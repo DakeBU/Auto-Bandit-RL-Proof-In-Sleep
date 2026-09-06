@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.UCBConditionalRewardLaw · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.UCBConditionalRewardLaw · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.UCBConditionalRewardLaw · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · UCB</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>UCB<wbr>Conditional<wbr>Reward<wbr>Law</h1>
+  <p class="lede">This module connects the selected-policy simultaneous empirical-mean event to the deterministic UCB score algebra. Its confidence width depends on the realized pull count, so it deliberately does not use the older UCB.finiteHorizonConfidenceBadEvent, whose radius is deterministic in the sample point.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/UCBConditionalRewardLaw.lean.html"><code>BanditRLProof/Algorithms/UCBConditionalRewardLaw.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/ucb/index.html">4. UCB: confidence events to regret</a></dd></div>
+    <div><dt>Declarations</dt><dd>7</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-algorithms-ucb/index.html"><code>BanditRLProof.Algorithms.UCB</code></a>, <a href="../banditrlproof-conditionalrewardlawsource/index.html"><code>BanditRLProof.ConditionalRewardLawSource</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-ucbconditionalrewardlawpolicy/index.html"><code>BanditRLProof.Algorithms.UCBConditionalRewardLawPolicy</code></a>, <a href="../banditrlproof-algorithms-ucbconditionalrewardpairtrajectory/index.html"><code>BanditRLProof.Algorithms.UCBConditionalRewardPairTrajectory</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-933a6b4c9149">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorEmpiricalMeanAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Successor empirical mean at the positive horizon `t + 1`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selectedPolicySuccessorEmpiricalMeanAt {Omega : Type u} {Action : Type} [DecidableEq Action] (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Rat) (omega : Omega) (t : Nat) (arm : Action) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBConditionalRewardLaw.lean.html#L22">Source line 22</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b4442f0f693c">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorRadiusAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Realized-count confidence width used at one arm/time pair.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selectedPolicySuccessorRadiusAt {Omega : Type u} {Action : Type} [DecidableEq Action] (action : Omega -&gt; ActionTrace Action) (sigma2 : NNReal) (arms : Finset Action) (T : Nat) (delta : Real) (omega : Omega) (t : Nat) (arm : Action) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBConditionalRewardLaw.lean.html#L31">Source line 31</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ee82c891289c">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorIndexAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Practical UCB index with a sample-dependent realized-count width.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selectedPolicySuccessorIndexAt {Omega : Type u} {Action : Type} [DecidableEq Action] (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Rat) (sigma2 : NNReal) (arms : Finset Action) (T : Nat) (delta : Real) (omega : Omega) (t : Nat) (arm : Action) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBConditionalRewardLaw.lean.html#L43">Source line 43</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b34ecc6c5fe1">
+  <summary>
+    <span class="kind">structure</span>
+    <code>BanditRLProof.UCB.SelectedPolicySuccessorInitializedScoreMaxSource</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Initialization and score-maximality contract for the finite set of charged UCB
+times.  The time set may omit initialization rounds; every retained time must
+lie below `T`, and both the designated best arm and the selected arm must have
+positive realized successor pull counts.</p>
+    <pre class="lean-code"><code><span class="kw">structure</span> SelectedPolicySuccessorInitializedScoreMaxSource {Omega : Type u} {Action : Type} [DecidableEq Action] (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Rat) (arms : Finset Action) (armMean : Action -&gt; Rat) (sigma2 : NNReal) (T : Nat) (delta : Real) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBConditionalRewardLaw.lean.html#L63">Source line 63</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ccbd77560ee6">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorLargeGapEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Large-gap selected-time event charged by the practical confidence event.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selectedPolicySuccessorLargeGapEvent {Omega : Type u} {Action : Type} [DecidableEq Action] {action : Omega -&gt; ActionTrace Action} {reward : Omega -&gt; RewardTrace Rat} {arms : Finset Action} {armMean : Action -&gt; Rat} {sigma2 : NNReal} {T : Nat} {delta : Real} (source : SelectedPolicySuccessorInitializedScoreMaxSource action reward arms armMean sigma2 T delta) : Set Omega</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBConditionalRewardLaw.lean.html#L88">Source line 88</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9eb4bc4d580c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.SelectedPolicySuccessorInitializedScoreMaxSource.meanGap_le_two_radius_of_not_badEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Outside the practical simultaneous confidence event, score maximality implies
+the standard UCB gap bound at every initialized charged time.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> SelectedPolicySuccessorInitializedScoreMaxSource.meanGap_le_two_radius_of_not_badEvent {Omega : Type u} {Action : Type} [DecidableEq Action] {action : Omega -&gt; ActionTrace Action} {reward : Omega -&gt; RewardTrace Rat} {arms : Finset Action} {armMean : Action -&gt; Rat} {sigma2 : NNReal} {T : Nat} {delta : Real} (source : SelectedPolicySuccessorInitializedScoreMaxSource action reward arms armMean sigma2 T delta) (omega : Omega) (t : Nat) (ht : t ∈ source.times) (hgood : omega ∉ ConditionalExpectationReward.successorArmEmpiricalMeanFiniteArmTimeBadEvent action reward arms armMean sigma2 T delta) : meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) source.best (source.chosen omega t) &lt;= <span class="num">2</span> * selectedPolicySuccessorRadiusAt action sigma2 arms T delta omega t (source.chosen omega t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBConditionalRewardLaw.lean.html#L106">Source line 106</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2073f705ed21">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measure_selectedPolicySuccessorLargeGapEvent_le_ennreal_delta_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Practical selected-policy UCB large-gap event bound on initialized times.
+
+The simultaneous empirical-mean theorem supplies the probability bound.  The
+source contract turns any large-gap score-maximal selection outside that event
+into a contradiction via the deterministic UCB confidence algebra.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_selectedPolicySuccessorLargeGapEvent_le_ennreal_delta_of_reward_map_eq_selected_policy_definitionalRawRangeMeasurableMeanRangeHistoryVarianceBounded {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] [DecidableEq Action] (mu : Measure Omega) [IsProbabilityMeasure mu] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat) (policy : Nat -&gt; Policy.MeasurablePolicy State Action) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (state : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; State) (mean : Context -&gt; Action -&gt; Rat) (varianceProxy : Context -&gt; Action -&gt; NNReal) (defaultAction : Action) (arms : Finset Action) (harms : arms.Nonempty) (armMean : Action -&gt; Rat) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (rewardLo rewardHi meanLo meanHi : Nat -&gt; Real) (sigma2 : NNReal) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hstate : <span class="kw">forall</span> n : Nat, Measurable (state n)) (hmean : Measurable (<span class="kw">fun</span> pair : Prod Context Action =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (hkernel : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hraw : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> omega : Omega, Set.Icc (rewardLo i) (rewardHi i) (((reward omega (i + <span class="num">1</span>) : Rat) : Real))) (hmean_range : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> context : Context, <span class="kw">forall</span> action : Action, Set.Icc (meanLo i) (meanHi i) (((mean context action : Rat) : Real))) (hvariance : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), varianceProxy (context i history) ((policy i).action (state i history)) &lt;= sigma2) (harmMean : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), <span class="kw">forall</span> arm, arm ∈ arms -&gt; mean (context i history) arm = armMean arm) (h_reward_map_eq_policy : <span class="kw">forall</span> i : Nat, Filter.Eventually (<span class="kw">fun</span> omega : Omega =&gt; @Measure.map Omega Rat mOmega inferInstance (<span class="kw">fun</span> y : Omega =&gt; reward y (i + <span class="num">1</span>)) (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ ((History.historyFiltrationSucc (ConditionalExpectationReward.generatedActionFromRewardHistory policy state defaultAction reward) reward (ConditionalExpectationReward.generatedActionFromRewardHistory_measurable (policy := policy) (state := state) (defaultAction := defaultAction) (reward := reward) hreward hstate) hreward) i) omega) = RewardKernel.selectedMeasure rewardKernel (context i (History.finiteRewardHistoryOfTrace (reward omega) i)) ((policy i).action (state i (History.finiteRewardHistoryOfTrace (reward omega) i)))) (ae (mu.trim ((History.historyFiltrationSucc (ConditionalExpectationReward.generatedActionFromRewardHistory policy state defaultAction reward) reward (ConditionalExpectationReward.generatedActionFromRewardHistory_measurable (policy := policy) (state := state) (defaultAction := defaultAction) (reward := reward) hreward hstate) hreward).le i)))) (T : Nat) (hT : <span class="num">0</span> &lt; T) (hsigma2 : <span class="num">0</span> &lt; (((sigma2 : NNReal) : Real))) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (source : SelectedPolicySuccessorInitializedScoreMaxSource (ConditionalExpectationReward.generatedActionFromRewardHistory policy state defaultAction reward) reward arms armMean sigma2 T delta) : mu (selectedPolicySuccessorLargeGapEvent source) &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBConditionalRewardLaw.lean.html#L189">Source line 189</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

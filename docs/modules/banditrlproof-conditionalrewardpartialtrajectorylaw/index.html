@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.ConditionalRewardPartialTrajectoryLaw · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.ConditionalRewardPartialTrajectoryLaw · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.ConditionalRewardPartialTrajectoryLaw · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Probability layer</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Conditional<wbr>Reward<wbr>Partial<wbr>Trajectory<wbr>Law</h1>
+  <p class="lede">Generated source map for this Lean module.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/ConditionalRewardPartialTrajectoryLaw.lean.html"><code>BanditRLProof/ConditionalRewardPartialTrajectoryLaw.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/probability/index.html">2. Probability, kernels, filtrations, and concentration</a></dd></div>
+    <div><dt>Declarations</dt><dd>8</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-conditionalrewardlawsource/index.html"><code>BanditRLProof.ConditionalRewardLawSource</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-conditionalrewardpartialtrajectorymaskedlaw/index.html"><code>BanditRLProof.ConditionalRewardPartialTrajectoryMaskedLaw</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-dd2ebd3672aa">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ConditionalExpectationReward.historyStepKernelFamily_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">An ambient reward process satisfying the configured initial law and successor
+conditional-distribution recursion has the generated finite-pair
+`partialTraj` law on the generated history filtration.
+
+Unlike the unrestricted theorem card, the action trace here is the policy
+action generated from the reward history, and the model-side trajectory law is
+supplied by `hzero` and `hcond` rather than assumed through the conclusion.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> historyStepKernelFamily_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_condDistrib {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] [Nonempty Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (mu0 : Measure Rat) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat) (policy : Nat -&gt; Policy.MeasurablePolicy State Action) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (state : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; State) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hstate : <span class="kw">forall</span> n : Nat, Measurable (state n)) (defaultAction : Action) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (hzero : Measure.map (<span class="kw">fun</span> omega : Omega =&gt; reward omega <span class="num">0</span>) mu = mu0) (hcond : <span class="kw">forall</span> i : Nat, Filter.EventuallyEq (ae (mu.map (<span class="kw">fun</span> omega : Omega =&gt; Preorder.frestrictLe i (reward omega)))) (ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; reward omega (i + <span class="num">1</span>)) (<span class="kw">fun</span> omega : Omega =&gt; Preorder.frestrictLe i (reward omega)) mu) (RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext hstate i)) (i : Nat) : Filter.Eventually (<span class="kw">fun</span> omega : Omega =&gt; @Measure.map Omega ((j : Finset.Iic (i + <span class="num">1</span>)) -&gt; Prod Action Rat) mOmega inferInstance (<span class="kw">fun</span> y : Omega =&gt; History.finitePairHistoryOfTrace (generatedActionFromRewardHistory policy state defaultAction reward y) (reward y) (i + <span class="num">1</span>)) (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ ((History.historyFiltrationSucc (generatedActionFromRewardHistory policy state defaultAction reward) reward (generatedActionFromRewardHistory_measurable (policy := policy) (state := state) (defaultAction := defaultAction) (reward := reward) hreward hstate) hreward) i) omega) = RewardKernel.actionRewardPartialTrajectoryKernel rewardKernel policy (<span class="kw">fun</span> n history =&gt; context n (History.pairHistoryRewardProjection history)) (<span class="kw">fun</span> n history =&gt; state n (History.pairHistoryRewardProjection history)) (<span class="kw">fun</span> n : Nat =&gt; (hcontext n).comp (History.measurable_pairHistoryRewardProjection (Action := Action) (Reward := Rat) n)) (<span class="kw">fun</span> n : Nat =&gt; (hstate n).comp (History.measurable_pairHistoryRewardProjection (Action := Action) (Reward := Rat) n)) i (i + <span class="num">1</span>) (History.finitePairHistoryOfTrace (generatedActionFromRewardHistory policy state defaultAction reward omega) (reward omega) i)) (ae (mu.trim ((History.historyFiltrationSucc (generatedActionFromRewardHistory policy state defaultAction reward) reward (generatedActionFromRewardHistory_measurable (policy := policy) (state := state) (defaultAction := defaultAction) (reward := reward) hreward hstate) hreward).le i)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/ConditionalRewardPartialTrajectoryLaw.lean.html#L17">Source line 17</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e14b631eeb20">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ConditionalExpectationReward.actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_pair_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">An arbitrary measurable action/reward process has the full finite-pair
+`partialTraj` law at time `i` when its successor pair regular conditional
+distribution given the observed finite pair prefix is the configured
+history-step action/reward kernel.
+
+This is the unrestricted-action theorem-card route under a genuine upstream
+pair `condDistrib` law. It needs neither a generated-action equality nor a
+complete trajectory-law assumption.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_pair_condDistrib {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [StandardBorelSpace Action] [MeasurableSingletonClass Action] [Countable Action] [Nonempty Omega] [Nonempty Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -&gt; ActionTrace Action) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat) (policy : Nat -&gt; Policy.MeasurablePolicy State Action) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (state : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; State) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hstate : <span class="kw">forall</span> n : Nat, Measurable (state n)) (reward : Omega -&gt; RewardTrace Rat) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (i : Nat) (hcond : Filter.EventuallyEq (ae (mu.map (<span class="kw">fun</span> omega : Omega =&gt; History.finitePairHistoryOfTrace (action omega) (reward omega) i))) (ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; (action omega (i + <span class="num">1</span>), reward omega (i + <span class="num">1</span>))) (<span class="kw">fun</span> omega : Omega =&gt; History.finitePairHistoryOfTrace (action omega) (reward omega) i) mu) (RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy (<span class="kw">fun</span> n history =&gt; context n (History.pairHistoryRewardProjection history)) (<span class="kw">fun</span> n history =&gt; state n (History.pairHistoryRewardProjection history)) (<span class="kw">fun</span> n : Nat =&gt; (hcontext n).comp (History.measurable_pairHistoryRewardProjection (Action := Action) (Reward := Rat) n)) (<span class="kw">fun</span> n : Nat =&gt; (hstate n).comp (History.measurable_pairHistoryRewardProjection (Action := Action) (Reward := Rat) n)) i)) : Filter.Eventually (<span class="kw">fun</span> omega : Omega =&gt; @Measure.map Omega ((j : Finset.Iic (i + <span class="num">1</span>)) -&gt; Prod Action Rat) mOmega inferInstance (<span class="kw">fun</span> y : Omega =&gt; History.finitePairHistoryOfTrace (action y) (reward y) (i + <span class="num">1</span>)) (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ ((History.historyFiltrationSucc (mOmega := mOmega) action reward haction hreward) i) omega) = RewardKernel.actionRewardPartialTrajectoryKernel rewardKernel policy (<span class="kw">fun</span> n history =&gt; context n (History.pairHistoryRewardProjection history)) (<span class="kw">fun</span> n history =&gt; state n (History.pairHistoryRewardProjection history)) (<span class="kw">fun</span> n : Nat =&gt; (hcontext n).comp (History.measurable_pairHistoryRewardProjection (Action := Action) (Reward := Rat) n)) (<span class="kw">fun</span> n : Nat =&gt; (hstate n).comp (History.measurable_pairHistoryRewardProjection (Action := Action) (Reward := Rat) n)) i (i + <span class="num">1</span>) (History.finitePairHistoryOfTrace (action omega) (reward omega) i)) (ae (mu.trim ((History.historyFiltrationSucc (mOmega := mOmega) action reward haction hreward).le i)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/ConditionalRewardPartialTrajectoryLaw.lean.html#L112">Source line 112</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-87963c5d8606">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ConditionalExpectationReward.centeredRewardSuccProcess_stronglyAdapted_historyFiltrationSucc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The zero-initialized successor centered-reward process is strongly adapted to
+the full action/reward history filtration for any measurable action trace.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredRewardSuccProcess_stronglyAdapted_historyFiltrationSucc {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] (action : Omega -&gt; ActionTrace Action) (policy : Nat -&gt; Policy.MeasurablePolicy State Action) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (state : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; State) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hstate : <span class="kw">forall</span> n : Nat, Measurable (state n)) (mean : Context -&gt; Action -&gt; Rat) (hmean : Measurable (<span class="kw">fun</span> pair : Prod Context Action =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (reward : Omega -&gt; RewardTrace Rat) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) : <span class="kw">let</span> F := History.historyFiltrationSucc action reward haction hreward <span class="kw">let</span> Y : Nat -&gt; Omega -&gt; Real := <span class="kw">fun</span> t omega =&gt; <span class="kw">match</span> t <span class="kw">with</span> | <span class="num">0</span> =&gt; <span class="num">0</span> | i + <span class="num">1</span> =&gt; (((reward omega (i + <span class="num">1</span>) - mean (context i (History.finiteRewardHistoryOfTrace (reward omega) i)) ((policy i).action (state i (History.finiteRewardHistoryOfTrace (reward omega) i))) : Rat) : Real)) StronglyAdapted F Y</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/ConditionalRewardPartialTrajectoryLaw.lean.html#L322">Source line 322</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d8446355b04b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_pair_condDistrib_of_ae_variance</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">An explicit successor-pair conditional distribution and the native
+trimmed-a.e. selected-variance bound yield the centered-reward conditional MGF
+witness for an arbitrary measurable action trace.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredReward_succ_hasCondSubgaussianMGF_of_pair_condDistrib_of_ae_variance {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [StandardBorelSpace Action] [MeasurableSingletonClass Action] [Countable Action] [Nonempty Omega] [Nonempty Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -&gt; ActionTrace Action) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat) (policy : Nat -&gt; Policy.MeasurablePolicy State Action) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (state : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; State) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hstate : <span class="kw">forall</span> n : Nat, Measurable (state n)) (mean : Context -&gt; Action -&gt; Rat) (varianceProxy : Context -&gt; Action -&gt; NNReal) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hmean : Measurable (<span class="kw">fun</span> pair : Prod Context Action =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (reward : Omega -&gt; RewardTrace Rat) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (i : Nat) (c : NNReal) (hvariance : Filter.Eventually (<span class="kw">fun</span> omega : Omega =&gt; varianceProxy (context i (History.finiteRewardHistoryOfTrace (reward omega) i)) ((policy i).action (state i (History.finiteRewardHistoryOfTrace (reward omega) i))) &lt;= c) (ae (mu.trim ((History.historyFiltrationSucc (mOmega := mOmega) action reward haction hreward).le i)))) (hcond : Filter.EventuallyEq (ae (mu.map (<span class="kw">fun</span> omega : Omega =&gt; History.finitePairHistoryOfTrace (action omega) (reward omega) i))) (ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; (action omega (i + <span class="num">1</span>), reward omega (i + <span class="num">1</span>))) (<span class="kw">fun</span> omega : Omega =&gt; History.finitePairHistoryOfTrace (action omega) (reward omega) i) mu) (RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy (<span class="kw">fun</span> n history =&gt; context n (History.pairHistoryRewardProjection history)) (<span class="kw">fun</span> n history =&gt; state n (History.pairHistoryRewardProjection history)) (<span class="kw">fun</span> n : Nat =&gt; (hcontext n).comp (History.measurable_pairHistoryRewardProjection (Action := Action) (Reward := Rat) n)) (<span class="kw">fun</span> n : Nat =&gt; (hstate n).comp (History.measurable_pairHistoryRewardProjection (Action := Action) (Reward := Rat) n)) i)) : ProbabilityTheory.HasCondSubgaussianMGF ((History.historyFiltrationSucc (mOmega := mOmega) action reward haction hreward) i) ((History.historyFiltrationSucc (mOmega := mOmega) action reward haction hreward).le i) (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega (i + <span class="num">1</span>) - mean (context i (History.finiteRewardHistoryOfTrace (reward omega) i)) ((policy i).action (state i (History.finiteRewardHistoryOfTrace (reward omega) i))) : Rat) : Real))) c mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/ConditionalRewardPartialTrajectoryLaw.lean.html#L456">Source line 456</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e304541d713c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ConditionalExpectationReward.centeredReward_succ_hasCondSubgaussianMGF_of_pair_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Compatibility wrapper for a pointwise selected-history variance ceiling.
+
+The core pair-conditional-law transfer only needs the corresponding
+trimmed-a.e. variance event.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredReward_succ_hasCondSubgaussianMGF_of_pair_condDistrib {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [StandardBorelSpace Action] [MeasurableSingletonClass Action] [Countable Action] [Nonempty Omega] [Nonempty Action] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -&gt; ActionTrace Action) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat) (policy : Nat -&gt; Policy.MeasurablePolicy State Action) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (state : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; State) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hstate : <span class="kw">forall</span> n : Nat, Measurable (state n)) (mean : Context -&gt; Action -&gt; Rat) (varianceProxy : Context -&gt; Action -&gt; NNReal) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hmean : Measurable (<span class="kw">fun</span> pair : Prod Context Action =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (reward : Omega -&gt; RewardTrace Rat) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (i : Nat) (c : NNReal) (hvariance : <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), varianceProxy (context i history) ((policy i).action (state i history)) &lt;= c) (hcond : Filter.EventuallyEq (ae (mu.map (<span class="kw">fun</span> omega : Omega =&gt; History.finitePairHistoryOfTrace (action omega) (reward omega) i))) (ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; (action omega (i + <span class="num">1</span>), reward omega (i + <span class="num">1</span>))) (<span class="kw">fun</span> omega : Omega =&gt; History.finitePairHistoryOfTrace (action omega) (reward omega) i) mu) (RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy (<span class="kw">fun</span> n history =&gt; context n (History.pairHistoryRewardProjection history)) (<span class="kw">fun</span> n history =&gt; state n (History.pairHistoryRewardProjection history)) (<span class="kw">fun</span> n : Nat =&gt; (hcontext n).comp (History.measurable_pairHistoryRewardProjection (Action := Action) (Reward := Rat) n)) (<span class="kw">fun</span> n : Nat =&gt; (hstate n).comp (History.measurable_pairHistoryRewardProjection (Action := Action) (Reward := Rat) n)) i)) : ProbabilityTheory.HasCondSubgaussianMGF ((History.historyFiltrationSucc (mOmega := mOmega) action reward haction hreward) i) ((History.historyFiltrationSucc (mOmega := mOmega) action reward haction hreward).le i) (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega (i + <span class="num">1</span>) - mean (context i (History.finiteRewardHistoryOfTrace (reward omega) i)) ((policy i).action (state i (History.finiteRewardHistoryOfTrace (reward omega) i))) : Rat) : Real))) c mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/ConditionalRewardPartialTrajectoryLaw.lean.html#L657">Source line 657</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c55a98c8e6c3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_centeredRewardSuccProcess_sum_tail_ennreal_of_pair_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Azuma-Hoeffding upper tail for an arbitrary measurable action/reward process
+whose every successor-pair conditional law is the configured history-step
+kernel.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> actionRewardHistoryStepKernelFamily_centeredRewardSuccProcess_sum_tail_ennreal_of_pair_condDistrib {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [StandardBorelSpace Action] [MeasurableSingletonClass Action] [Countable Action] [Nonempty Omega] [Nonempty Action] (mu : Measure Omega) [IsProbabilityMeasure mu] (action : Omega -&gt; ActionTrace Action) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat) (policy : Nat -&gt; Policy.MeasurablePolicy State Action) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (state : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; State) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hstate : <span class="kw">forall</span> n : Nat, Measurable (state n)) (mean : Context -&gt; Action -&gt; Rat) (varianceProxy : Context -&gt; Action -&gt; NNReal) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hmean : Measurable (<span class="kw">fun</span> pair : Prod Context Action =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (reward : Omega -&gt; RewardTrace Rat) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (hcondLaw : <span class="kw">forall</span> i : Nat, Filter.EventuallyEq (ae (mu.map (<span class="kw">fun</span> omega : Omega =&gt; History.finitePairHistoryOfTrace (action omega) (reward omega) i))) (ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; (action omega (i + <span class="num">1</span>), reward omega (i + <span class="num">1</span>))) (<span class="kw">fun</span> omega : Omega =&gt; History.finitePairHistoryOfTrace (action omega) (reward omega) i) mu) (RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy (<span class="kw">fun</span> n history =&gt; context n (History.pairHistoryRewardProjection history)) (<span class="kw">fun</span> n history =&gt; state n (History.pairHistoryRewardProjection history)) (<span class="kw">fun</span> n : Nat =&gt; (hcontext n).comp (History.measurable_pairHistoryRewardProjection (Action := Action) (Reward := Rat) n)) (<span class="kw">fun</span> n : Nat =&gt; (hstate n).comp (History.measurable_pairHistoryRewardProjection (Action := Action) (Reward := Rat) n)) i)) (varianceCeiling : Nat -&gt; NNReal) (hvariance : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), varianceProxy (context i history) ((policy i).action (state i history)) &lt;= varianceCeiling i) (n : Nat) {eps : Real} (heps : <span class="num">0</span> &lt;= eps) : <span class="kw">let</span> Y : Nat -&gt; Omega -&gt; Real := <span class="kw">fun</span> t omega =&gt; <span class="kw">match</span> t <span class="kw">with</span> | <span class="num">0</span> =&gt; <span class="num">0</span> | i + <span class="num">1</span> =&gt; (((reward omega (i + <span class="num">1</span>) - mean (context i (History.finiteRewardHistoryOfTrace (reward omega) i)) ((policy i).action (state i (History.finiteRewardHistoryOfTrace (reward omega) i))) : Rat) : Real)) <span class="kw">let</span> cY : Nat -&gt; NNReal := <span class="kw">fun</span> t =&gt; <span class="kw">match</span> t <span class="kw">with</span> | <span class="num">0</span> =&gt; <span class="num">0</span> | i + <span class="num">1</span> =&gt; varianceCeiling i mu {omega | eps &lt;= (Finset.range n).sum (<span class="kw">fun</span> t =&gt; Y t omega)} &lt;= ENNReal.ofReal (Real.exp (-eps ^ <span class="num">2</span> / (<span class="num">2</span> * (((Finset.range n).sum cY : NNReal) : Real))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/ConditionalRewardPartialTrajectoryLaw.lean.html#L742">Source line 742</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e50334a0089d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_centeredRewardSuccProcess_sum_tail_ennreal_of_pair_condDistrib_on_horizon</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-horizon Azuma-Hoeffding upper tail for an arbitrary measurable
+action/reward process.
+
+Only successor-pair laws and trimmed-a.e. selected-variance bounds at indices
+`i &lt; n - 1` are required.  This is the native contract consumed by the
+finite-sum conditional sub-Gaussian assembler.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> actionRewardHistoryStepKernelFamily_centeredRewardSuccProcess_sum_tail_ennreal_of_pair_condDistrib_on_horizon {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [StandardBorelSpace Action] [MeasurableSingletonClass Action] [Countable Action] [Nonempty Omega] [Nonempty Action] (mu : Measure Omega) [IsProbabilityMeasure mu] (action : Omega -&gt; ActionTrace Action) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat) (policy : Nat -&gt; Policy.MeasurablePolicy State Action) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (state : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; State) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hstate : <span class="kw">forall</span> n : Nat, Measurable (state n)) (mean : Context -&gt; Action -&gt; Rat) (varianceProxy : Context -&gt; Action -&gt; NNReal) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hmean : Measurable (<span class="kw">fun</span> pair : Prod Context Action =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (reward : Omega -&gt; RewardTrace Rat) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (n : Nat) (hcondLaw : <span class="kw">forall</span> i : Nat, i &lt; n - <span class="num">1</span> -&gt; Filter.EventuallyEq (ae (mu.map (<span class="kw">fun</span> omega : Omega =&gt; History.finitePairHistoryOfTrace (action omega) (reward omega) i))) (ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; (action omega (i + <span class="num">1</span>), reward omega (i + <span class="num">1</span>))) (<span class="kw">fun</span> omega : Omega =&gt; History.finitePairHistoryOfTrace (action omega) (reward omega) i) mu) (RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy (<span class="kw">fun</span> n history =&gt; context n (History.pairHistoryRewardProjection history)) (<span class="kw">fun</span> n history =&gt; state n (History.pairHistoryRewardProjection history)) (<span class="kw">fun</span> n : Nat =&gt; (hcontext n).comp (History.measurable_pairHistoryRewardProjection (Action := Action) (Reward := Rat) n)) (<span class="kw">fun</span> n : Nat =&gt; (hstate n).comp (History.measurable_pairHistoryRewardProjection (Action := Action) (Reward := Rat) n)) i)) (varianceCeiling : Nat -&gt; NNReal) (hvariance : <span class="kw">forall</span> i : Nat, i &lt; n - <span class="num">1</span> -&gt; Filter.Eventually (<span class="kw">fun</span> omega : Omega =&gt; varianceProxy (context i (History.finiteRewardHistoryOfTrace (reward omega) i)) ((policy i).action (state i (History.finiteRewardHistoryOfTrace (reward omega) i))) &lt;= varianceCeiling i) (ae (mu.trim ((History.historyFiltrationSucc (mOmega := mOmega) action reward haction hreward).le i)))) {eps : Real} (heps : <span class="num">0</span> &lt;= eps) : <span class="kw">let</span> Y : Nat -&gt; Omega -&gt; Real := <span class="kw">fun</span> t omega =&gt; <span class="kw">match</span> t <span class="kw">with</span> | <span class="num">0</span> =&gt; <span class="num">0</span> | i + <span class="num">1</span> =&gt; (((reward omega (i + <span class="num">1</span>) - mean (context i (History.finiteRewardHistoryOfTrace (reward omega) i)) ((policy i).action (state i (History.finiteRewardHistoryOfTrace (reward omega) i))) : Rat) : Real)) <span class="kw">let</span> cY : Nat -&gt; NNReal := <span class="kw">fun</span> t =&gt; <span class="kw">match</span> t <span class="kw">with</span> | <span class="num">0</span> =&gt; <span class="num">0</span> | i + <span class="num">1</span> =&gt; varianceCeiling i mu {omega | eps &lt;= (Finset.range n).sum (<span class="kw">fun</span> t =&gt; Y t omega)} &lt;= ENNReal.ofReal (Real.exp (-eps ^ <span class="num">2</span> / (<span class="num">2</span> * (((Finset.range n).sum cY : NNReal) : Real))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/ConditionalRewardPartialTrajectoryLaw.lean.html#L868">Source line 868</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b58c2b33fa65">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_centeredRewardSuccProcess_sum_tail_ennreal_trajMeasure_on_horizon</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical action/reward `trajMeasure` Azuma-Hoeffding upper tail.
+
+The Mathlib Ionescu--Tulcea trajectory law supplies every successor-pair
+conditional distribution.  The caller only provides the centered reward
+kernel law and horizon-local selected-history variance ceilings.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> actionRewardHistoryStepKernelFamily_centeredRewardSuccProcess_sum_tail_ennreal_trajMeasure_on_horizon {Context : Type v} {State : Type w} {Action : Type x} [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [StandardBorelSpace Action] [MeasurableSingletonClass Action] [Countable Action] [Nonempty Action] (mu0 : Measure (Prod Action Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat) (policy : Nat -&gt; Policy.MeasurablePolicy State Action) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (state : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; State) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hstate : <span class="kw">forall</span> n : Nat, Measurable (state n)) (mean : Context -&gt; Action -&gt; Rat) (varianceProxy : Context -&gt; Action -&gt; NNReal) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hmean : Measurable (<span class="kw">fun</span> pair : Prod Context Action =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (n : Nat) (varianceCeiling : Nat -&gt; NNReal) (hvariance : <span class="kw">forall</span> i : Nat, i &lt; n - <span class="num">1</span> -&gt; <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), varianceProxy (context i history) ((policy i).action (state i history)) &lt;= varianceCeiling i) {eps : Real} (heps : <span class="num">0</span> &lt;= eps) : <span class="kw">let</span> pairContext : (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod Action Rat) -&gt; Context</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/ConditionalRewardPartialTrajectoryLaw.lean.html#L1003">Source line 1003</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

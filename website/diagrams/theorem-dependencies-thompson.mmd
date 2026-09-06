@@ -1,0 +1,11 @@
+flowchart TB
+  Prior["prior"] --> Posterior["posterior kernel"]
+  Likelihood["likelihood kernel"] --> Posterior
+  Posterior --> Match["one-step probability matching"]
+  Match --> Recursive["recursive generated<br/>Thompson trajectory"]
+  Traj["generated trajectory law"] --> Recursive
+  Recursive --> Bayes["comparator / Bayesian<br/>regret decomposition"]
+  Selector["pointwise mean-optimal selector"] --> Bayes
+  Bayes --> Clipped["clipped confidence bridge"]
+  Clipped --> Latent["stationary latent-arm stream"]
+  Latent --> Terminal["generated stationary<br/>Bayesian-regret terminal"]

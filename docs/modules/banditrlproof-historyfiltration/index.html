@@ -1,0 +1,940 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.HistoryFiltration · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.HistoryFiltration · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.HistoryFiltration · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Probability layer</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>History<wbr>Filtration</h1>
+  <p class="lede">This module gives a narrow project-local filtration canary: the sigma-algebras generated by past action/reward singleton events form a Mathlib filtration. It does not construct kernels, policies, conditional expectations, conditional MGF witnesses, or adaptive regret theorems.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/HistoryFiltration.lean.html"><code>BanditRLProof/HistoryFiltration.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/probability/index.html">2. Probability, kernels, filtrations, and concentration</a></dd></div>
+    <div><dt>Declarations</dt><dd>49</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-measurefoundation/index.html"><code>BanditRLProof.MeasureFoundation</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-etccondsubgaussianwitnesses/index.html"><code>BanditRLProof.Algorithms.ETCCondSubGaussianWitnesses</code></a>, <a href="../banditrlproof-algorithms-etcempiricalmean/index.html"><code>BanditRLProof.Algorithms.ETCEmpiricalMean</code></a>, <a href="../banditrlproof-algorithms-thompsonreferencepolicy/index.html"><code>BanditRLProof.Algorithms.ThompsonReferencePolicy</code></a>, <a href="../banditrlproof-ofulgeneratedtrajectorypredictableconfidence/index.html"><code>BanditRLProof.OFULGeneratedTrajectoryPredictableConfidence</code></a>, <a href="../banditrlproof-policymeasurability/index.html"><code>BanditRLProof.PolicyMeasurability</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-770020465cc0">
+  <summary>
+    <span class="kind">abbrev</span>
+    <code>BanditRLProof.History.FiniteActionHistory</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite action histories through index `t`, represented on Mathlib&#x27;s
+`Finset.Iic t` finite-prefix index type.</p>
+    <pre class="lean-code"><code><span class="kw">abbrev</span> FiniteActionHistory (Action : Type v) (t : Nat)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L22">Source line 22</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9087f6b857f9">
+  <summary>
+    <span class="kind">abbrev</span>
+    <code>BanditRLProof.History.FiniteRewardHistory</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite reward histories through index `t`, represented on Mathlib&#x27;s
+`Finset.Iic t` finite-prefix index type.</p>
+    <pre class="lean-code"><code><span class="kw">abbrev</span> FiniteRewardHistory (Reward : Type w) (t : Nat)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L27">Source line 27</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-56f314647881">
+  <summary>
+    <span class="kind">abbrev</span>
+    <code>BanditRLProof.History.FinitePairHistory</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pair-coordinate finite action/reward histories through index `t`.</p>
+    <pre class="lean-code"><code><span class="kw">abbrev</span> FinitePairHistory (Action : Type v) (Reward : Type w) (t : Nat)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L31">Source line 31</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c0905b6162f7">
+  <summary>
+    <span class="kind">abbrev</span>
+    <code>BanditRLProof.History.FiniteHistory</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The paired finite action/reward history object at a finite prefix.</p>
+    <pre class="lean-code"><code><span class="kw">abbrev</span> FiniteHistory (Action : Type v) (Reward : Type w) (t : Nat)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L35">Source line 35</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-dab5b2794990">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.History.finiteActionHistoryOfTrace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Restrict an infinite action trace to the finite prefix indexed by
+`Finset.Iic t`.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> finiteActionHistoryOfTrace {Action : Type v} (action : ActionTrace Action) (t : Nat) : FiniteActionHistory Action t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L40">Source line 40</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6c3280deda6a">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.History.finiteRewardHistoryOfTrace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Restrict an infinite reward trace to the finite prefix indexed by
+`Finset.Iic t`.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> finiteRewardHistoryOfTrace {Reward : Type w} (reward : RewardTrace Reward) (t : Nat) : FiniteRewardHistory Reward t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L48">Source line 48</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b831db96b0ca">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.History.completeRewardTrace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Complete a finite reward history to an infinite trace, using `default` outside
+the observed prefix.
+
+The completion agrees with `history` at every coordinate through `t`.  It is a
+deterministic history-reconstruction helper; it does not assert that the
+defaulted future coordinates agree with an ambient reward process.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> completeRewardTrace {Reward : Type w} (t : Nat) (history : FiniteRewardHistory Reward t) (default : Reward) : RewardTrace Reward</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L62">Source line 62</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-985d22ba91cc">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.History.finiteHistoryOfTrace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Restrict infinite action and reward traces to a paired finite history.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> finiteHistoryOfTrace {Action : Type v} {Reward : Type w} (action : ActionTrace Action) (reward : RewardTrace Reward) (t : Nat) : FiniteHistory Action Reward t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L69">Source line 69</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2bebbc2b01ce">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.History.finitePairHistoryOfTrace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Restrict infinite action and reward traces to pair-coordinate history.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> finitePairHistoryOfTrace {Action : Type v} {Reward : Type w} (action : ActionTrace Action) (reward : RewardTrace Reward) (t : Nat) : FinitePairHistory Action Reward t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L78">Source line 78</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c8d1619d6b2d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.History.extendPairHistorySucc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Extend a finite pair history from `t` to `t + 1` by appending the next pair.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> extendPairHistorySucc {Action : Type v} {Reward : Type w} {t : Nat} (history : FinitePairHistory Action Reward t) (next : Prod Action Reward) : FinitePairHistory Action Reward (t + <span class="num">1</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L87">Source line 87</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d3a34e56a2f9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.finiteActionHistoryOfTrace_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteActionHistoryOfTrace_apply {Action : Type v} (action : ActionTrace Action) (t : Nat) (i : Finset.Iic t) : finiteActionHistoryOfTrace action t i = action i.<span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L99">Source line 99</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c60cfe2bc20f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.finiteRewardHistoryOfTrace_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteRewardHistoryOfTrace_apply {Reward : Type w} (reward : RewardTrace Reward) (t : Nat) (i : Finset.Iic t) : finiteRewardHistoryOfTrace reward t i = reward i.<span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L105">Source line 105</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d7b50c609fcc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.completeRewardTrace_finiteRewardHistoryOfTrace_apply_of_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Completing the actual finite reward prefix recovers every original coordinate
+through that prefix.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> completeRewardTrace_finiteRewardHistoryOfTrace_apply_of_le {Reward : Type w} (reward : RewardTrace Reward) (t s : Nat) (default : Reward) (hs : s &lt;= t) : completeRewardTrace t (finiteRewardHistoryOfTrace reward t) default s = reward s</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L115">Source line 115</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d5f1f6b871d9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.finiteHistoryOfTrace_fst</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteHistoryOfTrace_fst {Action : Type v} {Reward : Type w} (action : ActionTrace Action) (reward : RewardTrace Reward) (t : Nat) : (finiteHistoryOfTrace action reward t).<span class="num">1</span> = finiteActionHistoryOfTrace action t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L124">Source line 124</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a14316f8dbfc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.finiteHistoryOfTrace_snd</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteHistoryOfTrace_snd {Action : Type v} {Reward : Type w} (action : ActionTrace Action) (reward : RewardTrace Reward) (t : Nat) : (finiteHistoryOfTrace action reward t).<span class="num">2</span> = finiteRewardHistoryOfTrace reward t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L133">Source line 133</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5515a8fde601">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.finitePairHistoryOfTrace_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finitePairHistoryOfTrace_apply {Action : Type v} {Reward : Type w} (action : ActionTrace Action) (reward : RewardTrace Reward) (t : Nat) (i : Finset.Iic t) : finitePairHistoryOfTrace action reward t i = (action i.<span class="num">1</span>, reward i.<span class="num">1</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L142">Source line 142</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f75c5b79d131">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.extendPairHistorySucc_apply_of_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> extendPairHistorySucc_apply_of_le {Action : Type v} {Reward : Type w} {t : Nat} (history : FinitePairHistory Action Reward t) (next : Prod Action Reward) (i : Finset.Iic (t + <span class="num">1</span>)) (hi : i.<span class="num">1</span> &lt;= t) : extendPairHistorySucc history next i = history ⟨i.<span class="num">1</span>, Finset.mem_Iic.mpr hi⟩</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L151">Source line 151</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b55347a20669">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.extendPairHistorySucc_apply_succ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> extendPairHistorySucc_apply_succ {Action : Type v} {Reward : Type w} {t : Nat} (history : FinitePairHistory Action Reward t) (next : Prod Action Reward) : extendPairHistorySucc history next ⟨t + <span class="num">1</span>, Finset.mem_Iic.mpr le_rfl⟩ = next</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L161">Source line 161</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b84aa29a15a8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.finitePairHistoryOfTrace_succ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The trace prefix at `t + 1` is the old pair prefix extended by the next
+action/reward pair.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finitePairHistoryOfTrace_succ {Action : Type v} {Reward : Type w} (action : ActionTrace Action) (reward : RewardTrace Reward) (t : Nat) : finitePairHistoryOfTrace action reward (t + <span class="num">1</span>) = extendPairHistorySucc (finitePairHistoryOfTrace action reward t) (action (t + <span class="num">1</span>), reward (t + <span class="num">1</span>))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L175">Source line 175</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bbb0cc7ab24d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.History.pairHistoryRewardProjection</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Project the reward coordinates from a prefix of `(Action, Reward)` pairs.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> pairHistoryRewardProjection {Action : Type v} {Reward : Type w} {t : Nat} (history : (i : Finset.Iic t) -&gt; Prod Action Reward) : FiniteRewardHistory Reward t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L193">Source line 193</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2ee7694a7f89">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.pairHistoryRewardProjection_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pairHistoryRewardProjection_apply {Action : Type v} {Reward : Type w} {t : Nat} (history : (i : Finset.Iic t) -&gt; Prod Action Reward) (i : Finset.Iic t) : pairHistoryRewardProjection history i = (history i).<span class="num">2</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L200">Source line 200</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-afcb80355ce4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.pairHistoryRewardProjection_finitePairHistoryOfTrace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pairHistoryRewardProjection_finitePairHistoryOfTrace {Action : Type v} {Reward : Type w} (action : ActionTrace Action) (reward : RewardTrace Reward) (t : Nat) : pairHistoryRewardProjection (finitePairHistoryOfTrace action reward t) = finiteRewardHistoryOfTrace reward t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L207">Source line 207</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a1e3e64357cc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.measurable_finiteActionHistory_eval</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Coordinate evaluation on finite action histories is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_finiteActionHistory_eval {Action : Type v} [MeasurableSpace Action] (t : Nat) (i : Finset.Iic t) : Measurable (<span class="kw">fun</span> history : FiniteActionHistory Action t =&gt; history i)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L217">Source line 217</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-32e60a2df988">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.measurable_finiteRewardHistory_eval</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Coordinate evaluation on finite reward histories is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_finiteRewardHistory_eval {Reward : Type w} [MeasurableSpace Reward] (t : Nat) (i : Finset.Iic t) : Measurable (<span class="kw">fun</span> history : FiniteRewardHistory Reward t =&gt; history i)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L224">Source line 224</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-820e3f5f9383">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.measurable_finiteHistory_action_eval</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Action-coordinate evaluation on paired finite histories is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_finiteHistory_action_eval {Action : Type v} {Reward : Type w} [MeasurableSpace Action] [MeasurableSpace Reward] (t : Nat) (i : Finset.Iic t) : Measurable (<span class="kw">fun</span> history : FiniteHistory Action Reward t =&gt; history.<span class="num">1</span> i)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L231">Source line 231</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-137d5e280c61">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.measurable_finiteHistory_reward_eval</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Reward-coordinate evaluation on paired finite histories is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_finiteHistory_reward_eval {Action : Type v} {Reward : Type w} [MeasurableSpace Action] [MeasurableSpace Reward] (t : Nat) (i : Finset.Iic t) : Measurable (<span class="kw">fun</span> history : FiniteHistory Action Reward t =&gt; history.<span class="num">2</span> i)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L241">Source line 241</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-523b1adb198d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.measurable_pairHistoryRewardProjection</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The reward projection from pair-coordinate histories is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_pairHistoryRewardProjection {Action : Type v} {Reward : Type w} [MeasurableSpace Action] [MeasurableSpace Reward] (t : Nat) : Measurable (<span class="kw">fun</span> history : (i : Finset.Iic t) -&gt; Prod Action Reward =&gt; pairHistoryRewardProjection history)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L251">Source line 251</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f64c32c2719e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.measurable_finitePairHistoryOfTrace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Timewise measurable action and reward traces restrict to a measurable
+pair-coordinate finite history object.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_finitePairHistoryOfTrace {Omega : Type u} {Action : Type v} {Reward : Type w} [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSpace Reward] (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Reward) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (t : Nat) : Measurable (<span class="kw">fun</span> omega : Omega =&gt; finitePairHistoryOfTrace (action omega) (reward omega) t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L266">Source line 266</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f1a019ed3ba2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.measurable_extendPairHistorySucc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The successor-extension map for pair histories is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_extendPairHistorySucc {Action : Type v} {Reward : Type w} {t : Nat} [MeasurableSpace Action] [MeasurableSpace Reward] : Measurable (<span class="kw">fun</span> input : Prod (FinitePairHistory Action Reward t) (Prod Action Reward) =&gt; extendPairHistorySucc input.<span class="num">1</span> input.<span class="num">2</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L285">Source line 285</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5ac8f4023c2c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.measurable_finiteActionHistoryOfTrace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Timewise measurable action traces restrict to measurable finite action-history
+objects.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_finiteActionHistoryOfTrace {Omega : Type u} {Action : Type v} [MeasurableSpace Omega] [MeasurableSpace Action] (action : Omega -&gt; ActionTrace Action) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (t : Nat) : Measurable (<span class="kw">fun</span> omega : Omega =&gt; finiteActionHistoryOfTrace (action omega) t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L310">Source line 310</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5e38a74c9a53">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.measurable_finiteRewardHistoryOfTrace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Timewise measurable reward traces restrict to measurable finite reward-history
+objects.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_finiteRewardHistoryOfTrace {Omega : Type u} {Reward : Type w} [MeasurableSpace Omega] [MeasurableSpace Reward] (reward : Omega -&gt; RewardTrace Reward) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (t : Nat) : Measurable (<span class="kw">fun</span> omega : Omega =&gt; finiteRewardHistoryOfTrace (reward omega) t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L326">Source line 326</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ee20f4ff1b5d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.measurable_finiteHistoryOfTrace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Timewise measurable action and reward traces restrict to a measurable paired
+finite history object.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_finiteHistoryOfTrace {Omega : Type u} {Action : Type v} {Reward : Type w} [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSpace Reward] (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Reward) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (t : Nat) : Measurable (<span class="kw">fun</span> omega : Omega =&gt; finiteHistoryOfTrace (action omega) (reward omega) t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L342">Source line 342</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6c55665b94d8">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.History.historyGenerators</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The singleton-valued action/reward events visible before time `t`.
+
+This is deliberately discrete: it is shaped for finite arms and discrete local
+reward traces such as `Rat`, where singleton events are the current compiled
+measurability surface.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> historyGenerators {Omega : Type u} {Action : Type v} {Reward : Type w} (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Reward) (t : Nat) : Set (Set Omega)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L367">Source line 367</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7579ebb695cf">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.historyGenerators_mono</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Past history generators are monotone in the horizon.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> historyGenerators_mono {Omega : Type u} {Action : Type v} {Reward : Type w} (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Reward) {t u : Nat} (htu : t &lt;= u) : Set.Subset (historyGenerators action reward t) (historyGenerators action reward u)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L381">Source line 381</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-036b114e5a51">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.History.historyMeasurableSpace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The sigma-algebra generated by past action/reward singleton events.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> historyMeasurableSpace {Omega : Type u} {Action : Type v} {Reward : Type w} (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Reward) (t : Nat) : MeasurableSpace Omega</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L413">Source line 413</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-043125922767">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.historyMeasurableSpace_mono</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The history sigma-algebras are monotone.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> historyMeasurableSpace_mono {Omega : Type u} {Action : Type v} {Reward : Type w} (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Reward) {t u : Nat} (htu : t &lt;= u) : historyMeasurableSpace action reward t &lt;= historyMeasurableSpace action reward u</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L421">Source line 421</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5c58bb30804c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.historyMeasurableSpace_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The generated history sigma-algebra is a sub-sigma-algebra of the ambient
+measurable space when action and reward coordinates are timewise measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> historyMeasurableSpace_le {Omega : Type u} {Action : Type v} {Reward : Type w} [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [MeasurableSpace Reward] [MeasurableSingletonClass Reward] (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Reward) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (t : Nat) : historyMeasurableSpace action reward t &lt;= (inferInstance : MeasurableSpace Omega)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L435">Source line 435</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6203f87e8593">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.History.historyFiltration</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The local history filtration generated by past action/reward singleton events.
+
+This is the compiled `FILTRATION-HISTORY` canary.  It is intentionally only a
+filtration construction, not a policy/predictability or conditional-expectation
+theorem.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> historyFiltration {Omega : Type u} {Action : Type v} {Reward : Type w} [mOmega : MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [MeasurableSpace Reward] [MeasurableSingletonClass Reward] (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Reward) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) : Filtration Nat mOmega <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L476">Source line 476</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5b6586100d13">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.historyFiltration_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> historyFiltration_apply {Omega : Type u} {Action : Type v} {Reward : Type w} [mOmega : MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [MeasurableSpace Reward] [MeasurableSingletonClass Reward] (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Reward) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (t : Nat) : (historyFiltration action reward haction hreward t : MeasurableSpace Omega) = historyMeasurableSpace action reward t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L493">Source line 493</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e98c0a78ec2f">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.History.historyFiltrationSucc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The one-step shifted history filtration.
+
+`historyFiltration` at index `t` contains observations with index `&lt; t`.
+For adapted reward increments it is often more convenient to index the
+filtration by observations available after time `t`, i.e. `&lt; t + 1`.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> historyFiltrationSucc {Omega : Type u} {Action : Type v} {Reward : Type w} [mOmega : MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [MeasurableSpace Reward] [MeasurableSingletonClass Reward] (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Reward) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) : Filtration Nat mOmega <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L516">Source line 516</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b92cb8621bed">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.historyFiltrationSucc_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> historyFiltrationSucc_apply {Omega : Type u} {Action : Type v} {Reward : Type w} [mOmega : MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [MeasurableSpace Reward] [MeasurableSingletonClass Reward] (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Reward) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (t : Nat) : (historyFiltrationSucc action reward haction hreward t : MeasurableSpace Omega) = historyFiltration action reward haction hreward (t + <span class="num">1</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L536">Source line 536</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a5bec4162ae0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.measurableSet_action_mem_historyFiltration</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Past action singleton events are measurable in the generated history.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_action_mem_historyFiltration {Omega : Type u} {Action : Type v} {Reward : Type w} [mOmega : MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [MeasurableSpace Reward] [MeasurableSingletonClass Reward] (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Reward) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) {i t : Nat} (hit : i &lt; t) (a : Action) : MeasurableSet[historyFiltration action reward haction hreward t] (Set.preimage (<span class="kw">fun</span> omega =&gt; action omega i) (Set.singleton a))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L553">Source line 553</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b8ddd6fbaf61">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.measurable_action_mem_historyFiltration_of_lt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Past action coordinates are measurable with respect to the generated history.
+
+This is a deliberately discrete `ADAPTED-ACTION` canary: it uses countability
+and singleton-event measurability, not a full policy-predictability contract.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_action_mem_historyFiltration_of_lt {Omega : Type u} {Action : Type v} {Reward : Type w} [mOmega : MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] [MeasurableSpace Reward] [MeasurableSingletonClass Reward] (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Reward) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) {i t : Nat} (hit : i &lt; t) : @Measurable Omega Action (historyFiltration action reward haction hreward t) inferInstance (<span class="kw">fun</span> omega =&gt; action omega i)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L579">Source line 579</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6b1306c80b99">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.measurableSet_reward_mem_historyFiltration</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Past reward singleton events are measurable in the generated history.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_reward_mem_historyFiltration {Omega : Type u} {Action : Type v} {Reward : Type w} [mOmega : MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [MeasurableSpace Reward] [MeasurableSingletonClass Reward] (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Reward) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) {i t : Nat} (hit : i &lt; t) (r : Reward) : MeasurableSet[historyFiltration action reward haction hreward t] (Set.preimage (<span class="kw">fun</span> omega =&gt; reward omega i) (Set.singleton r))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L603">Source line 603</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0e120c0e772d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.measurable_reward_mem_historyFiltration_of_lt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Past reward coordinates are measurable with respect to the generated history.
+
+This is the reward-side companion canary for the local history filtration; it
+still does not instantiate conditional reward laws or martingale differences.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_reward_mem_historyFiltration_of_lt {Omega : Type u} {Action : Type v} {Reward : Type w} [mOmega : MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [MeasurableSpace Reward] [MeasurableSingletonClass Reward] [Countable Reward] (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Reward) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) {i t : Nat} (hit : i &lt; t) : @Measurable Omega Reward (historyFiltration action reward haction hreward t) inferInstance (<span class="kw">fun</span> omega =&gt; reward omega i)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L629">Source line 629</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7529531f5dab">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.measurable_finitePairHistoryOfTrace_mem_historyFiltration_of_lt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite pair histories up to `n` are measurable with respect to any generated
+history filtration level strictly after `n`.
+
+This is the product-valued counterpart of the coordinate measurability canaries
+above.  It is intentionally countable/discrete, matching the singleton-event
+definition of `historyMeasurableSpace`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_finitePairHistoryOfTrace_mem_historyFiltration_of_lt {Omega : Type u} {Action : Type v} {Reward : Type w} [mOmega : MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] [MeasurableSpace Reward] [MeasurableSingletonClass Reward] [Countable Reward] (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Reward) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) {n t : Nat} (hnt : n &lt; t) : @Measurable Omega ((i : Finset.Iic n) -&gt; Prod Action Reward) (historyFiltration (mOmega := mOmega) action reward haction hreward t) inferInstance (<span class="kw">fun</span> omega : Omega =&gt; finitePairHistoryOfTrace (action omega) (reward omega) n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L661">Source line 661</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-09ba9536feec">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.historyFiltration_succ_eq_comap_finitePairHistoryOfTrace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The generated history filtration after observing indices `&lt;= n` is exactly the
+comap of the finite pair-history restriction map.
+
+The forward inclusion follows from the singleton generators.  The reverse
+inclusion follows from the previous product-valued measurability wrapper.
+This equality is a local bridge between the hand-rolled history filtration and
+Mathlib conditional-distribution statements conditioned on finite prefixes.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> historyFiltration_succ_eq_comap_finitePairHistoryOfTrace {Omega : Type u} {Action : Type v} {Reward : Type w} [mOmega : MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] [MeasurableSpace Reward] [MeasurableSingletonClass Reward] [Countable Reward] (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Reward) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (n : Nat) : (historyFiltration action reward haction hreward (n + <span class="num">1</span>) : MeasurableSpace Omega) = (inferInstance : MeasurableSpace ((i : Finset.Iic n) -&gt; Prod Action Reward)).comap (<span class="kw">fun</span> omega : Omega =&gt; finitePairHistoryOfTrace (action omega) (reward omega) n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L716">Source line 716</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7da091a6a8cf">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The shifted generated-history filtration at time `n` is exactly the comap of
+the finite pair-history restriction through index `n`.
+
+This is the `historyFiltrationSucc`-indexed form used by the conditional-kernel
+source contracts.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace {Omega : Type u} {Action : Type v} {Reward : Type w} [mOmega : MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] [MeasurableSpace Reward] [MeasurableSingletonClass Reward] [Countable Reward] (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Reward) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (n : Nat) : (historyFiltrationSucc action reward haction hreward n : MeasurableSpace Omega) = (inferInstance : MeasurableSpace ((i : Finset.Iic n) -&gt; Prod Action Reward)).comap (<span class="kw">fun</span> omega : Omega =&gt; finitePairHistoryOfTrace (action omega) (reward omega) n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L819">Source line 819</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8ba37d4521b9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.History.historyFiltrationSucc_eq_of_action_eq_on_prefix</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Two shifted history filtrations agree at time `n` when their action traces
+agree pointwise through `n` and they use the same reward trace.
+
+The proof passes through the finite-pair-history comap characterization. It is
+useful when an adaptive policy has a deterministic exploration prefix.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> historyFiltrationSucc_eq_of_action_eq_on_prefix {Omega : Type u} {Action : Type v} {Reward : Type w} [mOmega : MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] [MeasurableSpace Reward] [MeasurableSingletonClass Reward] [Countable Reward] (action0 action1 : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Reward) (haction0 : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action0 omega t)) (haction1 : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action1 omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (n : Nat) (haction_eq : <span class="kw">forall</span> omega i, i &lt;= n -&gt; action0 omega i = action1 omega i) : (historyFiltrationSucc action0 reward haction0 hreward n : MeasurableSpace Omega) = (historyFiltrationSucc action1 reward haction1 hreward n : MeasurableSpace Omega)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/HistoryFiltration.lean.html#L849">Source line 849</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

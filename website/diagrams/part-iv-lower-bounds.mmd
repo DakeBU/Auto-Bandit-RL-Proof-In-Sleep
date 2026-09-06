@@ -1,0 +1,26 @@
+flowchart LR
+  C13["Chapter 13 · basic ideas<br/>required body compiled<br/>optional Notes/Exercises excluded"]
+  C14["Chapter 14 · information theory<br/>required body compiled<br/>optional Notes/Exercises excluded"]
+  C15["Chapter 15 · minimax lower bounds<br/>required body compiled<br/>optional Exercise 15.7 partial"]
+  C16["Chapter 16 · instance-dependent bounds<br/>required body compiled<br/>optional Notes/Exercises excluded"]
+  C17["Chapter 17 · high-probability bounds<br/>required body compiled with corrections<br/>Claim 17.6 non-strict; delta at most 1/32"]
+  L13["minimax semantics<br/>least-explored arm<br/>two-environment algebra"]
+  KL["relative entropy<br/>binary/event KL<br/>history change of measure"]
+  MM["testing and tuning<br/>Gaussian minimax terminal"]
+  ASY["policy consistency + d_inf<br/>exact finite-time and liminf terminals compiled"]
+  HP["Stochastic tails and corrected adversarial terminal<br/>c=1/160, C=64; strict CDF tail"]
+
+  L13 --> C13
+  C13 --> C14
+  C14 --> KL
+  KL --> C15
+  C15 --> MM
+  MM --> C16
+  C16 --> ASY
+  ASY --> C17
+  C17 --> HP
+
+  classDef compiled fill:#dff5e7,stroke:#247249,color:#123b29
+  classDef partial fill:#fff2cc,stroke:#9a6b00,color:#563c00
+  classDef planned fill:#eef2f7,stroke:#64748b,color:#334155
+  class L13,C13,C14,C15,C16,C17,KL,MM,ASY,HP compiled

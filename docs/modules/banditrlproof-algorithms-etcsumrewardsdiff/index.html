@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.ETCSumRewardsDiff · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.ETCSumRewardsDiff · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.ETCSumRewardsDiff · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · ETC</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>ETC<wbr>Sum<wbr>Rewards<wbr>Diff</h1>
+  <p class="lede">This module bridges the fixed-horizon sumRewards comparison produced by the ETC empirical-mean algebra layer to a centered pairwise finite-sum event. It stays deterministic: no probability measure, independence, sub-Gaussianity, filtration, conditional expectation, or final ETC result is introduced here.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/ETCSumRewardsDiff.lean.html"><code>BanditRLProof/Algorithms/ETCSumRewardsDiff.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/etc/index.html">3. Explore-Then-Commit</a></dd></div>
+    <div><dt>Declarations</dt><dd>6</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-algorithms-etcempiricalmean/index.html"><code>BanditRLProof.Algorithms.ETCEmpiricalMean</code></a>, <a href="../banditrlproof-mathlibwrappers/index.html"><code>BanditRLProof.MathlibWrappers</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-etccentereddiffrewardindependence/index.html"><code>BanditRLProof.Algorithms.ETCCenteredDiffRewardIndependence</code></a>, <a href="../banditrlproof-algorithms-etcpairwisecenteredsubgaussiantail/index.html"><code>BanditRLProof.Algorithms.ETCPairwiseCenteredSubGaussianTail</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-f083d8347351">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.centeredPairwiseRewardDiff</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Real-valued centered pairwise reward-difference summand for arm `a` against
+the model&#x27;s selected best arm at one ETC exploration-horizon time index.
+
+The expression remains deterministic and pointwise.  Future probability
+leaves may impose independence or sub-Gaussian contracts on this function.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> centeredPairwiseRewardDiff {Omega : Type u} {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (a : Fin K) (t : Nat) (omega : Omega) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCSumRewardsDiff.lean.html#L28">Source line 28</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6d4a15ae1758">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.centeredPairwiseGapThreshold</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Real-valued threshold corresponding to `explorationPulls` copies of the
+mean gap between the selected best arm and arm `a`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> centeredPairwiseGapThreshold {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (a : Fin K) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCSumRewardsDiff.lean.html#L44">Source line 44</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2dee71e21c67">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.selectedSubMean_sum_eq_sumRewards_sub_pullCount_mul</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The selected centered reward sum for one arm equals its selected reward total
+minus its pull count times the supplied mean.
+
+This helper is part of the `ETC-SUMREWARDS-PAIRWISE-DIFF-FINSET` bridge.  It
+uses the existing Mathlib-backed `sumRewards` and `pullCount` Finset wrappers.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selectedSubMean_sum_eq_sumRewards_sub_pullCount_mul {Action : Type} [DecidableEq Action] (action : ActionTrace Action) (reward : RewardTrace Rat) (a : Action) (n : Nat) (mu : Rat) : (Finset.range n).sum (<span class="kw">fun</span> t : Nat =&gt; <span class="kw">if</span> action t = a <span class="kw">then</span> reward t - mu <span class="kw">else</span> <span class="num">0</span>) = sumRewards action reward a n - (pullCount action a n : Rat) * mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCSumRewardsDiff.lean.html#L59">Source line 59</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fb239d0be81b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.meanSubSelected_sum_eq_pullCount_mul_sub_sumRewards</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The selected negative centered reward sum for one arm equals its pull count
+times the supplied mean minus its selected reward total.
+
+This is the best-arm companion to
+`selectedSubMean_sum_eq_sumRewards_sub_pullCount_mul`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> meanSubSelected_sum_eq_pullCount_mul_sub_sumRewards {Action : Type} [DecidableEq Action] (action : ActionTrace Action) (reward : RewardTrace Rat) (a : Action) (n : Nat) (mu : Rat) : (Finset.range n).sum (<span class="kw">fun</span> t : Nat =&gt; <span class="kw">if</span> action t = a <span class="kw">then</span> mu - reward t <span class="kw">else</span> <span class="num">0</span>) = (pullCount action a n : Rat) * mu - sumRewards action reward a n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCSumRewardsDiff.lean.html#L106">Source line 106</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-578c287a8ba2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.sumRewards_le_imp_centered_pairwise_sum_ge</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">If two arms have the same pull count by a horizon and the fixed-horizon reward
+sum of `b` is at most that of `a`, then the centered pairwise reward-difference
+finite sum is at least `m * (muB - muA)`.
+
+This is the deterministic algebra core of
+`ETC-SUMREWARDS-PAIRWISE-DIFF-FINSET`.  The equal-count assumptions are kept
+explicit so ETC can discharge them with its exploration-horizon count theorem.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sumRewards_le_imp_centered_pairwise_sum_ge {Action : Type} [DecidableEq Action] (action : ActionTrace Action) (reward : RewardTrace Rat) (a b : Action) (n m : Nat) (muA muB : Rat) (hcount_a : pullCount action a n = m) (hcount_b : pullCount action b n = m) (hraw : sumRewards action reward b n &lt;= sumRewards action reward a n) : (m : Rat) * (muB - muA) &lt;= (Finset.range n).sum (<span class="kw">fun</span> t : Nat =&gt; (<span class="kw">if</span> action t = a <span class="kw">then</span> reward t - muA <span class="kw">else</span> <span class="num">0</span>) + (<span class="kw">if</span> action t = b <span class="kw">then</span> muB - reward t <span class="kw">else</span> <span class="num">0</span>))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCSumRewardsDiff.lean.html#L156">Source line 156</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-664b07fd9261">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.empMeanAtExploration_ge_best_event_subset_centered_pairwise_sum_event</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Concrete ETC event inclusion from the empirical-mean comparison event to the
+centered pairwise reward-difference finite-sum event over the configured
+exploration horizon.
+
+This leaf instantiates the earlier abstract event-shape adapter with
+`idx := Finset.range (spec.explorationPulls * K)` and the centered
+non-best-minus-best reward-difference summands.  It still does not prove
+independence, sub-Gaussianity, filtration, or final ETC regret.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> empMeanAtExploration_ge_best_event_subset_centered_pairwise_sum_event {Omega : Type u} {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (a : Fin K) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) : Set.Subset {omega : Omega | ETC.empMeanAtExploration spec commitArm (reward omega) a &gt;= ETC.empMeanAtExploration spec commitArm (reward omega) model.bestArm} {omega : Omega | ETC.centeredPairwiseGapThreshold spec model a &lt;= (Finset.range (spec.explorationPulls * K)).sum (<span class="kw">fun</span> t : Nat =&gt; ETC.centeredPairwiseRewardDiff spec model commitArm reward a t omega)}</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCSumRewardsDiff.lean.html#L200">Source line 200</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Finite-horizon RL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>RL.<wbr>Finite<wbr>Horizon<wbr>Adaptive<wbr>Stochastic<wbr>Reward<wbr>Sampled<wbr>Empirical<wbr>Optimistic<wbr>Self<wbr>Consistent<wbr>Causal<wbr>Common<wbr>Space<wbr>L1Consistency</h1>
+  <p class="lede">This route strengthens the compiled convergence-in-probability theorem on the single heterogeneous causal trajectory measure. It does not use the independent product of complete finite-window experiments.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html"><code>BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/finite-horizon-rl/index.html">9. Finite-horizon reinforcement learning</a></dd></div>
+    <div><dt>Declarations</dt><dd>27</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-rl-finitehorizonadaptivestochasticrewardsampledempiricaloptimisticsel-334d05996e51/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceConsistency</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-rl-finitehorizonadaptivestochasticrewardsampledempiricaloptimisticsel-872db4cc4093/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceAlmostSureConsistency</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-98c45e4c45d2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.HeterogeneousAdaptiveStochasticEpisodeBatchSource.successorWeightedExpectedAverageRegret_le_two_mul_horizon</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every heterogeneous weighted selected-policy average is at most `2H`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> successorWeightedExpectedAverageRegret_le_two_mul_horizon {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat -&gt; Nat} (source : HeterogeneousAdaptiveStochasticEpisodeBatchSource mdp initialState episodes) (trajectory : HeterogeneousStochasticEpisodeBatchTrajectory mdp episodes) (rounds : Nat) (hmass : <span class="num">0</span> &lt; successorEpisodeMass episodes rounds) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) : source.successorWeightedExpectedAverageRegret trajectory rounds &lt;= <span class="num">2</span> * (mdp.horizon : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L45">Source line 45</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-15575fbafc5d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.HeterogeneousAdaptiveStochasticEpisodeBatchSource.trajectoryMeasure_cumulativeSuccessorGlobalReturnDeviation_hasSubgaussianMGF</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The heterogeneous successor deviation has one global sub-Gaussian MGF.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> trajectoryMeasure_cumulativeSuccessorGlobalReturnDeviation_hasSubgaussianMGF {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat -&gt; Nat} [StandardBorelSpace State] [StandardBorelSpace Action] [<span class="kw">forall</span> n, StandardBorelSpace (HeterogeneousStochasticEpisodeBatchPrefix mdp episodes n)] [<span class="kw">forall</span> n, Nonempty (HeterogeneousStochasticEpisodeBatchPrefix mdp episodes n)] [<span class="kw">forall</span> n, StandardBorelSpace (StochasticEpisodeBatch mdp (episodes n))] [<span class="kw">forall</span> n, Nonempty (StochasticEpisodeBatch mdp (episodes n))] [StandardBorelSpace (HeterogeneousStochasticEpisodeBatchTrajectory mdp episodes)] (source : HeterogeneousAdaptiveStochasticEpisodeBatchSource mdp initialState episodes) [source.GlobalReturnMeasurability] (rounds : Nat) (rewardBound rewardVarianceProxy : NNReal) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= (rewardBound : Real)) (law : source.rewardSource.UniformSubgaussianRewardLaw rewardVarianceProxy) : HasSubgaussianMGF (source.cumulativeSuccessorGlobalReturnDeviation rounds) (cumulativeSuccessorGlobalReturnVarianceProxy mdp episodes rounds rewardBound rewardVarianceProxy) source.trajectoryMeasure</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L94">Source line 94</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ae27cc832435">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.HeterogeneousAdaptiveStochasticEpisodeBatchSource.integrable_realizedSuccessorAverageRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-prefix heterogeneous realized successor-average regret is integrable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_realizedSuccessorAverageRegret {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat -&gt; Nat} [StandardBorelSpace State] [StandardBorelSpace Action] [<span class="kw">forall</span> n, StandardBorelSpace (HeterogeneousStochasticEpisodeBatchPrefix mdp episodes n)] [<span class="kw">forall</span> n, Nonempty (HeterogeneousStochasticEpisodeBatchPrefix mdp episodes n)] [<span class="kw">forall</span> n, StandardBorelSpace (StochasticEpisodeBatch mdp (episodes n))] [<span class="kw">forall</span> n, Nonempty (StochasticEpisodeBatch mdp (episodes n))] [StandardBorelSpace (HeterogeneousStochasticEpisodeBatchTrajectory mdp episodes)] (source : HeterogeneousAdaptiveStochasticEpisodeBatchSource mdp initialState episodes) [source.GlobalReturnMeasurability] (rounds : Nat) (hrounds : <span class="num">0</span> &lt; rounds) (hepisodes : <span class="kw">forall</span> t, <span class="num">0</span> &lt; episodes t) (rewardBound rewardVarianceProxy : NNReal) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= (rewardBound : Real)) (hrewardBoundOne : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (law : source.rewardSource.UniformSubgaussianRewardLaw rewardVarianceProxy) : Integrable (source.realizedSuccessorAverageRegret (rounds := rounds)) source.trajectoryMeasure</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L149">Source line 149</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bfd6d8749438">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.HeterogeneousAdaptiveStochasticEpisodeBatchSource.normalizedSuccessorGlobalReturnMGFFirstMomentBound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Direct first-moment envelope for the normalized heterogeneous deviation.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> normalizedSuccessorGlobalReturnMGFFirstMomentBound (mdp : MDP State Action) (episodes : Nat -&gt; Nat) (rounds : Nat) (rewardBound rewardVarianceProxy : NNReal) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L216">Source line 216</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6ab93f77bc29">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.HeterogeneousAdaptiveStochasticEpisodeBatchSource.normalizedSuccessorGlobalReturnMGFFirstMomentBound_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The normalized heterogeneous MGF first-moment envelope is nonnegative.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> normalizedSuccessorGlobalReturnMGFFirstMomentBound_nonneg (mdp : MDP State Action) (episodes : Nat -&gt; Nat) (rounds : Nat) (rewardBound rewardVarianceProxy : NNReal) : <span class="num">0</span> &lt;= normalizedSuccessorGlobalReturnMGFFirstMomentBound mdp episodes rounds rewardBound rewardVarianceProxy</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L230">Source line 230</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bb69f58d310c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.HeterogeneousAdaptiveStochasticEpisodeBatchSource.normalizedSuccessorGlobalReturnMGFFirstMomentBound_le_confidenceRadius</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A sufficiently wide normalized confidence radius dominates the MGF mean.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> normalizedSuccessorGlobalReturnMGFFirstMomentBound_le_confidenceRadius (mdp : MDP State Action) (episodes : Nat -&gt; Nat) (rounds : Nat) (rewardBound rewardVarianceProxy : NNReal) (delta : Real) (hmass : <span class="num">0</span> &lt; successorEpisodeMass episodes rounds) (hlog : (<span class="num">1</span> / <span class="num">2</span> : Real) &lt;= Real.log (<span class="num">2</span> / delta)) : normalizedSuccessorGlobalReturnMGFFirstMomentBound mdp episodes rounds rewardBound rewardVarianceProxy &lt;= <span class="num">2</span> * Real.exp (<span class="num">1</span> / <span class="num">2</span> : Real) * normalizedSuccessorGlobalReturnConfidenceRadius mdp episodes rounds rewardBound rewardVarianceProxy delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L244">Source line 244</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7da635e9d085">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalTailModelFailureBudget_ne_top</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every post-burn-in model budget is finite.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledCausalTailModelFailureBudget_ne_top (mdp : MDP State Action) (burnin : Nat) : selfConsistentScheduledCausalTailModelFailureBudget mdp burnin ≠ ⊤</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L298">Source line 298</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-22613f06506a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalTailModelFailureBudget_toReal_tendsto_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The real-valued post-burn-in model tail also tends to zero.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledCausalTailModelFailureBudget_toReal_tendsto_zero (mdp : MDP State Action) : Tendsto (<span class="kw">fun</span> burnin =&gt; (selfConsistentScheduledCausalTailModelFailureBudget mdp burnin).toReal) atTop (nhds <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L317">Source line 317</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2ae5e7630e2f">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalNormalizedReturnMGFFirstMomentBound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Scheduled direct-MGF contribution under actual successor mass.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selfConsistentScheduledCausalNormalizedReturnMGFFirstMomentBound (mdp : MDP State Action) (varianceProxy : NNReal) (baseVisitFloor : Real) (rounds : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L328">Source line 328</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-52a146e779ab">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalNormalizedReturnMGFFirstMomentBound_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The scheduled direct-MGF contribution is nonnegative.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledCausalNormalizedReturnMGFFirstMomentBound_nonneg (mdp : MDP State Action) (varianceProxy : NNReal) (baseVisitFloor : Real) (rounds : Nat) : <span class="num">0</span> &lt;= selfConsistentScheduledCausalNormalizedReturnMGFFirstMomentBound mdp varianceProxy baseVisitFloor rounds</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L341">Source line 341</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-55192174408f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalNormalizedReturnMGFFirstMomentBound_tendsto_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The scheduled direct-MGF first-moment contribution tends to zero.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledCausalNormalizedReturnMGFFirstMomentBound_tendsto_zero (mdp : MDP State Action) (varianceProxy : NNReal) (baseVisitFloor : Real) : Tendsto (selfConsistentScheduledCausalNormalizedReturnMGFFirstMomentBound mdp varianceProxy baseVisitFloor) atTop (nhds <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L353">Source line 353</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-edb1a5c3a6ef">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalBurninExpectedRegretRateEnvelope_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The fixed-burn-in expected-regret envelope is nonnegative.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledCausalBurninExpectedRegretRateEnvelope_nonneg (mdp : MDP State Action) (varianceProxy : NNReal) (baseVisitFloor : Real) (burnin rounds : Nat) : <span class="num">0</span> &lt;= selfConsistentScheduledCausalBurninExpectedRegretRateEnvelope mdp varianceProxy baseVisitFloor burnin rounds</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L421">Source line 421</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-acda0e96ff8a">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledNaturalCausalExpectedAbsoluteRealizedRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Expected absolute regret of one natural causal prefix.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selfConsistentScheduledNaturalCausalExpectedAbsoluteRealizedRegret (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (varianceProxy : NNReal) (baseVisitFloor : Real) (rounds : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L452">Source line 452</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5eff567d1299">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalBurninExpectedAbsoluteRegretL1Envelope</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Two-parameter direct `L1` envelope after a fixed model burn-in.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selfConsistentScheduledCausalBurninExpectedAbsoluteRegretL1Envelope (mdp : MDP State Action) (varianceProxy : NNReal) (baseVisitFloor : Real) (burnin rounds : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L467">Source line 467</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5aca727494ad">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalBurninExpectedAbsoluteRegretL1Envelope_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The direct natural-causal `L1` envelope is nonnegative.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledCausalBurninExpectedAbsoluteRegretL1Envelope_nonneg (mdp : MDP State Action) (varianceProxy : NNReal) (baseVisitFloor : Real) (burnin rounds : Nat) : <span class="num">0</span> &lt;= selfConsistentScheduledCausalBurninExpectedAbsoluteRegretL1Envelope mdp varianceProxy baseVisitFloor burnin rounds</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L481">Source line 481</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3e9f7aaa7363">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.integrable_selfConsistentScheduledNaturalCausalRealizedRegretProcess</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every coordinate of the natural causal realized-regret process is integrable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_selfConsistentScheduledNaturalCausalRealizedRegretProcess (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (baseVisitFloor : Real) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (rounds : Nat) : Integrable (selfConsistentScheduledNaturalCausalRealizedRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor rounds) (selfConsistentScheduledCausalSource mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L496">Source line 496</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-995f3958e54a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledNaturalCausalExpectedAbsoluteRealizedRegret_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Expected absolute natural-causal regret is nonnegative.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledNaturalCausalExpectedAbsoluteRealizedRegret_nonneg (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (varianceProxy : NNReal) (baseVisitFloor : Real) (rounds : Nat) : <span class="num">0</span> &lt;= selfConsistentScheduledNaturalCausalExpectedAbsoluteRealizedRegret mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor rounds</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L547">Source line 547</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d2121259f230">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledNaturalCausalExpectedAbsoluteRealizedRegret_le_burninL1Envelope</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The expected absolute natural-causal regret is controlled by the good-event
+planning envelope, the bounded model-tail overflow, and the directly integrated
+global-return MGF contribution.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledNaturalCausalExpectedAbsoluteRealizedRegret_le_burninL1Envelope (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : <span class="num">0</span> &lt; varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support <span class="num">1</span> baseVisitFloor) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) (burnin rounds : Nat) (hburnin : burnin &lt;= rounds) (hrounds : <span class="num">0</span> &lt; rounds) : selfConsistentScheduledNaturalCausalExpectedAbsoluteRealizedRegret mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor rounds &lt;= selfConsistentScheduledCausalBurninExpectedAbsoluteRegretL1Envelope mdp varianceProxy baseVisitFloor burnin rounds</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L566">Source line 566</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-aa45b578b5cc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledNaturalCausalExpectedAbsoluteRealizedRegret_tendsto_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Expected absolute regret on the natural causal prefixes tends to zero.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledNaturalCausalExpectedAbsoluteRealizedRegret_tendsto_zero (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : <span class="num">0</span> &lt; varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support <span class="num">1</span> baseVisitFloor) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) : Tendsto (selfConsistentScheduledNaturalCausalExpectedAbsoluteRealizedRegret mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor) atTop (nhds <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L755">Source line 755</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d8f50c10f1b1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.memLp_one_selfConsistentScheduledNaturalCausalRealizedRegretProcess</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every coordinate of the natural causal process belongs to `L1`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> memLp_one_selfConsistentScheduledNaturalCausalRealizedRegretProcess (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (baseVisitFloor : Real) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (rounds : Nat) : MemLp (selfConsistentScheduledNaturalCausalRealizedRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor rounds) <span class="num">1</span> (selfConsistentScheduledCausalSource mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L860">Source line 860</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-953d52e484bf">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.eLpNorm_one_selfConsistentScheduledNaturalCausalRealizedRegretProcess_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">At exponent one, `eLpNorm` is the lifted expected absolute regret.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> eLpNorm_one_selfConsistentScheduledNaturalCausalRealizedRegretProcess_eq (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (baseVisitFloor : Real) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (rounds : Nat) : eLpNorm (selfConsistentScheduledNaturalCausalRealizedRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor rounds) <span class="num">1</span> (selfConsistentScheduledCausalSource mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure = ENNReal.ofReal (selfConsistentScheduledNaturalCausalExpectedAbsoluteRealizedRegret mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor rounds)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L884">Source line 884</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2f8c986c7b87">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.eLpNorm_one_selfConsistentScheduledNaturalCausalRealizedRegretProcess_tendsto_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The exponent-one extended norm on the causal prefixes tends to zero.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> eLpNorm_one_selfConsistentScheduledNaturalCausalRealizedRegretProcess_tendsto_zero (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : <span class="num">0</span> &lt; varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support <span class="num">1</span> baseVisitFloor) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) : Tendsto (<span class="kw">fun</span> rounds =&gt; eLpNorm (selfConsistentScheduledNaturalCausalRealizedRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor rounds) <span class="num">1</span> (selfConsistentScheduledCausalSource mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure) atTop (nhds <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L914">Source line 914</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3839d17f9f62">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.eLpNorm_one_selfConsistentScheduledNaturalCausalRealizedRegretProcess_sub_zero_tendsto_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical natural-causal `L1` norm-of-the-difference convergence.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> eLpNorm_one_selfConsistentScheduledNaturalCausalRealizedRegretProcess_sub_zero_tendsto_zero (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : <span class="num">0</span> &lt; varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support <span class="num">1</span> baseVisitFloor) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) : Tendsto (<span class="kw">fun</span> rounds =&gt; eLpNorm (selfConsistentScheduledNaturalCausalRealizedRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor rounds - (<span class="kw">fun</span> _ =&gt; <span class="num">0</span>)) <span class="num">1</span> (selfConsistentScheduledCausalSource mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure) atTop (nhds <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L949">Source line 949</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cb43bb8f94bb">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledNaturalCausalRealizedRegretLp</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The natural causal realized-regret process as an `Lp Real 1` value.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selfConsistentScheduledNaturalCausalRealizedRegretLp (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (baseVisitFloor : Real) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (rounds : Nat) : Lp Real <span class="num">1</span> (selfConsistentScheduledCausalSource mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L984">Source line 984</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bf7fa743b677">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledNaturalCausalRealizedRegretLp_coeFn_ae_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The named natural-causal `Lp` coordinate represents the process a.e.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledNaturalCausalRealizedRegretLp_coeFn_ae_eq (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (baseVisitFloor : Real) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (rounds : Nat) : (selfConsistentScheduledNaturalCausalRealizedRegretLp mdp initialState rewardSource varianceProxy law initialTable defaultState baseVisitFloor hrewardBound rounds : HeterogeneousStochasticEpisodeBatchTrajectory mdp (<span class="kw">fun</span> t =&gt; AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes mdp varianceProxy baseVisitFloor t) -&gt; Real) =ᵐ[ (selfConsistentScheduledCausalSource mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure] selfConsistentScheduledNaturalCausalRealizedRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor rounds</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L1005">Source line 1005</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-11c3852afefb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledNaturalCausalRealizedRegretLp_tendsto_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The named natural-causal `Lp Real 1` process converges to zero.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledNaturalCausalRealizedRegretLp_tendsto_zero (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : <span class="num">0</span> &lt; varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support <span class="num">1</span> baseVisitFloor) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) : Tendsto (selfConsistentScheduledNaturalCausalRealizedRegretLp mdp initialState rewardSource varianceProxy law initialTable defaultState baseVisitFloor hrewardBound) atTop (nhds <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L1034">Source line 1034</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d32cf0526653">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_naturalRealizedRegret_memLp_eLpNorm_L1_tendsto_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Terminal natural-causal `L1` theorem on one heterogeneous dependent trajectory
+measure: exact exponent-one norms, `Lp` convergence, and convergence in measure.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledCausalSource_naturalRealizedRegret_memLp_eLpNorm_L1_tendsto_zero (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : <span class="num">0</span> &lt; varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support <span class="num">1</span> baseVisitFloor) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) : <span class="kw">let</span> source := selfConsistentScheduledCausalSource mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor (<span class="kw">forall</span> rounds, MemLp (selfConsistentScheduledNaturalCausalRealizedRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor rounds) <span class="num">1</span> source.trajectoryMeasure) /\ (<span class="kw">forall</span> rounds, eLpNorm (selfConsistentScheduledNaturalCausalRealizedRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor rounds) <span class="num">1</span> source.trajectoryMeasure = ENNReal.ofReal (selfConsistentScheduledNaturalCausalExpectedAbsoluteRealizedRegret mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor rounds)) /\ Tendsto (<span class="kw">fun</span> rounds =&gt; eLpNorm (selfConsistentScheduledNaturalCausalRealizedRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor rounds - (<span class="kw">fun</span> _ =&gt; <span class="num">0</span>)) <span class="num">1</span> source.trajectoryMeasure) atTop (nhds <span class="num">0</span>) /\ Tendsto (selfConsistentScheduledNaturalCausalRealizedRegretLp mdp initialState rewardSource varianceProxy law initialTable defaultState baseVisitFloor hrewardBound) atTop (nhds <span class="num">0</span>) /\ TendstoInMeasure source.trajectoryMeasure (selfConsistentScheduledNaturalCausalRealizedRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor) atTop (<span class="kw">fun</span> _ =&gt; <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency.lean.html#L1084">Source line 1084</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

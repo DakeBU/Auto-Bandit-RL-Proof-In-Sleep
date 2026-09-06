@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Exp3RealizedPredictableVariance · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Exp3RealizedPredictableVariance · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Exp3RealizedPredictableVariance · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · EXP3</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Exp3Realized<wbr>Predictable<wbr>Variance</h1>
+  <p class="lede">This module replaces the fixed interval proxy for the selected-loss deviation by its exact finite-action centered second moment. It constructs the generated predictable variance process and the zero-budget conditional MGF of the variance-compensated realized deviation.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html"><code>BanditRLProof/Exp3RealizedPredictableVariance.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/exp3/index.html">7. EXP3 and adversarial concentration</a></dd></div>
+    <div><dt>Declarations</dt><dd>23</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-exp3mixedsquarepredictablevariance/index.html"><code>BanditRLProof.Exp3MixedSquarePredictableVariance</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof-exp3realizedpredictablevariancetail/index.html"><code>BanditRLProof.Exp3RealizedPredictableVarianceTail</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-5acb34830474">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.selectedLossCenteredSecondMoment</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact centered second moment of a bounded loss under a finite action law.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selectedLossCenteredSecondMoment {History : Type u} {Action : Type v} [DecidableEq Action] (arms : Finset Action) (prob loss : History → Action → Real) (history : History) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L19">Source line 19</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-db28c6b79baa">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.measurable_selectedLossCenteredSecondMoment</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_selectedLossCenteredSecondMoment {History : Type u} {Action : Type v} [MeasurableSpace History] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (prob loss : History → Action → Real) (source : MeasurableFiniteActionDistribution arms prob) (epsilon : Real) (regularity : BoundedMeasurableLossWithProbabilityFloor arms prob loss epsilon) : Measurable (selectedLossCenteredSecondMoment arms prob loss)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L27">Source line 27</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4260e2d5942a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.selectedLossCenteredSecondMoment_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selectedLossCenteredSecondMoment_nonneg {History : Type u} {Action : Type v} [DecidableEq Action] (arms : Finset Action) (prob loss : History → Action → Real) (history : History) (hdist : FiniteActionDistribution arms (prob history)) : <span class="num">0</span> ≤ selectedLossCenteredSecondMoment arms prob loss history</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L49">Source line 49</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-df3220339784">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.selectedLossCenteredSecondMoment_le_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A probability-weighted centered second moment of `[0,1]` losses is at
+most one.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selectedLossCenteredSecondMoment_le_one {History : Type u} {Action : Type v} [DecidableEq Action] (arms : Finset Action) (prob loss : History → Action → Real) (history : History) (hdist : FiniteActionDistribution arms (prob history)) (hloss : ∀ action ∈ arms, loss history action ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) : selectedLossCenteredSecondMoment arms prob loss history ≤ <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L60">Source line 60</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-28211ca2a42c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.selectedLossCenteredSecondMoment_le_lossMass</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">For `[0,1]` losses, the exact selected-loss variance is at most the
+unweighted armwise loss mass.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selectedLossCenteredSecondMoment_le_lossMass {History : Type u} {Action : Type v} [DecidableEq Action] (arms : Finset Action) (prob loss : History → Action → Real) (history : History) (hdist : FiniteActionDistribution arms (prob history)) (hloss : ∀ action ∈ arms, loss history action ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) : selectedLossCenteredSecondMoment arms prob loss history ≤ arms.sum <span class="kw">fun</span> action =&gt; loss history action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L106">Source line 106</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3ace2ce65af4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.finiteActionSelectedLossDeviation_hasMGFUpperBoundAt_variance</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Fixed-tilt MGF budget retaining the exact selected-loss variance.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteActionSelectedLossDeviation_hasMGFUpperBoundAt_variance {History : Type u} {Action : Type v} [MeasurableSpace History] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (prob loss : History → Action → Real) (history : History) (hdist : FiniteActionDistribution arms (prob history)) (epsilon : Real) (regularity : BoundedMeasurableLossWithProbabilityFloor arms prob loss epsilon) (tilt : Real) (htilt_nonneg : <span class="num">0</span> ≤ tilt) (htilt_le_one : tilt ≤ <span class="num">1</span>) : <span class="kw">let</span> mean := arms.sum <span class="kw">fun</span> action =&gt; prob history action * loss history action Concentration.HasMGFUpperBoundAt (<span class="kw">fun</span> selected =&gt; loss history selected - mean) tilt (tilt ^ <span class="num">2</span> * selectedLossCenteredSecondMoment arms prob loss history) (finiteActionMeasure arms (prob history))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L174">Source line 174</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-02d9c94a37ca">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.finiteActionSelectedLossDeviation_compensated_hasMGFUpperBoundAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteActionSelectedLossDeviation_compensated_hasMGFUpperBoundAt {History : Type u} {Action : Type v} [MeasurableSpace History] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (prob loss : History → Action → Real) (history : History) (hdist : FiniteActionDistribution arms (prob history)) (epsilon : Real) (regularity : BoundedMeasurableLossWithProbabilityFloor arms prob loss epsilon) (tilt : Real) (htilt_nonneg : <span class="num">0</span> ≤ tilt) (htilt_le_one : tilt ≤ <span class="num">1</span>) : <span class="kw">let</span> mean := arms.sum <span class="kw">fun</span> action =&gt; prob history action * loss history action Concentration.HasMGFUpperBoundAt (<span class="kw">fun</span> selected =&gt; tilt * (loss history selected - mean) - tilt ^ <span class="num">2</span> * selectedLossCenteredSecondMoment arms prob loss history) <span class="num">1</span> <span class="num">0</span> (finiteActionMeasure arms (prob history))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L273">Source line 273</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d77dc28f089c">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.sampledTrajectoryPredictableRealizedVarianceAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact selected-loss predictable variance at an actual generated time.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledTrajectoryPredictableRealizedVarianceAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (loss : PredictableLossVector Env Action) (t : Nat) : Env × ((k : Nat) → Action × Real) → Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L298">Source line 298</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-78fd72ce69ad">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.measurable_sampledTrajectoryPredictableRealizedVarianceAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_sampledTrajectoryPredictableRealizedVarianceAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma ≤ <span class="num">1</span>) (loss : PredictableLossVector Env Action) (t : Nat) : Measurable (sampledTrajectoryPredictableRealizedVarianceAt arms eta gamma loss t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L308">Source line 308</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-22cf468fd488">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledTrajectoryPredictableRealizedVarianceAt_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledTrajectoryPredictableRealizedVarianceAt_nonneg {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_nonneg : <span class="num">0</span> ≤ gamma) (hgamma_le_one : gamma ≤ <span class="num">1</span>) (loss : PredictableLossVector Env Action) (t : Nat) (sample : Env × ((k : Nat) → Action × Real)) : <span class="num">0</span> ≤ sampledTrajectoryPredictableRealizedVarianceAt arms eta gamma loss t sample</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L328">Source line 328</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6685df0c4c99">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledTrajectoryPredictableRealizedVarianceAt_le_lossMassAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledTrajectoryPredictableRealizedVarianceAt_le_lossMassAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_nonneg : <span class="num">0</span> ≤ gamma) (hgamma_le_one : gamma ≤ <span class="num">1</span>) (loss : PredictableLossVector Env Action) (t : Nat) (sample : Env × ((k : Nat) → Action × Real)) : sampledTrajectoryPredictableRealizedVarianceAt arms eta gamma loss t sample ≤ arms.sum <span class="kw">fun</span> action =&gt; predictableLossAt loss t sample action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L346">Source line 346</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-687f3fdb8391">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledTrajectoryPredictableRealizedVarianceAt_le_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every generated selected-loss predictable variance is at most one.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledTrajectoryPredictableRealizedVarianceAt_le_one {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_nonneg : <span class="num">0</span> ≤ gamma) (hgamma_le_one : gamma ≤ <span class="num">1</span>) (loss : PredictableLossVector Env Action) (t : Nat) (sample : Env × ((k : Nat) → Action × Real)) : sampledTrajectoryPredictableRealizedVarianceAt arms eta gamma loss t sample ≤ <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L375">Source line 375</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-74ab5abce2d1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.selectedLossDeviation_compensated_hasCondMGFUpperBoundAt_of_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">An identified finite conditional action law supplies a zero-budget MGF
+for the exact selected-loss variance-compensated increment.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selectedLossDeviation_compensated_hasCondMGFUpperBoundAt_of_condDistrib {Omega : Type u} {History : Type v} {Action : Type*} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [Nonempty Omega] [mHistory : MeasurableSpace History] [StandardBorelSpace History] [mAction : MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (mu : Measure Omega) [IsFiniteMeasure mu] (history : Omega → History) (hhistory : Measurable history) (action : Omega → Action) (haction : Measurable action) (arms : Finset Action) (prob loss : History → Action → Real) (source : MeasurableFiniteActionDistribution arms prob) (epsilon : Real) (regularity : BoundedMeasurableLossWithProbabilityFloor arms prob loss epsilon) (hloss : Measurable (<span class="kw">fun</span> input : History × Action =&gt; loss input.<span class="num">1</span> input.<span class="num">2</span>)) (hloss_mem : ∀ history action, loss history action ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) (tilt : Real) (htilt_nonneg : <span class="num">0</span> ≤ tilt) (htilt_le_one : tilt ≤ <span class="num">1</span>) (hcond : condDistrib action history mu =ᵐ[mu.map history] finiteActionKernel arms prob source) : <span class="kw">let</span> mean := <span class="kw">fun</span> h =&gt; arms.sum <span class="kw">fun</span> candidate =&gt; prob h candidate * loss h candidate Concentration.HasCondMGFUpperBoundAt (mHistory.comap history) hhistory.comap_le (<span class="kw">fun</span> omega =&gt; tilt * (loss (history omega) (action omega) - mean (history omega)) - tilt ^ <span class="num">2</span> * selectedLossCenteredSecondMoment arms prob loss (history omega)) <span class="num">1</span> <span class="num">0</span> mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L404">Source line 404</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6ced29a7c59e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledPredictableSelectedLossCompensated_zero_hasCondMGFUpperBoundAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Initial generated selected-loss increment with its exact predictable
+variance compensation.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledPredictableSelectedLossCompensated_zero_hasCondMGFUpperBoundAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma ≤ <span class="num">1</span>) (loss : PredictableLossVector Env Action) (tilt : Real) (htilt_nonneg : <span class="num">0</span> ≤ tilt) (htilt_le_one : tilt ≤ <span class="num">1</span>) : <span class="kw">let</span> mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms eta gamma hgamma_pos.le hgamma_le_one loss.environment Concentration.HasCondMGFUpperBoundAt ((inferInstance : MeasurableSpace Env).comap (<span class="kw">fun</span> sample : Env × ((k : Nat) → Action × Real) =&gt; sample.<span class="num">1</span>)) measurable_fst.comap_le (<span class="kw">fun</span> sample =&gt; tilt * sampledTrajectorySelectedDeviationAt arms eta gamma loss <span class="num">0</span> sample - tilt ^ <span class="num">2</span> * sampledTrajectoryPredictableRealizedVarianceAt arms eta gamma loss <span class="num">0</span> sample) <span class="num">1</span> <span class="num">0</span> mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L691">Source line 691</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9b716efdafc6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledPredictableSelectedLossCompensated_succ_hasCondMGFUpperBoundAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Successor generated selected-loss increment with its exact predictable
+variance compensation.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledPredictableSelectedLossCompensated_succ_hasCondMGFUpperBoundAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma ≤ <span class="num">1</span>) (loss : PredictableLossVector Env Action) (n : Nat) (tilt : Real) (htilt_nonneg : <span class="num">0</span> ≤ tilt) (htilt_le_one : tilt ≤ <span class="num">1</span>) : <span class="kw">let</span> mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms eta gamma hgamma_pos.le hgamma_le_one loss.environment <span class="kw">let</span> history := <span class="kw">fun</span> sample : Env × ((k : Nat) → Action × Real) =&gt; (sample.<span class="num">1</span>, Preorder.frestrictLe n sample.<span class="num">2</span>) Concentration.HasCondMGFUpperBoundAt ((inferInstance : MeasurableSpace (Env × History.FinitePairHistory Action Real n)).comap history) (measurable_fst.prodMk ((Preorder.measurable_frestrictLe n).comp measurable_snd)).comap_le (<span class="kw">fun</span> sample =&gt; tilt * sampledTrajectorySelectedDeviationAt arms eta gamma loss (n + <span class="num">1</span>) sample - tilt ^ <span class="num">2</span> * sampledTrajectoryPredictableRealizedVarianceAt arms eta gamma loss (n + <span class="num">1</span>) sample) <span class="num">1</span> <span class="num">0</span> mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L753">Source line 753</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e317c3b072dd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledPredictableRealizedCompensated_zero_hasCondMGFUpperBoundAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The deterministic-feedback realization transports the initial selected
+loss compensation to the observed realized-loss increment.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledPredictableRealizedCompensated_zero_hasCondMGFUpperBoundAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma ≤ <span class="num">1</span>) (loss : PredictableLossVector Env Action) (tilt : Real) (htilt_nonneg : <span class="num">0</span> ≤ tilt) (htilt_le_one : tilt ≤ <span class="num">1</span>) : <span class="kw">let</span> mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms eta gamma hgamma_pos.le hgamma_le_one loss.environment Concentration.HasCondMGFUpperBoundAt ((inferInstance : MeasurableSpace Env).comap (<span class="kw">fun</span> sample : Env × ((k : Nat) → Action × Real) =&gt; sample.<span class="num">1</span>)) measurable_fst.comap_le (<span class="kw">fun</span> sample =&gt; tilt * sampledTrajectoryRealizedDeviationAt arms eta gamma loss <span class="num">0</span> sample - tilt ^ <span class="num">2</span> * sampledTrajectoryPredictableRealizedVarianceAt arms eta gamma loss <span class="num">0</span> sample) <span class="num">1</span> <span class="num">0</span> mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L822">Source line 822</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8309d41a4c3f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledPredictableRealizedCompensated_succ_hasCondMGFUpperBoundAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The deterministic-feedback realization transports each successor selected
+loss compensation to the observed realized-loss increment.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledPredictableRealizedCompensated_succ_hasCondMGFUpperBoundAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma ≤ <span class="num">1</span>) (loss : PredictableLossVector Env Action) (n : Nat) (tilt : Real) (htilt_nonneg : <span class="num">0</span> ≤ tilt) (htilt_le_one : tilt ≤ <span class="num">1</span>) : <span class="kw">let</span> mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms eta gamma hgamma_pos.le hgamma_le_one loss.environment <span class="kw">let</span> history := <span class="kw">fun</span> sample : Env × ((k : Nat) → Action × Real) =&gt; (sample.<span class="num">1</span>, Preorder.frestrictLe n sample.<span class="num">2</span>) Concentration.HasCondMGFUpperBoundAt ((inferInstance : MeasurableSpace (Env × History.FinitePairHistory Action Real n)).comap history) (measurable_fst.prodMk ((Preorder.measurable_frestrictLe n).comp measurable_snd)).comap_le (<span class="kw">fun</span> sample =&gt; tilt * sampledTrajectoryRealizedDeviationAt arms eta gamma loss (n + <span class="num">1</span>) sample - tilt ^ <span class="num">2</span> * sampledTrajectoryPredictableRealizedVarianceAt arms eta gamma loss (n + <span class="num">1</span>) sample) <span class="num">1</span> <span class="num">0</span> mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L903">Source line 903</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f55818acd811">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.sampledPredictableRealizedVarianceProcess</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Shift actual-time selected-loss variances by one so that the process is
+predictable for the generated deviation filtration.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledPredictableRealizedVarianceProcess {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (loss : PredictableLossVector Env Action) : Nat → Env × ((k : Nat) → Action × Real) → Real | <span class="num">0</span>, _sample =&gt; <span class="num">0</span> | i + <span class="num">1</span>, sample =&gt; sampledTrajectoryPredictableRealizedVarianceAt arms eta gamma loss i sample <span class="kw">theorem</span> measurable_sampledTrajectoryPredictableRealizedVarianceAt_filtration {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma ≤ <span class="num">1</span>) (loss : PredictableLossVector Env Action) (t : Nat) : Measurable[sampledPredictableDeviationFiltration Env Action t] (sampledTrajectoryPredictableRealizedVarianceAt arms eta gamma loss t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L990">Source line 990</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2840b335ea13">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.measurable_sampledTrajectoryPredictableRealizedVarianceAt_filtration</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_sampledTrajectoryPredictableRealizedVarianceAt_filtration {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma ≤ <span class="num">1</span>) (loss : PredictableLossVector Env Action) (t : Nat) : Measurable[sampledPredictableDeviationFiltration Env Action t] (sampledTrajectoryPredictableRealizedVarianceAt arms eta gamma loss t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L1001">Source line 1001</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-77db4b676e5c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledPredictableRealizedVarianceProcess_isPredictable</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledPredictableRealizedVarianceProcess_isPredictable {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma ≤ <span class="num">1</span>) (loss : PredictableLossVector Env Action) : IsPredictable (sampledPredictableDeviationFiltration Env Action) (sampledPredictableRealizedVarianceProcess arms eta gamma loss)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L1062">Source line 1062</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-36e4701d762b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledPredictableRealizedVarianceProcess_sum_range_succ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledPredictableRealizedVarianceProcess_sum_range_succ {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (loss : PredictableLossVector Env Action) (horizon : Nat) (sample : Env × ((k : Nat) → Action × Real)) : (Finset.range (horizon + <span class="num">1</span>)).sum (<span class="kw">fun</span> i =&gt; sampledPredictableRealizedVarianceProcess arms eta gamma loss i sample) = (Finset.range horizon).sum (<span class="kw">fun</span> i =&gt; sampledTrajectoryPredictableRealizedVarianceAt arms eta gamma loss i sample)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L1082">Source line 1082</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-34c87828e5c6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledPredictableRealizedVariance_sum_le_lossMass</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledPredictableRealizedVariance_sum_le_lossMass {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_nonneg : <span class="num">0</span> ≤ gamma) (hgamma_le_one : gamma ≤ <span class="num">1</span>) (loss : PredictableLossVector Env Action) (horizon : Nat) (sample : Env × ((k : Nat) → Action × Real)) : (Finset.range horizon).sum (<span class="kw">fun</span> i =&gt; sampledTrajectoryPredictableRealizedVarianceAt arms eta gamma loss i sample) ≤ (Finset.range horizon).sum (<span class="kw">fun</span> i =&gt; arms.sum <span class="kw">fun</span> action =&gt; predictableLossAt loss i sample action)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L1102">Source line 1102</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a36b8a77ce40">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledPredictableRealizedVariance_sum_le_horizon</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The first `horizon` generated selected-loss predictable variances have
+deterministic total budget `horizon`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledPredictableRealizedVariance_sum_le_horizon {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_nonneg : <span class="num">0</span> ≤ gamma) (hgamma_le_one : gamma ≤ <span class="num">1</span>) (loss : PredictableLossVector Env Action) (horizon : Nat) (sample : Env × ((k : Nat) → Action × Real)) : (Finset.range horizon).sum (<span class="kw">fun</span> i =&gt; sampledTrajectoryPredictableRealizedVarianceAt arms eta gamma loss i sample) ≤ (horizon : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3RealizedPredictableVariance.lean.html#L1123">Source line 1123</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="Distributional and high-probability lower bounds · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Distributional and high-probability lower bounds · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>Distributional and high-probability lower bounds · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group active" data-nav-group="research" data-nav-group-active="true" open><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">BanditRLwiki</a><a href="../../frontier/index.html">Frontier leaves</a><a href="../../papers/index.html">Paper index</a><a href="../../progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero wiki-hero" id="setting"><p class="eyebrow">BanditRLwiki setting</p><h1>Distributional and high-probability lower bounds</h1><p class="lede">Tail lower bounds, expected-regret tradeoffs, and source-faithful lower-bound proof spines.</p><p><a href="../../index.html">← All settings</a></p></section>
+<section id="signature"><h2>Comparison signature</h2><ul class="wiki-signature-list"><li><strong>Problem class.</strong> Finite stochastic or adversarial bandits</li><li><strong>Feedback.</strong> One common randomized nonanticipating policy</li><li><strong>Objective.</strong> Tail probability of random pseudo-regret or random regret</li><li><strong>Parameters.</strong> A arms, T rounds, confidence delta, expected-regret scale B</li></ul><div class="callout"><strong>Matching rule.</strong> A rate is called matched only when the upper and lower theorem contracts agree on the fields above; every remaining mismatch is named in the case.</div></section>
+<section id="setting-cases"><h2>1 cases</h2><div class="wiki-case-list">
+<details class="wiki-case-card" id="distributional-high-probability-regret" data-wiki-case
+  data-family="distributional-lower-bounds"
+  data-literature="minimax-matched"
+  data-lean="partial"
+  data-frontier="true"
+  data-search="distributional-high-probability-regret distributional high-probability regret under an expected-regret constraint a 2026 upper theorem matches the chapter 17 logarithmic confidence tradeoff in order. theorem 17.1, corollaries 17.2–17.3, and the explicitly corrected adversarial terminal pass the full local repository gate. eqo+ remains a separate unformalized upper route. distributional and high-probability lower bounds high probability lower bound distributional regret eqo+ chapter 17 tail tradeoff the upper and lower tradeoff match in confidence and square-root order, with constants, exact reward class, and the lower theorem&#x27;s expected-regret premise remaining visible. banditrllib compiles the stochastic chapter 17 endpoints, claims 17.5–17.7, eq. (17.8), same-policy shared-noise coupling, and deterministic matrix extraction. approved corrections: claim 17.6 uses t_i ≤ n/2; theorem 17.4 uses 0 &lt; δ ≤ 1/32, c=1/160, c=64 and a strict cdf tail. the full local repository gate passes; eqo+ is not formalized." open>
+  <summary>
+    <span class="wiki-case-id">distributional-high-probability-regret</span>
+    <span class="wiki-case-summary-copy"><strong>Distributional high-probability regret under an expected-regret constraint</strong><span>A 2026 upper theorem matches the Chapter 17 logarithmic confidence tradeoff in order. Theorem 17.1, Corollaries 17.2–17.3, and the explicitly corrected adversarial terminal pass the full local repository gate. EQO+ remains a separate unformalized upper route.</span></span>
+    <span class="wiki-case-statuses"><span class="wiki-badge literature minimax-matched" data-wiki-literature-status="minimax-matched">Minimax matched</span><span class="wiki-badge lean partial" data-wiki-lean-status="partial">Partial local route</span></span>
+  </summary>
+  <div class="wiki-case-body">
+    <div class="wiki-case-actions"><a href="../../cases/distributional-high-probability-regret/index.html">Open stable case page →</a><span><span class="wiki-badge source exact-source-theorem" data-wiki-source-status="exact-source-theorem">Exact source theorem</span></span></div>
+    <div class="wiki-tags"><span>high probability lower bound</span><span>distributional regret</span><span>EQO+</span><span>Chapter 17</span><span>tail tradeoff</span></div>
+    <dl class="wiki-signature"><div><dt>Reward model</dt><dd>Finite stochastic sub-Gaussian or unit-Gaussian arms</dd></div><div><dt>Policy premise</dt><dd>Uniform expected regret of order B sqrt((A-1) T) for the lower theorem</dd></div><div><dt>Regret</dt><dd>Tail of random pseudo-regret</dd></div><div><dt>Target scale</dt><dd>sqrt(A T) log(1/delta), capped by T</dd></div></dl>
+    <section class="wiki-comparison">
+      <div><p class="panel-kicker">Comparison judgment</p><h3>Minimax matched</h3><p>This literature frontier is closed by the 2026 EQO+ result. Chapter 17&#x27;s stochastic endpoints compile, and corrected Theorem 17.4 passes focused compilation on 0 &lt; δ ≤ 1/32 with c=1/160, C=64. Full local gates pass; this does not formalize EQO+.</p><p><strong>Known gap.</strong> The upper and lower tradeoff match in confidence and square-root order, with constants, exact reward class, and the lower theorem&#x27;s expected-regret premise remaining visible.</p></div>
+      <div><p class="panel-kicker">Local Lean boundary</p><h3>Partial local route</h3><p>BanditRLlib compiles the stochastic Chapter 17 endpoints, Claims 17.5–17.7, Eq. (17.8), same-policy shared-noise coupling, and deterministic matrix extraction. Approved corrections: Claim 17.6 uses T_i ≤ n/2; Theorem 17.4 uses 0 &lt; δ ≤ 1/32, c=1/160, C=64 and a strict CDF tail. The full local repository gate passes; EQO+ is not formalized.</p></div>
+    </section>
+    <div class="wiki-bound-grid">
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>EQO+ distributional-regret upper bound</h3>
+  <p class="wiki-paper-title">Unified Framework of Distributional Regret in Multi-Armed Bandits and Reinforcement Learning</p>
+  <p class="wiki-source-meta">Lee and Oh · 2026 · Theorem 4</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">EQO+ simultaneously controls expected regret at the minimax scale and the distributional tail with one logarithmic confidence factor.</span><span class="math-tex" aria-hidden="true">\[R_T=O\!\left(\sigma\sqrt{AT}\log(1/\delta)\right)\quad\text{with probability at least }1-\delta,\qquad \mathbb E R_T=O(\sigma\sqrt{AT}).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Use the source&#x27;s sub-Gaussian model and its displayed tuning c1 equals sigma square root T over A.</p>
+  <a href="https://proceedings.mlr.press/v336/lee26b.html">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Lower bound</p>
+  <h3>Chapter 17 distributional-regret lower bound</h3>
+  <p class="wiki-paper-title">Bandit Algorithms</p>
+  <p class="wiki-source-meta">Tor Lattimore and Csaba Szepesvári · 2020 · Theorem 17.1</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Lower bound guarantee"><strong>Lower bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Any policy with the source&#x27;s uniform expected-regret bound has a unit-Gaussian instance whose random pseudo-regret exceeds the displayed confidence-dependent threshold with probability at least delta.</span><span class="math-tex" aria-hidden="true">\[\Pr\!\left(R_T\ge\frac14\min\left\{T,\frac1B\sqrt{(A-1)T}\log\frac1{4\delta}\right\}\right)\ge\delta.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Preserve the exact A, T, B, delta conditions and the same randomized nonanticipating policy.</p>
+  <a href="https://tor-lattimore.com/downloads/book/book.pdf">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+    </div>
+    <section class="wiki-lean-evidence">
+      <div><p class="panel-kicker">Local Lean evidence</p><h3>Exact declarations</h3><ul><li><a href="../../../modules/banditrlproof-lowerbounds-highprobability/index.html#decl-4bb7c14eda2f"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>stochastic<wbr>High<wbr>Probability<wbr>Threshold</code></a></li><li><a href="../../../modules/banditrlproof-lowerbounds-highprobability/index.html#decl-ef466200fc8d"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>gaussian<wbr>Random<wbr>Pseudo<wbr>Regret_<wbr>ge_<wbr>theorem17_<wbr>1</code></a></li><li><a href="../../../modules/banditrlproof-lowerbounds-highprobability/index.html#decl-7f3bbcfa6913"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>no<wbr>Uniform<wbr>Gaussian<wbr>Random<wbr>Pseudo<wbr>Regret<wbr>Tail_<wbr>corollary17_<wbr>3</code></a></li><li><a href="../../../modules/banditrlproof-lowerbounds-highprobability/index.html#decl-c093fd82ca2f"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>gaussian<wbr>Random<wbr>Pseudo<wbr>Regret_<wbr>ge_<wbr>corollary17_<wbr>2</code></a></li><li><a href="../../../modules/banditrlproof-lowerbounds-highprobability/index.html#decl-5c2f374b84c4"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>exists_<wbr>cdf<wbr>Tail_<wbr>ge_<wbr>of_<wbr>integral_<wbr>ge</code></a></li><li><a href="../../../modules/banditrlproof-lowerbounds-highprobability/index.html#decl-2ddbbaa6b8b9"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>random<wbr>Regret_<wbr>ge_<wbr>quarter_<wbr>of_<wbr>clipping<wbr>Decomposition</code></a></li><li><a href="../../../modules/banditrlproof-lowerbounds-highprobability/index.html#decl-2baa1151442d"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>adversarial<wbr>Random<wbr>Regret_<wbr>ge_<wbr>eq17_<wbr>8</code></a></li></ul></div>
+      <div><p class="panel-kicker">Not yet proved here</p><h3>Missing steps</h3><ul><li>Map and formalize the EQO+ algorithm and Theorem 4 as a separate upper route.</li></ul></div>
+    </section>
+
+<section class="wiki-frontier-note">
+  <p class="panel-kicker">formalization frontier</p>
+  <h3>Can the compiled corrected lower terminal be paired with a formalized EQO+ upper route?</h3>
+  <p>Theorem 17.1, Corollaries 17.2–17.3, Eq. (17.8), corrected Claim 17.6, exact Claim 17.7, and corrected Theorem 17.4 pass the full local repository gate. Theorem 17.4 uses 0 &lt; δ ≤ 1/32, c=1/160, C=64. No EQO+ algorithm theorem is claimed.</p>
+  <ul><li>EQO+ source map and formalized upper terminal</li><li>Named formalization leaf: CH17-HISTORY-INFORMATION</li><li>Named formalization leaf: CH17-THEOREM-17-1</li><li>Named formalization leaf: CH17-COROLLARY-17-2</li><li>Named formalization leaf: CH17-COROLLARY-17-3</li><li>Named formalization leaf: EQOPLUS-UPPER</li></ul>
+</section>
+  </div>
+</details></div></section></main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Setting</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#setting">Setting</a><a data-toc-link href="#signature">Signature</a><a data-toc-link href="#setting-cases">Cases</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.LowerBounds.InformationTheory · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.LowerBounds.InformationTheory · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.LowerBounds.InformationTheory · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Foundations</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>Information<wbr>Theory</h1>
+  <p class="lede">This file formalizes the finite prefix-code/entropy definitions, a Kraft adapter, the measure-KL and data-processing surfaces, and event testing used in Part IV, Chapter 14 of Lattimore--Szepesvári, *Bandit Algorithms*. Measure-level relative entropy is Mathlib&#x27;s extended-real InformationTheory.klDiv. The project-local work keeps codeword regularity, absolute continuity, integrability, KL direction, Bernoulli endpoints, and the infinite-divergence branch explicit. It does not claim Huffman optimality or source coding.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html"><code>BanditRLProof/LowerBounds/InformationTheory.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/foundations/index.html">1. Finite bandits, traces, and regret</a></dd></div>
+    <div><dt>Declarations</dt><dd>32</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-algorithms-klucbbernoulli/index.html"><code>BanditRLProof.Algorithms.KLUCBBernoulli</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-lowerbounds-codingentropybound/index.html"><code>BanditRLProof.LowerBounds.CodingEntropyBound</code></a>, <a href="../banditrlproof-lowerbounds-commondensitykl/index.html"><code>BanditRLProof.LowerBounds.CommonDensityKL</code></a>, <a href="../banditrlproof-lowerbounds-finitediscretekl/index.html"><code>BanditRLProof.LowerBounds.FiniteDiscreteKL</code></a>, <a href="../banditrlproof-lowerbounds-minimax/index.html"><code>BanditRLProof.LowerBounds.Minimax</code></a>, <a href="../banditrlproof-lowerbounds-relativeentropyfiltration/index.html"><code>BanditRLProof.LowerBounds.RelativeEntropyFiltration</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-0dedbeba2d1c">
+  <summary>
+    <span class="kind">structure</span>
+    <code>BanditRLProof.LowerBounds.BinaryPrefixCode</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A finite-alphabet binary prefix code.  Excluding the empty codeword is
+the regularity condition needed for concatenations of repeated messages to be
+uniquely decodable.</p>
+    <pre class="lean-code"><code><span class="kw">structure</span> BinaryPrefixCode (Symbol : Type*) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L34">Source line 34</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-eaf078025321">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.BinaryPrefixCode.uniquelyDecodable_range</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A prefix-free codebook with no empty codeword is uniquely decodable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> uniquelyDecodable_range (code : BinaryPrefixCode Symbol) : InformationTheory.UniquelyDecodable (Set.range code.encode)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L45">Source line 45</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-72c7add430b6">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.BinaryPrefixCode.codebook</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite set of codewords induced by a finite source alphabet.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> codebook [Fintype Symbol] [DecidableEq Symbol] (code : BinaryPrefixCode Symbol) : Finset (List Bool)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L99">Source line 99</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-987fba051eec">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.BinaryPrefixCode.coe_codebook</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> coe_codebook [Fintype Symbol] [DecidableEq Symbol] (code : BinaryPrefixCode Symbol) : (code.codebook : Set (List Bool)) = Set.range code.encode</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L103">Source line 103</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ccdf46d24fa0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.BinaryPrefixCode.kraft_inequality</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Kraft--McMillan for a finite binary prefix code, obtained by adapting the
+codebook to Mathlib&#x27;s uniquely-decodable-code theorem.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> kraft_inequality [Fintype Symbol] [DecidableEq Symbol] (code : BinaryPrefixCode Symbol) : ∑ word ∈ code.codebook, (<span class="num">1</span> / <span class="num">2</span> : Real) ^ word.length ≤ <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L111">Source line 111</a>
+      <a href="../../chapters/foundations/index.html#decl-ccdf46d24fa0-teaching">Open teaching explanation</a>
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-847aa1096514">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.discreteEntropy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Natural-log entropy (nats) of a finite supported mass function, Eq. (14.3).</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> discreteEntropy (support : Finset Symbol) (probability : Symbol → Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L121">Source line 121</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-17eb3ee1926a">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.discreteEntropyBaseTwo</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Base-two entropy (bits) of a finite supported mass function.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> discreteEntropyBaseTwo (support : Finset Symbol) (probability : Symbol → Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L126">Source line 126</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-20c3bf9feeb6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.discreteEntropyBaseTwo_eq_div_log_two</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> discreteEntropyBaseTwo_eq_div_log_two (support : Finset Symbol) (probability : Symbol → Real) : discreteEntropyBaseTwo support probability = discreteEntropy support probability / Real.log <span class="num">2</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L131">Source line 131</a>
+      <a href="../../chapters/foundations/index.html#decl-20c3bf9feeb6-teaching">Open teaching explanation</a>
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1a617df72f09">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.discreteEntropy_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> discreteEntropy_nonneg (support : Finset Symbol) (probability : Symbol → Real) (hprobability : ∀ symbol ∈ support, <span class="num">0</span> ≤ probability symbol ∧ probability symbol ≤ <span class="num">1</span>) : <span class="num">0</span> ≤ discreteEntropy support probability</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L138">Source line 138</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-51734c977ce9">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.expectedCodeLength</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Expected binary codeword length, the objective in Eq. (14.1).</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> expectedCodeLength [Fintype Symbol] (probability : Symbol → Real) (code : BinaryPrefixCode Symbol) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L152">Source line 152</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5673fdc29dcc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.expectedCodeLength_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> expectedCodeLength_nonneg [Fintype Symbol] (probability : Symbol → Real) (code : BinaryPrefixCode Symbol) (hprobability : ∀ symbol, <span class="num">0</span> ≤ probability symbol) : <span class="num">0</span> ≤ expectedCodeLength probability code</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L156">Source line 156</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e58d2272a11a">
+  <summary>
+    <span class="kind">abbrev</span>
+    <code>BanditRLProof.LowerBounds.relativeEntropy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Chapter 14 relative entropy, with value `∞` on support mismatch or a
+non-integrable log-likelihood ratio.</p>
+    <pre class="lean-code"><code><span class="kw">abbrev</span> relativeEntropy {α : Type*} [MeasurableSpace α] (P Q : Measure α) : ENNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L168">Source line 168</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-927db8ea2ef8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.relativeEntropy_of_absolutelyContinuous_of_integrable</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite regular branch of the Radon--Nikodym representation.  The mass
+correction vanishes when `P` and `Q` are probability measures.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> relativeEntropy_of_absolutelyContinuous_of_integrable {α : Type*} [MeasurableSpace α] (P Q : Measure α) (hPQ : P ≪ Q) (hInt : Integrable (llr P Q) P) : relativeEntropy P Q = ENNReal.ofReal (∫ x, llr P Q x ∂P + Q.real univ - P.real univ)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L174">Source line 174</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-33bebf79a4d8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.relativeEntropy_of_probability_absolutelyContinuous_of_integrable</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Probability-measure specialization of Theorem 14.1: the finite relative
+entropy is exactly the expected log likelihood ratio.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> relativeEntropy_of_probability_absolutelyContinuous_of_integrable {α : Type*} [MeasurableSpace α] (P Q : Measure α) [IsProbabilityMeasure P] [IsProbabilityMeasure Q] (hPQ : P ≪ Q) (hInt : Integrable (llr P Q) P) : relativeEntropy P Q = ENNReal.ofReal (∫ x, llr P Q x ∂P)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L184">Source line 184</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-af80a4c0d103">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.relativeEntropy_eq_top_of_not_absolutelyContinuous</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The singular branch of Theorem 14.1.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> relativeEntropy_eq_top_of_not_absolutelyContinuous {α : Type*} [MeasurableSpace α] {P Q : Measure α} (hPQ : ¬ P ≪ Q) : relativeEntropy P Q = ∞</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L194">Source line 194</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2fe4612a71ee">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.relativeEntropy_ne_top_iff</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact finiteness contract for the Mathlib representation of Chapter 14
+relative entropy.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> relativeEntropy_ne_top_iff {α : Type*} [MeasurableSpace α] {P Q : Measure α} : relativeEntropy P Q ≠ ∞ ↔ P ≪ Q ∧ Integrable (llr P Q) P</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L202">Source line 202</a>
+      <a href="../../chapters/foundations/index.html#decl-2fe4612a71ee-teaching">Open teaching explanation</a>
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-abc675b64adb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.relativeEntropy_eq_zero_iff</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Relative entropy vanishes exactly when the finite measures agree.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> relativeEntropy_eq_zero_iff {α : Type*} [MeasurableSpace α] {P Q : Measure α} [IsFiniteMeasure P] [IsFiniteMeasure Q] : relativeEntropy P Q = <span class="num">0</span> ↔ P = Q</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L208">Source line 208</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-705c5b623c15">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.relativeEntropy_trim_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exercise 14.10 in its full sub-sigma-algebra form: forgetting measurable
+sets cannot increase relative entropy.  The proof uses the Radon--Nikodym
+conditional-expectation identity and conditional Jensen for `klFun`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> relativeEntropy_trim_le {α : Type*} {m m₀ : MeasurableSpace α} {P Q : @Measure α m₀} [IsFiniteMeasure P] [IsFiniteMeasure Q] (hm : m ≤ m₀) : @relativeEntropy α m (P.trim hm) (Q.trim hm) ≤ @relativeEntropy α m₀ P Q</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L217">Source line 217</a>
+      <a href="../../chapters/foundations/index.html#decl-705c5b623c15-teaching">Open teaching explanation</a>
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-06fde70784d0">
+  <summary>
+    <span class="kind">abbrev</span>
+    <code>BanditRLProof.LowerBounds.bernoulliRelativeEntropy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The Bernoulli relative entropy from Eq. (14.4), reusing the project&#x27;s exact
+support and endpoint convention.</p>
+    <pre class="lean-code"><code><span class="kw">abbrev</span> bernoulliRelativeEntropy (p q : Real) : ENNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L293">Source line 293</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a24c9968dfd1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.rnDeriv_restrict_restrict</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Restricting both laws to a measurable event preserves the original
+Radon--Nikodym derivative almost everywhere on that event.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> rnDeriv_restrict_restrict {α : Type*} [MeasurableSpace α] {P Q : Measure α} [SigmaFinite P] [SigmaFinite Q] (hPQ : P ≪ Q) {A : Set α} (hA : MeasurableSet A) : (P.restrict A).rnDeriv (Q.restrict A) =ᵐ[Q.restrict A] P.rnDeriv Q</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L298">Source line 298</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-62ce216779f3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.relativeEntropy_restrict_add_compl</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Relative entropy splits exactly across an event and its complement.  This
+is the two-cell partition identity used by the event data-processing proof.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> relativeEntropy_restrict_add_compl {α : Type*} [MeasurableSpace α] {P Q : Measure α} [IsFiniteMeasure P] [IsFiniteMeasure Q] (hPQ : P ≪ Q) {A : Set α} (hA : MeasurableSet A) : relativeEntropy P Q = relativeEntropy (P.restrict A) (Q.restrict A) + relativeEntropy (P.restrict Aᶜ) (Q.restrict Aᶜ)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L314">Source line 314</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-52c575587539">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.bernoulliKLCore_event_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Event data processing in the finite, non-singular Bernoulli branch.  This
+is the quantitative core of Exercise 14.10 specialized to the sigma-algebra
+generated by one event.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bernoulliKLCore_event_le {α : Type*} [MeasurableSpace α] {P Q : Measure α} [IsProbabilityMeasure P] [IsProbabilityMeasure Q] {A : Set α} (hA : MeasurableSet A) (hKL : relativeEntropy P Q ≠ ∞) (hQ0 : <span class="num">0</span> &lt; Q.real A) (hQ1 : Q.real A &lt; <span class="num">1</span>) : KLUCB.bernoulliKLCore (P.real A) (Q.real A) ≤ (relativeEntropy P Q).toReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L357">Source line 357</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-461464768003">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.mul_sqrt_div_eq_sqrt_mul</code>
+    <span><span class="status compiled">Compiled</span> <span class="status source">Internal helper</span></span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">private</span> <span class="kw">theorem</span> mul_sqrt_div_eq_sqrt_mul {a b : Real} (ha : <span class="num">0</span> &lt; a) (hb : <span class="num">0</span> ≤ b) : a * Real.sqrt (b / a) = Real.sqrt (a * b)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L410">Source line 410</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-67a47e9f1b61">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.exp_neg_half_bernoulliKLCore_le_affinity</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The binary likelihood affinity dominates `exp(-d/2)`.  This is the
+two-atom Jensen step in the source proof of Theorem 14.2.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exp_neg_half_bernoulliKLCore_le_affinity {p q : Real} (hp0 : <span class="num">0</span> &lt; p) (hp1 : p &lt; <span class="num">1</span>) (hq0 : <span class="num">0</span> &lt; q) (hq1 : q &lt; <span class="num">1</span>) : Real.exp (-(KLUCB.bernoulliKLCore p q) / <span class="num">2</span>) ≤ Real.sqrt (p * q) + Real.sqrt ((<span class="num">1</span> - p) * (<span class="num">1</span> - q))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L428">Source line 428</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6d81c05b8be1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.half_binaryAffinity_sq_le_eventError</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The two-atom Le Cam overlap inequality in the orientation needed for an
+event `A`: the affinity squared, divided by two, is bounded by
+`p + (1 - q)`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> half_binaryAffinity_sq_le_eventError {p q : Real} (hp : KLUCB.IsBernoulliParameter p) (hq : KLUCB.IsBernoulliParameter q) : (<span class="num">1</span> / <span class="num">2</span> : Real) * (Real.sqrt (p * q) + Real.sqrt ((<span class="num">1</span> - p) * (<span class="num">1</span> - q))) ^ <span class="num">2</span> ≤ p + (<span class="num">1</span> - q)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L496">Source line 496</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-68a478d6b831">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.binaryBretagnolleHuberCore</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Bretagnolle--Huber for the finite analytic Bernoulli KL expression.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> binaryBretagnolleHuberCore {p q : Real} (hp : KLUCB.IsBernoulliParameter p) (hq0 : <span class="num">0</span> &lt; q) (hq1 : q &lt; <span class="num">1</span>) : (<span class="num">1</span> / <span class="num">2</span> : Real) * Real.exp (-KLUCB.bernoulliKLCore p q) ≤ p + (<span class="num">1</span> - q)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L531">Source line 531</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-605c0b611253">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.bretagnolleHuberScale</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The source convention `exp(-∞)=0`, exposed as a real-valued testing
+scale so Theorem 14.2 remains unconditional.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> bretagnolleHuberScale (d : ENNReal) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L576">Source line 576</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9c783ef9e84c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.bretagnolleHuberScale_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bretagnolleHuberScale_nonneg (d : ENNReal) : <span class="num">0</span> ≤ bretagnolleHuberScale d</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L579">Source line 579</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0001f3c4602b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.binaryBretagnolleHuber</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact two-atom Bretagnolle--Huber inequality, including singular
+Bernoulli endpoints through the extended-real testing scale.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> binaryBretagnolleHuber {p q : Real} (hp : KLUCB.IsBernoulliParameter p) (hq : KLUCB.IsBernoulliParameter q) : bretagnolleHuberScale (bernoulliRelativeEntropy p q) ≤ p + (<span class="num">1</span> - q)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L588">Source line 588</a>
+      <a href="../../chapters/foundations/index.html#decl-0001f3c4602b-teaching">Open teaching explanation</a>
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-56fb0cd3cb0f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.bernoulliRelativeEntropy_event_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Event-level binary data processing: observing only membership in `A`
+cannot increase the relative entropy.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bernoulliRelativeEntropy_event_le {α : Type*} [MeasurableSpace α] {P Q : Measure α} [IsProbabilityMeasure P] [IsProbabilityMeasure Q] {A : Set α} (hA : MeasurableSet A) : bernoulliRelativeEntropy (P.real A) (Q.real A) ≤ relativeEntropy P Q</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L621">Source line 621</a>
+      <a href="../../chapters/foundations/index.html#decl-56fb0cd3cb0f-teaching">Open teaching explanation</a>
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c3963a54a3ae">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.bretagnolleHuberScale_antitone</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The Bretagnolle--Huber testing scale is antitone in its information
+argument.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bretagnolleHuberScale_antitone {d D : ENNReal} (h : d ≤ D) : bretagnolleHuberScale D ≤ bretagnolleHuberScale d</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L669">Source line 669</a>
+      <a href="../../chapters/foundations/index.html#decl-c3963a54a3ae-teaching">Open teaching explanation</a>
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8e5b7ced3e82">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.bretagnolleHuber</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">*Bretagnolle--Huber inequality** (Lattimore--Szepesvári, Theorem 14.2).
+For any measurable event, the two testing errors are bounded below in the
+source KL direction `D(P,Q)`.  The infinite-divergence case is included by
+`bretagnolleHuberScale`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bretagnolleHuber {α : Type*} [MeasurableSpace α] {P Q : Measure α} [IsProbabilityMeasure P] [IsProbabilityMeasure Q] {A : Set α} (hA : MeasurableSet A) : bretagnolleHuberScale (relativeEntropy P Q) ≤ P.real A + Q.real Aᶜ</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/InformationTheory.lean.html#L688">Source line 688</a>
+      <a href="../../chapters/foundations/index.html#decl-8e5b7ced3e82-teaching">Open teaching explanation</a>
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

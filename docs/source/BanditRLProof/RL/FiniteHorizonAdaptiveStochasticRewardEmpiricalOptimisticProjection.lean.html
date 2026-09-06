@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardEmpiricalOptimisticProjection.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardEmpiricalOptimisticProjection.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardEmpiricalOptimisticProjection.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardEmpiricalOptimisticProjection.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveEmpiricalOptimisticConfidence</span>
+<span id="L2">2 import BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardTotalReturnConcentration</span>
+<span id="L3">3 import BanditRLProof.RL.FiniteHorizonStochasticRewardErasureLaw</span>
+<span id="L4">4 import BanditRLProof.RewardTraceLaw</span>
+<span id="L5">5 </span>
+<span id="L6">6 /-!</span>
+<span id="L7">7 # Adaptive stochastic-reward empirical-optimistic projection</span>
+<span id="L8">8 </span>
+<span id="L9">9 This module lifts the existing known-reward exploratory empirical-transition</span>
+<span id="L10">10 source to stochastic rewards.  Its policy selector reads only the complete</span>
+<span id="L11">11 known-reward projection of the observed stochastic prefix.  The resulting</span>
+<span id="L12">12 adaptive stochastic trajectory therefore maps exactly to the deterministic</span>
+<span id="L13">13 source trajectory, so the compiled count-confidence, optimism, and recommended</span>
+<span id="L14">14 expected-regret terminal can be pulled back without estimating sampled rewards.</span>
+<span id="L15">15 </span>
+<span id="L16">16 The projection preserves every action and next-state coordinate and reinstates</span>
+<span id="L17">17 only the deterministic mean reward `mdp.reward`.  No realized behavior-regret</span>
+<span id="L18">18 or stochastic reward-confidence claim is made here.</span>
+<span id="L19">19 -/</span>
+<span id="L20">20 </span>
+<span id="L21">21 open MeasureTheory</span>
+<span id="L22">22 open scoped ENNReal ProbabilityTheory</span>
+<span id="L23">23 </span>
+<span id="L24">24 universe u v</span>
+<span id="L25">25 </span>
+<span id="L26">26 namespace BanditRLProof</span>
+<span id="L27">27 namespace FiniteHorizonRL</span>
+<span id="L28">28 </span>
+<span id="L29">29 namespace ProbabilityTheory</span>
+<span id="L30">30 </span>
+<span id="L31">31 /--</span>
+<span id="L32">32 Map both coordinates of a measure composition product when the base measure</span>
+<span id="L33">33 and every kernel fiber have the prescribed mapped laws.</span>
+<span id="L34">34 -/</span>
+<span id="L35">35 theorem measure_compProd_map_prodMap_of_map_eq</span>
+<span id="L36">36     {Alpha Alpha&#x27; Beta Beta&#x27; : Type*}</span>
+<span id="L37">37     [MeasurableSpace Alpha] [MeasurableSpace Alpha&#x27;]</span>
+<span id="L38">38     [MeasurableSpace Beta] [MeasurableSpace Beta&#x27;]</span>
+<span id="L39">39     (mu : Measure Alpha) [IsProbabilityMeasure mu]</span>
+<span id="L40">40     (kappa : ProbabilityTheory.Kernel Alpha Beta)</span>
+<span id="L41">41       [ProbabilityTheory.IsMarkovKernel kappa]</span>
+<span id="L42">42     (mu&#x27; : Measure Alpha&#x27;) [IsProbabilityMeasure mu&#x27;]</span>
+<span id="L43">43     (kappa&#x27; : ProbabilityTheory.Kernel Alpha&#x27; Beta&#x27;)</span>
+<span id="L44">44       [ProbabilityTheory.IsMarkovKernel kappa&#x27;]</span>
+<span id="L45">45     (f : Alpha -&gt; Alpha&#x27;) (hf : Measurable f)</span>
+<span id="L46">46     (g : Beta -&gt; Beta&#x27;) (hg : Measurable g)</span>
+<span id="L47">47     (hmu : mu.map f = mu&#x27;)</span>
+<span id="L48">48     (hkappa : forall alpha, (kappa alpha).map g = kappa&#x27; (f alpha)) :</span>
+<span id="L49">49     (mu ⊗ₘ kappa).map (Prod.map f g) = mu&#x27; ⊗ₘ kappa&#x27; := by</span>
+<span id="L50">50   apply Measure.ext_prod</span>
+<span id="L51">51   intro alphaSet betaSet halphaSet hbetaSet</span>
+<span id="L52">52   have hprodMap : Measurable (Prod.map f g) := hf.prodMap hg</span>
+<span id="L53">53   rw [Measure.map_apply hprodMap (halphaSet.prod hbetaSet)]</span>
+<span id="L54">54   have hpreimage :</span>
+<span id="L55">55       Prod.map f g ⁻¹&#x27; (alphaSet ×ˢ betaSet) =</span>
+<span id="L56">56         (f ⁻¹&#x27; alphaSet) ×ˢ (g ⁻¹&#x27; betaSet) := by</span>
+<span id="L57">57     ext pair</span>
+<span id="L58">58     simp</span>
+<span id="L59">59   rw [hpreimage, Measure.compProd_apply_prod (halphaSet.preimage hf)</span>
+<span id="L60">60     (hbetaSet.preimage hg)]</span>
+<span id="L61">61   rw [Measure.compProd_apply_prod halphaSet hbetaSet]</span>
+<span id="L62">62   have hfiber (alpha : Alpha) :</span>
+<span id="L63">63       kappa alpha (g ⁻¹&#x27; betaSet) = kappa&#x27; (f alpha) betaSet := by</span>
+<span id="L64">64     have h := congrArg (fun nu : Measure Beta&#x27; =&gt; nu betaSet) (hkappa alpha)</span>
+<span id="L65">65     simpa [Measure.map_apply hg hbetaSet] using h</span>
+<span id="L66">66   simp_rw [hfiber]</span>
+<span id="L67">67   let q : Alpha&#x27; -&gt; ENNReal := fun alpha =&gt; kappa&#x27; alpha betaSet</span>
+<span id="L68">68   have hq : Measurable q := kappa&#x27;.measurable_coe hbetaSet</span>
+<span id="L69">69   change</span>
+<span id="L70">70     (∫⁻ alpha in f ⁻¹&#x27; alphaSet, q (f alpha) ∂mu) =</span>
+<span id="L71">71       ∫⁻ alpha in alphaSet, q alpha ∂mu&#x27;</span>
+<span id="L72">72   rw [← MeasureTheory.setLIntegral_map halphaSet hq hf]</span>
+<span id="L73">73   rw [hmu]</span>
+<span id="L74">74 </span>
+<span id="L75">75 end ProbabilityTheory</span>
+<span id="L76">76 </span>
+<span id="L77">77 variable {State : Type u} {Action : Type v}</span>
+<span id="L78">78     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L79">79     [Fintype State] [Fintype Action]</span>
+<span id="L80">80     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L81">81     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L82">82     [Nonempty State] [Nonempty Action]</span>
+<span id="L83">83 </span>
+<span id="L84">84 namespace MDP.MeanCompatibleRewardKernel</span>
+<span id="L85">85 </span>
+<span id="L86">86 variable {mdp : MDP State Action}</span>
+<span id="L87">87 </span>
+<span id="L88">88 /-- Project one stochastic batch to the existing known-mean empirical batch. -/</span>
+<span id="L89">89 def knownRewardEpisodeBatch</span>
+<span id="L90">90     (episodes : Nat) (batch : StochasticEpisodeBatch mdp episodes) :</span>
+<span id="L91">91     EpisodeBatch mdp episodes :=</span>
+<span id="L92">92   knownRewardEpisodeBatchOfStochasticTrajectories</span>
+<span id="L93">93     (mdp := mdp) episodes batch</span>
+<span id="L94">94 </span>
+<span id="L95">95 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L96">96     [Nonempty State] [Nonempty Action] in</span>
+<span id="L97">97 /-- The stochastic-batch known-reward projection is measurable. -/</span>
+<span id="L98">98 theorem measurable_knownRewardEpisodeBatch (episodes : Nat) :</span>
+<span id="L99">99     Measurable (knownRewardEpisodeBatch (mdp := mdp) episodes) :=</span>
+<span id="L100">100   measurable_knownRewardEpisodeBatchOfStochasticTrajectories episodes</span>
+<span id="L101">101 </span>
+<span id="L102">102 /-- Project every coordinate of a finite stochastic batch prefix. -/</span>
+<span id="L103">103 def knownRewardEpisodeBatchPrefix</span>
+<span id="L104">104     (episodes n : Nat) (history : StochasticEpisodeBatchPrefix mdp episodes n) :</span>
+<span id="L105">105     EpisodeBatchPrefix mdp episodes n :=</span>
+<span id="L106">106   fun coordinate =&gt; knownRewardEpisodeBatch episodes (history coordinate)</span>
+<span id="L107">107 </span>
+<span id="L108">108 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L109">109     [Nonempty State] [Nonempty Action] in</span>
+<span id="L110">110 /-- The coordinatewise known-reward prefix projection is measurable. -/</span>
+<span id="L111">111 theorem measurable_knownRewardEpisodeBatchPrefix (episodes n : Nat) :</span>
+<span id="L112">112     Measurable (knownRewardEpisodeBatchPrefix (mdp := mdp) episodes n) := by</span>
+<span id="L113">113   apply measurable_pi_lambda</span>
+<span id="L114">114   intro coordinate</span>
+<span id="L115">115   exact (measurable_knownRewardEpisodeBatch episodes).comp</span>
+<span id="L116">116     (measurable_pi_apply coordinate)</span>
+<span id="L117">117 </span>
+<span id="L118">118 /-- Project every coordinate of an infinite stochastic batch trajectory. -/</span>
+<span id="L119">119 def knownRewardEpisodeBatchTrajectory</span>
+<span id="L120">120     (episodes : Nat) (trajectory : StochasticEpisodeBatchTrajectory mdp episodes) :</span>
+<span id="L121">121     EpisodeBatchTrajectory mdp episodes :=</span>
+<span id="L122">122   fun round =&gt; knownRewardEpisodeBatch episodes (trajectory round)</span>
+<span id="L123">123 </span>
+<span id="L124">124 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L125">125     [Nonempty State] [Nonempty Action] in</span>
+<span id="L126">126 /-- The coordinatewise complete known-reward trajectory projection is measurable. -/</span>
+<span id="L127">127 theorem measurable_knownRewardEpisodeBatchTrajectory (episodes : Nat) :</span>
+<span id="L128">128     Measurable (knownRewardEpisodeBatchTrajectory (mdp := mdp) episodes) := by</span>
+<span id="L129">129   apply measurable_pi_lambda</span>
+<span id="L130">130   intro round</span>
+<span id="L131">131   exact (measurable_knownRewardEpisodeBatch episodes).comp</span>
+<span id="L132">132     (measurable_pi_apply round)</span>
+<span id="L133">133 </span>
+<span id="L134">134 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L135">135     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L136">136     [Nonempty State] [Nonempty Action] in</span>
+<span id="L137">137 /-- Projection commutes with restricting a complete trajectory to a prefix. -/</span>
+<span id="L138">138 @[simp]</span>
+<span id="L139">139 theorem knownRewardEpisodeBatchPrefix_frestrictLe</span>
+<span id="L140">140     (episodes n : Nat) (trajectory : StochasticEpisodeBatchTrajectory mdp episodes) :</span>
+<span id="L141">141     knownRewardEpisodeBatchPrefix episodes n (Preorder.frestrictLe n trajectory) =</span>
+<span id="L142">142       Preorder.frestrictLe n (knownRewardEpisodeBatchTrajectory episodes trajectory) := by</span>
+<span id="L143">143   rfl</span>
+<span id="L144">144 </span>
+<span id="L145">145 end MDP.MeanCompatibleRewardKernel</span>
+<span id="L146">146 </span>
+<span id="L147">147 namespace DeterministicMarkovPolicyTable</span>
+<span id="L148">148 </span>
+<span id="L149">149 /-- Stochastic iid episode-batch law indexed by an exploratory policy table. -/</span>
+<span id="L150">150 noncomputable def exploratoryIIDStochasticEpisodeBatchKernel</span>
+<span id="L151">151     {mdp : MDP State Action}</span>
+<span id="L152">152     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L153">153     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L154">154     (episodes : Nat) (explorationRate : NNReal)</span>
+<span id="L155">155     (hexplorationRate : explorationRate &lt;= 1) :</span>
+<span id="L156">156     ProbabilityTheory.Kernel (DeterministicMarkovPolicyTable mdp)</span>
+<span id="L157">157       (StochasticEpisodeBatch mdp episodes) :=</span>
+<span id="L158">158   ProbabilityTheory.Kernel.ofFunOfCountable fun table =&gt;</span>
+<span id="L159">159     rewardSource.iidStochasticTrajectoryFamilyMeasure</span>
+<span id="L160">160       (table.exploratoryPolicy explorationRate hexplorationRate)</span>
+<span id="L161">161       initialState episodes</span>
+<span id="L162">162 </span>
+<span id="L163">163 omit [DecidableEq State] [DecidableEq Action] [Nonempty State] in</span>
+<span id="L164">164 @[simp]</span>
+<span id="L165">165 theorem exploratoryIIDStochasticEpisodeBatchKernel_apply</span>
+<span id="L166">166     {mdp : MDP State Action}</span>
+<span id="L167">167     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L168">168     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L169">169     (episodes : Nat) (explorationRate : NNReal)</span>
+<span id="L170">170     (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L171">171     (table : DeterministicMarkovPolicyTable mdp) :</span>
+<span id="L172">172     exploratoryIIDStochasticEpisodeBatchKernel rewardSource initialState episodes</span>
+<span id="L173">173         explorationRate hexplorationRate table =</span>
+<span id="L174">174       rewardSource.iidStochasticTrajectoryFamilyMeasure</span>
+<span id="L175">175         (table.exploratoryPolicy explorationRate hexplorationRate)</span>
+<span id="L176">176         initialState episodes :=</span>
+<span id="L177">177   rfl</span>
+<span id="L178">178 </span>
+<span id="L179">179 instance instExploratoryIIDStochasticEpisodeBatchKernelIsMarkov</span>
+<span id="L180">180     {mdp : MDP State Action}</span>
+<span id="L181">181     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L182">182     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L183">183     (episodes : Nat) (explorationRate : NNReal)</span>
+<span id="L184">184     (hexplorationRate : explorationRate &lt;= 1) :</span>
+<span id="L185">185     ProbabilityTheory.IsMarkovKernel</span>
+<span id="L186">186       (exploratoryIIDStochasticEpisodeBatchKernel rewardSource initialState episodes</span>
+<span id="L187">187         explorationRate hexplorationRate) where</span>
+<span id="L188">188   isProbabilityMeasure table := by</span>
+<span id="L189">189     rw [exploratoryIIDStochasticEpisodeBatchKernel_apply]</span>
+<span id="L190">190     infer_instance</span>
+<span id="L191">191 </span>
+<span id="L192">192 end DeterministicMarkovPolicyTable</span>
+<span id="L193">193 </span>
+<span id="L194">194 namespace AdaptiveStochasticEmpiricalOptimisticSource</span>
+<span id="L195">195 </span>
+<span id="L196">196 omit [Nonempty State] in</span>
+<span id="L197">197 /--</span>
+<span id="L198">198 A finite table selector and its batch statistic form a measurable dynamic</span>
+<span id="L199">199 sampled-return deviation.  This discharges the regularity field required by</span>
+<span id="L200">200 `AdaptiveStochasticEpisodeBatchSource` without constraining sampled rewards.</span>
+<span id="L201">201 -/</span>
+<span id="L202">202 theorem measurable_selectedExploratorySampledReturnDeviation</span>
+<span id="L203">203     {mdp : MDP State Action} {episodes : Nat}</span>
+<span id="L204">204     {History : Type*} [MeasurableSpace History]</span>
+<span id="L205">205     (selector : History -&gt; DeterministicMarkovPolicyTable mdp)</span>
+<span id="L206">206     (hselector : Measurable selector)</span>
+<span id="L207">207     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1) :</span>
+<span id="L208">208     Measurable fun pair : History × StochasticEpisodeBatch mdp episodes =&gt;</span>
+<span id="L209">209       mdp.sampledCumulativeReturnDeviationSum</span>
+<span id="L210">210         ((selector pair.1).exploratoryPolicy explorationRate hexplorationRate)</span>
+<span id="L211">211         episodes pair.2 := by</span>
+<span id="L212">212   classical</span>
+<span id="L213">213   let statistic := fun table : DeterministicMarkovPolicyTable mdp =&gt;</span>
+<span id="L214">214     mdp.sampledCumulativeReturnDeviationSum</span>
+<span id="L215">215       (table.exploratoryPolicy explorationRate hexplorationRate) episodes</span>
+<span id="L216">216   have hrepresentation :</span>
+<span id="L217">217       (fun pair : History × StochasticEpisodeBatch mdp episodes =&gt;</span>
+<span id="L218">218         mdp.sampledCumulativeReturnDeviationSum</span>
+<span id="L219">219           ((selector pair.1).exploratoryPolicy explorationRate hexplorationRate)</span>
+<span id="L220">220           episodes pair.2) =</span>
+<span id="L221">221         fun pair =&gt; ∑ table : DeterministicMarkovPolicyTable mdp,</span>
+<span id="L222">222           if selector pair.1 = table then statistic table pair.2 else 0 := by</span>
+<span id="L223">223     funext pair</span>
+<span id="L224">224     simp [statistic]</span>
+<span id="L225">225   rw [hrepresentation]</span>
+<span id="L226">226   exact Finset.measurable_sum Finset.univ fun table _ =&gt;</span>
+<span id="L227">227     Measurable.ite</span>
+<span id="L228">228       ((hselector.comp measurable_fst) (measurableSet_singleton table))</span>
+<span id="L229">229       ((mdp.measurable_sampledCumulativeReturnDeviationSum</span>
+<span id="L230">230         (table.exploratoryPolicy explorationRate hexplorationRate) episodes).comp</span>
+<span id="L231">231           measurable_snd)</span>
+<span id="L232">232       measurable_const</span>
+<span id="L233">233 </span>
+<span id="L234">234 /--</span>
+<span id="L235">235 Concrete stochastic-reward lift of the deterministic exploratory empirical</span>
+<span id="L236">236 optimistic source.  Every policy update factors through known-reward history.</span>
+<span id="L237">237 -/</span>
+<span id="L238">238 noncomputable def exploratorySource</span>
+<span id="L239">239     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L240">240     [IsProbabilityMeasure initialState] (episodes : Nat)</span>
+<span id="L241">241     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L242">242     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L243">243     (defaultState : State) (transitionBonus : Real)</span>
+<span id="L244">244     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1) :</span>
+<span id="L245">245     AdaptiveStochasticEpisodeBatchSource mdp initialState episodes where</span>
+<span id="L246">246   rewardSource := rewardSource</span>
+<span id="L247">247   initialPolicy :=</span>
+<span id="L248">248     initialTable.exploratoryPolicy explorationRate hexplorationRate</span>
+<span id="L249">249   successorPolicy n history :=</span>
+<span id="L250">250     (AdaptiveEmpiricalOptimisticSource.successorTable defaultState</span>
+<span id="L251">251       transitionBonus n</span>
+<span id="L252">252       (MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchPrefix</span>
+<span id="L253">253         (mdp := mdp) episodes n history)).exploratoryPolicy</span>
+<span id="L254">254         explorationRate hexplorationRate</span>
+<span id="L255">255   batchKernel n :=</span>
+<span id="L256">256     (DeterministicMarkovPolicyTable.exploratoryIIDStochasticEpisodeBatchKernel</span>
+<span id="L257">257       rewardSource initialState episodes explorationRate hexplorationRate).comap</span>
+<span id="L258">258         (fun history =&gt;</span>
+<span id="L259">259           AdaptiveEmpiricalOptimisticSource.successorTable defaultState</span>
+<span id="L260">260             transitionBonus n</span>
+<span id="L261">261             (MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchPrefix</span>
+<span id="L262">262               (mdp := mdp) episodes n history))</span>
+<span id="L263">263         ((AdaptiveEmpiricalOptimisticSource.measurable_successorTable</span>
+<span id="L264">264           defaultState transitionBonus n).comp</span>
+<span id="L265">265             (MDP.MeanCompatibleRewardKernel.measurable_knownRewardEpisodeBatchPrefix</span>
+<span id="L266">266               (mdp := mdp) episodes n))</span>
+<span id="L267">267   batchKernel_isMarkov n := by</span>
+<span id="L268">268     exact ProbabilityTheory.Kernel.IsMarkovKernel.comap _</span>
+<span id="L269">269       ((AdaptiveEmpiricalOptimisticSource.measurable_successorTable</span>
+<span id="L270">270         defaultState transitionBonus n).comp</span>
+<span id="L271">271           (MDP.MeanCompatibleRewardKernel.measurable_knownRewardEpisodeBatchPrefix</span>
+<span id="L272">272             (mdp := mdp) episodes n))</span>
+<span id="L273">273   batchKernel_eq_iidStochasticTrajectoryFamilyMeasure n history := by</span>
+<span id="L274">274     rw [ProbabilityTheory.Kernel.comap_apply]</span>
+<span id="L275">275     rfl</span>
+<span id="L276">276   measurable_successorSampledReturnDeviation n := by</span>
+<span id="L277">277     exact measurable_selectedExploratorySampledReturnDeviation</span>
+<span id="L278">278       (fun history =&gt;</span>
+<span id="L279">279         AdaptiveEmpiricalOptimisticSource.successorTable defaultState</span>
+<span id="L280">280           transitionBonus n</span>
+<span id="L281">281           (MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchPrefix</span>
+<span id="L282">282             (mdp := mdp) episodes n history))</span>
+<span id="L283">283       ((AdaptiveEmpiricalOptimisticSource.measurable_successorTable</span>
+<span id="L284">284         defaultState transitionBonus n).comp</span>
+<span id="L285">285           (MDP.MeanCompatibleRewardKernel.measurable_knownRewardEpisodeBatchPrefix</span>
+<span id="L286">286             (mdp := mdp) episodes n))</span>
+<span id="L287">287       explorationRate hexplorationRate</span>
+<span id="L288">288 </span>
+<span id="L289">289 omit [Nonempty State] in</span>
+<span id="L290">290 /-- The stochastic and deterministic initial policies agree definitionally. -/</span>
+<span id="L291">291 theorem exploratorySource_initialPolicy</span>
+<span id="L292">292     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L293">293     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L294">294     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L295">295     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L296">296     (defaultState : State) (transitionBonus : Real)</span>
+<span id="L297">297     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1) :</span>
+<span id="L298">298     (exploratorySource mdp initialState episodes rewardSource initialTable</span>
+<span id="L299">299       defaultState transitionBonus explorationRate hexplorationRate).initialPolicy =</span>
+<span id="L300">300       (AdaptiveEmpiricalOptimisticSource.exploratorySource mdp initialState episodes</span>
+<span id="L301">301         initialTable defaultState transitionBonus explorationRate</span>
+<span id="L302">302           hexplorationRate).initialPolicy := by</span>
+<span id="L303">303   simp only [exploratorySource,</span>
+<span id="L304">304     AdaptiveEmpiricalOptimisticSource.exploratorySource]</span>
+<span id="L305">305 </span>
+<span id="L306">306 omit [Nonempty State] in</span>
+<span id="L307">307 /-- The stochastic successor policy is selected from the projected prefix. -/</span>
+<span id="L308">308 theorem exploratorySource_successorPolicy</span>
+<span id="L309">309     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L310">310     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L311">311     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L312">312     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L313">313     (defaultState : State) (transitionBonus : Real)</span>
+<span id="L314">314     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L315">315     (n : Nat) (history : StochasticEpisodeBatchPrefix mdp episodes n) :</span>
+<span id="L316">316     (exploratorySource mdp initialState episodes rewardSource initialTable</span>
+<span id="L317">317       defaultState transitionBonus explorationRate hexplorationRate).successorPolicy</span>
+<span id="L318">318         n history =</span>
+<span id="L319">319       (AdaptiveEmpiricalOptimisticSource.exploratorySource mdp initialState episodes</span>
+<span id="L320">320         initialTable defaultState transitionBonus explorationRate</span>
+<span id="L321">321           hexplorationRate).successorPolicy n</span>
+<span id="L322">322             (MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchPrefix</span>
+<span id="L323">323               (mdp := mdp) episodes n history) := by</span>
+<span id="L324">324   simp only [exploratorySource,</span>
+<span id="L325">325     AdaptiveEmpiricalOptimisticSource.exploratorySource]</span>
+<span id="L326">326 </span>
+<span id="L327">327 omit [Nonempty State] in</span>
+<span id="L328">328 /-- The initial stochastic batch maps to the deterministic exploratory batch. -/</span>
+<span id="L329">329 theorem exploratorySource_initialBatch_map_knownRewardEpisodeBatch</span>
+<span id="L330">330     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L331">331     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L332">332     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L333">333     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L334">334     (defaultState : State) (transitionBonus : Real)</span>
+<span id="L335">335     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1) :</span>
+<span id="L336">336     (rewardSource.iidStochasticTrajectoryFamilyMeasure</span>
+<span id="L337">337       (exploratorySource mdp initialState episodes rewardSource initialTable</span>
+<span id="L338">338         defaultState transitionBonus explorationRate</span>
+<span id="L339">339           hexplorationRate).initialPolicy initialState episodes).map</span>
+<span id="L340">340         (MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatch</span>
+<span id="L341">341           (mdp := mdp) episodes) =</span>
+<span id="L342">342       (AdaptiveEmpiricalOptimisticSource.exploratorySource mdp initialState episodes</span>
+<span id="L343">343         initialTable defaultState transitionBonus explorationRate</span>
+<span id="L344">344           hexplorationRate).initialPolicy.iidEpisodeBatchMeasure</span>
+<span id="L345">345             initialState episodes := by</span>
+<span id="L346">346   rw [exploratorySource_initialPolicy rewardSource initialTable defaultState</span>
+<span id="L347">347     transitionBonus explorationRate hexplorationRate]</span>
+<span id="L348">348   exact</span>
+<span id="L349">349     rewardSource.iidStochasticTrajectoryFamilyMeasure_map_knownRewardEpisodeBatch_eq_iidEpisodeBatchMeasure</span>
+<span id="L350">350       _ initialState episodes</span>
+<span id="L351">351 </span>
+<span id="L352">352 omit [Nonempty State] in</span>
+<span id="L353">353 /-- Every selected stochastic successor batch maps to its deterministic fiber. -/</span>
+<span id="L354">354 theorem exploratorySource_batchKernel_map_knownRewardEpisodeBatch</span>
+<span id="L355">355     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L356">356     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L357">357     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L358">358     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L359">359     (defaultState : State) (transitionBonus : Real)</span>
+<span id="L360">360     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L361">361     (n : Nat) (history : StochasticEpisodeBatchPrefix mdp episodes n) :</span>
+<span id="L362">362     ((exploratorySource mdp initialState episodes rewardSource initialTable</span>
+<span id="L363">363       defaultState transitionBonus explorationRate hexplorationRate).batchKernel</span>
+<span id="L364">364         n history).map</span>
+<span id="L365">365           (MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatch</span>
+<span id="L366">366             (mdp := mdp) episodes) =</span>
+<span id="L367">367       (AdaptiveEmpiricalOptimisticSource.exploratorySource mdp initialState episodes</span>
+<span id="L368">368         initialTable defaultState transitionBonus explorationRate</span>
+<span id="L369">369           hexplorationRate).batchKernel n</span>
+<span id="L370">370             (MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchPrefix</span>
+<span id="L371">371               (mdp := mdp) episodes n history) := by</span>
+<span id="L372">372   let stochasticSource := exploratorySource mdp initialState episodes rewardSource</span>
+<span id="L373">373     initialTable defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L374">374   let deterministicSource :=</span>
+<span id="L375">375     AdaptiveEmpiricalOptimisticSource.exploratorySource mdp initialState episodes</span>
+<span id="L376">376       initialTable defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L377">377   rw [stochasticSource.batchKernel_eq_iidStochasticTrajectoryFamilyMeasure]</span>
+<span id="L378">378   rw [deterministicSource.batchKernel_eq_iidEpisodeBatchMeasure]</span>
+<span id="L379">379   have hpolicy :</span>
+<span id="L380">380       stochasticSource.successorPolicy n history =</span>
+<span id="L381">381         deterministicSource.successorPolicy n</span>
+<span id="L382">382           (MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchPrefix</span>
+<span id="L383">383             (mdp := mdp) episodes n history) :=</span>
+<span id="L384">384     exploratorySource_successorPolicy rewardSource initialTable defaultState</span>
+<span id="L385">385       transitionBonus explorationRate hexplorationRate n history</span>
+<span id="L386">386   rw [hpolicy]</span>
+<span id="L387">387   exact</span>
+<span id="L388">388     rewardSource.iidStochasticTrajectoryFamilyMeasure_map_knownRewardEpisodeBatch_eq_iidEpisodeBatchMeasure</span>
+<span id="L389">389       _ initialState episodes</span>
+<span id="L390">390 </span>
+<span id="L391">391 omit [Nonempty State] in</span>
+<span id="L392">392 /--</span>
+<span id="L393">393 After projecting both coordinates, every stochastic prefix/next-batch joint law</span>
+<span id="L394">394 is the projected-prefix measure composed with the deterministic source kernel.</span>
+<span id="L395">395 -/</span>
+<span id="L396">396 theorem exploratorySource_trajectoryMeasure_map_projectedPrefix_next_eq_compProd</span>
+<span id="L397">397     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L398">398     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L399">399     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L400">400     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L401">401     (defaultState : State) (transitionBonus : Real)</span>
+<span id="L402">402     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L403">403     (n : Nat) :</span>
+<span id="L404">404     let stochasticSource := exploratorySource mdp initialState episodes rewardSource</span>
+<span id="L405">405       initialTable defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L406">406     let deterministicSource :=</span>
+<span id="L407">407       AdaptiveEmpiricalOptimisticSource.exploratorySource mdp initialState episodes</span>
+<span id="L408">408         initialTable defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L409">409     stochasticSource.trajectoryMeasure.map</span>
+<span id="L410">410         (fun trajectory =&gt;</span>
+<span id="L411">411           (MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchPrefix</span>
+<span id="L412">412               (mdp := mdp) episodes n (Preorder.frestrictLe n trajectory),</span>
+<span id="L413">413             MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatch</span>
+<span id="L414">414               (mdp := mdp) episodes (trajectory (n + 1)))) =</span>
+<span id="L415">415       stochasticSource.trajectoryMeasure.map</span>
+<span id="L416">416           (fun trajectory =&gt;</span>
+<span id="L417">417             MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchPrefix</span>
+<span id="L418">418               (mdp := mdp) episodes n (Preorder.frestrictLe n trajectory)) ⊗ₘ</span>
+<span id="L419">419         deterministicSource.batchKernel n := by</span>
+<span id="L420">420   dsimp only</span>
+<span id="L421">421   let stochasticSource := exploratorySource mdp initialState episodes rewardSource</span>
+<span id="L422">422     initialTable defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L423">423   let deterministicSource :=</span>
+<span id="L424">424     AdaptiveEmpiricalOptimisticSource.exploratorySource mdp initialState episodes</span>
+<span id="L425">425       initialTable defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L426">426   let prefixProjection :=</span>
+<span id="L427">427     MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchPrefix</span>
+<span id="L428">428       (mdp := mdp) episodes n</span>
+<span id="L429">429   let batchProjection :=</span>
+<span id="L430">430     MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatch</span>
+<span id="L431">431       (mdp := mdp) episodes</span>
+<span id="L432">432   let projectedPrefix := fun trajectory : StochasticEpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L433">433     prefixProjection (Preorder.frestrictLe n trajectory)</span>
+<span id="L434">434   let projectedPair := fun trajectory : StochasticEpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L435">435     (projectedPrefix trajectory, batchProjection (trajectory (n + 1)))</span>
+<span id="L436">436   let originalPair := fun trajectory : StochasticEpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L437">437     (Preorder.frestrictLe n trajectory, trajectory (n + 1))</span>
+<span id="L438">438   have hprefixProjection : Measurable prefixProjection :=</span>
+<span id="L439">439     MDP.MeanCompatibleRewardKernel.measurable_knownRewardEpisodeBatchPrefix</span>
+<span id="L440">440       (mdp := mdp) episodes n</span>
+<span id="L441">441   have hbatchProjection : Measurable batchProjection :=</span>
+<span id="L442">442     MDP.MeanCompatibleRewardKernel.measurable_knownRewardEpisodeBatch</span>
+<span id="L443">443       (mdp := mdp) episodes</span>
+<span id="L444">444   have hrestrict : Measurable</span>
+<span id="L445">445       (Preorder.frestrictLe n : StochasticEpisodeBatchTrajectory mdp episodes -&gt;</span>
+<span id="L446">446         StochasticEpisodeBatchPrefix mdp episodes n) :=</span>
+<span id="L447">447     Preorder.measurable_frestrictLe n</span>
+<span id="L448">448   have hprojectedPrefix : Measurable projectedPrefix :=</span>
+<span id="L449">449     hprefixProjection.comp hrestrict</span>
+<span id="L450">450   have horiginalPair : Measurable originalPair :=</span>
+<span id="L451">451     hrestrict.prodMk (measurable_pi_apply (n + 1))</span>
+<span id="L452">452   have hprodMap : Measurable (Prod.map prefixProjection batchProjection) :=</span>
+<span id="L453">453     hprefixProjection.prodMap hbatchProjection</span>
+<span id="L454">454   have hbaseMap :</span>
+<span id="L455">455       (stochasticSource.trajectoryMeasure.map (Preorder.frestrictLe n)).map</span>
+<span id="L456">456           prefixProjection =</span>
+<span id="L457">457         stochasticSource.trajectoryMeasure.map projectedPrefix := by</span>
+<span id="L458">458     rw [Measure.map_map hprefixProjection hrestrict]</span>
+<span id="L459">459     rfl</span>
+<span id="L460">460   letI : IsProbabilityMeasure</span>
+<span id="L461">461       (stochasticSource.trajectoryMeasure.map (Preorder.frestrictLe n)) :=</span>
+<span id="L462">462     Measure.isProbabilityMeasure_map hrestrict.aemeasurable</span>
+<span id="L463">463   letI : IsProbabilityMeasure</span>
+<span id="L464">464       (stochasticSource.trajectoryMeasure.map projectedPrefix) :=</span>
+<span id="L465">465     Measure.isProbabilityMeasure_map hprojectedPrefix.aemeasurable</span>
+<span id="L466">466   have hcompProdMap :</span>
+<span id="L467">467       ((stochasticSource.trajectoryMeasure.map (Preorder.frestrictLe n)) ⊗ₘ</span>
+<span id="L468">468           stochasticSource.batchKernel n).map</span>
+<span id="L469">469             (Prod.map prefixProjection batchProjection) =</span>
+<span id="L470">470         stochasticSource.trajectoryMeasure.map projectedPrefix ⊗ₘ</span>
+<span id="L471">471           deterministicSource.batchKernel n := by</span>
+<span id="L472">472     exact ProbabilityTheory.measure_compProd_map_prodMap_of_map_eq</span>
+<span id="L473">473       (stochasticSource.trajectoryMeasure.map (Preorder.frestrictLe n))</span>
+<span id="L474">474       (stochasticSource.batchKernel n)</span>
+<span id="L475">475       (stochasticSource.trajectoryMeasure.map projectedPrefix)</span>
+<span id="L476">476       (deterministicSource.batchKernel n)</span>
+<span id="L477">477       prefixProjection hprefixProjection batchProjection hbatchProjection</span>
+<span id="L478">478       hbaseMap</span>
+<span id="L479">479       (fun history =&gt;</span>
+<span id="L480">480         exploratorySource_batchKernel_map_knownRewardEpisodeBatch rewardSource</span>
+<span id="L481">481           initialTable defaultState transitionBonus explorationRate</span>
+<span id="L482">482             hexplorationRate n history)</span>
+<span id="L483">483   change stochasticSource.trajectoryMeasure.map projectedPair =</span>
+<span id="L484">484     stochasticSource.trajectoryMeasure.map projectedPrefix ⊗ₘ</span>
+<span id="L485">485       deterministicSource.batchKernel n</span>
+<span id="L486">486   calc</span>
+<span id="L487">487     stochasticSource.trajectoryMeasure.map projectedPair =</span>
+<span id="L488">488         (stochasticSource.trajectoryMeasure.map originalPair).map</span>
+<span id="L489">489           (Prod.map prefixProjection batchProjection) := by</span>
+<span id="L490">490       rw [Measure.map_map hprodMap horiginalPair]</span>
+<span id="L491">491       rfl</span>
+<span id="L492">492     _ = ((stochasticSource.trajectoryMeasure.map (Preorder.frestrictLe n)) ⊗ₘ</span>
+<span id="L493">493           stochasticSource.batchKernel n).map</span>
+<span id="L494">494             (Prod.map prefixProjection batchProjection) := by</span>
+<span id="L495">495       rw [stochasticSource.trajectoryMeasure_prefix_compProd n]</span>
+<span id="L496">496     _ = stochasticSource.trajectoryMeasure.map projectedPrefix ⊗ₘ</span>
+<span id="L497">497           deterministicSource.batchKernel n := hcompProdMap</span>
+<span id="L498">498 </span>
+<span id="L499">499 omit [Nonempty State] in</span>
+<span id="L500">500 /--</span>
+<span id="L501">501 Conditioned on the projected stochastic prefix, the projected next batch has</span>
+<span id="L502">502 the deterministic exploratory empirical-optimistic source kernel.</span>
+<span id="L503">503 -/</span>
+<span id="L504">504 theorem exploratorySource_trajectoryMeasure_condDistrib_projectedNext</span>
+<span id="L505">505     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L506">506     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L507">507     [StandardBorelSpace (EpisodeBatch mdp episodes)]</span>
+<span id="L508">508     [Nonempty (EpisodeBatch mdp episodes)]</span>
+<span id="L509">509     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L510">510     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L511">511     (defaultState : State) (transitionBonus : Real)</span>
+<span id="L512">512     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L513">513     (n : Nat) :</span>
+<span id="L514">514     let stochasticSource := exploratorySource mdp initialState episodes rewardSource</span>
+<span id="L515">515       initialTable defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L516">516     let deterministicSource :=</span>
+<span id="L517">517       AdaptiveEmpiricalOptimisticSource.exploratorySource mdp initialState episodes</span>
+<span id="L518">518         initialTable defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L519">519     ProbabilityTheory.condDistrib</span>
+<span id="L520">520         (fun trajectory : StochasticEpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L521">521           MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatch</span>
+<span id="L522">522             (mdp := mdp) episodes (trajectory (n + 1)))</span>
+<span id="L523">523         (fun trajectory : StochasticEpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L524">524           MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchPrefix</span>
+<span id="L525">525             (mdp := mdp) episodes n (Preorder.frestrictLe n trajectory))</span>
+<span id="L526">526         stochasticSource.trajectoryMeasure =ᵐ[</span>
+<span id="L527">527           stochasticSource.trajectoryMeasure.map</span>
+<span id="L528">528             (fun trajectory =&gt;</span>
+<span id="L529">529               MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchPrefix</span>
+<span id="L530">530                 (mdp := mdp) episodes n (Preorder.frestrictLe n trajectory))]</span>
+<span id="L531">531       deterministicSource.batchKernel n := by</span>
+<span id="L532">532   dsimp only</span>
+<span id="L533">533   apply ProbabilityTheory.condDistrib_ae_eq_of_measure_eq_compProd_of_measurable</span>
+<span id="L534">534   · exact</span>
+<span id="L535">535       (MDP.MeanCompatibleRewardKernel.measurable_knownRewardEpisodeBatchPrefix</span>
+<span id="L536">536         (mdp := mdp) episodes n).comp (Preorder.measurable_frestrictLe n)</span>
+<span id="L537">537   · exact</span>
+<span id="L538">538       (MDP.MeanCompatibleRewardKernel.measurable_knownRewardEpisodeBatch</span>
+<span id="L539">539         (mdp := mdp) episodes).comp (measurable_pi_apply (n + 1))</span>
+<span id="L540">540   · exact</span>
+<span id="L541">541       exploratorySource_trajectoryMeasure_map_projectedPrefix_next_eq_compProd</span>
+<span id="L542">542         rewardSource initialTable defaultState transitionBonus explorationRate</span>
+<span id="L543">543           hexplorationRate n</span>
+<span id="L544">544 </span>
+<span id="L545">545 omit [Nonempty State] in</span>
+<span id="L546">546 /--</span>
+<span id="L547">547 The complete known-reward projection of the concrete stochastic adaptive source</span>
+<span id="L548">548 is exactly the existing deterministic exploratory source trajectory law.</span>
+<span id="L549">549 -/</span>
+<span id="L550">550 theorem exploratorySource_trajectoryMeasure_map_knownRewardEpisodeBatchTrajectory</span>
+<span id="L551">551     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L552">552     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L553">553     [StandardBorelSpace (EpisodeBatch mdp episodes)]</span>
+<span id="L554">554     [Nonempty (EpisodeBatch mdp episodes)]</span>
+<span id="L555">555     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L556">556     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L557">557     (defaultState : State) (transitionBonus : Real)</span>
+<span id="L558">558     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1) :</span>
+<span id="L559">559     let stochasticSource := exploratorySource mdp initialState episodes rewardSource</span>
+<span id="L560">560       initialTable defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L561">561     let deterministicSource :=</span>
+<span id="L562">562       AdaptiveEmpiricalOptimisticSource.exploratorySource mdp initialState episodes</span>
+<span id="L563">563         initialTable defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L564">564     stochasticSource.trajectoryMeasure.map</span>
+<span id="L565">565         (MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchTrajectory</span>
+<span id="L566">566           (mdp := mdp) episodes) =</span>
+<span id="L567">567       deterministicSource.trajectoryMeasure := by</span>
+<span id="L568">568   dsimp only</span>
+<span id="L569">569   let stochasticSource := exploratorySource mdp initialState episodes rewardSource</span>
+<span id="L570">570     initialTable defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L571">571   let deterministicSource :=</span>
+<span id="L572">572     AdaptiveEmpiricalOptimisticSource.exploratorySource mdp initialState episodes</span>
+<span id="L573">573       initialTable defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L574">574   let projection :=</span>
+<span id="L575">575     MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchTrajectory</span>
+<span id="L576">576       (mdp := mdp) episodes</span>
+<span id="L577">577   have hzero :</span>
+<span id="L578">578       stochasticSource.trajectoryMeasure.map</span>
+<span id="L579">579           (fun trajectory =&gt; projection trajectory 0) =</span>
+<span id="L580">580         deterministicSource.initialPolicy.iidEpisodeBatchMeasure</span>
+<span id="L581">581           initialState episodes := by</span>
+<span id="L582">582     let batchProjection :=</span>
+<span id="L583">583       MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatch</span>
+<span id="L584">584         (mdp := mdp) episodes</span>
+<span id="L585">585     have hbatchProjection : Measurable batchProjection :=</span>
+<span id="L586">586       MDP.MeanCompatibleRewardKernel.measurable_knownRewardEpisodeBatch</span>
+<span id="L587">587         (mdp := mdp) episodes</span>
+<span id="L588">588     calc</span>
+<span id="L589">589       stochasticSource.trajectoryMeasure.map</span>
+<span id="L590">590           (fun trajectory =&gt; projection trajectory 0) =</span>
+<span id="L591">591         (stochasticSource.trajectoryMeasure.map (Function.eval 0)).map</span>
+<span id="L592">592           batchProjection := by</span>
+<span id="L593">593           rw [Measure.map_map hbatchProjection (measurable_pi_apply 0)]</span>
+<span id="L594">594           rfl</span>
+<span id="L595">595       _ = (stochasticSource.rewardSource.iidStochasticTrajectoryFamilyMeasure</span>
+<span id="L596">596           stochasticSource.initialPolicy initialState episodes).map</span>
+<span id="L597">597             batchProjection := by</span>
+<span id="L598">598           rw [stochasticSource.trajectoryMeasure_map_eval_zero]</span>
+<span id="L599">599       _ = deterministicSource.initialPolicy.iidEpisodeBatchMeasure</span>
+<span id="L600">600           initialState episodes := by</span>
+<span id="L601">601         have hrewards : stochasticSource.rewardSource = rewardSource := by</span>
+<span id="L602">602           simp only [stochasticSource, exploratorySource]</span>
+<span id="L603">603         rw [hrewards]</span>
+<span id="L604">604         exact exploratorySource_initialBatch_map_knownRewardEpisodeBatch rewardSource</span>
+<span id="L605">605           initialTable defaultState transitionBonus explorationRate</span>
+<span id="L606">606           hexplorationRate</span>
+<span id="L607">607   have hcond : forall n,</span>
+<span id="L608">608       ProbabilityTheory.condDistrib</span>
+<span id="L609">609           (fun trajectory : StochasticEpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L610">610             projection trajectory (n + 1))</span>
+<span id="L611">611           (fun trajectory : StochasticEpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L612">612             History.finiteRewardHistoryOfTrace (projection trajectory) n)</span>
+<span id="L613">613           stochasticSource.trajectoryMeasure =ᵐ[</span>
+<span id="L614">614             stochasticSource.trajectoryMeasure.map</span>
+<span id="L615">615               (fun trajectory =&gt;</span>
+<span id="L616">616                 History.finiteRewardHistoryOfTrace (projection trajectory) n)]</span>
+<span id="L617">617         deterministicSource.batchKernel n := by</span>
+<span id="L618">618     intro n</span>
+<span id="L619">619     simpa [projection, History.finiteRewardHistoryOfTrace] using</span>
+<span id="L620">620       (exploratorySource_trajectoryMeasure_condDistrib_projectedNext</span>
+<span id="L621">621         rewardSource initialTable defaultState transitionBonus explorationRate</span>
+<span id="L622">622           hexplorationRate n)</span>
+<span id="L623">623   simpa [stochasticSource, deterministicSource, projection,</span>
+<span id="L624">624     AdaptiveEpisodeBatchSource.trajectoryMeasure] using</span>
+<span id="L625">625     (RewardKernel.rewardTrace_map_eq_trajMeasure_of_condDistrib</span>
+<span id="L626">626       (mu := stochasticSource.trajectoryMeasure)</span>
+<span id="L627">627       (mu0 := deterministicSource.initialPolicy.iidEpisodeBatchMeasure</span>
+<span id="L628">628         initialState episodes)</span>
+<span id="L629">629       (reward := projection)</span>
+<span id="L630">630       (hreward := fun round =&gt;</span>
+<span id="L631">631         (MDP.MeanCompatibleRewardKernel.measurable_knownRewardEpisodeBatch</span>
+<span id="L632">632           (mdp := mdp) episodes).comp (measurable_pi_apply round))</span>
+<span id="L633">633       (kernel := deterministicSource.batchKernel)</span>
+<span id="L634">634       hzero hcond)</span>
+<span id="L635">635 </span>
+<span id="L636">636 /--</span>
+<span id="L637">637 The stochastic count bad event is the inverse image of the deterministic</span>
+<span id="L638">638 adaptive count event under complete known-reward projection.</span>
+<span id="L639">639 -/</span>
+<span id="L640">640 def projectedAdaptiveSimultaneousCountBadEvent</span>
+<span id="L641">641     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L642">642     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L643">643     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L644">644     (defaultState : State) (transitionBonus : Real)</span>
+<span id="L645">645     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L646">646     (rounds : Nat) (delta : Real) :</span>
+<span id="L647">647     Set (StochasticEpisodeBatchTrajectory mdp episodes) :=</span>
+<span id="L648">648   MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchTrajectory</span>
+<span id="L649">649       (mdp := mdp) episodes ⁻¹&#x27;</span>
+<span id="L650">650     (AdaptiveEmpiricalOptimisticSource.exploratorySource mdp initialState episodes</span>
+<span id="L651">651       initialTable defaultState transitionBonus explorationRate</span>
+<span id="L652">652         hexplorationRate).adaptiveSimultaneousCountBadEvent rounds delta</span>
+<span id="L653">653 </span>
+<span id="L654">654 omit [Nonempty State] in</span>
+<span id="L655">655 /--</span>
+<span id="L656">656 Route endpoint: the concrete stochastic source inherits the deterministic</span>
+<span id="L657">657 known-mean all-coordinate confidence event, projected optimism, and projected</span>
+<span id="L658">658 recommended-policy expected-regret bound.</span>
+<span id="L659">659 -/</span>
+<span id="L660">660 theorem exploratorySource_trajectoryMeasure_projectedAllCoordinateConfidence_optimism_and_recommendedExpectedRegret</span>
+<span id="L661">661     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L662">662     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L663">663     [StandardBorelSpace (EpisodeBatch mdp episodes)]</span>
+<span id="L664">664     [Nonempty (EpisodeBatch mdp episodes)]</span>
+<span id="L665">665     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L666">666     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L667">667     (defaultState : State) (rewardBound transitionBonus : Real)</span>
+<span id="L668">668     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L669">669     (hrewardBound : forall state action,</span>
+<span id="L670">670       |mdp.reward state action| &lt;= rewardBound)</span>
+<span id="L671">671     (htransitionBonus_nonneg : 0 &lt;= transitionBonus)</span>
+<span id="L672">672     (rounds : Nat) (hrounds : 0 &lt; rounds)</span>
+<span id="L673">673     (hepisodes : 0 &lt; episodes) (delta : Real) (hdelta : 0 &lt; delta)</span>
+<span id="L674">674     (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L675">675     (calibration :</span>
+<span id="L676">676       let deterministicSource :=</span>
+<span id="L677">677         AdaptiveEmpiricalOptimisticSource.exploratorySource mdp initialState</span>
+<span id="L678">678           episodes initialTable defaultState transitionBonus explorationRate</span>
+<span id="L679">679             hexplorationRate</span>
+<span id="L680">680       AdaptiveEmpiricalOptimisticSource.SourceCalibration</span>
+<span id="L681">681         deterministicSource rounds delta rewardBound transitionBonus) :</span>
+<span id="L682">682     let stochasticSource := exploratorySource mdp initialState episodes rewardSource</span>
+<span id="L683">683       initialTable defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L684">684     let projection :=</span>
+<span id="L685">685       MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchTrajectory</span>
+<span id="L686">686         (mdp := mdp) episodes</span>
+<span id="L687">687     let bad := projectedAdaptiveSimultaneousCountBadEvent</span>
+<span id="L688">688       (mdp := mdp) (initialState := initialState) (episodes := episodes)</span>
+<span id="L689">689       initialTable defaultState transitionBonus explorationRate</span>
+<span id="L690">690         hexplorationRate rounds delta</span>
+<span id="L691">691     MeasurableSet bad ∧</span>
+<span id="L692">692       stochasticSource.trajectoryMeasure bad &lt;= ENNReal.ofReal delta ∧</span>
+<span id="L693">693       forall trajectory, trajectory ∉ bad -&gt;</span>
+<span id="L694">694         (forall round : Fin rounds, forall state,</span>
+<span id="L695">695           mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;=</span>
+<span id="L696">696             (adaptiveEmpiricalOptimisticPlanAt</span>
+<span id="L697">697               (mdp := mdp) (episodes := episodes)</span>
+<span id="L698">698               (projection trajectory) defaultState transitionBonus round).upperValueRemaining</span>
+<span id="L699">699                 mdp.horizon le_rfl state) ∧</span>
+<span id="L700">700         adaptiveEmpiricalOptimisticRecommendedExpectedRegret</span>
+<span id="L701">701             (mdp := mdp) (initialState := initialState) (episodes := episodes)</span>
+<span id="L702">702             (projection trajectory) defaultState transitionBonus rounds &lt;=</span>
+<span id="L703">703           adaptiveEmpiricalOptimisticOccupancyRadiusSum</span>
+<span id="L704">704             (mdp := mdp) (initialState := initialState) (episodes := episodes)</span>
+<span id="L705">705             (projection trajectory) defaultState transitionBonus rounds := by</span>
+<span id="L706">706   dsimp only</span>
+<span id="L707">707   let stochasticSource := exploratorySource mdp initialState episodes rewardSource</span>
+<span id="L708">708     initialTable defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L709">709   let deterministicSource :=</span>
+<span id="L710">710     AdaptiveEmpiricalOptimisticSource.exploratorySource mdp initialState episodes</span>
+<span id="L711">711       initialTable defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L712">712   let projection :=</span>
+<span id="L713">713     MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchTrajectory</span>
+<span id="L714">714       (mdp := mdp) episodes</span>
+<span id="L715">715   let deterministicBad :=</span>
+<span id="L716">716     deterministicSource.adaptiveSimultaneousCountBadEvent rounds delta</span>
+<span id="L717">717   let bad := projection ⁻¹&#x27; deterministicBad</span>
+<span id="L718">718   have hdeterministic :=</span>
+<span id="L719">719     AdaptiveEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_allCoordinateConfidence_optimism_and_recommendedExpectedRegret</span>
+<span id="L720">720       (mdp := mdp) (initialState := initialState) (episodes := episodes)</span>
+<span id="L721">721       initialTable defaultState rewardBound transitionBonus explorationRate</span>
+<span id="L722">722         hexplorationRate hrewardBound htransitionBonus_nonneg rounds hrounds</span>
+<span id="L723">723           hepisodes delta hdelta hdelta_le_one calibration</span>
+<span id="L724">724   change MeasurableSet bad ∧</span>
+<span id="L725">725     stochasticSource.trajectoryMeasure bad &lt;= ENNReal.ofReal delta ∧</span>
+<span id="L726">726     forall trajectory, trajectory ∉ bad -&gt;</span>
+<span id="L727">727       (forall round : Fin rounds, forall state,</span>
+<span id="L728">728         mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;=</span>
+<span id="L729">729           (adaptiveEmpiricalOptimisticPlanAt</span>
+<span id="L730">730             (mdp := mdp) (episodes := episodes)</span>
+<span id="L731">731             (projection trajectory) defaultState transitionBonus round).upperValueRemaining</span>
+<span id="L732">732               mdp.horizon le_rfl state) ∧</span>
+<span id="L733">733       adaptiveEmpiricalOptimisticRecommendedExpectedRegret</span>
+<span id="L734">734           (mdp := mdp) (initialState := initialState) (episodes := episodes)</span>
+<span id="L735">735           (projection trajectory) defaultState transitionBonus rounds &lt;=</span>
+<span id="L736">736         adaptiveEmpiricalOptimisticOccupancyRadiusSum</span>
+<span id="L737">737           (mdp := mdp) (initialState := initialState) (episodes := episodes)</span>
+<span id="L738">738           (projection trajectory) defaultState transitionBonus rounds</span>
+<span id="L739">739   change MeasurableSet deterministicBad ∧</span>
+<span id="L740">740       deterministicSource.trajectoryMeasure deterministicBad &lt;= ENNReal.ofReal delta ∧</span>
+<span id="L741">741       _ at hdeterministic</span>
+<span id="L742">742   obtain ⟨hdeterministicMeasurable, hdeterministicTail, hdeterministicGood⟩ :=</span>
+<span id="L743">743     hdeterministic</span>
+<span id="L744">744   have hprojection : Measurable projection :=</span>
+<span id="L745">745     MDP.MeanCompatibleRewardKernel.measurable_knownRewardEpisodeBatchTrajectory</span>
+<span id="L746">746       (mdp := mdp) episodes</span>
+<span id="L747">747   have htrajectoryMap :</span>
+<span id="L748">748       stochasticSource.trajectoryMeasure.map projection =</span>
+<span id="L749">749         deterministicSource.trajectoryMeasure := by</span>
+<span id="L750">750     simpa [stochasticSource, deterministicSource, projection] using</span>
+<span id="L751">751       (exploratorySource_trajectoryMeasure_map_knownRewardEpisodeBatchTrajectory</span>
+<span id="L752">752         rewardSource initialTable defaultState transitionBonus explorationRate</span>
+<span id="L753">753           hexplorationRate)</span>
+<span id="L754">754   refine ⟨hdeterministicMeasurable.preimage hprojection, ?_, ?_⟩</span>
+<span id="L755">755   · calc</span>
+<span id="L756">756       stochasticSource.trajectoryMeasure bad =</span>
+<span id="L757">757           (stochasticSource.trajectoryMeasure.map projection) deterministicBad := by</span>
+<span id="L758">758         rw [Measure.map_apply hprojection hdeterministicMeasurable]</span>
+<span id="L759">759       _ = deterministicSource.trajectoryMeasure deterministicBad := by</span>
+<span id="L760">760         rw [htrajectoryMap]</span>
+<span id="L761">761       _ &lt;= ENNReal.ofReal delta := hdeterministicTail</span>
+<span id="L762">762   · intro trajectory htrajectory</span>
+<span id="L763">763     exact hdeterministicGood (projection trajectory) htrajectory</span>
+<span id="L764">764 </span>
+<span id="L765">765 end AdaptiveStochasticEmpiricalOptimisticSource</span>
+<span id="L766">766 end FiniteHorizonRL</span>
+<span id="L767">767 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

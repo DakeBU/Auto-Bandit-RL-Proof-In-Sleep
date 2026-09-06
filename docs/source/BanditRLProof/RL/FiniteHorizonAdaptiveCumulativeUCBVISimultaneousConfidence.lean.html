@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVISimultaneousConfidence.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVISimultaneousConfidence.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVISimultaneousConfidence.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVISimultaneousConfidence.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVIConfidenceTuning</span>
+<span id="L2">2 import BanditRLProof.ProbabilityUnionBound</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Finite same-source confidence family for cumulative UCBVI-CH</span>
+<span id="L6">6 </span>
+<span id="L7">7 The family contains two genuinely generated transition coordinates:</span>
+<span id="L8">8 </span>
+<span id="L9">9 * every next-state singleton, with its Bernoulli variance; and</span>
+<span id="L10">10 * the normalized optimal continuation value at every stage.</span>
+<span id="L11">11 </span>
+<span id="L12">12 The second coordinate is not postulated as an external confidence premise.  It</span>
+<span id="L13">13 is proved from the same recursive episode source and is linked to the singleton</span>
+<span id="L14">14 residual family by the exact finite linear identity in</span>
+<span id="L15">15 `FiniteHorizonAdaptiveCumulativeUCBVITransitionValueConfidence`.</span>
+<span id="L16">16 -/</span>
+<span id="L17">17 </span>
+<span id="L18">18 open MeasureTheory</span>
+<span id="L19">19 open scoped ENNReal ProbabilityTheory</span>
+<span id="L20">20 </span>
+<span id="L21">21 universe u v</span>
+<span id="L22">22 </span>
+<span id="L23">23 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L24">24 </span>
+<span id="L25">25 variable {State : Type u} {Action : Type v}</span>
+<span id="L26">26     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L27">27     [Fintype State] [Fintype Action]</span>
+<span id="L28">28     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L29">29     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L30">30     [Nonempty State] [Nonempty Action]</span>
+<span id="L31">31 </span>
+<span id="L32">32 namespace AdaptiveCumulativeHoeffdingUCBVI</span>
+<span id="L33">33 </span>
+<span id="L34">34 /-- One peeled singleton-transition query.  `count` encodes the positive</span>
+<span id="L35">35 actual visit count `count + 1`. -/</span>
+<span id="L36">36 structure BernsteinCoordinateIndex (mdp : MDP State Action) (episodes : Nat) where</span>
+<span id="L37">37   round : Fin episodes</span>
+<span id="L38">38   state : State</span>
+<span id="L39">39   action : Action</span>
+<span id="L40">40   nextState : State</span>
+<span id="L41">41   count : Fin (episodes * mdp.horizon)</span>
+<span id="L42">42   deriving Fintype, DecidableEq</span>
+<span id="L43">43 </span>
+<span id="L44">44 /-- One peeled optimal-tail scalar query. -/</span>
+<span id="L45">45 structure OptimalTailIndex (mdp : MDP State Action) (episodes : Nat) where</span>
+<span id="L46">46   round : Fin episodes</span>
+<span id="L47">47   stage : Fin mdp.horizon</span>
+<span id="L48">48   state : State</span>
+<span id="L49">49   action : Action</span>
+<span id="L50">50   count : Fin (episodes * mdp.horizon)</span>
+<span id="L51">51   deriving Fintype, DecidableEq</span>
+<span id="L52">52 </span>
+<span id="L53">53 namespace AdaptiveEpisodeBatchSource</span>
+<span id="L54">54 </span>
+<span id="L55">55 noncomputable def bernsteinCoordinateFailureEvent</span>
+<span id="L56">56     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L57">57     [IsProbabilityMeasure initialState]</span>
+<span id="L58">58     (source : AdaptiveEpisodeBatchSource mdp initialState 1)</span>
+<span id="L59">59     (logBudget : Real) (index : BernsteinCoordinateIndex mdp episodes) :</span>
+<span id="L60">60     Set (EpisodeBatchTrajectory mdp 1) :=</span>
+<span id="L61">61   let varianceBudget := mdp.transitionCoordinateVariance</span>
+<span id="L62">62       index.state index.action index.nextState * (index.count + 1 : Nat)</span>
+<span id="L63">63   {trajectory |</span>
+<span id="L64">64     bernsteinCoordinateThreshold logBudget varianceBudget &lt;=</span>
+<span id="L65">65         |∑ i ∈ Finset.range (index.round + 1),</span>
+<span id="L66">66           source.aggregateTransitionResidualIncrement</span>
+<span id="L67">67             index.state index.action index.nextState i trajectory| ∧</span>
+<span id="L68">68       (∑ i ∈ Finset.range (index.round + 1),</span>
+<span id="L69">69           source.aggregateVisitIncrement index.state index.action i trajectory) &lt;=</span>
+<span id="L70">70         (index.count + 1 : Nat)}</span>
+<span id="L71">71 </span>
+<span id="L72">72 noncomputable def optimalTailFailureEvent</span>
+<span id="L73">73     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L74">74     [IsProbabilityMeasure initialState]</span>
+<span id="L75">75     (source : AdaptiveEpisodeBatchSource mdp initialState 1)</span>
+<span id="L76">76     (logBudget : Real) (index : OptimalTailIndex mdp episodes) :</span>
+<span id="L77">77     Set (EpisodeBatchTrajectory mdp 1) :=</span>
+<span id="L78">78   {trajectory |</span>
+<span id="L79">79     logBudget * Real.sqrt (index.count + 1 : Nat) &lt;=</span>
+<span id="L80">80         |∑ i ∈ Finset.range (index.round + 1),</span>
+<span id="L81">81           source.aggregateTransitionFunctionalResidualIncrement</span>
+<span id="L82">82             (mdp.optimalTailProbe index.stage)</span>
+<span id="L83">83             index.state index.action i trajectory| ∧</span>
+<span id="L84">84       (∑ i ∈ Finset.range (index.round + 1),</span>
+<span id="L85">85           source.aggregateVisitIncrement index.state index.action i trajectory) &lt;=</span>
+<span id="L86">86         (index.count + 1 : Nat)}</span>
+<span id="L87">87 </span>
+<span id="L88">88 /-- The complete finite same-source transition confidence failure set. -/</span>
+<span id="L89">89 noncomputable def simultaneousTransitionFailureEvent</span>
+<span id="L90">90     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L91">91     [IsProbabilityMeasure initialState]</span>
+<span id="L92">92     (source : AdaptiveEpisodeBatchSource mdp initialState 1)</span>
+<span id="L93">93     (episodes : Nat) (logBudget : Real) :</span>
+<span id="L94">94     Set (EpisodeBatchTrajectory mdp 1) :=</span>
+<span id="L95">95   (⋃ index : BernsteinCoordinateIndex mdp episodes,</span>
+<span id="L96">96       bernsteinCoordinateFailureEvent source logBudget index) ∪</span>
+<span id="L97">97   (⋃ index : OptimalTailIndex mdp episodes,</span>
+<span id="L98">98       optimalTailFailureEvent source logBudget index)</span>
+<span id="L99">99 </span>
+<span id="L100">100 theorem trajectoryMeasure_bernsteinCoordinateFailureEvent_le</span>
+<span id="L101">101     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L102">102     [IsProbabilityMeasure initialState]</span>
+<span id="L103">103     [StandardBorelSpace (EpisodeBatch mdp 1)]</span>
+<span id="L104">104     [StandardBorelSpace (EpisodeBatchTrajectory mdp 1)]</span>
+<span id="L105">105     (source : AdaptiveEpisodeBatchSource mdp initialState 1)</span>
+<span id="L106">106     (logBudget : Real) (hlog : 0 &lt; logBudget)</span>
+<span id="L107">107     (index : BernsteinCoordinateIndex mdp episodes) :</span>
+<span id="L108">108     source.trajectoryMeasure</span>
+<span id="L109">109         (bernsteinCoordinateFailureEvent source logBudget index) &lt;=</span>
+<span id="L110">110       2 * ENNReal.ofReal (Real.exp (-2 * logBudget)) := by</span>
+<span id="L111">111   let varianceBudget : Real := mdp.transitionCoordinateVariance</span>
+<span id="L112">112       index.state index.action index.nextState * (index.count + 1 : Nat)</span>
+<span id="L113">113   let tilt := bernsteinTilt logBudget varianceBudget</span>
+<span id="L114">114   have hvariance : 0 &lt;= varianceBudget := by</span>
+<span id="L115">115     exact mul_nonneg</span>
+<span id="L116">116       (mdp.transitionCoordinateVariance_nonneg _ _ _)</span>
+<span id="L117">117       (Nat.cast_nonneg _)</span>
+<span id="L118">118   have htail := source.measure_abs_aggregateTransitionResidualSum_ge_inter_visitSum_le_variance</span>
+<span id="L119">119     index.state index.action index.nextState (index.round + 1)</span>
+<span id="L120">120     tilt (bernsteinCoordinateThreshold logBudget varianceBudget)</span>
+<span id="L121">121     (index.count + 1 : Nat)</span>
+<span id="L122">122     (bernsteinTilt_pos hlog hvariance)</span>
+<span id="L123">123     (bernsteinTilt_le_one _ _)</span>
+<span id="L124">124   have hexponent := bernsteinTilt_exponent_le hlog hvariance</span>
+<span id="L125">125   have hexponent&#x27; :</span>
+<span id="L126">126       -tilt * bernsteinCoordinateThreshold logBudget varianceBudget +</span>
+<span id="L127">127           tilt ^ 2 * varianceBudget &lt;= -2 * logBudget := by</span>
+<span id="L128">128     simpa [tilt] using hexponent</span>
+<span id="L129">129   have harg :</span>
+<span id="L130">130       -tilt * bernsteinCoordinateThreshold logBudget varianceBudget +</span>
+<span id="L131">131           tilt ^ 2 * mdp.transitionCoordinateVariance</span>
+<span id="L132">132             index.state index.action index.nextState * (index.count + 1 : Nat) &lt;=</span>
+<span id="L133">133         -2 * logBudget := by</span>
+<span id="L134">134     rw [show tilt ^ 2 * mdp.transitionCoordinateVariance</span>
+<span id="L135">135           index.state index.action index.nextState * (index.count + 1 : Nat) =</span>
+<span id="L136">136         tilt ^ 2 * varianceBudget by simp [varianceBudget, mul_assoc]]</span>
+<span id="L137">137     exact hexponent&#x27;</span>
+<span id="L138">138   calc</span>
+<span id="L139">139     source.trajectoryMeasure</span>
+<span id="L140">140         (bernsteinCoordinateFailureEvent source logBudget index) &lt;=</span>
+<span id="L141">141       2 * ENNReal.ofReal</span>
+<span id="L142">142         (Real.exp (-tilt * bernsteinCoordinateThreshold logBudget varianceBudget +</span>
+<span id="L143">143           tilt ^ 2 * mdp.transitionCoordinateVariance</span>
+<span id="L144">144             index.state index.action index.nextState * (index.count + 1 : Nat))) := by</span>
+<span id="L145">145       simpa [bernsteinCoordinateFailureEvent, varianceBudget, tilt, mul_assoc] using htail</span>
+<span id="L146">146     _ &lt;= 2 * ENNReal.ofReal (Real.exp (-2 * logBudget)) := by</span>
+<span id="L147">147       apply mul_le_mul_left&#x27;</span>
+<span id="L148">148       apply ENNReal.ofReal_le_ofReal</span>
+<span id="L149">149       apply Real.exp_le_exp.mpr</span>
+<span id="L150">150       exact harg</span>
+<span id="L151">151 </span>
+<span id="L152">152 noncomputable def functionalTilt (logBudget visitBudget : Real) : Real :=</span>
+<span id="L153">153   4 * logBudget / Real.sqrt visitBudget</span>
+<span id="L154">154 </span>
+<span id="L155">155 theorem functionalTilt_pos</span>
+<span id="L156">156     {logBudget visitBudget : Real}</span>
+<span id="L157">157     (hlog : 0 &lt; logBudget) (hvisit : 0 &lt; visitBudget) :</span>
+<span id="L158">158     0 &lt; functionalTilt logBudget visitBudget := by</span>
+<span id="L159">159   unfold functionalTilt</span>
+<span id="L160">160   exact div_pos (mul_pos (by norm_num) hlog) (Real.sqrt_pos.2 hvisit)</span>
+<span id="L161">161 </span>
+<span id="L162">162 theorem functionalTilt_exponent_eq</span>
+<span id="L163">163     {logBudget visitBudget : Real}</span>
+<span id="L164">164     (hvisit : 0 &lt; visitBudget) :</span>
+<span id="L165">165     -functionalTilt logBudget visitBudget *</span>
+<span id="L166">166           (logBudget * Real.sqrt visitBudget) +</span>
+<span id="L167">167         (functionalTilt logBudget visitBudget ^ 2 / 8) * visitBudget =</span>
+<span id="L168">168       -2 * logBudget ^ 2 := by</span>
+<span id="L169">169   have hsqrt : Real.sqrt visitBudget ≠ 0 :=</span>
+<span id="L170">170     ne_of_gt (Real.sqrt_pos.2 hvisit)</span>
+<span id="L171">171   have hsqrtSq : Real.sqrt visitBudget ^ 2 = visitBudget :=</span>
+<span id="L172">172     Real.sq_sqrt hvisit.le</span>
+<span id="L173">173   unfold functionalTilt</span>
+<span id="L174">174   field_simp</span>
+<span id="L175">175   nlinarith</span>
+<span id="L176">176 </span>
+<span id="L177">177 theorem trajectoryMeasure_optimalTailFailureEvent_le</span>
+<span id="L178">178     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L179">179     [IsProbabilityMeasure initialState]</span>
+<span id="L180">180     [StandardBorelSpace (EpisodeBatch mdp 1)]</span>
+<span id="L181">181     [StandardBorelSpace (EpisodeBatchTrajectory mdp 1)]</span>
+<span id="L182">182     (source : AdaptiveEpisodeBatchSource mdp initialState 1)</span>
+<span id="L183">183     (hreward : ∀ state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L184">184     (logBudget : Real) (hlog : 0 &lt; logBudget)</span>
+<span id="L185">185     (index : OptimalTailIndex mdp episodes) :</span>
+<span id="L186">186     source.trajectoryMeasure</span>
+<span id="L187">187         (optimalTailFailureEvent source logBudget index) &lt;=</span>
+<span id="L188">188       2 * ENNReal.ofReal (Real.exp (-2 * logBudget ^ 2)) := by</span>
+<span id="L189">189   let visitBudget : Real := (index.count + 1 : Nat)</span>
+<span id="L190">190   let tilt := functionalTilt logBudget visitBudget</span>
+<span id="L191">191   have hvisit : 0 &lt; visitBudget := by</span>
+<span id="L192">192     change 0 &lt; ((index.count + 1 : Nat) : Real)</span>
+<span id="L193">193     positivity</span>
+<span id="L194">194   have hprobe : ∀ nextState,</span>
+<span id="L195">195       mdp.optimalTailProbe index.stage nextState ∈ Set.Icc (0 : Real) 1 :=</span>
+<span id="L196">196     mdp.optimalTailProbe_mem_Icc hreward index.stage</span>
+<span id="L197">197   have htail := source.measure_abs_aggregateTransitionFunctionalResidualSum_ge_inter_visitSum_le</span>
+<span id="L198">198     (mdp.optimalTailProbe index.stage) hprobe index.state index.action</span>
+<span id="L199">199     (index.round + 1) tilt (logBudget * Real.sqrt visitBudget) visitBudget</span>
+<span id="L200">200     (functionalTilt_pos hlog hvisit)</span>
+<span id="L201">201   calc</span>
+<span id="L202">202     source.trajectoryMeasure (optimalTailFailureEvent source logBudget index) &lt;=</span>
+<span id="L203">203       2 * ENNReal.ofReal</span>
+<span id="L204">204         (Real.exp (-tilt * (logBudget * Real.sqrt visitBudget) +</span>
+<span id="L205">205           (tilt ^ 2 / 8) * visitBudget)) := by</span>
+<span id="L206">206       simpa [optimalTailFailureEvent, visitBudget, tilt] using htail</span>
+<span id="L207">207     _ = 2 * ENNReal.ofReal (Real.exp (-2 * logBudget ^ 2)) := by</span>
+<span id="L208">208       rw [functionalTilt_exponent_eq hvisit]</span>
+<span id="L209">209 </span>
+<span id="L210">210 /-- A transparent finite-union bound.  The later UCBVI specialization proves</span>
+<span id="L211">211 that the displayed right hand side is at most its allotted fraction of</span>
+<span id="L212">212 `delta`; keeping this intermediate theorem exact makes the event accounting</span>
+<span id="L213">213 auditable. -/</span>
+<span id="L214">214 theorem trajectoryMeasure_simultaneousTransitionFailureEvent_le</span>
+<span id="L215">215     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L216">216     [IsProbabilityMeasure initialState]</span>
+<span id="L217">217     [StandardBorelSpace (EpisodeBatch mdp 1)]</span>
+<span id="L218">218     [StandardBorelSpace (EpisodeBatchTrajectory mdp 1)]</span>
+<span id="L219">219     (source : AdaptiveEpisodeBatchSource mdp initialState 1)</span>
+<span id="L220">220     (hreward : ∀ state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L221">221     (episodes : Nat) (logBudget : Real) (hlog : 0 &lt; logBudget) :</span>
+<span id="L222">222     source.trajectoryMeasure</span>
+<span id="L223">223         (simultaneousTransitionFailureEvent source episodes logBudget) &lt;=</span>
+<span id="L224">224       (Fintype.card (BernsteinCoordinateIndex mdp episodes) : ENNReal) *</span>
+<span id="L225">225           (2 * ENNReal.ofReal (Real.exp (-2 * logBudget))) +</span>
+<span id="L226">226         (Fintype.card (OptimalTailIndex mdp episodes) : ENNReal) *</span>
+<span id="L227">227           (2 * ENNReal.ofReal (Real.exp (-2 * logBudget ^ 2))) := by</span>
+<span id="L228">228   unfold simultaneousTransitionFailureEvent</span>
+<span id="L229">229   calc</span>
+<span id="L230">230     source.trajectoryMeasure</span>
+<span id="L231">231         ((⋃ index : BernsteinCoordinateIndex mdp episodes,</span>
+<span id="L232">232             bernsteinCoordinateFailureEvent source logBudget index) ∪</span>
+<span id="L233">233           (⋃ index : OptimalTailIndex mdp episodes,</span>
+<span id="L234">234             optimalTailFailureEvent source logBudget index)) &lt;=</span>
+<span id="L235">235       source.trajectoryMeasure</span>
+<span id="L236">236           (⋃ index : BernsteinCoordinateIndex mdp episodes,</span>
+<span id="L237">237             bernsteinCoordinateFailureEvent source logBudget index) +</span>
+<span id="L238">238         source.trajectoryMeasure</span>
+<span id="L239">239           (⋃ index : OptimalTailIndex mdp episodes,</span>
+<span id="L240">240             optimalTailFailureEvent source logBudget index) := measure_union_le _ _</span>
+<span id="L241">241     _ &lt;= (∑ _index : BernsteinCoordinateIndex mdp episodes,</span>
+<span id="L242">242           2 * ENNReal.ofReal (Real.exp (-2 * logBudget))) +</span>
+<span id="L243">243         (∑ _index : OptimalTailIndex mdp episodes,</span>
+<span id="L244">244           2 * ENNReal.ofReal (Real.exp (-2 * logBudget ^ 2))) := by</span>
+<span id="L245">245       gcongr</span>
+<span id="L246">246       · refine (ProbabilityUnionBound.measure_iUnion_fintype_le_sum</span>
+<span id="L247">247           source.trajectoryMeasure _).trans ?_</span>
+<span id="L248">248         exact Finset.sum_le_sum fun index _ =&gt;</span>
+<span id="L249">249           trajectoryMeasure_bernsteinCoordinateFailureEvent_le</span>
+<span id="L250">250             source logBudget hlog index</span>
+<span id="L251">251       · refine (ProbabilityUnionBound.measure_iUnion_fintype_le_sum</span>
+<span id="L252">252           source.trajectoryMeasure _).trans ?_</span>
+<span id="L253">253         exact Finset.sum_le_sum fun index _ =&gt;</span>
+<span id="L254">254           trajectoryMeasure_optimalTailFailureEvent_le</span>
+<span id="L255">255             source hreward logBudget hlog index</span>
+<span id="L256">256     _ = _ := by simp [nsmul_eq_mul]</span>
+<span id="L257">257 </span>
+<span id="L258">258 /-- Outside the joint event, every peeled singleton residual is strictly below</span>
+<span id="L259">259 its variance-sensitive threshold whenever the peel equals the actual count. -/</span>
+<span id="L260">260 theorem abs_coordinateResidual_lt_of_not_mem_simultaneousTransitionFailureEvent</span>
+<span id="L261">261     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L262">262     [IsProbabilityMeasure initialState]</span>
+<span id="L263">263     (source : AdaptiveEpisodeBatchSource mdp initialState 1)</span>
+<span id="L264">264     {episodes : Nat} {logBudget : Real}</span>
+<span id="L265">265     {trajectory : EpisodeBatchTrajectory mdp 1}</span>
+<span id="L266">266     (htrajectory : trajectory ∉</span>
+<span id="L267">267       simultaneousTransitionFailureEvent source episodes logBudget)</span>
+<span id="L268">268     (index : BernsteinCoordinateIndex mdp episodes)</span>
+<span id="L269">269     (hcount :</span>
+<span id="L270">270       (∑ i ∈ Finset.range (index.round + 1),</span>
+<span id="L271">271           source.aggregateVisitIncrement index.state index.action i trajectory) =</span>
+<span id="L272">272         (index.count + 1 : Nat)) :</span>
+<span id="L273">273     |∑ i ∈ Finset.range (index.round + 1),</span>
+<span id="L274">274         source.aggregateTransitionResidualIncrement</span>
+<span id="L275">275           index.state index.action index.nextState i trajectory| &lt;</span>
+<span id="L276">276       bernsteinCoordinateThreshold logBudget</span>
+<span id="L277">277         (mdp.transitionCoordinateVariance</span>
+<span id="L278">278           index.state index.action index.nextState * (index.count + 1 : Nat)) := by</span>
+<span id="L279">279   apply lt_of_not_ge</span>
+<span id="L280">280   intro hge</span>
+<span id="L281">281   apply htrajectory</span>
+<span id="L282">282   apply Set.mem_union_left</span>
+<span id="L283">283   exact Set.mem_iUnion.2 ⟨index, hge, hcount.le⟩</span>
+<span id="L284">284 </span>
+<span id="L285">285 /-- The sharp optimal-tail scalar coordinate is extracted from the same joint</span>
+<span id="L286">286 event, again at its exact actual-count peel. -/</span>
+<span id="L287">287 theorem abs_optimalTailResidual_lt_of_not_mem_simultaneousTransitionFailureEvent</span>
+<span id="L288">288     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L289">289     [IsProbabilityMeasure initialState]</span>
+<span id="L290">290     (source : AdaptiveEpisodeBatchSource mdp initialState 1)</span>
+<span id="L291">291     {episodes : Nat} {logBudget : Real}</span>
+<span id="L292">292     {trajectory : EpisodeBatchTrajectory mdp 1}</span>
+<span id="L293">293     (htrajectory : trajectory ∉</span>
+<span id="L294">294       simultaneousTransitionFailureEvent source episodes logBudget)</span>
+<span id="L295">295     (index : OptimalTailIndex mdp episodes)</span>
+<span id="L296">296     (hcount :</span>
+<span id="L297">297       (∑ i ∈ Finset.range (index.round + 1),</span>
+<span id="L298">298           source.aggregateVisitIncrement index.state index.action i trajectory) =</span>
+<span id="L299">299         (index.count + 1 : Nat)) :</span>
+<span id="L300">300     |∑ i ∈ Finset.range (index.round + 1),</span>
+<span id="L301">301         source.aggregateTransitionFunctionalResidualIncrement</span>
+<span id="L302">302           (mdp.optimalTailProbe index.stage)</span>
+<span id="L303">303           index.state index.action i trajectory| &lt;</span>
+<span id="L304">304       logBudget * Real.sqrt (index.count + 1 : Nat) := by</span>
+<span id="L305">305   apply lt_of_not_ge</span>
+<span id="L306">306   intro hge</span>
+<span id="L307">307   apply htrajectory</span>
+<span id="L308">308   apply Set.mem_union_right</span>
+<span id="L309">309   exact Set.mem_iUnion.2 ⟨index, hge, hcount.le⟩</span>
+<span id="L310">310 </span>
+<span id="L311">311 end AdaptiveEpisodeBatchSource</span>
+<span id="L312">312 </span>
+<span id="L313">313 end AdaptiveCumulativeHoeffdingUCBVI</span>
+<span id="L314">314 </span>
+<span id="L315">315 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

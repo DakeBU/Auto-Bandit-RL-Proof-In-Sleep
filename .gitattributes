@@ -1,0 +1,19 @@
+# The production checker image executes these files on Linux.  Force stable
+# bytes across Windows and Linux checkouts so image/SBOM hashes are portable.
+* text=auto eol=lf
+*.gz -text
+.gitattributes text eol=lf
+tools/*.py text eol=lf
+evaluation/target-drift-v2/checker-image.Containerfile text eol=lf
+evaluation/target-drift-v2/agent-image.Containerfile text eol=lf
+evaluation/target-drift-v2/agent-codex-native.apparmor text eol=lf
+evaluation/target-drift-v2/*.json text eol=lf
+evaluation/target-drift-v2/agent-production-action-fixture/** text eol=lf
+evaluation/target-drift-v1/challenges.json text eol=lf
+evaluation/target-drift-v1/protocol.json text eol=lf
+evaluation/source-contract-audit-v1/*.json text eol=lf
+evaluation/source-contract-audit-v1/**/*.json text eol=lf
+research-wiki/papers/sgb-theorem2-interface-frontier-trace.json text eol=lf
+research-wiki/papers/sgb-theorem2-interface-frontier-trace.csv text eol=lf
+.github/workflows/target-drift-agent-image.yml text eol=lf
+.github/workflows/leanflow-source-preflight.yml text eol=lf

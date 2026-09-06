@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.LowerBounds.BasicIdeas · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.LowerBounds.BasicIdeas · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.LowerBounds.BasicIdeas · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Foundations</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>Basic<wbr>Ideas</h1>
+  <p class="lede">This module formalizes the semantic and deterministic interfaces developed in Lattimore--Szepesvári, *Bandit Algorithms* (2020), Part IV, Chapter 13.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/LowerBounds/BasicIdeas.lean.html"><code>BanditRLProof/LowerBounds/BasicIdeas.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/foundations/index.html">1. Finite bandits, traces, and regret</a></dd></div>
+    <div><dt>Declarations</dt><dd>15</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><span class="empty">No project-local imports.</span></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-lowerbounds-gaussianhypothesistesting/index.html"><code>BanditRLProof.LowerBounds.GaussianHypothesisTesting</code></a>, <a href="../banditrlproof-lowerbounds-gaussianminimax/index.html"><code>BanditRLProof.LowerBounds.GaussianMinimax</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-dcd474eaafe4">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.worstCaseExpectedRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Worst-case expected regret of one policy over an explicit environment class.
+
+The `ENNReal` codomain supplies the source-level supremum without a hidden
+boundedness hypothesis. If `environmentClass` is empty, this retains the
+standard complete-lattice value `bot`; meaningful bandit consumers should
+prove their intended class is nonempty.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> worstCaseExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -&gt; Environment -&gt; ENNReal) (environmentClass : Set Environment) (policy : Policy) : ENNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/BasicIdeas.lean.html#L35">Source line 35</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-512d89b0f3f1">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.minimaxExpectedRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Minimax expected regret over explicit policy and environment classes.
+
+The definition mirrors `inf_pi sup_nu R_n(pi,nu)`. Nonemptiness of the classes
+is intentionally a consumer-side semantic contract rather than a hidden
+assumption of the definition.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> minimaxExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -&gt; Environment -&gt; ENNReal) (policyClass : Set Policy) (environmentClass : Set Environment) : ENNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/BasicIdeas.lean.html#L49">Source line 49</a>
+      <a href="../../chapters/foundations/index.html#decl-512d89b0f3f1-teaching">Open teaching explanation</a>
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-250ad508cc6e">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.IsMinimaxOptimal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A policy is minimax optimal for an explicit policy class, environment class,
+and fixed-horizon regret functional when it is admissible and its worst-case
+regret attains the minimax value.
+
+The horizon is carried by `regret`; keeping the two classes explicit records
+the source warning that minimax optimality is not a property of a policy alone.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> IsMinimaxOptimal {Policy : Type u} {Environment : Type v} (regret : Policy -&gt; Environment -&gt; ENNReal) (policyClass : Set Policy) (environmentClass : Set Environment) (policy : Policy) : Prop</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/BasicIdeas.lean.html#L65">Source line 65</a>
+      <a href="../../chapters/foundations/index.html#decl-250ad508cc6e-teaching">Open teaching explanation</a>
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8c1eaa33d51a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.IsMinimaxOptimal.mem_policyClass</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A minimax-optimal policy belongs to the policy class over which the infimum is taken.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> IsMinimaxOptimal.mem_policyClass {Policy : Type u} {Environment : Type v} {regret : Policy -&gt; Environment -&gt; ENNReal} {policyClass : Set Policy} {environmentClass : Set Environment} {policy : Policy} (hpolicy : IsMinimaxOptimal regret policyClass environmentClass policy) : policy ∈ policyClass</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/BasicIdeas.lean.html#L75">Source line 75</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-61667f78f62f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.IsMinimaxOptimal.eq_minimaxExpectedRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A minimax-optimal policy attains the fixed-class minimax value.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> IsMinimaxOptimal.eq_minimaxExpectedRegret {Policy : Type u} {Environment : Type v} {regret : Policy -&gt; Environment -&gt; ENNReal} {policyClass : Set Policy} {environmentClass : Set Environment} {policy : Policy} (hpolicy : IsMinimaxOptimal regret policyClass environmentClass policy) : worstCaseExpectedRegret regret environmentClass policy = minimaxExpectedRegret regret policyClass environmentClass</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/BasicIdeas.lean.html#L85">Source line 85</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-562534467a54">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.expectedRegret_le_worstCaseExpectedRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">One environment&#x27;s regret is below the worst case over any class containing it.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> expectedRegret_le_worstCaseExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -&gt; Environment -&gt; ENNReal) (environmentClass : Set Environment) (policy : Policy) (environment : Environment) (henvironment : environment ∈ environmentClass) : regret policy environment ≤ worstCaseExpectedRegret regret environmentClass policy</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/BasicIdeas.lean.html#L96">Source line 96</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e826611df866">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.minimaxExpectedRegret_le_worstCaseExpectedRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The minimax value is below the worst-case value of each admissible policy.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> minimaxExpectedRegret_le_worstCaseExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -&gt; Environment -&gt; ENNReal) (policyClass : Set Policy) (environmentClass : Set Environment) (policy : Policy) (hpolicy : policy ∈ policyClass) : minimaxExpectedRegret regret policyClass environmentClass ≤ worstCaseExpectedRegret regret environmentClass policy</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/BasicIdeas.lean.html#L109">Source line 109</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-023a08905f78">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.le_minimaxExpectedRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A uniform lower bound on every admissible policy is a minimax lower bound.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> le_minimaxExpectedRegret {Policy : Type u} {Environment : Type v} (regret : Policy -&gt; Environment -&gt; ENNReal) (policyClass : Set Policy) (environmentClass : Set Environment) (lower : ENNReal) (hlower : ∀ policy : policyClass, lower ≤ worstCaseExpectedRegret regret environmentClass policy.<span class="num">1</span>) : lower ≤ minimaxExpectedRegret regret policyClass environmentClass</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/BasicIdeas.lean.html#L120">Source line 120</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3433e3e67817">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.exists_alternative_le_average</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite averaging: among a nonempty family whose sum is at most `budget`, one
+coordinate is at most `budget / m`.
+
+This is a Mathlib-composed deterministic leaf. It contains no bandit law,
+expectation, measurability, or concentration assumption.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exists_alternative_le_average {m : Nat} (hm : <span class="num">0</span> &lt; m) (alternativeExpectedPulls : Fin m -&gt; Real) (budget : Real) (hbudget : ∑ i : Fin m, alternativeExpectedPulls i ≤ budget) : ∃ i : Fin m, alternativeExpectedPulls i ≤ budget / (m : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/BasicIdeas.lean.html#L138">Source line 138</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c161c41634a8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.alternativeExpectedPullBudget_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Removing the distinguished arm zero from an exact nonnegative pull budget
+leaves at most the full budget on the `Fin.succ` alternative arms.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> alternativeExpectedPullBudget_le {m : Nat} (expectedPulls : Fin (m + <span class="num">1</span>) -&gt; Real) (budget : Real) (hnonneg : ∀ arm, <span class="num">0</span> ≤ expectedPulls arm) (htotal : ∑ arm : Fin (m + <span class="num">1</span>), expectedPulls arm = budget) : (∑ i : Fin m, expectedPulls i.succ) ≤ budget</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/BasicIdeas.lean.html#L164">Source line 164</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a194d361149a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.exists_leastExploredAlternative</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Chapter 13&#x27;s least-explored alternative arm.
+
+There are `m + 1` arms: arm zero is the base arm and `i.succ`, for `i : Fin m`,
+are the alternatives. The hypotheses are precisely the expected pull-count
+nonnegativity and total-budget identity needed by the averaging argument.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exists_leastExploredAlternative {m : Nat} (hm : <span class="num">0</span> &lt; m) (expectedPulls : Fin (m + <span class="num">1</span>) -&gt; Real) (horizon : Nat) (hnonneg : ∀ arm, <span class="num">0</span> ≤ expectedPulls arm) (htotal : ∑ arm : Fin (m + <span class="num">1</span>), expectedPulls arm = (horizon : Real)) : ∃ i : Fin m, expectedPulls i.succ ≤ (horizon : Real) / (m : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/BasicIdeas.lean.html#L181">Source line 181</a>
+      <a href="../../chapters/foundations/index.html#decl-a194d361149a-teaching">Open teaching explanation</a>
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9a6cc4a86c94">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.baseEnvironmentRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The exact deterministic expression in the base-environment identity (13.2).</p>
+    <pre class="lean-code"><code><span class="kw">def</span> baseEnvironmentRegret (horizon : Nat) (gap baseFirstExpectedPulls : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/BasicIdeas.lean.html#L194">Source line 194</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5bcaeef5449a">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.changedEnvironmentRegretLowerBound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The changed-environment regret lower expression on the right of (13.3).</p>
+    <pre class="lean-code"><code><span class="kw">def</span> changedEnvironmentRegretLowerBound (gap changedFirstExpectedPulls : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/BasicIdeas.lean.html#L199">Source line 199</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e094b7afa46b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half_sub_error</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Quantitative algebraic core of the two-environment heuristic.
+
+The premise bounds the cross-environment discrepancy in the expected number
+of base-arm pulls. Chapter 13 writes these expectations as approximately
+equal; later information-theoretic chapters must supply an actual value of
+`error`. This theorem neither derives that premise nor proves Theorem 13.1.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> max_base_changed_regretLowerBound_ge_half_sub_error (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls error : Real) (hgap : <span class="num">0</span> ≤ gap) (hpullDifference : baseFirstExpectedPulls - changedFirstExpectedPulls ≤ error) : gap * ((horizon : Real) - error) / <span class="num">2</span> ≤ max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/BasicIdeas.lean.html#L211">Source line 211</a>
+      <a href="../../chapters/foundations/index.html#decl-e094b7afa46b-teaching">Open teaching explanation</a>
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5573ca9f2d05">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.max_base_changed_regretLowerBound_ge_half</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Zero-error corollary of the quantitative two-environment algebra.
+
+The premise `baseFirstExpectedPulls ≤ changedFirstExpectedPulls` specializes
+the pull discrepancy to at most zero. The quantitative predecessor is the
+intended interface for later information theorems; neither declaration is the
+Gaussian minimax lower bound.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> max_base_changed_regretLowerBound_ge_half (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls : Real) (hgap : <span class="num">0</span> ≤ gap) (htransport : baseFirstExpectedPulls ≤ changedFirstExpectedPulls) : gap * (horizon : Real) / <span class="num">2</span> ≤ max (baseEnvironmentRegret horizon gap baseFirstExpectedPulls) (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/BasicIdeas.lean.html#L243">Source line 243</a>
+      <a href="../../chapters/foundations/index.html#decl-5573ca9f2d05-teaching">Open teaching explanation</a>
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,971 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Algorithms.UCBRealStationaryExplicitPolicy</span>
+<span id="L2">2 import BanditRLProof.Algorithms.UCBArmStreamTail</span>
+<span id="L3">3 import Mathlib.Probability.Independence.InfinitePi</span>
+<span id="L4">4 </span>
+<span id="L5">5 /-!</span>
+<span id="L6">6 # Conditional laws for stationary UCB arm-stream coordinates</span>
+<span id="L7">7 </span>
+<span id="L8">8 This module isolates the product-measure part of the selected-reward route.</span>
+<span id="L9">9 Every `(pull index, arm)` coordinate is independent of the function containing</span>
+<span id="L10">10 all other coordinates, so its conditional distribution given that complement</span>
+<span id="L11">11 is the prescribed stationary arm law.</span>
+<span id="L12">12 -/</span>
+<span id="L13">13 </span>
+<span id="L14">14 namespace BanditRLProof</span>
+<span id="L15">15 </span>
+<span id="L16">16 open MeasureTheory ProbabilityTheory</span>
+<span id="L17">17 </span>
+<span id="L18">18 namespace UCB</span>
+<span id="L19">19 </span>
+<span id="L20">20 /-- A flattened pull-index/arm coordinate of a latent arm-reward stream. -/</span>
+<span id="L21">21 def armStreamCoordinate {K : Nat} (index : Nat × Fin K) :</span>
+<span id="L22">22     ArmRewardStream K -&gt; Real :=</span>
+<span id="L23">23   fun stream =&gt; stream index.1 index.2</span>
+<span id="L24">24 </span>
+<span id="L25">25 /-- The latent arm stream with one specified coordinate omitted. -/</span>
+<span id="L26">26 def armStreamWithoutCoordinate {K : Nat} (target : Nat × Fin K) :</span>
+<span id="L27">27     ArmRewardStream K -&gt; ({index : Nat × Fin K // index ≠ target} -&gt; Real) :=</span>
+<span id="L28">28   fun stream index =&gt; armStreamCoordinate index.1 stream</span>
+<span id="L29">29 </span>
+<span id="L30">30 /-- Reconstruct a latent arm stream after supplying one omitted coordinate. -/</span>
+<span id="L31">31 def armStreamInsertCoordinate {K : Nat} (target : Nat × Fin K) (value : Real) :</span>
+<span id="L32">32     ({index : Nat × Fin K // index ≠ target} -&gt; Real) -&gt; ArmRewardStream K :=</span>
+<span id="L33">33   fun rest index arm =&gt;</span>
+<span id="L34">34     if hindex : (index, arm) = target then value</span>
+<span id="L35">35     else rest ⟨(index, arm), hindex⟩</span>
+<span id="L36">36 </span>
+<span id="L37">37 /-- The history/action condition used by the successor reward kernel. -/</span>
+<span id="L38">38 noncomputable def armStreamHistoryAction</span>
+<span id="L39">39     {K : Nat} (hK : 0 &lt; K) (c : Real) (n : Nat) :</span>
+<span id="L40">40     ArmRewardStream K -&gt;</span>
+<span id="L41">41       History.FinitePairHistory (Fin K) Real n × Fin K :=</span>
+<span id="L42">42   fun stream =&gt;</span>
+<span id="L43">43     let history := armStreamHistory hK c stream n</span>
+<span id="L44">44     (history, realHistoryNextArm hK c n history)</span>
+<span id="L45">45 </span>
+<span id="L46">46 /-- The next unused pull-index/arm coordinate selected after history `n`. -/</span>
+<span id="L47">47 noncomputable def armStreamNextCoordinate</span>
+<span id="L48">48     {K : Nat} (hK : 0 &lt; K) (c : Real) (n : Nat) :</span>
+<span id="L49">49     ArmRewardStream K -&gt; Nat × Fin K :=</span>
+<span id="L50">50   fun stream =&gt;</span>
+<span id="L51">51     let condition := armStreamHistoryAction hK c n stream</span>
+<span id="L52">52     (ETC.realHistoryPullCount n condition.1 condition.2, condition.2)</span>
+<span id="L53">53 </span>
+<span id="L54">54 /-- The pull-index/arm coordinate encoded by a successor history/action condition. -/</span>
+<span id="L55">55 noncomputable def armStreamCoordinateOfHistoryAction</span>
+<span id="L56">56     {K : Nat} (n : Nat) :</span>
+<span id="L57">57     History.FinitePairHistory (Fin K) Real n × Fin K -&gt; Nat × Fin K :=</span>
+<span id="L58">58   fun condition =&gt;</span>
+<span id="L59">59     (ETC.realHistoryPullCount n condition.1 condition.2, condition.2)</span>
+<span id="L60">60 </span>
+<span id="L61">61 /-- Conditions that encode one fixed next pull-index/arm coordinate. -/</span>
+<span id="L62">62 def armStreamHistoryActionCoordinateBranch</span>
+<span id="L63">63     {K : Nat} (n : Nat) (target : Nat × Fin K) :</span>
+<span id="L64">64     Set (History.FinitePairHistory (Fin K) Real n × Fin K) :=</span>
+<span id="L65">65   {condition | armStreamCoordinateOfHistoryAction n condition = target}</span>
+<span id="L66">66 </span>
+<span id="L67">67 /-- The stationary reward kernel selected by the arm component of a condition. -/</span>
+<span id="L68">68 noncomputable abbrev armStreamSelectedRewardKernel</span>
+<span id="L69">69     {K : Nat} (n : Nat) (nu : Kernel (Fin K) Real) :</span>
+<span id="L70">70     Kernel (History.FinitePairHistory (Fin K) Real n × Fin K) Real :=</span>
+<span id="L71">71   nu.comap Prod.snd measurable_snd</span>
+<span id="L72">72 </span>
+<span id="L73">73 /-- Latent streams for which one fixed pull-index/arm coordinate is selected next. -/</span>
+<span id="L74">74 def armStreamNextCoordinateBranch</span>
+<span id="L75">75     {K : Nat} (hK : 0 &lt; K) (c : Real) (n : Nat)</span>
+<span id="L76">76     (target : Nat × Fin K) : Set (ArmRewardStream K) :=</span>
+<span id="L77">77   {stream | armStreamNextCoordinate hK c n stream = target}</span>
+<span id="L78">78 </span>
+<span id="L79">79 /-- Reconstructed successor condition using only a fixed coordinate&#x27;s complement. -/</span>
+<span id="L80">80 noncomputable def armStreamHistoryActionFromWithout</span>
+<span id="L81">81     {K : Nat} (hK : 0 &lt; K) (c : Real) (n : Nat)</span>
+<span id="L82">82     (target : Nat × Fin K) (value : Real) :</span>
+<span id="L83">83     ({index : Nat × Fin K // index ≠ target} -&gt; Real) -&gt;</span>
+<span id="L84">84       History.FinitePairHistory (Fin K) Real n × Fin K :=</span>
+<span id="L85">85   armStreamHistoryAction hK c n ∘ armStreamInsertCoordinate target value</span>
+<span id="L86">86 </span>
+<span id="L87">87 theorem measurable_armStreamCoordinate</span>
+<span id="L88">88     {K : Nat} (index : Nat × Fin K) :</span>
+<span id="L89">89     Measurable (armStreamCoordinate index) := by</span>
+<span id="L90">90   exact (measurable_pi_apply index.2).comp (measurable_pi_apply index.1)</span>
+<span id="L91">91 </span>
+<span id="L92">92 theorem measurable_armStreamWithoutCoordinate</span>
+<span id="L93">93     {K : Nat} (target : Nat × Fin K) :</span>
+<span id="L94">94     Measurable (armStreamWithoutCoordinate target) := by</span>
+<span id="L95">95   exact measurable_pi_lambda _ fun index =&gt;</span>
+<span id="L96">96     measurable_armStreamCoordinate index.1</span>
+<span id="L97">97 </span>
+<span id="L98">98 theorem measurable_armStreamInsertCoordinate</span>
+<span id="L99">99     {K : Nat} (target : Nat × Fin K) (value : Real) :</span>
+<span id="L100">100     Measurable (armStreamInsertCoordinate target value) := by</span>
+<span id="L101">101   apply measurable_pi_lambda</span>
+<span id="L102">102   intro index</span>
+<span id="L103">103   apply measurable_pi_lambda</span>
+<span id="L104">104   intro arm</span>
+<span id="L105">105   by_cases hindex : (index, arm) = target</span>
+<span id="L106">106   · simp [armStreamInsertCoordinate, hindex]</span>
+<span id="L107">107   · simpa [armStreamInsertCoordinate, hindex] using</span>
+<span id="L108">108       (measurable_pi_apply</span>
+<span id="L109">109         (⟨(index, arm), hindex⟩ :</span>
+<span id="L110">110           {candidate : Nat × Fin K // candidate ≠ target}))</span>
+<span id="L111">111 </span>
+<span id="L112">112 @[simp]</span>
+<span id="L113">113 theorem armStreamWithoutCoordinate_insertCoordinate</span>
+<span id="L114">114     {K : Nat} (target : Nat × Fin K) (value : Real)</span>
+<span id="L115">115     (rest : {index : Nat × Fin K // index ≠ target} -&gt; Real) :</span>
+<span id="L116">116     armStreamWithoutCoordinate target</span>
+<span id="L117">117         (armStreamInsertCoordinate target value rest) = rest := by</span>
+<span id="L118">118   funext index</span>
+<span id="L119">119   simp [armStreamWithoutCoordinate, armStreamCoordinate,</span>
+<span id="L120">120     armStreamInsertCoordinate, index.2]</span>
+<span id="L121">121 </span>
+<span id="L122">122 theorem measurable_armStreamHistoryAction</span>
+<span id="L123">123     {K : Nat} (hK : 0 &lt; K) (c : Real) (n : Nat) :</span>
+<span id="L124">124     Measurable (armStreamHistoryAction hK c n) := by</span>
+<span id="L125">125   have hhistory := measurable_armStreamHistory hK c n</span>
+<span id="L126">126   have harm := (measurable_realHistoryNextArm hK c n).comp hhistory</span>
+<span id="L127">127   simpa [armStreamHistoryAction] using hhistory.prodMk harm</span>
+<span id="L128">128 </span>
+<span id="L129">129 theorem measurable_armStreamNextCoordinate</span>
+<span id="L130">130     {K : Nat} (hK : 0 &lt; K) (c : Real) (n : Nat) :</span>
+<span id="L131">131     Measurable (armStreamNextCoordinate hK c n) := by</span>
+<span id="L132">132   have hcountEval : Measurable</span>
+<span id="L133">133       (fun input : History.FinitePairHistory (Fin K) Real n × Fin K =&gt;</span>
+<span id="L134">134         ETC.realHistoryPullCount n input.1 input.2) := by</span>
+<span id="L135">135     apply measurable_from_prod_countable_left</span>
+<span id="L136">136     intro arm</span>
+<span id="L137">137     exact measurable_realHistoryPullCount n arm</span>
+<span id="L138">138   have hcondition := measurable_armStreamHistoryAction hK c n</span>
+<span id="L139">139   have hcount := hcountEval.comp hcondition</span>
+<span id="L140">140   simpa [armStreamNextCoordinate] using hcount.prodMk hcondition.snd</span>
+<span id="L141">141 </span>
+<span id="L142">142 theorem measurable_armStreamCoordinateOfHistoryAction</span>
+<span id="L143">143     {K : Nat} (n : Nat) :</span>
+<span id="L144">144     Measurable (armStreamCoordinateOfHistoryAction (K := K) n) := by</span>
+<span id="L145">145   have hcountEval : Measurable</span>
+<span id="L146">146       (fun input : History.FinitePairHistory (Fin K) Real n × Fin K =&gt;</span>
+<span id="L147">147         ETC.realHistoryPullCount n input.1 input.2) := by</span>
+<span id="L148">148     apply measurable_from_prod_countable_left</span>
+<span id="L149">149     intro arm</span>
+<span id="L150">150     exact measurable_realHistoryPullCount n arm</span>
+<span id="L151">151   simpa [armStreamCoordinateOfHistoryAction] using</span>
+<span id="L152">152     hcountEval.prodMk measurable_snd</span>
+<span id="L153">153 </span>
+<span id="L154">154 theorem measurableSet_armStreamHistoryActionCoordinateBranch</span>
+<span id="L155">155     {K : Nat} (n : Nat) (target : Nat × Fin K) :</span>
+<span id="L156">156     MeasurableSet (armStreamHistoryActionCoordinateBranch n target) := by</span>
+<span id="L157">157   exact measurableSet_eq_fun</span>
+<span id="L158">158     (measurable_armStreamCoordinateOfHistoryAction n) measurable_const</span>
+<span id="L159">159 </span>
+<span id="L160">160 theorem measurableSet_armStreamNextCoordinateBranch</span>
+<span id="L161">161     {K : Nat} (hK : 0 &lt; K) (c : Real) (n : Nat)</span>
+<span id="L162">162     (target : Nat × Fin K) :</span>
+<span id="L163">163     MeasurableSet (armStreamNextCoordinateBranch hK c n target) := by</span>
+<span id="L164">164   exact measurableSet_eq_fun</span>
+<span id="L165">165     (measurable_armStreamNextCoordinate hK c n) measurable_const</span>
+<span id="L166">166 </span>
+<span id="L167">167 theorem armStreamNextCoordinate_eq_coordinateOfHistoryAction</span>
+<span id="L168">168     {K : Nat} (hK : 0 &lt; K) (c : Real) (n : Nat)</span>
+<span id="L169">169     (stream : ArmRewardStream K) :</span>
+<span id="L170">170     armStreamNextCoordinate hK c n stream =</span>
+<span id="L171">171       armStreamCoordinateOfHistoryAction n</span>
+<span id="L172">172         (armStreamHistoryAction hK c n stream) := by</span>
+<span id="L173">173   rfl</span>
+<span id="L174">174 </span>
+<span id="L175">175 theorem pairwise_disjoint_armStreamHistoryActionCoordinateBranch</span>
+<span id="L176">176     {K : Nat} (n : Nat) :</span>
+<span id="L177">177     Pairwise (Function.onFun</span>
+<span id="L178">178       (fun s t : Set</span>
+<span id="L179">179         (History.FinitePairHistory (Fin K) Real n × Fin K) =&gt; Disjoint s t)</span>
+<span id="L180">180       (fun target : Nat × Fin K =&gt;</span>
+<span id="L181">181         armStreamHistoryActionCoordinateBranch n target)) := by</span>
+<span id="L182">182   intro target target&#x27; hne</span>
+<span id="L183">183   change Disjoint</span>
+<span id="L184">184     (armStreamHistoryActionCoordinateBranch n target)</span>
+<span id="L185">185     (armStreamHistoryActionCoordinateBranch n target&#x27;)</span>
+<span id="L186">186   rw [Set.disjoint_left]</span>
+<span id="L187">187   intro condition htarget htarget&#x27;</span>
+<span id="L188">188   apply hne</span>
+<span id="L189">189   exact htarget.symm.trans htarget&#x27;</span>
+<span id="L190">190 </span>
+<span id="L191">191 theorem pairwise_disjoint_armStreamNextCoordinateBranch</span>
+<span id="L192">192     {K : Nat} (hK : 0 &lt; K) (c : Real) (n : Nat) :</span>
+<span id="L193">193     Pairwise (Function.onFun</span>
+<span id="L194">194       (fun s t : Set (ArmRewardStream K) =&gt; Disjoint s t)</span>
+<span id="L195">195       (fun target : Nat × Fin K =&gt;</span>
+<span id="L196">196         armStreamNextCoordinateBranch hK c n target)) := by</span>
+<span id="L197">197   intro target target&#x27; hne</span>
+<span id="L198">198   change Disjoint</span>
+<span id="L199">199     (armStreamNextCoordinateBranch hK c n target)</span>
+<span id="L200">200     (armStreamNextCoordinateBranch hK c n target&#x27;)</span>
+<span id="L201">201   rw [Set.disjoint_left]</span>
+<span id="L202">202   intro stream htarget htarget&#x27;</span>
+<span id="L203">203   apply hne</span>
+<span id="L204">204   exact htarget.symm.trans htarget&#x27;</span>
+<span id="L205">205 </span>
+<span id="L206">206 theorem iUnion_armStreamHistoryActionCoordinateBranch</span>
+<span id="L207">207     {K : Nat} (n : Nat) :</span>
+<span id="L208">208     (⋃ target : Nat × Fin K,</span>
+<span id="L209">209       armStreamHistoryActionCoordinateBranch n target) = Set.univ := by</span>
+<span id="L210">210   ext condition</span>
+<span id="L211">211   simp [armStreamHistoryActionCoordinateBranch]</span>
+<span id="L212">212 </span>
+<span id="L213">213 theorem iUnion_armStreamNextCoordinateBranch</span>
+<span id="L214">214     {K : Nat} (hK : 0 &lt; K) (c : Real) (n : Nat) :</span>
+<span id="L215">215     (⋃ target : Nat × Fin K,</span>
+<span id="L216">216       armStreamNextCoordinateBranch hK c n target) = Set.univ := by</span>
+<span id="L217">217   ext stream</span>
+<span id="L218">218   simp [armStreamNextCoordinateBranch]</span>
+<span id="L219">219 </span>
+<span id="L220">220 theorem measure_eq_sum_restrict_armStreamHistoryActionCoordinateBranch</span>
+<span id="L221">221     {K : Nat} (n : Nat)</span>
+<span id="L222">222     (mu : Measure</span>
+<span id="L223">223       (History.FinitePairHistory (Fin K) Real n × Fin K)) :</span>
+<span id="L224">224     mu = Measure.sum fun target : Nat × Fin K =&gt;</span>
+<span id="L225">225       mu.restrict (armStreamHistoryActionCoordinateBranch n target) := by</span>
+<span id="L226">226   rw [← Measure.restrict_iUnion</span>
+<span id="L227">227     (pairwise_disjoint_armStreamHistoryActionCoordinateBranch n)</span>
+<span id="L228">228     (measurableSet_armStreamHistoryActionCoordinateBranch n),</span>
+<span id="L229">229     iUnion_armStreamHistoryActionCoordinateBranch n,</span>
+<span id="L230">230     Measure.restrict_univ]</span>
+<span id="L231">231 </span>
+<span id="L232">232 theorem armStreamMeasure_eq_sum_restrict_nextCoordinateBranch</span>
+<span id="L233">233     {K : Nat} (hK : 0 &lt; K) (c : Real) (n : Nat)</span>
+<span id="L234">234     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] :</span>
+<span id="L235">235     armStreamMeasure nu = Measure.sum fun target : Nat × Fin K =&gt;</span>
+<span id="L236">236       (armStreamMeasure nu).restrict</span>
+<span id="L237">237         (armStreamNextCoordinateBranch hK c n target) := by</span>
+<span id="L238">238   rw [← Measure.restrict_iUnion</span>
+<span id="L239">239     (pairwise_disjoint_armStreamNextCoordinateBranch hK c n)</span>
+<span id="L240">240     (measurableSet_armStreamNextCoordinateBranch hK c n),</span>
+<span id="L241">241     iUnion_armStreamNextCoordinateBranch hK c n,</span>
+<span id="L242">242     Measure.restrict_univ]</span>
+<span id="L243">243 </span>
+<span id="L244">244 theorem measurable_armStreamHistoryActionFromWithout</span>
+<span id="L245">245     {K : Nat} (hK : 0 &lt; K) (c : Real) (n : Nat)</span>
+<span id="L246">246     (target : Nat × Fin K) (value : Real) :</span>
+<span id="L247">247     Measurable (armStreamHistoryActionFromWithout hK c n target value) := by</span>
+<span id="L248">248   exact (measurable_armStreamHistoryAction hK c n).comp</span>
+<span id="L249">249     (measurable_armStreamInsertCoordinate target value)</span>
+<span id="L250">250 </span>
+<span id="L251">251 /-- The first component of the next coordinate is the selected arm&#x27;s current count. -/</span>
+<span id="L252">252 theorem armStreamNextCoordinate_fst_eq_pullCount</span>
+<span id="L253">253     {K : Nat} (hK : 0 &lt; K) (c : Real)</span>
+<span id="L254">254     (stream : ArmRewardStream K) (n : Nat) :</span>
+<span id="L255">255     (armStreamNextCoordinate hK c n stream).1 =</span>
+<span id="L256">256       pullCount (armStreamAction hK c stream)</span>
+<span id="L257">257         (armStreamNextCoordinate hK c n stream).2 (n + 1) := by</span>
+<span id="L258">258   simp only [armStreamNextCoordinate, armStreamHistoryAction]</span>
+<span id="L259">259   rw [armStreamHistory_eq_finitePairHistoryOfTrace]</span>
+<span id="L260">260   exact ETC.realHistoryPullCount_finitePairHistoryOfTrace _ _ n _</span>
+<span id="L261">261 </span>
+<span id="L262">262 /-- The successor reward reads exactly the next coordinate selected after history `n`. -/</span>
+<span id="L263">263 theorem armStreamReward_succ_eq_nextCoordinate</span>
+<span id="L264">264     {K : Nat} (hK : 0 &lt; K) (c : Real)</span>
+<span id="L265">265     (stream : ArmRewardStream K) (n : Nat) :</span>
+<span id="L266">266     armStreamReward hK c stream (n + 1) =</span>
+<span id="L267">267       armStreamCoordinate (armStreamNextCoordinate hK c n stream) stream := by</span>
+<span id="L268">268   simp only [armStreamReward, rewardFromArmStream, armStreamCoordinate]</span>
+<span id="L269">269   rw [armStreamAction_succ]</span>
+<span id="L270">270   simp only [armStreamNextCoordinate, armStreamHistoryAction]</span>
+<span id="L271">271   rw [armStreamHistory_eq_finitePairHistoryOfTrace]</span>
+<span id="L272">272   rw [ETC.realHistoryPullCount_finitePairHistoryOfTrace]</span>
+<span id="L273">273   rfl</span>
+<span id="L274">274 </span>
+<span id="L275">275 /--</span>
+<span id="L276">276 The recursive history through `n` only reads coordinates whose pull index is</span>
+<span id="L277">277 strictly below the corresponding arm count at time `n + 1`.</span>
+<span id="L278">278 -/</span>
+<span id="L279">279 theorem armStreamHistory_eq_of_eq_below_pullCount</span>
+<span id="L280">280     {K : Nat} (hK : 0 &lt; K) (c : Real)</span>
+<span id="L281">281     (stream stream&#x27; : ArmRewardStream K) (n : Nat)</span>
+<span id="L282">282     (hagrees : ∀ arm index,</span>
+<span id="L283">283       index &lt; pullCount (armStreamAction hK c stream) arm (n + 1) →</span>
+<span id="L284">284         stream index arm = stream&#x27; index arm) :</span>
+<span id="L285">285     armStreamHistory hK c stream n = armStreamHistory hK c stream&#x27; n := by</span>
+<span id="L286">286   induction n generalizing stream stream&#x27; with</span>
+<span id="L287">287   | zero =&gt;</span>
+<span id="L288">288       have hzero : stream 0 (initializationArm hK 0) =</span>
+<span id="L289">289           stream&#x27; 0 (initializationArm hK 0) := by</span>
+<span id="L290">290         apply hagrees</span>
+<span id="L291">291         simp</span>
+<span id="L292">292       simp only [armStreamHistory]</span>
+<span id="L293">293       funext _i</span>
+<span id="L294">294       exact Prod.ext rfl hzero</span>
+<span id="L295">295   | succ n ih =&gt;</span>
+<span id="L296">296       have hprefix : ∀ arm index,</span>
+<span id="L297">297           index &lt; pullCount (armStreamAction hK c stream) arm (n + 1) →</span>
+<span id="L298">298             stream index arm = stream&#x27; index arm := by</span>
+<span id="L299">299         intro arm index hindex</span>
+<span id="L300">300         apply hagrees arm index</span>
+<span id="L301">301         exact lt_of_lt_of_le hindex &lt;|</span>
+<span id="L302">302           pullCount_mono (armStreamAction hK c stream) arm (Nat.le_succ _)</span>
+<span id="L303">303       have hhistory := ih stream stream&#x27; hprefix</span>
+<span id="L304">304       simp only [armStreamHistory]</span>
+<span id="L305">305       rw [← hhistory]</span>
+<span id="L306">306       apply congrArg (History.extendPairHistorySucc</span>
+<span id="L307">307         (armStreamHistory hK c stream n))</span>
+<span id="L308">308       apply Prod.ext</span>
+<span id="L309">309       · rfl</span>
+<span id="L310">310       · apply hagrees</span>
+<span id="L311">311         rw [armStreamHistory_eq_finitePairHistoryOfTrace]</span>
+<span id="L312">312         rw [ETC.realHistoryPullCount_finitePairHistoryOfTrace]</span>
+<span id="L313">313         have hselected : armStreamAction hK c stream (n + 1) =</span>
+<span id="L314">314             realHistoryNextArm hK c n</span>
+<span id="L315">315               (History.finitePairHistoryOfTrace</span>
+<span id="L316">316                 (armStreamAction hK c stream)</span>
+<span id="L317">317                 (armStreamReward hK c stream) n) := by</span>
+<span id="L318">318           rw [← armStreamHistory_eq_finitePairHistoryOfTrace]</span>
+<span id="L319">319           exact armStreamAction_succ hK c stream n</span>
+<span id="L320">320         rw [pullCount_succ_of_eq</span>
+<span id="L321">321           (armStreamAction hK c stream) _ (n + 1) hselected]</span>
+<span id="L322">322         exact Nat.lt_succ_self _</span>
+<span id="L323">323 </span>
+<span id="L324">324 /--</span>
+<span id="L325">325 Changing one not-yet-consumed coordinate cannot alter the history already</span>
+<span id="L326">326 generated from the latent stream.</span>
+<span id="L327">327 -/</span>
+<span id="L328">328 theorem armStreamHistory_eq_of_withoutCoordinate_eq_of_pullCount_le</span>
+<span id="L329">329     {K : Nat} (hK : 0 &lt; K) (c : Real)</span>
+<span id="L330">330     (target : Nat × Fin K) (stream stream&#x27; : ArmRewardStream K) (n : Nat)</span>
+<span id="L331">331     (hwithout : armStreamWithoutCoordinate target stream =</span>
+<span id="L332">332       armStreamWithoutCoordinate target stream&#x27;)</span>
+<span id="L333">333     (hfuture : pullCount (armStreamAction hK c stream) target.2 (n + 1) ≤</span>
+<span id="L334">334       target.1) :</span>
+<span id="L335">335     armStreamHistory hK c stream n = armStreamHistory hK c stream&#x27; n := by</span>
+<span id="L336">336   apply armStreamHistory_eq_of_eq_below_pullCount hK c stream stream&#x27; n</span>
+<span id="L337">337   intro arm index hindex</span>
+<span id="L338">338   by_cases htarget : (index, arm) = target</span>
+<span id="L339">339   · have hle : pullCount (armStreamAction hK c stream) arm (n + 1) ≤</span>
+<span id="L340">340         index := by</span>
+<span id="L341">341       simpa [← htarget] using hfuture</span>
+<span id="L342">342     exact (Nat.not_lt_of_ge hle hindex).elim</span>
+<span id="L343">343   · have hcoordinate := congrFun hwithout ⟨(index, arm), htarget⟩</span>
+<span id="L344">344     simpa [armStreamWithoutCoordinate, armStreamCoordinate] using hcoordinate</span>
+<span id="L345">345 </span>
+<span id="L346">346 /--</span>
+<span id="L347">347 The event that a fixed coordinate is selected next factors through the stream</span>
+<span id="L348">348 with that coordinate omitted.</span>
+<span id="L349">349 -/</span>
+<span id="L350">350 theorem armStreamNextCoordinate_eq_iff_insertCoordinate</span>
+<span id="L351">351     {K : Nat} (hK : 0 &lt; K) (c : Real) (n : Nat)</span>
+<span id="L352">352     (target : Nat × Fin K) (value : Real) (stream : ArmRewardStream K) :</span>
+<span id="L353">353     armStreamNextCoordinate hK c n stream = target ↔</span>
+<span id="L354">354       armStreamNextCoordinate hK c n</span>
+<span id="L355">355         (armStreamInsertCoordinate target value</span>
+<span id="L356">356           (armStreamWithoutCoordinate target stream)) = target := by</span>
+<span id="L357">357   let rebuilt := armStreamInsertCoordinate target value</span>
+<span id="L358">358     (armStreamWithoutCoordinate target stream)</span>
+<span id="L359">359   have hwithout : armStreamWithoutCoordinate target stream =</span>
+<span id="L360">360       armStreamWithoutCoordinate target rebuilt := by</span>
+<span id="L361">361     simp [rebuilt]</span>
+<span id="L362">362   constructor</span>
+<span id="L363">363   · intro hnext</span>
+<span id="L364">364     have hcount := armStreamNextCoordinate_fst_eq_pullCount hK c stream n</span>
+<span id="L365">365     rw [hnext] at hcount</span>
+<span id="L366">366     have hhistory :=</span>
+<span id="L367">367       armStreamHistory_eq_of_withoutCoordinate_eq_of_pullCount_le</span>
+<span id="L368">368         hK c target stream rebuilt n hwithout hcount.symm.le</span>
+<span id="L369">369     simpa [armStreamNextCoordinate, armStreamHistoryAction, rebuilt,</span>
+<span id="L370">370       hhistory] using hnext</span>
+<span id="L371">371   · intro hnext</span>
+<span id="L372">372     have hcount := armStreamNextCoordinate_fst_eq_pullCount hK c rebuilt n</span>
+<span id="L373">373     rw [hnext] at hcount</span>
+<span id="L374">374     have hhistory :=</span>
+<span id="L375">375       armStreamHistory_eq_of_withoutCoordinate_eq_of_pullCount_le</span>
+<span id="L376">376         hK c target rebuilt stream n hwithout.symm hcount.symm.le</span>
+<span id="L377">377     simpa [armStreamNextCoordinate, armStreamHistoryAction, rebuilt,</span>
+<span id="L378">378       hhistory] using hnext</span>
+<span id="L379">379 </span>
+<span id="L380">380 /--</span>
+<span id="L381">381 On the branch selecting `target`, the actual successor condition equals its</span>
+<span id="L382">382 reconstruction from all coordinates except `target`.</span>
+<span id="L383">383 -/</span>
+<span id="L384">384 theorem armStreamHistoryAction_eq_fromWithout_of_nextCoordinate_eq</span>
+<span id="L385">385     {K : Nat} (hK : 0 &lt; K) (c : Real) (n : Nat)</span>
+<span id="L386">386     (target : Nat × Fin K) (value : Real) (stream : ArmRewardStream K)</span>
+<span id="L387">387     (hnext : armStreamNextCoordinate hK c n stream = target) :</span>
+<span id="L388">388     armStreamHistoryAction hK c n stream =</span>
+<span id="L389">389       armStreamHistoryActionFromWithout hK c n target value</span>
+<span id="L390">390         (armStreamWithoutCoordinate target stream) := by</span>
+<span id="L391">391   let rebuilt := armStreamInsertCoordinate target value</span>
+<span id="L392">392     (armStreamWithoutCoordinate target stream)</span>
+<span id="L393">393   have hwithout : armStreamWithoutCoordinate target stream =</span>
+<span id="L394">394       armStreamWithoutCoordinate target rebuilt := by</span>
+<span id="L395">395     simp [rebuilt]</span>
+<span id="L396">396   have hcount := armStreamNextCoordinate_fst_eq_pullCount hK c stream n</span>
+<span id="L397">397   rw [hnext] at hcount</span>
+<span id="L398">398   have hhistory :=</span>
+<span id="L399">399     armStreamHistory_eq_of_withoutCoordinate_eq_of_pullCount_le</span>
+<span id="L400">400       hK c target stream rebuilt n hwithout hcount.symm.le</span>
+<span id="L401">401   simp [armStreamHistoryActionFromWithout, armStreamHistoryAction,</span>
+<span id="L402">402     rebuilt, hhistory]</span>
+<span id="L403">403 </span>
+<span id="L404">404 /-- All pull-index/arm coordinates are mutually independent. -/</span>
+<span id="L405">405 theorem iIndepFun_armStreamMeasure_coordinate</span>
+<span id="L406">406     {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] :</span>
+<span id="L407">407     iIndepFun</span>
+<span id="L408">408       (fun index : Nat × Fin K =&gt; armStreamCoordinate index)</span>
+<span id="L409">409       (armStreamMeasure nu) := by</span>
+<span id="L410">410   simpa [armStreamMeasure, armStreamCoordinate] using</span>
+<span id="L411">411     (iIndepFun_uncurry_infinitePi&#x27;</span>
+<span id="L412">412       (fun _index : Nat =&gt; fun arm : Fin K =&gt; nu arm)</span>
+<span id="L413">413       (fun _index _arm =&gt; measurable_id))</span>
+<span id="L414">414 </span>
+<span id="L415">415 set_option maxHeartbeats 800000 in</span>
+<span id="L416">416 /-- A fixed coordinate is independent of the collection of all other coordinates. -/</span>
+<span id="L417">417 theorem indepFun_armStreamMeasure_coordinate_without</span>
+<span id="L418">418     {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]</span>
+<span id="L419">419     (target : Nat × Fin K) :</span>
+<span id="L420">420     IndepFun (armStreamCoordinate target)</span>
+<span id="L421">421       (armStreamWithoutCoordinate target) (armStreamMeasure nu) := by</span>
+<span id="L422">422   let m : (Nat × Fin K) -&gt; MeasurableSpace (ArmRewardStream K) :=</span>
+<span id="L423">423     fun index =&gt; MeasurableSpace.comap (armStreamCoordinate index) inferInstance</span>
+<span id="L424">424   have hm_le : forall index,</span>
+<span id="L425">425       m index &lt;= (inferInstance : MeasurableSpace (ArmRewardStream K)) := fun index =&gt;</span>
+<span id="L426">426     (measurable_armStreamCoordinate index).comap_le</span>
+<span id="L427">427   have hindep : iIndep m (armStreamMeasure nu) := by</span>
+<span id="L428">428     exact iIndepFun_armStreamMeasure_coordinate nu</span>
+<span id="L429">429   have hdisjoint : Disjoint ({target} : Set (Nat × Fin K))</span>
+<span id="L430">430       {index | index ≠ target} := by</span>
+<span id="L431">431     simp</span>
+<span id="L432">432   have h := indep_iSup_of_disjoint hm_le hindep hdisjoint</span>
+<span id="L433">433   have hleft :</span>
+<span id="L434">434       (iSup fun index : Nat × Fin K =&gt;</span>
+<span id="L435">435         iSup fun _h : index ∈ ({target} : Set (Nat × Fin K)) =&gt; m index) =</span>
+<span id="L436">436         m target := by</span>
+<span id="L437">437     simp</span>
+<span id="L438">438   have hright :</span>
+<span id="L439">439       (iSup fun index : Nat × Fin K =&gt;</span>
+<span id="L440">440         iSup fun _h : index ∈ {candidate | candidate ≠ target} =&gt; m index) =</span>
+<span id="L441">441         MeasurableSpace.comap (armStreamWithoutCoordinate target)</span>
+<span id="L442">442           inferInstance := by</span>
+<span id="L443">443     simp only [MeasurableSpace.pi, MeasurableSpace.comap_iSup,</span>
+<span id="L444">444       MeasurableSpace.comap_comp, armStreamWithoutCoordinate,</span>
+<span id="L445">445       Function.comp_def, m]</span>
+<span id="L446">446     apply le_antisymm</span>
+<span id="L447">447     · refine iSup_le fun index =&gt; iSup_le fun hindex =&gt; ?_</span>
+<span id="L448">448       exact le_iSup_of_le (Subtype.mk index hindex) le_rfl</span>
+<span id="L449">449     · refine iSup_le fun index =&gt; ?_</span>
+<span id="L450">450       exact le_iSup_of_le index.1 &lt;| le_iSup_of_le index.2 le_rfl</span>
+<span id="L451">451   change Indep</span>
+<span id="L452">452     (MeasurableSpace.comap (armStreamCoordinate target) inferInstance)</span>
+<span id="L453">453     (MeasurableSpace.comap (armStreamWithoutCoordinate target) inferInstance)</span>
+<span id="L454">454     (armStreamMeasure nu)</span>
+<span id="L455">455   rw [hleft, hright] at h</span>
+<span id="L456">456   exact h</span>
+<span id="L457">457 </span>
+<span id="L458">458 /-- A fixed reward coordinate is independent of the reconstructed successor condition. -/</span>
+<span id="L459">459 theorem indepFun_armStreamMeasure_coordinate_historyActionFromWithout</span>
+<span id="L460">460     {K : Nat} (hK : 0 &lt; K) (c : Real) (n : Nat)</span>
+<span id="L461">461     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]</span>
+<span id="L462">462     (target : Nat × Fin K) (value : Real) :</span>
+<span id="L463">463     IndepFun (armStreamCoordinate target)</span>
+<span id="L464">464       (fun stream : ArmRewardStream K =&gt;</span>
+<span id="L465">465         armStreamHistoryActionFromWithout hK c n target value</span>
+<span id="L466">466           (armStreamWithoutCoordinate target stream))</span>
+<span id="L467">467       (armStreamMeasure nu) := by</span>
+<span id="L468">468   have hindep :=</span>
+<span id="L469">469     (indepFun_armStreamMeasure_coordinate_without nu target).comp</span>
+<span id="L470">470       measurable_id</span>
+<span id="L471">471       (measurable_armStreamHistoryActionFromWithout hK c n target value)</span>
+<span id="L472">472   simpa [Function.comp_def] using hindep</span>
+<span id="L473">473 </span>
+<span id="L474">474 /--</span>
+<span id="L475">475 The reconstructed successor condition and a fixed omitted coordinate have a</span>
+<span id="L476">476 product joint law, with the prescribed arm marginal on the reward coordinate.</span>
+<span id="L477">477 -/</span>
+<span id="L478">478 theorem armStreamMeasure_map_historyActionFromWithout_coordinate_eq_prod</span>
+<span id="L479">479     {K : Nat} (hK : 0 &lt; K) (c : Real) (n : Nat)</span>
+<span id="L480">480     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]</span>
+<span id="L481">481     (target : Nat × Fin K) (value : Real) :</span>
+<span id="L482">482     Measure.map</span>
+<span id="L483">483         (fun stream : ArmRewardStream K =&gt;</span>
+<span id="L484">484           (armStreamHistoryActionFromWithout hK c n target value</span>
+<span id="L485">485               (armStreamWithoutCoordinate target stream),</span>
+<span id="L486">486             armStreamCoordinate target stream))</span>
+<span id="L487">487         (armStreamMeasure nu) =</span>
+<span id="L488">488       (Measure.map</span>
+<span id="L489">489         (fun stream : ArmRewardStream K =&gt;</span>
+<span id="L490">490           armStreamHistoryActionFromWithout hK c n target value</span>
+<span id="L491">491             (armStreamWithoutCoordinate target stream))</span>
+<span id="L492">492         (armStreamMeasure nu)).prod (nu target.2) := by</span>
+<span id="L493">493   let condition := fun stream : ArmRewardStream K =&gt;</span>
+<span id="L494">494     armStreamHistoryActionFromWithout hK c n target value</span>
+<span id="L495">495       (armStreamWithoutCoordinate target stream)</span>
+<span id="L496">496   have hcondition : Measurable condition :=</span>
+<span id="L497">497     (measurable_armStreamHistoryActionFromWithout hK c n target value).comp</span>
+<span id="L498">498       (measurable_armStreamWithoutCoordinate target)</span>
+<span id="L499">499   have hcoordinate := measurable_armStreamCoordinate target</span>
+<span id="L500">500   have hjoint :=</span>
+<span id="L501">501     (indepFun_iff_map_prod_eq_prod_map_map</span>
+<span id="L502">502       hcondition.aemeasurable hcoordinate.aemeasurable).mp</span>
+<span id="L503">503       (indepFun_armStreamMeasure_coordinate_historyActionFromWithout</span>
+<span id="L504">504         hK c n nu target value).symm</span>
+<span id="L505">505   rw [hjoint]</span>
+<span id="L506">506   congr 1</span>
+<span id="L507">507   simpa [armStreamCoordinate] using</span>
+<span id="L508">508     armStreamMeasure_map_coord nu target.1 target.2</span>
+<span id="L509">509 </span>
+<span id="L510">510 /-- The reconstructed condition is in `target`&#x27;s branch exactly on the actual branch. -/</span>
+<span id="L511">511 theorem armStreamHistoryActionFromWithout_mem_coordinateBranch_iff</span>
+<span id="L512">512     {K : Nat} (hK : 0 &lt; K) (c : Real) (n : Nat)</span>
+<span id="L513">513     (target : Nat × Fin K) (value : Real) (stream : ArmRewardStream K) :</span>
+<span id="L514">514     armStreamHistoryActionFromWithout hK c n target value</span>
+<span id="L515">515         (armStreamWithoutCoordinate target stream) ∈</span>
+<span id="L516">516       armStreamHistoryActionCoordinateBranch n target ↔</span>
+<span id="L517">517     stream ∈ armStreamNextCoordinateBranch hK c n target := by</span>
+<span id="L518">518   change armStreamCoordinateOfHistoryAction n</span>
+<span id="L519">519       (armStreamHistoryAction hK c n</span>
+<span id="L520">520         (armStreamInsertCoordinate target value</span>
+<span id="L521">521           (armStreamWithoutCoordinate target stream))) = target ↔</span>
+<span id="L522">522     armStreamNextCoordinate hK c n stream = target</span>
+<span id="L523">523   rw [← armStreamNextCoordinate_eq_coordinateOfHistoryAction hK c n]</span>
+<span id="L524">524   exact (armStreamNextCoordinate_eq_iff_insertCoordinate</span>
+<span id="L525">525     hK c n target value stream).symm</span>
+<span id="L526">526 </span>
+<span id="L527">527 /-- Both actual and reconstructed condition maps induce the same branch restriction. -/</span>
+<span id="L528">528 theorem map_historyActionFromWithout_restrict_coordinateBranch_eq_historyAction</span>
+<span id="L529">529     {K : Nat} (hK : 0 &lt; K) (c : Real) (n : Nat)</span>
+<span id="L530">530     (target : Nat × Fin K) (value : Real)</span>
+<span id="L531">531     (mu : Measure (ArmRewardStream K)) :</span>
+<span id="L532">532     (Measure.map</span>
+<span id="L533">533       (fun stream : ArmRewardStream K =&gt;</span>
+<span id="L534">534         armStreamHistoryActionFromWithout hK c n target value</span>
+<span id="L535">535           (armStreamWithoutCoordinate target stream)) mu).restrict</span>
+<span id="L536">536         (armStreamHistoryActionCoordinateBranch n target) =</span>
+<span id="L537">537       (Measure.map (armStreamHistoryAction hK c n) mu).restrict</span>
+<span id="L538">538         (armStreamHistoryActionCoordinateBranch n target) := by</span>
+<span id="L539">539   have hrebuilt : Measurable</span>
+<span id="L540">540       (fun stream : ArmRewardStream K =&gt;</span>
+<span id="L541">541         armStreamHistoryActionFromWithout hK c n target value</span>
+<span id="L542">542           (armStreamWithoutCoordinate target stream)) :=</span>
+<span id="L543">543     (measurable_armStreamHistoryActionFromWithout hK c n target value).comp</span>
+<span id="L544">544       (measurable_armStreamWithoutCoordinate target)</span>
+<span id="L545">545   have hcondition := measurable_armStreamHistoryAction hK c n</span>
+<span id="L546">546   have hbranch :=</span>
+<span id="L547">547     measurableSet_armStreamHistoryActionCoordinateBranch n target</span>
+<span id="L548">548   rw [Measure.restrict_map hrebuilt hbranch,</span>
+<span id="L549">549     Measure.restrict_map hcondition hbranch]</span>
+<span id="L550">550   have hrebuiltPreimage :</span>
+<span id="L551">551       (fun stream : ArmRewardStream K =&gt;</span>
+<span id="L552">552         armStreamHistoryActionFromWithout hK c n target value</span>
+<span id="L553">553           (armStreamWithoutCoordinate target stream)) ⁻¹&#x27;</span>
+<span id="L554">554           armStreamHistoryActionCoordinateBranch n target =</span>
+<span id="L555">555         armStreamNextCoordinateBranch hK c n target := by</span>
+<span id="L556">556     ext stream</span>
+<span id="L557">557     exact armStreamHistoryActionFromWithout_mem_coordinateBranch_iff</span>
+<span id="L558">558       hK c n target value stream</span>
+<span id="L559">559   have hconditionPreimage :</span>
+<span id="L560">560       armStreamHistoryAction hK c n ⁻¹&#x27;</span>
+<span id="L561">561           armStreamHistoryActionCoordinateBranch n target =</span>
+<span id="L562">562         armStreamNextCoordinateBranch hK c n target := by</span>
+<span id="L563">563     ext stream</span>
+<span id="L564">564     rfl</span>
+<span id="L565">565   rw [hrebuiltPreimage, hconditionPreimage]</span>
+<span id="L566">566   apply Measure.map_congr</span>
+<span id="L567">567   filter_upwards [ae_restrict_mem</span>
+<span id="L568">568     (measurableSet_armStreamNextCoordinateBranch hK c n target)] with</span>
+<span id="L569">569       stream hnext</span>
+<span id="L570">570   exact (armStreamHistoryAction_eq_fromWithout_of_nextCoordinate_eq</span>
+<span id="L571">571     hK c n target value stream hnext).symm</span>
+<span id="L572">572 </span>
+<span id="L573">573 /--</span>
+<span id="L574">574 On one fixed next-coordinate branch, the actual successor condition/reward pair</span>
+<span id="L575">575 has the restricted condition marginal times the prescribed arm law.</span>
+<span id="L576">576 -/</span>
+<span id="L577">577 theorem armStreamMeasure_map_historyAction_reward_restrict_branch_eq_prod</span>
+<span id="L578">578     {K : Nat} (hK : 0 &lt; K) (c : Real) (n : Nat)</span>
+<span id="L579">579     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]</span>
+<span id="L580">580     (target : Nat × Fin K) (value : Real) :</span>
+<span id="L581">581     Measure.map</span>
+<span id="L582">582         (fun stream : ArmRewardStream K =&gt;</span>
+<span id="L583">583           (armStreamHistoryAction hK c n stream,</span>
+<span id="L584">584             armStreamReward hK c stream (n + 1)))</span>
+<span id="L585">585         ((armStreamMeasure nu).restrict</span>
+<span id="L586">586           (armStreamNextCoordinateBranch hK c n target)) =</span>
+<span id="L587">587       ((Measure.map (armStreamHistoryAction hK c n)</span>
+<span id="L588">588           (armStreamMeasure nu)).restrict</span>
+<span id="L589">589         (armStreamHistoryActionCoordinateBranch n target)).prod</span>
+<span id="L590">590           (nu target.2) := by</span>
+<span id="L591">591   let rebuiltCondition := fun stream : ArmRewardStream K =&gt;</span>
+<span id="L592">592     armStreamHistoryActionFromWithout hK c n target value</span>
+<span id="L593">593       (armStreamWithoutCoordinate target stream)</span>
+<span id="L594">594   let rebuiltPair := fun stream : ArmRewardStream K =&gt;</span>
+<span id="L595">595     (rebuiltCondition stream, armStreamCoordinate target stream)</span>
+<span id="L596">596   let actualPair := fun stream : ArmRewardStream K =&gt;</span>
+<span id="L597">597     (armStreamHistoryAction hK c n stream,</span>
+<span id="L598">598       armStreamReward hK c stream (n + 1))</span>
+<span id="L599">599   let streamBranch := armStreamNextCoordinateBranch hK c n target</span>
+<span id="L600">600   let conditionBranch := armStreamHistoryActionCoordinateBranch n target</span>
+<span id="L601">601   have hstreamBranch : MeasurableSet streamBranch :=</span>
+<span id="L602">602     measurableSet_armStreamNextCoordinateBranch hK c n target</span>
+<span id="L603">603   have hconditionBranch : MeasurableSet conditionBranch :=</span>
+<span id="L604">604     measurableSet_armStreamHistoryActionCoordinateBranch n target</span>
+<span id="L605">605   have hrebuiltCondition : Measurable rebuiltCondition :=</span>
+<span id="L606">606     (measurable_armStreamHistoryActionFromWithout hK c n target value).comp</span>
+<span id="L607">607       (measurable_armStreamWithoutCoordinate target)</span>
+<span id="L608">608   have hrebuiltPair : Measurable rebuiltPair :=</span>
+<span id="L609">609     hrebuiltCondition.prodMk (measurable_armStreamCoordinate target)</span>
+<span id="L610">610   have hpairMap :</span>
+<span id="L611">611       Measure.map actualPair ((armStreamMeasure nu).restrict streamBranch) =</span>
+<span id="L612">612         Measure.map rebuiltPair</span>
+<span id="L613">613           ((armStreamMeasure nu).restrict streamBranch) := by</span>
+<span id="L614">614     apply Measure.map_congr</span>
+<span id="L615">615     filter_upwards [ae_restrict_mem hstreamBranch] with stream hnext</span>
+<span id="L616">616     change armStreamNextCoordinate hK c n stream = target at hnext</span>
+<span id="L617">617     apply Prod.ext</span>
+<span id="L618">618     · exact armStreamHistoryAction_eq_fromWithout_of_nextCoordinate_eq</span>
+<span id="L619">619         hK c n target value stream hnext</span>
+<span id="L620">620     · change armStreamReward hK c stream (n + 1) =</span>
+<span id="L621">621         armStreamCoordinate target stream</span>
+<span id="L622">622       rw [armStreamReward_succ_eq_nextCoordinate, hnext]</span>
+<span id="L623">623   have hpreimage :</span>
+<span id="L624">624       rebuiltPair ⁻¹&#x27; (conditionBranch ×ˢ Set.univ) = streamBranch := by</span>
+<span id="L625">625     ext stream</span>
+<span id="L626">626     change (rebuiltCondition stream ∈ conditionBranch ∧</span>
+<span id="L627">627       armStreamCoordinate target stream ∈ Set.univ) ↔</span>
+<span id="L628">628         stream ∈ streamBranch</span>
+<span id="L629">629     simp only [Set.mem_univ, and_true]</span>
+<span id="L630">630     exact armStreamHistoryActionFromWithout_mem_coordinateBranch_iff</span>
+<span id="L631">631       hK c n target value stream</span>
+<span id="L632">632   calc</span>
+<span id="L633">633     Measure.map actualPair ((armStreamMeasure nu).restrict streamBranch) =</span>
+<span id="L634">634         Measure.map rebuiltPair</span>
+<span id="L635">635           ((armStreamMeasure nu).restrict streamBranch) := hpairMap</span>
+<span id="L636">636     _ = (Measure.map rebuiltPair (armStreamMeasure nu)).restrict</span>
+<span id="L637">637           (conditionBranch ×ˢ Set.univ) := by</span>
+<span id="L638">638       rw [Measure.restrict_map hrebuiltPair</span>
+<span id="L639">639         (hconditionBranch.prod MeasurableSet.univ), hpreimage]</span>
+<span id="L640">640     _ = ((Measure.map rebuiltCondition (armStreamMeasure nu)).prod</span>
+<span id="L641">641           (nu target.2)).restrict (conditionBranch ×ˢ Set.univ) := by</span>
+<span id="L642">642       rw [armStreamMeasure_map_historyActionFromWithout_coordinate_eq_prod</span>
+<span id="L643">643         hK c n nu target value]</span>
+<span id="L644">644     _ = ((Measure.map rebuiltCondition (armStreamMeasure nu)).restrict</span>
+<span id="L645">645           conditionBranch).prod (nu target.2) := by</span>
+<span id="L646">646       rw [Measure.restrict_prod_eq_prod_univ]</span>
+<span id="L647">647     _ = ((Measure.map (armStreamHistoryAction hK c n)</span>
+<span id="L648">648           (armStreamMeasure nu)).restrict conditionBranch).prod</span>
+<span id="L649">649           (nu target.2) := by</span>
+<span id="L650">650       rw [map_historyActionFromWithout_restrict_coordinateBranch_eq_historyAction</span>
+<span id="L651">651         hK c n target value (armStreamMeasure nu)]</span>
+<span id="L652">652 </span>
+<span id="L653">653 /--</span>
+<span id="L654">654 The full successor condition/reward joint law is the condition marginal followed</span>
+<span id="L655">655 by the stationary law of the arm selected in that condition.</span>
+<span id="L656">656 -/</span>
+<span id="L657">657 theorem armStreamMeasure_map_historyAction_reward_succ_eq_compProd</span>
+<span id="L658">658     {K : Nat} (hK : 0 &lt; K) (c : Real) (n : Nat)</span>
+<span id="L659">659     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] :</span>
+<span id="L660">660     Measure.map</span>
+<span id="L661">661         (fun stream : ArmRewardStream K =&gt;</span>
+<span id="L662">662           (armStreamHistoryAction hK c n stream,</span>
+<span id="L663">663             armStreamReward hK c stream (n + 1)))</span>
+<span id="L664">664         (armStreamMeasure nu) =</span>
+<span id="L665">665       Measure.compProd</span>
+<span id="L666">666         (Measure.map (armStreamHistoryAction hK c n)</span>
+<span id="L667">667           (armStreamMeasure nu))</span>
+<span id="L668">668         (armStreamSelectedRewardKernel n nu) := by</span>
+<span id="L669">669   let actualPair := fun stream : ArmRewardStream K =&gt;</span>
+<span id="L670">670     (armStreamHistoryAction hK c n stream,</span>
+<span id="L671">671       armStreamReward hK c stream (n + 1))</span>
+<span id="L672">672   let conditionMeasure :=</span>
+<span id="L673">673     Measure.map (armStreamHistoryAction hK c n) (armStreamMeasure nu)</span>
+<span id="L674">674   let selectedKernel : Kernel</span>
+<span id="L675">675       (History.FinitePairHistory (Fin K) Real n × Fin K) Real :=</span>
+<span id="L676">676     armStreamSelectedRewardKernel n nu</span>
+<span id="L677">677   have hactualPair : Measurable actualPair :=</span>
+<span id="L678">678     (measurable_armStreamHistoryAction hK c n).prodMk</span>
+<span id="L679">679       (measurable_armStreamReward hK c (n + 1))</span>
+<span id="L680">680   have hstreamPartition :=</span>
+<span id="L681">681     armStreamMeasure_eq_sum_restrict_nextCoordinateBranch hK c n nu</span>
+<span id="L682">682   have hconditionPartition :=</span>
+<span id="L683">683     measure_eq_sum_restrict_armStreamHistoryActionCoordinateBranch</span>
+<span id="L684">684       n conditionMeasure</span>
+<span id="L685">685   have hleft :</span>
+<span id="L686">686       Measure.map actualPair (armStreamMeasure nu) =</span>
+<span id="L687">687         Measure.sum fun target : Nat × Fin K =&gt;</span>
+<span id="L688">688           conditionMeasure.restrict</span>
+<span id="L689">689               (armStreamHistoryActionCoordinateBranch n target) |&gt;.prod</span>
+<span id="L690">690             (nu target.2) := by</span>
+<span id="L691">691     calc</span>
+<span id="L692">692       Measure.map actualPair (armStreamMeasure nu) =</span>
+<span id="L693">693           Measure.map actualPair</span>
+<span id="L694">694             (Measure.sum fun target : Nat × Fin K =&gt;</span>
+<span id="L695">695               (armStreamMeasure nu).restrict</span>
+<span id="L696">696                 (armStreamNextCoordinateBranch hK c n target)) := by</span>
+<span id="L697">697         rw [← hstreamPartition]</span>
+<span id="L698">698       _ = Measure.sum fun target : Nat × Fin K =&gt;</span>
+<span id="L699">699           Measure.map actualPair</span>
+<span id="L700">700             ((armStreamMeasure nu).restrict</span>
+<span id="L701">701               (armStreamNextCoordinateBranch hK c n target)) := by</span>
+<span id="L702">702         apply Measure.map_sum</span>
+<span id="L703">703         rw [← hstreamPartition]</span>
+<span id="L704">704         exact hactualPair.aemeasurable</span>
+<span id="L705">705       _ = Measure.sum fun target : Nat × Fin K =&gt;</span>
+<span id="L706">706           conditionMeasure.restrict</span>
+<span id="L707">707               (armStreamHistoryActionCoordinateBranch n target) |&gt;.prod</span>
+<span id="L708">708             (nu target.2) := by</span>
+<span id="L709">709         congr 1</span>
+<span id="L710">710         funext target</span>
+<span id="L711">711         exact armStreamMeasure_map_historyAction_reward_restrict_branch_eq_prod</span>
+<span id="L712">712           hK c n nu target 0</span>
+<span id="L713">713   have hright :</span>
+<span id="L714">714       Measure.compProd conditionMeasure selectedKernel =</span>
+<span id="L715">715         Measure.sum fun target : Nat × Fin K =&gt;</span>
+<span id="L716">716           conditionMeasure.restrict</span>
+<span id="L717">717               (armStreamHistoryActionCoordinateBranch n target) |&gt;.prod</span>
+<span id="L718">718             (nu target.2) := by</span>
+<span id="L719">719     calc</span>
+<span id="L720">720       Measure.compProd conditionMeasure selectedKernel =</span>
+<span id="L721">721           Measure.compProd</span>
+<span id="L722">722             (Measure.sum fun target : Nat × Fin K =&gt;</span>
+<span id="L723">723               conditionMeasure.restrict</span>
+<span id="L724">724                 (armStreamHistoryActionCoordinateBranch n target))</span>
+<span id="L725">725             selectedKernel := by</span>
+<span id="L726">726         rw [← hconditionPartition]</span>
+<span id="L727">727       _ = Measure.sum fun target : Nat × Fin K =&gt;</span>
+<span id="L728">728           Measure.compProd</span>
+<span id="L729">729             (conditionMeasure.restrict</span>
+<span id="L730">730               (armStreamHistoryActionCoordinateBranch n target))</span>
+<span id="L731">731             selectedKernel := by</span>
+<span id="L732">732         rw [Measure.compProd_sum_left]</span>
+<span id="L733">733       _ = Measure.sum fun target : Nat × Fin K =&gt;</span>
+<span id="L734">734           conditionMeasure.restrict</span>
+<span id="L735">735               (armStreamHistoryActionCoordinateBranch n target) |&gt;.prod</span>
+<span id="L736">736             (nu target.2) := by</span>
+<span id="L737">737         congr 1</span>
+<span id="L738">738         funext target</span>
+<span id="L739">739         have hselected : Filter.EventuallyEq</span>
+<span id="L740">740             (ae (conditionMeasure.restrict</span>
+<span id="L741">741               (armStreamHistoryActionCoordinateBranch n target)))</span>
+<span id="L742">742             selectedKernel</span>
+<span id="L743">743             (Kernel.const _ (nu target.2)) := by</span>
+<span id="L744">744           filter_upwards [ae_restrict_mem</span>
+<span id="L745">745             (measurableSet_armStreamHistoryActionCoordinateBranch</span>
+<span id="L746">746               n target)] with condition hcondition</span>
+<span id="L747">747           have hsecond : condition.2 = target.2 := by</span>
+<span id="L748">748             simpa [armStreamHistoryActionCoordinateBranch,</span>
+<span id="L749">749               armStreamCoordinateOfHistoryAction] using</span>
+<span id="L750">750                 congrArg Prod.snd hcondition</span>
+<span id="L751">751           rw [Kernel.comap_apply, Kernel.const_apply, hsecond]</span>
+<span id="L752">752         rw [Measure.compProd_congr hselected, Measure.compProd_const]</span>
+<span id="L753">753   exact hleft.trans hright.symm</span>
+<span id="L754">754 </span>
+<span id="L755">755 /-- The successor arm-stream reward conditional law is the selected arm law. -/</span>
+<span id="L756">756 theorem armStreamReward_succ_condDistrib_ae_eq_nu</span>
+<span id="L757">757     {K : Nat} (hK : 0 &lt; K) (c : Real) (n : Nat)</span>
+<span id="L758">758     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] :</span>
+<span id="L759">759     Filter.EventuallyEq</span>
+<span id="L760">760       (ae ((armStreamMeasure nu).map</span>
+<span id="L761">761         (armStreamHistoryAction hK c n)))</span>
+<span id="L762">762       (condDistrib</span>
+<span id="L763">763         (fun stream : ArmRewardStream K =&gt;</span>
+<span id="L764">764           armStreamReward hK c stream (n + 1))</span>
+<span id="L765">765         (armStreamHistoryAction hK c n)</span>
+<span id="L766">766         (armStreamMeasure nu))</span>
+<span id="L767">767       (armStreamSelectedRewardKernel n nu) := by</span>
+<span id="L768">768   refine</span>
+<span id="L769">769     (condDistrib_ae_eq_iff_measure_eq_compProd</span>
+<span id="L770">770       (armStreamHistoryAction hK c n)</span>
+<span id="L771">771       (measurable_armStreamReward hK c (n + 1)).aemeasurable</span>
+<span id="L772">772       (armStreamSelectedRewardKernel n nu)).mpr ?_</span>
+<span id="L773">773   exact armStreamMeasure_map_historyAction_reward_succ_eq_compProd</span>
+<span id="L774">774     hK c n nu</span>
+<span id="L775">775 </span>
+<span id="L776">776 /-- The packaged canonical successor-feedback kernel is the stationary selected law. -/</span>
+<span id="L777">777 theorem canonicalArmStreamHistoryEnvironment_feedback_ae_eq_nu</span>
+<span id="L778">778     {K : Nat} [NeZero K]</span>
+<span id="L779">779     (hK : 0 &lt; K) (c : Real) (sigma2 : NNReal)</span>
+<span id="L780">780     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) :</span>
+<span id="L781">781     Filter.EventuallyEq</span>
+<span id="L782">782       (ae ((armStreamMeasure nu).map</span>
+<span id="L783">783         (armStreamHistoryAction hK (c * (sigma2 : Real)) n)))</span>
+<span id="L784">784       ((canonicalArmStreamHistoryEnvironment hK c sigma2 nu).feedback n)</span>
+<span id="L785">785       (armStreamSelectedRewardKernel n nu) := by</span>
+<span id="L786">786   have hcondition :</span>
+<span id="L787">787       (fun stream : ArmRewardStream K =&gt;</span>
+<span id="L788">788         (History.finitePairHistoryOfTrace</span>
+<span id="L789">789             (armStreamAction hK (c * (sigma2 : Real)) stream)</span>
+<span id="L790">790             (armStreamReward hK (c * (sigma2 : Real)) stream) n,</span>
+<span id="L791">791           armStreamAction hK (c * (sigma2 : Real)) stream (n + 1))) =</span>
+<span id="L792">792         armStreamHistoryAction hK (c * (sigma2 : Real)) n := by</span>
+<span id="L793">793     funext stream</span>
+<span id="L794">794     rw [armStreamAction_succ]</span>
+<span id="L795">795     simp [armStreamHistoryAction,</span>
+<span id="L796">796       armStreamHistory_eq_finitePairHistoryOfTrace]</span>
+<span id="L797">797   simpa only [canonicalArmStreamHistoryEnvironment, hcondition] using</span>
+<span id="L798">798       armStreamReward_succ_condDistrib_ae_eq_nu</span>
+<span id="L799">799         hK (c * (sigma2 : Real)) n nu</span>
+<span id="L800">800 </span>
+<span id="L801">801 /--</span>
+<span id="L802">802 Given every other latent coordinate, a fixed coordinate still has its</span>
+<span id="L803">803 prescribed stationary arm law.</span>
+<span id="L804">804 -/</span>
+<span id="L805">805 theorem armStreamMeasure_condDistrib_coordinate_given_without</span>
+<span id="L806">806     {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]</span>
+<span id="L807">807     (target : Nat × Fin K) :</span>
+<span id="L808">808     Filter.EventuallyEq</span>
+<span id="L809">809       (ae ((armStreamMeasure nu).map</span>
+<span id="L810">810         (armStreamWithoutCoordinate target)))</span>
+<span id="L811">811       (condDistrib (armStreamCoordinate target)</span>
+<span id="L812">812         (armStreamWithoutCoordinate target) (armStreamMeasure nu))</span>
+<span id="L813">813       (Kernel.const _ (nu target.2)) := by</span>
+<span id="L814">814   refine</span>
+<span id="L815">815     (condDistrib_ae_eq_iff_measure_eq_compProd</span>
+<span id="L816">816       (armStreamWithoutCoordinate target)</span>
+<span id="L817">817       (measurable_armStreamCoordinate target).aemeasurable</span>
+<span id="L818">818       (Kernel.const _ (nu target.2))).mpr ?_</span>
+<span id="L819">819   have hjoint :=</span>
+<span id="L820">820     (indepFun_iff_map_prod_eq_prod_map_map</span>
+<span id="L821">821       (measurable_armStreamWithoutCoordinate target).aemeasurable</span>
+<span id="L822">822       (measurable_armStreamCoordinate target).aemeasurable).mp</span>
+<span id="L823">823       (indepFun_armStreamMeasure_coordinate_without nu target).symm</span>
+<span id="L824">824   rw [Measure.compProd_const, hjoint]</span>
+<span id="L825">825   congr 1</span>
+<span id="L826">826   simpa [armStreamCoordinate] using</span>
+<span id="L827">827     armStreamMeasure_map_coord nu target.1 target.2</span>
+<span id="L828">828 </span>
+<span id="L829">829 /-- The initial arm-stream reward conditional law is the selected arm law. -/</span>
+<span id="L830">830 theorem armStreamReward_zero_condDistrib_ae_eq_nu</span>
+<span id="L831">831     {K : Nat} [NeZero K]</span>
+<span id="L832">832     (hK : 0 &lt; K) (c : Real) (sigma2 : NNReal)</span>
+<span id="L833">833     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] :</span>
+<span id="L834">834     Filter.EventuallyEq</span>
+<span id="L835">835       (ae ((armStreamMeasure nu).map</span>
+<span id="L836">836         (fun stream : ArmRewardStream K =&gt;</span>
+<span id="L837">837           armStreamAction hK (c * (sigma2 : Real)) stream 0)))</span>
+<span id="L838">838       (condDistrib</span>
+<span id="L839">839         (fun stream : ArmRewardStream K =&gt;</span>
+<span id="L840">840           armStreamReward hK (c * (sigma2 : Real)) stream 0)</span>
+<span id="L841">841         (fun stream : ArmRewardStream K =&gt;</span>
+<span id="L842">842           armStreamAction hK (c * (sigma2 : Real)) stream 0)</span>
+<span id="L843">843         (armStreamMeasure nu))</span>
+<span id="L844">844       nu := by</span>
+<span id="L845">845   let initialArm := initializationArm hK 0</span>
+<span id="L846">846   let condition : ArmRewardStream K -&gt; Fin K := fun _stream =&gt; initialArm</span>
+<span id="L847">847   let target : ArmRewardStream K -&gt; Real :=</span>
+<span id="L848">848     armStreamCoordinate (0, initialArm)</span>
+<span id="L849">849   have hcondition : Measurable condition := measurable_const</span>
+<span id="L850">850   have htarget : Measurable target :=</span>
+<span id="L851">851     measurable_armStreamCoordinate (0, initialArm)</span>
+<span id="L852">852   have htarget_map : Measure.map target (armStreamMeasure nu) = nu initialArm := by</span>
+<span id="L853">853     simpa [target, armStreamCoordinate] using</span>
+<span id="L854">854       armStreamMeasure_map_coord nu 0 initialArm</span>
+<span id="L855">855   have hconst : Filter.EventuallyEq</span>
+<span id="L856">856       (ae ((armStreamMeasure nu).map condition))</span>
+<span id="L857">857       (condDistrib target condition (armStreamMeasure nu))</span>
+<span id="L858">858       (Kernel.const _ (nu initialArm)) := by</span>
+<span id="L859">859     refine</span>
+<span id="L860">860       (condDistrib_ae_eq_iff_measure_eq_compProd</span>
+<span id="L861">861         condition htarget.aemeasurable</span>
+<span id="L862">862         (Kernel.const _ (nu initialArm))).mpr ?_</span>
+<span id="L863">863     have hjoint :=</span>
+<span id="L864">864       (indepFun_iff_map_prod_eq_prod_map_map</span>
+<span id="L865">865         hcondition.aemeasurable htarget.aemeasurable).mp</span>
+<span id="L866">866         (indepFun_const_left (μ := armStreamMeasure nu) initialArm target)</span>
+<span id="L867">867     rw [Measure.compProd_const, hjoint, htarget_map]</span>
+<span id="L868">868   have hcondition_map :</span>
+<span id="L869">869       Measure.map condition (armStreamMeasure nu) = Measure.dirac initialArm := by</span>
+<span id="L870">870     simp [condition]</span>
+<span id="L871">871   have hselected : Filter.EventuallyEq</span>
+<span id="L872">872       (ae ((armStreamMeasure nu).map condition))</span>
+<span id="L873">873       (Kernel.const (Fin K) (nu initialArm)) nu := by</span>
+<span id="L874">874     rw [hcondition_map]</span>
+<span id="L875">875     simp only [ae_dirac_eq, Filter.EventuallyEq, Filter.eventually_pure,</span>
+<span id="L876">876       Kernel.const_apply]</span>
+<span id="L877">877   have hresult := hconst.trans hselected</span>
+<span id="L878">878   simpa [condition, target, armStreamCoordinate, armStreamReward,</span>
+<span id="L879">879     rewardFromArmStream] using hresult</span>
+<span id="L880">880 </span>
+<span id="L881">881 /-- The packaged canonical initial-feedback kernel is the stationary selected law. -/</span>
+<span id="L882">882 theorem canonicalArmStreamHistoryEnvironment_initialFeedback_ae_eq_nu</span>
+<span id="L883">883     {K : Nat} [NeZero K]</span>
+<span id="L884">884     (hK : 0 &lt; K) (c : Real) (sigma2 : NNReal)</span>
+<span id="L885">885     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] :</span>
+<span id="L886">886     Filter.EventuallyEq</span>
+<span id="L887">887       (ae ((canonicalArmStreamHistoryAlgorithm hK c sigma2 nu).initialAction))</span>
+<span id="L888">888       (canonicalArmStreamHistoryEnvironment hK c sigma2 nu).initialFeedback</span>
+<span id="L889">889       nu := by</span>
+<span id="L890">890   simpa [canonicalArmStreamHistoryAlgorithm,</span>
+<span id="L891">891     canonicalArmStreamHistoryEnvironment] using</span>
+<span id="L892">892     armStreamReward_zero_condDistrib_ae_eq_nu hK c sigma2 nu</span>
+<span id="L893">893 </span>
+<span id="L894">894 end UCB</span>
+<span id="L895">895 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,823 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/LowerBounds/BanditHistoryKL.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/LowerBounds/BanditHistoryKL.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/LowerBounds/BanditHistoryKL.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/LowerBounds/BanditHistoryKL.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.LowerBounds.ConditionalKernelKL</span>
+<span id="L2">2 import BanditRLProof.Algorithms.ThompsonCanonicalTrajectory</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Same-policy finite-history KL for stochastic bandits</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module connects the conditional-kernel KL integral to the repository&#x27;s</span>
+<span id="L8">8 kernel-valued `HistoryAlgorithm` and canonical Ionescu--Tulcea trajectory.</span>
+<span id="L9">9 The observable history includes every sampled action and reward, so the same</span>
+<span id="L10">10 possibly randomized nonanticipating policy is shared by both environments.</span>
+<span id="L11">11 -/</span>
+<span id="L12">12 </span>
+<span id="L13">13 namespace BanditRLProof</span>
+<span id="L14">14 namespace LowerBounds</span>
+<span id="L15">15 </span>
+<span id="L16">16 open MeasureTheory ProbabilityTheory</span>
+<span id="L17">17 open scoped ENNReal</span>
+<span id="L18">18 </span>
+<span id="L19">19 noncomputable section</span>
+<span id="L20">20 </span>
+<span id="L21">21 universe u v</span>
+<span id="L22">22 </span>
+<span id="L23">23 /-- The time-zero action/reward pair is measurably equivalent to its singleton history. -/</span>
+<span id="L24">24 def pairHistoryZeroMeasurableEquiv</span>
+<span id="L25">25     (Action : Type u) (Reward : Type v)</span>
+<span id="L26">26     [MeasurableSpace Action] [MeasurableSpace Reward] :</span>
+<span id="L27">27     (Action × Reward) ≃ᵐ History.FinitePairHistory Action Reward 0 where</span>
+<span id="L28">28   toEquiv :=</span>
+<span id="L29">29     { toFun := Thompson.singletonPairHistory</span>
+<span id="L30">30       invFun := fun history =&gt;</span>
+<span id="L31">31         history ⟨0, Finset.mem_Iic.mpr le_rfl⟩</span>
+<span id="L32">32       left_inv := fun _pair =&gt; rfl</span>
+<span id="L33">33       right_inv := fun history =&gt; by</span>
+<span id="L34">34         funext index</span>
+<span id="L35">35         have hindex : index = ⟨0, Finset.mem_Iic.mpr le_rfl⟩ :=</span>
+<span id="L36">36           Subsingleton.elim _ _</span>
+<span id="L37">37         subst index</span>
+<span id="L38">38         rfl }</span>
+<span id="L39">39   measurable_toFun := Thompson.measurable_singletonPairHistory</span>
+<span id="L40">40   measurable_invFun := measurable_pi_apply _</span>
+<span id="L41">41 </span>
+<span id="L42">42 /-- A finite history and one next pair are measurably equivalent to the successor history. -/</span>
+<span id="L43">43 def pairHistorySuccMeasurableEquiv</span>
+<span id="L44">44     (Action : Type u) (Reward : Type v)</span>
+<span id="L45">45     [MeasurableSpace Action] [MeasurableSpace Reward] (n : Nat) :</span>
+<span id="L46">46     (History.FinitePairHistory Action Reward n × (Action × Reward)) ≃ᵐ</span>
+<span id="L47">47       History.FinitePairHistory Action Reward (n + 1) :=</span>
+<span id="L48">48   (MeasurableEquiv.prodCongr</span>
+<span id="L49">49       (MeasurableEquiv.refl</span>
+<span id="L50">50         (History.FinitePairHistory Action Reward n))</span>
+<span id="L51">51       (MeasurableEquiv.piSingleton</span>
+<span id="L52">52         (X := fun _ : Nat =&gt; Action × Reward) n)).trans</span>
+<span id="L53">53     (MeasurableEquiv.IicProdIoc</span>
+<span id="L54">54       (X := fun _ : Nat =&gt; Action × Reward) (Nat.le_succ n))</span>
+<span id="L55">55 </span>
+<span id="L56">56 theorem pairHistoryZeroMeasurableEquiv_apply</span>
+<span id="L57">57     {Action : Type u} {Reward : Type v}</span>
+<span id="L58">58     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L59">59     (pair : Action × Reward) :</span>
+<span id="L60">60     pairHistoryZeroMeasurableEquiv Action Reward pair =</span>
+<span id="L61">61       Thompson.singletonPairHistory pair := by</span>
+<span id="L62">62   funext index</span>
+<span id="L63">63   have hindex : index = ⟨0, Finset.mem_Iic.mpr le_rfl⟩ := Subsingleton.elim _ _</span>
+<span id="L64">64   subst index</span>
+<span id="L65">65   rfl</span>
+<span id="L66">66 </span>
+<span id="L67">67 theorem pairHistorySuccMeasurableEquiv_apply</span>
+<span id="L68">68     {Action : Type u} {Reward : Type v}</span>
+<span id="L69">69     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L70">70     (n : Nat)</span>
+<span id="L71">71     (input : History.FinitePairHistory Action Reward n × (Action × Reward)) :</span>
+<span id="L72">72     pairHistorySuccMeasurableEquiv Action Reward n input =</span>
+<span id="L73">73       History.extendPairHistorySucc input.1 input.2 := by</span>
+<span id="L74">74   funext index</span>
+<span id="L75">75   by_cases hindex : index.1 ≤ n</span>
+<span id="L76">76   · simp [pairHistorySuccMeasurableEquiv, MeasurableEquiv.IicProdIoc,</span>
+<span id="L77">77       MeasurableEquiv.piSingleton, MeasurableEquiv.prodCongr,</span>
+<span id="L78">78       Equiv.prodCongr, MeasurableEquiv.refl,</span>
+<span id="L79">79       History.extendPairHistorySucc, hindex]</span>
+<span id="L80">80   · have hle : index.1 ≤ n + 1 := Finset.mem_Iic.mp index.2</span>
+<span id="L81">81     have hsucc : index.1 = n + 1 := by</span>
+<span id="L82">82       omega</span>
+<span id="L83">83     simp [pairHistorySuccMeasurableEquiv, MeasurableEquiv.IicProdIoc,</span>
+<span id="L84">84       MeasurableEquiv.piSingleton, MeasurableEquiv.prodCongr,</span>
+<span id="L85">85       Equiv.prodCongr, MeasurableEquiv.refl,</span>
+<span id="L86">86       History.extendPairHistorySucc, hsucc]</span>
+<span id="L87">87 </span>
+<span id="L88">88 /-- A stationary arm-indexed reward kernel viewed as a history environment. -/</span>
+<span id="L89">89 noncomputable def stationaryBanditHistoryEnvironment</span>
+<span id="L90">90     {K : Nat} {Reward : Type v}</span>
+<span id="L91">91     [MeasurableSpace Reward]</span>
+<span id="L92">92     (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] :</span>
+<span id="L93">93     Thompson.HistoryEnvironment (Fin K) Reward where</span>
+<span id="L94">94   initialFeedback := armLaw</span>
+<span id="L95">95   feedback _ := armLaw.comap Prod.snd measurable_snd</span>
+<span id="L96">96 </span>
+<span id="L97">97 @[simp]</span>
+<span id="L98">98 theorem stationaryBanditHistoryEnvironment_initialFeedback</span>
+<span id="L99">99     {K : Nat} {Reward : Type v}</span>
+<span id="L100">100     [MeasurableSpace Reward]</span>
+<span id="L101">101     (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] :</span>
+<span id="L102">102     (stationaryBanditHistoryEnvironment armLaw).initialFeedback = armLaw := rfl</span>
+<span id="L103">103 </span>
+<span id="L104">104 @[simp]</span>
+<span id="L105">105 theorem stationaryBanditHistoryEnvironment_feedback_apply</span>
+<span id="L106">106     {K : Nat} {Reward : Type v}</span>
+<span id="L107">107     [MeasurableSpace Reward]</span>
+<span id="L108">108     (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw]</span>
+<span id="L109">109     (n : Nat) (history : History.FinitePairHistory (Fin K) Reward n)</span>
+<span id="L110">110     (arm : Fin K) :</span>
+<span id="L111">111     (stationaryBanditHistoryEnvironment armLaw).feedback n (history, arm) =</span>
+<span id="L112">112       armLaw arm := by</span>
+<span id="L113">113   rw [stationaryBanditHistoryEnvironment, Kernel.comap_apply]</span>
+<span id="L114">114 </span>
+<span id="L115">115 /-- Law of the observable action/reward history through the inclusive round `n`. -/</span>
+<span id="L116">116 noncomputable def canonicalBanditHistoryMeasure</span>
+<span id="L117">117     {K : Nat} {Reward : Type v}</span>
+<span id="L118">118     [MeasurableSpace Reward]</span>
+<span id="L119">119     (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward)</span>
+<span id="L120">120     (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw]</span>
+<span id="L121">121     (n : Nat) : Measure (History.FinitePairHistory (Fin K) Reward n) :=</span>
+<span id="L122">122   (Thompson.canonicalHistoryTrajectoryMeasure algorithm</span>
+<span id="L123">123     (stationaryBanditHistoryEnvironment armLaw)).map</span>
+<span id="L124">124       (Preorder.frestrictLe n)</span>
+<span id="L125">125 </span>
+<span id="L126">126 instance instCanonicalBanditHistoryMeasureIsProbability</span>
+<span id="L127">127     {K : Nat} {Reward : Type v}</span>
+<span id="L128">128     [MeasurableSpace Reward]</span>
+<span id="L129">129     (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward)</span>
+<span id="L130">130     (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw]</span>
+<span id="L131">131     (n : Nat) :</span>
+<span id="L132">132     IsProbabilityMeasure</span>
+<span id="L133">133       (canonicalBanditHistoryMeasure algorithm armLaw n) := by</span>
+<span id="L134">134   unfold canonicalBanditHistoryMeasure</span>
+<span id="L135">135   exact Measure.isProbabilityMeasure_map (by fun_prop)</span>
+<span id="L136">136 </span>
+<span id="L137">137 /-- The inclusive time-zero history is the initial action/reward law in singleton form. -/</span>
+<span id="L138">138 theorem canonicalBanditHistoryMeasure_zero</span>
+<span id="L139">139     {K : Nat} {Reward : Type v}</span>
+<span id="L140">140     [MeasurableSpace Reward]</span>
+<span id="L141">141     (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward)</span>
+<span id="L142">142     (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw] :</span>
+<span id="L143">143     canonicalBanditHistoryMeasure algorithm armLaw 0 =</span>
+<span id="L144">144       (algorithm.initialAction ⊗ₘ armLaw).map</span>
+<span id="L145">145         (pairHistoryZeroMeasurableEquiv (Fin K) Reward) := by</span>
+<span id="L146">146   let trajectoryMeasure :=</span>
+<span id="L147">147     Thompson.canonicalHistoryTrajectoryMeasure algorithm</span>
+<span id="L148">148       (stationaryBanditHistoryEnvironment armLaw)</span>
+<span id="L149">149   have hprefix :</span>
+<span id="L150">150       (Preorder.frestrictLe 0 :</span>
+<span id="L151">151           ((n : Nat) → Fin K × Reward) →</span>
+<span id="L152">152             History.FinitePairHistory (Fin K) Reward 0) =</span>
+<span id="L153">153         fun trajectory =&gt;</span>
+<span id="L154">154           pairHistoryZeroMeasurableEquiv (Fin K) Reward (trajectory 0) := by</span>
+<span id="L155">155     funext trajectory index</span>
+<span id="L156">156     have hindex : index = ⟨0, Finset.mem_Iic.mpr le_rfl⟩ :=</span>
+<span id="L157">157       Subsingleton.elim _ _</span>
+<span id="L158">158     subst index</span>
+<span id="L159">159     rfl</span>
+<span id="L160">160   have hinitial :</span>
+<span id="L161">161       trajectoryMeasure.map (fun trajectory =&gt; trajectory 0) =</span>
+<span id="L162">162         algorithm.initialAction ⊗ₘ armLaw := by</span>
+<span id="L163">163     simpa [trajectoryMeasure, Thompson.canonicalHistoryTrajectoryAction,</span>
+<span id="L164">164       Thompson.canonicalHistoryTrajectoryReward] using</span>
+<span id="L165">165       (Thompson.canonicalHistoryTrajectory_initialPair_map_eq algorithm</span>
+<span id="L166">166         (stationaryBanditHistoryEnvironment armLaw))</span>
+<span id="L167">167   change trajectoryMeasure.map (Preorder.frestrictLe 0) = _</span>
+<span id="L168">168   rw [hprefix]</span>
+<span id="L169">169   change trajectoryMeasure.map</span>
+<span id="L170">170       ((pairHistoryZeroMeasurableEquiv (Fin K) Reward) ∘</span>
+<span id="L171">171         fun trajectory =&gt; trajectory 0) = _</span>
+<span id="L172">172   rw [← Measure.map_map</span>
+<span id="L173">173     (pairHistoryZeroMeasurableEquiv (Fin K) Reward).measurable</span>
+<span id="L174">174     (measurable_pi_apply 0), hinitial]</span>
+<span id="L175">175 </span>
+<span id="L176">176 /--</span>
+<span id="L177">177 The inclusive successor history is obtained from the prefix history and the</span>
+<span id="L178">178 canonical same-policy action/reward step, then re-encoded by a measurable</span>
+<span id="L179">179 equivalence.</span>
+<span id="L180">180 -/</span>
+<span id="L181">181 theorem canonicalBanditHistoryMeasure_succ</span>
+<span id="L182">182     {K : Nat} {Reward : Type v}</span>
+<span id="L183">183     [MeasurableSpace Reward]</span>
+<span id="L184">184     (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward)</span>
+<span id="L185">185     (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw]</span>
+<span id="L186">186     (n : Nat) :</span>
+<span id="L187">187     canonicalBanditHistoryMeasure algorithm armLaw (n + 1) =</span>
+<span id="L188">188       (canonicalBanditHistoryMeasure algorithm armLaw n ⊗ₘ</span>
+<span id="L189">189           Thompson.historyStepKernel algorithm</span>
+<span id="L190">190             (stationaryBanditHistoryEnvironment armLaw) n).map</span>
+<span id="L191">191         (pairHistorySuccMeasurableEquiv (Fin K) Reward n) := by</span>
+<span id="L192">192   let trajectoryMeasure :=</span>
+<span id="L193">193     Thompson.canonicalHistoryTrajectoryMeasure algorithm</span>
+<span id="L194">194       (stationaryBanditHistoryEnvironment armLaw)</span>
+<span id="L195">195   let stepKernel := fun m =&gt;</span>
+<span id="L196">196     Thompson.historyStepKernel algorithm</span>
+<span id="L197">197       (stationaryBanditHistoryEnvironment armLaw) m</span>
+<span id="L198">198   have hjoint :</span>
+<span id="L199">199       trajectoryMeasure.map (Preorder.frestrictLe n) ⊗ₘ stepKernel n =</span>
+<span id="L200">200         trajectoryMeasure.map (fun trajectory =&gt;</span>
+<span id="L201">201           (Preorder.frestrictLe n trajectory, trajectory (n + 1))) := by</span>
+<span id="L202">202     simpa [trajectoryMeasure, stepKernel,</span>
+<span id="L203">203       Thompson.canonicalHistoryTrajectoryMeasure] using</span>
+<span id="L204">204       (ProbabilityTheory.Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure</span>
+<span id="L205">205           (X := fun _ : Nat =&gt; Fin K × Reward)</span>
+<span id="L206">206           (μ₀ := algorithm.initialAction ⊗ₘ armLaw)</span>
+<span id="L207">207           (κ := stepKernel) (a := n))</span>
+<span id="L208">208   have hencode :</span>
+<span id="L209">209       (Preorder.frestrictLe (n + 1) :</span>
+<span id="L210">210           ((m : Nat) → Fin K × Reward) →</span>
+<span id="L211">211             History.FinitePairHistory (Fin K) Reward (n + 1)) =</span>
+<span id="L212">212         fun trajectory =&gt;</span>
+<span id="L213">213           pairHistorySuccMeasurableEquiv (Fin K) Reward n</span>
+<span id="L214">214             (Preorder.frestrictLe n trajectory, trajectory (n + 1)) := by</span>
+<span id="L215">215     funext trajectory</span>
+<span id="L216">216     rw [pairHistorySuccMeasurableEquiv_apply]</span>
+<span id="L217">217     funext index</span>
+<span id="L218">218     by_cases hindex : index.1 ≤ n</span>
+<span id="L219">219     · simp [History.extendPairHistorySucc, hindex]</span>
+<span id="L220">220     · have hle : index.1 ≤ n + 1 := Finset.mem_Iic.mp index.2</span>
+<span id="L221">221       have hsucc : index.1 = n + 1 := by omega</span>
+<span id="L222">222       simp [History.extendPairHistorySucc, hsucc]</span>
+<span id="L223">223   change trajectoryMeasure.map (Preorder.frestrictLe (n + 1)) = _</span>
+<span id="L224">224   rw [hencode]</span>
+<span id="L225">225   change trajectoryMeasure.map</span>
+<span id="L226">226       ((pairHistorySuccMeasurableEquiv (Fin K) Reward n) ∘</span>
+<span id="L227">227         fun trajectory =&gt;</span>
+<span id="L228">228           (Preorder.frestrictLe n trajectory, trajectory (n + 1))) = _</span>
+<span id="L229">229   rw [← Measure.map_map</span>
+<span id="L230">230     (pairHistorySuccMeasurableEquiv (Fin K) Reward n).measurable</span>
+<span id="L231">231     ((Preorder.measurable_frestrictLe n).prodMk</span>
+<span id="L232">232       (measurable_pi_apply (n + 1)))]</span>
+<span id="L233">233   rw [← hjoint]</span>
+<span id="L234">234   rfl</span>
+<span id="L235">235 </span>
+<span id="L236">236 /--</span>
+<span id="L237">237 At the first pull, same-policy history KL is the initial-action average of the</span>
+<span id="L238">238 arm-law KL divergence.  The expectation is under the first environment.</span>
+<span id="L239">239 -/</span>
+<span id="L240">240 theorem klDiv_canonicalBanditHistoryMeasure_zero</span>
+<span id="L241">241     {K : Nat} {Reward : Type v}</span>
+<span id="L242">242     [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward]</span>
+<span id="L243">243     (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward)</span>
+<span id="L244">244     (armLaw referenceArmLaw : Kernel (Fin K) Reward)</span>
+<span id="L245">245     [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw]</span>
+<span id="L246">246     (h_ac : ∀ arm, armLaw arm ≪ referenceArmLaw arm) :</span>
+<span id="L247">247     InformationTheory.klDiv</span>
+<span id="L248">248         (canonicalBanditHistoryMeasure algorithm armLaw 0)</span>
+<span id="L249">249         (canonicalBanditHistoryMeasure algorithm referenceArmLaw 0) =</span>
+<span id="L250">250       ∫⁻ arm, InformationTheory.klDiv</span>
+<span id="L251">251         (armLaw arm) (referenceArmLaw arm) ∂algorithm.initialAction := by</span>
+<span id="L252">252   rw [canonicalBanditHistoryMeasure_zero algorithm armLaw,</span>
+<span id="L253">253     canonicalBanditHistoryMeasure_zero algorithm referenceArmLaw]</span>
+<span id="L254">254   rw [klDiv_map_measurableEquiv]</span>
+<span id="L255">255   exact klDiv_compProd_same_left_eq_lintegral_klDiv</span>
+<span id="L256">256     algorithm.initialAction armLaw referenceArmLaw h_ac</span>
+<span id="L257">257 </span>
+<span id="L258">258 /--</span>
+<span id="L259">259 One successor round adds the first-environment policy average of the selected</span>
+<span id="L260">260 arm KL divergence.  This is the exact adaptive-history chain-rule step; the</span>
+<span id="L261">261 possibly randomized policy is shared and contributes no additional KL term.</span>
+<span id="L262">262 -/</span>
+<span id="L263">263 theorem klDiv_canonicalBanditHistoryMeasure_succ</span>
+<span id="L264">264     {K : Nat} {Reward : Type v}</span>
+<span id="L265">265     [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward]</span>
+<span id="L266">266     (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward)</span>
+<span id="L267">267     (armLaw referenceArmLaw : Kernel (Fin K) Reward)</span>
+<span id="L268">268     [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw]</span>
+<span id="L269">269     (h_ac : ∀ arm, armLaw arm ≪ referenceArmLaw arm)</span>
+<span id="L270">270     (n : Nat) :</span>
+<span id="L271">271     InformationTheory.klDiv</span>
+<span id="L272">272         (canonicalBanditHistoryMeasure algorithm armLaw (n + 1))</span>
+<span id="L273">273         (canonicalBanditHistoryMeasure algorithm referenceArmLaw (n + 1)) =</span>
+<span id="L274">274       InformationTheory.klDiv</span>
+<span id="L275">275           (canonicalBanditHistoryMeasure algorithm armLaw n)</span>
+<span id="L276">276           (canonicalBanditHistoryMeasure algorithm referenceArmLaw n) +</span>
+<span id="L277">277         ∫⁻ history, ∫⁻ arm,</span>
+<span id="L278">278           InformationTheory.klDiv</span>
+<span id="L279">279             (armLaw arm) (referenceArmLaw arm)</span>
+<span id="L280">280             ∂algorithm.policy n history</span>
+<span id="L281">281           ∂canonicalBanditHistoryMeasure algorithm armLaw n := by</span>
+<span id="L282">282   rw [canonicalBanditHistoryMeasure_succ algorithm armLaw n,</span>
+<span id="L283">283     canonicalBanditHistoryMeasure_succ algorithm referenceArmLaw n]</span>
+<span id="L284">284   rw [klDiv_map_measurableEquiv]</span>
+<span id="L285">285   rw [InformationTheory.klDiv_compProd_eq_add]</span>
+<span id="L286">286   congr 1</span>
+<span id="L287">287   simpa [Thompson.historyStepKernel,</span>
+<span id="L288">288     stationaryBanditHistoryEnvironment] using</span>
+<span id="L289">289     (klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL</span>
+<span id="L290">290       (canonicalBanditHistoryMeasure algorithm armLaw n)</span>
+<span id="L291">291       (algorithm.policy n) armLaw referenceArmLaw h_ac)</span>
+<span id="L292">292 </span>
+<span id="L293">293 /-- First-environment probability mass assigned to one arm at successor round `n + 1`. -/</span>
+<span id="L294">294 noncomputable def canonicalPolicyArmMass</span>
+<span id="L295">295     {K : Nat} {Reward : Type v}</span>
+<span id="L296">296     [MeasurableSpace Reward]</span>
+<span id="L297">297     (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward)</span>
+<span id="L298">298     (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw]</span>
+<span id="L299">299     (n : Nat) (arm : Fin K) : ENNReal :=</span>
+<span id="L300">300   ∫⁻ history,</span>
+<span id="L301">301     algorithm.policy n history ({arm} : Set (Fin K))</span>
+<span id="L302">302     ∂canonicalBanditHistoryMeasure algorithm armLaw n</span>
+<span id="L303">303 </span>
+<span id="L304">304 /--</span>
+<span id="L305">305 Expected number of selections of `arm` through inclusive round `n`: the</span>
+<span id="L306">306 initial-action mass plus the successor policy masses for rounds `1, ..., n`.</span>
+<span id="L307">307 The equality with the lower integral of the realized finite-history pull count</span>
+<span id="L308">308 is proved below; this definition exposes the recurrence used by the KL proof.</span>
+<span id="L309">309 -/</span>
+<span id="L310">310 noncomputable def canonicalExpectedPullCountThrough</span>
+<span id="L311">311     {K : Nat} {Reward : Type v}</span>
+<span id="L312">312     [MeasurableSpace Reward]</span>
+<span id="L313">313     (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward)</span>
+<span id="L314">314     (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw]</span>
+<span id="L315">315     (n : Nat) (arm : Fin K) : ENNReal :=</span>
+<span id="L316">316   algorithm.initialAction ({arm} : Set (Fin K)) +</span>
+<span id="L317">317     ∑ round ∈ Finset.range n,</span>
+<span id="L318">318       canonicalPolicyArmMass algorithm armLaw round arm</span>
+<span id="L319">319 </span>
+<span id="L320">320 @[simp]</span>
+<span id="L321">321 theorem canonicalExpectedPullCountThrough_zero</span>
+<span id="L322">322     {K : Nat} {Reward : Type v}</span>
+<span id="L323">323     [MeasurableSpace Reward]</span>
+<span id="L324">324     (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward)</span>
+<span id="L325">325     (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw]</span>
+<span id="L326">326     (arm : Fin K) :</span>
+<span id="L327">327     canonicalExpectedPullCountThrough algorithm armLaw 0 arm =</span>
+<span id="L328">328       algorithm.initialAction ({arm} : Set (Fin K)) := by</span>
+<span id="L329">329   simp [canonicalExpectedPullCountThrough]</span>
+<span id="L330">330 </span>
+<span id="L331">331 theorem canonicalExpectedPullCountThrough_succ</span>
+<span id="L332">332     {K : Nat} {Reward : Type v}</span>
+<span id="L333">333     [MeasurableSpace Reward]</span>
+<span id="L334">334     (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward)</span>
+<span id="L335">335     (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw]</span>
+<span id="L336">336     (n : Nat) (arm : Fin K) :</span>
+<span id="L337">337     canonicalExpectedPullCountThrough algorithm armLaw (n + 1) arm =</span>
+<span id="L338">338       canonicalExpectedPullCountThrough algorithm armLaw n arm +</span>
+<span id="L339">339         canonicalPolicyArmMass algorithm armLaw n arm := by</span>
+<span id="L340">340   simp [canonicalExpectedPullCountThrough, Finset.sum_range_succ,</span>
+<span id="L341">341     add_assoc]</span>
+<span id="L342">342 </span>
+<span id="L343">343 /-- A finite-action conditional cost integral regroups by action mass. -/</span>
+<span id="L344">344 theorem lintegral_lintegral_fin_eq_sum_armMass_mul</span>
+<span id="L345">345     {K : Nat} {History : Type*}</span>
+<span id="L346">346     [MeasurableSpace History]</span>
+<span id="L347">347     (historyLaw : Measure History)</span>
+<span id="L348">348     (policy : Kernel History (Fin K)) [IsMarkovKernel policy]</span>
+<span id="L349">349     (cost : Fin K → ENNReal) :</span>
+<span id="L350">350     (∫⁻ history, ∫⁻ arm, cost arm ∂policy history ∂historyLaw) =</span>
+<span id="L351">351       ∑ arm : Fin K,</span>
+<span id="L352">352         (∫⁻ history,</span>
+<span id="L353">353           policy history ({arm} : Set (Fin K)) ∂historyLaw) * cost arm := by</span>
+<span id="L354">354   classical</span>
+<span id="L355">355   simp_rw [MeasureTheory.lintegral_fintype]</span>
+<span id="L356">356   rw [MeasureTheory.lintegral_finset_sum]</span>
+<span id="L357">357   · apply Finset.sum_congr rfl</span>
+<span id="L358">358     intro arm _harm</span>
+<span id="L359">359     rw [MeasureTheory.lintegral_const_mul _</span>
+<span id="L360">360       (policy.measurable_coe (MeasurableSet.singleton arm))]</span>
+<span id="L361">361     rw [mul_comm]</span>
+<span id="L362">362   · intro arm _harm</span>
+<span id="L363">363     exact measurable_const.mul</span>
+<span id="L364">364       (policy.measurable_coe (MeasurableSet.singleton arm))</span>
+<span id="L365">365 </span>
+<span id="L366">366 /-- Policy-mass recurrence form of the finite-history KL decomposition. -/</span>
+<span id="L367">367 theorem klDiv_canonicalBanditHistoryMeasure_eq_sum_expectedPullCount_mul_armKL</span>
+<span id="L368">368     {K : Nat} {Reward : Type v}</span>
+<span id="L369">369     [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward]</span>
+<span id="L370">370     (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward)</span>
+<span id="L371">371     (armLaw referenceArmLaw : Kernel (Fin K) Reward)</span>
+<span id="L372">372     [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw]</span>
+<span id="L373">373     (h_ac : ∀ arm, armLaw arm ≪ referenceArmLaw arm)</span>
+<span id="L374">374     (n : Nat) :</span>
+<span id="L375">375     InformationTheory.klDiv</span>
+<span id="L376">376         (canonicalBanditHistoryMeasure algorithm armLaw n)</span>
+<span id="L377">377         (canonicalBanditHistoryMeasure algorithm referenceArmLaw n) =</span>
+<span id="L378">378       ∑ arm : Fin K,</span>
+<span id="L379">379         canonicalExpectedPullCountThrough algorithm armLaw n arm *</span>
+<span id="L380">380           InformationTheory.klDiv</span>
+<span id="L381">381             (armLaw arm) (referenceArmLaw arm) := by</span>
+<span id="L382">382   induction n with</span>
+<span id="L383">383   | zero =&gt;</span>
+<span id="L384">384       rw [klDiv_canonicalBanditHistoryMeasure_zero</span>
+<span id="L385">385         algorithm armLaw referenceArmLaw h_ac]</span>
+<span id="L386">386       rw [MeasureTheory.lintegral_fintype]</span>
+<span id="L387">387       apply Finset.sum_congr rfl</span>
+<span id="L388">388       intro arm _harm</span>
+<span id="L389">389       simp [mul_comm]</span>
+<span id="L390">390   | succ n ih =&gt;</span>
+<span id="L391">391       rw [klDiv_canonicalBanditHistoryMeasure_succ</span>
+<span id="L392">392         algorithm armLaw referenceArmLaw h_ac n, ih]</span>
+<span id="L393">393       rw [lintegral_lintegral_fin_eq_sum_armMass_mul]</span>
+<span id="L394">394       rw [← Finset.sum_add_distrib]</span>
+<span id="L395">395       apply Finset.sum_congr rfl</span>
+<span id="L396">396       intro arm _harm</span>
+<span id="L397">397       rw [canonicalExpectedPullCountThrough_succ]</span>
+<span id="L398">398       simp only [canonicalPolicyArmMass, add_mul]</span>
+<span id="L399">399 </span>
+<span id="L400">400 /-- Realized pull count encoded directly on an inclusive finite history. -/</span>
+<span id="L401">401 noncomputable def finiteHistoryPullCountENNReal</span>
+<span id="L402">402     {K : Nat} {Reward : Type v} :</span>
+<span id="L403">403     (n : Nat) → History.FinitePairHistory (Fin K) Reward n → Fin K → ENNReal</span>
+<span id="L404">404   | 0, history, arm =&gt;</span>
+<span id="L405">405       if (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 = arm then 1 else 0</span>
+<span id="L406">406   | n + 1, history, arm =&gt;</span>
+<span id="L407">407       finiteHistoryPullCountENNReal n (Thompson.pairHistoryPrefix history) arm +</span>
+<span id="L408">408         if (Thompson.pairHistoryLast history).1 = arm then 1 else 0</span>
+<span id="L409">409 </span>
+<span id="L410">410 theorem measurable_finiteHistoryPullCountENNReal</span>
+<span id="L411">411     {K : Nat} {Reward : Type v}</span>
+<span id="L412">412     [MeasurableSpace Reward]</span>
+<span id="L413">413     (n : Nat) (arm : Fin K) :</span>
+<span id="L414">414     Measurable (fun history : History.FinitePairHistory (Fin K) Reward n =&gt;</span>
+<span id="L415">415       finiteHistoryPullCountENNReal n history arm) := by</span>
+<span id="L416">416   induction n with</span>
+<span id="L417">417   | zero =&gt;</span>
+<span id="L418">418       exact Measurable.ite</span>
+<span id="L419">419         (measurableSet_eq_fun</span>
+<span id="L420">420           (measurable_fst.comp (measurable_pi_apply _)) measurable_const)</span>
+<span id="L421">421         measurable_const measurable_const</span>
+<span id="L422">422   | succ n ih =&gt;</span>
+<span id="L423">423       exact (ih.comp Thompson.measurable_pairHistoryPrefix).add</span>
+<span id="L424">424         (Measurable.ite</span>
+<span id="L425">425           (measurableSet_eq_fun</span>
+<span id="L426">426             (measurable_fst.comp Thompson.measurable_pairHistoryLast)</span>
+<span id="L427">427             measurable_const)</span>
+<span id="L428">428           measurable_const measurable_const)</span>
+<span id="L429">429 </span>
+<span id="L430">430 @[simp]</span>
+<span id="L431">431 theorem finiteHistoryPullCountENNReal_pairHistoryZeroMeasurableEquiv</span>
+<span id="L432">432     {K : Nat} {Reward : Type v}</span>
+<span id="L433">433     [MeasurableSpace Reward]</span>
+<span id="L434">434     (pair : Fin K × Reward) (arm : Fin K) :</span>
+<span id="L435">435     finiteHistoryPullCountENNReal 0</span>
+<span id="L436">436         (pairHistoryZeroMeasurableEquiv (Fin K) Reward pair) arm =</span>
+<span id="L437">437       if pair.1 = arm then 1 else 0 := by</span>
+<span id="L438">438   rw [pairHistoryZeroMeasurableEquiv_apply]</span>
+<span id="L439">439   change (if pair.1 = arm then 1 else 0) = _</span>
+<span id="L440">440   rfl</span>
+<span id="L441">441 </span>
+<span id="L442">442 @[simp]</span>
+<span id="L443">443 theorem finiteHistoryPullCountENNReal_pairHistorySuccMeasurableEquiv</span>
+<span id="L444">444     {K : Nat} {Reward : Type v}</span>
+<span id="L445">445     [MeasurableSpace Reward]</span>
+<span id="L446">446     (n : Nat)</span>
+<span id="L447">447     (input : History.FinitePairHistory (Fin K) Reward n × (Fin K × Reward))</span>
+<span id="L448">448     (arm : Fin K) :</span>
+<span id="L449">449     finiteHistoryPullCountENNReal (n + 1)</span>
+<span id="L450">450         (pairHistorySuccMeasurableEquiv (Fin K) Reward n input) arm =</span>
+<span id="L451">451       finiteHistoryPullCountENNReal n input.1 arm +</span>
+<span id="L452">452         if input.2.1 = arm then 1 else 0 := by</span>
+<span id="L453">453   rw [pairHistorySuccMeasurableEquiv_apply]</span>
+<span id="L454">454   simp [finiteHistoryPullCountENNReal]</span>
+<span id="L455">455 </span>
+<span id="L456">456 /-- Lower integral of the realized pull count on the generated finite history. -/</span>
+<span id="L457">457 noncomputable def canonicalRealizedExpectedPullCountThrough</span>
+<span id="L458">458     {K : Nat} {Reward : Type v}</span>
+<span id="L459">459     [MeasurableSpace Reward]</span>
+<span id="L460">460     (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward)</span>
+<span id="L461">461     (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw]</span>
+<span id="L462">462     (n : Nat) (arm : Fin K) : ENNReal :=</span>
+<span id="L463">463   ∫⁻ history,</span>
+<span id="L464">464     finiteHistoryPullCountENNReal n history arm</span>
+<span id="L465">465     ∂canonicalBanditHistoryMeasure algorithm armLaw n</span>
+<span id="L466">466 </span>
+<span id="L467">467 /-- The action indicator under a history-step kernel integrates to policy mass. -/</span>
+<span id="L468">468 theorem lintegral_historyStepKernel_armIndicator_eq_policy_mass</span>
+<span id="L469">469     {K : Nat} {Reward : Type v}</span>
+<span id="L470">470     [MeasurableSpace Reward]</span>
+<span id="L471">471     (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward)</span>
+<span id="L472">472     (environment : Thompson.HistoryEnvironment (Fin K) Reward)</span>
+<span id="L473">473     (n : Nat)</span>
+<span id="L474">474     (history : History.FinitePairHistory (Fin K) Reward n)</span>
+<span id="L475">475     (arm : Fin K) :</span>
+<span id="L476">476     (∫⁻ pair,</span>
+<span id="L477">477         ({arm} : Set (Fin K)).indicator (fun _ =&gt; (1 : ENNReal)) pair.1</span>
+<span id="L478">478         ∂Thompson.historyStepKernel algorithm environment n history) =</span>
+<span id="L479">479       algorithm.policy n history ({arm} : Set (Fin K)) := by</span>
+<span id="L480">480   calc</span>
+<span id="L481">481     (∫⁻ pair,</span>
+<span id="L482">482         ({arm} : Set (Fin K)).indicator (fun _ =&gt; (1 : ENNReal)) pair.1</span>
+<span id="L483">483         ∂Thompson.historyStepKernel algorithm environment n history) =</span>
+<span id="L484">484         ∫⁻ selectedArm,</span>
+<span id="L485">485           ({arm} : Set (Fin K)).indicator (fun _ =&gt; (1 : ENNReal)) selectedArm</span>
+<span id="L486">486           ∂(Thompson.historyStepKernel algorithm environment n history).map</span>
+<span id="L487">487             Prod.fst := by</span>
+<span id="L488">488       rw [MeasureTheory.lintegral_map</span>
+<span id="L489">489         (measurable_const.indicator (MeasurableSet.singleton arm)) measurable_fst]</span>
+<span id="L490">490     _ = ∫⁻ selectedArm,</span>
+<span id="L491">491           ({arm} : Set (Fin K)).indicator (fun _ =&gt; (1 : ENNReal)) selectedArm</span>
+<span id="L492">492           ∂algorithm.policy n history := by</span>
+<span id="L493">493       have hmap :</span>
+<span id="L494">494           (Thompson.historyStepKernel algorithm environment n history).map</span>
+<span id="L495">495               Prod.fst =</span>
+<span id="L496">496             algorithm.policy n history := by</span>
+<span id="L497">497         rw [← ProbabilityTheory.Kernel.map_apply _ measurable_fst,</span>
+<span id="L498">498           Thompson.historyStepKernel_map_fst]</span>
+<span id="L499">499       rw [hmap]</span>
+<span id="L500">500     _ = algorithm.policy n history ({arm} : Set (Fin K)) := by</span>
+<span id="L501">501       rw [MeasureTheory.lintegral_indicator (MeasurableSet.singleton arm)]</span>
+<span id="L502">502       exact MeasureTheory.setLIntegral_one _</span>
+<span id="L503">503 </span>
+<span id="L504">504 @[simp]</span>
+<span id="L505">505 theorem canonicalRealizedExpectedPullCountThrough_zero</span>
+<span id="L506">506     {K : Nat} {Reward : Type v}</span>
+<span id="L507">507     [MeasurableSpace Reward]</span>
+<span id="L508">508     (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward)</span>
+<span id="L509">509     (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw]</span>
+<span id="L510">510     (arm : Fin K) :</span>
+<span id="L511">511     canonicalRealizedExpectedPullCountThrough algorithm armLaw 0 arm =</span>
+<span id="L512">512       algorithm.initialAction ({arm} : Set (Fin K)) := by</span>
+<span id="L513">513   classical</span>
+<span id="L514">514   unfold canonicalRealizedExpectedPullCountThrough</span>
+<span id="L515">515   rw [canonicalBanditHistoryMeasure_zero algorithm armLaw]</span>
+<span id="L516">516   rw [MeasureTheory.lintegral_map_equiv]</span>
+<span id="L517">517   simp_rw [finiteHistoryPullCountENNReal_pairHistoryZeroMeasurableEquiv]</span>
+<span id="L518">518   have hindicator :</span>
+<span id="L519">519       (fun pair : Fin K × Reward =&gt;</span>
+<span id="L520">520           if pair.1 = arm then (1 : ENNReal) else 0) =</span>
+<span id="L521">521         fun pair =&gt;</span>
+<span id="L522">522           ({arm} : Set (Fin K)).indicator (fun _ =&gt; (1 : ENNReal)) pair.1 := by</span>
+<span id="L523">523     funext pair</span>
+<span id="L524">524     simp [Set.indicator, eq_comm]</span>
+<span id="L525">525   rw [hindicator]</span>
+<span id="L526">526   rw [MeasureTheory.lintegral_indicator_const_comp measurable_fst</span>
+<span id="L527">527     (MeasurableSet.singleton arm)]</span>
+<span id="L528">528   simp only [one_mul]</span>
+<span id="L529">529   calc</span>
+<span id="L530">530     (algorithm.initialAction ⊗ₘ armLaw)</span>
+<span id="L531">531         (Prod.fst ⁻¹&#x27; ({arm} : Set (Fin K))) =</span>
+<span id="L532">532         (algorithm.initialAction ⊗ₘ armLaw).fst</span>
+<span id="L533">533           ({arm} : Set (Fin K)) := by</span>
+<span id="L534">534       rw [Measure.fst_apply (MeasurableSet.singleton arm)]</span>
+<span id="L535">535     _ = algorithm.initialAction ({arm} : Set (Fin K)) := by</span>
+<span id="L536">536       rw [Measure.fst_compProd]</span>
+<span id="L537">537 </span>
+<span id="L538">538 theorem canonicalRealizedExpectedPullCountThrough_succ</span>
+<span id="L539">539     {K : Nat} {Reward : Type v}</span>
+<span id="L540">540     [MeasurableSpace Reward]</span>
+<span id="L541">541     (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward)</span>
+<span id="L542">542     (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw]</span>
+<span id="L543">543     (n : Nat) (arm : Fin K) :</span>
+<span id="L544">544     canonicalRealizedExpectedPullCountThrough algorithm armLaw (n + 1) arm =</span>
+<span id="L545">545       canonicalRealizedExpectedPullCountThrough algorithm armLaw n arm +</span>
+<span id="L546">546         canonicalPolicyArmMass algorithm armLaw n arm := by</span>
+<span id="L547">547   classical</span>
+<span id="L548">548   unfold canonicalRealizedExpectedPullCountThrough</span>
+<span id="L549">549   rw [canonicalBanditHistoryMeasure_succ algorithm armLaw n]</span>
+<span id="L550">550   rw [MeasureTheory.lintegral_map_equiv]</span>
+<span id="L551">551   simp_rw [finiteHistoryPullCountENNReal_pairHistorySuccMeasurableEquiv]</span>
+<span id="L552">552   let historyLaw := canonicalBanditHistoryMeasure algorithm armLaw n</span>
+<span id="L553">553   let stepKernel := Thompson.historyStepKernel algorithm</span>
+<span id="L554">554     (stationaryBanditHistoryEnvironment armLaw) n</span>
+<span id="L555">555   have hcountMeasurable :</span>
+<span id="L556">556       Measurable (fun input :</span>
+<span id="L557">557           History.FinitePairHistory (Fin K) Reward n × (Fin K × Reward) =&gt;</span>
+<span id="L558">558         finiteHistoryPullCountENNReal n input.1 arm) :=</span>
+<span id="L559">559     (measurable_finiteHistoryPullCountENNReal n arm).comp measurable_fst</span>
+<span id="L560">560   rw [MeasureTheory.lintegral_add_left hcountMeasurable]</span>
+<span id="L561">561   congr 1</span>
+<span id="L562">562   · change (∫⁻ input,</span>
+<span id="L563">563         finiteHistoryPullCountENNReal n input.1 arm</span>
+<span id="L564">564         ∂historyLaw ⊗ₘ stepKernel) = _</span>
+<span id="L565">565     rw [Measure.lintegral_compProd hcountMeasurable]</span>
+<span id="L566">566     simp</span>
+<span id="L567">567     rfl</span>
+<span id="L568">568   · have hindicator :</span>
+<span id="L569">569         (fun input :</span>
+<span id="L570">570             History.FinitePairHistory (Fin K) Reward n × (Fin K × Reward) =&gt;</span>
+<span id="L571">571           if input.2.1 = arm then (1 : ENNReal) else 0) =</span>
+<span id="L572">572           fun input =&gt;</span>
+<span id="L573">573             ({arm} : Set (Fin K)).indicator (fun _ =&gt; (1 : ENNReal))</span>
+<span id="L574">574               input.2.1 := by</span>
+<span id="L575">575         funext input</span>
+<span id="L576">576         simp [Set.indicator, eq_comm]</span>
+<span id="L577">577     rw [hindicator]</span>
+<span id="L578">578     have hindicatorMeasurable :</span>
+<span id="L579">579         Measurable (fun input :</span>
+<span id="L580">580             History.FinitePairHistory (Fin K) Reward n × (Fin K × Reward) =&gt;</span>
+<span id="L581">581           ({arm} : Set (Fin K)).indicator (fun _ =&gt; (1 : ENNReal))</span>
+<span id="L582">582             input.2.1) :=</span>
+<span id="L583">583       (measurable_const.indicator (MeasurableSet.singleton arm)).comp</span>
+<span id="L584">584         (measurable_fst.comp measurable_snd)</span>
+<span id="L585">585     change (∫⁻ input,</span>
+<span id="L586">586         ({arm} : Set (Fin K)).indicator (fun _ =&gt; (1 : ENNReal))</span>
+<span id="L587">587           input.2.1 ∂historyLaw ⊗ₘ stepKernel) = _</span>
+<span id="L588">588     rw [Measure.lintegral_compProd hindicatorMeasurable]</span>
+<span id="L589">589     simp_rw [stepKernel,</span>
+<span id="L590">590       lintegral_historyStepKernel_armIndicator_eq_policy_mass]</span>
+<span id="L591">591     rfl</span>
+<span id="L592">592 </span>
+<span id="L593">593 /--</span>
+<span id="L594">594 The policy-mass recurrence is exactly the lower integral of the realized pull</span>
+<span id="L595">595 count on the first-environment finite history.</span>
+<span id="L596">596 -/</span>
+<span id="L597">597 theorem canonicalRealizedExpectedPullCountThrough_eq_expectedPullCountThrough</span>
+<span id="L598">598     {K : Nat} {Reward : Type v}</span>
+<span id="L599">599     [MeasurableSpace Reward]</span>
+<span id="L600">600     (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward)</span>
+<span id="L601">601     (armLaw : Kernel (Fin K) Reward) [IsMarkovKernel armLaw]</span>
+<span id="L602">602     (n : Nat) (arm : Fin K) :</span>
+<span id="L603">603     canonicalRealizedExpectedPullCountThrough algorithm armLaw n arm =</span>
+<span id="L604">604       canonicalExpectedPullCountThrough algorithm armLaw n arm := by</span>
+<span id="L605">605   induction n with</span>
+<span id="L606">606   | zero =&gt;</span>
+<span id="L607">607       rw [canonicalRealizedExpectedPullCountThrough_zero,</span>
+<span id="L608">608         canonicalExpectedPullCountThrough_zero]</span>
+<span id="L609">609   | succ n ih =&gt;</span>
+<span id="L610">610       rw [canonicalRealizedExpectedPullCountThrough_succ,</span>
+<span id="L611">611         canonicalExpectedPullCountThrough_succ, ih]</span>
+<span id="L612">612 </span>
+<span id="L613">613 /-- The first-pull KL identity, including singular and infinite-divergence arms. -/</span>
+<span id="L614">614 theorem klDiv_canonicalBanditHistoryMeasure_zero_general</span>
+<span id="L615">615     {K : Nat} {Reward : Type v}</span>
+<span id="L616">616     [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward]</span>
+<span id="L617">617     (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward)</span>
+<span id="L618">618     (armLaw referenceArmLaw : Kernel (Fin K) Reward)</span>
+<span id="L619">619     [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw] :</span>
+<span id="L620">620     InformationTheory.klDiv</span>
+<span id="L621">621         (canonicalBanditHistoryMeasure algorithm armLaw 0)</span>
+<span id="L622">622         (canonicalBanditHistoryMeasure algorithm referenceArmLaw 0) =</span>
+<span id="L623">623       ∫⁻ arm, InformationTheory.klDiv</span>
+<span id="L624">624         (armLaw arm) (referenceArmLaw arm) ∂algorithm.initialAction := by</span>
+<span id="L625">625   rw [canonicalBanditHistoryMeasure_zero algorithm armLaw,</span>
+<span id="L626">626     canonicalBanditHistoryMeasure_zero algorithm referenceArmLaw]</span>
+<span id="L627">627   rw [klDiv_map_measurableEquiv]</span>
+<span id="L628">628   exact klDiv_finiteAction_compProd_eq_lintegral_armKL</span>
+<span id="L629">629     algorithm.initialAction armLaw referenceArmLaw</span>
+<span id="L630">630 </span>
+<span id="L631">631 /-- General successor KL recursion for a common randomized history policy. -/</span>
+<span id="L632">632 theorem klDiv_canonicalBanditHistoryMeasure_succ_general</span>
+<span id="L633">633     {K : Nat} {Reward : Type v}</span>
+<span id="L634">634     [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward]</span>
+<span id="L635">635     (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward)</span>
+<span id="L636">636     (armLaw referenceArmLaw : Kernel (Fin K) Reward)</span>
+<span id="L637">637     [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw]</span>
+<span id="L638">638     (n : Nat) :</span>
+<span id="L639">639     InformationTheory.klDiv</span>
+<span id="L640">640         (canonicalBanditHistoryMeasure algorithm armLaw (n + 1))</span>
+<span id="L641">641         (canonicalBanditHistoryMeasure algorithm referenceArmLaw (n + 1)) =</span>
+<span id="L642">642       InformationTheory.klDiv</span>
+<span id="L643">643           (canonicalBanditHistoryMeasure algorithm armLaw n)</span>
+<span id="L644">644           (canonicalBanditHistoryMeasure algorithm referenceArmLaw n) +</span>
+<span id="L645">645         ∫⁻ history, ∫⁻ arm,</span>
+<span id="L646">646           InformationTheory.klDiv</span>
+<span id="L647">647             (armLaw arm) (referenceArmLaw arm)</span>
+<span id="L648">648             ∂algorithm.policy n history</span>
+<span id="L649">649           ∂canonicalBanditHistoryMeasure algorithm armLaw n := by</span>
+<span id="L650">650   rw [canonicalBanditHistoryMeasure_succ algorithm armLaw n,</span>
+<span id="L651">651     canonicalBanditHistoryMeasure_succ algorithm referenceArmLaw n]</span>
+<span id="L652">652   rw [klDiv_map_measurableEquiv]</span>
+<span id="L653">653   rw [InformationTheory.klDiv_compProd_eq_add]</span>
+<span id="L654">654   congr 1</span>
+<span id="L655">655   simpa [Thompson.historyStepKernel,</span>
+<span id="L656">656     stationaryBanditHistoryEnvironment] using</span>
+<span id="L657">657     (klDiv_historyStep_samePolicy_eq_iterated_lintegral_armKL_general</span>
+<span id="L658">658       (canonicalBanditHistoryMeasure algorithm armLaw n)</span>
+<span id="L659">659       (algorithm.policy n) armLaw referenceArmLaw)</span>
+<span id="L660">660 </span>
+<span id="L661">661 /-- Policy-mass form of the unrestricted finite-history decomposition. -/</span>
+<span id="L662">662 theorem klDiv_canonicalBanditHistoryMeasure_eq_sum_expectedPullCount_mul_armKL_general</span>
+<span id="L663">663     {K : Nat} {Reward : Type v}</span>
+<span id="L664">664     [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward]</span>
+<span id="L665">665     (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward)</span>
+<span id="L666">666     (armLaw referenceArmLaw : Kernel (Fin K) Reward)</span>
+<span id="L667">667     [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw]</span>
+<span id="L668">668     (n : Nat) :</span>
+<span id="L669">669     InformationTheory.klDiv</span>
+<span id="L670">670         (canonicalBanditHistoryMeasure algorithm armLaw n)</span>
+<span id="L671">671         (canonicalBanditHistoryMeasure algorithm referenceArmLaw n) =</span>
+<span id="L672">672       ∑ arm : Fin K,</span>
+<span id="L673">673         canonicalExpectedPullCountThrough algorithm armLaw n arm *</span>
+<span id="L674">674           InformationTheory.klDiv</span>
+<span id="L675">675             (armLaw arm) (referenceArmLaw arm) := by</span>
+<span id="L676">676   induction n with</span>
+<span id="L677">677   | zero =&gt;</span>
+<span id="L678">678       rw [klDiv_canonicalBanditHistoryMeasure_zero_general</span>
+<span id="L679">679         algorithm armLaw referenceArmLaw]</span>
+<span id="L680">680       rw [MeasureTheory.lintegral_fintype]</span>
+<span id="L681">681       apply Finset.sum_congr rfl</span>
+<span id="L682">682       intro arm _harm</span>
+<span id="L683">683       simp [mul_comm]</span>
+<span id="L684">684   | succ n ih =&gt;</span>
+<span id="L685">685       rw [klDiv_canonicalBanditHistoryMeasure_succ_general</span>
+<span id="L686">686         algorithm armLaw referenceArmLaw n, ih]</span>
+<span id="L687">687       rw [lintegral_lintegral_fin_eq_sum_armMass_mul]</span>
+<span id="L688">688       rw [← Finset.sum_add_distrib]</span>
+<span id="L689">689       apply Finset.sum_congr rfl</span>
+<span id="L690">690       intro arm _harm</span>
+<span id="L691">691       rw [canonicalExpectedPullCountThrough_succ]</span>
+<span id="L692">692       simp only [canonicalPolicyArmMass, add_mul]</span>
+<span id="L693">693 </span>
+<span id="L694">694 /--</span>
+<span id="L695">695 Lattimore--Szepesvari Lemma 15.1 in the repository&#x27;s inclusive-round</span>
+<span id="L696">696 convention.  `canonicalBanditHistoryMeasure ... n` contains exactly `n + 1`</span>
+<span id="L697">697 action/reward pairs. Its directed KL divergence is the finite-arm sum of the</span>
+<span id="L698">698 first-environment lower integrals of the realized pull counts through round</span>
+<span id="L699">699 `n`, multiplied by the arm-law KL divergences. The algorithm is one common,</span>
+<span id="L700">700 possibly randomized, nonanticipating history policy in both environments.</span>
+<span id="L701">701 -/</span>
+<span id="L702">702 theorem klDiv_canonicalBanditHistoryMeasure_eq_sum_realizedExpectedPullCount_mul_armKL</span>
+<span id="L703">703     {K : Nat} {Reward : Type v}</span>
+<span id="L704">704     [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward]</span>
+<span id="L705">705     (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward)</span>
+<span id="L706">706     (armLaw referenceArmLaw : Kernel (Fin K) Reward)</span>
+<span id="L707">707     [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw]</span>
+<span id="L708">708     (n : Nat) :</span>
+<span id="L709">709     InformationTheory.klDiv</span>
+<span id="L710">710         (canonicalBanditHistoryMeasure algorithm armLaw n)</span>
+<span id="L711">711         (canonicalBanditHistoryMeasure algorithm referenceArmLaw n) =</span>
+<span id="L712">712       ∑ arm : Fin K,</span>
+<span id="L713">713         canonicalRealizedExpectedPullCountThrough algorithm armLaw n arm *</span>
+<span id="L714">714           InformationTheory.klDiv</span>
+<span id="L715">715             (armLaw arm) (referenceArmLaw arm) := by</span>
+<span id="L716">716   rw [klDiv_canonicalBanditHistoryMeasure_eq_sum_expectedPullCount_mul_armKL_general</span>
+<span id="L717">717     algorithm armLaw referenceArmLaw n]</span>
+<span id="L718">718   apply Finset.sum_congr rfl</span>
+<span id="L719">719   intro arm _harm</span>
+<span id="L720">720   rw [canonicalRealizedExpectedPullCountThrough_eq_expectedPullCountThrough]</span>
+<span id="L721">721 </span>
+<span id="L722">722 /--</span>
+<span id="L723">723 Source-facing name for Lattimore--Szepesvari Lemma 15.1 / Eq. (15.1).</span>
+<span id="L724">724 The local history index `lastRound` represents exactly `lastRound + 1` pulls.</span>
+<span id="L725">725 -/</span>
+<span id="L726">726 theorem banditHistoryRelativeEntropy_eq_expectedPulls_sum</span>
+<span id="L727">727     {K : Nat} {Reward : Type v}</span>
+<span id="L728">728     [MeasurableSpace Reward] [MeasurableSpace.CountablyGenerated Reward]</span>
+<span id="L729">729     (algorithm : Thompson.HistoryAlgorithm (Fin K) Reward)</span>
+<span id="L730">730     (armLaw referenceArmLaw : Kernel (Fin K) Reward)</span>
+<span id="L731">731     [IsMarkovKernel armLaw] [IsMarkovKernel referenceArmLaw]</span>
+<span id="L732">732     (lastRound : Nat) :</span>
+<span id="L733">733     InformationTheory.klDiv</span>
+<span id="L734">734         (canonicalBanditHistoryMeasure algorithm armLaw lastRound)</span>
+<span id="L735">735         (canonicalBanditHistoryMeasure algorithm referenceArmLaw lastRound) =</span>
+<span id="L736">736       ∑ arm : Fin K,</span>
+<span id="L737">737         canonicalRealizedExpectedPullCountThrough</span>
+<span id="L738">738             algorithm armLaw lastRound arm *</span>
+<span id="L739">739           InformationTheory.klDiv</span>
+<span id="L740">740             (armLaw arm) (referenceArmLaw arm) :=</span>
+<span id="L741">741   klDiv_canonicalBanditHistoryMeasure_eq_sum_realizedExpectedPullCount_mul_armKL</span>
+<span id="L742">742     algorithm armLaw referenceArmLaw lastRound</span>
+<span id="L743">743 </span>
+<span id="L744">744 end</span>
+<span id="L745">745 </span>
+<span id="L746">746 end LowerBounds</span>
+<span id="L747">747 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

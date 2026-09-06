@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIOptimalTailAlignment.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIOptimalTailAlignment.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIOptimalTailAlignment.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIOptimalTailAlignment.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVISimultaneousConfidence</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-! Exact affine transport from the normalized generated probe to `V*`. -/</span>
+<span id="L4">4 </span>
+<span id="L5">5 open MeasureTheory</span>
+<span id="L6">6 open scoped ENNReal ProbabilityTheory</span>
+<span id="L7">7 </span>
+<span id="L8">8 universe u v</span>
+<span id="L9">9 </span>
+<span id="L10">10 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L11">11 </span>
+<span id="L12">12 variable {State : Type u} {Action : Type v}</span>
+<span id="L13">13     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L14">14     [Fintype State] [Fintype Action]</span>
+<span id="L15">15     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L16">16     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L17">17     [Nonempty State] [Nonempty Action]</span>
+<span id="L18">18 </span>
+<span id="L19">19 namespace AdaptiveCumulativeHoeffdingUCBVI</span>
+<span id="L20">20 </span>
+<span id="L21">21 /-- Integrating the normalized optimal-tail probe against two probability</span>
+<span id="L22">22 measures and subtracting transports exactly back to the `V*` difference. -/</span>
+<span id="L23">23 theorem integral_optimalValue_sub_eq_two_mul_horizon_mul_integral_probe_sub</span>
+<span id="L24">24     (mdp : MDP State Action) (summary : TransitionCountSummary mdp)</span>
+<span id="L25">25     (defaultState : State) (stage : Fin mdp.horizon)</span>
+<span id="L26">26     (state : State) (action : Action) :</span>
+<span id="L27">27     (∫ nextState,</span>
+<span id="L28">28         mdp.optimalValueAt (stage + 1) (Nat.succ_le_of_lt stage.isLt) nextState</span>
+<span id="L29">29           ∂summary.aggregateEmpiricalTransitionKernel defaultState (state, action)) -</span>
+<span id="L30">30       mdp.transitionValue</span>
+<span id="L31">31         (mdp.optimalValueAt (stage + 1) (Nat.succ_le_of_lt stage.isLt))</span>
+<span id="L32">32         state action =</span>
+<span id="L33">33       2 * (mdp.horizon : Real) *</span>
+<span id="L34">34         ((∫ nextState, mdp.optimalTailProbe stage nextState</span>
+<span id="L35">35             ∂summary.aggregateEmpiricalTransitionKernel defaultState (state, action)) -</span>
+<span id="L36">36           mdp.transitionValue (mdp.optimalTailProbe stage) state action) := by</span>
+<span id="L37">37   let empirical := summary.aggregateEmpiricalTransitionKernel defaultState</span>
+<span id="L38">38       (state, action)</span>
+<span id="L39">39   let truth := mdp.transition (state, action)</span>
+<span id="L40">40   let value := mdp.optimalValueAt (stage + 1)</span>
+<span id="L41">41       (Nat.succ_le_of_lt stage.isLt)</span>
+<span id="L42">42   let probe := mdp.optimalTailProbe stage</span>
+<span id="L43">43   let scale : Real := 2 * (mdp.horizon : Real)</span>
+<span id="L44">44   have hhorizon : (mdp.horizon : Real) ≠ 0 := by</span>
+<span id="L45">45     exact_mod_cast Nat.ne_of_gt (Nat.pos_of_ne_zero (by</span>
+<span id="L46">46       intro hzero</span>
+<span id="L47">47       have : stage.val &lt; 0 := by simpa [hzero] using stage.isLt</span>
+<span id="L48">48       omega))</span>
+<span id="L49">49   have hpoint : ∀ nextState, value nextState =</span>
+<span id="L50">50       scale * probe nextState - (mdp.horizon : Real) := by</span>
+<span id="L51">51     intro nextState</span>
+<span id="L52">52     simp only [value, scale, probe, MDP.optimalTailProbe]</span>
+<span id="L53">53     field_simp</span>
+<span id="L54">54     ring</span>
+<span id="L55">55   letI : IsProbabilityMeasure empirical :=</span>
+<span id="L56">56     (summary.aggregateEmpiricalTransitionKernel_isMarkov defaultState).isProbabilityMeasure</span>
+<span id="L57">57       (state, action)</span>
+<span id="L58">58   letI : IsProbabilityMeasure truth := mdp.transition_isMarkov.isProbabilityMeasure</span>
+<span id="L59">59       (state, action)</span>
+<span id="L60">60   have hprobeMeasurable : Measurable probe := measurable_of_finite _</span>
+<span id="L61">61   have hprobeEmpirical : Integrable probe empirical :=</span>
+<span id="L62">62     integrable_of_fintype _ _ hprobeMeasurable</span>
+<span id="L63">63   have hprobeTruth : Integrable probe truth :=</span>
+<span id="L64">64     integrable_of_fintype _ _ hprobeMeasurable</span>
+<span id="L65">65   have hempirical :</span>
+<span id="L66">66       (∫ nextState, value nextState ∂empirical) =</span>
+<span id="L67">67         scale * (∫ nextState, probe nextState ∂empirical) -</span>
+<span id="L68">68           (mdp.horizon : Real) := by</span>
+<span id="L69">69     rw [integral_congr_ae (Filter.Eventually.of_forall hpoint)]</span>
+<span id="L70">70     rw [integral_sub]</span>
+<span id="L71">71     · rw [integral_const, measureReal_univ_eq_one, one_smul]</span>
+<span id="L72">72       rw [integral_const_mul scale probe]</span>
+<span id="L73">73     · exact hprobeEmpirical.const_mul _</span>
+<span id="L74">74     · exact integrable_const _</span>
+<span id="L75">75   have htruth :</span>
+<span id="L76">76       (∫ nextState, value nextState ∂truth) =</span>
+<span id="L77">77         scale * (∫ nextState, probe nextState ∂truth) -</span>
+<span id="L78">78           (mdp.horizon : Real) := by</span>
+<span id="L79">79     rw [integral_congr_ae (Filter.Eventually.of_forall hpoint)]</span>
+<span id="L80">80     rw [integral_sub]</span>
+<span id="L81">81     · rw [integral_const, measureReal_univ_eq_one, one_smul]</span>
+<span id="L82">82       rw [integral_const_mul scale probe]</span>
+<span id="L83">83     · exact hprobeTruth.const_mul _</span>
+<span id="L84">84     · exact integrable_const _</span>
+<span id="L85">85   change (∫ nextState, value nextState ∂empirical) -</span>
+<span id="L86">86       (∫ nextState, value nextState ∂truth) =</span>
+<span id="L87">87     scale * ((∫ nextState, probe nextState ∂empirical) -</span>
+<span id="L88">88       (∫ nextState, probe nextState ∂truth))</span>
+<span id="L89">89   rw [hempirical, htruth]</span>
+<span id="L90">90   ring</span>
+<span id="L91">91 </span>
+<span id="L92">92 namespace AdaptiveEpisodeBatchSource</span>
+<span id="L93">93 </span>
+<span id="L94">94 /-- Outside the proved joint event, the empirical transition kernel consumed</span>
+<span id="L95">95 by the planner has the sharp `V*` projection error at every peeled positive</span>
+<span id="L96">96 actual count.  No confidence statement is supplied by the caller. -/</span>
+<span id="L97">97 theorem abs_empiricalTransition_optimalValue_sub_lt</span>
+<span id="L98">98     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L99">99     [IsProbabilityMeasure initialState]</span>
+<span id="L100">100     (source : AdaptiveEpisodeBatchSource mdp initialState 1)</span>
+<span id="L101">101     {episodes : Nat} {logBudget : Real}</span>
+<span id="L102">102     {trajectory : EpisodeBatchTrajectory mdp 1}</span>
+<span id="L103">103     (htrajectory : trajectory ∉</span>
+<span id="L104">104       simultaneousTransitionFailureEvent source episodes logBudget)</span>
+<span id="L105">105     (defaultState : State) (index : OptimalTailIndex mdp episodes)</span>
+<span id="L106">106     (hactual : adaptiveCumulativeAggregateVisitCountAt trajectory index.round</span>
+<span id="L107">107         index.state index.action = index.count + 1) :</span>
+<span id="L108">108     |(∫ nextState,</span>
+<span id="L109">109           mdp.optimalValueAt (index.stage + 1)</span>
+<span id="L110">110               (Nat.succ_le_of_lt index.stage.isLt) nextState</span>
+<span id="L111">111             ∂TransitionCountSummary.aggregateEmpiricalTransitionKernel</span>
+<span id="L112">112               (adaptiveCumulativeEmpiricalModelStateAt trajectory index.round).1</span>
+<span id="L113">113               defaultState (index.state, index.action)) -</span>
+<span id="L114">114         mdp.transitionValue</span>
+<span id="L115">115           (mdp.optimalValueAt (index.stage + 1)</span>
+<span id="L116">116             (Nat.succ_le_of_lt index.stage.isLt))</span>
+<span id="L117">117           index.state index.action| &lt;</span>
+<span id="L118">118       2 * (mdp.horizon : Real) * logBudget /</span>
+<span id="L119">119         Real.sqrt (index.count + 1 : Nat) := by</span>
+<span id="L120">120   let summary := (adaptiveCumulativeEmpiricalModelStateAt trajectory index.round).1</span>
+<span id="L121">121   let count : Real := (index.count + 1 : Nat)</span>
+<span id="L122">122   let probeDifference : Real :=</span>
+<span id="L123">123     (∫ nextState, mdp.optimalTailProbe index.stage nextState</span>
+<span id="L124">124         ∂summary.aggregateEmpiricalTransitionKernel defaultState</span>
+<span id="L125">125           (index.state, index.action)) -</span>
+<span id="L126">126       mdp.transitionValue (mdp.optimalTailProbe index.stage)</span>
+<span id="L127">127         index.state index.action</span>
+<span id="L128">128   have hcountPosNat : 0 &lt; adaptiveCumulativeAggregateVisitCountAt trajectory</span>
+<span id="L129">129       index.round index.state index.action := by</span>
+<span id="L130">130     rw [hactual]</span>
+<span id="L131">131     exact Nat.succ_pos _</span>
+<span id="L132">132   have hvisitSum :</span>
+<span id="L133">133       (∑ i ∈ Finset.range (index.round + 1),</span>
+<span id="L134">134           source.aggregateVisitIncrement index.state index.action i trajectory) =</span>
+<span id="L135">135         (index.count + 1 : Nat) := by</span>
+<span id="L136">136     rw [source.sum_aggregateVisitIncrement_eq_prefixAggregateVisitCount]</span>
+<span id="L137">137     exact_mod_cast hactual</span>
+<span id="L138">138   have hresidual :=</span>
+<span id="L139">139     abs_optimalTailResidual_lt_of_not_mem_simultaneousTransitionFailureEvent</span>
+<span id="L140">140       source htrajectory index hvisitSum</span>
+<span id="L141">141   have halignment :=</span>
+<span id="L142">142     source.aggregateTransitionFunctionalResidual_eq_count_mul_transitionValue_sub</span>
+<span id="L143">143       trajectory index.round defaultState (mdp.optimalTailProbe index.stage)</span>
+<span id="L144">144       index.state index.action hcountPosNat</span>
+<span id="L145">145   have hresidual&#x27; : |count * probeDifference| &lt;</span>
+<span id="L146">146       logBudget * Real.sqrt count := by</span>
+<span id="L147">147     rw [halignment, hactual] at hresidual</span>
+<span id="L148">148     simpa [count, probeDifference, summary] using hresidual</span>
+<span id="L149">149   have hcountPos : 0 &lt; count := by</span>
+<span id="L150">150     change 0 &lt; ((index.count + 1 : Nat) : Real)</span>
+<span id="L151">151     positivity</span>
+<span id="L152">152   have hsqrtPos : 0 &lt; Real.sqrt count := Real.sqrt_pos.2 hcountPos</span>
+<span id="L153">153   have hsqrtSq : Real.sqrt count ^ 2 = count := Real.sq_sqrt hcountPos.le</span>
+<span id="L154">154   have hsqrtMul : Real.sqrt count * Real.sqrt count = count := by</span>
+<span id="L155">155     simpa [pow_two] using hsqrtSq</span>
+<span id="L156">156   have hprobe : |probeDifference| &lt; logBudget / Real.sqrt count := by</span>
+<span id="L157">157     rw [abs_mul, abs_of_pos hcountPos] at hresidual&#x27;</span>
+<span id="L158">158     apply (lt_div_iff₀ hsqrtPos).2</span>
+<span id="L159">159     refine lt_of_mul_lt_mul_right (a := Real.sqrt count) ?_ hsqrtPos.le</span>
+<span id="L160">160     calc</span>
+<span id="L161">161       |probeDifference| * Real.sqrt count * Real.sqrt count =</span>
+<span id="L162">162           |probeDifference| * count := by rw [mul_assoc, hsqrtMul]</span>
+<span id="L163">163       _ = count * |probeDifference| := by ring</span>
+<span id="L164">164       _ &lt; logBudget * Real.sqrt count := hresidual&#x27;</span>
+<span id="L165">165   have haffine :=</span>
+<span id="L166">166     integral_optimalValue_sub_eq_two_mul_horizon_mul_integral_probe_sub</span>
+<span id="L167">167       mdp summary defaultState index.stage index.state index.action</span>
+<span id="L168">168   have hhorizon : 0 &lt; (mdp.horizon : Real) := by</span>
+<span id="L169">169     exact_mod_cast Nat.pos_of_ne_zero (by</span>
+<span id="L170">170       intro hzero</span>
+<span id="L171">171       have : index.stage.val &lt; 0 := by simpa [hzero] using index.stage.isLt</span>
+<span id="L172">172       omega)</span>
+<span id="L173">173   rw [haffine, abs_mul, abs_of_pos (mul_pos (by norm_num) hhorizon)]</span>
+<span id="L174">174   simpa [count, probeDifference, summary, mul_div_assoc] using</span>
+<span id="L175">175     (mul_lt_mul_of_pos_left hprobe (mul_pos (by norm_num) hhorizon))</span>
+<span id="L176">176 </span>
+<span id="L177">177 end AdaptiveEpisodeBatchSource</span>
+<span id="L178">178 </span>
+<span id="L179">179 end AdaptiveCumulativeHoeffdingUCBVI</span>
+<span id="L180">180 </span>
+<span id="L181">181 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

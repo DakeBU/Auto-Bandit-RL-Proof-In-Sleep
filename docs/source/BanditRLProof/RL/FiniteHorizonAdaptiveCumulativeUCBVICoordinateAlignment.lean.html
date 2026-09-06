@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVICoordinateAlignment.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVICoordinateAlignment.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVICoordinateAlignment.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVICoordinateAlignment.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVIEpisodeRegret</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Exact singleton-coordinate alignment for the recurrent UCBVI source</span>
+<span id="L5">5 </span>
+<span id="L6">6 This file turns the variance-sensitive residual stored by the simultaneous</span>
+<span id="L7">7 same-source event into the literal empirical transition mass used by the</span>
+<span id="L8">8 planner.  The denominator is the actual pooled generated visit count.</span>
+<span id="L9">9 -/</span>
+<span id="L10">10 </span>
+<span id="L11">11 open MeasureTheory</span>
+<span id="L12">12 open scoped ENNReal ProbabilityTheory</span>
+<span id="L13">13 </span>
+<span id="L14">14 universe u v</span>
+<span id="L15">15 </span>
+<span id="L16">16 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L17">17 </span>
+<span id="L18">18 variable {State : Type u} {Action : Type v}</span>
+<span id="L19">19     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L20">20     [Fintype State] [Fintype Action]</span>
+<span id="L21">21     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L22">22     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L23">23     [Nonempty State] [Nonempty Action]</span>
+<span id="L24">24 </span>
+<span id="L25">25 namespace TransitionCountSummary</span>
+<span id="L26">26 </span>
+<span id="L27">27 /-- At a positive pooled count, the singleton mass of the planner&#x27;s empirical</span>
+<span id="L28">28 kernel is exactly the pooled numerator divided by the pooled denominator. -/</span>
+<span id="L29">29 theorem aggregateEmpiricalTransitionKernel_real_singleton_of_pos</span>
+<span id="L30">30     {mdp : MDP State Action} (summary : TransitionCountSummary mdp)</span>
+<span id="L31">31     (defaultState : State) (state : State) (action : Action)</span>
+<span id="L32">32     (nextState : State)</span>
+<span id="L33">33     (hpos : 0 &lt; summary.aggregateVisitCount state action) :</span>
+<span id="L34">34     (summary.aggregateEmpiricalTransitionKernel defaultState</span>
+<span id="L35">35         (state, action)).real {nextState} =</span>
+<span id="L36">36       (summary.aggregateTransitionCount state action nextState : Real) /</span>
+<span id="L37">37         (summary.aggregateVisitCount state action : Real) := by</span>
+<span id="L38">38   change</span>
+<span id="L39">39     ((summary.aggregateEmpiricalTransitionPMF defaultState state action).toMeasure).real</span>
+<span id="L40">40         {nextState} = _</span>
+<span id="L41">41   rw [Measure.real,</span>
+<span id="L42">42     PMF.toMeasure_apply_singleton _ _ (MeasurableSet.singleton nextState)]</span>
+<span id="L43">43   rw [summary.aggregateEmpiricalTransitionPMF_apply_of_aggregateVisitCount_pos</span>
+<span id="L44">44     defaultState state action nextState hpos]</span>
+<span id="L45">45   simp [ENNReal.toReal_div, ENNReal.toReal_natCast]</span>
+<span id="L46">46 </span>
+<span id="L47">47 end TransitionCountSummary</span>
+<span id="L48">48 </span>
+<span id="L49">49 namespace AdaptiveCumulativeHoeffdingUCBVI</span>
+<span id="L50">50 </span>
+<span id="L51">51 theorem bernsteinCoordinateThreshold_mul_probability_div_le</span>
+<span id="L52">52     {probability logBudget visits : Real}</span>
+<span id="L53">53     (hprobability : probability ∈ Set.Icc (0 : Real) 1)</span>
+<span id="L54">54     (hlog : 0 &lt;= logBudget) (hvisits : 0 &lt; visits) :</span>
+<span id="L55">55     bernsteinCoordinateThreshold logBudget</span>
+<span id="L56">56           (probability * (1 - probability) * visits) / visits &lt;=</span>
+<span id="L57">57       2 * Real.sqrt (2 * logBudget / visits) * Real.sqrt probability +</span>
+<span id="L58">58         2 * logBudget / visits := by</span>
+<span id="L59">59   let leftRoot := Real.sqrt</span>
+<span id="L60">60     (2 * (probability * (1 - probability) * visits) * logBudget) / visits</span>
+<span id="L61">61   let rightRoot := Real.sqrt (2 * logBudget / visits) * Real.sqrt probability</span>
+<span id="L62">62   have hvariance : 0 &lt;= probability * (1 - probability) * visits :=</span>
+<span id="L63">63     mul_nonneg (mul_nonneg hprobability.1 (sub_nonneg.mpr hprobability.2))</span>
+<span id="L64">64       hvisits.le</span>
+<span id="L65">65   have hleftRoot : 0 &lt;= leftRoot :=</span>
+<span id="L66">66     div_nonneg (Real.sqrt_nonneg _) hvisits.le</span>
+<span id="L67">67   have hrightRoot : 0 &lt;= rightRoot :=</span>
+<span id="L68">68     mul_nonneg (Real.sqrt_nonneg _) (Real.sqrt_nonneg _)</span>
+<span id="L69">69   have hleftSq : leftRoot ^ 2 =</span>
+<span id="L70">70       2 * probability * (1 - probability) * logBudget / visits := by</span>
+<span id="L71">71     dsimp [leftRoot]</span>
+<span id="L72">72     rw [div_pow, Real.sq_sqrt]</span>
+<span id="L73">73     · field_simp</span>
+<span id="L74">74     · positivity</span>
+<span id="L75">75   have hrightSq : rightRoot ^ 2 =</span>
+<span id="L76">76       2 * probability * logBudget / visits := by</span>
+<span id="L77">77     dsimp [rightRoot]</span>
+<span id="L78">78     rw [mul_pow, Real.sq_sqrt, Real.sq_sqrt]</span>
+<span id="L79">79     · ring</span>
+<span id="L80">80     · exact hprobability.1</span>
+<span id="L81">81     · positivity</span>
+<span id="L82">82   have hroot : leftRoot &lt;= rightRoot := by</span>
+<span id="L83">83     apply (sq_le_sq₀ hleftRoot hrightRoot).mp</span>
+<span id="L84">84     rw [hleftSq, hrightSq]</span>
+<span id="L85">85     have honeMinus : 0 &lt;= 1 - probability := sub_nonneg.mpr hprobability.2</span>
+<span id="L86">86     have hmul : probability * (1 - probability) &lt;= probability := by</span>
+<span id="L87">87       have hOneMinusLe : 1 - probability &lt;= 1 := by linarith [hprobability.1]</span>
+<span id="L88">88       simpa using mul_le_mul_of_nonneg_left hOneMinusLe hprobability.1</span>
+<span id="L89">89     have hcoefficient : 0 &lt;= 2 * logBudget / visits := by positivity</span>
+<span id="L90">90     calc</span>
+<span id="L91">91       2 * probability * (1 - probability) * logBudget / visits =</span>
+<span id="L92">92           (2 * logBudget / visits) * (probability * (1 - probability)) := by ring</span>
+<span id="L93">93       _ &lt;= (2 * logBudget / visits) * probability :=</span>
+<span id="L94">94         mul_le_mul_of_nonneg_left hmul hcoefficient</span>
+<span id="L95">95       _ = 2 * probability * logBudget / visits := by ring</span>
+<span id="L96">96   unfold bernsteinCoordinateThreshold</span>
+<span id="L97">97   rw [add_div]</span>
+<span id="L98">98   have hleftRewrite :</span>
+<span id="L99">99       2 * Real.sqrt</span>
+<span id="L100">100           (2 * (probability * (1 - probability) * visits) * logBudget) /</span>
+<span id="L101">101             visits = 2 * leftRoot := by</span>
+<span id="L102">102     dsimp [leftRoot]</span>
+<span id="L103">103     ring</span>
+<span id="L104">104   have hrightRewrite :</span>
+<span id="L105">105       2 * Real.sqrt (2 * logBudget / visits) * Real.sqrt probability =</span>
+<span id="L106">106         2 * rightRoot := by</span>
+<span id="L107">107     dsimp [rightRoot]</span>
+<span id="L108">108     ring</span>
+<span id="L109">109   rw [hleftRewrite, hrightRewrite]</span>
+<span id="L110">110   exact add_le_add</span>
+<span id="L111">111     (mul_le_mul_of_nonneg_left hroot (by norm_num : (0 : Real) &lt;= 2)) le_rfl</span>
+<span id="L112">112 </span>
+<span id="L113">113 /-- A finite weighted Bernstein coordinate family controls a bounded</span>
+<span id="L114">114 continuation value.  The small `z/(32H)` term is the self-bounding part used by</span>
+<span id="L115">115 the Bellman recursion; the remaining term is harmonic in the actual count. -/</span>
+<span id="L116">116 theorem abs_sum_weight_mul_massError_le_transitionValue_div_thirtyTwo_add</span>
+<span id="L117">117     (probability empirical value : State -&gt; Real)</span>
+<span id="L118">118     (horizon logBudget visits : Real)</span>
+<span id="L119">119     (hhorizon : 1 &lt;= horizon) (hlog : 0 &lt;= logBudget)</span>
+<span id="L120">120     (hvisits : 0 &lt; visits)</span>
+<span id="L121">121     (hprobability : forall state, 0 &lt;= probability state)</span>
+<span id="L122">122     (hvalue : forall state, value state ∈ Set.Icc (0 : Real) horizon)</span>
+<span id="L123">123     (hcoordinate : forall state,</span>
+<span id="L124">124       |empirical state - probability state| &lt;=</span>
+<span id="L125">125         2 * Real.sqrt (2 * logBudget / visits) *</span>
+<span id="L126">126             Real.sqrt (probability state) +</span>
+<span id="L127">127           2 * logBudget / visits) :</span>
+<span id="L128">128     |∑ state : State, value state *</span>
+<span id="L129">129         (empirical state - probability state)| &lt;=</span>
+<span id="L130">130       (∑ state : State, value state * probability state) / (32 * horizon) +</span>
+<span id="L131">131         66 * Fintype.card State * horizon ^ 2 * logBudget / visits := by</span>
+<span id="L132">132   let z : Real := ∑ state : State, value state * probability state</span>
+<span id="L133">133   let c : Real := Real.sqrt (2 * logBudget / visits)</span>
+<span id="L134">134   let cardH : Real := Fintype.card State * horizon</span>
+<span id="L135">135   have hhorizonPos : 0 &lt; horizon := lt_of_lt_of_le (by norm_num) hhorizon</span>
+<span id="L136">136   have hz : 0 &lt;= z := by</span>
+<span id="L137">137     exact Finset.sum_nonneg fun state _ =&gt;</span>
+<span id="L138">138       mul_nonneg (hvalue state).1 (hprobability state)</span>
+<span id="L139">139   have hsumValue : (∑ state : State, value state) &lt;= cardH := by</span>
+<span id="L140">140     calc</span>
+<span id="L141">141       (∑ state : State, value state) &lt;=</span>
+<span id="L142">142           ∑ _state : State, horizon :=</span>
+<span id="L143">143         Finset.sum_le_sum fun state _ =&gt; (hvalue state).2</span>
+<span id="L144">144       _ = cardH := by simp [cardH]</span>
+<span id="L145">145   have hcardH : 0 &lt;= cardH := by</span>
+<span id="L146">146     exact mul_nonneg (Nat.cast_nonneg _) hhorizonPos.le</span>
+<span id="L147">147   have hweightedSqrt :</span>
+<span id="L148">148       (∑ state : State, value state * Real.sqrt (probability state)) &lt;=</span>
+<span id="L149">149         Real.sqrt z * Real.sqrt cardH := by</span>
+<span id="L150">150     have hcs := Real.sum_sqrt_mul_sqrt_le (Finset.univ : Finset State)</span>
+<span id="L151">151       (fun state =&gt; mul_nonneg (hprobability state) (hvalue state).1)</span>
+<span id="L152">152       (fun state =&gt; (hvalue state).1)</span>
+<span id="L153">153     have hleft :</span>
+<span id="L154">154         (∑ state : State,</span>
+<span id="L155">155             Real.sqrt (probability state * value state) *</span>
+<span id="L156">156               Real.sqrt (value state)) =</span>
+<span id="L157">157           ∑ state : State, value state * Real.sqrt (probability state) := by</span>
+<span id="L158">158       apply Finset.sum_congr rfl</span>
+<span id="L159">159       intro state _</span>
+<span id="L160">160       rw [Real.sqrt_mul (hprobability state)]</span>
+<span id="L161">161       have hsquare := Real.sq_sqrt (hvalue state).1</span>
+<span id="L162">162       nlinarith [Real.sqrt_nonneg (probability state),</span>
+<span id="L163">163         Real.sqrt_nonneg (value state)]</span>
+<span id="L164">164     rw [hleft] at hcs</span>
+<span id="L165">165     have hright :</span>
+<span id="L166">166         (∑ state : State, probability state * value state) = z := by</span>
+<span id="L167">167       simp only [z]</span>
+<span id="L168">168       apply Finset.sum_congr rfl</span>
+<span id="L169">169       intro state _</span>
+<span id="L170">170       ring</span>
+<span id="L171">171     rw [hright] at hcs</span>
+<span id="L172">172     exact hcs.trans (mul_le_mul_of_nonneg_left</span>
+<span id="L173">173       (Real.sqrt_le_sqrt hsumValue) (Real.sqrt_nonneg z))</span>
+<span id="L174">174   have hc : 0 &lt;= c := Real.sqrt_nonneg _</span>
+<span id="L175">175   have hcSq : c ^ 2 = 2 * logBudget / visits := by</span>
+<span id="L176">176     exact Real.sq_sqrt (div_nonneg (mul_nonneg (by norm_num) hlog) hvisits.le)</span>
+<span id="L177">177   have hcardHSq : Real.sqrt cardH ^ 2 = cardH := Real.sq_sqrt hcardH</span>
+<span id="L178">178   let b : Real := c * Real.sqrt cardH</span>
+<span id="L179">179   have hb : 0 &lt;= b := mul_nonneg hc (Real.sqrt_nonneg _)</span>
+<span id="L180">180   have hbSq : b ^ 2 = 2 * Fintype.card State * horizon * logBudget / visits := by</span>
+<span id="L181">181     dsimp [b]</span>
+<span id="L182">182     rw [mul_pow, hcSq, hcardHSq]</span>
+<span id="L183">183     field_simp</span>
+<span id="L184">184     ring</span>
+<span id="L185">185   have hsqrtZSq : Real.sqrt z ^ 2 = z := Real.sq_sqrt hz</span>
+<span id="L186">186   have hyoung :</span>
+<span id="L187">187       2 * c * (Real.sqrt z * Real.sqrt cardH) &lt;=</span>
+<span id="L188">188         z / (32 * horizon) +</span>
+<span id="L189">189           64 * Fintype.card State * horizon ^ 2 * logBudget / visits := by</span>
+<span id="L190">190     have hrhs :</span>
+<span id="L191">191         z / (32 * horizon) +</span>
+<span id="L192">192             64 * Fintype.card State * horizon ^ 2 * logBudget / visits =</span>
+<span id="L193">193           (z + 2048 * Fintype.card State * horizon ^ 3 * logBudget / visits) /</span>
+<span id="L194">194             (32 * horizon) := by</span>
+<span id="L195">195       field_simp</span>
+<span id="L196">196       ring</span>
+<span id="L197">197     rw [hrhs, le_div_iff₀ (mul_pos (by norm_num) hhorizonPos)]</span>
+<span id="L198">198     have hsquare := sq_nonneg (Real.sqrt z - 32 * horizon * b)</span>
+<span id="L199">199     rw [show 2 * c * (Real.sqrt z * Real.sqrt cardH) =</span>
+<span id="L200">200         2 * Real.sqrt z * b by simp [b]; ring]</span>
+<span id="L201">201     ring_nf at hsquare</span>
+<span id="L202">202     rw [hbSq, hsqrtZSq] at hsquare</span>
+<span id="L203">203     ring_nf at hsquare ⊢</span>
+<span id="L204">204     nlinarith</span>
+<span id="L205">205   have hfirst :</span>
+<span id="L206">206       2 * c *</span>
+<span id="L207">207           (∑ state : State, value state * Real.sqrt (probability state)) &lt;=</span>
+<span id="L208">208         z / (32 * horizon) +</span>
+<span id="L209">209           64 * Fintype.card State * horizon ^ 2 * logBudget / visits :=</span>
+<span id="L210">210     (mul_le_mul_of_nonneg_left hweightedSqrt</span>
+<span id="L211">211       (mul_nonneg (by norm_num) hc)).trans hyoung</span>
+<span id="L212">212   have hsecond :</span>
+<span id="L213">213       (2 * logBudget / visits) * (∑ state : State, value state) &lt;=</span>
+<span id="L214">214         2 * Fintype.card State * horizon ^ 2 * logBudget / visits := by</span>
+<span id="L215">215     have hcoefficient : 0 &lt;= 2 * logBudget / visits :=</span>
+<span id="L216">216       div_nonneg (mul_nonneg (by norm_num) hlog) hvisits.le</span>
+<span id="L217">217     calc</span>
+<span id="L218">218       (2 * logBudget / visits) * (∑ state : State, value state) &lt;=</span>
+<span id="L219">219           (2 * logBudget / visits) * cardH :=</span>
+<span id="L220">220         mul_le_mul_of_nonneg_left hsumValue hcoefficient</span>
+<span id="L221">221       _ &lt;= 2 * Fintype.card State * horizon ^ 2 * logBudget / visits := by</span>
+<span id="L222">222         dsimp [cardH]</span>
+<span id="L223">223         have hhorizonSq : horizon &lt;= horizon ^ 2 := by</span>
+<span id="L224">224           have hmul := mul_le_mul_of_nonneg_left hhorizon hhorizonPos.le</span>
+<span id="L225">225           nlinarith</span>
+<span id="L226">226         have hfactor :</span>
+<span id="L227">227             0 &lt;= 2 * Fintype.card State * logBudget / visits := by</span>
+<span id="L228">228           positivity</span>
+<span id="L229">229         calc</span>
+<span id="L230">230           (2 * logBudget / visits) *</span>
+<span id="L231">231               (Fintype.card State * horizon) =</span>
+<span id="L232">232               (2 * Fintype.card State * logBudget / visits) * horizon := by ring</span>
+<span id="L233">233           _ &lt;= (2 * Fintype.card State * logBudget / visits) * horizon ^ 2 :=</span>
+<span id="L234">234             mul_le_mul_of_nonneg_left hhorizonSq hfactor</span>
+<span id="L235">235           _ = _ := by ring</span>
+<span id="L236">236   calc</span>
+<span id="L237">237     |∑ state : State, value state *</span>
+<span id="L238">238         (empirical state - probability state)| &lt;=</span>
+<span id="L239">239         ∑ state : State,</span>
+<span id="L240">240           |value state * (empirical state - probability state)| :=</span>
+<span id="L241">241       Finset.abs_sum_le_sum_abs _ _</span>
+<span id="L242">242     _ = ∑ state : State,</span>
+<span id="L243">243         value state * |empirical state - probability state| := by</span>
+<span id="L244">244       apply Finset.sum_congr rfl</span>
+<span id="L245">245       intro state _</span>
+<span id="L246">246       rw [abs_mul, abs_of_nonneg (hvalue state).1]</span>
+<span id="L247">247     _ &lt;= ∑ state : State,</span>
+<span id="L248">248         value state *</span>
+<span id="L249">249           (2 * c * Real.sqrt (probability state) +</span>
+<span id="L250">250             2 * logBudget / visits) := by</span>
+<span id="L251">251       apply Finset.sum_le_sum</span>
+<span id="L252">252       intro state _</span>
+<span id="L253">253       exact mul_le_mul_of_nonneg_left</span>
+<span id="L254">254         (by simpa [c, mul_assoc] using hcoordinate state)</span>
+<span id="L255">255         (hvalue state).1</span>
+<span id="L256">256     _ = 2 * c *</span>
+<span id="L257">257           (∑ state : State, value state * Real.sqrt (probability state)) +</span>
+<span id="L258">258         (2 * logBudget / visits) * (∑ state : State, value state) := by</span>
+<span id="L259">259       simp_rw [mul_add]</span>
+<span id="L260">260       rw [Finset.sum_add_distrib]</span>
+<span id="L261">261       congr 1</span>
+<span id="L262">262       · rw [Finset.mul_sum]</span>
+<span id="L263">263         apply Finset.sum_congr rfl</span>
+<span id="L264">264         intro state _</span>
+<span id="L265">265         ring</span>
+<span id="L266">266       · rw [Finset.mul_sum]</span>
+<span id="L267">267         apply Finset.sum_congr rfl</span>
+<span id="L268">268         intro state _</span>
+<span id="L269">269         ring</span>
+<span id="L270">270     _ &lt;= z / (32 * horizon) +</span>
+<span id="L271">271           64 * Fintype.card State * horizon ^ 2 * logBudget / visits +</span>
+<span id="L272">272         2 * Fintype.card State * horizon ^ 2 * logBudget / visits :=</span>
+<span id="L273">273       add_le_add hfirst hsecond</span>
+<span id="L274">274     _ = (∑ state : State, value state * probability state) /</span>
+<span id="L275">275           (32 * horizon) +</span>
+<span id="L276">276         66 * Fintype.card State * horizon ^ 2 * logBudget / visits := by</span>
+<span id="L277">277       simp only [z]</span>
+<span id="L278">278       ring</span>
+<span id="L279">279 </span>
+<span id="L280">280 end AdaptiveCumulativeHoeffdingUCBVI</span>
+<span id="L281">281 </span>
+<span id="L282">282 namespace AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource</span>
+<span id="L283">283 </span>
+<span id="L284">284 /-- The simultaneous singleton event controls the exact empirical mass error</span>
+<span id="L285">285 at the actual positive count.  No expected count or auxiliary sample appears. -/</span>
+<span id="L286">286 theorem abs_empiricalTransitionMass_sub_lt_bernstein</span>
+<span id="L287">287     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L288">288     [IsProbabilityMeasure initialState]</span>
+<span id="L289">289     (source : AdaptiveEpisodeBatchSource mdp initialState 1)</span>
+<span id="L290">290     {episodes : Nat} {logBudget : Real}</span>
+<span id="L291">291     {trajectory : EpisodeBatchTrajectory mdp 1}</span>
+<span id="L292">292     (htrajectory : trajectory ∉</span>
+<span id="L293">293       simultaneousTransitionFailureEvent source episodes logBudget)</span>
+<span id="L294">294     (defaultState : State) (index : BernsteinCoordinateIndex mdp episodes)</span>
+<span id="L295">295     (hactual : adaptiveCumulativeAggregateVisitCountAt trajectory index.round</span>
+<span id="L296">296         index.state index.action = index.count + 1) :</span>
+<span id="L297">297     |((adaptiveCumulativeEmpiricalModelStateAt trajectory index.round).1</span>
+<span id="L298">298           |&gt;.aggregateEmpiricalTransitionKernel defaultState</span>
+<span id="L299">299             (index.state, index.action)).real {index.nextState} -</span>
+<span id="L300">300         (mdp.transition (index.state, index.action)).real {index.nextState}| &lt;</span>
+<span id="L301">301       bernsteinCoordinateThreshold logBudget</span>
+<span id="L302">302           (mdp.transitionCoordinateVariance</span>
+<span id="L303">303             index.state index.action index.nextState * (index.count + 1 : Nat)) /</span>
+<span id="L304">304         (index.count + 1 : Nat) := by</span>
+<span id="L305">305   let summary := (adaptiveCumulativeEmpiricalModelStateAt trajectory index.round).1</span>
+<span id="L306">306   let visits : Real := (index.count + 1 : Nat)</span>
+<span id="L307">307   let truth : Real :=</span>
+<span id="L308">308     (mdp.transition (index.state, index.action)).real {index.nextState}</span>
+<span id="L309">309   have hpos : 0 &lt; summary.aggregateVisitCount index.state index.action := by</span>
+<span id="L310">310     change 0 &lt; adaptiveCumulativeAggregateVisitCountAt trajectory index.round</span>
+<span id="L311">311       index.state index.action</span>
+<span id="L312">312     rw [hactual]</span>
+<span id="L313">313     exact Nat.succ_pos _</span>
+<span id="L314">314   have hvisitSum :</span>
+<span id="L315">315       (∑ i ∈ Finset.range (index.round + 1),</span>
+<span id="L316">316           source.aggregateVisitIncrement index.state index.action i trajectory) =</span>
+<span id="L317">317         (index.count + 1 : Nat) := by</span>
+<span id="L318">318     rw [source.sum_aggregateVisitIncrement_eq_prefixAggregateVisitCount]</span>
+<span id="L319">319     exact_mod_cast hactual</span>
+<span id="L320">320   have hresidual :=</span>
+<span id="L321">321     abs_coordinateResidual_lt_of_not_mem_simultaneousTransitionFailureEvent</span>
+<span id="L322">322       source htrajectory index hvisitSum</span>
+<span id="L323">323   rw [source.sum_aggregateTransitionResidualIncrement_eq_prefixAggregateResidual]</span>
+<span id="L324">324       at hresidual</span>
+<span id="L325">325   have hmass := summary.aggregateEmpiricalTransitionKernel_real_singleton_of_pos</span>
+<span id="L326">326     defaultState index.state index.action index.nextState hpos</span>
+<span id="L327">327   have hcount :</span>
+<span id="L328">328       summary.aggregateTransitionCount index.state index.action index.nextState =</span>
+<span id="L329">329         adaptiveCumulativeAggregateTransitionCountAt trajectory index.round</span>
+<span id="L330">330           index.state index.action index.nextState := rfl</span>
+<span id="L331">331   have hvisit :</span>
+<span id="L332">332       summary.aggregateVisitCount index.state index.action =</span>
+<span id="L333">333         adaptiveCumulativeAggregateVisitCountAt trajectory index.round</span>
+<span id="L334">334           index.state index.action := rfl</span>
+<span id="L335">335   have hvisitPos : 0 &lt; visits := by</span>
+<span id="L336">336     change 0 &lt; ((index.count + 1 : Nat) : Real)</span>
+<span id="L337">337     positivity</span>
+<span id="L338">338   rw [hmass, hcount, hvisit, hactual]</span>
+<span id="L339">339   change |(adaptiveCumulativeAggregateTransitionCountAt trajectory index.round</span>
+<span id="L340">340       index.state index.action index.nextState : Real) / visits - truth| &lt; _</span>
+<span id="L341">341   have hrewrite :</span>
+<span id="L342">342       (adaptiveCumulativeAggregateTransitionCountAt trajectory index.round</span>
+<span id="L343">343           index.state index.action index.nextState : Real) / visits - truth =</span>
+<span id="L344">344         ((adaptiveCumulativeAggregateTransitionCountAt trajectory index.round</span>
+<span id="L345">345             index.state index.action index.nextState : Real) - visits * truth) /</span>
+<span id="L346">346           visits := by</span>
+<span id="L347">347     field_simp</span>
+<span id="L348">348   rw [hrewrite, abs_div, abs_of_pos hvisitPos]</span>
+<span id="L349">349   apply (div_lt_div_iff_of_pos_right hvisitPos).2</span>
+<span id="L350">350   simpa [visits, truth, hactual] using hresidual</span>
+<span id="L351">351 </span>
+<span id="L352">352 /-- The exact generated singleton family yields the self-bounding transition</span>
+<span id="L353">353 value estimate used in the UCBVI recursion. -/</span>
+<span id="L354">354 theorem abs_empiricalTransition_integral_sub_le_transitionValue_div_thirtyTwo_add</span>
+<span id="L355">355     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L356">356     [IsProbabilityMeasure initialState]</span>
+<span id="L357">357     (source : AdaptiveEpisodeBatchSource mdp initialState 1)</span>
+<span id="L358">358     {episodes : Nat} {logBudget : Real}</span>
+<span id="L359">359     {trajectory : EpisodeBatchTrajectory mdp 1}</span>
+<span id="L360">360     (htrajectory : trajectory ∉</span>
+<span id="L361">361       simultaneousTransitionFailureEvent source episodes logBudget)</span>
+<span id="L362">362     (defaultState : State) (round : Fin episodes)</span>
+<span id="L363">363     (state : State) (action : Action)</span>
+<span id="L364">364     (count : Fin (episodes * mdp.horizon))</span>
+<span id="L365">365     (hactual : adaptiveCumulativeAggregateVisitCountAt trajectory round</span>
+<span id="L366">366         state action = count + 1)</span>
+<span id="L367">367     (value : State -&gt; Real)</span>
+<span id="L368">368     (hvalue : forall nextState,</span>
+<span id="L369">369       value nextState ∈ Set.Icc (0 : Real) mdp.horizon)</span>
+<span id="L370">370     (hhorizon : 0 &lt; mdp.horizon) (hlog : 0 &lt;= logBudget) :</span>
+<span id="L371">371     |(∫ nextState, value nextState</span>
+<span id="L372">372           ∂TransitionCountSummary.aggregateEmpiricalTransitionKernel</span>
+<span id="L373">373             (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1</span>
+<span id="L374">374             defaultState (state, action)) -</span>
+<span id="L375">375         mdp.transitionValue value state action| &lt;=</span>
+<span id="L376">376       mdp.transitionValue value state action / (32 * mdp.horizon) +</span>
+<span id="L377">377         66 * Fintype.card State * (mdp.horizon : Real) ^ 2 * logBudget /</span>
+<span id="L378">378           (count + 1 : Nat) := by</span>
+<span id="L379">379   let summary := (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1</span>
+<span id="L380">380   let empiricalMeasure :=</span>
+<span id="L381">381     summary.aggregateEmpiricalTransitionKernel defaultState (state, action)</span>
+<span id="L382">382   let truthMeasure := mdp.transition (state, action)</span>
+<span id="L383">383   let empiricalMass : State -&gt; Real := fun nextState =&gt;</span>
+<span id="L384">384     empiricalMeasure.real {nextState}</span>
+<span id="L385">385   let truthMass : State -&gt; Real := fun nextState =&gt;</span>
+<span id="L386">386     truthMeasure.real {nextState}</span>
+<span id="L387">387   let visits : Real := (count + 1 : Nat)</span>
+<span id="L388">388   have hhorizonReal : (1 : Real) &lt;= mdp.horizon := by</span>
+<span id="L389">389     exact_mod_cast hhorizon</span>
+<span id="L390">390   have hvisits : 0 &lt; visits := by</span>
+<span id="L391">391     change 0 &lt; ((count + 1 : Nat) : Real)</span>
+<span id="L392">392     positivity</span>
+<span id="L393">393   have hcoordinate : forall nextState,</span>
+<span id="L394">394       |empiricalMass nextState - truthMass nextState| &lt;=</span>
+<span id="L395">395         2 * Real.sqrt (2 * logBudget / visits) *</span>
+<span id="L396">396             Real.sqrt (truthMass nextState) +</span>
+<span id="L397">397           2 * logBudget / visits := by</span>
+<span id="L398">398     intro nextState</span>
+<span id="L399">399     let index : BernsteinCoordinateIndex mdp episodes :=</span>
+<span id="L400">400       { round := round</span>
+<span id="L401">401         state := state</span>
+<span id="L402">402         action := action</span>
+<span id="L403">403         nextState := nextState</span>
+<span id="L404">404         count := count }</span>
+<span id="L405">405     have hraw := abs_empiricalTransitionMass_sub_lt_bernstein</span>
+<span id="L406">406       source htrajectory defaultState index hactual</span>
+<span id="L407">407     have hmass : truthMass nextState ∈ Set.Icc (0 : Real) 1 :=</span>
+<span id="L408">408       ⟨measureReal_nonneg, measureReal_le_one⟩</span>
+<span id="L409">409     have htune := bernsteinCoordinateThreshold_mul_probability_div_le</span>
+<span id="L410">410       hmass hlog hvisits</span>
+<span id="L411">411     exact (le_of_lt (by simpa [index, visits, truthMass, empiricalMass,</span>
+<span id="L412">412       empiricalMeasure, truthMeasure, MDP.transitionCoordinateVariance,</span>
+<span id="L413">413       mul_assoc] using hraw)).trans (by</span>
+<span id="L414">414         simpa [visits, truthMass, MDP.transitionCoordinateVariance,</span>
+<span id="L415">415           mul_assoc] using htune)</span>
+<span id="L416">416   have hanalytic :=</span>
+<span id="L417">417     abs_sum_weight_mul_massError_le_transitionValue_div_thirtyTwo_add</span>
+<span id="L418">418       truthMass empiricalMass value (mdp.horizon : Real) logBudget visits</span>
+<span id="L419">419       hhorizonReal hlog hvisits (fun _ =&gt; measureReal_nonneg) hvalue hcoordinate</span>
+<span id="L420">420   letI : IsProbabilityMeasure empiricalMeasure := by</span>
+<span id="L421">421     dsimp [empiricalMeasure]</span>
+<span id="L422">422     exact (summary.aggregateEmpiricalTransitionKernel_isMarkov defaultState)</span>
+<span id="L423">423       |&gt;.isProbabilityMeasure (state, action)</span>
+<span id="L424">424   have hempiricalIntegrable : Integrable value empiricalMeasure :=</span>
+<span id="L425">425     integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L426">426   have hempirical :</span>
+<span id="L427">427       (∫ nextState, value nextState ∂empiricalMeasure) =</span>
+<span id="L428">428         ∑ nextState : State,</span>
+<span id="L429">429           empiricalMass nextState * value nextState := by</span>
+<span id="L430">430     rw [integral_fintype hempiricalIntegrable]</span>
+<span id="L431">431     rfl</span>
+<span id="L432">432   have htruth :</span>
+<span id="L433">433       mdp.transitionValue value state action =</span>
+<span id="L434">434         ∑ nextState : State,</span>
+<span id="L435">435           value nextState * truthMass nextState := by</span>
+<span id="L436">436     simpa [truthMass, truthMeasure] using</span>
+<span id="L437">437       mdp.transitionValue_eq_sum_measureReal value state action</span>
+<span id="L438">438   rw [hempirical, htruth]</span>
+<span id="L439">439   have hleft :</span>
+<span id="L440">440       (∑ nextState : State,</span>
+<span id="L441">441           empiricalMass nextState * value nextState) -</span>
+<span id="L442">442           ∑ nextState : State, value nextState * truthMass nextState =</span>
+<span id="L443">443         ∑ nextState : State,</span>
+<span id="L444">444           value nextState * (empiricalMass nextState - truthMass nextState) := by</span>
+<span id="L445">445     rw [← Finset.sum_sub_distrib]</span>
+<span id="L446">446     apply Finset.sum_congr rfl</span>
+<span id="L447">447     intro nextState _</span>
+<span id="L448">448     ring</span>
+<span id="L449">449   rw [hleft]</span>
+<span id="L450">450   simpa [visits] using hanalytic</span>
+<span id="L451">451 </span>
+<span id="L452">452 end AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource</span>
+<span id="L453">453 </span>
+<span id="L454">454 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

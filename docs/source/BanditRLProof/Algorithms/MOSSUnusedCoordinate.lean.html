@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Algorithms/MOSSUnusedCoordinate.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Algorithms.MOSSCanonicalHistory</span>
+<span id="L2">2 import BanditRLProof.Algorithms.UCBArmStreamConditionalReward</span>
+<span id="L3">3 </span>
+<span id="L4">4 noncomputable section</span>
+<span id="L5">5 open MeasureTheory ProbabilityTheory</span>
+<span id="L6">6 namespace BanditRLProof.MOSS</span>
+<span id="L7">7 </span>
+<span id="L8">8 def canonicalCondition {k : ℕ} (hk : 0 &lt; k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ)</span>
+<span id="L9">9     (table : UCB.ArmRewardStream k) :=</span>
+<span id="L10">10   (canonicalHistory hk n mean table t, historyAction hk n t (canonicalHistory hk n mean table t))</span>
+<span id="L11">11 </span>
+<span id="L12">12 def canonicalNextCoordinate {k : ℕ} (hk : 0 &lt; k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ)</span>
+<span id="L13">13     (table : UCB.ArmRewardStream k) : ℕ × Fin k :=</span>
+<span id="L14">14   let c := canonicalCondition hk n mean t table</span>
+<span id="L15">15   (ETC.realHistoryPullCount t c.1 c.2 + 1, c.2)</span>
+<span id="L16">16 </span>
+<span id="L17">17 theorem canonicalNextCoordinate_count {k : ℕ} (hk : 0 &lt; k) (n : ℕ) (mean : Fin k → ℝ)</span>
+<span id="L18">18     (t : ℕ) (table : UCB.ArmRewardStream k) :</span>
+<span id="L19">19     (canonicalNextCoordinate hk n mean t table).1 =</span>
+<span id="L20">20       pullCount (canonicalAction hk n mean table) (canonicalNextCoordinate hk n mean t table).2 (t+1)+1 :=</span>
+<span id="L21">21   congrArg (fun m =&gt; m+1) (canonicalHistory_pullCount hk n mean table t _)</span>
+<span id="L22">22 </span>
+<span id="L23">23 theorem canonicalHistory_eq_of_complement_eq {k : ℕ} (hk : 0 &lt; k) (n : ℕ)</span>
+<span id="L24">24     (mean : Fin k → ℝ) (t : ℕ) (target : ℕ × Fin k) (table table&#x27; : UCB.ArmRewardStream k)</span>
+<span id="L25">25     (hc : UCB.armStreamWithoutCoordinate target table = UCB.armStreamWithoutCoordinate target table&#x27;)</span>
+<span id="L26">26     (hf : pullCount (canonicalAction hk n mean table) target.2 (t+1) &lt; target.1) :</span>
+<span id="L27">27     canonicalHistory hk n mean table t = canonicalHistory hk n mean table&#x27; t := by</span>
+<span id="L28">28   apply canonicalHistory_eq_of_eq_consumed</span>
+<span id="L29">29   intro a j hj</span>
+<span id="L30">30   have hne : (j+1,a) ≠ target := by</span>
+<span id="L31">31     intro he</span>
+<span id="L32">32     have ha : a = target.2 := congrArg Prod.snd he</span>
+<span id="L33">33     have hi : j+1 = target.1 := congrArg Prod.fst he</span>
+<span id="L34">34     subst a</span>
+<span id="L35">35     omega</span>
+<span id="L36">36   have h := congrFun hc ⟨(j+1,a), hne⟩</span>
+<span id="L37">37   exact h</span>
+<span id="L38">38 </span>
+<span id="L39">39 theorem canonicalNextCoordinate_eq_iff_insert {k : ℕ} (hk : 0 &lt; k) (n : ℕ)</span>
+<span id="L40">40     (mean : Fin k → ℝ) (t : ℕ) (target : ℕ × Fin k) (v : ℝ) (table : UCB.ArmRewardStream k) :</span>
+<span id="L41">41     canonicalNextCoordinate hk n mean t table = target ↔</span>
+<span id="L42">42       canonicalNextCoordinate hk n mean t</span>
+<span id="L43">43         (UCB.armStreamInsertCoordinate target v (UCB.armStreamWithoutCoordinate target table)) = target := by</span>
+<span id="L44">44   let rebuilt := UCB.armStreamInsertCoordinate target v (UCB.armStreamWithoutCoordinate target table)</span>
+<span id="L45">45   have hc : UCB.armStreamWithoutCoordinate target table = UCB.armStreamWithoutCoordinate target rebuilt := by</span>
+<span id="L46">46     simp [rebuilt]</span>
+<span id="L47">47   constructor</span>
+<span id="L48">48   · intro hnext</span>
+<span id="L49">49     have hn := canonicalNextCoordinate_count hk n mean t table</span>
+<span id="L50">50     rw [hnext] at hn</span>
+<span id="L51">51     have hh := canonicalHistory_eq_of_complement_eq hk n mean t target table rebuilt hc (by omega)</span>
+<span id="L52">52     have heq : canonicalNextCoordinate hk n mean t table = canonicalNextCoordinate hk n mean t rebuilt :=</span>
+<span id="L53">53       congrArg (fun h =&gt; (ETC.realHistoryPullCount t h (historyAction hk n t h)+1, historyAction hk n t h)) hh</span>
+<span id="L54">54     exact heq.symm.trans hnext</span>
+<span id="L55">55   · intro hnext</span>
+<span id="L56">56     have hn := canonicalNextCoordinate_count hk n mean t rebuilt</span>
+<span id="L57">57     rw [hnext] at hn</span>
+<span id="L58">58     have hh := canonicalHistory_eq_of_complement_eq hk n mean t target rebuilt table hc.symm (by omega)</span>
+<span id="L59">59     have heq : canonicalNextCoordinate hk n mean t rebuilt = canonicalNextCoordinate hk n mean t table :=</span>
+<span id="L60">60       congrArg (fun h =&gt; (ETC.realHistoryPullCount t h (historyAction hk n t h)+1, historyAction hk n t h)) hh</span>
+<span id="L61">61     exact heq.symm.trans hnext</span>
+<span id="L62">62 </span>
+<span id="L63">63 def canonicalConditionWithout {k : ℕ} (hk : 0 &lt; k) (n : ℕ) (mean : Fin k → ℝ) (t : ℕ)</span>
+<span id="L64">64     (target : ℕ × Fin k) (v : ℝ) :=</span>
+<span id="L65">65   canonicalCondition hk n mean t ∘ UCB.armStreamInsertCoordinate target v</span>
+<span id="L66">66 </span>
+<span id="L67">67 theorem canonicalCondition_eq_without {k : ℕ} (hk : 0 &lt; k) (n : ℕ)</span>
+<span id="L68">68     (mean : Fin k → ℝ) (t : ℕ) (target : ℕ × Fin k) (v : ℝ) (table : UCB.ArmRewardStream k)</span>
+<span id="L69">69     (hnext : canonicalNextCoordinate hk n mean t table = target) :</span>
+<span id="L70">70     canonicalCondition hk n mean t table =</span>
+<span id="L71">71       canonicalConditionWithout hk n mean t target v (UCB.armStreamWithoutCoordinate target table) := by</span>
+<span id="L72">72   have hn := canonicalNextCoordinate_count hk n mean t table</span>
+<span id="L73">73   rw [hnext] at hn</span>
+<span id="L74">74   have hh := canonicalHistory_eq_of_complement_eq hk n mean t target table</span>
+<span id="L75">75     (UCB.armStreamInsertCoordinate target v (UCB.armStreamWithoutCoordinate target table))</span>
+<span id="L76">76     (by simp) (by omega)</span>
+<span id="L77">77   exact congrArg (fun h =&gt; (h, historyAction hk n t h)) hh</span>
+<span id="L78">78 </span>
+<span id="L79">79 theorem measurable_canonicalCondition {k : ℕ} (hk : 0 &lt; k) (n : ℕ)</span>
+<span id="L80">80     (mean : Fin k → ℝ) (t : ℕ) : Measurable (canonicalCondition hk n mean t) :=</span>
+<span id="L81">81   (measurable_canonicalHistory hk n mean t).prodMk</span>
+<span id="L82">82     ((measurable_historyAction hk n t).comp (measurable_canonicalHistory hk n mean t))</span>
+<span id="L83">83 </span>
+<span id="L84">84 theorem measurable_canonicalConditionWithout {k : ℕ} (hk : 0 &lt; k) (n : ℕ)</span>
+<span id="L85">85     (mean : Fin k → ℝ) (t : ℕ) (target : ℕ × Fin k) (v : ℝ) :</span>
+<span id="L86">86     Measurable (canonicalConditionWithout hk n mean t target v) :=</span>
+<span id="L87">87   (measurable_canonicalCondition hk n mean t).comp (UCB.measurable_armStreamInsertCoordinate target v)</span>
+<span id="L88">88 </span>
+<span id="L89">89 /-- A target reward is independent of the condition reconstructed without it. -/</span>
+<span id="L90">90 theorem indepFun_coordinate_canonicalConditionWithout {k : ℕ} (hk : 0 &lt; k) (n : ℕ)</span>
+<span id="L91">91     (mean : Fin k → ℝ) (t : ℕ) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν]</span>
+<span id="L92">92     (target : ℕ × Fin k) (v : ℝ) :</span>
+<span id="L93">93     IndepFun (UCB.armStreamCoordinate target)</span>
+<span id="L94">94       (fun table =&gt; canonicalConditionWithout hk n mean t target v</span>
+<span id="L95">95         (UCB.armStreamWithoutCoordinate target table)) (UCB.armStreamMeasure ν) := by</span>
+<span id="L96">96   have hi := (UCB.indepFun_armStreamMeasure_coordinate_without ν target).comp measurable_id</span>
+<span id="L97">97     (measurable_canonicalConditionWithout hk n mean t target v)</span>
+<span id="L98">98   exact hi</span>
+<span id="L99">99 </span>
+<span id="L100">100 theorem map_canonicalConditionWithout_coordinate {k : ℕ} (hk : 0 &lt; k) (n : ℕ)</span>
+<span id="L101">101     (mean : Fin k → ℝ) (t : ℕ) (ν : Kernel (Fin k) ℝ) [IsMarkovKernel ν]</span>
+<span id="L102">102     (target : ℕ × Fin k) (v : ℝ) :</span>
+<span id="L103">103     Measure.map (fun table =&gt;</span>
+<span id="L104">104       (canonicalConditionWithout hk n mean t target v (UCB.armStreamWithoutCoordinate target table),</span>
+<span id="L105">105         UCB.armStreamCoordinate target table)) (UCB.armStreamMeasure ν) =</span>
+<span id="L106">106       (Measure.map (fun table =&gt; canonicalConditionWithout hk n mean t target v</span>
+<span id="L107">107         (UCB.armStreamWithoutCoordinate target table)) (UCB.armStreamMeasure ν)).prod (ν target.2) := by</span>
+<span id="L108">108   have hc := (measurable_canonicalConditionWithout hk n mean t target v).comp</span>
+<span id="L109">109     (UCB.measurable_armStreamWithoutCoordinate target)</span>
+<span id="L110">110   have hj := (indepFun_iff_map_prod_eq_prod_map_map hc.aemeasurable</span>
+<span id="L111">111     (UCB.measurable_armStreamCoordinate target).aemeasurable).mp</span>
+<span id="L112">112     (indepFun_coordinate_canonicalConditionWithout hk n mean t ν target v).symm</span>
+<span id="L113">113   simp only [Function.comp_def] at hj</span>
+<span id="L114">114   rw [hj]</span>
+<span id="L115">115   congr 1</span>
+<span id="L116">116   exact UCB.armStreamMeasure_map_coord ν target.1 target.2</span>
+<span id="L117">117 </span>
+<span id="L118">118 end BanditRLProof.MOSS</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

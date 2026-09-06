@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.TsallisConjugatePotentialFiniteHorizon · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.TsallisConjugatePotentialFiniteHorizon · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.TsallisConjugatePotentialFiniteHorizon · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Tsallis-FTRL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Tsallis<wbr>Conjugate<wbr>Potential<wbr>Finite<wbr>Horizon</h1>
+  <p class="lede">This module transports the compiled ordinary-importance-weighted conjugate-potential bound through identified finite conditional action laws and sums it over a finite horizon. It also records the exact deterministic potential telescope. The potential includes the paper-normalizing 1 / eta, so the process is ready for later cross-learning-rate comparisons.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html"><code>BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/tsallis/index.html">8. Tsallis-FTRL, corruption, and nonstationarity</a></dd></div>
+    <div><dt>Declarations</dt><dd>21</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-tsallisconjugatepotentialstability/index.html"><code>BanditRLProof.TsallisConjugatePotentialStability</code></a>, <a href="../banditrlproof-tsallisftrlgeneratedmeasurability/index.html"><code>BanditRLProof.TsallisFTRLGeneratedMeasurability</code></a>, <a href="../banditrlproof-exp3potential/index.html"><code>BanditRLProof.Exp3Potential</code></a>, <a href="../banditrlproof-expectationbochnersums/index.html"><code>BanditRLProof.ExpectationBochnerSums</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-tsallisscheduledexpectedstability/index.html"><code>BanditRLProof.TsallisScheduledExpectedStability</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-3303f86637d5">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.halfTsallisPotentialProcess</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A time-indexed paper-normalized half-Tsallis potential.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> halfTsallisPotentialProcess {Action : Type u} (arms : Finset Action) (eta : Real) (score probability : Nat -&gt; Action -&gt; Real) (t : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html#L24">Source line 24</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7c19c58c2c19">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sum_halfTsallisPotentialStability_eq_linearLoss_sum_add_terminal_sub_initial</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact fixed-learning-rate finite-horizon telescope for the candidate potential
+expression.  When every probability is the corresponding certified minimizer,
+this is the constrained-potential telescope.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sum_halfTsallisPotentialStability_eq_linearLoss_sum_add_terminal_sub_initial {Action : Type u} (arms : Finset Action) (eta : Real) (score probability estimate : Nat -&gt; Action -&gt; Real) (T : Nat) (hscoreSucc : <span class="kw">forall</span> t, t &lt; T -&gt; score (t + <span class="num">1</span>) = <span class="kw">fun</span> action =&gt; score t action + estimate t action) : (Finset.range T).sum (<span class="kw">fun</span> t =&gt; halfTsallisPotentialStability arms eta (score t) (probability t) (estimate t) (probability (t + <span class="num">1</span>))) = (Finset.range T).sum (<span class="kw">fun</span> t =&gt; FTRL.linearLoss arms (probability t) (estimate t)) + halfTsallisPotentialProcess arms eta score probability T - halfTsallisPotentialProcess arms eta score probability <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html#L35">Source line 35</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-272344b44f7d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.importanceWeightedPotentialStabilityScore</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The realized one-round conjugate-potential score on a history/action pair.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> importanceWeightedPotentialStabilityScore {History : Type u} {Action : Type v} (arms : Finset Action) (eta : Real) (score prob loss : History -&gt; Action -&gt; Real) (next : History -&gt; Action -&gt; Action -&gt; Real) (sample : History × Action) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html#L94">Source line 94</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d80634a893d0">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.refinedPotentialStabilityBound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The paper-shaped one-round conditional expectation budget.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> refinedPotentialStabilityBound {History : Type u} {Action : Type v} (arms : Finset Action) (eta : Real) (prob : History -&gt; Action -&gt; Real) (history : History) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html#L107">Source line 107</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f4ce10fd7c4a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.measurable_linearLoss_of_coordinatewise</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Coordinatewise measurability closes a finite linear-loss sum.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_linearLoss_of_coordinatewise {History : Type u} {Action : Type v} [MeasurableSpace History] (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real) (hprob : <span class="kw">forall</span> action, action ∈ arms -&gt; Measurable (<span class="kw">fun</span> history =&gt; prob history action)) (hloss : <span class="kw">forall</span> action, action ∈ arms -&gt; Measurable (<span class="kw">fun</span> history =&gt; loss history action)) : Measurable (<span class="kw">fun</span> history =&gt; FTRL.linearLoss arms (prob history) (loss history))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html#L116">Source line 116</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7420ff29e24f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.measurable_halfTsallisPotentialValue</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The paper-normalized potential is measurable from supported coordinate
+measurability of its score and simplex candidate.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_halfTsallisPotentialValue {History : Type u} {Action : Type v} [MeasurableSpace History] (arms : Finset Action) (eta : Real) (score probability : History -&gt; Action -&gt; Real) (hscore : <span class="kw">forall</span> action, action ∈ arms -&gt; Measurable (<span class="kw">fun</span> history =&gt; score history action)) (hprobability : <span class="kw">forall</span> action, action ∈ arms -&gt; Measurable (<span class="kw">fun</span> history =&gt; probability history action)) : Measurable (<span class="kw">fun</span> history =&gt; halfTsallisPotentialValue arms eta (score history) (probability history))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html#L131">Source line 131</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ee7d324102ef">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.measurable_importanceWeightedPotentialStabilityScore</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The conjugate-potential score is measurable from supported current score,
+probability, loss, and updated-selector coordinates.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_importanceWeightedPotentialStabilityScore {History : Type u} {Action : Type v} [MeasurableSpace History] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (eta : Real) (score prob loss : History -&gt; Action -&gt; Real) (next : History -&gt; Action -&gt; Action -&gt; Real) (hscore : <span class="kw">forall</span> candidate, candidate ∈ arms -&gt; Measurable (<span class="kw">fun</span> history =&gt; score history candidate)) (hprob : <span class="kw">forall</span> candidate, candidate ∈ arms -&gt; Measurable (<span class="kw">fun</span> history =&gt; prob history candidate)) (hloss : <span class="kw">forall</span> candidate, candidate ∈ arms -&gt; Measurable (<span class="kw">fun</span> history =&gt; loss history candidate)) (hnext : <span class="kw">forall</span> candidate, candidate ∈ arms -&gt; Measurable (<span class="kw">fun</span> sample : History × Action =&gt; next sample.<span class="num">1</span> sample.<span class="num">2</span> candidate)) : Measurable (importanceWeightedPotentialStabilityScore arms eta score prob loss next)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html#L171">Source line 171</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3cb8d0a2a762">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.measurable_refinedPotentialStabilityBound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The refined one-round budget is measurable from supported probability
+coordinates.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_refinedPotentialStabilityBound {History : Type u} {Action : Type v} [MeasurableSpace History] (arms : Finset Action) (eta : Real) (prob : History -&gt; Action -&gt; Real) (hprob : <span class="kw">forall</span> action, action ∈ arms -&gt; Measurable (<span class="kw">fun</span> history =&gt; prob history action)) : Measurable (refinedPotentialStabilityBound arms eta prob)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html#L245">Source line 245</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-98ee4ffbaaad">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.halfTsallisPotentialStability_nonneg_of_minimizers</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A true minimizer-to-minimizer potential step is nonnegative.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> halfTsallisPotentialStability_nonneg_of_minimizers {Action : Type u} (arms : Finset Action) (eta : Real) (score probability estimate next : Action -&gt; Real) (heta : <span class="num">0</span> &lt; eta) (hprobabilityMin : FTRL.IsRegularizedMinimizer (FTRL.finiteSimplex arms) arms eta (negEntropyRegularizer arms (<span class="num">1</span> / <span class="num">2</span> : Real)) score probability) (hnextMin : FTRL.IsRegularizedMinimizer (FTRL.finiteSimplex arms) arms eta (negEntropyRegularizer arms (<span class="num">1</span> / <span class="num">2</span> : Real)) (<span class="kw">fun</span> action =&gt; score action + estimate action) next) : <span class="num">0</span> &lt;= halfTsallisPotentialStability arms eta score probability estimate next</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html#L259">Source line 259</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5c1c35e02cc4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integrable_refinedPotentialStabilityBound_of_finiteSimplex</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The refined budget is uniformly integrable under a finite history measure.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_refinedPotentialStabilityBound_of_finiteSimplex {History : Type u} {Action : Type v} [MeasurableSpace History] (historyMu : Measure History) [IsFiniteMeasure historyMu] (arms : Finset Action) (eta : Real) (prob : History -&gt; Action -&gt; Real) (source : Exp3.MeasurableFiniteActionDistribution arms prob) (heta : <span class="num">0</span> &lt; eta) : Integrable (refinedPotentialStabilityBound arms eta prob) historyMu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html#L308">Source line 308</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9c9c8aabcec5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integrable_importanceWeightedPotentialStabilityScore_finiteActionKernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Measurability plus exact minimizer certificates give integrability of the
+potential score under the finite sampling kernel, without a probability floor.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_importanceWeightedPotentialStabilityScore_finiteActionKernel {History : Type u} {Action : Type v} [MeasurableSpace History] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (historyMu : Measure History) [IsFiniteMeasure historyMu] (arms : Finset Action) (eta : Real) (score prob loss : History -&gt; Action -&gt; Real) (next : History -&gt; Action -&gt; Action -&gt; Real) (source : Exp3.MeasurableFiniteActionDistribution arms prob) (heta : <span class="num">0</span> &lt; eta) (heta_le : eta &lt;= <span class="num">1</span> / <span class="num">2</span>) (hprobMin : <span class="kw">forall</span> history, FTRL.IsRegularizedMinimizer (FTRL.finiteSimplex arms) arms eta (negEntropyRegularizer arms (<span class="num">1</span> / <span class="num">2</span> : Real)) (score history) (prob history)) (hnextMin : <span class="kw">forall</span> history chosen, chosen ∈ arms -&gt; FTRL.IsRegularizedMinimizer (FTRL.finiteSimplex arms) arms eta (negEntropyRegularizer arms (<span class="num">1</span> / <span class="num">2</span> : Real)) (<span class="kw">fun</span> candidate =&gt; score history candidate + Exp3.importanceWeightedLoss (prob history) (loss history) chosen candidate) (next history chosen)) (hloss : <span class="kw">forall</span> history action, action ∈ arms -&gt; <span class="num">0</span> &lt;= loss history action ∧ loss history action &lt;= <span class="num">1</span>) (hscore : Measurable (importanceWeightedPotentialStabilityScore arms eta score prob loss next)) : Integrable (importanceWeightedPotentialStabilityScore arms eta score prob loss next) (historyMu ⊗ₘ Exp3.finiteActionKernel arms prob source)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html#L361">Source line 361</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-866241bafda2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integrable_score_comp_history_action_of_condDistrib_generic</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Product-law integrability pulls back to a realized history/action pair
+when the kernel is an identified conditional action law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_score_comp_history_action_of_condDistrib_generic {Omega : Type u} {History : Type v} {Action : Type w} [MeasurableSpace Omega] [MeasurableSpace History] [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action] (mu : Measure Omega) [IsFiniteMeasure mu] (history : Omega -&gt; History) (hhistory : Measurable history) (action : Omega -&gt; Action) (haction : Measurable action) (score : History × Action -&gt; Real) (policy : Kernel History Action) [IsMarkovKernel policy] (hcond : condDistrib action history mu =ᵐ[mu.map history] policy) (hIntegrable : Integrable score (mu.map history ⊗ₘ policy)) : Integrable (<span class="kw">fun</span> omega =&gt; score (history omega, action omega)) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html#L494">Source line 494</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0800a4a0dbbd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_importanceWeightedPotentialStabilityScore_le_integral_refinedBound_of_condDistrib_of_minimizers</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">An identified finite conditional action law transports the deterministic
+ordinary-IW conjugate-potential theorem to a one-round integral inequality.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_importanceWeightedPotentialStabilityScore_le_integral_refinedBound_of_condDistrib_of_minimizers {Omega : Type u} {History : Type v} {Action : Type w} [MeasurableSpace Omega] [MeasurableSpace History] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (mu : Measure Omega) [IsFiniteMeasure mu] (history : Omega -&gt; History) (hhistory : Measurable history) (action : Omega -&gt; Action) (haction : Measurable action) (arms : Finset Action) (eta : Real) (score prob loss : History -&gt; Action -&gt; Real) (next : History -&gt; Action -&gt; Action -&gt; Real) (policy : Kernel History Action) [IsMarkovKernel policy] (hpolicy : policy =ᵐ[mu.map history] <span class="kw">fun</span> h =&gt; Exp3.finiteActionMeasure arms (prob h)) (hcond : condDistrib action history mu =ᵐ[mu.map history] policy) (heta : <span class="num">0</span> &lt; eta) (heta_le : eta &lt;= <span class="num">1</span> / <span class="num">2</span>) (hprobMin : <span class="kw">forall</span> h, FTRL.IsRegularizedMinimizer (FTRL.finiteSimplex arms) arms eta (negEntropyRegularizer arms (<span class="num">1</span> / <span class="num">2</span> : Real)) (score h) (prob h)) (hnextMin : <span class="kw">forall</span> h chosen, chosen ∈ arms -&gt; FTRL.IsRegularizedMinimizer (FTRL.finiteSimplex arms) arms eta (negEntropyRegularizer arms (<span class="num">1</span> / <span class="num">2</span> : Real)) (<span class="kw">fun</span> candidate =&gt; score h candidate + Exp3.importanceWeightedLoss (prob h) (loss h) chosen candidate) (next h chosen)) (hloss : <span class="kw">forall</span> h candidate, candidate ∈ arms -&gt; <span class="num">0</span> &lt;= loss h candidate ∧ loss h candidate &lt;= <span class="num">1</span>) (hscore : Measurable (importanceWeightedPotentialStabilityScore arms eta score prob loss next)) (hIntegrable : Integrable (importanceWeightedPotentialStabilityScore arms eta score prob loss next) (mu.map history ⊗ₘ policy)) (hboundIntegrable : Integrable (refinedPotentialStabilityBound arms eta prob) (mu.map history)) : integral mu (<span class="kw">fun</span> omega =&gt; importanceWeightedPotentialStabilityScore arms eta score prob loss next (history omega, action omega)) &lt;= integral (mu.map history) (refinedPotentialStabilityBound arms eta prob)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html#L521">Source line 521</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3f93a378631a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_sum_importanceWeightedPotentialStabilityScore_le_integral_sum_refinedBound_of_condDistrib_of_minimizers</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-horizon expected conjugate-potential stability under identified
+conditional action laws and exact current/update minimizer certificates.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_sum_importanceWeightedPotentialStabilityScore_le_integral_sum_refinedBound_of_condDistrib_of_minimizers {Omega : Type u} {History : Type v} {Action : Type w} [MeasurableSpace Omega] [MeasurableSpace History] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (mu : Measure Omega) [IsFiniteMeasure mu] (horizon : Nat) (arms : Finset Action) (eta : Real) (history : Nat -&gt; Omega -&gt; History) (action : Nat -&gt; Omega -&gt; Action) (score prob loss : Nat -&gt; History -&gt; Action -&gt; Real) (next : Nat -&gt; History -&gt; Action -&gt; Action -&gt; Real) (policy : Nat -&gt; Kernel History Action) (hmarkov : <span class="kw">forall</span> t, IsMarkovKernel (policy t)) (hhistory : <span class="kw">forall</span> t, Measurable (history t)) (haction : <span class="kw">forall</span> t, Measurable (action t)) (hpolicy : <span class="kw">forall</span> t, policy t =ᵐ[mu.map (history t)] <span class="kw">fun</span> h =&gt; Exp3.finiteActionMeasure arms (prob t h)) (hcond : <span class="kw">forall</span> t, condDistrib (action t) (history t) mu =ᵐ[mu.map (history t)] policy t) (heta : <span class="num">0</span> &lt; eta) (heta_le : eta &lt;= <span class="num">1</span> / <span class="num">2</span>) (hprobMin : <span class="kw">forall</span> t h, FTRL.IsRegularizedMinimizer (FTRL.finiteSimplex arms) arms eta (negEntropyRegularizer arms (<span class="num">1</span> / <span class="num">2</span> : Real)) (score t h) (prob t h)) (hnextMin : <span class="kw">forall</span> t h chosen, chosen ∈ arms -&gt; FTRL.IsRegularizedMinimizer (FTRL.finiteSimplex arms) arms eta (negEntropyRegularizer arms (<span class="num">1</span> / <span class="num">2</span> : Real)) (<span class="kw">fun</span> candidate =&gt; score t h candidate + Exp3.importanceWeightedLoss (prob t h) (loss t h) chosen candidate) (next t h chosen)) (hloss : <span class="kw">forall</span> t h candidate, candidate ∈ arms -&gt; <span class="num">0</span> &lt;= loss t h candidate ∧ loss t h candidate &lt;= <span class="num">1</span>) (hscore : <span class="kw">forall</span> t, Measurable (importanceWeightedPotentialStabilityScore arms eta (score t) (prob t) (loss t) (next t))) (hIntegrable : <span class="kw">forall</span> t, Integrable (importanceWeightedPotentialStabilityScore arms eta (score t) (prob t) (loss t) (next t)) (mu.map (history t) ⊗ₘ policy t)) (hboundIntegrable : <span class="kw">forall</span> t, Integrable (refinedPotentialStabilityBound arms eta (prob t)) (mu.map (history t))) : integral mu (<span class="kw">fun</span> omega =&gt; (Finset.range horizon).sum (<span class="kw">fun</span> t =&gt; importanceWeightedPotentialStabilityScore arms eta (score t) (prob t) (loss t) (next t) (history t omega, action t omega))) &lt;= integral mu (<span class="kw">fun</span> omega =&gt; (Finset.range horizon).sum (<span class="kw">fun</span> t =&gt; refinedPotentialStabilityBound arms eta (prob t) (history t omega)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html#L619">Source line 619</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0de9cbb869ed">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.sampledHalfTsallisHistoryActionPotentialStabilityAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The canonical generated one-round potential score on a visible
+environment/prefix and sampled successor action.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledHalfTsallisHistoryActionPotentialStabilityAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (loss : Exp3.PredictableLossVector Env Action) (n : Nat) : (Env × History.FinitePairHistory Action Real n) × Action -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html#L739">Source line 739</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1a9c4414827a">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.sampledHalfTsallisRefinedPotentialStabilityBoundAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The generated visible-prefix refined potential budget.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledHalfTsallisRefinedPotentialStabilityBoundAt {Env : Type u} {Action : Type v} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (n : Nat) : Env × History.FinitePairHistory Action Real n -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html#L752">Source line 752</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4cea29fc6ff0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.measurable_sampledHalfTsallisHistoryActionPotentialStabilityAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The generated canonical potential score is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_sampledHalfTsallisHistoryActionPotentialStabilityAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (loss : Exp3.PredictableLossVector Env Action) (n : Nat) : Measurable (sampledHalfTsallisHistoryActionPotentialStabilityAt arms harms eta loss n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html#L760">Source line 760</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7689512d20e3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integrable_sampledHalfTsallisRefinedPotentialStabilityBoundAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The generated refined potential budget is automatically integrable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_sampledHalfTsallisRefinedPotentialStabilityBoundAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (n : Nat) (historyMu : Measure (Env × History.FinitePairHistory Action Real n)) [IsFiniteMeasure historyMu] (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (heta : <span class="num">0</span> &lt; eta) (selector : HalfTsallisFiniteHistorySelectorMeasurability arms harms eta) : Integrable (sampledHalfTsallisRefinedPotentialStabilityBoundAt (Env := Env) arms harms eta n) historyMu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html#L787">Source line 787</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-17b2f55d3ed0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integrable_sampledHalfTsallisHistoryActionPotentialStabilityAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The generated canonical potential score is automatically integrable under
+the visible-history/action product law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_sampledHalfTsallisHistoryActionPotentialStabilityAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (heta : <span class="num">0</span> &lt; eta) (heta_le : eta &lt;= <span class="num">1</span> / <span class="num">2</span>) (loss : Exp3.PredictableLossVector Env Action) (n : Nat) : <span class="kw">let</span> selector := canonicalHalfTsallisGeneratedSelectorMeasurability arms harms eta loss <span class="kw">let</span> mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel arms harms eta selector.finiteHistory loss.environment Integrable (sampledHalfTsallisHistoryActionPotentialStabilityAt arms harms eta loss n) (mu.map (sampledHalfTsallisHistoryAt n) ⊗ₘ sampledHalfTsallisPolicyAt (Env := Env) arms harms eta selector.finiteHistory n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html#L814">Source line 814</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9eecd8b416e4">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.sampledHalfTsallisSuccessorPotentialStabilityAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The actual generated successor potential step, written with the next
+prefix&#x27;s current selector.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledHalfTsallisSuccessorPotentialStabilityAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (loss : Exp3.PredictableLossVector Env Action) (n : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html#L870">Source line 870</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7cdad013c584">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_sum_sampledHalfTsallisSuccessorPotentialStability_le_integral_sum_refinedPotentialStabilityBound_canonical</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Generated canonical finite-horizon successor conjugate-potential stability.
+
+The trajectory action law, score recursion, selector measurability, score
+integrability, and refined-budget integrability are all discharged internally.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_sum_sampledHalfTsallisSuccessorPotentialStability_le_integral_sum_refinedPotentialStabilityBound_canonical {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (horizon : Nat) (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (heta : <span class="num">0</span> &lt; eta) (heta_le : eta &lt;= <span class="num">1</span> / <span class="num">2</span>) (loss : Exp3.PredictableLossVector Env Action) : <span class="kw">let</span> selector := canonicalHalfTsallisGeneratedSelectorMeasurability arms harms eta loss <span class="kw">let</span> mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel arms harms eta selector.finiteHistory loss.environment integral mu (<span class="kw">fun</span> sample =&gt; (Finset.range horizon).sum (<span class="kw">fun</span> n =&gt; sampledHalfTsallisSuccessorPotentialStabilityAt arms harms eta loss n sample)) &lt;= integral mu (<span class="kw">fun</span> sample =&gt; (Finset.range horizon).sum (<span class="kw">fun</span> n =&gt; sampledHalfTsallisRefinedPotentialStabilityBoundAt (Env := Env) arms harms eta n (sampledHalfTsallisHistoryAt n sample)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisConjugatePotentialFiniteHorizon.lean.html#L894">Source line 894</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

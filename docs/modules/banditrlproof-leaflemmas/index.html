@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.LeafLemmas · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.LeafLemmas · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.LeafLemmas · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Foundations</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Leaf<wbr>Lemmas</h1>
+  <p class="lede">These lemmas are the first compiled ABRL leaf library. They deliberately avoid Mathlib imports while exposing stable theorem names that later Mathlib-backed tasks can replace, generalize, or upstream.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/LeafLemmas.lean.html"><code>BanditRLProof/LeafLemmas.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/foundations/index.html">1. Finite bandits, traces, and regret</a></dd></div>
+    <div><dt>Declarations</dt><dd>38</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-regret/index.html"><code>BanditRLProof.Regret</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-etctracecountlemmas/index.html"><code>BanditRLProof.Algorithms.ETCTraceCountLemmas</code></a>, <a href="../banditrlproof-algorithms-stochasticgradientbandittheoremtwostarvation/index.html"><code>BanditRLProof.Algorithms.StochasticGradientBanditTheoremTwoStarvation</code></a>, <a href="../banditrlproof-expectationpullcount/index.html"><code>BanditRLProof.ExpectationPullCount</code></a>, <a href="../banditrlproof-mathlibwrappers/index.html"><code>BanditRLProof.MathlibWrappers</code></a>, <a href="../banditrlproof-measurablepullcount/index.html"><code>BanditRLProof.MeasurablePullCount</code></a>, <a href="../banditrlproof-pullcountreindex/index.html"><code>BanditRLProof.PullCountReindex</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-f22cfc1186c8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pullCount_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code>@[simp] <span class="kw">theorem</span> pullCount_one : pullCount action a <span class="num">1</span> = <span class="kw">if</span> action <span class="num">0</span> = a <span class="kw">then</span> <span class="num">1</span> <span class="kw">else</span> <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L18">Source line 18</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a983db10bccf">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pullCount_succ_of_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pullCount_succ_of_eq (h : action t = a) : pullCount action a (t + <span class="num">1</span>) = pullCount action a t + <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L22">Source line 22</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9e1cb61221fb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pullCount_succ_of_ne</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pullCount_succ_of_ne (h : action t ≠ a) : pullCount action a (t + <span class="num">1</span>) = pullCount action a t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L26">Source line 26</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-29f3cfecba80">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pullCount_le_succ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pullCount_le_succ : pullCount action a t ≤ pullCount action a (t + <span class="num">1</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L30">Source line 30</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-242e82d199b9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pullCount_succ_le_succ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pullCount_succ_le_succ : pullCount action a (t + <span class="num">1</span>) ≤ pullCount action a t + <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L35">Source line 35</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f9d0282ec437">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pullCount_lt_of_forall_succ_ne</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">If a positive count level is never hit at a successor time, every finite
+pull count stays strictly below that level.  The proof uses only that
+`pullCount` starts at zero and grows by at most one per round.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pullCount_lt_of_forall_succ_ne (target : Nat) (htarget : <span class="num">0</span> &lt; target) (hnever : ∀ chron, pullCount action a (chron + <span class="num">1</span>) ≠ target) : pullCount action a t &lt; target</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L43">Source line 43</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d1458009bbe5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pullCount_mono</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pullCount_mono {s t : Nat} (h : s ≤ t) : pullCount action a s ≤ pullCount action a t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L55">Source line 55</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4fb1a2bee033">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pullCount_le_time</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pullCount_le_time : pullCount action a t ≤ t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L61">Source line 61</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a0c08e2c7170">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pullCount_add_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pullCount_add_le (n : Nat) : pullCount action a (t + n) ≤ pullCount action a t + n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L73">Source line 73</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9495e71cf3f4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pullCount_le_add</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pullCount_le_add : pullCount action a t ≤ pullCount action a (t + n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L82">Source line 82</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ed50736c90bd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pullCount_eq_zero_of_forall_ne</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pullCount_eq_zero_of_forall_ne (h : ∀ s, s &lt; t → action s ≠ a) : pullCount action a t = <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L86">Source line 86</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-dfc0c3ae8eb7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pullCount_eq_time_of_forall_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pullCount_eq_time_of_forall_eq (h : ∀ s, s &lt; t → action s = a) : pullCount action a t = t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L95">Source line 95</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3077511280e5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pullCount_pos_of_eq_before</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pullCount_pos_of_eq_before {s t : Nat} (hst : s &lt; t) (h : action s = a) : <span class="num">0</span> &lt; pullCount action a t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L104">Source line 104</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d79ef2e13388">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pullCount_eq_of_forall_lt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pull counts depend only on the half-open action prefix `0, ..., t - 1`.
+
+This keeps later adaptive-policy wrappers from reproving the same induction
+when a history-generated trace is known to agree pointwise with an index-policy
+trace up to a finite horizon.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pullCount_eq_of_forall_lt (action action&#x27; : ActionTrace Action) (a : Action) : <span class="kw">forall</span> t : Nat, (<span class="kw">forall</span> s : Nat, s &lt; t -&gt; action s = action&#x27; s) -&gt; pullCount action a t = pullCount action&#x27; a t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L123">Source line 123</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8925fcd4f9a7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pullCount_const_self</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code>@[simp] <span class="kw">theorem</span> pullCount_const_self (a : Action) (t : Nat) : pullCount (<span class="kw">fun</span> _ =&gt; a) a t = t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L139">Source line 139</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-460aa31c1bcd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pullCount_const_of_ne</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pullCount_const_of_ne (b : Action) (h : b ≠ a) (t : Nat) : pullCount (<span class="kw">fun</span> _ =&gt; b) a t = <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L145">Source line 145</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5b93e91e22f1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pullCount_add_eq_of_forall_ne_between</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pullCount_add_eq_of_forall_ne_between (n : Nat) (h : ∀ s, t ≤ s → s &lt; t + n → action s ≠ a) : pullCount action a (t + n) = pullCount action a t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L151">Source line 151</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b99401859987">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pullCount_add_eq_add_of_forall_eq_between</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pullCount_add_eq_add_of_forall_eq_between (n : Nat) (h : ∀ s, t ≤ s → s &lt; t + n → action s = a) : pullCount action a (t + n) = pullCount action a t + n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L163">Source line 163</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7895c29e9d49">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pullCount_eq_list_filter_length</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The recursive pull count equals the number of matching actions in the
+half-open time prefix `0, ..., t - 1`.
+
+This is intentionally a dependency-light `List.range` bridge.  The Mathlib
+`Finset.range` cardinality wrapper is a separate downstream leaf.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pullCount_eq_list_filter_length : pullCount action a t = ((List.range t).filter (<span class="kw">fun</span> s : Nat =&gt; decide (action s = a))).length</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L183">Source line 183</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-687148a61da3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.sumRewards_succ_of_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sumRewards_succ_of_eq (h : action t = a) : sumRewards action reward a (t + <span class="num">1</span>) = sumRewards action reward a t + reward t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L204">Source line 204</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4a061607bfbe">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.sumRewards_succ_of_ne</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sumRewards_succ_of_ne (hzero : ∀ x : Reward, x + <span class="num">0</span> = x) (h : action t ≠ a) : sumRewards action reward a (t + <span class="num">1</span>) = sumRewards action reward a t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L209">Source line 209</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3ab51b50e9de">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.sumRewards_eq_zero_of_forall_ne</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sumRewards_eq_zero_of_forall_ne (hzero : ∀ x : Reward, x + <span class="num">0</span> = x) (h : ∀ s, s &lt; t → action s ≠ a) : sumRewards action reward a t = <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L215">Source line 215</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1f73079aab66">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.sumRewards_const_of_ne</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sumRewards_const_of_ne (hzero : ∀ x : Reward, x + <span class="num">0</span> = x) (b : Action) (h : b ≠ a) (t : Nat) : sumRewards (<span class="kw">fun</span> _ =&gt; b) reward a t = <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L224">Source line 224</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2a57a446e0a8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.sumRewards_add_eq_of_forall_ne_between</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sumRewards_add_eq_of_forall_ne_between (hzero : ∀ x : Reward, x + <span class="num">0</span> = x) (n : Nat) (h : ∀ s, t ≤ s → s &lt; t + n → action s ≠ a) : sumRewards action reward a (t + n) = sumRewards action reward a t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L232">Source line 232</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a6252cce7376">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.sumRewards_eq_list_range_foldl</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The recursive reward sum equals a left fold over the half-open time prefix.
+
+This bridge deliberately keeps the false-branch `+ 0` steps in the fold, so it
+does not require additive laws beyond the weak assumptions used by `sumRewards`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sumRewards_eq_list_range_foldl : sumRewards action reward a t = (List.range t).foldl (<span class="kw">fun</span> acc s =&gt; acc + <span class="kw">if</span> action s = a <span class="kw">then</span> reward s <span class="kw">else</span> <span class="num">0</span>) <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L250">Source line 250</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-05c07fbd2547">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.sumRewards_eq_list_range_filter_foldl</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The reward sum can also drop nonmatching time steps from the list fold when
+the accumulator has a right-zero law.
+
+This is still dependency-light: it uses `List.range` and `List.filter`, not a
+Mathlib `Finset` sum.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sumRewards_eq_list_range_filter_foldl (hzero : ∀ x : Reward, x + <span class="num">0</span> = x) : sumRewards action reward a t = ((List.range t).filter (<span class="kw">fun</span> s : Nat =&gt; decide (action s = a))).foldl (<span class="kw">fun</span> acc s =&gt; acc + reward s) <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L268">Source line 268</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-013a419b6b91">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteBanditModel.bestMean_eq_mean_bestArm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code>@[simp] <span class="kw">theorem</span> bestMean_eq_mean_bestArm (model : FiniteBanditModel K) : model.bestMean = model.mean model.bestArm</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L287">Source line 287</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-725a420fd59f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteBanditModel.gap_of_ne_bestArm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gap_of_ne_bestArm (model : FiniteBanditModel K) (arm : Fin K) (h : arm ≠ model.bestArm) : model.gap arm = model.bestMean - model.mean arm</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L290">Source line 290</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c406067214e2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pseudoRegret_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code>@[simp] <span class="kw">theorem</span> pseudoRegret_one : pseudoRegret model action <span class="num">1</span> = model.gap (action <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L301">Source line 301</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e8fe5277f15a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pseudoRegret_succ_of_bestArm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pseudoRegret_succ_of_bestArm (h : action t = model.bestArm) : pseudoRegret model action (t + <span class="num">1</span>) = pseudoRegret model action t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L306">Source line 306</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-11d4f5f5177d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pseudoRegret_succ_of_gap_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pseudoRegret_succ_of_gap_zero (h : model.gap (action t) = <span class="num">0</span>) : pseudoRegret model action (t + <span class="num">1</span>) = pseudoRegret model action t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L311">Source line 311</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0758075753de">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pseudoRegret_eq_zero_of_forall_bestArm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pseudoRegret_eq_zero_of_forall_bestArm (h : ∀ s, s &lt; t → action s = model.bestArm) : pseudoRegret model action t = <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L316">Source line 316</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ef8fd252c5fd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pseudoRegret_eq_zero_of_forall_gap_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pseudoRegret_eq_zero_of_forall_gap_zero (h : ∀ s, s &lt; t → model.gap (action s) = <span class="num">0</span>) : pseudoRegret model action t = <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L325">Source line 325</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-dc5ccd7709a0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pseudoRegret_const_bestArm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code>@[simp] <span class="kw">theorem</span> pseudoRegret_const_bestArm : pseudoRegret model (<span class="kw">fun</span> _ =&gt; model.bestArm) t = <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L334">Source line 334</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-333612519dd0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pseudoRegret_const_of_gap_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pseudoRegret_const_of_gap_zero (arm : Fin K) (h : model.gap arm = <span class="num">0</span>) : pseudoRegret model (<span class="kw">fun</span> _ =&gt; arm) t = <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L340">Source line 340</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0b4d7a856986">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pseudoRegret_add_eq_of_forall_bestArm_between</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pseudoRegret_add_eq_of_forall_bestArm_between (n : Nat) (h : ∀ s, t ≤ s → s &lt; t + n → action s = model.bestArm) : pseudoRegret model action (t + n) = pseudoRegret model action t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L346">Source line 346</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f1ae889461ed">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pseudoRegret_add_eq_of_forall_gap_zero_between</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pseudoRegret_add_eq_of_forall_gap_zero_between (n : Nat) (h : ∀ s, t ≤ s → s &lt; t + n → model.gap (action s) = <span class="num">0</span>) : pseudoRegret model action (t + n) = pseudoRegret model action t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L358">Source line 358</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-59956f26db5b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.pseudoRegret_eq_list_range_foldl</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The recursive pseudo-regret equals a left fold over the half-open time prefix.
+
+This is the dependency-light `List.range` bridge for the Rat-valued regret
+accumulator.  It matches the recursive bracketing directly.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pseudoRegret_eq_list_range_foldl : pseudoRegret model action t = (List.range t).foldl (<span class="kw">fun</span> acc s =&gt; acc + model.gap (action s)) <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LeafLemmas.lean.html#L376">Source line 376</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="Tests/DelayedFeedbackEliminatedArmInitializationCanary.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Tests/DelayedFeedbackEliminatedArmInitializationCanary.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>Tests/DelayedFeedbackEliminatedArmInitializationCanary.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>Tests/DelayedFeedbackEliminatedArmInitializationCanary.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.DelayedFeedback.EliminatedArmInitialization</span>
+<span id="L2">2 </span>
+<span id="L3">3 open BanditRLProof</span>
+<span id="L4">4 </span>
+<span id="L5">5 namespace BanditRLProof.DelayedFeedback</span>
+<span id="L6">6 </span>
+<span id="L7">7 /-- A concrete two-arm arrival batch.  Both processed sources selected arm one,</span>
+<span id="L8">8 so Algorithm 5 line 10 reads `n_1(S) = 2` at horizon four. -/</span>
+<span id="L9">9 def eliminatedInitializationTwoArmState : DelayedSAPOStructuralRoundState 2 where</span>
+<span id="L10">10   currentActionRound := 4</span>
+<span id="L11">11   currentActionRound_pos := by norm_num</span>
+<span id="L12">12   delayAt := fun s =&gt; if s = 1 then 2 else 0</span>
+<span id="L13">13   processedOrder := [3]</span>
+<span id="L14">14   processedOrder_nodup := by simp</span>
+<span id="L15">15   processedOrder_available := by</span>
+<span id="L16">16     intro s hs</span>
+<span id="L17">17     simp only [List.mem_cons, List.mem_nil_iff, or_false] at hs</span>
+<span id="L18">18     subst s</span>
+<span id="L19">19     norm_num</span>
+<span id="L20">20   activeAtSourceRound := fun _ =&gt; Finset.univ</span>
+<span id="L21">21   sourceActive_antitone := by</span>
+<span id="L22">22     intro _s _t _hst</span>
+<span id="L23">23     exact Finset.Subset.rfl</span>
+<span id="L24">24   currentActive := Finset.univ</span>
+<span id="L25">25   currentActive_subset_roundStart := Finset.Subset.rfl</span>
+<span id="L26">26   chosenArmAt := fun _ =&gt; (1 : Fin 2)</span>
+<span id="L27">27   inactiveProbabilityAt := fun _ _ =&gt; 0</span>
+<span id="L28">28 </span>
+<span id="L29">29 /-- Arm one has a deliberately separated empirical surface, while arm zero</span>
+<span id="L30">30 remains below the strict line-7 elimination threshold.  This canary isolates</span>
+<span id="L31">31 the deterministic line-7/line-10 data flow; the value `20` is deliberately a</span>
+<span id="L32">32 structural test fixture, not a claim that this state was generated by a</span>
+<span id="L33">33 `[0, 1]` loss trajectory. -/</span>
+<span id="L34">34 noncomputable def eliminatedInitializationStep :</span>
+<span id="L35">35     DelayedSAPONoSwitchProcessOne eliminatedInitializationTwoArmState where</span>
+<span id="L36">36   sourceRound := 1</span>
+<span id="L37">37   source_new := by native_decide</span>
+<span id="L38">38   empiricalMean := fun i =&gt; if i = 0 then 0 else 20</span>
+<span id="L39">39   importanceUpper := fun _ =&gt; 20</span>
+<span id="L40">40   previousEmpiricalUpper := fun _ =&gt; 20</span>
+<span id="L41">41   ucbStar := 0</span>
+<span id="L42">42 </span>
+<span id="L43">43 def eliminatedInitializationPrior : DelayedSAPOEliminatedArmBank 2 :=</span>
+<span id="L44">44   fun _ =&gt; none</span>
+<span id="L45">45 </span>
+<span id="L46">46 example : ActiveArmsUninitialized eliminatedInitializationTwoArmState</span>
+<span id="L47">47     eliminatedInitializationPrior := by</span>
+<span id="L48">48   intro i _hi</span>
+<span id="L49">49   rfl</span>
+<span id="L50">50 </span>
+<span id="L51">51 theorem eliminatedInitialization_armOne_processedPullCount :</span>
+<span id="L52">52     eliminatedInitializationStep.toPreEliminationSummary.toProcessedPrefix.processedPullCount</span>
+<span id="L53">53       (1 : Fin 2) = 2 := by</span>
+<span id="L54">54   simp [DelayedSAPOProcessedPrefix.processedPullCount,</span>
+<span id="L55">55     DelayedSAPOProcessedTraceSummary.toProcessedPrefix,</span>
+<span id="L56">56     DelayedSAPONoSwitchProcessOne.toPreEliminationSummary,</span>
+<span id="L57">57     DelayedSAPONoSwitchProcessOne.extendedOrder,</span>
+<span id="L58">58     eliminatedInitializationStep, eliminatedInitializationTwoArmState]</span>
+<span id="L59">59 </span>
+<span id="L60">60 /-- In the concrete `K = 2`, `T = 4`, `n_1(S) = 2` fixture, the exact printed</span>
+<span id="L61">61 line-10 formula gives `p_1^1 = 1/2`. -/</span>
+<span id="L62">62 example :</span>
+<span id="L63">63     (DelayedSAPOEliminatedArmInitialization.ofProcessOne</span>
+<span id="L64">64       eliminatedInitializationStep 4 (1 : Fin 2)).initialProbability =</span>
+<span id="L65">65         (1 : Real) / 2 := by</span>
+<span id="L66">66   norm_num [DelayedSAPOEliminatedArmInitialization.ofProcessOne,</span>
+<span id="L67">67     delayedSAPOInitialEliminatedProbability,</span>
+<span id="L68">68     eliminatedInitialization_armOne_processedPullCount]</span>
+<span id="L69">69 </span>
+<span id="L70">70 /-- The high empirical-mean arm is selected by the literal strict test. -/</span>
+<span id="L71">71 theorem eliminatedInitialization_armOne_mem_eliminated :</span>
+<span id="L72">72     (1 : Fin 2) ∈</span>
+<span id="L73">73       (eliminatedInitializationStep.toPreEliminationSummary.toConfidenceSnapshot 4).eliminated := by</span>
+<span id="L74">74   rw [DelayedSAPOEliminationSnapshot.mem_eliminated_iff]</span>
+<span id="L75">75   constructor</span>
+<span id="L76">76   · simp [eliminatedInitializationStep, eliminatedInitializationTwoArmState,</span>
+<span id="L77">77       DelayedSAPONoSwitchProcessOne.toPreEliminationSummary,</span>
+<span id="L78">78       DelayedSAPOProcessedTraceSummary.toConfidenceSnapshot]</span>
+<span id="L79">79   · have hwidth :</span>
+<span id="L80">80         eliminatedInitializationStep.toPreEliminationSummary.empiricalWidthAt</span>
+<span id="L81">81             4 (1 : Fin 2) &lt;= 1 :=</span>
+<span id="L82">82       DelayedSAPOProcessedPrefixCountCertificate.sourceEmpiricalWidthScale_le_one _ _</span>
+<span id="L83">83     change 0 &lt; 20 - 9 *</span>
+<span id="L84">84       eliminatedInitializationStep.toPreEliminationSummary.empiricalWidthAt</span>
+<span id="L85">85         4 (1 : Fin 2)</span>
+<span id="L86">86     linarith</span>
+<span id="L87">87 </span>
+<span id="L88">88 /-- Arm zero survives because every generated source width is nonnegative. -/</span>
+<span id="L89">89 theorem eliminatedInitialization_armZero_mem_remainingActive :</span>
+<span id="L90">90     (0 : Fin 2) ∈</span>
+<span id="L91">91       (eliminatedInitializationStep.toPreEliminationSummary.toConfidenceSnapshot 4).remainingActive := by</span>
+<span id="L92">92   rw [DelayedSAPOEliminationSnapshot.mem_remainingActive_iff]</span>
+<span id="L93">93   constructor</span>
+<span id="L94">94   · simp [eliminatedInitializationStep, eliminatedInitializationTwoArmState,</span>
+<span id="L95">95       DelayedSAPONoSwitchProcessOne.toPreEliminationSummary,</span>
+<span id="L96">96       DelayedSAPOProcessedTraceSummary.toConfidenceSnapshot]</span>
+<span id="L97">97   · have hwidth :</span>
+<span id="L98">98         0 &lt;= eliminatedInitializationStep.toPreEliminationSummary.empiricalWidthAt</span>
+<span id="L99">99             4 (0 : Fin 2) :=</span>
+<span id="L100">100       DelayedSAPOProcessedPrefixCountCertificate.sourceEmpiricalWidthScale_nonneg _ _</span>
+<span id="L101">101     change 0 - 9 *</span>
+<span id="L102">102       eliminatedInitializationStep.toPreEliminationSummary.empiricalWidthAt</span>
+<span id="L103">103         4 (0 : Fin 2) &lt;= 0</span>
+<span id="L104">104     linarith</span>
+<span id="L105">105 </span>
+<span id="L106">106 example :</span>
+<span id="L107">107     DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated</span>
+<span id="L108">108         eliminatedInitializationStep 4 eliminatedInitializationPrior (1 : Fin 2) =</span>
+<span id="L109">109       some (DelayedSAPOEliminatedArmInitialization.ofProcessOne</span>
+<span id="L110">110         eliminatedInitializationStep 4 (1 : Fin 2)) := by</span>
+<span id="L111">111   apply DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated_of_mem</span>
+<span id="L112">112   exact eliminatedInitialization_armOne_mem_eliminated</span>
+<span id="L113">113 </span>
+<span id="L114">114 example :</span>
+<span id="L115">115     DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated</span>
+<span id="L116">116         eliminatedInitializationStep 4 eliminatedInitializationPrior (0 : Fin 2) =</span>
+<span id="L117">117       none := by</span>
+<span id="L118">118   apply DelayedSAPOEliminatedArmInitialization.remainingActive_uninitialized_after_initialize</span>
+<span id="L119">119     (horizon := 4)</span>
+<span id="L120">120   · intro i _hi</span>
+<span id="L121">121     rfl</span>
+<span id="L122">122   · exact eliminatedInitialization_armZero_mem_remainingActive</span>
+<span id="L123">123 </span>
+<span id="L124">124 example :</span>
+<span id="L125">125     0 &lt; (DelayedSAPOEliminatedArmInitialization.ofProcessOne</span>
+<span id="L126">126       eliminatedInitializationStep 4 (1 : Fin 2)).initialProbability :=</span>
+<span id="L127">127   DelayedSAPOEliminatedArmInitialization.initialProbability_pos</span>
+<span id="L128">128     eliminatedInitializationStep 4 (1 : Fin 2)</span>
+<span id="L129">129 </span>
+<span id="L130">130 example :</span>
+<span id="L131">131     0 &lt; (DelayedSAPOEliminatedArmInitialization.ofProcessOne</span>
+<span id="L132">132       eliminatedInitializationStep 4 (1 : Fin 2)).surrogateGap :=</span>
+<span id="L133">133   DelayedSAPOEliminatedArmInitialization.surrogateGap_pos</span>
+<span id="L134">134     eliminatedInitializationStep 4 (1 : Fin 2) (by norm_num)</span>
+<span id="L135">135 </span>
+<span id="L136">136 example :</span>
+<span id="L137">137     0 &lt; (DelayedSAPOEliminatedArmInitialization.ofProcessOne</span>
+<span id="L138">138       eliminatedInitializationStep 4 (1 : Fin 2)).initialPhaseTarget :=</span>
+<span id="L139">139   DelayedSAPOEliminatedArmInitialization.initialPhaseTarget_pos</span>
+<span id="L140">140     eliminatedInitializationStep 4 (1 : Fin 2) (by norm_num)</span>
+<span id="L141">141 </span>
+<span id="L142">142 #check delayedSAPOInitialEliminatedProbability</span>
+<span id="L143">143 #check delayedSAPOInitialPhaseTarget</span>
+<span id="L144">144 #check DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated</span>
+<span id="L145">145 #check DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated_spec_of_mem</span>
+<span id="L146">146 #check DelayedSAPOEliminatedArmInitialization.mem_eliminated_of_initializeNewlyEliminated_ne_prior</span>
+<span id="L147">147 </span>
+<span id="L148">148 #print axioms DelayedSAPOEliminatedArmInitialization.initialProbability_pos</span>
+<span id="L149">149 #print axioms DelayedSAPOEliminatedArmInitialization.surrogateGap_pos</span>
+<span id="L150">150 #print axioms DelayedSAPOEliminatedArmInitialization.initialPhaseTarget_pos</span>
+<span id="L151">151 #print axioms DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated_spec_of_mem</span>
+<span id="L152">152 #print axioms DelayedSAPOEliminatedArmInitialization.mem_eliminated_of_initializeNewlyEliminated_ne_prior</span>
+<span id="L153">153 </span>
+<span id="L154">154 end BanditRLProof.DelayedFeedback</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Exp3MixedSquarePredictableVarianceSparseLossRealizedMarkovHighProbabilityRegret.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Exp3MixedSquarePredictableVarianceSparseLossRealizedMarkovHighProbabilityRegret.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Exp3MixedSquarePredictableVarianceSparseLossRealizedMarkovHighProbabilityRegret.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Exp3MixedSquarePredictableVarianceSparseLossRealizedMarkovHighProbabilityRegret.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Exp3MixedSquarePredictableVarianceSmallLossRealizedMarkovHighProbabilityRegret</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Sparse-loss control of realized predictable-variance EXP3 regret</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module discharges the pathwise armwise loss-mass premise of the small-loss</span>
+<span id="L7">7 route from a per-round support-cardinality contract. The local proof route is:</span>
+<span id="L8">8 </span>
+<span id="L9">9 1. restrict each predictable loss vector to its nonzero support in `arms`;</span>
+<span id="L10">10 2. use the `[0,1]` loss range to bound its mass by the support cardinality;</span>
+<span id="L11">11 3. sum a uniform support-cardinality bound over `Finset.range horizon`;</span>
+<span id="L12">12 4. instantiate the compiled small-loss realized Markov theorem with</span>
+<span id="L13">13    `lossMassBudget = sparsity * horizon`.</span>
+<span id="L14">14 </span>
+<span id="L15">15 The primary generated theorem only requires the support contract almost</span>
+<span id="L16">16 everywhere under its exact trajectory measure. A compatibility theorem retains</span>
+<span id="L17">17 the stronger pathwise contract uniform over all generated samples. Neither</span>
+<span id="L18">18 surface asserts a best-arm first-order bound, tunes `eta` or `gamma`, or</span>
+<span id="L19">19 replaces Markov overflow.</span>
+<span id="L20">20 -/</span>
+<span id="L21">21 </span>
+<span id="L22">22 namespace BanditRLProof.Exp3</span>
+<span id="L23">23 </span>
+<span id="L24">24 open MeasureTheory ProbabilityTheory</span>
+<span id="L25">25 </span>
+<span id="L26">26 universe u v</span>
+<span id="L27">27 </span>
+<span id="L28">28 /-- Nonzero predictable-loss coordinates among the active arms at one time. -/</span>
+<span id="L29">29 noncomputable def sampledPredictableLossSupport</span>
+<span id="L30">30     {Env : Type u} {Action : Type v}</span>
+<span id="L31">31     [MeasurableSpace Env] [MeasurableSpace Action]</span>
+<span id="L32">32     (arms : Finset Action) (loss : PredictableLossVector Env Action)</span>
+<span id="L33">33     (t : Nat) (sample : Env × ((k : Nat) → Action × Real)) : Finset Action := by</span>
+<span id="L34">34   classical</span>
+<span id="L35">35   exact arms.filter fun action =&gt; predictableLossAt loss t sample action ≠ 0</span>
+<span id="L36">36 </span>
+<span id="L37">37 /-- The predictable loss mass at one time is at most the number of active</span>
+<span id="L38">38 nonzero loss coordinates. -/</span>
+<span id="L39">39 theorem sampledPredictableLossMassAt_le_supportCard</span>
+<span id="L40">40     {Env : Type u} {Action : Type v}</span>
+<span id="L41">41     [MeasurableSpace Env] [MeasurableSpace Action]</span>
+<span id="L42">42     (arms : Finset Action) (loss : PredictableLossVector Env Action)</span>
+<span id="L43">43     (t : Nat) (sample : Env × ((k : Nat) → Action × Real)) :</span>
+<span id="L44">44     arms.sum (fun action =&gt; predictableLossAt loss t sample action) ≤</span>
+<span id="L45">45       (sampledPredictableLossSupport arms loss t sample).card := by</span>
+<span id="L46">46   classical</span>
+<span id="L47">47   let support := sampledPredictableLossSupport arms loss t sample</span>
+<span id="L48">48   have hsum :</span>
+<span id="L49">49       arms.sum (fun action =&gt; predictableLossAt loss t sample action) =</span>
+<span id="L50">50         support.sum (fun action =&gt; predictableLossAt loss t sample action) := by</span>
+<span id="L51">51     symm</span>
+<span id="L52">52     apply Finset.sum_subset</span>
+<span id="L53">53     · exact Finset.filter_subset _ _</span>
+<span id="L54">54     · intro action haction hnot</span>
+<span id="L55">55       simp only [support, sampledPredictableLossSupport, Finset.mem_filter,</span>
+<span id="L56">56         not_and, ne_eq] at hnot</span>
+<span id="L57">57       exact not_ne_iff.mp (hnot haction)</span>
+<span id="L58">58   rw [hsum]</span>
+<span id="L59">59   calc</span>
+<span id="L60">60     support.sum (fun action =&gt; predictableLossAt loss t sample action) ≤</span>
+<span id="L61">61         support.sum (fun _action =&gt; (1 : Real)) := by</span>
+<span id="L62">62       apply Finset.sum_le_sum</span>
+<span id="L63">63       intro action _haction</span>
+<span id="L64">64       exact (predictableLossAt_mem_unitInterval loss t sample action).2</span>
+<span id="L65">65     _ = (support.card : Real) := by simp</span>
+<span id="L66">66 </span>
+<span id="L67">67 /-- A per-round support-cardinality bound for one trajectory supplies its</span>
+<span id="L68">68 armwise loss-mass budget. -/</span>
+<span id="L69">69 theorem sampledPredictableLossMassSum_le_sparsity_mul_horizon_of_sample</span>
+<span id="L70">70     {Env : Type u} {Action : Type v}</span>
+<span id="L71">71     [MeasurableSpace Env] [MeasurableSpace Action]</span>
+<span id="L72">72     (arms : Finset Action) (loss : PredictableLossVector Env Action)</span>
+<span id="L73">73     (horizon sparsity : Nat)</span>
+<span id="L74">74     (sample : Env × ((k : Nat) → Action × Real))</span>
+<span id="L75">75     (hsparse : ∀ t, t &lt; horizon →</span>
+<span id="L76">76       (sampledPredictableLossSupport arms loss t sample).card ≤ sparsity) :</span>
+<span id="L77">77     sampledPredictableLossMassSum arms loss horizon sample ≤</span>
+<span id="L78">78       (sparsity : Real) * (horizon : Real) := by</span>
+<span id="L79">79   unfold sampledPredictableLossMassSum</span>
+<span id="L80">80   calc</span>
+<span id="L81">81     (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L82">82         arms.sum (fun action =&gt; predictableLossAt loss t sample action)) ≤</span>
+<span id="L83">83         (Finset.range horizon).sum (fun _t =&gt; (sparsity : Real)) := by</span>
+<span id="L84">84       apply Finset.sum_le_sum</span>
+<span id="L85">85       intro t ht</span>
+<span id="L86">86       exact</span>
+<span id="L87">87         (sampledPredictableLossMassAt_le_supportCard arms loss t sample).trans</span>
+<span id="L88">88           (Nat.cast_le.2 (hsparse t (Finset.mem_range.1 ht)))</span>
+<span id="L89">89     _ = (sparsity : Real) * (horizon : Real) := by</span>
+<span id="L90">90       simp [mul_comm]</span>
+<span id="L91">91 </span>
+<span id="L92">92 /-- A uniform per-round support-cardinality bound supplies the pathwise armwise</span>
+<span id="L93">93 loss-mass budget used by the small-loss theorem. -/</span>
+<span id="L94">94 theorem sampledPredictableLossMassSum_le_sparsity_mul_horizon</span>
+<span id="L95">95     {Env : Type u} {Action : Type v}</span>
+<span id="L96">96     [MeasurableSpace Env] [MeasurableSpace Action]</span>
+<span id="L97">97     (arms : Finset Action) (loss : PredictableLossVector Env Action)</span>
+<span id="L98">98     (horizon sparsity : Nat)</span>
+<span id="L99">99     (hsparse : ∀ sample t, t &lt; horizon →</span>
+<span id="L100">100       (sampledPredictableLossSupport arms loss t sample).card ≤ sparsity)</span>
+<span id="L101">101     (sample : Env × ((k : Nat) → Action × Real)) :</span>
+<span id="L102">102     sampledPredictableLossMassSum arms loss horizon sample ≤</span>
+<span id="L103">103       (sparsity : Real) * (horizon : Real) :=</span>
+<span id="L104">104   sampledPredictableLossMassSum_le_sparsity_mul_horizon_of_sample</span>
+<span id="L105">105     arms loss horizon sparsity sample (hsparse sample)</span>
+<span id="L106">106 </span>
+<span id="L107">107 /-- Sparse-loss specialization of the five-event realized regret budget. -/</span>
+<span id="L108">108 noncomputable def sampledPredictableVarianceSquareSparseLossRealizedMarkovHighProbabilityRegretBudget</span>
+<span id="L109">109     {Action : Type v} [DecidableEq Action]</span>
+<span id="L110">110     (arms : Finset Action) (eta gamma : Real) (horizon sparsity : Nat)</span>
+<span id="L111">111     (delta : Real) : Real :=</span>
+<span id="L112">112   sampledPredictableVarianceSquareSmallLossRealizedMarkovHighProbabilityRegretBudget</span>
+<span id="L113">113     arms eta gamma horizon ((sparsity : Real) * (horizon : Real)) delta</span>
+<span id="L114">114 </span>
+<span id="L115">115 /-- Realized predictable-variance EXP3 regret when the per-round nonzero-loss</span>
+<span id="L116">116 support-cardinality bound holds almost everywhere under the exact generated</span>
+<span id="L117">117 trajectory measure. -/</span>
+<span id="L118">118 theorem sampledPredictable_predictableVarianceSquareSparseLossRealizedMarkovHighProbabilityRegret_tail_total_delta_of_ae_sparsity</span>
+<span id="L119">119     {Env : Type u} {Action : Type v}</span>
+<span id="L120">120     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L121">121     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L122">122     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L123">123     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L124">124     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L125">125     (eta gamma : Real) (heta : 0 &lt; eta)</span>
+<span id="L126">126     (hgamma_pos : 0 &lt; gamma) (hgamma_lt_one : gamma &lt; 1)</span>
+<span id="L127">127     (loss : PredictableLossVector Env Action)</span>
+<span id="L128">128     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L129">129     (horizon sparsity : Nat) (hhorizon : 0 &lt; horizon)</span>
+<span id="L130">130     (hsparsity : 0 &lt; sparsity) (delta : Real) (hdelta : 0 &lt; delta)</span>
+<span id="L131">131     (hsparse : ∀ᵐ sample ∂(prior ⊗ₘ</span>
+<span id="L132">132         sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L133">133           eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment),</span>
+<span id="L134">134       ∀ t, t &lt; horizon →</span>
+<span id="L135">135       (sampledPredictableLossSupport arms loss t sample).card ≤ sparsity) :</span>
+<span id="L136">136     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L137">137       eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment</span>
+<span id="L138">138     mu {sample |</span>
+<span id="L139">139         sampledPredictableVarianceSquareSparseLossRealizedMarkovHighProbabilityRegretBudget</span>
+<span id="L140">140             arms eta gamma horizon sparsity delta ≤</span>
+<span id="L141">141           (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L142">142               sampledTrajectoryRealizedLossAt t sample) -</span>
+<span id="L143">143             (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L144">144               predictableLossAt loss t sample comparator)} ≤</span>
+<span id="L145">145       ENNReal.ofReal delta := by</span>
+<span id="L146">146   have hmass : ∀ᵐ sample ∂(prior ⊗ₘ</span>
+<span id="L147">147       sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L148">148         eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment),</span>
+<span id="L149">149       sampledPredictableLossMassSum arms loss horizon sample ≤</span>
+<span id="L150">150         (sparsity : Real) * (horizon : Real) := by</span>
+<span id="L151">151     filter_upwards [hsparse] with sample hsparseSample</span>
+<span id="L152">152     exact</span>
+<span id="L153">153       sampledPredictableLossMassSum_le_sparsity_mul_horizon_of_sample</span>
+<span id="L154">154         arms loss horizon sparsity sample hsparseSample</span>
+<span id="L155">155   have hmass_pos :</span>
+<span id="L156">156       0 &lt; (sparsity : Real) * (horizon : Real) :=</span>
+<span id="L157">157     mul_pos (Nat.cast_pos.2 hsparsity) (Nat.cast_pos.2 hhorizon)</span>
+<span id="L158">158   simpa [</span>
+<span id="L159">159     sampledPredictableVarianceSquareSparseLossRealizedMarkovHighProbabilityRegretBudget</span>
+<span id="L160">160   ] using</span>
+<span id="L161">161     sampledPredictable_predictableVarianceSquareSmallLossRealizedMarkovHighProbabilityRegret_tail_total_delta</span>
+<span id="L162">162       prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator</span>
+<span id="L163">163         hcomparator horizon hhorizon</span>
+<span id="L164">164         ((sparsity : Real) * (horizon : Real)) delta hmass_pos hdelta hmass</span>
+<span id="L165">165 </span>
+<span id="L166">166 /-- Backward-compatible pathwise sparse-loss wrapper. The stronger universal</span>
+<span id="L167">167 contract is converted to the generated-measure almost-everywhere contract used</span>
+<span id="L168">168 by the primary theorem. -/</span>
+<span id="L169">169 theorem sampledPredictable_predictableVarianceSquareSparseLossRealizedMarkovHighProbabilityRegret_tail_total_delta</span>
+<span id="L170">170     {Env : Type u} {Action : Type v}</span>
+<span id="L171">171     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L172">172     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L173">173     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L174">174     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L175">175     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L176">176     (eta gamma : Real) (heta : 0 &lt; eta)</span>
+<span id="L177">177     (hgamma_pos : 0 &lt; gamma) (hgamma_lt_one : gamma &lt; 1)</span>
+<span id="L178">178     (loss : PredictableLossVector Env Action)</span>
+<span id="L179">179     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L180">180     (horizon sparsity : Nat) (hhorizon : 0 &lt; horizon)</span>
+<span id="L181">181     (hsparsity : 0 &lt; sparsity) (delta : Real) (hdelta : 0 &lt; delta)</span>
+<span id="L182">182     (hsparse : ∀ sample t, t &lt; horizon →</span>
+<span id="L183">183       (sampledPredictableLossSupport arms loss t sample).card ≤ sparsity) :</span>
+<span id="L184">184     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L185">185       eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment</span>
+<span id="L186">186     mu {sample |</span>
+<span id="L187">187         sampledPredictableVarianceSquareSparseLossRealizedMarkovHighProbabilityRegretBudget</span>
+<span id="L188">188             arms eta gamma horizon sparsity delta ≤</span>
+<span id="L189">189           (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L190">190               sampledTrajectoryRealizedLossAt t sample) -</span>
+<span id="L191">191             (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L192">192               predictableLossAt loss t sample comparator)} ≤</span>
+<span id="L193">193       ENNReal.ofReal delta := by</span>
+<span id="L194">194   apply</span>
+<span id="L195">195     sampledPredictable_predictableVarianceSquareSparseLossRealizedMarkovHighProbabilityRegret_tail_total_delta_of_ae_sparsity</span>
+<span id="L196">196       prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator</span>
+<span id="L197">197         hcomparator horizon sparsity hhorizon hsparsity delta hdelta</span>
+<span id="L198">198   exact Filter.Eventually.of_forall fun sample t ht =&gt; hsparse sample t ht</span>
+<span id="L199">199 </span>
+<span id="L200">200 end BanditRLProof.Exp3</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

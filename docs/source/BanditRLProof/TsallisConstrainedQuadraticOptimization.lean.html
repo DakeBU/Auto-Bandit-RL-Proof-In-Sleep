@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/TsallisConstrainedQuadraticOptimization.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/TsallisConstrainedQuadraticOptimization.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/TsallisConstrainedQuadraticOptimization.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/TsallisConstrainedQuadraticOptimization.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.TsallisScheduledSelfBoundingInterpolation</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Constrained quadratic optimization for self-bounding Tsallis analysis</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module gives a rigorous finite-sum version of the one-round optimization</span>
+<span id="L7">7 used after lambda interpolation.  In contrast to the informal paper lemma,</span>
+<span id="L8">8 the quadratic coefficients are required to be strictly positive and the</span>
+<span id="L9">9 simplex-derived square-root mass constraint is explicit.</span>
+<span id="L10">10 -/</span>
+<span id="L11">11 </span>
+<span id="L12">12 namespace BanditRLProof</span>
+<span id="L13">13 namespace Tsallis</span>
+<span id="L14">14 </span>
+<span id="L15">15 universe u</span>
+<span id="L16">16 </span>
+<span id="L17">17 /-- A downward quadratic is bounded by its unconstrained vertex value. -/</span>
+<span id="L18">18 theorem linear_sub_quadratic_le_sq_div_four</span>
+<span id="L19">19     (b x c : Real) (hc : 0 &lt; c) :</span>
+<span id="L20">20     b * x - c * x ^ 2 ≤ b ^ 2 / (4 * c) := by</span>
+<span id="L21">21   rw [le_div_iff₀ (by positivity : 0 &lt; 4 * c)]</span>
+<span id="L22">22   nlinarith [sq_nonneg (2 * c * x - b)]</span>
+<span id="L23">23 </span>
+<span id="L24">24 /-- Coordinatewise completion of squares gives the unconstrained finite-sum</span>
+<span id="L25">25 branch of the paper&#x27;s quadratic optimization. -/</span>
+<span id="L26">26 theorem sum_linear_sub_quadratic_le_unconstrained</span>
+<span id="L27">27     {Index : Type u} [DecidableEq Index]</span>
+<span id="L28">28     (indices : Finset Index) (b : Real) (c x : Index → Real)</span>
+<span id="L29">29     (hc : ∀ i ∈ indices, 0 &lt; c i) :</span>
+<span id="L30">30     indices.sum (fun i =&gt; b * x i - c i * x i ^ 2) ≤</span>
+<span id="L31">31       b ^ 2 / 4 * indices.sum (fun i =&gt; 1 / c i) := by</span>
+<span id="L32">32   calc</span>
+<span id="L33">33     indices.sum (fun i =&gt; b * x i - c i * x i ^ 2) ≤</span>
+<span id="L34">34         indices.sum (fun i =&gt; b ^ 2 / (4 * c i)) := by</span>
+<span id="L35">35       apply Finset.sum_le_sum</span>
+<span id="L36">36       intro i hi</span>
+<span id="L37">37       exact linear_sub_quadratic_le_sq_div_four b (x i) (c i) (hc i hi)</span>
+<span id="L38">38     _ = b ^ 2 / 4 * indices.sum (fun i =&gt; 1 / c i) := by</span>
+<span id="L39">39       rw [Finset.mul_sum]</span>
+<span id="L40">40       apply Finset.sum_congr rfl</span>
+<span id="L41">41       intro i hi</span>
+<span id="L42">42       field_simp [ne_of_gt (hc i hi)]</span>
+<span id="L43">43 </span>
+<span id="L44">44 /-- If the unconstrained vertex lies beyond a finite `sum x ≤ M` constraint,</span>
+<span id="L45">45 shift the common linear coefficient and apply completion of squares to obtain</span>
+<span id="L46">46 the active-constraint branch. -/</span>
+<span id="L47">47 theorem sum_linear_sub_quadratic_le_of_sum_le</span>
+<span id="L48">48     {Index : Type u} [DecidableEq Index]</span>
+<span id="L49">49     (indices : Finset Index) (b M : Real) (c x : Index → Real)</span>
+<span id="L50">50     (hc : ∀ i ∈ indices, 0 &lt; c i)</span>
+<span id="L51">51     (hreciprocal : 0 &lt; indices.sum (fun i =&gt; 1 / c i))</span>
+<span id="L52">52     (hxsum : indices.sum x ≤ M)</span>
+<span id="L53">53     (hthreshold :</span>
+<span id="L54">54       2 * M ≤ b * indices.sum (fun i =&gt; 1 / c i)) :</span>
+<span id="L55">55     indices.sum (fun i =&gt; b * x i - c i * x i ^ 2) ≤</span>
+<span id="L56">56       b * M - M ^ 2 / indices.sum (fun i =&gt; 1 / c i) := by</span>
+<span id="L57">57   let reciprocal := indices.sum (fun i =&gt; 1 / c i)</span>
+<span id="L58">58   let shifted := 2 * M / reciprocal</span>
+<span id="L59">59   let residual := b - shifted</span>
+<span id="L60">60   have hresidual : 0 ≤ residual := by</span>
+<span id="L61">61     dsimp [residual, shifted, reciprocal]</span>
+<span id="L62">62     rw [sub_nonneg, div_le_iff₀ hreciprocal]</span>
+<span id="L63">63     simpa [mul_comm] using hthreshold</span>
+<span id="L64">64   have hvertex :</span>
+<span id="L65">65       indices.sum (fun i =&gt; shifted * x i - c i * x i ^ 2) ≤</span>
+<span id="L66">66         shifted ^ 2 / 4 * reciprocal := by</span>
+<span id="L67">67     simpa [reciprocal] using</span>
+<span id="L68">68       (sum_linear_sub_quadratic_le_unconstrained</span>
+<span id="L69">69         indices shifted c x hc)</span>
+<span id="L70">70   calc</span>
+<span id="L71">71     indices.sum (fun i =&gt; b * x i - c i * x i ^ 2) =</span>
+<span id="L72">72         residual * indices.sum x +</span>
+<span id="L73">73           indices.sum (fun i =&gt; shifted * x i - c i * x i ^ 2) := by</span>
+<span id="L74">74       rw [Finset.mul_sum, ← Finset.sum_add_distrib]</span>
+<span id="L75">75       apply Finset.sum_congr rfl</span>
+<span id="L76">76       intro i hi</span>
+<span id="L77">77       dsimp [residual]</span>
+<span id="L78">78       ring</span>
+<span id="L79">79     _ ≤ residual * M + shifted ^ 2 / 4 * reciprocal :=</span>
+<span id="L80">80       add_le_add (mul_le_mul_of_nonneg_left hxsum hresidual) hvertex</span>
+<span id="L81">81     _ = b * M - M ^ 2 / indices.sum (fun i =&gt; 1 / c i) := by</span>
+<span id="L82">82       dsimp [residual, shifted, reciprocal]</span>
+<span id="L83">83       field_simp [ne_of_gt hreciprocal]</span>
+<span id="L84">84       ring</span>
+<span id="L85">85 </span>
+<span id="L86">86 /-- Positive coefficients on a nonempty finite set have a positive reciprocal</span>
+<span id="L87">87 sum. -/</span>
+<span id="L88">88 theorem sum_inv_pos_of_nonempty</span>
+<span id="L89">89     {Index : Type u} [DecidableEq Index]</span>
+<span id="L90">90     (indices : Finset Index) (hindices : indices.Nonempty)</span>
+<span id="L91">91     (c : Index → Real) (hc : ∀ i ∈ indices, 0 &lt; c i) :</span>
+<span id="L92">92     0 &lt; indices.sum (fun i =&gt; 1 / c i) := by</span>
+<span id="L93">93   rcases hindices with ⟨i, hi⟩</span>
+<span id="L94">94   exact Finset.sum_pos&#x27;</span>
+<span id="L95">95     (fun j hj =&gt; (one_div_pos.mpr (hc j hj)).le)</span>
+<span id="L96">96     ⟨i, hi, one_div_pos.mpr (hc i hi)⟩</span>
+<span id="L97">97 </span>
+<span id="L98">98 /-- A finite simplex point has suboptimal square-root mass at most the square</span>
+<span id="L99">99 root of the number of suboptimal coordinates. -/</span>
+<span id="L100">100 theorem sum_erase_sqrt_le_sqrt_card</span>
+<span id="L101">101     {Action : Type u} [DecidableEq Action]</span>
+<span id="L102">102     (arms : Finset Action) {best : Action} (hbest : best ∈ arms)</span>
+<span id="L103">103     (probability : Action → Real)</span>
+<span id="L104">104     (hprobability : FTRL.finiteSimplex arms probability) :</span>
+<span id="L105">105     (arms.erase best).sum (fun action =&gt; Real.sqrt (probability action)) ≤</span>
+<span id="L106">106       Real.sqrt ((arms.erase best).card : Real) := by</span>
+<span id="L107">107   let suboptimal := arms.erase best</span>
+<span id="L108">108   have hprobNonneg : ∀ action,</span>
+<span id="L109">109       0 ≤ if action ∈ suboptimal then probability action else 0 := by</span>
+<span id="L110">110     intro action</span>
+<span id="L111">111     by_cases haction : action ∈ suboptimal</span>
+<span id="L112">112     · rw [if_pos haction]</span>
+<span id="L113">113       exact hprobability.1 action (Finset.mem_of_mem_erase haction)</span>
+<span id="L114">114     · simp [haction]</span>
+<span id="L115">115   have hsqrt := Real.sum_sqrt_mul_sqrt_le suboptimal</span>
+<span id="L116">116     hprobNonneg (fun _ =&gt; (zero_le_one : (0 : Real) ≤ 1))</span>
+<span id="L117">117   have hsumProbability : suboptimal.sum probability ≤ 1 := by</span>
+<span id="L118">118     have hsplit := Finset.add_sum_erase arms probability hbest</span>
+<span id="L119">119     rw [hprobability.2] at hsplit</span>
+<span id="L120">120     have hbestNonneg := hprobability.1 best hbest</span>
+<span id="L121">121     dsimp [suboptimal]</span>
+<span id="L122">122     linarith</span>
+<span id="L123">123   have hsumIf :</span>
+<span id="L124">124       suboptimal.sum (fun action =&gt;</span>
+<span id="L125">125         if action ∈ suboptimal then probability action else 0) =</span>
+<span id="L126">126         suboptimal.sum probability := by</span>
+<span id="L127">127     apply Finset.sum_congr rfl</span>
+<span id="L128">128     intro action haction</span>
+<span id="L129">129     simp [haction]</span>
+<span id="L130">130   calc</span>
+<span id="L131">131     suboptimal.sum (fun action =&gt; Real.sqrt (probability action)) =</span>
+<span id="L132">132         suboptimal.sum (fun action =&gt;</span>
+<span id="L133">133           Real.sqrt (if action ∈ suboptimal then probability action else 0) *</span>
+<span id="L134">134             Real.sqrt (1 : Real)) := by</span>
+<span id="L135">135       apply Finset.sum_congr rfl</span>
+<span id="L136">136       intro action haction</span>
+<span id="L137">137       simp [haction]</span>
+<span id="L138">138     _ ≤ Real.sqrt</span>
+<span id="L139">139           (suboptimal.sum (fun action =&gt;</span>
+<span id="L140">140             if action ∈ suboptimal then probability action else 0)) *</span>
+<span id="L141">141         Real.sqrt (suboptimal.sum (fun _ =&gt; (1 : Real))) :=</span>
+<span id="L142">142       hsqrt</span>
+<span id="L143">143     _ = Real.sqrt (suboptimal.sum probability) *</span>
+<span id="L144">144         Real.sqrt (suboptimal.card : Real) := by</span>
+<span id="L145">145       rw [hsumIf]</span>
+<span id="L146">146       simp</span>
+<span id="L147">147     _ ≤ Real.sqrt 1 * Real.sqrt (suboptimal.card : Real) := by</span>
+<span id="L148">148       gcongr</span>
+<span id="L149">149     _ = Real.sqrt (suboptimal.card : Real) := by simp</span>
+<span id="L150">150 </span>
+<span id="L151">151 /-- The unconstrained one-round branch after substituting</span>
+<span id="L152">152 `x action = sqrt (probability action)` and</span>
+<span id="L153">153 `c action = lambda * gap action`. -/</span>
+<span id="L154">154 theorem sum_erase_sqrt_probability_sub_gap_le_unconstrained</span>
+<span id="L155">155     {Action : Type u} [DecidableEq Action]</span>
+<span id="L156">156     (arms : Finset Action) {best : Action}</span>
+<span id="L157">157     (probability gap : Action → Real)</span>
+<span id="L158">158     (hprobability : FTRL.finiteSimplex arms probability)</span>
+<span id="L159">159     (hgap : ∀ action ∈ arms.erase best, 0 &lt; gap action)</span>
+<span id="L160">160     (b lambda : Real) (hlambda : 0 &lt; lambda) :</span>
+<span id="L161">161     (arms.erase best).sum (fun action =&gt;</span>
+<span id="L162">162         b * Real.sqrt (probability action) -</span>
+<span id="L163">163           lambda * gap action * probability action) ≤</span>
+<span id="L164">164       b ^ 2 / 4 * (arms.erase best).sum (fun action =&gt;</span>
+<span id="L165">165         1 / (lambda * gap action)) := by</span>
+<span id="L166">166   have hc : ∀ action ∈ arms.erase best,</span>
+<span id="L167">167       0 &lt; lambda * gap action := by</span>
+<span id="L168">168     intro action haction</span>
+<span id="L169">169     exact mul_pos hlambda (hgap action haction)</span>
+<span id="L170">170   calc</span>
+<span id="L171">171     (arms.erase best).sum (fun action =&gt;</span>
+<span id="L172">172         b * Real.sqrt (probability action) -</span>
+<span id="L173">173           lambda * gap action * probability action) =</span>
+<span id="L174">174         (arms.erase best).sum (fun action =&gt;</span>
+<span id="L175">175           b * Real.sqrt (probability action) -</span>
+<span id="L176">176             (lambda * gap action) *</span>
+<span id="L177">177               Real.sqrt (probability action) ^ 2) := by</span>
+<span id="L178">178       apply Finset.sum_congr rfl</span>
+<span id="L179">179       intro action haction</span>
+<span id="L180">180       rw [Real.sq_sqrt</span>
+<span id="L181">181         (hprobability.1 action (Finset.mem_of_mem_erase haction))]</span>
+<span id="L182">182     _ ≤ b ^ 2 / 4 * (arms.erase best).sum (fun action =&gt;</span>
+<span id="L183">183         1 / (lambda * gap action)) :=</span>
+<span id="L184">184       sum_linear_sub_quadratic_le_unconstrained</span>
+<span id="L185">185         (arms.erase best) b (fun action =&gt; lambda * gap action)</span>
+<span id="L186">186           (fun action =&gt; Real.sqrt (probability action)) hc</span>
+<span id="L187">187 </span>
+<span id="L188">188 /-- On the active-constraint branch, finite-simplex square-root mass sharpens</span>
+<span id="L189">189 the unconstrained coordinatewise bound by the common mass constraint. -/</span>
+<span id="L190">190 theorem sum_erase_sqrt_probability_sub_gap_le_of_threshold</span>
+<span id="L191">191     {Action : Type u} [DecidableEq Action]</span>
+<span id="L192">192     (arms : Finset Action) {best : Action} (hbest : best ∈ arms)</span>
+<span id="L193">193     (probability gap : Action → Real)</span>
+<span id="L194">194     (hprobability : FTRL.finiteSimplex arms probability)</span>
+<span id="L195">195     (hsuboptimal : (arms.erase best).Nonempty)</span>
+<span id="L196">196     (hgap : ∀ action ∈ arms.erase best, 0 &lt; gap action)</span>
+<span id="L197">197     (b lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L198">198     (hthreshold :</span>
+<span id="L199">199       2 * Real.sqrt ((arms.erase best).card : Real) ≤</span>
+<span id="L200">200         b * (arms.erase best).sum (fun action =&gt;</span>
+<span id="L201">201           1 / (lambda * gap action))) :</span>
+<span id="L202">202     (arms.erase best).sum (fun action =&gt;</span>
+<span id="L203">203         b * Real.sqrt (probability action) -</span>
+<span id="L204">204           lambda * gap action * probability action) ≤</span>
+<span id="L205">205       b * Real.sqrt ((arms.erase best).card : Real) -</span>
+<span id="L206">206         (arms.erase best).card /</span>
+<span id="L207">207           (arms.erase best).sum (fun action =&gt;</span>
+<span id="L208">208             1 / (lambda * gap action)) := by</span>
+<span id="L209">209   have hc : ∀ action ∈ arms.erase best,</span>
+<span id="L210">210       0 &lt; lambda * gap action := by</span>
+<span id="L211">211     intro action haction</span>
+<span id="L212">212     exact mul_pos hlambda (hgap action haction)</span>
+<span id="L213">213   have hreciprocal :</span>
+<span id="L214">214       0 &lt; (arms.erase best).sum (fun action =&gt;</span>
+<span id="L215">215         1 / (lambda * gap action)) :=</span>
+<span id="L216">216     sum_inv_pos_of_nonempty (arms.erase best) hsuboptimal</span>
+<span id="L217">217       (fun action =&gt; lambda * gap action) hc</span>
+<span id="L218">218   have hbound := sum_linear_sub_quadratic_le_of_sum_le</span>
+<span id="L219">219     (arms.erase best) b (Real.sqrt ((arms.erase best).card : Real))</span>
+<span id="L220">220       (fun action =&gt; lambda * gap action)</span>
+<span id="L221">221       (fun action =&gt; Real.sqrt (probability action))</span>
+<span id="L222">222       hc hreciprocal</span>
+<span id="L223">223       (sum_erase_sqrt_le_sqrt_card arms hbest probability hprobability)</span>
+<span id="L224">224       hthreshold</span>
+<span id="L225">225   calc</span>
+<span id="L226">226     (arms.erase best).sum (fun action =&gt;</span>
+<span id="L227">227         b * Real.sqrt (probability action) -</span>
+<span id="L228">228           lambda * gap action * probability action) =</span>
+<span id="L229">229         (arms.erase best).sum (fun action =&gt;</span>
+<span id="L230">230           b * Real.sqrt (probability action) -</span>
+<span id="L231">231             (lambda * gap action) *</span>
+<span id="L232">232               Real.sqrt (probability action) ^ 2) := by</span>
+<span id="L233">233       apply Finset.sum_congr rfl</span>
+<span id="L234">234       intro action haction</span>
+<span id="L235">235       rw [Real.sq_sqrt</span>
+<span id="L236">236         (hprobability.1 action (Finset.mem_of_mem_erase haction))]</span>
+<span id="L237">237     _ ≤ b * Real.sqrt ((arms.erase best).card : Real) -</span>
+<span id="L238">238         Real.sqrt ((arms.erase best).card : Real) ^ 2 /</span>
+<span id="L239">239           (arms.erase best).sum (fun action =&gt;</span>
+<span id="L240">240             1 / (lambda * gap action)) := hbound</span>
+<span id="L241">241     _ = b * Real.sqrt ((arms.erase best).card : Real) -</span>
+<span id="L242">242         (arms.erase best).card /</span>
+<span id="L243">243           (arms.erase best).sum (fun action =&gt;</span>
+<span id="L244">244             1 / (lambda * gap action)) := by</span>
+<span id="L245">245       rw [Real.sq_sqrt (by positivity :</span>
+<span id="L246">246         (0 : Real) ≤ ((arms.erase best).card : Real))]</span>
+<span id="L247">247 </span>
+<span id="L248">248 /-- Generated expected-probability specialization of the unconstrained</span>
+<span id="L249">249 one-round quadratic branch. All measure and Jensen obligations are discharged</span>
+<span id="L250">250 by the existing finite-simplex expectation theorem. -/</span>
+<span id="L251">251 theorem sampledScheduledHalfTsallisExpectedProbability_sum_le_unconstrained</span>
+<span id="L252">252     {Env : Type u} {Action : Type*}</span>
+<span id="L253">253     [MeasurableSpace Env]</span>
+<span id="L254">254     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L255">255     [DecidableEq Action]</span>
+<span id="L256">256     (mu : MeasureTheory.Measure (Env × ((k : Nat) → Action × Real)))</span>
+<span id="L257">257     [MeasureTheory.IsProbabilityMeasure mu]</span>
+<span id="L258">258     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat → Real)</span>
+<span id="L259">259     (t : Nat) {best : Action} (gap : Action → Real)</span>
+<span id="L260">260     (hgap : ∀ action ∈ arms.erase best, 0 &lt; gap action)</span>
+<span id="L261">261     (b lambda : Real) (hlambda : 0 &lt; lambda) :</span>
+<span id="L262">262     (arms.erase best).sum (fun action =&gt;</span>
+<span id="L263">263         b * Real.sqrt (sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L264">264           mu arms harms eta t action) -</span>
+<span id="L265">265         lambda * gap action *</span>
+<span id="L266">266           sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L267">267             mu arms harms eta t action) ≤</span>
+<span id="L268">268       b ^ 2 / 4 * (arms.erase best).sum (fun action =&gt;</span>
+<span id="L269">269         1 / (lambda * gap action)) := by</span>
+<span id="L270">270   exact sum_erase_sqrt_probability_sub_gap_le_unconstrained</span>
+<span id="L271">271     arms</span>
+<span id="L272">272     (sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L273">273       mu arms harms eta t)</span>
+<span id="L274">274     gap</span>
+<span id="L275">275     (finiteSimplex_sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L276">276       mu arms harms eta t)</span>
+<span id="L277">277     hgap b lambda hlambda</span>
+<span id="L278">278 </span>
+<span id="L279">279 /-- Generated expected-probability specialization of the active-constraint</span>
+<span id="L280">280 one-round quadratic branch. This is the direct consumer for the later</span>
+<span id="L281">281 time-threshold split in the improved self-bounding route. -/</span>
+<span id="L282">282 theorem sampledScheduledHalfTsallisExpectedProbability_sum_le_of_threshold</span>
+<span id="L283">283     {Env : Type u} {Action : Type*}</span>
+<span id="L284">284     [MeasurableSpace Env]</span>
+<span id="L285">285     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L286">286     [DecidableEq Action]</span>
+<span id="L287">287     (mu : MeasureTheory.Measure (Env × ((k : Nat) → Action × Real)))</span>
+<span id="L288">288     [MeasureTheory.IsProbabilityMeasure mu]</span>
+<span id="L289">289     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat → Real)</span>
+<span id="L290">290     (t : Nat) {best : Action} (hbest : best ∈ arms)</span>
+<span id="L291">291     (gap : Action → Real)</span>
+<span id="L292">292     (hsuboptimal : (arms.erase best).Nonempty)</span>
+<span id="L293">293     (hgap : ∀ action ∈ arms.erase best, 0 &lt; gap action)</span>
+<span id="L294">294     (b lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L295">295     (hthreshold :</span>
+<span id="L296">296       2 * Real.sqrt ((arms.erase best).card : Real) ≤</span>
+<span id="L297">297         b * (arms.erase best).sum (fun action =&gt;</span>
+<span id="L298">298           1 / (lambda * gap action))) :</span>
+<span id="L299">299     (arms.erase best).sum (fun action =&gt;</span>
+<span id="L300">300         b * Real.sqrt (sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L301">301           mu arms harms eta t action) -</span>
+<span id="L302">302         lambda * gap action *</span>
+<span id="L303">303           sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L304">304             mu arms harms eta t action) ≤</span>
+<span id="L305">305       b * Real.sqrt ((arms.erase best).card : Real) -</span>
+<span id="L306">306         (arms.erase best).card /</span>
+<span id="L307">307           (arms.erase best).sum (fun action =&gt;</span>
+<span id="L308">308             1 / (lambda * gap action)) := by</span>
+<span id="L309">309   exact sum_erase_sqrt_probability_sub_gap_le_of_threshold</span>
+<span id="L310">310     arms hbest</span>
+<span id="L311">311     (sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L312">312       mu arms harms eta t)</span>
+<span id="L313">313     gap</span>
+<span id="L314">314     (finiteSimplex_sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L315">315       mu arms harms eta t)</span>
+<span id="L316">316     hsuboptimal hgap b lambda hlambda hthreshold</span>
+<span id="L317">317 </span>
+<span id="L318">318 end Tsallis</span>
+<span id="L319">319 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

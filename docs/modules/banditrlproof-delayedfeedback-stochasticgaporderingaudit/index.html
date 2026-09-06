@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.DelayedFeedback.StochasticGapOrderingAudit · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.DelayedFeedback.StochasticGapOrderingAudit · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.DelayedFeedback.StochasticGapOrderingAudit · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Frontier</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Delayed<wbr>Feedback.<wbr>Stochastic<wbr>Gap<wbr>Ordering<wbr>Audit</h1>
+  <p class="lede">Generated source map for this Lean module.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean.html"><code>BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/frontier/index.html">10. Automation, resources, and open routes</a></dd></div>
+    <div><dt>Declarations</dt><dd>19</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-delayedfeedback-stochasticgoodeventassembly/index.html"><code>BanditRLProof.DelayedFeedback.StochasticGoodEventAssembly</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-delayedfeedback-processedprefixcounts/index.html"><code>BanditRLProof.DelayedFeedback.ProcessedPrefixCounts</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-9514fe1c7d3b">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The scalar form of the empirical width printed in the delayed-SAPO
+source, with `scale = 2 * log T` and `count = n_i(S)`.  A nonpositive count
+uses the capped width `1`; this prevents Lean&#x27;s totalized real division at
+zero from manufacturing a zero-width observation.  Keeping the scale explicit
+isolates the positive-count order issue from logarithmic side conditions.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sourceEmpiricalWidthScale (scale count : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean.html#L12">Source line 12</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f542d5195f47">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_antitone</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">For nonnegative scale and positive counts, the source empirical width is
+antitone in the count.  Thus a later state with at least as many pulls has no
+larger width than an earlier prefix.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sourceEmpiricalWidthScale_antitone (scale countEarlier countLater : Real) (hscale : <span class="num">0</span> &lt;= scale) (hcountEarlier : <span class="num">0</span> &lt; countEarlier) (hcount : countEarlier &lt;= countLater) : sourceEmpiricalWidthScale scale countLater &lt;= sourceEmpiricalWidthScale scale countEarlier</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean.html#L18">Source line 18</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3b8a78697092">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.one_le_ten_mul_sourceEmpiricalWidthScale_of_count_le_96_mul_scale</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The small-count branch used in the source proof of Lemma D.10.  If the
+count is at most `96 * scale`, then the capped inverse-square-root width is at
+least one tenth.  For the printed choice `scale = 2 * log T`, this is exactly
+the implication from `count &lt;= 192 * log T` to `1 &lt;= 10 * width`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> one_le_ten_mul_sourceEmpiricalWidthScale_of_count_le_96_mul_scale (scale count : Real) (hscale : <span class="num">0</span> &lt; scale) (hcount : count &lt;= <span class="num">96</span> * scale) : <span class="num">1</span> &lt;= <span class="num">10</span> * sourceEmpiricalWidthScale scale count</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean.html#L35">Source line 35</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-20d0715b4716">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.one_le_ten_mul_sourceEmpiricalWidthScale_two_log_of_small_count</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Source-parameter specialization of the preceding small-count lemma.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> one_le_ten_mul_sourceEmpiricalWidthScale_two_log_of_small_count (horizon count : Real) (hhorizon : <span class="num">1</span> &lt; horizon) (hcount : count &lt;= <span class="num">192</span> * Real.log horizon) : <span class="num">1</span> &lt;= <span class="num">10</span> * sourceEmpiricalWidthScale (<span class="num">2</span> * Real.log horizon) count</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean.html#L58">Source line 58</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-396d21fff494">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_one_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact small instance used to audit the direction of the displayed D.10
+prefix-to-elimination inequality.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sourceEmpiricalWidthScale_one_one : sourceEmpiricalWidthScale <span class="num">1</span> <span class="num">1</span> = <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean.html#L70">Source line 70</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-16f78dc38c24">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_one_four</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Four times the count gives half the uncapped width in the same exact
+instance.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sourceEmpiricalWidthScale_one_four : sourceEmpiricalWidthScale <span class="num">1</span> <span class="num">4</span> = (<span class="num">1</span> / <span class="num">2</span> : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean.html#L77">Source line 77</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-deb477c66b53">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.not_sourceEmpiricalWidthScale_one_le_four</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The reverse inequality used in the displayed D.10 proof is not a generic
+consequence of prefix count growth: it already fails at scale one between
+counts one and four.  This diagnoses an edge of the frozen proof, not a
+counterexample to every possible repair of Lemma D.10.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> not_sourceEmpiricalWidthScale_one_le_four : not (sourceEmpiricalWidthScale <span class="num">1</span> <span class="num">1</span> &lt;= sourceEmpiricalWidthScale <span class="num">1</span> <span class="num">4</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean.html#L85">Source line 85</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-10a2c77670fb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.not_sourceEmpiricalWidthScale_horizon_four_one_le_four</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A literal source-width instance at integer horizon `T = 4`.  Moving from
+one to four processed pulls strictly decreases the printed capped radius, so
+the reverse transport fails inside the paper&#x27;s own parameter domain rather
+than only for the normalized scale-one diagnostic above.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> not_sourceEmpiricalWidthScale_horizon_four_one_le_four : ¬ (sourceEmpiricalWidthScale (<span class="num">2</span> * Real.log <span class="num">4</span>) <span class="num">1</span> &lt;= sourceEmpiricalWidthScale (<span class="num">2</span> * Real.log <span class="num">4</span>) <span class="num">4</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean.html#L94">Source line 94</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-94edae056fd8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.eight_mul_empiricalWidth_lt_gap_of_mem_eliminated</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">At one source elimination snapshot, the line-7 strict test and the
+elimination projection of the stochastic good event put the eliminated arm&#x27;s
+true gap strictly above eight empirical widths.  This is the lower endpoint
+used by the repaired D.12 route below; it is derived from the actual source
+snapshot rather than supplied as a scalar contract field.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> eight_mul_empiricalWidth_lt_gap_of_mem_eliminated {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -&gt; Real) (optimal i : Fin K) (hoptimal : <span class="kw">forall</span> j, mean optimal &lt;= mean j) (hgood : snapshot.EliminationGoodEvent mean) (hi : i ∈ snapshot.eliminated) : <span class="num">8</span> * snapshot.empiricalWidth i &lt; mean i - mean optimal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean.html#L133">Source line 133</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8888f98f9fae">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A still-active arm&#x27;s gap is at most sixteen of its widths at the same
+processed prefix, once the source upper-confidence surface is bounded by the
+current optimal-arm empirical radius and the optimal width is within factor
+three.  These are exactly the algebraic facts used inside the displayed D.10
+proof; no transport to a later elimination prefix occurs here.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -&gt; Real) (optimal i : Fin K) (hgood : snapshot.EliminationGoodEvent mean) (hi : i ∈ snapshot.remainingActive) (hucbCurrent : snapshot.ucbStar &lt;= snapshot.empiricalMean optimal + snapshot.empiricalWidth optimal) (hoptimalWidth : snapshot.empiricalWidth optimal &lt;= <span class="num">3</span> * snapshot.empiricalWidth i) : mean i - mean optimal &lt;= <span class="num">16</span> * snapshot.empiricalWidth i</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean.html#L158">Source line 158</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cb8ebacd8789">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive_of_large_or_small_count</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Source-faithful case split behind the D.10 active-arm upper endpoint.
+The large-count branch supplies the current-UCB and factor-three width edges.
+The small-count branch supplies the printed width formula together with
+`count &lt;= 96 * scale`; bounded losses then give `gap &lt;= 1 &lt;= 10 * width`.
+This removes the unconditional factor-three assumption from the combined
+consumer while leaving the recursive count and width-shape producers explicit.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gap_le_sixteen_mul_empiricalWidth_of_mem_remainingActive_of_large_or_small_count {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -&gt; Real) (optimal i : Fin K) (hmeanBounds : <span class="kw">forall</span> j, mean j ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) (hgood : snapshot.EliminationGoodEvent mean) (hi : i ∈ snapshot.remainingActive) (hbranch : (snapshot.ucbStar &lt;= snapshot.empiricalMean optimal + snapshot.empiricalWidth optimal /\ snapshot.empiricalWidth optimal &lt;= <span class="num">3</span> * snapshot.empiricalWidth i) \/ (<span class="kw">exists</span> scale count : Real, <span class="num">0</span> &lt; scale /\ count &lt;= <span class="num">96</span> * scale /\ snapshot.empiricalWidth i = sourceEmpiricalWidthScale scale count)) : mean i - mean optimal &lt;= <span class="num">16</span> * snapshot.empiricalWidth i</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean.html#L191">Source line 191</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f7417e6b51c4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Same-snapshot repair of the displayed D.12 / main-text Lemma 4.2 chain.
+When `iEarlier` is eliminated and `iLater` remains active in that very update,
+the active-prefix D.10 gap upper bound can be consumed before any later
+elimination snapshot is mentioned.  The proof therefore avoids the reversed
+prefix-to-elimination width inequality diagnosed above.  The two width
+comparison premises still have to be produced by the source count event on a
+recursive Delayed SAPO trajectory.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gap_le_twenty_mul_gap_at_earlier_elimination_snapshot {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -&gt; Real) (optimal iEarlier iLater : Fin K) (hoptimal : <span class="kw">forall</span> j, mean optimal &lt;= mean j) (hgood : snapshot.EliminationGoodEvent mean) (hEarlierEliminated : iEarlier ∈ snapshot.eliminated) (hLaterRemaining : iLater ∈ snapshot.remainingActive) (hucbCurrent : snapshot.ucbStar &lt;= snapshot.empiricalMean optimal + snapshot.empiricalWidth optimal) (hoptimalWidth : snapshot.empiricalWidth optimal &lt;= <span class="num">3</span> * snapshot.empiricalWidth iLater) (hpairWidth : snapshot.empiricalWidth iLater &lt;= <span class="num">10</span> * snapshot.empiricalWidth iEarlier) : mean iLater - mean optimal &lt;= <span class="num">20</span> * (mean iEarlier - mean optimal)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean.html#L229">Source line 229</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c2295de5f85e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_large_or_small_count</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The same-snapshot factor-twenty consumer with the source&#x27;s large/small-
+count split exposed.  In the small-count branch the factor-three premise is
+replaced by bounded means and the exact source-width lower bound.  The theorem
+still requires a recursive producer for the selected branch and the same-
+prefix factor-ten comparison; it is not an unconditional port of D.10/D.12.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gap_le_twenty_mul_gap_at_earlier_elimination_snapshot_of_large_or_small_count {K : Nat} [Nonempty (Fin K)] (snapshot : DelayedSAPOSourceConfidenceSnapshot K) (mean : Fin K -&gt; Real) (optimal iEarlier iLater : Fin K) (hoptimal : <span class="kw">forall</span> j, mean optimal &lt;= mean j) (hmeanBounds : <span class="kw">forall</span> j, mean j ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) (hgood : snapshot.EliminationGoodEvent mean) (hEarlierEliminated : iEarlier ∈ snapshot.eliminated) (hLaterRemaining : iLater ∈ snapshot.remainingActive) (hbranch : (snapshot.ucbStar &lt;= snapshot.empiricalMean optimal + snapshot.empiricalWidth optimal /\ snapshot.empiricalWidth optimal &lt;= <span class="num">3</span> * snapshot.empiricalWidth iLater) \/ (<span class="kw">exists</span> scale count : Real, <span class="num">0</span> &lt; scale /\ count &lt;= <span class="num">96</span> * scale /\ snapshot.empiricalWidth iLater = sourceEmpiricalWidthScale scale count)) (hpairWidth : snapshot.empiricalWidth iLater &lt;= <span class="num">10</span> * snapshot.empiricalWidth iEarlier) : mean iLater - mean optimal &lt;= <span class="num">20</span> * (mean iEarlier - mean optimal)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean.html#L260">Source line 260</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a97f7132b8d1">
+  <summary>
+    <span class="kind">structure</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact deterministic interface needed by the displayed proof of source
+Lemma D.12 (main-text Lemma 4.2).  Its index is a shared processed-sequence
+prefix length, not wall-clock action time.  The fields deliberately name the
+four edges consumed by D.12: D.10 supplies the gap endpoints and cross-arm
+comparison, while the width definition supplies the time transport.</p>
+    <pre class="lean-code"><code><span class="kw">structure</span> DelayedSAPOD10D12GapOrderingContract (K : Nat) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean.html#L295">Source line 295</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e69c14dce811">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.surrogateGap</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The source surrogate gap `Delta-tilde_i = 8 width_i(S-tilde_i)`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> surrogateGap {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (i : Fin K) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean.html#L312">Source line 312</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-72c08e59043b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.surrogateGap_le_gap</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Lower half of the displayed D.10 two-sided surrogate-gap comparison.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> surrogateGap_le_gap {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (i : Fin K) : contract.surrogateGap i &lt;= contract.gap i</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean.html#L318">Source line 318</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d9bdb5344427">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.gap_le_two_mul_surrogateGap</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Upper half of the displayed D.10 two-sided comparison, exposed from the
+factor-16 endpoint rather than assumed in factor-two form.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gap_le_two_mul_surrogateGap {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (i : Fin K) : contract.gap i &lt;= <span class="num">2</span> * contract.surrogateGap i</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean.html#L326">Source line 326</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cd61e0f1307b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.d12_gap_ordering_chain</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The four inequalities in the source&#x27;s displayed D.12 chain, kept
+separate so an audit can identify which edge is missing from a recursive
+Delayed SAPO implementation.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> d12_gap_ordering_chain {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (iEarlier iLater : Fin K) (horder : contract.eliminationPrefixIndex iEarlier &lt;= contract.eliminationPrefixIndex iLater) : contract.gap iLater &lt;= <span class="num">16</span> * contract.widthAt iLater (contract.eliminationPrefixIndex iLater) /\ <span class="num">16</span> * contract.widthAt iLater (contract.eliminationPrefixIndex iLater) &lt;= <span class="num">16</span> * contract.widthAt iLater (contract.eliminationPrefixIndex iEarlier) /\ <span class="num">16</span> * contract.widthAt iLater (contract.eliminationPrefixIndex iEarlier) &lt;= <span class="num">160</span> * contract.widthAt iEarlier (contract.eliminationPrefixIndex iEarlier) /\ <span class="num">160</span> * contract.widthAt iEarlier (contract.eliminationPrefixIndex iEarlier) &lt;= <span class="num">20</span> * contract.gap iEarlier</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean.html#L337">Source line 337</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-092f3676d5d5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOD10D12GapOrderingContract.gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Conditional source Lemma D.12 / main-text Lemma 4.2 consumer.  It proves
+the factor-20 gap ordering once the exact D.10 endpoints and the correctly
+oriented width transport are supplied; it does not claim those disputed
+inputs follow from the current one-snapshot library.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gap_le_twenty_mul_gap_of_eliminationPrefixIndex_le {K : Nat} (contract : DelayedSAPOD10D12GapOrderingContract K) (iEarlier iLater : Fin K) (horder : contract.eliminationPrefixIndex iEarlier &lt;= contract.eliminationPrefixIndex iLater) : contract.gap iLater &lt;= <span class="num">20</span> * contract.gap iEarlier</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/StochasticGapOrderingAudit.lean.html#L367">Source line 367</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/LowerBounds/PrefixCodeConstruction.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/LowerBounds/PrefixCodeConstruction.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/LowerBounds/PrefixCodeConstruction.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/LowerBounds/PrefixCodeConstruction.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.LowerBounds.ShannonLengths</span>
+<span id="L2">2 import Mathlib.Data.List.OfFn</span>
+<span id="L3">3 </span>
+<span id="L4">4 namespace BanditRLProof.LowerBounds</span>
+<span id="L5">5 </span>
+<span id="L6">6 /-- All words at depth n in the full binary tree. -/</span>
+<span id="L7">7 def binaryWords (n : ℕ) : Finset (List Bool) :=</span>
+<span id="L8">8   Finset.univ.image (fun f : Fin n → Bool =&gt; List.ofFn f)</span>
+<span id="L9">9 </span>
+<span id="L10">10 theorem card_binaryWords (n : ℕ) : (binaryWords n).card = 2 ^ n := by</span>
+<span id="L11">11   rw [binaryWords, Finset.card_image_of_injective _ List.ofFn_injective]</span>
+<span id="L12">12   simp</span>
+<span id="L13">13 </span>
+<span id="L14">14 theorem mem_binaryWords_iff (w : List Bool) (n : ℕ) :</span>
+<span id="L15">15     w ∈ binaryWords n ↔ w.length = n := by</span>
+<span id="L16">16   constructor</span>
+<span id="L17">17   · intro h</span>
+<span id="L18">18     obtain ⟨f, _, rfl⟩ := Finset.mem_image.mp h</span>
+<span id="L19">19     simp</span>
+<span id="L20">20   · intro h</span>
+<span id="L21">21     subst n</span>
+<span id="L22">22     apply Finset.mem_image.mpr</span>
+<span id="L23">23     exact ⟨w.get, Finset.mem_univ _, List.ofFn_get w⟩</span>
+<span id="L24">24 </span>
+<span id="L25">25 /-- The descendants of a prefix after n additional bits. -/</span>
+<span id="L26">26 def binaryExtensions (w : List Bool) (n : ℕ) : Finset (List Bool) :=</span>
+<span id="L27">27   (binaryWords n).image (fun v =&gt; w ++ v)</span>
+<span id="L28">28 </span>
+<span id="L29">29 theorem card_binaryExtensions (w : List Bool) (n : ℕ) :</span>
+<span id="L30">30     (binaryExtensions w n).card = 2 ^ n := by</span>
+<span id="L31">31   rw [binaryExtensions, Finset.card_image_of_injective]</span>
+<span id="L32">32   · exact card_binaryWords n</span>
+<span id="L33">33   · intro a b h</span>
+<span id="L34">34     exact List.append_cancel_left h</span>
+<span id="L35">35 </span>
+<span id="L36">36 theorem mem_binaryExtensions_iff (w v : List Bool) (n : ℕ) :</span>
+<span id="L37">37     v ∈ binaryExtensions w n ↔ w &lt;+: v ∧ v.length = w.length + n := by</span>
+<span id="L38">38   constructor</span>
+<span id="L39">39   · intro h</span>
+<span id="L40">40     obtain ⟨u, hu, rfl⟩ := Finset.mem_image.mp h</span>
+<span id="L41">41     exact ⟨List.prefix_append _ _, by simp [(mem_binaryWords_iff u n).1 hu]⟩</span>
+<span id="L42">42   · rintro ⟨⟨u, rfl⟩, hlen⟩</span>
+<span id="L43">43     apply Finset.mem_image.mpr</span>
+<span id="L44">44     refine ⟨u, (mem_binaryWords_iff u n).2 ?_, rfl⟩</span>
+<span id="L45">45     simpa using hlen</span>
+<span id="L46">46 </span>
+<span id="L47">47 /-- Cylinders from incomparable prefixes are disjoint. -/</span>
+<span id="L48">48 theorem binaryExtensions_disjoint_of_incomparable</span>
+<span id="L49">49     (u v : List Bool) (m n : ℕ) (huv : ¬ u &lt;+: v) (hvu : ¬ v &lt;+: u) :</span>
+<span id="L50">50     Disjoint (binaryExtensions u m) (binaryExtensions v n) := by</span>
+<span id="L51">51   apply Finset.disjoint_left.mpr</span>
+<span id="L52">52   intro w hu hv</span>
+<span id="L53">53   have h1 := (mem_binaryExtensions_iff u w m).1 hu</span>
+<span id="L54">54   have h2 := (mem_binaryExtensions_iff v w n).1 hv</span>
+<span id="L55">55   exact (List.prefix_or_prefix_of_prefix h1.1 h2.1).elim huv hvu</span>
+<span id="L56">56 </span>
+<span id="L57">57 /-- A free word exists whenever previous prefixes occupy fewer than all level nodes. -/</span>
+<span id="L58">58 theorem exists_binaryWord_avoiding_prefixes</span>
+<span id="L59">59     (S : Finset (List Bool)) (n : ℕ)</span>
+<span id="L60">60     (hlen : ∀ w ∈ S, w.length ≤ n)</span>
+<span id="L61">61     (hbudget : (∑ w ∈ S, 2 ^ (n - w.length)) &lt; 2 ^ n) :</span>
+<span id="L62">62     ∃ v : List Bool, v.length = n ∧ ∀ w ∈ S, ¬ w &lt;+: v := by</span>
+<span id="L63">63   let U := S.biUnion (fun w =&gt; binaryExtensions w (n - w.length))</span>
+<span id="L64">64   have hcard : U.card &lt; (binaryWords n).card := by</span>
+<span id="L65">65     rw [card_binaryWords]</span>
+<span id="L66">66     calc</span>
+<span id="L67">67       U.card ≤ ∑ w ∈ S, (binaryExtensions w (n - w.length)).card :=</span>
+<span id="L68">68         Finset.card_biUnion_le</span>
+<span id="L69">69       _ = ∑ w ∈ S, 2 ^ (n - w.length) := by simp only [card_binaryExtensions]</span>
+<span id="L70">70       _ &lt; _ := hbudget</span>
+<span id="L71">71   obtain ⟨v, hv, hnot⟩ := Finset.exists_mem_notMem_of_card_lt_card hcard</span>
+<span id="L72">72   refine ⟨v, (mem_binaryWords_iff v n).1 hv, ?_⟩</span>
+<span id="L73">73   intro w hw hpre</span>
+<span id="L74">74   apply hnot</span>
+<span id="L75">75   apply Finset.mem_biUnion.mpr</span>
+<span id="L76">76   refine ⟨w, hw, (mem_binaryExtensions_iff w v (n - w.length)).2 ⟨hpre, ?_⟩⟩</span>
+<span id="L77">77   rw [(mem_binaryWords_iff v n).1 hv]</span>
+<span id="L78">78   have := hlen w hw</span>
+<span id="L79">79   omega</span>
+<span id="L80">80 </span>
+<span id="L81">81 theorem binary_level_mul_kraft_weight {k n : ℕ} (h : k ≤ n) :</span>
+<span id="L82">82     (2 : ℝ) ^ n * (1 / 2 : ℝ) ^ k = 2 ^ (n - k) := by</span>
+<span id="L83">83   have hn : n = (n - k) + k := by omega</span>
+<span id="L84">84   nth_rw 1 [hn]</span>
+<span id="L85">85   rw [pow_add, one_div_pow]</span>
+<span id="L86">86   field_simp</span>
+<span id="L87">87 </span>
+<span id="L88">88 /-- Real Kraft slack supplies the integer capacity needed to insert a word. -/</span>
+<span id="L89">89 theorem exists_binaryWord_of_kraft_lt_one</span>
+<span id="L90">90     (S : Finset (List Bool)) (n : ℕ)</span>
+<span id="L91">91     (hlen : ∀ w ∈ S, w.length ≤ n)</span>
+<span id="L92">92     (hk : (∑ w ∈ S, (1 / 2 : ℝ) ^ w.length) &lt; 1) :</span>
+<span id="L93">93     ∃ v : List Bool, v.length = n ∧ ∀ w ∈ S, ¬ w &lt;+: v := by</span>
+<span id="L94">94   apply exists_binaryWord_avoiding_prefixes S n hlen</span>
+<span id="L95">95   have h := mul_lt_mul_of_pos_left hk (pow_pos (by norm_num : (0 : ℝ) &lt; 2) n)</span>
+<span id="L96">96   rw [Finset.mul_sum, mul_one] at h</span>
+<span id="L97">97   have he : (∑ w ∈ S, (2 : ℝ) ^ n * (1 / 2 : ℝ) ^ w.length) =</span>
+<span id="L98">98       ∑ w ∈ S, (2 : ℝ) ^ (n - w.length) := by</span>
+<span id="L99">99     exact Finset.sum_congr rfl fun w hw =&gt; binary_level_mul_kraft_weight (hlen w hw)</span>
+<span id="L100">100   rw [he] at h</span>
+<span id="L101">101   exact_mod_cast h</span>
+<span id="L102">102 </span>
+<span id="L103">103 /-- The greedy insertion preserves prefix freedom in both directions. -/</span>
+<span id="L104">104 theorem exists_prefixFree_insert_of_kraft_lt_one</span>
+<span id="L105">105     (S : Finset (List Bool)) (n : ℕ)</span>
+<span id="L106">106     (hfree : ∀ a ∈ S, ∀ b ∈ S, a &lt;+: b → a = b)</span>
+<span id="L107">107     (hlen : ∀ w ∈ S, w.length ≤ n)</span>
+<span id="L108">108     (hk : (∑ w ∈ S, (1 / 2 : ℝ) ^ w.length) &lt; 1) :</span>
+<span id="L109">109     ∃ v : List Bool, v.length = n ∧ v ∉ S ∧</span>
+<span id="L110">110       ∀ a ∈ insert v S, ∀ b ∈ insert v S, a &lt;+: b → a = b := by</span>
+<span id="L111">111   obtain ⟨v, hvlen, hv⟩ := exists_binaryWord_of_kraft_lt_one S n hlen hk</span>
+<span id="L112">112   have hvnot : v ∉ S := by</span>
+<span id="L113">113     intro h</span>
+<span id="L114">114     exact hv v h (by rfl)</span>
+<span id="L115">115   have hreverse : ∀ w ∈ S, ¬ v &lt;+: w := by</span>
+<span id="L116">116     intro w hw hpre</span>
+<span id="L117">117     obtain ⟨t, rfl⟩ := hpre</span>
+<span id="L118">118     have ht : t.length = 0 := by</span>
+<span id="L119">119       have h := hlen (v ++ t) hw</span>
+<span id="L120">120       simp only [List.length_append, hvlen] at h</span>
+<span id="L121">121       omega</span>
+<span id="L122">122     have ht&#x27; : t = [] := List.length_eq_zero_iff.mp ht</span>
+<span id="L123">123     simp only [ht&#x27;, List.append_nil] at hw</span>
+<span id="L124">124     exact hvnot hw</span>
+<span id="L125">125   refine ⟨v, hvlen, hvnot, ?_⟩</span>
+<span id="L126">126   intro a ha b hb hab</span>
+<span id="L127">127   by_cases hav : a = v</span>
+<span id="L128">128   · subst a</span>
+<span id="L129">129     by_cases hbv : b = v</span>
+<span id="L130">130     · exact hbv.symm</span>
+<span id="L131">131     · exact (hreverse b ((Finset.mem_insert.mp hb).resolve_left hbv) hab).elim</span>
+<span id="L132">132   · have haS := (Finset.mem_insert.mp ha).resolve_left hav</span>
+<span id="L133">133     by_cases hbv : b = v</span>
+<span id="L134">134     · subst b</span>
+<span id="L135">135       exact (hv a haS hab).elim</span>
+<span id="L136">136     · exact hfree a haS b ((Finset.mem_insert.mp hb).resolve_left hbv) hab</span>
+<span id="L137">137 </span>
+<span id="L138">138 /-- Finite Kraft converse, retaining each prescribed length, including equality. -/</span>
+<span id="L139">139 theorem exists_prefix_encoding_of_kraft_le_one</span>
+<span id="L140">140     {α : Type*} [DecidableEq α] (s : Finset α) (l : α → ℕ)</span>
+<span id="L141">141     (hk : (∑ i ∈ s, (1 / 2 : ℝ) ^ l i) ≤ 1) :</span>
+<span id="L142">142     ∃ c : α → List Bool, (∀ i ∈ s, (c i).length = l i) ∧</span>
+<span id="L143">143       (∀ i ∈ s, ∀ j ∈ s, c i &lt;+: c j → i = j) := by</span>
+<span id="L144">144   classical</span>
+<span id="L145">145   induction s using Finset.strongInductionOn with</span>
+<span id="L146">146   | _ s ih =&gt;</span>
+<span id="L147">147     by_cases hs : s.Nonempty</span>
+<span id="L148">148     · obtain ⟨a, ha, hmax⟩ := s.exists_max_image l hs</span>
+<span id="L149">149       let t := s.erase a</span>
+<span id="L150">150       have ht : t ⊂ s := Finset.erase_ssubset ha</span>
+<span id="L151">151       have hkt : (∑ i ∈ t, (1 / 2 : ℝ) ^ l i) &lt; 1 := by</span>
+<span id="L152">152         have he := Finset.sum_erase_add s (fun i =&gt; (1 / 2 : ℝ) ^ l i) ha</span>
+<span id="L153">153         have hp : 0 &lt; (1 / 2 : ℝ) ^ l a := by positivity</span>
+<span id="L154">154         dsimp [t]</span>
+<span id="L155">155         linarith</span>
+<span id="L156">156       obtain ⟨c, hcl, hcf⟩ := ih t ht hkt.le</span>
+<span id="L157">157       let S := t.image c</span>
+<span id="L158">158       have hci : Set.InjOn c t := by</span>
+<span id="L159">159         intro i hi j hj hij</span>
+<span id="L160">160         exact hcf i hi j hj (by rw [hij])</span>
+<span id="L161">161       have hSl : ∀ w ∈ S, w.length ≤ l a := by</span>
+<span id="L162">162         intro w hw</span>
+<span id="L163">163         obtain ⟨i, hi, rfl⟩ := Finset.mem_image.mp hw</span>
+<span id="L164">164         rw [hcl i hi]</span>
+<span id="L165">165         exact hmax i (Finset.mem_of_mem_erase hi)</span>
+<span id="L166">166       have hSk : (∑ w ∈ S, (1 / 2 : ℝ) ^ w.length) &lt; 1 := by</span>
+<span id="L167">167         dsimp [S]</span>
+<span id="L168">168         rw [Finset.sum_image hci]</span>
+<span id="L169">169         have he : (∑ i ∈ t, (1 / 2 : ℝ) ^ (c i).length) =</span>
+<span id="L170">170             ∑ i ∈ t, (1 / 2 : ℝ) ^ l i :=</span>
+<span id="L171">171           Finset.sum_congr rfl fun i hi =&gt; by rw [hcl i hi]</span>
+<span id="L172">172         rw [he]</span>
+<span id="L173">173         exact hkt</span>
+<span id="L174">174       have hSf : ∀ u ∈ S, ∀ v ∈ S, u &lt;+: v → u = v := by</span>
+<span id="L175">175         intro u hu v hv huv</span>
+<span id="L176">176         obtain ⟨i, hi, rfl⟩ := Finset.mem_image.mp hu</span>
+<span id="L177">177         obtain ⟨j, hj, rfl⟩ := Finset.mem_image.mp hv</span>
+<span id="L178">178         rw [hcf i hi j hj huv]</span>
+<span id="L179">179       obtain ⟨v, hvl, hvnot, hvfree⟩ :=</span>
+<span id="L180">180         exists_prefixFree_insert_of_kraft_lt_one S (l a) hSf hSl hSk</span>
+<span id="L181">181       let d : α → List Bool := fun i =&gt; if i = a then v else c i</span>
+<span id="L182">182       have hdmem : ∀ i ∈ s, d i ∈ insert v S := by</span>
+<span id="L183">183         intro i hi</span>
+<span id="L184">184         by_cases hia : i = a</span>
+<span id="L185">185         · simp [d, hia]</span>
+<span id="L186">186         · simp only [d, if_neg hia]</span>
+<span id="L187">187           exact Finset.mem_insert_of_mem (Finset.mem_image.mpr</span>
+<span id="L188">188             ⟨i, Finset.mem_erase.mpr ⟨hia, hi⟩, rfl⟩)</span>
+<span id="L189">189       have hdi : Set.InjOn d s := by</span>
+<span id="L190">190         intro i hi j hj hd</span>
+<span id="L191">191         by_cases hia : i = a</span>
+<span id="L192">192         · by_cases hja : j = a</span>
+<span id="L193">193           · exact hia.trans hja.symm</span>
+<span id="L194">194           · have hcj : c j ∈ S := Finset.mem_image.mpr</span>
+<span id="L195">195               ⟨j, Finset.mem_erase.mpr ⟨hja, hj⟩, rfl⟩</span>
+<span id="L196">196             have he : v = c j := by simpa [d, hia, hja] using hd</span>
+<span id="L197">197             exact (hvnot (he ▸ hcj)).elim</span>
+<span id="L198">198         · by_cases hja : j = a</span>
+<span id="L199">199           · have hci&#x27; : c i ∈ S := Finset.mem_image.mpr</span>
+<span id="L200">200               ⟨i, Finset.mem_erase.mpr ⟨hia, hi⟩, rfl⟩</span>
+<span id="L201">201             have he : c i = v := by simpa [d, hia, hja] using hd</span>
+<span id="L202">202             exact (hvnot (he ▸ hci&#x27;)).elim</span>
+<span id="L203">203           · apply hci (Finset.mem_erase.mpr ⟨hia, hi⟩) (Finset.mem_erase.mpr ⟨hja, hj⟩)</span>
+<span id="L204">204             simpa [d, hia, hja] using hd</span>
+<span id="L205">205       refine ⟨d, ?_, ?_⟩</span>
+<span id="L206">206       · intro i hi</span>
+<span id="L207">207         by_cases hia : i = a</span>
+<span id="L208">208         · simpa [d, hia] using hvl</span>
+<span id="L209">209         · simpa [d, hia] using hcl i (Finset.mem_erase.mpr ⟨hia, hi⟩)</span>
+<span id="L210">210       · intro i hi j hj hpre</span>
+<span id="L211">211         exact hdi hi hj (hvfree _ (hdmem i hi) _ (hdmem j hj) hpre)</span>
+<span id="L212">212     · have he : s = ∅ := Finset.not_nonempty_iff_eq_empty.mp hs</span>
+<span id="L213">213       subst s</span>
+<span id="L214">214       exact ⟨fun _ =&gt; [], by simp⟩</span>
+<span id="L215">215 </span>
+<span id="L216">216 /-- Backwards-compatible strict version of the finite Kraft converse. -/</span>
+<span id="L217">217 theorem exists_prefix_encoding_of_kraft_lt_one</span>
+<span id="L218">218     {α : Type*} [DecidableEq α] (s : Finset α) (l : α → ℕ)</span>
+<span id="L219">219     (hk : (∑ i ∈ s, (1 / 2 : ℝ) ^ l i) &lt; 1) :</span>
+<span id="L220">220     ∃ c : α → List Bool, (∀ i ∈ s, (c i).length = l i) ∧</span>
+<span id="L221">221       (∀ i ∈ s, ∀ j ∈ s, c i &lt;+: c j → i = j) :=</span>
+<span id="L222">222   exists_prefix_encoding_of_kraft_le_one s l hk.le</span>
+<span id="L223">223 </span>
+<span id="L224">224 /-- Non-strict Kraft converse packaged as an actual binary prefix code. -/</span>
+<span id="L225">225 theorem exists_binaryPrefixCode_of_kraft_le_one</span>
+<span id="L226">226     {α : Type*} [Fintype α] [DecidableEq α] (l : α → ℕ)</span>
+<span id="L227">227     (hl : ∀ i, 0 &lt; l i) (hk : (∑ i, (1 / 2 : ℝ) ^ l i) ≤ 1) :</span>
+<span id="L228">228     ∃ code : BinaryPrefixCode α, ∀ i, (code.encode i).length = l i := by</span>
+<span id="L229">229   obtain ⟨c, hlen, hfree⟩ := exists_prefix_encoding_of_kraft_le_one Finset.univ l hk</span>
+<span id="L230">230   have hci : Function.Injective c := by</span>
+<span id="L231">231     intro i j hij</span>
+<span id="L232">232     exact hfree i (Finset.mem_univ _) j (Finset.mem_univ _) (by rw [hij])</span>
+<span id="L233">233   have hcne : ∀ i, c i ≠ [] := by</span>
+<span id="L234">234     intro i he</span>
+<span id="L235">235     have h := hlen i (Finset.mem_univ _)</span>
+<span id="L236">236     rw [he] at h</span>
+<span id="L237">237     have := hl i</span>
+<span id="L238">238     simp only [List.length_nil] at h</span>
+<span id="L239">239     omega</span>
+<span id="L240">240   refine ⟨⟨c, hci, hcne, ?_⟩, ?_⟩</span>
+<span id="L241">241   · intro i j hp</span>
+<span id="L242">242     exact hfree i (Finset.mem_univ _) j (Finset.mem_univ _) hp</span>
+<span id="L243">243   · intro i</span>
+<span id="L244">244     exact hlen i (Finset.mem_univ _)</span>
+<span id="L245">245 </span>
+<span id="L246">246 /-- Backwards-compatible strict Kraft packaging. -/</span>
+<span id="L247">247 theorem exists_binaryPrefixCode_of_kraft_lt_one</span>
+<span id="L248">248     {α : Type*} [Fintype α] [DecidableEq α] (l : α → ℕ)</span>
+<span id="L249">249     (hl : ∀ i, 0 &lt; l i) (hk : (∑ i, (1 / 2 : ℝ) ^ l i) &lt; 1) :</span>
+<span id="L250">250     ∃ code : BinaryPrefixCode α, ∀ i, (code.encode i).length = l i :=</span>
+<span id="L251">251   exists_binaryPrefixCode_of_kraft_le_one l hl hk.le</span>
+<span id="L252">252 </span>
+<span id="L253">253 /-- Every finite uniquely decodable encoder has a prefix code with exactly</span>
+<span id="L254">254 the same symbol lengths (the boxed assertion in Chapter 14, Section 14.1). -/</span>
+<span id="L255">255 theorem exists_prefixCode_of_uniquelyDecodable</span>
+<span id="L256">256     {α : Type*} [Fintype α] (c : α → List Bool) (hinj : Function.Injective c)</span>
+<span id="L257">257     (hud : InformationTheory.UniquelyDecodable (Set.range c)) :</span>
+<span id="L258">258     ∃ code : BinaryPrefixCode α, ∀ i, (code.encode i).length = (c i).length := by</span>
+<span id="L259">259   classical</span>
+<span id="L260">260   have hl (i : α) : 0 &lt; (c i).length := by</span>
+<span id="L261">261     have hn : c i ≠ [] := fun h =&gt; hud.epsilon_not_mem ⟨i, h⟩</span>
+<span id="L262">262     exact List.length_pos_iff.mpr hn</span>
+<span id="L263">263   have hset : ((Finset.univ.image c : Finset (List Bool)) : Set (List Bool)) =</span>
+<span id="L264">264       Set.range c := by ext w; simp</span>
+<span id="L265">265   have hk := InformationTheory.kraft_mcmillan_inequality (S := Finset.univ.image c)</span>
+<span id="L266">266     (hset.symm ▸ hud)</span>
+<span id="L267">267   have hki : (∑ i, (1 / 2 : ℝ) ^ (c i).length) ≤ 1 := by</span>
+<span id="L268">268     simpa only [Fintype.card_bool, Nat.cast_ofNat,</span>
+<span id="L269">269       Finset.sum_image (fun i _ j _ h =&gt; hinj h)] using hk</span>
+<span id="L270">270   exact exists_binaryPrefixCode_of_kraft_le_one (fun i =&gt; (c i).length) hl hki</span>
+<span id="L271">271 </span>
+<span id="L272">272 /-- A realizable finite prefix code attains the one-bit entropy sandwich.</span>
+<span id="L273">273 This proves existence, not Huffman&#x27;s algorithm or optimality. -/</span>
+<span id="L274">274 theorem exists_binaryPrefixCode_entropy_sandwich</span>
+<span id="L275">275     {α : Type*} [Fintype α] [DecidableEq α] (p : α → ℝ)</span>
+<span id="L276">276     (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) :</span>
+<span id="L277">277     ∃ code : BinaryPrefixCode α,</span>
+<span id="L278">278       discreteEntropyBaseTwo Finset.univ p ≤ expectedCodeLength p code ∧</span>
+<span id="L279">279       expectedCodeLength p code ≤ discreteEntropyBaseTwo Finset.univ p + 1 := by</span>
+<span id="L280">280   obtain ⟨l, hl, hk, he⟩ := exists_lengths_kraft_lt_one_entropy_bound p hp hs</span>
+<span id="L281">281   obtain ⟨code, hc⟩ := exists_binaryPrefixCode_of_kraft_lt_one l hl hk</span>
+<span id="L282">282   refine ⟨code, discreteEntropyBaseTwo_le_expectedCodeLength p hp hs code, ?_⟩</span>
+<span id="L283">283   simpa only [expectedCodeLength, hc] using he</span>
+<span id="L284">284 </span>
+<span id="L285">285 end BanditRLProof.LowerBounds</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

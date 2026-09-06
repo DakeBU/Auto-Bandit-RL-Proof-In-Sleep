@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.OFULGeneratedTrajectoryPredictableConfidence · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.OFULGeneratedTrajectoryPredictableConfidence · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.OFULGeneratedTrajectoryPredictableConfidence · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · OFUL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>OFUL<wbr>Generated<wbr>Trajectory<wbr>Predictable<wbr>Confidence</h1>
+  <p class="lede">The actual canonical action coordinate is only almost surely equal to the deterministic history selector. This module constructs the pointwise predictable selector feature under a strict-past filtration, proves its almost-everywhere alignment with the actual selected feature, and transports the compiled uniform confidence and successor-gap tails back to the actual trajectory.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean.html"><code>BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/oful/index.html">5. OFUL, self-normalized confidence, and stopping times</a></dd></div>
+    <div><dt>Declarations</dt><dd>20</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-ofulgeneratedtrajectoryuniformconfidence/index.html"><code>BanditRLProof.OFULGeneratedTrajectoryUniformConfidence</code></a>, <a href="../banditrlproof-historyfiltration/index.html"><code>BanditRLProof.HistoryFiltration</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-ofulhistoryenvironmentrewardlaw/index.html"><code>BanditRLProof.OFULHistoryEnvironmentRewardLaw</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-d4129c6ceb45">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.canonicalHistoryTrajectoryBeforeFiltration</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The canonical trajectory filtration strictly before the current coordinate.
+Level zero is trivial, while level `n + 1` contains exactly coordinates
+`0, ..., n`.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> canonicalHistoryTrajectoryBeforeFiltration {K : Nat} : Filtration Nat (inferInstance : MeasurableSpace (Nat -&gt; Fin K × Real)) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean.html#L28">Source line 28</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b5eb660ff313">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.canonicalHistoryTrajectoryBeforeFiltration_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> canonicalHistoryTrajectoryBeforeFiltration_zero {K : Nat} : (canonicalHistoryTrajectoryBeforeFiltration (K := K) <span class="num">0</span> : MeasurableSpace (Nat -&gt; Fin K × Real)) = ⊥</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean.html#L56">Source line 56</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cb46b40cdcfa">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.canonicalHistoryTrajectoryBeforeFiltration_succ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> canonicalHistoryTrajectoryBeforeFiltration_succ {K : Nat} (n : Nat) : (canonicalHistoryTrajectoryBeforeFiltration (K := K) (n + <span class="num">1</span>) : MeasurableSpace (Nat -&gt; Fin K × Real)) = Filtration.piLE (X := <span class="kw">fun</span> _ : Nat =&gt; Fin K × Real) n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean.html#L62">Source line 62</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5f79d3f4170a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measurable_finiteHistoryScalarRidgeOptimisticAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The concrete scalar-ridge strict-fold selector is measurable in its history.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_finiteHistoryScalarRidgeOptimisticAction {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta S : Real) (n : Nat) : Measurable (finiteHistoryScalarRidgeOptimisticAction hK lambda actionFeature R delta S n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean.html#L69">Source line 69</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-71133e1e9f09">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.canonicalHistoryTrajectoryPredictableFeature</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pointwise predictable feature used by scalar-ridge confidence.
+
+At time zero it uses the deterministic initial arm.  At time `n + 1` it uses
+the strict-fold selector evaluated only on coordinates through `n`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> canonicalHistoryTrajectoryPredictableFeature {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta S : Real) : Nat -&gt; (Nat -&gt; Fin K × Real) -&gt; Feature -&gt; Real | <span class="num">0</span>, _trajectory =&gt; actionFeature ⟨<span class="num">0</span>, hK⟩ | n + <span class="num">1</span>, trajectory =&gt; finiteHistoryScalarRidgeSelectedFeature hK lambda actionFeature R delta S n (Preorder.frestrictLe n trajectory) /-- Every coordinate of the predictable feature is strict-past measurable. -/ <span class="kw">theorem</span> canonicalHistoryTrajectoryPredictableFeature_stronglyMeasurable {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta S : Real) (t : Nat) (j : Feature) : StronglyMeasurable[ canonicalHistoryTrajectoryBeforeFiltration (K := K) t] (<span class="kw">fun</span> trajectory =&gt; canonicalHistoryTrajectoryPredictableFeature hK lambda actionFeature R delta S t trajectory j)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean.html#L98">Source line 98</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2c21120eee3b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.canonicalHistoryTrajectoryPredictableFeature_stronglyMeasurable</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every coordinate of the predictable feature is strict-past measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> canonicalHistoryTrajectoryPredictableFeature_stronglyMeasurable {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta S : Real) (t : Nat) (j : Feature) : StronglyMeasurable[ canonicalHistoryTrajectoryBeforeFiltration (K := K) t] (<span class="kw">fun</span> trajectory =&gt; canonicalHistoryTrajectoryPredictableFeature hK lambda actionFeature R delta S t trajectory j)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean.html#L114">Source line 114</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8c97a34f2c7f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.canonicalHistoryTrajectory_action_zero_ae_eq_initialArm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The initial canonical action of the concrete OFUL algorithm is its Dirac arm a.e.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> canonicalHistoryTrajectory_action_zero_ae_eq_initialArm {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta S : Real) (environment : Thompson.HistoryEnvironment (Fin K) Real) : ∀ᵐ trajectory ∂ Thompson.canonicalHistoryTrajectoryMeasure (finiteHistoryScalarRidgeOptimisticAlgorithm hK lambda actionFeature R delta S) environment, Thompson.canonicalHistoryTrajectoryAction trajectory <span class="num">0</span> = ⟨<span class="num">0</span>, hK⟩</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean.html#L159">Source line 159</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-39df76fc9311">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.canonicalHistoryTrajectoryFeature_ae_eq_predictableFeature</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Actual and pointwise predictable canonical features agree a.e. at each time.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> canonicalHistoryTrajectoryFeature_ae_eq_predictableFeature {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta S : Real) (environment : Thompson.HistoryEnvironment (Fin K) Real) (t : Nat) : canonicalHistoryTrajectoryFeature actionFeature t =ᵐ[ Thompson.canonicalHistoryTrajectoryMeasure (finiteHistoryScalarRidgeOptimisticAlgorithm hK lambda actionFeature R delta S) environment] canonicalHistoryTrajectoryPredictableFeature hK lambda actionFeature R delta S t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean.html#L213">Source line 213</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b6b16a735275">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.canonicalHistoryTrajectoryFeature_ae_eq_predictableFeature_all</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Actual and predictable canonical features agree simultaneously at all times.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> canonicalHistoryTrajectoryFeature_ae_eq_predictableFeature_all {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta S : Real) (environment : Thompson.HistoryEnvironment (Fin K) Real) : ∀ᵐ trajectory ∂ Thompson.canonicalHistoryTrajectoryMeasure (finiteHistoryScalarRidgeOptimisticAlgorithm hK lambda actionFeature R delta S) environment, ∀ t, canonicalHistoryTrajectoryFeature actionFeature t trajectory = canonicalHistoryTrajectoryPredictableFeature hK lambda actionFeature R delta S t trajectory</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean.html#L249">Source line 249</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0ec8d61ec73d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.canonicalHistoryTrajectoryPredictableResidual</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical reward residual around the pointwise predictable linear response.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> canonicalHistoryTrajectoryPredictableResidual {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (thetaStar : Feature -&gt; Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta S : Real) (i : Nat) (trajectory : Nat -&gt; Fin K × Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean.html#L273">Source line 273</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-80c790a39c26">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measurable_canonicalHistoryTrajectoryResponse_before_succ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The canonical reward coordinate at time `i` is measurable at level `i + 1`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_canonicalHistoryTrajectoryResponse_before_succ {K : Nat} (i : Nat) : @Measurable (Nat -&gt; Fin K × Real) Real (canonicalHistoryTrajectoryBeforeFiltration (K := K) (i + <span class="num">1</span>)) inferInstance (canonicalHistoryTrajectoryResponse i)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean.html#L288">Source line 288</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b2450313f244">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.canonicalHistoryTrajectoryPredictableResidual_stronglyAdapted</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The zero-initialized predictable residual process is strongly adapted.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> canonicalHistoryTrajectoryPredictableResidual_stronglyAdapted {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (thetaStar : Feature -&gt; Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta S : Real) : StronglyAdapted (canonicalHistoryTrajectoryBeforeFiltration (K := K)) (<span class="kw">fun</span> t trajectory =&gt; <span class="kw">match</span> t <span class="kw">with</span> | <span class="num">0</span> =&gt; <span class="num">0</span> | i + <span class="num">1</span> =&gt; canonicalHistoryTrajectoryPredictableResidual hK lambda thetaStar actionFeature R delta S i trajectory)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean.html#L313">Source line 313</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-78b161e6d232">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.finiteActionProjectionBound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Maximum absolute projection over the finite arm set.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteActionProjectionBound {K : Nat} {Feature : Type u} [Fintype Feature] (hK : <span class="num">0</span> &lt; K) (actionFeature : Fin K -&gt; Feature -&gt; Real) (theta : EuclideanSpace Real Feature) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean.html#L371">Source line 371</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-dfaa76e196cf">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.finiteActionProjectionBound_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteActionProjectionBound_nonneg {K : Nat} {Feature : Type u} [Fintype Feature] (hK : <span class="num">0</span> &lt; K) (actionFeature : Fin K -&gt; Feature -&gt; Real) (theta : EuclideanSpace Real Feature) : <span class="num">0</span> &lt;= finiteActionProjectionBound hK actionFeature theta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean.html#L383">Source line 383</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7c49f7b6cae2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.predictableFeature_projection_le_finiteActionProjectionBound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> predictableFeature_projection_le_finiteActionProjectionBound {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta S : Real) (theta : EuclideanSpace Real Feature) (i : Nat) (trajectory : Nat -&gt; Fin K × Real) : |dotProduct (WithLp.ofLp theta) (canonicalHistoryTrajectoryPredictableFeature hK lambda actionFeature R delta S i trajectory)| &lt;= finiteActionProjectionBound hK actionFeature theta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean.html#L403">Source line 403</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-53ce721f3674">
+  <summary>
+    <span class="kind">structure</span>
+    <code>BanditRLProof.OFUL.CanonicalPredictableScalarRidgeResidualLaw</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The remaining stochastic law for predictable canonical confidence.
+
+Measurability, adaptedness, deterministic finite-arm projection bounds, and
+the pointwise response identity are derived by this module.  A concrete
+environment producer therefore only needs the parameter norm and the
+strict-past conditional MGF of the canonical predictable residual.</p>
+    <pre class="lean-code"><code><span class="kw">structure</span> CanonicalPredictableScalarRidgeResidualLaw {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (thetaStar : Feature -&gt; Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R algorithmDelta S : Real) (environment : Thompson.HistoryEnvironment (Fin K) Real) (horizon : Nat) : Prop <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean.html#L447">Source line 447</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c9973fe58805">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.mem_scalarRidgeConfidenceFailureAt_iff_of_feature_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pointwise feature equality preserves every fixed-time scalar-ridge event.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> mem_scalarRidgeConfidenceFailureAt_iff_of_feature_eq {Omega : Type*} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (thetaStar : Feature -&gt; Real) (S : Real) (feature feature&#x27; : Nat -&gt; Omega -&gt; Feature -&gt; Real) (response : Nat -&gt; Omega -&gt; Real) (R delta : Real) (n : Nat) (omega : Omega) (hfeature : <span class="kw">forall</span> i, feature i omega = feature&#x27; i omega) : omega ∈ scalarRidgeConfidenceFailureAt lambda thetaStar S feature response R delta n ↔ omega ∈ scalarRidgeConfidenceFailureAt lambda thetaStar S feature&#x27; response R delta n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean.html#L471">Source line 471</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1a7202f17a20">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.mem_finiteHorizonUniformScalarRidgeConfidenceFailureSet_iff_of_feature_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pointwise feature equality preserves the finite-window uniform failure event.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> mem_finiteHorizonUniformScalarRidgeConfidenceFailureSet_iff_of_feature_eq {Omega : Type*} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (thetaStar : Feature -&gt; Real) (S : Real) (feature feature&#x27; : Nat -&gt; Omega -&gt; Feature -&gt; Real) (response : Nat -&gt; Omega -&gt; Real) (R delta : Real) (horizon : Nat) (omega : Omega) (hfeature : <span class="kw">forall</span> i, feature i omega = feature&#x27; i omega) : omega ∈ finiteHorizonUniformScalarRidgeConfidenceFailureSet lambda thetaStar S feature response R delta horizon ↔ omega ∈ finiteHorizonUniformScalarRidgeConfidenceFailureSet lambda thetaStar S feature&#x27; response R delta horizon</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean.html#L510">Source line 510</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bbf97b4c0849">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measure_canonicalHistoryTrajectory_uniformScalarRidgeConfidenceFailureSet_le_of_predictableResidualLaw</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Uniform scalar-ridge confidence on the actual canonical selected features,
+derived from only the predictable residual conditional law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_canonicalHistoryTrajectory_uniformScalarRidgeConfidenceFailureSet_le_of_predictableResidualLaw {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (hlambda : <span class="num">0</span> &lt; lambda) (thetaStar : Feature -&gt; Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R : Real) (hR : <span class="num">0</span> &lt; R) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (S : Real) (environment : Thompson.HistoryEnvironment (Fin K) Real) (horizon : Nat) (source : CanonicalPredictableScalarRidgeResidualLaw hK lambda thetaStar actionFeature R (delta / ((horizon + <span class="num">1</span> : Nat) : Real)) S environment horizon) : Thompson.canonicalHistoryTrajectoryMeasure (finiteHistoryScalarRidgeOptimisticAlgorithm hK lambda actionFeature R (delta / ((horizon + <span class="num">1</span> : Nat) : Real)) S) environment (finiteHorizonUniformScalarRidgeConfidenceFailureSet lambda thetaStar S (canonicalHistoryTrajectoryFeature actionFeature) canonicalHistoryTrajectoryResponse R delta horizon) &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean.html#L549">Source line 549</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1001526943ca">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measure_canonicalHistoryTrajectorySumRangeSuccGapViolationSet_le_of_predictableResidualLaw</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical successor-gap tail derived from the strict-past predictable residual
+law.  Unlike the earlier source theorem, no pointwise measurability of the
+actual selected feature is assumed.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_canonicalHistoryTrajectorySumRangeSuccGapViolationSet_le_of_predictableResidualLaw {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (hlambda : <span class="num">0</span> &lt; lambda) (thetaStar : Feature -&gt; Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R : Real) (hR : <span class="num">0</span> &lt; R) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (S : Real) (environment : Thompson.HistoryEnvironment (Fin K) Real) (horizon : Nat) (comparator : Nat -&gt; Fin K) (source : CanonicalPredictableScalarRidgeResidualLaw hK lambda thetaStar actionFeature R (delta / ((horizon + <span class="num">1</span> : Nat) : Real)) S environment horizon) : Thompson.canonicalHistoryTrajectoryMeasure (finiteHistoryScalarRidgeOptimisticAlgorithm hK lambda actionFeature R (delta / ((horizon + <span class="num">1</span> : Nat) : Real)) S) environment (canonicalHistoryTrajectorySumRangeSuccGapViolationSet lambda thetaStar actionFeature R delta S horizon comparator) &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULGeneratedTrajectoryPredictableConfidence.lean.html#L661">Source line 661</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

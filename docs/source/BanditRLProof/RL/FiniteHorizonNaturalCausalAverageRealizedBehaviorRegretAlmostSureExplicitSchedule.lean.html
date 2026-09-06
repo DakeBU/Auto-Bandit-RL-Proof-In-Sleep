@@ -1,0 +1,663 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonNaturalCausalAverageRealizedBehaviorRegretAlmostSureExplicitSchedule.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonNaturalCausalAverageRealizedBehaviorRegretAlmostSureExplicitSchedule.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonNaturalCausalAverageRealizedBehaviorRegretAlmostSureExplicitSchedule.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonNaturalCausalAverageRealizedBehaviorRegretAlmostSureExplicitSchedule.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonNaturalCausalAverageRealizedBehaviorRegretL1Consistency</span>
+<span id="L2">2 import Mathlib.Analysis.PSeries</span>
+<span id="L3">3 import Mathlib.MeasureTheory.OuterMeasure.BorelCantelli</span>
+<span id="L4">4 </span>
+<span id="L5">5 /-!</span>
+<span id="L6">6 # Explicit-schedule almost-sure consistency for natural average realized behavior regret</span>
+<span id="L7">7 </span>
+<span id="L8">8 This module keeps the exact process which divides every successor batch by its</span>
+<span id="L9">9 own positive episode count and then weights rounds equally. Along the</span>
+<span id="L10">10 deterministic fourth-power prefixes `(n + 1)^4`, its compiled all-prefix L1</span>
+<span id="L11">11 envelope is dominated by a sum of shifted exponent-three and exponent-two</span>
+<span id="L12">12 p-series. Markov&#x27;s inequality and the first Borel-Cantelli lemma then give</span>
+<span id="L13">13 almost-everywhere convergence on this subsequence.</span>
+<span id="L14">14 </span>
+<span id="L15">15 This is not the older total-episode-mass-weighted process and is not an</span>
+<span id="L16">16 all-prefix, anytime, or stopping-time almost-sure result.</span>
+<span id="L17">17 -/</span>
+<span id="L18">18 </span>
+<span id="L19">19 open MeasureTheory ProbabilityTheory Filter Topology</span>
+<span id="L20">20 open scoped BigOperators ENNReal NNReal</span>
+<span id="L21">21 </span>
+<span id="L22">22 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L23">23 </span>
+<span id="L24">24 universe u v</span>
+<span id="L25">25 </span>
+<span id="L26">26 variable {State : Type u} {Action : Type v}</span>
+<span id="L27">27     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L28">28     [Fintype State] [Fintype Action]</span>
+<span id="L29">29     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L30">30     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L31">31     [Nonempty State] [Nonempty Action]</span>
+<span id="L32">32 </span>
+<span id="L33">33 namespace AdaptiveStochasticSampledEmpiricalOptimisticSource</span>
+<span id="L34">34 </span>
+<span id="L35">35 /-- Shifted exponent-three envelope for the scheduled behavior-regret L1 term. -/</span>
+<span id="L36">36 noncomputable def explicitPolynomialPrefixAverageBehaviorRegretL1SummableEnvelope</span>
+<span id="L37">37     (mdp : MDP State Action) (n : Nat) : Real :=</span>
+<span id="L38">38   4 * selfConsistentScheduledNaturalCausalLogarithmicRateCoefficient mdp /</span>
+<span id="L39">39     (explicitHighProbabilityScale n : Real) ^ 3</span>
+<span id="L40">40 </span>
+<span id="L41">41 /-- Shifted exponent-two envelope for the scheduled normalized-return L1 term. -/</span>
+<span id="L42">42 noncomputable def explicitPolynomialPrefixAverageReturnL1SummableEnvelope</span>
+<span id="L43">43     (mdp : MDP State Action) (varianceProxy : NNReal) (n : Nat) : Real :=</span>
+<span id="L44">44   (2 * Real.sqrt</span>
+<span id="L45">45       (mdp.globalReturnDeviationPerEpisodeVarianceProxy 1 varianceProxy : Real) *</span>
+<span id="L46">46       Real.exp (1 / 2 : Real)) /</span>
+<span id="L47">47     (explicitHighProbabilityScale n : Real) ^ 2</span>
+<span id="L48">48 </span>
+<span id="L49">49 /-- Summable deterministic L1 envelope on the fourth-power prefix schedule. -/</span>
+<span id="L50">50 noncomputable def explicitPolynomialPrefixAverageRealizedBehaviorRegretL1SummableEnvelope</span>
+<span id="L51">51     (mdp : MDP State Action) (varianceProxy : NNReal) (n : Nat) : Real :=</span>
+<span id="L52">52   explicitPolynomialPrefixAverageBehaviorRegretL1SummableEnvelope mdp n +</span>
+<span id="L53">53     explicitPolynomialPrefixAverageReturnL1SummableEnvelope mdp varianceProxy n</span>
+<span id="L54">54 </span>
+<span id="L55">55 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L56">56     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L57">57     [Nonempty State] [Nonempty Action] in</span>
+<span id="L58">58 /-- The scheduled logarithmic average is dominated by a shifted exponent-three term. -/</span>
+<span id="L59">59 theorem selfConsistentScheduledNaturalCausalLogarithmicAverageIntegratedBehaviorExpectedRegretRate_explicitRounds_le_summableEnvelope</span>
+<span id="L60">60     (mdp : MDP State Action) (n : Nat) :</span>
+<span id="L61">61     selfConsistentScheduledNaturalCausalLogarithmicAverageIntegratedBehaviorExpectedRegretRate</span>
+<span id="L62">62         mdp (explicitHighProbabilityRounds n) &lt;=</span>
+<span id="L63">63       explicitPolynomialPrefixAverageBehaviorRegretL1SummableEnvelope mdp n := by</span>
+<span id="L64">64   let s : Real := explicitHighProbabilityScale n</span>
+<span id="L65">65   let C : Real :=</span>
+<span id="L66">66     selfConsistentScheduledNaturalCausalLogarithmicRateCoefficient mdp</span>
+<span id="L67">67   have hs : 0 &lt; s := by</span>
+<span id="L68">68     dsimp [s]</span>
+<span id="L69">69     exact_mod_cast explicitHighProbabilityScale_pos n</span>
+<span id="L70">70   have hC : 0 &lt;= C :=</span>
+<span id="L71">71     selfConsistentScheduledNaturalCausalLogarithmicRateCoefficient_nonneg mdp</span>
+<span id="L72">72   have hrounds : (explicitHighProbabilityRounds n : Real) = s ^ 4 := by</span>
+<span id="L73">73     simp [explicitHighProbabilityRounds, s]</span>
+<span id="L74">74   have hlog : Real.log s &lt;= s - 1 :=</span>
+<span id="L75">75     Real.log_le_sub_one_of_pos hs</span>
+<span id="L76">76   have hlogBound : 1 + Real.log (s ^ 4) &lt;= 4 * s := by</span>
+<span id="L77">77     rw [Real.log_pow]</span>
+<span id="L78">78     norm_num</span>
+<span id="L79">79     linarith</span>
+<span id="L80">80   have hsPow : 0 &lt; s ^ 4 := pow_pos hs 4</span>
+<span id="L81">81   unfold selfConsistentScheduledNaturalCausalLogarithmicAverageIntegratedBehaviorExpectedRegretRate</span>
+<span id="L82">82     selfConsistentScheduledNaturalCausalLogarithmicCumulativeIntegratedBehaviorExpectedRegretRate</span>
+<span id="L83">83     explicitPolynomialPrefixAverageBehaviorRegretL1SummableEnvelope</span>
+<span id="L84">84   change C * (1 + Real.log (explicitHighProbabilityRounds n : Real)) /</span>
+<span id="L85">85       (explicitHighProbabilityRounds n : Real) &lt;= 4 * C / s ^ 3</span>
+<span id="L86">86   rw [hrounds]</span>
+<span id="L87">87   calc</span>
+<span id="L88">88     C * (1 + Real.log (s ^ 4)) / s ^ 4 &lt;=</span>
+<span id="L89">89         C * (4 * s) / s ^ 4 :=</span>
+<span id="L90">90       div_le_div_of_nonneg_right</span>
+<span id="L91">91         (mul_le_mul_of_nonneg_left hlogBound hC) hsPow.le</span>
+<span id="L92">92     _ = 4 * C / s ^ 3 := by</span>
+<span id="L93">93       field_simp [ne_of_gt hs]</span>
+<span id="L94">94 </span>
+<span id="L95">95 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L96">96     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L97">97     [Nonempty State] [Nonempty Action] in</span>
+<span id="L98">98 /-- The scheduled return first moment is dominated by a shifted exponent-two term. -/</span>
+<span id="L99">99 theorem selfConsistentScheduledNaturalCausalAverageReturnFirstMomentBound_explicitRounds_le_summableEnvelope</span>
+<span id="L100">100     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L101">101     (baseVisitFloor : Real) (n : Nat) :</span>
+<span id="L102">102     selfConsistentScheduledNaturalCausalAverageReturnFirstMomentBound mdp</span>
+<span id="L103">103         varianceProxy baseVisitFloor (explicitHighProbabilityRounds n) &lt;=</span>
+<span id="L104">104       explicitPolynomialPrefixAverageReturnL1SummableEnvelope mdp</span>
+<span id="L105">105         varianceProxy n := by</span>
+<span id="L106">106   let s : Real := explicitHighProbabilityScale n</span>
+<span id="L107">107   have hs : 0 &lt; s := by</span>
+<span id="L108">108     dsimp [s]</span>
+<span id="L109">109     exact_mod_cast explicitHighProbabilityScale_pos n</span>
+<span id="L110">110   have hrounds : (explicitHighProbabilityRounds n : Real) = s ^ 4 := by</span>
+<span id="L111">111     simp [explicitHighProbabilityRounds, s]</span>
+<span id="L112">112   calc</span>
+<span id="L113">113     selfConsistentScheduledNaturalCausalAverageReturnFirstMomentBound mdp</span>
+<span id="L114">114         varianceProxy baseVisitFloor (explicitHighProbabilityRounds n) &lt;=</span>
+<span id="L115">115       selfConsistentScheduledNaturalCausalAverageReturnInverseSqrtEnvelope mdp</span>
+<span id="L116">116         varianceProxy (explicitHighProbabilityRounds n) :=</span>
+<span id="L117">117       selfConsistentScheduledNaturalCausalAverageReturnFirstMomentBound_le_inverseSqrtEnvelope</span>
+<span id="L118">118         mdp varianceProxy baseVisitFloor (explicitHighProbabilityRounds n)</span>
+<span id="L119">119           (explicitHighProbabilityRounds_pos n)</span>
+<span id="L120">120     _ = explicitPolynomialPrefixAverageReturnL1SummableEnvelope mdp</span>
+<span id="L121">121         varianceProxy n := by</span>
+<span id="L122">122       unfold selfConsistentScheduledNaturalCausalAverageReturnInverseSqrtEnvelope</span>
+<span id="L123">123         explicitPolynomialPrefixAverageReturnL1SummableEnvelope</span>
+<span id="L124">124       rw [hrounds, show s ^ 4 = (s ^ 2) ^ 2 by ring,</span>
+<span id="L125">125         Real.sqrt_sq (sq_nonneg s)]</span>
+<span id="L126">126 </span>
+<span id="L127">127 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L128">128     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L129">129     [Nonempty State] [Nonempty Action] in</span>
+<span id="L130">130 /-- The explicit scheduled L1 envelope is nonnegative. -/</span>
+<span id="L131">131 theorem explicitPolynomialPrefixAverageRealizedBehaviorRegretL1SummableEnvelope_nonneg</span>
+<span id="L132">132     (mdp : MDP State Action) (varianceProxy : NNReal) (n : Nat) :</span>
+<span id="L133">133     0 &lt;= explicitPolynomialPrefixAverageRealizedBehaviorRegretL1SummableEnvelope</span>
+<span id="L134">134       mdp varianceProxy n := by</span>
+<span id="L135">135   unfold explicitPolynomialPrefixAverageRealizedBehaviorRegretL1SummableEnvelope</span>
+<span id="L136">136     explicitPolynomialPrefixAverageBehaviorRegretL1SummableEnvelope</span>
+<span id="L137">137     explicitPolynomialPrefixAverageReturnL1SummableEnvelope</span>
+<span id="L138">138   exact add_nonneg</span>
+<span id="L139">139     (div_nonneg</span>
+<span id="L140">140       (mul_nonneg (by norm_num)</span>
+<span id="L141">141         (selfConsistentScheduledNaturalCausalLogarithmicRateCoefficient_nonneg</span>
+<span id="L142">142           mdp))</span>
+<span id="L143">143       (pow_nonneg (Nat.cast_nonneg _) 3))</span>
+<span id="L144">144     (div_nonneg (by positivity) (pow_nonneg (Nat.cast_nonneg _) 2))</span>
+<span id="L145">145 </span>
+<span id="L146">146 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L147">147     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L148">148     [Nonempty State] [Nonempty Action] in</span>
+<span id="L149">149 /-- The all-prefix L1 envelope is pointwise controlled on fourth-power prefixes. -/</span>
+<span id="L150">150 theorem selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretL1Envelope_explicitRounds_le_summableEnvelope</span>
+<span id="L151">151     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L152">152     (baseVisitFloor : Real) (n : Nat) :</span>
+<span id="L153">153     selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretL1Envelope</span>
+<span id="L154">154         mdp varianceProxy baseVisitFloor (explicitHighProbabilityRounds n) &lt;=</span>
+<span id="L155">155       explicitPolynomialPrefixAverageRealizedBehaviorRegretL1SummableEnvelope</span>
+<span id="L156">156         mdp varianceProxy n := by</span>
+<span id="L157">157   unfold selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretL1Envelope</span>
+<span id="L158">158     explicitPolynomialPrefixAverageRealizedBehaviorRegretL1SummableEnvelope</span>
+<span id="L159">159   exact add_le_add</span>
+<span id="L160">160     (selfConsistentScheduledNaturalCausalLogarithmicAverageIntegratedBehaviorExpectedRegretRate_explicitRounds_le_summableEnvelope</span>
+<span id="L161">161       mdp n)</span>
+<span id="L162">162     (selfConsistentScheduledNaturalCausalAverageReturnFirstMomentBound_explicitRounds_le_summableEnvelope</span>
+<span id="L163">163       mdp varianceProxy baseVisitFloor n)</span>
+<span id="L164">164 </span>
+<span id="L165">165 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L166">166     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L167">167     [Nonempty State] [Nonempty Action] in</span>
+<span id="L168">168 /-- The shifted exponent-three behavior envelope is summable. -/</span>
+<span id="L169">169 theorem summable_explicitPolynomialPrefixAverageBehaviorRegretL1SummableEnvelope</span>
+<span id="L170">170     (mdp : MDP State Action) :</span>
+<span id="L171">171     Summable (explicitPolynomialPrefixAverageBehaviorRegretL1SummableEnvelope mdp) := by</span>
+<span id="L172">172   have hp : Summable (fun n : Nat =&gt;</span>
+<span id="L173">173       1 / (((n + 1 : Nat) : Real) ^ 3)) := by</span>
+<span id="L174">174     simpa only [Nat.cast_add, Nat.cast_one] using</span>
+<span id="L175">175       ((summable_nat_add_iff (f := fun n : Nat =&gt;</span>
+<span id="L176">176         1 / ((n : Real) ^ 3)) 1).2</span>
+<span id="L177">177           (Real.summable_one_div_nat_pow.mpr (by norm_num)))</span>
+<span id="L178">178   unfold explicitPolynomialPrefixAverageBehaviorRegretL1SummableEnvelope</span>
+<span id="L179">179   refine (hp.mul_left</span>
+<span id="L180">180     (4 * selfConsistentScheduledNaturalCausalLogarithmicRateCoefficient mdp)).congr ?_</span>
+<span id="L181">181   intro n</span>
+<span id="L182">182   simp [explicitHighProbabilityScale, div_eq_mul_inv]</span>
+<span id="L183">183 </span>
+<span id="L184">184 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L185">185     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L186">186     [Nonempty State] [Nonempty Action] in</span>
+<span id="L187">187 /-- The shifted exponent-two return envelope is summable. -/</span>
+<span id="L188">188 theorem summable_explicitPolynomialPrefixAverageReturnL1SummableEnvelope</span>
+<span id="L189">189     (mdp : MDP State Action) (varianceProxy : NNReal) :</span>
+<span id="L190">190     Summable</span>
+<span id="L191">191       (explicitPolynomialPrefixAverageReturnL1SummableEnvelope mdp</span>
+<span id="L192">192         varianceProxy) := by</span>
+<span id="L193">193   have hp : Summable (fun n : Nat =&gt;</span>
+<span id="L194">194       1 / (((n + 1 : Nat) : Real) ^ 2)) := by</span>
+<span id="L195">195     simpa only [Nat.cast_add, Nat.cast_one] using</span>
+<span id="L196">196       ((summable_nat_add_iff (f := fun n : Nat =&gt;</span>
+<span id="L197">197         1 / ((n : Real) ^ 2)) 1).2</span>
+<span id="L198">198           (Real.summable_one_div_nat_pow.mpr (by norm_num)))</span>
+<span id="L199">199   unfold explicitPolynomialPrefixAverageReturnL1SummableEnvelope</span>
+<span id="L200">200   refine (hp.mul_left</span>
+<span id="L201">201     (2 * Real.sqrt</span>
+<span id="L202">202       (mdp.globalReturnDeviationPerEpisodeVarianceProxy 1 varianceProxy : Real) *</span>
+<span id="L203">203       Real.exp (1 / 2 : Real))).congr ?_</span>
+<span id="L204">204   intro n</span>
+<span id="L205">205   simp [explicitHighProbabilityScale, div_eq_mul_inv]</span>
+<span id="L206">206 </span>
+<span id="L207">207 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L208">208     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L209">209     [Nonempty State] [Nonempty Action] in</span>
+<span id="L210">210 /-- The deterministic fourth-power scheduled L1 envelope is summable. -/</span>
+<span id="L211">211 theorem summable_explicitPolynomialPrefixAverageRealizedBehaviorRegretL1SummableEnvelope</span>
+<span id="L212">212     (mdp : MDP State Action) (varianceProxy : NNReal) :</span>
+<span id="L213">213     Summable</span>
+<span id="L214">214       (explicitPolynomialPrefixAverageRealizedBehaviorRegretL1SummableEnvelope</span>
+<span id="L215">215         mdp varianceProxy) := by</span>
+<span id="L216">216   simpa [explicitPolynomialPrefixAverageRealizedBehaviorRegretL1SummableEnvelope]</span>
+<span id="L217">217     using</span>
+<span id="L218">218       (summable_explicitPolynomialPrefixAverageBehaviorRegretL1SummableEnvelope</span>
+<span id="L219">219           mdp).add</span>
+<span id="L220">220         (summable_explicitPolynomialPrefixAverageReturnL1SummableEnvelope</span>
+<span id="L221">221           mdp varianceProxy)</span>
+<span id="L222">222 </span>
+<span id="L223">223 /-- Expected absolute exact average realized regret on the fourth-power schedule. -/</span>
+<span id="L224">224 noncomputable def</span>
+<span id="L225">225     explicitPolynomialPrefixExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L226">226     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L227">227     [IsProbabilityMeasure initialState]</span>
+<span id="L228">228     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L229">229     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L230">230     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L231">231     (baseVisitFloor : Real) (n : Nat) : Real :=</span>
+<span id="L232">232   selfConsistentScheduledNaturalCausalExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L233">233     mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L234">234       baseVisitFloor (explicitHighProbabilityRounds n)</span>
+<span id="L235">235 </span>
+<span id="L236">236 /-- The scheduled expected absolute process is nonnegative. -/</span>
+<span id="L237">237 theorem explicitPolynomialPrefixExpectedAbsoluteAverageRealizedBehaviorRegret_nonneg</span>
+<span id="L238">238     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L239">239     [IsProbabilityMeasure initialState]</span>
+<span id="L240">240     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L241">241     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L242">242     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L243">243     (baseVisitFloor : Real) (n : Nat) :</span>
+<span id="L244">244     0 &lt;= explicitPolynomialPrefixExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L245">245       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L246">246         baseVisitFloor n := by</span>
+<span id="L247">247   exact</span>
+<span id="L248">248     selfConsistentScheduledNaturalCausalExpectedAbsoluteAverageRealizedBehaviorRegret_nonneg</span>
+<span id="L249">249       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L250">250         baseVisitFloor (explicitHighProbabilityRounds n)</span>
+<span id="L251">251 </span>
+<span id="L252">252 /-- The scheduled expected absolute process is bounded by the summable envelope. -/</span>
+<span id="L253">253 theorem explicitPolynomialPrefixExpectedAbsoluteAverageRealizedBehaviorRegret_le_summableEnvelope</span>
+<span id="L254">254     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L255">255     [IsProbabilityMeasure initialState]</span>
+<span id="L256">256     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L257">257     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L258">258     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L259">259     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L260">260     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L261">261     (defaultState : State)</span>
+<span id="L262">262     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L263">263     (baseVisitFloor : Real)</span>
+<span id="L264">264     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L265">265     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L266">266     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L267">267     (n : Nat) :</span>
+<span id="L268">268     explicitPolynomialPrefixExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L269">269         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L270">270           baseVisitFloor n &lt;=</span>
+<span id="L271">271       explicitPolynomialPrefixAverageRealizedBehaviorRegretL1SummableEnvelope</span>
+<span id="L272">272         mdp varianceProxy n := by</span>
+<span id="L273">273   exact</span>
+<span id="L274">274     (selfConsistentScheduledNaturalCausalExpectedAbsoluteAverageRealizedBehaviorRegret_le_L1Envelope</span>
+<span id="L275">275       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L276">276         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L277">277           hbaseVisitFloor (explicitHighProbabilityRounds n)).trans</span>
+<span id="L278">278       (selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretL1Envelope_explicitRounds_le_summableEnvelope</span>
+<span id="L279">279         mdp varianceProxy baseVisitFloor n)</span>
+<span id="L280">280 </span>
+<span id="L281">281 /-- Scheduled expected absolute exact average realized regret is summable. -/</span>
+<span id="L282">282 theorem summable_explicitPolynomialPrefixExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L283">283     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L284">284     [IsProbabilityMeasure initialState]</span>
+<span id="L285">285     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L286">286     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L287">287     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L288">288     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L289">289     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L290">290     (defaultState : State)</span>
+<span id="L291">291     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L292">292     (baseVisitFloor : Real)</span>
+<span id="L293">293     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L294">294     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L295">295     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L296">296     Summable</span>
+<span id="L297">297       (explicitPolynomialPrefixExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L298">298         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L299">299           baseVisitFloor) := by</span>
+<span id="L300">300   exact Summable.of_nonneg_of_le</span>
+<span id="L301">301     (fun n =&gt;</span>
+<span id="L302">302       explicitPolynomialPrefixExpectedAbsoluteAverageRealizedBehaviorRegret_nonneg</span>
+<span id="L303">303         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L304">304           baseVisitFloor n)</span>
+<span id="L305">305     (fun n =&gt;</span>
+<span id="L306">306       explicitPolynomialPrefixExpectedAbsoluteAverageRealizedBehaviorRegret_le_summableEnvelope</span>
+<span id="L307">307         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L308">308           defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L309">309             hbaseVisitFloor n)</span>
+<span id="L310">310     (summable_explicitPolynomialPrefixAverageRealizedBehaviorRegretL1SummableEnvelope</span>
+<span id="L311">311       mdp varianceProxy)</span>
+<span id="L312">312 </span>
+<span id="L313">313 /-- Reciprocal thresholds used to turn fixed-threshold Borel-Cantelli into convergence. -/</span>
+<span id="L314">314 noncomputable def explicitPolynomialPrefixReciprocalThreshold (k : Nat) : Real :=</span>
+<span id="L315">315   1 / ((k + 1 : Nat) : Real)</span>
+<span id="L316">316 </span>
+<span id="L317">317 theorem explicitPolynomialPrefixReciprocalThreshold_pos (k : Nat) :</span>
+<span id="L318">318     0 &lt; explicitPolynomialPrefixReciprocalThreshold k := by</span>
+<span id="L319">319   unfold explicitPolynomialPrefixReciprocalThreshold</span>
+<span id="L320">320   positivity</span>
+<span id="L321">321 </span>
+<span id="L322">322 /-- Markov&#x27;s inequality for one scheduled distance-from-zero violation. -/</span>
+<span id="L323">323 theorem explicitPolynomialPrefixAverageRealizedBehaviorRegretDistanceViolationProbability_le_expectedAbsolute_div</span>
+<span id="L324">324     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L325">325     [IsProbabilityMeasure initialState]</span>
+<span id="L326">326     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L327">327     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L328">328     (varianceProxy : NNReal)</span>
+<span id="L329">329     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L330">330     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L331">331     (defaultState : State) (baseVisitFloor epsilon : Real)</span>
+<span id="L332">332     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L333">333     (hepsilon : 0 &lt; epsilon) (n : Nat) :</span>
+<span id="L334">334     explicitPolynomialPrefixAverageRealizedBehaviorRegretDistanceViolationProbability</span>
+<span id="L335">335         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L336">336           baseVisitFloor epsilon n &lt;=</span>
+<span id="L337">337       ENNReal.ofReal</span>
+<span id="L338">338         (explicitPolynomialPrefixExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L339">339           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L340">340             baseVisitFloor n / epsilon) := by</span>
+<span id="L341">341   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L342">342     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L343">343   let mu := source.trajectoryMeasure</span>
+<span id="L344">344   let process := explicitPolynomialPrefixAverageRealizedBehaviorRegretProcess</span>
+<span id="L345">345     mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L346">346       baseVisitFloor n</span>
+<span id="L347">347   have hmeas : Measurable process := by</span>
+<span id="L348">348     simpa [process] using</span>
+<span id="L349">349       measurable_explicitPolynomialPrefixAverageRealizedBehaviorRegretProcess</span>
+<span id="L350">350         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L351">351           baseVisitFloor n</span>
+<span id="L352">352   have hintegrable : Integrable process mu := by</span>
+<span id="L353">353     simpa [process, mu, source,</span>
+<span id="L354">354       explicitPolynomialPrefixAverageRealizedBehaviorRegretProcess] using</span>
+<span id="L355">355       (integrable_selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess</span>
+<span id="L356">356         mdp initialState rewardSource varianceProxy law initialTable defaultState</span>
+<span id="L357">357           baseVisitFloor hrewardBound (explicitHighProbabilityRounds n))</span>
+<span id="L358">358   have hevent :</span>
+<span id="L359">359       explicitPolynomialPrefixAverageRealizedBehaviorRegretDistanceViolationSet</span>
+<span id="L360">360           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L361">361             baseVisitFloor epsilon n =</span>
+<span id="L362">362         {trajectory | ENNReal.ofReal epsilon &lt;=</span>
+<span id="L363">363           ENNReal.ofReal |process trajectory|} := by</span>
+<span id="L364">364     ext trajectory</span>
+<span id="L365">365     simp [explicitPolynomialPrefixAverageRealizedBehaviorRegretDistanceViolationSet,</span>
+<span id="L366">366       process]</span>
+<span id="L367">367   have hmarkov :</span>
+<span id="L368">368       mu {trajectory | ENNReal.ofReal epsilon &lt;=</span>
+<span id="L369">369           ENNReal.ofReal |process trajectory|} &lt;=</span>
+<span id="L370">370         lintegral mu (fun trajectory =&gt; ENNReal.ofReal |process trajectory|) /</span>
+<span id="L371">371           ENNReal.ofReal epsilon :=</span>
+<span id="L372">372     meas_ge_le_lintegral_div (μ := mu)</span>
+<span id="L373">373       (hmeas.abs.ennreal_ofReal.aemeasurable)</span>
+<span id="L374">374       (ENNReal.ofReal_ne_zero_iff.mpr hepsilon) ENNReal.ofReal_ne_top</span>
+<span id="L375">375   unfold explicitPolynomialPrefixAverageRealizedBehaviorRegretDistanceViolationProbability</span>
+<span id="L376">376   dsimp only</span>
+<span id="L377">377   change mu</span>
+<span id="L378">378       (explicitPolynomialPrefixAverageRealizedBehaviorRegretDistanceViolationSet</span>
+<span id="L379">379         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L380">380           baseVisitFloor epsilon n) &lt;= _</span>
+<span id="L381">381   rw [hevent]</span>
+<span id="L382">382   calc</span>
+<span id="L383">383     mu {trajectory | ENNReal.ofReal epsilon &lt;=</span>
+<span id="L384">384         ENNReal.ofReal |process trajectory|} &lt;=</span>
+<span id="L385">385       lintegral mu (fun trajectory =&gt; ENNReal.ofReal |process trajectory|) /</span>
+<span id="L386">386         ENNReal.ofReal epsilon := hmarkov</span>
+<span id="L387">387     _ = ENNReal.ofReal</span>
+<span id="L388">388         (integral mu (fun trajectory =&gt; |process trajectory|) / epsilon) := by</span>
+<span id="L389">389       rw [← ofReal_integral_eq_lintegral_ofReal hintegrable.abs</span>
+<span id="L390">390         (Filter.Eventually.of_forall fun _ =&gt; abs_nonneg _),</span>
+<span id="L391">391         ENNReal.ofReal_div_of_pos hepsilon]</span>
+<span id="L392">392     _ = ENNReal.ofReal</span>
+<span id="L393">393         (explicitPolynomialPrefixExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L394">394           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L395">395             baseVisitFloor n / epsilon) := by</span>
+<span id="L396">396       rfl</span>
+<span id="L397">397 </span>
+<span id="L398">398 /-- Fixed positive scheduled violation probabilities have finite total mass. -/</span>
+<span id="L399">399 theorem tsum_explicitPolynomialPrefixAverageRealizedBehaviorRegretDistanceViolationProbability_ne_top</span>
+<span id="L400">400     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L401">401     [IsProbabilityMeasure initialState]</span>
+<span id="L402">402     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L403">403     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L404">404     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L405">405     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L406">406     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L407">407     (defaultState : State)</span>
+<span id="L408">408     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L409">409     (baseVisitFloor : Real)</span>
+<span id="L410">410     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L411">411     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L412">412     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L413">413     (epsilon : Real) (hepsilon : 0 &lt; epsilon) :</span>
+<span id="L414">414     (∑&#x27; n,</span>
+<span id="L415">415       explicitPolynomialPrefixAverageRealizedBehaviorRegretDistanceViolationProbability</span>
+<span id="L416">416         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L417">417           baseVisitFloor epsilon n) ≠ ∞ := by</span>
+<span id="L418">418   have hexpected :=</span>
+<span id="L419">419     summable_explicitPolynomialPrefixExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L420">420       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L421">421         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L422">422           hbaseVisitFloor</span>
+<span id="L423">423   have hdiv : Summable (fun n =&gt;</span>
+<span id="L424">424       explicitPolynomialPrefixExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L425">425         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L426">426           baseVisitFloor n / epsilon) :=</span>
+<span id="L427">427     hexpected.div_const epsilon</span>
+<span id="L428">428   exact ne_top_of_le_ne_top hdiv.tsum_ofReal_ne_top</span>
+<span id="L429">429     (ENNReal.tsum_le_tsum fun n =&gt;</span>
+<span id="L430">430       explicitPolynomialPrefixAverageRealizedBehaviorRegretDistanceViolationProbability_le_expectedAbsolute_div</span>
+<span id="L431">431         mdp initialState rewardSource varianceProxy law initialTable defaultState</span>
+<span id="L432">432           baseVisitFloor epsilon hrewardBound hepsilon n)</span>
+<span id="L433">433 </span>
+<span id="L434">434 /-- Almost every trajectory eventually avoids every reciprocal scheduled violation. -/</span>
+<span id="L435">435 theorem ae_eventually_not_mem_explicitPolynomialPrefixAverageRealizedBehaviorRegretReciprocalDistanceViolationSet</span>
+<span id="L436">436     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L437">437     [IsProbabilityMeasure initialState]</span>
+<span id="L438">438     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L439">439     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L440">440     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L441">441     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L442">442     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L443">443     (defaultState : State)</span>
+<span id="L444">444     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L445">445     (baseVisitFloor : Real)</span>
+<span id="L446">446     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L447">447     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L448">448     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L449">449     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L450">450       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L451">451     ∀ᵐ trajectory ∂source.trajectoryMeasure, forall k,</span>
+<span id="L452">452       ∀ᶠ n in atTop,</span>
+<span id="L453">453         trajectory ∉</span>
+<span id="L454">454           explicitPolynomialPrefixAverageRealizedBehaviorRegretDistanceViolationSet</span>
+<span id="L455">455             mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L456">456               baseVisitFloor (explicitPolynomialPrefixReciprocalThreshold k) n := by</span>
+<span id="L457">457   dsimp only</span>
+<span id="L458">458   apply ae_all_iff.2</span>
+<span id="L459">459   intro k</span>
+<span id="L460">460   apply ae_eventually_notMem</span>
+<span id="L461">461   simpa [explicitPolynomialPrefixAverageRealizedBehaviorRegretDistanceViolationProbability]</span>
+<span id="L462">462     using</span>
+<span id="L463">463       (tsum_explicitPolynomialPrefixAverageRealizedBehaviorRegretDistanceViolationProbability_ne_top</span>
+<span id="L464">464         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L465">465           defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L466">466             hbaseVisitFloor (explicitPolynomialPrefixReciprocalThreshold k)</span>
+<span id="L467">467               (explicitPolynomialPrefixReciprocalThreshold_pos k))</span>
+<span id="L468">468 </span>
+<span id="L469">469 /-- The exact equal-round average process converges a.e. on fourth-power prefixes. -/</span>
+<span id="L470">470 theorem explicitPolynomialPrefixAverageRealizedBehaviorRegret_tendstoAlmostEverywhere_zero</span>
+<span id="L471">471     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L472">472     [IsProbabilityMeasure initialState]</span>
+<span id="L473">473     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L474">474     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L475">475     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L476">476     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L477">477     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L478">478     (defaultState : State)</span>
+<span id="L479">479     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L480">480     (baseVisitFloor : Real)</span>
+<span id="L481">481     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L482">482     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L483">483     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L484">484     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L485">485       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L486">486     ∀ᵐ trajectory ∂source.trajectoryMeasure,</span>
+<span id="L487">487       Tendsto</span>
+<span id="L488">488         (fun n =&gt;</span>
+<span id="L489">489           explicitPolynomialPrefixAverageRealizedBehaviorRegretProcess mdp</span>
+<span id="L490">490             initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L491">491               baseVisitFloor n trajectory)</span>
+<span id="L492">492         atTop (nhds 0) := by</span>
+<span id="L493">493   dsimp only</span>
+<span id="L494">494   have hreciprocal :=</span>
+<span id="L495">495     ae_eventually_not_mem_explicitPolynomialPrefixAverageRealizedBehaviorRegretReciprocalDistanceViolationSet</span>
+<span id="L496">496       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L497">497         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L498">498           hbaseVisitFloor</span>
+<span id="L499">499   filter_upwards [hreciprocal] with trajectory htrajectory</span>
+<span id="L500">500   rw [Metric.tendsto_atTop]</span>
+<span id="L501">501   intro epsilon hepsilon</span>
+<span id="L502">502   obtain ⟨k, hk⟩ := exists_nat_one_div_lt hepsilon</span>
+<span id="L503">503   have heventually := htrajectory k</span>
+<span id="L504">504   exact eventually_atTop.1 (by</span>
+<span id="L505">505     filter_upwards [heventually] with n hn</span>
+<span id="L506">506     have hdist :</span>
+<span id="L507">507         dist</span>
+<span id="L508">508             (explicitPolynomialPrefixAverageRealizedBehaviorRegretProcess mdp</span>
+<span id="L509">509               initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L510">510                 baseVisitFloor n trajectory)</span>
+<span id="L511">511             0 &lt; explicitPolynomialPrefixReciprocalThreshold k := by</span>
+<span id="L512">512       simpa [explicitPolynomialPrefixAverageRealizedBehaviorRegretDistanceViolationSet]</span>
+<span id="L513">513         using hn</span>
+<span id="L514">514     exact hdist.trans (by</span>
+<span id="L515">515       simpa [explicitPolynomialPrefixReciprocalThreshold] using hk))</span>
+<span id="L516">516 </span>
+<span id="L517">517 /-</span>
+<span id="L518">518 Terminal route certificate. The trajectory space and process semantics are</span>
+<span id="L519">519 unchanged from the all-prefix L1 theorem; only the deterministic fourth-power</span>
+<span id="L520">520 subsequence supplies enough summability for first Borel-Cantelli.</span>
+<span id="L521">521 -/</span>
+<span id="L522">522 /-- Scheduled L1 summability and almost-sure consistency on the common source. -/</span>
+<span id="L523">523 theorem selfConsistentScheduledCausalSource_explicitPolynomialPrefixAverageRealizedBehaviorRegret_tendstoAlmostEverywhere_zero</span>
+<span id="L524">524     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L525">525     [IsProbabilityMeasure initialState]</span>
+<span id="L526">526     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L527">527     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L528">528     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L529">529     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L530">530     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L531">531     (defaultState : State)</span>
+<span id="L532">532     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L533">533     (baseVisitFloor : Real)</span>
+<span id="L534">534     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L535">535     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L536">536     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L537">537     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L538">538       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L539">539     (forall n,</span>
+<span id="L540">540       Measurable</span>
+<span id="L541">541         (explicitPolynomialPrefixAverageRealizedBehaviorRegretProcess mdp</span>
+<span id="L542">542           initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L543">543             baseVisitFloor n)) ∧</span>
+<span id="L544">544       Summable</span>
+<span id="L545">545         (explicitPolynomialPrefixAverageRealizedBehaviorRegretL1SummableEnvelope</span>
+<span id="L546">546           mdp varianceProxy) ∧</span>
+<span id="L547">547       Summable</span>
+<span id="L548">548         (explicitPolynomialPrefixExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L549">549           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L550">550             baseVisitFloor) ∧</span>
+<span id="L551">551       (forall epsilon, 0 &lt; epsilon -&gt;</span>
+<span id="L552">552         (∑&#x27; n,</span>
+<span id="L553">553           explicitPolynomialPrefixAverageRealizedBehaviorRegretDistanceViolationProbability</span>
+<span id="L554">554             mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L555">555               baseVisitFloor epsilon n) ≠ ∞) ∧</span>
+<span id="L556">556       ∀ᵐ trajectory ∂source.trajectoryMeasure,</span>
+<span id="L557">557         Tendsto</span>
+<span id="L558">558           (fun n =&gt;</span>
+<span id="L559">559             explicitPolynomialPrefixAverageRealizedBehaviorRegretProcess mdp</span>
+<span id="L560">560               initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L561">561                 baseVisitFloor n trajectory)</span>
+<span id="L562">562           atTop (nhds 0) := by</span>
+<span id="L563">563   dsimp only</span>
+<span id="L564">564   exact ⟨</span>
+<span id="L565">565     fun n =&gt;</span>
+<span id="L566">566       measurable_explicitPolynomialPrefixAverageRealizedBehaviorRegretProcess</span>
+<span id="L567">567         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L568">568           baseVisitFloor n,</span>
+<span id="L569">569     summable_explicitPolynomialPrefixAverageRealizedBehaviorRegretL1SummableEnvelope</span>
+<span id="L570">570       mdp varianceProxy,</span>
+<span id="L571">571     summable_explicitPolynomialPrefixExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L572">572       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L573">573         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L574">574           hbaseVisitFloor,</span>
+<span id="L575">575     fun epsilon hepsilon =&gt;</span>
+<span id="L576">576       tsum_explicitPolynomialPrefixAverageRealizedBehaviorRegretDistanceViolationProbability_ne_top</span>
+<span id="L577">577         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L578">578           defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L579">579             hbaseVisitFloor epsilon hepsilon,</span>
+<span id="L580">580     explicitPolynomialPrefixAverageRealizedBehaviorRegret_tendstoAlmostEverywhere_zero</span>
+<span id="L581">581       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L582">582         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L583">583           hbaseVisitFloor⟩</span>
+<span id="L584">584 </span>
+<span id="L585">585 end AdaptiveStochasticSampledEmpiricalOptimisticSource</span>
+<span id="L586">586 </span>
+<span id="L587">587 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

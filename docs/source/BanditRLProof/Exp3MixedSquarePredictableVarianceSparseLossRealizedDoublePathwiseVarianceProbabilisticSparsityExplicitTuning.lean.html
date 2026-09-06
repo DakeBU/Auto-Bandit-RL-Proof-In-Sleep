@@ -1,0 +1,916 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Exp3MixedSquarePredictableVarianceSparseLossRealizedDoublePathwiseVarianceProbabilisticSparsityExplicitTuning.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Exp3MixedSquarePredictableVarianceSparseLossRealizedDoublePathwiseVarianceProbabilisticSparsityExplicitTuning.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Exp3MixedSquarePredictableVarianceSparseLossRealizedDoublePathwiseVarianceProbabilisticSparsityExplicitTuning.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Exp3MixedSquarePredictableVarianceSparseLossRealizedDoublePathwiseVarianceProbabilisticSparsityExplicitTuning.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Exp3MixedSquarePredictableVarianceSparseLossRealizedDoublePathwiseVarianceProbabilisticSparsityTuning</span>
+<span id="L2">2 import BanditRLProof.Exp3MixedSquarePredictableVarianceSparseLossRealizedPathwiseVarianceProbabilisticSparsityExplicitTuning</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Explicit exploration tuning for sparse EXP3 with two predictable variances</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module closes gamma tuning for the sparse generated-regret theorem that</span>
+<span id="L8">8 uses both the mixed-square predictable variance and the exact selected-loss</span>
+<span id="L9">9 predictable variance. The first three exploration scales are shared with the</span>
+<span id="L10">10 single-variance pathwise route. The additional selected-loss scale is</span>
+<span id="L11">11 </span>
+<span id="L12">12 `sqrt (S * log (4 / delta) / T)`.</span>
+<span id="L13">13 </span>
+<span id="L14">14 Under four transparent horizon contracts, the internally eta/gamma-tuned</span>
+<span id="L15">15 threshold is at most `16 * gamma * T`. The exact sparsity-failure event is</span>
+<span id="L16">16 charged once; the practical endpoint has failure budget `delta + epsilon`.</span>
+<span id="L17">17 -/</span>
+<span id="L18">18 </span>
+<span id="L19">19 namespace BanditRLProof.Exp3</span>
+<span id="L20">20 </span>
+<span id="L21">21 open MeasureTheory ProbabilityTheory</span>
+<span id="L22">22 </span>
+<span id="L23">23 universe u v</span>
+<span id="L24">24 </span>
+<span id="L25">25 /-- Exploration scale forced by the exact selected-loss predictable-variance</span>
+<span id="L26">26 radius with budget `S * T`. -/</span>
+<span id="L27">27 noncomputable def doubleVarianceProbabilisticSparseLossRealizedExplorationScale</span>
+<span id="L28">28     (S T delta : Real) : Real :=</span>
+<span id="L29">29   Real.sqrt (S * Real.log (4 / delta) / T)</span>
+<span id="L30">30 </span>
+<span id="L31">31 /-- The previous pathwise raw schedule augmented by the exact selected-loss</span>
+<span id="L32">32 predictable-variance scale. -/</span>
+<span id="L33">33 noncomputable def doubleVarianceProbabilisticSparseLossRawExplorationRate</span>
+<span id="L34">34     (K S T delta : Real) : Real :=</span>
+<span id="L35">35   max</span>
+<span id="L36">36     (pathwiseVarianceProbabilisticSparseLossRawExplorationRate K S T delta)</span>
+<span id="L37">37     (doubleVarianceProbabilisticSparseLossRealizedExplorationScale S T delta)</span>
+<span id="L38">38 </span>
+<span id="L39">39 /-- Explicit double-variance exploration schedule clipped into the Hedge</span>
+<span id="L40">40 stability regime. -/</span>
+<span id="L41">41 noncomputable def doubleVarianceProbabilisticSparseLossClippedExplorationRate</span>
+<span id="L42">42     (K S T delta : Real) : Real :=</span>
+<span id="L43">43   min (1 / 2)</span>
+<span id="L44">44     (doubleVarianceProbabilisticSparseLossRawExplorationRate K S T delta)</span>
+<span id="L45">45 </span>
+<span id="L46">46 theorem doubleVarianceProbabilisticSparseLossClippedExplorationRate_le_half</span>
+<span id="L47">47     (K S T delta : Real) :</span>
+<span id="L48">48     doubleVarianceProbabilisticSparseLossClippedExplorationRate</span>
+<span id="L49">49         K S T delta &lt;=</span>
+<span id="L50">50       1 / 2 :=</span>
+<span id="L51">51   min_le_left _ _</span>
+<span id="L52">52 </span>
+<span id="L53">53 theorem doubleVarianceProbabilisticSparseLossClippedExplorationRate_eq_raw</span>
+<span id="L54">54     (K S T delta : Real)</span>
+<span id="L55">55     (hraw :</span>
+<span id="L56">56       doubleVarianceProbabilisticSparseLossRawExplorationRate</span>
+<span id="L57">57           K S T delta &lt;=</span>
+<span id="L58">58         1 / 2) :</span>
+<span id="L59">59     doubleVarianceProbabilisticSparseLossClippedExplorationRate</span>
+<span id="L60">60         K S T delta =</span>
+<span id="L61">61       doubleVarianceProbabilisticSparseLossRawExplorationRate</span>
+<span id="L62">62         K S T delta :=</span>
+<span id="L63">63   min_eq_right hraw</span>
+<span id="L64">64 </span>
+<span id="L65">65 theorem doubleVarianceProbabilisticSparseLossRawExplorationRate_pos</span>
+<span id="L66">66     (K S T delta : Real) (hK_one : 1 &lt; K) (hS : 0 &lt; S) (hT : 0 &lt; T) :</span>
+<span id="L67">67     0 &lt;</span>
+<span id="L68">68       doubleVarianceProbabilisticSparseLossRawExplorationRate</span>
+<span id="L69">69         K S T delta :=</span>
+<span id="L70">70   (pathwiseVarianceProbabilisticSparseLossRawExplorationRate_pos</span>
+<span id="L71">71     K S T delta hK_one hS hT).trans_le (le_max_left _ _)</span>
+<span id="L72">72 </span>
+<span id="L73">73 theorem doubleVarianceProbabilisticSparseLossClippedExplorationRate_pos</span>
+<span id="L74">74     (K S T delta : Real) (hK_one : 1 &lt; K) (hS : 0 &lt; S) (hT : 0 &lt; T) :</span>
+<span id="L75">75     0 &lt;</span>
+<span id="L76">76       doubleVarianceProbabilisticSparseLossClippedExplorationRate</span>
+<span id="L77">77         K S T delta := by</span>
+<span id="L78">78   apply lt_min</span>
+<span id="L79">79   · norm_num</span>
+<span id="L80">80   · exact</span>
+<span id="L81">81       doubleVarianceProbabilisticSparseLossRawExplorationRate_pos</span>
+<span id="L82">82         K S T delta hK_one hS hT</span>
+<span id="L83">83 </span>
+<span id="L84">84 /-- The selected-loss horizon contract also controls the older bounded</span>
+<span id="L85">85 realized-deviation component retained by the shared raw schedule. -/</span>
+<span id="L86">86 theorem boundedRealizedLargeHorizon_of_doubleVarianceLargeHorizon</span>
+<span id="L87">87     (S T delta : Real) (hS_one : 1 &lt;= S)</span>
+<span id="L88">88     (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L89">89     (hlarge_realized :</span>
+<span id="L90">90       4 * (S * Real.log (4 / delta)) &lt;= T) :</span>
+<span id="L91">91     8 * ((Concentration.intervalVarianceProxy 0 1 : NNReal) : Real) *</span>
+<span id="L92">92           Real.log (4 / delta) &lt;=</span>
+<span id="L93">93       T := by</span>
+<span id="L94">94   have hone_lt_four_div : 1 &lt; 4 / delta := by</span>
+<span id="L95">95     rw [lt_div_iff₀ hdelta]</span>
+<span id="L96">96     nlinarith</span>
+<span id="L97">97   have hlog : 0 &lt;= Real.log (4 / delta) :=</span>
+<span id="L98">98     (Real.log_pos hone_lt_four_div).le</span>
+<span id="L99">99   have hlog_le : Real.log (4 / delta) &lt;= S * Real.log (4 / delta) := by</span>
+<span id="L100">100     nlinarith [mul_nonneg (sub_nonneg.mpr hS_one) hlog]</span>
+<span id="L101">101   norm_num [Concentration.intervalVarianceProxy]</span>
+<span id="L102">102   linarith</span>
+<span id="L103">103 </span>
+<span id="L104">104 /-- Four horizon contracts place every component of the double-variance raw</span>
+<span id="L105">105 schedule below one half. -/</span>
+<span id="L106">106 theorem doubleVarianceProbabilisticSparseLossRawExplorationRate_le_half_of_horizon_contracts</span>
+<span id="L107">107     (K S T delta : Real) (hK_one : 1 &lt; K) (hS_one : 1 &lt;= S)</span>
+<span id="L108">108     (hT : 0 &lt; T) (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L109">109     (hlarge_arm : 4 * (S * Real.log K) &lt;= T)</span>
+<span id="L110">110     (hlarge_mixed :</span>
+<span id="L111">111       32 * (K * S * Real.log K ^ 2 * Real.log (4 / delta)) &lt;= T ^ 3)</span>
+<span id="L112">112     (hlarge_confidence : 8 * (K * Real.log (4 / delta)) &lt;= T)</span>
+<span id="L113">113     (hlarge_realized :</span>
+<span id="L114">114       4 * (S * Real.log (4 / delta)) &lt;= T) :</span>
+<span id="L115">115     doubleVarianceProbabilisticSparseLossRawExplorationRate</span>
+<span id="L116">116         K S T delta &lt;=</span>
+<span id="L117">117       1 / 2 := by</span>
+<span id="L118">118   have hS : 0 &lt; S := lt_of_lt_of_le zero_lt_one hS_one</span>
+<span id="L119">119   have hold_realized :</span>
+<span id="L120">120       8 * ((Concentration.intervalVarianceProxy 0 1 : NNReal) : Real) *</span>
+<span id="L121">121             Real.log (4 / delta) &lt;=</span>
+<span id="L122">122         T :=</span>
+<span id="L123">123     boundedRealizedLargeHorizon_of_doubleVarianceLargeHorizon</span>
+<span id="L124">124       S T delta hS_one hdelta hdelta_le_one hlarge_realized</span>
+<span id="L125">125   have hold :</span>
+<span id="L126">126       pathwiseVarianceProbabilisticSparseLossRawExplorationRate</span>
+<span id="L127">127           K S T delta &lt;=</span>
+<span id="L128">128         1 / 2 :=</span>
+<span id="L129">129     pathwiseVarianceProbabilisticSparseLossRawExplorationRate_le_half_of_horizon_contracts</span>
+<span id="L130">130       K S T delta hK_one hS hT hdelta hdelta_le_one hlarge_arm</span>
+<span id="L131">131         hlarge_mixed hlarge_confidence hold_realized</span>
+<span id="L132">132   have hnew :</span>
+<span id="L133">133       doubleVarianceProbabilisticSparseLossRealizedExplorationScale</span>
+<span id="L134">134           S T delta &lt;=</span>
+<span id="L135">135         1 / 2 := by</span>
+<span id="L136">136     apply sqrt_div_le_half_of_four_mul_le</span>
+<span id="L137">137     · exact hT</span>
+<span id="L138">138     · exact hlarge_realized</span>
+<span id="L139">139   rw [doubleVarianceProbabilisticSparseLossRawExplorationRate]</span>
+<span id="L140">140   exact max_le hold hnew</span>
+<span id="L141">141 </span>
+<span id="L142">142 /-- The clipped schedule supplies the base, mixed-square, Bernstein, and</span>
+<span id="L143">143 selected-loss predictable-variance contracts. -/</span>
+<span id="L144">144 theorem doubleVarianceProbabilisticSparseLossClippedExplorationRate_contracts</span>
+<span id="L145">145     (K S T delta : Real) (hK_one : 1 &lt; K) (hS_one : 1 &lt;= S)</span>
+<span id="L146">146     (hT : 0 &lt; T) (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L147">147     (hlarge_arm : 4 * (S * Real.log K) &lt;= T)</span>
+<span id="L148">148     (hlarge_mixed :</span>
+<span id="L149">149       32 * (K * S * Real.log K ^ 2 * Real.log (4 / delta)) &lt;= T ^ 3)</span>
+<span id="L150">150     (hlarge_confidence : 8 * (K * Real.log (4 / delta)) &lt;= T)</span>
+<span id="L151">151     (hlarge_realized :</span>
+<span id="L152">152       4 * (S * Real.log (4 / delta)) &lt;= T) :</span>
+<span id="L153">153     let gamma :=</span>
+<span id="L154">154       doubleVarianceProbabilisticSparseLossClippedExplorationRate</span>
+<span id="L155">155         K S T delta</span>
+<span id="L156">156     0 &lt; gamma ∧</span>
+<span id="L157">157       gamma &lt;= 1 / 2 ∧</span>
+<span id="L158">158       S * Real.log K &lt;= gamma ^ 2 * T ∧</span>
+<span id="L159">159       K * S * Real.log K ^ 2 * Real.log (4 / delta) &lt;=</span>
+<span id="L160">160         gamma ^ 5 * T ^ 3 ∧</span>
+<span id="L161">161       K * Real.log (4 / delta) &lt;= gamma ^ 3 * T ∧</span>
+<span id="L162">162       S * Real.log (4 / delta) &lt;= gamma ^ 2 * T := by</span>
+<span id="L163">163   dsimp only</span>
+<span id="L164">164   let numerator : Real :=</span>
+<span id="L165">165     K * S * Real.log K ^ 2 * Real.log (4 / delta)</span>
+<span id="L166">166   let denominator : Real := T ^ 3</span>
+<span id="L167">167   have hS : 0 &lt; S := lt_of_lt_of_le zero_lt_one hS_one</span>
+<span id="L168">168   have hK : 0 &lt; K := lt_trans zero_lt_one hK_one</span>
+<span id="L169">169   have hlogK : 0 &lt;= Real.log K := (Real.log_pos hK_one).le</span>
+<span id="L170">170   have hone_lt_four_div : 1 &lt; 4 / delta := by</span>
+<span id="L171">171     rw [lt_div_iff₀ hdelta]</span>
+<span id="L172">172     nlinarith</span>
+<span id="L173">173   have hlog : 0 &lt;= Real.log (4 / delta) :=</span>
+<span id="L174">174     (Real.log_pos hone_lt_four_div).le</span>
+<span id="L175">175   have hnumerator : 0 &lt;= numerator := by</span>
+<span id="L176">176     dsimp [numerator]</span>
+<span id="L177">177     positivity</span>
+<span id="L178">178   have hdenominator : 0 &lt; denominator := by</span>
+<span id="L179">179     dsimp [denominator]</span>
+<span id="L180">180     positivity</span>
+<span id="L181">181   have hraw :=</span>
+<span id="L182">182     doubleVarianceProbabilisticSparseLossRawExplorationRate_le_half_of_horizon_contracts</span>
+<span id="L183">183       K S T delta hK_one hS_one hT hdelta hdelta_le_one hlarge_arm</span>
+<span id="L184">184         hlarge_mixed hlarge_confidence hlarge_realized</span>
+<span id="L185">185   have hclip :</span>
+<span id="L186">186       doubleVarianceProbabilisticSparseLossClippedExplorationRate</span>
+<span id="L187">187           K S T delta =</span>
+<span id="L188">188         doubleVarianceProbabilisticSparseLossRawExplorationRate</span>
+<span id="L189">189           K S T delta :=</span>
+<span id="L190">190     doubleVarianceProbabilisticSparseLossClippedExplorationRate_eq_raw</span>
+<span id="L191">191       K S T delta hraw</span>
+<span id="L192">192   have hold_component :</span>
+<span id="L193">193       pathwiseVarianceProbabilisticSparseLossRawExplorationRate</span>
+<span id="L194">194           K S T delta &lt;=</span>
+<span id="L195">195         doubleVarianceProbabilisticSparseLossClippedExplorationRate</span>
+<span id="L196">196           K S T delta := by</span>
+<span id="L197">197     rw [hclip, doubleVarianceProbabilisticSparseLossRawExplorationRate]</span>
+<span id="L198">198     exact le_max_left _ _</span>
+<span id="L199">199   have harm_component :</span>
+<span id="L200">200       sparseLossPredictableVarianceArmExplorationScale K S T &lt;=</span>
+<span id="L201">201         doubleVarianceProbabilisticSparseLossClippedExplorationRate</span>
+<span id="L202">202           K S T delta :=</span>
+<span id="L203">203     (le_max_left _ _).trans hold_component</span>
+<span id="L204">204   have hmixed_component :</span>
+<span id="L205">205       pathwiseVarianceProbabilisticSparseLossMixedExplorationScale</span>
+<span id="L206">206           K S T delta &lt;=</span>
+<span id="L207">207         doubleVarianceProbabilisticSparseLossClippedExplorationRate</span>
+<span id="L208">208           K S T delta :=</span>
+<span id="L209">209     (le_max_of_le_right (le_max_left _ _)).trans hold_component</span>
+<span id="L210">210   have hconfidence_component :</span>
+<span id="L211">211       randomSquareBernsteinConfidenceExplorationScale K T delta &lt;=</span>
+<span id="L212">212         doubleVarianceProbabilisticSparseLossClippedExplorationRate</span>
+<span id="L213">213           K S T delta :=</span>
+<span id="L214">214     (le_max_of_le_right (le_max_of_le_right (le_max_left _ _))).trans</span>
+<span id="L215">215       hold_component</span>
+<span id="L216">216   have hrealized_component :</span>
+<span id="L217">217       doubleVarianceProbabilisticSparseLossRealizedExplorationScale</span>
+<span id="L218">218           S T delta &lt;=</span>
+<span id="L219">219         doubleVarianceProbabilisticSparseLossClippedExplorationRate</span>
+<span id="L220">220           K S T delta := by</span>
+<span id="L221">221     rw [hclip, doubleVarianceProbabilisticSparseLossRawExplorationRate]</span>
+<span id="L222">222     exact le_max_right _ _</span>
+<span id="L223">223   refine ⟨</span>
+<span id="L224">224     doubleVarianceProbabilisticSparseLossClippedExplorationRate_pos</span>
+<span id="L225">225       K S T delta hK_one hS hT,</span>
+<span id="L226">226     doubleVarianceProbabilisticSparseLossClippedExplorationRate_le_half</span>
+<span id="L227">227       K S T delta,</span>
+<span id="L228">228     ?_, ?_, ?_, ?_⟩</span>
+<span id="L229">229   · exact numerator_le_sq_mul_of_sqrt_div_le</span>
+<span id="L230">230       (S * Real.log K) T</span>
+<span id="L231">231         (doubleVarianceProbabilisticSparseLossClippedExplorationRate</span>
+<span id="L232">232           K S T delta)</span>
+<span id="L233">233         (mul_nonneg hS.le hlogK) hT (by</span>
+<span id="L234">234           simpa [sparseLossPredictableVarianceArmExplorationScale] using</span>
+<span id="L235">235             harm_component)</span>
+<span id="L236">236   · have hroot :</span>
+<span id="L237">237         (numerator / denominator) ^ (5 : Real)⁻¹ &lt;=</span>
+<span id="L238">238           doubleVarianceProbabilisticSparseLossClippedExplorationRate</span>
+<span id="L239">239             K S T delta := by</span>
+<span id="L240">240       simpa [</span>
+<span id="L241">241         pathwiseVarianceProbabilisticSparseLossMixedExplorationScale,</span>
+<span id="L242">242         numerator, denominator] using hmixed_component</span>
+<span id="L243">243     have hpower :=</span>
+<span id="L244">244       numerator_le_pow_five_mul_of_rpow_inv_five_le</span>
+<span id="L245">245         numerator denominator</span>
+<span id="L246">246           (doubleVarianceProbabilisticSparseLossClippedExplorationRate</span>
+<span id="L247">247             K S T delta)</span>
+<span id="L248">248         hnumerator hdenominator hroot</span>
+<span id="L249">249     simpa [numerator, denominator, mul_assoc] using hpower</span>
+<span id="L250">250   · exact numerator_le_cube_mul_of_rpow_inv_three_le</span>
+<span id="L251">251       (K * Real.log (4 / delta)) T</span>
+<span id="L252">252         (doubleVarianceProbabilisticSparseLossClippedExplorationRate</span>
+<span id="L253">253           K S T delta)</span>
+<span id="L254">254         (mul_nonneg hK.le hlog) hT (by</span>
+<span id="L255">255           simpa [randomSquareBernsteinConfidenceExplorationScale] using</span>
+<span id="L256">256             hconfidence_component)</span>
+<span id="L257">257   · exact numerator_le_sq_mul_of_sqrt_div_le</span>
+<span id="L258">258       (S * Real.log (4 / delta)) T</span>
+<span id="L259">259         (doubleVarianceProbabilisticSparseLossClippedExplorationRate</span>
+<span id="L260">260           K S T delta)</span>
+<span id="L261">261         (mul_nonneg hS.le hlog) hT (by</span>
+<span id="L262">262           simpa [</span>
+<span id="L263">263             doubleVarianceProbabilisticSparseLossRealizedExplorationScale]</span>
+<span id="L264">264             using hrealized_component)</span>
+<span id="L265">265 </span>
+<span id="L266">266 /-- Explicit double-variance threshold after tuning eta and gamma. -/</span>
+<span id="L267">267 noncomputable def pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedExplicitThreshold</span>
+<span id="L268">268     {Action : Type v} (_arms : Finset Action) (gamma : Real)</span>
+<span id="L269">269     (horizon _sparsity : Nat) (_delta : Real) : Real :=</span>
+<span id="L270">270   16 * gamma * (horizon : Real)</span>
+<span id="L271">271 </span>
+<span id="L272">272 /-- The exact selected-loss predictable-variance radius is at most</span>
+<span id="L273">273 `3 * gamma * T` under its sparse variance contract. -/</span>
+<span id="L274">274 theorem sparseRealizedPredictableVarianceRadius_le_three_mul_gamma_mul_horizon</span>
+<span id="L275">275     (S T gamma delta : Real) (hS_one : 1 &lt;= S)</span>
+<span id="L276">276     (hT : 0 &lt; T) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L277">277     (hgamma_le_half : gamma &lt;= 1 / 2)</span>
+<span id="L278">278     (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L279">279     (hrealized :</span>
+<span id="L280">280       S * Real.log (4 / delta) &lt;= gamma ^ 2 * T) :</span>
+<span id="L281">281     sampledRealizedPredictableVarianceRadius</span>
+<span id="L282">282         (S * T) (delta / 4) &lt;=</span>
+<span id="L283">283       3 * gamma * T := by</span>
+<span id="L284">284   let budget : Real := Real.log (4 / delta)</span>
+<span id="L285">285   have hone_lt_four_div : 1 &lt; 4 / delta := by</span>
+<span id="L286">286     rw [lt_div_iff₀ hdelta]</span>
+<span id="L287">287     nlinarith</span>
+<span id="L288">288   have hbudget_pos : 0 &lt; budget := by</span>
+<span id="L289">289     dsimp [budget]</span>
+<span id="L290">290     exact Real.log_pos hone_lt_four_div</span>
+<span id="L291">291   have hlog_fourth : Real.log (1 / (delta / 4)) = budget := by</span>
+<span id="L292">292     dsimp [budget]</span>
+<span id="L293">293     exact log_one_div_fourth_eq_log_four_div delta hdelta</span>
+<span id="L294">294   have hmax_fourth : max (Real.log (1 / (delta / 4))) 0 = budget := by</span>
+<span id="L295">295     rw [hlog_fourth]</span>
+<span id="L296">296     exact max_eq_left hbudget_pos.le</span>
+<span id="L297">297   have hrealized&#x27; : S * budget &lt;= gamma ^ 2 * T := by</span>
+<span id="L298">298     simpa [budget] using hrealized</span>
+<span id="L299">299   have hsq : S * T * budget &lt;= (gamma * T) ^ 2 := by</span>
+<span id="L300">300     have hmul := mul_le_mul_of_nonneg_right hrealized&#x27; hT.le</span>
+<span id="L301">301     nlinarith</span>
+<span id="L302">302   have hroot : Real.sqrt (S * T * budget) &lt;= gamma * T := by</span>
+<span id="L303">303     rw [Real.sqrt_le_iff]</span>
+<span id="L304">304     constructor</span>
+<span id="L305">305     · positivity</span>
+<span id="L306">306     · exact hsq</span>
+<span id="L307">307   have hbudget_le_sparse : budget &lt;= S * budget := by</span>
+<span id="L308">308     nlinarith [mul_nonneg (sub_nonneg.mpr hS_one) hbudget_pos.le]</span>
+<span id="L309">309   have hgamma_sq_le_gamma : gamma ^ 2 &lt;= gamma := by</span>
+<span id="L310">310     nlinarith</span>
+<span id="L311">311   have hgamma_sq_T_le : gamma ^ 2 * T &lt;= gamma * T :=</span>
+<span id="L312">312     mul_le_mul_of_nonneg_right hgamma_sq_le_gamma hT.le</span>
+<span id="L313">313   have hbudget_le : budget &lt;= gamma * T :=</span>
+<span id="L314">314     hbudget_le_sparse.trans (hrealized&#x27;.trans hgamma_sq_T_le)</span>
+<span id="L315">315   dsimp [sampledRealizedPredictableVarianceRadius]</span>
+<span id="L316">316   rw [hmax_fourth]</span>
+<span id="L317">317   linarith</span>
+<span id="L318">318 </span>
+<span id="L319">319 /-- The four exploration contracts reduce the eta-tuned double-variance</span>
+<span id="L320">320 threshold to `16 * gamma * T`. -/</span>
+<span id="L321">321 theorem pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedTunedThreshold_le_explicitThreshold</span>
+<span id="L322">322     {Action : Type v} [DecidableEq Action]</span>
+<span id="L323">323     (arms : Finset Action) (hcard_two : 2 &lt;= arms.card)</span>
+<span id="L324">324     (horizon sparsity : Nat) (hhorizon : 0 &lt; horizon)</span>
+<span id="L325">325     (hsparsity : 0 &lt; sparsity)</span>
+<span id="L326">326     (gamma delta : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L327">327     (hgamma_le_half : gamma &lt;= 1 / 2)</span>
+<span id="L328">328     (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L329">329     (hbase :</span>
+<span id="L330">330       (sparsity : Real) * Real.log (arms.card : Real) &lt;=</span>
+<span id="L331">331         gamma ^ 2 * (horizon : Real))</span>
+<span id="L332">332     (hmixed :</span>
+<span id="L333">333       (arms.card : Real) * (sparsity : Real) *</span>
+<span id="L334">334             Real.log (arms.card : Real) ^ 2 * Real.log (4 / delta) &lt;=</span>
+<span id="L335">335         gamma ^ 5 * (horizon : Real) ^ 3)</span>
+<span id="L336">336     (hconfidence :</span>
+<span id="L337">337       (arms.card : Real) * Real.log (4 / delta) &lt;=</span>
+<span id="L338">338         gamma ^ 3 * (horizon : Real))</span>
+<span id="L339">339     (hrealized :</span>
+<span id="L340">340       (sparsity : Real) * Real.log (4 / delta) &lt;=</span>
+<span id="L341">341         gamma ^ 2 * (horizon : Real)) :</span>
+<span id="L342">342     pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedTunedThreshold</span>
+<span id="L343">343         arms gamma horizon sparsity delta &lt;=</span>
+<span id="L344">344       pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedExplicitThreshold</span>
+<span id="L345">345         arms gamma horizon sparsity delta := by</span>
+<span id="L346">346   let K : Real := arms.card</span>
+<span id="L347">347   let S : Real := sparsity</span>
+<span id="L348">348   let T : Real := horizon</span>
+<span id="L349">349   let budget : Real := Real.log (4 / delta)</span>
+<span id="L350">350   have hK_one : 1 &lt; K := by</span>
+<span id="L351">351     dsimp [K]</span>
+<span id="L352">352     exact_mod_cast hcard_two</span>
+<span id="L353">353   have hK : 0 &lt; K := lt_trans zero_lt_one hK_one</span>
+<span id="L354">354   have hS_one : 1 &lt;= S := by</span>
+<span id="L355">355     dsimp [S]</span>
+<span id="L356">356     exact_mod_cast hsparsity</span>
+<span id="L357">357   have hT : 0 &lt; T := by</span>
+<span id="L358">358     dsimp [T]</span>
+<span id="L359">359     exact_mod_cast hhorizon</span>
+<span id="L360">360   have hone_lt_four_div : 1 &lt; 4 / delta := by</span>
+<span id="L361">361     rw [lt_div_iff₀ hdelta]</span>
+<span id="L362">362     nlinarith</span>
+<span id="L363">363   have hbudget_pos : 0 &lt; budget := by</span>
+<span id="L364">364     dsimp [budget]</span>
+<span id="L365">365     exact Real.log_pos hone_lt_four_div</span>
+<span id="L366">366   have hlog_fourth : Real.log (1 / (delta / 4)) = budget := by</span>
+<span id="L367">367     dsimp [budget]</span>
+<span id="L368">368     exact log_one_div_fourth_eq_log_four_div delta hdelta</span>
+<span id="L369">369   have hmax_fourth : max (Real.log (1 / (delta / 4))) 0 = budget := by</span>
+<span id="L370">370     rw [hlog_fourth]</span>
+<span id="L371">371     exact max_eq_left hbudget_pos.le</span>
+<span id="L372">372   have hbalanced :</span>
+<span id="L373">373       Real.sqrt</span>
+<span id="L374">374           (Real.log K *</span>
+<span id="L375">375             pathwiseVarianceProbabilisticSparseLossHighProbabilityScale</span>
+<span id="L376">376               arms gamma horizon sparsity delta) &lt;=</span>
+<span id="L377">377         2 * gamma * T := by</span>
+<span id="L378">378     simpa [K, T] using</span>
+<span id="L379">379       pathwiseVarianceProbabilisticSparseLossBalancedSqrt_le_two_mul_gamma_mul_horizon</span>
+<span id="L380">380         arms hcard_two gamma hgamma_pos hgamma_le_half horizon sparsity</span>
+<span id="L381">381           hhorizon hsparsity delta hdelta hdelta_le_one hbase hmixed hconfidence</span>
+<span id="L382">382   have hconfidence_radius :</span>
+<span id="L383">383       2 * Real.sqrt (T * budget / (gamma / K)) +</span>
+<span id="L384">384           budget / (gamma / K) &lt;=</span>
+<span id="L385">385         3 * gamma * T :=</span>
+<span id="L386">386     bernsteinConfidenceRadius_le_three_mul_gamma_mul_horizon</span>
+<span id="L387">387       K T budget gamma hK hT hbudget_pos.le hgamma_pos (by linarith)</span>
+<span id="L388">388         (by simpa [K, T, budget] using hconfidence)</span>
+<span id="L389">389   have hrealized_radius :</span>
+<span id="L390">390       sampledRealizedPredictableVarianceRadius</span>
+<span id="L391">391           (S * T) (delta / 4) &lt;=</span>
+<span id="L392">392         3 * gamma * T :=</span>
+<span id="L393">393     sparseRealizedPredictableVarianceRadius_le_three_mul_gamma_mul_horizon</span>
+<span id="L394">394       S T gamma delta hS_one hT hgamma_pos hgamma_le_half hdelta</span>
+<span id="L395">395         hdelta_le_one (by simpa [S, T, budget] using hrealized)</span>
+<span id="L396">396   dsimp [</span>
+<span id="L397">397     pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedTunedThreshold,</span>
+<span id="L398">398     pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedExplicitThreshold,</span>
+<span id="L399">399     sampledPurePredictableMinusObservedBernsteinConfidenceRadius,</span>
+<span id="L400">400     sampledComparatorEstimatorBernsteinConfidenceRadius,</span>
+<span id="L401">401     sampledPredictableSparseRealizedVarianceBudget]</span>
+<span id="L402">402   rw [hmax_fourth]</span>
+<span id="L403">403   change</span>
+<span id="L404">404     3 * Real.sqrt</span>
+<span id="L405">405           (Real.log K *</span>
+<span id="L406">406             pathwiseVarianceProbabilisticSparseLossHighProbabilityScale</span>
+<span id="L407">407               arms gamma horizon sparsity delta) +</span>
+<span id="L408">408         gamma * T +</span>
+<span id="L409">409         (2 * Real.sqrt (T * budget / (gamma / K)) +</span>
+<span id="L410">410           budget / (gamma / K)) +</span>
+<span id="L411">411         (2 * Real.sqrt (T * budget / (gamma / K)) +</span>
+<span id="L412">412           budget / (gamma / K)) +</span>
+<span id="L413">413         sampledRealizedPredictableVarianceRadius (S * T) (delta / 4) &lt;=</span>
+<span id="L414">414       16 * gamma * T</span>
+<span id="L415">415   linarith</span>
+<span id="L416">416 </span>
+<span id="L417">417 /-- Gamma-characterized double-variance regret tail away from the exact</span>
+<span id="L418">418 sparsity-failure event. -/</span>
+<span id="L419">419 theorem sampledPredictable_gammaCharacterizedDoubleVarianceProbabilisticSparseLossRealizedRegret_tail_off_sparsityFailure</span>
+<span id="L420">420     {Env : Type u} {Action : Type v}</span>
+<span id="L421">421     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L422">422     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L423">423     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L424">424     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L425">425     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L426">426     (hcard_two : 2 &lt;= arms.card)</span>
+<span id="L427">427     (gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L428">428     (hgamma_le_half : gamma &lt;= 1 / 2)</span>
+<span id="L429">429     (loss : PredictableLossVector Env Action)</span>
+<span id="L430">430     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L431">431     (horizon sparsity : Nat) (hhorizon : 0 &lt; horizon)</span>
+<span id="L432">432     (hsparsity : 0 &lt; sparsity)</span>
+<span id="L433">433     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L434">434     (hbase :</span>
+<span id="L435">435       (sparsity : Real) * Real.log (arms.card : Real) &lt;=</span>
+<span id="L436">436         gamma ^ 2 * (horizon : Real))</span>
+<span id="L437">437     (hmixed :</span>
+<span id="L438">438       (arms.card : Real) * (sparsity : Real) *</span>
+<span id="L439">439             Real.log (arms.card : Real) ^ 2 * Real.log (4 / delta) &lt;=</span>
+<span id="L440">440         gamma ^ 5 * (horizon : Real) ^ 3)</span>
+<span id="L441">441     (hconfidence :</span>
+<span id="L442">442       (arms.card : Real) * Real.log (4 / delta) &lt;=</span>
+<span id="L443">443         gamma ^ 3 * (horizon : Real))</span>
+<span id="L444">444     (hrealized :</span>
+<span id="L445">445       (sparsity : Real) * Real.log (4 / delta) &lt;=</span>
+<span id="L446">446         gamma ^ 2 * (horizon : Real)) :</span>
+<span id="L447">447     let eta :=</span>
+<span id="L448">448       pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate</span>
+<span id="L449">449         arms gamma horizon sparsity delta</span>
+<span id="L450">450     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L451">451       eta gamma hgamma_pos.le (by linarith : gamma &lt;= 1) loss.environment</span>
+<span id="L452">452     mu ({sample |</span>
+<span id="L453">453         pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedExplicitThreshold</span>
+<span id="L454">454             arms gamma horizon sparsity delta &lt;=</span>
+<span id="L455">455           (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L456">456               sampledTrajectoryRealizedLossAt t sample) -</span>
+<span id="L457">457             (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L458">458               predictableLossAt loss t sample comparator)} \</span>
+<span id="L459">459       sampledPredictableSparsityFailure arms loss horizon sparsity) &lt;=</span>
+<span id="L460">460         ENNReal.ofReal delta := by</span>
+<span id="L461">461   dsimp only</span>
+<span id="L462">462   have hgamma_lt_one : gamma &lt; 1 := by linarith</span>
+<span id="L463">463   have hthreshold :=</span>
+<span id="L464">464     pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedTunedThreshold_le_explicitThreshold</span>
+<span id="L465">465       arms hcard_two horizon sparsity hhorizon hsparsity gamma delta</span>
+<span id="L466">466         hgamma_pos hgamma_le_half hdelta hdelta_le_one hbase hmixed</span>
+<span id="L467">467         hconfidence hrealized</span>
+<span id="L468">468   have htail :=</span>
+<span id="L469">469     sampledPredictable_tunedDoubleVarianceProbabilisticSparseLossRealizedRegret_tail_off_sparsityFailure</span>
+<span id="L470">470       prior arms harms hcard_two gamma hgamma_pos hgamma_le_half loss comparator</span>
+<span id="L471">471         hcomparator horizon sparsity hhorizon hsparsity delta hdelta</span>
+<span id="L472">472   dsimp only at htail ⊢</span>
+<span id="L473">473   calc</span>
+<span id="L474">474     (prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L475">475         (pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate</span>
+<span id="L476">476           arms gamma horizon sparsity delta)</span>
+<span id="L477">477         gamma hgamma_pos.le hgamma_lt_one.le loss.environment)</span>
+<span id="L478">478         ({sample |</span>
+<span id="L479">479           pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedExplicitThreshold</span>
+<span id="L480">480               arms gamma horizon sparsity delta &lt;=</span>
+<span id="L481">481             (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L482">482                 sampledTrajectoryRealizedLossAt t sample) -</span>
+<span id="L483">483               (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L484">484                 predictableLossAt loss t sample comparator)} \</span>
+<span id="L485">485           sampledPredictableSparsityFailure arms loss horizon sparsity) &lt;=</span>
+<span id="L486">486       (prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L487">487         (pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate</span>
+<span id="L488">488           arms gamma horizon sparsity delta)</span>
+<span id="L489">489         gamma hgamma_pos.le hgamma_lt_one.le loss.environment)</span>
+<span id="L490">490         ({sample |</span>
+<span id="L491">491           pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedTunedThreshold</span>
+<span id="L492">492               arms gamma horizon sparsity delta &lt;=</span>
+<span id="L493">493             (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L494">494                 sampledTrajectoryRealizedLossAt t sample) -</span>
+<span id="L495">495               (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L496">496                 predictableLossAt loss t sample comparator)} \</span>
+<span id="L497">497           sampledPredictableSparsityFailure arms loss horizon sparsity) := by</span>
+<span id="L498">498         apply measure_mono</span>
+<span id="L499">499         intro sample hsample</span>
+<span id="L500">500         exact ⟨hthreshold.trans hsample.1, hsample.2⟩</span>
+<span id="L501">501     _ &lt;= ENNReal.ofReal delta := htail</span>
+<span id="L502">502 </span>
+<span id="L503">503 /-- Gamma-characterized double-variance regret with the exact</span>
+<span id="L504">504 sparsity-failure residual. -/</span>
+<span id="L505">505 theorem sampledPredictable_gammaCharacterizedDoubleVarianceProbabilisticSparseLossRealizedRegret_tail</span>
+<span id="L506">506     {Env : Type u} {Action : Type v}</span>
+<span id="L507">507     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L508">508     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L509">509     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L510">510     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L511">511     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L512">512     (hcard_two : 2 &lt;= arms.card)</span>
+<span id="L513">513     (gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L514">514     (hgamma_le_half : gamma &lt;= 1 / 2)</span>
+<span id="L515">515     (loss : PredictableLossVector Env Action)</span>
+<span id="L516">516     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L517">517     (horizon sparsity : Nat) (hhorizon : 0 &lt; horizon)</span>
+<span id="L518">518     (hsparsity : 0 &lt; sparsity)</span>
+<span id="L519">519     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L520">520     (hbase :</span>
+<span id="L521">521       (sparsity : Real) * Real.log (arms.card : Real) &lt;=</span>
+<span id="L522">522         gamma ^ 2 * (horizon : Real))</span>
+<span id="L523">523     (hmixed :</span>
+<span id="L524">524       (arms.card : Real) * (sparsity : Real) *</span>
+<span id="L525">525             Real.log (arms.card : Real) ^ 2 * Real.log (4 / delta) &lt;=</span>
+<span id="L526">526         gamma ^ 5 * (horizon : Real) ^ 3)</span>
+<span id="L527">527     (hconfidence :</span>
+<span id="L528">528       (arms.card : Real) * Real.log (4 / delta) &lt;=</span>
+<span id="L529">529         gamma ^ 3 * (horizon : Real))</span>
+<span id="L530">530     (hrealized :</span>
+<span id="L531">531       (sparsity : Real) * Real.log (4 / delta) &lt;=</span>
+<span id="L532">532         gamma ^ 2 * (horizon : Real)) :</span>
+<span id="L533">533     let eta :=</span>
+<span id="L534">534       pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate</span>
+<span id="L535">535         arms gamma horizon sparsity delta</span>
+<span id="L536">536     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L537">537       eta gamma hgamma_pos.le (by linarith : gamma &lt;= 1) loss.environment</span>
+<span id="L538">538     mu {sample |</span>
+<span id="L539">539         pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedExplicitThreshold</span>
+<span id="L540">540             arms gamma horizon sparsity delta &lt;=</span>
+<span id="L541">541           (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L542">542               sampledTrajectoryRealizedLossAt t sample) -</span>
+<span id="L543">543             (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L544">544               predictableLossAt loss t sample comparator)} &lt;=</span>
+<span id="L545">545       ENNReal.ofReal delta +</span>
+<span id="L546">546         mu (sampledPredictableSparsityFailure arms loss horizon sparsity) := by</span>
+<span id="L547">547   dsimp only</span>
+<span id="L548">548   have hgamma_lt_one : gamma &lt; 1 := by linarith</span>
+<span id="L549">549   have hthreshold :=</span>
+<span id="L550">550     pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedTunedThreshold_le_explicitThreshold</span>
+<span id="L551">551       arms hcard_two horizon sparsity hhorizon hsparsity gamma delta</span>
+<span id="L552">552         hgamma_pos hgamma_le_half hdelta hdelta_le_one hbase hmixed</span>
+<span id="L553">553         hconfidence hrealized</span>
+<span id="L554">554   have htail :=</span>
+<span id="L555">555     sampledPredictable_tunedDoubleVarianceProbabilisticSparseLossRealizedRegret_tail</span>
+<span id="L556">556       prior arms harms hcard_two gamma hgamma_pos hgamma_le_half loss comparator</span>
+<span id="L557">557         hcomparator horizon sparsity hhorizon hsparsity delta hdelta</span>
+<span id="L558">558   dsimp only at htail ⊢</span>
+<span id="L559">559   exact</span>
+<span id="L560">560     (measure_mono (fun _sample hsample =&gt; hthreshold.trans hsample)).trans htail</span>
+<span id="L561">561 </span>
+<span id="L562">562 /-- Practical gamma-characterized endpoint under the exact generated-measure</span>
+<span id="L563">563 bound on the sparsity-failure event. -/</span>
+<span id="L564">564 theorem sampledPredictable_gammaCharacterizedDoubleVarianceProbabilisticSparseLossRealizedRegret_tail_of_sparsityFailure_le</span>
+<span id="L565">565     {Env : Type u} {Action : Type v}</span>
+<span id="L566">566     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L567">567     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L568">568     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L569">569     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L570">570     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L571">571     (hcard_two : 2 &lt;= arms.card)</span>
+<span id="L572">572     (gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L573">573     (hgamma_le_half : gamma &lt;= 1 / 2)</span>
+<span id="L574">574     (loss : PredictableLossVector Env Action)</span>
+<span id="L575">575     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L576">576     (horizon sparsity : Nat) (hhorizon : 0 &lt; horizon)</span>
+<span id="L577">577     (hsparsity : 0 &lt; sparsity)</span>
+<span id="L578">578     (delta epsilon : Real) (hdelta : 0 &lt; delta)</span>
+<span id="L579">579     (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L580">580     (hbase :</span>
+<span id="L581">581       (sparsity : Real) * Real.log (arms.card : Real) &lt;=</span>
+<span id="L582">582         gamma ^ 2 * (horizon : Real))</span>
+<span id="L583">583     (hmixed :</span>
+<span id="L584">584       (arms.card : Real) * (sparsity : Real) *</span>
+<span id="L585">585             Real.log (arms.card : Real) ^ 2 * Real.log (4 / delta) &lt;=</span>
+<span id="L586">586         gamma ^ 5 * (horizon : Real) ^ 3)</span>
+<span id="L587">587     (hconfidence :</span>
+<span id="L588">588       (arms.card : Real) * Real.log (4 / delta) &lt;=</span>
+<span id="L589">589         gamma ^ 3 * (horizon : Real))</span>
+<span id="L590">590     (hrealized :</span>
+<span id="L591">591       (sparsity : Real) * Real.log (4 / delta) &lt;=</span>
+<span id="L592">592         gamma ^ 2 * (horizon : Real)) :</span>
+<span id="L593">593     let eta :=</span>
+<span id="L594">594       pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate</span>
+<span id="L595">595         arms gamma horizon sparsity delta</span>
+<span id="L596">596     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L597">597       eta gamma hgamma_pos.le (by linarith : gamma &lt;= 1) loss.environment</span>
+<span id="L598">598     mu (sampledPredictableSparsityFailure arms loss horizon sparsity) &lt;=</span>
+<span id="L599">599         ENNReal.ofReal epsilon →</span>
+<span id="L600">600       mu {sample |</span>
+<span id="L601">601           pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedExplicitThreshold</span>
+<span id="L602">602               arms gamma horizon sparsity delta &lt;=</span>
+<span id="L603">603             (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L604">604                 sampledTrajectoryRealizedLossAt t sample) -</span>
+<span id="L605">605               (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L606">606                 predictableLossAt loss t sample comparator)} &lt;=</span>
+<span id="L607">607         ENNReal.ofReal delta + ENNReal.ofReal epsilon := by</span>
+<span id="L608">608   dsimp only</span>
+<span id="L609">609   intro hfailure</span>
+<span id="L610">610   have htail :=</span>
+<span id="L611">611     sampledPredictable_gammaCharacterizedDoubleVarianceProbabilisticSparseLossRealizedRegret_tail</span>
+<span id="L612">612       prior arms harms hcard_two gamma hgamma_pos hgamma_le_half loss comparator</span>
+<span id="L613">613         hcomparator horizon sparsity hhorizon hsparsity delta hdelta</span>
+<span id="L614">614         hdelta_le_one hbase hmixed hconfidence hrealized</span>
+<span id="L615">615   dsimp only at htail</span>
+<span id="L616">616   exact htail.trans (add_le_add le_rfl hfailure)</span>
+<span id="L617">617 </span>
+<span id="L618">618 /-- Fully explicit double-variance regret tail away from the exact</span>
+<span id="L619">619 sparsity-failure event for the clipped schedule. -/</span>
+<span id="L620">620 theorem sampledPredictable_explicitDoubleVarianceProbabilisticSparseLossRealizedRegret_tail_off_sparsityFailure</span>
+<span id="L621">621     {Env : Type u} {Action : Type v}</span>
+<span id="L622">622     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L623">623     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L624">624     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L625">625     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L626">626     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L627">627     (hcard_two : 2 &lt;= arms.card)</span>
+<span id="L628">628     (loss : PredictableLossVector Env Action)</span>
+<span id="L629">629     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L630">630     (horizon sparsity : Nat) (hhorizon : 0 &lt; horizon)</span>
+<span id="L631">631     (hsparsity : 0 &lt; sparsity)</span>
+<span id="L632">632     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L633">633     (hlarge_arm :</span>
+<span id="L634">634       4 * ((sparsity : Real) * Real.log (arms.card : Real)) &lt;=</span>
+<span id="L635">635         (horizon : Real))</span>
+<span id="L636">636     (hlarge_mixed :</span>
+<span id="L637">637       32 * ((arms.card : Real) * (sparsity : Real) *</span>
+<span id="L638">638           Real.log (arms.card : Real) ^ 2 * Real.log (4 / delta)) &lt;=</span>
+<span id="L639">639         (horizon : Real) ^ 3)</span>
+<span id="L640">640     (hlarge_confidence :</span>
+<span id="L641">641       8 * ((arms.card : Real) * Real.log (4 / delta)) &lt;=</span>
+<span id="L642">642         (horizon : Real))</span>
+<span id="L643">643     (hlarge_realized :</span>
+<span id="L644">644       4 * ((sparsity : Real) * Real.log (4 / delta)) &lt;=</span>
+<span id="L645">645         (horizon : Real)) :</span>
+<span id="L646">646     let gamma :=</span>
+<span id="L647">647       doubleVarianceProbabilisticSparseLossClippedExplorationRate</span>
+<span id="L648">648         (arms.card : Real) (sparsity : Real) (horizon : Real) delta</span>
+<span id="L649">649     let eta :=</span>
+<span id="L650">650       pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate</span>
+<span id="L651">651         arms gamma horizon sparsity delta</span>
+<span id="L652">652     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L653">653       eta gamma</span>
+<span id="L654">654         (doubleVarianceProbabilisticSparseLossClippedExplorationRate_pos</span>
+<span id="L655">655           (arms.card : Real) (sparsity : Real) (horizon : Real) delta</span>
+<span id="L656">656           (by exact_mod_cast hcard_two)</span>
+<span id="L657">657           (by exact_mod_cast hsparsity)</span>
+<span id="L658">658           (by exact_mod_cast hhorizon)).le</span>
+<span id="L659">659         (by</span>
+<span id="L660">660           exact</span>
+<span id="L661">661             (doubleVarianceProbabilisticSparseLossClippedExplorationRate_le_half</span>
+<span id="L662">662               (arms.card : Real) (sparsity : Real) (horizon : Real)</span>
+<span id="L663">663                 delta).trans (by norm_num))</span>
+<span id="L664">664         loss.environment</span>
+<span id="L665">665     mu ({sample |</span>
+<span id="L666">666         pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedExplicitThreshold</span>
+<span id="L667">667             arms gamma horizon sparsity delta &lt;=</span>
+<span id="L668">668           (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L669">669               sampledTrajectoryRealizedLossAt t sample) -</span>
+<span id="L670">670             (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L671">671               predictableLossAt loss t sample comparator)} \</span>
+<span id="L672">672       sampledPredictableSparsityFailure arms loss horizon sparsity) &lt;=</span>
+<span id="L673">673         ENNReal.ofReal delta := by</span>
+<span id="L674">674   dsimp only</span>
+<span id="L675">675   have hK_one : 1 &lt; (arms.card : Real) := by exact_mod_cast hcard_two</span>
+<span id="L676">676   have hS_one : 1 &lt;= (sparsity : Real) := by exact_mod_cast hsparsity</span>
+<span id="L677">677   have hT : 0 &lt; (horizon : Real) := by exact_mod_cast hhorizon</span>
+<span id="L678">678   have hcontracts :=</span>
+<span id="L679">679     doubleVarianceProbabilisticSparseLossClippedExplorationRate_contracts</span>
+<span id="L680">680       (arms.card : Real) (sparsity : Real) (horizon : Real) delta</span>
+<span id="L681">681         hK_one hS_one hT hdelta hdelta_le_one hlarge_arm hlarge_mixed</span>
+<span id="L682">682         hlarge_confidence hlarge_realized</span>
+<span id="L683">683   dsimp only at hcontracts</span>
+<span id="L684">684   rcases hcontracts with</span>
+<span id="L685">685     ⟨hgamma_pos, hgamma_le_half, hbase, hmixed, hconfidence, hrealized⟩</span>
+<span id="L686">686   exact</span>
+<span id="L687">687     sampledPredictable_gammaCharacterizedDoubleVarianceProbabilisticSparseLossRealizedRegret_tail_off_sparsityFailure</span>
+<span id="L688">688       prior arms harms hcard_two</span>
+<span id="L689">689         (doubleVarianceProbabilisticSparseLossClippedExplorationRate</span>
+<span id="L690">690           (arms.card : Real) (sparsity : Real) (horizon : Real) delta)</span>
+<span id="L691">691         hgamma_pos hgamma_le_half loss comparator hcomparator horizon sparsity</span>
+<span id="L692">692         hhorizon hsparsity delta hdelta hdelta_le_one hbase hmixed hconfidence</span>
+<span id="L693">693         hrealized</span>
+<span id="L694">694 </span>
+<span id="L695">695 /-- Fully explicit double-variance regret with the exact sparsity-failure</span>
+<span id="L696">696 residual. -/</span>
+<span id="L697">697 theorem sampledPredictable_explicitDoubleVarianceProbabilisticSparseLossRealizedRegret_tail</span>
+<span id="L698">698     {Env : Type u} {Action : Type v}</span>
+<span id="L699">699     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L700">700     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L701">701     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L702">702     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L703">703     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L704">704     (hcard_two : 2 &lt;= arms.card)</span>
+<span id="L705">705     (loss : PredictableLossVector Env Action)</span>
+<span id="L706">706     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L707">707     (horizon sparsity : Nat) (hhorizon : 0 &lt; horizon)</span>
+<span id="L708">708     (hsparsity : 0 &lt; sparsity)</span>
+<span id="L709">709     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L710">710     (hlarge_arm :</span>
+<span id="L711">711       4 * ((sparsity : Real) * Real.log (arms.card : Real)) &lt;=</span>
+<span id="L712">712         (horizon : Real))</span>
+<span id="L713">713     (hlarge_mixed :</span>
+<span id="L714">714       32 * ((arms.card : Real) * (sparsity : Real) *</span>
+<span id="L715">715           Real.log (arms.card : Real) ^ 2 * Real.log (4 / delta)) &lt;=</span>
+<span id="L716">716         (horizon : Real) ^ 3)</span>
+<span id="L717">717     (hlarge_confidence :</span>
+<span id="L718">718       8 * ((arms.card : Real) * Real.log (4 / delta)) &lt;=</span>
+<span id="L719">719         (horizon : Real))</span>
+<span id="L720">720     (hlarge_realized :</span>
+<span id="L721">721       4 * ((sparsity : Real) * Real.log (4 / delta)) &lt;=</span>
+<span id="L722">722         (horizon : Real)) :</span>
+<span id="L723">723     let gamma :=</span>
+<span id="L724">724       doubleVarianceProbabilisticSparseLossClippedExplorationRate</span>
+<span id="L725">725         (arms.card : Real) (sparsity : Real) (horizon : Real) delta</span>
+<span id="L726">726     let eta :=</span>
+<span id="L727">727       pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate</span>
+<span id="L728">728         arms gamma horizon sparsity delta</span>
+<span id="L729">729     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L730">730       eta gamma</span>
+<span id="L731">731         (doubleVarianceProbabilisticSparseLossClippedExplorationRate_pos</span>
+<span id="L732">732           (arms.card : Real) (sparsity : Real) (horizon : Real) delta</span>
+<span id="L733">733           (by exact_mod_cast hcard_two)</span>
+<span id="L734">734           (by exact_mod_cast hsparsity)</span>
+<span id="L735">735           (by exact_mod_cast hhorizon)).le</span>
+<span id="L736">736         (by</span>
+<span id="L737">737           exact</span>
+<span id="L738">738             (doubleVarianceProbabilisticSparseLossClippedExplorationRate_le_half</span>
+<span id="L739">739               (arms.card : Real) (sparsity : Real) (horizon : Real)</span>
+<span id="L740">740                 delta).trans (by norm_num))</span>
+<span id="L741">741         loss.environment</span>
+<span id="L742">742     mu {sample |</span>
+<span id="L743">743         pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedExplicitThreshold</span>
+<span id="L744">744             arms gamma horizon sparsity delta &lt;=</span>
+<span id="L745">745           (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L746">746               sampledTrajectoryRealizedLossAt t sample) -</span>
+<span id="L747">747             (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L748">748               predictableLossAt loss t sample comparator)} &lt;=</span>
+<span id="L749">749       ENNReal.ofReal delta +</span>
+<span id="L750">750         mu (sampledPredictableSparsityFailure arms loss horizon sparsity) := by</span>
+<span id="L751">751   dsimp only</span>
+<span id="L752">752   have hK_one : 1 &lt; (arms.card : Real) := by exact_mod_cast hcard_two</span>
+<span id="L753">753   have hS_one : 1 &lt;= (sparsity : Real) := by exact_mod_cast hsparsity</span>
+<span id="L754">754   have hT : 0 &lt; (horizon : Real) := by exact_mod_cast hhorizon</span>
+<span id="L755">755   have hcontracts :=</span>
+<span id="L756">756     doubleVarianceProbabilisticSparseLossClippedExplorationRate_contracts</span>
+<span id="L757">757       (arms.card : Real) (sparsity : Real) (horizon : Real) delta</span>
+<span id="L758">758         hK_one hS_one hT hdelta hdelta_le_one hlarge_arm hlarge_mixed</span>
+<span id="L759">759         hlarge_confidence hlarge_realized</span>
+<span id="L760">760   dsimp only at hcontracts</span>
+<span id="L761">761   rcases hcontracts with</span>
+<span id="L762">762     ⟨hgamma_pos, hgamma_le_half, hbase, hmixed, hconfidence, hrealized⟩</span>
+<span id="L763">763   exact</span>
+<span id="L764">764     sampledPredictable_gammaCharacterizedDoubleVarianceProbabilisticSparseLossRealizedRegret_tail</span>
+<span id="L765">765       prior arms harms hcard_two</span>
+<span id="L766">766         (doubleVarianceProbabilisticSparseLossClippedExplorationRate</span>
+<span id="L767">767           (arms.card : Real) (sparsity : Real) (horizon : Real) delta)</span>
+<span id="L768">768         hgamma_pos hgamma_le_half loss comparator hcomparator horizon sparsity</span>
+<span id="L769">769         hhorizon hsparsity delta hdelta hdelta_le_one hbase hmixed hconfidence</span>
+<span id="L770">770         hrealized</span>
+<span id="L771">771 </span>
+<span id="L772">772 /-- Fully explicit practical `delta + epsilon` theorem under the exact</span>
+<span id="L773">773 sparsity-failure bound for the internally eta/gamma-tuned measure. -/</span>
+<span id="L774">774 theorem sampledPredictable_explicitDoubleVarianceProbabilisticSparseLossRealizedRegret_tail_of_sparsityFailure_le</span>
+<span id="L775">775     {Env : Type u} {Action : Type v}</span>
+<span id="L776">776     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L777">777     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L778">778     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L779">779     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L780">780     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L781">781     (hcard_two : 2 &lt;= arms.card)</span>
+<span id="L782">782     (loss : PredictableLossVector Env Action)</span>
+<span id="L783">783     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L784">784     (horizon sparsity : Nat) (hhorizon : 0 &lt; horizon)</span>
+<span id="L785">785     (hsparsity : 0 &lt; sparsity)</span>
+<span id="L786">786     (delta epsilon : Real) (hdelta : 0 &lt; delta)</span>
+<span id="L787">787     (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L788">788     (hlarge_arm :</span>
+<span id="L789">789       4 * ((sparsity : Real) * Real.log (arms.card : Real)) &lt;=</span>
+<span id="L790">790         (horizon : Real))</span>
+<span id="L791">791     (hlarge_mixed :</span>
+<span id="L792">792       32 * ((arms.card : Real) * (sparsity : Real) *</span>
+<span id="L793">793           Real.log (arms.card : Real) ^ 2 * Real.log (4 / delta)) &lt;=</span>
+<span id="L794">794         (horizon : Real) ^ 3)</span>
+<span id="L795">795     (hlarge_confidence :</span>
+<span id="L796">796       8 * ((arms.card : Real) * Real.log (4 / delta)) &lt;=</span>
+<span id="L797">797         (horizon : Real))</span>
+<span id="L798">798     (hlarge_realized :</span>
+<span id="L799">799       4 * ((sparsity : Real) * Real.log (4 / delta)) &lt;=</span>
+<span id="L800">800         (horizon : Real)) :</span>
+<span id="L801">801     let gamma :=</span>
+<span id="L802">802       doubleVarianceProbabilisticSparseLossClippedExplorationRate</span>
+<span id="L803">803         (arms.card : Real) (sparsity : Real) (horizon : Real) delta</span>
+<span id="L804">804     let eta :=</span>
+<span id="L805">805       pathwiseVarianceProbabilisticSparseLossHighProbabilityLearningRate</span>
+<span id="L806">806         arms gamma horizon sparsity delta</span>
+<span id="L807">807     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L808">808       eta gamma</span>
+<span id="L809">809         (doubleVarianceProbabilisticSparseLossClippedExplorationRate_pos</span>
+<span id="L810">810           (arms.card : Real) (sparsity : Real) (horizon : Real) delta</span>
+<span id="L811">811           (by exact_mod_cast hcard_two)</span>
+<span id="L812">812           (by exact_mod_cast hsparsity)</span>
+<span id="L813">813           (by exact_mod_cast hhorizon)).le</span>
+<span id="L814">814         (by</span>
+<span id="L815">815           exact</span>
+<span id="L816">816             (doubleVarianceProbabilisticSparseLossClippedExplorationRate_le_half</span>
+<span id="L817">817               (arms.card : Real) (sparsity : Real) (horizon : Real)</span>
+<span id="L818">818                 delta).trans (by norm_num))</span>
+<span id="L819">819         loss.environment</span>
+<span id="L820">820     mu (sampledPredictableSparsityFailure arms loss horizon sparsity) &lt;=</span>
+<span id="L821">821         ENNReal.ofReal epsilon →</span>
+<span id="L822">822       mu {sample |</span>
+<span id="L823">823           pathwiseVarianceProbabilisticSparseLossDoubleVarianceRealizedExplicitThreshold</span>
+<span id="L824">824               arms gamma horizon sparsity delta &lt;=</span>
+<span id="L825">825             (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L826">826                 sampledTrajectoryRealizedLossAt t sample) -</span>
+<span id="L827">827               (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L828">828                 predictableLossAt loss t sample comparator)} &lt;=</span>
+<span id="L829">829         ENNReal.ofReal delta + ENNReal.ofReal epsilon := by</span>
+<span id="L830">830   dsimp only</span>
+<span id="L831">831   intro hfailure</span>
+<span id="L832">832   have htail :=</span>
+<span id="L833">833     sampledPredictable_explicitDoubleVarianceProbabilisticSparseLossRealizedRegret_tail</span>
+<span id="L834">834       prior arms harms hcard_two loss comparator hcomparator horizon sparsity</span>
+<span id="L835">835         hhorizon hsparsity delta hdelta hdelta_le_one hlarge_arm hlarge_mixed</span>
+<span id="L836">836         hlarge_confidence hlarge_realized</span>
+<span id="L837">837   dsimp only at htail</span>
+<span id="L838">838   exact htail.trans (add_le_add le_rfl hfailure)</span>
+<span id="L839">839 </span>
+<span id="L840">840 end BanditRLProof.Exp3</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,926 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Exp3ComparatorBernstein.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Exp3ComparatorBernstein.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Exp3ComparatorBernstein.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Exp3ComparatorBernstein.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.ConcentrationFixedMGF</span>
+<span id="L2">2 import BanditRLProof.Exp3ComparatorConfidence</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Variance-sensitive fixed-comparator EXP3 concentration</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module replaces the range-squared Hoeffding proxy for one fixed comparator estimator by a</span>
+<span id="L8">8 fixed-tilt second-moment bound.  The scalar input is the quadratic exponential remainder on</span>
+<span id="L9">9 `[-1, 1]`; the probabilistic input is the exact second moment of the importance-weighted</span>
+<span id="L10">10 estimator under its finite sampling law.</span>
+<span id="L11">11 -/</span>
+<span id="L12">12 </span>
+<span id="L13">13 namespace BanditRLProof</span>
+<span id="L14">14 </span>
+<span id="L15">15 open MeasureTheory ProbabilityTheory Real</span>
+<span id="L16">16 </span>
+<span id="L17">17 namespace Concentration</span>
+<span id="L18">18 </span>
+<span id="L19">19 /-- On `[-1, 1]`, the exponential remainder is bounded by the square. -/</span>
+<span id="L20">20 theorem exp_le_one_add_self_add_sq_of_abs_le_one {x : Real} (hx : |x| &lt;= 1) :</span>
+<span id="L21">21     Real.exp x &lt;= 1 + x + x ^ 2 := by</span>
+<span id="L22">22   have hrem := Real.abs_exp_sub_one_sub_id_le hx</span>
+<span id="L23">23   have hle : Real.exp x - 1 - x &lt;= |Real.exp x - 1 - x| := le_abs_self _</span>
+<span id="L24">24   linarith</span>
+<span id="L25">25 </span>
+<span id="L26">26 /-- Optimize a quadratic fixed-tilt MGF budget under the hard constraint `tilt &lt;= epsilon`. -/</span>
+<span id="L27">27 theorem exists_tilt_fixedMGF_exponent_le_neg</span>
+<span id="L28">28     (horizon epsilon budget : Real)</span>
+<span id="L29">29     (hhorizon : 0 &lt;= horizon) (hepsilon : 0 &lt; epsilon)</span>
+<span id="L30">30     (hbudget : 0 &lt;= budget) :</span>
+<span id="L31">31     exists tilt : Real, 0 &lt;= tilt ∧ tilt &lt;= epsilon ∧</span>
+<span id="L32">32       -tilt *</span>
+<span id="L33">33           (2 * Real.sqrt (horizon * budget / epsilon) + budget / epsilon) +</span>
+<span id="L34">34         horizon * (tilt ^ 2 / epsilon) &lt;= -budget := by</span>
+<span id="L35">35   by_cases hbudget_zero : budget = 0</span>
+<span id="L36">36   · refine ⟨0, le_rfl, hepsilon.le, ?_⟩</span>
+<span id="L37">37     simp [hbudget_zero]</span>
+<span id="L38">38   have hbudget_pos : 0 &lt; budget :=</span>
+<span id="L39">39     lt_of_le_of_ne hbudget (Ne.symm hbudget_zero)</span>
+<span id="L40">40   by_cases hsmall : budget &lt;= epsilon * horizon</span>
+<span id="L41">41   · have hhorizon_pos : 0 &lt; horizon := by nlinarith</span>
+<span id="L42">42     let tilt := Real.sqrt (epsilon * budget / horizon)</span>
+<span id="L43">43     let scale := Real.sqrt (horizon * budget / epsilon)</span>
+<span id="L44">44     have htilt_nonneg : 0 &lt;= tilt := Real.sqrt_nonneg _</span>
+<span id="L45">45     have hscale_nonneg : 0 &lt;= scale := Real.sqrt_nonneg _</span>
+<span id="L46">46     have htilt_sq : tilt ^ 2 = epsilon * budget / horizon := by</span>
+<span id="L47">47       dsimp only [tilt]</span>
+<span id="L48">48       rw [Real.sq_sqrt]</span>
+<span id="L49">49       positivity</span>
+<span id="L50">50     have hscale_sq : scale ^ 2 = horizon * budget / epsilon := by</span>
+<span id="L51">51       dsimp only [scale]</span>
+<span id="L52">52       rw [Real.sq_sqrt]</span>
+<span id="L53">53       positivity</span>
+<span id="L54">54     have hprod_sq : (tilt * scale) ^ 2 = budget ^ 2 := by</span>
+<span id="L55">55       rw [mul_pow, htilt_sq, hscale_sq]</span>
+<span id="L56">56       field_simp</span>
+<span id="L57">57     have hprod : tilt * scale = budget := by</span>
+<span id="L58">58       nlinarith [mul_nonneg htilt_nonneg hscale_nonneg]</span>
+<span id="L59">59     have htilt_sq_le : tilt ^ 2 &lt;= epsilon ^ 2 := by</span>
+<span id="L60">60       rw [htilt_sq, div_le_iff₀ hhorizon_pos]</span>
+<span id="L61">61       nlinarith</span>
+<span id="L62">62     have htilt_le : tilt &lt;= epsilon :=</span>
+<span id="L63">63       (sq_le_sq₀ htilt_nonneg hepsilon.le).mp htilt_sq_le</span>
+<span id="L64">64     refine ⟨tilt, htilt_nonneg, htilt_le, ?_⟩</span>
+<span id="L65">65     change -tilt * (2 * scale + budget / epsilon) +</span>
+<span id="L66">66       horizon * (tilt ^ 2 / epsilon) &lt;= -budget</span>
+<span id="L67">67     have hbudget_term : horizon * (tilt ^ 2 / epsilon) = budget := by</span>
+<span id="L68">68       rw [htilt_sq]</span>
+<span id="L69">69       field_simp</span>
+<span id="L70">70     have hextra : 0 &lt;= tilt * (budget / epsilon) :=</span>
+<span id="L71">71       mul_nonneg htilt_nonneg (div_nonneg hbudget hepsilon.le)</span>
+<span id="L72">72     rw [hbudget_term]</span>
+<span id="L73">73     nlinarith</span>
+<span id="L74">74   · refine ⟨epsilon, hepsilon.le, le_rfl, ?_⟩</span>
+<span id="L75">75     let scale := Real.sqrt (horizon * budget / epsilon)</span>
+<span id="L76">76     have hscale_nonneg : 0 &lt;= scale :=</span>
+<span id="L77">77       Real.sqrt_nonneg _</span>
+<span id="L78">78     have hscale_sq : scale ^ 2 = horizon * budget / epsilon := by</span>
+<span id="L79">79       dsimp only [scale]</span>
+<span id="L80">80       rw [Real.sq_sqrt]</span>
+<span id="L81">81       positivity</span>
+<span id="L82">82     have hlarge : epsilon * horizon &lt; budget := lt_of_not_ge hsmall</span>
+<span id="L83">83     have hhorizon_sq_le : horizon ^ 2 &lt;= scale ^ 2 := by</span>
+<span id="L84">84       rw [hscale_sq, le_div_iff₀ hepsilon]</span>
+<span id="L85">85       have hmul := mul_le_mul_of_nonneg_right hlarge.le hhorizon</span>
+<span id="L86">86       simpa [pow_two, mul_assoc, mul_comm, mul_left_comm] using hmul</span>
+<span id="L87">87     have hhorizon_le_scale : horizon &lt;= scale :=</span>
+<span id="L88">88       (sq_le_sq₀ hhorizon hscale_nonneg).mp hhorizon_sq_le</span>
+<span id="L89">89     have hcover : horizon * epsilon &lt;= 2 * epsilon * scale := by</span>
+<span id="L90">90       calc</span>
+<span id="L91">91         horizon * epsilon = epsilon * horizon := by ring</span>
+<span id="L92">92         _ &lt;= epsilon * scale :=</span>
+<span id="L93">93           mul_le_mul_of_nonneg_left hhorizon_le_scale hepsilon.le</span>
+<span id="L94">94         _ &lt;= 2 * epsilon * scale := by</span>
+<span id="L95">95           nlinarith [mul_nonneg hepsilon.le hscale_nonneg]</span>
+<span id="L96">96     calc</span>
+<span id="L97">97       -epsilon *</span>
+<span id="L98">98             (2 * Real.sqrt (horizon * budget / epsilon) + budget / epsilon) +</span>
+<span id="L99">99           horizon * (epsilon ^ 2 / epsilon) =</span>
+<span id="L100">100         -2 * epsilon * Real.sqrt (horizon * budget / epsilon) - budget +</span>
+<span id="L101">101           horizon * epsilon := by</span>
+<span id="L102">102             field_simp</span>
+<span id="L103">103             ring</span>
+<span id="L104">104       _ &lt;= -budget := by</span>
+<span id="L105">105         change -2 * epsilon * scale - budget + horizon * epsilon &lt;= -budget</span>
+<span id="L106">106         nlinarith</span>
+<span id="L107">107 </span>
+<span id="L108">108 end Concentration</span>
+<span id="L109">109 </span>
+<span id="L110">110 namespace Exp3</span>
+<span id="L111">111 </span>
+<span id="L112">112 universe u</span>
+<span id="L113">113 </span>
+<span id="L114">114 /-- Exact centered second moment of one fixed-arm importance-weighted estimator. -/</span>
+<span id="L115">115 theorem sum_prob_mul_sq_comparatorEstimatorDeviation_eq</span>
+<span id="L116">116     {Action : Type u} [DecidableEq Action]</span>
+<span id="L117">117     (arms : Finset Action) (prob loss : Action -&gt; Real)</span>
+<span id="L118">118     (hdist : FiniteActionDistribution arms prob)</span>
+<span id="L119">119     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L120">120     (hprob : prob comparator ≠ 0) :</span>
+<span id="L121">121     arms.sum (fun chosen =&gt;</span>
+<span id="L122">122         prob chosen *</span>
+<span id="L123">123           (importanceWeightedLoss prob loss chosen comparator - loss comparator) ^ 2) =</span>
+<span id="L124">124       (loss comparator) ^ 2 / prob comparator - (loss comparator) ^ 2 := by</span>
+<span id="L125">125   let raw := fun chosen =&gt; importanceWeightedLoss prob loss chosen comparator</span>
+<span id="L126">126   have hfirst : arms.sum (fun chosen =&gt; prob chosen * raw chosen) = loss comparator := by</span>
+<span id="L127">127     simpa [raw] using sum_prob_mul_importanceWeightedLoss_eq_loss</span>
+<span id="L128">128       arms prob loss comparator hcomparator hprob</span>
+<span id="L129">129   have hsecond : arms.sum (fun chosen =&gt; prob chosen * (raw chosen) ^ 2) =</span>
+<span id="L130">130       (loss comparator) ^ 2 / prob comparator := by</span>
+<span id="L131">131     rw [Finset.sum_eq_single comparator]</span>
+<span id="L132">132     · simp [raw, importanceWeightedLoss]</span>
+<span id="L133">133       field_simp</span>
+<span id="L134">134     · intro chosen hchosen hne</span>
+<span id="L135">135       simp [raw, importanceWeightedLoss, hne]</span>
+<span id="L136">136     · exact fun hnotmem =&gt; (hnotmem hcomparator).elim</span>
+<span id="L137">137   have hcenter (chosen : Action) :</span>
+<span id="L138">138       prob chosen * (raw chosen - loss comparator) ^ 2 =</span>
+<span id="L139">139         (prob chosen * (raw chosen) ^ 2 -</span>
+<span id="L140">140           2 * loss comparator * (prob chosen * raw chosen)) +</span>
+<span id="L141">141           (loss comparator) ^ 2 * prob chosen := by</span>
+<span id="L142">142     ring</span>
+<span id="L143">143   change arms.sum (fun chosen =&gt;</span>
+<span id="L144">144     prob chosen * (raw chosen - loss comparator) ^ 2) = _</span>
+<span id="L145">145   simp_rw [hcenter]</span>
+<span id="L146">146   rw [Finset.sum_add_distrib, Finset.sum_sub_distrib,</span>
+<span id="L147">147     ← Finset.mul_sum, ← Finset.mul_sum, hsecond, hfirst, hdist.sum_eq_one]</span>
+<span id="L148">148   ring</span>
+<span id="L149">149 </span>
+<span id="L150">150 /-- The centered comparator estimator has second moment at most the reciprocal probability floor. -/</span>
+<span id="L151">151 theorem sum_prob_mul_sq_comparatorEstimatorDeviation_le_inv_floor</span>
+<span id="L152">152     {Action : Type u} [DecidableEq Action]</span>
+<span id="L153">153     (arms : Finset Action) (prob loss : Action -&gt; Real)</span>
+<span id="L154">154     (hdist : FiniteActionDistribution arms prob)</span>
+<span id="L155">155     (epsilon : Real) (hepsilon : 0 &lt; epsilon)</span>
+<span id="L156">156     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L157">157     (hfloor : epsilon &lt;= prob comparator)</span>
+<span id="L158">158     (hloss : loss comparator ∈ Set.Icc (0 : Real) 1) :</span>
+<span id="L159">159     arms.sum (fun chosen =&gt;</span>
+<span id="L160">160         prob chosen *</span>
+<span id="L161">161           (importanceWeightedLoss prob loss chosen comparator - loss comparator) ^ 2) &lt;=</span>
+<span id="L162">162       1 / epsilon := by</span>
+<span id="L163">163   have hprob_pos : 0 &lt; prob comparator := hepsilon.trans_le hfloor</span>
+<span id="L164">164   rw [sum_prob_mul_sq_comparatorEstimatorDeviation_eq arms prob loss hdist</span>
+<span id="L165">165     comparator hcomparator hprob_pos.ne&#x27;]</span>
+<span id="L166">166   have hloss_sq : (loss comparator) ^ 2 &lt;= 1 := by</span>
+<span id="L167">167     simpa using (sq_le_sq₀ hloss.1 zero_le_one).2 hloss.2</span>
+<span id="L168">168   have hdiv : (loss comparator) ^ 2 / prob comparator &lt;= 1 / epsilon := by</span>
+<span id="L169">169     calc</span>
+<span id="L170">170       (loss comparator) ^ 2 / prob comparator &lt;= 1 / prob comparator :=</span>
+<span id="L171">171         div_le_div_of_nonneg_right hloss_sq hprob_pos.le</span>
+<span id="L172">172       _ &lt;= 1 / epsilon := one_div_le_one_div_of_le hepsilon hfloor</span>
+<span id="L173">173   nlinarith [sq_nonneg (loss comparator)]</span>
+<span id="L174">174 </span>
+<span id="L175">175 /-- Fixed-tilt MGF budget for a finite-law fixed-comparator estimator. -/</span>
+<span id="L176">176 theorem finiteActionComparatorEstimator_hasMGFUpperBoundAt</span>
+<span id="L177">177     {Action : Type u} [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L178">178     [DecidableEq Action]</span>
+<span id="L179">179     (arms : Finset Action) (prob loss : Action -&gt; Real)</span>
+<span id="L180">180     (hdist : FiniteActionDistribution arms prob)</span>
+<span id="L181">181     (epsilon : Real) (hepsilon : 0 &lt; epsilon)</span>
+<span id="L182">182     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L183">183     (hfloor : epsilon &lt;= prob comparator)</span>
+<span id="L184">184     (hloss : loss comparator ∈ Set.Icc (0 : Real) 1)</span>
+<span id="L185">185     (tilt : Real) (htilt_nonneg : 0 &lt;= tilt) (htilt_le : tilt &lt;= epsilon) :</span>
+<span id="L186">186     Concentration.HasMGFUpperBoundAt</span>
+<span id="L187">187       (fun chosen =&gt;</span>
+<span id="L188">188         importanceWeightedLoss prob loss chosen comparator - loss comparator)</span>
+<span id="L189">189       tilt (tilt ^ 2 / epsilon) (finiteActionMeasure arms prob) := by</span>
+<span id="L190">190   let X := fun chosen =&gt;</span>
+<span id="L191">191     importanceWeightedLoss prob loss chosen comparator - loss comparator</span>
+<span id="L192">192   letI : IsProbabilityMeasure (finiteActionMeasure arms prob) :=</span>
+<span id="L193">193     finiteActionMeasure_isProbabilityMeasure arms prob hdist</span>
+<span id="L194">194   have hprob_pos : 0 &lt; prob comparator := hepsilon.trans_le hfloor</span>
+<span id="L195">195   have hprob_le_one : prob comparator &lt;= 1 := by</span>
+<span id="L196">196     calc</span>
+<span id="L197">197       prob comparator &lt;= arms.sum prob := by</span>
+<span id="L198">198         exact Finset.single_le_sum (fun action haction =&gt; hdist.nonneg action haction)</span>
+<span id="L199">199           hcomparator</span>
+<span id="L200">200       _ = 1 := hdist.sum_eq_one</span>
+<span id="L201">201   have hepsilon_le_one : epsilon &lt;= 1 := hfloor.trans hprob_le_one</span>
+<span id="L202">202   have hinv_nonneg : 0 &lt;= 1 / epsilon := (one_div_pos.mpr hepsilon).le</span>
+<span id="L203">203   have hone_le_inv : 1 &lt;= 1 / epsilon := by</span>
+<span id="L204">204     rw [le_div_iff₀ hepsilon]</span>
+<span id="L205">205     simpa using hepsilon_le_one</span>
+<span id="L206">206   have hX_bound (chosen : Action) : |X chosen| &lt;= 1 / epsilon := by</span>
+<span id="L207">207     have hraw_nonneg : 0 &lt;= importanceWeightedLoss prob loss chosen comparator :=</span>
+<span id="L208">208       importanceWeightedLoss_nonneg (chosen := chosen)</span>
+<span id="L209">209         (hdist.nonneg comparator hcomparator) hloss.1</span>
+<span id="L210">210     have hraw_le : importanceWeightedLoss prob loss chosen comparator &lt;= 1 / epsilon := by</span>
+<span id="L211">211       unfold importanceWeightedLoss</span>
+<span id="L212">212       split_ifs</span>
+<span id="L213">213       · exact (div_le_div_of_nonneg_right hloss.2 hprob_pos.le).trans</span>
+<span id="L214">214           (one_div_le_one_div_of_le hepsilon hfloor)</span>
+<span id="L215">215       · exact hinv_nonneg</span>
+<span id="L216">216     dsimp only [X]</span>
+<span id="L217">217     rw [abs_le]</span>
+<span id="L218">218     constructor</span>
+<span id="L219">219     · calc</span>
+<span id="L220">220         -(1 / epsilon) &lt;= -loss comparator := by</span>
+<span id="L221">221           exact neg_le_neg (hloss.2.trans hone_le_inv)</span>
+<span id="L222">222         _ &lt;= importanceWeightedLoss prob loss chosen comparator - loss comparator := by</span>
+<span id="L223">223           linarith</span>
+<span id="L224">224     · calc</span>
+<span id="L225">225         importanceWeightedLoss prob loss chosen comparator - loss comparator &lt;=</span>
+<span id="L226">226             importanceWeightedLoss prob loss chosen comparator := by</span>
+<span id="L227">227           linarith [hloss.1]</span>
+<span id="L228">228         _ &lt;= 1 / epsilon := hraw_le</span>
+<span id="L229">229   constructor</span>
+<span id="L230">230   · intro s</span>
+<span id="L231">231     rw [finiteActionMeasure]</span>
+<span id="L232">232     refine integrable_finset_sum_measure.2 fun action haction =&gt; ?_</span>
+<span id="L233">233     exact (integrable_dirac (by simp)).smul_measure ENNReal.ofReal_ne_top</span>
+<span id="L234">234   · rw [ProbabilityTheory.mgf, integral_finiteActionMeasure_eq_sum arms prob hdist]</span>
+<span id="L235">235     have hexp (chosen : Action) (hchosen : chosen ∈ arms) :</span>
+<span id="L236">236         Real.exp (tilt * X chosen) &lt;=</span>
+<span id="L237">237           1 + tilt * X chosen + (tilt * X chosen) ^ 2 := by</span>
+<span id="L238">238       apply Concentration.exp_le_one_add_self_add_sq_of_abs_le_one</span>
+<span id="L239">239       rw [abs_mul, abs_of_nonneg htilt_nonneg]</span>
+<span id="L240">240       calc</span>
+<span id="L241">241         tilt * |X chosen| &lt;= tilt * (1 / epsilon) :=</span>
+<span id="L242">242           mul_le_mul_of_nonneg_left (hX_bound chosen) htilt_nonneg</span>
+<span id="L243">243         _ &lt;= epsilon * (1 / epsilon) :=</span>
+<span id="L244">244           mul_le_mul_of_nonneg_right htilt_le hinv_nonneg</span>
+<span id="L245">245         _ = 1 := by field_simp</span>
+<span id="L246">246     calc</span>
+<span id="L247">247       arms.sum (fun chosen =&gt; prob chosen * Real.exp (tilt * X chosen)) &lt;=</span>
+<span id="L248">248           arms.sum (fun chosen =&gt;</span>
+<span id="L249">249             prob chosen * (1 + tilt * X chosen + (tilt * X chosen) ^ 2)) := by</span>
+<span id="L250">250         apply Finset.sum_le_sum</span>
+<span id="L251">251         intro chosen hchosen</span>
+<span id="L252">252         exact mul_le_mul_of_nonneg_left (hexp chosen hchosen)</span>
+<span id="L253">253           (hdist.nonneg chosen hchosen)</span>
+<span id="L254">254       _ = 1 + tilt * arms.sum (fun chosen =&gt; prob chosen * X chosen) +</span>
+<span id="L255">255           tilt ^ 2 * arms.sum (fun chosen =&gt; prob chosen * (X chosen) ^ 2) := by</span>
+<span id="L256">256         have hterm (chosen : Action) :</span>
+<span id="L257">257             prob chosen * (1 + tilt * X chosen + (tilt * X chosen) ^ 2) =</span>
+<span id="L258">258               (prob chosen + tilt * (prob chosen * X chosen)) +</span>
+<span id="L259">259                 tilt ^ 2 * (prob chosen * (X chosen) ^ 2) := by ring</span>
+<span id="L260">260         simp_rw [hterm, Finset.sum_add_distrib, ← Finset.mul_sum, hdist.sum_eq_one]</span>
+<span id="L261">261       _ &lt;= 1 + tilt ^ 2 * (1 / epsilon) := by</span>
+<span id="L262">262         have hmean : arms.sum (fun chosen =&gt; prob chosen * X chosen) = 0 := by</span>
+<span id="L263">263           dsimp only [X]</span>
+<span id="L264">264           simp_rw [mul_sub]</span>
+<span id="L265">265           rw [Finset.sum_sub_distrib,</span>
+<span id="L266">266             sum_prob_mul_importanceWeightedLoss_eq_loss arms prob loss comparator</span>
+<span id="L267">267               hcomparator hprob_pos.ne&#x27;, ← Finset.sum_mul, hdist.sum_eq_one]</span>
+<span id="L268">268           ring</span>
+<span id="L269">269         rw [hmean, mul_zero, add_zero]</span>
+<span id="L270">270         have hsecond := mul_le_mul_of_nonneg_left</span>
+<span id="L271">271           (by</span>
+<span id="L272">272             simpa [X] using</span>
+<span id="L273">273               sum_prob_mul_sq_comparatorEstimatorDeviation_le_inv_floor</span>
+<span id="L274">274                 arms prob loss hdist epsilon hepsilon comparator hcomparator hfloor hloss)</span>
+<span id="L275">275           (sq_nonneg tilt)</span>
+<span id="L276">276         simpa only [X, one_div, add_comm] using add_le_add_left hsecond 1</span>
+<span id="L277">277       _ &lt;= Real.exp (tilt ^ 2 / epsilon) := by</span>
+<span id="L278">278         rw [show tilt ^ 2 * (1 / epsilon) = tilt ^ 2 / epsilon by ring]</span>
+<span id="L279">279         simpa [add_comm] using Real.add_one_le_exp (tilt ^ 2 / epsilon)</span>
+<span id="L280">280 </span>
+<span id="L281">281 /-- A finite conditional action law supplies the variance-sensitive fixed-tilt MGF budget for</span>
+<span id="L282">282 one fixed comparator estimator. -/</span>
+<span id="L283">283 theorem comparatorEstimator_hasCondMGFUpperBoundAt_of_condDistrib_ae_eq_finiteActionKernel</span>
+<span id="L284">284     {Omega : Type u} {History : Type v} {Action : Type*}</span>
+<span id="L285">285     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [Nonempty Omega]</span>
+<span id="L286">286     [mHistory : MeasurableSpace History] [StandardBorelSpace History]</span>
+<span id="L287">287     [mAction : MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L288">288     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L289">289     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L290">290     (history : Omega -&gt; History) (hhistory : Measurable history)</span>
+<span id="L291">291     (action : Omega -&gt; Action) (haction : Measurable action)</span>
+<span id="L292">292     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L293">293     (source : MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L294">294     (epsilon : Real)</span>
+<span id="L295">295     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L296">296       arms prob loss epsilon)</span>
+<span id="L297">297     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L298">298     (tilt : Real) (htilt_nonneg : 0 &lt;= tilt) (htilt_le : tilt &lt;= epsilon)</span>
+<span id="L299">299     (hcond : condDistrib action history mu =ᵐ[mu.map history]</span>
+<span id="L300">300       finiteActionKernel arms prob source) :</span>
+<span id="L301">301     Concentration.HasCondMGFUpperBoundAt</span>
+<span id="L302">302       (mHistory.comap history)</span>
+<span id="L303">303       hhistory.comap_le</span>
+<span id="L304">304       (fun omega =&gt;</span>
+<span id="L305">305         importanceWeightedLoss (prob (history omega)) (loss (history omega))</span>
+<span id="L306">306           (action omega) comparator - loss (history omega) comparator)</span>
+<span id="L307">307       tilt (tilt ^ 2 / epsilon) mu := by</span>
+<span id="L308">308   let mcond := mHistory.comap history</span>
+<span id="L309">309   let X := fun omega =&gt;</span>
+<span id="L310">310     importanceWeightedLoss (prob (history omega)) (loss (history omega))</span>
+<span id="L311">311       (action omega) comparator - loss (history omega) comparator</span>
+<span id="L312">312   let target : Omega -&gt; Measure Real := fun omega =&gt; Measure.map</span>
+<span id="L313">313     (fun selected =&gt;</span>
+<span id="L314">314       importanceWeightedLoss (prob (history omega)) (loss (history omega))</span>
+<span id="L315">315         selected comparator - loss (history omega) comparator)</span>
+<span id="L316">316     (finiteActionMeasure arms (prob (history omega)))</span>
+<span id="L317">317   have hmcond : mcond &lt;= mOmega := hhistory.comap_le</span>
+<span id="L318">318   have hrawPair := measurable_importanceWeightedLoss_score</span>
+<span id="L319">319     arms prob loss source epsilon regularity comparator hcomparator</span>
+<span id="L320">320   have hX : @Measurable Omega Real mOmega inferInstance X :=</span>
+<span id="L321">321     (hrawPair.comp (hhistory.prodMk haction)).sub</span>
+<span id="L322">322       ((regularity.measurable_loss comparator hcomparator).comp hhistory)</span>
+<span id="L323">323   have haction_map :=</span>
+<span id="L324">324     condExpKernel_map_eq_finiteActionMeasure_of_condDistrib_ae_eq</span>
+<span id="L325">325       (mOmega := mOmega) (mCondition := mHistory) (mAction := mAction)</span>
+<span id="L326">326       mu action history haction hhistory arms prob source hcond</span>
+<span id="L327">327   have hhistory_mcond :</span>
+<span id="L328">328       @Measurable Omega History mcond mHistory history :=</span>
+<span id="L329">329     Measurable.of_comap_le le_rfl</span>
+<span id="L330">330   have hhistory_map :=</span>
+<span id="L331">331     ConditionalExpectationReward.condExpKernel_map_eq_dirac_of_measurable</span>
+<span id="L332">332       (mOmega := mOmega) (mTarget := mHistory)</span>
+<span id="L333">333       mu mcond hmcond history hhistory_mcond</span>
+<span id="L334">334   have hhistory_ae :</span>
+<span id="L335">335       Filter.Eventually</span>
+<span id="L336">336         (fun omega =&gt; Filter.EventuallyEq</span>
+<span id="L337">337           (ae (@condExpKernel Omega mOmega _ mu _ mcond omega))</span>
+<span id="L338">338           history (fun _ =&gt; history omega))</span>
+<span id="L339">339         (ae (mu.trim hmcond)) := by</span>
+<span id="L340">340     filter_upwards [hhistory_map] with omega hmap</span>
+<span id="L341">341     exact ConditionalExpectationReward.eventuallyEq_const_of_map_eq_dirac</span>
+<span id="L342">342       (mOmega := mOmega) (mTarget := mHistory)</span>
+<span id="L343">343       (@condExpKernel Omega mOmega _ mu _ mcond omega)</span>
+<span id="L344">344       history (history omega) hhistory hmap</span>
+<span id="L345">345   have hkernel_X_eq :</span>
+<span id="L346">346       Filter.Eventually</span>
+<span id="L347">347         (fun omega =&gt; Filter.EventuallyEq</span>
+<span id="L348">348           (ae (@condExpKernel Omega mOmega _ mu _ mcond omega))</span>
+<span id="L349">349           X</span>
+<span id="L350">350           (fun y =&gt;</span>
+<span id="L351">351             importanceWeightedLoss (prob (history omega)) (loss (history omega))</span>
+<span id="L352">352               (action y) comparator - loss (history omega) comparator))</span>
+<span id="L353">353         (ae (mu.trim hmcond)) := by</span>
+<span id="L354">354     filter_upwards [hhistory_ae] with omega hfreeze</span>
+<span id="L355">355     filter_upwards [hfreeze] with y hy</span>
+<span id="L356">356     simp only [X]</span>
+<span id="L357">357     rw [hy]</span>
+<span id="L358">358   have hkernel_map :</span>
+<span id="L359">359       Filter.Eventually</span>
+<span id="L360">360         (fun omega =&gt;</span>
+<span id="L361">361           @Measure.map Omega Real mOmega inferInstance X</span>
+<span id="L362">362               (@condExpKernel Omega mOmega _ mu _ mcond omega) =</span>
+<span id="L363">363             target omega)</span>
+<span id="L364">364         (ae (mu.trim hmcond)) := by</span>
+<span id="L365">365     filter_upwards [haction_map, hkernel_X_eq] with omega haction_eq hXeq</span>
+<span id="L366">366     let score : Action -&gt; Real := fun selected =&gt;</span>
+<span id="L367">367       importanceWeightedLoss (prob (history omega)) (loss (history omega))</span>
+<span id="L368">368         selected comparator - loss (history omega) comparator</span>
+<span id="L369">369     have hscore : Measurable score := by</span>
+<span id="L370">370       exact (hrawPair.comp (measurable_const.prodMk measurable_id)).sub</span>
+<span id="L371">371         measurable_const</span>
+<span id="L372">372     calc</span>
+<span id="L373">373       @Measure.map Omega Real mOmega inferInstance X</span>
+<span id="L374">374           (@condExpKernel Omega mOmega _ mu _ mcond omega) =</span>
+<span id="L375">375         @Measure.map Omega Real mOmega inferInstance</span>
+<span id="L376">376           (fun y =&gt; score (action y))</span>
+<span id="L377">377           (@condExpKernel Omega mOmega _ mu _ mcond omega) :=</span>
+<span id="L378">378             Measure.map_congr hXeq</span>
+<span id="L379">379       _ = Measure.map score</span>
+<span id="L380">380           (@Measure.map Omega Action mOmega mAction action</span>
+<span id="L381">381             (@condExpKernel Omega mOmega _ mu _ mcond omega)) := by</span>
+<span id="L382">382               rw [Measure.map_map hscore haction]</span>
+<span id="L383">383               congr 1</span>
+<span id="L384">384       _ = target omega := by rw [haction_eq]</span>
+<span id="L385">385   have hsub :=</span>
+<span id="L386">386     comparatorEstimator_hasCondSubgaussianMGF_of_condDistrib_ae_eq_finiteActionKernel</span>
+<span id="L387">387       (mOmega := mOmega) (mHistory := mHistory) (mAction := mAction)</span>
+<span id="L388">388       mu history hhistory action haction arms prob loss source epsilon regularity</span>
+<span id="L389">389         comparator hcomparator hcond</span>
+<span id="L390">390   change Concentration.Kernel.HasMGFUpperBoundAt X tilt (tilt ^ 2 / epsilon)</span>
+<span id="L391">391     (@condExpKernel Omega mOmega _ mu _ mcond) (mu.trim hmcond)</span>
+<span id="L392">392   refine ⟨?_, ?_⟩</span>
+<span id="L393">393   · intro s</span>
+<span id="L394">394     rw [@ProbabilityTheory.condExpKernel_comp_trim</span>
+<span id="L395">395       Omega mcond mOmega _ mu _ hmcond]</span>
+<span id="L396">396     simpa [X] using hsub.integrable_exp_mul s</span>
+<span id="L397">397   filter_upwards [hkernel_map] with omega hmap</span>
+<span id="L398">398   let actionMu := finiteActionMeasure arms (prob (history omega))</span>
+<span id="L399">399   let score : Action -&gt; Real := fun selected =&gt;</span>
+<span id="L400">400     importanceWeightedLoss (prob (history omega)) (loss (history omega))</span>
+<span id="L401">401       selected comparator - loss (history omega) comparator</span>
+<span id="L402">402   have hscore : Measurable score :=</span>
+<span id="L403">403     (hrawPair.comp (measurable_const.prodMk measurable_id)).sub measurable_const</span>
+<span id="L404">404   have hfinite : Concentration.HasMGFUpperBoundAt score tilt</span>
+<span id="L405">405       (tilt ^ 2 / epsilon) actionMu := by</span>
+<span id="L406">406     simpa [score, actionMu] using</span>
+<span id="L407">407       finiteActionComparatorEstimator_hasMGFUpperBoundAt</span>
+<span id="L408">408         arms (prob (history omega)) (loss (history omega))</span>
+<span id="L409">409           (source.distribution (history omega)) epsilon regularity.epsilon_pos</span>
+<span id="L410">410           comparator hcomparator</span>
+<span id="L411">411           (regularity.prob_floor (history omega) comparator hcomparator)</span>
+<span id="L412">412           (regularity.loss_mem_Icc (history omega) comparator hcomparator)</span>
+<span id="L413">413           tilt htilt_nonneg htilt_le</span>
+<span id="L414">414   have htarget : Concentration.HasMGFUpperBoundAt id tilt</span>
+<span id="L415">415       (tilt ^ 2 / epsilon) (target omega) := by</span>
+<span id="L416">416     simpa [target, actionMu, score] using</span>
+<span id="L417">417       (Concentration.HasMGFUpperBoundAt.id_map_iff hscore.aemeasurable).2 hfinite</span>
+<span id="L418">418   rw [← hmap] at htarget</span>
+<span id="L419">419   exact ((Concentration.HasMGFUpperBoundAt.id_map_iff hX.aemeasurable).1 htarget).mgf_le</span>
+<span id="L420">420 </span>
+<span id="L421">421 theorem sampledPredictableComparatorEstimatorDeviation_zero_hasCondMGFUpperBoundAt</span>
+<span id="L422">422     {Env : Type u} {Action : Type v}</span>
+<span id="L423">423     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L424">424     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L425">425     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L426">426     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L427">427     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L428">428     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L429">429     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L430">430     (loss : PredictableLossVector Env Action)</span>
+<span id="L431">431     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L432">432     (tilt : Real) (htilt_nonneg : 0 &lt;= tilt)</span>
+<span id="L433">433     (htilt_le : tilt &lt;= gamma / (arms.card : Real)) :</span>
+<span id="L434">434     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L435">435       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L436">436     Concentration.HasCondMGFUpperBoundAt</span>
+<span id="L437">437       ((inferInstance : MeasurableSpace Env).comap</span>
+<span id="L438">438         (fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; sample.1))</span>
+<span id="L439">439       measurable_fst.comap_le</span>
+<span id="L440">440       (sampledTrajectoryPredictableComparatorEstimatorDeviationAt</span>
+<span id="L441">441         arms eta gamma loss comparator 0)</span>
+<span id="L442">442       tilt (tilt ^ 2 / (gamma / (arms.card : Real))) mu := by</span>
+<span id="L443">443   dsimp only</span>
+<span id="L444">444   let algorithm := sampledImportanceWeightedHistoryAlgorithm arms harms</span>
+<span id="L445">445     eta gamma hgamma_pos.le hgamma_le_one</span>
+<span id="L446">446   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L447">447     eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L448">448   let history := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; sample.1</span>
+<span id="L449">449   let action := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L450">450     (sample.2 0).1</span>
+<span id="L451">451   let prob := fun _env : Env =&gt; initialExploredDistribution arms eta gamma</span>
+<span id="L452">452   let source := sampledInitialEnvironmentDistributionSource</span>
+<span id="L453">453     (Env := Env) arms harms eta gamma hgamma_pos.le hgamma_le_one</span>
+<span id="L454">454   let regularity := sampledPredictableInitialLossRegularity</span>
+<span id="L455">455     arms harms eta gamma hgamma_pos hgamma_le_one loss</span>
+<span id="L456">456   have hkernel : Kernel.const Env algorithm.initialAction =</span>
+<span id="L457">457       finiteActionKernel arms prob source := by</span>
+<span id="L458">458     ext env event hevent</span>
+<span id="L459">459     rw [Kernel.const_apply, finiteActionKernel_apply]</span>
+<span id="L460">460     rfl</span>
+<span id="L461">461   have hcond : condDistrib action history mu =ᵐ[mu.map history]</span>
+<span id="L462">462       finiteActionKernel arms prob source := by</span>
+<span id="L463">463     have hbase :=</span>
+<span id="L464">464       canonicalMeasurableEnvironmentTrajectoryMeasure_condDistrib_action_zero_given_environment</span>
+<span id="L465">465         prior algorithm loss.environment</span>
+<span id="L466">466     rw [hkernel] at hbase</span>
+<span id="L467">467     simpa [mu, algorithm, history, action,</span>
+<span id="L468">468       sampledImportanceWeightedTrajectoryKernel] using hbase</span>
+<span id="L469">469   have hmgf :=</span>
+<span id="L470">470     comparatorEstimator_hasCondMGFUpperBoundAt_of_condDistrib_ae_eq_finiteActionKernel</span>
+<span id="L471">471       mu history measurable_fst action (by fun_prop) arms prob loss.initial</span>
+<span id="L472">472         source (gamma / (arms.card : Real)) regularity comparator hcomparator</span>
+<span id="L473">473         tilt htilt_nonneg htilt_le hcond</span>
+<span id="L474">474   simpa [mu, history, action, prob,</span>
+<span id="L475">475     sampledTrajectoryPredictableComparatorEstimatorDeviationAt,</span>
+<span id="L476">476     sampledTrajectoryProbabilityAt, predictableLossAt] using hmgf</span>
+<span id="L477">477 </span>
+<span id="L478">478 theorem sampledPredictableComparatorEstimatorDeviation_succ_hasCondMGFUpperBoundAt</span>
+<span id="L479">479     {Env : Type u} {Action : Type v}</span>
+<span id="L480">480     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L481">481     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L482">482     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L483">483     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L484">484     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L485">485     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L486">486     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L487">487     (loss : PredictableLossVector Env Action)</span>
+<span id="L488">488     (comparator : Action) (hcomparator : comparator ∈ arms) (n : Nat)</span>
+<span id="L489">489     (tilt : Real) (htilt_nonneg : 0 &lt;= tilt)</span>
+<span id="L490">490     (htilt_le : tilt &lt;= gamma / (arms.card : Real)) :</span>
+<span id="L491">491     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L492">492       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L493">493     let history := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L494">494       (sample.1, Preorder.frestrictLe n sample.2)</span>
+<span id="L495">495     Concentration.HasCondMGFUpperBoundAt</span>
+<span id="L496">496       ((inferInstance : MeasurableSpace</span>
+<span id="L497">497         (Env × History.FinitePairHistory Action Real n)).comap history)</span>
+<span id="L498">498       (measurable_fst.prodMk</span>
+<span id="L499">499         ((Preorder.measurable_frestrictLe n).comp measurable_snd)).comap_le</span>
+<span id="L500">500       (sampledTrajectoryPredictableComparatorEstimatorDeviationAt</span>
+<span id="L501">501         arms eta gamma loss comparator (n + 1))</span>
+<span id="L502">502       tilt (tilt ^ 2 / (gamma / (arms.card : Real))) mu := by</span>
+<span id="L503">503   dsimp only</span>
+<span id="L504">504   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L505">505     eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L506">506   let history := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L507">507     (sample.1, Preorder.frestrictLe n sample.2)</span>
+<span id="L508">508   let action := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L509">509     (sample.2 (n + 1)).1</span>
+<span id="L510">510   let prob := fun input : Env × History.FinitePairHistory Action Real n =&gt;</span>
+<span id="L511">511     sampledHistoryDistribution arms eta gamma n input.2</span>
+<span id="L512">512   let roundLoss := fun input : Env × History.FinitePairHistory Action Real n =&gt;</span>
+<span id="L513">513     loss.successor n input.1 input.2</span>
+<span id="L514">514   let source := sampledEnvironmentHistoryDistributionSource</span>
+<span id="L515">515     (Env := Env) arms harms eta gamma hgamma_pos.le hgamma_le_one n</span>
+<span id="L516">516   let regularity := sampledPredictableSuccessorLossRegularity</span>
+<span id="L517">517     arms harms eta gamma hgamma_pos hgamma_le_one loss n</span>
+<span id="L518">518   have hhistory : Measurable history := measurable_fst.prodMk</span>
+<span id="L519">519     ((Preorder.measurable_frestrictLe n).comp measurable_snd)</span>
+<span id="L520">520   have haction : Measurable action := by fun_prop</span>
+<span id="L521">521   have hcond : condDistrib action history mu =ᵐ[mu.map history]</span>
+<span id="L522">522       finiteActionKernel arms prob source := by</span>
+<span id="L523">523     simpa [mu, history, action, prob, source] using</span>
+<span id="L524">524       (sampledImportanceWeightedTrajectoryMeasure_condDistrib_action_given_environment</span>
+<span id="L525">525         prior arms harms eta gamma hgamma_pos.le hgamma_le_one loss n)</span>
+<span id="L526">526   have hmgf :=</span>
+<span id="L527">527     comparatorEstimator_hasCondMGFUpperBoundAt_of_condDistrib_ae_eq_finiteActionKernel</span>
+<span id="L528">528       mu history hhistory action haction arms prob roundLoss source</span>
+<span id="L529">529         (gamma / (arms.card : Real)) regularity comparator hcomparator</span>
+<span id="L530">530         tilt htilt_nonneg htilt_le hcond</span>
+<span id="L531">531   simpa [mu, history, action, prob, roundLoss,</span>
+<span id="L532">532     sampledTrajectoryPredictableComparatorEstimatorDeviationAt,</span>
+<span id="L533">533     sampledTrajectoryProbabilityAt, predictableLossAt] using hmgf</span>
+<span id="L534">534 </span>
+<span id="L535">535 theorem sampledObservedComparatorEstimatorDeviation_zero_hasCondMGFUpperBoundAt</span>
+<span id="L536">536     {Env : Type u} {Action : Type v}</span>
+<span id="L537">537     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L538">538     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L539">539     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L540">540     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L541">541     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L542">542     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L543">543     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L544">544     (loss : PredictableLossVector Env Action)</span>
+<span id="L545">545     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L546">546     (tilt : Real) (htilt_nonneg : 0 &lt;= tilt)</span>
+<span id="L547">547     (htilt_le : tilt &lt;= gamma / (arms.card : Real)) :</span>
+<span id="L548">548     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L549">549       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L550">550     Concentration.HasCondMGFUpperBoundAt</span>
+<span id="L551">551       ((inferInstance : MeasurableSpace Env).comap</span>
+<span id="L552">552         (fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; sample.1))</span>
+<span id="L553">553       measurable_fst.comap_le</span>
+<span id="L554">554       (sampledTrajectoryObservedComparatorEstimatorDeviationAt</span>
+<span id="L555">555         arms eta gamma loss comparator 0)</span>
+<span id="L556">556       tilt (tilt ^ 2 / (gamma / (arms.card : Real))) mu := by</span>
+<span id="L557">557   dsimp only</span>
+<span id="L558">558   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L559">559     eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L560">560   let history := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; sample.1</span>
+<span id="L561">561   have hhistory : Measurable history := measurable_fst</span>
+<span id="L562">562   let mcond := (inferInstance : MeasurableSpace Env).comap history</span>
+<span id="L563">563   letI : MeasurableSpace (Env × ((k : Nat) -&gt; Action × Real)) :=</span>
+<span id="L564">564     Prod.instMeasurableSpace</span>
+<span id="L565">565   have hmcond : mcond &lt;= Prod.instMeasurableSpace := hhistory.comap_le</span>
+<span id="L566">566   have hpredictable :=</span>
+<span id="L567">567     sampledPredictableComparatorEstimatorDeviation_zero_hasCondMGFUpperBoundAt</span>
+<span id="L568">568       prior arms harms eta gamma hgamma_pos hgamma_le_one loss comparator hcomparator</span>
+<span id="L569">569         tilt htilt_nonneg htilt_le</span>
+<span id="L570">570   dsimp only at hpredictable</span>
+<span id="L571">571   have hobserved :=</span>
+<span id="L572">572     (observedAt_eq_predictableAt_ae prior arms harms eta gamma hgamma_pos.le</span>
+<span id="L573">573       hgamma_le_one loss 0 comparator).1</span>
+<span id="L574">574   have hdeviation :</span>
+<span id="L575">575       sampledTrajectoryPredictableComparatorEstimatorDeviationAt</span>
+<span id="L576">576           arms eta gamma loss comparator 0 =ᵐ[mu]</span>
+<span id="L577">577         sampledTrajectoryObservedComparatorEstimatorDeviationAt</span>
+<span id="L578">578           arms eta gamma loss comparator 0 := by</span>
+<span id="L579">579     filter_upwards [hobserved] with sample hs</span>
+<span id="L580">580     simp only [sampledTrajectoryPredictableComparatorEstimatorDeviationAt,</span>
+<span id="L581">581       sampledTrajectoryObservedComparatorEstimatorDeviationAt]</span>
+<span id="L582">582     rw [hs]</span>
+<span id="L583">583   change Concentration.Kernel.HasMGFUpperBoundAt</span>
+<span id="L584">584     (sampledTrajectoryPredictableComparatorEstimatorDeviationAt</span>
+<span id="L585">585       arms eta gamma loss comparator 0)</span>
+<span id="L586">586     tilt (tilt ^ 2 / (gamma / (arms.card : Real)))</span>
+<span id="L587">587     (@condExpKernel (Env × ((k : Nat) -&gt; Action × Real)) inferInstance _</span>
+<span id="L588">588       mu _ mcond) (mu.trim hmcond) at hpredictable</span>
+<span id="L589">589   change Concentration.Kernel.HasMGFUpperBoundAt</span>
+<span id="L590">590     (sampledTrajectoryObservedComparatorEstimatorDeviationAt</span>
+<span id="L591">591       arms eta gamma loss comparator 0)</span>
+<span id="L592">592     tilt (tilt ^ 2 / (gamma / (arms.card : Real)))</span>
+<span id="L593">593     (@condExpKernel (Env × ((k : Nat) -&gt; Action × Real)) inferInstance _</span>
+<span id="L594">594       mu _ mcond) (mu.trim hmcond)</span>
+<span id="L595">595   apply hpredictable.congr</span>
+<span id="L596">596   rw [@ProbabilityTheory.condExpKernel_comp_trim</span>
+<span id="L597">597     (Env × ((k : Nat) -&gt; Action × Real)) mcond inferInstance _ mu _ hmcond]</span>
+<span id="L598">598   exact hdeviation</span>
+<span id="L599">599 </span>
+<span id="L600">600 theorem sampledObservedComparatorEstimatorDeviation_succ_hasCondMGFUpperBoundAt</span>
+<span id="L601">601     {Env : Type u} {Action : Type v}</span>
+<span id="L602">602     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L603">603     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L604">604     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L605">605     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L606">606     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L607">607     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L608">608     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L609">609     (loss : PredictableLossVector Env Action)</span>
+<span id="L610">610     (comparator : Action) (hcomparator : comparator ∈ arms) (n : Nat)</span>
+<span id="L611">611     (tilt : Real) (htilt_nonneg : 0 &lt;= tilt)</span>
+<span id="L612">612     (htilt_le : tilt &lt;= gamma / (arms.card : Real)) :</span>
+<span id="L613">613     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L614">614       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L615">615     let history := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L616">616       (sample.1, Preorder.frestrictLe n sample.2)</span>
+<span id="L617">617     Concentration.HasCondMGFUpperBoundAt</span>
+<span id="L618">618       ((inferInstance : MeasurableSpace</span>
+<span id="L619">619         (Env × History.FinitePairHistory Action Real n)).comap history)</span>
+<span id="L620">620       (measurable_fst.prodMk</span>
+<span id="L621">621         ((Preorder.measurable_frestrictLe n).comp measurable_snd)).comap_le</span>
+<span id="L622">622       (sampledTrajectoryObservedComparatorEstimatorDeviationAt</span>
+<span id="L623">623         arms eta gamma loss comparator (n + 1))</span>
+<span id="L624">624       tilt (tilt ^ 2 / (gamma / (arms.card : Real))) mu := by</span>
+<span id="L625">625   dsimp only</span>
+<span id="L626">626   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L627">627     eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L628">628   let history := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L629">629     (sample.1, Preorder.frestrictLe n sample.2)</span>
+<span id="L630">630   have hhistory : Measurable history := measurable_fst.prodMk</span>
+<span id="L631">631     ((Preorder.measurable_frestrictLe n).comp measurable_snd)</span>
+<span id="L632">632   let mcond := (inferInstance : MeasurableSpace</span>
+<span id="L633">633     (Env × History.FinitePairHistory Action Real n)).comap history</span>
+<span id="L634">634   letI : MeasurableSpace (Env × ((k : Nat) -&gt; Action × Real)) :=</span>
+<span id="L635">635     Prod.instMeasurableSpace</span>
+<span id="L636">636   have hmcond : mcond &lt;= Prod.instMeasurableSpace := hhistory.comap_le</span>
+<span id="L637">637   have hpredictable :=</span>
+<span id="L638">638     sampledPredictableComparatorEstimatorDeviation_succ_hasCondMGFUpperBoundAt</span>
+<span id="L639">639       prior arms harms eta gamma hgamma_pos hgamma_le_one loss comparator</span>
+<span id="L640">640         hcomparator n tilt htilt_nonneg htilt_le</span>
+<span id="L641">641   dsimp only at hpredictable</span>
+<span id="L642">642   have hobserved :=</span>
+<span id="L643">643     (observedAt_eq_predictableAt_ae prior arms harms eta gamma hgamma_pos.le</span>
+<span id="L644">644       hgamma_le_one loss (n + 1) comparator).1</span>
+<span id="L645">645   have hdeviation :</span>
+<span id="L646">646       sampledTrajectoryPredictableComparatorEstimatorDeviationAt</span>
+<span id="L647">647           arms eta gamma loss comparator (n + 1) =ᵐ[mu]</span>
+<span id="L648">648         sampledTrajectoryObservedComparatorEstimatorDeviationAt</span>
+<span id="L649">649           arms eta gamma loss comparator (n + 1) := by</span>
+<span id="L650">650     filter_upwards [hobserved] with sample hs</span>
+<span id="L651">651     simp only [sampledTrajectoryPredictableComparatorEstimatorDeviationAt,</span>
+<span id="L652">652       sampledTrajectoryObservedComparatorEstimatorDeviationAt]</span>
+<span id="L653">653     rw [hs]</span>
+<span id="L654">654   change Concentration.Kernel.HasMGFUpperBoundAt</span>
+<span id="L655">655     (sampledTrajectoryPredictableComparatorEstimatorDeviationAt</span>
+<span id="L656">656       arms eta gamma loss comparator (n + 1))</span>
+<span id="L657">657     tilt (tilt ^ 2 / (gamma / (arms.card : Real)))</span>
+<span id="L658">658     (@condExpKernel (Env × ((k : Nat) -&gt; Action × Real)) inferInstance _</span>
+<span id="L659">659       mu _ mcond) (mu.trim hmcond) at hpredictable</span>
+<span id="L660">660   change Concentration.Kernel.HasMGFUpperBoundAt</span>
+<span id="L661">661     (sampledTrajectoryObservedComparatorEstimatorDeviationAt</span>
+<span id="L662">662       arms eta gamma loss comparator (n + 1))</span>
+<span id="L663">663     tilt (tilt ^ 2 / (gamma / (arms.card : Real)))</span>
+<span id="L664">664     (@condExpKernel (Env × ((k : Nat) -&gt; Action × Real)) inferInstance _</span>
+<span id="L665">665       mu _ mcond) (mu.trim hmcond)</span>
+<span id="L666">666   apply hpredictable.congr</span>
+<span id="L667">667   rw [@ProbabilityTheory.condExpKernel_comp_trim</span>
+<span id="L668">668     (Env × ((k : Nat) -&gt; Action × Real)) mcond inferInstance _ mu _ hmcond]</span>
+<span id="L669">669   exact hdeviation</span>
+<span id="L670">670 </span>
+<span id="L671">671 /-- Variance-sensitive finite-horizon Chernoff bound for one fixed comparator on the generated</span>
+<span id="L672">672 EXP3 trajectory.  The per-round budget is linear, rather than quadratic, in the reciprocal</span>
+<span id="L673">673 exploration floor. -/</span>
+<span id="L674">674 theorem sampledObservedComparatorEstimatorDeviation_sum_tail_fixedTilt</span>
+<span id="L675">675     {Env : Type u} {Action : Type v}</span>
+<span id="L676">676     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L677">677     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L678">678     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L679">679     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L680">680     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L681">681     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L682">682     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L683">683     (loss : PredictableLossVector Env Action)</span>
+<span id="L684">684     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L685">685     (horizon : Nat) (tilt : Real) (htilt_nonneg : 0 &lt;= tilt)</span>
+<span id="L686">686     (htilt_le : tilt &lt;= gamma / (arms.card : Real)) (threshold : Real) :</span>
+<span id="L687">687     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L688">688       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L689">689     mu.real {sample | threshold &lt;= (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L690">690         sampledTrajectoryObservedComparatorEstimatorDeviationAt</span>
+<span id="L691">691           arms eta gamma loss comparator i sample)} &lt;=</span>
+<span id="L692">692       Real.exp (-tilt * threshold +</span>
+<span id="L693">693         (horizon : Real) * (tilt ^ 2 / (gamma / (arms.card : Real)))) := by</span>
+<span id="L694">694   dsimp only</span>
+<span id="L695">695   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L696">696     eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L697">697   let F := sampledPredictableDeviationFiltration Env Action</span>
+<span id="L698">698   let Y := sampledObservedComparatorEstimatorDeviationProcess</span>
+<span id="L699">699     arms eta gamma loss comparator</span>
+<span id="L700">700   let psiY : Nat -&gt; Real</span>
+<span id="L701">701     | 0 =&gt; 0</span>
+<span id="L702">702     | _i + 1 =&gt; tilt ^ 2 / (gamma / (arms.card : Real))</span>
+<span id="L703">703   letI : IsProbabilityMeasure mu := by</span>
+<span id="L704">704     dsimp [mu]</span>
+<span id="L705">705     infer_instance</span>
+<span id="L706">706   have hadapted : StronglyAdapted F Y := by</span>
+<span id="L707">707     simpa [F, Y] using</span>
+<span id="L708">708       (sampledObservedComparatorEstimatorDeviationProcess_stronglyAdapted</span>
+<span id="L709">709         arms harms eta gamma hgamma_pos.le hgamma_le_one loss comparator hcomparator)</span>
+<span id="L710">710   have hzero : Concentration.HasMGFUpperBoundAt (Y 0) tilt (psiY 0) mu := by</span>
+<span id="L711">711     change Concentration.HasMGFUpperBoundAt (fun _ =&gt; 0) tilt 0 mu</span>
+<span id="L712">712     constructor</span>
+<span id="L713">713     · intro s</span>
+<span id="L714">714       simp</span>
+<span id="L715">715     · simp [ProbabilityTheory.mgf]</span>
+<span id="L716">716   have hcond : forall i, i &lt; (horizon + 1) - 1 -&gt;</span>
+<span id="L717">717       Concentration.HasCondMGFUpperBoundAt</span>
+<span id="L718">718         (F i) (F.le i) (Y (i + 1)) tilt (psiY (i + 1)) mu := by</span>
+<span id="L719">719     intro i _hi</span>
+<span id="L720">720     cases i with</span>
+<span id="L721">721     | zero =&gt;</span>
+<span id="L722">722         simpa [mu, F, Y, psiY,</span>
+<span id="L723">723           sampledObservedComparatorEstimatorDeviationProcess] using</span>
+<span id="L724">724           (sampledObservedComparatorEstimatorDeviation_zero_hasCondMGFUpperBoundAt</span>
+<span id="L725">725             prior arms harms eta gamma hgamma_pos hgamma_le_one loss comparator</span>
+<span id="L726">726               hcomparator tilt htilt_nonneg htilt_le)</span>
+<span id="L727">727     | succ n =&gt;</span>
+<span id="L728">728         simpa [mu, F, Y, psiY,</span>
+<span id="L729">729           sampledObservedComparatorEstimatorDeviationProcess,</span>
+<span id="L730">730           Nat.succ_eq_add_one, Nat.add_assoc] using</span>
+<span id="L731">731           (sampledObservedComparatorEstimatorDeviation_succ_hasCondMGFUpperBoundAt</span>
+<span id="L732">732             prior arms harms eta gamma hgamma_pos hgamma_le_one loss comparator</span>
+<span id="L733">733               hcomparator n tilt htilt_nonneg htilt_le)</span>
+<span id="L734">734   have htail := Concentration.measure_sum_ge_le_of_hasCondMGFUpperBoundAt</span>
+<span id="L735">735     hadapted hzero (horizon + 1) hcond threshold htilt_nonneg</span>
+<span id="L736">736   have hprocess (sample : Env × ((k : Nat) -&gt; Action × Real)) :=</span>
+<span id="L737">737     sampledObservedComparatorEstimatorDeviationProcess_sum_range_succ</span>
+<span id="L738">738       arms eta gamma loss comparator horizon sample</span>
+<span id="L739">739   have hbudget_aux (n : Nat) : (Finset.range (n + 1)).sum psiY =</span>
+<span id="L740">740       (n : Real) * (tilt ^ 2 / (gamma / (arms.card : Real))) := by</span>
+<span id="L741">741     induction n with</span>
+<span id="L742">742     | zero =&gt; simp [psiY]</span>
+<span id="L743">743     | succ n ih =&gt;</span>
+<span id="L744">744         rw [show Nat.succ n + 1 = (n + 1) + 1 by omega,</span>
+<span id="L745">745           Finset.sum_range_succ, ih]</span>
+<span id="L746">746         push_cast</span>
+<span id="L747">747         ring</span>
+<span id="L748">748   have hbudget := hbudget_aux horizon</span>
+<span id="L749">749   simpa [Y, hprocess, hbudget] using htail</span>
+<span id="L750">750 </span>
+<span id="L751">751 /-- Variance-sensitive confidence radius obtained by optimizing the fixed-tilt comparator tail. -/</span>
+<span id="L752">752 noncomputable def sampledComparatorEstimatorBernsteinConfidenceRadius</span>
+<span id="L753">753     {Action : Type v} (arms : Finset Action) (gamma : Real)</span>
+<span id="L754">754     (horizon : Nat) (delta : Real) : Real :=</span>
+<span id="L755">755   let budget := max (Real.log (1 / delta)) 0</span>
+<span id="L756">756   2 * Real.sqrt</span>
+<span id="L757">757       ((horizon : Real) * budget / (gamma / (arms.card : Real))) +</span>
+<span id="L758">758     budget / (gamma / (arms.card : Real))</span>
+<span id="L759">759 </span>
+<span id="L760">760 /-- Delta-shaped variance-sensitive confidence bound for one fixed comparator&#x27;s observed</span>
+<span id="L761">761 importance-weighted estimator on the generated EXP3 trajectory. -/</span>
+<span id="L762">762 theorem sampledObservedComparatorEstimatorDeviation_sum_tail_bernstein_delta</span>
+<span id="L763">763     {Env : Type u} {Action : Type v}</span>
+<span id="L764">764     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L765">765     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L766">766     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L767">767     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L768">768     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L769">769     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L770">770     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L771">771     (loss : PredictableLossVector Env Action)</span>
+<span id="L772">772     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L773">773     (horizon : Nat) (delta : Real) (hdelta : 0 &lt; delta) :</span>
+<span id="L774">774     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L775">775       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L776">776     mu {sample |</span>
+<span id="L777">777         sampledComparatorEstimatorBernsteinConfidenceRadius</span>
+<span id="L778">778             arms gamma horizon delta &lt;=</span>
+<span id="L779">779           (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L780">780             sampledTrajectoryObservedComparatorEstimatorDeviationAt</span>
+<span id="L781">781               arms eta gamma loss comparator i sample)} &lt;=</span>
+<span id="L782">782       ENNReal.ofReal delta := by</span>
+<span id="L783">783   dsimp only</span>
+<span id="L784">784   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L785">785     eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L786">786   let epsilon := gamma / (arms.card : Real)</span>
+<span id="L787">787   let budget := max (Real.log (1 / delta)) 0</span>
+<span id="L788">788   let radius :=</span>
+<span id="L789">789     2 * Real.sqrt ((horizon : Real) * budget / epsilon) + budget / epsilon</span>
+<span id="L790">790   have hepsilon : 0 &lt; epsilon := by</span>
+<span id="L791">791     simpa [epsilon] using explorationFloor_pos arms harms gamma hgamma_pos</span>
+<span id="L792">792   have hbudget : 0 &lt;= budget := by</span>
+<span id="L793">793     exact le_max_right _ _</span>
+<span id="L794">794   obtain ⟨tilt, htilt_nonneg, htilt_le, hexponent⟩ :=</span>
+<span id="L795">795     Concentration.exists_tilt_fixedMGF_exponent_le_neg</span>
+<span id="L796">796       (horizon : Real) epsilon budget (by positivity) hepsilon hbudget</span>
+<span id="L797">797   have htail :=</span>
+<span id="L798">798     sampledObservedComparatorEstimatorDeviation_sum_tail_fixedTilt</span>
+<span id="L799">799       prior arms harms eta gamma hgamma_pos hgamma_le_one loss comparator hcomparator</span>
+<span id="L800">800         horizon tilt htilt_nonneg (by simpa [epsilon] using htilt_le) radius</span>
+<span id="L801">801   have hexponent&#x27; :</span>
+<span id="L802">802       -tilt * radius +</span>
+<span id="L803">803           (horizon : Real) * (tilt ^ 2 / (gamma / (arms.card : Real))) &lt;=</span>
+<span id="L804">804         -budget := by</span>
+<span id="L805">805     simpa [radius, epsilon] using hexponent</span>
+<span id="L806">806   have hreal :</span>
+<span id="L807">807       mu.real {sample | radius &lt;= (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L808">808           sampledTrajectoryObservedComparatorEstimatorDeviationAt</span>
+<span id="L809">809             arms eta gamma loss comparator i sample)} &lt;=</span>
+<span id="L810">810         Real.exp (-budget) := by</span>
+<span id="L811">811     exact htail.trans (Real.exp_le_exp.mpr hexponent&#x27;)</span>
+<span id="L812">812   rw [Measure.real] at hreal</span>
+<span id="L813">813   have hennreal :</span>
+<span id="L814">814       mu {sample | radius &lt;= (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L815">815           sampledTrajectoryObservedComparatorEstimatorDeviationAt</span>
+<span id="L816">816             arms eta gamma loss comparator i sample)} &lt;=</span>
+<span id="L817">817         ENNReal.ofReal (Real.exp (-budget)) := by</span>
+<span id="L818">818     exact (ENNReal.le_ofReal_iff_toReal_le</span>
+<span id="L819">819       (measure_ne_top mu {sample | radius &lt;= (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L820">820         sampledTrajectoryObservedComparatorEstimatorDeviationAt</span>
+<span id="L821">821           arms eta gamma loss comparator i sample)})</span>
+<span id="L822">822       (Real.exp_pos _).le).2 hreal</span>
+<span id="L823">823   have hscale : 0 &lt; 1 / delta := one_div_pos.mpr hdelta</span>
+<span id="L824">824   have hexp_le_delta : Real.exp (-budget) &lt;= delta := by</span>
+<span id="L825">825     by_cases hdelta_le_one : delta &lt;= 1</span>
+<span id="L826">826     · have hone_le_inv : 1 &lt;= 1 / delta := by</span>
+<span id="L827">827         simpa using one_div_le_one_div_of_le hdelta hdelta_le_one</span>
+<span id="L828">828       have hlog_nonneg : 0 &lt;= Real.log (1 / delta) :=</span>
+<span id="L829">829         Real.log_nonneg hone_le_inv</span>
+<span id="L830">830       have hbudget_eq : budget = Real.log (1 / delta) :=</span>
+<span id="L831">831         max_eq_left hlog_nonneg</span>
+<span id="L832">832       rw [hbudget_eq, Real.exp_neg, Real.exp_log hscale]</span>
+<span id="L833">833       field_simp</span>
+<span id="L834">834       exact le_rfl</span>
+<span id="L835">835     · have hone_lt_delta : 1 &lt; delta := lt_of_not_ge hdelta_le_one</span>
+<span id="L836">836       have hinv_le_one : 1 / delta &lt;= 1 := by</span>
+<span id="L837">837         simpa using one_div_le_one_div_of_le (by norm_num : (0 : Real) &lt; 1)</span>
+<span id="L838">838           hone_lt_delta.le</span>
+<span id="L839">839       have hlog_nonpos : Real.log (1 / delta) &lt;= 0 :=</span>
+<span id="L840">840         Real.log_nonpos hscale.le hinv_le_one</span>
+<span id="L841">841       have hbudget_eq : budget = 0 := max_eq_right hlog_nonpos</span>
+<span id="L842">842       rw [hbudget_eq, neg_zero, Real.exp_zero]</span>
+<span id="L843">843       exact hone_lt_delta.le</span>
+<span id="L844">844   have hfinal := hennreal.trans (ENNReal.ofReal_le_ofReal hexp_le_delta)</span>
+<span id="L845">845   simpa [radius, budget, epsilon,</span>
+<span id="L846">846     sampledComparatorEstimatorBernsteinConfidenceRadius, mu] using hfinal</span>
+<span id="L847">847 </span>
+<span id="L848">848 end Exp3</span>
+<span id="L849">849 </span>
+<span id="L850">850 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

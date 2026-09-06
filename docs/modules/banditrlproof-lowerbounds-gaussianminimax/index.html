@@ -1,0 +1,946 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.LowerBounds.GaussianMinimax · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.LowerBounds.GaussianMinimax · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.LowerBounds.GaussianMinimax · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Foundations</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>Gaussian<wbr>Minimax</h1>
+  <p class="lede">This module formalizes the proof of Lattimore--Szepesvari, Theorem 15.2, on the repository&#x27;s canonical finite-history law. The local history index is inclusive: lastRound represents exactly lastRound + 1 observations.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html"><code>BanditRLProof/LowerBounds/GaussianMinimax.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/foundations/index.html">1. Finite bandits, traces, and regret</a></dd></div>
+    <div><dt>Declarations</dt><dd>51</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-lowerbounds-bandithistorykl/index.html"><code>BanditRLProof.LowerBounds.BanditHistoryKL</code></a>, <a href="../banditrlproof-lowerbounds-basicideas/index.html"><code>BanditRLProof.LowerBounds.BasicIdeas</code></a>, <a href="../banditrlproof-lowerbounds-minimax/index.html"><code>BanditRLProof.LowerBounds.Minimax</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-lowerbounds-instancedependent/index.html"><code>BanditRLProof.LowerBounds.InstanceDependent</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-55791a777347">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.finiteHistoryPullCountReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A realized pull count, converted to `Real` for the source&#x27;s regret
+algebra.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteHistoryPullCountReal {K : Nat} {Reward : Type*} (n : Nat) (history : History.FinitePairHistory (Fin K) Reward n) (arm : Fin K) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L25">Source line 25</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f770a1c708b3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.finiteHistoryPullCountENNReal_ne_top</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteHistoryPullCountENNReal_ne_top {K : Nat} {Reward : Type*} (n : Nat) (history : History.FinitePairHistory (Fin K) Reward n) (arm : Fin K) : finiteHistoryPullCountENNReal n history arm ≠ ∞</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L31">Source line 31</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ec3fa5f7c605">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.sum_finiteHistoryPullCountENNReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sum_finiteHistoryPullCountENNReal {K : Nat} {Reward : Type*} (n : Nat) (history : History.FinitePairHistory (Fin K) Reward n) : ∑ arm : Fin K, finiteHistoryPullCountENNReal n history arm = n + <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L45">Source line 45</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ed940b43ae5a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.sum_finiteHistoryPullCountReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sum_finiteHistoryPullCountReal {K : Nat} {Reward : Type*} (n : Nat) (history : History.FinitePairHistory (Fin K) Reward n) : ∑ arm : Fin K, finiteHistoryPullCountReal n history arm = n + <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L66">Source line 66</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-966212b000bf">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.finiteHistoryPullCountReal_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteHistoryPullCountReal_nonneg {K : Nat} {Reward : Type*} (n : Nat) (history : History.FinitePairHistory (Fin K) Reward n) (arm : Fin K) : <span class="num">0</span> ≤ finiteHistoryPullCountReal n history arm</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L78">Source line 78</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e9e6cd89015b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.measurable_finiteHistoryPullCountReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_finiteHistoryPullCountReal {K : Nat} {Reward : Type*} [MeasurableSpace Reward] (n : Nat) (arm : Fin K) : Measurable (<span class="kw">fun</span> history : History.FinitePairHistory (Fin K) Reward n =&gt; finiteHistoryPullCountReal n history arm)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L85">Source line 85</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2cf9e60aa70e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.ofReal_mul_probReal_le_lintegral_of_event</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Event integration lower bound in the exact real-probability convention
+used by the Bretagnolle--Huber theorem.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> ofReal_mul_probReal_le_lintegral_of_event {alpha : Type*} [MeasurableSpace alpha] {mu : Measure alpha} [IsFiniteMeasure mu] {A : Set alpha} (hA : MeasurableSet A) {c : Real} (hc : <span class="num">0</span> ≤ c) {f : alpha -&gt; ENNReal} (hf : <span class="kw">forall</span> x, x ∈ A -&gt; ENNReal.ofReal c ≤ f x) : ENNReal.ofReal (c * mu.real A) ≤ ∫⁻ x, f x ∂mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L94">Source line 94</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fbe60463f85e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.sixteen_div_twentySeven_le_exp_neg_half</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A rigorous rational lower bound for the testing constant in the source
+proof.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sixteen_div_twentySeven_le_exp_neg_half : (<span class="num">16</span> / <span class="num">27</span> : Real) ≤ Real.exp (-(<span class="num">1</span> / <span class="num">2</span> : Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L116">Source line 116</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-54030d2f1783">
+  <summary>
+    <span class="kind">structure</span>
+    <code>BanditRLProof.LowerBounds.UnitGaussianBanditEnvironment</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A unit-cube Gaussian environment together with a certified optimal arm.
+The optimal-arm field is proof data; the induced reward kernel depends only on
+`mean`.</p>
+    <pre class="lean-code"><code><span class="kw">structure</span> UnitGaussianBanditEnvironment (K : Nat) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L135">Source line 135</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a39ab5076890">
+  <summary>
+    <span class="kind">abbrev</span>
+    <code>BanditRLProof.LowerBounds.unitGaussianKernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The stationary reward kernel induced by a finite vector of Gaussian
+means.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">abbrev</span> unitGaussianKernel {K : Nat} (mean : Fin K -&gt; Real) : Kernel (Fin K) Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L143">Source line 143</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c8a3038d7299">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.unitGaussianKernel_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> unitGaussianKernel_apply {K : Nat} (mean : Fin K -&gt; Real) (arm : Fin K) : unitGaussianKernel mean arm = unitGaussianArm (mean arm)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L148">Source line 148</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5c35e9dc18ca">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.finiteHistoryGaussianPseudoRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Realized pseudo-regret on an inclusive finite history.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteHistoryGaussianPseudoRegret {K : Nat} (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Real lastRound) : ENNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L160">Source line 160</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ac1c058dd060">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.gaussianExpectedPseudoRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Expected pseudo-regret under the canonical history law.  This is the
+Lemma 4.5-equivalent gap-times-pull-count form of the source quantity `R_n`,
+represented in `ENNReal` to align with Mathlib&#x27;s measure-KL API.  The separate
+reward-sum-regret equality is not asserted by this definition.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> gaussianExpectedPseudoRegret {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) : ENNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L173">Source line 173</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e2000cab341c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.measurable_finiteHistoryGaussianPseudoRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_finiteHistoryGaussianPseudoRegret {K : Nat} (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) : Measurable (finiteHistoryGaussianPseudoRegret environment lastRound)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L182">Source line 182</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f1a6c27e944e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianExpectedPseudoRegret_eq_sum_expectedPulls</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Regrouping expected Gaussian pseudo-regret by arm pulls.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianExpectedPseudoRegret_eq_sum_expectedPulls {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) : gaussianExpectedPseudoRegret algorithm environment lastRound = ∑ arm : Fin K, ENNReal.ofReal (environment.mean environment.bestArm - environment.mean arm) * canonicalRealizedExpectedPullCountThrough algorithm (unitGaussianKernel environment.mean) lastRound arm</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L193">Source line 193</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ff4f2dc79f27">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.sum_canonicalRealizedExpectedPullCountThrough</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every inclusive history contains exactly `lastRound + 1` pulls, hence so
+do the expected realized counts.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sum_canonicalRealizedExpectedPullCountThrough {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (mean : Fin K -&gt; Real) (lastRound : Nat) : ∑ arm : Fin K, canonicalRealizedExpectedPullCountThrough algorithm (unitGaussianKernel mean) lastRound arm = lastRound + <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L217">Source line 217</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5e0ad062b462">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.gaussianExpectedPullCountReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Real-valued first-environment expected pull count.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> gaussianExpectedPullCountReal {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (mean : Fin K -&gt; Real) (lastRound : Nat) (arm : Fin K) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L232">Source line 232</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-927e4a42e753">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianExpectedPullCountReal_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianExpectedPullCountReal_nonneg {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (mean : Fin K -&gt; Real) (lastRound : Nat) (arm : Fin K) : <span class="num">0</span> ≤ gaussianExpectedPullCountReal algorithm mean lastRound arm</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L238">Source line 238</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e4113d1fb417">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.sum_gaussianExpectedPullCountReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sum_gaussianExpectedPullCountReal {K : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (mean : Fin K -&gt; Real) (lastRound : Nat) : ∑ arm : Fin K, gaussianExpectedPullCountReal algorithm mean lastRound arm = lastRound + <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L245">Source line 245</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-920667482ed7">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.gaussianMinimaxBaseMean</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Base mean vector in the proof of Theorem 15.2: arm zero has mean
+`gap`, and every alternative has mean zero.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> gaussianMinimaxBaseMean {m : Nat} (gap : Real) : Fin (m + <span class="num">1</span>) -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L271">Source line 271</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e88104ee3ac6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianMinimaxBaseMean_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianMinimaxBaseMean_zero {m : Nat} (gap : Real) : gaussianMinimaxBaseMean (m := m) gap <span class="num">0</span> = gap</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L275">Source line 275</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b7bfe41fc6cb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianMinimaxBaseMean_succ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianMinimaxBaseMean_succ {m : Nat} (gap : Real) (i : Fin m) : gaussianMinimaxBaseMean (m := m) gap i.succ = <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L280">Source line 280</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-51ac1b830a6d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.gaussianMinimaxChangedMean</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Changed mean vector: the selected alternative `i.succ` is raised from
+zero to `2*gap`, while arm zero remains at `gap`.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> gaussianMinimaxChangedMean {m : Nat} (gap : Real) (i : Fin m) : Fin (m + <span class="num">1</span>) -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L286">Source line 286</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-66c1ab60c98c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianMinimaxChangedMean_selected</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianMinimaxChangedMean_selected {m : Nat} (gap : Real) (i : Fin m) : gaussianMinimaxChangedMean gap i i.succ = <span class="num">2</span> * gap</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L292">Source line 292</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-36d260a5860e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianMinimaxChangedMean_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianMinimaxChangedMean_zero {m : Nat} (gap : Real) (i : Fin m) : gaussianMinimaxChangedMean gap i <span class="num">0</span> = gap</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L298">Source line 298</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6346dcebb4fb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianMinimaxChangedMean_other</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianMinimaxChangedMean_other {m : Nat} (gap : Real) {i j : Fin m} (hji : j ≠ i) : gaussianMinimaxChangedMean gap i j.succ = <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L305">Source line 305</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-92eb850735e7">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.gaussianMinimaxBaseEnvironment</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Certified base environment.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> gaussianMinimaxBaseEnvironment {m : Nat} (gap : Real) (hgap : <span class="num">0</span> ≤ gap) (hgap_le : gap ≤ <span class="num">1</span> / <span class="num">2</span>) : UnitGaussianBanditEnvironment (m + <span class="num">1</span>) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L311">Source line 311</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6fc7251c7c05">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.gaussianMinimaxChangedEnvironment</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Certified changed environment with `i.succ` optimal.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> gaussianMinimaxChangedEnvironment {m : Nat} (gap : Real) (i : Fin m) (hgap : <span class="num">0</span> ≤ gap) (hgap_le : gap ≤ <span class="num">1</span> / <span class="num">2</span>) : UnitGaussianBanditEnvironment (m + <span class="num">1</span>) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L329">Source line 329</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e35375aef845">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.finiteHistoryGaussianPseudoRegret_ne_top</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteHistoryGaussianPseudoRegret_ne_top {K : Nat} (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Real lastRound) : finiteHistoryGaussianPseudoRegret environment lastRound history ≠ ∞</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L358">Source line 358</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b567fb7a9aff">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.finiteHistoryGaussianPseudoRegret_toReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteHistoryGaussianPseudoRegret_toReal {K : Nat} (environment : UnitGaussianBanditEnvironment K) (lastRound : Nat) (history : History.FinitePairHistory (Fin K) Real lastRound) : (finiteHistoryGaussianPseudoRegret environment lastRound history).toReal = ∑ arm : Fin K, (environment.mean environment.bestArm - environment.mean arm) * finiteHistoryPullCountReal lastRound history arm</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L369">Source line 369</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a9909262bf7d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.gaussianMinimaxBaseSmallPullEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The source event `A={T_0(n) &lt;= n/2}`, in the repository&#x27;s inclusive
+history convention.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> gaussianMinimaxBaseSmallPullEvent {m : Nat} (lastRound : Nat) : Set (History.FinitePairHistory (Fin (m + <span class="num">1</span>)) Real lastRound)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L391">Source line 391</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3dde021c8b75">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.measurableSet_gaussianMinimaxBaseSmallPullEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_gaussianMinimaxBaseSmallPullEvent {m : Nat} (lastRound : Nat) : MeasurableSet (gaussianMinimaxBaseSmallPullEvent (m := m) lastRound)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L397">Source line 397</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-edc4dd50001d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.finiteHistoryGaussianPseudoRegret_base_toReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteHistoryGaussianPseudoRegret_base_toReal {m : Nat} (gap : Real) (hgap : <span class="num">0</span> ≤ gap) (hgap_le : gap ≤ <span class="num">1</span> / <span class="num">2</span>) (lastRound : Nat) (history : History.FinitePairHistory (Fin (m + <span class="num">1</span>)) Real lastRound) : (finiteHistoryGaussianPseudoRegret (gaussianMinimaxBaseEnvironment gap hgap hgap_le) lastRound history).toReal = gap * ((lastRound + <span class="num">1</span> : Nat) - finiteHistoryPullCountReal lastRound history <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L405">Source line 405</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9001434fbd84">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.finiteHistoryGaussianPseudoRegret_changed_toReal_lower</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteHistoryGaussianPseudoRegret_changed_toReal_lower {m : Nat} (gap : Real) (i : Fin m) (hgap : <span class="num">0</span> ≤ gap) (hgap_le : gap ≤ <span class="num">1</span> / <span class="num">2</span>) (lastRound : Nat) (history : History.FinitePairHistory (Fin (m + <span class="num">1</span>)) Real lastRound) : gap * finiteHistoryPullCountReal lastRound history <span class="num">0</span> ≤ (finiteHistoryGaussianPseudoRegret (gaussianMinimaxChangedEnvironment gap i hgap hgap_le) lastRound history).toReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L431">Source line 431</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0e5642d188ae">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.base_event_forces_gaussianPseudoRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> base_event_forces_gaussianPseudoRegret {m : Nat} (gap : Real) (hgap : <span class="num">0</span> ≤ gap) (hgap_le : gap ≤ <span class="num">1</span> / <span class="num">2</span>) (lastRound : Nat) (history : History.FinitePairHistory (Fin (m + <span class="num">1</span>)) Real lastRound) (hA : history ∈ gaussianMinimaxBaseSmallPullEvent (m := m) lastRound) : ENNReal.ofReal (((lastRound + <span class="num">1</span> : Nat) : Real) * gap / <span class="num">2</span>) ≤ finiteHistoryGaussianPseudoRegret (gaussianMinimaxBaseEnvironment gap hgap hgap_le) lastRound history</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L457">Source line 457</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-75ad3ec402f9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.changed_complement_forces_gaussianPseudoRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> changed_complement_forces_gaussianPseudoRegret {m : Nat} (gap : Real) (i : Fin m) (hgap : <span class="num">0</span> ≤ gap) (hgap_le : gap ≤ <span class="num">1</span> / <span class="num">2</span>) (lastRound : Nat) (history : History.FinitePairHistory (Fin (m + <span class="num">1</span>)) Real lastRound) (hAc : history ∈ (gaussianMinimaxBaseSmallPullEvent (m := m) lastRound)ᶜ) : ENNReal.ofReal (((lastRound + <span class="num">1</span> : Nat) : Real) * gap / <span class="num">2</span>) ≤ finiteHistoryGaussianPseudoRegret (gaussianMinimaxChangedEnvironment gap i hgap hgap_le) lastRound history</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L473">Source line 473</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3dbb126d3ff7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.base_event_probability_lower_bound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> base_event_probability_lower_bound {m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + <span class="num">1</span>)) Real) (gap : Real) (hgap : <span class="num">0</span> ≤ gap) (hgap_le : gap ≤ <span class="num">1</span> / <span class="num">2</span>) (lastRound : Nat) : ENNReal.ofReal ((((lastRound + <span class="num">1</span> : Nat) : Real) * gap / <span class="num">2</span>) * (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel (gaussianMinimaxBaseMean gap)) lastRound).real (gaussianMinimaxBaseSmallPullEvent (m := m) lastRound)) ≤ gaussianExpectedPseudoRegret algorithm (gaussianMinimaxBaseEnvironment gap hgap hgap_le) lastRound</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L493">Source line 493</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c169def54aa3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.changed_complement_probability_lower_bound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> changed_complement_probability_lower_bound {m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + <span class="num">1</span>)) Real) (gap : Real) (i : Fin m) (hgap : <span class="num">0</span> ≤ gap) (hgap_le : gap ≤ <span class="num">1</span> / <span class="num">2</span>) (lastRound : Nat) : ENNReal.ofReal ((((lastRound + <span class="num">1</span> : Nat) : Real) * gap / <span class="num">2</span>) * (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel (gaussianMinimaxChangedMean gap i)) lastRound).real (gaussianMinimaxBaseSmallPullEvent (m := m) lastRound)ᶜ) ≤ gaussianExpectedPseudoRegret algorithm (gaussianMinimaxChangedEnvironment gap i hgap hgap_le) lastRound</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L510">Source line 510</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a7e01a3a44d0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.klDiv_unitGaussianKernel_base_changed</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> klDiv_unitGaussianKernel_base_changed {m : Nat} (gap : Real) (i j : Fin m) : InformationTheory.klDiv (unitGaussianKernel (gaussianMinimaxBaseMean gap) j.succ) (unitGaussianKernel (gaussianMinimaxChangedMean gap i) j.succ) = <span class="kw">if</span> j = i <span class="kw">then</span> ENNReal.ofReal (<span class="num">2</span> * gap ^ <span class="num">2</span>) <span class="kw">else</span> <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L529">Source line 529</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d2d51d0ea6ce">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.klDiv_gaussianMinimax_base_changed_history</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Lemma 15.1 specialized to the source&#x27;s base/changed Gaussian pair: only
+the selected alternative contributes to the directed history KL.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> klDiv_gaussianMinimax_base_changed_history {m : Nat} (algorithm : Thompson.HistoryAlgorithm (Fin (m + <span class="num">1</span>)) Real) (gap : Real) (i : Fin m) (lastRound : Nat) : InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel (gaussianMinimaxBaseMean gap)) lastRound) (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel (gaussianMinimaxChangedMean gap i)) lastRound) = canonicalRealizedExpectedPullCountThrough algorithm (unitGaussianKernel (gaussianMinimaxBaseMean gap)) lastRound i.succ * ENNReal.ofReal (<span class="num">2</span> * gap ^ <span class="num">2</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L547">Source line 547</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6a30f314726b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.exists_gaussianMinimax_leastExploredAlternative</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Least-explored alternative under the actual base Gaussian history law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exists_gaussianMinimax_leastExploredAlternative {m : Nat} (hm : <span class="num">0</span> &lt; m) (algorithm : Thompson.HistoryAlgorithm (Fin (m + <span class="num">1</span>)) Real) (gap : Real) (lastRound : Nat) : ∃ i : Fin m, gaussianExpectedPullCountReal algorithm (gaussianMinimaxBaseMean gap) lastRound i.succ ≤ ((lastRound + <span class="num">1</span> : Nat) : Real) / (m : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L572">Source line 572</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8fdede289dcd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.exists_gaussianMinimax_historyKL_le_half</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The source gap choice makes the selected base-to-changed history KL at
+most `1/2`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exists_gaussianMinimax_historyKL_le_half {m horizon : Nat} (hm : <span class="num">0</span> &lt; m) (hmhorizon : m ≤ horizon) (algorithm : Thompson.HistoryAlgorithm (Fin (m + <span class="num">1</span>)) Real) : <span class="kw">let</span> gap := gaussianMinimaxGap (m : Real) (horizon : Real) ∃ i : Fin m, InformationTheory.klDiv (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel (gaussianMinimaxBaseMean gap)) (horizon - <span class="num">1</span>)) (canonicalBanditHistoryMeasure algorithm (unitGaussianKernel (gaussianMinimaxChangedMean gap i)) (horizon - <span class="num">1</span>)) ≤ ENNReal.ofReal (<span class="num">1</span> / <span class="num">2</span> : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L592">Source line 592</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-61d315c614f2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.horizon_mul_gaussianMinimaxGap_eq_half_sqrt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> horizon_mul_gaussianMinimaxGap_eq_half_sqrt {alternativeCount horizon : Real} (halternatives : <span class="num">0</span> ≤ alternativeCount) (hhorizon : <span class="num">0</span> &lt; horizon) : horizon * gaussianMinimaxGap alternativeCount horizon = Real.sqrt (alternativeCount * horizon) / <span class="num">2</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L675">Source line 675</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a185972c8c52">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.exists_unitGaussianBandit_expectedPseudoRegret_ge_sqrt_div_twentySeven</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Quantitative two-environment conclusion in the exact source constant.
+For every policy, one of the source&#x27;s base/changed unit-Gaussian bandits has
+expected pseudo-regret at least `sqrt(m*n)/27`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exists_unitGaussianBandit_expectedPseudoRegret_ge_sqrt_div_twentySeven {m horizon : Nat} (hm : <span class="num">0</span> &lt; m) (hmhorizon : m ≤ horizon) (algorithm : Thompson.HistoryAlgorithm (Fin (m + <span class="num">1</span>)) Real) : <span class="kw">let</span> gap := gaussianMinimaxGap (m : Real) (horizon : Real) ∃ i : Fin m, ENNReal.ofReal ((<span class="num">1</span> / <span class="num">27</span> : Real) * Real.sqrt ((m : Real) * (horizon : Real))) ≤ max (gaussianExpectedPseudoRegret algorithm (gaussianMinimaxBaseEnvironment gap (show <span class="num">0</span> ≤ gaussianMinimaxGap (m : Real) (horizon : Real) from Real.sqrt_nonneg _) (gaussianMinimaxGap_le_half (show (<span class="num">0</span> : Real) &lt; (horizon : Real) <span class="kw">by</span> exact_mod_cast lt_of_lt_of_le hm hmhorizon) (<span class="kw">by</span> exact_mod_cast hmhorizon))) (horizon - <span class="num">1</span>)) (gaussianExpectedPseudoRegret algorithm (gaussianMinimaxChangedEnvironment gap i (show <span class="num">0</span> ≤ gaussianMinimaxGap (m : Real) (horizon : Real) from Real.sqrt_nonneg _) (gaussianMinimaxGap_le_half (show (<span class="num">0</span> : Real) &lt; (horizon : Real) <span class="kw">by</span> exact_mod_cast lt_of_lt_of_le hm hmhorizon) (<span class="kw">by</span> exact_mod_cast hmhorizon))) (horizon - <span class="num">1</span>))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L710">Source line 710</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f8f45bb20911">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.exists_unitGaussianBanditEnvironment_expectedPseudoRegret_ge</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Source-facing existence form of Theorem 15.2 with `m=k-1`.  The returned
+environment records both the unit-cube mean vector and a genuinely optimal
+arm; its reward law is the corresponding unit-variance Gaussian bandit.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exists_unitGaussianBanditEnvironment_expectedPseudoRegret_ge {m horizon : Nat} (hm : <span class="num">0</span> &lt; m) (hmhorizon : m ≤ horizon) (algorithm : Thompson.HistoryAlgorithm (Fin (m + <span class="num">1</span>)) Real) : ∃ environment : UnitGaussianBanditEnvironment (m + <span class="num">1</span>), ENNReal.ofReal ((<span class="num">1</span> / <span class="num">27</span> : Real) * Real.sqrt ((m : Real) * (horizon : Real))) ≤ gaussianExpectedPseudoRegret algorithm environment (horizon - <span class="num">1</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L834">Source line 834</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4c43658e3020">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.finiteArmedGaussianMinimaxLowerBound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">*Lattimore--Szepesvari, Theorem 15.2.**  For `k&gt;1`, `n≥k-1`, and
+every possibly randomized nonanticipating policy, there exists a mean vector
+in `[0,1]^k` for which the unit-variance Gaussian bandit has expected
+pseudo-regret at least `sqrt((k-1)n)/27`.
+
+The local history parameter is `n-1`, hence contains exactly `n` observations.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteArmedGaussianMinimaxLowerBound {k horizon : Nat} (hk : <span class="num">1</span> &lt; k) (hkhorizon : k - <span class="num">1</span> ≤ horizon) (algorithm : Thompson.HistoryAlgorithm (Fin k) Real) : ∃ environment : UnitGaussianBanditEnvironment k, ENNReal.ofReal ((<span class="num">1</span> / <span class="num">27</span> : Real) * Real.sqrt (((k - <span class="num">1</span> : Nat) : Real) * (horizon : Real))) ≤ gaussianExpectedPseudoRegret algorithm environment (horizon - <span class="num">1</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L864">Source line 864</a>
+      <a href="../../chapters/foundations/index.html#decl-4c43658e3020-teaching">Open teaching explanation</a>
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9ee95b0c556f">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.unitGaussianWorstCaseExpectedPseudoRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Worst-case expected pseudo-regret over all unit-cube, unit-variance
+Gaussian environments.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> unitGaussianWorstCaseExpectedPseudoRegret (K : Nat) (algorithm : Thompson.HistoryAlgorithm (Fin K) Real) (lastRound : Nat) : ENNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L882">Source line 882</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1f514abf4eac">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.unitGaussianMinimaxExpectedPseudoRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Minimax expected pseudo-regret over stochastic finite-history policies.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> unitGaussianMinimaxExpectedPseudoRegret (K lastRound : Nat) : ENNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L889">Source line 889</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-600fce63f71a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.unitGaussianWorstCaseExpectedPseudoRegret_ge</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> unitGaussianWorstCaseExpectedPseudoRegret_ge {k horizon : Nat} (hk : <span class="num">1</span> &lt; k) (hkhorizon : k - <span class="num">1</span> ≤ horizon) (algorithm : Thompson.HistoryAlgorithm (Fin k) Real) : ENNReal.ofReal ((<span class="num">1</span> / <span class="num">27</span> : Real) * Real.sqrt (((k - <span class="num">1</span> : Nat) : Real) * (horizon : Real))) ≤ unitGaussianWorstCaseExpectedPseudoRegret k algorithm (horizon - <span class="num">1</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L894">Source line 894</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7d888e72081c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Minimax form of Theorem 15.2.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> unitGaussianMinimaxExpectedPseudoRegret_ge {k horizon : Nat} (hk : <span class="num">1</span> &lt; k) (hkhorizon : k - <span class="num">1</span> ≤ horizon) : ENNReal.ofReal ((<span class="num">1</span> / <span class="num">27</span> : Real) * Real.sqrt (((k - <span class="num">1</span> : Nat) : Real) * (horizon : Real))) ≤ unitGaussianMinimaxExpectedPseudoRegret k (horizon - <span class="num">1</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L909">Source line 909</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ae72137aa924">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Chapter 13&#x27;s coarser `c*sqrt(k*n)` statement, now discharged from the
+exact Chapter 15 constant.  The explicit universal choice here is `c=1/54`;
+the source only asks for existence of a positive universal constant.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt {k horizon : Nat} (hk : <span class="num">1</span> &lt; k) (hkhorizon : k ≤ horizon) : ENNReal.ofReal ((<span class="num">1</span> / <span class="num">54</span> : Real) * Real.sqrt ((k : Real) * (horizon : Real))) ≤ unitGaussianMinimaxExpectedPseudoRegret k (horizon - <span class="num">1</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMinimax.lean.html#L922">Source line 922</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

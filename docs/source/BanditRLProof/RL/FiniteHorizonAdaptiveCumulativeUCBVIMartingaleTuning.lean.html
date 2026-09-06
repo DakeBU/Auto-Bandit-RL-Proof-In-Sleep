@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIMartingaleTuning.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIMartingaleTuning.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIMartingaleTuning.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIMartingaleTuning.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVIProbabilityBudget</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-! Tuned Bellman-innovation tail for canonical recurrent UCBVI-CH. -/</span>
+<span id="L4">4 </span>
+<span id="L5">5 open MeasureTheory</span>
+<span id="L6">6 open scoped ENNReal ProbabilityTheory BigOperators</span>
+<span id="L7">7 </span>
+<span id="L8">8 universe u v</span>
+<span id="L9">9 </span>
+<span id="L10">10 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L11">11 </span>
+<span id="L12">12 variable {State : Type u} {Action : Type v}</span>
+<span id="L13">13     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L14">14     [Fintype State] [Fintype Action]</span>
+<span id="L15">15     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L16">16     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L17">17     [Nonempty State] [Nonempty Action]</span>
+<span id="L18">18 </span>
+<span id="L19">19 namespace AdaptiveCumulativeHoeffdingUCBVI</span>
+<span id="L20">20 </span>
+<span id="L21">21 /-- Bellman-martingale charge used in the frozen `20/250` terminal. -/</span>
+<span id="L22">22 noncomputable def bellmanInnovationThreshold</span>
+<span id="L23">23     (mdp : MDP State Action) (episodes : Nat) (delta : Real) : Real :=</span>
+<span id="L24">24   (11 / 8 : Real) * mdp.horizon *</span>
+<span id="L25">25     Real.sqrt ((mdp.horizon : Real) * episodes) *</span>
+<span id="L26">26     logFactor (State := State) (Action := Action) mdp episodes delta</span>
+<span id="L27">27 </span>
+<span id="L28">28 /-- Chernoff tilt optimized for the deterministic `K H^3` variance budget. -/</span>
+<span id="L29">29 noncomputable def bellmanInnovationTilt</span>
+<span id="L30">30     (mdp : MDP State Action) (episodes : Nat) (delta : Real) : Real :=</span>
+<span id="L31">31   4 * bellmanInnovationThreshold (State := State) (Action := Action)</span>
+<span id="L32">32       mdp episodes delta /</span>
+<span id="L33">33     ((episodes : Real) * ((mdp.horizon : Real) * (mdp.horizon : Real) ^ 2))</span>
+<span id="L34">34 </span>
+<span id="L35">35 theorem bellmanInnovationThreshold_nonneg</span>
+<span id="L36">36     (mdp : MDP State Action) (episodes : Nat) (delta : Real) :</span>
+<span id="L37">37     0 &lt;= bellmanInnovationThreshold (State := State) (Action := Action)</span>
+<span id="L38">38       mdp episodes delta := by</span>
+<span id="L39">39   unfold bellmanInnovationThreshold</span>
+<span id="L40">40   exact mul_nonneg</span>
+<span id="L41">41     (mul_nonneg</span>
+<span id="L42">42       (mul_nonneg (by norm_num) (Nat.cast_nonneg mdp.horizon))</span>
+<span id="L43">43       (Real.sqrt_nonneg _))</span>
+<span id="L44">44     (logFactor_nonneg mdp episodes delta)</span>
+<span id="L45">45 </span>
+<span id="L46">46 theorem bellmanInnovationTilt_pos</span>
+<span id="L47">47     (mdp : MDP State Action) (episodes : Nat) (delta : Real)</span>
+<span id="L48">48     (hhorizon : 0 &lt; mdp.horizon) (hepisodes : 0 &lt; episodes)</span>
+<span id="L49">49     (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1) :</span>
+<span id="L50">50     0 &lt; bellmanInnovationTilt (State := State) (Action := Action)</span>
+<span id="L51">51       mdp episodes delta := by</span>
+<span id="L52">52   unfold bellmanInnovationTilt</span>
+<span id="L53">53   apply div_pos</span>
+<span id="L54">54   · apply mul_pos (by norm_num)</span>
+<span id="L55">55     unfold bellmanInnovationThreshold</span>
+<span id="L56">56     exact mul_pos</span>
+<span id="L57">57       (mul_pos</span>
+<span id="L58">58         (mul_pos (by norm_num) (by exact_mod_cast hhorizon))</span>
+<span id="L59">59         (Real.sqrt_pos.2 (mul_pos (by exact_mod_cast hhorizon)</span>
+<span id="L60">60           (by exact_mod_cast hepisodes))))</span>
+<span id="L61">61       (lt_of_lt_of_le zero_lt_one</span>
+<span id="L62">62         (one_le_logFactor mdp episodes delta hhorizon hepisodes</span>
+<span id="L63">63           hdelta hdelta_le_one))</span>
+<span id="L64">64   · positivity</span>
+<span id="L65">65 </span>
+<span id="L66">66 theorem bellmanInnovationTilt_exponent_le_neg_two_logFactor</span>
+<span id="L67">67     (mdp : MDP State Action) (episodes : Nat) (delta : Real)</span>
+<span id="L68">68     (hhorizon : 0 &lt; mdp.horizon) (hepisodes : 0 &lt; episodes)</span>
+<span id="L69">69     (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1) :</span>
+<span id="L70">70     -bellmanInnovationTilt (State := State) (Action := Action)</span>
+<span id="L71">71           mdp episodes delta *</span>
+<span id="L72">72         bellmanInnovationThreshold (State := State) (Action := Action)</span>
+<span id="L73">73           mdp episodes delta +</span>
+<span id="L74">74       (bellmanInnovationTilt (State := State) (Action := Action)</span>
+<span id="L75">75           mdp episodes delta ^ 2 / 8) *</span>
+<span id="L76">76         ((episodes : Real) *</span>
+<span id="L77">77           ((mdp.horizon : Real) * (mdp.horizon : Real) ^ 2)) &lt;=</span>
+<span id="L78">78       -2 * logFactor (State := State) (Action := Action)</span>
+<span id="L79">79         mdp episodes delta := by</span>
+<span id="L80">80   let H : Real := mdp.horizon</span>
+<span id="L81">81   let K : Real := episodes</span>
+<span id="L82">82   let L := logFactor (State := State) (Action := Action) mdp episodes delta</span>
+<span id="L83">83   let threshold : Real := (11 / 8 : Real) * H * Real.sqrt (H * K) * L</span>
+<span id="L84">84   let variance : Real := K * (H * H ^ 2)</span>
+<span id="L85">85   have hH : 0 &lt; H := by dsimp [H]; exact_mod_cast hhorizon</span>
+<span id="L86">86   have hK : 0 &lt; K := by dsimp [K]; exact_mod_cast hepisodes</span>
+<span id="L87">87   have hL : 1 &lt;= L := one_le_logFactor mdp episodes delta</span>
+<span id="L88">88     hhorizon hepisodes hdelta hdelta_le_one</span>
+<span id="L89">89   have hHK : 0 &lt;= H * K := mul_nonneg hH.le hK.le</span>
+<span id="L90">90   have hsqrtSq : Real.sqrt (H * K) ^ 2 = H * K := Real.sq_sqrt hHK</span>
+<span id="L91">91   have hvariance : 0 &lt; variance := by dsimp [variance]; positivity</span>
+<span id="L92">92   have hexact :</span>
+<span id="L93">93       -(4 * threshold / variance) * threshold +</span>
+<span id="L94">94           ((4 * threshold / variance) ^ 2 / 8) * variance =</span>
+<span id="L95">95         -(121 / 32 : Real) * L ^ 2 := by</span>
+<span id="L96">96     dsimp [threshold, variance]</span>
+<span id="L97">97     field_simp</span>
+<span id="L98">98     nlinarith</span>
+<span id="L99">99   change -(4 * threshold / variance) * threshold +</span>
+<span id="L100">100       ((4 * threshold / variance) ^ 2 / 8) * variance &lt;= -2 * L</span>
+<span id="L101">101   rw [hexact]</span>
+<span id="L102">102   nlinarith [mul_nonneg (sub_nonneg.mpr hL) (zero_le_one.trans hL)]</span>
+<span id="L103">103 </span>
+<span id="L104">104 /-- The tuned Bellman-innovation tail consumes at most one fifth of `delta`. -/</span>
+<span id="L105">105 theorem recurrentSource_trajectoryMeasure_bellmanInnovation_sum_ge_threshold_le_fifth</span>
+<span id="L106">106     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L107">107     [IsProbabilityMeasure initialState]</span>
+<span id="L108">108     [StandardBorelSpace (EpisodeBatch mdp 1)]</span>
+<span id="L109">109     [StandardBorelSpace (EpisodeBatchTrajectory mdp 1)]</span>
+<span id="L110">110     (defaultState : State) (episodes : Nat) (delta : Real)</span>
+<span id="L111">111     (hhorizon : 0 &lt; mdp.horizon) (hepisodes : 0 &lt; episodes)</span>
+<span id="L112">112     (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1) :</span>
+<span id="L113">113     let source := recurrentSource mdp initialState defaultState episodes delta</span>
+<span id="L114">114     source.trajectoryMeasure</span>
+<span id="L115">115         {trajectory |</span>
+<span id="L116">116           bellmanInnovationThreshold (State := State) (Action := Action)</span>
+<span id="L117">117               mdp episodes delta &lt;=</span>
+<span id="L118">118             (Finset.range episodes).sum (fun round =&gt;</span>
+<span id="L119">119               recurrentBellmanInnovationProcess mdp defaultState episodes delta</span>
+<span id="L120">120                 round trajectory)} &lt;=</span>
+<span id="L121">121       ENNReal.ofReal (delta / 5) := by</span>
+<span id="L122">122   dsimp only</span>
+<span id="L123">123   let threshold := bellmanInnovationThreshold</span>
+<span id="L124">124     (State := State) (Action := Action) mdp episodes delta</span>
+<span id="L125">125   let tilt := bellmanInnovationTilt</span>
+<span id="L126">126     (State := State) (Action := Action) mdp episodes delta</span>
+<span id="L127">127   let L := logFactor (State := State) (Action := Action) mdp episodes delta</span>
+<span id="L128">128   let B : Real := confidenceNumerator (State := State) (Action := Action)</span>
+<span id="L129">129     mdp episodes</span>
+<span id="L130">130   have htail := trajectoryMeasure_recurrentBellmanInnovation_sum_ge_le</span>
+<span id="L131">131     (mdp := mdp) (initialState := initialState) defaultState episodes delta</span>
+<span id="L132">132     hhorizon tilt threshold</span>
+<span id="L133">133     (bellmanInnovationTilt_pos mdp episodes delta hhorizon hepisodes</span>
+<span id="L134">134       hdelta hdelta_le_one)</span>
+<span id="L135">135   have hexponent :</span>
+<span id="L136">136       -tilt * threshold + (tilt ^ 2 / 8) *</span>
+<span id="L137">137           ((episodes : Real) *</span>
+<span id="L138">138             ((mdp.horizon : Real) * (mdp.horizon : Real) ^ 2)) &lt;=</span>
+<span id="L139">139         -2 * L := by</span>
+<span id="L140">140     dsimp [tilt, threshold, L]</span>
+<span id="L141">141     exact bellmanInnovationTilt_exponent_le_neg_two_logFactor</span>
+<span id="L142">142       mdp episodes delta hhorizon hepisodes hdelta hdelta_le_one</span>
+<span id="L143">143   have hexp : Real.exp (-2 * L) = (delta / B) ^ 2 := by</span>
+<span id="L144">144     dsimp [L, B]</span>
+<span id="L145">145     exact exp_neg_two_mul_logFactor_eq mdp episodes delta</span>
+<span id="L146">146       hhorizon hepisodes hdelta hdelta_le_one</span>
+<span id="L147">147   have hBfive : 5 &lt;= B := by</span>
+<span id="L148">148     dsimp [B]</span>
+<span id="L149">149     exact_mod_cast (show 5 &lt;= confidenceNumerator</span>
+<span id="L150">150       (State := State) (Action := Action) mdp episodes by</span>
+<span id="L151">151         unfold confidenceNumerator totalSteps</span>
+<span id="L152">152         have hproduct : 1 &lt;=</span>
+<span id="L153">153             mdp.horizon * Fintype.card State * Fintype.card Action *</span>
+<span id="L154">154               (episodes * mdp.horizon) := by</span>
+<span id="L155">155           have hpos : 0 &lt;</span>
+<span id="L156">156               mdp.horizon * Fintype.card State * Fintype.card Action *</span>
+<span id="L157">157                 (episodes * mdp.horizon) := by positivity</span>
+<span id="L158">158           omega</span>
+<span id="L159">159         simpa [Nat.mul_assoc] using Nat.mul_le_mul_left 5 hproduct)</span>
+<span id="L160">160   have hreal : Real.exp (-2 * L) &lt;= delta / 5 := by</span>
+<span id="L161">161     rw [hexp]</span>
+<span id="L162">162     have hBpos : 0 &lt; B := lt_of_lt_of_le (by norm_num) hBfive</span>
+<span id="L163">163     have hdeltaB : delta &lt;= B := hdelta_le_one.trans</span>
+<span id="L164">164       ((show (1 : Real) &lt;= 5 by norm_num).trans hBfive)</span>
+<span id="L165">165     have hfiveDelta : 5 * delta &lt;= B ^ 2 := by</span>
+<span id="L166">166       nlinarith [mul_nonneg (sub_nonneg.mpr hBfive) hBpos.le]</span>
+<span id="L167">167     field_simp</span>
+<span id="L168">168     nlinarith</span>
+<span id="L169">169   exact htail.trans &lt;| calc</span>
+<span id="L170">170     ENNReal.ofReal (Real.exp</span>
+<span id="L171">171         (-tilt * threshold + (tilt ^ 2 / 8) *</span>
+<span id="L172">172           ((episodes : Real) *</span>
+<span id="L173">173             ((mdp.horizon : Real) * (mdp.horizon : Real) ^ 2)))) &lt;=</span>
+<span id="L174">174       ENNReal.ofReal (Real.exp (-2 * L)) := by</span>
+<span id="L175">175         apply ENNReal.ofReal_le_ofReal</span>
+<span id="L176">176         exact Real.exp_le_exp.mpr hexponent</span>
+<span id="L177">177     _ &lt;= ENNReal.ofReal (delta / 5) := ENNReal.ofReal_le_ofReal hreal</span>
+<span id="L178">178 </span>
+<span id="L179">179 end AdaptiveCumulativeHoeffdingUCBVI</span>
+<span id="L180">180 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

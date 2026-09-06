@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.StochasticGradientBanditTwoArmTheoremOne · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.StochasticGradientBanditTwoArmTheoremOne · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.StochasticGradientBanditTwoArmTheoremOne · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Frontier</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>Stochastic<wbr>Gradient<wbr>Bandit<wbr>Two<wbr>Arm<wbr>Theorem<wbr>One</h1>
+  <p class="lede">This module closes Theorem 1 of Baudry, Johnson, Vary, Pike-Burke, and Rebeschini, *Does Stochastic Gradient really succeed for Bandits?* (NeurIPS 2025), for the paper&#x27;s fixed two-arm IID reward model.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html"><code>BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/frontier/index.html">10. Automation, resources, and open routes</a></dd></div>
+    <div><dt>Declarations</dt><dd>32</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-algorithms-stochasticgradientbandittwoarmunconditionalrecurrence/index.html"><code>BanditRLProof.Algorithms.StochasticGradientBanditTwoArmUnconditionalRecurrence</code></a>, <a href="../banditrlproof-algorithms-stochasticgradientbandittwoarmfixediid/index.html"><code>BanditRLProof.Algorithms.StochasticGradientBanditTwoArmFixedIID</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-stochasticgradientbanditcorollaryone/index.html"><code>BanditRLProof.Algorithms.StochasticGradientBanditCorollaryOne</code></a>, <a href="../banditrlproof-algorithms-stochasticgradientbandittheoremfourcontractaudit/index.html"><code>BanditRLProof.Algorithms.StochasticGradientBanditTheoremFourContractAudit</code></a>, <a href="../banditrlproof-algorithms-stochasticgradientbandittheoremtwostarvation/index.html"><code>BanditRLProof.Algorithms.StochasticGradientBanditTheoremTwoStarvation</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-7e34f36dc42f">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmTrajectorySourceIncrement</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmTrajectorySourceIncrement {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) (sample : Env × ((k : Nat) -&gt; Fin <span class="num">2</span> × Real)) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L34">Source line 34</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-079de65c2783">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.measurable_twoArmTrajectorySourceIncrement</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_twoArmTrajectorySourceIncrement {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) : Measurable (twoArmTrajectorySourceIncrement (Env := Env) eta n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L44">Source line 44</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3863d6b38fc8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integrable_twoArmTrajectorySourceIncrement</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_twoArmTrajectorySourceIncrement {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) : Integrable (twoArmTrajectorySourceIncrement (Env := Env) eta n) (twoArmTrajectoryMeasure prior eta environment)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L65">Source line 65</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7ee470fdab59">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmTrajectorySourceIncrement_condExp_ae_eq_integral_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmTrajectorySourceIncrement_condExp_ae_eq_integral_condDistrib {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) : (twoArmTrajectoryMeasure prior eta environment)[ twoArmTrajectorySourceIncrement (Env := Env) eta n | twoArmPrefixSigma (Env := Env) n] =ᵐ[ twoArmTrajectoryMeasure prior eta environment] <span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Fin <span class="num">2</span> × Real) =&gt; integral (condDistrib (twoArmNextPair n) (twoArmEnvironmentPrefix n) (twoArmTrajectoryMeasure prior eta environment) (twoArmEnvironmentPrefix n sample)) (<span class="kw">fun</span> pair : Fin <span class="num">2</span> × Real =&gt; sourceIncrement (softmaxProbability (historyParameter (<span class="kw">fun</span> _ : Fin <span class="num">2</span> =&gt; <span class="num">0</span>) eta n (twoArmEnvironmentPrefix n sample).<span class="num">2</span>)) pair.<span class="num">2</span> pair.<span class="num">1</span> <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L87">Source line 87</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b2d35a05e1d1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmTrajectorySourceIncrement_condExp_ae_eq_successFailure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmTrajectorySourceIncrement_condExp_ae_eq_successFailure {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean <span class="num">0</span> - mean <span class="num">1</span> = Delta) (n : Nat) : (twoArmTrajectoryMeasure prior eta environment)[ twoArmTrajectorySourceIncrement (Env := Env) eta n | twoArmPrefixSigma (Env := Env) n] =ᵐ[ twoArmTrajectoryMeasure prior eta environment] <span class="kw">fun</span> sample =&gt; Delta * twoArmSuccessProbability eta n sample * twoArmFailureMass eta n sample</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L162">Source line 162</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-32926ca08b17">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmTrajectoryParameterZero_succ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmTrajectoryParameterZero_succ {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) (sample : Env × ((k : Nat) -&gt; Fin <span class="num">2</span> × Real)) : twoArmTrajectoryParameterZero eta (n + <span class="num">1</span>) sample = twoArmTrajectoryParameterZero eta n sample + eta * twoArmTrajectorySourceIncrement eta n sample</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L235">Source line 235</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9d4e039079fc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integrable_twoArmTrajectoryParameterZero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_twoArmTrajectoryParameterZero {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) : Integrable (twoArmTrajectoryParameterZero (Env := Env) eta n) (twoArmTrajectoryMeasure prior eta environment)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L252">Source line 252</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f1060148561f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integral_twoArmTrajectorySourceIncrement_eq_successFailure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_twoArmTrajectorySourceIncrement_eq_successFailure {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean <span class="num">0</span> - mean <span class="num">1</span> = Delta) (n : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmTrajectorySourceIncrement (Env := Env) eta n) = integral (twoArmTrajectoryMeasure prior eta environment) (<span class="kw">fun</span> sample =&gt; Delta * twoArmSuccessProbability eta n sample * twoArmFailureMass eta n sample)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L273">Source line 273</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-25678c02942c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integral_twoArmTrajectoryParameterZero_succ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_twoArmTrajectoryParameterZero_succ {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean <span class="num">0</span> - mean <span class="num">1</span> = Delta) (n : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmTrajectoryParameterZero (Env := Env) eta (n + <span class="num">1</span>)) = integral (twoArmTrajectoryMeasure prior eta environment) (twoArmTrajectoryParameterZero (Env := Env) eta n) + eta * integral (twoArmTrajectoryMeasure prior eta environment) (<span class="kw">fun</span> sample =&gt; Delta * twoArmSuccessProbability eta n sample * twoArmFailureMass eta n sample)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L305">Source line 305</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0315cc4a4ed0">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmInitialSourceIncrement</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmInitialSourceIncrement (pair : Fin <span class="num">2</span> × Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L345">Source line 345</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-59d0b7f66cbb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.measurable_twoArmInitialSourceIncrement</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_twoArmInitialSourceIncrement : Measurable twoArmInitialSourceIncrement</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L350">Source line 350</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c5da08299c65">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integral_twoArmInitialSourceIncrement_eq_quarter_gap</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_twoArmInitialSourceIncrement_eq_quarter_gap {Env : Type v} [MeasurableSpace Env] (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (env : Env) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean <span class="num">0</span> - mean <span class="num">1</span> = Delta) : integral (Thompson.measurableEnvironmentInitialPairKernel (historyAlgorithm (<span class="kw">fun</span> _ : Fin <span class="num">2</span> =&gt; <span class="num">0</span>) eta) environment env) twoArmInitialSourceIncrement = Delta / <span class="num">4</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L356">Source line 356</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-108f022c6d5a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integral_twoArmTrajectoryParameterZero_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_twoArmTrajectoryParameterZero_zero {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean <span class="num">0</span> - mean <span class="num">1</span> = Delta) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmTrajectoryParameterZero (Env := Env) eta <span class="num">0</span>) = eta * Delta / <span class="num">4</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L396">Source line 396</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-10fdbf81e69b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integral_twoArmTrajectoryParameterZero_eq_successFailureSum</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_twoArmTrajectoryParameterZero_eq_successFailureSum {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean <span class="num">0</span> - mean <span class="num">1</span> = Delta) (tailHorizon : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmTrajectoryParameterZero (Env := Env) eta tailHorizon) = eta * Delta * ((<span class="num">1</span> : Real) / <span class="num">4</span> + (Finset.range tailHorizon).sum (<span class="kw">fun</span> n =&gt; integral (twoArmTrajectoryMeasure prior eta environment) (<span class="kw">fun</span> sample =&gt; twoArmSuccessProbability eta n sample * twoArmFailureMass eta n sample)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L486">Source line 486</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-85be282ff5ff">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.measurable_twoArmSuccessFailureMass</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_twoArmSuccessFailureMass {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) : Measurable (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Fin <span class="num">2</span> × Real) =&gt; twoArmSuccessProbability eta n sample * twoArmFailureMass eta n sample)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L532">Source line 532</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e6f67eaa0692">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integrable_twoArmSuccessFailureMass</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_twoArmSuccessFailureMass {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (n : Nat) : Integrable (<span class="kw">fun</span> sample =&gt; twoArmSuccessProbability (Env := Env) eta n sample * twoArmFailureMass eta n sample) (twoArmTrajectoryMeasure prior eta environment)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L541">Source line 541</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9472500f3c3f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integral_twoArmFailureMass_eq_successFailure_add_sq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_twoArmFailureMass_eq_successFailure_add_sq {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (n : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (<span class="kw">fun</span> sample =&gt; twoArmFailureMass (Env := Env) eta n sample) = integral (twoArmTrajectoryMeasure prior eta environment) (<span class="kw">fun</span> sample =&gt; twoArmSuccessProbability eta n sample * twoArmFailureMass eta n sample) + integral (twoArmTrajectoryMeasure prior eta environment) (<span class="kw">fun</span> sample =&gt; twoArmFailureMass eta n sample ^ <span class="num">2</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L565">Source line 565</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1b23e9149fa1">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmGeneratedExpectedPseudoRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Expected pseudo-regret for source rounds `1, ..., tailHorizon + 1`.
+The first round is uniform, and Lean tail index `n` is source round `n + 2`.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmGeneratedExpectedPseudoRegret {Env : Type v} [MeasurableSpace Env] (prior : Measure Env) (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (tailHorizon : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L597">Source line 597</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0950628466a5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmGeneratedExpectedPseudoRegret_eq_parameter_add_failureSq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmGeneratedExpectedPseudoRegret_eq_parameter_add_failureSq {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (heta : <span class="num">0</span> &lt; eta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean <span class="num">0</span> - mean <span class="num">1</span> = Delta) (tailHorizon : Nat) : twoArmGeneratedExpectedPseudoRegret prior eta Delta environment tailHorizon = integral (twoArmTrajectoryMeasure prior eta environment) (twoArmTrajectoryParameterZero (Env := Env) eta tailHorizon) / eta + Delta * ((<span class="num">1</span> : Real) / <span class="num">4</span> + (Finset.range tailHorizon).sum (<span class="kw">fun</span> n =&gt; integral (twoArmTrajectoryMeasure prior eta environment) (<span class="kw">fun</span> sample =&gt; twoArmFailureMass eta n sample ^ <span class="num">2</span>)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L607">Source line 607</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-10ee15e5b28b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integral_twoArmTrajectoryParameterZero_le_half_log_forwardPotential</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_twoArmTrajectoryParameterZero_le_half_log_forwardPotential {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (tailHorizon : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmTrajectoryParameterZero (Env := Env) eta tailHorizon) &lt;= Real.log (integral (twoArmTrajectoryMeasure prior eta environment) (twoArmForwardPotential (Env := Env) eta tailHorizon)) / <span class="num">2</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L646">Source line 646</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b417c09e418a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integral_twoArmSuccessProbability_sq_le_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_twoArmSuccessProbability_sq_le_one {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (n : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (<span class="kw">fun</span> sample =&gt; twoArmSuccessProbability (Env := Env) eta n sample ^ <span class="num">2</span>) &lt;= <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L694">Source line 694</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3b2a9a38f0ac">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integral_twoArmForwardPotential_le_source_bound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_twoArmForwardPotential_le_source_bound {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (heta : <span class="num">0</span> &lt; eta) (hDelta : <span class="num">0</span> &lt; Delta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean <span class="num">0</span> - mean <span class="num">1</span> = Delta) (hmargin : eta * sourceC eta &lt; Delta) (tailHorizon : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmForwardPotential (Env := Env) eta tailHorizon) &lt;= <span class="num">1</span> + <span class="num">4</span> * eta * Delta * ((tailHorizon + <span class="num">1</span> : Nat) : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L725">Source line 725</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cb50279e11f4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integral_twoArmTrajectoryParameterZero_le_source_log_bound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_twoArmTrajectoryParameterZero_le_source_log_bound {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (heta : <span class="num">0</span> &lt; eta) (hDelta : <span class="num">0</span> &lt; Delta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean <span class="num">0</span> - mean <span class="num">1</span> = Delta) (hmargin : eta * sourceC eta &lt; Delta) (tailHorizon : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmTrajectoryParameterZero (Env := Env) eta tailHorizon) &lt;= Real.log (<span class="num">1</span> + <span class="num">4</span> * eta * Delta * ((tailHorizon + <span class="num">1</span> : Nat) : Real)) / <span class="num">2</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L790">Source line 790</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-aef4926772b2">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmActionGap</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmActionGap (Delta : Real) (action : Fin <span class="num">2</span>) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L844">Source line 844</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f2d37592db40">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.measurable_twoArmActionGap</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_twoArmActionGap (Delta : Real) : Measurable (twoArmActionGap Delta)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L847">Source line 847</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-26436bbdcd1f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integral_twoArmInitialActionGap_eq_half</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_twoArmInitialActionGap_eq_half {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) : integral (twoArmTrajectoryMeasure prior eta environment) (<span class="kw">fun</span> sample =&gt; twoArmActionGap Delta (sample.<span class="num">2</span> <span class="num">0</span>).<span class="num">1</span>) = Delta / <span class="num">2</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L851">Source line 851</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-da04c63f5848">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integral_twoArmSuccessorActionGap_eq_failureMass</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_twoArmSuccessorActionGap_eq_failureMass {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (n : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (<span class="kw">fun</span> sample =&gt; twoArmActionGap Delta (sample.<span class="num">2</span> (n + <span class="num">1</span>)).<span class="num">1</span>) = Delta * integral (twoArmTrajectoryMeasure prior eta environment) (<span class="kw">fun</span> sample =&gt; twoArmFailureMass (Env := Env) eta n sample)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L915">Source line 915</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-66e26454a0b8">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmSampledPseudoRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmSampledPseudoRegret {Env : Type v} (Delta : Real) (horizon : Nat) (sample : Env × ((k : Nat) -&gt; Fin <span class="num">2</span> × Real)) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L1007">Source line 1007</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cc6e96d93725">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_eq_generated</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_twoArmSampledPseudoRegret_eq_generated {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (tailHorizon : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmSampledPseudoRegret (Env := Env) Delta (tailHorizon + <span class="num">1</span>)) = twoArmGeneratedExpectedPseudoRegret prior eta Delta environment tailHorizon</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L1013">Source line 1013</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ac1c5d499dcb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmGeneratedExpectedPseudoRegret_le_sourceTheoremOne</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmGeneratedExpectedPseudoRegret_le_sourceTheoremOne {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (heta : <span class="num">0</span> &lt; eta) (hDelta : <span class="num">0</span> &lt; Delta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean <span class="num">0</span> - mean <span class="num">1</span> = Delta) (hmargin : eta * sourceC eta &lt; Delta) (tailHorizon : Nat) : twoArmGeneratedExpectedPseudoRegret prior eta Delta environment tailHorizon &lt;= Real.log (<span class="num">1</span> + <span class="num">4</span> * eta * Delta * ((tailHorizon + <span class="num">1</span> : Nat) : Real)) / (<span class="num">2</span> * eta) + Delta / (<span class="num">2</span> * eta * (Delta - eta * sourceC eta))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L1057">Source line 1057</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-234c90645f52">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_le_sourceTheoremOne</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_twoArmSampledPseudoRegret_le_sourceTheoremOne {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsProbabilityMeasure prior] (eta Delta : Real) (heta : <span class="num">0</span> &lt; eta) (hDelta : <span class="num">0</span> &lt; Delta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean <span class="num">0</span> - mean <span class="num">1</span> = Delta) (hmargin : eta * sourceC eta &lt; Delta) (tailHorizon : Nat) : integral (twoArmTrajectoryMeasure prior eta environment) (twoArmSampledPseudoRegret (Env := Env) Delta (tailHorizon + <span class="num">1</span>)) &lt;= Real.log (<span class="num">1</span> + <span class="num">4</span> * eta * Delta * ((tailHorizon + <span class="num">1</span> : Nat) : Real)) / (<span class="num">2</span> * eta) + Delta / (<span class="num">2</span> * eta * (Delta - eta * sourceC eta))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L1106">Source line 1106</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0c2e512d4027">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_theoremOne</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Source-faithful Theorem 1 of Baudry--Johnson--Vary--Pike-Burke--
+Rebeschini (NeurIPS 2025), for a fixed pair of IID arm laws.  Lean horizon
+`tailHorizon + 1` is source `T`, including the uniform first action.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmFixedIIDDirac_theoremOne (armLaw : Fin <span class="num">2</span> -&gt; Measure Real) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (mean : Fin <span class="num">2</span> -&gt; Real) (hbound : <span class="kw">forall</span> arm, ∀ᵐ reward ∂armLaw arm, |reward| &lt;= <span class="num">1</span>) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) id = mean arm) (eta Delta : Real) (heta : <span class="num">0</span> &lt; eta) (hDelta : <span class="num">0</span> &lt; Delta) (_hDelta_lt_one : Delta &lt; <span class="num">1</span>) (hgap : mean <span class="num">0</span> - mean <span class="num">1</span> = Delta) (hmargin : eta * sourceC eta &lt; Delta) (tailHorizon : Nat) : integral (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmSampledPseudoRegret (Env := Unit) Delta (tailHorizon + <span class="num">1</span>)) &lt;= Real.log (<span class="num">1</span> + <span class="num">4</span> * eta * Delta * ((tailHorizon + <span class="num">1</span> : Nat) : Real)) / (<span class="num">2</span> * eta) + Delta / (<span class="num">2</span> * eta * (Delta - eta * sourceC eta))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean.html#L1131">Source line 1131</a>
+      <a href="../../chapters/frontier/index.html#decl-0c2e512d4027-teaching">Open teaching explanation</a>
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

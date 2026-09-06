@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.TsallisRefinedImportanceWeightedMoment · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.TsallisRefinedImportanceWeightedMoment · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.TsallisRefinedImportanceWeightedMoment · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Tsallis-FTRL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Tsallis<wbr>Refined<wbr>Importance<wbr>Weighted<wbr>Moment</h1>
+  <p class="lede">This module isolates the finite-sum calculation behind the ordinary importance-weighted part of the refined half-Tsallis stability route. The baseline is the sampled raw loss. The quadratic moment contracts to sum_a sqrt (p a) * (1 - p a), while the positive cubic remainder is at most one.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/TsallisRefinedImportanceWeightedMoment.lean.html"><code>BanditRLProof/TsallisRefinedImportanceWeightedMoment.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/tsallis/index.html">8. Tsallis-FTRL, corruption, and nonstationarity</a></dd></div>
+    <div><dt>Declarations</dt><dd>9</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-tsallisftrlgeneratedregularity/index.html"><code>BanditRLProof.TsallisFTRLGeneratedRegularity</code></a>, <a href="../banditrlproof-tsallisimportanceweightedmoment/index.html"><code>BanditRLProof.TsallisImportanceWeightedMoment</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-tsallisconjugatepotentialstability/index.html"><code>BanditRLProof.TsallisConjugatePotentialStability</code></a>, <a href="../banditrlproof-tsallisrefinedaveragedstabilityobstruction/index.html"><code>BanditRLProof.TsallisRefinedAveragedStabilityObstruction</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-d230424ad39b">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.shiftedHalfPowerImportanceWeightedMoment</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Inverse-half-Tsallis-Hessian quadratic moment after subtracting a baseline.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> shiftedHalfPowerImportanceWeightedMoment {Action : Type u} (arms : Finset Action) (prob loss : Action -&gt; Real) (chosen : Action) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisRefinedImportanceWeightedMoment.lean.html#L27">Source line 27</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-184da0295f54">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.shiftedPositiveCubicImportanceWeightedMoment</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Positive cubic remainder used by the refined Taylor bound.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> shiftedPositiveCubicImportanceWeightedMoment {Action : Type u} (arms : Finset Action) (prob loss : Action -&gt; Real) (chosen : Action) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisRefinedImportanceWeightedMoment.lean.html#L36">Source line 36</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c4f1f256c8e7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sum_mul_sum_erase_eq_sum_mul_one_sub</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Reindex a weighted sum over complements using simplex normalization.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sum_mul_sum_erase_eq_sum_mul_one_sub {Action : Type u} [DecidableEq Action] (arms : Finset Action) (prob weight : Action -&gt; Real) (hsum : arms.sum prob = <span class="num">1</span>) : arms.sum (<span class="kw">fun</span> chosen =&gt; prob chosen * (arms.erase chosen).sum weight) = arms.sum (<span class="kw">fun</span> action =&gt; weight action * (<span class="num">1</span> - prob action))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisRefinedImportanceWeightedMoment.lean.html#L46">Source line 46</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-debb2deb48ea">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.prob_mul_shiftedHalfPowerImportanceWeightedMoment_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact sampled-action expansion of the shifted quadratic moment.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> prob_mul_shiftedHalfPowerImportanceWeightedMoment_eq {Action : Type u} [DecidableEq Action] (arms : Finset Action) (prob loss : Action -&gt; Real) {chosen : Action} (hchosen : chosen ∈ arms) (hprob : <span class="num">0</span> &lt; prob chosen) : prob chosen * shiftedHalfPowerImportanceWeightedMoment arms prob loss chosen = (loss chosen) ^ <span class="num">2</span> * (Real.sqrt (prob chosen) * (<span class="num">1</span> - prob chosen) ^ <span class="num">2</span> + prob chosen * (arms.erase chosen).sum (<span class="kw">fun</span> action =&gt; Real.sqrt (prob action) * prob action))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisRefinedImportanceWeightedMoment.lean.html#L89">Source line 89</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0f4316a0beb4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sum_prob_mul_shiftedHalfPowerImportanceWeightedMoment_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The sampled shifted quadratic IW moment is bounded by the refined all-arm
+half-power mass.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sum_prob_mul_shiftedHalfPowerImportanceWeightedMoment_le {Action : Type u} [DecidableEq Action] (arms : Finset Action) (prob loss : Action -&gt; Real) (hprobability : FTRL.finiteSimplex arms prob) (hprob : <span class="kw">forall</span> action, action ∈ arms -&gt; <span class="num">0</span> &lt; prob action) (hloss : <span class="kw">forall</span> action, action ∈ arms -&gt; <span class="num">0</span> &lt;= loss action ∧ loss action &lt;= <span class="num">1</span>) : arms.sum (<span class="kw">fun</span> chosen =&gt; prob chosen * shiftedHalfPowerImportanceWeightedMoment arms prob loss chosen) &lt;= arms.sum (<span class="kw">fun</span> action =&gt; Real.sqrt (prob action) * (<span class="num">1</span> - prob action))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisRefinedImportanceWeightedMoment.lean.html#L136">Source line 136</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a140ba017811">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.prob_mul_shiftedPositiveCubicImportanceWeightedMoment_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact sampled-action expansion of the positive cubic remainder.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> prob_mul_shiftedPositiveCubicImportanceWeightedMoment_eq {Action : Type u} [DecidableEq Action] (arms : Finset Action) (prob loss : Action -&gt; Real) {chosen : Action} (hchosen : chosen ∈ arms) (hprob : <span class="num">0</span> &lt; prob chosen) (hprobLeOne : prob chosen &lt;= <span class="num">1</span>) (hlossNonneg : <span class="num">0</span> &lt;= loss chosen) : prob chosen * shiftedPositiveCubicImportanceWeightedMoment arms prob loss chosen = prob chosen * (loss chosen) ^ <span class="num">3</span> * (arms.erase chosen).sum (<span class="kw">fun</span> action =&gt; (prob action) ^ <span class="num">2</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisRefinedImportanceWeightedMoment.lean.html#L195">Source line 195</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-378d7121f5c3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sum_prob_mul_shiftedPositiveCubicImportanceWeightedMoment_le_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The sampled positive cubic IW remainder is at most one.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sum_prob_mul_shiftedPositiveCubicImportanceWeightedMoment_le_one {Action : Type u} [DecidableEq Action] (arms : Finset Action) (prob loss : Action -&gt; Real) (hprobability : FTRL.finiteSimplex arms prob) (hprob : <span class="kw">forall</span> action, action ∈ arms -&gt; <span class="num">0</span> &lt; prob action) (hloss : <span class="kw">forall</span> action, action ∈ arms -&gt; <span class="num">0</span> &lt;= loss action ∧ loss action &lt;= <span class="num">1</span>) : arms.sum (<span class="kw">fun</span> chosen =&gt; prob chosen * shiftedPositiveCubicImportanceWeightedMoment arms prob loss chosen) &lt;= <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisRefinedImportanceWeightedMoment.lean.html#L226">Source line 226</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9739d46f3016">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sum_prob_mul_stability_le_refinedHalfPower_add_square</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Paper-shaped finite-sum consumer for a shifted Taylor/Hessian stability bound.
+
+The remaining hypothesis is deliberately pointwise: a producer must compare
+its instantaneous stability quantity with the shifted quadratic and positive
+cubic moments.  This theorem performs all sampled-action averaging.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sum_prob_mul_stability_le_refinedHalfPower_add_square {Action : Type u} [DecidableEq Action] (arms : Finset Action) (eta : Real) (prob loss stability : Action -&gt; Real) (heta : <span class="num">0</span> &lt;= eta) (hprobability : FTRL.finiteSimplex arms prob) (hprob : <span class="kw">forall</span> action, action ∈ arms -&gt; <span class="num">0</span> &lt; prob action) (hloss : <span class="kw">forall</span> action, action ∈ arms -&gt; <span class="num">0</span> &lt;= loss action ∧ loss action &lt;= <span class="num">1</span>) (hpointwise : <span class="kw">forall</span> chosen, chosen ∈ arms -&gt; stability chosen &lt;= eta / <span class="num">2</span> * shiftedHalfPowerImportanceWeightedMoment arms prob loss chosen + eta ^ <span class="num">2</span> / <span class="num">2</span> * shiftedPositiveCubicImportanceWeightedMoment arms prob loss chosen) : arms.sum (<span class="kw">fun</span> chosen =&gt; prob chosen * stability chosen) &lt;= eta / <span class="num">2</span> * arms.sum (<span class="kw">fun</span> action =&gt; Real.sqrt (prob action) * (<span class="num">1</span> - prob action)) + eta ^ <span class="num">2</span> / <span class="num">2</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisRefinedImportanceWeightedMoment.lean.html#L300">Source line 300</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-56d44022f17b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sum_prob_mul_linearLoss_sub_next_importanceWeightedLoss_le_refined_of_shiftedTaylor</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact current-FTRL-expression wrapper around the shifted-moment consumer.
+
+The sole unresolved premise is the deterministic shifted Taylor/Hessian
+comparison for each sampled-action update.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sum_prob_mul_linearLoss_sub_next_importanceWeightedLoss_le_refined_of_shiftedTaylor {Action : Type u} [DecidableEq Action] (arms : Finset Action) (eta : Real) (prob loss : Action -&gt; Real) (next : Action -&gt; Action -&gt; Real) (heta : <span class="num">0</span> &lt;= eta) (hprobability : FTRL.finiteSimplex arms prob) (hprob : <span class="kw">forall</span> action, action ∈ arms -&gt; <span class="num">0</span> &lt; prob action) (hloss : <span class="kw">forall</span> action, action ∈ arms -&gt; <span class="num">0</span> &lt;= loss action ∧ loss action &lt;= <span class="num">1</span>) (hshiftedTaylor : <span class="kw">forall</span> chosen, chosen ∈ arms -&gt; FTRL.linearLoss arms prob (Exp3.importanceWeightedLoss prob loss chosen) - FTRL.linearLoss arms (next chosen) (Exp3.importanceWeightedLoss prob loss chosen) &lt;= eta / <span class="num">2</span> * shiftedHalfPowerImportanceWeightedMoment arms prob loss chosen + eta ^ <span class="num">2</span> / <span class="num">2</span> * shiftedPositiveCubicImportanceWeightedMoment arms prob loss chosen) : arms.sum (<span class="kw">fun</span> chosen =&gt; prob chosen * (FTRL.linearLoss arms prob (Exp3.importanceWeightedLoss prob loss chosen) - FTRL.linearLoss arms (next chosen) (Exp3.importanceWeightedLoss prob loss chosen))) &lt;= eta / <span class="num">2</span> * arms.sum (<span class="kw">fun</span> action =&gt; Real.sqrt (prob action) * (<span class="num">1</span> - prob action)) + eta ^ <span class="num">2</span> / <span class="num">2</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisRefinedImportanceWeightedMoment.lean.html#L399">Source line 399</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Finite-horizon RL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>RL.<wbr>Finite<wbr>Horizon<wbr>Adaptive<wbr>Stochastic<wbr>Reward<wbr>Sampled<wbr>Empirical<wbr>Optimistic<wbr>Confidence</h1>
+  <p class="lede">This module transports the fixed-policy sampled count-and-reward empirical model event through the exact history-fiber laws of the adaptive stochastic source. The resulting finite-round event controls models computed from the actual sampled rewards, not their known-mean projection.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html"><code>BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/finite-horizon-rl/index.html">9. Finite-horizon reinforcement learning</a></dd></div>
+    <div><dt>Declarations</dt><dd>24</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-rl-finitehorizonadaptivestochasticrewardsampledempiricaloptimisticsource/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource</code></a>, <a href="../banditrlproof-rl-finitehorizonstochasticrewardiidexplicitcalibration/index.html"><code>BanditRLProof.RL.FiniteHorizonStochasticRewardIIDExplicitCalibration</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-rl-finitehorizonadaptivestochasticrewardsampledempiricaloptimisticcum-48200eab5c41/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticCumulativeRecommendedRegret</code></a>, <a href="../banditrlproof-rl-finitehorizonadaptivestochasticrewardsampledempiricaloptimisticsel-977e98383175/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalModelConfidence</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-48b267c774ff">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.policyAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Policy whose iid stochastic law generated a batch coordinate.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> policyAt {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) (trajectory : StochasticEpisodeBatchTrajectory mdp episodes) : Nat -&gt; MarkovPolicy mdp | <span class="num">0</span> =&gt; source.initialPolicy | n + <span class="num">1</span> =&gt; source.successorPolicy n (Preorder.frestrictLe n trajectory) /-- Pull an initial stochastic-batch event back to the adaptive trajectory. -/ <span class="kw">def</span> initialBadEvent {mdp : MDP State Action} {episodes : Nat} (bad : Set (StochasticEpisodeBatch mdp episodes)) : Set (StochasticEpisodeBatchTrajectory mdp episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L31">Source line 31</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-85cbba8423d6">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.initialBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pull an initial stochastic-batch event back to the adaptive trajectory.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> initialBadEvent {mdp : MDP State Action} {episodes : Nat} (bad : Set (StochasticEpisodeBatch mdp episodes)) : Set (StochasticEpisodeBatchTrajectory mdp episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L41">Source line 41</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9db7e99f28dc">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.successorBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pull a prefix-dependent successor stochastic-batch event back to the trajectory.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> successorBadEvent {mdp : MDP State Action} {episodes : Nat} (n : Nat) (bad : Set (StochasticEpisodeBatchPrefix mdp episodes n × StochasticEpisodeBatch mdp episodes)) : Set (StochasticEpisodeBatchTrajectory mdp episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L48">Source line 48</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0a52accb7cd5">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.roundBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Round-indexed adapted stochastic-batch event.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> roundBadEvent {mdp : MDP State Action} {episodes : Nat} (initialBad : Set (StochasticEpisodeBatch mdp episodes)) (successorBad : (n : Nat) -&gt; Set (StochasticEpisodeBatchPrefix mdp episodes n × StochasticEpisodeBatch mdp episodes)) : Nat -&gt; Set (StochasticEpisodeBatchTrajectory mdp episodes) | <span class="num">0</span> =&gt; initialBadEvent initialBad | n + <span class="num">1</span> =&gt; successorBadEvent n (successorBad n) /-- Union of the first `rounds` adapted stochastic-batch events. -/ <span class="kw">def</span> finiteHorizonBadEvent {mdp : MDP State Action} {episodes : Nat} (rounds : Nat) (initialBad : Set (StochasticEpisodeBatch mdp episodes)) (successorBad : (n : Nat) -&gt; Set (StochasticEpisodeBatchPrefix mdp episodes n × StochasticEpisodeBatch mdp episodes)) : Set (StochasticEpisodeBatchTrajectory mdp episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L57">Source line 57</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3c2e47ca8298">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.finiteHorizonBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Union of the first `rounds` adapted stochastic-batch events.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> finiteHorizonBadEvent {mdp : MDP State Action} {episodes : Nat} (rounds : Nat) (initialBad : Set (StochasticEpisodeBatch mdp episodes)) (successorBad : (n : Nat) -&gt; Set (StochasticEpisodeBatchPrefix mdp episodes n × StochasticEpisodeBatch mdp episodes)) : Set (StochasticEpisodeBatchTrajectory mdp episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L68">Source line 68</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d9261f523958">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.measurableSet_finiteHorizonBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Measurability of the finite adapted stochastic-batch union.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_finiteHorizonBadEvent {mdp : MDP State Action} {episodes rounds : Nat} {initialBad : Set (StochasticEpisodeBatch mdp episodes)} {successorBad : (n : Nat) -&gt; Set (StochasticEpisodeBatchPrefix mdp episodes n × StochasticEpisodeBatch mdp episodes)} (hinitial : MeasurableSet initialBad) (hsuccessor : <span class="kw">forall</span> n, n + <span class="num">1</span> &lt; rounds -&gt; MeasurableSet (successorBad n)) : MeasurableSet (finiteHorizonBadEvent rounds initialBad successorBad)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L82">Source line 82</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-51ee25b5a51d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.trajectoryMeasure_initialBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact mass of a pulled-back initial stochastic-batch event.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> trajectoryMeasure_initialBadEvent {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) {bad : Set (StochasticEpisodeBatch mdp episodes)} (hbad : MeasurableSet bad) : source.trajectoryMeasure (initialBadEvent bad) = source.rewardSource.iidStochasticTrajectoryFamilyMeasure source.initialPolicy initialState episodes bad</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L106">Source line 106</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d4b5e435c972">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.trajectoryMeasure_successorBadEvent_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A successor event inherits a uniform bound on every history fiber.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> trajectoryMeasure_successorBadEvent_le {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) (n : Nat) {bad : Set (StochasticEpisodeBatchPrefix mdp episodes n × StochasticEpisodeBatch mdp episodes)} (hbad : MeasurableSet bad) (budget : ENNReal) (hfiber : <span class="kw">forall</span> history, source.batchKernel n history (Prod.mk history ⁻¹&#x27; bad) &lt;= budget) : source.trajectoryMeasure (successorBadEvent n bad) &lt;= budget</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L123">Source line 123</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-75eb1632531e">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.initialAllCoordinateEmpiricalModelBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Initial selected count-and-reward empirical-model event.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> initialAllCoordinateEmpiricalModelBadEvent {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) (rounds : Nat) (varianceProxy : NNReal) (countDelta rewardDelta : Real) : Set (StochasticEpisodeBatch mdp episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L160">Source line 160</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-59da0b0fd1d5">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.successorAllCoordinateEmpiricalModelBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Prefix-selected successor count-and-reward empirical-model event.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> successorAllCoordinateEmpiricalModelBadEvent {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) (rounds : Nat) (varianceProxy : NNReal) (countDelta rewardDelta : Real) (n : Nat) : Set (StochasticEpisodeBatchPrefix mdp episodes n × StochasticEpisodeBatch mdp episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L173">Source line 173</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c76f75c145d6">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.adaptiveAllCoordinateEmpiricalModelBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-round selected count-and-reward empirical-model event.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> adaptiveAllCoordinateEmpiricalModelBadEvent {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) (rounds : Nat) (varianceProxy : NNReal) (countDelta rewardDelta : Real) : Set (StochasticEpisodeBatchTrajectory mdp episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L188">Source line 188</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6c8f41a0a837">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.multiBatchLocalDelta_pos_of_pos</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A positive global share gives a positive finite-round local share.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> multiBatchLocalDelta_pos_of_pos {rounds : Nat} (hrounds : <span class="num">0</span> &lt; rounds) {delta : Real} (hdelta : <span class="num">0</span> &lt; delta) : <span class="num">0</span> &lt; multiBatchLocalDelta rounds delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L202">Source line 202</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4a192a88ffce">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.multiBatchLocalDelta_le_one_of_le_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A global share at most one gives every finite-round local share at most one.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> multiBatchLocalDelta_le_one_of_le_one {rounds : Nat} (hrounds : <span class="num">0</span> &lt; rounds) {delta : Real} (hdelta_le_one : delta &lt;= <span class="num">1</span>) : multiBatchLocalDelta rounds delta &lt;= <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L209">Source line 209</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8034810bc677">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.measurableSet_initialAllCoordinateEmpiricalModelBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The initial selected empirical-model event is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_initialAllCoordinateEmpiricalModelBadEvent {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) (rounds : Nat) (varianceProxy : NNReal) (countDelta rewardDelta : Real) : MeasurableSet (source.initialAllCoordinateEmpiricalModelBadEvent rounds varianceProxy countDelta rewardDelta)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L220">Source line 220</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cd1817ab8fa6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.measurableSet_adaptiveAllCoordinateEmpiricalModelBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Measurability of every selected successor event closes the global event.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_adaptiveAllCoordinateEmpiricalModelBadEvent {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) (rounds : Nat) (varianceProxy : NNReal) (countDelta rewardDelta : Real) (hsuccessor : <span class="kw">forall</span> n, n + <span class="num">1</span> &lt; rounds -&gt; MeasurableSet (source.successorAllCoordinateEmpiricalModelBadEvent rounds varianceProxy countDelta rewardDelta n)) : MeasurableSet (source.adaptiveAllCoordinateEmpiricalModelBadEvent rounds varianceProxy countDelta rewardDelta)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L234">Source line 234</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4b9210ac6c00">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.initialAllCoordinateEmpiricalModelBadEvent_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The initial selected empirical-model event receives its two local shares.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> initialAllCoordinateEmpiricalModelBadEvent_le [StandardBorelSpace State] [StandardBorelSpace Action] {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) (rounds : Nat) (hrounds : <span class="num">0</span> &lt; rounds) (hepisodes : <span class="num">0</span> &lt; episodes) (varianceProxy : NNReal) (law : source.rewardSource.UniformSubgaussianRewardLaw varianceProxy) (htotal : <span class="num">0</span> &lt; ((((episodes : NNReal) * varianceProxy : NNReal) : Real))) (countDelta : Real) (hcountDelta : <span class="num">0</span> &lt; countDelta) (hcountDelta_le_one : countDelta &lt;= <span class="num">1</span>) (rewardDelta : Real) (hrewardDelta : <span class="num">0</span> &lt; rewardDelta) (hrewardDelta_le_one : rewardDelta &lt;= <span class="num">1</span>) : (source.rewardSource.iidStochasticTrajectoryFamilyMeasure source.initialPolicy initialState episodes) (source.initialAllCoordinateEmpiricalModelBadEvent rounds varianceProxy countDelta rewardDelta) &lt;= ENNReal.ofReal (multiBatchLocalDelta rounds countDelta) + ENNReal.ofReal (multiBatchLocalDelta rounds rewardDelta)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L251">Source line 251</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3bad3214e0be">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.successorAllCoordinateEmpiricalModelBadEvent_fiber_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every selected successor fiber receives the same two local shares.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> successorAllCoordinateEmpiricalModelBadEvent_fiber_le [StandardBorelSpace State] [StandardBorelSpace Action] {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) (rounds : Nat) (hrounds : <span class="num">0</span> &lt; rounds) (hepisodes : <span class="num">0</span> &lt; episodes) (varianceProxy : NNReal) (law : source.rewardSource.UniformSubgaussianRewardLaw varianceProxy) (htotal : <span class="num">0</span> &lt; ((((episodes : NNReal) * varianceProxy : NNReal) : Real))) (countDelta : Real) (hcountDelta : <span class="num">0</span> &lt; countDelta) (hcountDelta_le_one : countDelta &lt;= <span class="num">1</span>) (rewardDelta : Real) (hrewardDelta : <span class="num">0</span> &lt; rewardDelta) (hrewardDelta_le_one : rewardDelta &lt;= <span class="num">1</span>) (n : Nat) (history : StochasticEpisodeBatchPrefix mdp episodes n) : source.batchKernel n history (Prod.mk history ⁻¹&#x27; source.successorAllCoordinateEmpiricalModelBadEvent rounds varianceProxy countDelta rewardDelta n) &lt;= ENNReal.ofReal (multiBatchLocalDelta rounds countDelta) + ENNReal.ofReal (multiBatchLocalDelta rounds rewardDelta)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L280">Source line 280</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b763af453753">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.ofReal_multiBatchLocalDelta_add</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The two local shares are the local share of their sum.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> ofReal_multiBatchLocalDelta_add (rounds : Nat) {countDelta rewardDelta : Real} (hcountDelta : <span class="num">0</span> &lt;= countDelta) (hrewardDelta : <span class="num">0</span> &lt;= rewardDelta) : ENNReal.ofReal (multiBatchLocalDelta rounds countDelta) + ENNReal.ofReal (multiBatchLocalDelta rounds rewardDelta) = ENNReal.ofReal (multiBatchLocalDelta rounds (countDelta + rewardDelta))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L319">Source line 319</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bda047aed7c1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.trajectoryMeasure_adaptiveAllCoordinateEmpiricalModelBadEvent_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-round adaptive count-and-reward confidence under exact selected-policy
+iid fibers.  The two global shares remain separate in the terminal bound.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> trajectoryMeasure_adaptiveAllCoordinateEmpiricalModelBadEvent_le [StandardBorelSpace State] [StandardBorelSpace Action] {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) (rounds : Nat) (hrounds : <span class="num">0</span> &lt; rounds) (hepisodes : <span class="num">0</span> &lt; episodes) (varianceProxy : NNReal) (law : source.rewardSource.UniformSubgaussianRewardLaw varianceProxy) (htotal : <span class="num">0</span> &lt; ((((episodes : NNReal) * varianceProxy : NNReal) : Real))) (countDelta : Real) (hcountDelta : <span class="num">0</span> &lt; countDelta) (hcountDelta_le_one : countDelta &lt;= <span class="num">1</span>) (rewardDelta : Real) (hrewardDelta : <span class="num">0</span> &lt; rewardDelta) (hrewardDelta_le_one : rewardDelta &lt;= <span class="num">1</span>) (hsuccessor : <span class="kw">forall</span> n, n + <span class="num">1</span> &lt; rounds -&gt; MeasurableSet (source.successorAllCoordinateEmpiricalModelBadEvent rounds varianceProxy countDelta rewardDelta n)) : source.trajectoryMeasure (source.adaptiveAllCoordinateEmpiricalModelBadEvent rounds varianceProxy countDelta rewardDelta) &lt;= ENNReal.ofReal countDelta + ENNReal.ofReal rewardDelta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L348">Source line 348</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5ec426778ff5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.policyAt_batch_not_mem_allCoordinateEmpiricalModelBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Outside the adaptive event, each batch avoids its generating policy&#x27;s event.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> policyAt_batch_not_mem_allCoordinateEmpiricalModelBadEvent {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes rounds : Nat} (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) (trajectory : StochasticEpisodeBatchTrajectory mdp episodes) (varianceProxy : NNReal) (countDelta rewardDelta : Real) (htrajectory : trajectory ∉ source.adaptiveAllCoordinateEmpiricalModelBadEvent rounds varianceProxy countDelta rewardDelta) (round : Fin rounds) : trajectory round ∉ source.rewardSource.stochasticAllCoordinateEmpiricalModelBadEvent (source.policyAt trajectory round) initialState episodes varianceProxy (multiBatchLocalDelta rounds countDelta) (multiBatchLocalDelta rounds rewardDelta)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L425">Source line 425</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-03733caaed6a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.measurableSet_selectedExploratoryStochasticAllCoordinateEmpiricalModelBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Selected exploratory count-and-reward events are measurable after pulling the
+stochastic batch back to its raw sampled `EpisodeBatch`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_selectedExploratoryStochasticAllCoordinateEmpiricalModelBadEvent {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} {History : Type*} [MeasurableSpace History] (rewardSource : mdp.MeanCompatibleRewardKernel) (selector : History -&gt; DeterministicMarkovPolicyTable mdp) (hselector : Measurable selector) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (varianceProxy : NNReal) (countDelta rewardDelta : Real) : MeasurableSet {pair : History × StochasticEpisodeBatch mdp episodes | pair.<span class="num">2</span> ∈ rewardSource.stochasticAllCoordinateEmpiricalModelBadEvent ((selector pair.<span class="num">1</span>).exploratoryPolicy explorationRate hexplorationRate) initialState episodes varianceProxy countDelta rewardDelta}</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L466">Source line 466</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2ce78cf24ea6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.exploratorySource_measurableSet_successorAllCoordinateEmpiricalModelBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every successor event of the concrete sampled optimistic source is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_measurableSet_successorAllCoordinateEmpiricalModelBadEvent {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (rewardBudget transitionBudget : Real) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (rounds : Nat) (varianceProxy : NNReal) (countDelta rewardDelta : Real) (n : Nat) : <span class="kw">let</span> source := exploratorySource mdp initialState episodes rewardSource initialTable defaultState rewardBudget transitionBudget explorationRate hexplorationRate MeasurableSet (source.successorAllCoordinateEmpiricalModelBadEvent rounds varianceProxy countDelta rewardDelta n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L521">Source line 521</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1090ec47dc2e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_adaptiveAllCoordinateEmpiricalModelBadEvent_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The concrete sampled optimistic source inherits the finite-round selected
+count-and-reward event without any caller-supplied measurability premise.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_trajectoryMeasure_adaptiveAllCoordinateEmpiricalModelBadEvent_le [StandardBorelSpace State] [StandardBorelSpace Action] {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (rewardBudget transitionBudget : Real) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (rounds : Nat) (hrounds : <span class="num">0</span> &lt; rounds) (hepisodes : <span class="num">0</span> &lt; episodes) (varianceProxy : NNReal) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (htotal : <span class="num">0</span> &lt; ((((episodes : NNReal) * varianceProxy : NNReal) : Real))) (countDelta : Real) (hcountDelta : <span class="num">0</span> &lt; countDelta) (hcountDelta_le_one : countDelta &lt;= <span class="num">1</span>) (rewardDelta : Real) (hrewardDelta : <span class="num">0</span> &lt; rewardDelta) (hrewardDelta_le_one : rewardDelta &lt;= <span class="num">1</span>) : <span class="kw">let</span> source := exploratorySource mdp initialState episodes rewardSource initialTable defaultState rewardBudget transitionBudget explorationRate hexplorationRate <span class="kw">let</span> event := source.adaptiveAllCoordinateEmpiricalModelBadEvent rounds varianceProxy countDelta rewardDelta MeasurableSet event /\ source.trajectoryMeasure event &lt;= ENNReal.ofReal countDelta + ENNReal.ofReal rewardDelta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L557">Source line 557</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3ff6f8b080d1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_finiteRound_allCoordinateConfidence_optimism_and_recommendedExpectedRegret_of_pathSupport_explicitCalibration</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-round sampled-reward adaptive optimism with explicit exploratory path
+support calibration.  Every model is built from the actual observed rewards;
+outside one measurable event, every round is optimistic and its recommended
+policy satisfies the compiled selected-radius expected-regret bound.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_trajectoryMeasure_finiteRound_allCoordinateConfidence_optimism_and_recommendedExpectedRegret_of_pathSupport_explicitCalibration [StandardBorelSpace State] [StandardBorelSpace Action] {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (rounds : Nat) (hrounds : <span class="num">0</span> &lt; rounds) (hepisodes : <span class="num">0</span> &lt; episodes) (varianceProxy : NNReal) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (htotal : <span class="num">0</span> &lt; ((((episodes : NNReal) * varianceProxy : NNReal) : Real))) (countDelta : Real) (hcountDelta : <span class="num">0</span> &lt; countDelta) (hcountDelta_le_one : countDelta &lt;= <span class="num">1</span>) (rewardDelta : Real) (hrewardDelta : <span class="num">0</span> &lt; rewardDelta) (hrewardDelta_le_one : rewardDelta &lt;= <span class="num">1</span>) (defaultState : State) (rewardBound : Real) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= rewardBound) (support : ExploratoryPathSupport mdp initialState) (visitFloor : Real) (hfloor : ExploratoryPathUniformVisitFloor support explorationRate visitFloor) (hmargin : simultaneousCountConfidenceRadius mdp episodes (multiBatchLocalDelta rounds countDelta) &lt; (episodes : Real) * visitFloor) (hcontraction : (Fintype.card State : Real) * uniformFloorTransitionCoordinateRadius mdp episodes (multiBatchLocalDelta rounds countDelta) visitFloor * (mdp.horizon : Real) &lt;= <span class="num">1</span> / <span class="num">2</span>) : <span class="kw">let</span> localCountDelta := multiBatchLocalDelta rounds countDelta <span class="kw">let</span> localRewardDelta := multiBatchLocalDelta rounds rewardDelta <span class="kw">let</span> rewardBudget := uniformFloorStochasticRewardCoordinateRadius mdp episodes varianceProxy localCountDelta localRewardDelta visitFloor <span class="kw">let</span> transitionBudget := uniformFloorStochasticTransitionBudget rewardBound rewardBudget <span class="kw">let</span> source := exploratorySource mdp initialState episodes rewardSource initialTable defaultState rewardBudget transitionBudget explorationRate hexplorationRate <span class="kw">let</span> event := source.adaptiveAllCoordinateEmpiricalModelBadEvent rounds varianceProxy countDelta rewardDelta MeasurableSet event /\ source.trajectoryMeasure event &lt;= ENNReal.ofReal countDelta + ENNReal.ofReal rewardDelta /\ <span class="kw">forall</span> trajectory, trajectory ∉ event -&gt; <span class="kw">forall</span> round : Fin rounds, <span class="kw">let</span> model := mdp.stochasticAllCoordinateEmpiricalFiniteBatchModel episodes (mdp.sampledEpisodeBatchOfStochasticTrajectories episodes (trajectory round)) defaultState rewardBudget transitionBudget (<span class="kw">forall</span> state, mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;= model.plan.upperValueRemaining mdp.horizon le_rfl state) /\ model.plan.optimisticPolicy.expectedRegret initialState &lt;= model.plan.optimisticPolicy.occupancySumRemaining (<span class="kw">fun</span> remaining hremaining state =&gt; <span class="num">2</span> * model.plan.selectedRadiusRemaining remaining hremaining state) mdp.horizon le_rfl initialState</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence.lean.html#L608">Source line 608</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Algorithms/ThompsonBayesRegretDecomposition.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Algorithms/ThompsonBayesRegretDecomposition.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Algorithms/ThompsonBayesRegretDecomposition.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Algorithms/ThompsonBayesRegretDecomposition.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Algorithms.ThompsonRecursiveSampler</span>
+<span id="L2">2 import BanditRLProof.ExpectationBochnerSums</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Bayesian regret decomposition for the recursive Thompson trajectory</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module ports the probability-matching algebra behind LML&#x27;s</span>
+<span id="L8">8 `TS.integral_regret_eq_add` to the locally generated Thompson trajectory.</span>
+<span id="L9">9 The confidence score is abstract but must depend only on the visible history</span>
+<span id="L10">10 and the candidate action.  Clipped-UCB concentration can therefore be attached</span>
+<span id="L11">11 downstream without restoring an assumed sampler or posterior law.</span>
+<span id="L12">12 -/</span>
+<span id="L13">13 </span>
+<span id="L14">14 open MeasureTheory ProbabilityTheory Finset</span>
+<span id="L15">15 open scoped ProbabilityTheory</span>
+<span id="L16">16 </span>
+<span id="L17">17 universe u v w x</span>
+<span id="L18">18 </span>
+<span id="L19">19 namespace BanditRLProof</span>
+<span id="L20">20 namespace Thompson</span>
+<span id="L21">21 </span>
+<span id="L22">22 /-- A real score whose time-`n + 1` value sees exactly the history through `n`. -/</span>
+<span id="L23">23 structure HistoryActionScore (Action : Type u) (Reward : Type v)</span>
+<span id="L24">24     [MeasurableSpace Action] [MeasurableSpace Reward] where</span>
+<span id="L25">25   initial : Action -&gt; Real</span>
+<span id="L26">26   successor :</span>
+<span id="L27">27     (n : Nat) -&gt; History.FinitePairHistory Action Reward n -&gt; Action -&gt; Real</span>
+<span id="L28">28   measurable_initial : Measurable initial</span>
+<span id="L29">29   measurable_successor :</span>
+<span id="L30">30     forall n, Measurable (fun pair :</span>
+<span id="L31">31       History.FinitePairHistory Action Reward n × Action =&gt;</span>
+<span id="L32">32         successor n pair.1 pair.2)</span>
+<span id="L33">33 </span>
+<span id="L34">34 namespace HistoryActionScore</span>
+<span id="L35">35 </span>
+<span id="L36">36 /-- Evaluate a history score on the action selected by one complete trace. -/</span>
+<span id="L37">37 def atTrace</span>
+<span id="L38">38     {Action : Type u} {Reward : Type v}</span>
+<span id="L39">39     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L40">40     (score : HistoryActionScore Action Reward)</span>
+<span id="L41">41     (action : ActionTrace Action) (reward : RewardTrace Reward) :</span>
+<span id="L42">42     Nat -&gt; Real</span>
+<span id="L43">43   | 0 =&gt; score.initial (action 0)</span>
+<span id="L44">44   | n + 1 =&gt; score.successor n</span>
+<span id="L45">45       (History.finitePairHistoryOfTrace action reward n) (action (n + 1))</span>
+<span id="L46">46 </span>
+<span id="L47">47 /-- Evaluate the same visible-history score at a comparison action. -/</span>
+<span id="L48">48 def atBestTrace</span>
+<span id="L49">49     {Action : Type u} {Reward : Type v}</span>
+<span id="L50">50     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L51">51     (score : HistoryActionScore Action Reward)</span>
+<span id="L52">52     (bestAction : Action)</span>
+<span id="L53">53     (action : ActionTrace Action) (reward : RewardTrace Reward) :</span>
+<span id="L54">54     Nat -&gt; Real</span>
+<span id="L55">55   | 0 =&gt; score.initial bestAction</span>
+<span id="L56">56   | n + 1 =&gt; score.successor n</span>
+<span id="L57">57       (History.finitePairHistoryOfTrace action reward n) bestAction</span>
+<span id="L58">58 </span>
+<span id="L59">59 theorem measurable_atTrace</span>
+<span id="L60">60     {Omega : Type w} {Action : Type u} {Reward : Type v}</span>
+<span id="L61">61     [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L62">62     (score : HistoryActionScore Action Reward)</span>
+<span id="L63">63     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L64">64     (reward : Omega -&gt; RewardTrace Reward)</span>
+<span id="L65">65     (haction : forall t, Measurable (fun omega =&gt; action omega t))</span>
+<span id="L66">66     (hreward : forall t, Measurable (fun omega =&gt; reward omega t))</span>
+<span id="L67">67     (t : Nat) :</span>
+<span id="L68">68     Measurable (fun omega =&gt; score.atTrace (action omega) (reward omega) t) := by</span>
+<span id="L69">69   cases t with</span>
+<span id="L70">70   | zero =&gt;</span>
+<span id="L71">71       exact score.measurable_initial.comp (haction 0)</span>
+<span id="L72">72   | succ n =&gt;</span>
+<span id="L73">73       exact (score.measurable_successor n).comp</span>
+<span id="L74">74         ((History.measurable_finitePairHistoryOfTrace</span>
+<span id="L75">75           action reward haction hreward n).prodMk (haction (n + 1)))</span>
+<span id="L76">76 </span>
+<span id="L77">77 theorem measurable_atBestTrace</span>
+<span id="L78">78     {Omega : Type w} {Action : Type u} {Reward : Type v}</span>
+<span id="L79">79     [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L80">80     (score : HistoryActionScore Action Reward)</span>
+<span id="L81">81     (bestAction : Omega -&gt; Action) (hbestAction : Measurable bestAction)</span>
+<span id="L82">82     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L83">83     (reward : Omega -&gt; RewardTrace Reward)</span>
+<span id="L84">84     (haction : forall t, Measurable (fun omega =&gt; action omega t))</span>
+<span id="L85">85     (hreward : forall t, Measurable (fun omega =&gt; reward omega t))</span>
+<span id="L86">86     (t : Nat) :</span>
+<span id="L87">87     Measurable (fun omega =&gt;</span>
+<span id="L88">88       score.atBestTrace (bestAction omega) (action omega) (reward omega) t) := by</span>
+<span id="L89">89   cases t with</span>
+<span id="L90">90   | zero =&gt;</span>
+<span id="L91">91       exact score.measurable_initial.comp hbestAction</span>
+<span id="L92">92   | succ n =&gt;</span>
+<span id="L93">93       exact (score.measurable_successor n).comp</span>
+<span id="L94">94         ((History.measurable_finitePairHistoryOfTrace</span>
+<span id="L95">95           action reward haction hreward n).prodMk hbestAction)</span>
+<span id="L96">96 </span>
+<span id="L97">97 end HistoryActionScore</span>
+<span id="L98">98 </span>
+<span id="L99">99 /-- Equal pushforwards give equal integrals of every measurable real score. -/</span>
+<span id="L100">100 theorem integral_comp_eq_of_map_eq</span>
+<span id="L101">101     {Omega : Type u} {Target : Type v}</span>
+<span id="L102">102     [MeasurableSpace Omega] [MeasurableSpace Target]</span>
+<span id="L103">103     (mu : Measure Omega)</span>
+<span id="L104">104     (left right : Omega -&gt; Target)</span>
+<span id="L105">105     (hleft : Measurable left) (hright : Measurable right)</span>
+<span id="L106">106     (hmap : mu.map left = mu.map right)</span>
+<span id="L107">107     (score : Target -&gt; Real) (hscore : Measurable score) :</span>
+<span id="L108">108     integral mu (fun omega =&gt; score (left omega)) =</span>
+<span id="L109">109       integral mu (fun omega =&gt; score (right omega)) := by</span>
+<span id="L110">110   calc</span>
+<span id="L111">111     _ = integral (mu.map left) score := by</span>
+<span id="L112">112       rw [integral_map hleft.aemeasurable hscore.aestronglyMeasurable]</span>
+<span id="L113">113     _ = integral (mu.map right) score := by rw [hmap]</span>
+<span id="L114">114     _ = _ := by</span>
+<span id="L115">115       rw [integral_map hright.aemeasurable hscore.aestronglyMeasurable]</span>
+<span id="L116">116 </span>
+<span id="L117">117 /--</span>
+<span id="L118">118 If two actions have the same conditional law given a history, every measurable</span>
+<span id="L119">119 history/action score has the same expectation under those actions.</span>
+<span id="L120">120 -/</span>
+<span id="L121">121 theorem integral_historyAction_eq_of_condDistrib_ae_eq</span>
+<span id="L122">122     {Omega : Type u} {History : Type v} {Action : Type w}</span>
+<span id="L123">123     [MeasurableSpace Omega] [MeasurableSpace History]</span>
+<span id="L124">124     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L125">125     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L126">126     (history : Omega -&gt; History) (hhistory : Measurable history)</span>
+<span id="L127">127     (action bestAction : Omega -&gt; Action)</span>
+<span id="L128">128     (haction : Measurable action) (hbestAction : Measurable bestAction)</span>
+<span id="L129">129     (hcond : condDistrib action history mu =ᵐ[mu.map history]</span>
+<span id="L130">130       condDistrib bestAction history mu)</span>
+<span id="L131">131     (score : History × Action -&gt; Real) (hscore : Measurable score) :</span>
+<span id="L132">132     integral mu (fun omega =&gt; score (history omega, action omega)) =</span>
+<span id="L133">133       integral mu (fun omega =&gt; score (history omega, bestAction omega)) := by</span>
+<span id="L134">134   have hpair :</span>
+<span id="L135">135       mu.map (fun omega =&gt; (history omega, action omega)) =</span>
+<span id="L136">136         mu.map (fun omega =&gt; (history omega, bestAction omega)) := by</span>
+<span id="L137">137     rw [← compProd_map_condDistrib haction.aemeasurable,</span>
+<span id="L138">138       ← compProd_map_condDistrib hbestAction.aemeasurable]</span>
+<span id="L139">139     exact Measure.compProd_congr hcond</span>
+<span id="L140">140   exact integral_comp_eq_of_map_eq mu</span>
+<span id="L141">141     (fun omega =&gt; (history omega, action omega))</span>
+<span id="L142">142     (fun omega =&gt; (history omega, bestAction omega))</span>
+<span id="L143">143     (hhistory.prodMk haction) (hhistory.prodMk hbestAction) hpair score hscore</span>
+<span id="L144">144 </span>
+<span id="L145">145 /-- The environment-indexed trajectory kernel has the algorithm&#x27;s action law at time zero. -/</span>
+<span id="L146">146 theorem canonicalMeasurableEnvironmentTrajectoryKernel_map_action_zero</span>
+<span id="L147">147     {Env : Type u} {Action : Type v} {Reward : Type w}</span>
+<span id="L148">148     [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L149">149     [Nonempty Action] [Nonempty Reward]</span>
+<span id="L150">150     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L151">151     (environment : MeasurableHistoryEnvironment Env Action Reward) :</span>
+<span id="L152">152     (canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment).map</span>
+<span id="L153">153         (fun trajectory =&gt; (trajectory 0).1) =</span>
+<span id="L154">154       Kernel.const Env algorithm.initialAction := by</span>
+<span id="L155">155   change</span>
+<span id="L156">156     (canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment).map</span>
+<span id="L157">157         (Prod.fst ∘ fun trajectory =&gt; trajectory 0) =</span>
+<span id="L158">158       Kernel.const Env algorithm.initialAction</span>
+<span id="L159">159   have hevalZero : Measurable</span>
+<span id="L160">160       (fun trajectory : (n : Nat) -&gt; Action × Reward =&gt; trajectory 0) :=</span>
+<span id="L161">161     measurable_pi_apply 0</span>
+<span id="L162">162   rw [Kernel.map_comp_right _ hevalZero measurable_fst,</span>
+<span id="L163">163     canonicalMeasurableEnvironmentTrajectoryKernel_map_eval_zero,</span>
+<span id="L164">164     ← Kernel.fst_eq, measurableEnvironmentInitialPairKernel,</span>
+<span id="L165">165     Kernel.fst_compProd]</span>
+<span id="L166">166 </span>
+<span id="L167">167 /-- Mixing the trajectory kernel through a probability prior preserves its initial action law. -/</span>
+<span id="L168">168 theorem canonicalMeasurableEnvironmentTrajectoryMeasure_map_action_zero</span>
+<span id="L169">169     {Env : Type u} {Action : Type v} {Reward : Type w}</span>
+<span id="L170">170     [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L171">171     [Nonempty Action] [Nonempty Reward]</span>
+<span id="L172">172     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L173">173     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L174">174     (environment : MeasurableHistoryEnvironment Env Action Reward) :</span>
+<span id="L175">175     (prior ⊗ₘ canonicalMeasurableEnvironmentTrajectoryKernel</span>
+<span id="L176">176       algorithm environment).map</span>
+<span id="L177">177         (fun sample =&gt; (sample.2 0).1) =</span>
+<span id="L178">178       algorithm.initialAction := by</span>
+<span id="L179">179   let trajectory :=</span>
+<span id="L180">180     canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment</span>
+<span id="L181">181   let actionZero := fun trace : (n : Nat) -&gt; Action × Reward =&gt; (trace 0).1</span>
+<span id="L182">182   have hactionZero : Measurable actionZero :=</span>
+<span id="L183">183     measurable_fst.comp (measurable_pi_apply 0)</span>
+<span id="L184">184   calc</span>
+<span id="L185">185     (prior ⊗ₘ trajectory).map (actionZero ∘ Prod.snd) =</span>
+<span id="L186">186         ((prior ⊗ₘ trajectory).map Prod.snd).map actionZero := by</span>
+<span id="L187">187       rw [Measure.map_map (g := actionZero) (f := Prod.snd)</span>
+<span id="L188">188         hactionZero measurable_snd]</span>
+<span id="L189">189     _ = (trajectory ∘ₘ prior).map actionZero := by</span>
+<span id="L190">190       change (prior ⊗ₘ trajectory).snd.map actionZero =</span>
+<span id="L191">191         (trajectory ∘ₘ prior).map actionZero</span>
+<span id="L192">192       rw [Measure.snd_compProd]</span>
+<span id="L193">193     _ = (trajectory.map actionZero) ∘ₘ prior := by</span>
+<span id="L194">194       rw [Measure.map_comp prior trajectory hactionZero]</span>
+<span id="L195">195     _ = Kernel.const Env algorithm.initialAction ∘ₘ prior := by</span>
+<span id="L196">196       rw [canonicalMeasurableEnvironmentTrajectoryKernel_map_action_zero]</span>
+<span id="L197">197     _ = algorithm.initialAction := by</span>
+<span id="L198">198       rw [Measure.const_comp, measure_univ, one_smul]</span>
+<span id="L199">199 </span>
+<span id="L200">200 /-- The initial action and latent best action have the same marginal on the actual TS trajectory. -/</span>
+<span id="L201">201 theorem uniformReferenceThompsonAlgorithm_map_action_zero_eq_bestAction</span>
+<span id="L202">202     {Env : Type u} {Action : Type v} {Reward : Type w}</span>
+<span id="L203">203     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L204">204     [MeasurableSpace Action] [StandardBorelSpace Action]</span>
+<span id="L205">205     [Fintype Action] [Nonempty Action]</span>
+<span id="L206">206     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L207">207     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L208">208     (environment : MeasurableHistoryEnvironment Env Action Reward)</span>
+<span id="L209">209     (bestAction : Env -&gt; Action) (hbestAction : Measurable bestAction) :</span>
+<span id="L210">210     let algorithm :=</span>
+<span id="L211">211       uniformReferenceThompsonAlgorithm prior environment bestAction hbestAction</span>
+<span id="L212">212     let actualMeasure :=</span>
+<span id="L213">213       prior ⊗ₘ canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment</span>
+<span id="L214">214     actualMeasure.map</span>
+<span id="L215">215         (fun sample =&gt; environmentTrajectoryAction sample 0) =</span>
+<span id="L216">216       actualMeasure.map (bestAction ∘ Prod.fst) := by</span>
+<span id="L217">217   dsimp only</span>
+<span id="L218">218   let algorithm :=</span>
+<span id="L219">219     uniformReferenceThompsonAlgorithm prior environment bestAction hbestAction</span>
+<span id="L220">220   let actualMeasure :=</span>
+<span id="L221">221     prior ⊗ₘ canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment</span>
+<span id="L222">222   have haction :</span>
+<span id="L223">223       actualMeasure.map (fun sample =&gt; environmentTrajectoryAction sample 0) =</span>
+<span id="L224">224         prior.map bestAction := by</span>
+<span id="L225">225     calc</span>
+<span id="L226">226       _ = algorithm.initialAction := by</span>
+<span id="L227">227         exact canonicalMeasurableEnvironmentTrajectoryMeasure_map_action_zero</span>
+<span id="L228">228           prior algorithm environment</span>
+<span id="L229">229       _ = prior.map bestAction := by</span>
+<span id="L230">230         simp [algorithm, uniformReferenceThompsonAlgorithm]</span>
+<span id="L231">231   have hbest :</span>
+<span id="L232">232       actualMeasure.map (bestAction ∘ Prod.fst) = prior.map bestAction := by</span>
+<span id="L233">233     calc</span>
+<span id="L234">234       _ = (actualMeasure.map Prod.fst).map bestAction := by</span>
+<span id="L235">235         rw [Measure.map_map (g := bestAction) (f := Prod.fst)</span>
+<span id="L236">236           hbestAction measurable_fst]</span>
+<span id="L237">237       _ = prior.map bestAction := by</span>
+<span id="L238">238         change</span>
+<span id="L239">239           (prior ⊗ₘ canonicalMeasurableEnvironmentTrajectoryKernel</span>
+<span id="L240">240             algorithm environment).fst.map bestAction = prior.map bestAction</span>
+<span id="L241">241         rw [Measure.fst_compProd]</span>
+<span id="L242">242   exact haction.trans hbest.symm</span>
+<span id="L243">243 </span>
+<span id="L244">244 /-- Evaluate the history score on the actual trajectory action. -/</span>
+<span id="L245">245 def trajectoryHistoryScore</span>
+<span id="L246">246     {Env : Type u} {Action : Type v} {Reward : Type w}</span>
+<span id="L247">247     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L248">248     (score : HistoryActionScore Action Reward)</span>
+<span id="L249">249     (sample : Env × ((n : Nat) -&gt; Action × Reward)) (t : Nat) : Real :=</span>
+<span id="L250">250   score.atTrace (environmentTrajectoryAction sample)</span>
+<span id="L251">251     (environmentTrajectoryReward sample) t</span>
+<span id="L252">252 </span>
+<span id="L253">253 /-- Evaluate the same score at the latent environment&#x27;s best action. -/</span>
+<span id="L254">254 def trajectoryBestHistoryScore</span>
+<span id="L255">255     {Env : Type u} {Action : Type v} {Reward : Type w}</span>
+<span id="L256">256     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L257">257     (score : HistoryActionScore Action Reward)</span>
+<span id="L258">258     (bestAction : Env -&gt; Action)</span>
+<span id="L259">259     (sample : Env × ((n : Nat) -&gt; Action × Reward)) (t : Nat) : Real :=</span>
+<span id="L260">260   score.atBestTrace (bestAction sample.1)</span>
+<span id="L261">261     (environmentTrajectoryAction sample)</span>
+<span id="L262">262     (environmentTrajectoryReward sample) t</span>
+<span id="L263">263 </span>
+<span id="L264">264 /--</span>
+<span id="L265">265 Probability matching on the actual recursive trajectory implies equality of</span>
+<span id="L266">266 every visible-history score at the selected and latent-best actions.</span>
+<span id="L267">267 -/</span>
+<span id="L268">268 theorem uniformReferenceThompsonAlgorithm_integral_historyScore_eq_bestAction</span>
+<span id="L269">269     {Env : Type u} {Action : Type v} {Reward : Type w}</span>
+<span id="L270">270     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L271">271     [MeasurableSpace Action] [StandardBorelSpace Action]</span>
+<span id="L272">272     [Fintype Action] [Nonempty Action]</span>
+<span id="L273">273     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L274">274     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L275">275     (environment : MeasurableHistoryEnvironment Env Action Reward)</span>
+<span id="L276">276     (bestAction : Env -&gt; Action) (hbestAction : Measurable bestAction)</span>
+<span id="L277">277     (score : HistoryActionScore Action Reward) (t : Nat) :</span>
+<span id="L278">278     let algorithm :=</span>
+<span id="L279">279       uniformReferenceThompsonAlgorithm prior environment bestAction hbestAction</span>
+<span id="L280">280     let actualMeasure :=</span>
+<span id="L281">281       prior ⊗ₘ canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment</span>
+<span id="L282">282     integral actualMeasure (fun sample =&gt;</span>
+<span id="L283">283         trajectoryHistoryScore score sample t) =</span>
+<span id="L284">284       integral actualMeasure (fun sample =&gt;</span>
+<span id="L285">285         trajectoryBestHistoryScore score bestAction sample t) := by</span>
+<span id="L286">286   dsimp only</span>
+<span id="L287">287   let algorithm :=</span>
+<span id="L288">288     uniformReferenceThompsonAlgorithm prior environment bestAction hbestAction</span>
+<span id="L289">289   let actualMeasure :=</span>
+<span id="L290">290     prior ⊗ₘ canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment</span>
+<span id="L291">291   cases t with</span>
+<span id="L292">292   | zero =&gt;</span>
+<span id="L293">293       exact integral_comp_eq_of_map_eq actualMeasure</span>
+<span id="L294">294         (fun sample =&gt; environmentTrajectoryAction sample 0)</span>
+<span id="L295">295         (bestAction ∘ Prod.fst)</span>
+<span id="L296">296         (measurable_environmentTrajectoryAction_apply 0)</span>
+<span id="L297">297         (hbestAction.comp measurable_fst)</span>
+<span id="L298">298         (uniformReferenceThompsonAlgorithm_map_action_zero_eq_bestAction</span>
+<span id="L299">299           prior environment bestAction hbestAction)</span>
+<span id="L300">300         score.initial score.measurable_initial</span>
+<span id="L301">301   | succ n =&gt;</span>
+<span id="L302">302       let history := fun sample :</span>
+<span id="L303">303           Env × ((n : Nat) -&gt; Action × Reward) =&gt;</span>
+<span id="L304">304         History.finitePairHistoryOfTrace</span>
+<span id="L305">305           (environmentTrajectoryAction sample)</span>
+<span id="L306">306           (environmentTrajectoryReward sample) n</span>
+<span id="L307">307       have hhistory : Measurable history :=</span>
+<span id="L308">308         History.measurable_finitePairHistoryOfTrace</span>
+<span id="L309">309           environmentTrajectoryAction environmentTrajectoryReward</span>
+<span id="L310">310           measurable_environmentTrajectoryAction_apply</span>
+<span id="L311">311           measurable_environmentTrajectoryReward_apply n</span>
+<span id="L312">312       have hnextAction : Measurable</span>
+<span id="L313">313           (fun sample : Env × ((n : Nat) -&gt; Action × Reward) =&gt;</span>
+<span id="L314">314             environmentTrajectoryAction sample (n + 1)) :=</span>
+<span id="L315">315         measurable_environmentTrajectoryAction_apply (n + 1)</span>
+<span id="L316">316       have hbest : Measurable</span>
+<span id="L317">317           (fun sample : Env × ((n : Nat) -&gt; Action × Reward) =&gt;</span>
+<span id="L318">318             bestAction sample.1) :=</span>
+<span id="L319">319         hbestAction.comp measurable_fst</span>
+<span id="L320">320       simpa [trajectoryHistoryScore, trajectoryBestHistoryScore,</span>
+<span id="L321">321         HistoryActionScore.atTrace, HistoryActionScore.atBestTrace, history,</span>
+<span id="L322">322         actualMeasure, algorithm] using</span>
+<span id="L323">323         (integral_historyAction_eq_of_condDistrib_ae_eq</span>
+<span id="L324">324           (Omega := Env × ((n : Nat) -&gt; Action × Reward))</span>
+<span id="L325">325           (History := History.FinitePairHistory Action Reward n)</span>
+<span id="L326">326           (Action := Action) actualMeasure</span>
+<span id="L327">327           history hhistory</span>
+<span id="L328">328           (fun sample : Env × ((n : Nat) -&gt; Action × Reward) =&gt;</span>
+<span id="L329">329             environmentTrajectoryAction sample (n + 1))</span>
+<span id="L330">330           (fun sample : Env × ((n : Nat) -&gt; Action × Reward) =&gt;</span>
+<span id="L331">331             bestAction sample.1) hnextAction hbest</span>
+<span id="L332">332           (uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction</span>
+<span id="L333">333             prior environment bestAction hbestAction n)</span>
+<span id="L334">334           (fun pair : History.FinitePairHistory Action Reward n × Action =&gt;</span>
+<span id="L335">335             score.successor n pair.1 pair.2)</span>
+<span id="L336">336           (score.measurable_successor n))</span>
+<span id="L337">337 </span>
+<span id="L338">338 /-- A selector is mean-optimal when it maximizes the environment-dependent</span>
+<span id="L339">339 action mean pointwise.  This contract separates a genuine best-action regret</span>
+<span id="L340">340 interpretation from the comparator-relative algebra below. -/</span>
+<span id="L341">341 def IsOptimalMeanSelector</span>
+<span id="L342">342     {Env : Type u} {Action : Type v}</span>
+<span id="L343">343     (mean : Env -&gt; Action -&gt; Real) (bestAction : Env -&gt; Action) : Prop :=</span>
+<span id="L344">344   forall env arm, mean env arm &lt;= mean env (bestAction env)</span>
+<span id="L345">345 </span>
+<span id="L346">346 /-- Finite-horizon comparator-relative mean regret.  It is Bayesian</span>
+<span id="L347">347 pseudo-regret when `bestAction` satisfies `IsOptimalMeanSelector mean</span>
+<span id="L348">348 bestAction` and the environment is integrated against a prior. -/</span>
+<span id="L349">349 def trajectoryBayesMeanRegret</span>
+<span id="L350">350     {Env : Type u} {Action : Type v} {Reward : Type w}</span>
+<span id="L351">351     (mean : Env -&gt; Action -&gt; Real) (bestAction : Env -&gt; Action)</span>
+<span id="L352">352     (sample : Env × ((n : Nat) -&gt; Action × Reward)) (horizon : Nat) : Real :=</span>
+<span id="L353">353   ∑ t ∈ range horizon,</span>
+<span id="L354">354     (mean sample.1 (bestAction sample.1) -</span>
+<span id="L355">355       mean sample.1 (environmentTrajectoryAction sample t))</span>
+<span id="L356">356 </span>
+<span id="L357">357 /--</span>
+<span id="L358">358 LML-shaped Thompson Bayesian regret decomposition on the locally generated</span>
+<span id="L359">359 recursive trajectory.  Integrability is explicit; bounded clipped scores and</span>
+<span id="L360">360 bounded action means can discharge these four contracts downstream.</span>
+<span id="L361">361 -/</span>
+<span id="L362">362 theorem integral_trajectoryBayesMeanRegret_eq_add_historyScore</span>
+<span id="L363">363     {Env : Type u} {Action : Type v} {Reward : Type w}</span>
+<span id="L364">364     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L365">365     [MeasurableSpace Action] [StandardBorelSpace Action]</span>
+<span id="L366">366     [Fintype Action] [Nonempty Action]</span>
+<span id="L367">367     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L368">368     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L369">369     (environment : MeasurableHistoryEnvironment Env Action Reward)</span>
+<span id="L370">370     (bestAction : Env -&gt; Action) (hbestAction : Measurable bestAction)</span>
+<span id="L371">371     (mean : Env -&gt; Action -&gt; Real)</span>
+<span id="L372">372     (score : HistoryActionScore Action Reward)</span>
+<span id="L373">373     (horizon : Nat)</span>
+<span id="L374">374     (hmeanBest : Integrable (fun sample :</span>
+<span id="L375">375       Env × ((n : Nat) -&gt; Action × Reward) =&gt;</span>
+<span id="L376">376         mean sample.1 (bestAction sample.1))</span>
+<span id="L377">377       (prior ⊗ₘ canonicalMeasurableEnvironmentTrajectoryKernel</span>
+<span id="L378">378         (uniformReferenceThompsonAlgorithm</span>
+<span id="L379">379           prior environment bestAction hbestAction) environment))</span>
+<span id="L380">380     (hmeanAction : forall t : Nat, t &lt; horizon -&gt; Integrable (fun sample :</span>
+<span id="L381">381       Env × ((n : Nat) -&gt; Action × Reward) =&gt;</span>
+<span id="L382">382         mean sample.1 (environmentTrajectoryAction sample t))</span>
+<span id="L383">383       (prior ⊗ₘ canonicalMeasurableEnvironmentTrajectoryKernel</span>
+<span id="L384">384         (uniformReferenceThompsonAlgorithm</span>
+<span id="L385">385           prior environment bestAction hbestAction) environment))</span>
+<span id="L386">386     (hscoreAction : forall t : Nat, t &lt; horizon -&gt; Integrable (fun sample :</span>
+<span id="L387">387       Env × ((n : Nat) -&gt; Action × Reward) =&gt;</span>
+<span id="L388">388         trajectoryHistoryScore score sample t)</span>
+<span id="L389">389       (prior ⊗ₘ canonicalMeasurableEnvironmentTrajectoryKernel</span>
+<span id="L390">390         (uniformReferenceThompsonAlgorithm</span>
+<span id="L391">391           prior environment bestAction hbestAction) environment))</span>
+<span id="L392">392     (hscoreBest : forall t : Nat, t &lt; horizon -&gt; Integrable (fun sample :</span>
+<span id="L393">393       Env × ((n : Nat) -&gt; Action × Reward) =&gt;</span>
+<span id="L394">394         trajectoryBestHistoryScore score bestAction sample t)</span>
+<span id="L395">395       (prior ⊗ₘ canonicalMeasurableEnvironmentTrajectoryKernel</span>
+<span id="L396">396         (uniformReferenceThompsonAlgorithm</span>
+<span id="L397">397           prior environment bestAction hbestAction) environment)) :</span>
+<span id="L398">398     let algorithm :=</span>
+<span id="L399">399       uniformReferenceThompsonAlgorithm prior environment bestAction hbestAction</span>
+<span id="L400">400     let actualMeasure :=</span>
+<span id="L401">401       prior ⊗ₘ canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment</span>
+<span id="L402">402     integral actualMeasure (fun sample =&gt;</span>
+<span id="L403">403         trajectoryBayesMeanRegret mean bestAction sample horizon) =</span>
+<span id="L404">404       integral actualMeasure (fun sample =&gt;</span>
+<span id="L405">405         ∑ t ∈ range horizon,</span>
+<span id="L406">406           (mean sample.1 (bestAction sample.1) -</span>
+<span id="L407">407             trajectoryBestHistoryScore score bestAction sample t)) +</span>
+<span id="L408">408       integral actualMeasure (fun sample =&gt;</span>
+<span id="L409">409         ∑ t ∈ range horizon,</span>
+<span id="L410">410           (trajectoryHistoryScore score sample t -</span>
+<span id="L411">411             mean sample.1 (environmentTrajectoryAction sample t))) := by</span>
+<span id="L412">412   dsimp only</span>
+<span id="L413">413   let algorithm :=</span>
+<span id="L414">414     uniformReferenceThompsonAlgorithm prior environment bestAction hbestAction</span>
+<span id="L415">415   let actualMeasure :=</span>
+<span id="L416">416     prior ⊗ₘ canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment</span>
+<span id="L417">417   have hscoreIntegral (t : Nat) :</span>
+<span id="L418">418       integral actualMeasure (fun sample =&gt;</span>
+<span id="L419">419           trajectoryHistoryScore score sample t) =</span>
+<span id="L420">420         integral actualMeasure (fun sample =&gt;</span>
+<span id="L421">421           trajectoryBestHistoryScore score bestAction sample t) := by</span>
+<span id="L422">422     exact uniformReferenceThompsonAlgorithm_integral_historyScore_eq_bestAction</span>
+<span id="L423">423       prior environment bestAction hbestAction score t</span>
+<span id="L424">424   have hregretTerm (t : Nat) (ht : t ∈ range horizon) :</span>
+<span id="L425">425       Integrable (fun sample :</span>
+<span id="L426">426         Env × ((n : Nat) -&gt; Action × Reward) =&gt;</span>
+<span id="L427">427           mean sample.1 (bestAction sample.1) -</span>
+<span id="L428">428             mean sample.1 (environmentTrajectoryAction sample t))</span>
+<span id="L429">429         actualMeasure :=</span>
+<span id="L430">430     hmeanBest.sub (hmeanAction t (mem_range.mp ht))</span>
+<span id="L431">431   have hbestTerm (t : Nat) (ht : t ∈ range horizon) :</span>
+<span id="L432">432       Integrable (fun sample :</span>
+<span id="L433">433         Env × ((n : Nat) -&gt; Action × Reward) =&gt;</span>
+<span id="L434">434           mean sample.1 (bestAction sample.1) -</span>
+<span id="L435">435             trajectoryBestHistoryScore score bestAction sample t)</span>
+<span id="L436">436         actualMeasure :=</span>
+<span id="L437">437     hmeanBest.sub (hscoreBest t (mem_range.mp ht))</span>
+<span id="L438">438   have hactionTerm (t : Nat) (ht : t ∈ range horizon) :</span>
+<span id="L439">439       Integrable (fun sample :</span>
+<span id="L440">440         Env × ((n : Nat) -&gt; Action × Reward) =&gt;</span>
+<span id="L441">441           trajectoryHistoryScore score sample t -</span>
+<span id="L442">442             mean sample.1 (environmentTrajectoryAction sample t))</span>
+<span id="L443">443         actualMeasure :=</span>
+<span id="L444">444     (hscoreAction t (mem_range.mp ht)).sub</span>
+<span id="L445">445       (hmeanAction t (mem_range.mp ht))</span>
+<span id="L446">446   calc</span>
+<span id="L447">447     integral actualMeasure (fun sample =&gt;</span>
+<span id="L448">448         trajectoryBayesMeanRegret mean bestAction sample horizon) =</span>
+<span id="L449">449       ∑ t ∈ range horizon,</span>
+<span id="L450">450         integral actualMeasure (fun sample =&gt;</span>
+<span id="L451">451           mean sample.1 (bestAction sample.1) -</span>
+<span id="L452">452             mean sample.1 (environmentTrajectoryAction sample t)) := by</span>
+<span id="L453">453         simpa only [trajectoryBayesMeanRegret] using</span>
+<span id="L454">454           (ExpectationBochnerSums.integral_finset_sum</span>
+<span id="L455">455             actualMeasure (range horizon)</span>
+<span id="L456">456             (fun t sample =&gt;</span>
+<span id="L457">457               mean sample.1 (bestAction sample.1) -</span>
+<span id="L458">458                 mean sample.1 (environmentTrajectoryAction sample t))</span>
+<span id="L459">459             hregretTerm)</span>
+<span id="L460">460     _ = (∑ t ∈ range horizon,</span>
+<span id="L461">461           (integral actualMeasure (fun sample =&gt;</span>
+<span id="L462">462             mean sample.1 (bestAction sample.1)) -</span>
+<span id="L463">463           integral actualMeasure (fun sample =&gt;</span>
+<span id="L464">464             trajectoryBestHistoryScore score bestAction sample t))) +</span>
+<span id="L465">465         ∑ t ∈ range horizon,</span>
+<span id="L466">466           (integral actualMeasure (fun sample =&gt;</span>
+<span id="L467">467             trajectoryHistoryScore score sample t) -</span>
+<span id="L468">468           integral actualMeasure (fun sample =&gt;</span>
+<span id="L469">469             mean sample.1 (environmentTrajectoryAction sample t))) := by</span>
+<span id="L470">470         rw [← sum_add_distrib]</span>
+<span id="L471">471         apply sum_congr rfl</span>
+<span id="L472">472         intro t ht</span>
+<span id="L473">473         rw [integral_sub hmeanBest</span>
+<span id="L474">474           (hmeanAction t (mem_range.mp ht))]</span>
+<span id="L475">475         rw [hscoreIntegral t]</span>
+<span id="L476">476         ring</span>
+<span id="L477">477     _ = (∑ t ∈ range horizon,</span>
+<span id="L478">478           integral actualMeasure (fun sample =&gt;</span>
+<span id="L479">479             mean sample.1 (bestAction sample.1) -</span>
+<span id="L480">480               trajectoryBestHistoryScore score bestAction sample t)) +</span>
+<span id="L481">481         ∑ t ∈ range horizon,</span>
+<span id="L482">482           integral actualMeasure (fun sample =&gt;</span>
+<span id="L483">483             trajectoryHistoryScore score sample t -</span>
+<span id="L484">484               mean sample.1 (environmentTrajectoryAction sample t)) := by</span>
+<span id="L485">485         congr 1</span>
+<span id="L486">486         · apply sum_congr rfl</span>
+<span id="L487">487           intro t ht</span>
+<span id="L488">488           rw [integral_sub hmeanBest (hscoreBest t (mem_range.mp ht))]</span>
+<span id="L489">489         · apply sum_congr rfl</span>
+<span id="L490">490           intro t ht</span>
+<span id="L491">491           rw [integral_sub (hscoreAction t (mem_range.mp ht))</span>
+<span id="L492">492             (hmeanAction t (mem_range.mp ht))]</span>
+<span id="L493">493     _ = integral actualMeasure (fun sample =&gt;</span>
+<span id="L494">494           ∑ t ∈ range horizon,</span>
+<span id="L495">495             (mean sample.1 (bestAction sample.1) -</span>
+<span id="L496">496               trajectoryBestHistoryScore score bestAction sample t)) +</span>
+<span id="L497">497         integral actualMeasure (fun sample =&gt;</span>
+<span id="L498">498           ∑ t ∈ range horizon,</span>
+<span id="L499">499             (trajectoryHistoryScore score sample t -</span>
+<span id="L500">500               mean sample.1 (environmentTrajectoryAction sample t))) := by</span>
+<span id="L501">501         rw [ExpectationBochnerSums.integral_finset_sum</span>
+<span id="L502">502           actualMeasure (range horizon)</span>
+<span id="L503">503           (fun t sample =&gt;</span>
+<span id="L504">504             mean sample.1 (bestAction sample.1) -</span>
+<span id="L505">505               trajectoryBestHistoryScore score bestAction sample t)</span>
+<span id="L506">506           hbestTerm]</span>
+<span id="L507">507         rw [ExpectationBochnerSums.integral_finset_sum</span>
+<span id="L508">508           actualMeasure (range horizon)</span>
+<span id="L509">509           (fun t sample =&gt;</span>
+<span id="L510">510             trajectoryHistoryScore score sample t -</span>
+<span id="L511">511               mean sample.1 (environmentTrajectoryAction sample t))</span>
+<span id="L512">512           hactionTerm]</span>
+<span id="L513">513 </span>
+<span id="L514">514 end Thompson</span>
+<span id="L515">515 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

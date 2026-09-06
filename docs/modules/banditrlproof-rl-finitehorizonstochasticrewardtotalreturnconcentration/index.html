@@ -1,0 +1,556 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.RL.FiniteHorizonStochasticRewardTotalReturnConcentration · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.RL.FiniteHorizonStochasticRewardTotalReturnConcentration · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.RL.FiniteHorizonStochasticRewardTotalReturnConcentration · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Finite-horizon RL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>RL.<wbr>Finite<wbr>Horizon<wbr>Stochastic<wbr>Reward<wbr>Total<wbr>Return<wbr>Concentration</h1>
+  <p class="lede">This module combines selected-reward noise with policy-action and transition noise. The target random variable is the actual sampled cumulative return minus the recursive policy value. The additive proxy relies on the product structure of reward and next-state sampling given the current state and action.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html"><code>BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/finite-horizon-rl/index.html">9. Finite-horizon reinforcement learning</a></dd></div>
+    <div><dt>Declarations</dt><dd>28</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-rl-finitehorizonstochasticrewardbellmaninnovationconcentration/index.html"><code>BanditRLProof.RL.FiniteHorizonStochasticRewardBellmanInnovationConcentration</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-rl-finitehorizonstochasticrewardinitiallawtotalreturnconcentration/index.html"><code>BanditRLProof.RL.FiniteHorizonStochasticRewardInitialLawTotalReturnConcentration</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-5fa3c260ce37">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>ProbabilityTheory.Kernel.compProd_prodMkRight_eq_prod</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Sampling from `kappa` and then from a kernel that ignores the sampled value is
+the same as sampling from the product kernel at the original input.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> compProd_prodMkRight_eq_prod (kappa : Kernel Alpha Beta) (eta : Kernel Alpha Gamma) [IsFiniteKernel kappa] [IsFiniteKernel eta] : kappa ⊗ₖ prodMkRight Beta eta = kappa ×ₖ eta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L27">Source line 27</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2ef08fde6851">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>ProbabilityTheory.Kernel.map_compProd_prodMk</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Push a first-coordinate-dependent map through the second stage of `compProd`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> map_compProd_prodMk {Delta : Type*} [MeasurableSpace Delta] (kappa : Kernel Alpha Beta) (eta : Kernel (Alpha × Beta) Gamma) (eta&#x27; : Kernel (Alpha × Beta) Delta) [IsSFiniteKernel kappa] [IsSFiniteKernel eta] [IsSFiniteKernel eta&#x27;] (g : Beta -&gt; Gamma -&gt; Delta) (hg : Measurable g.uncurry) (hmap : <span class="kw">forall</span> a b, (eta (a, b)).map (g b) = eta&#x27; (a, b)) : (kappa ⊗ₖ eta).map (<span class="kw">fun</span> p =&gt; (p.<span class="num">1</span>, g p.<span class="num">1</span> p.<span class="num">2</span>)) = kappa ⊗ₖ eta&#x27;</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L39">Source line 39</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-67d7cc1f6d30">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.retainedActionStateKernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Retain the current state together with one sampled action/next-state pair.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> retainedActionStateKernel {mdp : MDP State Action} (policy : MarkovPolicy mdp) (stage : Fin mdp.horizon) : ProbabilityTheory.Kernel State (State × (Action × State))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L79">Source line 79</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a0c7e0bdd7ad">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.sampledCumulativeReturnDeviationFrom</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Actual sampled cumulative return centered at the recursive policy value.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledCumulativeReturnDeviationFrom (mdp : MDP State Action) (policy : MarkovPolicy mdp) (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) (state : State) (trace : RewardStepTrace Action State remaining) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L98">Source line 98</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7197022f7495">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.measurable_sampledCumulativeReturnDeviationFrom</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The sampled-return deviation is jointly measurable in start state and trace.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_sampledCumulativeReturnDeviationFrom (mdp : MDP State Action) (policy : MarkovPolicy mdp) (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) : Measurable (<span class="kw">fun</span> p : State × RewardStepTrace Action State remaining =&gt; mdp.sampledCumulativeReturnDeviationFrom policy remaining hremaining p.<span class="num">1</span> p.<span class="num">2</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L106">Source line 106</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-43cd0ad6c42c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.sampledCumulativeReturnDeviationFrom_eq_rewardDeviation_add_meanBellmanInnovation</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The centered sampled return splits pathwise into selected-reward noise and the
+mean Bellman innovation. No probabilistic independence is used in this identity.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledCumulativeReturnDeviationFrom_eq_rewardDeviation_add_meanBellmanInnovation (mdp : MDP State Action) (policy : MarkovPolicy mdp) (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) (state : State) (trace : RewardStepTrace Action State remaining) : mdp.sampledCumulativeReturnDeviationFrom policy remaining hremaining state trace = mdp.sampledCumulativeRewardDeviationFrom remaining state trace + mdp.sampledCumulativeMeanBellmanInnovationFrom policy remaining hremaining state trace</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L120">Source line 120</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c1301333d62d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.rewardDeviationAfterActionState</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Center a sampled reward using the retained state/action coordinates.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> rewardDeviationAfterActionState (mdp : MDP State Action) : ((State × (Action × State)) × Real) -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L147">Source line 147</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a060f0f92508">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.measurable_rewardDeviationAfterActionState</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_rewardDeviationAfterActionState (mdp : MDP State Action) : Measurable (rewardDeviationAfterActionState mdp)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L151">Source line 151</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-23502f45684f">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.rawRewardKernelAfterActionState</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Raw reward sampled from the retained current-state/action coordinates.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> rawRewardKernelAfterActionState (source : MeanCompatibleRewardKernel mdp) : ProbabilityTheory.Kernel (State × (Action × State)) Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L158">Source line 158</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b74e7e3e9f4c">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.rewardDeviationKernelAfterActionState</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Reward residual sampled after retaining the current state and an already sampled
+action/next-state pair.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> rewardDeviationKernelAfterActionState (source : MeanCompatibleRewardKernel mdp) : ProbabilityTheory.Kernel (State × (Action × State)) Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L175">Source line 175</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7b0d2cd7fb3f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.rewardDeviationKernelAfterActionState_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pointwise law of the retained-state centered reward kernel.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> rewardDeviationKernelAfterActionState_apply (source : MeanCompatibleRewardKernel mdp) (p : State × (Action × State)) : source.rewardDeviationKernelAfterActionState p = (source.rewardKernel.kernel (p.<span class="num">1</span>, p.<span class="num">2.1</span>)).map (<span class="kw">fun</span> reward =&gt; reward - mdp.reward p.<span class="num">1</span> p.<span class="num">2.1</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L191">Source line 191</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-885227c42c87">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.rewardDeviationKernelAfterActionState_hasSubgaussianMGF</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The retained-state reward residual kernel inherits the uniform reward MGF.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> rewardDeviationKernelAfterActionState_hasSubgaussianMGF [StandardBorelSpace State] [StandardBorelSpace Action] (source : MeanCompatibleRewardKernel mdp) (varianceProxy : NNReal) (law : source.UniformSubgaussianRewardLaw varianceProxy) (base : Measure (State × (Action × State))) [IsFiniteMeasure base] : ProbabilityTheory.Kernel.HasSubgaussianMGF id varianceProxy source.rewardDeviationKernelAfterActionState base</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L209">Source line 209</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6d60e82a0750">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.rawRewardKernelAfterRetainedActionState</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Ignore the outer duplicated state and sample the raw retained-coordinate reward.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> rawRewardKernelAfterRetainedActionState (source : MeanCompatibleRewardKernel mdp) : ProbabilityTheory.Kernel (State × (State × (Action × State))) Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L236">Source line 236</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0f66844d54f0">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.rewardDeviationKernelAfterRetainedActionState</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Ignore the outer duplicated state and sample the centered reward residual.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> rewardDeviationKernelAfterRetainedActionState (source : MeanCompatibleRewardKernel mdp) : ProbabilityTheory.Kernel (State × (State × (Action × State))) Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L243">Source line 243</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-462b7a7e0271">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.uncenterRewardAfterRetainedActionState</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Add the retained MDP mean back to a centered reward residual.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> uncenterRewardAfterRetainedActionState (mdp : MDP State Action) : State × (Action × State) -&gt; Real -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L264">Source line 264</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7a750a9703f2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.measurable_uncenterRewardAfterRetainedActionState</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_uncenterRewardAfterRetainedActionState (mdp : MDP State Action) : Measurable (uncenterRewardAfterRetainedActionState mdp).uncurry</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L268">Source line 268</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d3ddf20977ae">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.rewardDeviationKernelAfterRetainedActionState_map_uncenter</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Centering and then restoring the retained MDP mean recovers the raw reward law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> rewardDeviationKernelAfterRetainedActionState_map_uncenter (source : MeanCompatibleRewardKernel mdp) (outer : State) (retained : State × (Action × State)) : (source.rewardDeviationKernelAfterRetainedActionState (outer, retained)).map (uncenterRewardAfterRetainedActionState mdp retained) = source.rawRewardKernelAfterRetainedActionState (outer, retained)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L276">Source line 276</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d858c8f46198">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.retainedActionStateKernel_compProd_rewardDeviation_map_uncenter</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Restore raw rewards throughout the retained action-state product kernel.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> retainedActionStateKernel_compProd_rewardDeviation_map_uncenter (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) (stage : Fin mdp.horizon) : ((policy.retainedActionStateKernel stage) ⊗ₖ source.rewardDeviationKernelAfterRetainedActionState).map (<span class="kw">fun</span> p =&gt; (p.<span class="num">1</span>, uncenterRewardAfterRetainedActionState mdp p.<span class="num">1</span> p.<span class="num">2</span>)) = (policy.retainedActionStateKernel stage) ⊗ₖ source.rawRewardKernelAfterRetainedActionState</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L300">Source line 300</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b930f551397b">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.assembleRawRewardAfterRetainedActionState</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Arrange retained current/action/next-state coordinates with a raw reward.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> assembleRawRewardAfterRetainedActionState : ((State × (Action × State)) × Real) -&gt; Action × (Real × State)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L320">Source line 320</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1de1eff8e921">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.measurable_assembleRawRewardAfterRetainedActionState</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_assembleRawRewardAfterRetainedActionState : Measurable (assembleRawRewardAfterRetainedActionState (State := State) (Action := Action))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L326">Source line 326</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1eaaedfbb5a6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.retainedActionStateKernel_compProd_rawReward_map_assemble</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The retained raw-reward construction is exactly the existing head kernel.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> retainedActionStateKernel_compProd_rawReward_map_assemble (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) (stage : Fin mdp.horizon) : ((policy.retainedActionStateKernel stage) ⊗ₖ source.rawRewardKernelAfterRetainedActionState).map (assembleRawRewardAfterRetainedActionState (State := State) (Action := Action)) = source.actionRewardStateKernel policy stage</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L334">Source line 334</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-50a420db5c7e">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.assembleRewardDeviationAfterRetainedActionState</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Assemble a reward-bearing head directly from a centered residual.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> assembleRewardDeviationAfterRetainedActionState (mdp : MDP State Action) : ((State × (Action × State)) × Real) -&gt; Action × (Real × State)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L408">Source line 408</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bf61dba7619f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.measurable_assembleRewardDeviationAfterRetainedActionState</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_assembleRewardDeviationAfterRetainedActionState (mdp : MDP State Action) : Measurable (assembleRewardDeviationAfterRetainedActionState mdp)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L414">Source line 414</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ab960f2c2969">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.retainedActionStateKernel_compProd_rewardDeviation_map_assemble</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The centered residual construction maps exactly to the existing head kernel.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> retainedActionStateKernel_compProd_rewardDeviation_map_assemble (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) (stage : Fin mdp.horizon) : ((policy.retainedActionStateKernel stage) ⊗ₖ source.rewardDeviationKernelAfterRetainedActionState).map (assembleRewardDeviationAfterRetainedActionState mdp) = source.actionRewardStateKernel policy stage</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L423">Source line 423</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b52b3f0a4817">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.retainedActionStateKernel_meanBellmanInnovation_hasSubgaussianMGF</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Retaining the current state preserves the one-step Bellman innovation MGF.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> retainedActionStateKernel_meanBellmanInnovation_hasSubgaussianMGF (policy : MarkovPolicy mdp) (rewardBound : NNReal) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= (rewardBound : Real)) (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (state : State) : ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> retained : State × (Action × State) =&gt; mdp.reward retained.<span class="num">1</span> retained.<span class="num">2.1</span> + policy.valueRemaining remaining (<span class="kw">by</span> omega) retained.<span class="num">2.2</span> - policy.valueRemaining (remaining + <span class="num">1</span>) hremaining state) (meanBellmanInnovationStepVarianceProxy rewardBound (remaining + <span class="num">1</span>)) (policy.retainedActionStateKernel ⟨mdp.horizon - (remaining + <span class="num">1</span>), <span class="kw">by</span> omega⟩ state)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L451">Source line 451</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-adf0bccb14e4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.actionRewardStateKernel_sampledReturnBellmanInnovation_hasSubgaussianMGF</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">One sampled reward plus the sampled next policy value is sub-Gaussian around
+the current policy value with the sum of reward and Bellman innovation proxies.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> actionRewardStateKernel_sampledReturnBellmanInnovation_hasSubgaussianMGF [StandardBorelSpace State] [StandardBorelSpace Action] [Nonempty Action] (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) (rewardBound rewardVarianceProxy : NNReal) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= (rewardBound : Real)) (law : source.UniformSubgaussianRewardLaw rewardVarianceProxy) (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (state : State) : ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> head : Action × (Real × State) =&gt; head.<span class="num">2.1</span> + policy.valueRemaining remaining (<span class="kw">by</span> omega) head.<span class="num">2.2</span> - policy.valueRemaining (remaining + <span class="num">1</span>) hremaining state) (meanBellmanInnovationStepVarianceProxy rewardBound (remaining + <span class="num">1</span>) + rewardVarianceProxy) (source.actionRewardStateKernel policy ⟨mdp.horizon - (remaining + <span class="num">1</span>), <span class="kw">by</span> omega⟩ state)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L513">Source line 513</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-53f713c1182f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.stochasticTrajectoryKernelRemaining_sampledCumulativeReturnDeviationFrom_hasSubgaussianMGF</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The full sampled return is sub-Gaussian around the recursive policy value, with
+the reward-noise proxy plus the mean Bellman innovation proxy.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stochasticTrajectoryKernelRemaining_sampledCumulativeReturnDeviationFrom_hasSubgaussianMGF [StandardBorelSpace State] [StandardBorelSpace Action] [Nonempty Action] (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) (rewardBound rewardVarianceProxy : NNReal) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= (rewardBound : Real)) (law : source.UniformSubgaussianRewardLaw rewardVarianceProxy) (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) (state : State) : ProbabilityTheory.HasSubgaussianMGF (mdp.sampledCumulativeReturnDeviationFrom policy remaining hremaining state) ((remaining : NNReal) * rewardVarianceProxy + meanBellmanInnovationVarianceProxy rewardBound remaining) (source.stochasticTrajectoryKernelRemaining policy remaining hremaining state)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L622">Source line 622</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8194f7a631f3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.stochasticTrajectoryKernelRemaining_sampledCumulativeReturnDeviationFrom_abs_tail_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Fixed-horizon two-sided delta tail for sampled return around policy value.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stochasticTrajectoryKernelRemaining_sampledCumulativeReturnDeviationFrom_abs_tail_le [StandardBorelSpace State] [StandardBorelSpace Action] [Nonempty Action] (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) (rewardBound rewardVarianceProxy : NNReal) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= (rewardBound : Real)) (law : source.UniformSubgaussianRewardLaw rewardVarianceProxy) (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) (state : State) (htotal : <span class="num">0</span> &lt; ((((remaining : NNReal) * rewardVarianceProxy + meanBellmanInnovationVarianceProxy rewardBound remaining : NNReal) : Real))) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) : (source.stochasticTrajectoryKernelRemaining policy remaining hremaining state) {trace | Concentration.subGaussianSumConfidenceRadius ((remaining : NNReal) * rewardVarianceProxy + meanBellmanInnovationVarianceProxy rewardBound remaining) delta &lt;= |mdp.sampledCumulativeReturnDeviationFrom policy remaining hremaining state trace|} &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardTotalReturnConcentration.lean.html#L877">Source line 877</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

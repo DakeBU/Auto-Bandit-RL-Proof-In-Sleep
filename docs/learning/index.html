@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="Learning path · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Learning path · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>Learning path · BanditRLlib</title>
+  <link rel="icon" href="../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../index.html">Overview</a><a href="../installation/index.html">Installation</a></div></details><details class="nav-group active" data-nav-group="book-map" data-nav-group-active="true" open><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="index.html" aria-current="page">All chapters</a><a class="book-nav-link" href="../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../banditrlwiki/index.html">BanditRLwiki</a><a href="../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../banditrlwiki/papers/index.html">Paper index</a><a href="../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../declarations/index.html">Lean declarations</a><a href="../implementation-map/index.html">Implementation map</a><a href="../lean-graph/index.html">Lean Graph</a><a href="../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../ide/index.html">Local Formalization Lab</a><a href="../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../community/index.html">Contribute</a><a href="../roadmap/index.html">Roadmap</a><a href="../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="learning">
+  <p class="eyebrow">A student-first route</p>
+  <h1 class="page-title">How to read the formalization</h1>
+  <p class="lede">You do not need to read thousands of declarations in source order. Begin with the deterministic language, learn the probability interfaces, then follow one algorithm route from assumptions to a compiled endpoint.</p>
+
+<aside class="primary-textbook-banner" id="primary-textbook" aria-labelledby="primary-textbook-title">
+  <div class="primary-textbook-identity">
+    <span class="primary-textbook-label">Current primary textbook</span>
+    <strong class="primary-textbook-title" id="primary-textbook-title"><cite>Bandit Algorithms</cite></strong>
+    <span class="primary-textbook-authors">Tor Lattimore and Csaba Szepesvári · <a href="https://www.cambridge.org/core/books/bandit-algorithms/8E39FD004E6CE036680F90DD0C6F09FC">Cambridge University Press, 2020</a> · <a href="https://doi.org/10.1017/9781108571401">DOI 10.1017/9781108571401</a></span>
+  </div>
+  <p>The ten-chapter Book Map uses this book as its main mathematical spine. Original papers supplement OFUL, Tsallis-INF, UCBVI, and other source-specific results.</p>
+  <a class="button compact" href="https://tor-lattimore.com/downloads/book/book.pdf">Open the free textbook <span aria-hidden="true">↗</span></a>
+  <dl class="textbook-coverage" aria-label="Current textbook coverage">
+    <div><dt>Book Map</dt><dd><strong>10 source-mapped routes</strong><span>9 canonical cores compiled · 1 planned</span></dd></div>
+    <div><dt>Part IV spine</dt><dd><strong>5 of 5 chapter contracts compiled</strong><span>Required scope only, not every exercise. Ch.17 uses explicitly corrected source statements.</span></dd></div>
+    <div><dt>Whole textbook</dt><dd><strong>Not claimed complete</strong><span>Coverage is theorem- and route-specific, with exact gaps on every page</span></dd></div>
+  </dl>
+</aside>
+
+</section>
+
+<section id="path">
+  <h2>Choose a route before choosing a chapter</h2>
+  <p class="section-intro">The same finite-sum and probability leaves recur across algorithms. Pick a question, follow its short dependency route, and return to the complete map when you need a neighboring technique.</p>
+  <div class="learning-route-grid"><article class="learning-route-card" data-learning-route><h3>Stochastic finite arms</h3><p>Start with bookkeeping, add concentration, then compare ETC and optimism.</p><ol><li><a href="../chapters/foundations/index.html"><span>01</span>1. Finite bandits, traces, and regret</a></li><li><a href="../chapters/probability/index.html"><span>02</span>2. Probability, kernels, filtrations, and concentration</a></li><li><a href="../chapters/etc/index.html"><span>03</span>3. Explore-Then-Commit</a></li><li><a href="../chapters/ucb/index.html"><span>04</span>4. UCB: confidence events to regret</a></li></ol></article><article class="learning-route-card" data-learning-route><h3>Linear and contextual</h3><p>Build the probability interface before moving from optimism to confidence ellipsoids.</p><ol><li><a href="../chapters/probability/index.html"><span>01</span>2. Probability, kernels, filtrations, and concentration</a></li><li><a href="../chapters/ucb/index.html"><span>02</span>4. UCB: confidence events to regret</a></li><li><a href="../chapters/oful/index.html"><span>03</span>5. OFUL, self-normalized confidence, and stopping times</a></li></ol></article><article class="learning-route-card" data-learning-route><h3>Bayesian</h3><p>Use the common probability layer, then follow posterior sampling and its information route.</p><ol><li><a href="../chapters/probability/index.html"><span>01</span>2. Probability, kernels, filtrations, and concentration</a></li><li><a href="../chapters/thompson/index.html"><span>02</span>6. Thompson sampling and Bayesian regret</a></li></ol></article><article class="learning-route-card" data-learning-route><h3>Adversarial and OCO</h3><p>Move from importance weighting in EXP3 to regularized FTRL and Tsallis geometry.</p><ol><li><a href="../chapters/probability/index.html"><span>01</span>2. Probability, kernels, filtrations, and concentration</a></li><li><a href="../chapters/exp3/index.html"><span>02</span>7. EXP3 and adversarial concentration</a></li><li><a href="../chapters/tsallis/index.html"><span>03</span>8. Tsallis-FTRL, corruption, and nonstationarity</a></li></ol></article><article class="learning-route-card" data-learning-route><h3>Finite-horizon RL</h3><p>Reuse probability and optimism interfaces before entering Bellman recursion and UCBVI.</p><ol><li><a href="../chapters/probability/index.html"><span>01</span>2. Probability, kernels, filtrations, and concentration</a></li><li><a href="../chapters/ucb/index.html"><span>02</span>4. UCB: confidence events to regret</a></li><li><a href="../chapters/finite-horizon-rl/index.html"><span>03</span>9. Finite-horizon reinforcement learning</a></li></ol></article></div>
+  <div class="callout"><strong>Reading rule.</strong> Read the plain-English statement first, then the mathematical reading, then the exact Lean signature. Save tactic details for the second pass.</div>
+</section>
+
+<section id="lean-translation">
+  <h2>Four Lean ideas to recognize</h2>
+  <div class="card-grid">
+    <div class="info-card"><h3>Structures</h3><p>Bundle mathematical data with invariant proofs, such as a finite model and its best-arm certificate.</p></div>
+    <div class="info-card"><h3>Typeclasses</h3><p>Supply ambient facts such as measurable spaces, finite types, probability measures, and nonempty action sets.</p></div>
+    <div class="info-card"><h3>Almost everywhere</h3><p>Conditional distributions and kernel identities are usually equal almost everywhere, not pointwise.</p></div>
+    <div class="info-card"><h3>Thin wrappers</h3><p>Algorithm-specific theorems should reuse general finite-sum, measure, concentration, and optimization leaves.</p></div>
+  </div>
+</section>
+
+<section id="book-map">
+  <p class="eyebrow">Formalized textbook map</p>
+  <h2>Book map</h2>
+  <p class="section-intro">The main spine is Lattimore and Szepesvári's <em>Bandit Algorithms</em>. OFUL, Tsallis-INF, and UCBVI add their original papers. Online-edition pages are shown on every chapter card; the source pages themselves explain the exact algorithms and full assumptions.</p>
+  <div class="book-map-grid">
+<a class="book-chapter-card" href="../chapters/foundations/index.html">
+  <span class="book-chapter-number" aria-hidden="true">01</span>
+  <div class="book-chapter-copy">
+    <span class="book-chapter-meta"><span>Teaching chapter</span><span class="status compiled">Canonical route compiled</span></span>
+    <strong>1. Finite bandits, traces, and regret</strong>
+    <span class="book-scope">Extension and milestone ledger · 13 compiled · 1 partial</span>
+    <span class="book-source">Ch. 1 and Ch. 4, especially §4.5 · online pp. 8–16 and 56–69; regret decomposition pp. 62–63</span>
+    <span class="book-summary">The deterministic language shared by the entire project: finite models, action and reward traces, pull counts, gaps, reward sums, pseudo-regret, and count-to-regret decompositions.</span>
+    <p class="book-audience"><strong>Reader.</strong> Start here if you know basic probability or machine learning but are new to this Lean library.</p>
+  </div>
+  <span class="book-chapter-arrow" aria-hidden="true">→</span>
+</a>
+<a class="book-chapter-card" href="../chapters/probability/index.html">
+  <span class="book-chapter-number" aria-hidden="true">02</span>
+  <div class="book-chapter-copy">
+    <span class="book-chapter-meta"><span>Teaching chapter</span><span class="status compiled">Canonical route compiled</span></span>
+    <strong>2. Probability, kernels, filtrations, and concentration</strong>
+    <span class="book-scope">Extension and milestone ledger · 6 compiled</span>
+    <span class="book-source">Ch. 2, Ch. 3, and Ch. 5 · online pp. 18–42, 46–54, and 74–81</span>
+    <span class="book-summary">Measure-theoretic infrastructure for generated histories, conditional reward laws, martingale differences, posterior kernels, stopping times, and concentration.</span>
+    <p class="book-audience"><strong>Reader.</strong> Read after Foundations; familiarity with conditional expectation helps but is not required.</p>
+  </div>
+  <span class="book-chapter-arrow" aria-hidden="true">→</span>
+</a>
+<a class="book-chapter-card" href="../chapters/etc/index.html">
+  <span class="book-chapter-number" aria-hidden="true">03</span>
+  <div class="book-chapter-copy">
+    <span class="book-chapter-meta"><span>Teaching chapter</span><span class="status compiled">Canonical route compiled</span></span>
+    <strong>3. Explore-Then-Commit</strong>
+    <span class="book-scope">Extension and milestone ledger · 3 compiled</span>
+    <span class="book-source">Ch. 6 · online pp. 91–96</span>
+    <span class="book-summary">Round-robin exploration, empirical means, measurable commit choices, wrong-commit tails, and expected-regret assemblies under bounded or sub-Gaussian arm laws.</span>
+    <p class="book-audience"><strong>Reader.</strong> The shortest end-to-end stochastic-bandit route in the repository.</p>
+  </div>
+  <span class="book-chapter-arrow" aria-hidden="true">→</span>
+</a>
+<a class="book-chapter-card" href="../chapters/ucb/index.html">
+  <span class="book-chapter-number" aria-hidden="true">04</span>
+  <div class="book-chapter-copy">
+    <span class="book-chapter-meta"><span>Teaching chapter</span><span class="status compiled">Canonical route compiled</span></span>
+    <strong>4. UCB: confidence events to regret</strong>
+    <span class="book-scope">Extension and milestone ledger · 5 compiled · 1 partial</span>
+    <span class="book-source">Ch. 7; KL-UCB extension in Ch. 10 · online pp. 102–111; KL-UCB pp. 133–141</span>
+    <span class="book-summary">History-based ordinary-UCB and KL-UCB scores, count thresholds, generated policies, arm streams, same-trajectory confidence, finite-arm reward kernels, and expected regret.</span>
+    <p class="book-audience"><strong>Reader.</strong> Read ETC first if confidence-event arguments are new to you.</p>
+  </div>
+  <span class="book-chapter-arrow" aria-hidden="true">→</span>
+</a>
+<a class="book-chapter-card" href="../chapters/oful/index.html">
+  <span class="book-chapter-number" aria-hidden="true">05</span>
+  <div class="book-chapter-copy">
+    <span class="book-chapter-meta"><span>Teaching chapter</span><span class="status compiled">Canonical route compiled</span></span>
+    <strong>5. OFUL, self-normalized confidence, and stopping times</strong>
+    <span class="book-scope">Extension and milestone ledger · 8 compiled</span>
+    <span class="book-source">Ch. 19–20; stopping times in §3.3 · online pp. 238–262; stopping-time basics pp. 50–54</span>
+    <span class="book-summary">The scoped canonical finite-action linear-bandit route compiles from elliptical potential and self-normalized ridge confidence through one horizon-free generated OFUL policy with all-horizon regret and stopping consumers, plus a separately identified horizon-indexed expected-consistency family.</span>
+    <p class="book-audience"><strong>Reader.</strong> Read the Probability layer and UCB chapter before this linear-bandit route.</p>
+  </div>
+  <span class="book-chapter-arrow" aria-hidden="true">→</span>
+</a>
+<a class="book-chapter-card" href="../chapters/thompson/index.html">
+  <span class="book-chapter-number" aria-hidden="true">06</span>
+  <div class="book-chapter-copy">
+    <span class="book-chapter-meta"><span>Teaching chapter</span><span class="status compiled">Canonical route compiled</span></span>
+    <strong>6. Thompson sampling and Bayesian regret</strong>
+    <span class="book-scope">Extension and milestone ledger · 6 compiled · 1 partial</span>
+    <span class="book-source">Ch. 34 and Ch. 36 · online pp. 421–436 and 460–475</span>
+    <span class="book-summary">The scoped stationary finite-arm Thompson route compiles from posterior kernels and probability matching on the actual recursive generated history through clipped-UCB decomposition, latent-stream confidence, and an explicit Bayesian regret terminal.</span>
+    <p class="book-audience"><strong>Reader.</strong> Best read after the Probability layer.</p>
+  </div>
+  <span class="book-chapter-arrow" aria-hidden="true">→</span>
+</a>
+<a class="book-chapter-card" href="../chapters/exp3/index.html">
+  <span class="book-chapter-number" aria-hidden="true">07</span>
+  <div class="book-chapter-copy">
+    <span class="book-chapter-meta"><span>Teaching chapter</span><span class="status compiled">Canonical route compiled</span></span>
+    <strong>7. EXP3 and adversarial concentration</strong>
+    <span class="book-scope">Extension and milestone ledger · 7 compiled</span>
+    <span class="book-source">Ch. 11–12 · online pp. 148–172</span>
+    <span class="book-summary">The scoped canonical generated EXP3 route compiles from exponential-weight potentials and importance-weighted conditional moments through horizon-tuned expected and best-arm high-probability endpoints, plus a distinct fixed-process all-positive-prefix realized-regret event and a sparse-loss extension.</span>
+    <p class="book-audience"><strong>Reader.</strong> Read Foundations first; later sections use the Probability layer heavily.</p>
+  </div>
+  <span class="book-chapter-arrow" aria-hidden="true">→</span>
+</a>
+<a class="book-chapter-card" href="../chapters/tsallis/index.html">
+  <span class="book-chapter-number" aria-hidden="true">08</span>
+  <div class="book-chapter-copy">
+    <span class="book-chapter-meta"><span>Teaching chapter</span><span class="status compiled">Canonical route compiled</span></span>
+    <strong>8. Tsallis-FTRL, corruption, and nonstationarity</strong>
+    <span class="book-scope">Extension and milestone ledger · 4 compiled</span>
+    <span class="book-source">Ch. 28 (FTRL and mirror-descent foundation) · online pp. 327–344</span>
+    <span class="book-summary">The scoped canonical half-Tsallis FTRL route compiles from finite-simplex minimizers and one-step stability through a measurable scheduled generated trajectory, score alignment, expected self-bounding, and a finite-arm IID bounded reward-law logarithmic regret terminal; corruption and nonstationary routes remain labelled extensions.</span>
+    <p class="book-audience"><strong>Reader.</strong> This is one of the longest routes; read EXP3 and the Probability layer first.</p>
+  </div>
+  <span class="book-chapter-arrow" aria-hidden="true">→</span>
+</a>
+<a class="book-chapter-card" href="../chapters/finite-horizon-rl/index.html">
+  <span class="book-chapter-number" aria-hidden="true">09</span>
+  <div class="book-chapter-copy">
+    <span class="book-chapter-meta"><span>Teaching chapter</span><span class="status compiled">Canonical route compiled</span></span>
+    <strong>9. Finite-horizon reinforcement learning</strong>
+    <span class="book-scope">Extension and milestone ledger · 7 compiled</span>
+    <span class="book-source">Ch. 38 · online pp. 512–538</span>
+    <span class="book-summary">Finite MDPs, Bellman optimality, generated trajectories and occupancy regret, plus a canonical known-reward Hoeffding UCBVI-CH route whose recurrent planner, same-source confidence, optimism, raw cumulative episode pseudo-regret, high-probability terminal, and failure-aware expectation consumer share one adaptive generated process.</span>
+    <p class="book-audience"><strong>Reader.</strong> Read Foundations, Probability, UCB, and the OFUL stopping-time material first.</p>
+  </div>
+  <span class="book-chapter-arrow" aria-hidden="true">→</span>
+</a>
+<a class="book-chapter-card" href="../chapters/frontier/index.html">
+  <span class="book-chapter-number" aria-hidden="true">10</span>
+  <div class="book-chapter-copy">
+    <span class="book-chapter-meta"><span>Teaching chapter</span><span class="status planned">Canonical route planned</span></span>
+    <strong>10. Automation, resources, and open routes</strong>
+    <span class="book-scope">Extension and milestone ledger · 2 blocked · 13 compiled · 5 partial · 1 planned</span>
+    <span class="book-source">Parts VII–VIII as a background index · online pp. 358–538</span>
+    <span class="book-summary">The proof harness, task vocabulary, resource stopping leaves, literature registry, partial source-frozen delayed-feedback, succinct-lower-bound, and stochastic-gradient-bandit audits, and planned BwK, preference, robust, federated, neural-bandit, and sharp KL-asymptotic work.</span>
+    <p class="book-audience"><strong>Reader.</strong> Read this chapter to contribute a new route or understand what is deliberately not claimed.</p>
+  </div>
+  <span class="book-chapter-arrow" aria-hidden="true">→</span>
+</a></div>
+</section>
+
+<section id="textbook-spine">
+  <p class="eyebrow">Canonical source sequence</p>
+  <h2>Part IV: Lower Bounds</h2>
+  <p class="section-intro">Use this separate spine when you want the exact textbook order and page mapping for Chapters 13–17. Status is per chapter and per Lean declaration.</p>
+  <div class="textbook-spine-grid">
+<a class="spine-chapter-card" href="../textbook-spine/chapter-13-basic-ideas/index.html">
+  <span class="spine-chapter-number">Chapter 13</span>
+  <span class="spine-chapter-status"><span class="status compiled">Compiled</span></span>
+  <strong>Lower Bounds: Basic Ideas</strong>
+  <span>155–159 print · 189–194 PDF</span>
+  <p>Theorem 13.1 compiles through Chapter 15 with c=1/54. Chapter 13 also compiles fixed-class minimax-optimality, the canonical iid Gaussian empirical-mean law, midpoint error events, the Chernoff companion, and both exact Mills-ratio bounds of Eq. (13.4) rescaled to the printed Eq. (13.1). The broader 1-subgaussian class with gaps in [0,1] now has a compiled fixed-horizon MOSS upper bound and constant-factor near-minimax theorem. The frozen main-text contract is complete: PR #105, authoritative-main checks, Pages deployment and live desktop/mobile acceptance pass for b38630c. Notes and Exercises remain optional and unformalized.</p>
+  <span class="spine-chapter-arrow" aria-hidden="true">→</span>
+</a>
+<a class="spine-chapter-card" href="../textbook-spine/chapter-14-information-theory/index.html">
+  <span class="spine-chapter-number">Chapter 14</span>
+  <span class="spine-chapter-status"><span class="status compiled">Compiled</span></span>
+  <strong>Foundations of Information Theory</strong>
+  <span>160–169 print · 195–206 PDF</span>
+  <p>The frozen required body is compiled: Huffman optimality, exact-real arithmetic block coding and converse, finite/partition/common-density KL, the source affinity/overlap route, and Gaussian testing. Independent review, PR #106, main run 33959196451, Pages and live desktop/mobile acceptance passed. The singleton and uniform-code qualifications below are part of the accepted boundary; optional Notes/Exercises are not claimed complete.</p>
+  <span class="spine-chapter-arrow" aria-hidden="true">→</span>
+</a>
+<a class="spine-chapter-card" href="../textbook-spine/chapter-15-minimax-lower-bounds/index.html">
+  <span class="spine-chapter-number">Chapter 15</span>
+  <span class="spine-chapter-status"><span class="status compiled">Compiled</span></span>
+  <strong>Minimax Lower Bounds</strong>
+  <span>170–176 print · 207–214 PDF</span>
+  <p>The frozen required body (§15.1–15.2) is compiled: Lemma 15.1 and Theorem 15.2 use one arbitrary randomized HistoryAlgorithm, the canonical finite-history law, exact unit-Gaussian construction and 1/27 constant, with worst-case and minimax consequences. Optional Exercise 15.7 remains partial: measurable-map KL contraction reuses Chapter 14&#x27;s trim API, and the fixed-horizon observation corollary compiles; stopped-history information and F_tau factorization remain open. Notes and other exercises are outside the required-body completion contract.</p>
+  <span class="spine-chapter-arrow" aria-hidden="true">→</span>
+</a>
+<a class="spine-chapter-card" href="../textbook-spine/chapter-16-instance-dependent/index.html">
+  <span class="spine-chapter-number">Chapter 16</span>
+  <span class="spine-chapter-status"><span class="status compiled">Compiled</span></span>
+  <strong>Instance-Dependent Lower Bounds</strong>
+  <span>177–184 print · 215–223 PDF</span>
+  <p>Definition 16.1, Theorem 16.2, Lemma 16.3, and Theorem 16.4 compile with the source quantifiers, information branches, constants, and positive-part placement.</p>
+  <span class="spine-chapter-arrow" aria-hidden="true">→</span>
+</a>
+<a class="spine-chapter-card" href="../textbook-spine/chapter-17-high-probability/index.html">
+  <span class="spine-chapter-number">Chapter 17</span>
+  <span class="spine-chapter-status"><span class="status compiled">Compiled</span></span>
+  <strong>High-Probability Lower Bounds</strong>
+  <span>185–190 print · 224–230 PDF</span>
+  <p>All Chapter 17 body endpoints pass the full Lean/Tests/harness gate, including same-policy hard-law coupling and deterministic matrix extraction; integrated into main via PR #101. Approved corrections: Claim 17.6 uses T_i ≤ n/2; Theorem 17.4 uses 0 &lt; δ ≤ 1/32 with c=1/160, C=64 and a strict CDF tail. This is corrected-chapter closure, not a proof of the unchanged printed statements or every optional exercise.</p>
+  <span class="spine-chapter-arrow" aria-hidden="true">→</span>
+</a></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Reading guide</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#learning">Reading guide</a><a data-toc-link href="#primary-textbook">Primary textbook</a><a data-toc-link href="#path">Recommended path</a><a data-toc-link href="#lean-translation">Lean ideas</a><a data-toc-link href="#book-map">Book map</a><a data-toc-link href="#textbook-spine">Part IV spine</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../static/site.js?v=20260903f"></script>
+</body>
+</html>

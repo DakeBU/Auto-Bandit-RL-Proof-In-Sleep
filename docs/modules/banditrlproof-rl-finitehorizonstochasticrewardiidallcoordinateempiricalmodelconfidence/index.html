@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.RL.FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.RL.FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.RL.FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Finite-horizon RL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>RL.<wbr>Finite<wbr>Horizon<wbr>Stochastic<wbr>Reward<wbr>IID<wbr>All<wbr>Coordinate<wbr>Empirical<wbr>Model<wbr>Confidence</h1>
+  <p class="lede">This module combines the compiled sampled-reward coordinate tail with the existing simultaneous count/transition event. It keeps the complete reward-bearing iid trajectory family as the probability space and constructs the empirical model from the actual sampled rewards.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html"><code>BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/finite-horizon-rl/index.html">9. Finite-horizon reinforcement learning</a></dd></div>
+    <div><dt>Declarations</dt><dd>32</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-rl-finitehorizonstochasticrewardiidempiricalrewardconfidence/index.html"><code>BanditRLProof.RL.FiniteHorizonStochasticRewardIIDEmpiricalRewardConfidence</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-rl-finitehorizonadaptivestochasticrewardsampledempiricaloptimisticsource/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource</code></a>, <a href="../banditrlproof-rl-finitehorizonstochasticrewardiidexplicitcalibration/index.html"><code>BanditRLProof.RL.FiniteHorizonStochasticRewardIIDExplicitCalibration</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-663ca5ef774e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.rewardStepTrace_stateAt_eq_trajectoryStateAt_eraseTrajectory</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Reward erasure preserves the state immediately preceding every coordinate.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> rewardStepTrace_stateAt_eq_trajectoryStateAt_eraseTrajectory (mdp : MDP State Action) (trajectory : State × RewardStepTrace Action State mdp.horizon) (stage : Fin mdp.horizon) : RewardStepTrace.stateAt trajectory.<span class="num">1</span> trajectory.<span class="num">2</span> stage = mdp.trajectoryStateAt (MeanCompatibleRewardKernel.eraseTrajectory (mdp := mdp) trajectory) stage</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L30">Source line 30</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ac6557544d74">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.sampledEpisodeStep_state_eq_knownRewardEpisodeStep</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Sampled and known-reward projections have identical stage states.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledEpisodeStep_state_eq_knownRewardEpisodeStep (mdp : MDP State Action) (trajectory : State × RewardStepTrace Action State mdp.horizon) (stage : Fin mdp.horizon) : (mdp.sampledEpisodeStepOfStochasticTrajectory trajectory stage).state = (mdp.episodeStepOfTrajectory (MeanCompatibleRewardKernel.eraseTrajectory (mdp := mdp) trajectory) stage).state</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L43">Source line 43</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0a757967883e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.sampledEpisodeStep_action_eq_knownRewardEpisodeStep</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Sampled and known-reward projections have identical stage actions.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledEpisodeStep_action_eq_knownRewardEpisodeStep (mdp : MDP State Action) (trajectory : State × RewardStepTrace Action State mdp.horizon) (stage : Fin mdp.horizon) : (mdp.sampledEpisodeStepOfStochasticTrajectory trajectory stage).action = (mdp.episodeStepOfTrajectory (MeanCompatibleRewardKernel.eraseTrajectory (mdp := mdp) trajectory) stage).action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L56">Source line 56</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2c6c48d69904">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.sampledEpisodeStep_nextState_eq_knownRewardEpisodeStep</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Sampled and known-reward projections have identical next states.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledEpisodeStep_nextState_eq_knownRewardEpisodeStep (mdp : MDP State Action) (trajectory : State × RewardStepTrace Action State mdp.horizon) (stage : Fin mdp.horizon) : (mdp.sampledEpisodeStepOfStochasticTrajectory trajectory stage).nextState = (mdp.episodeStepOfTrajectory (MeanCompatibleRewardKernel.eraseTrajectory (mdp := mdp) trajectory) stage).nextState</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L68">Source line 68</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-49bca2426810">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.sampledEpisodeBatch_visitCount_eq_knownRewardEpisodeBatch</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Actual sampled-reward and known-reward projections have the same visit counts.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledEpisodeBatch_visitCount_eq_knownRewardEpisodeBatch (mdp : MDP State Action) (episodes : Nat) (trajectories : Fin episodes -&gt; State × RewardStepTrace Action State mdp.horizon) (stage : Fin mdp.horizon) (state : State) (action : Action) : (mdp.sampledEpisodeBatchOfStochasticTrajectories episodes trajectories).visitCount stage state action = (MeanCompatibleRewardKernel.knownRewardEpisodeBatchOfStochasticTrajectories (mdp := mdp) episodes trajectories).visitCount stage state action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L79">Source line 79</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-12229fcb17f6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.sampledEpisodeBatch_transitionCount_eq_knownRewardEpisodeBatch</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Actual sampled-reward and known-reward projections have the same transition counts.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledEpisodeBatch_transitionCount_eq_knownRewardEpisodeBatch (mdp : MDP State Action) (episodes : Nat) (trajectories : Fin episodes -&gt; State × RewardStepTrace Action State mdp.horizon) (stage : Fin mdp.horizon) (state : State) (action : Action) (nextState : State) : (mdp.sampledEpisodeBatchOfStochasticTrajectories episodes trajectories).transitionCount stage state action nextState = (MeanCompatibleRewardKernel.knownRewardEpisodeBatchOfStochasticTrajectories (mdp := mdp) episodes trajectories).transitionCount stage state action nextState</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L111">Source line 111</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f1093059fbeb">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.stochasticSampledBatchCountBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Count event pulled back along the actual sampled-reward batch projection. Its
+set is source-independent, while the receiver aligns it with the source&#x27;s iid
+stochastic trajectory measure and reward event used by the combined route.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> stochasticSampledBatchCountBadEvent (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (delta : Real) : Set (Fin episodes -&gt; State × RewardStepTrace Action State mdp.horizon)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L161">Source line 161</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9be345b81763">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.mem_stochasticSampledBatchCountBadEvent_iff_knownReward</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Membership in the sampled and known-reward pullbacks of the count event agrees.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> mem_stochasticSampledBatchCountBadEvent_iff_knownReward (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (delta : Real) (trajectories : Fin episodes -&gt; State × RewardStepTrace Action State mdp.horizon) : trajectories ∈ source.stochasticSampledBatchCountBadEvent policy initialState episodes delta ↔ MeanCompatibleRewardKernel.knownRewardEpisodeBatchOfStochasticTrajectories (mdp := mdp) episodes trajectories ∈ policy.simultaneousCountBadEvent initialState episodes delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L171">Source line 171</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9ca9a86d024f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.measurableSet_stochasticSampledBatchCountBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The pulled-back sampled-batch count event is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_stochasticSampledBatchCountBadEvent (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (delta : Real) : MeasurableSet (source.stochasticSampledBatchCountBadEvent policy initialState episodes delta)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L211">Source line 211</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-71211bd87c89">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.iidStochasticTrajectoryFamilyMeasure_stochasticSampledBatchCountBadEvent_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The actual sampled-batch count event inherits the compiled count failure share.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iidStochasticTrajectoryFamilyMeasure_stochasticSampledBatchCountBadEvent_le (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (hepisodes : <span class="num">0</span> &lt; episodes) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) : (source.iidStochasticTrajectoryFamilyMeasure policy initialState episodes) (source.stochasticSampledBatchCountBadEvent policy initialState episodes delta) &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L223">Source line 223</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d22ebb556910">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.simultaneousRewardDelta</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Equal reward confidence share for every stage/state/action coordinate.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> simultaneousRewardDelta (mdp : MDP State Action) (delta : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L259">Source line 259</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a48d34f888dd">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.simultaneousRewardSumConfidenceRadius</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Deterministic fixed-coordinate reward-sum confidence radius.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> simultaneousRewardSumConfidenceRadius (mdp : MDP State Action) (episodes : Nat) (varianceProxy : NNReal) (delta : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L264">Source line 264</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-01d9fd683065">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.rewardCoordinateBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">One visit coordinate&#x27;s sampled-reward deviation event.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> rewardCoordinateBadEvent (source : MeanCompatibleRewardKernel mdp) (episodes : Nat) (varianceProxy : NNReal) (delta : Real) (coordinate : VisitCoordinate mdp) : Set (Fin episodes -&gt; State × RewardStepTrace Action State mdp.horizon)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L272">Source line 272</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8e9a7e44402e">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.simultaneousRewardBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Union of every stage/state/action sampled-reward deviation event.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> simultaneousRewardBadEvent (source : MeanCompatibleRewardKernel mdp) (episodes : Nat) (varianceProxy : NNReal) (delta : Real) : Set (Fin episodes -&gt; State × RewardStepTrace Action State mdp.horizon)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L284">Source line 284</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-65bdb9a4b1a5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.measurableSet_rewardCoordinateBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every fixed reward-coordinate event is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_rewardCoordinateBadEvent (source : MeanCompatibleRewardKernel mdp) (episodes : Nat) (varianceProxy : NNReal) (delta : Real) (coordinate : VisitCoordinate mdp) : MeasurableSet (source.rewardCoordinateBadEvent episodes varianceProxy delta coordinate)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L292">Source line 292</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b1c139e22b59">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.measurableSet_simultaneousRewardBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The all-coordinate reward union is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_simultaneousRewardBadEvent (source : MeanCompatibleRewardKernel mdp) (episodes : Nat) (varianceProxy : NNReal) (delta : Real) : MeasurableSet (source.simultaneousRewardBadEvent episodes varianceProxy delta)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L309">Source line 309</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2dccc4296c7f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.simultaneousRewardDelta_pos</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A nonempty reward-coordinate family receives a positive equal share.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> simultaneousRewardDelta_pos (mdp : MDP State Action) (hcoordinate : Nonempty (VisitCoordinate mdp)) {delta : Real} (hdelta : <span class="num">0</span> &lt; delta) : <span class="num">0</span> &lt; simultaneousRewardDelta mdp delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L320">Source line 320</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d26ccc42ea83">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.simultaneousRewardDelta_le_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A global reward share at most one gives each coordinate a share at most one.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> simultaneousRewardDelta_le_one (mdp : MDP State Action) (hcoordinate : Nonempty (VisitCoordinate mdp)) {delta : Real} (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) : simultaneousRewardDelta mdp delta &lt;= <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L329">Source line 329</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e7e1110723b2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.iidStochasticTrajectoryFamilyMeasure_simultaneousRewardBadEvent_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite all-coordinate sampled-reward union consumes only its reward share.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iidStochasticTrajectoryFamilyMeasure_simultaneousRewardBadEvent_le [StandardBorelSpace State] [StandardBorelSpace Action] (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (varianceProxy : NNReal) (law : source.UniformSubgaussianRewardLaw varianceProxy) (htotal : <span class="num">0</span> &lt; ((((episodes : NNReal) * varianceProxy : NNReal) : Real))) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) : (source.iidStochasticTrajectoryFamilyMeasure policy initialState episodes) (source.simultaneousRewardBadEvent episodes varianceProxy delta) &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L340">Source line 340</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6f2fb4ad7fb2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.maskedRewardDeviation_sum_abs_lt_of_not_mem_simultaneousRewardBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Outside the reward union, every masked reward sum is strictly inside its radius.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> maskedRewardDeviation_sum_abs_lt_of_not_mem_simultaneousRewardBadEvent (source : MeanCompatibleRewardKernel mdp) {episodes : Nat} {varianceProxy : NNReal} {delta : Real} (trajectories : Fin episodes -&gt; State × RewardStepTrace Action State mdp.horizon) (htrajectories : trajectories ∉ source.simultaneousRewardBadEvent episodes varianceProxy delta) (coordinate : VisitCoordinate mdp) : |∑ episode : Fin episodes, source.maskedRewardDeviationAtEpisode coordinate.stage coordinate.state coordinate.action episode trajectories| &lt; simultaneousRewardSumConfidenceRadius mdp episodes varianceProxy delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L390">Source line 390</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-28f5b082bf95">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.maskedRewardDeviation_sum_eq_sampledBatch_rewardSum_sub</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The masked iid reward sum is exactly reward sum minus visit count times mean.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> maskedRewardDeviation_sum_eq_sampledBatch_rewardSum_sub (source : MeanCompatibleRewardKernel mdp) {episodes : Nat} (trajectories : Fin episodes -&gt; State × RewardStepTrace Action State mdp.horizon) (stage : Fin mdp.horizon) (state : State) (action : Action) : (∑ episode : Fin episodes, source.maskedRewardDeviationAtEpisode stage state action episode trajectories) = (mdp.sampledEpisodeBatchOfStochasticTrajectories episodes trajectories).rewardSum stage state action - ((mdp.sampledEpisodeBatchOfStochasticTrajectories episodes trajectories).visitCount stage state action : Real) * mdp.reward state action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L408">Source line 408</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fcdc767bbad6">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.expectedCountRewardCoordinateRadius</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Deterministic reward-mean radius based on the genuine lower count margin. Its
+formula is source-independent; the receiver keeps it adjacent to the
+source-indexed reward event and empirical-reward consumer.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> expectedCountRewardCoordinateRadius (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (varianceProxy : NNReal) (countDelta rewardDelta : Real) (coordinate : VisitCoordinate mdp) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L443">Source line 443</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3b641098b01e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.sampledBatch_empiricalReward_abs_sub_le_expectedCountRewardCoordinateRadius</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Outside both events, a sampled empirical reward obeys its deterministic radius.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledBatch_empiricalReward_abs_sub_le_expectedCountRewardCoordinateRadius (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] {episodes : Nat} {varianceProxy : NNReal} {countDelta rewardDelta : Real} (trajectories : Fin episodes -&gt; State × RewardStepTrace Action State mdp.horizon) (hcount : trajectories ∉ source.stochasticSampledBatchCountBadEvent policy initialState episodes countDelta) (hreward : trajectories ∉ source.simultaneousRewardBadEvent episodes varianceProxy rewardDelta) (coordinate : VisitCoordinate mdp) (hmargin : simultaneousCountConfidenceRadius mdp episodes countDelta &lt; coordinate.expectedCount policy initialState episodes) : <span class="kw">let</span> batch := mdp.sampledEpisodeBatchOfStochasticTrajectories episodes trajectories |batch.empiricalReward coordinate.stage coordinate.state coordinate.action - mdp.reward coordinate.state coordinate.action| &lt;= source.expectedCountRewardCoordinateRadius policy initialState episodes varianceProxy countDelta rewardDelta coordinate</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L454">Source line 454</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-13bd76798c3b">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.stochasticEmpiricalFiniteBatchValueEnvelope</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Linear value envelope with one empirical-reward error and one reward bonus.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> stochasticEmpiricalFiniteBatchValueEnvelope (rewardBound rewardBudget transitionBudget : Real) (remaining : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L539">Source line 539</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ba330f6e3532">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.stochasticAllCoordinateEmpiricalFiniteBatchModel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical empirical model retaining sampled rewards and fixed reward/transition budgets.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> stochasticAllCoordinateEmpiricalFiniteBatchModel (mdp : MDP State Action) (episodes : Nat) (batch : EpisodeBatch mdp episodes) (defaultState : State) (rewardBudget transitionBudget : Real) : FiniteBatchModel mdp episodes <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L548">Source line 548</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-38b46b248def">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.StochasticAllCoordinateConfidence.upperValueRemaining_abs_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Reward error and fixed budgets give a noncircular linear optimistic-value envelope.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> upperValueRemaining_abs_le (hrewardError : <span class="kw">forall</span> stage state action, |batch.empiricalReward stage state action - mdp.reward state action| &lt;= rewardBudget) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= rewardBound) (hrewardBudget_nonneg : <span class="num">0</span> &lt;= rewardBudget) (htransitionBudget_nonneg : <span class="num">0</span> &lt;= transitionBudget) : <span class="kw">forall</span> (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) (state : State), |(mdp.stochasticAllCoordinateEmpiricalFiniteBatchModel episodes batch defaultState rewardBudget transitionBudget).plan.upperValueRemaining remaining hremaining state| &lt;= stochasticEmpiricalFiniteBatchValueEnvelope rewardBound rewardBudget transitionBudget remaining</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L565">Source line 565</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-185c7c9d9385">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.stochasticAllCoordinateEmpiricalFiniteBatchModelConfidence_of_not_mem</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pathwise stochastic sampled-batch producer for the complete confidence object.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> stochasticAllCoordinateEmpiricalFiniteBatchModelConfidence_of_not_mem {mdp : MDP State Action} (source : mdp.MeanCompatibleRewardKernel) (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] {episodes : Nat} {varianceProxy : NNReal} {countDelta rewardDelta : Real} (trajectories : Fin episodes -&gt; State × RewardStepTrace Action State mdp.horizon) (hcount : trajectories ∉ source.stochasticSampledBatchCountBadEvent policy initialState episodes countDelta) (hreward : trajectories ∉ source.simultaneousRewardBadEvent episodes varianceProxy rewardDelta) (defaultState : State) (rewardBound rewardBudget transitionBudget : Real) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= rewardBound) (hrewardBudget_nonneg : <span class="num">0</span> &lt;= rewardBudget) (htransitionBudget_nonneg : <span class="num">0</span> &lt;= transitionBudget) (hmargin : <span class="kw">forall</span> coordinate : VisitCoordinate mdp, simultaneousCountConfidenceRadius mdp episodes countDelta &lt; coordinate.expectedCount policy initialState episodes) (hrewardCover : <span class="kw">forall</span> coordinate : VisitCoordinate mdp, source.expectedCountRewardCoordinateRadius policy initialState episodes varianceProxy countDelta rewardDelta coordinate &lt;= rewardBudget) (htransitionCover : <span class="kw">forall</span> (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (state : State) (action : Action), (∑ nextState, policy.expectedCountTransitionCoordinateRadius initialState episodes countDelta (mdp.decisionStageRemaining remaining hremaining) state action nextState * stochasticEmpiricalFiniteBatchValueEnvelope rewardBound rewardBudget transitionBudget remaining) &lt;= transitionBudget) : (mdp.stochasticAllCoordinateEmpiricalFiniteBatchModel episodes (mdp.sampledEpisodeBatchOfStochasticTrajectories episodes trajectories) defaultState rewardBudget transitionBudget).Confidence</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L680">Source line 680</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0dac2ff6ca16">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.stochasticAllCoordinateEmpiricalModelBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The one bad event used by the stochastic empirical-model route: the pulled-back
+count event or one of the sampled-reward coordinate events.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> stochasticAllCoordinateEmpiricalModelBadEvent (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (varianceProxy : NNReal) (countDelta rewardDelta : Real) : Set (Fin episodes -&gt; State × RewardStepTrace Action State mdp.horizon)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L787">Source line 787</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9062bed77cbb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.measurableSet_stochasticAllCoordinateEmpiricalModelBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The combined count-and-reward empirical-model event is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_stochasticAllCoordinateEmpiricalModelBadEvent (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (varianceProxy : NNReal) (countDelta rewardDelta : Real) : MeasurableSet (source.stochasticAllCoordinateEmpiricalModelBadEvent policy initialState episodes varianceProxy countDelta rewardDelta)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L799">Source line 799</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ff700953475b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.MeanCompatibleRewardKernel.iidStochasticTrajectoryFamilyMeasure_stochasticAllCoordinateEmpiricalModelBadEvent_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The two separately calibrated failure shares add under the combined event.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iidStochasticTrajectoryFamilyMeasure_stochasticAllCoordinateEmpiricalModelBadEvent_le [StandardBorelSpace State] [StandardBorelSpace Action] (source : MeanCompatibleRewardKernel mdp) (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (hepisodes : <span class="num">0</span> &lt; episodes) (varianceProxy : NNReal) (law : source.UniformSubgaussianRewardLaw varianceProxy) (htotal : <span class="num">0</span> &lt; ((((episodes : NNReal) * varianceProxy : NNReal) : Real))) (countDelta : Real) (hcountDelta : <span class="num">0</span> &lt; countDelta) (hcountDelta_le_one : countDelta &lt;= <span class="num">1</span>) (rewardDelta : Real) (hrewardDelta : <span class="num">0</span> &lt; rewardDelta) (hrewardDelta_le_one : rewardDelta &lt;= <span class="num">1</span>) : (source.iidStochasticTrajectoryFamilyMeasure policy initialState episodes) (source.stochasticAllCoordinateEmpiricalModelBadEvent policy initialState episodes varianceProxy countDelta rewardDelta) &lt;= ENNReal.ofReal countDelta + ENNReal.ofReal rewardDelta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L814">Source line 814</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-53f04e26b81d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.iidStochasticTrajectoryFamilyMeasure_allCoordinate_finiteBatchModel_confidence</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The iid stochastic-reward trajectory law produces a measurable all-coordinate
+confidence event for the empirical model built from the actual sampled rewards.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iidStochasticTrajectoryFamilyMeasure_allCoordinate_finiteBatchModel_confidence [StandardBorelSpace State] [StandardBorelSpace Action] {mdp : MDP State Action} (source : mdp.MeanCompatibleRewardKernel) (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (hepisodes : <span class="num">0</span> &lt; episodes) (varianceProxy : NNReal) (law : source.UniformSubgaussianRewardLaw varianceProxy) (htotal : <span class="num">0</span> &lt; ((((episodes : NNReal) * varianceProxy : NNReal) : Real))) (countDelta : Real) (hcountDelta : <span class="num">0</span> &lt; countDelta) (hcountDelta_le_one : countDelta &lt;= <span class="num">1</span>) (rewardDelta : Real) (hrewardDelta : <span class="num">0</span> &lt; rewardDelta) (hrewardDelta_le_one : rewardDelta &lt;= <span class="num">1</span>) (defaultState : State) (rewardBound rewardBudget transitionBudget : Real) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= rewardBound) (hrewardBudget_nonneg : <span class="num">0</span> &lt;= rewardBudget) (htransitionBudget_nonneg : <span class="num">0</span> &lt;= transitionBudget) (hmargin : <span class="kw">forall</span> coordinate : VisitCoordinate mdp, simultaneousCountConfidenceRadius mdp episodes countDelta &lt; coordinate.expectedCount policy initialState episodes) (hrewardCover : <span class="kw">forall</span> coordinate : VisitCoordinate mdp, source.expectedCountRewardCoordinateRadius policy initialState episodes varianceProxy countDelta rewardDelta coordinate &lt;= rewardBudget) (htransitionCover : <span class="kw">forall</span> (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (state : State) (action : Action), (∑ nextState, policy.expectedCountTransitionCoordinateRadius initialState episodes countDelta (mdp.decisionStageRemaining remaining hremaining) state action nextState * stochasticEmpiricalFiniteBatchValueEnvelope rewardBound rewardBudget transitionBudget remaining) &lt;= transitionBudget) : <span class="kw">let</span> event := source.stochasticAllCoordinateEmpiricalModelBadEvent policy initialState episodes varianceProxy countDelta rewardDelta MeasurableSet event ∧ (source.iidStochasticTrajectoryFamilyMeasure policy initialState episodes) event &lt;= ENNReal.ofReal countDelta + ENNReal.ofReal rewardDelta ∧ <span class="kw">forall</span> trajectories, trajectories ∉ event -&gt; Nonempty (mdp.stochasticAllCoordinateEmpiricalFiniteBatchModel episodes (mdp.sampledEpisodeBatchOfStochasticTrajectories episodes trajectories) defaultState rewardBudget transitionBudget).Confidence</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L848">Source line 848</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f1ac38e13130">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.iidStochasticTrajectoryFamilyMeasure_allCoordinate_optimism_and_expectedRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Outside the compiled stochastic empirical-model event, the sampled model is
+globally optimistic and its recommended policy satisfies the existing
+selected-radius expected-regret bound.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iidStochasticTrajectoryFamilyMeasure_allCoordinate_optimism_and_expectedRegret [StandardBorelSpace State] [StandardBorelSpace Action] {mdp : MDP State Action} (source : mdp.MeanCompatibleRewardKernel) (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (hepisodes : <span class="num">0</span> &lt; episodes) (varianceProxy : NNReal) (law : source.UniformSubgaussianRewardLaw varianceProxy) (htotal : <span class="num">0</span> &lt; ((((episodes : NNReal) * varianceProxy : NNReal) : Real))) (countDelta : Real) (hcountDelta : <span class="num">0</span> &lt; countDelta) (hcountDelta_le_one : countDelta &lt;= <span class="num">1</span>) (rewardDelta : Real) (hrewardDelta : <span class="num">0</span> &lt; rewardDelta) (hrewardDelta_le_one : rewardDelta &lt;= <span class="num">1</span>) (defaultState : State) (rewardBound rewardBudget transitionBudget : Real) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= rewardBound) (hrewardBudget_nonneg : <span class="num">0</span> &lt;= rewardBudget) (htransitionBudget_nonneg : <span class="num">0</span> &lt;= transitionBudget) (hmargin : <span class="kw">forall</span> coordinate : VisitCoordinate mdp, simultaneousCountConfidenceRadius mdp episodes countDelta &lt; coordinate.expectedCount policy initialState episodes) (hrewardCover : <span class="kw">forall</span> coordinate : VisitCoordinate mdp, source.expectedCountRewardCoordinateRadius policy initialState episodes varianceProxy countDelta rewardDelta coordinate &lt;= rewardBudget) (htransitionCover : <span class="kw">forall</span> (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (state : State) (action : Action), (∑ nextState, policy.expectedCountTransitionCoordinateRadius initialState episodes countDelta (mdp.decisionStageRemaining remaining hremaining) state action nextState * stochasticEmpiricalFiniteBatchValueEnvelope rewardBound rewardBudget transitionBudget remaining) &lt;= transitionBudget) : <span class="kw">let</span> event := source.stochasticAllCoordinateEmpiricalModelBadEvent policy initialState episodes varianceProxy countDelta rewardDelta MeasurableSet event ∧ (source.iidStochasticTrajectoryFamilyMeasure policy initialState episodes) event &lt;= ENNReal.ofReal countDelta + ENNReal.ofReal rewardDelta ∧ <span class="kw">forall</span> trajectories, trajectories ∉ event -&gt; <span class="kw">let</span> model := mdp.stochasticAllCoordinateEmpiricalFiniteBatchModel episodes (mdp.sampledEpisodeBatchOfStochasticTrajectories episodes trajectories) defaultState rewardBudget transitionBudget (<span class="kw">forall</span> state, mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;= model.plan.upperValueRemaining mdp.horizon le_rfl state) ∧ model.plan.optimisticPolicy.expectedRegret initialState &lt;= model.plan.optimisticPolicy.occupancySumRemaining (<span class="kw">fun</span> remaining hremaining state =&gt; <span class="num">2</span> * model.plan.selectedRadiusRemaining remaining hremaining state) mdp.horizon le_rfl initialState</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence.lean.html#L923">Source line 923</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

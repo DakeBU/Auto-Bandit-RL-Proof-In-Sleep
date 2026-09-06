@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/LowerBounds/GaussianTesting.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/LowerBounds/GaussianTesting.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/LowerBounds/GaussianTesting.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/LowerBounds/GaussianTesting.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.LowerBounds.Minimax</span>
+<span id="L2">2 import Mathlib.Analysis.Complex.ExponentialBounds</span>
+<span id="L3">3 </span>
+<span id="L4">4 namespace BanditRLProof.LowerBounds</span>
+<span id="L5">5 </span>
+<span id="L6">6 open MeasureTheory ProbabilityTheory Real</span>
+<span id="L7">7 open scoped ENNReal NNReal</span>
+<span id="L8">8 </span>
+<span id="L9">9 noncomputable section</span>
+<span id="L10">10 </span>
+<span id="L11">11 theorem log_gaussianPDFReal_div_same_variance</span>
+<span id="L12">12     (m n x : ℝ) (v : ℝ≥0) (hv : v ≠ 0) :</span>
+<span id="L13">13     Real.log (gaussianPDFReal m v x / gaussianPDFReal n v x) =</span>
+<span id="L14">14       ((m - n) * x + (n ^ 2 - m ^ 2) / 2) / v := by</span>
+<span id="L15">15   have hvpos : (0 : ℝ) &lt; v := NNReal.coe_pos.mpr (pos_iff_ne_zero.mpr hv)</span>
+<span id="L16">16   rw [gaussianPDFReal_def, gaussianPDFReal_def]</span>
+<span id="L17">17   have hn : (Real.sqrt (2 * Real.pi * v))⁻¹ ≠ 0 := by positivity</span>
+<span id="L18">18   rw [mul_div_mul_left _ _ hn, Real.log_div (Real.exp_ne_zero _) (Real.exp_ne_zero _),</span>
+<span id="L19">19     Real.log_exp, Real.log_exp]</span>
+<span id="L20">20   ring</span>
+<span id="L21">21 </span>
+<span id="L22">22 theorem llr_gaussianReal_same_variance_ae</span>
+<span id="L23">23     (m n : ℝ) (v : ℝ≥0) (hv : v ≠ 0) :</span>
+<span id="L24">24     llr (gaussianReal m v) (gaussianReal n v) =ᵐ[gaussianReal m v]</span>
+<span id="L25">25       fun x =&gt; ((m - n) * x + (n ^ 2 - m ^ 2) / 2) / v := by</span>
+<span id="L26">26   have hP := gaussianReal_absolutelyContinuous m hv</span>
+<span id="L27">27   have hQ := gaussianReal_absolutelyContinuous n hv</span>
+<span id="L28">28   have hPQ := hP.trans (gaussianReal_absolutelyContinuous&#x27; n hv)</span>
+<span id="L29">29   filter_upwards [hPQ.ae_le (Measure.rnDeriv_eq_div hP hQ),</span>
+<span id="L30">30     hP.ae_le (rnDeriv_gaussianReal m v), hP.ae_le (rnDeriv_gaussianReal n v)]</span>
+<span id="L31">31     with x hr hp hq</span>
+<span id="L32">32   rw [llr, hr, hp, hq, ENNReal.toReal_div, toReal_gaussianPDF, toReal_gaussianPDF]</span>
+<span id="L33">33   exact log_gaussianPDFReal_div_same_variance m n x v hv</span>
+<span id="L34">34 </span>
+<span id="L35">35 theorem integrable_llr_gaussianReal_same_variance</span>
+<span id="L36">36     (m n : ℝ) (v : ℝ≥0) (hv : v ≠ 0) :</span>
+<span id="L37">37     Integrable (llr (gaussianReal m v) (gaussianReal n v)) (gaussianReal m v) := by</span>
+<span id="L38">38   rw [integrable_congr (llr_gaussianReal_same_variance_ae m n v hv)]</span>
+<span id="L39">39   have hi : Integrable (fun x : ℝ =&gt; x) (gaussianReal m v) :=</span>
+<span id="L40">40     (memLp_id_gaussianReal (μ := m) (v := v) 1).integrable (by norm_num)</span>
+<span id="L41">41   exact ((hi.const_mul (m - n)).add (integrable_const _)).div_const _</span>
+<span id="L42">42 </span>
+<span id="L43">43 /-- The common positive variance Gaussian KL formula in Chapter 14. -/</span>
+<span id="L44">44 theorem klDiv_gaussianReal_same_variance</span>
+<span id="L45">45     (m n : ℝ) (v : ℝ≥0) (hv : v ≠ 0) :</span>
+<span id="L46">46     InformationTheory.klDiv (gaussianReal m v) (gaussianReal n v) =</span>
+<span id="L47">47       ENNReal.ofReal ((m - n) ^ 2 / (2 * v)) := by</span>
+<span id="L48">48   have hPQ := (gaussianReal_absolutelyContinuous m hv).trans</span>
+<span id="L49">49     (gaussianReal_absolutelyContinuous&#x27; n hv)</span>
+<span id="L50">50   rw [InformationTheory.klDiv_of_ac_of_integrable hPQ</span>
+<span id="L51">51     (integrable_llr_gaussianReal_same_variance m n v hv)]</span>
+<span id="L52">52   simp only [probReal_univ, add_sub_cancel_right]</span>
+<span id="L53">53   rw [integral_congr_ae (llr_gaussianReal_same_variance_ae m n v hv), integral_div]</span>
+<span id="L54">54   have hi : Integrable (fun x : ℝ =&gt; x) (gaussianReal m v) :=</span>
+<span id="L55">55     (memLp_id_gaussianReal (μ := m) (v := v) 1).integrable (by norm_num)</span>
+<span id="L56">56   rw [integral_add (hi.const_mul (m - n)) (integrable_const _),</span>
+<span id="L57">57     integral_const_mul, integral_id_gaussianReal]</span>
+<span id="L58">58   simp only [integral_const, probReal_univ, one_smul]</span>
+<span id="L59">59   congr 1</span>
+<span id="L60">60   ring</span>
+<span id="L61">61 </span>
+<span id="L62">62 /-- Exact rational certification of the displayed Gaussian testing constant. -/</span>
+<span id="L63">63 theorem three_fifths_le_exp_neg_half :</span>
+<span id="L64">64     (3 / 5 : ℝ) ≤ Real.exp (-(1 / 2 : ℝ)) := by</span>
+<span id="L65">65   have he : Real.exp 1 &lt; (25 / 9 : ℝ) := Real.exp_one_lt_d9.trans (by norm_num)</span>
+<span id="L66">66   have hi := one_div_lt_one_div_of_lt (Real.exp_pos 1) he</span>
+<span id="L67">67   have hs : Real.exp (-(1 / 2 : ℝ)) ^ 2 = (Real.exp 1)⁻¹ := by</span>
+<span id="L68">68     rw [pow_two, ← Real.exp_add]</span>
+<span id="L69">69     convert Real.exp_neg 1 using 1 &lt;;&gt; norm_num</span>
+<span id="L70">70   norm_num [div_eq_mul_inv] at hi</span>
+<span id="L71">71   nlinarith [Real.exp_pos (-(1 / 2 : ℝ))]</span>
+<span id="L72">72 </span>
+<span id="L73">73 /-- Testing two Gaussian means from one observation, with arbitrary positive variance. -/</span>
+<span id="L74">74 theorem gaussian_testing_error_lower_bound</span>
+<span id="L75">75     (Δ : ℝ) (v : ℝ≥0) (hv : v ≠ 0) {A : Set ℝ} (hA : MeasurableSet A) :</span>
+<span id="L76">76     (1 / 2 : ℝ) * Real.exp (-(Δ ^ 2 / (2 * v))) ≤</span>
+<span id="L77">77       (gaussianReal 0 v).real A + (gaussianReal Δ v).real Aᶜ := by</span>
+<span id="L78">78   have h := bretagnolleHuber (P := gaussianReal 0 v) (Q := gaussianReal Δ v) hA</span>
+<span id="L79">79   have hn : 0 ≤ Δ ^ 2 / (2 * (v : ℝ)) := by positivity</span>
+<span id="L80">80   simpa only [relativeEntropy, klDiv_gaussianReal_same_variance 0 Δ v hv,</span>
+<span id="L81">81     zero_sub, neg_sq, bretagnolleHuberScale, ENNReal.ofReal_ne_top, ↓reduceIte,</span>
+<span id="L82">82     ENNReal.toReal_ofReal hn] using h</span>
+<span id="L83">83 </span>
+<span id="L84">84 /-- Under signal-to-noise ratio at most one, the sum of errors is at least 3/10. -/</span>
+<span id="L85">85 theorem gaussian_testing_error_three_tenths</span>
+<span id="L86">86     (Δ : ℝ) (v : ℝ≥0) (hv : v ≠ 0) (hsnr : Δ ^ 2 / (v : ℝ) ≤ 1)</span>
+<span id="L87">87     {A : Set ℝ} (hA : MeasurableSet A) :</span>
+<span id="L88">88     (3 / 10 : ℝ) ≤ (gaussianReal 0 v).real A + (gaussianReal Δ v).real Aᶜ := by</span>
+<span id="L89">89   have hr : Δ ^ 2 / (2 * (v : ℝ)) ≤ 1 / 2 := by</span>
+<span id="L90">90     have he : Δ ^ 2 / (2 * (v : ℝ)) = (Δ ^ 2 / (v : ℝ)) / 2 := by ring</span>
+<span id="L91">91     rw [he]</span>
+<span id="L92">92     linarith</span>
+<span id="L93">93   have he := Real.exp_le_exp.mpr (neg_le_neg hr)</span>
+<span id="L94">94   have ht := gaussian_testing_error_lower_bound Δ v hv hA</span>
+<span id="L95">95   linarith [three_fifths_le_exp_neg_half]</span>
+<span id="L96">96 </span>
+<span id="L97">97 /-- No measurable decision rule has both errors below 3/20 in the low-SNR regime. -/</span>
+<span id="L98">98 theorem gaussian_testing_max_error_three_twentieths</span>
+<span id="L99">99     (Δ : ℝ) (v : ℝ≥0) (hv : v ≠ 0) (hsnr : Δ ^ 2 / (v : ℝ) ≤ 1)</span>
+<span id="L100">100     {A : Set ℝ} (hA : MeasurableSet A) :</span>
+<span id="L101">101     (3 / 20 : ℝ) ≤ max ((gaussianReal 0 v).real A) ((gaussianReal Δ v).real Aᶜ) := by</span>
+<span id="L102">102   have h := gaussian_testing_error_three_tenths Δ v hv hsnr hA</span>
+<span id="L103">103   have hp := le_max_left ((gaussianReal 0 v).real A) ((gaussianReal Δ v).real Aᶜ)</span>
+<span id="L104">104   have hq := le_max_right ((gaussianReal 0 v).real A) ((gaussianReal Δ v).real Aᶜ)</span>
+<span id="L105">105   linarith</span>
+<span id="L106">106 </span>
+<span id="L107">107 end</span>
+<span id="L108">108 end BanditRLProof.LowerBounds</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

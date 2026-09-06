@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.TsallisScheduledExpectedRegret · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.TsallisScheduledExpectedRegret · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.TsallisScheduledExpectedRegret · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Tsallis-FTRL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Tsallis<wbr>Scheduled<wbr>Expected<wbr>Regret</h1>
+  <p class="lede">This module transports the observed importance-weighted regret of the scheduled half-Tsallis trajectory to predictable environment regret. It then combines the pathwise time-varying penalty theorem with the all-rate expected stability theorem.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/TsallisScheduledExpectedRegret.lean.html"><code>BanditRLProof/TsallisScheduledExpectedRegret.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/tsallis/index.html">8. Tsallis-FTRL, corruption, and nonstationarity</a></dd></div>
+    <div><dt>Declarations</dt><dd>13</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-tsallisscheduledallrateexpectedstability/index.html"><code>BanditRLProof.TsallisScheduledAllRateExpectedStability</code></a>, <a href="../banditrlproof-tsallisftrlestimatedenvironmentregret/index.html"><code>BanditRLProof.TsallisFTRLEstimatedEnvironmentRegret</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-tsallisoraclerestartexpectedregret/index.html"><code>BanditRLProof.TsallisOracleRestartExpectedRegret</code></a>, <a href="../banditrlproof-tsallisscheduledsuboptimalexpectedbound/index.html"><code>BanditRLProof.TsallisScheduledSuboptimalExpectedBound</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-1e5a9c2a217d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.sampledScheduledHalfTsallisPredictableEstimatedLossAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Predictable importance-weighted loss using the scheduled probability at
+the same actual trajectory time.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledScheduledHalfTsallisPredictableEstimatedLossAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (loss : Exp3.PredictableLossVector Env Action) (t : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) : Action -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledExpectedRegret.lean.html#L22">Source line 22</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c9326518de57">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.sampledScheduledHalfTsallisPredictableEnvironmentRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Predictable environment regret of the scheduled generated probabilities
+against a fixed comparator through the inclusive terminal time.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledScheduledHalfTsallisPredictableEnvironmentRegret {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (loss : Exp3.PredictableLossVector Env Action) (q : Action -&gt; Real) (horizon : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledExpectedRegret.lean.html#L35">Source line 35</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bb0503bf280a">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.sampledScheduledHalfTsallisPredictableEstimatedRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-horizon scheduled regret after replacing stored rewards by the
+predictable importance-weighted loss vectors.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledScheduledHalfTsallisPredictableEstimatedRegret {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (loss : Exp3.PredictableLossVector Env Action) (q : Action -&gt; Real) (horizon : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledExpectedRegret.lean.html#L51">Source line 51</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e143385d2e8f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.measurable_sampledScheduledHalfTsallisProbabilityAtTime</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_sampledScheduledHalfTsallisProbabilityAtTime {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (t : Nat) (candidate : Action) (hcandidate : candidate ∈ arms) : Measurable (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; sampledScheduledHalfTsallisProbabilityAtTime arms harms eta t sample candidate)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledExpectedRegret.lean.html#L68">Source line 68</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5f41dbd0e9e5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.measurable_sampledScheduledHalfTsallisPredictableEstimatedLossAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_sampledScheduledHalfTsallisPredictableEstimatedLossAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (loss : Exp3.PredictableLossVector Env Action) (t : Nat) (candidate : Action) (hcandidate : candidate ∈ arms) : Measurable (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; sampledScheduledHalfTsallisPredictableEstimatedLossAt arms harms eta loss t sample candidate)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledExpectedRegret.lean.html#L93">Source line 93</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-11dbdc25e29c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sampledScheduledHalfTsallisObservedEstimatedLossAt_eq_predictable_ae</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Deterministic predictable feedback identifies each stored-reward
+scheduled estimator with its predictable counterpart almost surely.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledScheduledHalfTsallisObservedEstimatedLossAt_eq_predictable_ae {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (loss : Exp3.PredictableLossVector Env Action) (t : Nat) : <span class="kw">let</span> selector := canonicalHalfTsallisScheduleGeneratedSelectorMeasurability arms harms eta loss <span class="kw">let</span> mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel arms harms eta selector.finiteHistory loss.environment (<span class="kw">fun</span> sample =&gt; sampledScheduledHalfTsallisObservedEstimatedLossAt arms harms eta t sample) =ᵐ[mu] (<span class="kw">fun</span> sample =&gt; sampledScheduledHalfTsallisPredictableEstimatedLossAt arms harms eta loss t sample)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledExpectedRegret.lean.html#L116">Source line 116</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-89286e370a12">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sampledScheduledHalfTsallisPredictableEstimatedLossAt_first_moments</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">At each scheduled time, the mixed and comparator-weighted predictable IW
+estimators are integrable and have their corresponding environment first
+moments.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledScheduledHalfTsallisPredictableEstimatedLossAt_first_moments {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (loss : Exp3.PredictableLossVector Env Action) (q : Action -&gt; Real) (hq : FTRL.finiteSimplex arms q) (t : Nat) : <span class="kw">let</span> selector := canonicalHalfTsallisScheduleGeneratedSelectorMeasurability arms harms eta loss <span class="kw">let</span> mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel arms harms eta selector.finiteHistory loss.environment (Integrable (<span class="kw">fun</span> sample =&gt; FTRL.linearLoss arms (sampledScheduledHalfTsallisProbabilityAtTime arms harms eta t sample) (sampledScheduledHalfTsallisPredictableEstimatedLossAt arms harms eta loss t sample)) mu ∧ Integrable (<span class="kw">fun</span> sample =&gt; FTRL.linearLoss arms q (sampledScheduledHalfTsallisPredictableEstimatedLossAt arms harms eta loss t sample)) mu) ∧ ((integral mu (<span class="kw">fun</span> sample =&gt; FTRL.linearLoss arms (sampledScheduledHalfTsallisProbabilityAtTime arms harms eta t sample) (sampledScheduledHalfTsallisPredictableEstimatedLossAt arms harms eta loss t sample)) = integral mu (<span class="kw">fun</span> sample =&gt; FTRL.linearLoss arms (sampledScheduledHalfTsallisProbabilityAtTime arms harms eta t sample) (Exp3.predictableLossAt loss t sample))) ∧ (integral mu (<span class="kw">fun</span> sample =&gt; FTRL.linearLoss arms q (sampledScheduledHalfTsallisPredictableEstimatedLossAt arms harms eta loss t sample)) = integral mu (<span class="kw">fun</span> sample =&gt; FTRL.linearLoss arms q (Exp3.predictableLossAt loss t sample))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledExpectedRegret.lean.html#L170">Source line 170</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-724ffe8e5b7f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.finiteSimplex_sampledScheduledHalfTsallisProbabilityAtTime</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteSimplex_sampledScheduledHalfTsallisProbabilityAtTime {Env : Type u} {Action : Type v} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (t : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) : FTRL.finiteSimplex arms (sampledScheduledHalfTsallisProbabilityAtTime arms harms eta t sample)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledExpectedRegret.lean.html#L347">Source line 347</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fb74c79178ef">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integrable_sampledScheduledHalfTsallisPredictableLinearLossAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Current scheduled mixed predictable loss and a fixed-comparator
+predictable loss are integrable at every actual time.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_sampledScheduledHalfTsallisPredictableLinearLossAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (mu : Measure (Env × ((k : Nat) -&gt; Action × Real))) [IsFiniteMeasure mu] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (loss : Exp3.PredictableLossVector Env Action) (q : Action -&gt; Real) (hq : FTRL.finiteSimplex arms q) (t : Nat) : Integrable (<span class="kw">fun</span> sample =&gt; FTRL.linearLoss arms (sampledScheduledHalfTsallisProbabilityAtTime arms harms eta t sample) (Exp3.predictableLossAt loss t sample)) mu ∧ Integrable (<span class="kw">fun</span> sample =&gt; FTRL.linearLoss arms q (Exp3.predictableLossAt loss t sample)) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledExpectedRegret.lean.html#L369">Source line 369</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b20a895d260d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisPredictableEstimatedRegret_eq_environmentRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Predictable scheduled estimated regret is integrable and has exactly the
+same finite-horizon integral as predictable environment regret.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_sampledScheduledHalfTsallisPredictableEstimatedRegret_eq_environmentRegret {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (loss : Exp3.PredictableLossVector Env Action) (q : Action -&gt; Real) (hq : FTRL.finiteSimplex arms q) (horizon : Nat) : <span class="kw">let</span> selector := canonicalHalfTsallisScheduleGeneratedSelectorMeasurability arms harms eta loss <span class="kw">let</span> mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel arms harms eta selector.finiteHistory loss.environment Integrable (sampledScheduledHalfTsallisPredictableEstimatedRegret arms harms eta loss q horizon) mu ∧ Integrable (sampledScheduledHalfTsallisPredictableEnvironmentRegret arms harms eta loss q horizon) mu ∧ integral mu (sampledScheduledHalfTsallisPredictableEstimatedRegret arms harms eta loss q horizon) = integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret arms harms eta loss q horizon)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledExpectedRegret.lean.html#L459">Source line 459</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8475b2c09afe">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sampledScheduledHalfTsallisEstimatedRegret_eq_predictable_ae</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Observed scheduled estimated regret agrees almost surely with the
+predictable-estimator version over every finite horizon.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledScheduledHalfTsallisEstimatedRegret_eq_predictable_ae {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (loss : Exp3.PredictableLossVector Env Action) (q : Action -&gt; Real) (horizon : Nat) : <span class="kw">let</span> selector := canonicalHalfTsallisScheduleGeneratedSelectorMeasurability arms harms eta loss <span class="kw">let</span> mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel arms harms eta selector.finiteHistory loss.environment sampledScheduledHalfTsallisEstimatedRegret arms harms eta q horizon =ᵐ[mu] sampledScheduledHalfTsallisPredictableEstimatedRegret arms harms eta loss q horizon</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledExpectedRegret.lean.html#L555">Source line 555</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-005c6f36f96b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisEstimatedRegret_eq_environmentRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Observed scheduled IW regret is integrable and has exactly the predictable
+environment-regret integral.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_sampledScheduledHalfTsallisEstimatedRegret_eq_environmentRegret {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (loss : Exp3.PredictableLossVector Env Action) (q : Action -&gt; Real) (hq : FTRL.finiteSimplex arms q) (horizon : Nat) : <span class="kw">let</span> selector := canonicalHalfTsallisScheduleGeneratedSelectorMeasurability arms harms eta loss <span class="kw">let</span> mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel arms harms eta selector.finiteHistory loss.environment Integrable (sampledScheduledHalfTsallisEstimatedRegret arms harms eta q horizon) mu ∧ Integrable (sampledScheduledHalfTsallisPredictableEnvironmentRegret arms harms eta loss q horizon) mu ∧ integral mu (sampledScheduledHalfTsallisEstimatedRegret arms harms eta q horizon) = integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret arms harms eta loss q horizon)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledExpectedRegret.lean.html#L597">Source line 597</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b37ae4da4e92">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_allRateBound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Observed scheduled IW regret is integrable and has exactly the predictable
+environment-regret integral. -/
+theorem integral_sampledScheduledHalfTsallisEstimatedRegret_eq_environmentRegret
+{Env : Type u} {Action : Type v}
+[MeasurableSpace Env] [StandardBorelSpace Env]
+[MeasurableSpace Action] [MeasurableSingletonClass Action]
+[StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]
+(prior : Measure Env) [IsFiniteMeasure prior]
+(arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)
+(loss : Exp3.PredictableLossVector Env Action)
+(q : Action -&gt; Real) (hq : FTRL.finiteSimplex arms q)
+(horizon : Nat) :
+let selector :=
+canonicalHalfTsallisScheduleGeneratedSelectorMeasurability
+arms harms eta loss
+let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel
+arms harms eta selector.finiteHistory loss.environment
+Integrable (sampledScheduledHalfTsallisEstimatedRegret
+arms harms eta q horizon) mu ∧
+Integrable (sampledScheduledHalfTsallisPredictableEnvironmentRegret
+arms harms eta loss q horizon) mu ∧
+integral mu (sampledScheduledHalfTsallisEstimatedRegret
+arms harms eta q horizon) =
+integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret
+arms harms eta loss q horizon) := by
+dsimp only
+let selector :=
+canonicalHalfTsallisScheduleGeneratedSelectorMeasurability
+arms harms eta loss
+let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel
+arms harms eta selector.finiteHistory loss.environment
+have hpredictable :=
+integral_sampledScheduledHalfTsallisPredictableEstimatedRegret_eq_environmentRegret
+prior arms harms eta loss q hq horizon
+dsimp only at hpredictable
+have hae :=
+sampledScheduledHalfTsallisEstimatedRegret_eq_predictable_ae
+prior arms harms eta loss q horizon
+dsimp only at hae
+have hobserved : Integrable
+(sampledScheduledHalfTsallisEstimatedRegret
+arms harms eta q horizon) mu :=
+hpredictable.1.congr hae.symm
+exact ⟨hobserved, hpredictable.2.1,
+(integral_congr_ae hae).trans hpredictable.2.2⟩
+
+/-!
+The theorem below is the generated-trajectory scheduled regret endpoint of
+this module.  The rate schedule is only required to be positive on the finite
+horizon and nonincreasing between included rounds.  Each stability term uses
+the refined branch when its local rate is at most `1 / 2`, and the compiled
+constant-one fallback otherwise.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_allRateBound {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsProbabilityMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (loss : Exp3.PredictableLossVector Env Action) {best : Action} (hbest : best ∈ arms) (horizon : Nat) (heta : <span class="kw">forall</span> t, t &lt;= horizon -&gt; <span class="num">0</span> &lt; eta t) (hetaMono : <span class="kw">forall</span> t, t &lt; horizon -&gt; eta (t + <span class="num">1</span>) &lt;= eta t) : <span class="kw">let</span> selector := canonicalHalfTsallisScheduleGeneratedSelectorMeasurability arms harms eta loss <span class="kw">let</span> mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel arms harms eta selector.finiteHistory loss.environment integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret arms harms eta loss (pointMass best) horizon) &lt;= integral mu (<span class="kw">fun</span> sample =&gt; (Finset.range (horizon + <span class="num">1</span>)).sum (<span class="kw">fun</span> t =&gt; sampledScheduledHalfTsallisAllRatePotentialStabilityBoundAtTime arms harms eta sample t)) + halfTsallisPotentialMass arms (initialHalfTsallisDistribution arms harms (eta <span class="num">0</span>)) / eta horizon - <span class="num">1</span> / eta horizon</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledExpectedRegret.lean.html#L648">Source line 648</a>
+      <a href="../../chapters/tsallis/index.html#decl-b37ae4da4e92-teaching">Open teaching explanation</a>
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

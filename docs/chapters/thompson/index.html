@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="6. Thompson sampling and Bayesian regret · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="6. Thompson sampling and Bayesian regret · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>6. Thompson sampling and Bayesian regret · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group active" data-nav-group="book-map" data-nav-group-active="true" open><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="index.html" aria-current="page"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="chapter">
+  <p class="eyebrow">Teaching chapter 06 of 10 · <span class="status compiled">Canonical route compiled</span></p>
+  <h1 class="page-title">6. Thompson sampling and Bayesian regret</h1>
+  <p class="lede">The scoped stationary finite-arm Thompson route compiles from posterior kernels and probability matching on the actual recursive generated history through clipped-UCB decomposition, latent-stream confidence, and an explicit Bayesian regret terminal.</p>
+  <p class="chapter-scope-note"><strong>How to read the status.</strong> It describes this page's canonical local Lean route, not completion of the cited textbook chapter or every extension listed below.</p>
+</section>
+
+
+<nav class="chapter-compass" data-chapter-compass aria-label="Chapter reading order">
+  <a href="#orientation"><span class="chapter-compass-step">01 · Orient</span><strong>What you need</strong><small>3 learning goals and the intended reader.</small></a>
+  <a href="#source-guide"><span class="chapter-compass-step">02 · Learn</span><strong>Thompson sampling</strong><small>Ch. 34 and Ch. 36 · online pp. 421–436 and 460–475. 1 source theorem restatement, with assumptions and original links. Includes a three-step worked example.</small></a>
+  <a href="#teaching-notes"><span class="chapter-compass-step">03 · Verify</span><strong>Mathematics ↔ Lean</strong><small>Read intuition and proof structure, then open the exact compiled declaration.</small></a>
+</nav>
+
+<section id="orientation">
+  <h2>Orientation</h2>
+  <p><strong>Who should read this.</strong> Best read after the Probability layer.</p>
+  <h3>Learning goals</h3>
+  <ul><li>Read a posterior as a kernel from histories to environments.</li><li>Transport conditional action-law equality onto the generated trajectory.</li><li>Understand why one compiled stationary theorem is not a universal posterior-sampling result.</li></ul>
+</section>
+
+
+<section id="source-guide" class="source-guide">
+  <p class="eyebrow">Textbook crosswalk</p>
+  <h2>Read the mathematics before the Lean interface</h2>
+  <p class="section-intro">The Book Map is a curated formalization curriculum anchored in <em>Bandit Algorithms</em>, not a chapter-for-chapter reproduction of one book. Visible page labels use the numbered pages of its free online edition; source buttons use the PDF viewer's physical page index, which includes front matter and can therefore be larger. Companion papers cover algorithm-specific results.</p>
+  <div class="source-grid source-grid-1">
+<article class="source-card">
+  <span class="panel-kicker">Primary spine · free online edition</span>
+  <h3>Bandit Algorithms</h3>
+  <p>Tor Lattimore and Csaba Szepesvári</p>
+  <dl><div><dt>Location</dt><dd>Ch. 34 and Ch. 36</dd></div><div><dt>Pages</dt><dd>online pp. 421–436 and 460–475</dd></div></dl>
+  <a class="button compact" href="https://tor-lattimore.com/downloads/book/book.pdf#page=430">Open at the cited pages <span aria-hidden="true">↗</span></a>
+</article></div>
+
+
+  <aside class="notation-primer" id="notation" aria-labelledby="notation-title">
+    <div><span class="panel-kicker">Reader checkpoint</span><h3 id="notation-title">Notation you will meet</h3></div>
+    <dl><div><dt><code>Π_t</code></dt><dd>the posterior distribution after observing the history through round t</dd></div><div><dt><code>θ̃_t</code></dt><dd>a parameter sample drawn from that posterior</dd></div><div><dt><code>A_t</code></dt><dd>an arm optimal for the sampled parameter, with ties handled explicitly</dd></div></dl>
+  </aside>
+  <div class="algorithm-panel" id="algorithm">
+    <div><span class="panel-kicker">algorithm · ordered flow</span><h3>Thompson sampling</h3><p class="algorithm-intro">Read top to bottom: each step supplies the state or proof fact used by the next one.</p></div>
+    <ol class="algorithm-flow"><li><span class="algorithm-step-number" aria-hidden="true">01</span><div><strong>Condition</strong><p>Form the posterior distribution of the unknown environment given observed history.</p></div></li><li><span class="algorithm-step-number" aria-hidden="true">02</span><div><strong>Sample a model</strong><p>Draw one plausible environment from that posterior.</p></div></li><li><span class="algorithm-step-number" aria-hidden="true">03</span><div><strong>Optimize the sample</strong><p>Choose an arm that is best in the sampled environment.</p></div></li><li><span class="algorithm-step-number" aria-hidden="true">04</span><div><strong>Observe and update</strong><p>Record the reward and condition the posterior on the enlarged history.</p></div></li></ol>
+
+    <aside class="algorithm-pseudocode" id="algorithm-pseudocode" aria-labelledby="algorithm-pseudocode-title">
+      <div><span class="panel-kicker">Algorithm · explicit conventions</span><h4 id="algorithm-pseudocode-title">Posterior-sampling loop</h4><p>This form makes probability matching visible: sample one environment from the current posterior, then act optimally for that sampled environment.</p></div>
+      <div class="math-statement" data-math-statement data-scroll-label="Posterior sample and selected arm"><strong>Posterior sample and selected arm.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Sample a latent environment from the posterior given the previous history, then choose the least-encoded arm with maximal mean in that sampled environment.</span><span class="math-tex" aria-hidden="true">\[\widetilde\theta_t\sim\Pi_t(\cdot\mid H_{t-1}),\qquad A_t=\min\operatorname*{arg\,max}_{a\in[k]}\mu_a(\widetilde\theta_t).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+      <pre tabindex="0" role="region" aria-label="Posterior-sampling loop"><code>input: prior Q, likelihood/reward kernel, horizon n, fixed optimal-arm tie rule
+initialize posterior Π_1 = Q
+for t = 1,…,n:
+    sample θ̃_t from Π_t given the visible history H_{t-1}
+    choose A_t as the documented mean-optimal arm for θ̃_t
+    observe reward X_t and update Π_{t+1} by conditioning on (A_t,X_t)</code></pre>
+      <p class="algorithm-pseudocode-boundary"><strong>Source/Lean boundary.</strong> BanditRLlib constructs a canonical posterior kernel and a recursive stationary latent-arm-stream trajectory. Its selector carries an explicit pointwise mean-optimality contract, and its compiled endpoint is Bayesian rather than a universal frequentist theorem for every Thompson variant.</p>
+    </aside>
+  </div>
+
+  <aside class="worked-example" id="worked-example" aria-labelledby="worked-example-title">
+    <div class="worked-example-heading"><span class="panel-kicker">Worked example · follow one decision</span><h3 id="worked-example-title">Read one Thompson decision as probability matching</h3><p>After the current history, suppose the posterior says arm 1 is optimal with probability 0.7 and arm 2 with probability 0.3. Thompson sampling turns that uncertainty directly into its next-action law.</p></div>
+    <ol class="worked-example-flow"><li class="worked-example-step"><span class="worked-example-number" aria-hidden="true">01</span><div class="worked-example-copy"><strong>Start from posterior uncertainty</strong><p>The probabilities describe uncertainty about the true optimal arm under the Bayesian model, not empirical-mean scores.</p></div><div class="math-statement" data-math-statement data-scroll-label="Worked example step 1"><strong>Worked example step 1.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Given the previous history, the posterior probability that arm 1 is optimal is 0.7 and that arm 2 is optimal is 0.3.</span><span class="math-tex" aria-hidden="true">\[\Pr(A^\star=1\mid H_{t-1})=0.7,\qquad \Pr(A^\star=2\mid H_{t-1})=0.3.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div></li><li class="worked-example-step"><span class="worked-example-number" aria-hidden="true">02</span><div class="worked-example-copy"><strong>Sample a plausible environment</strong><p>If this posterior draw makes arm 2 optimal, the documented selector chooses arm 2 even though arm 1 is more likely to be truly optimal.</p></div><div class="math-statement" data-math-statement data-scroll-label="Worked example step 2"><strong>Worked example step 2.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">A sampled environment is drawn from the posterior; in this illustrative draw arm 2 is best, so arm 2 is selected.</span><span class="math-tex" aria-hidden="true">\[\widetilde\theta_t\sim\Pi_t,\qquad \operatorname*{arg\,max}_a\mu_a(\widetilde\theta_t)=2\Longrightarrow A_t=2.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div></li><li class="worked-example-step"><span class="worked-example-number" aria-hidden="true">03</span><div class="worked-example-copy"><strong>Recover the action probabilities</strong><p>Across posterior draws, applying the same optimal-arm rule reproduces the posterior law of the true optimal arm.</p></div><div class="math-statement" data-math-statement data-scroll-label="Worked example step 3"><strong>Worked example step 3.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Conditioned on the history, Thompson sampling chooses arms 1 and 2 with probabilities 0.7 and 0.3.</span><span class="math-tex" aria-hidden="true">\[\Pr(A_t=1\mid H_{t-1})=0.7,\qquad \Pr(A_t=2\mid H_{t-1})=0.3.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div></li></ol>
+    <p class="worked-example-takeaway"><strong>Takeaway.</strong> Thompson sampling explores because posterior uncertainty remains: a 30 percent chance that arm 2 is optimal becomes a 30 percent chance of sampling it.</p>
+    <p class="worked-example-boundary"><strong>Scope.</strong> The numbers specify one hypothetical posterior state and do not perform a Bayesian update. The exact compiled route below constructs the posterior kernel and proves probability matching under its stated latent-environment and tie-breaking contracts.</p>
+  </aside>
+
+  <aside class="proof-bridge" id="proof-bridge" aria-labelledby="proof-bridge-title">
+    <div class="proof-bridge-heading"><span class="panel-kicker">Proof bridge · source to Lean</span><h3 id="proof-bridge-title">Why posterior sampling can be analyzed through probability matching</h3><p>The analysis uses the fact that the action selected from a posterior sample and the truly optimal action have the same conditional distribution given the visible history.</p></div>
+    <ol class="proof-bridge-flow"><li class="proof-bridge-step"><span class="proof-bridge-number" aria-hidden="true">01</span><div class="proof-bridge-copy"><strong>Condition on the observed history</strong><p>Given the current history, both the unknown environment and the fresh posterior sample are distributed according to the same posterior kernel.</p></div><div class="math-statement" data-math-statement data-scroll-label="Step 1 equation"><strong>Step 1 equation.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Conditionally on the previous history, the sampled and true latent environments share the current posterior law.</span><span class="math-tex" aria-hidden="true">\[\mathcal L(\widetilde\theta_t\mid H_{t-1})=\mathcal L(\theta_\star\mid H_{t-1})=\Pi_t.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div></li><li class="proof-bridge-step"><span class="proof-bridge-number" aria-hidden="true">02</span><div class="proof-bridge-copy"><strong>Match the optimal-action law</strong><p>Applying the same documented optimal-arm selector to those two latent environments gives equal conditional laws for the chosen arm and the optimal arm.</p></div><div class="math-statement" data-math-statement data-scroll-label="Step 2 equation"><strong>Step 2 equation.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">For each arm, its conditional chance of being selected equals its conditional chance of being optimal.</span><span class="math-tex" aria-hidden="true">\[\mathbb P(A_t=a\mid H_{t-1})=\mathbb P(A^\star=a\mid H_{t-1}).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div></li><li class="proof-bridge-step"><span class="proof-bridge-number" aria-hidden="true">03</span><div class="proof-bridge-copy"><strong>Rewrite Bayesian regret</strong><p>Probability matching permits a clipped upper-confidence decomposition in which uncertainty and failure terms are separated before expectations are summed.</p></div><div class="math-statement" data-math-statement data-scroll-label="Step 3 equation"><strong>Step 3 equation.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Conditional Bayesian regret is bounded by an uncertainty term for the selected arm plus an upper-confidence failure term for the optimal arm.</span><span class="math-tex" aria-hidden="true">\[\mathbb E_t[\mu(A^\star)-\mu(A_t)]\le\mathbb E_t[U_t(A_t)-\mu(A_t)]+\mathbb E_t[\mu(A^\star)-U_t(A^\star)].\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div></li><li class="proof-bridge-step"><span class="proof-bridge-number" aria-hidden="true">04</span><div class="proof-bridge-copy"><strong>Sum uncertainty under the model contract</strong><p>The bounded-reward, variance, and posterior assumptions then control the accumulated widths and failure charge, producing the source theorem&#x27;s Bayesian rate.</p></div><div class="math-statement" data-math-statement data-scroll-label="Step 4 equation"><strong>Step 4 equation.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Under the stated Bayesian finite-arm assumptions, the accumulated terms yield a constant times square root of k n log n.</span><span class="math-tex" aria-hidden="true">\[BR_n\le C\sqrt{kn\log n}.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div></li></ol>
+    <p class="proof-bridge-boundary"><strong>Reading boundary.</strong> This is a conceptual map of the Bayesian route. The exact compiled terminal has its own boundedness and variance terms and does not establish a frequentist guarantee for arbitrary Thompson-sampling implementations.</p>
+  </aside>
+
+<article class="source-theorem-card">
+  <div class="source-theorem-heading"><div><span class="panel-kicker">Source theorem · faithful restatement</span><h3>Theorem 36.1 (Bayesian regret of Thompson sampling)</h3></div><a href="https://tor-lattimore.com/downloads/book/book.pdf#page=470">Original at online p. 461 (Chapter 36, §36.1) ↗</a></div>
+
+  <p>Probability matching turns posterior uncertainty about the best arm into an exploration policy.</p>
+  <dl class="source-theorem-contract" aria-label="Source theorem contract"><div><dt>Model</dt><dd>A k-armed Bayesian bandit environment with prior Q and arm laws indexed by the latent environment.</dd></div><div><dt>Assumptions</dt><dd>For every environment and arm, the centered reward law is 1-sub-Gaussian and its mean lies in [0,1]; optimal-arm ties use the algorithm&#x27;s fixed rule.</dd></div><div><dt>Algorithm parameters</dt><dd>Prior Q, arm count k, and horizon n.</dd></div><div><dt>Regret notion</dt><dd>Bayesian regret BR_n, averaged over the prior, observations, and policy randomization.</dd></div><div><dt>Guarantee</dt><dd>BR_n is at most C√(kn log n) for a universal constant C.</dd></div></dl>
+  <div class="math-statement" data-math-statement data-scroll-label="Source mathematical statement"><strong>Source mathematical statement.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">In the stated Bayesian finite-armed setting, Thompson sampling has square-root-horizon Bayesian regret up to a logarithmic factor.</span><span class="math-tex" aria-hidden="true">\[BR_n\le C\sqrt{kn\log n}\quad\text{for the theorem&#x27;s Bayesian finite-armed model and universal }C.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p class="source-note"><strong>BanditRLlib relationship.</strong> BanditRLlib constructs a canonical posterior/kernel and generated stationary latent-arm-stream process. Its compiled terminal has explicit bounded-reward and variance terms and is not a blanket frequentist guarantee for all Thompson variants.</p>
+  <p class="copyright-note">The mathematical content is restated in this site's notation; wording is ours. See online p. 461 (Chapter 36, §36.1) in the linked source for the original statement and full assumptions.</p>
+</article>
+</section>
+
+<section id="teaching-notes">
+  <h2>Natural-language and Lean side by side</h2>
+  <p>The mathematical readings are explanatory summaries. The exact generated Lean statement and its source link remain authoritative for hypotheses, types, constants, and indexing.</p>
+  <p class="section-intro">A curated route through definitions, key bridges, and canonical terminals stays visible. 3 additional dependency, extension, or research-frontier notes are grouped below.</p>
+
+<article class="theorem-panel" id="decl-104ff246858b-teaching" aria-labelledby="decl-104ff246858b-teaching-title decl-104ff246858b-teaching-name">
+  <div class="theorem-header">
+    <div class="declaration-heading"><span class="panel-kicker">Mathematics ↔ Lean</span><h3 id="decl-104ff246858b-teaching-title">The canonical posterior is the conditional environment law</h3><p class="declaration-name" id="decl-104ff246858b-teaching-name"><span>Lean declaration</span><code>Bandit<wbr>RL<wbr>Proof.<wbr>Posterior<wbr>Kernel.<wbr>canonical<wbr>Posterior_<wbr>kernel_<wbr>ae_<wbr>eq_<wbr>cond<wbr>Distrib_<wbr>of_<wbr>pair_<wbr>map_<wbr>eq</code></p></div>
+    <span class="status compiled">Compiled</span>
+  </div>
+  <div class="theorem-body">
+    <p><strong>Plain-English statement.</strong> If an environment and observed history have the canonical prior-likelihood joint law, then the canonical posterior kernel equals the conditional law of the environment given that history almost everywhere.</p>
+    <div class="math-statement" data-math-statement data-scroll-label="Mathematical reading"><strong>Mathematical reading.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">If an environment and observed history have the canonical prior-likelihood joint law, then the canonical posterior kernel equals the conditional law of the environment given that history almost everywhere.</span><span class="math-tex" aria-hidden="true">\(\Pi(\cdot\mid H)=\mathcal L(E\mid H)\quad\text{a.e.}\)</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+    <dl class="teaching-grid">
+      <div><dt>Intuition</dt><dd>A posterior is a measurable kernel from histories to environments; the theorem identifies that constructed kernel with the measure-theoretic conditional distribution.</dd></div>
+      <div><dt>Why it is needed</dt><dd>Probability matching is valid only after the algorithmic posterior is tied to the actual environment-history law.</dd></div>
+      <div><dt>Place in the proof</dt><dd>It is the posterior-law root of the Chapter 6 proof DAG.</dd></div>
+    </dl>
+    <details class="technical-reading">
+      <summary>Proof and Lean reading notes</summary>
+      <dl class="technical-teaching-grid">
+        <div><dt>Proof idea</dt><dd>Use uniqueness of regular conditional distributions under the equality of the observed pair pushforward and the canonical prior-likelihood joint measure.</dd></div>
+        <div><dt>Lean reading notes</dt><dd>The theorem requires Standard Borel and nonempty environment, measurable environment/history maps, a probability prior, a Markov likelihood kernel, and exact pair-law equality. It does not accept an arbitrary posterior kernel.</dd></div>
+        <div><dt>Teaching dependencies</dt><dd>No direct teaching dependency recorded.</dd></div>
+      </dl>
+    </details>
+    <details class="exact-lean">
+      <summary>Exact Lean statement</summary>
+      <pre class="lean-code" tabindex="0" role="region" aria-label="Exact Lean statement"><code><span class="kw">theorem</span> canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq {Omega : Type*} [MeasurableSpace Omega] [StandardBorelSpace Env] [Nonempty Env] (mu : Measure Omega) [IsFiniteMeasure mu] (env : Omega -&gt; Env) (history : Omega -&gt; History) (henv : Measurable env) (hhistory : Measurable history) (prior : Measure Env) [IsProbabilityMeasure prior] (likelihood : ProbabilityTheory.Kernel Env History) [ProbabilityTheory.IsMarkovKernel likelihood] (hpair : mu.map (<span class="kw">fun</span> omega =&gt; (env omega, history omega)) = canonicalJointMeasure prior likelihood) : (canonicalPosterior prior likelihood).kernel =ᵐ[mu.map history] ProbabilityTheory.condDistrib env history mu</code></pre>
+    </details>
+    <div class="source-links">
+      <a href="../../modules/banditrlproof-posteriorkernel/index.html#decl-104ff246858b">Open in the declaration catalog</a>
+      <a href="../../source/BanditRLProof/PosteriorKernel.lean.html#L194">Open source at line 194</a>
+    </div>
+  </div>
+</article>
+
+<article class="theorem-panel" id="decl-103dd0175542-teaching" aria-labelledby="decl-103dd0175542-teaching-title decl-103dd0175542-teaching-name">
+  <div class="theorem-header">
+    <div class="declaration-heading"><span class="panel-kicker">Mathematics ↔ Lean</span><h3 id="decl-103dd0175542-teaching-title">Thompson actions probability-match the posterior</h3><p class="declaration-name" id="decl-103dd0175542-teaching-name"><span>Lean declaration</span><code>Bandit<wbr>RL<wbr>Proof.<wbr>Thompson.<wbr>uniform<wbr>Reference<wbr>Thompson<wbr>Algorithm_<wbr>trajectory_<wbr>cond<wbr>Distrib_<wbr>action_<wbr>ae_<wbr>eq_<wbr>best<wbr>Action</code></p></div>
+    <span class="status compiled">Compiled</span>
+  </div>
+  <div class="theorem-body">
+    <p><strong>Plain-English statement.</strong> On the actual globally recursive Thompson trajectory, the action at round n+1 conditioned on the trajectory&#x27;s own finite history through n probability-matches the posterior best action.</p>
+    <div class="math-statement" data-math-statement data-scroll-label="Mathematical reading"><strong>Mathematical reading.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">On the actual globally recursive Thompson trajectory, the action at round n+1 conditioned on the trajectory&#x27;s own finite history through n probability-matches the posterior best action.</span><span class="math-tex" aria-hidden="true">\(\mathcal L(A_{n+1}\mid H_n)=\mathcal L(a^\star(E)\mid H_n).\)</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+    <dl class="teaching-grid">
+      <div><dt>Intuition</dt><dd>The uniform reference policy supplies full support, so the posterior sampler can be recursively coupled without assuming a second unrelated action process.</dd></div>
+      <div><dt>Why it is needed</dt><dd>Bayesian regret decomposition needs matching for the actions that the generated algorithm actually takes.</dd></div>
+      <div><dt>Place in the proof</dt><dd>It is the bridge from the canonical one-step sampler to the generated finite-history score identities.</dd></div>
+    </dl>
+    <details class="technical-reading">
+      <summary>Proof and Lean reading notes</summary>
+      <dl class="technical-teaching-grid">
+        <div><dt>Proof idea</dt><dd>Build the recursive history algorithm and canonical environment trajectory kernel, extract the actual finite history, apply density and conditional-law invariance, and identify the successor coordinate.</dd></div>
+        <div><dt>Lean reading notes</dt><dd>The canary restates the complete algorithm, trajectoryKernel, actualMeasure, actualHistory, and nextAction let chain. It is not an adjoined sampler theorem.</dd></div>
+        <div><dt>Teaching dependencies</dt><dd><code>BanditRLProof.Thompson.canonicalSampler_condDistrib_action_ae_eq_bestAction</code></dd></div>
+      </dl>
+    </details>
+    <details class="exact-lean">
+      <summary>Exact Lean statement</summary>
+      <pre class="lean-code" tabindex="0" role="region" aria-label="Exact Lean statement"><code><span class="kw">theorem</span> uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction {Env : Type u} {Action : Type v} {Reward : Type w} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [MeasurableSpace Action] [StandardBorelSpace Action] [Fintype Action] [Nonempty Action] [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward] (prior : Measure Env) [IsProbabilityMeasure prior] (environment : MeasurableHistoryEnvironment Env Action Reward) (bestAction : Env -&gt; Action) (hbestAction : Measurable bestAction) (n : Nat) : <span class="kw">let</span> algorithm := uniformReferenceThompsonAlgorithm prior environment bestAction hbestAction <span class="kw">let</span> trajectoryKernel := canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment <span class="kw">let</span> actualMeasure := prior ⊗ₘ trajectoryKernel <span class="kw">let</span> actualHistory := <span class="kw">fun</span> sample =&gt; History.finitePairHistoryOfTrace (environmentTrajectoryAction sample) (environmentTrajectoryReward sample) n <span class="kw">let</span> nextAction := <span class="kw">fun</span> sample =&gt; environmentTrajectoryAction sample (n + <span class="num">1</span>) ProbabilityTheory.condDistrib nextAction actualHistory actualMeasure =ᵐ[ actualMeasure.map actualHistory] ProbabilityTheory.condDistrib (bestAction ∘ Prod.fst) actualHistory actualMeasure</code></pre>
+    </details>
+    <div class="source-links">
+      <a href="../../modules/banditrlproof-algorithms-thompsonrecursivesampler/index.html#decl-103dd0175542">Open in the declaration catalog</a>
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonRecursiveSampler.lean.html#L507">Open source at line 507</a>
+    </div>
+  </div>
+</article>
+
+<article class="theorem-panel" id="decl-cdc4f419f1bd-teaching" aria-labelledby="decl-cdc4f419f1bd-teaching-title decl-cdc4f419f1bd-teaching-name">
+  <div class="theorem-header">
+    <div class="declaration-heading"><span class="panel-kicker">Mathematics ↔ Lean</span><h3 id="decl-cdc4f419f1bd-teaching-title">Bayesian regret decomposes through a clipped-UCB score</h3><p class="declaration-name" id="decl-cdc4f419f1bd-teaching-name"><span>Lean declaration</span><code>Bandit<wbr>RL<wbr>Proof.<wbr>Thompson.<wbr>integral_<wbr>trajectory<wbr>Bayes<wbr>Mean<wbr>Regret_<wbr>eq_<wbr>add_<wbr>clipped<wbr>UCB</code></p></div>
+    <span class="status compiled">Compiled</span>
+  </div>
+  <div class="theorem-body">
+    <p><strong>Plain-English statement.</strong> Choosing the measurable bounded clipped-UCB history score specializes the comparator-relative decomposition to confidence terms suitable for stationary reward tails; optimality is imposed at the final Bayesian-regret terminal.</p>
+    <div class="math-statement" data-math-statement data-scroll-label="Mathematical reading"><strong>Mathematical reading.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Choosing the measurable bounded clipped-UCB history score specializes the comparator-relative decomposition to confidence terms suitable for stationary reward tails; optimality is imposed at the final Bayesian-regret terminal.</span><span class="math-tex" aria-hidden="true">\(\mathbb E R_n^{\mathrm{Bayes}}=\mathbb E\sum_{t&lt;n}(\mu_{a^\star}-\mathrm{clip}(U_t(a^\star)))+\mathbb E\sum_{t&lt;n}(\mathrm{clip}(U_t(A_t))-\mu_{A_t}).\)</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+    <dl class="teaching-grid">
+      <div><dt>Intuition</dt><dd>Clipping keeps scores inside the known mean range while empirical means plus widths retain optimism with high probability.</dd></div>
+      <div><dt>Why it is needed</dt><dd>This is the exact bridge from probability matching to concentration and the final finite regret bound.</dd></div>
+      <div><dt>Place in the proof</dt><dd>It consumes the history-score decomposition and feeds the two stationary clipped-score expectation inequalities.</dd></div>
+    </dl>
+    <details class="technical-reading">
+      <summary>Proof and Lean reading notes</summary>
+      <dl class="technical-teaching-grid">
+        <div><dt>Proof idea</dt><dd>Prove the clipped score is measurable and uniformly bounded, automatically obtain the needed integrability, and instantiate the general history-score equality.</dd></div>
+        <div><dt>Lean reading notes</dt><dd>The mean surface must be measurable and contained in [l,u]. The theorem is comparator-relative algebra and does not itself assert selector optimality or provide the stationary concentration bounds.</dd></div>
+        <div><dt>Teaching dependencies</dt><dd><code>BanditRLProof.Thompson.integral_trajectoryBayesMeanRegret_eq_add_historyScore</code></dd></div>
+      </dl>
+    </details>
+    <details class="exact-lean">
+      <summary>Exact Lean statement</summary>
+      <pre class="lean-code" tabindex="0" role="region" aria-label="Exact Lean statement"><code><span class="kw">theorem</span> integral_trajectoryBayesMeanRegret_eq_add_clippedUCB {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [Nonempty (Fin K)] (prior : Measure Env) [IsProbabilityMeasure prior] (environment : MeasurableHistoryEnvironment Env (Fin K) Real) (bestAction : Env -&gt; Fin K) (hbestAction : Measurable bestAction) (mean : Env -&gt; Fin K -&gt; Real) (hmean : Measurable (<span class="kw">fun</span> pair : Env × Fin K =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (l u sigma2 delta : Real) (hlu : l &lt;= u) (hmeanMem : <span class="kw">forall</span> env arm, mean env arm ∈ Set.Icc l u) (horizon : Nat) : <span class="kw">let</span> algorithm := uniformReferenceThompsonAlgorithm prior environment bestAction hbestAction <span class="kw">let</span> actualMeasure := prior ⊗ₘ canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment integral actualMeasure (<span class="kw">fun</span> sample =&gt; trajectoryBayesMeanRegret mean bestAction sample horizon) = integral actualMeasure (<span class="kw">fun</span> sample =&gt; ∑ t ∈ range horizon, (mean sample.<span class="num">1</span> (bestAction sample.<span class="num">1</span>) - clippedUCB l u sigma2 delta (environmentTrajectoryAction sample) (environmentTrajectoryReward sample) (bestAction sample.<span class="num">1</span>) t)) + integral actualMeasure (<span class="kw">fun</span> sample =&gt; ∑ t ∈ range horizon, (clippedUCB l u sigma2 delta (environmentTrajectoryAction sample) (environmentTrajectoryReward sample) (environmentTrajectoryAction sample t) t - mean sample.<span class="num">1</span> (environmentTrajectoryAction sample t)))</code></pre>
+    </details>
+    <div class="source-links">
+      <a href="../../modules/banditrlproof-algorithms-thompsonclippeducbscore/index.html#decl-cdc4f419f1bd">Open in the declaration catalog</a>
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html#L428">Open source at line 428</a>
+    </div>
+  </div>
+</article>
+
+<article class="theorem-panel" id="decl-04335aae6150-teaching" aria-labelledby="decl-04335aae6150-teaching-title decl-04335aae6150-teaching-name">
+  <div class="theorem-header">
+    <div class="declaration-heading"><span class="panel-kicker">Mathematics ↔ Lean</span><h3 id="decl-04335aae6150-teaching-title">Finite-time Bayesian regret for the generated Thompson process</h3><p class="declaration-name" id="decl-04335aae6150-teaching-name"><span>Lean declaration</span><code>Bandit<wbr>RL<wbr>Proof.<wbr>Thompson.<wbr>stationary<wbr>Latent<wbr>Arm<wbr>Stream<wbr>Canonical<wbr>Trajectory<wbr>Measure_<wbr>integral_<wbr>trajectory<wbr>Bayes<wbr>Mean<wbr>Regret_<wbr>le</code></p></div>
+    <span class="status compiled">Compiled</span>
+  </div>
+  <div class="theorem-body">
+    <p><strong>Plain-English statement.</strong> For the canonical stationary latent-arm-stream Thompson process, expected Bayesian mean regret is at most (2K+1)(u-l) plus 8 times the square root of sigma-squared K n log n.</p>
+    <div class="math-statement" data-math-statement data-scroll-label="Mathematical reading"><strong>Mathematical reading.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">For the canonical stationary latent-arm-stream Thompson process, expected Bayesian mean regret is at most (2K+1)(u-l) plus 8 times the square root of sigma-squared K n log n.</span><span class="math-tex" aria-hidden="true">\(\mathbb E[R_n^{\mathrm{Bayes}}]\le(2K+1)(u-l)+8\sqrt{\sigma^2Kn\log n}.\)</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+    <dl class="teaching-grid">
+      <div><dt>Intuition</dt><dd>Posterior sampling matches the law of the optimal action, so a carefully chosen confidence decomposition can compare the sampled and optimal actions in expectation.</dd></div>
+      <div><dt>Why it is needed</dt><dd>It is the final stationary theorem of the local Thompson route and demonstrates that posterior-law construction reaches an actual regret endpoint.</dd></div>
+      <div><dt>Place in the proof</dt><dd>It closes the scoped stationary canonical Chapter 6 route while BRL-TS-BAYES-001 and direct upstream identity remain separate.</dd></div>
+    </dl>
+    <details class="technical-reading">
+      <summary>Proof and Lean reading notes</summary>
+      <dl class="technical-teaching-grid">
+        <div><dt>Proof idea</dt><dd>Construct actual and reference trajectories, prove posterior-action conditional-law equality, integrate the Bayesian regret decomposition, apply clipped-UCB bounds, and discharge stationary reward tails.</dd></div>
+        <div><dt>Lean reading notes</dt><dd>The exact statement requires a probability prior, Standard Borel nonempty environment, finite nonempty arms, stationary Markov reward kernel, measurable bestAction, pointwise `IsOptimalMeanSelector mean bestAction`, a measurable mean surface, means in [l,u], centered sub-Gaussian MGF, nonzero variance proxy, and the canonical augmented latent stream. It is not a universal or sharp-asymptotic Thompson theorem.</dd></div>
+        <div><dt>Teaching dependencies</dt><dd><code>BanditRLProof.Thompson.integral_trajectoryBayesMeanRegret_eq_add_clippedUCB</code>, <code>BanditRLProof.Thompson.canonicalLatentArmStreamTrajectory_reward_eq_rewardFromArmStream_ae</code>, <code>BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_sum_mean_bestAction_sub_clippedUCB_le</code>, <code>BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_sum_clippedUCB_action_sub_mean_le</code></dd></div>
+      </dl>
+    </details>
+    <details class="exact-lean">
+      <summary>Exact Lean statement</summary>
+      <pre class="lean-code" tabindex="0" role="region" aria-label="Exact Lean statement"><code><span class="kw">theorem</span> stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (bestAction : Env -&gt; Fin K) (hbestAction : Measurable bestAction) (mean : Env -&gt; Fin K -&gt; Real) (hbest : IsOptimalMeanSelector mean bestAction) (hmeas_mean : Measurable (<span class="kw">fun</span> input : Env × Fin K =&gt; mean input.<span class="num">1</span> input.<span class="num">2</span>)) (l u : Real) (hlu : l &lt;= u) (hmeanMem : <span class="kw">forall</span> env arm, mean env arm ∈ Set.Icc l u) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (hsigma2 : sigma2 ≠ <span class="num">0</span>) (n : Nat) : <span class="kw">let</span> augmentedPrior := stationaryLatentArmStreamPrior prior rewardKernel <span class="kw">let</span> feedbackEnvironment := latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K) <span class="kw">let</span> augmentedBestAction := <span class="kw">fun</span> envStream : Env × UCB.ArmRewardStream K =&gt; bestAction envStream.<span class="num">1</span> <span class="kw">let</span> augmentedMean := <span class="kw">fun</span> envStream : Env × UCB.ArmRewardStream K =&gt; <span class="kw">fun</span> arm =&gt; mean envStream.<span class="num">1</span> arm <span class="kw">let</span> algorithm := uniformReferenceThompsonAlgorithm augmentedPrior feedbackEnvironment augmentedBestAction (hbestAction.comp measurable_fst) integral (stationaryLatentArmStreamCanonicalTrajectoryMeasure prior rewardKernel algorithm) (<span class="kw">fun</span> sample =&gt; trajectoryBayesMeanRegret augmentedMean augmentedBestAction sample n) &lt;= (<span class="num">2</span> * K + <span class="num">1</span>) * (u - l) + <span class="num">8</span> * Real.sqrt ((sigma2 : Real) * K * n * Real.log n)</code></pre>
+    </details>
+    <div class="source-links">
+      <a href="../../modules/banditrlproof-algorithms-thompsonstationaryreward/index.html#decl-04335aae6150">Open in the declaration catalog</a>
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L3848">Open source at line 3848</a>
+    </div>
+  </div>
+</article>
+<details class="inventory-disclosure teaching-disclosure"><summary>Explore 3 additional Lean teaching notes</summary><div>
+<article class="theorem-panel" id="decl-946d27e10ae5-teaching" aria-labelledby="decl-946d27e10ae5-teaching-title decl-946d27e10ae5-teaching-name">
+  <div class="theorem-header">
+    <div class="declaration-heading"><span class="panel-kicker">Mathematics ↔ Lean</span><h3 id="decl-946d27e10ae5-teaching-title">For the canonical one-step sampler, the sampled action conditioned on…</h3><p class="declaration-name" id="decl-946d27e10ae5-teaching-name"><span>Lean declaration</span><code>Bandit<wbr>RL<wbr>Proof.<wbr>Thompson.<wbr>canonical<wbr>Sampler_<wbr>cond<wbr>Distrib_<wbr>action_<wbr>ae_<wbr>eq_<wbr>best<wbr>Action</code></p></div>
+    <span class="status compiled">Compiled</span>
+  </div>
+  <div class="theorem-body">
+    <p><strong>Plain-English statement.</strong> For the canonical one-step sampler, the sampled action conditioned on history has the same law as the best action of the latent environment conditioned on that history.</p>
+    <div class="math-statement" data-math-statement data-scroll-label="Mathematical reading"><strong>Mathematical reading.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">For the canonical one-step sampler, the sampled action conditioned on history has the same law as the best action of the latent environment conditioned on that history.</span><span class="math-tex" aria-hidden="true">\(\mathcal L(A\mid H)=\mathcal L(a^\star(E)\mid H).\)</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+    <dl class="teaching-grid">
+      <div><dt>Intuition</dt><dd>Draw an environment from the posterior and act optimally for that draw; pushing the posterior through bestAction is exactly the posterior optimal-action law.</dd></div>
+      <div><dt>Why it is needed</dt><dd>This is the local probability-matching identity later transported to every successor action of the recursive algorithm.</dd></div>
+      <div><dt>Place in the proof</dt><dd>It consumes posterior-kernel correctness and feeds the recursive trajectory sampler.</dd></div>
+    </dl>
+    <details class="technical-reading">
+      <summary>Proof and Lean reading notes</summary>
+      <dl class="technical-teaching-grid">
+        <div><dt>Proof idea</dt><dd>Construct the canonical sampler measure, apply posterior equals conditional environment law, and map both sides through the measurable best-action selector.</dd></div>
+        <div><dt>Lean reading notes</dt><dd>Standard Borel/nonempty environment and action spaces, a probability prior, Markov likelihood, and measurable bestAction are explicit. This is one-step matching, not yet a generated multi-round regret theorem.</dd></div>
+        <div><dt>Teaching dependencies</dt><dd><code>BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq</code></dd></div>
+      </dl>
+    </details>
+    <details class="exact-lean">
+      <summary>Exact Lean statement</summary>
+      <pre class="lean-code" tabindex="0" role="region" aria-label="Exact Lean statement"><code><span class="kw">theorem</span> canonicalSampler_condDistrib_action_ae_eq_bestAction {History : Type u} {Env : Type v} {Action : Type w} [MeasurableSpace History] [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action] (prior : Measure Env) [IsProbabilityMeasure prior] (likelihood : ProbabilityTheory.Kernel Env History) [ProbabilityTheory.IsMarkovKernel likelihood] (bestAction : Env -&gt; Action) (hbestAction : Measurable bestAction) : ProbabilityTheory.condDistrib canonicalSamplerAction canonicalSamplerHistory (canonicalSamplerMeasure prior likelihood bestAction hbestAction) =ᵐ[ (canonicalSamplerMeasure prior likelihood bestAction hbestAction).map canonicalSamplerHistory] ProbabilityTheory.condDistrib (bestAction ∘ canonicalSamplerEnv) canonicalSamplerHistory (canonicalSamplerMeasure prior likelihood bestAction hbestAction)</code></pre>
+    </details>
+    <div class="source-links">
+      <a href="../../modules/banditrlproof-algorithms-thompsoncanonicalsampler/index.html#decl-946d27e10ae5">Open in the declaration catalog</a>
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonCanonicalSampler.lean.html#L271">Open source at line 271</a>
+    </div>
+  </div>
+</article>
+
+<article class="theorem-panel" id="decl-d3efce1c2be8-teaching" aria-labelledby="decl-d3efce1c2be8-teaching-title decl-d3efce1c2be8-teaching-name">
+  <div class="theorem-header">
+    <div class="declaration-heading"><span class="panel-kicker">Mathematics ↔ Lean</span><h3 id="decl-d3efce1c2be8-teaching-title">Expected comparator-relative mean regret on the generated trajectory splits…</h3><p class="declaration-name" id="decl-d3efce1c2be8-teaching-name"><span>Lean declaration</span><code>Bandit<wbr>RL<wbr>Proof.<wbr>Thompson.<wbr>integral_<wbr>trajectory<wbr>Bayes<wbr>Mean<wbr>Regret_<wbr>eq_<wbr>add_<wbr>history<wbr>Score</code></p></div>
+    <span class="status compiled">Compiled</span>
+  </div>
+  <div class="theorem-body">
+    <p><strong>Plain-English statement.</strong> Expected comparator-relative mean regret on the generated trajectory splits exactly into a selector-score gap and a selected-action score gap for any integrable finite-history score; the Bayesian-regret reading additionally requires a mean-optimal selector.</p>
+    <div class="math-statement" data-math-statement data-scroll-label="Mathematical reading"><strong>Mathematical reading.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Expected comparator-relative mean regret on the generated trajectory splits exactly into a selector-score gap and a selected-action score gap for any integrable finite-history score; the Bayesian-regret reading additionally requires a mean-optimal selector.</span><span class="math-tex" aria-hidden="true">\(\mathbb E R_n^{\mathrm{Bayes}}=\mathbb E\sum_{t&lt;n}(\mu_{a^\star}-U_t(a^\star))+\mathbb E\sum_{t&lt;n}(U_t(A_t)-\mu_{A_t}).\)</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+    <dl class="teaching-grid">
+      <div><dt>Intuition</dt><dd>Add and subtract the same score; probability matching makes the expected score of the sampled action equal the expected score of the latent best action.</dd></div>
+      <div><dt>Why it is needed</dt><dd>It turns posterior-law equality into the two error terms that concentration can control.</dd></div>
+      <div><dt>Place in the proof</dt><dd>It follows recursive probability matching and precedes the concrete clipped-UCB specialization.</dd></div>
+    </dl>
+    <details class="technical-reading">
+      <summary>Proof and Lean reading notes</summary>
+      <dl class="technical-teaching-grid">
+        <div><dt>Proof idea</dt><dd>Apply the finite-history conditional-distribution equality to each score, integrate the score identity, sum over the finite horizon, and regroup the mean differences.</dd></div>
+        <div><dt>Lean reading notes</dt><dd>The theorem retains separate integrability hypotheses for selector means, selected means, selected scores, and selector scores. The decomposition is valid for any measurable selector; `trajectoryBayesMeanRegret` is genuinely Bayesian pseudo-regret only when `IsOptimalMeanSelector mean bestAction` is available.</dd></div>
+        <div><dt>Teaching dependencies</dt><dd><code>BanditRLProof.Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction</code></dd></div>
+      </dl>
+    </details>
+    <details class="exact-lean">
+      <summary>Exact Lean statement</summary>
+      <pre class="lean-code" tabindex="0" role="region" aria-label="Exact Lean statement"><code><span class="kw">theorem</span> integral_trajectoryBayesMeanRegret_eq_add_historyScore {Env : Type u} {Action : Type v} {Reward : Type w} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [MeasurableSpace Action] [StandardBorelSpace Action] [Fintype Action] [Nonempty Action] [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward] (prior : Measure Env) [IsProbabilityMeasure prior] (environment : MeasurableHistoryEnvironment Env Action Reward) (bestAction : Env -&gt; Action) (hbestAction : Measurable bestAction) (mean : Env -&gt; Action -&gt; Real) (score : HistoryActionScore Action Reward) (horizon : Nat) (hmeanBest : Integrable (<span class="kw">fun</span> sample : Env × ((n : Nat) -&gt; Action × Reward) =&gt; mean sample.<span class="num">1</span> (bestAction sample.<span class="num">1</span>)) (prior ⊗ₘ canonicalMeasurableEnvironmentTrajectoryKernel (uniformReferenceThompsonAlgorithm prior environment bestAction hbestAction) environment)) (hmeanAction : <span class="kw">forall</span> t : Nat, t &lt; horizon -&gt; Integrable (<span class="kw">fun</span> sample : Env × ((n : Nat) -&gt; Action × Reward) =&gt; mean sample.<span class="num">1</span> (environmentTrajectoryAction sample t)) (prior ⊗ₘ canonicalMeasurableEnvironmentTrajectoryKernel (uniformReferenceThompsonAlgorithm prior environment bestAction hbestAction) environment)) (hscoreAction : <span class="kw">forall</span> t : Nat, t &lt; horizon -&gt; Integrable (<span class="kw">fun</span> sample : Env × ((n : Nat) -&gt; Action × Reward) =&gt; trajectoryHistoryScore score sample t) (prior ⊗ₘ canonicalMeasurableEnvironmentTrajectoryKernel (uniformReferenceThompsonAlgorithm prior environment bestAction hbestAction) environment)) (hscoreBest : <span class="kw">forall</span> t : Nat, t &lt; horizon -&gt; Integrable (<span class="kw">fun</span> sample : Env × ((n : Nat) -&gt; Action × Reward) =&gt; trajectoryBestHistoryScore score bestAction sample t) (prior ⊗ₘ canonicalMeasurableEnvironmentTrajectoryKernel (uniformReferenceThompsonAlgorithm prior environment bestAction hbestAction) environment)) : <span class="kw">let</span> algorithm := uniformReferenceThompsonAlgorithm prior environment bestAction hbestAction <span class="kw">let</span> actualMeasure := prior ⊗ₘ canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment integral actualMeasure (<span class="kw">fun</span> sample =&gt; trajectoryBayesMeanRegret mean bestAction sample horizon) = integral actualMeasure (<span class="kw">fun</span> sample =&gt; ∑ t ∈ range horizon, (mean sample.<span class="num">1</span> (bestAction sample.<span class="num">1</span>) - trajectoryBestHistoryScore score bestAction sample t)) + integral actualMeasure (<span class="kw">fun</span> sample =&gt; ∑ t ∈ range horizon, (trajectoryHistoryScore score sample t - mean sample.<span class="num">1</span> (environmentTrajectoryAction sample t)))</code></pre>
+    </details>
+    <div class="source-links">
+      <a href="../../modules/banditrlproof-algorithms-thompsonbayesregretdecomposition/index.html#decl-d3efce1c2be8">Open in the declaration catalog</a>
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonBayesRegretDecomposition.lean.html#L362">Open source at line 362</a>
+    </div>
+  </div>
+</article>
+
+<article class="theorem-panel" id="decl-031ca318d6e0-teaching" aria-labelledby="decl-031ca318d6e0-teaching-title decl-031ca318d6e0-teaching-name">
+  <div class="theorem-header">
+    <div class="declaration-heading"><span class="panel-kicker">Mathematics ↔ Lean</span><h3 id="decl-031ca318d6e0-teaching-title">For the canonical latent-stream environment, every generated reward…</h3><p class="declaration-name" id="decl-031ca318d6e0-teaching-name"><span>Lean declaration</span><code>Bandit<wbr>RL<wbr>Proof.<wbr>Thompson.<wbr>canonical<wbr>Latent<wbr>Arm<wbr>Stream<wbr>Trajectory_<wbr>reward_<wbr>eq_<wbr>reward<wbr>From<wbr>Arm<wbr>Stream_<wbr>ae</code></p></div>
+    <span class="status compiled">Compiled</span>
+  </div>
+  <div class="theorem-body">
+    <p><strong>Plain-English statement.</strong> For the canonical latent-stream environment, every generated reward coordinate agrees almost everywhere with the next unused reward coordinate of the selected arm&#x27;s stationary stream.</p>
+    <div class="math-statement" data-math-statement data-scroll-label="Mathematical reading"><strong>Mathematical reading.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">For the canonical latent-stream environment, every generated reward coordinate agrees almost everywhere with the next unused reward coordinate of the selected arm&#x27;s stationary stream.</span><span class="math-tex" aria-hidden="true">\(Y_t=Z_{A_t,N_{A_t}(t)}\quad\text{for all }t\text{ a.e.}\)</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+    <dl class="teaching-grid">
+      <div><dt>Intuition</dt><dd>A latent infinite reward stream for each arm turns adaptive sampling into coordinate selection without changing the actual recursive policy.</dd></div>
+      <div><dt>Why it is needed</dt><dd>Stationary empirical-mean tails must apply to the rewards actually observed by Thompson sampling, not to an independent offline sample.</dd></div>
+      <div><dt>Place in the proof</dt><dd>It connects the recursive generated trajectory to arm-stream concentration and clipped-score expectation bounds.</dd></div>
+    </dl>
+    <details class="technical-reading">
+      <summary>Proof and Lean reading notes</summary>
+      <dl class="technical-teaching-grid">
+        <div><dt>Proof idea</dt><dd>Use the canonical step-kernel construction and induction over finite trajectory prefixes to identify each feedback draw with rewardFromArmStream at the selected pull count.</dd></div>
+        <div><dt>Lean reading notes</dt><dd>The equality is almost everywhere under the canonical generated trajectory kernel for each latent environment/stream input. It is a support/alignment theorem, not independence stated by fiat.</dd></div>
+        <div><dt>Teaching dependencies</dt><dd><code>BanditRLProof.Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction</code></dd></div>
+      </dl>
+    </details>
+    <details class="exact-lean">
+      <summary>Exact Lean statement</summary>
+      <pre class="lean-code" tabindex="0" role="region" aria-label="Exact Lean statement"><code><span class="kw">theorem</span> canonicalLatentArmStreamTrajectory_reward_eq_rewardFromArmStream_ae {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (stream : UCB.ArmRewardStream K) : canonicalHistoryTrajectoryReward =ᵐ[ canonicalMeasurableEnvironmentTrajectoryKernel algorithm (latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)) (env, stream)] UCB.rewardFromArmStream canonicalHistoryTrajectoryAction (<span class="kw">fun</span> _ =&gt; stream)</code></pre>
+    </details>
+    <div class="source-links">
+      <a href="../../modules/banditrlproof-algorithms-thompsonstationaryreward/index.html#decl-031ca318d6e0">Open in the declaration catalog</a>
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L455">Open source at line 455</a>
+    </div>
+  </div>
+</article>
+</div></details>
+</section>
+
+
+<nav class="chapter-pager chapter-pager-primary" id="continue-reading" aria-label="Continue after the teaching route">
+  <div class="chapter-pager-heading"><span class="eyebrow">Continue reading</span><strong>BanditRLlib Book Map</strong></div>
+  <div class="chapter-pager-links">
+    <a class="chapter-pager-link previous" href="../oful/index.html"><span class="chapter-pager-direction"><span aria-hidden="true">←</span> Previous</span><strong>5. OFUL, self-normalized confidence, and stopping times</strong></a>
+    <a class="chapter-pager-index" href="../../learning/index.html"><span>All chapters</span><strong>6 of 10</strong></a>
+    <a class="chapter-pager-link next" href="../exp3/index.html"><span class="chapter-pager-direction">Next <span aria-hidden="true">→</span></span><strong>7. EXP3 and adversarial concentration</strong></a>
+  </div>
+</nav>
+
+
+<section id="completion-contract">
+  <h2>Maintainer contract</h2>
+  <details class="maintainer-contract"><summary>Open the canonical completion definition and blockers</summary><div>
+    <p>Complete in the stationary canonical textbook scope when a probability prior and likelihood construct the posterior kernel, a measurable selector with the explicit pointwise IsOptimalMeanSelector contract gives posterior best-action pushforward and actual-recursive-trajectory probability matching, score transport yields Bayesian and clipped-UCB decompositions, a stationary Markov reward kernel constructs the augmented latent arm stream with a.e. generated-reward support, upper/lower confidence consumers compile, and the generated trajectory satisfies E[R_n^Bayes] &lt;= (2K+1)(u-l)+8 sqrt(sigma^2 K n log n) under the exact optimality, measurable bounded-mean, and centered sub-Gaussian assumptions.</p>
+    <h3>Remaining blockers</h3>
+    <ul><li>No remaining blocker inside this stationary canonical scope: the public canary types probability matching on the actual recursive history and concretely instantiates the final theorem with a one-arm stationary Gaussian Markov source while explicitly proving its mean-optimal selector contract. The items below remain separate extensions.</li></ul>
+  </div></details>
+</section>
+
+
+<section id="milestones">
+  <h2>Chapter implementation status</h2>
+  <p class="section-intro">The compact summary keeps the reading route visible. Open it for source-linked declarations and exact remaining gaps.</p>
+  <details class="chapter-ledger-disclosure"><summary><span>Open 7 implementation records</span><span>6 compiled · 1 partial · 0 blocked · 0 planned</span></summary><div class="table-wrap chapter-milestone-table" tabindex="0" role="region" aria-label="Chapter implementation milestones"><table><thead><tr><th>Milestone</th><th>Status</th><th>Lean declaration</th><th>Remaining gap</th></tr></thead><tbody><tr><td data-label="Milestone">Posterior kernel equals the conditional environment law</td><td data-label="Status"><span class="status compiled">Compiled</span></td><td data-label="Lean evidence"><div class="chapter-milestone-declarations"><a href="../../modules/banditrlproof-posteriorkernel/index.html#decl-104ff246858b"><code>BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq</code></a></div></td><td data-label="Remaining gap">—</td></tr><tr><td data-label="Milestone">Canonical one-step probability matching</td><td data-label="Status"><span class="status compiled">Compiled</span></td><td data-label="Lean evidence"><div class="chapter-milestone-declarations"><a href="../../modules/banditrlproof-algorithms-thompsoncanonicalsampler/index.html#decl-946d27e10ae5"><code>BanditRLProof.Thompson.canonicalSampler_condDistrib_action_ae_eq_bestAction</code></a></div></td><td data-label="Remaining gap">—</td></tr><tr><td data-label="Milestone">Probability matching on the actual recursive trajectory</td><td data-label="Status"><span class="status compiled">Compiled</span></td><td data-label="Lean evidence"><div class="chapter-milestone-declarations"><a href="../../modules/banditrlproof-algorithms-thompsonrecursivesampler/index.html#decl-103dd0175542"><code>BanditRLProof.Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction</code></a></div></td><td data-label="Remaining gap">—</td></tr><tr><td data-label="Milestone">Bayesian regret and clipped-UCB decomposition</td><td data-label="Status"><span class="status compiled">Compiled</span></td><td data-label="Lean evidence"><div class="chapter-milestone-declarations"><a href="../../modules/banditrlproof-algorithms-thompsonbayesregretdecomposition/index.html#decl-d3efce1c2be8"><code>BanditRLProof.Thompson.integral_trajectoryBayesMeanRegret_eq_add_historyScore</code></a><a href="../../modules/banditrlproof-algorithms-thompsonclippeducbscore/index.html#decl-cdc4f419f1bd"><code>BanditRLProof.Thompson.integral_trajectoryBayesMeanRegret_eq_add_clippedUCB</code></a></div></td><td data-label="Remaining gap">—</td></tr><tr><td data-label="Milestone">Generated rewards align with the stationary latent arm stream</td><td data-label="Status"><span class="status compiled">Compiled</span></td><td data-label="Lean evidence"><div class="chapter-milestone-declarations"><a href="../../modules/banditrlproof-algorithms-thompsonstationaryreward/index.html#decl-031ca318d6e0"><code>BanditRLProof.Thompson.canonicalLatentArmStreamTrajectory_reward_eq_rewardFromArmStream_ae</code></a></div></td><td data-label="Remaining gap">—</td></tr><tr><td data-label="Milestone">Stationary latent-arm-stream Thompson regret</td><td data-label="Status"><span class="status compiled">Compiled</span></td><td data-label="Lean evidence"><div class="chapter-milestone-declarations"><a href="../../modules/banditrlproof-algorithms-thompsonbayesregretdecomposition/index.html#decl-0681eefab214"><code>BanditRLProof.Thompson.IsOptimalMeanSelector</code></a><a href="../../modules/banditrlproof-algorithms-thompsonstationaryreward/index.html#decl-04335aae6150"><code>BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le</code></a></div></td><td data-label="Remaining gap">—</td></tr><tr><td data-label="Milestone">General Thompson/LML Bayesian port</td><td data-label="Status"><span class="status partial">Partial</span></td><td data-label="Lean evidence"><div class="chapter-milestone-declarations"><a href="../../modules/banditrlproof-algorithms-thompsonstationaryreward/index.html#decl-04335aae6150"><code>BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le</code></a></div></td><td data-label="Remaining gap">Add posterior-law producers for broader models.<br>Close the exact upstream compatibility gate.</td></tr></tbody></table></div></details>
+</section>
+
+<section id="open-gaps">
+  <h2>Open boundaries</h2>
+  <ul><li>Arbitrary nonstationary posterior models, contextual or linear Thompson sampling, posterior-sampling RL, and user-supplied posteriors without a law producer remain extensions.</li><li>Sharp problem-dependent or asymptotically optimal constants are not claimed by the compiled stationary terminal.</li><li>Exact LeanMachineLearning declaration/toolchain identity remains independently blocked; LML cards are retrieval evidence, not imported proof terms.</li></ul>
+</section>
+
+<section id="module-list">
+  <h2>All Lean modules in this chapter</h2>
+  <details class="inventory-disclosure"><summary>Open the complete module list (11 modules)</summary><div class="table-wrap" tabindex="0" role="region" aria-label="Lean modules in this chapter"><table><thead><tr><th>Module</th><th>Declarations</th><th>Project imports</th><th>Status</th></tr></thead><tbody><tr><td><a href="../../modules/banditrlproof-algorithms-thompson/index.html"><code>BanditRLProof.Algorithms.Thompson</code></a></td><td>14</td><td>2</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-algorithms-thompsonalgorithmdensity/index.html"><code>BanditRLProof.Algorithms.ThompsonAlgorithmDensity</code></a></td><td>11</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-algorithms-thompsonalgorithmdensityprocess/index.html"><code>BanditRLProof.Algorithms.ThompsonAlgorithmDensityProcess</code></a></td><td>31</td><td>2</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-algorithms-thompsonbayesregretdecomposition/index.html"><code>BanditRLProof.Algorithms.ThompsonBayesRegretDecomposition</code></a></td><td>16</td><td>2</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-algorithms-thompsoncanonicalsampler/index.html"><code>BanditRLProof.Algorithms.ThompsonCanonicalSampler</code></a></td><td>14</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-algorithms-thompsoncanonicaltrajectory/index.html"><code>BanditRLProof.Algorithms.ThompsonCanonicalTrajectory</code></a></td><td>31</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-algorithms-thompsonclippeducbscore/index.html"><code>BanditRLProof.Algorithms.ThompsonClippedUCBScore</code></a></td><td>20</td><td>3</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-algorithms-thompsonmeasurabletrajectory/index.html"><code>BanditRLProof.Algorithms.ThompsonMeasurableTrajectory</code></a></td><td>31</td><td>2</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-algorithms-thompsonrecursivesampler/index.html"><code>BanditRLProof.Algorithms.ThompsonRecursiveSampler</code></a></td><td>15</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-algorithms-thompsonreferencepolicy/index.html"><code>BanditRLProof.Algorithms.ThompsonReferencePolicy</code></a></td><td>17</td><td>2</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-algorithms-thompsonstationaryreward/index.html"><code>BanditRLProof.Algorithms.ThompsonStationaryReward</code></a></td><td>97</td><td>2</td><td><span class="status compiled">Compiled</span></td></tr></tbody></table></div></details>
+</section>
+
+
+<nav class="chapter-pager chapter-pager-secondary" id="continue-reading-again" aria-label="Chapter navigation at end">
+  <div class="chapter-pager-heading"><span class="eyebrow">Next stop</span><strong>BanditRLlib Book Map</strong></div>
+  <div class="chapter-pager-links">
+    <a class="chapter-pager-link previous" href="../oful/index.html"><span class="chapter-pager-direction"><span aria-hidden="true">←</span> Previous</span><strong>5. OFUL, self-normalized confidence, and stopping times</strong></a>
+    <a class="chapter-pager-index" href="../../learning/index.html"><span>All chapters</span><strong>6 of 10</strong></a>
+    <a class="chapter-pager-link next" href="../exp3/index.html"><span class="chapter-pager-direction">Next <span aria-hidden="true">→</span></span><strong>7. EXP3 and adversarial concentration</strong></a>
+  </div>
+</nav>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Chapter</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#chapter">Chapter</a><a data-toc-link href="#orientation">Orientation</a><a data-toc-link href="#source-guide">Sources</a><a data-toc-link href="#notation">Notation</a><a data-toc-link href="#algorithm">Algorithm flow</a><a data-toc-link href="#worked-example">Worked example</a><a data-toc-link href="#proof-bridge">Why the proof works</a><a data-toc-link href="#teaching-notes">Lean teaching notes</a><a data-toc-link href="#completion-contract">Maintainer contract</a><a data-toc-link href="#milestones">Status</a><a data-toc-link href="#open-gaps">Open boundaries</a><a data-toc-link href="#module-list">Modules</a><a data-toc-link href="#continue-reading">Continue reading</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

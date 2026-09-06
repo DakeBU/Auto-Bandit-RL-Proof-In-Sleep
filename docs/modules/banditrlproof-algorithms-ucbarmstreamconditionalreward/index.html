@@ -1,0 +1,847 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.UCBArmStreamConditionalReward · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.UCBArmStreamConditionalReward · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.UCBArmStreamConditionalReward · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · UCB</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>UCB<wbr>Arm<wbr>Stream<wbr>Conditional<wbr>Reward</h1>
+  <p class="lede">This module isolates the product-measure part of the selected-reward route. Every (pull index, arm) coordinate is independent of the function containing all other coordinates, so its conditional distribution given that complement is the prescribed stationary arm law.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html"><code>BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/ucb/index.html">4. UCB: confidence events to regret</a></dd></div>
+    <div><dt>Declarations</dt><dd>46</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-algorithms-ucbrealstationaryexplicitpolicy/index.html"><code>BanditRLProof.Algorithms.UCBRealStationaryExplicitPolicy</code></a>, <a href="../banditrlproof-algorithms-ucbarmstreamtail/index.html"><code>BanditRLProof.Algorithms.UCBArmStreamTail</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-mossunusedcoordinate/index.html"><code>BanditRLProof.Algorithms.MOSSUnusedCoordinate</code></a>, <a href="../banditrlproof-algorithms-stochasticgradientbandittheoremtwolatentreward/index.html"><code>BanditRLProof.Algorithms.StochasticGradientBanditTheoremTwoLatentReward</code></a>, <a href="../banditrlproof-algorithms-ucbrealstationaryselectedrewardconsistency/index.html"><code>BanditRLProof.Algorithms.UCBRealStationarySelectedRewardConsistency</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-dae33d6732c5">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.armStreamCoordinate</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A flattened pull-index/arm coordinate of a latent arm-reward stream.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> armStreamCoordinate {K : Nat} (index : Nat × Fin K) : ArmRewardStream K -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L21">Source line 21</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6a1124d788f9">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.armStreamWithoutCoordinate</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The latent arm stream with one specified coordinate omitted.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> armStreamWithoutCoordinate {K : Nat} (target : Nat × Fin K) : ArmRewardStream K -&gt; ({index : Nat × Fin K // index ≠ target} -&gt; Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L26">Source line 26</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-65d9ac196028">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.armStreamInsertCoordinate</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Reconstruct a latent arm stream after supplying one omitted coordinate.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> armStreamInsertCoordinate {K : Nat} (target : Nat × Fin K) (value : Real) : ({index : Nat × Fin K // index ≠ target} -&gt; Real) -&gt; ArmRewardStream K</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L31">Source line 31</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-35e447331cc8">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.armStreamHistoryAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The history/action condition used by the successor reward kernel.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> armStreamHistoryAction {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (n : Nat) : ArmRewardStream K -&gt; History.FinitePairHistory (Fin K) Real n × Fin K</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L38">Source line 38</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-173a48f34876">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.armStreamNextCoordinate</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The next unused pull-index/arm coordinate selected after history `n`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> armStreamNextCoordinate {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (n : Nat) : ArmRewardStream K -&gt; Nat × Fin K</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L47">Source line 47</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5b028b76f3c8">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.armStreamCoordinateOfHistoryAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The pull-index/arm coordinate encoded by a successor history/action condition.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> armStreamCoordinateOfHistoryAction {K : Nat} (n : Nat) : History.FinitePairHistory (Fin K) Real n × Fin K -&gt; Nat × Fin K</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L55">Source line 55</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9ce3929a4565">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.armStreamHistoryActionCoordinateBranch</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Conditions that encode one fixed next pull-index/arm coordinate.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> armStreamHistoryActionCoordinateBranch {K : Nat} (n : Nat) (target : Nat × Fin K) : Set (History.FinitePairHistory (Fin K) Real n × Fin K)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L62">Source line 62</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3ed0cd2afb53">
+  <summary>
+    <span class="kind">abbrev</span>
+    <code>BanditRLProof.UCB.armStreamSelectedRewardKernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The stationary reward kernel selected by the arm component of a condition.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">abbrev</span> armStreamSelectedRewardKernel {K : Nat} (n : Nat) (nu : Kernel (Fin K) Real) : Kernel (History.FinitePairHistory (Fin K) Real n × Fin K) Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L68">Source line 68</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8d4f7abe902e">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.armStreamNextCoordinateBranch</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Latent streams for which one fixed pull-index/arm coordinate is selected next.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> armStreamNextCoordinateBranch {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (n : Nat) (target : Nat × Fin K) : Set (ArmRewardStream K)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L74">Source line 74</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b87872b30e4e">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.armStreamHistoryActionFromWithout</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Reconstructed successor condition using only a fixed coordinate&#x27;s complement.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> armStreamHistoryActionFromWithout {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (n : Nat) (target : Nat × Fin K) (value : Real) : ({index : Nat × Fin K // index ≠ target} -&gt; Real) -&gt; History.FinitePairHistory (Fin K) Real n × Fin K</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L80">Source line 80</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-41cc0a0dad18">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measurable_armStreamCoordinate</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_armStreamCoordinate {K : Nat} (index : Nat × Fin K) : Measurable (armStreamCoordinate index)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L87">Source line 87</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3dc518ca0235">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measurable_armStreamWithoutCoordinate</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_armStreamWithoutCoordinate {K : Nat} (target : Nat × Fin K) : Measurable (armStreamWithoutCoordinate target)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L92">Source line 92</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c449766a4bc2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measurable_armStreamInsertCoordinate</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_armStreamInsertCoordinate {K : Nat} (target : Nat × Fin K) (value : Real) : Measurable (armStreamInsertCoordinate target value)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L98">Source line 98</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fa6b50b55f6f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.armStreamWithoutCoordinate_insertCoordinate</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> armStreamWithoutCoordinate_insertCoordinate {K : Nat} (target : Nat × Fin K) (value : Real) (rest : {index : Nat × Fin K // index ≠ target} -&gt; Real) : armStreamWithoutCoordinate target (armStreamInsertCoordinate target value rest) = rest</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L113">Source line 113</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b94f829bb6bc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measurable_armStreamHistoryAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_armStreamHistoryAction {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (n : Nat) : Measurable (armStreamHistoryAction hK c n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L122">Source line 122</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c56350eced97">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measurable_armStreamNextCoordinate</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_armStreamNextCoordinate {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (n : Nat) : Measurable (armStreamNextCoordinate hK c n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L129">Source line 129</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-53a9bee4569f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measurable_armStreamCoordinateOfHistoryAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_armStreamCoordinateOfHistoryAction {K : Nat} (n : Nat) : Measurable (armStreamCoordinateOfHistoryAction (K := K) n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L142">Source line 142</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6d46ed34a7dd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measurableSet_armStreamHistoryActionCoordinateBranch</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_armStreamHistoryActionCoordinateBranch {K : Nat} (n : Nat) (target : Nat × Fin K) : MeasurableSet (armStreamHistoryActionCoordinateBranch n target)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L154">Source line 154</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-495e58cdece5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measurableSet_armStreamNextCoordinateBranch</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_armStreamNextCoordinateBranch {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (n : Nat) (target : Nat × Fin K) : MeasurableSet (armStreamNextCoordinateBranch hK c n target)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L160">Source line 160</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f085debf52db">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.armStreamNextCoordinate_eq_coordinateOfHistoryAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> armStreamNextCoordinate_eq_coordinateOfHistoryAction {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (n : Nat) (stream : ArmRewardStream K) : armStreamNextCoordinate hK c n stream = armStreamCoordinateOfHistoryAction n (armStreamHistoryAction hK c n stream)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L167">Source line 167</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-43c20d212bd2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.pairwise_disjoint_armStreamHistoryActionCoordinateBranch</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pairwise_disjoint_armStreamHistoryActionCoordinateBranch {K : Nat} (n : Nat) : Pairwise (Function.onFun (<span class="kw">fun</span> s t : Set (History.FinitePairHistory (Fin K) Real n × Fin K) =&gt; Disjoint s t) (<span class="kw">fun</span> target : Nat × Fin K =&gt; armStreamHistoryActionCoordinateBranch n target))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L175">Source line 175</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-43a29c40628c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.pairwise_disjoint_armStreamNextCoordinateBranch</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pairwise_disjoint_armStreamNextCoordinateBranch {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (n : Nat) : Pairwise (Function.onFun (<span class="kw">fun</span> s t : Set (ArmRewardStream K) =&gt; Disjoint s t) (<span class="kw">fun</span> target : Nat × Fin K =&gt; armStreamNextCoordinateBranch hK c n target))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L191">Source line 191</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0e3363a1f7d5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.iUnion_armStreamHistoryActionCoordinateBranch</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iUnion_armStreamHistoryActionCoordinateBranch {K : Nat} (n : Nat) : (⋃ target : Nat × Fin K, armStreamHistoryActionCoordinateBranch n target) = Set.univ</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L206">Source line 206</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-22d8da96eaf2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.iUnion_armStreamNextCoordinateBranch</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iUnion_armStreamNextCoordinateBranch {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (n : Nat) : (⋃ target : Nat × Fin K, armStreamNextCoordinateBranch hK c n target) = Set.univ</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L213">Source line 213</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3f5af2b2c7cf">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measure_eq_sum_restrict_armStreamHistoryActionCoordinateBranch</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_eq_sum_restrict_armStreamHistoryActionCoordinateBranch {K : Nat} (n : Nat) (mu : Measure (History.FinitePairHistory (Fin K) Real n × Fin K)) : mu = Measure.sum <span class="kw">fun</span> target : Nat × Fin K =&gt; mu.restrict (armStreamHistoryActionCoordinateBranch n target)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L220">Source line 220</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c05878669260">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.armStreamMeasure_eq_sum_restrict_nextCoordinateBranch</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> armStreamMeasure_eq_sum_restrict_nextCoordinateBranch {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (n : Nat) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] : armStreamMeasure nu = Measure.sum <span class="kw">fun</span> target : Nat × Fin K =&gt; (armStreamMeasure nu).restrict (armStreamNextCoordinateBranch hK c n target)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L232">Source line 232</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-04ea7251325e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measurable_armStreamHistoryActionFromWithout</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_armStreamHistoryActionFromWithout {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (n : Nat) (target : Nat × Fin K) (value : Real) : Measurable (armStreamHistoryActionFromWithout hK c n target value)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L244">Source line 244</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c23030a228e9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.armStreamNextCoordinate_fst_eq_pullCount</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The first component of the next coordinate is the selected arm&#x27;s current count.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> armStreamNextCoordinate_fst_eq_pullCount {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (stream : ArmRewardStream K) (n : Nat) : (armStreamNextCoordinate hK c n stream).<span class="num">1</span> = pullCount (armStreamAction hK c stream) (armStreamNextCoordinate hK c n stream).<span class="num">2</span> (n + <span class="num">1</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L252">Source line 252</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e9528e7cf96e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.armStreamReward_succ_eq_nextCoordinate</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The successor reward reads exactly the next coordinate selected after history `n`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> armStreamReward_succ_eq_nextCoordinate {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (stream : ArmRewardStream K) (n : Nat) : armStreamReward hK c stream (n + <span class="num">1</span>) = armStreamCoordinate (armStreamNextCoordinate hK c n stream) stream</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L263">Source line 263</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1c9a48cb49fa">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.armStreamHistory_eq_of_eq_below_pullCount</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The recursive history through `n` only reads coordinates whose pull index is
+strictly below the corresponding arm count at time `n + 1`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> armStreamHistory_eq_of_eq_below_pullCount {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (stream stream&#x27; : ArmRewardStream K) (n : Nat) (hagrees : ∀ arm index, index &lt; pullCount (armStreamAction hK c stream) arm (n + <span class="num">1</span>) → stream index arm = stream&#x27; index arm) : armStreamHistory hK c stream n = armStreamHistory hK c stream&#x27; n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L279">Source line 279</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-173c939a087f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.armStreamHistory_eq_of_withoutCoordinate_eq_of_pullCount_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Changing one not-yet-consumed coordinate cannot alter the history already
+generated from the latent stream.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> armStreamHistory_eq_of_withoutCoordinate_eq_of_pullCount_le {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (target : Nat × Fin K) (stream stream&#x27; : ArmRewardStream K) (n : Nat) (hwithout : armStreamWithoutCoordinate target stream = armStreamWithoutCoordinate target stream&#x27;) (hfuture : pullCount (armStreamAction hK c stream) target.<span class="num">2</span> (n + <span class="num">1</span>) ≤ target.<span class="num">1</span>) : armStreamHistory hK c stream n = armStreamHistory hK c stream&#x27; n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L328">Source line 328</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-eb6cdcb82935">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.armStreamNextCoordinate_eq_iff_insertCoordinate</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The event that a fixed coordinate is selected next factors through the stream
+with that coordinate omitted.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> armStreamNextCoordinate_eq_iff_insertCoordinate {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (n : Nat) (target : Nat × Fin K) (value : Real) (stream : ArmRewardStream K) : armStreamNextCoordinate hK c n stream = target ↔ armStreamNextCoordinate hK c n (armStreamInsertCoordinate target value (armStreamWithoutCoordinate target stream)) = target</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L350">Source line 350</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-04977b855e20">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.armStreamHistoryAction_eq_fromWithout_of_nextCoordinate_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">On the branch selecting `target`, the actual successor condition equals its
+reconstruction from all coordinates except `target`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> armStreamHistoryAction_eq_fromWithout_of_nextCoordinate_eq {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (n : Nat) (target : Nat × Fin K) (value : Real) (stream : ArmRewardStream K) (hnext : armStreamNextCoordinate hK c n stream = target) : armStreamHistoryAction hK c n stream = armStreamHistoryActionFromWithout hK c n target value (armStreamWithoutCoordinate target stream)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L384">Source line 384</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-83a0f33b41a5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.iIndepFun_armStreamMeasure_coordinate</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">All pull-index/arm coordinates are mutually independent.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iIndepFun_armStreamMeasure_coordinate {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] : iIndepFun (<span class="kw">fun</span> index : Nat × Fin K =&gt; armStreamCoordinate index) (armStreamMeasure nu)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L405">Source line 405</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-56c3eca87794">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.indepFun_armStreamMeasure_coordinate_without</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A fixed coordinate is independent of the collection of all other coordinates.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> indepFun_armStreamMeasure_coordinate_without {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (target : Nat × Fin K) : IndepFun (armStreamCoordinate target) (armStreamWithoutCoordinate target) (armStreamMeasure nu)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L417">Source line 417</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b2e5843fd07f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.indepFun_armStreamMeasure_coordinate_historyActionFromWithout</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A fixed reward coordinate is independent of the reconstructed successor condition.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> indepFun_armStreamMeasure_coordinate_historyActionFromWithout {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (n : Nat) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (target : Nat × Fin K) (value : Real) : IndepFun (armStreamCoordinate target) (<span class="kw">fun</span> stream : ArmRewardStream K =&gt; armStreamHistoryActionFromWithout hK c n target value (armStreamWithoutCoordinate target stream)) (armStreamMeasure nu)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L459">Source line 459</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3e3016df354f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.armStreamMeasure_map_historyActionFromWithout_coordinate_eq_prod</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The reconstructed successor condition and a fixed omitted coordinate have a
+product joint law, with the prescribed arm marginal on the reward coordinate.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> armStreamMeasure_map_historyActionFromWithout_coordinate_eq_prod {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (n : Nat) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (target : Nat × Fin K) (value : Real) : Measure.map (<span class="kw">fun</span> stream : ArmRewardStream K =&gt; (armStreamHistoryActionFromWithout hK c n target value (armStreamWithoutCoordinate target stream), armStreamCoordinate target stream)) (armStreamMeasure nu) = (Measure.map (<span class="kw">fun</span> stream : ArmRewardStream K =&gt; armStreamHistoryActionFromWithout hK c n target value (armStreamWithoutCoordinate target stream)) (armStreamMeasure nu)).prod (nu target.<span class="num">2</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L478">Source line 478</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a4933a943610">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.armStreamHistoryActionFromWithout_mem_coordinateBranch_iff</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The reconstructed condition is in `target`&#x27;s branch exactly on the actual branch.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> armStreamHistoryActionFromWithout_mem_coordinateBranch_iff {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (n : Nat) (target : Nat × Fin K) (value : Real) (stream : ArmRewardStream K) : armStreamHistoryActionFromWithout hK c n target value (armStreamWithoutCoordinate target stream) ∈ armStreamHistoryActionCoordinateBranch n target ↔ stream ∈ armStreamNextCoordinateBranch hK c n target</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L511">Source line 511</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1b5b7b82c81b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.map_historyActionFromWithout_restrict_coordinateBranch_eq_historyAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Both actual and reconstructed condition maps induce the same branch restriction.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> map_historyActionFromWithout_restrict_coordinateBranch_eq_historyAction {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (n : Nat) (target : Nat × Fin K) (value : Real) (mu : Measure (ArmRewardStream K)) : (Measure.map (<span class="kw">fun</span> stream : ArmRewardStream K =&gt; armStreamHistoryActionFromWithout hK c n target value (armStreamWithoutCoordinate target stream)) mu).restrict (armStreamHistoryActionCoordinateBranch n target) = (Measure.map (armStreamHistoryAction hK c n) mu).restrict (armStreamHistoryActionCoordinateBranch n target)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L528">Source line 528</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d8ad617a69a8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.armStreamMeasure_map_historyAction_reward_restrict_branch_eq_prod</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">On one fixed next-coordinate branch, the actual successor condition/reward pair
+has the restricted condition marginal times the prescribed arm law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> armStreamMeasure_map_historyAction_reward_restrict_branch_eq_prod {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (n : Nat) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (target : Nat × Fin K) (value : Real) : Measure.map (<span class="kw">fun</span> stream : ArmRewardStream K =&gt; (armStreamHistoryAction hK c n stream, armStreamReward hK c stream (n + <span class="num">1</span>))) ((armStreamMeasure nu).restrict (armStreamNextCoordinateBranch hK c n target)) = ((Measure.map (armStreamHistoryAction hK c n) (armStreamMeasure nu)).restrict (armStreamHistoryActionCoordinateBranch n target)).prod (nu target.<span class="num">2</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L577">Source line 577</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d16fcbeca916">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.armStreamMeasure_map_historyAction_reward_succ_eq_compProd</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The full successor condition/reward joint law is the condition marginal followed
+by the stationary law of the arm selected in that condition.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> armStreamMeasure_map_historyAction_reward_succ_eq_compProd {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (n : Nat) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] : Measure.map (<span class="kw">fun</span> stream : ArmRewardStream K =&gt; (armStreamHistoryAction hK c n stream, armStreamReward hK c stream (n + <span class="num">1</span>))) (armStreamMeasure nu) = Measure.compProd (Measure.map (armStreamHistoryAction hK c n) (armStreamMeasure nu)) (armStreamSelectedRewardKernel n nu)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L657">Source line 657</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a21f8fa2a131">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.armStreamReward_succ_condDistrib_ae_eq_nu</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The successor arm-stream reward conditional law is the selected arm law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> armStreamReward_succ_condDistrib_ae_eq_nu {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) (n : Nat) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] : Filter.EventuallyEq (ae ((armStreamMeasure nu).map (armStreamHistoryAction hK c n))) (condDistrib (<span class="kw">fun</span> stream : ArmRewardStream K =&gt; armStreamReward hK c stream (n + <span class="num">1</span>)) (armStreamHistoryAction hK c n) (armStreamMeasure nu)) (armStreamSelectedRewardKernel n nu)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L756">Source line 756</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-269876c40a07">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.canonicalArmStreamHistoryEnvironment_feedback_ae_eq_nu</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The packaged canonical successor-feedback kernel is the stationary selected law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> canonicalArmStreamHistoryEnvironment_feedback_ae_eq_nu {K : Nat} [NeZero K] (hK : <span class="num">0</span> &lt; K) (c : Real) (sigma2 : NNReal) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) : Filter.EventuallyEq (ae ((armStreamMeasure nu).map (armStreamHistoryAction hK (c * (sigma2 : Real)) n))) ((canonicalArmStreamHistoryEnvironment hK c sigma2 nu).feedback n) (armStreamSelectedRewardKernel n nu)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L777">Source line 777</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7d5b7c0bb98d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.armStreamMeasure_condDistrib_coordinate_given_without</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Given every other latent coordinate, a fixed coordinate still has its
+prescribed stationary arm law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> armStreamMeasure_condDistrib_coordinate_given_without {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (target : Nat × Fin K) : Filter.EventuallyEq (ae ((armStreamMeasure nu).map (armStreamWithoutCoordinate target))) (condDistrib (armStreamCoordinate target) (armStreamWithoutCoordinate target) (armStreamMeasure nu)) (Kernel.const _ (nu target.<span class="num">2</span>))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L805">Source line 805</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b91fe11b2a54">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.armStreamReward_zero_condDistrib_ae_eq_nu</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The initial arm-stream reward conditional law is the selected arm law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> armStreamReward_zero_condDistrib_ae_eq_nu {K : Nat} [NeZero K] (hK : <span class="num">0</span> &lt; K) (c : Real) (sigma2 : NNReal) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] : Filter.EventuallyEq (ae ((armStreamMeasure nu).map (<span class="kw">fun</span> stream : ArmRewardStream K =&gt; armStreamAction hK (c * (sigma2 : Real)) stream <span class="num">0</span>))) (condDistrib (<span class="kw">fun</span> stream : ArmRewardStream K =&gt; armStreamReward hK (c * (sigma2 : Real)) stream <span class="num">0</span>) (<span class="kw">fun</span> stream : ArmRewardStream K =&gt; armStreamAction hK (c * (sigma2 : Real)) stream <span class="num">0</span>) (armStreamMeasure nu)) nu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L830">Source line 830</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-36621135302d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.canonicalArmStreamHistoryEnvironment_initialFeedback_ae_eq_nu</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The packaged canonical initial-feedback kernel is the stationary selected law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> canonicalArmStreamHistoryEnvironment_initialFeedback_ae_eq_nu {K : Nat} [NeZero K] (hK : <span class="num">0</span> &lt; K) (c : Real) (sigma2 : NNReal) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] : Filter.EventuallyEq (ae ((canonicalArmStreamHistoryAlgorithm hK c sigma2 nu).initialAction)) (canonicalArmStreamHistoryEnvironment hK c sigma2 nu).initialFeedback nu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamConditionalReward.lean.html#L882">Source line 882</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

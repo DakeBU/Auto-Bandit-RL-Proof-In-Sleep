@@ -1,0 +1,814 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonNaturalCausalRealizedBehaviorRegretHighProbabilityBurninLogRate.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonNaturalCausalRealizedBehaviorRegretHighProbabilityBurninLogRate.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonNaturalCausalRealizedBehaviorRegretHighProbabilityBurninLogRate.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonNaturalCausalRealizedBehaviorRegretHighProbabilityBurninLogRate.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonNaturalCausalRealizedBehaviorRegretHighProbabilityLogRate</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Burn-in tail high-probability natural causal realized behavior regret</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module repairs the nonvanishing finite-prefix model budget in the</span>
+<span id="L7">7 fixed-prefix logarithmic realized-regret route.  Model failures before a</span>
+<span id="L8">8 deterministic `burnin` are paid for by the uniform `2 * horizon` behavior</span>
+<span id="L9">9 regret bound.  Only the infinite model tail from `burnin` onward enters the</span>
+<span id="L10">10 probability event.  The return component remains the fixed-prefix sum of</span>
+<span id="L11">11 successor-batch-average deviations, with each batch divided by its own</span>
+<span id="L12">12 positive scheduled episode count.</span>
+<span id="L13">13 </span>
+<span id="L14">14 The resulting event has exact budget</span>
+<span id="L15">15 `tailModelFailureBudget burnin + ENNReal.ofReal returnDelta`.  No</span>
+<span id="L16">16 independence between the model and return events is used.  This is a</span>
+<span id="L17">17 fixed-`burnin`, fixed-`rounds` theorem.  An all-prefix consumer must still</span>
+<span id="L18">18 choose a sublinear growing burn-in and a vanishing return share.</span>
+<span id="L19">19 -/</span>
+<span id="L20">20 </span>
+<span id="L21">21 open MeasureTheory ProbabilityTheory</span>
+<span id="L22">22 open scoped BigOperators ENNReal NNReal</span>
+<span id="L23">23 </span>
+<span id="L24">24 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L25">25 </span>
+<span id="L26">26 universe u v</span>
+<span id="L27">27 </span>
+<span id="L28">28 variable {State : Type u} {Action : Type v}</span>
+<span id="L29">29     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L30">30     [Fintype State] [Fintype Action]</span>
+<span id="L31">31     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L32">32     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L33">33     [Nonempty State] [Nonempty Action]</span>
+<span id="L34">34 </span>
+<span id="L35">35 namespace AdaptiveStochasticSampledEmpiricalOptimisticSource</span>
+<span id="L36">36 </span>
+<span id="L37">37 /-- Uniform burn-in charge plus the compiled full logarithmic planning sum. -/</span>
+<span id="L38">38 noncomputable def</span>
+<span id="L39">39     selfConsistentScheduledNaturalCausalBurninCumulativeBehaviorExpectedRegretLogarithmicRate</span>
+<span id="L40">40     (mdp : MDP State Action) (burnin rounds : Nat) : Real :=</span>
+<span id="L41">41   2 * (mdp.horizon : Real) * (burnin : Real) +</span>
+<span id="L42">42     selfConsistentScheduledNaturalCausalLogarithmicCumulativeIntegratedBehaviorExpectedRegretRate</span>
+<span id="L43">43       mdp rounds</span>
+<span id="L44">44 </span>
+<span id="L45">45 /--</span>
+<span id="L46">46 Outside the infinite model tail, only the first `burnin` natural rounds need</span>
+<span id="L47">47 the uniform `2 * horizon` charge.  Every later round uses its actual</span>
+<span id="L48">48 coordinate model certificate.</span>
+<span id="L49">49 -/</span>
+<span id="L50">50 theorem</span>
+<span id="L51">51     selfConsistentScheduledNaturalCausalCumulativeBehaviorExpectedRegretProcess_le_burnin_logarithmic_of_not_mem_tailModelBadEvent</span>
+<span id="L52">52     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L53">53     [IsProbabilityMeasure initialState]</span>
+<span id="L54">54     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L55">55     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L56">56     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L57">57     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L58">58     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L59">59     (defaultState : State)</span>
+<span id="L60">60     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L61">61     (baseVisitFloor : Real)</span>
+<span id="L62">62     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L63">63     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L64">64     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L65">65     (burnin rounds : Nat) (hburnin : burnin &lt;= rounds)</span>
+<span id="L66">66     (trajectory : HeterogeneousStochasticEpisodeBatchTrajectory mdp</span>
+<span id="L67">67       (fun s =&gt;</span>
+<span id="L68">68         AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L69">69           mdp varianceProxy baseVisitFloor s))</span>
+<span id="L70">70     (htrajectory : trajectory ∉</span>
+<span id="L71">71       selfConsistentScheduledCausalTailModelBadEvent mdp initialState</span>
+<span id="L72">72         rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L73">73           burnin) :</span>
+<span id="L74">74     selfConsistentScheduledNaturalCausalCumulativeBehaviorExpectedRegretProcess</span>
+<span id="L75">75         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L76">76           baseVisitFloor rounds trajectory &lt;=</span>
+<span id="L77">77       selfConsistentScheduledNaturalCausalBurninCumulativeBehaviorExpectedRegretLogarithmicRate</span>
+<span id="L78">78         mdp burnin rounds := by</span>
+<span id="L79">79   let expectedAt := fun t =&gt;</span>
+<span id="L80">80     selfConsistentScheduledNaturalCausalSuccessorPolicyExpectedRegretProcess</span>
+<span id="L81">81       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L82">82         baseVisitFloor t trajectory</span>
+<span id="L83">83   let rateAt := fun t =&gt; selfConsistentScheduledCausalPlanningRateAt mdp t</span>
+<span id="L84">84   have hEarly :</span>
+<span id="L85">85       (Finset.range burnin).sum expectedAt &lt;=</span>
+<span id="L86">86         (Finset.range burnin).sum</span>
+<span id="L87">87           (fun _ =&gt; 2 * (mdp.horizon : Real)) := by</span>
+<span id="L88">88     apply Finset.sum_le_sum</span>
+<span id="L89">89     intro t _ht</span>
+<span id="L90">90     simpa [expectedAt] using</span>
+<span id="L91">91       (selfConsistentScheduledNaturalCausalSuccessorPolicyExpectedRegretProcess_le_two_mul_horizon</span>
+<span id="L92">92         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L93">93           baseVisitFloor hrewardBound t trajectory)</span>
+<span id="L94">94   have hTail :</span>
+<span id="L95">95       (Finset.Ico burnin rounds).sum expectedAt &lt;=</span>
+<span id="L96">96         (Finset.Ico burnin rounds).sum rateAt := by</span>
+<span id="L97">97     apply Finset.sum_le_sum</span>
+<span id="L98">98     intro t ht</span>
+<span id="L99">99     have htBounds := Finset.mem_Ico.mp ht</span>
+<span id="L100">100     have hnotRound :=</span>
+<span id="L101">101       not_mem_selfConsistentScheduledCausalModelRoundBadEvent_of_not_mem_tail</span>
+<span id="L102">102         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L103">103           baseVisitFloor burnin t htBounds.1 trajectory htrajectory</span>
+<span id="L104">104     simpa [expectedAt, rateAt,</span>
+<span id="L105">105       selfConsistentScheduledNaturalCausalSuccessorPolicyExpectedRegretProcess]</span>
+<span id="L106">106       using</span>
+<span id="L107">107         (selfConsistentScheduledCausalSource_successorPolicyAt_expectedRegret_le_rateAt_of_not_mem_modelRoundBadEvent</span>
+<span id="L108">108           mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L109">109             initialTable defaultState support baseVisitFloor hbaseFloor</span>
+<span id="L110">110               hrewardBound hhorizon hbaseVisitFloor trajectory t hnotRound)</span>
+<span id="L111">111   have hrateNonneg : forall t, 0 &lt;= rateAt t := by</span>
+<span id="L112">112     intro t</span>
+<span id="L113">113     dsimp [rateAt]</span>
+<span id="L114">114     unfold selfConsistentScheduledCausalPlanningRateAt</span>
+<span id="L115">115     rw [AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledTransitionBudgetRateEnvelope_eq]</span>
+<span id="L116">116     unfold exploratoryBehaviorRegretCharge</span>
+<span id="L117">117     positivity</span>
+<span id="L118">118   have htailRateLeFull :</span>
+<span id="L119">119       (Finset.Ico burnin rounds).sum rateAt &lt;=</span>
+<span id="L120">120         (Finset.range rounds).sum rateAt := by</span>
+<span id="L121">121     have hsplit := Finset.sum_range_add_sum_Ico rateAt hburnin</span>
+<span id="L122">122     have hearlyNonneg : 0 &lt;= (Finset.range burnin).sum rateAt :=</span>
+<span id="L123">123       Finset.sum_nonneg fun t _ =&gt; hrateNonneg t</span>
+<span id="L124">124     calc</span>
+<span id="L125">125       (Finset.Ico burnin rounds).sum rateAt &lt;=</span>
+<span id="L126">126           (Finset.range burnin).sum rateAt +</span>
+<span id="L127">127             (Finset.Ico burnin rounds).sum rateAt :=</span>
+<span id="L128">128         le_add_of_nonneg_left hearlyNonneg</span>
+<span id="L129">129       _ = (Finset.range rounds).sum rateAt := hsplit</span>
+<span id="L130">130   have hsum :</span>
+<span id="L131">131       selfConsistentScheduledNaturalCausalCumulativeBehaviorExpectedRegretProcess</span>
+<span id="L132">132           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L133">133             baseVisitFloor rounds trajectory &lt;=</span>
+<span id="L134">134         2 * (mdp.horizon : Real) * (burnin : Real) +</span>
+<span id="L135">135           selfConsistentScheduledNaturalCausalCumulativePlanningRate</span>
+<span id="L136">136             mdp rounds := by</span>
+<span id="L137">137     rw [show</span>
+<span id="L138">138       selfConsistentScheduledNaturalCausalCumulativeBehaviorExpectedRegretProcess</span>
+<span id="L139">139           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L140">140             baseVisitFloor rounds trajectory =</span>
+<span id="L141">141         (Finset.range rounds).sum expectedAt by</span>
+<span id="L142">142       rfl]</span>
+<span id="L143">143     calc</span>
+<span id="L144">144       (Finset.range rounds).sum expectedAt =</span>
+<span id="L145">145           (Finset.range burnin).sum expectedAt +</span>
+<span id="L146">146             (Finset.Ico burnin rounds).sum expectedAt :=</span>
+<span id="L147">147         (Finset.sum_range_add_sum_Ico expectedAt hburnin).symm</span>
+<span id="L148">148       _ &lt;= (Finset.range burnin).sum</span>
+<span id="L149">149               (fun _ =&gt; 2 * (mdp.horizon : Real)) +</span>
+<span id="L150">150             (Finset.Ico burnin rounds).sum rateAt :=</span>
+<span id="L151">151         add_le_add hEarly hTail</span>
+<span id="L152">152       _ &lt;= (Finset.range burnin).sum</span>
+<span id="L153">153               (fun _ =&gt; 2 * (mdp.horizon : Real)) +</span>
+<span id="L154">154             (Finset.range rounds).sum rateAt :=</span>
+<span id="L155">155         add_le_add (le_refl _) htailRateLeFull</span>
+<span id="L156">156       _ = 2 * (mdp.horizon : Real) * (burnin : Real) +</span>
+<span id="L157">157             selfConsistentScheduledNaturalCausalCumulativePlanningRate</span>
+<span id="L158">158               mdp rounds := by</span>
+<span id="L159">159         simp [rateAt,</span>
+<span id="L160">160           selfConsistentScheduledNaturalCausalCumulativePlanningRate]</span>
+<span id="L161">161         ring</span>
+<span id="L162">162   calc</span>
+<span id="L163">163     selfConsistentScheduledNaturalCausalCumulativeBehaviorExpectedRegretProcess</span>
+<span id="L164">164           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L165">165             baseVisitFloor rounds trajectory &lt;=</span>
+<span id="L166">166         2 * (mdp.horizon : Real) * (burnin : Real) +</span>
+<span id="L167">167           selfConsistentScheduledNaturalCausalCumulativePlanningRate mdp rounds :=</span>
+<span id="L168">168       hsum</span>
+<span id="L169">169     _ &lt;= 2 * (mdp.horizon : Real) * (burnin : Real) +</span>
+<span id="L170">170           selfConsistentScheduledNaturalCausalLogarithmicCumulativeIntegratedBehaviorExpectedRegretRate</span>
+<span id="L171">171             mdp rounds :=</span>
+<span id="L172">172       add_le_add (le_refl _)</span>
+<span id="L173">173         (selfConsistentScheduledNaturalCausalCumulativePlanningRate_le_logarithmic</span>
+<span id="L174">174           mdp rounds)</span>
+<span id="L175">175     _ =</span>
+<span id="L176">176         selfConsistentScheduledNaturalCausalBurninCumulativeBehaviorExpectedRegretLogarithmicRate</span>
+<span id="L177">177           mdp burnin rounds := rfl</span>
+<span id="L178">178 </span>
+<span id="L179">179 /--</span>
+<span id="L180">180 Infinite model tail after `burnin`, union the fixed-prefix normalized return</span>
+<span id="L181">181 deviation event.</span>
+<span id="L182">182 -/</span>
+<span id="L183">183 noncomputable def selfConsistentScheduledNaturalCausalBurninTailModelReturnBadEvent</span>
+<span id="L184">184     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L185">185     [IsProbabilityMeasure initialState]</span>
+<span id="L186">186     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L187">187     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L188">188     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L189">189     (baseVisitFloor : Real) (burnin rounds : Nat) (returnDelta : Real) :</span>
+<span id="L190">190     Set (HeterogeneousStochasticEpisodeBatchTrajectory mdp</span>
+<span id="L191">191       (fun t =&gt;</span>
+<span id="L192">192         AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L193">193           mdp varianceProxy baseVisitFloor t)) :=</span>
+<span id="L194">194   selfConsistentScheduledCausalTailModelBadEvent mdp initialState rewardSource</span>
+<span id="L195">195       initialTable defaultState varianceProxy baseVisitFloor burnin ∪</span>
+<span id="L196">196     selfConsistentScheduledNaturalCausalCumulativeReturnBadEvent mdp</span>
+<span id="L197">197       initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L198">198         baseVisitFloor rounds returnDelta</span>
+<span id="L199">199 </span>
+<span id="L200">200 /-- Exact infinite-tail model share plus caller-supplied return share. -/</span>
+<span id="L201">201 noncomputable def</span>
+<span id="L202">202     selfConsistentScheduledNaturalCausalBurninTailModelReturnFailureBudget</span>
+<span id="L203">203     (mdp : MDP State Action) (burnin : Nat) (returnDelta : Real) : ENNReal :=</span>
+<span id="L204">204   selfConsistentScheduledCausalTailModelFailureBudget mdp burnin +</span>
+<span id="L205">205     ENNReal.ofReal returnDelta</span>
+<span id="L206">206 </span>
+<span id="L207">207 /-- The joint burn-in tail event is measurable and has its exact union budget. -/</span>
+<span id="L208">208 theorem</span>
+<span id="L209">209     selfConsistentScheduledCausalSource_trajectoryMeasure_naturalBurninTailModelReturnBadEvent_le</span>
+<span id="L210">210     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L211">211     [IsProbabilityMeasure initialState]</span>
+<span id="L212">212     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L213">213     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L214">214     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L215">215     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L216">216     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L217">217     (defaultState : State)</span>
+<span id="L218">218     (baseVisitFloor : Real)</span>
+<span id="L219">219     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L220">220     (hhorizon : 0 &lt; mdp.horizon)</span>
+<span id="L221">221     (burnin rounds : Nat) (hrounds : 0 &lt; rounds)</span>
+<span id="L222">222     (returnDelta : Real) (hreturnDelta : 0 &lt; returnDelta)</span>
+<span id="L223">223     (hreturnDelta_le_one : returnDelta &lt;= 1) :</span>
+<span id="L224">224     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L225">225       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L226">226     let event :=</span>
+<span id="L227">227       selfConsistentScheduledNaturalCausalBurninTailModelReturnBadEvent mdp</span>
+<span id="L228">228         initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L229">229           baseVisitFloor burnin rounds returnDelta</span>
+<span id="L230">230     MeasurableSet event ∧</span>
+<span id="L231">231       source.trajectoryMeasure event &lt;=</span>
+<span id="L232">232         selfConsistentScheduledNaturalCausalBurninTailModelReturnFailureBudget</span>
+<span id="L233">233           mdp burnin returnDelta := by</span>
+<span id="L234">234   dsimp only</span>
+<span id="L235">235   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L236">236     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L237">237   let modelEvent := selfConsistentScheduledCausalTailModelBadEvent mdp</span>
+<span id="L238">238     initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L239">239       baseVisitFloor burnin</span>
+<span id="L240">240   let returnEvent :=</span>
+<span id="L241">241     selfConsistentScheduledNaturalCausalCumulativeReturnBadEvent mdp</span>
+<span id="L242">242       initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L243">243         baseVisitFloor rounds returnDelta</span>
+<span id="L244">244   have hmodelMeasurable : MeasurableSet modelEvent := by</span>
+<span id="L245">245     simpa [modelEvent] using</span>
+<span id="L246">246       (measurableSet_selfConsistentScheduledCausalTailModelBadEvent mdp</span>
+<span id="L247">247         initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L248">248           baseVisitFloor burnin)</span>
+<span id="L249">249   have hmodelTail : source.trajectoryMeasure modelEvent &lt;=</span>
+<span id="L250">250       selfConsistentScheduledCausalTailModelFailureBudget mdp burnin := by</span>
+<span id="L251">251     simpa [source, modelEvent] using</span>
+<span id="L252">252       (selfConsistentScheduledCausalSource_trajectoryMeasure_tailModelBadEvent_le</span>
+<span id="L253">253         mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L254">254           initialTable defaultState baseVisitFloor burnin)</span>
+<span id="L255">255   have hreturnMeasurable : MeasurableSet returnEvent := by</span>
+<span id="L256">256     simpa [returnEvent] using</span>
+<span id="L257">257       (measurableSet_selfConsistentScheduledNaturalCausalCumulativeReturnBadEvent</span>
+<span id="L258">258         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L259">259           baseVisitFloor rounds returnDelta)</span>
+<span id="L260">260   have hreturnTail : source.trajectoryMeasure returnEvent &lt;=</span>
+<span id="L261">261       ENNReal.ofReal returnDelta := by</span>
+<span id="L262">262     simpa [source, returnEvent] using</span>
+<span id="L263">263       (selfConsistentScheduledCausalSource_trajectoryMeasure_naturalCumulativeReturnBadEvent_le</span>
+<span id="L264">264         mdp initialState rewardSource varianceProxy law initialTable</span>
+<span id="L265">265           defaultState baseVisitFloor hrewardBound hhorizon rounds hrounds</span>
+<span id="L266">266             returnDelta hreturnDelta hreturnDelta_le_one)</span>
+<span id="L267">267   refine ⟨?_, ?_⟩</span>
+<span id="L268">268   · simpa [selfConsistentScheduledNaturalCausalBurninTailModelReturnBadEvent,</span>
+<span id="L269">269       modelEvent, returnEvent] using hmodelMeasurable.union hreturnMeasurable</span>
+<span id="L270">270   · have hunion :</span>
+<span id="L271">271         source.trajectoryMeasure (modelEvent ∪ returnEvent) &lt;=</span>
+<span id="L272">272           source.trajectoryMeasure modelEvent +</span>
+<span id="L273">273             source.trajectoryMeasure returnEvent :=</span>
+<span id="L274">274       measure_union_le modelEvent returnEvent</span>
+<span id="L275">275     have hsum := add_le_add hmodelTail hreturnTail</span>
+<span id="L276">276     simpa [selfConsistentScheduledNaturalCausalBurninTailModelReturnBadEvent,</span>
+<span id="L277">277       selfConsistentScheduledNaturalCausalBurninTailModelReturnFailureBudget,</span>
+<span id="L278">278       modelEvent, returnEvent, source] using hunion.trans hsum</span>
+<span id="L279">279 </span>
+<span id="L280">280 /-- Burn-in expected-regret envelope plus normalized return radius. -/</span>
+<span id="L281">281 noncomputable def</span>
+<span id="L282">282     selfConsistentScheduledNaturalCausalBurninRealizedCumulativeLogarithmicRate</span>
+<span id="L283">283     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L284">284     (baseVisitFloor : Real) (burnin rounds : Nat)</span>
+<span id="L285">285     (returnDelta : Real) : Real :=</span>
+<span id="L286">286   selfConsistentScheduledNaturalCausalBurninCumulativeBehaviorExpectedRegretLogarithmicRate</span>
+<span id="L287">287       mdp burnin rounds +</span>
+<span id="L288">288     Concentration.subGaussianSumConfidenceRadius</span>
+<span id="L289">289       (selfConsistentScheduledNaturalCausalCumulativeReturnVarianceProxy</span>
+<span id="L290">290         mdp varianceProxy baseVisitFloor rounds) returnDelta</span>
+<span id="L291">291 </span>
+<span id="L292">292 /-- Positive-round average form of the burn-in realized rate. -/</span>
+<span id="L293">293 noncomputable def</span>
+<span id="L294">294     selfConsistentScheduledNaturalCausalBurninRealizedAverageLogarithmicRate</span>
+<span id="L295">295     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L296">296     (baseVisitFloor : Real) (burnin rounds : Nat)</span>
+<span id="L297">297     (returnDelta : Real) : Real :=</span>
+<span id="L298">298   selfConsistentScheduledNaturalCausalBurninRealizedCumulativeLogarithmicRate</span>
+<span id="L299">299     mdp varianceProxy baseVisitFloor burnin rounds returnDelta /</span>
+<span id="L300">300       (rounds : Real)</span>
+<span id="L301">301 </span>
+<span id="L302">302 /--</span>
+<span id="L303">303 Outside the tail-model/return union, cumulative successor-batch-average</span>
+<span id="L304">304 realized behavior regret obeys the burn-in logarithmic envelope.</span>
+<span id="L305">305 -/</span>
+<span id="L306">306 theorem</span>
+<span id="L307">307     selfConsistentScheduledNaturalCausalCumulativeRealizedBehaviorRegretProcess_le_burnin_logarithmic_of_not_mem_tailModelReturnBadEvent</span>
+<span id="L308">308     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L309">309     [IsProbabilityMeasure initialState]</span>
+<span id="L310">310     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L311">311     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L312">312     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L313">313     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L314">314     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L315">315     (defaultState : State)</span>
+<span id="L316">316     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L317">317     (baseVisitFloor : Real)</span>
+<span id="L318">318     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L319">319     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L320">320     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L321">321     (burnin rounds : Nat) (hburnin : burnin &lt;= rounds)</span>
+<span id="L322">322     (returnDelta : Real)</span>
+<span id="L323">323     (trajectory : HeterogeneousStochasticEpisodeBatchTrajectory mdp</span>
+<span id="L324">324       (fun t =&gt;</span>
+<span id="L325">325         AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L326">326           mdp varianceProxy baseVisitFloor t))</span>
+<span id="L327">327     (htrajectory : trajectory ∉</span>
+<span id="L328">328       selfConsistentScheduledNaturalCausalBurninTailModelReturnBadEvent mdp</span>
+<span id="L329">329         initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L330">330           baseVisitFloor burnin rounds returnDelta) :</span>
+<span id="L331">331     selfConsistentScheduledNaturalCausalCumulativeRealizedBehaviorRegretProcess</span>
+<span id="L332">332         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L333">333           baseVisitFloor rounds trajectory &lt;=</span>
+<span id="L334">334       selfConsistentScheduledNaturalCausalBurninRealizedCumulativeLogarithmicRate</span>
+<span id="L335">335         mdp varianceProxy baseVisitFloor burnin rounds returnDelta := by</span>
+<span id="L336">336   let modelEvent := selfConsistentScheduledCausalTailModelBadEvent mdp</span>
+<span id="L337">337     initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L338">338       baseVisitFloor burnin</span>
+<span id="L339">339   let returnEvent :=</span>
+<span id="L340">340     selfConsistentScheduledNaturalCausalCumulativeReturnBadEvent mdp</span>
+<span id="L341">341       initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L342">342         baseVisitFloor rounds returnDelta</span>
+<span id="L343">343   have hnotModel : trajectory ∉ modelEvent := by</span>
+<span id="L344">344     intro hmodel</span>
+<span id="L345">345     exact htrajectory (by</span>
+<span id="L346">346       simpa [selfConsistentScheduledNaturalCausalBurninTailModelReturnBadEvent,</span>
+<span id="L347">347         modelEvent, returnEvent] using Set.mem_union_left returnEvent hmodel)</span>
+<span id="L348">348   have hnotReturn : trajectory ∉ returnEvent := by</span>
+<span id="L349">349     intro hreturn</span>
+<span id="L350">350     exact htrajectory (by</span>
+<span id="L351">351       simpa [selfConsistentScheduledNaturalCausalBurninTailModelReturnBadEvent,</span>
+<span id="L352">352         modelEvent, returnEvent] using Set.mem_union_right modelEvent hreturn)</span>
+<span id="L353">353   have hexpected :=</span>
+<span id="L354">354     selfConsistentScheduledNaturalCausalCumulativeBehaviorExpectedRegretProcess_le_burnin_logarithmic_of_not_mem_tailModelBadEvent</span>
+<span id="L355">355       mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L356">356         initialTable defaultState support baseVisitFloor hbaseFloor</span>
+<span id="L357">357           hrewardBound hhorizon hbaseVisitFloor burnin rounds hburnin</span>
+<span id="L358">358             trajectory (by simpa [modelEvent] using hnotModel)</span>
+<span id="L359">359   have hnotRadius :</span>
+<span id="L360">360       ¬ Concentration.subGaussianSumConfidenceRadius</span>
+<span id="L361">361           (selfConsistentScheduledNaturalCausalCumulativeReturnVarianceProxy</span>
+<span id="L362">362             mdp varianceProxy baseVisitFloor rounds) returnDelta &lt;=</span>
+<span id="L363">363         |selfConsistentScheduledNaturalCausalCumulativeReturnDeviationProcess</span>
+<span id="L364">364           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L365">365             baseVisitFloor rounds trajectory| := by</span>
+<span id="L366">366     simpa [returnEvent,</span>
+<span id="L367">367       selfConsistentScheduledNaturalCausalCumulativeReturnBadEvent] using</span>
+<span id="L368">368         hnotReturn</span>
+<span id="L369">369   have hnoise :</span>
+<span id="L370">370       -selfConsistentScheduledNaturalCausalCumulativeReturnDeviationProcess</span>
+<span id="L371">371           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L372">372             baseVisitFloor rounds trajectory &lt;=</span>
+<span id="L373">373         Concentration.subGaussianSumConfidenceRadius</span>
+<span id="L374">374           (selfConsistentScheduledNaturalCausalCumulativeReturnVarianceProxy</span>
+<span id="L375">375             mdp varianceProxy baseVisitFloor rounds) returnDelta :=</span>
+<span id="L376">376     (neg_le_abs _).trans (lt_of_not_ge hnotRadius).le</span>
+<span id="L377">377   rw [selfConsistentScheduledNaturalCausalCumulativeRealizedBehaviorRegretProcess_eq_expected_sub_deviation</span>
+<span id="L378">378     mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L379">379       baseVisitFloor rounds trajectory]</span>
+<span id="L380">380   calc</span>
+<span id="L381">381     selfConsistentScheduledNaturalCausalCumulativeBehaviorExpectedRegretProcess</span>
+<span id="L382">382           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L383">383             baseVisitFloor rounds trajectory -</span>
+<span id="L384">384         selfConsistentScheduledNaturalCausalCumulativeReturnDeviationProcess</span>
+<span id="L385">385           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L386">386             baseVisitFloor rounds trajectory =</span>
+<span id="L387">387       selfConsistentScheduledNaturalCausalCumulativeBehaviorExpectedRegretProcess</span>
+<span id="L388">388           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L389">389             baseVisitFloor rounds trajectory +</span>
+<span id="L390">390         (-selfConsistentScheduledNaturalCausalCumulativeReturnDeviationProcess</span>
+<span id="L391">391           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L392">392             baseVisitFloor rounds trajectory) := by ring</span>
+<span id="L393">393     _ &lt;=</span>
+<span id="L394">394         selfConsistentScheduledNaturalCausalBurninCumulativeBehaviorExpectedRegretLogarithmicRate</span>
+<span id="L395">395             mdp burnin rounds +</span>
+<span id="L396">396           Concentration.subGaussianSumConfidenceRadius</span>
+<span id="L397">397             (selfConsistentScheduledNaturalCausalCumulativeReturnVarianceProxy</span>
+<span id="L398">398               mdp varianceProxy baseVisitFloor rounds) returnDelta :=</span>
+<span id="L399">399       add_le_add hexpected hnoise</span>
+<span id="L400">400     _ =</span>
+<span id="L401">401         selfConsistentScheduledNaturalCausalBurninRealizedCumulativeLogarithmicRate</span>
+<span id="L402">402           mdp varianceProxy baseVisitFloor burnin rounds returnDelta := rfl</span>
+<span id="L403">403 </span>
+<span id="L404">404 /-- Joint-good paths also obey the positive-round average burn-in rate. -/</span>
+<span id="L405">405 theorem</span>
+<span id="L406">406     selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess_le_burnin_logarithmic_of_not_mem_tailModelReturnBadEvent</span>
+<span id="L407">407     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L408">408     [IsProbabilityMeasure initialState]</span>
+<span id="L409">409     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L410">410     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L411">411     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L412">412     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L413">413     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L414">414     (defaultState : State)</span>
+<span id="L415">415     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L416">416     (baseVisitFloor : Real)</span>
+<span id="L417">417     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L418">418     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L419">419     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L420">420     (burnin rounds : Nat) (hburnin : burnin &lt;= rounds)</span>
+<span id="L421">421     (hrounds : 0 &lt; rounds) (returnDelta : Real)</span>
+<span id="L422">422     (trajectory : HeterogeneousStochasticEpisodeBatchTrajectory mdp</span>
+<span id="L423">423       (fun t =&gt;</span>
+<span id="L424">424         AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L425">425           mdp varianceProxy baseVisitFloor t))</span>
+<span id="L426">426     (htrajectory : trajectory ∉</span>
+<span id="L427">427       selfConsistentScheduledNaturalCausalBurninTailModelReturnBadEvent mdp</span>
+<span id="L428">428         initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L429">429           baseVisitFloor burnin rounds returnDelta) :</span>
+<span id="L430">430     selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess</span>
+<span id="L431">431         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L432">432           baseVisitFloor rounds trajectory &lt;=</span>
+<span id="L433">433       selfConsistentScheduledNaturalCausalBurninRealizedAverageLogarithmicRate</span>
+<span id="L434">434         mdp varianceProxy baseVisitFloor burnin rounds returnDelta := by</span>
+<span id="L435">435   have hcumulative :=</span>
+<span id="L436">436     selfConsistentScheduledNaturalCausalCumulativeRealizedBehaviorRegretProcess_le_burnin_logarithmic_of_not_mem_tailModelReturnBadEvent</span>
+<span id="L437">437       mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L438">438         initialTable defaultState support baseVisitFloor hbaseFloor</span>
+<span id="L439">439           hrewardBound hhorizon hbaseVisitFloor burnin rounds hburnin</span>
+<span id="L440">440             returnDelta trajectory htrajectory</span>
+<span id="L441">441   have hroundsReal : (0 : Real) &lt; (rounds : Real) := by</span>
+<span id="L442">442     exact_mod_cast hrounds</span>
+<span id="L443">443   simpa [selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess,</span>
+<span id="L444">444     HeterogeneousAdaptiveStochasticEpisodeBatchSource.naturalAverageRealizedBehaviorRegret,</span>
+<span id="L445">445     selfConsistentScheduledNaturalCausalCumulativeRealizedBehaviorRegretProcess,</span>
+<span id="L446">446     selfConsistentScheduledNaturalCausalBurninRealizedAverageLogarithmicRate]</span>
+<span id="L447">447     using div_le_div_of_nonneg_right hcumulative hroundsReal.le</span>
+<span id="L448">448 </span>
+<span id="L449">449 /-- One-sided cumulative burn-in realized-regret violation set. -/</span>
+<span id="L450">450 noncomputable def</span>
+<span id="L451">451     selfConsistentScheduledNaturalCausalBurninCumulativeRealizedBehaviorRegretLogarithmicViolationSet</span>
+<span id="L452">452     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L453">453     [IsProbabilityMeasure initialState]</span>
+<span id="L454">454     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L455">455     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L456">456     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L457">457     (baseVisitFloor : Real) (burnin rounds : Nat) (returnDelta : Real) :</span>
+<span id="L458">458     Set (HeterogeneousStochasticEpisodeBatchTrajectory mdp</span>
+<span id="L459">459       (fun t =&gt;</span>
+<span id="L460">460         AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L461">461           mdp varianceProxy baseVisitFloor t)) :=</span>
+<span id="L462">462   {trajectory |</span>
+<span id="L463">463     selfConsistentScheduledNaturalCausalBurninRealizedCumulativeLogarithmicRate</span>
+<span id="L464">464         mdp varianceProxy baseVisitFloor burnin rounds returnDelta &lt;</span>
+<span id="L465">465       selfConsistentScheduledNaturalCausalCumulativeRealizedBehaviorRegretProcess</span>
+<span id="L466">466         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L467">467           baseVisitFloor rounds trajectory}</span>
+<span id="L468">468 </span>
+<span id="L469">469 /-- One-sided average burn-in realized-regret violation set. -/</span>
+<span id="L470">470 noncomputable def</span>
+<span id="L471">471     selfConsistentScheduledNaturalCausalBurninAverageRealizedBehaviorRegretLogarithmicViolationSet</span>
+<span id="L472">472     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L473">473     [IsProbabilityMeasure initialState]</span>
+<span id="L474">474     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L475">475     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L476">476     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L477">477     (baseVisitFloor : Real) (burnin rounds : Nat) (returnDelta : Real) :</span>
+<span id="L478">478     Set (HeterogeneousStochasticEpisodeBatchTrajectory mdp</span>
+<span id="L479">479       (fun t =&gt;</span>
+<span id="L480">480         AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L481">481           mdp varianceProxy baseVisitFloor t)) :=</span>
+<span id="L482">482   {trajectory |</span>
+<span id="L483">483     selfConsistentScheduledNaturalCausalBurninRealizedAverageLogarithmicRate</span>
+<span id="L484">484         mdp varianceProxy baseVisitFloor burnin rounds returnDelta &lt;</span>
+<span id="L485">485       selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess</span>
+<span id="L486">486         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L487">487           baseVisitFloor rounds trajectory}</span>
+<span id="L488">488 </span>
+<span id="L489">489 /-- The cumulative burn-in violation set is measurable. -/</span>
+<span id="L490">490 theorem</span>
+<span id="L491">491     measurableSet_selfConsistentScheduledNaturalCausalBurninCumulativeRealizedBehaviorRegretLogarithmicViolationSet</span>
+<span id="L492">492     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L493">493     [IsProbabilityMeasure initialState]</span>
+<span id="L494">494     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L495">495     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L496">496     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L497">497     (baseVisitFloor : Real) (burnin rounds : Nat) (returnDelta : Real) :</span>
+<span id="L498">498     MeasurableSet</span>
+<span id="L499">499       (selfConsistentScheduledNaturalCausalBurninCumulativeRealizedBehaviorRegretLogarithmicViolationSet</span>
+<span id="L500">500         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L501">501           baseVisitFloor burnin rounds returnDelta) := by</span>
+<span id="L502">502   unfold</span>
+<span id="L503">503     selfConsistentScheduledNaturalCausalBurninCumulativeRealizedBehaviorRegretLogarithmicViolationSet</span>
+<span id="L504">504   exact measurableSet_lt measurable_const</span>
+<span id="L505">505     (measurable_selfConsistentScheduledNaturalCausalCumulativeRealizedBehaviorRegretProcess</span>
+<span id="L506">506       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L507">507         baseVisitFloor rounds)</span>
+<span id="L508">508 </span>
+<span id="L509">509 /-- The average burn-in violation set is measurable. -/</span>
+<span id="L510">510 theorem</span>
+<span id="L511">511     measurableSet_selfConsistentScheduledNaturalCausalBurninAverageRealizedBehaviorRegretLogarithmicViolationSet</span>
+<span id="L512">512     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L513">513     [IsProbabilityMeasure initialState]</span>
+<span id="L514">514     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L515">515     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L516">516     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L517">517     (baseVisitFloor : Real) (burnin rounds : Nat) (returnDelta : Real) :</span>
+<span id="L518">518     MeasurableSet</span>
+<span id="L519">519       (selfConsistentScheduledNaturalCausalBurninAverageRealizedBehaviorRegretLogarithmicViolationSet</span>
+<span id="L520">520         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L521">521           baseVisitFloor burnin rounds returnDelta) := by</span>
+<span id="L522">522   unfold</span>
+<span id="L523">523     selfConsistentScheduledNaturalCausalBurninAverageRealizedBehaviorRegretLogarithmicViolationSet</span>
+<span id="L524">524   exact measurableSet_lt measurable_const</span>
+<span id="L525">525     (measurable_selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess</span>
+<span id="L526">526       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L527">527         baseVisitFloor rounds)</span>
+<span id="L528">528 </span>
+<span id="L529">529 /-- Every cumulative burn-in violation belongs to the joint tail event. -/</span>
+<span id="L530">530 theorem</span>
+<span id="L531">531     selfConsistentScheduledNaturalCausalBurninCumulativeRealizedBehaviorRegretLogarithmicViolationSet_subset_tailModelReturnBadEvent</span>
+<span id="L532">532     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L533">533     [IsProbabilityMeasure initialState]</span>
+<span id="L534">534     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L535">535     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L536">536     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L537">537     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L538">538     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L539">539     (defaultState : State)</span>
+<span id="L540">540     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L541">541     (baseVisitFloor : Real)</span>
+<span id="L542">542     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L543">543     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L544">544     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L545">545     (burnin rounds : Nat) (hburnin : burnin &lt;= rounds)</span>
+<span id="L546">546     (returnDelta : Real) :</span>
+<span id="L547">547     selfConsistentScheduledNaturalCausalBurninCumulativeRealizedBehaviorRegretLogarithmicViolationSet</span>
+<span id="L548">548         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L549">549           baseVisitFloor burnin rounds returnDelta ⊆</span>
+<span id="L550">550       selfConsistentScheduledNaturalCausalBurninTailModelReturnBadEvent mdp</span>
+<span id="L551">551         initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L552">552           baseVisitFloor burnin rounds returnDelta := by</span>
+<span id="L553">553   intro trajectory hviolation</span>
+<span id="L554">554   by_contra hgood</span>
+<span id="L555">555   have hbound :=</span>
+<span id="L556">556     selfConsistentScheduledNaturalCausalCumulativeRealizedBehaviorRegretProcess_le_burnin_logarithmic_of_not_mem_tailModelReturnBadEvent</span>
+<span id="L557">557       mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L558">558         initialTable defaultState support baseVisitFloor hbaseFloor</span>
+<span id="L559">559           hrewardBound hhorizon hbaseVisitFloor burnin rounds hburnin</span>
+<span id="L560">560             returnDelta trajectory hgood</span>
+<span id="L561">561   exact (not_lt_of_ge hbound) hviolation</span>
+<span id="L562">562 </span>
+<span id="L563">563 /-- Every average burn-in violation belongs to the joint tail event. -/</span>
+<span id="L564">564 theorem</span>
+<span id="L565">565     selfConsistentScheduledNaturalCausalBurninAverageRealizedBehaviorRegretLogarithmicViolationSet_subset_tailModelReturnBadEvent</span>
+<span id="L566">566     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L567">567     [IsProbabilityMeasure initialState]</span>
+<span id="L568">568     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L569">569     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L570">570     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L571">571     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L572">572     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L573">573     (defaultState : State)</span>
+<span id="L574">574     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L575">575     (baseVisitFloor : Real)</span>
+<span id="L576">576     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L577">577     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L578">578     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L579">579     (burnin rounds : Nat) (hburnin : burnin &lt;= rounds)</span>
+<span id="L580">580     (hrounds : 0 &lt; rounds) (returnDelta : Real) :</span>
+<span id="L581">581     selfConsistentScheduledNaturalCausalBurninAverageRealizedBehaviorRegretLogarithmicViolationSet</span>
+<span id="L582">582         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L583">583           baseVisitFloor burnin rounds returnDelta ⊆</span>
+<span id="L584">584       selfConsistentScheduledNaturalCausalBurninTailModelReturnBadEvent mdp</span>
+<span id="L585">585         initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L586">586           baseVisitFloor burnin rounds returnDelta := by</span>
+<span id="L587">587   intro trajectory hviolation</span>
+<span id="L588">588   by_contra hgood</span>
+<span id="L589">589   have hbound :=</span>
+<span id="L590">590     selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess_le_burnin_logarithmic_of_not_mem_tailModelReturnBadEvent</span>
+<span id="L591">591       mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L592">592         initialTable defaultState support baseVisitFloor hbaseFloor</span>
+<span id="L593">593           hrewardBound hhorizon hbaseVisitFloor burnin rounds hburnin hrounds</span>
+<span id="L594">594             returnDelta trajectory hgood</span>
+<span id="L595">595   exact (not_lt_of_ge hbound) hviolation</span>
+<span id="L596">596 </span>
+<span id="L597">597 /--</span>
+<span id="L598">598 Terminal burn-in tail high-probability logarithmic cumulative and average</span>
+<span id="L599">599 realized behavior-regret certificate.</span>
+<span id="L600">600 -/</span>
+<span id="L601">601 theorem</span>
+<span id="L602">602     selfConsistentScheduledCausalSource_burninTailHighProbabilityLogarithmicCumulativeAverageRealizedBehaviorRegret</span>
+<span id="L603">603     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L604">604     [IsProbabilityMeasure initialState]</span>
+<span id="L605">605     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L606">606     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L607">607     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L608">608     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L609">609     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L610">610     (defaultState : State)</span>
+<span id="L611">611     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L612">612     (baseVisitFloor : Real)</span>
+<span id="L613">613     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L614">614     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L615">615     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L616">616     (burnin rounds : Nat) (hburnin : burnin &lt;= rounds)</span>
+<span id="L617">617     (hrounds : 0 &lt; rounds)</span>
+<span id="L618">618     (returnDelta : Real) (hreturnDelta : 0 &lt; returnDelta)</span>
+<span id="L619">619     (hreturnDelta_le_one : returnDelta &lt;= 1) :</span>
+<span id="L620">620     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L621">621       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L622">622     let event :=</span>
+<span id="L623">623       selfConsistentScheduledNaturalCausalBurninTailModelReturnBadEvent mdp</span>
+<span id="L624">624         initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L625">625           baseVisitFloor burnin rounds returnDelta</span>
+<span id="L626">626     let cumulativeViolation :=</span>
+<span id="L627">627       selfConsistentScheduledNaturalCausalBurninCumulativeRealizedBehaviorRegretLogarithmicViolationSet</span>
+<span id="L628">628         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L629">629           baseVisitFloor burnin rounds returnDelta</span>
+<span id="L630">630     let averageViolation :=</span>
+<span id="L631">631       selfConsistentScheduledNaturalCausalBurninAverageRealizedBehaviorRegretLogarithmicViolationSet</span>
+<span id="L632">632         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L633">633           baseVisitFloor burnin rounds returnDelta</span>
+<span id="L634">634     let failureBudget :=</span>
+<span id="L635">635       selfConsistentScheduledNaturalCausalBurninTailModelReturnFailureBudget</span>
+<span id="L636">636         mdp burnin returnDelta</span>
+<span id="L637">637     MeasurableSet event ∧</span>
+<span id="L638">638       MeasurableSet cumulativeViolation ∧</span>
+<span id="L639">639       MeasurableSet averageViolation ∧</span>
+<span id="L640">640       source.trajectoryMeasure event &lt;= failureBudget ∧</span>
+<span id="L641">641       cumulativeViolation ⊆ event ∧</span>
+<span id="L642">642       averageViolation ⊆ event ∧</span>
+<span id="L643">643       source.trajectoryMeasure cumulativeViolation &lt;= failureBudget ∧</span>
+<span id="L644">644       source.trajectoryMeasure averageViolation &lt;= failureBudget ∧</span>
+<span id="L645">645       (failureBudget &lt; 1 -&gt;</span>
+<span id="L646">646         source.trajectoryMeasure event &lt; 1 ∧</span>
+<span id="L647">647         source.trajectoryMeasure cumulativeViolation &lt; 1 ∧</span>
+<span id="L648">648         source.trajectoryMeasure averageViolation &lt; 1) ∧</span>
+<span id="L649">649       forall trajectory, trajectory ∉ event -&gt;</span>
+<span id="L650">650         selfConsistentScheduledNaturalCausalCumulativeRealizedBehaviorRegretProcess</span>
+<span id="L651">651             mdp initialState rewardSource initialTable defaultState</span>
+<span id="L652">652               varianceProxy baseVisitFloor rounds trajectory &lt;=</span>
+<span id="L653">653           selfConsistentScheduledNaturalCausalBurninRealizedCumulativeLogarithmicRate</span>
+<span id="L654">654             mdp varianceProxy baseVisitFloor burnin rounds returnDelta ∧</span>
+<span id="L655">655         selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess</span>
+<span id="L656">656             mdp initialState rewardSource initialTable defaultState</span>
+<span id="L657">657               varianceProxy baseVisitFloor rounds trajectory &lt;=</span>
+<span id="L658">658           selfConsistentScheduledNaturalCausalBurninRealizedAverageLogarithmicRate</span>
+<span id="L659">659             mdp varianceProxy baseVisitFloor burnin rounds returnDelta := by</span>
+<span id="L660">660   dsimp only</span>
+<span id="L661">661   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L662">662     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L663">663   let event :=</span>
+<span id="L664">664     selfConsistentScheduledNaturalCausalBurninTailModelReturnBadEvent mdp</span>
+<span id="L665">665       initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L666">666         baseVisitFloor burnin rounds returnDelta</span>
+<span id="L667">667   let cumulativeViolation :=</span>
+<span id="L668">668     selfConsistentScheduledNaturalCausalBurninCumulativeRealizedBehaviorRegretLogarithmicViolationSet</span>
+<span id="L669">669       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L670">670         baseVisitFloor burnin rounds returnDelta</span>
+<span id="L671">671   let averageViolation :=</span>
+<span id="L672">672     selfConsistentScheduledNaturalCausalBurninAverageRealizedBehaviorRegretLogarithmicViolationSet</span>
+<span id="L673">673       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L674">674         baseVisitFloor burnin rounds returnDelta</span>
+<span id="L675">675   let failureBudget :=</span>
+<span id="L676">676     selfConsistentScheduledNaturalCausalBurninTailModelReturnFailureBudget</span>
+<span id="L677">677       mdp burnin returnDelta</span>
+<span id="L678">678   have hevent :=</span>
+<span id="L679">679     selfConsistentScheduledCausalSource_trajectoryMeasure_naturalBurninTailModelReturnBadEvent_le</span>
+<span id="L680">680       mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L681">681         initialTable defaultState baseVisitFloor hrewardBound hhorizon</span>
+<span id="L682">682           burnin rounds hrounds returnDelta hreturnDelta hreturnDelta_le_one</span>
+<span id="L683">683   have hcumulativeMeasurable : MeasurableSet cumulativeViolation := by</span>
+<span id="L684">684     simpa [cumulativeViolation] using</span>
+<span id="L685">685       (measurableSet_selfConsistentScheduledNaturalCausalBurninCumulativeRealizedBehaviorRegretLogarithmicViolationSet</span>
+<span id="L686">686         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L687">687           baseVisitFloor burnin rounds returnDelta)</span>
+<span id="L688">688   have haverageMeasurable : MeasurableSet averageViolation := by</span>
+<span id="L689">689     simpa [averageViolation] using</span>
+<span id="L690">690       (measurableSet_selfConsistentScheduledNaturalCausalBurninAverageRealizedBehaviorRegretLogarithmicViolationSet</span>
+<span id="L691">691         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L692">692           baseVisitFloor burnin rounds returnDelta)</span>
+<span id="L693">693   have hcumulativeSubset : cumulativeViolation ⊆ event := by</span>
+<span id="L694">694     simpa [cumulativeViolation, event] using</span>
+<span id="L695">695       (selfConsistentScheduledNaturalCausalBurninCumulativeRealizedBehaviorRegretLogarithmicViolationSet_subset_tailModelReturnBadEvent</span>
+<span id="L696">696         mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L697">697           initialTable defaultState support baseVisitFloor hbaseFloor</span>
+<span id="L698">698             hrewardBound hhorizon hbaseVisitFloor burnin rounds hburnin</span>
+<span id="L699">699               returnDelta)</span>
+<span id="L700">700   have haverageSubset : averageViolation ⊆ event := by</span>
+<span id="L701">701     simpa [averageViolation, event] using</span>
+<span id="L702">702       (selfConsistentScheduledNaturalCausalBurninAverageRealizedBehaviorRegretLogarithmicViolationSet_subset_tailModelReturnBadEvent</span>
+<span id="L703">703         mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L704">704           initialTable defaultState support baseVisitFloor hbaseFloor</span>
+<span id="L705">705             hrewardBound hhorizon hbaseVisitFloor burnin rounds hburnin</span>
+<span id="L706">706               hrounds returnDelta)</span>
+<span id="L707">707   have heventMeasure : source.trajectoryMeasure event &lt;= failureBudget := by</span>
+<span id="L708">708     simpa [source, event, failureBudget] using hevent.2</span>
+<span id="L709">709   have hcumulativeMeasure :</span>
+<span id="L710">710       source.trajectoryMeasure cumulativeViolation &lt;= failureBudget :=</span>
+<span id="L711">711     (measure_mono hcumulativeSubset).trans heventMeasure</span>
+<span id="L712">712   have haverageMeasure :</span>
+<span id="L713">713       source.trajectoryMeasure averageViolation &lt;= failureBudget :=</span>
+<span id="L714">714     (measure_mono haverageSubset).trans heventMeasure</span>
+<span id="L715">715   refine ⟨?_, hcumulativeMeasurable, haverageMeasurable, heventMeasure,</span>
+<span id="L716">716     hcumulativeSubset, haverageSubset, hcumulativeMeasure, haverageMeasure,</span>
+<span id="L717">717     ?_, ?_⟩</span>
+<span id="L718">718   · simpa [event] using hevent.1</span>
+<span id="L719">719   · intro hnontrivial</span>
+<span id="L720">720     exact ⟨heventMeasure.trans_lt hnontrivial,</span>
+<span id="L721">721       hcumulativeMeasure.trans_lt hnontrivial,</span>
+<span id="L722">722       haverageMeasure.trans_lt hnontrivial⟩</span>
+<span id="L723">723   · intro trajectory htrajectory</span>
+<span id="L724">724     exact ⟨</span>
+<span id="L725">725       selfConsistentScheduledNaturalCausalCumulativeRealizedBehaviorRegretProcess_le_burnin_logarithmic_of_not_mem_tailModelReturnBadEvent</span>
+<span id="L726">726         mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L727">727           initialTable defaultState support baseVisitFloor hbaseFloor</span>
+<span id="L728">728             hrewardBound hhorizon hbaseVisitFloor burnin rounds hburnin</span>
+<span id="L729">729               returnDelta trajectory (by simpa [event] using htrajectory),</span>
+<span id="L730">730       selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess_le_burnin_logarithmic_of_not_mem_tailModelReturnBadEvent</span>
+<span id="L731">731         mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L732">732           initialTable defaultState support baseVisitFloor hbaseFloor</span>
+<span id="L733">733             hrewardBound hhorizon hbaseVisitFloor burnin rounds hburnin</span>
+<span id="L734">734               hrounds returnDelta trajectory (by simpa [event] using htrajectory)⟩</span>
+<span id="L735">735 </span>
+<span id="L736">736 end AdaptiveStochasticSampledEmpiricalOptimisticSource</span>
+<span id="L737">737 </span>
+<span id="L738">738 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

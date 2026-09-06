@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Algorithms/UCBBoundedFiniteArmRewardLaw.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Algorithms/UCBBoundedFiniteArmRewardLaw.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Algorithms/UCBBoundedFiniteArmRewardLaw.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Algorithms/UCBBoundedFiniteArmRewardLaw.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Algorithms.UCBConditionalRewardLawCenteredKernelReal</span>
+<span id="L2">2 import BanditRLProof.FiniteArmRewardKernelLaw</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Canonical UCB expected regret for bounded finite-arm reward laws</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module instantiates the centered-kernel canonical Real theorem with</span>
+<span id="L8">8 stationary action-indexed reward laws. It supports both one common interval</span>
+<span id="L9">9 and arm-dependent nondegenerate intervals.</span>
+<span id="L10">10 -/</span>
+<span id="L11">11 </span>
+<span id="L12">12 open scoped BigOperators ENNReal NNReal</span>
+<span id="L13">13 </span>
+<span id="L14">14 open MeasureTheory ProbabilityTheory</span>
+<span id="L15">15 </span>
+<span id="L16">16 namespace BanditRLProof</span>
+<span id="L17">17 namespace UCB</span>
+<span id="L18">18 </span>
+<span id="L19">19 /--</span>
+<span id="L20">20 Canonical Real expected pseudo-regret bound for finite-arm stationary reward</span>
+<span id="L21">21 laws supported almost surely on one nondegenerate interval.</span>
+<span id="L22">22 </span>
+<span id="L23">23 The initial reward is sampled from the default arm law. Successor rewards use</span>
+<span id="L24">24 the context-independent action law kernel, while the context is `Unit`.</span>
+<span id="L25">25 -/</span>
+<span id="L26">26 theorem integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_boundedFiniteArmLaws</span>
+<span id="L27">27     {K : Nat}</span>
+<span id="L28">28     (model : FiniteBanditModel K)</span>
+<span id="L29">29     (armLaw : Fin K -&gt; Measure Rat)</span>
+<span id="L30">30     (hprob : forall arm, IsProbabilityMeasure (armLaw arm))</span>
+<span id="L31">31     (lo hi : Real) (hlohi : lo &lt; hi)</span>
+<span id="L32">32     (hmeas : forall arm,</span>
+<span id="L33">33       AEMeasurable (fun reward : Rat =&gt; ((reward : Rat) : Real))</span>
+<span id="L34">34         (armLaw arm))</span>
+<span id="L35">35     (hbound : forall arm,</span>
+<span id="L36">36       Filter.Eventually</span>
+<span id="L37">37         (fun reward : Rat =&gt; Set.Icc lo hi ((reward : Rat) : Real))</span>
+<span id="L38">38         (ae (armLaw arm)))</span>
+<span id="L39">39     (hmean : forall arm,</span>
+<span id="L40">40       integral (armLaw arm) (fun reward : Rat =&gt; ((reward : Rat) : Real)) =</span>
+<span id="L41">41         ((model.mean arm : Rat) : Real))</span>
+<span id="L42">42     (defaultAction : Fin K)</span>
+<span id="L43">43     (T : Nat) (hT : 0 &lt; T)</span>
+<span id="L44">44     (delta : Real) (hdelta : 0 &lt; delta) :</span>
+<span id="L45">45     let sigma2 := Concentration.intervalVarianceProxy lo hi</span>
+<span id="L46">46     let rewardKernel := RewardKernel.contextIndependentOfActionLaws</span>
+<span id="L47">47       (Context := Unit) armLaw hprob</span>
+<span id="L48">48     let context : (n : Nat) -&gt; History.FiniteRewardHistory Rat n -&gt; Unit :=</span>
+<span id="L49">49       fun _ _ =&gt; ()</span>
+<span id="L50">50     MeasureTheory.integral</span>
+<span id="L51">51         (selectedPolicySuccessorRewardTrajMeasure model.hK</span>
+<span id="L52">52           (armLaw defaultAction) rewardKernel context</span>
+<span id="L53">53           (fun _ =&gt; measurable_const) sigma2 T delta defaultAction)</span>
+<span id="L54">54         (fun trajectory : RewardTrace Rat =&gt;</span>
+<span id="L55">55           ((pseudoRegret model</span>
+<span id="L56">56             (selectedPolicySuccessorGeneratedUCBRegretAction</span>
+<span id="L57">57               model.hK sigma2 T delta defaultAction</span>
+<span id="L58">58               (fun y : RewardTrace Rat =&gt; y) trajectory)</span>
+<span id="L59">59             T : Rat) : Real)) &lt;=</span>
+<span id="L60">60       ((Finset.univ : Finset (Fin K)).filter (fun arm =&gt;</span>
+<span id="L61">61         0 &lt; (((model.gap arm : Rat) : Real)))).sum (fun arm =&gt;</span>
+<span id="L62">62           selectedPolicySuccessorTextbookGapBudget K sigma2 T delta</span>
+<span id="L63">63               (((model.gap arm : Rat) : Real)) +</span>
+<span id="L64">64             (((model.gap arm : Rat) : Real)) * ((T : Real) * delta)) := by</span>
+<span id="L65">65   let sigma2 := Concentration.intervalVarianceProxy lo hi</span>
+<span id="L66">66   let rewardKernel := RewardKernel.contextIndependentOfActionLaws</span>
+<span id="L67">67     (Context := Unit) armLaw hprob</span>
+<span id="L68">68   let context : (n : Nat) -&gt; History.FiniteRewardHistory Rat n -&gt; Unit :=</span>
+<span id="L69">69     fun _ _ =&gt; ()</span>
+<span id="L70">70   have hcontext : forall n : Nat, Measurable (context n) := by</span>
+<span id="L71">71     intro n</span>
+<span id="L72">72     exact measurable_const</span>
+<span id="L73">73   have hmeanMeas :</span>
+<span id="L74">74       Measurable (fun pair : Unit × Fin K =&gt; model.mean pair.2) :=</span>
+<span id="L75">75     (measurable_of_countable model.mean).comp measurable_snd</span>
+<span id="L76">76   have hkernel :</span>
+<span id="L77">77       RewardKernel.CenteredRewardKernelLaw rewardKernel</span>
+<span id="L78">78         (fun _ arm =&gt; model.mean arm) (fun _ _ =&gt; sigma2) := by</span>
+<span id="L79">79     simpa [rewardKernel, sigma2] using</span>
+<span id="L80">80       (RewardKernel.contextIndependentBoundedCenteredRewardKernelLaw</span>
+<span id="L81">81         (Context := Unit)</span>
+<span id="L82">82         armLaw hprob model.mean lo hi hmeas hbound hmean)</span>
+<span id="L83">83   have hsigma2 : 0 &lt; ((sigma2 : NNReal) : Real) := by</span>
+<span id="L84">84     simpa [sigma2] using</span>
+<span id="L85">85       (Concentration.intervalVarianceProxy_pos_of_lt hlohi)</span>
+<span id="L86">86   letI : IsProbabilityMeasure (armLaw defaultAction) := hprob defaultAction</span>
+<span id="L87">87   simpa [sigma2, rewardKernel, context] using</span>
+<span id="L88">88     (integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_trajMeasure_centeredKernel</span>
+<span id="L89">89       (model := model)</span>
+<span id="L90">90       (mu0 := armLaw defaultAction)</span>
+<span id="L91">91       (rewardKernel := rewardKernel)</span>
+<span id="L92">92       (context := context)</span>
+<span id="L93">93       (mean := fun _ arm =&gt; model.mean arm)</span>
+<span id="L94">94       (varianceProxy := fun _ _ =&gt; sigma2)</span>
+<span id="L95">95       (defaultAction := defaultAction)</span>
+<span id="L96">96       (sigma2 := sigma2)</span>
+<span id="L97">97       (hcontext := hcontext)</span>
+<span id="L98">98       (hmean := hmeanMeas)</span>
+<span id="L99">99       (hkernel := hkernel)</span>
+<span id="L100">100       (T := T)</span>
+<span id="L101">101       (hT := hT)</span>
+<span id="L102">102       (hsigma2 := hsigma2)</span>
+<span id="L103">103       (delta := delta)</span>
+<span id="L104">104       (hdelta := hdelta)</span>
+<span id="L105">105       (hvariance := fun _ _ =&gt; le_rfl)</span>
+<span id="L106">106       (harmMean := fun _ _ _ =&gt; rfl))</span>
+<span id="L107">107 </span>
+<span id="L108">108 /--</span>
+<span id="L109">109 Canonical Real expected pseudo-regret bound for finite-arm stationary reward</span>
+<span id="L110">110 laws with arm-dependent nondegenerate support intervals.</span>
+<span id="L111">111 </span>
+<span id="L112">112 The UCB variance parameter is the maximum of the armwise Hoeffding proxies,</span>
+<span id="L113">113 computed internally with `Finset.sup` over all arms.</span>
+<span id="L114">114 -/</span>
+<span id="L115">115 theorem integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_armwiseBoundedFiniteArmLaws</span>
+<span id="L116">116     {K : Nat}</span>
+<span id="L117">117     (model : FiniteBanditModel K)</span>
+<span id="L118">118     (armLaw : Fin K -&gt; Measure Rat)</span>
+<span id="L119">119     (hprob : forall arm, IsProbabilityMeasure (armLaw arm))</span>
+<span id="L120">120     (lo hi : Fin K -&gt; Real)</span>
+<span id="L121">121     (hlohi : forall arm, lo arm &lt; hi arm)</span>
+<span id="L122">122     (hmeas : forall arm,</span>
+<span id="L123">123       AEMeasurable (fun reward : Rat =&gt; ((reward : Rat) : Real))</span>
+<span id="L124">124         (armLaw arm))</span>
+<span id="L125">125     (hbound : forall arm,</span>
+<span id="L126">126       Filter.Eventually</span>
+<span id="L127">127         (fun reward : Rat =&gt; Set.Icc (lo arm) (hi arm)</span>
+<span id="L128">128           ((reward : Rat) : Real))</span>
+<span id="L129">129         (ae (armLaw arm)))</span>
+<span id="L130">130     (hmean : forall arm,</span>
+<span id="L131">131       integral (armLaw arm) (fun reward : Rat =&gt; ((reward : Rat) : Real)) =</span>
+<span id="L132">132         ((model.mean arm : Rat) : Real))</span>
+<span id="L133">133     (defaultAction : Fin K)</span>
+<span id="L134">134     (T : Nat) (hT : 0 &lt; T)</span>
+<span id="L135">135     (delta : Real) (hdelta : 0 &lt; delta) :</span>
+<span id="L136">136     let sigma2 := Concentration.finiteArmIntervalVarianceProxy lo hi</span>
+<span id="L137">137     let rewardKernel := RewardKernel.contextIndependentOfActionLaws</span>
+<span id="L138">138       (Context := Unit) armLaw hprob</span>
+<span id="L139">139     let context : (n : Nat) -&gt; History.FiniteRewardHistory Rat n -&gt; Unit :=</span>
+<span id="L140">140       fun _ _ =&gt; ()</span>
+<span id="L141">141     MeasureTheory.integral</span>
+<span id="L142">142         (selectedPolicySuccessorRewardTrajMeasure model.hK</span>
+<span id="L143">143           (armLaw defaultAction) rewardKernel context</span>
+<span id="L144">144           (fun _ =&gt; measurable_const) sigma2 T delta defaultAction)</span>
+<span id="L145">145         (fun trajectory : RewardTrace Rat =&gt;</span>
+<span id="L146">146           ((pseudoRegret model</span>
+<span id="L147">147             (selectedPolicySuccessorGeneratedUCBRegretAction</span>
+<span id="L148">148               model.hK sigma2 T delta defaultAction</span>
+<span id="L149">149               (fun y : RewardTrace Rat =&gt; y) trajectory)</span>
+<span id="L150">150             T : Rat) : Real)) &lt;=</span>
+<span id="L151">151       ((Finset.univ : Finset (Fin K)).filter (fun arm =&gt;</span>
+<span id="L152">152         0 &lt; (((model.gap arm : Rat) : Real)))).sum (fun arm =&gt;</span>
+<span id="L153">153           selectedPolicySuccessorTextbookGapBudget K sigma2 T delta</span>
+<span id="L154">154               (((model.gap arm : Rat) : Real)) +</span>
+<span id="L155">155             (((model.gap arm : Rat) : Real)) * ((T : Real) * delta)) := by</span>
+<span id="L156">156   let sigma2 := Concentration.finiteArmIntervalVarianceProxy lo hi</span>
+<span id="L157">157   let rewardKernel := RewardKernel.contextIndependentOfActionLaws</span>
+<span id="L158">158     (Context := Unit) armLaw hprob</span>
+<span id="L159">159   let context : (n : Nat) -&gt; History.FiniteRewardHistory Rat n -&gt; Unit :=</span>
+<span id="L160">160     fun _ _ =&gt; ()</span>
+<span id="L161">161   have hcontext : forall n : Nat, Measurable (context n) := by</span>
+<span id="L162">162     intro n</span>
+<span id="L163">163     exact measurable_const</span>
+<span id="L164">164   have hmeanMeas :</span>
+<span id="L165">165       Measurable (fun pair : Unit × Fin K =&gt; model.mean pair.2) :=</span>
+<span id="L166">166     (measurable_of_countable model.mean).comp measurable_snd</span>
+<span id="L167">167   have hkernel :</span>
+<span id="L168">168       RewardKernel.CenteredRewardKernelLaw rewardKernel</span>
+<span id="L169">169         (fun _ arm =&gt; model.mean arm)</span>
+<span id="L170">170         (fun _ arm =&gt; Concentration.intervalVarianceProxy</span>
+<span id="L171">171           (lo arm) (hi arm)) := by</span>
+<span id="L172">172     simpa [rewardKernel] using</span>
+<span id="L173">173       (RewardKernel.contextIndependentArmwiseBoundedCenteredRewardKernelLaw</span>
+<span id="L174">174         (Context := Unit)</span>
+<span id="L175">175         armLaw hprob model.mean lo hi hmeas hbound hmean)</span>
+<span id="L176">176   have hsigma2 : 0 &lt; ((sigma2 : NNReal) : Real) := by</span>
+<span id="L177">177     simpa [sigma2] using</span>
+<span id="L178">178       (Concentration.finiteArmIntervalVarianceProxy_pos</span>
+<span id="L179">179         model.hK lo hi hlohi)</span>
+<span id="L180">180   letI : IsProbabilityMeasure (armLaw defaultAction) := hprob defaultAction</span>
+<span id="L181">181   simpa [sigma2, rewardKernel, context] using</span>
+<span id="L182">182     (integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_trajMeasure_centeredKernel</span>
+<span id="L183">183       (model := model)</span>
+<span id="L184">184       (mu0 := armLaw defaultAction)</span>
+<span id="L185">185       (rewardKernel := rewardKernel)</span>
+<span id="L186">186       (context := context)</span>
+<span id="L187">187       (mean := fun _ arm =&gt; model.mean arm)</span>
+<span id="L188">188       (varianceProxy := fun _ arm =&gt;</span>
+<span id="L189">189         Concentration.intervalVarianceProxy (lo arm) (hi arm))</span>
+<span id="L190">190       (defaultAction := defaultAction)</span>
+<span id="L191">191       (sigma2 := sigma2)</span>
+<span id="L192">192       (hcontext := hcontext)</span>
+<span id="L193">193       (hmean := hmeanMeas)</span>
+<span id="L194">194       (hkernel := hkernel)</span>
+<span id="L195">195       (T := T)</span>
+<span id="L196">196       (hT := hT)</span>
+<span id="L197">197       (hsigma2 := hsigma2)</span>
+<span id="L198">198       (delta := delta)</span>
+<span id="L199">199       (hdelta := hdelta)</span>
+<span id="L200">200       (hvariance := fun _ _ =&gt;</span>
+<span id="L201">201         Concentration.intervalVarianceProxy_le_finiteArmIntervalVarianceProxy</span>
+<span id="L202">202           lo hi _)</span>
+<span id="L203">203       (harmMean := fun _ _ _ =&gt; rfl))</span>
+<span id="L204">204 </span>
+<span id="L205">205 end UCB</span>
+<span id="L206">206 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

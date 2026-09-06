@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Finite-horizon RL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>RL.<wbr>Finite<wbr>Horizon<wbr>Adaptive<wbr>Cumulative<wbr>Hoeffding<wbr>UCBVI</h1>
+  <p class="lede">This module records the first generated-process leaves for the Hoeffding UCB-VI route. It adds the reward-sum component that was absent from the existing cumulative transition-count state, proves exact prefix updates and measurability, and defines a one-episode-at-a-time adaptive source whose next policy is the cumulative empirical optimistic policy with a clipped inverse-square-root Hoeffding radius.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html"><code>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/finite-horizon-rl/index.html">9. Finite-horizon reinforcement learning</a></dd></div>
+    <div><dt>Declarations</dt><dd>36</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-rl-finitehorizonadaptivecumulativeinversesqrtcalibration/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeInverseSqrtCalibration</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-rl-finitehorizonadaptivecumulativeucbviaggregatetransition/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVIAggregateTransition</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-6ad7a571771b">
+  <summary>
+    <span class="kind">abbrev</span>
+    <code>BanditRLProof.FiniteHorizonRL.RewardSumSummary</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Reward sums indexed by stage, state, and action.</p>
+    <pre class="lean-code"><code><span class="kw">abbrev</span> RewardSumSummary (mdp : MDP State Action)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L42">Source line 42</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9216028e0515">
+  <summary>
+    <span class="kind">abbrev</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeEmpiricalModelState</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The cumulative empirical-model state needed by UCB-VI: transition counts and
+sampled reward sums.  State-action visit counts are derived from the transition
+summary, so they cannot drift away from the transition counts.</p>
+    <pre class="lean-code"><code><span class="kw">abbrev</span> AdaptiveCumulativeEmpiricalModelState (mdp : MDP State Action)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L50">Source line 50</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ce713e668ff8">
+  <summary>
+    <span class="kind">abbrev</span>
+    <code>BanditRLProof.FiniteHorizonRL.AggregateVisitCountSummary</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">UCBVI-CH state-action visits aggregated across every stage.</p>
+    <pre class="lean-code"><code><span class="kw">abbrev</span> AggregateVisitCountSummary</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L54">Source line 54</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b8bba90a6c96">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.TransitionCountSummary.aggregateVisitCount</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Sum a stage-indexed transition summary into the paper count `N_k(x,a)`.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> aggregateVisitCount {mdp : MDP State Action} (summary : TransitionCountSummary mdp) : AggregateVisitCountSummary (State := State) (Action := Action)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L59">Source line 59</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-25e74d253bef">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.TransitionCountSummary.measurable_aggregateVisitCount</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The complete cross-stage aggregate count view is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_aggregateVisitCount {mdp : MDP State Action} : Measurable (aggregateVisitCount : TransitionCountSummary mdp -&gt; AggregateVisitCountSummary (State := State) (Action := Action))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L69">Source line 69</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-acf1d74e83a0">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.EpisodeBatchPrefix.cumulativeRewardSumSummary</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Sum every reward coordinate in a nonempty finite generated-batch prefix.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> cumulativeRewardSumSummary {mdp : MDP State Action} {episodes n : Nat} (history : EpisodeBatchPrefix mdp episodes n) : RewardSumSummary mdp</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L87">Source line 87</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fd43f9a94eb9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.EpisodeBatchPrefix.measurable_rewardSum_coordinate</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A fixed batch reward sum is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_rewardSum_coordinate {mdp : MDP State Action} {episodes : Nat} (stage : Fin mdp.horizon) (state : State) (action : Action) : Measurable <span class="kw">fun</span> batch : EpisodeBatch mdp episodes =&gt; batch.rewardSum stage state action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L97">Source line 97</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-dda25aaeeda2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.EpisodeBatchPrefix.measurable_cumulativeRewardSumSummary</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The complete cumulative reward-sum table is history measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_cumulativeRewardSumSummary {mdp : MDP State Action} {episodes n : Nat} : Measurable (cumulativeRewardSumSummary : EpisodeBatchPrefix mdp episodes n -&gt; RewardSumSummary mdp)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L121">Source line 121</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-794c0be270f7">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.EpisodeBatchPrefix.cumulativeEmpiricalModelState</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Cumulative transition counts and reward sums from exactly the same prefix.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> cumulativeEmpiricalModelState {mdp : MDP State Action} {episodes n : Nat} (history : EpisodeBatchPrefix mdp episodes n) : AdaptiveCumulativeEmpiricalModelState mdp</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L140">Source line 140</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c34bbf43a8a0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.EpisodeBatchPrefix.measurable_cumulativeEmpiricalModelState</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The paired cumulative empirical-model state is history measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_cumulativeEmpiricalModelState {mdp : MDP State Action} {episodes n : Nat} : Measurable (cumulativeEmpiricalModelState : EpisodeBatchPrefix mdp episodes n -&gt; AdaptiveCumulativeEmpiricalModelState mdp)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L149">Source line 149</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f48c00538f52">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.adaptiveCumulativeEmpiricalModelStateAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Cumulative empirical-model state through trajectory coordinate `round`.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> adaptiveCumulativeEmpiricalModelStateAt {mdp : MDP State Action} {episodes : Nat} (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat) : AdaptiveCumulativeEmpiricalModelState mdp</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L160">Source line 160</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0b957e2de69c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.measurable_adaptiveCumulativeEmpiricalModelStateAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The cumulative empirical-model state at a fixed generated round is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_adaptiveCumulativeEmpiricalModelStateAt {mdp : MDP State Action} {episodes : Nat} (round : Nat) : Measurable <span class="kw">fun</span> trajectory : EpisodeBatchTrajectory mdp episodes =&gt; adaptiveCumulativeEmpiricalModelStateAt trajectory round</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L169">Source line 169</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3971e2ca1e17">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.adaptiveCumulativeEmpiricalModelStateAt_transitionCount_succ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Extending the prefix adds exactly the new transition-count coordinate.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> adaptiveCumulativeEmpiricalModelStateAt_transitionCount_succ {mdp : MDP State Action} {episodes : Nat} (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat) (stage : Fin mdp.horizon) (state : State) (action : Action) (nextState : State) : (adaptiveCumulativeEmpiricalModelStateAt trajectory (round + <span class="num">1</span>)).<span class="num">1</span> stage state action nextState = (adaptiveCumulativeEmpiricalModelStateAt trajectory round).<span class="num">1</span> stage state action nextState + (trajectory (round + <span class="num">1</span>)).transitionCount stage state action nextState</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L179">Source line 179</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-73d54e5ee848">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.adaptiveCumulativeEmpiricalModelStateAt_rewardSum_succ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Extending the prefix adds exactly the new reward-sum coordinate.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> adaptiveCumulativeEmpiricalModelStateAt_rewardSum_succ {mdp : MDP State Action} {episodes : Nat} (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat) (stage : Fin mdp.horizon) (state : State) (action : Action) : (adaptiveCumulativeEmpiricalModelStateAt trajectory (round + <span class="num">1</span>)).<span class="num">2</span> stage state action = (adaptiveCumulativeEmpiricalModelStateAt trajectory round).<span class="num">2</span> stage state action + (trajectory (round + <span class="num">1</span>)).rewardSum stage state action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L196">Source line 196</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fd9c19ce4957">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.adaptiveCumulativeEmpiricalModelStateAt_visitCount</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Visit counts are definitionally derived from the same cumulative state.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> adaptiveCumulativeEmpiricalModelStateAt_visitCount {mdp : MDP State Action} {episodes : Nat} (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat) (stage : Fin mdp.horizon) (state : State) (action : Action) : (adaptiveCumulativeEmpiricalModelStateAt trajectory round).<span class="num">1</span>.visitCount stage state action = ∑ i : Fin (round + <span class="num">1</span>), (trajectory i).visitCount stage state action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L221">Source line 221</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-791eb7c5068d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.adaptiveCumulativeAggregateVisitCountAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The paper count `N_k(x,a)` read from exactly one generated prefix.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> adaptiveCumulativeAggregateVisitCountAt {mdp : MDP State Action} {episodes : Nat} (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat) : AggregateVisitCountSummary (State := State) (Action := Action)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L235">Source line 235</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f81807091aa7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.measurable_adaptiveCumulativeAggregateVisitCountAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every fixed-round aggregate state-action count table is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_adaptiveCumulativeAggregateVisitCountAt {mdp : MDP State Action} {episodes : Nat} (round : Nat) : Measurable <span class="kw">fun</span> trajectory : EpisodeBatchTrajectory mdp episodes =&gt; adaptiveCumulativeAggregateVisitCountAt trajectory round</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L243">Source line 243</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6a7c764684db">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.adaptiveCumulativeAggregateVisitCountAt_eq_sum</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The aggregate count is the literal sum over prior episodes and stages.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> adaptiveCumulativeAggregateVisitCountAt_eq_sum {mdp : MDP State Action} {episodes : Nat} (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat) (state : State) (action : Action) : adaptiveCumulativeAggregateVisitCountAt trajectory round state action = ∑ i : Fin (round + <span class="num">1</span>), ∑ stage : Fin mdp.horizon, (trajectory i).visitCount stage state action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L253">Source line 253</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-32fdb5617471">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.adaptiveCumulativeAggregateVisitCountAt_succ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Extending the generated prefix adds exactly one episode&#x27;s stage visits.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> adaptiveCumulativeAggregateVisitCountAt_succ {mdp : MDP State Action} {episodes : Nat} (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat) (state : State) (action : Action) : adaptiveCumulativeAggregateVisitCountAt trajectory (round + <span class="num">1</span>) state action = adaptiveCumulativeAggregateVisitCountAt trajectory round state action + ∑ stage : Fin mdp.horizon, (trajectory (round + <span class="num">1</span>)).visitCount stage state action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L269">Source line 269</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-37044b362dd4">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeEmpiricalModelState.empiricalReward</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Empirical reward with the explicit zero-count convention.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> AdaptiveCumulativeEmpiricalModelState.empiricalReward {mdp : MDP State Action} (model : AdaptiveCumulativeEmpiricalModelState mdp) (stage : Fin mdp.horizon) (state : State) (action : Action) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L283">Source line 283</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-db2f2411ba55">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeEmpiricalModelState.empiricalReward_of_visitCount_eq_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> AdaptiveCumulativeEmpiricalModelState.empiricalReward_of_visitCount_eq_zero {mdp : MDP State Action} (model : AdaptiveCumulativeEmpiricalModelState mdp) (stage : Fin mdp.horizon) (state : State) (action : Action) (hzero : model.<span class="num">1</span>.visitCount stage state action = <span class="num">0</span>) : model.empiricalReward stage state action = <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L294">Source line 294</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9dc652641be6">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.totalSteps</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Total number of environment time steps after `episodes` episodes.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> totalSteps (mdp : MDP State Action) (episodes : Nat) : Nat</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L305">Source line 305</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ee9811df10f5">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.confidenceNumerator</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Integer numerator used in the UCBVI-CH logarithmic factor.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> confidenceNumerator (mdp : MDP State Action) (episodes : Nat) : Nat</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L309">Source line 309</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9e9af9a5f255">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.logFactor</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Safe total version of the UCBVI-CH logarithmic factor.  The `max 1` only
+specifies invalid/degenerate inputs and disappears under the positive task
+contract.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> logFactor (mdp : MDP State Action) (episodes : Nat) (delta : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L319">Source line 319</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f23fab3f02ad">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.one_le_confidenceNumerator_div</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> one_le_confidenceNumerator_div (mdp : MDP State Action) (episodes : Nat) (delta : Real) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hepisodes : <span class="num">0</span> &lt; episodes) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) : <span class="num">1</span> &lt;= ((confidenceNumerator (State := State) (Action := Action) mdp episodes : Nat) : Real) / delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L327">Source line 327</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d7383c28c334">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.logFactor_eq_paper</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">On the task domain, the safe total logarithm is exactly the paper factor.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> logFactor_eq_paper (mdp : MDP State Action) (episodes : Nat) (delta : Real) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hepisodes : <span class="num">0</span> &lt; episodes) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) : logFactor (State := State) (Action := Action) mdp episodes delta = Real.log (((confidenceNumerator (State := State) (Action := Action) mdp episodes : Nat) : Real) / delta)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L349">Source line 349</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-209bc248764a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.logFactor_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> logFactor_nonneg (mdp : MDP State Action) (episodes : Nat) (delta : Real) : <span class="num">0</span> &lt;= logFactor (State := State) (Action := Action) mdp episodes delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L365">Source line 365</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-da1b07352775">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.scale</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Paper-shaped Hoeffding scale `7 H L`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> scale (mdp : MDP State Action) (episodes : Nat) (delta : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L372">Source line 372</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-82773724e1d8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.scale_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> scale_nonneg (mdp : MDP State Action) (episodes : Nat) (delta : Real) : <span class="num">0</span> &lt;= scale (State := State) (Action := Action) mdp episodes delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L380">Source line 380</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e5436bb12709">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.countRadius</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Clipped Hoeffding radius: `H` at zero visits and
+`min H (7 H L / sqrt N)` afterwards.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> countRadius (mdp : MDP State Action) (episodes : Nat) (delta : Real) : TransitionCountRadius</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L392">Source line 392</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0c96fde311b6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.countRadius_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> countRadius_zero (mdp : MDP State Action) (episodes : Nat) (delta : Real) : (countRadius (State := State) (Action := Action) mdp episodes delta).radius <span class="num">0</span> = (mdp.horizon : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L404">Source line 404</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-37d4c3ff5b62">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.countRadius_of_pos</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> countRadius_of_pos (mdp : MDP State Action) (episodes : Nat) (delta : Real) {count : Nat} (hcount : <span class="num">0</span> &lt; count) : (countRadius (State := State) (Action := Action) mdp episodes delta).radius count = min (mdp.horizon : Real) (scale (State := State) (Action := Action) mdp episodes delta / Real.sqrt count)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L413">Source line 413</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-867ef5967fc6">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.source</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">One-episode-at-a-time cumulative optimistic source.  Coordinate zero follows
+`initialTable`; coordinate `n+1` is generated by the pure optimistic policy
+computed from all coordinates through `n`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> source (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (episodes : Nat) (delta : Real) : AdaptiveEpisodeBatchSource mdp initialState <span class="num">1</span> <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L430">Source line 430</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-60c70f9b4c25">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.source_successorPolicy_eq_optimisticPolicy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The next policy is exactly the cumulative empirical optimistic plan.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> source_successorPolicy_eq_optimisticPolicy (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) (history : EpisodeBatchPrefix mdp <span class="num">1</span> n) : (source mdp initialState initialTable defaultState episodes delta).successorPolicy n history = (history.cumulativeTransitionCountSummary.countRadiusOptimisticPlan mdp defaultState (countRadius (State := State) (Action := Action) mdp episodes delta) ).optimisticPolicy</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L461">Source line 461</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e07fe88bb6c4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.source_policyAt_succ_eq_optimisticPolicy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">On a complete generated trajectory, the policy at successor episode `n+1`
+uses exactly the cumulative counts through `n`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> source_policyAt_succ_eq_optimisticPolicy (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (episodes : Nat) (delta : Real) (trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>) (n : Nat) : (source mdp initialState initialTable defaultState episodes delta).policyAt trajectory (n + <span class="num">1</span>) = (adaptiveCumulativeEmpiricalOptimisticPlanAt trajectory defaultState (countRadius (State := State) (Action := Action) mdp episodes delta) n ).optimisticPolicy</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L480">Source line 480</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7633d3c49bdd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.source_policyAt_succ_eq_modelState_optimisticPolicy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The policy/model alignment names the paired cumulative state explicitly.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> source_policyAt_succ_eq_modelState_optimisticPolicy (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (episodes : Nat) (delta : Real) (trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>) (n : Nat) : (source mdp initialState initialTable defaultState episodes delta).policyAt trajectory (n + <span class="num">1</span>) = ((adaptiveCumulativeEmpiricalModelStateAt trajectory n).<span class="num">1</span> |&gt;.countRadiusOptimisticPlan mdp defaultState (countRadius (State := State) (Action := Action) mdp episodes delta) |&gt;.optimisticPolicy)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeHoeffdingUCBVI.lean.html#L495">Source line 495</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

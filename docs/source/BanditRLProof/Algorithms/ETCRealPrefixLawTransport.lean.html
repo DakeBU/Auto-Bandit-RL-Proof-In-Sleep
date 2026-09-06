@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Algorithms.ETCFiniteArmRewardLaw</span>
+<span id="L2">2 import BanditRLProof.Algorithms.ETCRealInfinitePiTail</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Native Real ETC finite-prefix law transport</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module factors the native Real ETC commit, action, and finite-horizon</span>
+<span id="L8">8 kernel regret through the finite exploration reward prefix. It then transports</span>
+<span id="L9">9 the canonical infinite-product regret bound to an arbitrary probability space</span>
+<span id="L10">10 from equality of that finite-prefix pushforward law. A final adapter permits</span>
+<span id="L11">11 an external action process that agrees almost surely with the local ETC action.</span>
+<span id="L12">12 -/</span>
+<span id="L13">13 </span>
+<span id="L14">14 namespace BanditRLProof</span>
+<span id="L15">15 </span>
+<span id="L16">16 open MeasureTheory</span>
+<span id="L17">17 </span>
+<span id="L18">18 namespace ETC</span>
+<span id="L19">19 </span>
+<span id="L20">20 /-- The reward coordinates read during ETC exploration. -/</span>
+<span id="L21">21 def realExplorationRewardPrefix {K : Nat} (spec : ETC.Spec K)</span>
+<span id="L22">22     (trajectory : RewardTrace Real) : Fin (spec.explorationPulls * K) -&gt; Real :=</span>
+<span id="L23">23   fun t =&gt; trajectory t.1</span>
+<span id="L24">24 </span>
+<span id="L25">25 /-- Extend a finite exploration prefix by zero outside the exploration phase. -/</span>
+<span id="L26">26 def realRewardTraceOfExplorationPrefix {K : Nat} (spec : ETC.Spec K)</span>
+<span id="L27">27     (rewardPrefix : Fin (spec.explorationPulls * K) -&gt; Real) : RewardTrace Real :=</span>
+<span id="L28">28   fun t =&gt; if ht : t &lt; spec.explorationPulls * K then rewardPrefix ⟨t, ht⟩ else 0</span>
+<span id="L29">29 </span>
+<span id="L30">30 /-- Taking the exploration prefix after extension recovers the original prefix. -/</span>
+<span id="L31">31 @[simp] theorem realExplorationRewardPrefix_realRewardTraceOfExplorationPrefix</span>
+<span id="L32">32     {K : Nat} (spec : ETC.Spec K)</span>
+<span id="L33">33     (rewardPrefix : Fin (spec.explorationPulls * K) -&gt; Real) :</span>
+<span id="L34">34     ETC.realExplorationRewardPrefix spec</span>
+<span id="L35">35         (ETC.realRewardTraceOfExplorationPrefix spec rewardPrefix) =</span>
+<span id="L36">36       rewardPrefix := by</span>
+<span id="L37">37   funext t</span>
+<span id="L38">38   simp [ETC.realExplorationRewardPrefix,</span>
+<span id="L39">39     ETC.realRewardTraceOfExplorationPrefix, t.isLt]</span>
+<span id="L40">40 </span>
+<span id="L41">41 /-- Prefix extraction from a Real reward trace is measurable. -/</span>
+<span id="L42">42 theorem measurable_realExplorationRewardPrefix {K : Nat} (spec : ETC.Spec K) :</span>
+<span id="L43">43     Measurable (ETC.realExplorationRewardPrefix spec) := by</span>
+<span id="L44">44   exact measurable_pi_lambda _ (fun t =&gt; measurable_pi_apply t.1)</span>
+<span id="L45">45 </span>
+<span id="L46">46 /-- Zero extension of a finite Real reward prefix is measurable. -/</span>
+<span id="L47">47 theorem measurable_realRewardTraceOfExplorationPrefix {K : Nat}</span>
+<span id="L48">48     (spec : ETC.Spec K) :</span>
+<span id="L49">49     Measurable (ETC.realRewardTraceOfExplorationPrefix spec) := by</span>
+<span id="L50">50   apply measurable_pi_lambda</span>
+<span id="L51">51   intro t</span>
+<span id="L52">52   by_cases ht : t &lt; spec.explorationPulls * K</span>
+<span id="L53">53   · simpa [ETC.realRewardTraceOfExplorationPrefix, ht] using</span>
+<span id="L54">54       (measurable_pi_apply (⟨t, ht⟩ : Fin (spec.explorationPulls * K)))</span>
+<span id="L55">55   · simp [ETC.realRewardTraceOfExplorationPrefix, ht]</span>
+<span id="L56">56 </span>
+<span id="L57">57 /-- Timewise measurable rewards give a measurable finite exploration prefix. -/</span>
+<span id="L58">58 theorem measurable_realExplorationRewardPrefix_comp</span>
+<span id="L59">59     {Omega : Type u} {K : Nat} [MeasurableSpace Omega]</span>
+<span id="L60">60     (spec : ETC.Spec K) (reward : Omega -&gt; RewardTrace Real)</span>
+<span id="L61">61     (hreward : forall t, Measurable (fun omega =&gt; reward omega t)) :</span>
+<span id="L62">62     Measurable (fun omega =&gt;</span>
+<span id="L63">63       ETC.realExplorationRewardPrefix spec (reward omega)) := by</span>
+<span id="L64">64   exact measurable_pi_lambda _ (fun t =&gt; hreward t.1)</span>
+<span id="L65">65 </span>
+<span id="L66">66 /-- Reward sums agree when the reward traces agree before the horizon. -/</span>
+<span id="L67">67 theorem sumRewards_eq_of_eq_on_lt</span>
+<span id="L68">68     {Action Reward : Type} [DecidableEq Action] [AddCommMonoid Reward]</span>
+<span id="L69">69     (action : ActionTrace Action) (reward reward&#x27; : RewardTrace Reward)</span>
+<span id="L70">70     (a : Action) (n : Nat)</span>
+<span id="L71">71     (hreward : forall t, t &lt; n -&gt; reward t = reward&#x27; t) :</span>
+<span id="L72">72     sumRewards action reward a n = sumRewards action reward&#x27; a n := by</span>
+<span id="L73">73   rw [sumRewards_eq_finset_filter_sum, sumRewards_eq_finset_filter_sum]</span>
+<span id="L74">74   apply Finset.sum_congr rfl</span>
+<span id="L75">75   intro t ht</span>
+<span id="L76">76   exact hreward t (Finset.mem_range.mp (Finset.mem_filter.mp ht).1)</span>
+<span id="L77">77 </span>
+<span id="L78">78 /-- Native Real exploration means depend only on the exploration reward prefix. -/</span>
+<span id="L79">79 theorem realEmpMeanAtExploration_eq_of_eq_on_exploration</span>
+<span id="L80">80     {K : Nat} (spec : ETC.Spec K) (baseCommitArm : Fin K)</span>
+<span id="L81">81     (reward reward&#x27; : RewardTrace Real)</span>
+<span id="L82">82     (hreward : forall t, t &lt; spec.explorationPulls * K -&gt;</span>
+<span id="L83">83       reward t = reward&#x27; t) (a : Fin K) :</span>
+<span id="L84">84     ETC.realEmpMeanAtExploration spec baseCommitArm reward a =</span>
+<span id="L85">85       ETC.realEmpMeanAtExploration spec baseCommitArm reward&#x27; a := by</span>
+<span id="L86">86   rw [ETC.realEmpMeanAtExploration_eq_sumRewards_div_explorationPulls,</span>
+<span id="L87">87     ETC.realEmpMeanAtExploration_eq_sumRewards_div_explorationPulls]</span>
+<span id="L88">88   congr 1</span>
+<span id="L89">89   exact ETC.sumRewards_eq_of_eq_on_lt</span>
+<span id="L90">90     (ETC.actionWithCommit spec baseCommitArm) reward reward&#x27; a</span>
+<span id="L91">91     (spec.explorationPulls * K) hreward</span>
+<span id="L92">92 </span>
+<span id="L93">93 /-- Native Real empirical argmax commit depends only on exploration rewards. -/</span>
+<span id="L94">94 theorem realExplorationArgmaxCommit_eq_of_eq_on_exploration</span>
+<span id="L95">95     {K : Nat} (spec : ETC.Spec K) (baseCommitArm : Fin K)</span>
+<span id="L96">96     (reward reward&#x27; : RewardTrace Real)</span>
+<span id="L97">97     (hreward : forall t, t &lt; spec.explorationPulls * K -&gt;</span>
+<span id="L98">98       reward t = reward&#x27; t) :</span>
+<span id="L99">99     ETC.realExplorationArgmaxCommit spec baseCommitArm reward =</span>
+<span id="L100">100       ETC.realExplorationArgmaxCommit spec baseCommitArm reward&#x27; := by</span>
+<span id="L101">101   unfold ETC.realExplorationArgmaxCommit</span>
+<span id="L102">102   congr 1</span>
+<span id="L103">103   funext a</span>
+<span id="L104">104   exact ETC.realEmpMeanAtExploration_eq_of_eq_on_exploration</span>
+<span id="L105">105     spec baseCommitArm reward reward&#x27; hreward a</span>
+<span id="L106">106 </span>
+<span id="L107">107 /-- Extending the extracted prefix does not change the ETC commit arm. -/</span>
+<span id="L108">108 theorem realExplorationArgmaxCommit_realRewardTraceOf_prefix_eq</span>
+<span id="L109">109     {K : Nat} (spec : ETC.Spec K) (baseCommitArm : Fin K)</span>
+<span id="L110">110     (trajectory : RewardTrace Real) :</span>
+<span id="L111">111     ETC.realExplorationArgmaxCommit spec baseCommitArm trajectory =</span>
+<span id="L112">112       ETC.realExplorationArgmaxCommit spec baseCommitArm</span>
+<span id="L113">113         (ETC.realRewardTraceOfExplorationPrefix spec</span>
+<span id="L114">114           (ETC.realExplorationRewardPrefix spec trajectory)) := by</span>
+<span id="L115">115   apply ETC.realExplorationArgmaxCommit_eq_of_eq_on_exploration</span>
+<span id="L116">116   intro t ht</span>
+<span id="L117">117   simp [ETC.realRewardTraceOfExplorationPrefix,</span>
+<span id="L118">118     ETC.realExplorationRewardPrefix, ht]</span>
+<span id="L119">119 </span>
+<span id="L120">120 /-- Extending the extracted prefix does not change the native Real ETC action. -/</span>
+<span id="L121">121 theorem realExplorationArgmaxAction_realRewardTraceOf_prefix_eq</span>
+<span id="L122">122     {K : Nat} (spec : ETC.Spec K) (baseCommitArm : Fin K)</span>
+<span id="L123">123     (trajectory : RewardTrace Real) :</span>
+<span id="L124">124     ETC.realExplorationArgmaxAction spec baseCommitArm trajectory =</span>
+<span id="L125">125       ETC.realExplorationArgmaxAction spec baseCommitArm</span>
+<span id="L126">126         (ETC.realRewardTraceOfExplorationPrefix spec</span>
+<span id="L127">127           (ETC.realExplorationRewardPrefix spec trajectory)) := by</span>
+<span id="L128">128   simp only [ETC.realExplorationArgmaxAction]</span>
+<span id="L129">129   rw [ETC.realExplorationArgmaxCommit_realRewardTraceOf_prefix_eq]</span>
+<span id="L130">130 </span>
+<span id="L131">131 /-- Kernel regret is measurable from a timewise measurable finite-arm action. -/</span>
+<span id="L132">132 theorem measurable_realKernelRegret_of_forall_measurable_action</span>
+<span id="L133">133     {Omega : Type u} {K : Nat} [MeasurableSpace Omega]</span>
+<span id="L134">134     (nu : ProbabilityTheory.Kernel (Fin K) Real)</span>
+<span id="L135">135     (action : Omega -&gt; ActionTrace (Fin K))</span>
+<span id="L136">136     (haction : forall t, Measurable (fun omega =&gt; action omega t))</span>
+<span id="L137">137     (n : Nat) :</span>
+<span id="L138">138     Measurable (fun omega =&gt; realKernelRegret nu (action omega) n) := by</span>
+<span id="L139">139   rw [show (fun omega =&gt; realKernelRegret nu (action omega) n) =</span>
+<span id="L140">140       (fun omega =&gt; (Finset.range n).sum</span>
+<span id="L141">141         (fun t =&gt; realKernelGap nu (action omega t))) by</span>
+<span id="L142">142     funext omega</span>
+<span id="L143">143     exact realKernelRegret_eq_finset_sum_gap nu (action omega) n]</span>
+<span id="L144">144   refine Finset.measurable_sum _ ?_</span>
+<span id="L145">145   intro t _ht</span>
+<span id="L146">146   exact (measurable_of_finite (realKernelGap nu)).comp (haction t)</span>
+<span id="L147">147 </span>
+<span id="L148">148 /-- The finite-prefix functional whose value is native Real ETC kernel regret. -/</span>
+<span id="L149">149 noncomputable def realKernelRegretOfExplorationPrefix</span>
+<span id="L150">150     {K : Nat} (spec : ETC.Spec K) (nu : ProbabilityTheory.Kernel (Fin K) Real)</span>
+<span id="L151">151     (baseCommitArm : Fin K) (n : Nat)</span>
+<span id="L152">152     (rewardPrefix : Fin (spec.explorationPulls * K) -&gt; Real) : Real :=</span>
+<span id="L153">153   realKernelRegret nu</span>
+<span id="L154">154     (ETC.realExplorationArgmaxAction spec baseCommitArm</span>
+<span id="L155">155       (ETC.realRewardTraceOfExplorationPrefix spec rewardPrefix)) n</span>
+<span id="L156">156 </span>
+<span id="L157">157 /-- The finite-prefix kernel-regret functional is measurable. -/</span>
+<span id="L158">158 theorem measurable_realKernelRegretOfExplorationPrefix</span>
+<span id="L159">159     {K : Nat} (spec : ETC.Spec K)</span>
+<span id="L160">160     (nu : ProbabilityTheory.Kernel (Fin K) Real)</span>
+<span id="L161">161     (baseCommitArm : Fin K) (n : Nat) :</span>
+<span id="L162">162     Measurable</span>
+<span id="L163">163       (ETC.realKernelRegretOfExplorationPrefix spec nu baseCommitArm n) := by</span>
+<span id="L164">164   let extension := ETC.realRewardTraceOfExplorationPrefix spec</span>
+<span id="L165">165   let commit := fun rewardPrefix : Fin (spec.explorationPulls * K) -&gt; Real =&gt;</span>
+<span id="L166">166     ETC.realExplorationArgmaxCommit spec baseCommitArm (extension rewardPrefix)</span>
+<span id="L167">167   let action := fun rewardPrefix : Fin (spec.explorationPulls * K) -&gt; Real =&gt;</span>
+<span id="L168">168     ETC.actionWithCommit spec (commit rewardPrefix)</span>
+<span id="L169">169   have hextension : Measurable extension :=</span>
+<span id="L170">170     ETC.measurable_realRewardTraceOfExplorationPrefix spec</span>
+<span id="L171">171   have hcommit : Measurable commit := by</span>
+<span id="L172">172     exact ETC.measurable_realExplorationArgmaxCommit</span>
+<span id="L173">173       spec baseCommitArm extension (fun t =&gt; (measurable_pi_apply t).comp hextension)</span>
+<span id="L174">174   have haction : forall t, Measurable (fun rewardPrefix =&gt; action rewardPrefix t) := by</span>
+<span id="L175">175     intro t</span>
+<span id="L176">176     exact (measurable_of_countable</span>
+<span id="L177">177       (fun arm : Fin K =&gt; ETC.actionWithCommit spec arm t)).comp hcommit</span>
+<span id="L178">178   simpa [ETC.realKernelRegretOfExplorationPrefix, extension, commit, action,</span>
+<span id="L179">179     ETC.realExplorationArgmaxAction] using</span>
+<span id="L180">180     (ETC.measurable_realKernelRegret_of_forall_measurable_action</span>
+<span id="L181">181       nu action haction n)</span>
+<span id="L182">182 </span>
+<span id="L183">183 /-- Native Real ETC kernel regret factors through the exploration prefix. -/</span>
+<span id="L184">184 theorem realKernelRegret_realExplorationArgmaxAction_eq_prefixFunctional</span>
+<span id="L185">185     {K : Nat} (spec : ETC.Spec K)</span>
+<span id="L186">186     (nu : ProbabilityTheory.Kernel (Fin K) Real)</span>
+<span id="L187">187     (baseCommitArm : Fin K) (trajectory : RewardTrace Real) (n : Nat) :</span>
+<span id="L188">188     realKernelRegret nu</span>
+<span id="L189">189         (ETC.realExplorationArgmaxAction spec baseCommitArm trajectory) n =</span>
+<span id="L190">190       ETC.realKernelRegretOfExplorationPrefix spec nu baseCommitArm n</span>
+<span id="L191">191         (ETC.realExplorationRewardPrefix spec trajectory) := by</span>
+<span id="L192">192   rw [ETC.realKernelRegretOfExplorationPrefix]</span>
+<span id="L193">193   rw [ETC.realExplorationArgmaxAction_realRewardTraceOf_prefix_eq]</span>
+<span id="L194">194 </span>
+<span id="L195">195 /-- Kernel regret agrees when two action traces agree before the horizon. -/</span>
+<span id="L196">196 theorem realKernelRegret_eq_of_action_eq_on_lt</span>
+<span id="L197">197     {K : Nat} (nu : ProbabilityTheory.Kernel (Fin K) Real)</span>
+<span id="L198">198     (action action&#x27; : ActionTrace (Fin K)) (n : Nat)</span>
+<span id="L199">199     (haction : forall t, t &lt; n -&gt; action t = action&#x27; t) :</span>
+<span id="L200">200     realKernelRegret nu action n = realKernelRegret nu action&#x27; n := by</span>
+<span id="L201">201   rw [realKernelRegret_eq_finset_sum_gap,</span>
+<span id="L202">202     realKernelRegret_eq_finset_sum_gap]</span>
+<span id="L203">203   apply Finset.sum_congr rfl</span>
+<span id="L204">204   intro t ht</span>
+<span id="L205">205   rw [haction t (Finset.mem_range.mp ht)]</span>
+<span id="L206">206 </span>
+<span id="L207">207 /-- A constant-kernel Ionescu-Tulcea trajectory is the infinite product law. -/</span>
+<span id="L208">208 theorem real_trajMeasure_const_eq_infinitePi</span>
+<span id="L209">209     (coordLaw : Nat -&gt; Measure Real)</span>
+<span id="L210">210     [forall t, IsProbabilityMeasure (coordLaw t)] :</span>
+<span id="L211">211     ProbabilityTheory.Kernel.trajMeasure (coordLaw 0)</span>
+<span id="L212">212         (fun i =&gt; ProbabilityTheory.Kernel.const</span>
+<span id="L213">213           ((j : Finset.Iic i) -&gt; Real) (coordLaw (i + 1))) =</span>
+<span id="L214">214       Measure.infinitePi coordLaw := by</span>
+<span id="L215">215   calc</span>
+<span id="L216">216     ProbabilityTheory.Kernel.trajMeasure (coordLaw 0)</span>
+<span id="L217">217         (fun i =&gt; ProbabilityTheory.Kernel.const</span>
+<span id="L218">218           ((j : Finset.Iic i) -&gt; Real) (coordLaw (i + 1))) =</span>
+<span id="L219">219       Measure.infinitePiNat coordLaw := by</span>
+<span id="L220">220         rw [ProbabilityTheory.Kernel.trajMeasure, Measure.infinitePiNat]</span>
+<span id="L221">221         congr 1</span>
+<span id="L222">222         exact</span>
+<span id="L223">223           ((MeasureTheory.measurePreserving_piUnique</span>
+<span id="L224">224             (fun j : Finset.Iic 0 =&gt; coordLaw j)).symm</span>
+<span id="L225">225               (MeasurableEquiv.piUnique (fun _j : Finset.Iic 0 =&gt; Real))).map_eq</span>
+<span id="L226">226     _ = Measure.infinitePi coordLaw := by</span>
+<span id="L227">227       exact (Measure.isProjectiveLimit_infinitePiNat coordLaw).unique</span>
+<span id="L228">228         (Measure.isProjectiveLimit_infinitePi coordLaw)</span>
+<span id="L229">229 </span>
+<span id="L230">230 /-- Convert the inclusive history through `horizon - 1` to a `Fin horizon` prefix. -/</span>
+<span id="L231">231 def realExplorationPrefixOfFiniteRewardHistory</span>
+<span id="L232">232     {K : Nat} (spec : ETC.Spec K)</span>
+<span id="L233">233     (history : History.FiniteRewardHistory Real</span>
+<span id="L234">234       (spec.explorationPulls * K - 1)) :</span>
+<span id="L235">235     Fin (spec.explorationPulls * K) -&gt; Real :=</span>
+<span id="L236">236   fun t =&gt; history</span>
+<span id="L237">237     ⟨t.1, Finset.mem_Iic.mpr (Nat.le_pred_of_lt t.2)⟩</span>
+<span id="L238">238 </span>
+<span id="L239">239 /-- The inclusive-history to `Fin` exploration-prefix conversion is measurable. -/</span>
+<span id="L240">240 theorem measurable_realExplorationPrefixOfFiniteRewardHistory</span>
+<span id="L241">241     {K : Nat} (spec : ETC.Spec K) :</span>
+<span id="L242">242     Measurable (ETC.realExplorationPrefixOfFiniteRewardHistory spec) := by</span>
+<span id="L243">243   exact measurable_pi_lambda _ (fun t =&gt; measurable_pi_apply</span>
+<span id="L244">244     (⟨t.1, Finset.mem_Iic.mpr (Nat.le_pred_of_lt t.2)⟩ :</span>
+<span id="L245">245       Finset.Iic (spec.explorationPulls * K - 1)))</span>
+<span id="L246">246 </span>
+<span id="L247">247 /-- Conversion of a trace&#x27;s inclusive history is its `Fin` exploration prefix. -/</span>
+<span id="L248">248 theorem realExplorationPrefixOfFiniteRewardHistory_of_trace</span>
+<span id="L249">249     {K : Nat} (spec : ETC.Spec K) (trajectory : RewardTrace Real) :</span>
+<span id="L250">250     ETC.realExplorationPrefixOfFiniteRewardHistory spec</span>
+<span id="L251">251         (History.finiteRewardHistoryOfTrace trajectory</span>
+<span id="L252">252           (spec.explorationPulls * K - 1)) =</span>
+<span id="L253">253       ETC.realExplorationRewardPrefix spec trajectory := by</span>
+<span id="L254">254   rfl</span>
+<span id="L255">255 </span>
+<span id="L256">256 /--</span>
+<span id="L257">257 Equality of finite exploration-prefix laws transports the canonical native</span>
+<span id="L258">258 Real ETC exact regret bound to an arbitrary reward process.</span>
+<span id="L259">259 -/</span>
+<span id="L260">260 theorem integral_realKernelRegret_realExplorationArgmaxAction_le_exact_sum_of_prefixLaw_eq_infinitePi</span>
+<span id="L261">261     {Omega : Type u} {K : Nat} [MeasurableSpace Omega]</span>
+<span id="L262">262     (mu : Measure Omega) [IsProbabilityMeasure mu]</span>
+<span id="L263">263     (spec : ETC.Spec K)</span>
+<span id="L264">264     (nu : ProbabilityTheory.Kernel (Fin K) Real)</span>
+<span id="L265">265     [ProbabilityTheory.IsMarkovKernel nu]</span>
+<span id="L266">266     (sigma2 : NNReal)</span>
+<span id="L267">267     (hsubG : forall arm, ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L268">268       (fun reward =&gt; reward - realKernelMean nu arm) sigma2 (nu arm))</span>
+<span id="L269">269     (hm : 0 &lt; spec.explorationPulls) (n : Nat)</span>
+<span id="L270">270     (hn : K * spec.explorationPulls &lt;= n)</span>
+<span id="L271">271     (reward : Omega -&gt; RewardTrace Real)</span>
+<span id="L272">272     (hreward : forall t, Measurable (fun omega =&gt; reward omega t))</span>
+<span id="L273">273     (hprefixLaw :</span>
+<span id="L274">274       Measure.map</span>
+<span id="L275">275           (fun omega =&gt; ETC.realExplorationRewardPrefix spec (reward omega)) mu =</span>
+<span id="L276">276         Measure.map (ETC.realExplorationRewardPrefix spec)</span>
+<span id="L277">277           (Measure.infinitePi (fun t : Nat =&gt; nu (ETC.exploreArm spec t)))) :</span>
+<span id="L278">278     let best := ETC.realKernelBestArm spec.hK nu</span>
+<span id="L279">279     integral mu (fun omega =&gt;</span>
+<span id="L280">280         realKernelRegret nu</span>
+<span id="L281">281           (ETC.realExplorationArgmaxAction spec best (reward omega)) n) &lt;=</span>
+<span id="L282">282       (Finset.univ : Finset (Fin K)).sum (fun arm =&gt;</span>
+<span id="L283">283         realKernelGap nu arm *</span>
+<span id="L284">284           ((spec.explorationPulls : Real) +</span>
+<span id="L285">285             ((n - K * spec.explorationPulls : Nat) : Real) *</span>
+<span id="L286">286               Real.exp</span>
+<span id="L287">287                 (-(spec.explorationPulls : Real) *</span>
+<span id="L288">288                   (realKernelGap nu arm) ^ 2 /</span>
+<span id="L289">289                     (4 * (sigma2 : Real))))) := by</span>
+<span id="L290">290   dsimp only</span>
+<span id="L291">291   let best := ETC.realKernelBestArm spec.hK nu</span>
+<span id="L292">292   let coordLaw := fun t : Nat =&gt; nu (ETC.exploreArm spec t)</span>
+<span id="L293">293   let canonicalMu := Measure.infinitePi coordLaw</span>
+<span id="L294">294   let prefixFunctional :=</span>
+<span id="L295">295     ETC.realKernelRegretOfExplorationPrefix spec nu best n</span>
+<span id="L296">296   have hprefix_external : Measurable (fun omega =&gt;</span>
+<span id="L297">297       ETC.realExplorationRewardPrefix spec (reward omega)) :=</span>
+<span id="L298">298     ETC.measurable_realExplorationRewardPrefix_comp spec reward hreward</span>
+<span id="L299">299   have hprefix_canonical : Measurable</span>
+<span id="L300">300       (ETC.realExplorationRewardPrefix spec) :=</span>
+<span id="L301">301     ETC.measurable_realExplorationRewardPrefix spec</span>
+<span id="L302">302   have hfunctional : Measurable prefixFunctional :=</span>
+<span id="L303">303     ETC.measurable_realKernelRegretOfExplorationPrefix spec nu best n</span>
+<span id="L304">304   have hintegral_prefix :</span>
+<span id="L305">305       integral mu (fun omega =&gt; prefixFunctional</span>
+<span id="L306">306           (ETC.realExplorationRewardPrefix spec (reward omega))) =</span>
+<span id="L307">307         integral canonicalMu (fun trajectory : RewardTrace Real =&gt;</span>
+<span id="L308">308           prefixFunctional (ETC.realExplorationRewardPrefix spec trajectory)) := by</span>
+<span id="L309">309     calc</span>
+<span id="L310">310       integral mu (fun omega =&gt; prefixFunctional</span>
+<span id="L311">311           (ETC.realExplorationRewardPrefix spec (reward omega))) =</span>
+<span id="L312">312         integral (Measure.map</span>
+<span id="L313">313           (fun omega =&gt; ETC.realExplorationRewardPrefix spec (reward omega)) mu)</span>
+<span id="L314">314           prefixFunctional := by</span>
+<span id="L315">315             exact (integral_map hprefix_external.aemeasurable</span>
+<span id="L316">316               hfunctional.aestronglyMeasurable).symm</span>
+<span id="L317">317       _ = integral (Measure.map (ETC.realExplorationRewardPrefix spec)</span>
+<span id="L318">318           canonicalMu) prefixFunctional := by</span>
+<span id="L319">319             rw [show Measure.map</span>
+<span id="L320">320                 (fun omega =&gt; ETC.realExplorationRewardPrefix spec (reward omega)) mu =</span>
+<span id="L321">321               Measure.map (ETC.realExplorationRewardPrefix spec) canonicalMu by</span>
+<span id="L322">322                 simpa [canonicalMu, coordLaw] using hprefixLaw]</span>
+<span id="L323">323       _ = integral canonicalMu (fun trajectory : RewardTrace Real =&gt;</span>
+<span id="L324">324           prefixFunctional (ETC.realExplorationRewardPrefix spec trajectory)) := by</span>
+<span id="L325">325             exact integral_map hprefix_canonical.aemeasurable</span>
+<span id="L326">326               hfunctional.aestronglyMeasurable</span>
+<span id="L327">327   calc</span>
+<span id="L328">328     integral mu (fun omega =&gt;</span>
+<span id="L329">329         realKernelRegret nu</span>
+<span id="L330">330           (ETC.realExplorationArgmaxAction spec best (reward omega)) n) =</span>
+<span id="L331">331       integral mu (fun omega =&gt; prefixFunctional</span>
+<span id="L332">332         (ETC.realExplorationRewardPrefix spec (reward omega))) := by</span>
+<span id="L333">333           apply integral_congr_ae</span>
+<span id="L334">334           exact Filter.Eventually.of_forall (fun omega =&gt;</span>
+<span id="L335">335             ETC.realKernelRegret_realExplorationArgmaxAction_eq_prefixFunctional</span>
+<span id="L336">336               spec nu best (reward omega) n)</span>
+<span id="L337">337     _ = integral canonicalMu (fun trajectory : RewardTrace Real =&gt;</span>
+<span id="L338">338         prefixFunctional (ETC.realExplorationRewardPrefix spec trajectory)) :=</span>
+<span id="L339">339       hintegral_prefix</span>
+<span id="L340">340     _ = integral canonicalMu (fun trajectory : RewardTrace Real =&gt;</span>
+<span id="L341">341         realKernelRegret nu</span>
+<span id="L342">342           (ETC.realExplorationArgmaxAction spec best trajectory) n) := by</span>
+<span id="L343">343           apply integral_congr_ae</span>
+<span id="L344">344           exact Filter.Eventually.of_forall (fun trajectory =&gt;</span>
+<span id="L345">345             (ETC.realKernelRegret_realExplorationArgmaxAction_eq_prefixFunctional</span>
+<span id="L346">346               spec nu best trajectory n).symm)</span>
+<span id="L347">347     _ &lt;= (Finset.univ : Finset (Fin K)).sum (fun arm =&gt;</span>
+<span id="L348">348         realKernelGap nu arm *</span>
+<span id="L349">349           ((spec.explorationPulls : Real) +</span>
+<span id="L350">350             ((n - K * spec.explorationPulls : Nat) : Real) *</span>
+<span id="L351">351               Real.exp</span>
+<span id="L352">352                 (-(spec.explorationPulls : Real) *</span>
+<span id="L353">353                   (realKernelGap nu arm) ^ 2 /</span>
+<span id="L354">354                     (4 * (sigma2 : Real))))) := by</span>
+<span id="L355">355           simpa [canonicalMu, coordLaw, best] using</span>
+<span id="L356">356             (ETC.integral_realKernelRegret_realExplorationArgmaxAction_le_exact_sum_of_infinitePi_kernel</span>
+<span id="L357">357               spec nu sigma2 hsubG hm n hn)</span>
+<span id="L358">358 </span>
+<span id="L359">359 /--</span>
+<span id="L360">360 External-action version of the finite-prefix law transport theorem. The two</span>
+<span id="L361">361 remaining upstream obligations are explicit: finite-prefix reward law equality</span>
+<span id="L362">362 and almost-sure equality with the local native Real ETC action.</span>
+<span id="L363">363 -/</span>
+<span id="L364">364 theorem integral_realKernelRegret_externalAction_le_exact_sum_of_prefixLaw_eq_infinitePi</span>
+<span id="L365">365     {Omega : Type u} {K : Nat} [MeasurableSpace Omega]</span>
+<span id="L366">366     (mu : Measure Omega) [IsProbabilityMeasure mu]</span>
+<span id="L367">367     (spec : ETC.Spec K)</span>
+<span id="L368">368     (nu : ProbabilityTheory.Kernel (Fin K) Real)</span>
+<span id="L369">369     [ProbabilityTheory.IsMarkovKernel nu]</span>
+<span id="L370">370     (sigma2 : NNReal)</span>
+<span id="L371">371     (hsubG : forall arm, ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L372">372       (fun reward =&gt; reward - realKernelMean nu arm) sigma2 (nu arm))</span>
+<span id="L373">373     (hm : 0 &lt; spec.explorationPulls) (n : Nat)</span>
+<span id="L374">374     (hn : K * spec.explorationPulls &lt;= n)</span>
+<span id="L375">375     (action : Omega -&gt; ActionTrace (Fin K))</span>
+<span id="L376">376     (reward : Omega -&gt; RewardTrace Real)</span>
+<span id="L377">377     (hreward : forall t, Measurable (fun omega =&gt; reward omega t))</span>
+<span id="L378">378     (hprefixLaw :</span>
+<span id="L379">379       Measure.map</span>
+<span id="L380">380           (fun omega =&gt; ETC.realExplorationRewardPrefix spec (reward omega)) mu =</span>
+<span id="L381">381         Measure.map (ETC.realExplorationRewardPrefix spec)</span>
+<span id="L382">382           (Measure.infinitePi (fun t : Nat =&gt; nu (ETC.exploreArm spec t))))</span>
+<span id="L383">383     (haction : Filter.Eventually</span>
+<span id="L384">384       (fun omega =&gt; forall t, t &lt; n -&gt;</span>
+<span id="L385">385         action omega t =</span>
+<span id="L386">386           ETC.realExplorationArgmaxAction spec</span>
+<span id="L387">387             (ETC.realKernelBestArm spec.hK nu) (reward omega) t)</span>
+<span id="L388">388       (ae mu)) :</span>
+<span id="L389">389     integral mu (fun omega =&gt; realKernelRegret nu (action omega) n) &lt;=</span>
+<span id="L390">390       (Finset.univ : Finset (Fin K)).sum (fun arm =&gt;</span>
+<span id="L391">391         realKernelGap nu arm *</span>
+<span id="L392">392           ((spec.explorationPulls : Real) +</span>
+<span id="L393">393             ((n - K * spec.explorationPulls : Nat) : Real) *</span>
+<span id="L394">394               Real.exp</span>
+<span id="L395">395                 (-(spec.explorationPulls : Real) *</span>
+<span id="L396">396                   (realKernelGap nu arm) ^ 2 /</span>
+<span id="L397">397                     (4 * (sigma2 : Real))))) := by</span>
+<span id="L398">398   calc</span>
+<span id="L399">399     integral mu (fun omega =&gt; realKernelRegret nu (action omega) n) =</span>
+<span id="L400">400       integral mu (fun omega =&gt; realKernelRegret nu</span>
+<span id="L401">401         (ETC.realExplorationArgmaxAction spec</span>
+<span id="L402">402           (ETC.realKernelBestArm spec.hK nu) (reward omega)) n) := by</span>
+<span id="L403">403             apply integral_congr_ae</span>
+<span id="L404">404             filter_upwards [haction] with omega haction_eq</span>
+<span id="L405">405             exact ETC.realKernelRegret_eq_of_action_eq_on_lt</span>
+<span id="L406">406               nu (action omega)</span>
+<span id="L407">407               (ETC.realExplorationArgmaxAction spec</span>
+<span id="L408">408                 (ETC.realKernelBestArm spec.hK nu) (reward omega))</span>
+<span id="L409">409               n haction_eq</span>
+<span id="L410">410     _ &lt;= (Finset.univ : Finset (Fin K)).sum (fun arm =&gt;</span>
+<span id="L411">411         realKernelGap nu arm *</span>
+<span id="L412">412           ((spec.explorationPulls : Real) +</span>
+<span id="L413">413             ((n - K * spec.explorationPulls : Nat) : Real) *</span>
+<span id="L414">414               Real.exp</span>
+<span id="L415">415                 (-(spec.explorationPulls : Real) *</span>
+<span id="L416">416                   (realKernelGap nu arm) ^ 2 /</span>
+<span id="L417">417                     (4 * (sigma2 : Real))))) :=</span>
+<span id="L418">418       ETC.integral_realKernelRegret_realExplorationArgmaxAction_le_exact_sum_of_prefixLaw_eq_infinitePi</span>
+<span id="L419">419         mu spec nu sigma2 hsubG hm n hn reward hreward hprefixLaw</span>
+<span id="L420">420 </span>
+<span id="L421">421 /--</span>
+<span id="L422">422 External native Real exact ETC regret from the scheduled exploration-arm</span>
+<span id="L423">423 initial marginal and successor conditional reward laws. This is the direct</span>
+<span id="L424">424 law surface needed before mapping an upstream `IsAlgEnvSeq` witness.</span>
+<span id="L425">425 -/</span>
+<span id="L426">426 theorem integral_realKernelRegret_externalAction_le_exact_sum_of_initial_map_eq_condDistrib</span>
+<span id="L427">427     {Omega : Type u} {K : Nat} [MeasurableSpace Omega]</span>
+<span id="L428">428     (mu : Measure Omega) [IsProbabilityMeasure mu]</span>
+<span id="L429">429     (spec : ETC.Spec K)</span>
+<span id="L430">430     (nu : ProbabilityTheory.Kernel (Fin K) Real)</span>
+<span id="L431">431     [ProbabilityTheory.IsMarkovKernel nu]</span>
+<span id="L432">432     (sigma2 : NNReal)</span>
+<span id="L433">433     (hsubG : forall arm, ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L434">434       (fun reward =&gt; reward - realKernelMean nu arm) sigma2 (nu arm))</span>
+<span id="L435">435     (hm : 0 &lt; spec.explorationPulls) (n : Nat)</span>
+<span id="L436">436     (hn : K * spec.explorationPulls &lt;= n)</span>
+<span id="L437">437     (action : Omega -&gt; ActionTrace (Fin K))</span>
+<span id="L438">438     (reward : Omega -&gt; RewardTrace Real)</span>
+<span id="L439">439     (hreward : forall t, Measurable (fun omega =&gt; reward omega t))</span>
+<span id="L440">440     (hzero : Measure.map (fun omega =&gt; reward omega 0) mu =</span>
+<span id="L441">441       nu (ETC.exploreArm spec 0))</span>
+<span id="L442">442     (hcond : forall i, i &lt; spec.explorationPulls * K - 1 -&gt;</span>
+<span id="L443">443       ProbabilityTheory.condDistrib</span>
+<span id="L444">444           (fun omega =&gt; reward omega (i + 1))</span>
+<span id="L445">445           (fun omega =&gt;</span>
+<span id="L446">446             History.finiteRewardHistoryOfTrace (reward omega) i)</span>
+<span id="L447">447           mu =ᵐ[mu.map (fun omega =&gt;</span>
+<span id="L448">448             History.finiteRewardHistoryOfTrace (reward omega) i)]</span>
+<span id="L449">449         ProbabilityTheory.Kernel.const</span>
+<span id="L450">450           (History.FiniteRewardHistory Real i)</span>
+<span id="L451">451           (nu (ETC.exploreArm spec (i + 1))))</span>
+<span id="L452">452     (haction : Filter.Eventually</span>
+<span id="L453">453       (fun omega =&gt; forall t, t &lt; n -&gt;</span>
+<span id="L454">454         action omega t =</span>
+<span id="L455">455           ETC.realExplorationArgmaxAction spec</span>
+<span id="L456">456             (ETC.realKernelBestArm spec.hK nu) (reward omega) t)</span>
+<span id="L457">457       (ae mu)) :</span>
+<span id="L458">458     integral mu (fun omega =&gt; realKernelRegret nu (action omega) n) &lt;=</span>
+<span id="L459">459       (Finset.univ : Finset (Fin K)).sum (fun arm =&gt;</span>
+<span id="L460">460         realKernelGap nu arm *</span>
+<span id="L461">461           ((spec.explorationPulls : Real) +</span>
+<span id="L462">462             ((n - K * spec.explorationPulls : Nat) : Real) *</span>
+<span id="L463">463               Real.exp</span>
+<span id="L464">464                 (-(spec.explorationPulls : Real) *</span>
+<span id="L465">465                   (realKernelGap nu arm) ^ 2 /</span>
+<span id="L466">466                     (4 * (sigma2 : Real))))) := by</span>
+<span id="L467">467   let coordLaw := fun t : Nat =&gt; nu (ETC.exploreArm spec t)</span>
+<span id="L468">468   let stepKernel := fun i =&gt; ProbabilityTheory.Kernel.const</span>
+<span id="L469">469     (History.FiniteRewardHistory Real i) (coordLaw (i + 1))</span>
+<span id="L470">470   letI : forall t, IsProbabilityMeasure (coordLaw t) := fun _t =&gt; inferInstance</span>
+<span id="L471">471   let trajMeasure := ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L472">472     (X := fun _ : Nat =&gt; Real) (coordLaw 0) stepKernel</span>
+<span id="L473">473   let historyMap : RewardTrace Real -&gt;</span>
+<span id="L474">474       History.FiniteRewardHistory Real (spec.explorationPulls * K - 1) :=</span>
+<span id="L475">475     fun trajectory =&gt; History.finiteRewardHistoryOfTrace trajectory</span>
+<span id="L476">476       (spec.explorationPulls * K - 1)</span>
+<span id="L477">477   let convert := ETC.realExplorationPrefixOfFiniteRewardHistory spec</span>
+<span id="L478">478   have hhistory_external : Measurable (fun omega =&gt; historyMap (reward omega)) := by</span>
+<span id="L479">479     exact History.measurable_finiteRewardHistoryOfTrace reward hreward</span>
+<span id="L480">480       (spec.explorationPulls * K - 1)</span>
+<span id="L481">481   have hhistory_canonical : Measurable historyMap := by</span>
+<span id="L482">482     exact History.measurable_finiteRewardHistoryOfTrace</span>
+<span id="L483">483       (fun trajectory : RewardTrace Real =&gt; trajectory)</span>
+<span id="L484">484       (fun t =&gt; measurable_pi_apply t)</span>
+<span id="L485">485       (spec.explorationPulls * K - 1)</span>
+<span id="L486">486   have hconvert : Measurable convert :=</span>
+<span id="L487">487     ETC.measurable_realExplorationPrefixOfFiniteRewardHistory spec</span>
+<span id="L488">488   have hprefix_history :</span>
+<span id="L489">489       Measure.map (fun omega =&gt; historyMap (reward omega)) mu =</span>
+<span id="L490">490         Measure.map historyMap trajMeasure := by</span>
+<span id="L491">491     exact RewardKernel.rewardTrace_prefix_map_eq_trajMeasure_of_condDistrib</span>
+<span id="L492">492       mu (coordLaw 0) reward hreward stepKernel</span>
+<span id="L493">493       (by simpa [coordLaw] using hzero)</span>
+<span id="L494">494       (spec.explorationPulls * K - 1)</span>
+<span id="L495">495       (by</span>
+<span id="L496">496         intro i hi</span>
+<span id="L497">497         simpa [stepKernel, coordLaw] using hcond i hi)</span>
+<span id="L498">498   have hprefix_converted := congrArg (Measure.map convert) hprefix_history</span>
+<span id="L499">499   rw [Measure.map_map hconvert hhistory_external,</span>
+<span id="L500">500     Measure.map_map hconvert hhistory_canonical] at hprefix_converted</span>
+<span id="L501">501   have hcomp_external :</span>
+<span id="L502">502       convert ∘ (fun omega =&gt; historyMap (reward omega)) =</span>
+<span id="L503">503         fun omega =&gt; ETC.realExplorationRewardPrefix spec (reward omega) := by</span>
+<span id="L504">504     funext omega</span>
+<span id="L505">505     exact ETC.realExplorationPrefixOfFiniteRewardHistory_of_trace</span>
+<span id="L506">506       spec (reward omega)</span>
+<span id="L507">507   have hcomp_canonical : convert ∘ historyMap =</span>
+<span id="L508">508       ETC.realExplorationRewardPrefix spec := by</span>
+<span id="L509">509     funext trajectory</span>
+<span id="L510">510     exact ETC.realExplorationPrefixOfFiniteRewardHistory_of_trace</span>
+<span id="L511">511       spec trajectory</span>
+<span id="L512">512   have htraj : trajMeasure = Measure.infinitePi coordLaw := by</span>
+<span id="L513">513     simpa [trajMeasure, stepKernel] using</span>
+<span id="L514">514       (ETC.real_trajMeasure_const_eq_infinitePi coordLaw)</span>
+<span id="L515">515   rw [hcomp_external, hcomp_canonical, htraj] at hprefix_converted</span>
+<span id="L516">516   exact</span>
+<span id="L517">517     ETC.integral_realKernelRegret_externalAction_le_exact_sum_of_prefixLaw_eq_infinitePi</span>
+<span id="L518">518       mu spec nu sigma2 hsubG hm n hn action reward hreward</span>
+<span id="L519">519       (by simpa [coordLaw] using hprefix_converted) haction</span>
+<span id="L520">520 </span>
+<span id="L521">521 end ETC</span>
+<span id="L522">522 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

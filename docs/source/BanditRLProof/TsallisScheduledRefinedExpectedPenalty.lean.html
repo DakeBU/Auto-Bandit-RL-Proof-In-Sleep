@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/TsallisScheduledRefinedExpectedPenalty.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/TsallisScheduledRefinedExpectedPenalty.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/TsallisScheduledRefinedExpectedPenalty.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/TsallisScheduledRefinedExpectedPenalty.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.TsallisScheduledSuboptimalExpectedBound</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Refined expected penalty for scheduled half-Tsallis FTRL</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module keeps the reciprocal-rate increments from the deterministic</span>
+<span id="L7">7 time-varying penalty theorem instead of collapsing them into a terminal</span>
+<span id="L8">8 potential mass.  The mass above the point-mass baseline is eliminated in</span>
+<span id="L9">9 favor of suboptimal-arm terms, then transported through expectation by the</span>
+<span id="L10">10 compiled square-root Jensen bridge.</span>
+<span id="L11">11 -/</span>
+<span id="L12">12 </span>
+<span id="L13">13 namespace BanditRLProof</span>
+<span id="L14">14 namespace Tsallis</span>
+<span id="L15">15 </span>
+<span id="L16">16 open MeasureTheory ProbabilityTheory</span>
+<span id="L17">17 </span>
+<span id="L18">18 universe u v</span>
+<span id="L19">19 </span>
+<span id="L20">20 /-- The concavity tangent at one bounds the excess of `sqrt x` over `x`. -/</span>
+<span id="L21">21 theorem sqrt_sub_self_le_half_one_sub (x : Real) (hx : 0 &lt;= x) :</span>
+<span id="L22">22     Real.sqrt x - x &lt;= (1 - x) / 2 := by</span>
+<span id="L23">23   have hsquare : 0 &lt;= (Real.sqrt x - 1) ^ 2 := sq_nonneg _</span>
+<span id="L24">24   have hsqrtSquare : (Real.sqrt x) ^ 2 = x := Real.sq_sqrt hx</span>
+<span id="L25">25   nlinarith</span>
+<span id="L26">26 </span>
+<span id="L27">27 /-- Above the point-mass baseline, half-Tsallis potential mass is controlled</span>
+<span id="L28">28 by the paper&#x27;s refined suboptimal-arm mass. -/</span>
+<span id="L29">29 theorem halfTsallisPotentialMass_sub_one_le_two_mul_sum_erase_refined</span>
+<span id="L30">30     {Action : Type u} [DecidableEq Action]</span>
+<span id="L31">31     (arms : Finset Action) {best : Action} (hbest : best ∈ arms)</span>
+<span id="L32">32     (probability : Action -&gt; Real)</span>
+<span id="L33">33     (hprobability : FTRL.finiteSimplex arms probability) :</span>
+<span id="L34">34     halfTsallisPotentialMass arms probability - 1 &lt;=</span>
+<span id="L35">35       2 * (arms.erase best).sum (fun action =&gt;</span>
+<span id="L36">36         Real.sqrt (probability action) - probability action / 2) := by</span>
+<span id="L37">37   rw [halfTsallisPotentialMass_eq_two_mul_powerSum_sub_one]</span>
+<span id="L38">38   have hsplitSqrt := Finset.add_sum_erase arms</span>
+<span id="L39">39     (fun action =&gt; Real.sqrt (probability action)) hbest</span>
+<span id="L40">40   have hsplitProbability := Finset.add_sum_erase arms probability hbest</span>
+<span id="L41">41   rw [hprobability.2] at hsplitProbability</span>
+<span id="L42">42   have hbestBound := sqrt_sub_self_le_half_one_sub</span>
+<span id="L43">43     (probability best) (hprobability.1 best hbest)</span>
+<span id="L44">44   have heraseRewrite :</span>
+<span id="L45">45       (arms.erase best).sum (fun action =&gt;</span>
+<span id="L46">46           Real.sqrt (probability action) - probability action / 2) =</span>
+<span id="L47">47         (arms.erase best).sum (fun action =&gt; Real.sqrt (probability action)) -</span>
+<span id="L48">48           (arms.erase best).sum probability / 2 := by</span>
+<span id="L49">49     rw [Finset.sum_sub_distrib, Finset.sum_div]</span>
+<span id="L50">50   rw [heraseRewrite]</span>
+<span id="L51">51   simp only [powerSum, ← Real.sqrt_eq_rpow]</span>
+<span id="L52">52   nlinarith</span>
+<span id="L53">53 </span>
+<span id="L54">54 /-- Generated pathwise point-mass penalty with every reciprocal-rate</span>
+<span id="L55">55 increment retained and every potential mass replaced by its refined</span>
+<span id="L56">56 suboptimal-arm upper bound. -/</span>
+<span id="L57">57 theorem sum_sampledScheduledHalfTsallisPotentialPenalty_pointMass_le_refined</span>
+<span id="L58">58     {Env : Type u} {Action : Type v} [DecidableEq Action]</span>
+<span id="L59">59     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L60">60     (eta : Nat -&gt; Real)</span>
+<span id="L61">61     (sample : Env × ((k : Nat) -&gt; Action × Real))</span>
+<span id="L62">62     {best : Action} (hbest : best ∈ arms) (n : Nat)</span>
+<span id="L63">63     (heta : forall t, t &lt;= n -&gt; 0 &lt; eta t)</span>
+<span id="L64">64     (hetaMono : forall t, t &lt; n -&gt; eta (t + 1) &lt;= eta t) :</span>
+<span id="L65">65     (Finset.range (n + 1)).sum (fun t =&gt;</span>
+<span id="L66">66         sampledScheduledHalfTsallisPotentialPenaltyAtTime</span>
+<span id="L67">67           arms harms eta (pointMass best) sample t) &lt;=</span>
+<span id="L68">68       2 / eta 0 * (arms.erase best).sum (fun action =&gt;</span>
+<span id="L69">69         Real.sqrt (sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L70">70           arms harms eta 0 sample action) -</span>
+<span id="L71">71         sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L72">72           arms harms eta 0 sample action / 2) +</span>
+<span id="L73">73       (Finset.range n).sum (fun t =&gt;</span>
+<span id="L74">74         2 * (1 / eta (t + 1) - 1 / eta t) *</span>
+<span id="L75">75           (arms.erase best).sum (fun action =&gt;</span>
+<span id="L76">76             Real.sqrt (sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L77">77               arms harms eta (t + 1) sample action) -</span>
+<span id="L78">78             sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L79">79               arms harms eta (t + 1) sample action / 2)) := by</span>
+<span id="L80">80   let probability := fun t =&gt;</span>
+<span id="L81">81     sampledScheduledHalfTsallisProbabilityAtTime arms harms eta t sample</span>
+<span id="L82">82   let refinedMass := fun t =&gt; (arms.erase best).sum (fun action =&gt;</span>
+<span id="L83">83     Real.sqrt (probability t action) - probability t action / 2)</span>
+<span id="L84">84   have hbase :</span>
+<span id="L85">85       (Finset.range (n + 1)).sum (fun t =&gt;</span>
+<span id="L86">86           sampledScheduledHalfTsallisPotentialPenaltyAtTime</span>
+<span id="L87">87             arms harms eta (pointMass best) sample t) &lt;=</span>
+<span id="L88">88         halfTsallisPotentialMass arms (probability 0) / eta 0 +</span>
+<span id="L89">89           (Finset.range n).sum (fun t =&gt;</span>
+<span id="L90">90             (1 / eta (t + 1) - 1 / eta t) *</span>
+<span id="L91">91               halfTsallisPotentialMass arms (probability (t + 1))) -</span>
+<span id="L92">92           1 / eta n := by</span>
+<span id="L93">93     simpa [probability, sampledScheduledHalfTsallisPotentialPenaltyAtTime,</span>
+<span id="L94">94       sampledScheduledHalfTsallisSameRateNextAt,</span>
+<span id="L95">95       halfTsallisPotentialMass_pointMass arms hbest] using</span>
+<span id="L96">96       (sum_halfTsallisScheduledPotentialPenalty_le</span>
+<span id="L97">97         arms eta</span>
+<span id="L98">98           (fun t =&gt; sampledScheduledHalfTsallisObservedEstimatedLossAt</span>
+<span id="L99">99             arms harms eta t sample)</span>
+<span id="L100">100           (fun t =&gt; sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L101">101             arms harms eta t sample)</span>
+<span id="L102">102           (fun t =&gt; sampledScheduledHalfTsallisSameRateNextAt</span>
+<span id="L103">103             arms harms eta sample t)</span>
+<span id="L104">104           (pointMass best) n heta</span>
+<span id="L105">105           (fun t _ht =&gt; by</span>
+<span id="L106">106             change FTRL.IsRegularizedMinimizer (FTRL.finiteSimplex arms)</span>
+<span id="L107">107               arms (eta t) (negEntropyRegularizer arms (1 / 2 : Real))</span>
+<span id="L108">108                 (FTRL.cumulativeLoss</span>
+<span id="L109">109                   (fun s =&gt; sampledScheduledHalfTsallisObservedEstimatedLossAt</span>
+<span id="L110">110                     arms harms eta s sample) t)</span>
+<span id="L111">111                 (sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L112">112                   arms harms eta t sample)</span>
+<span id="L113">113             rw [← halfTsallisScheduledMinimizer_observedEstimatedLoss_eq_probabilityAtTime</span>
+<span id="L114">114               arms harms eta sample t]</span>
+<span id="L115">115             exact halfTsallisMinimizer_isRegularizedMinimizer</span>
+<span id="L116">116               arms harms (eta t)</span>
+<span id="L117">117                 (FTRL.cumulativeLoss</span>
+<span id="L118">118                   (fun s =&gt; sampledScheduledHalfTsallisObservedEstimatedLossAt</span>
+<span id="L119">119                     arms harms eta s sample) t))</span>
+<span id="L120">120           (fun t _ht =&gt; by</span>
+<span id="L121">121             unfold sampledScheduledHalfTsallisSameRateNextAt</span>
+<span id="L122">122               halfTsallisScheduledSameRateNext</span>
+<span id="L123">123             exact halfTsallisMinimizer_isRegularizedMinimizer</span>
+<span id="L124">124               arms harms (eta t)</span>
+<span id="L125">125                 (FTRL.cumulativeLoss</span>
+<span id="L126">126                   (fun s =&gt; sampledScheduledHalfTsallisObservedEstimatedLossAt</span>
+<span id="L127">127                     arms harms eta s sample) (t + 1)))</span>
+<span id="L128">128           (finiteSimplex_pointMass arms hbest))</span>
+<span id="L129">129   have hmass (t : Nat) :</span>
+<span id="L130">130       halfTsallisPotentialMass arms (probability t) &lt;=</span>
+<span id="L131">131         1 + 2 * refinedMass t := by</span>
+<span id="L132">132     have hsimplex :=</span>
+<span id="L133">133       finiteSimplex_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L134">134         arms harms eta t sample</span>
+<span id="L135">135     have h := halfTsallisPotentialMass_sub_one_le_two_mul_sum_erase_refined</span>
+<span id="L136">136       arms hbest (probability t) hsimplex</span>
+<span id="L137">137     dsimp only [refinedMass, probability]</span>
+<span id="L138">138     linarith</span>
+<span id="L139">139   have hcoefficient (t : Nat) (ht : t ∈ Finset.range n) :</span>
+<span id="L140">140       0 &lt;= 1 / eta (t + 1) - 1 / eta t := by</span>
+<span id="L141">141     have htn : t &lt; n := Finset.mem_range.mp ht</span>
+<span id="L142">142     exact sub_nonneg.mpr (one_div_le_one_div_of_le</span>
+<span id="L143">143       (heta (t + 1) (Nat.succ_le_of_lt htn)) (hetaMono t htn))</span>
+<span id="L144">144   have hinitial :</span>
+<span id="L145">145       halfTsallisPotentialMass arms (probability 0) / eta 0 &lt;=</span>
+<span id="L146">146         (1 + 2 * refinedMass 0) / eta 0 :=</span>
+<span id="L147">147     (div_le_div_iff_of_pos_right (heta 0 (Nat.zero_le n))).2 (hmass 0)</span>
+<span id="L148">148   have hsum :</span>
+<span id="L149">149       (Finset.range n).sum (fun t =&gt;</span>
+<span id="L150">150           (1 / eta (t + 1) - 1 / eta t) *</span>
+<span id="L151">151             halfTsallisPotentialMass arms (probability (t + 1))) &lt;=</span>
+<span id="L152">152         (Finset.range n).sum (fun t =&gt;</span>
+<span id="L153">153           (1 / eta (t + 1) - 1 / eta t) *</span>
+<span id="L154">154             (1 + 2 * refinedMass (t + 1))) := by</span>
+<span id="L155">155     apply Finset.sum_le_sum</span>
+<span id="L156">156     intro t ht</span>
+<span id="L157">157     exact mul_le_mul_of_nonneg_left (hmass (t + 1)) (hcoefficient t ht)</span>
+<span id="L158">158   have htelescope := Exp3Potential.sum_range_forward_difference</span>
+<span id="L159">159     (fun t =&gt; 1 / eta t) n</span>
+<span id="L160">160   have hexpand :</span>
+<span id="L161">161       (Finset.range n).sum (fun t =&gt;</span>
+<span id="L162">162           (1 / eta (t + 1) - 1 / eta t) *</span>
+<span id="L163">163             (1 + 2 * refinedMass (t + 1))) =</span>
+<span id="L164">164         (Finset.range n).sum (fun t =&gt;</span>
+<span id="L165">165           (1 / eta (t + 1) - 1 / eta t)) +</span>
+<span id="L166">166         (Finset.range n).sum (fun t =&gt;</span>
+<span id="L167">167           2 * (1 / eta (t + 1) - 1 / eta t) *</span>
+<span id="L168">168             refinedMass (t + 1)) := by</span>
+<span id="L169">169     rw [← Finset.sum_add_distrib]</span>
+<span id="L170">170     apply Finset.sum_congr rfl</span>
+<span id="L171">171     intro t _ht</span>
+<span id="L172">172     ring</span>
+<span id="L173">173   calc</span>
+<span id="L174">174     (Finset.range (n + 1)).sum (fun t =&gt;</span>
+<span id="L175">175         sampledScheduledHalfTsallisPotentialPenaltyAtTime</span>
+<span id="L176">176           arms harms eta (pointMass best) sample t) &lt;=</span>
+<span id="L177">177       halfTsallisPotentialMass arms (probability 0) / eta 0 +</span>
+<span id="L178">178         (Finset.range n).sum (fun t =&gt;</span>
+<span id="L179">179           (1 / eta (t + 1) - 1 / eta t) *</span>
+<span id="L180">180             halfTsallisPotentialMass arms (probability (t + 1))) -</span>
+<span id="L181">181         1 / eta n := hbase</span>
+<span id="L182">182     _ &lt;= (1 + 2 * refinedMass 0) / eta 0 +</span>
+<span id="L183">183         (Finset.range n).sum (fun t =&gt;</span>
+<span id="L184">184           (1 / eta (t + 1) - 1 / eta t) *</span>
+<span id="L185">185             (1 + 2 * refinedMass (t + 1))) -</span>
+<span id="L186">186         1 / eta n := by linarith</span>
+<span id="L187">187     _ = 2 / eta 0 * refinedMass 0 +</span>
+<span id="L188">188         (Finset.range n).sum (fun t =&gt;</span>
+<span id="L189">189           2 * (1 / eta (t + 1) - 1 / eta t) *</span>
+<span id="L190">190             refinedMass (t + 1)) := by</span>
+<span id="L191">191       rw [hexpand, htelescope]</span>
+<span id="L192">192       ring</span>
+<span id="L193">193     _ = _ := by rfl</span>
+<span id="L194">194 </span>
+<span id="L195">195 /-- Refined suboptimal-arm mass on one generated trajectory sample. -/</span>
+<span id="L196">196 noncomputable def sampledScheduledHalfTsallisRefinedSuboptimalMassAt</span>
+<span id="L197">197     {Env : Type u} {Action : Type v} [DecidableEq Action]</span>
+<span id="L198">198     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L199">199     (best : Action) (t : Nat)</span>
+<span id="L200">200     (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real :=</span>
+<span id="L201">201   (arms.erase best).sum (fun action =&gt;</span>
+<span id="L202">202     Real.sqrt (sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L203">203       arms harms eta t sample action) -</span>
+<span id="L204">204     sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L205">205       arms harms eta t sample action / 2)</span>
+<span id="L206">206 </span>
+<span id="L207">207 /-- Deterministic Jensen target for one refined suboptimal-arm mass. -/</span>
+<span id="L208">208 noncomputable def sampledScheduledHalfTsallisExpectedRefinedSuboptimalMassAt</span>
+<span id="L209">209     {Env : Type u} {Action : Type v}</span>
+<span id="L210">210     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L211">211     (mu : Measure (Env × ((k : Nat) -&gt; Action × Real)))</span>
+<span id="L212">212     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L213">213     (best : Action) (t : Nat) : Real :=</span>
+<span id="L214">214   (arms.erase best).sum (fun action =&gt;</span>
+<span id="L215">215     Real.sqrt (sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L216">216       mu arms harms eta t action) -</span>
+<span id="L217">217     sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L218">218       mu arms harms eta t action / 2)</span>
+<span id="L219">219 </span>
+<span id="L220">220 theorem integrable_sampledScheduledHalfTsallisRefinedSuboptimalMassAt</span>
+<span id="L221">221     {Env : Type u} {Action : Type v}</span>
+<span id="L222">222     [MeasurableSpace Env]</span>
+<span id="L223">223     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L224">224     [DecidableEq Action]</span>
+<span id="L225">225     (mu : Measure (Env × ((k : Nat) -&gt; Action × Real))) [IsFiniteMeasure mu]</span>
+<span id="L226">226     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L227">227     {best : Action} (t : Nat) :</span>
+<span id="L228">228     Integrable (sampledScheduledHalfTsallisRefinedSuboptimalMassAt</span>
+<span id="L229">229       arms harms eta best t) mu := by</span>
+<span id="L230">230   unfold sampledScheduledHalfTsallisRefinedSuboptimalMassAt</span>
+<span id="L231">231   exact IntegrabilitySums.integrable_finset_sum mu (arms.erase best)</span>
+<span id="L232">232     (fun action sample =&gt;</span>
+<span id="L233">233       Real.sqrt (sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L234">234         arms harms eta t sample action) -</span>
+<span id="L235">235       sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L236">236         arms harms eta t sample action / 2)</span>
+<span id="L237">237     (fun action haction =&gt; by</span>
+<span id="L238">238       have hairm : action ∈ arms := Finset.mem_of_mem_erase haction</span>
+<span id="L239">239       exact</span>
+<span id="L240">240         (integrable_sqrt_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L241">241           mu arms harms eta t action hairm).sub</span>
+<span id="L242">242         ((integrable_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L243">243           mu arms harms eta t action hairm).div_const 2))</span>
+<span id="L244">244 </span>
+<span id="L245">245 /-- Jensen transport for the complete refined suboptimal-arm mass at one</span>
+<span id="L246">246 scheduled time. -/</span>
+<span id="L247">247 theorem integral_sampledScheduledHalfTsallisRefinedSuboptimalMassAt_le_expected</span>
+<span id="L248">248     {Env : Type u} {Action : Type v}</span>
+<span id="L249">249     [MeasurableSpace Env]</span>
+<span id="L250">250     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L251">251     [DecidableEq Action]</span>
+<span id="L252">252     (mu : Measure (Env × ((k : Nat) -&gt; Action × Real)))</span>
+<span id="L253">253     [IsProbabilityMeasure mu]</span>
+<span id="L254">254     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L255">255     {best : Action} (t : Nat) :</span>
+<span id="L256">256     integral mu (sampledScheduledHalfTsallisRefinedSuboptimalMassAt</span>
+<span id="L257">257         arms harms eta best t) &lt;=</span>
+<span id="L258">258       sampledScheduledHalfTsallisExpectedRefinedSuboptimalMassAt</span>
+<span id="L259">259         mu arms harms eta best t := by</span>
+<span id="L260">260   unfold sampledScheduledHalfTsallisRefinedSuboptimalMassAt</span>
+<span id="L261">261   rw [ExpectationBochnerSums.integral_finset_sum mu (arms.erase best)</span>
+<span id="L262">262     (fun action sample =&gt;</span>
+<span id="L263">263       Real.sqrt (sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L264">264         arms harms eta t sample action) -</span>
+<span id="L265">265       sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L266">266         arms harms eta t sample action / 2)]</span>
+<span id="L267">267   · unfold sampledScheduledHalfTsallisExpectedRefinedSuboptimalMassAt</span>
+<span id="L268">268     apply Finset.sum_le_sum</span>
+<span id="L269">269     intro action haction</span>
+<span id="L270">270     have hairm : action ∈ arms := Finset.mem_of_mem_erase haction</span>
+<span id="L271">271     have hsqrt :=</span>
+<span id="L272">272       integrable_sqrt_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L273">273         mu arms harms eta t action hairm</span>
+<span id="L274">274     have hprobability :=</span>
+<span id="L275">275       integrable_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L276">276         mu arms harms eta t action hairm</span>
+<span id="L277">277     rw [integral_sub hsqrt (hprobability.div_const 2), integral_div]</span>
+<span id="L278">278     exact sub_le_sub_right</span>
+<span id="L279">279       (integral_sqrt_sampledScheduledHalfTsallisProbabilityAtTime_le_sqrt_expected</span>
+<span id="L280">280         mu arms harms eta t action hairm) _</span>
+<span id="L281">281   · intro action haction</span>
+<span id="L282">282     have hairm : action ∈ arms := Finset.mem_of_mem_erase haction</span>
+<span id="L283">283     exact</span>
+<span id="L284">284       (integrable_sqrt_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L285">285         mu arms harms eta t action hairm).sub</span>
+<span id="L286">286       ((integrable_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L287">287         mu arms harms eta t action hairm).div_const 2)</span>
+<span id="L288">288 </span>
+<span id="L289">289 /-- The generated predictable environment regret retains the refined</span>
+<span id="L290">290 time-varying penalty after expectation.  Unlike the coarse endpoint theorem,</span>
+<span id="L291">291 no terminal potential mass divided by the final learning rate remains. -/</span>
+<span id="L292">292 theorem integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_refinedExpectedPenalty</span>
+<span id="L293">293     {Env : Type u} {Action : Type v}</span>
+<span id="L294">294     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L295">295     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L296">296     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L297">297     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L298">298     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L299">299     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L300">300     {best : Action} (hbest : best ∈ arms) (horizon : Nat)</span>
+<span id="L301">301     (heta : forall t, t &lt;= horizon -&gt; 0 &lt; eta t)</span>
+<span id="L302">302     (hetaMono : forall t, t &lt; horizon -&gt; eta (t + 1) &lt;= eta t) :</span>
+<span id="L303">303     let selector :=</span>
+<span id="L304">304       canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L305">305         arms harms eta loss</span>
+<span id="L306">306     let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L307">307       arms harms eta selector.finiteHistory loss.environment</span>
+<span id="L308">308     integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L309">309         arms harms eta loss (pointMass best) horizon) &lt;=</span>
+<span id="L310">310       integral mu (fun sample =&gt; (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L311">311         sampledScheduledHalfTsallisAllRatePotentialStabilityBoundAtTime</span>
+<span id="L312">312           arms harms eta sample t)) +</span>
+<span id="L313">313       2 / eta 0 * sampledScheduledHalfTsallisExpectedRefinedSuboptimalMassAt</span>
+<span id="L314">314         mu arms harms eta best 0 +</span>
+<span id="L315">315       (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L316">316         2 * (1 / eta (t + 1) - 1 / eta t) *</span>
+<span id="L317">317           sampledScheduledHalfTsallisExpectedRefinedSuboptimalMassAt</span>
+<span id="L318">318             mu arms harms eta best (t + 1)) := by</span>
+<span id="L319">319   dsimp only</span>
+<span id="L320">320   let selector :=</span>
+<span id="L321">321     canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L322">322       arms harms eta loss</span>
+<span id="L323">323   let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L324">324     arms harms eta selector.finiteHistory loss.environment</span>
+<span id="L325">325   let stabilitySum := fun</span>
+<span id="L326">326       (sample : Env × ((k : Nat) -&gt; Action × Real)) =&gt;</span>
+<span id="L327">327     (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L328">328       sampledScheduledHalfTsallisPotentialStabilityAtTime</span>
+<span id="L329">329         arms harms eta sample t)</span>
+<span id="L330">330   let allRateSum := fun</span>
+<span id="L331">331       (sample : Env × ((k : Nat) -&gt; Action × Real)) =&gt;</span>
+<span id="L332">332     (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L333">333       sampledScheduledHalfTsallisAllRatePotentialStabilityBoundAtTime</span>
+<span id="L334">334         arms harms eta sample t)</span>
+<span id="L335">335   let refinedMass := fun t =&gt;</span>
+<span id="L336">336     sampledScheduledHalfTsallisRefinedSuboptimalMassAt</span>
+<span id="L337">337       (Env := Env) arms harms eta best t</span>
+<span id="L338">338   let refinedPenalty := fun</span>
+<span id="L339">339       (sample : Env × ((k : Nat) -&gt; Action × Real)) =&gt;</span>
+<span id="L340">340     2 / eta 0 * refinedMass 0 sample +</span>
+<span id="L341">341       (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L342">342         2 * (1 / eta (t + 1) - 1 / eta t) * refinedMass (t + 1) sample)</span>
+<span id="L343">343   let expectedRefinedMass := fun t =&gt;</span>
+<span id="L344">344     sampledScheduledHalfTsallisExpectedRefinedSuboptimalMassAt</span>
+<span id="L345">345       mu arms harms eta best t</span>
+<span id="L346">346   let expectedRefinedPenalty :=</span>
+<span id="L347">347     2 / eta 0 * expectedRefinedMass 0 +</span>
+<span id="L348">348       (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L349">349         2 * (1 / eta (t + 1) - 1 / eta t) * expectedRefinedMass (t + 1))</span>
+<span id="L350">350   let rhs := fun (sample : Env × ((k : Nat) -&gt; Action × Real)) =&gt;</span>
+<span id="L351">351     stabilitySum sample + refinedPenalty sample</span>
+<span id="L352">352   haveI : IsProbabilityMeasure mu := inferInstance</span>
+<span id="L353">353   have hmoment :=</span>
+<span id="L354">354     integral_sampledScheduledHalfTsallisEstimatedRegret_eq_environmentRegret</span>
+<span id="L355">355       prior arms harms eta loss (pointMass best)</span>
+<span id="L356">356         (finiteSimplex_pointMass arms hbest) horizon</span>
+<span id="L357">357   dsimp only at hmoment</span>
+<span id="L358">358   have hstabilityIntegrable :=</span>
+<span id="L359">359     integrable_sum_sampledScheduledHalfTsallisPotentialStabilityAtTime_allRate</span>
+<span id="L360">360       prior horizon arms harms eta heta loss</span>
+<span id="L361">361   dsimp only at hstabilityIntegrable</span>
+<span id="L362">362   have hstabilityIntegrable&#x27; : Integrable stabilitySum mu := by</span>
+<span id="L363">363     simpa [stabilitySum, mu, selector] using hstabilityIntegrable.1</span>
+<span id="L364">364   have hallRateIntegrable : Integrable allRateSum mu := by</span>
+<span id="L365">365     simpa [allRateSum, mu, selector] using hstabilityIntegrable.2</span>
+<span id="L366">366   have hrefinedMassIntegrable (t : Nat) : Integrable (refinedMass t) mu := by</span>
+<span id="L367">367     simpa [refinedMass] using</span>
+<span id="L368">368       (integrable_sampledScheduledHalfTsallisRefinedSuboptimalMassAt</span>
+<span id="L369">369         mu arms harms eta (best := best) t)</span>
+<span id="L370">370   have hrefinedPenaltyIntegrable : Integrable refinedPenalty mu := by</span>
+<span id="L371">371     unfold refinedPenalty</span>
+<span id="L372">372     exact (hrefinedMassIntegrable 0).const_mul (2 / eta 0) |&gt;.add</span>
+<span id="L373">373       (IntegrabilitySums.integrable_finset_sum mu (Finset.range horizon)</span>
+<span id="L374">374         (fun t sample =&gt;</span>
+<span id="L375">375           2 * (1 / eta (t + 1) - 1 / eta t) * refinedMass (t + 1) sample)</span>
+<span id="L376">376         (fun t _ht =&gt;</span>
+<span id="L377">377           (hrefinedMassIntegrable (t + 1)).const_mul</span>
+<span id="L378">378             (2 * (1 / eta (t + 1) - 1 / eta t))))</span>
+<span id="L379">379   have hrhsIntegrable : Integrable rhs mu := by</span>
+<span id="L380">380     exact hstabilityIntegrable&#x27;.add hrefinedPenaltyIntegrable</span>
+<span id="L381">381   have hpathwise : ∀ᵐ sample ∂mu,</span>
+<span id="L382">382       sampledScheduledHalfTsallisEstimatedRegret</span>
+<span id="L383">383           arms harms eta (pointMass best) horizon sample &lt;= rhs sample := by</span>
+<span id="L384">384     filter_upwards [] with sample</span>
+<span id="L385">385     rw [sampledScheduledHalfTsallisEstimatedRegret_eq_stability_add_penalty]</span>
+<span id="L386">386     have hpenalty :=</span>
+<span id="L387">387       sum_sampledScheduledHalfTsallisPotentialPenalty_pointMass_le_refined</span>
+<span id="L388">388         arms harms eta sample hbest horizon heta hetaMono</span>
+<span id="L389">389     simpa [rhs, stabilitySum, refinedPenalty, refinedMass,</span>
+<span id="L390">390       sampledScheduledHalfTsallisRefinedSuboptimalMassAt] using</span>
+<span id="L391">391       add_le_add_left hpenalty</span>
+<span id="L392">392         ((Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L393">393           sampledScheduledHalfTsallisPotentialStabilityAtTime</span>
+<span id="L394">394             arms harms eta sample t))</span>
+<span id="L395">395   have hintegrated := integral_mono_ae hmoment.1 hrhsIntegrable hpathwise</span>
+<span id="L396">396   have hrhsIntegral :</span>
+<span id="L397">397       integral mu rhs = integral mu stabilitySum + integral mu refinedPenalty := by</span>
+<span id="L398">398     unfold rhs</span>
+<span id="L399">399     exact integral_add hstabilityIntegrable&#x27; hrefinedPenaltyIntegrable</span>
+<span id="L400">400   have hrefinedPenaltyIntegral :</span>
+<span id="L401">401       integral mu refinedPenalty =</span>
+<span id="L402">402         2 / eta 0 * integral mu (refinedMass 0) +</span>
+<span id="L403">403         (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L404">404           2 * (1 / eta (t + 1) - 1 / eta t) *</span>
+<span id="L405">405             integral mu (refinedMass (t + 1))) := by</span>
+<span id="L406">406     unfold refinedPenalty</span>
+<span id="L407">407     rw [integral_add ((hrefinedMassIntegrable 0).const_mul (2 / eta 0))</span>
+<span id="L408">408       (IntegrabilitySums.integrable_finset_sum mu (Finset.range horizon)</span>
+<span id="L409">409         (fun t sample =&gt;</span>
+<span id="L410">410           2 * (1 / eta (t + 1) - 1 / eta t) * refinedMass (t + 1) sample)</span>
+<span id="L411">411         (fun t _ht =&gt;</span>
+<span id="L412">412           (hrefinedMassIntegrable (t + 1)).const_mul</span>
+<span id="L413">413             (2 * (1 / eta (t + 1) - 1 / eta t))))]</span>
+<span id="L414">414     rw [integral_const_mul]</span>
+<span id="L415">415     rw [ExpectationBochnerSums.integral_finset_sum mu (Finset.range horizon)</span>
+<span id="L416">416       (fun t sample =&gt;</span>
+<span id="L417">417         2 * (1 / eta (t + 1) - 1 / eta t) * refinedMass (t + 1) sample)]</span>
+<span id="L418">418     · apply congrArg (fun value =&gt; 2 / eta 0 * integral mu (refinedMass 0) + value)</span>
+<span id="L419">419       apply Finset.sum_congr rfl</span>
+<span id="L420">420       intro t _ht</span>
+<span id="L421">421       rw [integral_const_mul]</span>
+<span id="L422">422     · intro t _ht</span>
+<span id="L423">423       exact (hrefinedMassIntegrable (t + 1)).const_mul</span>
+<span id="L424">424         (2 * (1 / eta (t + 1) - 1 / eta t))</span>
+<span id="L425">425   have hrefinedPenaltyBound :</span>
+<span id="L426">426       integral mu refinedPenalty &lt;= expectedRefinedPenalty := by</span>
+<span id="L427">427     rw [hrefinedPenaltyIntegral]</span>
+<span id="L428">428     unfold expectedRefinedPenalty expectedRefinedMass</span>
+<span id="L429">429     have hinitial :=</span>
+<span id="L430">430       integral_sampledScheduledHalfTsallisRefinedSuboptimalMassAt_le_expected</span>
+<span id="L431">431         mu arms harms eta (best := best) 0</span>
+<span id="L432">432     have hinitialCoefficient : 0 &lt;= 2 / eta 0 := by</span>
+<span id="L433">433       exact div_nonneg (by norm_num) (le_of_lt (heta 0 (Nat.zero_le horizon)))</span>
+<span id="L434">434     have hsum :</span>
+<span id="L435">435         (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L436">436             2 * (1 / eta (t + 1) - 1 / eta t) *</span>
+<span id="L437">437               integral mu (refinedMass (t + 1))) &lt;=</span>
+<span id="L438">438           (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L439">439             2 * (1 / eta (t + 1) - 1 / eta t) *</span>
+<span id="L440">440               sampledScheduledHalfTsallisExpectedRefinedSuboptimalMassAt</span>
+<span id="L441">441                 mu arms harms eta best (t + 1)) := by</span>
+<span id="L442">442       apply Finset.sum_le_sum</span>
+<span id="L443">443       intro t ht</span>
+<span id="L444">444       have htn : t &lt; horizon := Finset.mem_range.mp ht</span>
+<span id="L445">445       have hcoefficient :</span>
+<span id="L446">446           0 &lt;= 2 * (1 / eta (t + 1) - 1 / eta t) := by</span>
+<span id="L447">447         have hreciprocal := one_div_le_one_div_of_le</span>
+<span id="L448">448           (heta (t + 1) (Nat.succ_le_of_lt htn)) (hetaMono t htn)</span>
+<span id="L449">449         exact mul_nonneg (by norm_num) (sub_nonneg.mpr hreciprocal)</span>
+<span id="L450">450       exact mul_le_mul_of_nonneg_left</span>
+<span id="L451">451         (by</span>
+<span id="L452">452           simpa [refinedMass] using</span>
+<span id="L453">453             (integral_sampledScheduledHalfTsallisRefinedSuboptimalMassAt_le_expected</span>
+<span id="L454">454               mu arms harms eta (best := best) (t + 1)))</span>
+<span id="L455">455         hcoefficient</span>
+<span id="L456">456     exact add_le_add</span>
+<span id="L457">457       (mul_le_mul_of_nonneg_left hinitial hinitialCoefficient) hsum</span>
+<span id="L458">458   have hstabilityBoundBase :=</span>
+<span id="L459">459     integral_sum_sampledScheduledHalfTsallisPotentialStabilityAtTime_le_allRateBound</span>
+<span id="L460">460       prior horizon arms harms eta heta loss</span>
+<span id="L461">461   dsimp only at hstabilityBoundBase</span>
+<span id="L462">462   have hstabilityBound : integral mu stabilitySum &lt;= integral mu allRateSum := by</span>
+<span id="L463">463     simpa [mu, selector, stabilitySum, allRateSum] using hstabilityBoundBase</span>
+<span id="L464">464   calc</span>
+<span id="L465">465     integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L466">466         arms harms eta loss (pointMass best) horizon) =</span>
+<span id="L467">467       integral mu (sampledScheduledHalfTsallisEstimatedRegret</span>
+<span id="L468">468         arms harms eta (pointMass best) horizon) := hmoment.2.2.symm</span>
+<span id="L469">469     _ &lt;= integral mu rhs := hintegrated</span>
+<span id="L470">470     _ = integral mu stabilitySum + integral mu refinedPenalty := hrhsIntegral</span>
+<span id="L471">471     _ &lt;= integral mu allRateSum + expectedRefinedPenalty :=</span>
+<span id="L472">472       add_le_add hstabilityBound hrefinedPenaltyBound</span>
+<span id="L473">473     _ = _ := by</span>
+<span id="L474">474       unfold allRateSum expectedRefinedPenalty expectedRefinedMass mu selector</span>
+<span id="L475">475       ring</span>
+<span id="L476">476 </span>
+<span id="L477">477 end Tsallis</span>
+<span id="L478">478 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/OFULScheduledPowerOfTwoForcedHighProbabilityAverageRegret.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/OFULScheduledPowerOfTwoForcedHighProbabilityAverageRegret.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/OFULScheduledPowerOfTwoForcedHighProbabilityAverageRegret.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/OFULScheduledPowerOfTwoForcedHighProbabilityAverageRegret.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.OFULScheduledPowerOfTwoForcedHighProbabilityRegretRate</span>
+<span id="L2">2 import BanditRLProof.OFULExpectedRegretConsistency</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Vanishing average budget for power-of-two forced OFUL</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module divides the exact fixed-model scalar all-horizon budget by the</span>
+<span id="L8">8 number of available rounds. It preserves the same power-of-two forced policy,</span>
+<span id="L9">9 canonical measure, violation event, and fixed outer confidence budget.</span>
+<span id="L10">10 -/</span>
+<span id="L11">11 </span>
+<span id="L12">12 namespace BanditRLProof.OFUL</span>
+<span id="L13">13 </span>
+<span id="L14">14 open Filter Real MeasureTheory Set</span>
+<span id="L15">15 open scoped ENNReal Topology</span>
+<span id="L16">16 </span>
+<span id="L17">17 universe u</span>
+<span id="L18">18 </span>
+<span id="L19">19 /--</span>
+<span id="L20">20 The exact scalar power-of-two forced high-probability budget is `o(T + 1)` for</span>
+<span id="L21">21 fixed model parameters and fixed positive outer confidence budget.</span>
+<span id="L22">22 -/</span>
+<span id="L23">23 theorem</span>
+<span id="L24">24     powerOfTwoForcedScalarHighProbabilityPseudoRegretBound_isLittleO_natCast_succ</span>
+<span id="L25">25     {Feature : Type u}</span>
+<span id="L26">26     [Fintype Feature] [Nonempty Feature]</span>
+<span id="L27">27     (R : Real)</span>
+<span id="L28">28     (delta : Real) (hdelta : 0 &lt; delta)</span>
+<span id="L29">29     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L30">30     (S : Real) (L2 : Real) (hL2 : 0 &lt;= L2) :</span>
+<span id="L31">31     (fun horizon : Nat =&gt;</span>
+<span id="L32">32       powerOfTwoForcedScalarHighProbabilityPseudoRegretBound</span>
+<span id="L33">33         (Feature := Feature) R delta lambda S horizon L2) =o[atTop]</span>
+<span id="L34">34       (fun horizon : Nat =&gt; (((horizon + 1 : Nat) : Real))) :=</span>
+<span id="L35">35   (powerOfTwoForcedScalarHighProbabilityPseudoRegretBound_isBigO_sqrt_mul_log</span>
+<span id="L36">36     (Feature := Feature) R delta hdelta lambda hlambda S L2 hL2).trans_isLittleO</span>
+<span id="L37">37       sqrt_mul_log_succ_isLittleO_natCast_succ</span>
+<span id="L38">38 </span>
+<span id="L39">39 /-- The exact scalar high-probability budget per available round. -/</span>
+<span id="L40">40 noncomputable def powerOfTwoForcedScalarHighProbabilityAveragePseudoRegretBound</span>
+<span id="L41">41     {Feature : Type u} [Fintype Feature]</span>
+<span id="L42">42     (R delta lambda S : Real) (horizon : Nat) (L2 : Real) : Real :=</span>
+<span id="L43">43   powerOfTwoForcedScalarHighProbabilityPseudoRegretBound</span>
+<span id="L44">44       (Feature := Feature) R delta lambda S horizon L2 /</span>
+<span id="L45">45     (((horizon + 1 : Nat) : Real))</span>
+<span id="L46">46 </span>
+<span id="L47">47 /-- The exact scalar high-probability budget per round converges to zero. -/</span>
+<span id="L48">48 theorem</span>
+<span id="L49">49     powerOfTwoForcedScalarHighProbabilityAveragePseudoRegretBound_tendsto_zero</span>
+<span id="L50">50     {Feature : Type u}</span>
+<span id="L51">51     [Fintype Feature] [Nonempty Feature]</span>
+<span id="L52">52     (R : Real)</span>
+<span id="L53">53     (delta : Real) (hdelta : 0 &lt; delta)</span>
+<span id="L54">54     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L55">55     (S : Real) (L2 : Real) (hL2 : 0 &lt;= L2) :</span>
+<span id="L56">56     Tendsto</span>
+<span id="L57">57       (powerOfTwoForcedScalarHighProbabilityAveragePseudoRegretBound</span>
+<span id="L58">58         (Feature := Feature) R delta lambda S · L2)</span>
+<span id="L59">59       atTop (nhds 0) := by</span>
+<span id="L60">60   have hlimit :=</span>
+<span id="L61">61     (powerOfTwoForcedScalarHighProbabilityPseudoRegretBound_isLittleO_natCast_succ</span>
+<span id="L62">62       (Feature := Feature) R delta hdelta lambda hlambda S L2 hL2).tendsto_div_nhds_zero</span>
+<span id="L63">63   convert hlimit using 1</span>
+<span id="L64">64 </span>
+<span id="L65">65 /-- Complete fixed-best pseudo-regret per available round. -/</span>
+<span id="L66">66 noncomputable def</span>
+<span id="L67">67     powerOfTwoForcedCanonicalStandardHighProbabilityAveragePseudoRegret</span>
+<span id="L68">68     {K : Nat} {Feature : Type u}</span>
+<span id="L69">69     [Fintype Feature]</span>
+<span id="L70">70     (thetaStar : Feature -&gt; Real)</span>
+<span id="L71">71     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L72">72     (best : Fin K)</span>
+<span id="L73">73     (horizon : Nat)</span>
+<span id="L74">74     (trajectory : Nat -&gt; Fin K × Real) : Real :=</span>
+<span id="L75">75   canonicalStandardHighProbabilityPseudoRegret</span>
+<span id="L76">76       thetaStar actionFeature best horizon trajectory /</span>
+<span id="L77">77     (((horizon + 1 : Nat) : Real))</span>
+<span id="L78">78 </span>
+<span id="L79">79 /--</span>
+<span id="L80">80 Outside the named all-horizon violation event, complete pseudo-regret per round</span>
+<span id="L81">81 is bounded by the exact scalar average budget at every horizon.</span>
+<span id="L82">82 -/</span>
+<span id="L83">83 theorem</span>
+<span id="L84">84     powerOfTwoForcedCanonicalStandardHighProbabilityAveragePseudoRegret_le_averageBound_of_not_mem_allHorizonViolationSet</span>
+<span id="L85">85     {K : Nat} {Feature : Type u}</span>
+<span id="L86">86     [Fintype Feature]</span>
+<span id="L87">87     (lambda : Real)</span>
+<span id="L88">88     (thetaStar : Feature -&gt; Real)</span>
+<span id="L89">89     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L90">90     (R delta S L2 : Real)</span>
+<span id="L91">91     (best : Fin K)</span>
+<span id="L92">92     (trajectory : Nat -&gt; Fin K × Real)</span>
+<span id="L93">93     (hnot :</span>
+<span id="L94">94       trajectory ∉</span>
+<span id="L95">95         powerOfTwoForcedCanonicalAsymptoticHighProbabilityPseudoRegretAllHorizonViolationSet</span>
+<span id="L96">96           lambda thetaStar actionFeature R delta S L2 best)</span>
+<span id="L97">97     (horizon : Nat) :</span>
+<span id="L98">98     powerOfTwoForcedCanonicalStandardHighProbabilityAveragePseudoRegret</span>
+<span id="L99">99         thetaStar actionFeature best horizon trajectory &lt;=</span>
+<span id="L100">100       powerOfTwoForcedScalarHighProbabilityAveragePseudoRegretBound</span>
+<span id="L101">101         (Feature := Feature) R delta lambda S horizon L2 := by</span>
+<span id="L102">102   have hregret :</span>
+<span id="L103">103       canonicalStandardHighProbabilityPseudoRegret</span>
+<span id="L104">104           thetaStar actionFeature best horizon trajectory &lt;=</span>
+<span id="L105">105         powerOfTwoForcedScalarHighProbabilityPseudoRegretBound</span>
+<span id="L106">106           (Feature := Feature) R delta lambda S horizon L2 := by</span>
+<span id="L107">107     by_contra hle</span>
+<span id="L108">108     exact hnot ⟨horizon, lt_of_not_ge hle⟩</span>
+<span id="L109">109   unfold</span>
+<span id="L110">110     powerOfTwoForcedCanonicalStandardHighProbabilityAveragePseudoRegret</span>
+<span id="L111">111     powerOfTwoForcedScalarHighProbabilityAveragePseudoRegretBound</span>
+<span id="L112">112   exact</span>
+<span id="L113">113     (div_le_div_iff_of_pos_right</span>
+<span id="L114">114       (by positivity : (0 : Real) &lt; (((horizon + 1 : Nat) : Real)))).2 hregret</span>
+<span id="L115">115 </span>
+<span id="L116">116 /--</span>
+<span id="L117">117 Complete fixed-model average-envelope theorem for one power-of-two forced</span>
+<span id="L118">118 policy: the exact scalar average budget tends to zero, it bounds complete</span>
+<span id="L119">119 pseudo-regret per round outside the unchanged all-horizon event, pseudo-regret</span>
+<span id="L120">120 is nonnegative, and the event has probability at most `delta`.</span>
+<span id="L121">121 -/</span>
+<span id="L122">122 theorem</span>
+<span id="L123">123     powerOfTwoForcedCanonicalStandardHighProbabilityPseudoRegret_averageBudget_tendsto_zero_nonneg_and_allHorizon_tail_le_of_linearSubgaussianEnvironment_of_featureBound_le_regularization</span>
+<span id="L124">124     {K : Nat} {Feature : Type u}</span>
+<span id="L125">125     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L126">126     (hK : 0 &lt; K)</span>
+<span id="L127">127     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L128">128     (thetaStar : Feature -&gt; Real)</span>
+<span id="L129">129     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L130">130     (R : Real) (hR : 0 &lt; R)</span>
+<span id="L131">131     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_one : delta &lt;= 1)</span>
+<span id="L132">132     (S : Real) (hS : 0 &lt;= S)</span>
+<span id="L133">133     (forcedAction : Nat -&gt; Fin K)</span>
+<span id="L134">134     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L135">135     (L2 : Real) (hL2 : 0 &lt;= L2)</span>
+<span id="L136">136     (hactionFeatureBound : forall action,</span>
+<span id="L137">137       dotProduct (actionFeature action) (actionFeature action) &lt;= L2)</span>
+<span id="L138">138     (hL2lambda : L2 &lt;= lambda)</span>
+<span id="L139">139     (best : Fin K)</span>
+<span id="L140">140     (hbest : IsOptimalLinearArm thetaStar actionFeature best)</span>
+<span id="L141">141     (source : CanonicalLinearSubgaussianEnvironmentLaw</span>
+<span id="L142">142       hK thetaStar actionFeature R S environment) :</span>
+<span id="L143">143     Tendsto</span>
+<span id="L144">144         (powerOfTwoForcedScalarHighProbabilityAveragePseudoRegretBound</span>
+<span id="L145">145           (Feature := Feature) R delta lambda S · L2)</span>
+<span id="L146">146         atTop (nhds 0) ∧</span>
+<span id="L147">147       (forall trajectory,</span>
+<span id="L148">148         trajectory ∉</span>
+<span id="L149">149             powerOfTwoForcedCanonicalAsymptoticHighProbabilityPseudoRegretAllHorizonViolationSet</span>
+<span id="L150">150               lambda thetaStar actionFeature R delta S L2 best -&gt;</span>
+<span id="L151">151           forall horizon,</span>
+<span id="L152">152             powerOfTwoForcedCanonicalStandardHighProbabilityAveragePseudoRegret</span>
+<span id="L153">153                 thetaStar actionFeature best horizon trajectory &lt;=</span>
+<span id="L154">154               powerOfTwoForcedScalarHighProbabilityAveragePseudoRegretBound</span>
+<span id="L155">155                 (Feature := Feature) R delta lambda S horizon L2) ∧</span>
+<span id="L156">156       (forall horizon trajectory,</span>
+<span id="L157">157         0 &lt;= canonicalStandardHighProbabilityPseudoRegret</span>
+<span id="L158">158           thetaStar actionFeature best horizon trajectory) ∧</span>
+<span id="L159">159       Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L160">160           (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAlgorithm</span>
+<span id="L161">161             hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L162">162           environment</span>
+<span id="L163">163           (powerOfTwoForcedCanonicalAsymptoticHighProbabilityPseudoRegretAllHorizonViolationSet</span>
+<span id="L164">164             lambda thetaStar actionFeature R delta S L2 best) &lt;=</span>
+<span id="L165">165         ENNReal.ofReal delta := by</span>
+<span id="L166">166   have haverage :=</span>
+<span id="L167">167     powerOfTwoForcedScalarHighProbabilityAveragePseudoRegretBound_tendsto_zero</span>
+<span id="L168">168       (Feature := Feature) R delta hdelta lambda hlambda S L2 hL2</span>
+<span id="L169">169   have hpathwise :</span>
+<span id="L170">170       forall trajectory,</span>
+<span id="L171">171         trajectory ∉</span>
+<span id="L172">172             powerOfTwoForcedCanonicalAsymptoticHighProbabilityPseudoRegretAllHorizonViolationSet</span>
+<span id="L173">173               lambda thetaStar actionFeature R delta S L2 best -&gt;</span>
+<span id="L174">174           forall horizon,</span>
+<span id="L175">175             powerOfTwoForcedCanonicalStandardHighProbabilityAveragePseudoRegret</span>
+<span id="L176">176                 thetaStar actionFeature best horizon trajectory &lt;=</span>
+<span id="L177">177               powerOfTwoForcedScalarHighProbabilityAveragePseudoRegretBound</span>
+<span id="L178">178                 (Feature := Feature) R delta lambda S horizon L2 := by</span>
+<span id="L179">179     intro trajectory hnot horizon</span>
+<span id="L180">180     exact</span>
+<span id="L181">181       powerOfTwoForcedCanonicalStandardHighProbabilityAveragePseudoRegret_le_averageBound_of_not_mem_allHorizonViolationSet</span>
+<span id="L182">182         lambda thetaStar actionFeature R delta S L2 best trajectory hnot horizon</span>
+<span id="L183">183   have hparent :=</span>
+<span id="L184">184     powerOfTwoForcedCanonicalStandardHighProbabilityPseudoRegret_asymptoticRate_nonneg_and_allHorizon_tail_le_of_linearSubgaussianEnvironment_of_featureBound_le_regularization</span>
+<span id="L185">185       hK lambda hlambda thetaStar actionFeature R hR</span>
+<span id="L186">186       delta hdelta hdelta_one S hS forcedAction environment</span>
+<span id="L187">187       L2 hL2 hactionFeatureBound hL2lambda best hbest source</span>
+<span id="L188">188   exact ⟨haverage, hpathwise, hparent.2.1, hparent.2.2⟩</span>
+<span id="L189">189 </span>
+<span id="L190">190 end BanditRLProof.OFUL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

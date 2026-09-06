@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Finite-horizon RL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>RL.<wbr>Finite<wbr>Horizon<wbr>Adaptive<wbr>Cumulative<wbr>Count<wbr>Martingale<wbr>Confidence</h1>
+  <p class="lede">This module supplies the statistical producer required by the cumulative count-radius planner. Each raw episode-batch count is centered by its history-kernel integral. The exact adaptive iid batch law then gives a conditionally sub-Gaussian increment with the within-batch Bernoulli proxy, rather than the weaker whole-batch bounded-range proxy.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html"><code>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/finite-horizon-rl/index.html">9. Finite-horizon reinforcement learning</a></dd></div>
+    <div><dt>Declarations</dt><dd>46</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-rl-finitehorizonadaptivecumulativeempiricaloptimisticregret/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeEmpiricalOptimisticRegret</code></a>, <a href="../banditrlproof-conditionalexpectationreward/index.html"><code>BanditRLProof.ConditionalExpectationReward</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-rl-finitehorizonadaptivecumulativeinversesqrtcalibration/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeInverseSqrtCalibration</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-5f1aeb8af71a">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.CountCoordinate.rawCount</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The uncentered real count selected by a visit or transition coordinate.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> rawCount {mdp : MDP State Action} (coordinate : CountCoordinate mdp) {episodes : Nat} (batch : EpisodeBatch mdp episodes) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L36">Source line 36</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2abca78758f9">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.CountCoordinate.policyMean</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The iid batch mean of the selected raw count.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> policyMean {mdp : MDP State Action} (coordinate : CountCoordinate mdp) (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L45">Source line 45</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c0321548c5e4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.CountCoordinate.measurable_rawCount</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every selected raw count is measurable on the batch space.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_rawCount {mdp : MDP State Action} (coordinate : CountCoordinate mdp) {episodes : Nat} : Measurable (coordinate.rawCount : EpisodeBatch mdp episodes -&gt; Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L60">Source line 60</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2e09a78976cf">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.CountCoordinate.deviation_eq_rawCount_sub_policyMean</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The existing coordinate deviation is raw count minus policy mean.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> deviation_eq_rawCount_sub_policyMean {mdp : MDP State Action} (coordinate : CountCoordinate mdp) (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] {episodes : Nat} (batch : EpisodeBatch mdp episodes) : coordinate.deviation policy initialState batch = coordinate.rawCount batch - coordinate.policyMean policy initialState episodes</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L74">Source line 74</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a3f97f6769a1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.CountCoordinate.integral_rawCount_iidEpisodeBatchMeasure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The kernel integral of a selected raw count is its policy mean.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_rawCount_iidEpisodeBatchMeasure {mdp : MDP State Action} (coordinate : CountCoordinate mdp) (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) : integral (policy.iidEpisodeBatchMeasure initialState episodes) coordinate.rawCount = coordinate.policyMean policy initialState episodes</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L86">Source line 86</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6820d0fba480">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.CountCoordinate.deviation_hasSubgaussianMGF</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The selected batch-count deviation has the sharp within-batch Bernoulli proxy.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> deviation_hasSubgaussianMGF {mdp : MDP State Action} (coordinate : CountCoordinate mdp) (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) : ProbabilityTheory.HasSubgaussianMGF (coordinate.deviation policy initialState) (MarkovPolicy.iidBernoulliVarianceProxy episodes) (policy.iidEpisodeBatchMeasure initialState episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L177">Source line 177</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4a1476539622">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.coordinateKernelMean</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Predictable mean of the next selected raw count under the history kernel.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> coordinateKernelMean {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (n : Nat) (coordinate : CountCoordinate mdp) (history : EpisodeBatchPrefix mdp episodes n) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L221">Source line 221</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-aed2f63e6ee2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.measurable_coordinateKernelMean</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The history-kernel raw-count mean is measurable in the finite prefix.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_coordinateKernelMean {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (n : Nat) (coordinate : CountCoordinate mdp) : Measurable (source.coordinateKernelMean n coordinate)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L231">Source line 231</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-132ae4ef5f27">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.coordinateKernelMean_eq_policyMean</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The predictable kernel mean equals the selected-policy iid batch mean.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> coordinateKernelMean_eq_policyMean {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (n : Nat) (coordinate : CountCoordinate mdp) (history : EpisodeBatchPrefix mdp episodes n) : source.coordinateKernelMean n coordinate history = coordinate.policyMean (source.successorPolicy n history) initialState episodes</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L241">Source line 241</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-29d23c89f0cf">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.coordinatePrefixIncrement</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Count increment at a finite prefix.  At successor rounds the center is the
+measurable history-kernel integral, not the potentially nonmeasurable policy
+selector exposed by the source structure.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> coordinatePrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (coordinate : CountCoordinate mdp) : (round : Nat) -&gt; EpisodeBatchPrefix mdp episodes round -&gt; Real | <span class="num">0</span>, history =&gt; coordinate.rawCount (history ⟨<span class="num">0</span>, Finset.mem_Iic.mpr le_rfl⟩) - coordinate.policyMean source.initialPolicy initialState episodes | n + <span class="num">1</span>, history =&gt; coordinate.rawCount (history ⟨n + <span class="num">1</span>, Finset.mem_Iic.mpr le_rfl⟩) - source.coordinateKernelMean n coordinate (Preorder.frestrictLe₂ (π := <span class="kw">fun</span> _ : Nat =&gt; EpisodeBatch mdp episodes) (Nat.le_succ n) history) omit [Nonempty State] [Nonempty Action] <span class="kw">in</span> /-- Every finite-prefix increment is measurable. -/ <span class="kw">theorem</span> measurable_coordinatePrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (coordinate : CountCoordinate mdp) (round : Nat) : Measurable (source.coordinatePrefixIncrement coordinate round)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L259">Source line 259</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-171b2c4bc108">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.measurable_coordinatePrefixIncrement</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every finite-prefix increment is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_coordinatePrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (coordinate : CountCoordinate mdp) (round : Nat) : Measurable (source.coordinatePrefixIncrement coordinate round)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L278">Source line 278</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bfadb01f4e42">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.coordinateIncrement</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The adaptive kernel-centered coordinate increment process.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> coordinateIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (coordinate : CountCoordinate mdp) (round : Nat) (trajectory : EpisodeBatchTrajectory mdp episodes) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L300">Source line 300</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f03760c9e7f5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.coordinateIncrement_stronglyAdapted_piLE</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The coordinate increment process is adapted to the canonical prefix filtration.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> coordinateIncrement_stronglyAdapted_piLE {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (coordinate : CountCoordinate mdp) : StronglyAdapted (Filtration.piLE (X := <span class="kw">fun</span> _ : Nat =&gt; EpisodeBatch mdp episodes)) (source.coordinateIncrement coordinate)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L311">Source line 311</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-193c5b4edad2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.trajectoryMeasure_condDistrib_rawCount</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The next raw-count conditional distribution is the mapped batch kernel.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> trajectoryMeasure_condDistrib_rawCount {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} [StandardBorelSpace (EpisodeBatch mdp episodes)] (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (n : Nat) (coordinate : CountCoordinate mdp) : ProbabilityTheory.condDistrib (<span class="kw">fun</span> trajectory : EpisodeBatchTrajectory mdp episodes =&gt; coordinate.rawCount (trajectory (n + <span class="num">1</span>))) (Preorder.frestrictLe n) source.trajectoryMeasure =ᵐ[ source.trajectoryMeasure.map (Preorder.frestrictLe n)] (source.batchKernel n).map coordinate.rawCount</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L325">Source line 325</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1f8caebf64f9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.condExpKernel_map_rawCount_eq_batchKernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Trimmed conditional-expectation-kernel law for the next adaptive raw count.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> condExpKernel_map_rawCount_eq_batchKernel {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} [StandardBorelSpace (EpisodeBatch mdp episodes)] [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)] (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (n : Nat) (coordinate : CountCoordinate mdp) : Filter.Eventually (<span class="kw">fun</span> trajectory : EpisodeBatchTrajectory mdp episodes =&gt; Measure.map (<span class="kw">fun</span> path : EpisodeBatchTrajectory mdp episodes =&gt; coordinate.rawCount (path (n + <span class="num">1</span>))) (ProbabilityTheory.condExpKernel source.trajectoryMeasure ((inferInstance : MeasurableSpace (EpisodeBatchPrefix mdp episodes n)).comap (Preorder.frestrictLe n)) trajectory) = ((source.batchKernel n).map coordinate.rawCount) (Preorder.frestrictLe n trajectory)) (ae (source.trajectoryMeasure.trim (Preorder.measurable_frestrictLe n).comap_le))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L371">Source line 371</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-005da84ba63e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.coordinateIncrement_zero_hasSubgaussianMGF</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Initial adaptive batch-count increment has the iid Bernoulli sum proxy.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> coordinateIncrement_zero_hasSubgaussianMGF {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (coordinate : CountCoordinate mdp) : ProbabilityTheory.HasSubgaussianMGF (source.coordinateIncrement coordinate <span class="num">0</span>) (MarkovPolicy.iidBernoulliVarianceProxy episodes) source.trajectoryMeasure</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L409">Source line 409</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-935ea1e2c35a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.coordinateIncrement_succ_hasCondSubgaussianMGF</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every successor adaptive count increment is conditionally sub-Gaussian.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> coordinateIncrement_succ_hasCondSubgaussianMGF {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} [StandardBorelSpace (EpisodeBatch mdp episodes)] [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)] (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (n : Nat) (coordinate : CountCoordinate mdp) : ProbabilityTheory.HasCondSubgaussianMGF (Filtration.piLE (X := <span class="kw">fun</span> _ : Nat =&gt; EpisodeBatch mdp episodes) n) ((Filtration.piLE (X := <span class="kw">fun</span> _ : Nat =&gt; EpisodeBatch mdp episodes)).le n) (source.coordinateIncrement coordinate (n + <span class="num">1</span>)) (MarkovPolicy.iidBernoulliVarianceProxy episodes) source.trajectoryMeasure</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L431">Source line 431</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7489109d3d02">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.cumulativeCoordinateVarianceProxy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Total within-batch variance proxy for a finite adaptive prefix.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> cumulativeCoordinateVarianceProxy (episodes rounds : Nat) : NNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L553">Source line 553</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4446129f5876">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.cumulativeCoordinateConfidenceRadius</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Delta-calibrated radius for one adaptive cumulative count coordinate.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> cumulativeCoordinateConfidenceRadius (episodes rounds : Nat) (delta : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L558">Source line 558</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ea7e076eb727">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.cumulativeCoordinateDeviation</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Sum of kernel-centered increments over the first `rounds` batches.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> cumulativeCoordinateDeviation {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (coordinate : CountCoordinate mdp) (rounds : Nat) (trajectory : EpisodeBatchTrajectory mdp episodes) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L564">Source line 564</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7b49669c2067">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.measurable_cumulativeCoordinateDeviation</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every fixed cumulative coordinate deviation is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_cumulativeCoordinateDeviation {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (coordinate : CountCoordinate mdp) (rounds : Nat) : Measurable (source.cumulativeCoordinateDeviation coordinate rounds)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L575">Source line 575</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-01e689273df9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.trajectoryMeasure_cumulativeCoordinateDeviation_abs_tail_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Two-sided square-root prefix tail for one adaptive cumulative count coordinate.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> trajectoryMeasure_cumulativeCoordinateDeviation_abs_tail_le {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} [StandardBorelSpace (EpisodeBatch mdp episodes)] [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)] (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (coordinate : CountCoordinate mdp) (rounds : Nat) (hrounds : <span class="num">0</span> &lt; rounds) (hepisodes : <span class="num">0</span> &lt; episodes) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) : source.trajectoryMeasure {trajectory | cumulativeCoordinateConfidenceRadius episodes rounds delta &lt;= |source.cumulativeCoordinateDeviation coordinate rounds trajectory|} &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L589">Source line 589</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d37f956c014a">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.cumulativeCountLocalDelta</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Equal confidence share for every queried prefix/coordinate pair.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> cumulativeCountLocalDelta (mdp : MDP State Action) (rounds : Nat) (delta : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L630">Source line 630</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0196ae9fba27">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.adaptiveCumulativeCountBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">One global bad event covering every cumulative prefix and count coordinate.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> adaptiveCumulativeCountBadEvent {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (rounds : Nat) (delta : Real) : Set (EpisodeBatchTrajectory mdp episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L636">Source line 636</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9ca3c6961197">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.measurableSet_adaptiveCumulativeCountBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite round-coordinate cumulative bad event is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_adaptiveCumulativeCountBadEvent {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (rounds : Nat) (delta : Real) : MeasurableSet (source.adaptiveCumulativeCountBadEvent rounds delta)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L650">Source line 650</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f7f709e5c19c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.cumulativeCountIndex_nonempty</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite round-coordinate family is nonempty at positive horizon/rounds.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> cumulativeCountIndex_nonempty {mdp : MDP State Action} {rounds : Nat} (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hrounds : <span class="num">0</span> &lt; rounds) : Nonempty (Fin rounds × CountCoordinate mdp)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L662">Source line 662</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c92ffb213a8b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.cumulativeCountLocalDelta_pos</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A positive global delta gives a positive local round-coordinate share.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> cumulativeCountLocalDelta_pos {mdp : MDP State Action} {rounds : Nat} (hindex : Nonempty (Fin rounds × CountCoordinate mdp)) {delta : Real} (hdelta : <span class="num">0</span> &lt; delta) : <span class="num">0</span> &lt; cumulativeCountLocalDelta mdp rounds delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L671">Source line 671</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9c5a37b9a5a2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.cumulativeCountLocalDelta_le_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A valid global delta gives every nonempty-family local share at most one.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> cumulativeCountLocalDelta_le_one {mdp : MDP State Action} {rounds : Nat} (hindex : Nonempty (Fin rounds × CountCoordinate mdp)) {delta : Real} (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) : cumulativeCountLocalDelta mdp rounds delta &lt;= <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L681">Source line 681</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fc05c885fa45">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.trajectoryMeasure_adaptiveCumulativeCountBadEvent_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The global adaptive cumulative count event has the requested delta budget.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> trajectoryMeasure_adaptiveCumulativeCountBadEvent_le {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes rounds : Nat} [StandardBorelSpace (EpisodeBatch mdp episodes)] [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)] (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hrounds : <span class="num">0</span> &lt; rounds) (hepisodes : <span class="num">0</span> &lt; episodes) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) : source.trajectoryMeasure (source.adaptiveCumulativeCountBadEvent rounds delta) &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L692">Source line 692</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-713fe86902f5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.cumulativeCoordinateDeviation_abs_lt_of_not_mem_badEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Outside the union, every queried cumulative deviation is strictly small.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> cumulativeCoordinateDeviation_abs_lt_of_not_mem_badEvent {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes rounds : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) {delta : Real} {trajectory : EpisodeBatchTrajectory mdp episodes} (htrajectory : trajectory ∉ source.adaptiveCumulativeCountBadEvent rounds delta) (round : Fin rounds) (coordinate : CountCoordinate mdp) : |source.cumulativeCoordinateDeviation coordinate (round + <span class="num">1</span>) trajectory| &lt; cumulativeCoordinateConfidenceRadius episodes (round + <span class="num">1</span>) (cumulativeCountLocalDelta mdp rounds delta)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L728">Source line 728</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3abd646b9db9">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.coordinateMeanAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Predictable center used at one adaptive batch coordinate.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> coordinateMeanAt {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (coordinate : CountCoordinate mdp) : Nat -&gt; EpisodeBatchTrajectory mdp episodes -&gt; Real | <span class="num">0</span>, _trajectory =&gt; coordinate.policyMean source.initialPolicy initialState episodes | n + <span class="num">1</span>, trajectory =&gt; source.coordinateKernelMean n coordinate (Preorder.frestrictLe n trajectory) /-- Sum of predictable coordinate means over a finite prefix. -/ <span class="kw">noncomputable</span> <span class="kw">def</span> cumulativeCoordinateMean {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (coordinate : CountCoordinate mdp) (rounds : Nat) (trajectory : EpisodeBatchTrajectory mdp episodes) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L744">Source line 744</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-943bdf056803">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.cumulativeCoordinateMean</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Sum of predictable coordinate means over a finite prefix.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> cumulativeCoordinateMean {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (coordinate : CountCoordinate mdp) (rounds : Nat) (trajectory : EpisodeBatchTrajectory mdp episodes) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L757">Source line 757</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5a550d6d7366">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.cumulativeCoordinateRawCount</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Sum of uncentered coordinate counts over a finite prefix.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> cumulativeCoordinateRawCount {mdp : MDP State Action} {episodes : Nat} (coordinate : CountCoordinate mdp) (rounds : Nat) (trajectory : EpisodeBatchTrajectory mdp episodes) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L767">Source line 767</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3ab4e772b5eb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.coordinateIncrement_eq_rawCount_sub_meanAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Each adaptive increment is raw count minus its predictable mean.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> coordinateIncrement_eq_rawCount_sub_meanAt {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (coordinate : CountCoordinate mdp) (round : Nat) (trajectory : EpisodeBatchTrajectory mdp episodes) : source.coordinateIncrement coordinate round trajectory = coordinate.rawCount (trajectory round) - source.coordinateMeanAt coordinate round trajectory</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L775">Source line 775</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bcd9a862dd5b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.cumulativeCoordinateDeviation_eq_rawCount_sub_mean</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The cumulative martingale deviation is raw count minus cumulative mean.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> cumulativeCoordinateDeviation_eq_rawCount_sub_mean {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (coordinate : CountCoordinate mdp) (rounds : Nat) (trajectory : EpisodeBatchTrajectory mdp episodes) : source.cumulativeCoordinateDeviation coordinate rounds trajectory = cumulativeCoordinateRawCount coordinate rounds trajectory - source.cumulativeCoordinateMean coordinate rounds trajectory</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L791">Source line 791</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fea22858e3ce">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.cumulativeCoordinateRawCount_visit</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Cumulative visit raw counts are exactly the summary&#x27;s visit count.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> cumulativeCoordinateRawCount_visit {mdp : MDP State Action} {episodes : Nat} (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat) (stage : Fin mdp.horizon) (state : State) (action : Action) : cumulativeCoordinateRawCount (.visit stage state action) (round + <span class="num">1</span>) trajectory = ((cumulativeTransitionCountSummaryAt trajectory round).visitCount stage state action : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L818">Source line 818</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-97cbdc080d5d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.cumulativeCoordinateRawCount_transition</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Cumulative transition raw counts are exactly the summary coordinate.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> cumulativeCoordinateRawCount_transition {mdp : MDP State Action} {episodes : Nat} (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat) (stage : Fin mdp.horizon) (state : State) (action : Action) (nextState : State) : cumulativeCoordinateRawCount (.transition stage state action nextState) (round + <span class="num">1</span>) trajectory = (cumulativeTransitionCountSummaryAt trajectory round stage state action nextState : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L834">Source line 834</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-476cc95ab846">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.coordinateMeanAt_transition_eq_visit_mul_transition</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Each transition-count predictable mean factors through its visit mean.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> coordinateMeanAt_transition_eq_visit_mul_transition {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (round : Nat) (trajectory : EpisodeBatchTrajectory mdp episodes) (stage : Fin mdp.horizon) (state : State) (action : Action) (nextState : State) : source.coordinateMeanAt (.transition stage state action nextState) round trajectory = source.coordinateMeanAt (.visit stage state action) round trajectory * (mdp.transition (state, action)).real {nextState}</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L849">Source line 849</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3d131c2adebb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.cumulativeCoordinateMean_transition_eq_visit_mul_transition</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Cumulative transition centers factor through the cumulative visit center.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> cumulativeCoordinateMean_transition_eq_visit_mul_transition {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (rounds : Nat) (trajectory : EpisodeBatchTrajectory mdp episodes) (stage : Fin mdp.horizon) (state : State) (action : Action) (nextState : State) : source.cumulativeCoordinateMean (.transition stage state action nextState) rounds trajectory = source.cumulativeCoordinateMean (.visit stage state action) rounds trajectory * (mdp.transition (state, action)).real {nextState}</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L877">Source line 877</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c9a669c4a4d7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.cumulativeEmpiricalTransitionMass_abs_sub_transition_lt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Positive cumulative visits convert the two martingale deviations into a
+random-denominator empirical-transition singleton bound.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> cumulativeEmpiricalTransitionMass_abs_sub_transition_lt {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes rounds : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Fin rounds) (defaultState : State) (stage : Fin mdp.horizon) (state : State) (action : Action) (nextState : State) (radius : Real) (hvisitPos : <span class="num">0</span> &lt; (cumulativeTransitionCountSummaryAt trajectory round).visitCount stage state action) (hvisitDeviation : |((cumulativeTransitionCountSummaryAt trajectory round).visitCount stage state action : Real) - source.cumulativeCoordinateMean (.visit stage state action) (round + <span class="num">1</span>) trajectory| &lt; radius) (htransitionDeviation : |(cumulativeTransitionCountSummaryAt trajectory round stage state action nextState : Real) - source.cumulativeCoordinateMean (.transition stage state action nextState) (round + <span class="num">1</span>) trajectory| &lt; radius) : |((cumulativeTransitionCountSummaryAt trajectory round).empiricalTransitionKernel defaultState stage (state, action)).real {nextState} - (mdp.transition (state, action)).real {nextState}| &lt; <span class="num">2</span> * radius / ((cumulativeTransitionCountSummaryAt trajectory round).visitCount stage state action : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L900">Source line 900</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3c704eb7e3c3">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.adaptiveCumulativeTransitionCoordinateRadius</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Coordinate radius obtained from the cumulative visit denominator.  The zero
+visit branch uses the trivial probability-mass bound; the positive branch
+uses the paired visit and transition martingale deviations.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> adaptiveCumulativeTransitionCoordinateRadius {mdp : MDP State Action} {episodes rounds : Nat} (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Fin rounds) (delta : Real) (stage : Fin mdp.horizon) (state : State) (action : Action) (_nextState : State) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L986">Source line 986</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a03904102b80">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.AdaptiveCumulativeCountMartingaleCover</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Regularity contract connecting the statistical coordinate radius to the
+planner&#x27;s count radius after multiplication by the recursive value envelope.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> AdaptiveCumulativeCountMartingaleCover {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes rounds : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (countRadius : TransitionCountRadius) (delta rewardBound : Real) : Prop</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L1005">Source line 1005</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d22a596aa0a6">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.coordinateConfidence_of_not_mem_adaptiveCumulativeCountBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Outside the cumulative count-martingale event, the cumulative empirical plan
+has the finite-coordinate confidence required by the optimistic Bellman route.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> coordinateConfidence_of_not_mem_adaptiveCumulativeCountBadEvent {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes rounds : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) {delta : Real} {trajectory : EpisodeBatchTrajectory mdp episodes} (htrajectory : trajectory ∉ source.adaptiveCumulativeCountBadEvent rounds delta) (round : Fin rounds) (defaultState : State) (countRadius : TransitionCountRadius) (rewardBound : Real) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= rewardBound) (hcover : <span class="kw">forall</span> (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (state : State) (action : Action), (∑ nextState, adaptiveCumulativeTransitionCoordinateRadius trajectory round delta (mdp.decisionStageRemaining remaining hremaining) state action nextState * empiricalFiniteBatchValueEnvelope rewardBound (countRadius.radius <span class="num">0</span>) remaining) &lt;= countRadius.radius ((cumulativeTransitionCountSummaryAt trajectory round).visitCount (mdp.decisionStageRemaining remaining hremaining) state action)) : (adaptiveCumulativeEmpiricalOptimisticPlanAt trajectory defaultState countRadius round).CoordinateConfidence <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L1029">Source line 1029</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-646c083cb02f">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.adaptiveCumulativeCoordinateConfidenceContract_of_martingale</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The cumulative count martingale event and cover produce the reusable global
+coordinate-confidence contract for cumulative optimistic recommendations.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> adaptiveCumulativeCoordinateConfidenceContract_of_martingale {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes rounds : Nat} [StandardBorelSpace (EpisodeBatch mdp episodes)] [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)] (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (defaultState : State) (countRadius : TransitionCountRadius) (rewardBound : Real) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= rewardBound) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hrounds : <span class="num">0</span> &lt; rounds) (hepisodes : <span class="num">0</span> &lt; episodes) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) (hcover : AdaptiveCumulativeCountMartingaleCover (rounds := rounds) source countRadius delta rewardBound) : AdaptiveCumulativeCoordinateConfidenceContract source defaultState countRadius rounds delta <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L1124">Source line 1124</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e97c650683b1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.trajectoryMeasure_adaptiveCumulativeCountMartingale_optimism_and_explicitRecommendedExpectedRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Generic route endpoint: cumulative count martingales supply the probability
+producer for optimism and explicit recommended-policy expected regret.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> trajectoryMeasure_adaptiveCumulativeCountMartingale_optimism_and_explicitRecommendedExpectedRegret {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes rounds : Nat} [StandardBorelSpace (EpisodeBatch mdp episodes)] [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)] (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (defaultState : State) (countRadius : TransitionCountRadius) (rewardBound : Real) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= rewardBound) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hrounds : <span class="num">0</span> &lt; rounds) (hepisodes : <span class="num">0</span> &lt; episodes) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) (hcover : AdaptiveCumulativeCountMartingaleCover (rounds := rounds) source countRadius delta rewardBound) (radiusEnvelope : Fin rounds -&gt; Real) (hradius : <span class="kw">forall</span> trajectory, trajectory ∉ source.adaptiveCumulativeCountBadEvent rounds delta -&gt; <span class="kw">forall</span> (round : Fin rounds) (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (state : State), (adaptiveCumulativeEmpiricalOptimisticPlanAt trajectory defaultState countRadius round).selectedRadiusRemaining remaining hremaining state &lt;= radiusEnvelope round) : MeasurableSet (source.adaptiveCumulativeCountBadEvent rounds delta) /\ source.trajectoryMeasure (source.adaptiveCumulativeCountBadEvent rounds delta) &lt;= ENNReal.ofReal delta /\ <span class="kw">forall</span> trajectory, trajectory ∉ source.adaptiveCumulativeCountBadEvent rounds delta -&gt; (<span class="kw">forall</span> round : Fin rounds, <span class="kw">forall</span> state, mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;= (adaptiveCumulativeEmpiricalOptimisticPlanAt trajectory defaultState countRadius round).upperValueRemaining mdp.horizon le_rfl state) /\ adaptiveCumulativeEmpiricalOptimisticRecommendedExpectedRegret (initialState := initialState) trajectory defaultState countRadius rounds &lt;= ∑ round : Fin rounds, (mdp.horizon : Real) * (<span class="num">2</span> * radiusEnvelope round)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L1157">Source line 1157</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-06730fabf8aa">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_cumulativeCountMartingale_optimism_and_explicitRecommendedExpectedRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Concrete exploratory-source endpoint for the cumulative count-martingale
+confidence route.  The conclusion concerns recommended policies, not behavior
+or realized regret.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_trajectoryMeasure_cumulativeCountMartingale_optimism_and_explicitRecommendedExpectedRegret (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes rounds : Nat) [StandardBorelSpace (EpisodeBatch mdp episodes)] [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)] (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (countRadius : TransitionCountRadius) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (rewardBound : Real) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= rewardBound) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hrounds : <span class="num">0</span> &lt; rounds) (hepisodes : <span class="num">0</span> &lt; episodes) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) (hcover : AdaptiveEpisodeBatchSource.AdaptiveCumulativeCountMartingaleCover (rounds := rounds) (exploratorySource mdp initialState episodes initialTable defaultState countRadius explorationRate hexplorationRate) countRadius delta rewardBound) (radiusEnvelope : Fin rounds -&gt; Real) (hradius : <span class="kw">forall</span> trajectory, trajectory ∉ (exploratorySource mdp initialState episodes initialTable defaultState countRadius explorationRate hexplorationRate).adaptiveCumulativeCountBadEvent rounds delta -&gt; <span class="kw">forall</span> (round : Fin rounds) (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (state : State), (adaptiveCumulativeEmpiricalOptimisticPlanAt trajectory defaultState countRadius round).selectedRadiusRemaining remaining hremaining state &lt;= radiusEnvelope round) : <span class="kw">let</span> source := exploratorySource mdp initialState episodes initialTable defaultState countRadius explorationRate hexplorationRate MeasurableSet (source.adaptiveCumulativeCountBadEvent rounds delta) /\ source.trajectoryMeasure (source.adaptiveCumulativeCountBadEvent rounds delta) &lt;= ENNReal.ofReal delta /\ <span class="kw">forall</span> trajectory, trajectory ∉ source.adaptiveCumulativeCountBadEvent rounds delta -&gt; (<span class="kw">forall</span> round : Fin rounds, <span class="kw">forall</span> state, mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;= (adaptiveCumulativeEmpiricalOptimisticPlanAt trajectory defaultState countRadius round).upperValueRemaining mdp.horizon le_rfl state) /\ adaptiveCumulativeEmpiricalOptimisticRecommendedExpectedRegret (initialState := initialState) trajectory defaultState countRadius rounds &lt;= ∑ round : Fin rounds, (mdp.horizon : Real) * (<span class="num">2</span> * radiusEnvelope round)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean.html#L1216">Source line 1216</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

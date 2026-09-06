@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIExpectedRegret.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIExpectedRegret.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIExpectedRegret.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIExpectedRegret.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVITerminal</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Expected regret of the canonical generated Hoeffding UCBVI-CH source</span>
+<span id="L5">5 </span>
+<span id="L6">6 This file first closes the small measurability bridge from the recurrent</span>
+<span id="L7">7 finite table to policy-value pseudo-regret.  It then integrates the compiled</span>
+<span id="L8">8 high-probability terminal, charging the deterministic `K H` envelope only on</span>
+<span id="L9">9 the measurable hull of the proved failure event.  The resulting corollary</span>
+<span id="L10">10 therefore retains the required `K H delta` term.</span>
+<span id="L11">11 -/</span>
+<span id="L12">12 </span>
+<span id="L13">13 open MeasureTheory</span>
+<span id="L14">14 open scoped ENNReal ProbabilityTheory BigOperators</span>
+<span id="L15">15 </span>
+<span id="L16">16 universe u v</span>
+<span id="L17">17 </span>
+<span id="L18">18 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L19">19 </span>
+<span id="L20">20 variable {State : Type u} {Action : Type v}</span>
+<span id="L21">21     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L22">22     [Fintype State] [Fintype Action]</span>
+<span id="L23">23     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L24">24     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L25">25     [Nonempty State] [Nonempty Action]</span>
+<span id="L26">26 </span>
+<span id="L27">27 namespace AdaptiveCumulativeHoeffdingUCBVI</span>
+<span id="L28">28 </span>
+<span id="L29">29 theorem measurable_generatedPolicyTable</span>
+<span id="L30">30     (mdp : MDP State Action) (defaultState : State)</span>
+<span id="L31">31     (episodes : Nat) (delta : Real) (episode : Nat) :</span>
+<span id="L32">32     Measurable (fun trajectory : EpisodeBatchTrajectory mdp 1 =&gt;</span>
+<span id="L33">33       generatedPolicyTable mdp defaultState episodes delta trajectory episode) := by</span>
+<span id="L34">34   cases episode with</span>
+<span id="L35">35   | zero =&gt;</span>
+<span id="L36">36       change Measurable (fun _ : EpisodeBatchTrajectory mdp 1 =&gt;</span>
+<span id="L37">37         recurrentInitialTable mdp)</span>
+<span id="L38">38       exact measurable_const</span>
+<span id="L39">39   | succ episode =&gt;</span>
+<span id="L40">40       change Measurable (fun trajectory : EpisodeBatchTrajectory mdp 1 =&gt;</span>
+<span id="L41">41         recurrentSuccessorTable defaultState</span>
+<span id="L42">42           (scale (State := State) (Action := Action) mdp episodes delta)</span>
+<span id="L43">43           episode (Preorder.frestrictLe episode trajectory))</span>
+<span id="L44">44       exact (measurable_recurrentSuccessorTable defaultState</span>
+<span id="L45">45         (scale (State := State) (Action := Action) mdp episodes delta)</span>
+<span id="L46">46         episode).comp (Preorder.measurable_frestrictLe episode)</span>
+<span id="L47">47 </span>
+<span id="L48">48 theorem measurable_generatedEpisodeInitialState</span>
+<span id="L49">49     (mdp : MDP State Action) (defaultState : State) :</span>
+<span id="L50">50     Measurable (generatedEpisodeInitialState mdp defaultState) := by</span>
+<span id="L51">51   unfold generatedEpisodeInitialState</span>
+<span id="L52">52   split_ifs with hhorizon</span>
+<span id="L53">53   ·</span>
+<span id="L54">54     exact EpisodeStep.measurable_state.comp</span>
+<span id="L55">55       ((measurable_pi_apply (⟨0, hhorizon⟩ : Fin mdp.horizon)).comp</span>
+<span id="L56">56         (measurable_pi_apply (0 : Fin 1)))</span>
+<span id="L57">57   ·</span>
+<span id="L58">58     exact measurable_const</span>
+<span id="L59">59 </span>
+<span id="L60">60 theorem measurable_generatedEpisodePseudoRegret</span>
+<span id="L61">61     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L62">62     [IsProbabilityMeasure initialState]</span>
+<span id="L63">63     (defaultState : State) (episodes : Nat) (delta : Real)</span>
+<span id="L64">64     (episode : Nat) :</span>
+<span id="L65">65     Measurable (fun trajectory : EpisodeBatchTrajectory mdp 1 =&gt;</span>
+<span id="L66">66       generatedEpisodePseudoRegret</span>
+<span id="L67">67         (recurrentSource mdp initialState defaultState episodes delta)</span>
+<span id="L68">68         defaultState trajectory episode) := by</span>
+<span id="L69">69   let state : EpisodeBatchTrajectory mdp 1 → State := fun trajectory =&gt;</span>
+<span id="L70">70     generatedEpisodeInitialState mdp defaultState (trajectory episode)</span>
+<span id="L71">71   have hstate : Measurable state :=</span>
+<span id="L72">72     (measurable_generatedEpisodeInitialState mdp defaultState).comp</span>
+<span id="L73">73       (measurable_pi_apply episode)</span>
+<span id="L74">74   let regretOf : DeterministicMarkovPolicyTable mdp × State → Real :=</span>
+<span id="L75">75     fun pair =&gt;</span>
+<span id="L76">76       mdp.optimalValueAt 0 (Nat.zero_le mdp.horizon) pair.2 -</span>
+<span id="L77">77         pair.1.toMarkovPolicy.valueAt 0</span>
+<span id="L78">78           (Nat.zero_le mdp.horizon) pair.2</span>
+<span id="L79">79   have hregretOf : Measurable regretOf := measurable_of_countable _</span>
+<span id="L80">80   have hpair : Measurable (fun trajectory : EpisodeBatchTrajectory mdp 1 =&gt;</span>
+<span id="L81">81       (generatedPolicyTable mdp defaultState episodes delta trajectory episode,</span>
+<span id="L82">82         state trajectory)) :=</span>
+<span id="L83">83     (measurable_generatedPolicyTable mdp defaultState episodes delta episode).prodMk</span>
+<span id="L84">84       hstate</span>
+<span id="L85">85   simpa only [generatedEpisodePseudoRegret,</span>
+<span id="L86">86     recurrentSource_policyAt_eq_generatedPolicyTable, state, regretOf] using</span>
+<span id="L87">87     hregretOf.comp hpair</span>
+<span id="L88">88 </span>
+<span id="L89">89 theorem measurable_cumulativeEpisodePseudoRegret</span>
+<span id="L90">90     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L91">91     [IsProbabilityMeasure initialState]</span>
+<span id="L92">92     (defaultState : State) (episodes : Nat) (delta : Real) :</span>
+<span id="L93">93     Measurable (fun trajectory : EpisodeBatchTrajectory mdp 1 =&gt;</span>
+<span id="L94">94       cumulativeEpisodePseudoRegret</span>
+<span id="L95">95         (recurrentSource mdp initialState defaultState episodes delta)</span>
+<span id="L96">96         defaultState episodes trajectory) := by</span>
+<span id="L97">97   unfold cumulativeEpisodePseudoRegret</span>
+<span id="L98">98   exact Finset.measurable_sum Finset.univ fun episode _ =&gt;</span>
+<span id="L99">99     measurable_generatedEpisodePseudoRegret mdp initialState defaultState</span>
+<span id="L100">100       episodes delta episode</span>
+<span id="L101">101 </span>
+<span id="L102">102 /-- Canonical finite-time expected pseudo-regret.  The `K H delta` summand is</span>
+<span id="L103">103 the explicit contribution of the proved terminal failure event. -/</span>
+<span id="L104">104 theorem integral_cumulativeEpisodePseudoRegret_recurrentSource_le_canonicalRegretBound_add_failure</span>
+<span id="L105">105     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L106">106     [IsProbabilityMeasure initialState]</span>
+<span id="L107">107     [StandardBorelSpace (EpisodeBatch mdp 1)]</span>
+<span id="L108">108     [StandardBorelSpace (EpisodeBatchTrajectory mdp 1)]</span>
+<span id="L109">109     (defaultState : State) (episodes : Nat) (delta : Real)</span>
+<span id="L110">110     (hhorizon : 0 &lt; mdp.horizon) (hepisodes : 0 &lt; episodes)</span>
+<span id="L111">111     (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L112">112     (hrewardNonneg : ∀ state action, 0 &lt;= mdp.reward state action)</span>
+<span id="L113">113     (hrewardOne : ∀ state action, mdp.reward state action &lt;= 1) :</span>
+<span id="L114">114     let source := recurrentSource mdp initialState defaultState episodes delta</span>
+<span id="L115">115     ∫ trajectory, cumulativeEpisodePseudoRegret source defaultState episodes trajectory</span>
+<span id="L116">116         ∂source.trajectoryMeasure &lt;=</span>
+<span id="L117">117       canonicalRegretBound (State := State) (Action := Action)</span>
+<span id="L118">118           mdp episodes delta +</span>
+<span id="L119">119         (episodes : Real) * mdp.horizon * delta := by</span>
+<span id="L120">120   dsimp only</span>
+<span id="L121">121   let source := recurrentSource mdp initialState defaultState episodes delta</span>
+<span id="L122">122   let μ := source.trajectoryMeasure</span>
+<span id="L123">123   let regret : EpisodeBatchTrajectory mdp 1 → Real := fun trajectory =&gt;</span>
+<span id="L124">124     cumulativeEpisodePseudoRegret source defaultState episodes trajectory</span>
+<span id="L125">125   let bound := canonicalRegretBound (State := State) (Action := Action)</span>
+<span id="L126">126     mdp episodes delta</span>
+<span id="L127">127   let envelope : Real := episodes * mdp.horizon</span>
+<span id="L128">128   let failure := canonicalFailureEvent (mdp := mdp) (initialState := initialState)</span>
+<span id="L129">129     defaultState episodes delta</span>
+<span id="L130">130   let bad := toMeasurable μ failure</span>
+<span id="L131">131   let overflow : EpisodeBatchTrajectory mdp 1 → Real :=</span>
+<span id="L132">132     bad.indicator (fun _ =&gt; envelope)</span>
+<span id="L133">133   have hregretMeasurable : Measurable regret :=</span>
+<span id="L134">134     measurable_cumulativeEpisodePseudoRegret mdp initialState defaultState</span>
+<span id="L135">135       episodes delta</span>
+<span id="L136">136   have hregretBound : ∀ trajectory, |regret trajectory| &lt;= envelope := by</span>
+<span id="L137">137     intro trajectory</span>
+<span id="L138">138     have hmem := cumulativeEpisodePseudoRegret_mem_Icc source defaultState</span>
+<span id="L139">139       episodes trajectory hrewardNonneg hrewardOne</span>
+<span id="L140">140     rw [abs_of_nonneg hmem.1]</span>
+<span id="L141">141     exact hmem.2</span>
+<span id="L142">142   have hregretIntegrable : Integrable regret μ := by</span>
+<span id="L143">143     exact (integrable_const envelope).mono&#x27;</span>
+<span id="L144">144       hregretMeasurable.aestronglyMeasurable (ae_of_all μ hregretBound)</span>
+<span id="L145">145   have hbad : MeasurableSet bad := measurableSet_toMeasurable _ _</span>
+<span id="L146">146   have hoverflow : Integrable overflow μ :=</span>
+<span id="L147">147     (integrable_const envelope).indicator hbad</span>
+<span id="L148">148   have hbound : 0 &lt;= bound := canonicalRegretBound_nonneg mdp episodes delta</span>
+<span id="L149">149   have hpoint : ∀ trajectory, regret trajectory &lt;= bound + overflow trajectory := by</span>
+<span id="L150">150     intro trajectory</span>
+<span id="L151">151     by_cases htrajectory : trajectory ∈ bad</span>
+<span id="L152">152     · have hupper := (cumulativeEpisodePseudoRegret_mem_Icc source defaultState</span>
+<span id="L153">153         episodes trajectory hrewardNonneg hrewardOne).2</span>
+<span id="L154">154       calc</span>
+<span id="L155">155         regret trajectory &lt;= envelope := hupper</span>
+<span id="L156">156         _ &lt;= bound + envelope := le_add_of_nonneg_left hbound</span>
+<span id="L157">157         _ = bound + overflow trajectory := by</span>
+<span id="L158">158           simp [overflow, Set.indicator_of_mem htrajectory]</span>
+<span id="L159">159     · have hnotFailure : trajectory ∉ failure := by</span>
+<span id="L160">160         intro hfailure</span>
+<span id="L161">161         exact htrajectory (subset_toMeasurable μ failure hfailure)</span>
+<span id="L162">162       have hgood := cumulativeEpisodePseudoRegret_le_canonicalRegretBound_of_not_mem</span>
+<span id="L163">163         mdp initialState defaultState episodes delta hhorizon hepisodes</span>
+<span id="L164">164           hdelta hdelta_le_one hrewardNonneg hrewardOne trajectory hnotFailure</span>
+<span id="L165">165       calc</span>
+<span id="L166">166         regret trajectory &lt;= bound := hgood</span>
+<span id="L167">167         _ = bound + overflow trajectory := by</span>
+<span id="L168">168           simp [overflow, Set.indicator_of_notMem htrajectory]</span>
+<span id="L169">169   have htail : μ failure &lt;= ENNReal.ofReal delta :=</span>
+<span id="L170">170     recurrentSource_trajectoryMeasure_canonicalFailureEvent_le</span>
+<span id="L171">171       mdp initialState defaultState episodes delta hhorizon hepisodes</span>
+<span id="L172">172         hdelta hdelta_le_one hrewardNonneg hrewardOne</span>
+<span id="L173">173   have htailReal : μ.real bad &lt;= delta := by</span>
+<span id="L174">174     rw [Measure.real, measure_toMeasurable]</span>
+<span id="L175">175     calc</span>
+<span id="L176">176       (μ failure).toReal &lt;= (ENNReal.ofReal delta).toReal :=</span>
+<span id="L177">177         ENNReal.toReal_mono ENNReal.ofReal_ne_top htail</span>
+<span id="L178">178       _ = delta := ENNReal.toReal_ofReal hdelta.le</span>
+<span id="L179">179   change integral μ regret &lt;= bound + envelope * delta</span>
+<span id="L180">180   calc</span>
+<span id="L181">181     integral μ regret &lt;= integral μ (fun trajectory =&gt;</span>
+<span id="L182">182         bound + overflow trajectory) := by</span>
+<span id="L183">183       exact integral_mono hregretIntegrable</span>
+<span id="L184">184         ((integrable_const bound).add hoverflow) hpoint</span>
+<span id="L185">185     _ = bound + integral μ overflow := by</span>
+<span id="L186">186       rw [integral_add (integrable_const bound) hoverflow, integral_const]</span>
+<span id="L187">187       simp [MeasureTheory.probReal_univ]</span>
+<span id="L188">188     _ = bound + envelope * μ.real bad := by</span>
+<span id="L189">189       congr 1</span>
+<span id="L190">190       change integral μ (bad.indicator (fun _ =&gt; envelope)) =</span>
+<span id="L191">191         envelope * μ.real bad</span>
+<span id="L192">192       rw [integral_indicator hbad, setIntegral_const]</span>
+<span id="L193">193       simp [Measure.real, smul_eq_mul, mul_comm]</span>
+<span id="L194">194     _ &lt;= bound + envelope * delta := by</span>
+<span id="L195">195       exact add_le_add le_rfl</span>
+<span id="L196">196         (mul_le_mul_of_nonneg_left htailReal (by positivity))</span>
+<span id="L197">197 </span>
+<span id="L198">198 end AdaptiveCumulativeHoeffdingUCBVI</span>
+<span id="L199">199 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

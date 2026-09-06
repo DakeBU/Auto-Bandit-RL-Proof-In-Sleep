@@ -1,0 +1,1085 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterIntegrableFiniteStoppingTime</span>
+<span id="L2">2 import BanditRLProof.OFULScheduledUnboundedStoppingTimeExpectedRegretRate</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Second moment of the uncapped inverse-sqrt hitting time</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module upgrades each fixed-index genuine `hittingAfter` first passage</span>
+<span id="L8">8 from a first moment to `OFUL.SquareIntegrableFiniteStoppingTime` when</span>
+<span id="L9">9 `4 &lt; mdp.horizon`. Squaring the fourth-power checkpoint values produces a</span>
+<span id="L10">10 seventh-degree block weight. The stronger horizon contract supplies an</span>
+<span id="L11">11 inverse-tenth local confidence share, leaving a summable inverse-square</span>
+<span id="L12">12 diagonal after shifted-tail reindexing.</span>
+<span id="L13">13 </span>
+<span id="L14">14 The result is fixed-index L2 regularity. It does not prove a uniform moment</span>
+<span id="L15">15 rate, a stopped-process L1 theorem, an exponential crossing tail, or an</span>
+<span id="L16">16 optional-stopping identity.</span>
+<span id="L17">17 -/</span>
+<span id="L18">18 </span>
+<span id="L19">19 open Filter MeasureTheory ProbabilityTheory</span>
+<span id="L20">20 open scoped BigOperators ENNReal NNReal ProbabilityTheory Topology</span>
+<span id="L21">21 </span>
+<span id="L22">22 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L23">23 </span>
+<span id="L24">24 universe u v</span>
+<span id="L25">25 </span>
+<span id="L26">26 variable {State : Type u} {Action : Type v}</span>
+<span id="L27">27     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L28">28     [Fintype State] [Fintype Action]</span>
+<span id="L29">29     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L30">30     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L31">31     [Nonempty State] [Nonempty Action]</span>
+<span id="L32">32 </span>
+<span id="L33">33 namespace AdaptiveStochasticSampledEmpiricalOptimisticSource</span>
+<span id="L34">34 </span>
+<span id="L35">35 /-- Seventh-degree envelope for one consecutive squared fourth-power checkpoint block. -/</span>
+<span id="L36">36 def explicitHighProbabilityQuarticSquareBlockWeight (n : Nat) : Nat :=</span>
+<span id="L37">37   16 * (n + 2) ^ 7</span>
+<span id="L38">38 </span>
+<span id="L39">39 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L40">40     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L41">41     [Nonempty State] [Nonempty Action] in</span>
+<span id="L42">42 /-- A consecutive squared fourth-power checkpoint gap is bounded by the seventh-degree weight. -/</span>
+<span id="L43">43 theorem explicitHighProbabilityRounds_succ_square_sub_le_quarticSquareBlockWeight</span>
+<span id="L44">44     (n : Nat) :</span>
+<span id="L45">45     (explicitHighProbabilityRounds (n + 1) + 1) ^ 2 -</span>
+<span id="L46">46         (explicitHighProbabilityRounds n + 1) ^ 2 &lt;=</span>
+<span id="L47">47       explicitHighProbabilityQuarticSquareBlockWeight n := by</span>
+<span id="L48">48   unfold explicitHighProbabilityRounds explicitHighProbabilityScale</span>
+<span id="L49">49     explicitHighProbabilityQuarticSquareBlockWeight</span>
+<span id="L50">50   rw [Nat.sub_le_iff_le_add]</span>
+<span id="L51">51   ring_nf</span>
+<span id="L52">52   omega</span>
+<span id="L53">53 </span>
+<span id="L54">54 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L55">55     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L56">56     [Nonempty State] [Nonempty Action] in</span>
+<span id="L57">57 /-- Horizon at least five makes every local confidence share no larger than a shifted inverse tenth power. -/</span>
+<span id="L58">58 theorem selfConsistentScheduledLocalDelta_le_inv_pow_ten</span>
+<span id="L59">59     (mdp : MDP State Action) (hhorizon : 4 &lt; mdp.horizon) (t : Nat) :</span>
+<span id="L60">60     AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledLocalDelta mdp t &lt;=</span>
+<span id="L61">61       1 / (((t + 2 : Nat) : Real) ^ 10) := by</span>
+<span id="L62">62   rw [selfConsistentScheduledLocalDelta_eq_inv_pow mdp t]</span>
+<span id="L63">63   exact one_div_pow_le_one_div_pow_of_le</span>
+<span id="L64">64     (by exact_mod_cast (show 1 &lt;= t + 2 by omega) :</span>
+<span id="L65">65       (1 : Real) &lt;= ((t + 2 : Nat) : Real))</span>
+<span id="L66">66     (by omega : 10 &lt;= mdp.horizon + 5)</span>
+<span id="L67">67 </span>
+<span id="L68">68 /-- Inverse-cube pair envelope after a seventh-degree weight cancels seven inverse powers. -/</span>
+<span id="L69">69 noncomputable def quarticSquareBlockShiftedInverseCubePairEnvelope</span>
+<span id="L70">70     (p : Nat × Nat) : ENNReal :=</span>
+<span id="L71">71   4 * quarticBlockShiftedInverseCubePairEnvelope p</span>
+<span id="L72">72 </span>
+<span id="L73">73 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L74">74     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L75">75     [Nonempty State] [Nonempty Action] in</span>
+<span id="L76">76 /-- The square-block shifted pair envelope has finite total ENNReal mass. -/</span>
+<span id="L77">77 theorem tsum_quarticSquareBlockShiftedInverseCubePairEnvelope_ne_top :</span>
+<span id="L78">78     Ne (∑&#x27; p : Nat × Nat,</span>
+<span id="L79">79       quarticSquareBlockShiftedInverseCubePairEnvelope p) ∞ := by</span>
+<span id="L80">80   rw [show (fun p : Nat × Nat =&gt;</span>
+<span id="L81">81       quarticSquareBlockShiftedInverseCubePairEnvelope p) =</span>
+<span id="L82">82       fun p =&gt; 4 * quarticBlockShiftedInverseCubePairEnvelope p by rfl]</span>
+<span id="L83">83   rw [ENNReal.tsum_mul_left]</span>
+<span id="L84">84   exact ENNReal.mul_ne_top ENNReal.ofNat_ne_top</span>
+<span id="L85">85     tsum_quarticBlockShiftedInverseCubePairEnvelope_ne_top</span>
+<span id="L86">86 </span>
+<span id="L87">87 /-- One squared-checkpoint block weight times one shifted coordinate model-failure charge. -/</span>
+<span id="L88">88 noncomputable def quarticSquareBlockShiftedCoordinateModelFailureCharge</span>
+<span id="L89">89     (mdp : MDP State Action) (p : Nat × Nat) : ENNReal :=</span>
+<span id="L90">90   (explicitHighProbabilityQuarticSquareBlockWeight p.1 : ENNReal) *</span>
+<span id="L91">91     selfConsistentScheduledCausalCoordinateModelFailureBudget mdp</span>
+<span id="L92">92       (p.1 + p.2 + 1)</span>
+<span id="L93">93 </span>
+<span id="L94">94 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L95">95     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L96">96     [Nonempty State] [Nonempty Action] in</span>
+<span id="L97">97 /-- The inverse-tenth local share puts every seventh-weighted coordinate charge below the pair envelope. -/</span>
+<span id="L98">98 theorem quarticSquareBlockShiftedCoordinateModelFailureCharge_le_pairEnvelope</span>
+<span id="L99">99     (mdp : MDP State Action) (hhorizon : 4 &lt; mdp.horizon)</span>
+<span id="L100">100     (p : Nat × Nat) :</span>
+<span id="L101">101     quarticSquareBlockShiftedCoordinateModelFailureCharge mdp p &lt;=</span>
+<span id="L102">102       quarticSquareBlockShiftedInverseCubePairEnvelope p := by</span>
+<span id="L103">103   let n := p.1</span>
+<span id="L104">104   let j := p.2</span>
+<span id="L105">105   let s : Real := ((n + j + 3 : Nat) : Real)</span>
+<span id="L106">106   let delta :=</span>
+<span id="L107">107     AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledLocalDelta</span>
+<span id="L108">108       mdp (n + j + 1)</span>
+<span id="L109">109   have hs : 0 &lt; s := by</span>
+<span id="L110">110     dsimp [s]</span>
+<span id="L111">111     positivity</span>
+<span id="L112">112   have hdeltaNonneg : 0 &lt;= delta := by</span>
+<span id="L113">113     dsimp [delta]</span>
+<span id="L114">114     rw [selfConsistentScheduledLocalDelta_eq_inv_pow]</span>
+<span id="L115">115     positivity</span>
+<span id="L116">116   have hdelta : delta &lt;= 1 / s ^ 10 := by</span>
+<span id="L117">117     dsimp [delta, s, n, j]</span>
+<span id="L118">118     convert selfConsistentScheduledLocalDelta_le_inv_pow_ten mdp hhorizon</span>
+<span id="L119">119       (p.1 + p.2 + 1) using 1</span>
+<span id="L120">120   have hnle : ((n + 2 : Nat) : Real) &lt;= s := by</span>
+<span id="L121">121     dsimp [s, n, j]</span>
+<span id="L122">122     exact_mod_cast (show p.1 + 2 &lt;= p.1 + p.2 + 3 by omega)</span>
+<span id="L123">123   have hseventh : (((n + 2 : Nat) : Real) ^ 7) &lt;= s ^ 7 := by</span>
+<span id="L124">124     exact pow_le_pow_left₀ (by positivity) hnle 7</span>
+<span id="L125">125   have hreal :</span>
+<span id="L126">126       ((explicitHighProbabilityQuarticSquareBlockWeight n : Nat) : Real) *</span>
+<span id="L127">127           (delta + delta) &lt;=</span>
+<span id="L128">128         32 / s ^ 3 := by</span>
+<span id="L129">129     have hweight :</span>
+<span id="L130">130         ((explicitHighProbabilityQuarticSquareBlockWeight n : Nat) : Real) &lt;=</span>
+<span id="L131">131           16 * s ^ 7 := by</span>
+<span id="L132">132       unfold explicitHighProbabilityQuarticSquareBlockWeight</span>
+<span id="L133">133       push_cast</span>
+<span id="L134">134       norm_num at hseventh ⊢</span>
+<span id="L135">135       nlinarith</span>
+<span id="L136">136     calc</span>
+<span id="L137">137       ((explicitHighProbabilityQuarticSquareBlockWeight n : Nat) : Real) *</span>
+<span id="L138">138             (delta + delta) &lt;=</span>
+<span id="L139">139           ((explicitHighProbabilityQuarticSquareBlockWeight n : Nat) : Real) *</span>
+<span id="L140">140             (1 / s ^ 10 + 1 / s ^ 10) := by</span>
+<span id="L141">141         gcongr</span>
+<span id="L142">142       _ &lt;= (16 * s ^ 7) * (1 / s ^ 10 + 1 / s ^ 10) := by</span>
+<span id="L143">143         gcongr</span>
+<span id="L144">144       _ = 32 / s ^ 3 := by</span>
+<span id="L145">145         field_simp [ne_of_gt hs]</span>
+<span id="L146">146         norm_num</span>
+<span id="L147">147   unfold quarticSquareBlockShiftedCoordinateModelFailureCharge</span>
+<span id="L148">148     quarticSquareBlockShiftedInverseCubePairEnvelope</span>
+<span id="L149">149     quarticBlockShiftedInverseCubePairEnvelope</span>
+<span id="L150">150     selfConsistentScheduledCausalCoordinateModelFailureBudget</span>
+<span id="L151">151   change</span>
+<span id="L152">152     (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) *</span>
+<span id="L153">153         (ENNReal.ofReal delta + ENNReal.ofReal delta) &lt;=</span>
+<span id="L154">154       4 * ENNReal.ofReal (8 / s ^ 3)</span>
+<span id="L155">155   rw [← ENNReal.ofReal_natCast</span>
+<span id="L156">156       (explicitHighProbabilityQuarticSquareBlockWeight n),</span>
+<span id="L157">157     ← ENNReal.ofReal_add hdeltaNonneg hdeltaNonneg,</span>
+<span id="L158">158     ← ENNReal.ofReal_mul (by positivity :</span>
+<span id="L159">159       (0 : Real) &lt;=</span>
+<span id="L160">160         ((explicitHighProbabilityQuarticSquareBlockWeight n : Nat) : Real)),</span>
+<span id="L161">161     ← ENNReal.ofReal_ofNat, ← ENNReal.ofReal_mul (by norm_num : (0 : Real) &lt;= 4)]</span>
+<span id="L162">162   apply ENNReal.ofReal_le_ofReal</span>
+<span id="L163">163   convert hreal using 1</span>
+<span id="L164">164   ring_nf</span>
+<span id="L165">165 </span>
+<span id="L166">166 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L167">167     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L168">168     [Nonempty State] [Nonempty Action] in</span>
+<span id="L169">169 /-- The seventh-weighted shifted coordinate charges have finite total ENNReal mass. -/</span>
+<span id="L170">170 theorem tsum_quarticSquareBlockShiftedCoordinateModelFailureCharge_ne_top</span>
+<span id="L171">171     (mdp : MDP State Action) (hhorizon : 4 &lt; mdp.horizon) :</span>
+<span id="L172">172     Ne (∑&#x27; p : Nat × Nat,</span>
+<span id="L173">173       quarticSquareBlockShiftedCoordinateModelFailureCharge mdp p) ∞ := by</span>
+<span id="L174">174   exact ne_top_of_le_ne_top</span>
+<span id="L175">175     tsum_quarticSquareBlockShiftedInverseCubePairEnvelope_ne_top</span>
+<span id="L176">176     (ENNReal.tsum_le_tsum</span>
+<span id="L177">177       (quarticSquareBlockShiftedCoordinateModelFailureCharge_le_pairEnvelope</span>
+<span id="L178">178         mdp hhorizon))</span>
+<span id="L179">179 </span>
+<span id="L180">180 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L181">181     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L182">182     [Nonempty State] [Nonempty Action] in</span>
+<span id="L183">183 /-- A model tail after `n+1`, charged by one squared-checkpoint block, is the shifted coordinate row. -/</span>
+<span id="L184">184 theorem quarticSquareBlockWeight_mul_tailModelFailureBudget_eq_tsum_shiftedCoordinateCharge</span>
+<span id="L185">185     (mdp : MDP State Action) (n : Nat) :</span>
+<span id="L186">186     (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) *</span>
+<span id="L187">187         selfConsistentScheduledCausalTailModelFailureBudget mdp (n + 1) =</span>
+<span id="L188">188       ∑&#x27; j : Nat,</span>
+<span id="L189">189         quarticSquareBlockShiftedCoordinateModelFailureCharge mdp (n, j) := by</span>
+<span id="L190">190   have htail :</span>
+<span id="L191">191       selfConsistentScheduledCausalTailModelFailureBudget mdp (n + 1) =</span>
+<span id="L192">192         ∑&#x27; j : Nat,</span>
+<span id="L193">193           selfConsistentScheduledCausalCoordinateModelFailureBudget mdp</span>
+<span id="L194">194             (j + (n + 1)) := by</span>
+<span id="L195">195     unfold selfConsistentScheduledCausalTailModelFailureBudget</span>
+<span id="L196">196     exact ((notMemRangeEquiv (n + 1)).symm.tsum_eq</span>
+<span id="L197">197       (fun t : {t // t ∉ Finset.range (n + 1)} =&gt;</span>
+<span id="L198">198         selfConsistentScheduledCausalCoordinateModelFailureBudget mdp t)).symm</span>
+<span id="L199">199   rw [htail, ← ENNReal.tsum_mul_left]</span>
+<span id="L200">200   apply tsum_congr</span>
+<span id="L201">201   intro j</span>
+<span id="L202">202   unfold quarticSquareBlockShiftedCoordinateModelFailureCharge</span>
+<span id="L203">203   congr 2</span>
+<span id="L204">204   omega</span>
+<span id="L205">205 </span>
+<span id="L206">206 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L207">207     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L208">208     [Nonempty State] [Nonempty Action] in</span>
+<span id="L209">209 /-- Squared-checkpoint block weights are summable against the exact infinite model-tail budgets. -/</span>
+<span id="L210">210 theorem tsum_quarticSquareBlockWeight_mul_tailModelFailureBudget_ne_top</span>
+<span id="L211">211     (mdp : MDP State Action) (hhorizon : 4 &lt; mdp.horizon) :</span>
+<span id="L212">212     Ne (∑&#x27; n : Nat,</span>
+<span id="L213">213       (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) *</span>
+<span id="L214">214         selfConsistentScheduledCausalTailModelFailureBudget mdp (n + 1)) ∞ := by</span>
+<span id="L215">215   rw [show (fun n : Nat =&gt;</span>
+<span id="L216">216       (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) *</span>
+<span id="L217">217         selfConsistentScheduledCausalTailModelFailureBudget mdp (n + 1)) =</span>
+<span id="L218">218       fun n =&gt; ∑&#x27; j : Nat,</span>
+<span id="L219">219         quarticSquareBlockShiftedCoordinateModelFailureCharge mdp (n, j) by</span>
+<span id="L220">220     funext n</span>
+<span id="L221">221     exact</span>
+<span id="L222">222       quarticSquareBlockWeight_mul_tailModelFailureBudget_eq_tsum_shiftedCoordinateCharge</span>
+<span id="L223">223         mdp n]</span>
+<span id="L224">224   rw [← ENNReal.tsum_prod&#x27;]</span>
+<span id="L225">225   exact tsum_quarticSquareBlockShiftedCoordinateModelFailureCharge_ne_top</span>
+<span id="L226">226     mdp hhorizon</span>
+<span id="L227">227 </span>
+<span id="L228">228 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L229">229     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L230">230     [Nonempty State] [Nonempty Action] in</span>
+<span id="L231">231 /-- A seventh-degree squared-checkpoint weight times the exponential return share is summable. -/</span>
+<span id="L232">232 theorem summable_quarticSquareBlockWeight_mul_explicitHighProbabilityReturnDelta :</span>
+<span id="L233">233     Summable (fun n : Nat =&gt;</span>
+<span id="L234">234       ((explicitHighProbabilityQuarticSquareBlockWeight n : Nat) : Real) *</span>
+<span id="L235">235         explicitHighProbabilityReturnDelta n) := by</span>
+<span id="L236">236   let base : Nat -&gt; Real := fun n =&gt;</span>
+<span id="L237">237     (n : Real) ^ 7 * Real.exp (-(1 : Real) * (n : Real))</span>
+<span id="L238">238   have hbase : Summable base := by</span>
+<span id="L239">239     simpa [base] using</span>
+<span id="L240">240       (Real.summable_pow_mul_exp_neg_nat_mul 7</span>
+<span id="L241">241         (by norm_num : (0 : Real) &lt; 1))</span>
+<span id="L242">242   have hshift : Summable (fun n : Nat =&gt; base (n + 2)) :=</span>
+<span id="L243">243     (summable_nat_add_iff (f := base) 2).2 hbase</span>
+<span id="L244">244   have hscaled := hshift.mul_left (16 * Real.exp 1)</span>
+<span id="L245">245   apply hscaled.congr</span>
+<span id="L246">246   intro n</span>
+<span id="L247">247   unfold base explicitHighProbabilityQuarticSquareBlockWeight</span>
+<span id="L248">248     explicitHighProbabilityReturnDelta explicitHighProbabilityScale</span>
+<span id="L249">249   push_cast</span>
+<span id="L250">250   calc</span>
+<span id="L251">251     (16 * Real.exp 1) *</span>
+<span id="L252">252           (((n : Real) + 2) ^ 7 *</span>
+<span id="L253">253             Real.exp (-(1 : Real) * ((n : Real) + 2))) =</span>
+<span id="L254">254         16 * ((n : Real) + 2) ^ 7 *</span>
+<span id="L255">255           (Real.exp 1 *</span>
+<span id="L256">256             Real.exp (-(1 : Real) * ((n : Real) + 2))) := by ring</span>
+<span id="L257">257     _ = 16 * ((n : Real) + 2) ^ 7 *</span>
+<span id="L258">258           Real.exp (-(n : Real) - 1) := by</span>
+<span id="L259">259       rw [← Real.exp_add 1 (-(1 : Real) * ((n : Real) + 2))]</span>
+<span id="L260">260       congr 2</span>
+<span id="L261">261       ring</span>
+<span id="L262">262     _ = 16 * ((n : Real) + 2) ^ 7 *</span>
+<span id="L263">263           Real.exp (-((n : Real) + 1)) := by ring</span>
+<span id="L264">264 </span>
+<span id="L265">265 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L266">266     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L267">267     [Nonempty State] [Nonempty Action] in</span>
+<span id="L268">268 /-- The exact return shares have finite total mass after squared-checkpoint charging. -/</span>
+<span id="L269">269 theorem tsum_quarticSquareBlockWeight_mul_explicitHighProbabilityReturnDelta_ne_top :</span>
+<span id="L270">270     Ne (∑&#x27; n : Nat,</span>
+<span id="L271">271       (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) *</span>
+<span id="L272">272         ENNReal.ofReal (explicitHighProbabilityReturnDelta n)) ∞ := by</span>
+<span id="L273">273   have hfinite :=</span>
+<span id="L274">274     summable_quarticSquareBlockWeight_mul_explicitHighProbabilityReturnDelta.tsum_ofReal_ne_top</span>
+<span id="L275">275   convert hfinite using 1</span>
+<span id="L276">276   apply tsum_congr</span>
+<span id="L277">277   intro n</span>
+<span id="L278">278   rw [← ENNReal.ofReal_natCast</span>
+<span id="L279">279       (explicitHighProbabilityQuarticSquareBlockWeight n),</span>
+<span id="L280">280     ← ENNReal.ofReal_mul (by positivity :</span>
+<span id="L281">281       (0 : Real) &lt;=</span>
+<span id="L282">282         ((explicitHighProbabilityQuarticSquareBlockWeight n : Nat) : Real))]</span>
+<span id="L283">283 </span>
+<span id="L284">284 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L285">285     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L286">286     [Nonempty State] [Nonempty Action] in</span>
+<span id="L287">287 /-- The exact checkpoint violation budgets remain summable after squared-checkpoint charging. -/</span>
+<span id="L288">288 theorem tsum_quarticSquareBlockWeight_mul_explicitPolynomialPrefixTailModelReturnFailureBudget_ne_top</span>
+<span id="L289">289     (mdp : MDP State Action) (hhorizon : 4 &lt; mdp.horizon) :</span>
+<span id="L290">290     Ne (∑&#x27; n : Nat,</span>
+<span id="L291">291       (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) *</span>
+<span id="L292">292         explicitPolynomialPrefixTailModelReturnFailureBudget mdp n) ∞ := by</span>
+<span id="L293">293   have hmodel :=</span>
+<span id="L294">294     tsum_quarticSquareBlockWeight_mul_tailModelFailureBudget_ne_top</span>
+<span id="L295">295       mdp hhorizon</span>
+<span id="L296">296   have hreturn :=</span>
+<span id="L297">297     tsum_quarticSquareBlockWeight_mul_explicitHighProbabilityReturnDelta_ne_top</span>
+<span id="L298">298   unfold explicitPolynomialPrefixTailModelReturnFailureBudget</span>
+<span id="L299">299     selfConsistentScheduledNaturalCausalBurninTailModelReturnFailureBudget</span>
+<span id="L300">300     explicitHighProbabilityBurnin</span>
+<span id="L301">301   simp_rw [mul_add]</span>
+<span id="L302">302   rw [ENNReal.tsum_add]</span>
+<span id="L303">303   exact ENNReal.add_ne_top.mpr ⟨hmodel, hreturn⟩</span>
+<span id="L304">304 </span>
+<span id="L305">305 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L306">306     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L307">307     [Nonempty State] [Nonempty Action] in</span>
+<span id="L308">308 /-- Seventh-degree weights dominate every finite telescope of squared checkpoint values. -/</span>
+<span id="L309">309 theorem explicitHighProbabilityRounds_add_square_le_add_sum_Ico_quarticSquareBlockWeight</span>
+<span id="L310">310     (start width : Nat) :</span>
+<span id="L311">311     (explicitHighProbabilityRounds (start + width) + 1) ^ 2 &lt;=</span>
+<span id="L312">312       (explicitHighProbabilityRounds start + 1) ^ 2 +</span>
+<span id="L313">313         (Finset.Ico start (start + width)).sum</span>
+<span id="L314">314           explicitHighProbabilityQuarticSquareBlockWeight := by</span>
+<span id="L315">315   induction width with</span>
+<span id="L316">316   | zero =&gt; simp</span>
+<span id="L317">317   | succ width ih =&gt;</span>
+<span id="L318">318       have hmonoBase :</span>
+<span id="L319">319           explicitHighProbabilityRounds (start + width) + 1 &lt;=</span>
+<span id="L320">320             explicitHighProbabilityRounds (start + width + 1) + 1 := by</span>
+<span id="L321">321         exact Nat.succ_le_succ</span>
+<span id="L322">322           (explicitHighProbabilityRounds_mono (by omega))</span>
+<span id="L323">323       have hmonoSquare :</span>
+<span id="L324">324           (explicitHighProbabilityRounds (start + width) + 1) ^ 2 &lt;=</span>
+<span id="L325">325             (explicitHighProbabilityRounds (start + width + 1) + 1) ^ 2 :=</span>
+<span id="L326">326         Nat.pow_le_pow_left hmonoBase 2</span>
+<span id="L327">327       have hstep :</span>
+<span id="L328">328           (explicitHighProbabilityRounds (start + width + 1) + 1) ^ 2 &lt;=</span>
+<span id="L329">329             (explicitHighProbabilityRounds (start + width) + 1) ^ 2 +</span>
+<span id="L330">330               explicitHighProbabilityQuarticSquareBlockWeight</span>
+<span id="L331">331                 (start + width) := by</span>
+<span id="L332">332         have hgap :=</span>
+<span id="L333">333           explicitHighProbabilityRounds_succ_square_sub_le_quarticSquareBlockWeight</span>
+<span id="L334">334             (start + width)</span>
+<span id="L335">335         omega</span>
+<span id="L336">336       rw [show start + (width + 1) = start + width + 1 by omega,</span>
+<span id="L337">337         Finset.sum_Ico_succ_top (by omega : start &lt;= start + width)]</span>
+<span id="L338">338       calc</span>
+<span id="L339">339         (explicitHighProbabilityRounds (start + width + 1) + 1) ^ 2 &lt;=</span>
+<span id="L340">340             (explicitHighProbabilityRounds (start + width) + 1) ^ 2 +</span>
+<span id="L341">341               explicitHighProbabilityQuarticSquareBlockWeight</span>
+<span id="L342">342                 (start + width) := hstep</span>
+<span id="L343">343         _ &lt;= ((explicitHighProbabilityRounds start + 1) ^ 2 +</span>
+<span id="L344">344               (Finset.Ico start (start + width)).sum</span>
+<span id="L345">345                 explicitHighProbabilityQuarticSquareBlockWeight) +</span>
+<span id="L346">346               explicitHighProbabilityQuarticSquareBlockWeight</span>
+<span id="L347">347                 (start + width) := Nat.add_le_add_right ih _</span>
+<span id="L348">348         _ = (explicitHighProbabilityRounds start + 1) ^ 2 +</span>
+<span id="L349">349             ((Finset.Ico start (start + width)).sum</span>
+<span id="L350">350                 explicitHighProbabilityQuarticSquareBlockWeight +</span>
+<span id="L351">351               explicitHighProbabilityQuarticSquareBlockWeight</span>
+<span id="L352">352                 (start + width)) := by omega</span>
+<span id="L353">353 </span>
+<span id="L354">354 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L355">355     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L356">356     [Nonempty State] [Nonempty Action] in</span>
+<span id="L357">357 /-- The square of a finite natural time is paid for by an initial squared checkpoint plus preceding delayed blocks. -/</span>
+<span id="L358">358 theorem natCast_succ_square_le_checkpoint_square_add_tsum_quarticSquareBlockWeight_of_delayed</span>
+<span id="L359">359     (start time : Nat) :</span>
+<span id="L360">360     (((time + 1) ^ 2 : Nat) : ENNReal) &lt;=</span>
+<span id="L361">361       (((explicitHighProbabilityRounds start + 1) ^ 2 : Nat) : ENNReal) +</span>
+<span id="L362">362         ∑&#x27; n : Nat,</span>
+<span id="L363">363           if start &lt;= n ∧ explicitHighProbabilityRounds n &lt; time then</span>
+<span id="L364">364             (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal)</span>
+<span id="L365">365           else 0 := by</span>
+<span id="L366">366   have hexists : exists width : Nat,</span>
+<span id="L367">367       time &lt;= explicitHighProbabilityRounds (start + width) := by</span>
+<span id="L368">368     refine ⟨time, ?_⟩</span>
+<span id="L369">369     calc</span>
+<span id="L370">370       time &lt;= explicitHighProbabilityRounds (time + start) :=</span>
+<span id="L371">371         scheduleIndex_le_explicitHighProbabilityRounds_add time start</span>
+<span id="L372">372       _ = explicitHighProbabilityRounds (start + time) := by</span>
+<span id="L373">373         rw [Nat.add_comm]</span>
+<span id="L374">374   let width := Nat.find hexists</span>
+<span id="L375">375   have hcover : time &lt;= explicitHighProbabilityRounds (start + width) :=</span>
+<span id="L376">376     Nat.find_spec hexists</span>
+<span id="L377">377   have hsquareCover :</span>
+<span id="L378">378       (time + 1) ^ 2 &lt;=</span>
+<span id="L379">379         (explicitHighProbabilityRounds (start + width) + 1) ^ 2 :=</span>
+<span id="L380">380     Nat.pow_le_pow_left (Nat.succ_le_succ hcover) 2</span>
+<span id="L381">381   by_cases hwidth : width = 0</span>
+<span id="L382">382   · rw [hwidth, Nat.add_zero] at hsquareCover</span>
+<span id="L383">383     have hcast :</span>
+<span id="L384">384         (((time + 1) ^ 2 : Nat) : ENNReal) &lt;=</span>
+<span id="L385">385           (((explicitHighProbabilityRounds start + 1) ^ 2 : Nat) : ENNReal) := by</span>
+<span id="L386">386       exact_mod_cast hsquareCover</span>
+<span id="L387">387     calc</span>
+<span id="L388">388       (((time + 1) ^ 2 : Nat) : ENNReal) &lt;=</span>
+<span id="L389">389           (((explicitHighProbabilityRounds start + 1) ^ 2 : Nat) : ENNReal) :=</span>
+<span id="L390">390         hcast</span>
+<span id="L391">391       _ &lt;= (((explicitHighProbabilityRounds start + 1) ^ 2 : Nat) : ENNReal) +</span>
+<span id="L392">392           ∑&#x27; n : Nat,</span>
+<span id="L393">393             if start &lt;= n ∧ explicitHighProbabilityRounds n &lt; time then</span>
+<span id="L394">394               (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal)</span>
+<span id="L395">395             else 0 := le_add_right le_rfl</span>
+<span id="L396">396   · obtain ⟨previous, hprevious⟩ : exists previous, width = previous + 1 := by</span>
+<span id="L397">397       exact ⟨width - 1, by omega⟩</span>
+<span id="L398">398     have hnotCover :</span>
+<span id="L399">399         ¬ time &lt;= explicitHighProbabilityRounds (start + previous) := by</span>
+<span id="L400">400       apply Nat.find_min hexists</span>
+<span id="L401">401       omega</span>
+<span id="L402">402     have hpreviousDelayed :</span>
+<span id="L403">403         explicitHighProbabilityRounds (start + previous) &lt; time := by</span>
+<span id="L404">404       omega</span>
+<span id="L405">405     have hdelayed : (n : Nat) -&gt; n ∈ Finset.Ico start (start + width) -&gt;</span>
+<span id="L406">406         start &lt;= n ∧ explicitHighProbabilityRounds n &lt; time := by</span>
+<span id="L407">407       intro n hn</span>
+<span id="L408">408       refine ⟨(Finset.mem_Ico.mp hn).1, ?_⟩</span>
+<span id="L409">409       have hnle : n &lt;= start + previous := by</span>
+<span id="L410">410         have hnlt := (Finset.mem_Ico.mp hn).2</span>
+<span id="L411">411         omega</span>
+<span id="L412">412       exact lt_of_le_of_lt (explicitHighProbabilityRounds_mono hnle)</span>
+<span id="L413">413         hpreviousDelayed</span>
+<span id="L414">414     have hsum :</span>
+<span id="L415">415         (((Finset.Ico start (start + width)).sum</span>
+<span id="L416">416             explicitHighProbabilityQuarticSquareBlockWeight : Nat) : ENNReal) &lt;=</span>
+<span id="L417">417           ∑&#x27; n : Nat,</span>
+<span id="L418">418             if start &lt;= n ∧ explicitHighProbabilityRounds n &lt; time then</span>
+<span id="L419">419               (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal)</span>
+<span id="L420">420             else 0 := by</span>
+<span id="L421">421       calc</span>
+<span id="L422">422         (((Finset.Ico start (start + width)).sum</span>
+<span id="L423">423               explicitHighProbabilityQuarticSquareBlockWeight : Nat) : ENNReal) =</span>
+<span id="L424">424             ∑ n ∈ Finset.Ico start (start + width),</span>
+<span id="L425">425               (if start &lt;= n ∧ explicitHighProbabilityRounds n &lt; time then</span>
+<span id="L426">426                 (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal)</span>
+<span id="L427">427               else 0) := by</span>
+<span id="L428">428           calc</span>
+<span id="L429">429             (((Finset.Ico start (start + width)).sum</span>
+<span id="L430">430                 explicitHighProbabilityQuarticSquareBlockWeight : Nat) : ENNReal) =</span>
+<span id="L431">431                 ∑ n ∈ Finset.Ico start (start + width),</span>
+<span id="L432">432                   (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) := by</span>
+<span id="L433">433               exact_mod_cast rfl</span>
+<span id="L434">434             _ = ∑ n ∈ Finset.Ico start (start + width),</span>
+<span id="L435">435                 (if start &lt;= n ∧ explicitHighProbabilityRounds n &lt; time then</span>
+<span id="L436">436                   (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal)</span>
+<span id="L437">437                 else 0) := by</span>
+<span id="L438">438               apply Finset.sum_congr rfl</span>
+<span id="L439">439               intro n hn</span>
+<span id="L440">440               simp [hdelayed n hn]</span>
+<span id="L441">441         _ &lt;= ∑&#x27; n : Nat,</span>
+<span id="L442">442               if start &lt;= n ∧ explicitHighProbabilityRounds n &lt; time then</span>
+<span id="L443">443                 (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal)</span>
+<span id="L444">444               else 0 := ENNReal.sum_le_tsum _</span>
+<span id="L445">445     have htelescope :=</span>
+<span id="L446">446       explicitHighProbabilityRounds_add_square_le_add_sum_Ico_quarticSquareBlockWeight</span>
+<span id="L447">447         start width</span>
+<span id="L448">448     calc</span>
+<span id="L449">449       (((time + 1) ^ 2 : Nat) : ENNReal) &lt;=</span>
+<span id="L450">450           (((explicitHighProbabilityRounds (start + width) + 1) ^ 2 : Nat) : ENNReal) := by</span>
+<span id="L451">451         exact_mod_cast hsquareCover</span>
+<span id="L452">452       _ &lt;= (((explicitHighProbabilityRounds start + 1) ^ 2 +</span>
+<span id="L453">453             (Finset.Ico start (start + width)).sum</span>
+<span id="L454">454               explicitHighProbabilityQuarticSquareBlockWeight : Nat) : ENNReal) := by</span>
+<span id="L455">455         exact_mod_cast htelescope</span>
+<span id="L456">456       _ = (((explicitHighProbabilityRounds start + 1) ^ 2 : Nat) : ENNReal) +</span>
+<span id="L457">457           (((Finset.Ico start (start + width)).sum</span>
+<span id="L458">458             explicitHighProbabilityQuarticSquareBlockWeight : Nat) : ENNReal) := by</span>
+<span id="L459">459         rw [Nat.cast_add]</span>
+<span id="L460">460       _ &lt;= (((explicitHighProbabilityRounds start + 1) ^ 2 : Nat) : ENNReal) +</span>
+<span id="L461">461           ∑&#x27; n : Nat,</span>
+<span id="L462">462             if start &lt;= n ∧ explicitHighProbabilityRounds n &lt; time then</span>
+<span id="L463">463               (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal)</span>
+<span id="L464">464             else 0 := add_le_add le_rfl hsum</span>
+<span id="L465">465 </span>
+<span id="L466">466 /-- A deterministic checkpoint after which the scheduled regret envelope is</span>
+<span id="L467">467 below the fixed inverse-square-root first-passage threshold. -/</span>
+<span id="L468">468 theorem exists_inverseSqrtThresholdUnboundedHittingAfterTailStart</span>
+<span id="L469">469     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L470">470     (baseVisitFloor : Real) (scheduleIndex : Nat) :</span>
+<span id="L471">471     ∃ start : Nat,</span>
+<span id="L472">472       scheduleIndex &lt;= start ∧</span>
+<span id="L473">473         ∀ n, start &lt;= n -&gt;</span>
+<span id="L474">474           explicitPolynomialPrefixAverageRealizedBehaviorRegretRate</span>
+<span id="L475">475               mdp varianceProxy baseVisitFloor n &lt;=</span>
+<span id="L476">476             selfConsistentScheduledNaturalCausalInverseSqrtFirstPassageThreshold</span>
+<span id="L477">477               scheduleIndex := by</span>
+<span id="L478">478   have hrateEventually :=</span>
+<span id="L479">479     (explicitPolynomialPrefixAverageRealizedBehaviorRegretRate_tendsto_zero</span>
+<span id="L480">480       mdp varianceProxy baseVisitFloor).eventually_lt_const</span>
+<span id="L481">481         (selfConsistentScheduledNaturalCausalInverseSqrtFirstPassageThreshold_pos</span>
+<span id="L482">482           scheduleIndex)</span>
+<span id="L483">483   obtain ⟨rateStart, hrateStart⟩ := Filter.eventually_atTop.1 hrateEventually</span>
+<span id="L484">484   refine ⟨max scheduleIndex rateStart, le_max_left _ _, ?_⟩</span>
+<span id="L485">485   intro n hn</span>
+<span id="L486">486   exact (hrateStart n ((le_max_right _ _).trans hn)).le</span>
+<span id="L487">487 </span>
+<span id="L488">488 /-- Canonical deterministic witness for the eventual delayed-checkpoint tail</span>
+<span id="L489">489 bound at a fixed inverse-square-root threshold index. -/</span>
+<span id="L490">490 noncomputable def inverseSqrtThresholdUnboundedHittingAfterTailStart</span>
+<span id="L491">491     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L492">492     (baseVisitFloor : Real) (scheduleIndex : Nat) : Nat := by</span>
+<span id="L493">493   classical</span>
+<span id="L494">494   exact Nat.find</span>
+<span id="L495">495     (exists_inverseSqrtThresholdUnboundedHittingAfterTailStart</span>
+<span id="L496">496       mdp varianceProxy baseVisitFloor scheduleIndex)</span>
+<span id="L497">497 </span>
+<span id="L498">498 /-- The canonical tail start is beyond the threshold index and validates the</span>
+<span id="L499">499 scheduled regret-rate comparison at every later checkpoint. -/</span>
+<span id="L500">500 theorem inverseSqrtThresholdUnboundedHittingAfterTailStart_spec</span>
+<span id="L501">501     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L502">502     (baseVisitFloor : Real) (scheduleIndex : Nat) :</span>
+<span id="L503">503     scheduleIndex &lt;=</span>
+<span id="L504">504         inverseSqrtThresholdUnboundedHittingAfterTailStart</span>
+<span id="L505">505           mdp varianceProxy baseVisitFloor scheduleIndex ∧</span>
+<span id="L506">506       ∀ n,</span>
+<span id="L507">507         inverseSqrtThresholdUnboundedHittingAfterTailStart</span>
+<span id="L508">508               mdp varianceProxy baseVisitFloor scheduleIndex &lt;= n -&gt;</span>
+<span id="L509">509           explicitPolynomialPrefixAverageRealizedBehaviorRegretRate</span>
+<span id="L510">510               mdp varianceProxy baseVisitFloor n &lt;=</span>
+<span id="L511">511             selfConsistentScheduledNaturalCausalInverseSqrtFirstPassageThreshold</span>
+<span id="L512">512               scheduleIndex := by</span>
+<span id="L513">513   classical</span>
+<span id="L514">514   exact Nat.find_spec</span>
+<span id="L515">515     (exists_inverseSqrtThresholdUnboundedHittingAfterTailStart</span>
+<span id="L516">516       mdp varianceProxy baseVisitFloor scheduleIndex)</span>
+<span id="L517">517 </span>
+<span id="L518">518 /-- Explicit deterministic ENNReal budget for the second moment of the</span>
+<span id="L519">519 successor round count at the uncapped inverse-square-root hitting time. -/</span>
+<span id="L520">520 noncomputable def</span>
+<span id="L521">521     inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentENNRealBudget</span>
+<span id="L522">522     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L523">523     (baseVisitFloor : Real) (scheduleIndex : Nat) : ENNReal :=</span>
+<span id="L524">524   let start := inverseSqrtThresholdUnboundedHittingAfterTailStart</span>
+<span id="L525">525     mdp varianceProxy baseVisitFloor scheduleIndex</span>
+<span id="L526">526   (((explicitHighProbabilityRounds start + 1) ^ 2 : Nat) : ENNReal) +</span>
+<span id="L527">527     ∑&#x27; n : Nat,</span>
+<span id="L528">528       (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) *</span>
+<span id="L529">529         explicitPolynomialPrefixTailModelReturnFailureBudget mdp n</span>
+<span id="L530">530 </span>
+<span id="L531">531 /-- The deterministic stopping-round second-moment budget is finite whenever</span>
+<span id="L532">532 the horizon supplies the inverse-tenth confidence exponent. -/</span>
+<span id="L533">533 theorem</span>
+<span id="L534">534     inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentENNRealBudget_ne_top</span>
+<span id="L535">535     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L536">536     (baseVisitFloor : Real) (scheduleIndex : Nat)</span>
+<span id="L537">537     (hhorizon : 4 &lt; mdp.horizon) :</span>
+<span id="L538">538     inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentENNRealBudget</span>
+<span id="L539">539         mdp varianceProxy baseVisitFloor scheduleIndex ≠ ∞ := by</span>
+<span id="L540">540   unfold</span>
+<span id="L541">541     inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentENNRealBudget</span>
+<span id="L542">542   rw [ENNReal.add_ne_top]</span>
+<span id="L543">543   exact ⟨by simp,</span>
+<span id="L544">544     tsum_quarticSquareBlockWeight_mul_explicitPolynomialPrefixTailModelReturnFailureBudget_ne_top</span>
+<span id="L545">545       mdp hhorizon⟩</span>
+<span id="L546">546 </span>
+<span id="L547">547 /-- Real-valued form of the deterministic stopping-round second-moment</span>
+<span id="L548">548 budget. -/</span>
+<span id="L549">549 noncomputable def</span>
+<span id="L550">550     inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentBudget</span>
+<span id="L551">551     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L552">552     (baseVisitFloor : Real) (scheduleIndex : Nat) : Real :=</span>
+<span id="L553">553   (inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentENNRealBudget</span>
+<span id="L554">554     mdp varianceProxy baseVisitFloor scheduleIndex).toReal</span>
+<span id="L555">555 </span>
+<span id="L556">556 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L557">557     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L558">558     [Nonempty State] [Nonempty Action] in</span>
+<span id="L559">559 /-- A pointwise delayed-checkpoint tail budget gives an explicit ENNReal</span>
+<span id="L560">560 upper bound for the successor stopping-round second moment. -/</span>
+<span id="L561">561 theorem lintegral_sq_untopA_add_one_le_quarticSquareCheckpointBudget</span>
+<span id="L562">562     {Omega : Type*} [MeasurableSpace Omega]</span>
+<span id="L563">563     (mu : Measure Omega) [IsProbabilityMeasure mu]</span>
+<span id="L564">564     (tau : Omega -&gt; WithTop Nat) (htau : Measurable tau)</span>
+<span id="L565">565     (budget : Nat -&gt; ENNReal) (start : Nat)</span>
+<span id="L566">566     (htailStart : ∀ n, start &lt;= n -&gt;</span>
+<span id="L567">567       mu {omega |</span>
+<span id="L568">568         (explicitHighProbabilityRounds n : WithTop Nat) &lt; tau omega} &lt;=</span>
+<span id="L569">569           budget n) :</span>
+<span id="L570">570     ∫⁻ omega,</span>
+<span id="L571">571         ENNReal.ofReal (((((tau omega).untopA + 1 : Nat) : Real)) ^ 2) ∂mu &lt;=</span>
+<span id="L572">572       (((explicitHighProbabilityRounds start + 1) ^ 2 : Nat) : ENNReal) +</span>
+<span id="L573">573         ∑&#x27; n : Nat,</span>
+<span id="L574">574           (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) *</span>
+<span id="L575">575             budget n := by</span>
+<span id="L576">576   let delayed : Nat -&gt; Set Omega := fun n =&gt;</span>
+<span id="L577">577     {omega | (explicitHighProbabilityRounds n : WithTop Nat) &lt; tau omega}</span>
+<span id="L578">578   have hdelayedMeasurable (n : Nat) : MeasurableSet (delayed n) := by</span>
+<span id="L579">579     exact measurableSet_lt measurable_const htau</span>
+<span id="L580">580   let term : Nat -&gt; Omega -&gt; ENNReal := fun n =&gt;</span>
+<span id="L581">581     if start &lt;= n then</span>
+<span id="L582">582       (delayed n).indicator</span>
+<span id="L583">583         (fun _ =&gt;</span>
+<span id="L584">584           (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal))</span>
+<span id="L585">585     else fun _ =&gt; 0</span>
+<span id="L586">586   have htermMeasurable (n : Nat) : AEMeasurable (term n) mu := by</span>
+<span id="L587">587     by_cases hn : start &lt;= n</span>
+<span id="L588">588     · simp only [term, hn, if_true]</span>
+<span id="L589">589       exact (Measurable.indicator measurable_const</span>
+<span id="L590">590         (hdelayedMeasurable n)).aemeasurable</span>
+<span id="L591">591     · simp only [term, hn, if_false]</span>
+<span id="L592">592       exact measurable_const.aemeasurable</span>
+<span id="L593">593   have hpoint (omega : Omega) :</span>
+<span id="L594">594       ENNReal.ofReal</span>
+<span id="L595">595           (((((tau omega).untopA + 1 : Nat) : Real)) ^ 2) &lt;=</span>
+<span id="L596">596         (((explicitHighProbabilityRounds start + 1) ^ 2 : Nat) : ENNReal) +</span>
+<span id="L597">597           ∑&#x27; n : Nat, term n omega := by</span>
+<span id="L598">598     have hnat :=</span>
+<span id="L599">599       natCast_succ_square_le_checkpoint_square_add_tsum_quarticSquareBlockWeight_of_delayed</span>
+<span id="L600">600         start (tau omega).untopA</span>
+<span id="L601">601     calc</span>
+<span id="L602">602       ENNReal.ofReal</span>
+<span id="L603">603           (((((tau omega).untopA + 1 : Nat) : Real)) ^ 2) =</span>
+<span id="L604">604           ((((tau omega).untopA + 1) ^ 2 : Nat) : ENNReal) := by</span>
+<span id="L605">605         rw [ENNReal.ofReal_pow (by positivity) 2,</span>
+<span id="L606">606           ENNReal.ofReal_natCast]</span>
+<span id="L607">607         norm_cast</span>
+<span id="L608">608       _ &lt;= (((explicitHighProbabilityRounds start + 1) ^ 2 : Nat) : ENNReal) +</span>
+<span id="L609">609           ∑&#x27; n : Nat,</span>
+<span id="L610">610             if start &lt;= n ∧</span>
+<span id="L611">611                 explicitHighProbabilityRounds n &lt; (tau omega).untopA then</span>
+<span id="L612">612               (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal)</span>
+<span id="L613">613             else 0 := hnat</span>
+<span id="L614">614       _ &lt;= (((explicitHighProbabilityRounds start + 1) ^ 2 : Nat) : ENNReal) +</span>
+<span id="L615">615           ∑&#x27; n : Nat, term n omega := by</span>
+<span id="L616">616         apply add_le_add le_rfl</span>
+<span id="L617">617         apply ENNReal.tsum_le_tsum</span>
+<span id="L618">618         intro n</span>
+<span id="L619">619         by_cases hn : start &lt;= n</span>
+<span id="L620">620         · by_cases htime :</span>
+<span id="L621">621               explicitHighProbabilityRounds n &lt; (tau omega).untopA</span>
+<span id="L622">622           · have hmem : omega ∈ delayed n := by</span>
+<span id="L623">623               unfold delayed</span>
+<span id="L624">624               by_cases htop : tau omega = (⊤ : WithTop Nat)</span>
+<span id="L625">625               · simp [htop]</span>
+<span id="L626">626               · exact (WithTop.lt_untopA_iff htop).mp htime</span>
+<span id="L627">627             simp [term, hn, htime, hmem]</span>
+<span id="L628">628           · simp [term, hn, htime]</span>
+<span id="L629">629         · simp [term, hn]</span>
+<span id="L630">630   have htermIntegral (n : Nat) :</span>
+<span id="L631">631       ∫⁻ omega, term n omega ∂mu &lt;=</span>
+<span id="L632">632         (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) *</span>
+<span id="L633">633           budget n := by</span>
+<span id="L634">634     by_cases hn : start &lt;= n</span>
+<span id="L635">635     · have htailN : mu (delayed n) &lt;= budget n := by</span>
+<span id="L636">636         simpa [delayed] using htailStart n hn</span>
+<span id="L637">637       simp only [term, hn, if_true]</span>
+<span id="L638">638       rw [lintegral_indicator_const (hdelayedMeasurable n)]</span>
+<span id="L639">639       gcongr</span>
+<span id="L640">640     · simp [term, hn]</span>
+<span id="L641">641   calc</span>
+<span id="L642">642     ∫⁻ omega,</span>
+<span id="L643">643         ENNReal.ofReal (((((tau omega).untopA + 1 : Nat) : Real)) ^ 2) ∂mu &lt;=</span>
+<span id="L644">644         ∫⁻ omega,</span>
+<span id="L645">645           ((((explicitHighProbabilityRounds start + 1) ^ 2 : Nat) : ENNReal) +</span>
+<span id="L646">646             ∑&#x27; n : Nat, term n omega) ∂mu := lintegral_mono hpoint</span>
+<span id="L647">647     _ &lt;= (((explicitHighProbabilityRounds start + 1) ^ 2 : Nat) : ENNReal) +</span>
+<span id="L648">648           ∑&#x27; n : Nat,</span>
+<span id="L649">649             (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) *</span>
+<span id="L650">650               budget n := by</span>
+<span id="L651">651       rw [lintegral_add_left measurable_const, lintegral_const,</span>
+<span id="L652">652         lintegral_tsum htermMeasurable]</span>
+<span id="L653">653       simp only [IsProbabilityMeasure.measure_univ, mul_one]</span>
+<span id="L654">654       exact add_le_add le_rfl (ENNReal.tsum_le_tsum htermIntegral)</span>
+<span id="L655">655 </span>
+<span id="L656">656 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L657">657     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L658">658     [Nonempty State] [Nonempty Action] in</span>
+<span id="L659">659 /-- Eventually summable squared fourth-power checkpoint crossing tails imply a finite second moment. -/</span>
+<span id="L660">660 theorem memLp_two_untopA_add_one_of_eventually_quarticSquareCheckpointTail</span>
+<span id="L661">661     {Omega : Type*} [MeasurableSpace Omega]</span>
+<span id="L662">662     (mu : Measure Omega) [IsProbabilityMeasure mu]</span>
+<span id="L663">663     (tau : Omega -&gt; WithTop Nat) (htau : Measurable tau)</span>
+<span id="L664">664     (budget : Nat -&gt; ENNReal)</span>
+<span id="L665">665     (hbudget : Ne (∑&#x27; n : Nat,</span>
+<span id="L666">666       (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) *</span>
+<span id="L667">667         budget n) ∞)</span>
+<span id="L668">668     (htail : ∀ᶠ n : Nat in atTop,</span>
+<span id="L669">669       mu {omega |</span>
+<span id="L670">670         (explicitHighProbabilityRounds n : WithTop Nat) &lt; tau omega} &lt;=</span>
+<span id="L671">671           budget n) :</span>
+<span id="L672">672     MemLp (fun omega =&gt; (((tau omega).untopA + 1 : Nat) : Real)) 2 mu := by</span>
+<span id="L673">673   obtain ⟨start, htailStart⟩ := Filter.eventually_atTop.1 htail</span>
+<span id="L674">674   let delayed : Nat -&gt; Set Omega := fun n =&gt;</span>
+<span id="L675">675     {omega | (explicitHighProbabilityRounds n : WithTop Nat) &lt; tau omega}</span>
+<span id="L676">676   have hdelayedMeasurable (n : Nat) : MeasurableSet (delayed n) := by</span>
+<span id="L677">677     exact measurableSet_lt measurable_const htau</span>
+<span id="L678">678   let term : Nat -&gt; Omega -&gt; ENNReal := fun n =&gt;</span>
+<span id="L679">679     if start &lt;= n then</span>
+<span id="L680">680       (delayed n).indicator</span>
+<span id="L681">681         (fun _ =&gt;</span>
+<span id="L682">682           (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal))</span>
+<span id="L683">683     else fun _ =&gt; 0</span>
+<span id="L684">684   have htermMeasurable (n : Nat) : AEMeasurable (term n) mu := by</span>
+<span id="L685">685     by_cases hn : start &lt;= n</span>
+<span id="L686">686     · simp only [term, hn, if_true]</span>
+<span id="L687">687       exact (Measurable.indicator measurable_const</span>
+<span id="L688">688         (hdelayedMeasurable n)).aemeasurable</span>
+<span id="L689">689     · simp only [term, hn, if_false]</span>
+<span id="L690">690       exact measurable_const.aemeasurable</span>
+<span id="L691">691   have hpoint (omega : Omega) :</span>
+<span id="L692">692       ENNReal.ofReal</span>
+<span id="L693">693           (((((tau omega).untopA + 1 : Nat) : Real)) ^ 2) &lt;=</span>
+<span id="L694">694         (((explicitHighProbabilityRounds start + 1) ^ 2 : Nat) : ENNReal) +</span>
+<span id="L695">695           ∑&#x27; n : Nat, term n omega := by</span>
+<span id="L696">696     have hnat :=</span>
+<span id="L697">697       natCast_succ_square_le_checkpoint_square_add_tsum_quarticSquareBlockWeight_of_delayed</span>
+<span id="L698">698         start (tau omega).untopA</span>
+<span id="L699">699     calc</span>
+<span id="L700">700       ENNReal.ofReal</span>
+<span id="L701">701           (((((tau omega).untopA + 1 : Nat) : Real)) ^ 2) =</span>
+<span id="L702">702           ((((tau omega).untopA + 1) ^ 2 : Nat) : ENNReal) := by</span>
+<span id="L703">703         rw [ENNReal.ofReal_pow (by positivity) 2,</span>
+<span id="L704">704           ENNReal.ofReal_natCast]</span>
+<span id="L705">705         norm_cast</span>
+<span id="L706">706       _ &lt;= (((explicitHighProbabilityRounds start + 1) ^ 2 : Nat) : ENNReal) +</span>
+<span id="L707">707           ∑&#x27; n : Nat,</span>
+<span id="L708">708             if start &lt;= n ∧</span>
+<span id="L709">709                 explicitHighProbabilityRounds n &lt; (tau omega).untopA then</span>
+<span id="L710">710               (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal)</span>
+<span id="L711">711             else 0 := hnat</span>
+<span id="L712">712       _ &lt;= (((explicitHighProbabilityRounds start + 1) ^ 2 : Nat) : ENNReal) +</span>
+<span id="L713">713           ∑&#x27; n : Nat, term n omega := by</span>
+<span id="L714">714         apply add_le_add le_rfl</span>
+<span id="L715">715         apply ENNReal.tsum_le_tsum</span>
+<span id="L716">716         intro n</span>
+<span id="L717">717         by_cases hn : start &lt;= n</span>
+<span id="L718">718         · by_cases htime :</span>
+<span id="L719">719               explicitHighProbabilityRounds n &lt; (tau omega).untopA</span>
+<span id="L720">720           · have hmem : omega ∈ delayed n := by</span>
+<span id="L721">721               unfold delayed</span>
+<span id="L722">722               by_cases htop : tau omega = (⊤ : WithTop Nat)</span>
+<span id="L723">723               · simp [htop]</span>
+<span id="L724">724               · exact (WithTop.lt_untopA_iff htop).mp htime</span>
+<span id="L725">725             simp [term, hn, htime, hmem]</span>
+<span id="L726">726           · simp [term, hn, htime]</span>
+<span id="L727">727         · simp [term, hn]</span>
+<span id="L728">728   have htermIntegral (n : Nat) :</span>
+<span id="L729">729       ∫⁻ omega, term n omega ∂mu &lt;=</span>
+<span id="L730">730         (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) *</span>
+<span id="L731">731           budget n := by</span>
+<span id="L732">732     by_cases hn : start &lt;= n</span>
+<span id="L733">733     · have htailN : mu (delayed n) &lt;= budget n := by</span>
+<span id="L734">734         simpa [delayed] using htailStart n hn</span>
+<span id="L735">735       simp only [term, hn, if_true]</span>
+<span id="L736">736       rw [lintegral_indicator_const (hdelayedMeasurable n)]</span>
+<span id="L737">737       gcongr</span>
+<span id="L738">738     · simp [term, hn]</span>
+<span id="L739">739   have hdomIntegral :</span>
+<span id="L740">740       ∫⁻ omega,</span>
+<span id="L741">741           ((((explicitHighProbabilityRounds start + 1) ^ 2 : Nat) :</span>
+<span id="L742">742               ENNReal) + ∑&#x27; n : Nat, term n omega) ∂mu &lt;=</span>
+<span id="L743">743         (((explicitHighProbabilityRounds start + 1) ^ 2 : Nat) : ENNReal) +</span>
+<span id="L744">744           ∑&#x27; n : Nat,</span>
+<span id="L745">745             (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) *</span>
+<span id="L746">746               budget n := by</span>
+<span id="L747">747     rw [lintegral_add_left measurable_const, lintegral_const,</span>
+<span id="L748">748       lintegral_tsum htermMeasurable]</span>
+<span id="L749">749     simp only [IsProbabilityMeasure.measure_univ, mul_one]</span>
+<span id="L750">750     exact add_le_add le_rfl (ENNReal.tsum_le_tsum htermIntegral)</span>
+<span id="L751">751   have hrhsFinite :</span>
+<span id="L752">752       (((explicitHighProbabilityRounds start + 1) ^ 2 : Nat) : ENNReal) +</span>
+<span id="L753">753           ∑&#x27; n : Nat,</span>
+<span id="L754">754             (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) *</span>
+<span id="L755">755               budget n &lt; ∞ := by</span>
+<span id="L756">756     rw [ENNReal.add_lt_top]</span>
+<span id="L757">757     exact ⟨by simp, lt_top_iff_ne_top.mpr hbudget⟩</span>
+<span id="L758">758   have hmeasurable : Measurable</span>
+<span id="L759">759       (fun omega =&gt; (((tau omega).untopA + 1 : Nat) : Real)) :=</span>
+<span id="L760">760     (measurable_of_countable</span>
+<span id="L761">761       (fun count : Nat =&gt; (((count + 1 : Nat) : Nat) : Real))).comp</span>
+<span id="L762">762         htau.untopA</span>
+<span id="L763">763   apply (memLp_two_iff_integrable_sq</span>
+<span id="L764">764     hmeasurable.aestronglyMeasurable).2</span>
+<span id="L765">765   refine ⟨(hmeasurable.pow_const 2).aestronglyMeasurable, ?_⟩</span>
+<span id="L766">766   rw [hasFiniteIntegral_iff_ofReal</span>
+<span id="L767">767     (Filter.Eventually.of_forall fun _ =&gt; by positivity)]</span>
+<span id="L768">768   exact lt_of_le_of_lt</span>
+<span id="L769">769     (lintegral_mono hpoint |&gt;.trans hdomIntegral) hrhsFinite</span>
+<span id="L770">770 </span>
+<span id="L771">771 /-- From the canonical tail start onward, every delayed uncapped first-passage</span>
+<span id="L772">772 checkpoint has the exact compiled model/return failure budget. -/</span>
+<span id="L773">773 theorem</span>
+<span id="L774">774     selfConsistentScheduledCausalSource_trajectoryMeasure_inverseSqrtThresholdUnboundedHittingAfterDelayedCheckpointSet_le_of_tailStart</span>
+<span id="L775">775     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L776">776     [IsProbabilityMeasure initialState]</span>
+<span id="L777">777     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L778">778     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L779">779     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L780">780     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L781">781     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L782">782     (defaultState : State)</span>
+<span id="L783">783     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L784">784     (baseVisitFloor : Real)</span>
+<span id="L785">785     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L786">786     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L787">787     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L788">788     (scheduleIndex checkpointIndex : Nat)</span>
+<span id="L789">789     (hcheckpointIndex :</span>
+<span id="L790">790       inverseSqrtThresholdUnboundedHittingAfterTailStart</span>
+<span id="L791">791           mdp varianceProxy baseVisitFloor scheduleIndex &lt;= checkpointIndex) :</span>
+<span id="L792">792     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L793">793       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L794">794     source.trajectoryMeasure</span>
+<span id="L795">795         (selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterDelayedCheckpointSet</span>
+<span id="L796">796           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L797">797             baseVisitFloor scheduleIndex checkpointIndex) &lt;=</span>
+<span id="L798">798       explicitPolynomialPrefixTailModelReturnFailureBudget mdp</span>
+<span id="L799">799         checkpointIndex := by</span>
+<span id="L800">800   dsimp only</span>
+<span id="L801">801   have hstart :=</span>
+<span id="L802">802     inverseSqrtThresholdUnboundedHittingAfterTailStart_spec</span>
+<span id="L803">803       mdp varianceProxy baseVisitFloor scheduleIndex</span>
+<span id="L804">804   have hindex : scheduleIndex &lt;= checkpointIndex :=</span>
+<span id="L805">805     hstart.1.trans hcheckpointIndex</span>
+<span id="L806">806   have hrate := hstart.2 checkpointIndex hcheckpointIndex</span>
+<span id="L807">807   have hsubset :=</span>
+<span id="L808">808     selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterDelayedCheckpointSet_subset_explicitPolynomialPrefixAverageRealizedBehaviorRegretViolationSet</span>
+<span id="L809">809       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L810">810         baseVisitFloor hindex hrate</span>
+<span id="L811">811   have hcert :=</span>
+<span id="L812">812     selfConsistentScheduledCausalSource_explicitPolynomialPrefixHighProbabilityAverageRealizedBehaviorRegretConsistency</span>
+<span id="L813">813       mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L814">814         initialTable defaultState support baseVisitFloor hbaseFloor</span>
+<span id="L815">815           hrewardBound hhorizon hbaseVisitFloor</span>
+<span id="L816">816   dsimp only at hcert</span>
+<span id="L817">817   rcases hcert with</span>
+<span id="L818">818     ⟨_hbudgetTendsto, _hrateTendsto, _hbudgetEventually, hcheckpoint⟩</span>
+<span id="L819">819   rcases hcheckpoint checkpointIndex with</span>
+<span id="L820">820     ⟨_heventMeasurable, _hviolationMeasurable, _heventMeasure,</span>
+<span id="L821">821       _hviolationSubset, hviolationMeasure, _hstrict, _hpath⟩</span>
+<span id="L822">822   exact (measure_mono hsubset).trans hviolationMeasure</span>
+<span id="L823">823 </span>
+<span id="L824">824 /-- The actual successor stopping-round square has an explicit deterministic</span>
+<span id="L825">825 ENNReal upper bound at every fixed inverse-square-root threshold index. -/</span>
+<span id="L826">826 theorem</span>
+<span id="L827">827     selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_lintegral_stoppingRound_sq_le_ENNRealBudget</span>
+<span id="L828">828     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L829">829     [IsProbabilityMeasure initialState]</span>
+<span id="L830">830     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L831">831     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L832">832     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L833">833     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L834">834     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L835">835     (defaultState : State)</span>
+<span id="L836">836     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L837">837     (baseVisitFloor : Real)</span>
+<span id="L838">838     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L839">839     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L840">840     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L841">841     (scheduleIndex : Nat) :</span>
+<span id="L842">842     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L843">843       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L844">844     let tau :=</span>
+<span id="L845">845       selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L846">846         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L847">847           baseVisitFloor scheduleIndex</span>
+<span id="L848">848     ∫⁻ trajectory,</span>
+<span id="L849">849         ENNReal.ofReal (((((tau trajectory).untopA + 1 : Nat) : Real)) ^ 2)</span>
+<span id="L850">850           ∂source.trajectoryMeasure &lt;=</span>
+<span id="L851">851       inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentENNRealBudget</span>
+<span id="L852">852         mdp varianceProxy baseVisitFloor scheduleIndex := by</span>
+<span id="L853">853   dsimp only</span>
+<span id="L854">854   apply lintegral_sq_untopA_add_one_le_quarticSquareCheckpointBudget</span>
+<span id="L855">855     (selfConsistentScheduledCausalSource mdp initialState rewardSource</span>
+<span id="L856">856       initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure</span>
+<span id="L857">857     (selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L858">858       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L859">859         baseVisitFloor scheduleIndex)</span>
+<span id="L860">860     (selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix_isStoppingTime</span>
+<span id="L861">861       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L862">862         baseVisitFloor scheduleIndex).measurable&#x27;</span>
+<span id="L863">863     (explicitPolynomialPrefixTailModelReturnFailureBudget mdp)</span>
+<span id="L864">864     (inverseSqrtThresholdUnboundedHittingAfterTailStart</span>
+<span id="L865">865       mdp varianceProxy baseVisitFloor scheduleIndex)</span>
+<span id="L866">866   intro checkpointIndex hcheckpointIndex</span>
+<span id="L867">867   exact</span>
+<span id="L868">868     selfConsistentScheduledCausalSource_trajectoryMeasure_inverseSqrtThresholdUnboundedHittingAfterDelayedCheckpointSet_le_of_tailStart</span>
+<span id="L869">869       mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L870">870         initialTable defaultState support baseVisitFloor hbaseFloor</span>
+<span id="L871">871           hrewardBound hhorizon hbaseVisitFloor scheduleIndex checkpointIndex</span>
+<span id="L872">872             hcheckpointIndex</span>
+<span id="L873">873 </span>
+<span id="L874">874 /-- Each fixed-index genuine uncapped inverse-square-root first passage has a</span>
+<span id="L875">875 finite second moment when the finite-horizon confidence exponent is at least ten. -/</span>
+<span id="L876">876 theorem</span>
+<span id="L877">877     selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_squareIntegrableFiniteStoppingTime</span>
+<span id="L878">878     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L879">879     [IsProbabilityMeasure initialState]</span>
+<span id="L880">880     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L881">881     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L882">882     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L883">883     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L884">884     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L885">885     (defaultState : State)</span>
+<span id="L886">886     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L887">887     (baseVisitFloor : Real)</span>
+<span id="L888">888     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L889">889     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L890">890     (hhorizon : 4 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L891">891     (scheduleIndex : Nat) :</span>
+<span id="L892">892     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L893">893       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L894">894     BanditRLProof.OFUL.SquareIntegrableFiniteStoppingTime</span>
+<span id="L895">895       source.trajectoryMeasure</span>
+<span id="L896">896       (selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L897">897         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L898">898           baseVisitFloor scheduleIndex) := by</span>
+<span id="L899">899   dsimp only</span>
+<span id="L900">900   let tau :=</span>
+<span id="L901">901     selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L902">902       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L903">903         baseVisitFloor scheduleIndex</span>
+<span id="L904">904   refine ⟨?_, ?_⟩</span>
+<span id="L905">905   · exact</span>
+<span id="L906">906       ae_ne_top_selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L907">907         mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L908">908           initialTable defaultState support baseVisitFloor hbaseFloor</span>
+<span id="L909">909             hrewardBound (by omega) hbaseVisitFloor scheduleIndex</span>
+<span id="L910">910   · apply memLp_two_untopA_add_one_of_eventually_quarticSquareCheckpointTail</span>
+<span id="L911">911       (selfConsistentScheduledCausalSource mdp initialState rewardSource</span>
+<span id="L912">912         initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure</span>
+<span id="L913">913       tau</span>
+<span id="L914">914       (selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix_isStoppingTime</span>
+<span id="L915">915         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L916">916           baseVisitFloor scheduleIndex).measurable&#x27;</span>
+<span id="L917">917       (explicitPolynomialPrefixTailModelReturnFailureBudget mdp)</span>
+<span id="L918">918       (tsum_quarticSquareBlockWeight_mul_explicitPolynomialPrefixTailModelReturnFailureBudget_ne_top</span>
+<span id="L919">919         mdp hhorizon)</span>
+<span id="L920">920     exact</span>
+<span id="L921">921       eventually_selfConsistentScheduledCausalSource_trajectoryMeasure_inverseSqrtThresholdUnboundedHittingAfterDelayedCheckpointSet_le</span>
+<span id="L922">922         mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L923">923           initialTable defaultState support baseVisitFloor hbaseFloor</span>
+<span id="L924">924             hrewardBound (by omega) hbaseVisitFloor scheduleIndex</span>
+<span id="L925">925 </span>
+<span id="L926">926 /-- The Bochner second moment of the actual successor stopping-round count is</span>
+<span id="L927">927 bounded by the canonical deterministic checkpoint/failure budget. -/</span>
+<span id="L928">928 theorem</span>
+<span id="L929">929     selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_integral_stoppingRound_sq_le_budget</span>
+<span id="L930">930     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L931">931     [IsProbabilityMeasure initialState]</span>
+<span id="L932">932     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L933">933     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L934">934     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L935">935     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L936">936     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L937">937     (defaultState : State)</span>
+<span id="L938">938     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L939">939     (baseVisitFloor : Real)</span>
+<span id="L940">940     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L941">941     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L942">942     (hhorizon : 4 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L943">943     (scheduleIndex : Nat) :</span>
+<span id="L944">944     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L945">945       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L946">946     let tau :=</span>
+<span id="L947">947       selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L948">948         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L949">949           baseVisitFloor scheduleIndex</span>
+<span id="L950">950     integral source.trajectoryMeasure</span>
+<span id="L951">951         (fun trajectory =&gt;</span>
+<span id="L952">952           ((((tau trajectory).untopA + 1 : Nat) : Real)) ^ 2) &lt;=</span>
+<span id="L953">953       inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentBudget</span>
+<span id="L954">954         mdp varianceProxy baseVisitFloor scheduleIndex := by</span>
+<span id="L955">955   dsimp only</span>
+<span id="L956">956   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L957">957     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L958">958   let tau :=</span>
+<span id="L959">959     selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L960">960       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L961">961         baseVisitFloor scheduleIndex</span>
+<span id="L962">962   change integral source.trajectoryMeasure</span>
+<span id="L963">963       (fun trajectory =&gt;</span>
+<span id="L964">964         ((((tau trajectory).untopA + 1 : Nat) : Real)) ^ 2) &lt;=</span>
+<span id="L965">965     inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentBudget</span>
+<span id="L966">966       mdp varianceProxy baseVisitFloor scheduleIndex</span>
+<span id="L967">967   have hstop : BanditRLProof.OFUL.SquareIntegrableFiniteStoppingTime</span>
+<span id="L968">968       source.trajectoryMeasure tau := by</span>
+<span id="L969">969     simpa [source, tau] using</span>
+<span id="L970">970       (selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_squareIntegrableFiniteStoppingTime</span>
+<span id="L971">971         mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L972">972           initialTable defaultState support baseVisitFloor hbaseFloor</span>
+<span id="L973">973             hrewardBound hhorizon hbaseVisitFloor scheduleIndex)</span>
+<span id="L974">974   have hlin :</span>
+<span id="L975">975       ∫⁻ trajectory,</span>
+<span id="L976">976           ENNReal.ofReal</span>
+<span id="L977">977             (((((tau trajectory).untopA + 1 : Nat) : Real)) ^ 2)</span>
+<span id="L978">978           ∂source.trajectoryMeasure &lt;=</span>
+<span id="L979">979         inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentENNRealBudget</span>
+<span id="L980">980           mdp varianceProxy baseVisitFloor scheduleIndex := by</span>
+<span id="L981">981     simpa [source, tau] using</span>
+<span id="L982">982       (selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_lintegral_stoppingRound_sq_le_ENNRealBudget</span>
+<span id="L983">983         mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L984">984           initialTable defaultState support baseVisitFloor hbaseFloor</span>
+<span id="L985">985             hrewardBound (by omega) hbaseVisitFloor scheduleIndex)</span>
+<span id="L986">986   unfold</span>
+<span id="L987">987     inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentBudget</span>
+<span id="L988">988   calc</span>
+<span id="L989">989     integral source.trajectoryMeasure</span>
+<span id="L990">990         (fun trajectory =&gt;</span>
+<span id="L991">991           ((((tau trajectory).untopA + 1 : Nat) : Real)) ^ 2) =</span>
+<span id="L992">992       (∫⁻ trajectory,</span>
+<span id="L993">993           ENNReal.ofReal</span>
+<span id="L994">994             (((((tau trajectory).untopA + 1 : Nat) : Real)) ^ 2)</span>
+<span id="L995">995           ∂source.trajectoryMeasure).toReal := by</span>
+<span id="L996">996         exact integral_eq_lintegral_of_nonneg_ae</span>
+<span id="L997">997           (Filter.Eventually.of_forall fun _ =&gt; sq_nonneg _)</span>
+<span id="L998">998           hstop.memLp_rounds.integrable_sq.aestronglyMeasurable</span>
+<span id="L999">999     _ &lt;=</span>
+<span id="L1000">1000       (inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentENNRealBudget</span>
+<span id="L1001">1001         mdp varianceProxy baseVisitFloor scheduleIndex).toReal := by</span>
+<span id="L1002">1002       exact ENNReal.toReal_mono</span>
+<span id="L1003">1003         (inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentENNRealBudget_ne_top</span>
+<span id="L1004">1004           mdp varianceProxy baseVisitFloor scheduleIndex hhorizon)</span>
+<span id="L1005">1005         hlin</span>
+<span id="L1006">1006 </span>
+<span id="L1007">1007 end AdaptiveStochasticSampledEmpiricalOptimisticSource</span>
+<span id="L1008">1008 </span>
+<span id="L1009">1009 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterExplicitTailStartExpectedAbsoluteBound.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterExplicitTailStartExpectedAbsoluteBound.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterExplicitTailStartExpectedAbsoluteBound.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterExplicitTailStartExpectedAbsoluteBound.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterIntegrableExpectedUpperBound</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Explicit tail start for the uncapped inverse-sqrt hitting time</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module replaces the convergence-selected tail start in the fixed-index</span>
+<span id="L7">7 second-moment route by a concrete ceiling expression. It then transports that</span>
+<span id="L8">8 explicit witness into the deterministic stopped-regret absolute-moment budget.</span>
+<span id="L9">9 </span>
+<span id="L10">10 The result remains fixed-index. It does not establish a uniform moment rate,</span>
+<span id="L11">11 uniform integrability, L1 convergence, or an optional-stopping identity.</span>
+<span id="L12">12 -/</span>
+<span id="L13">13 </span>
+<span id="L14">14 open Filter MeasureTheory ProbabilityTheory</span>
+<span id="L15">15 open scoped BigOperators ENNReal NNReal ProbabilityTheory Topology</span>
+<span id="L16">16 </span>
+<span id="L17">17 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L18">18 </span>
+<span id="L19">19 universe u v</span>
+<span id="L20">20 </span>
+<span id="L21">21 variable {State : Type u} {Action : Type v}</span>
+<span id="L22">22     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L23">23     [Fintype State] [Fintype Action]</span>
+<span id="L24">24     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L25">25     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L26">26     [Nonempty State] [Nonempty Action]</span>
+<span id="L27">27 </span>
+<span id="L28">28 namespace AdaptiveStochasticSampledEmpiricalOptimisticSource</span>
+<span id="L29">29 </span>
+<span id="L30">30 /-- Coefficient of a reciprocal-linear envelope for the exact scheduled</span>
+<span id="L31">31 realized-regret rate. -/</span>
+<span id="L32">32 noncomputable def</span>
+<span id="L33">33     explicitPolynomialPrefixAverageRealizedBehaviorRegretRateLinearCoefficient</span>
+<span id="L34">34     (mdp : MDP State Action) (varianceProxy : NNReal) : Real :=</span>
+<span id="L35">35   2 * (mdp.horizon : Real) +</span>
+<span id="L36">36     4 * selfConsistentScheduledNaturalCausalLogarithmicRateCoefficient mdp +</span>
+<span id="L37">37     2 *</span>
+<span id="L38">38       (((mdp.globalReturnDeviationPerEpisodeVarianceProxy</span>
+<span id="L39">39           1 varianceProxy : NNReal) : Real) + 1)</span>
+<span id="L40">40 </span>
+<span id="L41">41 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L42">42     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L43">43     [Nonempty State] [Nonempty Action] in</span>
+<span id="L44">44 /-- The reciprocal-linear rate coefficient is nonnegative. -/</span>
+<span id="L45">45 theorem</span>
+<span id="L46">46     explicitPolynomialPrefixAverageRealizedBehaviorRegretRateLinearCoefficient_nonneg</span>
+<span id="L47">47     (mdp : MDP State Action) (varianceProxy : NNReal) :</span>
+<span id="L48">48     0 &lt;=</span>
+<span id="L49">49       explicitPolynomialPrefixAverageRealizedBehaviorRegretRateLinearCoefficient</span>
+<span id="L50">50         mdp varianceProxy := by</span>
+<span id="L51">51   unfold</span>
+<span id="L52">52     explicitPolynomialPrefixAverageRealizedBehaviorRegretRateLinearCoefficient</span>
+<span id="L53">53   exact add_nonneg</span>
+<span id="L54">54     (add_nonneg</span>
+<span id="L55">55       (mul_nonneg (by norm_num) (Nat.cast_nonneg _))</span>
+<span id="L56">56       (mul_nonneg (by norm_num)</span>
+<span id="L57">57         (selfConsistentScheduledNaturalCausalLogarithmicRateCoefficient_nonneg</span>
+<span id="L58">58           mdp)))</span>
+<span id="L59">59     (mul_nonneg (by norm_num) (by positivity))</span>
+<span id="L60">60 </span>
+<span id="L61">61 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L62">62     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L63">63     [Nonempty State] [Nonempty Action] in</span>
+<span id="L64">64 /-- The exact scheduled realized-regret rate is controlled by a reciprocal</span>
+<span id="L65">65 linear envelope in the fourth-power schedule scale. -/</span>
+<span id="L66">66 theorem explicitPolynomialPrefixAverageRealizedBehaviorRegretRate_le_linearEnvelope</span>
+<span id="L67">67     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L68">68     (baseVisitFloor : Real) (n : Nat) :</span>
+<span id="L69">69     explicitPolynomialPrefixAverageRealizedBehaviorRegretRate</span>
+<span id="L70">70         mdp varianceProxy baseVisitFloor n &lt;=</span>
+<span id="L71">71       explicitPolynomialPrefixAverageRealizedBehaviorRegretRateLinearCoefficient</span>
+<span id="L72">72           mdp varianceProxy /</span>
+<span id="L73">73         (explicitHighProbabilityScale n : Real) := by</span>
+<span id="L74">74   let s : Real := explicitHighProbabilityScale n</span>
+<span id="L75">75   let H : Real := mdp.horizon</span>
+<span id="L76">76   let C : Real :=</span>
+<span id="L77">77     selfConsistentScheduledNaturalCausalLogarithmicRateCoefficient mdp</span>
+<span id="L78">78   let V : Real :=</span>
+<span id="L79">79     ((mdp.globalReturnDeviationPerEpisodeVarianceProxy</span>
+<span id="L80">80       1 varianceProxy : NNReal) : Real)</span>
+<span id="L81">81   have hs : 0 &lt; s := by</span>
+<span id="L82">82     dsimp [s]</span>
+<span id="L83">83     exact_mod_cast explicitHighProbabilityScale_pos n</span>
+<span id="L84">84   have hsOne : 1 &lt;= s := by</span>
+<span id="L85">85     dsimp [s]</span>
+<span id="L86">86     exact_mod_cast explicitHighProbabilityScale_pos n</span>
+<span id="L87">87   have hH : 0 &lt;= H := by</span>
+<span id="L88">88     dsimp [H]</span>
+<span id="L89">89     positivity</span>
+<span id="L90">90   have hC : 0 &lt;= C := by</span>
+<span id="L91">91     exact selfConsistentScheduledNaturalCausalLogarithmicRateCoefficient_nonneg</span>
+<span id="L92">92       mdp</span>
+<span id="L93">93   have hA : 0 &lt;= 2 * H + 4 * C := by positivity</span>
+<span id="L94">94   have hsSq : 1 &lt;= s ^ 2 := by</span>
+<span id="L95">95     have hplus : 0 &lt;= s + 1 := by linarith</span>
+<span id="L96">96     nlinarith [mul_nonneg (sub_nonneg.mpr hsOne) hplus]</span>
+<span id="L97">97   have hsCube : s &lt;= s ^ 3 := by</span>
+<span id="L98">98     calc</span>
+<span id="L99">99       s = s * 1 := by ring</span>
+<span id="L100">100       _ &lt;= s * s ^ 2 := mul_le_mul_of_nonneg_left hsSq hs.le</span>
+<span id="L101">101       _ = s ^ 3 := by ring</span>
+<span id="L102">102   have hInv : 1 / s ^ 3 &lt;= 1 / s := by</span>
+<span id="L103">103     apply (div_le_div_iff₀ (pow_pos hs 3) hs).2</span>
+<span id="L104">104     simpa using hsCube</span>
+<span id="L105">105   have hCubic : (2 * H + 4 * C) / s ^ 3 &lt;=</span>
+<span id="L106">106       (2 * H + 4 * C) / s := by</span>
+<span id="L107">107     calc</span>
+<span id="L108">108       (2 * H + 4 * C) / s ^ 3 =</span>
+<span id="L109">109           (2 * H + 4 * C) * (1 / s ^ 3) := by ring</span>
+<span id="L110">110       _ &lt;= (2 * H + 4 * C) * (1 / s) :=</span>
+<span id="L111">111         mul_le_mul_of_nonneg_left hInv hA</span>
+<span id="L112">112       _ = (2 * H + 4 * C) / s := by ring</span>
+<span id="L113">113   have hlog :=</span>
+<span id="L114">114     selfConsistentScheduledNaturalCausalLogarithmicAverageIntegratedBehaviorExpectedRegretRate_explicitRounds_le_summableEnvelope</span>
+<span id="L115">115       mdp n</span>
+<span id="L116">116   have hreturn :=</span>
+<span id="L117">117     explicitPolynomialPrefixAverageReturnRadius_le</span>
+<span id="L118">118       mdp varianceProxy baseVisitFloor n</span>
+<span id="L119">119   have hlog&#x27; :</span>
+<span id="L120">120       selfConsistentScheduledNaturalCausalLogarithmicAverageIntegratedBehaviorExpectedRegretRate</span>
+<span id="L121">121           mdp (explicitHighProbabilityRounds n) &lt;=</span>
+<span id="L122">122         4 * C / s ^ 3 := by</span>
+<span id="L123">123     simpa [explicitPolynomialPrefixAverageBehaviorRegretL1SummableEnvelope,</span>
+<span id="L124">124       C, s] using hlog</span>
+<span id="L125">125   have hreturn&#x27; :</span>
+<span id="L126">126       explicitPolynomialPrefixAverageReturnRadius</span>
+<span id="L127">127           mdp varianceProxy baseVisitFloor n &lt;=</span>
+<span id="L128">128         2 * (V + 1) / s := by</span>
+<span id="L129">129     simpa [V, s] using hreturn</span>
+<span id="L130">130   have hdecomp :</span>
+<span id="L131">131       explicitPolynomialPrefixAverageRealizedBehaviorRegretRate</span>
+<span id="L132">132           mdp varianceProxy baseVisitFloor n =</span>
+<span id="L133">133         2 * H / s ^ 3 +</span>
+<span id="L134">134           selfConsistentScheduledNaturalCausalLogarithmicAverageIntegratedBehaviorExpectedRegretRate</span>
+<span id="L135">135             mdp (explicitHighProbabilityRounds n) +</span>
+<span id="L136">136           explicitPolynomialPrefixAverageReturnRadius</span>
+<span id="L137">137             mdp varianceProxy baseVisitFloor n := by</span>
+<span id="L138">138     unfold explicitPolynomialPrefixAverageRealizedBehaviorRegretRate</span>
+<span id="L139">139       selfConsistentScheduledNaturalCausalBurninRealizedAverageLogarithmicRate</span>
+<span id="L140">140       selfConsistentScheduledNaturalCausalBurninRealizedCumulativeLogarithmicRate</span>
+<span id="L141">141       selfConsistentScheduledNaturalCausalBurninCumulativeBehaviorExpectedRegretLogarithmicRate</span>
+<span id="L142">142       selfConsistentScheduledNaturalCausalLogarithmicAverageIntegratedBehaviorExpectedRegretRate</span>
+<span id="L143">143       explicitPolynomialPrefixAverageReturnRadius</span>
+<span id="L144">144     simp [explicitHighProbabilityBurnin, explicitHighProbabilityRounds,</span>
+<span id="L145">145       s, H]</span>
+<span id="L146">146     field_simp [ne_of_gt hs]</span>
+<span id="L147">147   rw [hdecomp]</span>
+<span id="L148">148   calc</span>
+<span id="L149">149     2 * H / s ^ 3 +</span>
+<span id="L150">150           selfConsistentScheduledNaturalCausalLogarithmicAverageIntegratedBehaviorExpectedRegretRate</span>
+<span id="L151">151             mdp (explicitHighProbabilityRounds n) +</span>
+<span id="L152">152           explicitPolynomialPrefixAverageReturnRadius</span>
+<span id="L153">153             mdp varianceProxy baseVisitFloor n &lt;=</span>
+<span id="L154">154         2 * H / s ^ 3 + 4 * C / s ^ 3 + 2 * (V + 1) / s := by</span>
+<span id="L155">155       exact add_le_add (add_le_add le_rfl hlog&#x27;) hreturn&#x27;</span>
+<span id="L156">156     _ &lt;= (2 * H + 4 * C) / s + 2 * (V + 1) / s := by</span>
+<span id="L157">157       calc</span>
+<span id="L158">158         2 * H / s ^ 3 + 4 * C / s ^ 3 + 2 * (V + 1) / s =</span>
+<span id="L159">159             (2 * H + 4 * C) / s ^ 3 + 2 * (V + 1) / s := by ring</span>
+<span id="L160">160         _ &lt;= (2 * H + 4 * C) / s + 2 * (V + 1) / s :=</span>
+<span id="L161">161           by simpa [add_comm] using</span>
+<span id="L162">162             (add_le_add_right hCubic (2 * (V + 1) / s))</span>
+<span id="L163">163     _ =</span>
+<span id="L164">164         explicitPolynomialPrefixAverageRealizedBehaviorRegretRateLinearCoefficient</span>
+<span id="L165">165             mdp varianceProxy /</span>
+<span id="L166">166           (explicitHighProbabilityScale n : Real) := by</span>
+<span id="L167">167       unfold</span>
+<span id="L168">168         explicitPolynomialPrefixAverageRealizedBehaviorRegretRateLinearCoefficient</span>
+<span id="L169">169       dsimp [H, C, V, s]</span>
+<span id="L170">170       ring</span>
+<span id="L171">171 </span>
+<span id="L172">172 /-- Explicit checkpoint index that clears the fixed inverse-square-root</span>
+<span id="L173">173 threshold for every later scheduled regret-rate checkpoint. -/</span>
+<span id="L174">174 noncomputable def inverseSqrtThresholdUnboundedHittingAfterExplicitTailStart</span>
+<span id="L175">175     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L176">176     (scheduleIndex : Nat) : Nat :=</span>
+<span id="L177">177   max scheduleIndex</span>
+<span id="L178">178     (Nat.ceil</span>
+<span id="L179">179       (explicitPolynomialPrefixAverageRealizedBehaviorRegretRateLinearCoefficient</span>
+<span id="L180">180           mdp varianceProxy *</span>
+<span id="L181">181         Real.sqrt (explicitHighProbabilityScale scheduleIndex : Real)))</span>
+<span id="L182">182 </span>
+<span id="L183">183 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L184">184     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L185">185     [Nonempty State] [Nonempty Action] in</span>
+<span id="L186">186 /-- The explicit ceiling witness is beyond the threshold index and validates</span>
+<span id="L187">187 the exact scheduled rate comparison at every later checkpoint. -/</span>
+<span id="L188">188 theorem inverseSqrtThresholdUnboundedHittingAfterExplicitTailStart_spec</span>
+<span id="L189">189     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L190">190     (baseVisitFloor : Real) (scheduleIndex : Nat) :</span>
+<span id="L191">191     scheduleIndex &lt;=</span>
+<span id="L192">192         inverseSqrtThresholdUnboundedHittingAfterExplicitTailStart</span>
+<span id="L193">193           mdp varianceProxy scheduleIndex /\</span>
+<span id="L194">194       forall n,</span>
+<span id="L195">195         inverseSqrtThresholdUnboundedHittingAfterExplicitTailStart</span>
+<span id="L196">196               mdp varianceProxy scheduleIndex &lt;= n -&gt;</span>
+<span id="L197">197           explicitPolynomialPrefixAverageRealizedBehaviorRegretRate</span>
+<span id="L198">198               mdp varianceProxy baseVisitFloor n &lt;=</span>
+<span id="L199">199             selfConsistentScheduledNaturalCausalInverseSqrtFirstPassageThreshold</span>
+<span id="L200">200               scheduleIndex := by</span>
+<span id="L201">201   let coefficient :=</span>
+<span id="L202">202     explicitPolynomialPrefixAverageRealizedBehaviorRegretRateLinearCoefficient</span>
+<span id="L203">203       mdp varianceProxy</span>
+<span id="L204">204   let thresholdScale : Real :=</span>
+<span id="L205">205     explicitHighProbabilityScale scheduleIndex</span>
+<span id="L206">206   let ceiling := Nat.ceil (coefficient * Real.sqrt thresholdScale)</span>
+<span id="L207">207   have hthresholdScale : 0 &lt; thresholdScale := by</span>
+<span id="L208">208     dsimp [thresholdScale]</span>
+<span id="L209">209     exact_mod_cast explicitHighProbabilityScale_pos scheduleIndex</span>
+<span id="L210">210   have hsqrt : 0 &lt; Real.sqrt thresholdScale :=</span>
+<span id="L211">211     Real.sqrt_pos.2 hthresholdScale</span>
+<span id="L212">212   have hceil : coefficient * Real.sqrt thresholdScale &lt;=</span>
+<span id="L213">213       (ceiling : Real) := by</span>
+<span id="L214">214     exact Nat.le_ceil _</span>
+<span id="L215">215   constructor</span>
+<span id="L216">216   · exact le_max_left _ _</span>
+<span id="L217">217   · intro n hn</span>
+<span id="L218">218     have hceilingLe : ceiling &lt;= n := by</span>
+<span id="L219">219       exact (le_max_right scheduleIndex ceiling).trans hn</span>
+<span id="L220">220     have hcoefficientSqrtLe :</span>
+<span id="L221">221         coefficient * Real.sqrt thresholdScale &lt;=</span>
+<span id="L222">222           (explicitHighProbabilityScale n : Real) := by</span>
+<span id="L223">223       calc</span>
+<span id="L224">224         coefficient * Real.sqrt thresholdScale &lt;= (ceiling : Real) := hceil</span>
+<span id="L225">225         _ &lt;= (n : Real) := by exact_mod_cast hceilingLe</span>
+<span id="L226">226         _ &lt;= (explicitHighProbabilityScale n : Real) := by</span>
+<span id="L227">227           simp [explicitHighProbabilityScale]</span>
+<span id="L228">228     have hscale : 0 &lt; (explicitHighProbabilityScale n : Real) := by</span>
+<span id="L229">229       exact_mod_cast explicitHighProbabilityScale_pos n</span>
+<span id="L230">230     have henvelope : coefficient /</span>
+<span id="L231">231           (explicitHighProbabilityScale n : Real) &lt;=</span>
+<span id="L232">232         1 / Real.sqrt thresholdScale := by</span>
+<span id="L233">233       apply (div_le_div_iff₀ hscale hsqrt).2</span>
+<span id="L234">234       simpa using hcoefficientSqrtLe</span>
+<span id="L235">235     exact</span>
+<span id="L236">236       (explicitPolynomialPrefixAverageRealizedBehaviorRegretRate_le_linearEnvelope</span>
+<span id="L237">237         mdp varianceProxy baseVisitFloor n).trans</span>
+<span id="L238">238         (by</span>
+<span id="L239">239           simpa [coefficient, thresholdScale,</span>
+<span id="L240">240             selfConsistentScheduledNaturalCausalInverseSqrtFirstPassageThreshold]</span>
+<span id="L241">241             using henvelope)</span>
+<span id="L242">242 </span>
+<span id="L243">243 /-- The accepted least eventual witness is no larger than the explicit</span>
+<span id="L244">244 ceiling-based tail start. -/</span>
+<span id="L245">245 theorem inverseSqrtThresholdUnboundedHittingAfterTailStart_le_explicitTailStart</span>
+<span id="L246">246     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L247">247     (baseVisitFloor : Real) (scheduleIndex : Nat) :</span>
+<span id="L248">248     inverseSqrtThresholdUnboundedHittingAfterTailStart</span>
+<span id="L249">249         mdp varianceProxy baseVisitFloor scheduleIndex &lt;=</span>
+<span id="L250">250       inverseSqrtThresholdUnboundedHittingAfterExplicitTailStart</span>
+<span id="L251">251         mdp varianceProxy scheduleIndex := by</span>
+<span id="L252">252   classical</span>
+<span id="L253">253   unfold inverseSqrtThresholdUnboundedHittingAfterTailStart</span>
+<span id="L254">254   exact Nat.find_min&#x27;</span>
+<span id="L255">255     (exists_inverseSqrtThresholdUnboundedHittingAfterTailStart</span>
+<span id="L256">256       mdp varianceProxy baseVisitFloor scheduleIndex)</span>
+<span id="L257">257     (inverseSqrtThresholdUnboundedHittingAfterExplicitTailStart_spec</span>
+<span id="L258">258       mdp varianceProxy baseVisitFloor scheduleIndex)</span>
+<span id="L259">259 </span>
+<span id="L260">260 /-- ENNReal second-moment budget obtained by replacing the canonical tail</span>
+<span id="L261">261 start with its explicit ceiling-based upper bound. -/</span>
+<span id="L262">262 noncomputable def</span>
+<span id="L263">263     inverseSqrtThresholdUnboundedHittingAfterExplicitStoppingRoundSecondMomentENNRealBudget</span>
+<span id="L264">264     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L265">265     (scheduleIndex : Nat) : ENNReal :=</span>
+<span id="L266">266   let start := inverseSqrtThresholdUnboundedHittingAfterExplicitTailStart</span>
+<span id="L267">267     mdp varianceProxy scheduleIndex</span>
+<span id="L268">268   (((explicitHighProbabilityRounds start + 1) ^ 2 : Nat) : ENNReal) +</span>
+<span id="L269">269     ∑&#x27; n : Nat,</span>
+<span id="L270">270       (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) *</span>
+<span id="L271">271         explicitPolynomialPrefixTailModelReturnFailureBudget mdp n</span>
+<span id="L272">272 </span>
+<span id="L273">273 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L274">274     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L275">275     [Nonempty State] [Nonempty Action] in</span>
+<span id="L276">276 /-- The explicit-start ENNReal budget is finite under the same horizon-five</span>
+<span id="L277">277 contract as the accepted canonical budget. -/</span>
+<span id="L278">278 theorem</span>
+<span id="L279">279     inverseSqrtThresholdUnboundedHittingAfterExplicitStoppingRoundSecondMomentENNRealBudget_ne_top</span>
+<span id="L280">280     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L281">281     (scheduleIndex : Nat) (hhorizon : 4 &lt; mdp.horizon) :</span>
+<span id="L282">282     inverseSqrtThresholdUnboundedHittingAfterExplicitStoppingRoundSecondMomentENNRealBudget</span>
+<span id="L283">283         mdp varianceProxy scheduleIndex ≠ ∞ := by</span>
+<span id="L284">284   unfold</span>
+<span id="L285">285     inverseSqrtThresholdUnboundedHittingAfterExplicitStoppingRoundSecondMomentENNRealBudget</span>
+<span id="L286">286   rw [ENNReal.add_ne_top]</span>
+<span id="L287">287   exact ⟨by simp,</span>
+<span id="L288">288     tsum_quarticSquareBlockWeight_mul_explicitPolynomialPrefixTailModelReturnFailureBudget_ne_top</span>
+<span id="L289">289       mdp hhorizon⟩</span>
+<span id="L290">290 </span>
+<span id="L291">291 /-- Real-valued form of the explicit-start stopping-round second-moment</span>
+<span id="L292">292 budget. -/</span>
+<span id="L293">293 noncomputable def</span>
+<span id="L294">294     inverseSqrtThresholdUnboundedHittingAfterExplicitStoppingRoundSecondMomentBudget</span>
+<span id="L295">295     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L296">296     (scheduleIndex : Nat) : Real :=</span>
+<span id="L297">297   (inverseSqrtThresholdUnboundedHittingAfterExplicitStoppingRoundSecondMomentENNRealBudget</span>
+<span id="L298">298     mdp varianceProxy scheduleIndex).toReal</span>
+<span id="L299">299 </span>
+<span id="L300">300 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L301">301     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L302">302     [Nonempty State] [Nonempty Action] in</span>
+<span id="L303">303 /-- The checkpoint-square plus fixed weighted failure series is monotone in</span>
+<span id="L304">304 its deterministic checkpoint start. -/</span>
+<span id="L305">305 theorem explicitStoppingRoundSecondMomentENNRealBudgetAt_mono</span>
+<span id="L306">306     (mdp : MDP State Action) {left right : Nat} (h : left &lt;= right) :</span>
+<span id="L307">307     (((explicitHighProbabilityRounds left + 1) ^ 2 : Nat) : ENNReal) +</span>
+<span id="L308">308         ∑&#x27; n : Nat,</span>
+<span id="L309">309           (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) *</span>
+<span id="L310">310             explicitPolynomialPrefixTailModelReturnFailureBudget mdp n &lt;=</span>
+<span id="L311">311       (((explicitHighProbabilityRounds right + 1) ^ 2 : Nat) : ENNReal) +</span>
+<span id="L312">312         ∑&#x27; n : Nat,</span>
+<span id="L313">313           (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) *</span>
+<span id="L314">314             explicitPolynomialPrefixTailModelReturnFailureBudget mdp n := by</span>
+<span id="L315">315   apply add_le_add</span>
+<span id="L316">316   · exact_mod_cast Nat.pow_le_pow_left</span>
+<span id="L317">317       (Nat.succ_le_succ (explicitHighProbabilityRounds_mono h)) 2</span>
+<span id="L318">318   · exact le_rfl</span>
+<span id="L319">319 </span>
+<span id="L320">320 /-- Replacing the least eventual witness by the explicit tail start can only</span>
+<span id="L321">321 increase the deterministic ENNReal second-moment budget. -/</span>
+<span id="L322">322 theorem</span>
+<span id="L323">323     inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentENNRealBudget_le_explicit</span>
+<span id="L324">324     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L325">325     (baseVisitFloor : Real) (scheduleIndex : Nat) :</span>
+<span id="L326">326     inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentENNRealBudget</span>
+<span id="L327">327         mdp varianceProxy baseVisitFloor scheduleIndex &lt;=</span>
+<span id="L328">328       inverseSqrtThresholdUnboundedHittingAfterExplicitStoppingRoundSecondMomentENNRealBudget</span>
+<span id="L329">329         mdp varianceProxy scheduleIndex := by</span>
+<span id="L330">330   simpa only</span>
+<span id="L331">331       [inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentENNRealBudget,</span>
+<span id="L332">332         inverseSqrtThresholdUnboundedHittingAfterExplicitStoppingRoundSecondMomentENNRealBudget] using</span>
+<span id="L333">333     (explicitStoppingRoundSecondMomentENNRealBudgetAt_mono mdp</span>
+<span id="L334">334       (inverseSqrtThresholdUnboundedHittingAfterTailStart_le_explicitTailStart</span>
+<span id="L335">335         mdp varianceProxy baseVisitFloor scheduleIndex))</span>
+<span id="L336">336 </span>
+<span id="L337">337 /-- Real-valued canonical second-moment budget is bounded by the explicit</span>
+<span id="L338">338 tail-start budget. -/</span>
+<span id="L339">339 theorem</span>
+<span id="L340">340     inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentBudget_le_explicit</span>
+<span id="L341">341     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L342">342     (baseVisitFloor : Real) (scheduleIndex : Nat)</span>
+<span id="L343">343     (hhorizon : 4 &lt; mdp.horizon) :</span>
+<span id="L344">344     inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentBudget</span>
+<span id="L345">345         mdp varianceProxy baseVisitFloor scheduleIndex &lt;=</span>
+<span id="L346">346       inverseSqrtThresholdUnboundedHittingAfterExplicitStoppingRoundSecondMomentBudget</span>
+<span id="L347">347         mdp varianceProxy scheduleIndex := by</span>
+<span id="L348">348   unfold</span>
+<span id="L349">349     inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentBudget</span>
+<span id="L350">350     inverseSqrtThresholdUnboundedHittingAfterExplicitStoppingRoundSecondMomentBudget</span>
+<span id="L351">351   exact ENNReal.toReal_mono</span>
+<span id="L352">352     (inverseSqrtThresholdUnboundedHittingAfterExplicitStoppingRoundSecondMomentENNRealBudget_ne_top</span>
+<span id="L353">353       mdp varianceProxy scheduleIndex hhorizon)</span>
+<span id="L354">354     (inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentENNRealBudget_le_explicit</span>
+<span id="L355">355       mdp varianceProxy baseVisitFloor scheduleIndex)</span>
+<span id="L356">356 </span>
+<span id="L357">357 /-- The actual successor stopping-round second moment is bounded by the</span>
+<span id="L358">358 explicit ceiling-based deterministic budget. -/</span>
+<span id="L359">359 theorem</span>
+<span id="L360">360     selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_integral_stoppingRound_sq_le_explicitTailStartBudget</span>
+<span id="L361">361     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L362">362     [IsProbabilityMeasure initialState]</span>
+<span id="L363">363     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L364">364     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L365">365     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L366">366     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L367">367     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L368">368     (defaultState : State)</span>
+<span id="L369">369     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L370">370     (baseVisitFloor : Real)</span>
+<span id="L371">371     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L372">372     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L373">373     (hhorizon : 4 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L374">374     (scheduleIndex : Nat) :</span>
+<span id="L375">375     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L376">376       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L377">377     let tau :=</span>
+<span id="L378">378       selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L379">379         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L380">380           baseVisitFloor scheduleIndex</span>
+<span id="L381">381     integral source.trajectoryMeasure</span>
+<span id="L382">382         (fun trajectory =&gt;</span>
+<span id="L383">383           ((((tau trajectory).untopA + 1 : Nat) : Real)) ^ 2) &lt;=</span>
+<span id="L384">384       inverseSqrtThresholdUnboundedHittingAfterExplicitStoppingRoundSecondMomentBudget</span>
+<span id="L385">385         mdp varianceProxy scheduleIndex := by</span>
+<span id="L386">386   dsimp only</span>
+<span id="L387">387   exact</span>
+<span id="L388">388     (selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_integral_stoppingRound_sq_le_budget</span>
+<span id="L389">389       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L390">390         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L391">391           hbaseVisitFloor scheduleIndex).trans</span>
+<span id="L392">392       (inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentBudget_le_explicit</span>
+<span id="L393">393         mdp varianceProxy baseVisitFloor scheduleIndex hhorizon)</span>
+<span id="L394">394 </span>
+<span id="L395">395 /-- Explicit-tail-start absolute-first-moment budget. Its public parameters</span>
+<span id="L396">396 contain no canonical `Nat.find` witness and no unevaluated random integral. -/</span>
+<span id="L397">397 noncomputable def</span>
+<span id="L398">398     selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterExplicitTailStartDeterministicStoppingRoundSecondMomentAbsoluteFirstMomentBudget</span>
+<span id="L399">399     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L400">400     (scheduleIndex : Nat) : Real :=</span>
+<span id="L401">401   Real.sqrt</span>
+<span id="L402">402       (selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretUniformSecondMomentEnvelope</span>
+<span id="L403">403         mdp varianceProxy) *</span>
+<span id="L404">404     ((1 / 2 : Real) *</span>
+<span id="L405">405       (inverseSqrtThresholdUnboundedHittingAfterExplicitStoppingRoundSecondMomentBudget</span>
+<span id="L406">406           mdp varianceProxy scheduleIndex +</span>
+<span id="L407">407         ∑&#x27; rounds : Nat,</span>
+<span id="L408">408           1 / (((rounds + 1 : Nat) : Real) ^ 2)))</span>
+<span id="L409">409 </span>
+<span id="L410">410 /-- For each fixed threshold index, the exact stopped average realized</span>
+<span id="L411">411 behavior regret is integrable and its absolute first moment is controlled by</span>
+<span id="L412">412 the explicit ceiling-based deterministic second-moment budget. -/</span>
+<span id="L413">413 theorem</span>
+<span id="L414">414     selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_stoppedAverageRealizedBehaviorRegret_integrable_and_integral_abs_le_explicitTailStartDeterministicStoppingRoundSecondMomentBudget</span>
+<span id="L415">415     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L416">416     [IsProbabilityMeasure initialState]</span>
+<span id="L417">417     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L418">418     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L419">419     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L420">420     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L421">421     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L422">422     (defaultState : State)</span>
+<span id="L423">423     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L424">424     (baseVisitFloor : Real)</span>
+<span id="L425">425     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L426">426     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L427">427     (hhorizon : 4 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L428">428     (scheduleIndex : Nat) :</span>
+<span id="L429">429     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L430">430       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L431">431     let stoppingPrefix :=</span>
+<span id="L432">432       selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L433">433         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L434">434           baseVisitFloor</span>
+<span id="L435">435     let stoppedProcess :=</span>
+<span id="L436">436       selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess</span>
+<span id="L437">437         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L438">438           baseVisitFloor stoppingPrefix scheduleIndex</span>
+<span id="L439">439     Integrable stoppedProcess source.trajectoryMeasure /\</span>
+<span id="L440">440       integral source.trajectoryMeasure</span>
+<span id="L441">441           (fun trajectory =&gt; |stoppedProcess trajectory|) &lt;=</span>
+<span id="L442">442         selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterExplicitTailStartDeterministicStoppingRoundSecondMomentAbsoluteFirstMomentBudget</span>
+<span id="L443">443           mdp varianceProxy scheduleIndex := by</span>
+<span id="L444">444   dsimp only</span>
+<span id="L445">445   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L446">446     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L447">447   let stoppingPrefix :=</span>
+<span id="L448">448     selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L449">449       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L450">450         baseVisitFloor</span>
+<span id="L451">451   let stoppedProcess :=</span>
+<span id="L452">452     selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess</span>
+<span id="L453">453       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L454">454         baseVisitFloor stoppingPrefix scheduleIndex</span>
+<span id="L455">455   have hparent :=</span>
+<span id="L456">456     selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_stoppedAverageRealizedBehaviorRegret_integrable_and_integral_abs_le_deterministicStoppingRoundSecondMomentBudget</span>
+<span id="L457">457       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L458">458         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L459">459           hbaseVisitFloor scheduleIndex</span>
+<span id="L460">460   have hmoment :=</span>
+<span id="L461">461     inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentBudget_le_explicit</span>
+<span id="L462">462       mdp varianceProxy baseVisitFloor scheduleIndex hhorizon</span>
+<span id="L463">463   have hbudget :</span>
+<span id="L464">464       selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterDeterministicStoppingRoundSecondMomentAbsoluteFirstMomentBudget</span>
+<span id="L465">465           mdp varianceProxy baseVisitFloor scheduleIndex &lt;=</span>
+<span id="L466">466         selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterExplicitTailStartDeterministicStoppingRoundSecondMomentAbsoluteFirstMomentBudget</span>
+<span id="L467">467           mdp varianceProxy scheduleIndex := by</span>
+<span id="L468">468     unfold</span>
+<span id="L469">469       selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterDeterministicStoppingRoundSecondMomentAbsoluteFirstMomentBudget</span>
+<span id="L470">470       selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterExplicitTailStartDeterministicStoppingRoundSecondMomentAbsoluteFirstMomentBudget</span>
+<span id="L471">471     apply mul_le_mul_of_nonneg_left</span>
+<span id="L472">472     · apply mul_le_mul_of_nonneg_left</span>
+<span id="L473">473       · exact add_le_add hmoment le_rfl</span>
+<span id="L474">474       · norm_num</span>
+<span id="L475">475     · exact Real.sqrt_nonneg _</span>
+<span id="L476">476   refine ⟨?_, ?_⟩</span>
+<span id="L477">477   · simpa only [stoppedProcess, source, stoppingPrefix] using hparent.1</span>
+<span id="L478">478   · simpa only [stoppedProcess, source, stoppingPrefix] using</span>
+<span id="L479">479       hparent.2.trans hbudget</span>
+<span id="L480">480 </span>
+<span id="L481">481 end AdaptiveStochasticSampledEmpiricalOptimisticSource</span>
+<span id="L482">482 </span>
+<span id="L483">483 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

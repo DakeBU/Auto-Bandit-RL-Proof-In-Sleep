@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLwiki Papers · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLwiki Papers · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLwiki Papers · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group active" data-nav-group="research" data-nav-group-active="true" open><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../index.html">BanditRLwiki</a><a href="../frontier/index.html">Frontier leaves</a><a href="index.html" aria-current="page">Paper index</a><a href="../progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero wiki-hero" id="papers"><p class="eyebrow">Primary-source theorem index</p><h1>BanditRLwiki Papers</h1><p class="lede">19 primary papers expose 27 indexed theorem surfaces across 13 assumption-compatible comparison cases.</p></section>
+<section id="audit-boundary"><h2>Audit boundary</h2><p>Links point to primary papers, proceedings pages, DOIs, or the author-hosted textbook. Rate summaries are independently written comparison statements; source prose, templates, and data are not copied.</p></section>
+<section id="paper-index"><h2>Sources and indexed cases</h2><div class="wiki-paper-grid">
+<article class="wiki-paper-card" data-wiki-paper>
+  <p class="panel-kicker">Primary paper · 1 theorem surface</p>
+  <h3>Asymptotically Efficient Adaptive Allocation Rules</h3>
+  <p>Tze Leung Lai and Herbert Robbins · 1985</p>
+  <h4>Theorem surfaces</h4>
+  <ul class="wiki-theorem-surface-list"><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Lower</span><strong>Lai–Robbins asymptotic information lower bound</strong><small>Asymptotic information lower bound · <code>stochastic-instance-dependent-klucb</code></small></li></ul>
+  <h4>Indexed cases</h4>
+  <ul class="wiki-paper-case-list"><li><a class="wiki-paper-case-link" data-wiki-paper-case-link href="../cases/stochastic-instance-dependent-klucb/index.html">Bernoulli KL-UCB instance-dependent asymptotic regret</a></li></ul>
+  <a href="https://doi.org/10.1016/0196-8858(85)90002-8">Primary source ↗</a>
+</article>
+<article class="wiki-paper-card" data-wiki-paper>
+  <p class="panel-kicker">Primary paper · 2 theorem surfaces</p>
+  <h3>The Nonstochastic Multiarmed Bandit Problem</h3>
+  <p>Peter Auer, Nicolò Cesa-Bianchi, Yoav Freund, and Robert Schapire · 2002</p>
+  <h4>Theorem surfaces</h4>
+  <ul class="wiki-theorem-surface-list"><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Upper</span><strong>EXP3 expected-regret upper bound</strong><small>EXP3 expected-regret theorem · <code>adversarial-exp3</code></small></li><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Lower</span><strong>Adversarial minimax lower bound</strong><small>Section 5 lower bound · <code>adversarial-exp3</code></small></li></ul>
+  <h4>Indexed cases</h4>
+  <ul class="wiki-paper-case-list"><li><a class="wiki-paper-case-link" data-wiki-paper-case-link href="../cases/adversarial-exp3/index.html">EXP3 expected regret versus the adversarial minimax rate</a></li></ul>
+  <a href="https://epubs.siam.org/doi/10.1137/S0097539701398375">Primary source ↗</a>
+</article>
+<article class="wiki-paper-card" data-wiki-paper>
+  <p class="panel-kicker">Primary paper · 1 theorem surface</p>
+  <h3>Stochastic Linear Optimization under Bandit Feedback</h3>
+  <p>Varsha Dani, Thomas Hayes, and Sham Kakade · 2008</p>
+  <h4>Theorem surfaces</h4>
+  <ul class="wiki-theorem-surface-list"><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Lower</span><strong>Linear-bandit minimax expected-regret lower bound</strong><small>Theorem 3 · <code>stochastic-linear-oful</code></small></li></ul>
+  <h4>Indexed cases</h4>
+  <ul class="wiki-paper-case-list"><li><a class="wiki-paper-case-link" data-wiki-paper-case-link href="../cases/stochastic-linear-oful/index.html">Stochastic linear bandits: OFUL versus dimension-dependent lower bounds</a></li></ul>
+  <a href="https://www.learningtheory.org/colt2008/papers/80-Dani.pdf">Primary source ↗</a>
+</article>
+<article class="wiki-paper-card" data-wiki-paper>
+  <p class="panel-kicker">Primary paper · 1 theorem surface</p>
+  <h3>Contextual Bandit Algorithms with Supervised Learning Guarantees</h3>
+  <p>Alina Beygelzimer, John Langford, Lihong Li, Lev Reyzin, and Robert Schapire · 2010</p>
+  <h4>Theorem surfaces</h4>
+  <ul class="wiki-theorem-surface-list"><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Upper</span><strong>Exp4.P high-probability policy-regret upper bound</strong><small>Theorem 2 · <code>contextual-finite-policy-exp4p</code></small></li></ul>
+  <h4>Indexed cases</h4>
+  <ul class="wiki-paper-case-list"><li><a class="wiki-paper-case-link" data-wiki-paper-case-link href="../cases/contextual-finite-policy-exp4p/index.html">Finite-policy contextual bandits with Exp4.P</a></li></ul>
+  <a href="https://arxiv.org/abs/1002.4058">Primary source ↗</a>
+</article>
+<article class="wiki-paper-card" data-wiki-paper>
+  <p class="panel-kicker">Primary paper · 1 theorem surface</p>
+  <h3>Improved Algorithms for Linear Stochastic Bandits</h3>
+  <p>Yasin Abbasi-Yadkori, Dávid Pál, and Csaba Szepesvári · 2011</p>
+  <h4>Theorem surfaces</h4>
+  <ul class="wiki-theorem-surface-list"><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Upper</span><strong>OFUL high-probability regret upper bound</strong><small>Theorem 13 · <code>stochastic-linear-oful</code></small></li></ul>
+  <h4>Indexed cases</h4>
+  <ul class="wiki-paper-case-list"><li><a class="wiki-paper-case-link" data-wiki-paper-case-link href="../cases/stochastic-linear-oful/index.html">Stochastic linear bandits: OFUL versus dimension-dependent lower bounds</a></li></ul>
+  <a href="https://arxiv.org/abs/1102.2670">Primary source ↗</a>
+</article>
+<article class="wiki-paper-card" data-wiki-paper>
+  <p class="panel-kicker">Primary paper · 1 theorem surface</p>
+  <h3>The KL-UCB Algorithm for Bounded Stochastic Bandits and Beyond</h3>
+  <p>Aurélien Garivier and Olivier Cappé · 2011</p>
+  <h4>Theorem surfaces</h4>
+  <ul class="wiki-theorem-surface-list"><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Upper</span><strong>KL-UCB asymptotic pull-count upper bound</strong><small>Theorems 1–2 and Corollary 3 · <code>stochastic-instance-dependent-klucb</code></small></li></ul>
+  <h4>Indexed cases</h4>
+  <ul class="wiki-paper-case-list"><li><a class="wiki-paper-case-link" data-wiki-paper-case-link href="../cases/stochastic-instance-dependent-klucb/index.html">Bernoulli KL-UCB instance-dependent asymptotic regret</a></li></ul>
+  <a href="https://arxiv.org/abs/1102.2490">Primary source ↗</a>
+</article>
+<article class="wiki-paper-card" data-wiki-paper>
+  <p class="panel-kicker">Primary paper · 2 theorem surfaces</p>
+  <h3>Stochastic Multi-Armed-Bandit Problem with Non-stationary Rewards</h3>
+  <p>Omar Besbes, Yonatan Gur, and Assaf Zeevi · 2014</p>
+  <h4>Theorem surfaces</h4>
+  <ul class="wiki-theorem-surface-list"><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Upper</span><strong>Rexp3 variation-budget upper bound</strong><small>Theorem 2 · <code>nonstationary-variation-budget</code></small></li><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Lower</span><strong>Variation-budget dynamic-regret lower bound</strong><small>Theorem 1 · <code>nonstationary-variation-budget</code></small></li></ul>
+  <h4>Indexed cases</h4>
+  <ul class="wiki-paper-case-list"><li><a class="wiki-paper-case-link" data-wiki-paper-case-link href="../cases/nonstationary-variation-budget/index.html">Variation-budget nonstationary stochastic bandits</a></li></ul>
+  <a href="https://proceedings.neurips.cc/paper_files/paper/2014/hash/91ba7292e5388b90b58d0b839a7f19ec-Abstract.html">Primary source ↗</a>
+</article>
+<article class="wiki-paper-card" data-wiki-paper>
+  <p class="panel-kicker">Primary paper · 2 theorem surfaces</p>
+  <h3>Anytime optimal algorithms in stochastic multi-armed bandits</h3>
+  <p>Rémy Degenne and Vianney Perchet · 2016</p>
+  <h4>Theorem surfaces</h4>
+  <ul class="wiki-theorem-surface-list"><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Upper</span><strong>Anytime MOSS regret</strong><small>Theorem 3 with Lemma 3 · <code>stochastic-finite-arm-minimax</code></small></li><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Lower</span><strong>Minimax stochastic-bandit lower bound</strong><small>Lemma 3 · <code>stochastic-finite-arm-minimax</code></small></li></ul>
+  <h4>Indexed cases</h4>
+  <ul class="wiki-paper-case-list"><li><a class="wiki-paper-case-link" data-wiki-paper-case-link href="../cases/stochastic-finite-arm-minimax/index.html">Finite-arm stochastic minimax expected regret</a></li></ul>
+  <a href="https://proceedings.mlr.press/v48/degenne16.html">Primary source ↗</a>
+</article>
+<article class="wiki-paper-card" data-wiki-paper>
+  <p class="panel-kicker">Primary paper · 2 theorem surfaces</p>
+  <h3>Optimal Best Arm Identification with Fixed Confidence</h3>
+  <p>Aurélien Garivier and Emilie Kaufmann · 2016</p>
+  <h4>Theorem surfaces</h4>
+  <ul class="wiki-theorem-surface-list"><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Upper</span><strong>Track-and-Stop asymptotic upper bound</strong><small>Theorem 14 · <code>fixed-confidence-best-arm-identification</code></small></li><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Lower</span><strong>Characteristic-time lower bound</strong><small>Theorem 1 · <code>fixed-confidence-best-arm-identification</code></small></li></ul>
+  <h4>Indexed cases</h4>
+  <ul class="wiki-paper-case-list"><li><a class="wiki-paper-case-link" data-wiki-paper-case-link href="../cases/fixed-confidence-best-arm-identification/index.html">Fixed-confidence best-arm identification</a></li></ul>
+  <a href="https://proceedings.mlr.press/v49/garivier16a.html">Primary source ↗</a>
+</article>
+<article class="wiki-paper-card" data-wiki-paper>
+  <p class="panel-kicker">Primary paper · 2 theorem surfaces</p>
+  <h3>Minimax Regret Bounds for Reinforcement Learning</h3>
+  <p>Mohammad Azar, Ian Osband, and Rémi Munos · 2017</p>
+  <h4>Theorem surfaces</h4>
+  <ul class="wiki-theorem-surface-list"><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Upper</span><strong>UCBVI high-probability regret upper bounds</strong><small>Theorems 1–2 · <code>tabular-finite-horizon-rl-ucbvi</code></small></li><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Lower</span><strong>Tabular episodic minimax lower-bound comparison</strong><small>Minimax lower-bound comparison · <code>tabular-finite-horizon-rl-ucbvi</code></small></li></ul>
+  <h4>Indexed cases</h4>
+  <ul class="wiki-paper-case-list"><li><a class="wiki-paper-case-link" data-wiki-paper-case-link href="../cases/tabular-finite-horizon-rl-ucbvi/index.html">Tabular finite-horizon RL: UCBVI and minimax leading rates</a></li></ul>
+  <a href="https://proceedings.mlr.press/v70/azar17a.html">Primary source ↗</a>
+</article>
+<article class="wiki-paper-card" data-wiki-paper>
+  <p class="panel-kicker">Primary paper · 2 theorem surfaces</p>
+  <h3>Delay and Cooperation in Nonstochastic Bandits</h3>
+  <p>Nicolò Cesa-Bianchi, Claudio Gentile, and Yishay Mansour · 2019</p>
+  <h4>Theorem surfaces</h4>
+  <ul class="wiki-theorem-surface-list"><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Upper</span><strong>Fixed-delay regret upper bound</strong><small>Corollary 15 · <code>delayed-adversarial-bandit</code></small></li><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Lower</span><strong>Fixed-delay minimax comparison</strong><small>Fixed-delay minimax comparison · <code>delayed-adversarial-bandit</code></small></li></ul>
+  <h4>Indexed cases</h4>
+  <ul class="wiki-paper-case-list"><li><a class="wiki-paper-case-link" data-wiki-paper-case-link href="../cases/delayed-adversarial-bandit/index.html">Adversarial bandits with delayed feedback</a></li></ul>
+  <a href="https://www.jmlr.org/papers/v20/17-631.html">Primary source ↗</a>
+</article>
+<article class="wiki-paper-card" data-wiki-paper>
+  <p class="panel-kicker">Primary paper · 2 theorem surfaces</p>
+  <h3>Nearly Minimax-Optimal Regret for Linearly Parameterized Bandits</h3>
+  <p>Lihong Li, Wei Wang, and Zhihua Zhou · 2019</p>
+  <h4>Theorem surfaces</h4>
+  <ul class="wiki-theorem-surface-list"><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Upper</span><strong>Finite-action linear contextual upper bound</strong><small>Theorem 1 · <code>finite-action-linear-contextual</code></small></li><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Lower</span><strong>Finite-action linear contextual lower bound</strong><small>Theorem 2 · <code>finite-action-linear-contextual</code></small></li></ul>
+  <h4>Indexed cases</h4>
+  <ul class="wiki-paper-case-list"><li><a class="wiki-paper-case-link" data-wiki-paper-case-link href="../cases/finite-action-linear-contextual/index.html">Finite-action linear contextual minimax rates</a></li></ul>
+  <a href="https://arxiv.org/abs/1904.00242">Primary source ↗</a>
+</article>
+<article class="wiki-paper-card" data-wiki-paper>
+  <p class="panel-kicker">Primary paper · 1 theorem surface</p>
+  <h3>Nonstochastic Multiarmed Bandits with Unrestricted Delays</h3>
+  <p>Tobias Thune, Nicolò Cesa-Bianchi, and Yevgeny Seldin · 2019</p>
+  <h4>Theorem surfaces</h4>
+  <ul class="wiki-theorem-surface-list"><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Upper</span><strong>Known-delay DEXP3/DEW upper bound</strong><small>Theorem 1 and Corollary 4 · <code>delayed-adversarial-bandit</code></small></li></ul>
+  <h4>Indexed cases</h4>
+  <ul class="wiki-paper-case-list"><li><a class="wiki-paper-case-link" data-wiki-paper-case-link href="../cases/delayed-adversarial-bandit/index.html">Adversarial bandits with delayed feedback</a></li></ul>
+  <a href="https://arxiv.org/abs/1906.00670">Primary source ↗</a>
+</article>
+<article class="wiki-paper-card" data-wiki-paper>
+  <p class="panel-kicker">Primary paper · 1 theorem surface</p>
+  <h3>A Near-Optimal Change-Detection Based Algorithm for Piecewise-Stationary Combinatorial Semi-Bandits</h3>
+  <p>Zhou, Wang, Varshney, and Lim · 2020</p>
+  <h4>Theorem surfaces</h4>
+  <ul class="wiki-theorem-surface-list"><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Lower</span><strong>Piecewise-stationary minimax lower bound</strong><small>Theorem 5.1 · <code>nonstationary-best-arm-switch-budget</code></small></li></ul>
+  <h4>Indexed cases</h4>
+  <ul class="wiki-paper-case-list"><li><a class="wiki-paper-case-link" data-wiki-paper-case-link href="../cases/nonstationary-best-arm-switch-budget/index.html">Unknown best-arm-identity switch budget</a></li></ul>
+  <a href="https://ojs.aaai.org/index.php/AAAI/article/view/6176">Primary source ↗</a>
+</article>
+<article class="wiki-paper-card" data-wiki-paper>
+  <p class="panel-kicker">Primary paper · 1 theorem surface</p>
+  <h3>Bandit Algorithms</h3>
+  <p>Tor Lattimore and Csaba Szepesvári · 2020</p>
+  <h4>Theorem surfaces</h4>
+  <ul class="wiki-theorem-surface-list"><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Lower</span><strong>Chapter 17 distributional-regret lower bound</strong><small>Theorem 17.1 · <code>distributional-high-probability-regret</code></small></li></ul>
+  <h4>Indexed cases</h4>
+  <ul class="wiki-paper-case-list"><li><a class="wiki-paper-case-link" data-wiki-paper-case-link href="../cases/distributional-high-probability-regret/index.html">Distributional high-probability regret under an expected-regret constraint</a></li></ul>
+  <a href="https://tor-lattimore.com/downloads/book/book.pdf">Primary source ↗</a>
+</article>
+<article class="wiki-paper-card" data-wiki-paper>
+  <p class="panel-kicker">Primary paper · 2 theorem surfaces</p>
+  <h3>Tsallis-INF: An Optimal Algorithm for Stochastic and Adversarial Bandits</h3>
+  <p>Julian Zimmert and Yevgeny Seldin · 2021</p>
+  <h4>Theorem surfaces</h4>
+  <ul class="wiki-theorem-surface-list"><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Upper</span><strong>Tsallis-INF best-of-both-worlds upper bounds</strong><small>Theorem 1 · <code>adversarial-stochastic-best-of-both-worlds</code></small></li><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Lower</span><strong>Rate-optimality comparison used by the Tsallis-INF analysis</strong><small>Lower-bound comparisons summarized with Theorem 1 · <code>adversarial-stochastic-best-of-both-worlds</code></small></li></ul>
+  <h4>Indexed cases</h4>
+  <ul class="wiki-paper-case-list"><li><a class="wiki-paper-case-link" data-wiki-paper-case-link href="../cases/adversarial-stochastic-best-of-both-worlds/index.html">Tsallis-INF best of stochastic and adversarial worlds</a></li></ul>
+  <a href="https://www.jmlr.org/papers/v22/19-753.html">Primary source ↗</a>
+</article>
+<article class="wiki-paper-card" data-wiki-paper>
+  <p class="panel-kicker">Primary paper · 1 theorem surface</p>
+  <h3>A New Look at Dynamic Regret for Non-Stationary Stochastic Bandits</h3>
+  <p>Yasin Abbasi-Yadkori, András György, and Nevena Lazić · 2023</p>
+  <h4>Theorem surfaces</h4>
+  <ul class="wiki-theorem-surface-list"><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Upper</span><strong>ArmSwitch best-arm-switch upper bound</strong><small>Theorem 1 · <code>nonstationary-best-arm-switch-budget</code></small></li></ul>
+  <h4>Indexed cases</h4>
+  <ul class="wiki-paper-case-list"><li><a class="wiki-paper-case-link" data-wiki-paper-case-link href="../cases/nonstationary-best-arm-switch-budget/index.html">Unknown best-arm-identity switch budget</a></li></ul>
+  <a href="https://www.jmlr.org/papers/v24/22-0387.html">Primary source ↗</a>
+</article>
+<article class="wiki-paper-card" data-wiki-paper>
+  <p class="panel-kicker">Primary paper · 1 theorem surface</p>
+  <h3>Settling the sample complexity of online reinforcement learning</h3>
+  <p>Zihan Zhang and collaborators · 2024</p>
+  <h4>Theorem surfaces</h4>
+  <ul class="wiki-theorem-surface-list"><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Upper</span><strong>Modified MVP full-range minimax regret bound</strong><small>Modified MVP full-range result · <code>tabular-finite-horizon-rl-ucbvi</code></small></li></ul>
+  <h4>Indexed cases</h4>
+  <ul class="wiki-paper-case-list"><li><a class="wiki-paper-case-link" data-wiki-paper-case-link href="../cases/tabular-finite-horizon-rl-ucbvi/index.html">Tabular finite-horizon RL: UCBVI and minimax leading rates</a></li></ul>
+  <a href="https://proceedings.mlr.press/v247/zhang24a.html">Primary source ↗</a>
+</article>
+<article class="wiki-paper-card" data-wiki-paper>
+  <p class="panel-kicker">Primary paper · 1 theorem surface</p>
+  <h3>Unified Framework of Distributional Regret in Multi-Armed Bandits and Reinforcement Learning</h3>
+  <p>Lee and Oh · 2026</p>
+  <h4>Theorem surfaces</h4>
+  <ul class="wiki-theorem-surface-list"><li class="wiki-theorem-surface" data-wiki-theorem-surface><span>Upper</span><strong>EQO+ distributional-regret upper bound</strong><small>Theorem 4 · <code>distributional-high-probability-regret</code></small></li></ul>
+  <h4>Indexed cases</h4>
+  <ul class="wiki-paper-case-list"><li><a class="wiki-paper-case-link" data-wiki-paper-case-link href="../cases/distributional-high-probability-regret/index.html">Distributional high-probability regret under an expected-regret constraint</a></li></ul>
+  <a href="https://proceedings.mlr.press/v336/lee26b.html">Primary source ↗</a>
+</article></div></section></main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Overview</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#papers">Overview</a><a data-toc-link href="#audit-boundary">Audit boundary</a><a data-toc-link href="#paper-index">Paper index</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.TsallisOracleRestartGeneratedTrajectory · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.TsallisOracleRestartGeneratedTrajectory · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.TsallisOracleRestartGeneratedTrajectory · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Tsallis-FTRL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Tsallis<wbr>Oracle<wbr>Restart<wbr>Generated<wbr>Trajectory</h1>
+  <p class="lede">This module constructs the restarted selector and trajectory kernel needed by the oracle-restart dynamic-regret route. It proves the conditional action law of that generated process. Epoch-local regret transport remains downstream.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html"><code>BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/tsallis/index.html">8. Tsallis-FTRL, corruption, and nonstationarity</a></dd></div>
+    <div><dt>Declarations</dt><dd>22</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-tsallisscheduledscorealignment/index.html"><code>BanditRLProof.TsallisScheduledScoreAlignment</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-tsallisoraclerestartpredictableregret/index.html"><code>BanditRLProof.TsallisOracleRestartPredictableRegret</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-cf75e3fb4479">
+  <summary>
+    <span class="kind">structure</span>
+    <code>BanditRLProof.Tsallis.OracleRestartSchedule</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Start time of the current epoch, with either continuation or a fresh
+restart at every successor time.</p>
+    <pre class="lean-code"><code><span class="kw">structure</span> OracleRestartSchedule <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L20">Source line 20</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c12e13e75952">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.oracleNeverRestartSchedule</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">One epoch containing the whole trajectory.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> oracleNeverRestartSchedule : OracleRestartSchedule <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L27">Source line 27</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3668c632a97a">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.oracleRestartEveryRoundSchedule</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A fresh one-round epoch at every actual time.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> oracleRestartEveryRoundSchedule : OracleRestartSchedule <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L34">Source line 34</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e152b53177bd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.OracleRestartSchedule.start_succ_le_of_ne</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Away from a restart boundary, the current epoch starts no later than the
+last observed round.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> OracleRestartSchedule.start_succ_le_of_ne (schedule : OracleRestartSchedule) (n : Nat) (hboundary : schedule.start (n + <span class="num">1</span>) ≠ n + <span class="num">1</span>) : schedule.start (n + <span class="num">1</span>) &lt;= n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L42">Source line 42</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8a136cdc3259">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.oracleRestartLocalPairHistory</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Reindex the inclusive global history segment `start..n` as a local history
+through `n-start`.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> oracleRestartLocalPairHistory {Action Reward : Type*} (start n : Nat) (hstart : start &lt;= n) (history : History.FinitePairHistory Action Reward n) : History.FinitePairHistory Action Reward (n - start)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L51">Source line 51</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bb7fd4ea06da">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.oracleRestartLocalPairHistory_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> oracleRestartLocalPairHistory_zero {Action Reward : Type*} (n : Nat) (history : History.FinitePairHistory Action Reward n) : oracleRestartLocalPairHistory <span class="num">0</span> n (Nat.zero_le n) history = history</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L61">Source line 61</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7bec124263aa">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.measurable_oracleRestartLocalPairHistory</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Epoch-suffix reindexing is measurable coordinatewise.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_oracleRestartLocalPairHistory {Action Reward : Type*} [MeasurableSpace Action] [MeasurableSpace Reward] (start n : Nat) (hstart : start &lt;= n) : Measurable (oracleRestartLocalPairHistory (Action := Action) (Reward := Reward) start n hstart)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L69">Source line 69</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a3810364a540">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisHistoryDistribution</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Restarted successor action distribution. Boundary times use a fresh
+initial law; continuation times use only the current epoch&#x27;s local suffix.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledOracleRestartHalfTsallisHistoryDistribution {Action : Type u} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (n : Nat) : History.FinitePairHistory Action Real n -&gt; Action -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L86">Source line 86</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b85bdc92f196">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisHistoryDistribution_of_boundary</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledOracleRestartHalfTsallisHistoryDistribution_of_boundary {Action : Type u} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (n : Nat) (hboundary : schedule.start (n + <span class="num">1</span>) = n + <span class="num">1</span>) (history : History.FinitePairHistory Action Real n) : sampledOracleRestartHalfTsallisHistoryDistribution arms harms eta schedule n history = initialHalfTsallisDistribution arms harms (eta <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L102">Source line 102</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d1e1ead05fb7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisHistoryDistribution_of_continuation</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledOracleRestartHalfTsallisHistoryDistribution_of_continuation {Action : Type u} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (n : Nat) (hboundary : schedule.start (n + <span class="num">1</span>) ≠ n + <span class="num">1</span>) (history : History.FinitePairHistory Action Real n) : sampledOracleRestartHalfTsallisHistoryDistribution arms harms eta schedule n history = sampledScheduledHalfTsallisHistoryDistribution arms harms eta (n - schedule.start (n + <span class="num">1</span>)) (oracleRestartLocalPairHistory (schedule.start (n + <span class="num">1</span>)) n (schedule.start_succ_le_of_ne n hboundary) history)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L114">Source line 114</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-50f2bfa9f22f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisHistoryDistribution_pos</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every arm in the finite action set keeps strictly positive probability
+under either the boundary reset or the continued local scheduled policy.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledOracleRestartHalfTsallisHistoryDistribution_pos {Action : Type u} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (n : Nat) (history : History.FinitePairHistory Action Real n) (candidate : Action) (hcandidate : candidate ∈ arms) : <span class="num">0</span> &lt; sampledOracleRestartHalfTsallisHistoryDistribution arms harms eta schedule n history candidate</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L131">Source line 131</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-521a2e54c366">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisHistoryDistribution_neverRestart</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledOracleRestartHalfTsallisHistoryDistribution_neverRestart {Action : Type u} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (n : Nat) (history : History.FinitePairHistory Action Real n) : sampledOracleRestartHalfTsallisHistoryDistribution arms harms eta oracleNeverRestartSchedule n history = sampledScheduledHalfTsallisHistoryDistribution arms harms eta n history</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L166">Source line 166</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1d2d972c9c8a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisHistoryDistribution_restartEveryRound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledOracleRestartHalfTsallisHistoryDistribution_restartEveryRound {Action : Type u} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (n : Nat) (history : History.FinitePairHistory Action Real n) : sampledOracleRestartHalfTsallisHistoryDistribution arms harms eta oracleRestartEveryRoundSchedule n history = initialHalfTsallisDistribution arms harms (eta <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L179">Source line 179</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a74f87220f7c">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisHistoryDistributionSource</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Measurable finite-action source for every restarted successor policy.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledOracleRestartHalfTsallisHistoryDistributionSource {Action : Type u} [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (n : Nat) : Exp3.MeasurableFiniteActionDistribution arms (sampledOracleRestartHalfTsallisHistoryDistribution arms harms eta schedule n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L190">Source line 190</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-86066d62a6eb">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisHistoryAlgorithm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Stochastic finite-history algorithm whose score resets at every scheduled
+epoch boundary.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledOracleRestartHalfTsallisHistoryAlgorithm {Action : Type u} [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) : Thompson.HistoryAlgorithm Action Real <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L232">Source line 232</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5210f3601925">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisHistoryAlgorithm_policy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledOracleRestartHalfTsallisHistoryAlgorithm_policy {Action : Type u} [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (n : Nat) : (sampledOracleRestartHalfTsallisHistoryAlgorithm arms harms eta schedule).policy n = Exp3.finiteActionKernel arms (sampledOracleRestartHalfTsallisHistoryDistribution arms harms eta schedule n) (sampledOracleRestartHalfTsallisHistoryDistributionSource arms harms eta schedule n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L259">Source line 259</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c4b9284ba076">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisProbabilityAtTime</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Restarted sampling probabilities at actual trajectory times.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledOracleRestartHalfTsallisProbabilityAtTime {Env : Type v} {Action : Type u} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) : Nat -&gt; Env × ((k : Nat) -&gt; Action × Real) -&gt; Action -&gt; Real | <span class="num">0</span>, _sample =&gt; initialHalfTsallisDistribution arms harms (eta <span class="num">0</span>) | n + <span class="num">1</span>, sample =&gt; sampledOracleRestartHalfTsallisHistoryDistribution arms harms eta schedule n (Preorder.frestrictLe n sample.<span class="num">2</span>) @[simp] <span class="kw">theorem</span> sampledOracleRestartHalfTsallisProbabilityAtTime_neverRestart {Env : Type v} {Action : Type u} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (t : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) : sampledOracleRestartHalfTsallisProbabilityAtTime arms harms eta oracleNeverRestartSchedule t sample = sampledScheduledHalfTsallisProbabilityAtTime arms harms eta t sample</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L275">Source line 275</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1879c3e0a9c7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisProbabilityAtTime_neverRestart</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledOracleRestartHalfTsallisProbabilityAtTime_neverRestart {Env : Type v} {Action : Type u} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (t : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) : sampledOracleRestartHalfTsallisProbabilityAtTime arms harms eta oracleNeverRestartSchedule t sample = sampledScheduledHalfTsallisProbabilityAtTime arms harms eta t sample</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L286">Source line 286</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-16436f67cdef">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisProbabilityAtTime_restartEveryRound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledOracleRestartHalfTsallisProbabilityAtTime_restartEveryRound {Env : Type v} {Action : Type u} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (t : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) : sampledOracleRestartHalfTsallisProbabilityAtTime arms harms eta oracleRestartEveryRoundSchedule t sample = initialHalfTsallisDistribution arms harms (eta <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L301">Source line 301</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e3f9bf2371a1">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisTrajectoryKernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Full environment-indexed trajectory generated by the restarted policy.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledOracleRestartHalfTsallisTrajectoryKernel {Env : Type v} {Action : Type u} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] [Nonempty Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) : Kernel Env ((n : Nat) -&gt; Action × Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L314">Source line 314</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ce77cecf9528">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisTrajectoryMeasure_condDistrib_action</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The generated successor action has the restarted finite-action law
+conditional on the complete visible global history.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledOracleRestartHalfTsallisTrajectoryMeasure_condDistrib_action {Env : Type v} {Action : Type u} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) (n : Nat) : condDistrib (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; (sample.<span class="num">2</span> (n + <span class="num">1</span>)).<span class="num">1</span>) (<span class="kw">fun</span> sample =&gt; Preorder.frestrictLe n sample.<span class="num">2</span>) (prior ⊗ₘ sampledOracleRestartHalfTsallisTrajectoryKernel arms harms eta schedule environment) =ᵐ[ (prior ⊗ₘ sampledOracleRestartHalfTsallisTrajectoryKernel arms harms eta schedule environment).map (<span class="kw">fun</span> sample =&gt; Preorder.frestrictLe n sample.<span class="num">2</span>)] Exp3.finiteActionKernel arms (sampledOracleRestartHalfTsallisHistoryDistribution arms harms eta schedule n) (sampledOracleRestartHalfTsallisHistoryDistributionSource arms harms eta schedule n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L343">Source line 343</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2ae59016d64f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisTrajectoryMeasure_condDistrib_action_given_environment</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The restarted successor action law after retaining both the environment
+and the visible global prefix. This is the conditioning surface needed by
+predictable-loss first-moment transport.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledOracleRestartHalfTsallisTrajectoryMeasure_condDistrib_action_given_environment {Env : Type v} {Action : Type u} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) (n : Nat) : condDistrib (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; (sample.<span class="num">2</span> (n + <span class="num">1</span>)).<span class="num">1</span>) (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; (sample.<span class="num">1</span>, Preorder.frestrictLe n sample.<span class="num">2</span>)) (prior ⊗ₘ sampledOracleRestartHalfTsallisTrajectoryKernel arms harms eta schedule environment) =ᵐ[ (prior ⊗ₘ sampledOracleRestartHalfTsallisTrajectoryKernel arms harms eta schedule environment).map (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; (sample.<span class="num">1</span>, Preorder.frestrictLe n sample.<span class="num">2</span>))] (Exp3.finiteActionKernel arms (sampledOracleRestartHalfTsallisHistoryDistribution arms harms eta schedule n) (sampledOracleRestartHalfTsallisHistoryDistributionSource arms harms eta schedule n)).comap (<span class="kw">fun</span> input : Env × History.FinitePairHistory Action Real n =&gt; input.<span class="num">2</span>) (measurable_snd : Measurable (<span class="kw">fun</span> input : Env × History.FinitePairHistory Action Real n =&gt; input.<span class="num">2</span>))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartGeneratedTrajectory.lean.html#L378">Source line 378</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

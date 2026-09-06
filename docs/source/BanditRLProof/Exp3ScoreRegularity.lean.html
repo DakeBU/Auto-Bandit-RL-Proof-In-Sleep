@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Exp3ScoreRegularity.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Exp3ScoreRegularity.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Exp3ScoreRegularity.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Exp3ScoreRegularity.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Exp3ActionProcess</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Regularity of one-round EXP3 importance-weighted scores</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module discharges the measurable-score and integrability premises of the</span>
+<span id="L7">7 generated one-round EXP3 action process.  A uniform positive probability floor</span>
+<span id="L8">8 and measurable losses in `[0, 1]` give explicit pointwise bounds for the</span>
+<span id="L9">9 armwise, mixed first-moment, and mixed second-moment scores.</span>
+<span id="L10">10 -/</span>
+<span id="L11">11 </span>
+<span id="L12">12 namespace BanditRLProof</span>
+<span id="L13">13 namespace Exp3</span>
+<span id="L14">14 </span>
+<span id="L15">15 open MeasureTheory</span>
+<span id="L16">16 </span>
+<span id="L17">17 universe u v</span>
+<span id="L18">18 </span>
+<span id="L19">19 /-- Measurable bounded losses and a uniform exploration floor on the finite support. -/</span>
+<span id="L20">20 structure BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L21">21     {History : Type u} {Action : Type v}</span>
+<span id="L22">22     [MeasurableSpace History]</span>
+<span id="L23">23     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L24">24     (epsilon : Real) : Prop where</span>
+<span id="L25">25   epsilon_pos : 0 &lt; epsilon</span>
+<span id="L26">26   prob_floor : forall history action, action ∈ arms -&gt;</span>
+<span id="L27">27     epsilon &lt;= prob history action</span>
+<span id="L28">28   measurable_loss : forall action, action ∈ arms -&gt;</span>
+<span id="L29">29     Measurable (fun history =&gt; loss history action)</span>
+<span id="L30">30   loss_mem_Icc : forall history action, action ∈ arms -&gt;</span>
+<span id="L31">31     loss history action ∈ Set.Icc (0 : Real) 1</span>
+<span id="L32">32 </span>
+<span id="L33">33 theorem BoundedMeasurableLossWithProbabilityFloor.prob_pos</span>
+<span id="L34">34     {History : Type u} {Action : Type v}</span>
+<span id="L35">35     [MeasurableSpace History]</span>
+<span id="L36">36     {arms : Finset Action} {prob loss : History -&gt; Action -&gt; Real}</span>
+<span id="L37">37     {epsilon : Real}</span>
+<span id="L38">38     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L39">39       arms prob loss epsilon)</span>
+<span id="L40">40     (history : History) (action : Action) (haction : action ∈ arms) :</span>
+<span id="L41">41     0 &lt; prob history action :=</span>
+<span id="L42">42   regularity.epsilon_pos.trans_le</span>
+<span id="L43">43     (regularity.prob_floor history action haction)</span>
+<span id="L44">44 </span>
+<span id="L45">45 /-- A fixed-arm importance-weighted score is measurable on history/action pairs. -/</span>
+<span id="L46">46 theorem measurable_importanceWeightedLoss_score</span>
+<span id="L47">47     {History : Type u} {Action : Type v}</span>
+<span id="L48">48     [MeasurableSpace History] [MeasurableSpace Action]</span>
+<span id="L49">49     [MeasurableSingletonClass Action] [DecidableEq Action]</span>
+<span id="L50">50     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L51">51     (source : MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L52">52     (epsilon : Real)</span>
+<span id="L53">53     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L54">54       arms prob loss epsilon)</span>
+<span id="L55">55     (action : Action) (haction : action ∈ arms) :</span>
+<span id="L56">56     Measurable (fun sample : History × Action =&gt;</span>
+<span id="L57">57       importanceWeightedLoss (prob sample.1) (loss sample.1)</span>
+<span id="L58">58         sample.2 action) := by</span>
+<span id="L59">59   unfold importanceWeightedLoss</span>
+<span id="L60">60   refine Measurable.ite ?_ ?_ measurable_const</span>
+<span id="L61">61   · simpa only [Set.mem_setOf_eq] using</span>
+<span id="L62">62       (measurable_snd (measurableSet_singleton action))</span>
+<span id="L63">63   · exact</span>
+<span id="L64">64       ((regularity.measurable_loss action haction).comp measurable_fst).div</span>
+<span id="L65">65         ((source.measurable_prob action haction).comp measurable_fst)</span>
+<span id="L66">66 </span>
+<span id="L67">67 /-- The probability-mixed first-moment score is measurable. -/</span>
+<span id="L68">68 theorem measurable_mixedImportanceWeightedLoss_score</span>
+<span id="L69">69     {History : Type u} {Action : Type v}</span>
+<span id="L70">70     [MeasurableSpace History] [MeasurableSpace Action]</span>
+<span id="L71">71     [MeasurableSingletonClass Action] [DecidableEq Action]</span>
+<span id="L72">72     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L73">73     (source : MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L74">74     (epsilon : Real)</span>
+<span id="L75">75     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L76">76       arms prob loss epsilon) :</span>
+<span id="L77">77     Measurable (fun sample : History × Action =&gt;</span>
+<span id="L78">78       mixedImportanceWeightedLoss arms (prob sample.1) (loss sample.1)</span>
+<span id="L79">79         sample.2) := by</span>
+<span id="L80">80   unfold mixedImportanceWeightedLoss</span>
+<span id="L81">81   refine Finset.measurable_sum arms fun action haction =&gt; ?_</span>
+<span id="L82">82   exact ((source.measurable_prob action haction).comp measurable_fst).mul</span>
+<span id="L83">83     (measurable_importanceWeightedLoss_score arms prob loss source epsilon</span>
+<span id="L84">84       regularity action haction)</span>
+<span id="L85">85 </span>
+<span id="L86">86 /-- A score mixed by a second measurable finite distribution is measurable. -/</span>
+<span id="L87">87 theorem measurable_weightedImportanceWeightedLoss_score</span>
+<span id="L88">88     {History : Type u} {Action : Type v}</span>
+<span id="L89">89     [MeasurableSpace History] [MeasurableSpace Action]</span>
+<span id="L90">90     [MeasurableSingletonClass Action] [DecidableEq Action]</span>
+<span id="L91">91     (arms : Finset Action) (prob weight loss : History -&gt; Action -&gt; Real)</span>
+<span id="L92">92     (probSource : MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L93">93     (weightSource : MeasurableFiniteActionDistribution arms weight)</span>
+<span id="L94">94     (epsilon : Real)</span>
+<span id="L95">95     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L96">96       arms prob loss epsilon) :</span>
+<span id="L97">97     Measurable (fun sample : History × Action =&gt;</span>
+<span id="L98">98       weightedImportanceWeightedLoss arms (prob sample.1)</span>
+<span id="L99">99         (weight sample.1) (loss sample.1) sample.2) := by</span>
+<span id="L100">100   unfold weightedImportanceWeightedLoss</span>
+<span id="L101">101   refine Finset.measurable_sum arms fun action haction =&gt; ?_</span>
+<span id="L102">102   exact ((weightSource.measurable_prob action haction).comp measurable_fst).mul</span>
+<span id="L103">103     (measurable_importanceWeightedLoss_score arms prob loss probSource epsilon</span>
+<span id="L104">104       regularity action haction)</span>
+<span id="L105">105 </span>
+<span id="L106">106 /-- The probability-mixed second-moment score is measurable. -/</span>
+<span id="L107">107 theorem measurable_mixedSquaredImportanceWeightedLoss_score</span>
+<span id="L108">108     {History : Type u} {Action : Type v}</span>
+<span id="L109">109     [MeasurableSpace History] [MeasurableSpace Action]</span>
+<span id="L110">110     [MeasurableSingletonClass Action] [DecidableEq Action]</span>
+<span id="L111">111     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L112">112     (source : MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L113">113     (epsilon : Real)</span>
+<span id="L114">114     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L115">115       arms prob loss epsilon) :</span>
+<span id="L116">116     Measurable (fun sample : History × Action =&gt;</span>
+<span id="L117">117       mixedSquaredImportanceWeightedLoss arms (prob sample.1)</span>
+<span id="L118">118         (loss sample.1) sample.2) := by</span>
+<span id="L119">119   unfold mixedSquaredImportanceWeightedLoss</span>
+<span id="L120">120   refine Finset.measurable_sum arms fun action haction =&gt; ?_</span>
+<span id="L121">121   exact ((source.measurable_prob action haction).comp measurable_fst).mul</span>
+<span id="L122">122     ((measurable_importanceWeightedLoss_score arms prob loss source epsilon</span>
+<span id="L123">123       regularity action haction).pow_const 2)</span>
+<span id="L124">124 </span>
+<span id="L125">125 /-- A fixed-arm importance-weighted score is bounded by the reciprocal floor. -/</span>
+<span id="L126">126 theorem norm_importanceWeightedLoss_score_le_inv_floor</span>
+<span id="L127">127     {History : Type u} {Action : Type v}</span>
+<span id="L128">128     [MeasurableSpace History] [DecidableEq Action]</span>
+<span id="L129">129     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L130">130     (epsilon : Real)</span>
+<span id="L131">131     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L132">132       arms prob loss epsilon)</span>
+<span id="L133">133     (history : History) (chosen action : Action) (haction : action ∈ arms) :</span>
+<span id="L134">134     ‖importanceWeightedLoss (prob history) (loss history) chosen action‖ &lt;=</span>
+<span id="L135">135       1 / epsilon := by</span>
+<span id="L136">136   have hprob_pos := regularity.prob_pos history action haction</span>
+<span id="L137">137   have hloss := regularity.loss_mem_Icc history action haction</span>
+<span id="L138">138   unfold importanceWeightedLoss</span>
+<span id="L139">139   split_ifs</span>
+<span id="L140">140   · rw [Real.norm_eq_abs, abs_of_nonneg (div_nonneg hloss.1 hprob_pos.le)]</span>
+<span id="L141">141     exact (div_le_div_of_nonneg_right hloss.2 hprob_pos.le).trans</span>
+<span id="L142">142       (one_div_le_one_div_of_le regularity.epsilon_pos</span>
+<span id="L143">143         (regularity.prob_floor history action haction))</span>
+<span id="L144">144   · simpa only [norm_zero] using</span>
+<span id="L145">145       (one_div_pos.mpr regularity.epsilon_pos).le</span>
+<span id="L146">146 </span>
+<span id="L147">147 /-- The mixed first-moment score is bounded by the reciprocal floor. -/</span>
+<span id="L148">148 theorem norm_mixedImportanceWeightedLoss_score_le_inv_floor</span>
+<span id="L149">149     {History : Type u} {Action : Type v}</span>
+<span id="L150">150     [MeasurableSpace History] [DecidableEq Action]</span>
+<span id="L151">151     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L152">152     (source : MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L153">153     (epsilon : Real)</span>
+<span id="L154">154     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L155">155       arms prob loss epsilon)</span>
+<span id="L156">156     (history : History) (chosen : Action) :</span>
+<span id="L157">157     ‖mixedImportanceWeightedLoss arms (prob history) (loss history) chosen‖ &lt;=</span>
+<span id="L158">158       1 / epsilon := by</span>
+<span id="L159">159   rw [Real.norm_eq_abs]</span>
+<span id="L160">160   unfold mixedImportanceWeightedLoss</span>
+<span id="L161">161   calc</span>
+<span id="L162">162     |arms.sum (fun action =&gt;</span>
+<span id="L163">163         prob history action *</span>
+<span id="L164">164           importanceWeightedLoss (prob history) (loss history) chosen action)| &lt;=</span>
+<span id="L165">165         arms.sum (fun action =&gt;</span>
+<span id="L166">166           |prob history action *</span>
+<span id="L167">167             importanceWeightedLoss (prob history) (loss history) chosen action|) :=</span>
+<span id="L168">168       Finset.abs_sum_le_sum_abs _ arms</span>
+<span id="L169">169     _ &lt;= arms.sum (fun action =&gt; prob history action * (1 / epsilon)) := by</span>
+<span id="L170">170       apply Finset.sum_le_sum</span>
+<span id="L171">171       intro action haction</span>
+<span id="L172">172       have hprob_nonneg := (source.distribution history).nonneg action haction</span>
+<span id="L173">173       have hiw_bound :=</span>
+<span id="L174">174         norm_importanceWeightedLoss_score_le_inv_floor arms prob loss epsilon</span>
+<span id="L175">175           regularity history chosen action haction</span>
+<span id="L176">176       rw [Real.norm_eq_abs] at hiw_bound</span>
+<span id="L177">177       rw [abs_mul, abs_of_nonneg hprob_nonneg]</span>
+<span id="L178">178       exact mul_le_mul_of_nonneg_left hiw_bound hprob_nonneg</span>
+<span id="L179">179     _ = arms.sum (prob history) * (1 / epsilon) := by</span>
+<span id="L180">180       rw [Finset.sum_mul]</span>
+<span id="L181">181     _ = 1 / epsilon := by</span>
+<span id="L182">182       rw [(source.distribution history).sum_eq_one, one_mul]</span>
+<span id="L183">183 </span>
+<span id="L184">184 /-- Mixing by any finite probability vector preserves the reciprocal-floor</span>
+<span id="L185">185 bound for the importance-weighted score. -/</span>
+<span id="L186">186 theorem norm_weightedImportanceWeightedLoss_score_le_inv_floor</span>
+<span id="L187">187     {History : Type u} {Action : Type v}</span>
+<span id="L188">188     [MeasurableSpace History] [DecidableEq Action]</span>
+<span id="L189">189     (arms : Finset Action) (prob weight loss : History -&gt; Action -&gt; Real)</span>
+<span id="L190">190     (weightSource : MeasurableFiniteActionDistribution arms weight)</span>
+<span id="L191">191     (epsilon : Real)</span>
+<span id="L192">192     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L193">193       arms prob loss epsilon)</span>
+<span id="L194">194     (history : History) (chosen : Action) :</span>
+<span id="L195">195     ‖weightedImportanceWeightedLoss arms (prob history) (weight history)</span>
+<span id="L196">196         (loss history) chosen‖ &lt;= 1 / epsilon := by</span>
+<span id="L197">197   rw [Real.norm_eq_abs]</span>
+<span id="L198">198   unfold weightedImportanceWeightedLoss</span>
+<span id="L199">199   calc</span>
+<span id="L200">200     |arms.sum (fun action =&gt;</span>
+<span id="L201">201         weight history action *</span>
+<span id="L202">202           importanceWeightedLoss (prob history) (loss history) chosen action)| &lt;=</span>
+<span id="L203">203         arms.sum (fun action =&gt;</span>
+<span id="L204">204           |weight history action *</span>
+<span id="L205">205             importanceWeightedLoss (prob history) (loss history) chosen action|) :=</span>
+<span id="L206">206       Finset.abs_sum_le_sum_abs _ arms</span>
+<span id="L207">207     _ &lt;= arms.sum (fun action =&gt; weight history action * (1 / epsilon)) := by</span>
+<span id="L208">208       apply Finset.sum_le_sum</span>
+<span id="L209">209       intro action haction</span>
+<span id="L210">210       have hweight_nonneg :=</span>
+<span id="L211">211         (weightSource.distribution history).nonneg action haction</span>
+<span id="L212">212       have hiw_bound :=</span>
+<span id="L213">213         norm_importanceWeightedLoss_score_le_inv_floor arms prob loss epsilon</span>
+<span id="L214">214           regularity history chosen action haction</span>
+<span id="L215">215       rw [Real.norm_eq_abs] at hiw_bound</span>
+<span id="L216">216       rw [abs_mul, abs_of_nonneg hweight_nonneg]</span>
+<span id="L217">217       exact mul_le_mul_of_nonneg_left hiw_bound hweight_nonneg</span>
+<span id="L218">218     _ = arms.sum (weight history) * (1 / epsilon) := by</span>
+<span id="L219">219       rw [Finset.sum_mul]</span>
+<span id="L220">220     _ = 1 / epsilon := by</span>
+<span id="L221">221       rw [(weightSource.distribution history).sum_eq_one, one_mul]</span>
+<span id="L222">222 </span>
+<span id="L223">223 /-- The mixed second-moment score is bounded by the square reciprocal floor. -/</span>
+<span id="L224">224 theorem norm_mixedSquaredImportanceWeightedLoss_score_le_inv_floor_sq</span>
+<span id="L225">225     {History : Type u} {Action : Type v}</span>
+<span id="L226">226     [MeasurableSpace History] [DecidableEq Action]</span>
+<span id="L227">227     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L228">228     (source : MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L229">229     (epsilon : Real)</span>
+<span id="L230">230     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L231">231       arms prob loss epsilon)</span>
+<span id="L232">232     (history : History) (chosen : Action) :</span>
+<span id="L233">233     ‖mixedSquaredImportanceWeightedLoss arms (prob history) (loss history)</span>
+<span id="L234">234         chosen‖ &lt;= (1 / epsilon) ^ 2 := by</span>
+<span id="L235">235   have hbound_nonneg : 0 &lt;= 1 / epsilon :=</span>
+<span id="L236">236     (one_div_pos.mpr regularity.epsilon_pos).le</span>
+<span id="L237">237   rw [Real.norm_eq_abs]</span>
+<span id="L238">238   unfold mixedSquaredImportanceWeightedLoss</span>
+<span id="L239">239   rw [abs_of_nonneg]</span>
+<span id="L240">240   · calc</span>
+<span id="L241">241       arms.sum (fun action =&gt;</span>
+<span id="L242">242           prob history action *</span>
+<span id="L243">243             (importanceWeightedLoss (prob history) (loss history)</span>
+<span id="L244">244               chosen action) ^ 2) &lt;=</span>
+<span id="L245">245           arms.sum (fun action =&gt; prob history action * (1 / epsilon) ^ 2) := by</span>
+<span id="L246">246         apply Finset.sum_le_sum</span>
+<span id="L247">247         intro action haction</span>
+<span id="L248">248         have hprob_nonneg := (source.distribution history).nonneg action haction</span>
+<span id="L249">249         have hiw_nonneg := importanceWeightedLoss_nonneg (chosen := chosen)</span>
+<span id="L250">250           hprob_nonneg (regularity.loss_mem_Icc history action haction).1</span>
+<span id="L251">251         have hiw_le :</span>
+<span id="L252">252             importanceWeightedLoss (prob history) (loss history) chosen action &lt;=</span>
+<span id="L253">253               1 / epsilon := by</span>
+<span id="L254">254           simpa [Real.norm_eq_abs, abs_of_nonneg hiw_nonneg] using</span>
+<span id="L255">255             norm_importanceWeightedLoss_score_le_inv_floor arms prob loss</span>
+<span id="L256">256               epsilon regularity history chosen action haction</span>
+<span id="L257">257         exact mul_le_mul_of_nonneg_left</span>
+<span id="L258">258           ((sq_le_sq₀ hiw_nonneg hbound_nonneg).2 hiw_le) hprob_nonneg</span>
+<span id="L259">259       _ = arms.sum (prob history) * (1 / epsilon) ^ 2 := by</span>
+<span id="L260">260         rw [Finset.sum_mul]</span>
+<span id="L261">261       _ = (1 / epsilon) ^ 2 := by</span>
+<span id="L262">262         rw [(source.distribution history).sum_eq_one, one_mul]</span>
+<span id="L263">263   · exact Finset.sum_nonneg fun action haction =&gt;</span>
+<span id="L264">264       mul_nonneg ((source.distribution history).nonneg action haction)</span>
+<span id="L265">265         (sq_nonneg _)</span>
+<span id="L266">266 </span>
+<span id="L267">267 /-- The armwise score is integrable under the generated history/action law. -/</span>
+<span id="L268">268 theorem integrable_importanceWeightedLoss_score</span>
+<span id="L269">269     {History : Type u} {Action : Type v}</span>
+<span id="L270">270     [MeasurableSpace History] [MeasurableSpace Action]</span>
+<span id="L271">271     [MeasurableSingletonClass Action] [DecidableEq Action]</span>
+<span id="L272">272     (historyMu : Measure History) [IsFiniteMeasure historyMu]</span>
+<span id="L273">273     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L274">274     (source : MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L275">275     (epsilon : Real)</span>
+<span id="L276">276     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L277">277       arms prob loss epsilon)</span>
+<span id="L278">278     (action : Action) (haction : action ∈ arms) :</span>
+<span id="L279">279     Integrable (fun sample : History × Action =&gt;</span>
+<span id="L280">280       importanceWeightedLoss (prob sample.1) (loss sample.1)</span>
+<span id="L281">281         sample.2 action)</span>
+<span id="L282">282       (Measure.compProd historyMu (finiteActionKernel arms prob source)) := by</span>
+<span id="L283">283   refine Integrable.of_bound</span>
+<span id="L284">284     (measurable_importanceWeightedLoss_score arms prob loss source epsilon</span>
+<span id="L285">285       regularity action haction).aestronglyMeasurable</span>
+<span id="L286">286     (1 / epsilon) ?_</span>
+<span id="L287">287   exact Filter.Eventually.of_forall fun sample =&gt;</span>
+<span id="L288">288     norm_importanceWeightedLoss_score_le_inv_floor arms prob loss epsilon</span>
+<span id="L289">289       regularity sample.1 sample.2 action haction</span>
+<span id="L290">290 </span>
+<span id="L291">291 /-- The mixed first-moment score is integrable under the generated law. -/</span>
+<span id="L292">292 theorem integrable_mixedImportanceWeightedLoss_score</span>
+<span id="L293">293     {History : Type u} {Action : Type v}</span>
+<span id="L294">294     [MeasurableSpace History] [MeasurableSpace Action]</span>
+<span id="L295">295     [MeasurableSingletonClass Action] [DecidableEq Action]</span>
+<span id="L296">296     (historyMu : Measure History) [IsFiniteMeasure historyMu]</span>
+<span id="L297">297     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L298">298     (source : MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L299">299     (epsilon : Real)</span>
+<span id="L300">300     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L301">301       arms prob loss epsilon) :</span>
+<span id="L302">302     Integrable (fun sample : History × Action =&gt;</span>
+<span id="L303">303       mixedImportanceWeightedLoss arms (prob sample.1) (loss sample.1)</span>
+<span id="L304">304         sample.2)</span>
+<span id="L305">305       (Measure.compProd historyMu (finiteActionKernel arms prob source)) := by</span>
+<span id="L306">306   refine Integrable.of_bound</span>
+<span id="L307">307     (measurable_mixedImportanceWeightedLoss_score arms prob loss source epsilon</span>
+<span id="L308">308       regularity).aestronglyMeasurable</span>
+<span id="L309">309     (1 / epsilon) ?_</span>
+<span id="L310">310   exact Filter.Eventually.of_forall fun sample =&gt;</span>
+<span id="L311">311     norm_mixedImportanceWeightedLoss_score_le_inv_floor arms prob loss source</span>
+<span id="L312">312       epsilon regularity sample.1 sample.2</span>
+<span id="L313">313 </span>
+<span id="L314">314 /-- A predictably weighted importance-weighted score is integrable under the</span>
+<span id="L315">315 sampling law when both finite distributions are measurable. -/</span>
+<span id="L316">316 theorem integrable_weightedImportanceWeightedLoss_score</span>
+<span id="L317">317     {History : Type u} {Action : Type v}</span>
+<span id="L318">318     [MeasurableSpace History] [MeasurableSpace Action]</span>
+<span id="L319">319     [MeasurableSingletonClass Action] [DecidableEq Action]</span>
+<span id="L320">320     (historyMu : Measure History) [IsFiniteMeasure historyMu]</span>
+<span id="L321">321     (arms : Finset Action) (prob weight loss : History -&gt; Action -&gt; Real)</span>
+<span id="L322">322     (probSource : MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L323">323     (weightSource : MeasurableFiniteActionDistribution arms weight)</span>
+<span id="L324">324     (epsilon : Real)</span>
+<span id="L325">325     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L326">326       arms prob loss epsilon) :</span>
+<span id="L327">327     Integrable (fun sample : History × Action =&gt;</span>
+<span id="L328">328       weightedImportanceWeightedLoss arms (prob sample.1)</span>
+<span id="L329">329         (weight sample.1) (loss sample.1) sample.2)</span>
+<span id="L330">330       (Measure.compProd historyMu (finiteActionKernel arms prob probSource)) := by</span>
+<span id="L331">331   refine Integrable.of_bound</span>
+<span id="L332">332     (measurable_weightedImportanceWeightedLoss_score arms prob weight loss</span>
+<span id="L333">333       probSource weightSource epsilon regularity).aestronglyMeasurable</span>
+<span id="L334">334     (1 / epsilon) ?_</span>
+<span id="L335">335   exact Filter.Eventually.of_forall fun sample =&gt;</span>
+<span id="L336">336     norm_weightedImportanceWeightedLoss_score_le_inv_floor arms prob weight loss</span>
+<span id="L337">337       weightSource epsilon regularity sample.1 sample.2</span>
+<span id="L338">338 </span>
+<span id="L339">339 /-- The mixed second-moment score is integrable under the generated law. -/</span>
+<span id="L340">340 theorem integrable_mixedSquaredImportanceWeightedLoss_score</span>
+<span id="L341">341     {History : Type u} {Action : Type v}</span>
+<span id="L342">342     [MeasurableSpace History] [MeasurableSpace Action]</span>
+<span id="L343">343     [MeasurableSingletonClass Action] [DecidableEq Action]</span>
+<span id="L344">344     (historyMu : Measure History) [IsFiniteMeasure historyMu]</span>
+<span id="L345">345     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L346">346     (source : MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L347">347     (epsilon : Real)</span>
+<span id="L348">348     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L349">349       arms prob loss epsilon) :</span>
+<span id="L350">350     Integrable (fun sample : History × Action =&gt;</span>
+<span id="L351">351       mixedSquaredImportanceWeightedLoss arms (prob sample.1)</span>
+<span id="L352">352         (loss sample.1) sample.2)</span>
+<span id="L353">353       (Measure.compProd historyMu (finiteActionKernel arms prob source)) := by</span>
+<span id="L354">354   refine Integrable.of_bound</span>
+<span id="L355">355     (measurable_mixedSquaredImportanceWeightedLoss_score arms prob loss source</span>
+<span id="L356">356       epsilon regularity).aestronglyMeasurable</span>
+<span id="L357">357     ((1 / epsilon) ^ 2) ?_</span>
+<span id="L358">358   exact Filter.Eventually.of_forall fun sample =&gt;</span>
+<span id="L359">359     norm_mixedSquaredImportanceWeightedLoss_score_le_inv_floor_sq arms prob loss</span>
+<span id="L360">360       source epsilon regularity sample.1 sample.2</span>
+<span id="L361">361 </span>
+<span id="L362">362 /-- A bounded armwise score remains integrable when the sampled action is any</span>
+<span id="L363">363 measurable function on a finite history measure. -/</span>
+<span id="L364">364 theorem integrable_importanceWeightedLoss_selected_of_isFiniteMeasure</span>
+<span id="L365">365     {History : Type u} {Action : Type v}</span>
+<span id="L366">366     [MeasurableSpace History]</span>
+<span id="L367">367     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L368">368     [DecidableEq Action]</span>
+<span id="L369">369     (mu : Measure History) [IsFiniteMeasure mu]</span>
+<span id="L370">370     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L371">371     (source : MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L372">372     (epsilon : Real)</span>
+<span id="L373">373     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L374">374       arms prob loss epsilon)</span>
+<span id="L375">375     (chosen : History -&gt; Action) (hchosen : Measurable chosen)</span>
+<span id="L376">376     (comparator : Action) (hcomparator : comparator ∈ arms) :</span>
+<span id="L377">377     Integrable (fun history =&gt;</span>
+<span id="L378">378       importanceWeightedLoss (prob history) (loss history)</span>
+<span id="L379">379         (chosen history) comparator) mu := by</span>
+<span id="L380">380   refine Integrable.of_bound</span>
+<span id="L381">381     ((measurable_importanceWeightedLoss_score arms prob loss source epsilon</span>
+<span id="L382">382       regularity comparator hcomparator).comp</span>
+<span id="L383">383         (measurable_id.prodMk hchosen)).aestronglyMeasurable</span>
+<span id="L384">384     (1 / epsilon) ?_</span>
+<span id="L385">385   exact Filter.Eventually.of_forall fun history =&gt;</span>
+<span id="L386">386     norm_importanceWeightedLoss_score_le_inv_floor arms prob loss epsilon</span>
+<span id="L387">387       regularity history (chosen history) comparator hcomparator</span>
+<span id="L388">388 </span>
+<span id="L389">389 /-- A predictably weighted score remains integrable when the sampled action is</span>
+<span id="L390">390 an arbitrary measurable function on a finite measure. -/</span>
+<span id="L391">391 theorem integrable_weightedImportanceWeightedLoss_selected_of_isFiniteMeasure</span>
+<span id="L392">392     {History : Type u} {Action : Type v}</span>
+<span id="L393">393     [MeasurableSpace History]</span>
+<span id="L394">394     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L395">395     [DecidableEq Action]</span>
+<span id="L396">396     (mu : Measure History) [IsFiniteMeasure mu]</span>
+<span id="L397">397     (arms : Finset Action) (prob weight loss : History -&gt; Action -&gt; Real)</span>
+<span id="L398">398     (probSource : MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L399">399     (weightSource : MeasurableFiniteActionDistribution arms weight)</span>
+<span id="L400">400     (epsilon : Real)</span>
+<span id="L401">401     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L402">402       arms prob loss epsilon)</span>
+<span id="L403">403     (chosen : History -&gt; Action) (hchosen : Measurable chosen) :</span>
+<span id="L404">404     Integrable (fun history =&gt;</span>
+<span id="L405">405       weightedImportanceWeightedLoss arms (prob history) (weight history)</span>
+<span id="L406">406         (loss history) (chosen history)) mu := by</span>
+<span id="L407">407   refine Integrable.of_bound</span>
+<span id="L408">408     ((measurable_weightedImportanceWeightedLoss_score arms prob weight loss</span>
+<span id="L409">409       probSource weightSource epsilon regularity).comp</span>
+<span id="L410">410         (measurable_id.prodMk hchosen)).aestronglyMeasurable</span>
+<span id="L411">411     (1 / epsilon) ?_</span>
+<span id="L412">412   exact Filter.Eventually.of_forall fun history =&gt;</span>
+<span id="L413">413     norm_weightedImportanceWeightedLoss_score_le_inv_floor arms prob weight loss</span>
+<span id="L414">414       weightSource epsilon regularity history (chosen history)</span>
+<span id="L415">415 </span>
+<span id="L416">416 /-- A bounded mixed second-moment score remains integrable when the sampled</span>
+<span id="L417">417 action is any measurable function on a finite history measure. -/</span>
+<span id="L418">418 theorem integrable_mixedSquaredImportanceWeightedLoss_selected_of_isFiniteMeasure</span>
+<span id="L419">419     {History : Type u} {Action : Type v}</span>
+<span id="L420">420     [MeasurableSpace History]</span>
+<span id="L421">421     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L422">422     [DecidableEq Action]</span>
+<span id="L423">423     (mu : Measure History) [IsFiniteMeasure mu]</span>
+<span id="L424">424     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L425">425     (source : MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L426">426     (epsilon : Real)</span>
+<span id="L427">427     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L428">428       arms prob loss epsilon)</span>
+<span id="L429">429     (chosen : History -&gt; Action) (hchosen : Measurable chosen) :</span>
+<span id="L430">430     Integrable (fun history =&gt;</span>
+<span id="L431">431       mixedSquaredImportanceWeightedLoss arms (prob history) (loss history)</span>
+<span id="L432">432         (chosen history)) mu := by</span>
+<span id="L433">433   refine Integrable.of_bound</span>
+<span id="L434">434     ((measurable_mixedSquaredImportanceWeightedLoss_score arms prob loss source</span>
+<span id="L435">435       epsilon regularity).comp</span>
+<span id="L436">436         (measurable_id.prodMk hchosen)).aestronglyMeasurable</span>
+<span id="L437">437     ((1 / epsilon) ^ 2) ?_</span>
+<span id="L438">438   exact Filter.Eventually.of_forall fun history =&gt;</span>
+<span id="L439">439     norm_mixedSquaredImportanceWeightedLoss_score_le_inv_floor_sq arms prob loss</span>
+<span id="L440">440       source epsilon regularity history (chosen history)</span>
+<span id="L441">441 </span>
+<span id="L442">442 /-- Canonical armwise identity with score regularity inferred from bounded losses. -/</span>
+<span id="L443">443 theorem actionProcess_integral_importanceWeightedLoss_eq_integral_loss_of_regularity</span>
+<span id="L444">444     {History : Type u} {Action : Type v}</span>
+<span id="L445">445     [MeasurableSpace History] [MeasurableSpace Action]</span>
+<span id="L446">446     [MeasurableSingletonClass Action]</span>
+<span id="L447">447     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L448">448     (historyMu : Measure History) [IsFiniteMeasure historyMu]</span>
+<span id="L449">449     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L450">450     (source : MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L451">451     (epsilon : Real)</span>
+<span id="L452">452     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L453">453       arms prob loss epsilon)</span>
+<span id="L454">454     (comparator : Action) (hcomparator : comparator ∈ arms) :</span>
+<span id="L455">455     integral (actionProcessMeasure historyMu arms prob source) (fun sample =&gt;</span>
+<span id="L456">456         importanceWeightedLoss (prob (actionProcessHistory sample))</span>
+<span id="L457">457           (loss (actionProcessHistory sample)) (actionProcessAction sample)</span>
+<span id="L458">458           comparator) =</span>
+<span id="L459">459       integral historyMu (fun history =&gt; loss history comparator) := by</span>
+<span id="L460">460   exact actionProcess_integral_importanceWeightedLoss_eq_integral_loss</span>
+<span id="L461">461     historyMu arms prob loss source</span>
+<span id="L462">462     (fun history action haction =&gt; regularity.prob_pos history action haction)</span>
+<span id="L463">463     comparator hcomparator</span>
+<span id="L464">464     (measurable_importanceWeightedLoss_score arms prob loss source epsilon</span>
+<span id="L465">465       regularity comparator hcomparator)</span>
+<span id="L466">466     (integrable_importanceWeightedLoss_score historyMu arms prob loss source</span>
+<span id="L467">467       epsilon regularity comparator hcomparator)</span>
+<span id="L468">468 </span>
+<span id="L469">469 /-- Canonical mixed first-moment identity with score regularity inferred. -/</span>
+<span id="L470">470 theorem actionProcess_integral_mixedImportanceWeightedLoss_eq_integral_mixedLoss_of_regularity</span>
+<span id="L471">471     {History : Type u} {Action : Type v}</span>
+<span id="L472">472     [MeasurableSpace History] [MeasurableSpace Action]</span>
+<span id="L473">473     [MeasurableSingletonClass Action]</span>
+<span id="L474">474     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L475">475     (historyMu : Measure History) [IsFiniteMeasure historyMu]</span>
+<span id="L476">476     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L477">477     (source : MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L478">478     (epsilon : Real)</span>
+<span id="L479">479     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L480">480       arms prob loss epsilon) :</span>
+<span id="L481">481     integral (actionProcessMeasure historyMu arms prob source) (fun sample =&gt;</span>
+<span id="L482">482         mixedImportanceWeightedLoss arms</span>
+<span id="L483">483           (prob (actionProcessHistory sample))</span>
+<span id="L484">484           (loss (actionProcessHistory sample)) (actionProcessAction sample)) =</span>
+<span id="L485">485       integral historyMu (fun history =&gt;</span>
+<span id="L486">486         arms.sum (fun action =&gt; prob history action * loss history action)) := by</span>
+<span id="L487">487   exact actionProcess_integral_mixedImportanceWeightedLoss_eq_integral_mixedLoss</span>
+<span id="L488">488     historyMu arms prob loss source</span>
+<span id="L489">489     (fun history action haction =&gt; regularity.prob_pos history action haction)</span>
+<span id="L490">490     (measurable_mixedImportanceWeightedLoss_score arms prob loss source epsilon</span>
+<span id="L491">491       regularity)</span>
+<span id="L492">492     (integrable_mixedImportanceWeightedLoss_score historyMu arms prob loss source</span>
+<span id="L493">493       epsilon regularity)</span>
+<span id="L494">494 </span>
+<span id="L495">495 /-- Canonical mixed second-moment identity with score regularity inferred. -/</span>
+<span id="L496">496 theorem actionProcess_integral_mixedSquaredImportanceWeightedLoss_eq_integral_sum_loss_sq_of_regularity</span>
+<span id="L497">497     {History : Type u} {Action : Type v}</span>
+<span id="L498">498     [MeasurableSpace History] [MeasurableSpace Action]</span>
+<span id="L499">499     [MeasurableSingletonClass Action]</span>
+<span id="L500">500     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L501">501     (historyMu : Measure History) [IsFiniteMeasure historyMu]</span>
+<span id="L502">502     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L503">503     (source : MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L504">504     (epsilon : Real)</span>
+<span id="L505">505     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L506">506       arms prob loss epsilon) :</span>
+<span id="L507">507     integral (actionProcessMeasure historyMu arms prob source) (fun sample =&gt;</span>
+<span id="L508">508         mixedSquaredImportanceWeightedLoss arms</span>
+<span id="L509">509           (prob (actionProcessHistory sample))</span>
+<span id="L510">510           (loss (actionProcessHistory sample)) (actionProcessAction sample)) =</span>
+<span id="L511">511       integral historyMu (fun history =&gt;</span>
+<span id="L512">512         arms.sum (fun action =&gt; (loss history action) ^ 2)) := by</span>
+<span id="L513">513   exact</span>
+<span id="L514">514     actionProcess_integral_mixedSquaredImportanceWeightedLoss_eq_integral_sum_loss_sq</span>
+<span id="L515">515       historyMu arms prob loss source</span>
+<span id="L516">516       (fun history action haction =&gt; regularity.prob_pos history action haction)</span>
+<span id="L517">517       (measurable_mixedSquaredImportanceWeightedLoss_score arms prob loss source</span>
+<span id="L518">518         epsilon regularity)</span>
+<span id="L519">519       (integrable_mixedSquaredImportanceWeightedLoss_score historyMu arms prob</span>
+<span id="L520">520         loss source epsilon regularity)</span>
+<span id="L521">521 </span>
+<span id="L522">522 end Exp3</span>
+<span id="L523">523 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRecurrentOptimism.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRecurrentOptimism.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRecurrentOptimism.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRecurrentOptimism.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVIOptimism</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-! Bellman optimism for every queried policy of the one recurrent source. -/</span>
+<span id="L4">4 </span>
+<span id="L5">5 open MeasureTheory</span>
+<span id="L6">6 </span>
+<span id="L7">7 universe u v</span>
+<span id="L8">8 </span>
+<span id="L9">9 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L10">10 </span>
+<span id="L11">11 variable {State : Type u} {Action : Type v}</span>
+<span id="L12">12     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L13">13     [Fintype State] [Fintype Action]</span>
+<span id="L14">14     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L15">15     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L16">16     [Nonempty State] [Nonempty Action]</span>
+<span id="L17">17 </span>
+<span id="L18">18 namespace AdaptiveCumulativeHoeffdingUCBVI</span>
+<span id="L19">19 </span>
+<span id="L20">20 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L21">21 /-- The planner fold and the statistical state use literally the same prefix</span>
+<span id="L22">22 transition summary. -/</span>
+<span id="L23">23 theorem cumulativeSummaryOfSequence_prefixTransitionSummaries_eq</span>
+<span id="L24">24     {mdp : MDP State Action}</span>
+<span id="L25">25     (trajectory : EpisodeBatchTrajectory mdp 1) (round : Nat) :</span>
+<span id="L26">26     cumulativeSummaryOfSequence</span>
+<span id="L27">27         (prefixTransitionSummaries</span>
+<span id="L28">28           (Preorder.frestrictLe round trajectory)) =</span>
+<span id="L29">29       (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1 := by</span>
+<span id="L30">30   funext stage state action nextState</span>
+<span id="L31">31   simp [cumulativeSummaryOfSequence, prefixTransitionSummaries,</span>
+<span id="L32">32     adaptiveCumulativeEmpiricalModelStateAt,</span>
+<span id="L33">33     EpisodeBatchPrefix.cumulativeEmpiricalModelState,</span>
+<span id="L34">34     EpisodeBatchPrefix.cumulativeTransitionCountSummary,</span>
+<span id="L35">35     EpisodeBatch.transitionCountSummary]</span>
+<span id="L36">36 </span>
+<span id="L37">37 namespace AdaptiveEpisodeBatchSource</span>
+<span id="L38">38 </span>
+<span id="L39">39 /-- Every finite Q-table fold through the first `n` actually generated</span>
+<span id="L40">40 episodes is optimistic on the proved same-source event. -/</span>
+<span id="L41">41 theorem recurrentQTableOfTrajectory_dominatesOptimal</span>
+<span id="L42">42     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L43">43     [IsProbabilityMeasure initialState]</span>
+<span id="L44">44     (source : AdaptiveEpisodeBatchSource mdp initialState 1)</span>
+<span id="L45">45     {episodes : Nat} {delta : Real}</span>
+<span id="L46">46     {trajectory : EpisodeBatchTrajectory mdp 1}</span>
+<span id="L47">47     (hhorizon : 0 &lt; mdp.horizon) (hepisodes : 0 &lt; episodes)</span>
+<span id="L48">48     (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L49">49     (hrewardNonneg : ∀ state action, 0 &lt;= mdp.reward state action)</span>
+<span id="L50">50     (hrewardOne : ∀ state action, mdp.reward state action &lt;= 1)</span>
+<span id="L51">51     (htrajectory : trajectory ∉ simultaneousTransitionFailureEvent source episodes</span>
+<span id="L52">52       (logFactor (State := State) (Action := Action) mdp episodes delta))</span>
+<span id="L53">53     (defaultState : State) :</span>
+<span id="L54">54     ∀ n, n &lt;= episodes -&gt;</span>
+<span id="L55">55       QDominatesOptimal mdp</span>
+<span id="L56">56         (recurrentQTableOfSummaries mdp defaultState</span>
+<span id="L57">57           (scale (State := State) (Action := Action) mdp episodes delta) n</span>
+<span id="L58">58           (fun i =&gt; (trajectory i).transitionCountSummary)) := by</span>
+<span id="L59">59   intro n</span>
+<span id="L60">60   induction n with</span>
+<span id="L61">61   | zero =&gt;</span>
+<span id="L62">62       intro _hn</span>
+<span id="L63">63       exact initialQTable_dominatesOptimal mdp (by</span>
+<span id="L64">64         intro state action</span>
+<span id="L65">65         rw [abs_of_nonneg (hrewardNonneg state action)]</span>
+<span id="L66">66         exact hrewardOne state action)</span>
+<span id="L67">67   | succ n ih =&gt;</span>
+<span id="L68">68       intro hn</span>
+<span id="L69">69       have hnlt : n &lt; episodes := by omega</span>
+<span id="L70">70       let round : Fin episodes := ⟨n, hnlt⟩</span>
+<span id="L71">71       let previous := recurrentQTableOfSummaries mdp defaultState</span>
+<span id="L72">72         (scale (State := State) (Action := Action) mdp episodes delta) n</span>
+<span id="L73">73         (fun i =&gt; (trajectory i).transitionCountSummary)</span>
+<span id="L74">74       let summary := cumulativeSummaryOfSequence</span>
+<span id="L75">75         (fun i : Fin (n + 1) =&gt; (trajectory i).transitionCountSummary)</span>
+<span id="L76">76       have hprevious : QDominatesOptimal mdp previous := by</span>
+<span id="L77">77         simpa [previous] using ih (by omega)</span>
+<span id="L78">78       have hsummary : summary =</span>
+<span id="L79">79           (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1 := by</span>
+<span id="L80">80         simpa [summary, round] using</span>
+<span id="L81">81           cumulativeSummaryOfSequence_prefixTransitionSummaries_eq</span>
+<span id="L82">82             trajectory n</span>
+<span id="L83">83       have hconfidence : HasOptimalTailConfidence mdp summary defaultState</span>
+<span id="L84">84           (scale (State := State) (Action := Action) mdp episodes delta) := by</span>
+<span id="L85">85         rw [hsummary]</span>
+<span id="L86">86         exact hasOptimalTailConfidence_of_not_mem_simultaneousTransitionFailureEvent</span>
+<span id="L87">87           source hhorizon hepisodes hdelta hdelta_le_one htrajectory</span>
+<span id="L88">88             defaultState round</span>
+<span id="L89">89       change QDominatesOptimal mdp</span>
+<span id="L90">90         (clippedQTable mdp previous summary defaultState</span>
+<span id="L91">91           (scale (State := State) (Action := Action) mdp episodes delta))</span>
+<span id="L92">92       exact clippedQTable_dominatesOptimal mdp previous summary defaultState</span>
+<span id="L93">93         (scale (State := State) (Action := Action) mdp episodes delta)</span>
+<span id="L94">94         hrewardNonneg hrewardOne hprevious hconfidence</span>
+<span id="L95">95 </span>
+<span id="L96">96 /-- The generated successor episode selects an action whose actual recurrent</span>
+<span id="L97">97 Q value dominates every optimal action value. -/</span>
+<span id="L98">98 theorem recurrentSuccessor_selectedQ_ge_optimalQ</span>
+<span id="L99">99     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L100">100     [IsProbabilityMeasure initialState]</span>
+<span id="L101">101     (source : AdaptiveEpisodeBatchSource mdp initialState 1)</span>
+<span id="L102">102     {episodes : Nat} {delta : Real}</span>
+<span id="L103">103     {trajectory : EpisodeBatchTrajectory mdp 1}</span>
+<span id="L104">104     (hhorizon : 0 &lt; mdp.horizon) (hepisodes : 0 &lt; episodes)</span>
+<span id="L105">105     (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L106">106     (hrewardNonneg : ∀ state action, 0 &lt;= mdp.reward state action)</span>
+<span id="L107">107     (hrewardOne : ∀ state action, mdp.reward state action &lt;= 1)</span>
+<span id="L108">108     (htrajectory : trajectory ∉ simultaneousTransitionFailureEvent source episodes</span>
+<span id="L109">109       (logFactor (State := State) (Action := Action) mdp episodes delta))</span>
+<span id="L110">110     (defaultState : State) (round : Fin episodes)</span>
+<span id="L111">111     (stage : Fin mdp.horizon) (state : State) (action : Action) :</span>
+<span id="L112">112     optimalQAt mdp stage state action &lt;=</span>
+<span id="L113">113       recurrentQTableOfSummaries mdp defaultState</span>
+<span id="L114">114         (scale (State := State) (Action := Action) mdp episodes delta)</span>
+<span id="L115">115         (round + 1) (fun i =&gt; (trajectory i).transitionCountSummary)</span>
+<span id="L116">116         stage state</span>
+<span id="L117">117         (recurrentPolicyTableOfSummaries mdp defaultState</span>
+<span id="L118">118           (scale (State := State) (Action := Action) mdp episodes delta)</span>
+<span id="L119">119           (round + 1) (fun i =&gt; (trajectory i).transitionCountSummary)</span>
+<span id="L120">120           stage state) := by</span>
+<span id="L121">121   let table := recurrentQTableOfSummaries mdp defaultState</span>
+<span id="L122">122     (scale (State := State) (Action := Action) mdp episodes delta)</span>
+<span id="L123">123     (round + 1) (fun i =&gt; (trajectory i).transitionCountSummary)</span>
+<span id="L124">124   have hdom := recurrentQTableOfTrajectory_dominatesOptimal source hhorizon</span>
+<span id="L125">125     hepisodes hdelta hdelta_le_one hrewardNonneg hrewardOne htrajectory</span>
+<span id="L126">126       defaultState (round + 1) (by omega)</span>
+<span id="L127">127   exact (hdom stage state action).trans</span>
+<span id="L128">128     (FiniteRealArgmax.score_le_choose (table stage state) action)</span>
+<span id="L129">129 </span>
+<span id="L130">130 end AdaptiveEpisodeBatchSource</span>
+<span id="L131">131 </span>
+<span id="L132">132 end AdaptiveCumulativeHoeffdingUCBVI</span>
+<span id="L133">133 </span>
+<span id="L134">134 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/OFULScheduledPowerOfTwoForcedHistoryAlgorithm.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/OFULScheduledPowerOfTwoForcedHistoryAlgorithm.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/OFULScheduledPowerOfTwoForcedHistoryAlgorithm.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/OFULScheduledPowerOfTwoForcedHistoryAlgorithm.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.OFULScheduledBlockStartForcedHistoryAlgorithm</span>
+<span id="L2">2 import BanditRLProof.OFULScheduledPowerOfTwoForcedIndexCount</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Power-of-two forced scheduling for telescoping OFUL</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module packages one horizon-independent deterministic history algorithm.</span>
+<span id="L8">8 At history indices one below a power of two it selects the arm indexed by that</span>
+<span id="L9">9 power&#x27;s exponent; at every other index it uses the ordinary telescoping OFUL</span>
+<span id="L10">10 selector.</span>
+<span id="L11">11 -/</span>
+<span id="L12">12 </span>
+<span id="L13">13 namespace BanditRLProof</span>
+<span id="L14">14 </span>
+<span id="L15">15 open MeasureTheory Real Matrix Set</span>
+<span id="L16">16 open scoped ENNReal ProbabilityTheory</span>
+<span id="L17">17 </span>
+<span id="L18">18 universe u</span>
+<span id="L19">19 </span>
+<span id="L20">20 namespace OFUL</span>
+<span id="L21">21 </span>
+<span id="L22">22 /--</span>
+<span id="L23">23 Use the exponent-indexed forced action at power-of-two successor indices and</span>
+<span id="L24">24 the ordinary telescoping OFUL selector at all other history indices.</span>
+<span id="L25">25 -/</span>
+<span id="L26">26 noncomputable def finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L27">27     {K : Nat} {Feature : Type u}</span>
+<span id="L28">28     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L29">29     (hK : 0 &lt; K)</span>
+<span id="L30">30     (lambda : Real)</span>
+<span id="L31">31     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L32">32     (R delta S : Real)</span>
+<span id="L33">33     (forcedAction : Nat -&gt; Fin K)</span>
+<span id="L34">34     (n : Nat)</span>
+<span id="L35">35     (history : History.FinitePairHistory (Fin K) Real n) :</span>
+<span id="L36">36     Fin K :=</span>
+<span id="L37">37   if isPowerOfTwoForcedIndex n then</span>
+<span id="L38">38     forcedAction (Nat.log2 (n + 1))</span>
+<span id="L39">39   else</span>
+<span id="L40">40     finiteHistoryTelescopingScalarRidgeOptimisticAction</span>
+<span id="L41">41       hK lambda actionFeature R delta S n history</span>
+<span id="L42">42 </span>
+<span id="L43">43 /-- The power-of-two forced selector is measurable in its finite history. -/</span>
+<span id="L44">44 theorem measurable_finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L45">45     {K : Nat} {Feature : Type u}</span>
+<span id="L46">46     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L47">47     (hK : 0 &lt; K)</span>
+<span id="L48">48     (lambda : Real)</span>
+<span id="L49">49     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L50">50     (R delta S : Real)</span>
+<span id="L51">51     (forcedAction : Nat -&gt; Fin K)</span>
+<span id="L52">52     (n : Nat) :</span>
+<span id="L53">53     Measurable</span>
+<span id="L54">54       (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L55">55         hK lambda actionFeature R delta S forcedAction n) := by</span>
+<span id="L56">56   by_cases hforced : isPowerOfTwoForcedIndex n</span>
+<span id="L57">57   · unfold finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L58">58     simp only [hforced, if_true]</span>
+<span id="L59">59     exact measurable_const</span>
+<span id="L60">60   · unfold finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L61">61     simp only [hforced, if_false]</span>
+<span id="L62">62     simpa only [finiteHistoryTelescopingScalarRidgeOptimisticAction] using</span>
+<span id="L63">63       measurable_finiteHistoryScheduledScalarRidgeOptimisticAction</span>
+<span id="L64">64         hK lambda actionFeature R (allTimeTelescopingDelta delta) S n</span>
+<span id="L65">65 </span>
+<span id="L66">66 /-- The power-of-two forced selector as one deterministic history algorithm. -/</span>
+<span id="L67">67 noncomputable def finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAlgorithm</span>
+<span id="L68">68     {K : Nat} {Feature : Type u}</span>
+<span id="L69">69     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L70">70     (hK : 0 &lt; K)</span>
+<span id="L71">71     (lambda : Real)</span>
+<span id="L72">72     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L73">73     (R delta S : Real)</span>
+<span id="L74">74     (forcedAction : Nat -&gt; Fin K) :</span>
+<span id="L75">75     Thompson.HistoryAlgorithm (Fin K) Real :=</span>
+<span id="L76">76   Thompson.deterministicHistoryAlgorithm</span>
+<span id="L77">77     (Fin.mk 0 hK)</span>
+<span id="L78">78     (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L79">79       hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L80">80     (measurable_finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L81">81       hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L82">82 </span>
+<span id="L83">83 /-- Every policy section is the Dirac law at the power-of-two selector. -/</span>
+<span id="L84">84 @[simp]</span>
+<span id="L85">85 theorem</span>
+<span id="L86">86     finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAlgorithm_policy_apply</span>
+<span id="L87">87     {K : Nat} {Feature : Type u}</span>
+<span id="L88">88     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L89">89     (hK : 0 &lt; K)</span>
+<span id="L90">90     (lambda : Real)</span>
+<span id="L91">91     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L92">92     (R delta S : Real)</span>
+<span id="L93">93     (forcedAction : Nat -&gt; Fin K)</span>
+<span id="L94">94     (n : Nat)</span>
+<span id="L95">95     (history : History.FinitePairHistory (Fin K) Real n) :</span>
+<span id="L96">96     (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAlgorithm</span>
+<span id="L97">97       hK lambda actionFeature R delta S forcedAction).policy n history =</span>
+<span id="L98">98         Measure.dirac</span>
+<span id="L99">99           (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L100">100             hK lambda actionFeature R delta S forcedAction n history) := by</span>
+<span id="L101">101   exact Thompson.deterministicHistoryAlgorithm_policy_apply</span>
+<span id="L102">102     (Fin.mk 0 hK)</span>
+<span id="L103">103     (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L104">104       hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L105">105     (measurable_finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L106">106       hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L107">107     n history</span>
+<span id="L108">108 </span>
+<span id="L109">109 /--</span>
+<span id="L110">110 At history index `2 ^ exponent - 1`, the selector uses the action prescribed</span>
+<span id="L111">111 for that exponent.</span>
+<span id="L112">112 -/</span>
+<span id="L113">113 @[simp]</span>
+<span id="L114">114 theorem finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction_pow_sub_one</span>
+<span id="L115">115     {K : Nat} {Feature : Type u}</span>
+<span id="L116">116     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L117">117     (hK : 0 &lt; K)</span>
+<span id="L118">118     (lambda : Real)</span>
+<span id="L119">119     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L120">120     (R delta S : Real)</span>
+<span id="L121">121     (forcedAction : Nat -&gt; Fin K)</span>
+<span id="L122">122     (exponent : Nat)</span>
+<span id="L123">123     (history :</span>
+<span id="L124">124       History.FinitePairHistory (Fin K) Real (2 ^ exponent - 1)) :</span>
+<span id="L125">125     finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L126">126         hK lambda actionFeature R delta S forcedAction</span>
+<span id="L127">127         (2 ^ exponent - 1) history =</span>
+<span id="L128">128       forcedAction exponent := by</span>
+<span id="L129">129   have hpow : 0 &lt; 2 ^ exponent := pow_pos (by omega) exponent</span>
+<span id="L130">130   have hsucc : 2 ^ exponent - 1 + 1 = 2 ^ exponent := by omega</span>
+<span id="L131">131   have hforced : isPowerOfTwoForcedIndex (2 ^ exponent - 1) :=</span>
+<span id="L132">132     isPowerOfTwoForcedIndex_iff.mpr ⟨exponent, hsucc⟩</span>
+<span id="L133">133   unfold finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L134">134   rw [if_pos hforced, hsucc, Nat.log2_eq_log_two,</span>
+<span id="L135">135     Nat.log_pow Nat.one_lt_two]</span>
+<span id="L136">136 </span>
+<span id="L137">137 /-- Generated successor actions follow the power-of-two selector almost surely. -/</span>
+<span id="L138">138 theorem</span>
+<span id="L139">139     canonicalHistoryTrajectory_action_succ_ae_eq_finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L140">140     {K : Nat} {Feature : Type u}</span>
+<span id="L141">141     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L142">142     (hK : 0 &lt; K)</span>
+<span id="L143">143     (lambda : Real)</span>
+<span id="L144">144     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L145">145     (R delta S : Real)</span>
+<span id="L146">146     (forcedAction : Nat -&gt; Fin K)</span>
+<span id="L147">147     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L148">148     (n : Nat) :</span>
+<span id="L149">149     ∀ᵐ trajectory ∂</span>
+<span id="L150">150         Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L151">151           (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAlgorithm</span>
+<span id="L152">152             hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L153">153           environment,</span>
+<span id="L154">154       (trajectory (n + 1)).1 =</span>
+<span id="L155">155         finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L156">156           hK lambda actionFeature R delta S forcedAction n</span>
+<span id="L157">157           (Preorder.frestrictLe n trajectory) := by</span>
+<span id="L158">158   letI : Nonempty (Fin K) := ⟨Fin.mk 0 hK⟩</span>
+<span id="L159">159   simpa only [</span>
+<span id="L160">160       finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAlgorithm,</span>
+<span id="L161">161       Thompson.canonicalHistoryTrajectoryAction,</span>
+<span id="L162">162       Thompson.canonicalHistoryTrajectoryReward] using</span>
+<span id="L163">163     (Thompson.canonicalHistoryTrajectory_action_succ_ae_eq_deterministicHistorySelector</span>
+<span id="L164">164       (Fin.mk 0 hK)</span>
+<span id="L165">165       (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L166">166         hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L167">167       (measurable_finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L168">168         hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L169">169       environment n)</span>
+<span id="L170">170 </span>
+<span id="L171">171 /-- At successor round `2 ^ exponent`, the generated action is prescribed. -/</span>
+<span id="L172">172 theorem</span>
+<span id="L173">173     canonicalHistoryTrajectory_action_pow_ae_eq_forcedAction</span>
+<span id="L174">174     {K : Nat} {Feature : Type u}</span>
+<span id="L175">175     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L176">176     (hK : 0 &lt; K)</span>
+<span id="L177">177     (lambda : Real)</span>
+<span id="L178">178     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L179">179     (R delta S : Real)</span>
+<span id="L180">180     (forcedAction : Nat -&gt; Fin K)</span>
+<span id="L181">181     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L182">182     (exponent : Nat) :</span>
+<span id="L183">183     ∀ᵐ trajectory ∂</span>
+<span id="L184">184         Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L185">185           (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAlgorithm</span>
+<span id="L186">186             hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L187">187           environment,</span>
+<span id="L188">188       (trajectory (2 ^ exponent)).1 = forcedAction exponent := by</span>
+<span id="L189">189   have hpow : 0 &lt; 2 ^ exponent := pow_pos (by omega) exponent</span>
+<span id="L190">190   have hsucc : 2 ^ exponent - 1 + 1 = 2 ^ exponent := by omega</span>
+<span id="L191">191   filter_upwards [</span>
+<span id="L192">192     canonicalHistoryTrajectory_action_succ_ae_eq_finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L193">193       hK lambda actionFeature R delta S forcedAction environment</span>
+<span id="L194">194       (2 ^ exponent - 1)] with trajectory htrajectory</span>
+<span id="L195">195   rw [← hsucc, htrajectory]</span>
+<span id="L196">196   exact</span>
+<span id="L197">197     finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction_pow_sub_one</span>
+<span id="L198">198       hK lambda actionFeature R delta S forcedAction exponent</span>
+<span id="L199">199       (Preorder.frestrictLe (2 ^ exponent - 1) trajectory)</span>
+<span id="L200">200 </span>
+<span id="L201">201 end OFUL</span>
+<span id="L202">202 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

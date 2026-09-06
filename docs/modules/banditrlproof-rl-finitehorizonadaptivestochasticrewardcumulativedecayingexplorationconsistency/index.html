@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Finite-horizon RL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>RL.<wbr>Finite<wbr>Horizon<wbr>Adaptive<wbr>Stochastic<wbr>Reward<wbr>Cumulative<wbr>Decaying<wbr>Exploration<wbr>Consistency</h1>
+  <p class="lede">This module lifts the cumulative empirical-optimistic exploratory source to complete stochastic-reward episode batches. Policy selection reads only the known-reward projection of the sampled prefix. The first layer proves the exact complete trajectory pushforward to the deterministic cumulative source; later layers consume the deterministic decaying-exploration count certificate and the globally centered stochastic return tail.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html"><code>BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/finite-horizon-rl/index.html">9. Finite-horizon reinforcement learning</a></dd></div>
+    <div><dt>Declarations</dt><dd>32</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-rl-finitehorizonadaptivestochasticrewardempiricaloptimisticrealizedbehaviorregret/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardEmpiricalOptimisticRealizedBehaviorRegret</code></a>, <a href="../banditrlproof-rl-finitehorizonadaptivecumulativedecayingexplorationbehaviorconsistency/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeDecayingExplorationBehaviorConsistency</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-rl-finitehorizonadaptivestochasticrewardcumulativedecayingexploration-54b2a9d89968/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationRegularityClosedConsistency</code></a>, <a href="../banditrlproof-rl-finitehorizonadaptivestochasticrewardsampledempiricaloptimisticsel-83f00d79874e/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentSchedule</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-a8bc6fe7ff49">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.globalReturnDeviationPerEpisodeVarianceProxy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">One-episode proxy underlying the globally centered stochastic batch proxy.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> globalReturnDeviationPerEpisodeVarianceProxy (mdp : MDP State Action) (rewardBound rewardVarianceProxy : NNReal) : NNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L36">Source line 36</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b688e9c8af0d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.iidGlobalSampledCumulativeReturnDeviationVarianceProxy_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The honest global iid proxy is exactly episode-linear.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iidGlobalSampledCumulativeReturnDeviationVarianceProxy_eq (mdp : MDP State Action) (episodes : Nat) (rewardBound rewardVarianceProxy : NNReal) : mdp.iidGlobalSampledCumulativeReturnDeviationVarianceProxy episodes rewardBound rewardVarianceProxy = (episodes : NNReal) * mdp.globalReturnDeviationPerEpisodeVarianceProxy rewardBound rewardVarianceProxy</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L46">Source line 46</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9723f7d79371">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.globalReturnDeviationPerEpisodeVarianceProxy_pos</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Positive horizon and positive reward bound make the per-episode proxy positive.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> globalReturnDeviationPerEpisodeVarianceProxy_pos (mdp : MDP State Action) (rewardBound rewardVarianceProxy : NNReal) (hrewardBound : <span class="num">0</span> &lt; rewardBound) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) : <span class="num">0</span> &lt; mdp.globalReturnDeviationPerEpisodeVarianceProxy rewardBound rewardVarianceProxy</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L67">Source line 67</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-70bc9e546401">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.cumulativeSuccessorGlobalReturnVarianceProxy_coe</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The successor proxy is exactly rounds times episodes times one base proxy.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> cumulativeSuccessorGlobalReturnVarianceProxy_coe (mdp : MDP State Action) (rounds episodes : Nat) (rewardBound rewardVarianceProxy : NNReal) : ((cumulativeSuccessorGlobalReturnVarianceProxy mdp rounds episodes rewardBound rewardVarianceProxy : NNReal) : Real) = (rounds : Real) * (episodes : Real) * (mdp.globalReturnDeviationPerEpisodeVarianceProxy rewardBound rewardVarianceProxy : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L89">Source line 89</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e8e7bba77002">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.normalizedSuccessorGlobalReturnConfidenceRadius</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Globally centered stochastic return radius normalized by all successor samples.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> normalizedSuccessorGlobalReturnConfidenceRadius (mdp : MDP State Action) (episodes rounds : Nat) (rewardBound rewardVarianceProxy : NNReal) (delta : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L103">Source line 103</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-02b1285bed54">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.normalizedSuccessorGlobalReturnConfidenceRadius_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> normalizedSuccessorGlobalReturnConfidenceRadius_nonneg (mdp : MDP State Action) (episodes rounds : Nat) (rewardBound rewardVarianceProxy : NNReal) (delta : Real) : <span class="num">0</span> &lt;= normalizedSuccessorGlobalReturnConfidenceRadius mdp episodes rounds rewardBound rewardVarianceProxy delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L114">Source line 114</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0eb6a4c7f12a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.normalizedSuccessorGlobalReturnConfidenceRadius_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact normalized-radius formula after exposing episode and round scaling.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> normalizedSuccessorGlobalReturnConfidenceRadius_eq (mdp : MDP State Action) (episodes rounds : Nat) (rewardBound rewardVarianceProxy : NNReal) (delta : Real) (hepisodes : <span class="num">0</span> &lt; episodes) (hrounds : <span class="num">0</span> &lt; rounds) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) : normalizedSuccessorGlobalReturnConfidenceRadius mdp episodes rounds rewardBound rewardVarianceProxy delta = Real.sqrt (<span class="num">2</span> * (mdp.globalReturnDeviationPerEpisodeVarianceProxy rewardBound rewardVarianceProxy : Real) * Real.log (<span class="num">2</span> / delta) / ((episodes : Real) * (rounds : Real)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L128">Source line 128</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e3d32ea790c1">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticReturnRadiusEnvelope</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A simple inverse-scale envelope for the scheduled stochastic radius.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> decayingExplorationStochasticReturnRadiusEnvelope (mdp : MDP State Action) (rewardBound rewardVarianceProxy : NNReal) (n : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L187">Source line 187</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b4e2c9d5ab2c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.normalizedSuccessorGlobalReturnConfidenceRadius_le_decayingEnvelope</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> normalizedSuccessorGlobalReturnConfidenceRadius_le_decayingEnvelope (mdp : MDP State Action) (episodes : Nat) (rewardBound rewardVarianceProxy : NNReal) (n : Nat) (hepisodes : <span class="num">0</span> &lt; episodes) : normalizedSuccessorGlobalReturnConfidenceRadius mdp episodes (AdaptiveEpisodeBatchSource.decayingExplorationRounds mdp n) rewardBound rewardVarianceProxy (AdaptiveEpisodeBatchSource.vanishingAverageConfidenceDelta n) &lt;= decayingExplorationStochasticReturnRadiusEnvelope mdp rewardBound rewardVarianceProxy n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L198">Source line 198</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a96613ae5e1c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticReturnRadiusEnvelope_tendsto_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> decayingExplorationStochasticReturnRadiusEnvelope_tendsto_zero (mdp : MDP State Action) (rewardBound rewardVarianceProxy : NNReal) : Tendsto (decayingExplorationStochasticReturnRadiusEnvelope mdp rewardBound rewardVarianceProxy) atTop (nhds <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L287">Source line 287</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c969cfe50a68">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.decayingExplorationNormalizedSuccessorGlobalReturnRadius_tendsto_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The exact scheduled stochastic return radius tends to zero.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> decayingExplorationNormalizedSuccessorGlobalReturnRadius_tendsto_zero (mdp : MDP State Action) (baseVisitFloor : Real) (rewardBound rewardVarianceProxy : NNReal) : Tendsto (<span class="kw">fun</span> n =&gt; normalizedSuccessorGlobalReturnConfidenceRadius mdp (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes mdp baseVisitFloor n) (AdaptiveEpisodeBatchSource.decayingExplorationRounds mdp n) rewardBound rewardVarianceProxy (AdaptiveEpisodeBatchSource.vanishingAverageConfidenceDelta n)) atTop (nhds <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L312">Source line 312</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-db102fbcb3e7">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticAverageRealizedBehaviorRegretBound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Stochastic realized-behavior certificate at schedule index `n`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> decayingExplorationStochasticAverageRealizedBehaviorRegretBound (mdp : MDP State Action) (baseVisitFloor : Real) (rewardVarianceProxy : NNReal) (n : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L342">Source line 342</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d6c0a9b01a57">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticRealizedFailureBudget</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Projected-count and stochastic-return deviations consume one share each.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> decayingExplorationStochasticRealizedFailureBudget (n : Nat) : ENNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L355">Source line 355</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4b26680fe049">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticAverageRealizedBehaviorRegretBound_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> decayingExplorationStochasticAverageRealizedBehaviorRegretBound_nonneg (mdp : MDP State Action) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (baseVisitFloor : Real) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) (rewardVarianceProxy : NNReal) (n : Nat) : <span class="num">0</span> &lt;= decayingExplorationStochasticAverageRealizedBehaviorRegretBound mdp baseVisitFloor rewardVarianceProxy n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L360">Source line 360</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-aa27228fef42">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticAverageRealizedBehaviorRegretBound_tendsto_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> decayingExplorationStochasticAverageRealizedBehaviorRegretBound_tendsto_zero (mdp : MDP State Action) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (baseVisitFloor : Real) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) (rewardVarianceProxy : NNReal) : Tendsto (decayingExplorationStochasticAverageRealizedBehaviorRegretBound mdp baseVisitFloor rewardVarianceProxy) atTop (nhds <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L383">Source line 383</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ffc45c05b625">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticRealizedFailureBudget_tendsto_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> decayingExplorationStochasticRealizedFailureBudget_tendsto_zero : Tendsto decayingExplorationStochasticRealizedFailureBudget atTop (nhds <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L399">Source line 399</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6db8d9135129">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticRealizedFailureAndRegretBound_tendsto_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> decayingExplorationStochasticRealizedFailureAndRegretBound_tendsto_zero (mdp : MDP State Action) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (baseVisitFloor : Real) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) (rewardVarianceProxy : NNReal) : Tendsto (<span class="kw">fun</span> n =&gt; (decayingExplorationStochasticRealizedFailureBudget n, decayingExplorationStochasticAverageRealizedBehaviorRegretBound mdp baseVisitFloor rewardVarianceProxy n)) atTop (nhds (<span class="num">0</span>, <span class="num">0</span>))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L406">Source line 406</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-66ae6cc88ed5">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Stochastic-reward lift of the cumulative empirical-optimistic exploratory
+source. The cumulative table selector is evaluated only on projected history.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> exploratorySource (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (countRadius : TransitionCountRadius) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L429">Source line 429</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9b486f631c78">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_initialPolicy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The initial policies of the stochastic lift and deterministic source agree.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_initialPolicy {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (countRadius : TransitionCountRadius) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) : (exploratorySource mdp initialState episodes rewardSource initialTable defaultState countRadius explorationRate hexplorationRate).initialPolicy = (AdaptiveCumulativeEmpiricalOptimisticSource.exploratorySource mdp initialState episodes initialTable defaultState countRadius explorationRate hexplorationRate).initialPolicy</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L483">Source line 483</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e1c779b0fcaa">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_successorPolicy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every stochastic successor policy is the deterministic projected policy.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_successorPolicy {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (countRadius : TransitionCountRadius) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (n : Nat) (history : StochasticEpisodeBatchPrefix mdp episodes n) : (exploratorySource mdp initialState episodes rewardSource initialTable defaultState countRadius explorationRate hexplorationRate).successorPolicy n history = (AdaptiveCumulativeEmpiricalOptimisticSource.exploratorySource mdp initialState episodes initialTable defaultState countRadius explorationRate hexplorationRate).successorPolicy n (MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchPrefix (mdp := mdp) episodes n history)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L499">Source line 499</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-df17a82f36fd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_initialBatch_map_knownRewardEpisodeBatch</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The initial stochastic batch maps to the deterministic cumulative fiber.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_initialBatch_map_knownRewardEpisodeBatch {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (countRadius : TransitionCountRadius) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) : (rewardSource.iidStochasticTrajectoryFamilyMeasure (exploratorySource mdp initialState episodes rewardSource initialTable defaultState countRadius explorationRate hexplorationRate).initialPolicy initialState episodes).map (MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatch (mdp := mdp) episodes) = (AdaptiveCumulativeEmpiricalOptimisticSource.exploratorySource mdp initialState episodes initialTable defaultState countRadius explorationRate hexplorationRate).initialPolicy.iidEpisodeBatchMeasure initialState episodes</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L519">Source line 519</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-88683e8a4c5c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_batchKernel_map_knownRewardEpisodeBatch</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every selected stochastic successor batch maps to its deterministic fiber.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_batchKernel_map_knownRewardEpisodeBatch {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (countRadius : TransitionCountRadius) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (n : Nat) (history : StochasticEpisodeBatchPrefix mdp episodes n) : ((exploratorySource mdp initialState episodes rewardSource initialTable defaultState countRadius explorationRate hexplorationRate).batchKernel n history).map (MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatch (mdp := mdp) episodes) = (AdaptiveCumulativeEmpiricalOptimisticSource.exploratorySource mdp initialState episodes initialTable defaultState countRadius explorationRate hexplorationRate).batchKernel n (MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchPrefix (mdp := mdp) episodes n history)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L544">Source line 544</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8378ecad7551">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_map_projectedPrefix_next_eq_compProd</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Projected prefix and next-batch joint law of the cumulative source.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_trajectoryMeasure_map_projectedPrefix_next_eq_compProd {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (countRadius : TransitionCountRadius) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (n : Nat) : <span class="kw">let</span> stochasticSource := exploratorySource mdp initialState episodes rewardSource initialTable defaultState countRadius explorationRate hexplorationRate <span class="kw">let</span> deterministicSource := AdaptiveCumulativeEmpiricalOptimisticSource.exploratorySource mdp initialState episodes initialTable defaultState countRadius explorationRate hexplorationRate stochasticSource.trajectoryMeasure.map (<span class="kw">fun</span> trajectory =&gt; (MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchPrefix (mdp := mdp) episodes n (Preorder.frestrictLe n trajectory), MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatch (mdp := mdp) episodes (trajectory (n + <span class="num">1</span>)))) = stochasticSource.trajectoryMeasure.map (<span class="kw">fun</span> trajectory =&gt; MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchPrefix (mdp := mdp) episodes n (Preorder.frestrictLe n trajectory)) ⊗ₘ deterministicSource.batchKernel n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L584">Source line 584</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-380d10d671ed">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_condDistrib_projectedNext</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Conditional projected next-batch law for the cumulative source.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_trajectoryMeasure_condDistrib_projectedNext {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} [StandardBorelSpace (EpisodeBatch mdp episodes)] [Nonempty (EpisodeBatch mdp episodes)] (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (countRadius : TransitionCountRadius) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (n : Nat) : <span class="kw">let</span> stochasticSource := exploratorySource mdp initialState episodes rewardSource initialTable defaultState countRadius explorationRate hexplorationRate <span class="kw">let</span> deterministicSource := AdaptiveCumulativeEmpiricalOptimisticSource.exploratorySource mdp initialState episodes initialTable defaultState countRadius explorationRate hexplorationRate ProbabilityTheory.condDistrib (<span class="kw">fun</span> trajectory : StochasticEpisodeBatchTrajectory mdp episodes =&gt; MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatch (mdp := mdp) episodes (trajectory (n + <span class="num">1</span>))) (<span class="kw">fun</span> trajectory : StochasticEpisodeBatchTrajectory mdp episodes =&gt; MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchPrefix (mdp := mdp) episodes n (Preorder.frestrictLe n trajectory)) stochasticSource.trajectoryMeasure =ᵐ[ stochasticSource.trajectoryMeasure.map (<span class="kw">fun</span> trajectory =&gt; MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchPrefix (mdp := mdp) episodes n (Preorder.frestrictLe n trajectory))] deterministicSource.batchKernel n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L694">Source line 694</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-13e0899192ca">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_map_knownRewardEpisodeBatchTrajectory</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The complete known-reward projection equals the deterministic source law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_trajectoryMeasure_map_knownRewardEpisodeBatchTrajectory {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} [StandardBorelSpace (EpisodeBatch mdp episodes)] [Nonempty (EpisodeBatch mdp episodes)] (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (countRadius : TransitionCountRadius) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) : <span class="kw">let</span> stochasticSource := exploratorySource mdp initialState episodes rewardSource initialTable defaultState countRadius explorationRate hexplorationRate <span class="kw">let</span> deterministicSource := AdaptiveCumulativeEmpiricalOptimisticSource.exploratorySource mdp initialState episodes initialTable defaultState countRadius explorationRate hexplorationRate stochasticSource.trajectoryMeasure.map (MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchTrajectory (mdp := mdp) episodes) = deterministicSource.trajectoryMeasure</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L738">Source line 738</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-71b7dd42d82c">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.projectedAdaptiveCumulativeCountBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pullback of the deterministic cumulative count event.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> projectedAdaptiveCumulativeCountBadEvent {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (countRadius : TransitionCountRadius) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (rounds : Nat) (delta : Real) : Set (StochasticEpisodeBatchTrajectory mdp episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L827">Source line 827</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9583e8adf1d9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_successorExpectedCumulativeRegret_eq_projected</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Stochastic successor expected regret is the projected cumulative quantity.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_successorExpectedCumulativeRegret_eq_projected {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (countRadius : TransitionCountRadius) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (trajectory : StochasticEpisodeBatchTrajectory mdp episodes) (rounds : Nat) : (exploratorySource mdp initialState episodes rewardSource initialTable defaultState countRadius explorationRate hexplorationRate).successorExpectedCumulativeRegret trajectory rounds = adaptiveCumulativeEmpiricalOptimisticExploratoryBehaviorExpectedRegret (initialState := initialState) (MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchTrajectory (mdp := mdp) episodes trajectory) defaultState countRadius explorationRate hexplorationRate rounds</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L869">Source line 869</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-457c938cefc9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_successorExpectedAverageRegret_eq_projected</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Average stochastic successor expected regret is the projected average.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_successorExpectedAverageRegret_eq_projected {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (countRadius : TransitionCountRadius) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (trajectory : StochasticEpisodeBatchTrajectory mdp episodes) (rounds : Nat) : (exploratorySource mdp initialState episodes rewardSource initialTable defaultState countRadius explorationRate hexplorationRate).successorExpectedAverageRegret trajectory rounds = adaptiveCumulativeEmpiricalOptimisticAverageExploratoryBehaviorExpectedRegret (initialState := initialState) (MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchTrajectory (mdp := mdp) episodes trajectory) defaultState countRadius explorationRate hexplorationRate rounds</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L896">Source line 896</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b481bf929ee3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_projectedCumulativeInverseSqrtPathSupport_optimism_and_decayingExplorationAverageExploratoryBehaviorExpectedRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The projected stochastic source inherits the deterministic decaying count,
+optimism, and expected exploratory-behavior certificate for one window.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_trajectoryMeasure_projectedCumulativeInverseSqrtPathSupport_optimism_and_decayingExplorationAverageExploratoryBehaviorExpectedRegret (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (baseVisitFloor : Real) (n : Nat) [StandardBorelSpace (EpisodeBatch mdp (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes mdp baseVisitFloor n))] [Nonempty (EpisodeBatch mdp (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes mdp baseVisitFloor n))] [StandardBorelSpace (EpisodeBatchTrajectory mdp (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes mdp baseVisitFloor n))] (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (hbaseFloor : ExploratoryPathUniformVisitFloor support <span class="num">1</span> baseVisitFloor) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) : <span class="kw">let</span> rounds := AdaptiveEpisodeBatchSource.decayingExplorationRounds mdp n <span class="kw">let</span> delta := AdaptiveEpisodeBatchSource.vanishingAverageConfidenceDelta n <span class="kw">let</span> explorationRate := AdaptiveEpisodeBatchSource.decayingExplorationRate n <span class="kw">let</span> visitFloor := AdaptiveEpisodeBatchSource.decayingExplorationVisitFloor mdp baseVisitFloor n <span class="kw">let</span> episodes := AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes mdp baseVisitFloor n <span class="kw">let</span> countRadius := AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtCountRadius mdp rounds delta visitFloor <span class="kw">let</span> source := exploratorySource mdp initialState episodes rewardSource initialTable defaultState countRadius explorationRate (AdaptiveEpisodeBatchSource.decayingExplorationRate_le_one n) <span class="kw">let</span> projection := MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchTrajectory (mdp := mdp) episodes <span class="kw">let</span> countBadEvent := projectedAdaptiveCumulativeCountBadEvent (mdp := mdp) (initialState := initialState) (episodes := episodes) initialTable defaultState countRadius explorationRate (AdaptiveEpisodeBatchSource.decayingExplorationRate_le_one n) rounds delta MeasurableSet countBadEvent /\ source.trajectoryMeasure countBadEvent &lt;= ENNReal.ofReal delta /\ <span class="kw">forall</span> trajectory, trajectory ∉ countBadEvent -&gt; (<span class="kw">forall</span> round : Fin rounds, <span class="kw">forall</span> state, mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;= (adaptiveCumulativeEmpiricalOptimisticPlanAt (projection trajectory) defaultState countRadius round ).upperValueRemaining mdp.horizon le_rfl state) /\ source.successorExpectedAverageRegret trajectory rounds &lt;= AdaptiveEpisodeBatchSource.decayingExplorationAverageExploratoryBehaviorExpectedRegretBound mdp baseVisitFloor n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L920">Source line 920</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-022a68a1a7f2">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.decayingExplorationAverageRealizedBehaviorRegretViolationSet</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Stochastic realized-regret violation set for one scheduled window.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> decayingExplorationAverageRealizedBehaviorRegretViolationSet (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (baseVisitFloor : Real) (rewardVarianceProxy : NNReal) (n : Nat) : Set (StochasticEpisodeBatchTrajectory mdp (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes mdp baseVisitFloor n))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L1032">Source line 1032</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-35aaa727fdd9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_projectedCumulativeInverseSqrtPathSupport_optimism_and_decayingExplorationAverageRealizedBehaviorConsistency</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">One stochastic finite window: projected counts and globally centered returns
+cover the realized-regret violation set under the two-share scheduled budget.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_trajectoryMeasure_projectedCumulativeInverseSqrtPathSupport_optimism_and_decayingExplorationAverageRealizedBehaviorConsistency (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (baseVisitFloor : Real) (n : Nat) [StandardBorelSpace State] [StandardBorelSpace Action] [StandardBorelSpace (EpisodeBatch mdp (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes mdp baseVisitFloor n))] [Nonempty (EpisodeBatch mdp (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes mdp baseVisitFloor n))] [StandardBorelSpace (EpisodeBatchTrajectory mdp (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes mdp baseVisitFloor n))] [StandardBorelSpace (StochasticEpisodeBatch mdp (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes mdp baseVisitFloor n))] [Nonempty (StochasticEpisodeBatch mdp (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes mdp baseVisitFloor n))] [StandardBorelSpace (StochasticEpisodeBatchTrajectory mdp (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes mdp baseVisitFloor n))] (rewardSource : mdp.MeanCompatibleRewardKernel) (rewardVarianceProxy : NNReal) (law : rewardSource.UniformSubgaussianRewardLaw rewardVarianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (hbaseFloor : ExploratoryPathUniformVisitFloor support <span class="num">1</span> baseVisitFloor) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) : <span class="kw">let</span> rounds := AdaptiveEpisodeBatchSource.decayingExplorationRounds mdp n <span class="kw">let</span> delta := AdaptiveEpisodeBatchSource.vanishingAverageConfidenceDelta n <span class="kw">let</span> explorationRate := AdaptiveEpisodeBatchSource.decayingExplorationRate n <span class="kw">let</span> visitFloor := AdaptiveEpisodeBatchSource.decayingExplorationVisitFloor mdp baseVisitFloor n <span class="kw">let</span> episodes := AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes mdp baseVisitFloor n <span class="kw">let</span> countRadius := AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtCountRadius mdp rounds delta visitFloor <span class="kw">let</span> source := exploratorySource mdp initialState episodes rewardSource initialTable defaultState countRadius explorationRate (AdaptiveEpisodeBatchSource.decayingExplorationRate_le_one n) <span class="kw">let</span> projection := MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchTrajectory (mdp := mdp) episodes <span class="kw">let</span> countBadEvent := projectedAdaptiveCumulativeCountBadEvent (mdp := mdp) (initialState := initialState) (episodes := episodes) initialTable defaultState countRadius explorationRate (AdaptiveEpisodeBatchSource.decayingExplorationRate_le_one n) rounds delta <span class="kw">let</span> returnBadEvent := source.successorGlobalReturnDeviationBadEvent rounds <span class="num">1</span> rewardVarianceProxy delta <span class="kw">let</span> combinedBadEvent := countBadEvent ∪ returnBadEvent <span class="kw">let</span> violationSet := decayingExplorationAverageRealizedBehaviorRegretViolationSet mdp initialState rewardSource initialTable defaultState baseVisitFloor rewardVarianceProxy n MeasurableSet combinedBadEvent /\ source.trajectoryMeasure combinedBadEvent &lt;= AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticRealizedFailureBudget n /\ violationSet ⊆ combinedBadEvent /\ source.trajectoryMeasure violationSet &lt;= AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticRealizedFailureBudget n /\ <span class="kw">forall</span> trajectory, trajectory ∉ combinedBadEvent -&gt; (<span class="kw">forall</span> round : Fin rounds, <span class="kw">forall</span> state, mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;= (adaptiveCumulativeEmpiricalOptimisticPlanAt (projection trajectory) defaultState countRadius round ).upperValueRemaining mdp.horizon le_rfl state) /\ source.realizedSuccessorAverageRegret trajectory rounds &lt;= AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticAverageRealizedBehaviorRegretBound mdp baseVisitFloor rewardVarianceProxy n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L1065">Source line 1065</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cd377c475b69">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeStochasticEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_projectedCumulativeInverseSqrtPathSupport_decayingExplorationAverageRealizedBehaviorConsistency_allWindows</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">All scheduled stochastic windows plus the joint scalar limit. The indexed
+Borel witnesses expose the changing deterministic and stochastic sample spaces.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_trajectoryMeasure_projectedCumulativeInverseSqrtPathSupport_decayingExplorationAverageRealizedBehaviorConsistency_allWindows (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (baseVisitFloor : Real) (hdetBatchBorel : <span class="kw">forall</span> n, StandardBorelSpace (EpisodeBatch mdp (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes mdp baseVisitFloor n))) (hdetTrajectoryBorel : <span class="kw">forall</span> n, StandardBorelSpace (EpisodeBatchTrajectory mdp (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes mdp baseVisitFloor n))) (hstochasticBatchBorel : <span class="kw">forall</span> n, StandardBorelSpace (StochasticEpisodeBatch mdp (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes mdp baseVisitFloor n))) (hstochasticTrajectoryBorel : <span class="kw">forall</span> n, StandardBorelSpace (StochasticEpisodeBatchTrajectory mdp (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes mdp baseVisitFloor n))) (rewardSource : mdp.MeanCompatibleRewardKernel) (rewardVarianceProxy : NNReal) (law : rewardSource.UniformSubgaussianRewardLaw rewardVarianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (hbaseFloor : ExploratoryPathUniformVisitFloor support <span class="num">1</span> baseVisitFloor) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) : Tendsto (<span class="kw">fun</span> n =&gt; (AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticRealizedFailureBudget n, AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticAverageRealizedBehaviorRegretBound mdp baseVisitFloor rewardVarianceProxy n)) atTop (nhds (<span class="num">0</span>, <span class="num">0</span>)) /\ <span class="kw">forall</span> n, letI : StandardBorelSpace (EpisodeBatch mdp (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes mdp baseVisitFloor n))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationConsistency.lean.html#L1259">Source line 1259</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

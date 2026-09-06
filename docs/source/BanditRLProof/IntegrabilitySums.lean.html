@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/IntegrabilitySums.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/IntegrabilitySums.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/IntegrabilitySums.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/IntegrabilitySums.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import Mathlib.MeasureTheory.Function.L1Space.Integrable</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Finite sums of integrable terms</span>
+<span id="L5">5 </span>
+<span id="L6">6 Thin Mathlib-backed wrappers for the reusable integrability fact needed by</span>
+<span id="L7">7 finite regret decompositions: a finite sum of integrable terms is integrable.</span>
+<span id="L8">8 This module does not state Bochner expectation linearity; that is a separate</span>
+<span id="L9">9 leaf.</span>
+<span id="L10">10 -/</span>
+<span id="L11">11 </span>
+<span id="L12">12 namespace BanditRLProof</span>
+<span id="L13">13 namespace IntegrabilitySums</span>
+<span id="L14">14 </span>
+<span id="L15">15 open MeasureTheory</span>
+<span id="L16">16 </span>
+<span id="L17">17 universe u v w</span>
+<span id="L18">18 </span>
+<span id="L19">19 /--</span>
+<span id="L20">20 Finite sums of integrable terms are integrable.</span>
+<span id="L21">21 </span>
+<span id="L22">22 This is the `INT-FINITE-SUM` import wrapper.  It is polymorphic in the</span>
+<span id="L23">23 codomain, following Mathlib&#x27;s `integrable_finset_sum&#x27;`; in bandit applications</span>
+<span id="L24">24 the codomain is usually `Real`.</span>
+<span id="L25">25 -/</span>
+<span id="L26">26 theorem integrable_finset_sum</span>
+<span id="L27">27     {Omega : Type u} [MeasurableSpace Omega]</span>
+<span id="L28">28     {Idx : Type v}</span>
+<span id="L29">29     {E : Type w} [TopologicalSpace E] [ESeminormedAddCommMonoid E]</span>
+<span id="L30">30     [ContinuousAdd E]</span>
+<span id="L31">31     (mu : Measure Omega)</span>
+<span id="L32">32     (s : Finset Idx)</span>
+<span id="L33">33     (f : Idx -&gt; Omega -&gt; E)</span>
+<span id="L34">34     (hf : forall i, i ∈ s -&gt; Integrable (f i) mu) :</span>
+<span id="L35">35     Integrable (fun omega : Omega =&gt; s.sum (fun i =&gt; f i omega)) mu := by</span>
+<span id="L36">36   simpa only [Finset.sum_apply] using</span>
+<span id="L37">37     (MeasureTheory.integrable_finset_sum</span>
+<span id="L38">38       (μ := mu)</span>
+<span id="L39">39       (s := s)</span>
+<span id="L40">40       (f := f)</span>
+<span id="L41">41       hf)</span>
+<span id="L42">42 </span>
+<span id="L43">43 /--</span>
+<span id="L44">44 Finite-type specialization of `integrable_finset_sum`.</span>
+<span id="L45">45 </span>
+<span id="L46">46 This version exposes the common finite-arm shape with `(Finset.univ :</span>
+<span id="L47">47 Finset Idx)`.</span>
+<span id="L48">48 -/</span>
+<span id="L49">49 theorem integrable_univ_sum</span>
+<span id="L50">50     {Omega : Type u} [MeasurableSpace Omega]</span>
+<span id="L51">51     {Idx : Type v} [Fintype Idx]</span>
+<span id="L52">52     {E : Type w} [TopologicalSpace E] [ESeminormedAddCommMonoid E]</span>
+<span id="L53">53     [ContinuousAdd E]</span>
+<span id="L54">54     (mu : Measure Omega)</span>
+<span id="L55">55     (f : Idx -&gt; Omega -&gt; E)</span>
+<span id="L56">56     (hf : forall i : Idx, Integrable (f i) mu) :</span>
+<span id="L57">57     Integrable</span>
+<span id="L58">58       (fun omega : Omega =&gt;</span>
+<span id="L59">59         (Finset.univ : Finset Idx).sum (fun i =&gt; f i omega))</span>
+<span id="L60">60       mu := by</span>
+<span id="L61">61   exact</span>
+<span id="L62">62     integrable_finset_sum</span>
+<span id="L63">63       (mu := mu)</span>
+<span id="L64">64       (s := (Finset.univ : Finset Idx))</span>
+<span id="L65">65       (f := f)</span>
+<span id="L66">66       (hf := fun i _hi =&gt; hf i)</span>
+<span id="L67">67 </span>
+<span id="L68">68 end IntegrabilitySums</span>
+<span id="L69">69 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

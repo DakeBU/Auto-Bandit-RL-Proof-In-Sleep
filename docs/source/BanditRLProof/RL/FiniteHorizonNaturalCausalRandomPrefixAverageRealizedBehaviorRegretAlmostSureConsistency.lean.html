@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonNaturalCausalRandomPrefixAverageRealizedBehaviorRegretAlmostSureConsistency.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonNaturalCausalRandomPrefixAverageRealizedBehaviorRegretAlmostSureConsistency.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonNaturalCausalRandomPrefixAverageRealizedBehaviorRegretAlmostSureConsistency.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonNaturalCausalRandomPrefixAverageRealizedBehaviorRegretAlmostSureConsistency.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonNaturalCausalAverageRealizedBehaviorRegretAlmostSureConsistency</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Diverging random-prefix almost-sure natural causal consistency</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module consumes the compiled deterministic all-prefix almost-sure theorem</span>
+<span id="L7">7 for the exact per-batch-normalized, equal-round-weighted natural average</span>
+<span id="L8">8 realized behavior-regret process. A countable random-index measurability</span>
+<span id="L9">9 wrapper makes every random-prefix evaluation measurable, while pathwise</span>
+<span id="L10">10 composition transports the limit through any measurable random-prefix</span>
+<span id="L11">11 schedule which diverges almost everywhere.</span>
+<span id="L12">12 </span>
+<span id="L13">13 This is random-subsequence transport on one dependent causal measure. It does</span>
+<span id="L14">14 not use optional stopping and does not prove an anytime confidence sequence,</span>
+<span id="L15">15 a stopping-time rate, raw single-episode regret, behavior/recommended-policy</span>
+<span id="L16">16 equality, minimax reachability, or complete UCB-VI.</span>
+<span id="L17">17 -/</span>
+<span id="L18">18 </span>
+<span id="L19">19 open Filter MeasureTheory ProbabilityTheory</span>
+<span id="L20">20 open scoped ENNReal NNReal ProbabilityTheory Topology</span>
+<span id="L21">21 </span>
+<span id="L22">22 namespace BanditRLProof</span>
+<span id="L23">23 </span>
+<span id="L24">24 universe w x</span>
+<span id="L25">25 </span>
+<span id="L26">26 /-- A countable random coordinate of a measurable process is measurable. -/</span>
+<span id="L27">27 theorem measurable_apply_randomNat</span>
+<span id="L28">28     {Omega : Type w} {Beta : Type x}</span>
+<span id="L29">29     [MeasurableSpace Omega] [MeasurableSpace Beta]</span>
+<span id="L30">30     (process : Nat -&gt; Omega -&gt; Beta) (randomIndex : Omega -&gt; Nat)</span>
+<span id="L31">31     (hprocess : forall n, Measurable (process n))</span>
+<span id="L32">32     (hrandomIndex : Measurable randomIndex) :</span>
+<span id="L33">33     Measurable (fun omega =&gt; process (randomIndex omega) omega) := by</span>
+<span id="L34">34   have hjoint : Measurable (fun input : Omega × Nat =&gt; process input.2 input.1) := by</span>
+<span id="L35">35     apply measurable_from_prod_countable_left</span>
+<span id="L36">36     intro n</span>
+<span id="L37">37     simpa using hprocess n</span>
+<span id="L38">38   exact hjoint.comp (measurable_id.prodMk hrandomIndex)</span>
+<span id="L39">39 </span>
+<span id="L40">40 /-- An almost-everywhere limit survives an almost-everywhere diverging random prefix. -/</span>
+<span id="L41">41 theorem ae_tendsto_apply_randomPrefix</span>
+<span id="L42">42     {Omega : Type w} {Beta : Type x}</span>
+<span id="L43">43     [MeasurableSpace Omega] [TopologicalSpace Beta]</span>
+<span id="L44">44     {mu : Measure Omega} {process : Nat -&gt; Omega -&gt; Beta}</span>
+<span id="L45">45     {randomPrefix : Nat -&gt; Omega -&gt; Nat} {z : Beta}</span>
+<span id="L46">46     (hprocess : ∀ᵐ omega ∂mu,</span>
+<span id="L47">47       Tendsto (fun n =&gt; process n omega) atTop (nhds z))</span>
+<span id="L48">48     (hrandomPrefix : ∀ᵐ omega ∂mu,</span>
+<span id="L49">49       Tendsto (fun n =&gt; randomPrefix n omega) atTop atTop) :</span>
+<span id="L50">50     ∀ᵐ omega ∂mu,</span>
+<span id="L51">51       Tendsto (fun n =&gt; process (randomPrefix n omega) omega) atTop (nhds z) := by</span>
+<span id="L52">52   filter_upwards [hprocess, hrandomPrefix] with omega hprocessOmega hrandomPrefixOmega</span>
+<span id="L53">53   exact hprocessOmega.comp hrandomPrefixOmega</span>
+<span id="L54">54 </span>
+<span id="L55">55 /-- A pointwise deterministic lower envelope forces a Nat-valued random prefix to diverge. -/</span>
+<span id="L56">56 theorem tendsto_randomPrefix_atTop_of_nat_le</span>
+<span id="L57">57     {Omega : Type w} (randomPrefix : Nat -&gt; Omega -&gt; Nat)</span>
+<span id="L58">58     (hlower : forall n omega, n &lt;= randomPrefix n omega) (omega : Omega) :</span>
+<span id="L59">59     Tendsto (fun n =&gt; randomPrefix n omega) atTop atTop := by</span>
+<span id="L60">60   refine tendsto_atTop.2 (fun threshold =&gt; ?_)</span>
+<span id="L61">61   filter_upwards [eventually_ge_atTop threshold] with n hn</span>
+<span id="L62">62   exact hn.trans (hlower n omega)</span>
+<span id="L63">63 </span>
+<span id="L64">64 namespace FiniteHorizonRL</span>
+<span id="L65">65 </span>
+<span id="L66">66 universe u v</span>
+<span id="L67">67 </span>
+<span id="L68">68 variable {State : Type u} {Action : Type v}</span>
+<span id="L69">69     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L70">70     [Fintype State] [Fintype Action]</span>
+<span id="L71">71     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L72">72     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L73">73     [Nonempty State] [Nonempty Action]</span>
+<span id="L74">74 </span>
+<span id="L75">75 namespace AdaptiveStochasticSampledEmpiricalOptimisticSource</span>
+<span id="L76">76 </span>
+<span id="L77">77 /-- The exact natural average realized behavior regret at a random prefix. -/</span>
+<span id="L78">78 noncomputable def selfConsistentScheduledNaturalCausalRandomPrefixAverageRealizedBehaviorRegretProcess</span>
+<span id="L79">79     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L80">80     [IsProbabilityMeasure initialState]</span>
+<span id="L81">81     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L82">82     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L83">83     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L84">84     (baseVisitFloor : Real)</span>
+<span id="L85">85     (randomPrefix : Nat -&gt;</span>
+<span id="L86">86       HeterogeneousStochasticEpisodeBatchTrajectory mdp</span>
+<span id="L87">87         (fun t =&gt;</span>
+<span id="L88">88           AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L89">89             mdp varianceProxy baseVisitFloor t) -&gt; Nat)</span>
+<span id="L90">90     (scheduleIndex : Nat) :</span>
+<span id="L91">91     HeterogeneousStochasticEpisodeBatchTrajectory mdp</span>
+<span id="L92">92         (fun t =&gt;</span>
+<span id="L93">93           AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L94">94             mdp varianceProxy baseVisitFloor t) -&gt; Real :=</span>
+<span id="L95">95   fun trajectory =&gt;</span>
+<span id="L96">96     selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess</span>
+<span id="L97">97       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L98">98         baseVisitFloor (randomPrefix scheduleIndex trajectory) trajectory</span>
+<span id="L99">99 </span>
+<span id="L100">100 @[simp]</span>
+<span id="L101">101 theorem selfConsistentScheduledNaturalCausalRandomPrefixAverageRealizedBehaviorRegretProcess_apply</span>
+<span id="L102">102     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L103">103     [IsProbabilityMeasure initialState]</span>
+<span id="L104">104     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L105">105     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L106">106     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L107">107     (baseVisitFloor : Real)</span>
+<span id="L108">108     (randomPrefix : Nat -&gt;</span>
+<span id="L109">109       HeterogeneousStochasticEpisodeBatchTrajectory mdp</span>
+<span id="L110">110         (fun t =&gt;</span>
+<span id="L111">111           AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L112">112             mdp varianceProxy baseVisitFloor t) -&gt; Nat)</span>
+<span id="L113">113     (scheduleIndex : Nat)</span>
+<span id="L114">114     (trajectory : HeterogeneousStochasticEpisodeBatchTrajectory mdp</span>
+<span id="L115">115       (fun t =&gt;</span>
+<span id="L116">116         AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L117">117           mdp varianceProxy baseVisitFloor t)) :</span>
+<span id="L118">118     selfConsistentScheduledNaturalCausalRandomPrefixAverageRealizedBehaviorRegretProcess</span>
+<span id="L119">119         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L120">120           baseVisitFloor randomPrefix scheduleIndex trajectory =</span>
+<span id="L121">121       selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess</span>
+<span id="L122">122         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L123">123           baseVisitFloor (randomPrefix scheduleIndex trajectory) trajectory := by</span>
+<span id="L124">124   rfl</span>
+<span id="L125">125 </span>
+<span id="L126">126 /-- Every coordinate of the exact random-prefix process is measurable. -/</span>
+<span id="L127">127 theorem measurable_selfConsistentScheduledNaturalCausalRandomPrefixAverageRealizedBehaviorRegretProcess</span>
+<span id="L128">128     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L129">129     [IsProbabilityMeasure initialState]</span>
+<span id="L130">130     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L131">131     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L132">132     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L133">133     (baseVisitFloor : Real)</span>
+<span id="L134">134     (randomPrefix : Nat -&gt;</span>
+<span id="L135">135       HeterogeneousStochasticEpisodeBatchTrajectory mdp</span>
+<span id="L136">136         (fun t =&gt;</span>
+<span id="L137">137           AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L138">138             mdp varianceProxy baseVisitFloor t) -&gt; Nat)</span>
+<span id="L139">139     (scheduleIndex : Nat) (hrandomPrefix : Measurable (randomPrefix scheduleIndex)) :</span>
+<span id="L140">140     Measurable</span>
+<span id="L141">141       (selfConsistentScheduledNaturalCausalRandomPrefixAverageRealizedBehaviorRegretProcess</span>
+<span id="L142">142         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L143">143           baseVisitFloor randomPrefix scheduleIndex) := by</span>
+<span id="L144">144   unfold selfConsistentScheduledNaturalCausalRandomPrefixAverageRealizedBehaviorRegretProcess</span>
+<span id="L145">145   exact measurable_apply_randomNat</span>
+<span id="L146">146     (fun rounds =&gt;</span>
+<span id="L147">147       selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess</span>
+<span id="L148">148         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L149">149           baseVisitFloor rounds)</span>
+<span id="L150">150     (randomPrefix scheduleIndex)</span>
+<span id="L151">151     (fun rounds =&gt;</span>
+<span id="L152">152       measurable_selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess</span>
+<span id="L153">153         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L154">154           baseVisitFloor rounds)</span>
+<span id="L155">155     hrandomPrefix</span>
+<span id="L156">156 </span>
+<span id="L157">157 /--</span>
+<span id="L158">158 The exact natural average realized behavior regret remains almost-surely</span>
+<span id="L159">159 consistent at every measurable random prefix which diverges almost everywhere.</span>
+<span id="L160">160 -/</span>
+<span id="L161">161 theorem selfConsistentScheduledCausalSource_randomPrefixNaturalAverageRealizedBehaviorRegret_tendstoAlmostEverywhere_zero</span>
+<span id="L162">162     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L163">163     [IsProbabilityMeasure initialState]</span>
+<span id="L164">164     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L165">165     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L166">166     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L167">167     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L168">168     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L169">169     (defaultState : State)</span>
+<span id="L170">170     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L171">171     (baseVisitFloor : Real)</span>
+<span id="L172">172     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L173">173     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L174">174     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L175">175     (randomPrefix : Nat -&gt;</span>
+<span id="L176">176       HeterogeneousStochasticEpisodeBatchTrajectory mdp</span>
+<span id="L177">177         (fun t =&gt;</span>
+<span id="L178">178           AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L179">179             mdp varianceProxy baseVisitFloor t) -&gt; Nat)</span>
+<span id="L180">180     (hrandomPrefixMeasurable : forall n, Measurable (randomPrefix n))</span>
+<span id="L181">181     (hrandomPrefixDiverges :</span>
+<span id="L182">182       ∀ᵐ trajectory ∂</span>
+<span id="L183">183         (selfConsistentScheduledCausalSource mdp initialState rewardSource</span>
+<span id="L184">184           initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure,</span>
+<span id="L185">185         Tendsto (fun n =&gt; randomPrefix n trajectory) atTop atTop) :</span>
+<span id="L186">186     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L187">187       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L188">188     (forall n,</span>
+<span id="L189">189       Measurable</span>
+<span id="L190">190         (selfConsistentScheduledNaturalCausalRandomPrefixAverageRealizedBehaviorRegretProcess</span>
+<span id="L191">191           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L192">192             baseVisitFloor randomPrefix n)) /\</span>
+<span id="L193">193       ∀ᵐ trajectory ∂source.trajectoryMeasure,</span>
+<span id="L194">194         Tendsto</span>
+<span id="L195">195           (fun n =&gt;</span>
+<span id="L196">196             selfConsistentScheduledNaturalCausalRandomPrefixAverageRealizedBehaviorRegretProcess</span>
+<span id="L197">197               mdp initialState rewardSource initialTable defaultState</span>
+<span id="L198">198                 varianceProxy baseVisitFloor randomPrefix n trajectory)</span>
+<span id="L199">199           atTop (nhds 0) := by</span>
+<span id="L200">200   dsimp only</span>
+<span id="L201">201   refine ⟨fun n =&gt;</span>
+<span id="L202">202     measurable_selfConsistentScheduledNaturalCausalRandomPrefixAverageRealizedBehaviorRegretProcess</span>
+<span id="L203">203       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L204">204         baseVisitFloor randomPrefix n (hrandomPrefixMeasurable n), ?_⟩</span>
+<span id="L205">205   have hparent :=</span>
+<span id="L206">206     selfConsistentScheduledCausalSource_naturalAverageRealizedBehaviorRegret_tendstoAlmostEverywhere_zero</span>
+<span id="L207">207       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L208">208         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L209">209           hbaseVisitFloor</span>
+<span id="L210">210   have hcomposed :=</span>
+<span id="L211">211     ae_tendsto_apply_randomPrefix</span>
+<span id="L212">212       (process := fun rounds trajectory =&gt;</span>
+<span id="L213">213         selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess</span>
+<span id="L214">214           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L215">215             baseVisitFloor rounds trajectory)</span>
+<span id="L216">216       (randomPrefix := randomPrefix) hparent.2 hrandomPrefixDiverges</span>
+<span id="L217">217   simpa [selfConsistentScheduledNaturalCausalRandomPrefixAverageRealizedBehaviorRegretProcess]</span>
+<span id="L218">218     using hcomposed</span>
+<span id="L219">219 </span>
+<span id="L220">220 /-- A pointwise lower envelope is a practical sufficient random-prefix contract. -/</span>
+<span id="L221">221 theorem selfConsistentScheduledCausalSource_randomPrefixNaturalAverageRealizedBehaviorRegret_tendstoAlmostEverywhere_zero_of_nat_le</span>
+<span id="L222">222     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L223">223     [IsProbabilityMeasure initialState]</span>
+<span id="L224">224     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L225">225     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L226">226     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L227">227     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L228">228     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L229">229     (defaultState : State)</span>
+<span id="L230">230     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L231">231     (baseVisitFloor : Real)</span>
+<span id="L232">232     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L233">233     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L234">234     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L235">235     (randomPrefix : Nat -&gt;</span>
+<span id="L236">236       HeterogeneousStochasticEpisodeBatchTrajectory mdp</span>
+<span id="L237">237         (fun t =&gt;</span>
+<span id="L238">238           AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L239">239             mdp varianceProxy baseVisitFloor t) -&gt; Nat)</span>
+<span id="L240">240     (hrandomPrefixMeasurable : forall n, Measurable (randomPrefix n))</span>
+<span id="L241">241     (hrandomPrefixLower : forall n trajectory, n &lt;= randomPrefix n trajectory) :</span>
+<span id="L242">242     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L243">243       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L244">244     (forall n,</span>
+<span id="L245">245       Measurable</span>
+<span id="L246">246         (selfConsistentScheduledNaturalCausalRandomPrefixAverageRealizedBehaviorRegretProcess</span>
+<span id="L247">247           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L248">248             baseVisitFloor randomPrefix n)) /\</span>
+<span id="L249">249       ∀ᵐ trajectory ∂source.trajectoryMeasure,</span>
+<span id="L250">250         Tendsto</span>
+<span id="L251">251           (fun n =&gt;</span>
+<span id="L252">252             selfConsistentScheduledNaturalCausalRandomPrefixAverageRealizedBehaviorRegretProcess</span>
+<span id="L253">253               mdp initialState rewardSource initialTable defaultState</span>
+<span id="L254">254                 varianceProxy baseVisitFloor randomPrefix n trajectory)</span>
+<span id="L255">255           atTop (nhds 0) := by</span>
+<span id="L256">256   apply</span>
+<span id="L257">257     selfConsistentScheduledCausalSource_randomPrefixNaturalAverageRealizedBehaviorRegret_tendstoAlmostEverywhere_zero</span>
+<span id="L258">258       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L259">259         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L260">260           hbaseVisitFloor randomPrefix hrandomPrefixMeasurable</span>
+<span id="L261">261   exact Filter.Eventually.of_forall fun trajectory =&gt;</span>
+<span id="L262">262     tendsto_randomPrefix_atTop_of_nat_le randomPrefix hrandomPrefixLower trajectory</span>
+<span id="L263">263 </span>
+<span id="L264">264 end AdaptiveStochasticSampledEmpiricalOptimisticSource</span>
+<span id="L265">265 </span>
+<span id="L266">266 end FiniteHorizonRL</span>
+<span id="L267">267 </span>
+<span id="L268">268 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

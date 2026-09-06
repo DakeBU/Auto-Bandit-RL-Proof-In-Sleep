@@ -1,0 +1,1498 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedBehaviorExpectedRegretAndReturnDeviationL1TruncationEquivalence.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedBehaviorExpectedRegretAndReturnDeviationL1TruncationEquivalence.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedBehaviorExpectedRegretAndReturnDeviationL1TruncationEquivalence.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedBehaviorExpectedRegretAndReturnDeviationL1TruncationEquivalence.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterL1TruncationEquivalence</span>
+<span id="L2">2 import BanditRLProof.RL.FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppedBehaviorExpectedRegretAndReturnDeviationL1Consistency</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Componentwise L1 truncation for stopped policy-value semantics</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module transports the genuine uncapped `hittingAfter` policy-value and</span>
+<span id="L8">8 return-deviation semantics to the capped double-linear first-passage prefix.</span>
+<span id="L9">9 It proves exponent-one norm replacement for both semantic components on the</span>
+<span id="L10">10 exact generated trajectory law.</span>
+<span id="L11">11 </span>
+<span id="L12">12 No expectation is commuted through a random index.  The result is not an</span>
+<span id="L13">13 optional-stopping theorem and does not assert finite-index equality.</span>
+<span id="L14">14 -/</span>
+<span id="L15">15 </span>
+<span id="L16">16 open Filter MeasureTheory ProbabilityTheory</span>
+<span id="L17">17 open scoped ENNReal NNReal ProbabilityTheory Topology</span>
+<span id="L18">18 </span>
+<span id="L19">19 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L20">20 </span>
+<span id="L21">21 universe u v</span>
+<span id="L22">22 </span>
+<span id="L23">23 variable {State : Type u} {Action : Type v}</span>
+<span id="L24">24     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L25">25     [Fintype State] [Fintype Action]</span>
+<span id="L26">26     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L27">27     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L28">28     [Nonempty State] [Nonempty Action]</span>
+<span id="L29">29 </span>
+<span id="L30">30 namespace AdaptiveStochasticSampledEmpiricalOptimisticSource</span>
+<span id="L31">31 </span>
+<span id="L32">32 /-- The capped inverse-square-root first-passage prefix diverges after</span>
+<span id="L33">33 `WithTop.untopA`, almost surely. -/</span>
+<span id="L34">34 theorem</span>
+<span id="L35">35     ae_tendsto_untopA_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix_atTop</span>
+<span id="L36">36     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L37">37     [IsProbabilityMeasure initialState]</span>
+<span id="L38">38     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L39">39     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L40">40     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L41">41     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L42">42     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L43">43     (defaultState : State)</span>
+<span id="L44">44     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L45">45     (baseVisitFloor : Real)</span>
+<span id="L46">46     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L47">47     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L48">48     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L49">49     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L50">50       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L51">51     ∀ᵐ trajectory ∂source.trajectoryMeasure,</span>
+<span id="L52">52       Tendsto</span>
+<span id="L53">53         (fun scheduleIndex =&gt;</span>
+<span id="L54">54           (selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L55">55             mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L56">56               baseVisitFloor scheduleIndex trajectory).untopA)</span>
+<span id="L57">57         atTop atTop := by</span>
+<span id="L58">58   dsimp only</span>
+<span id="L59">59   have heventually :=</span>
+<span id="L60">60     ae_eventually_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix_eq_base</span>
+<span id="L61">61       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L62">62         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L63">63           hbaseVisitFloor</span>
+<span id="L64">64   filter_upwards [heventually] with trajectory htrajectory</span>
+<span id="L65">65   apply explicitHighProbabilityRounds_tendsto_atTop.congr&#x27;</span>
+<span id="L66">66   filter_upwards [htrajectory] with scheduleIndex heq</span>
+<span id="L67">67   rw [heq]</span>
+<span id="L68">68   rfl</span>
+<span id="L69">69 </span>
+<span id="L70">70 /-- Capped and uncapped stopped policy-value and return-deviation coordinates</span>
+<span id="L71">71 are eventually exactly equal, almost surely. -/</span>
+<span id="L72">72 theorem</span>
+<span id="L73">73     ae_eventually_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedBehaviorExpectedRegret_and_returnDeviation_eq</span>
+<span id="L74">74     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L75">75     [IsProbabilityMeasure initialState]</span>
+<span id="L76">76     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L77">77     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L78">78     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L79">79     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L80">80     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L81">81     (defaultState : State)</span>
+<span id="L82">82     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L83">83     (baseVisitFloor : Real)</span>
+<span id="L84">84     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L85">85     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L86">86     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L87">87     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L88">88       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L89">89     let cappedStoppingPrefix :=</span>
+<span id="L90">90       selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L91">91         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L92">92           baseVisitFloor</span>
+<span id="L93">93     let uncappedStoppingPrefix :=</span>
+<span id="L94">94       selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L95">95         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L96">96           baseVisitFloor</span>
+<span id="L97">97     let cappedBehavior :=</span>
+<span id="L98">98       selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L99">99         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L100">100           baseVisitFloor cappedStoppingPrefix</span>
+<span id="L101">101     let uncappedBehavior :=</span>
+<span id="L102">102       selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L103">103         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L104">104           baseVisitFloor uncappedStoppingPrefix</span>
+<span id="L105">105     let cappedReturn :=</span>
+<span id="L106">106       selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess</span>
+<span id="L107">107         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L108">108           baseVisitFloor cappedStoppingPrefix</span>
+<span id="L109">109     let uncappedReturn :=</span>
+<span id="L110">110       selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess</span>
+<span id="L111">111         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L112">112           baseVisitFloor uncappedStoppingPrefix</span>
+<span id="L113">113     ∀ᵐ trajectory ∂source.trajectoryMeasure,</span>
+<span id="L114">114       ∀ᶠ scheduleIndex in atTop,</span>
+<span id="L115">115         cappedBehavior scheduleIndex trajectory =</span>
+<span id="L116">116             uncappedBehavior scheduleIndex trajectory ∧</span>
+<span id="L117">117           cappedReturn scheduleIndex trajectory =</span>
+<span id="L118">118             uncappedReturn scheduleIndex trajectory := by</span>
+<span id="L119">119   dsimp only</span>
+<span id="L120">120   have hcapped :=</span>
+<span id="L121">121     ae_eventually_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix_eq_base</span>
+<span id="L122">122       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L123">123         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L124">124           hbaseVisitFloor</span>
+<span id="L125">125   have huncapped :=</span>
+<span id="L126">126     ae_eventually_selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix_eq_base</span>
+<span id="L127">127       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L128">128         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L129">129           hbaseVisitFloor</span>
+<span id="L130">130   filter_upwards [hcapped, huncapped] with trajectory hcap huncap</span>
+<span id="L131">131   filter_upwards [hcap, huncap] with scheduleIndex hcapEq huncapEq</span>
+<span id="L132">132   constructor &lt;;&gt;</span>
+<span id="L133">133     simp only [</span>
+<span id="L134">134       selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess_apply,</span>
+<span id="L135">135       selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess_apply,</span>
+<span id="L136">136       hcapEq, huncapEq]</span>
+<span id="L137">137 </span>
+<span id="L138">138 /-- The capped stopped behavior expected-regret process converges almost</span>
+<span id="L139">139 everywhere. -/</span>
+<span id="L140">140 theorem</span>
+<span id="L141">141     selfConsistentScheduledCausalSource_inverseSqrtThresholdCapped_stoppedBehaviorExpectedRegret_tendstoAlmostEverywhere_zero</span>
+<span id="L142">142     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L143">143     [IsProbabilityMeasure initialState]</span>
+<span id="L144">144     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L145">145     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L146">146     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L147">147     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L148">148     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L149">149     (defaultState : State)</span>
+<span id="L150">150     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L151">151     (baseVisitFloor : Real)</span>
+<span id="L152">152     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L153">153     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L154">154     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L155">155     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L156">156       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L157">157     let stoppingPrefix :=</span>
+<span id="L158">158       selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L159">159         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L160">160           baseVisitFloor</span>
+<span id="L161">161     let behaviorProcess :=</span>
+<span id="L162">162       selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L163">163         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L164">164           baseVisitFloor stoppingPrefix</span>
+<span id="L165">165     ∀ᵐ trajectory ∂source.trajectoryMeasure,</span>
+<span id="L166">166       Tendsto (fun scheduleIndex =&gt; behaviorProcess scheduleIndex trajectory)</span>
+<span id="L167">167         atTop (nhds 0) := by</span>
+<span id="L168">168   dsimp only</span>
+<span id="L169">169   have hprocess :=</span>
+<span id="L170">170     selfConsistentScheduledCausalSource_naturalAverageBehaviorExpectedRegret_tendstoAlmostEverywhere_zero</span>
+<span id="L171">171       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L172">172         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L173">173           hbaseVisitFloor</span>
+<span id="L174">174   have hprefix :=</span>
+<span id="L175">175     ae_tendsto_untopA_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix_atTop</span>
+<span id="L176">176       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L177">177         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L178">178           hbaseVisitFloor</span>
+<span id="L179">179   simpa [</span>
+<span id="L180">180     selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess,</span>
+<span id="L181">181     stoppedValue] using</span>
+<span id="L182">182       (ae_tendsto_apply_randomPrefix hprocess hprefix)</span>
+<span id="L183">183 </span>
+<span id="L184">184 /-- Every capped stopped behavior expected-regret coordinate is measurable. -/</span>
+<span id="L185">185 theorem</span>
+<span id="L186">186     measurable_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedBehaviorExpectedRegret</span>
+<span id="L187">187     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L188">188     [IsProbabilityMeasure initialState]</span>
+<span id="L189">189     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L190">190     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L191">191     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L192">192     (baseVisitFloor : Real) (scheduleIndex : Nat) :</span>
+<span id="L193">193     Measurable</span>
+<span id="L194">194       (selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L195">195         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L196">196           baseVisitFloor</span>
+<span id="L197">197           (selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L198">198             mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L199">199               baseVisitFloor)</span>
+<span id="L200">200           scheduleIndex) := by</span>
+<span id="L201">201   exact</span>
+<span id="L202">202     measurable_selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L203">203       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L204">204         baseVisitFloor _ scheduleIndex (by</span>
+<span id="L205">205           simpa [</span>
+<span id="L206">206             selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix] using</span>
+<span id="L207">207             (selfConsistentScheduledNaturalCausalCappedDoubleLinearRawWindowFirstPassageStoppingPrefix_isStoppingTime</span>
+<span id="L208">208               mdp initialState rewardSource initialTable defaultState</span>
+<span id="L209">209                 varianceProxy baseVisitFloor</span>
+<span id="L210">210                   selfConsistentScheduledNaturalCausalInverseSqrtFirstPassageThreshold</span>
+<span id="L211">211                     scheduleIndex))</span>
+<span id="L212">212 </span>
+<span id="L213">213 /-- Every capped stopped behavior expected-regret coordinate belongs to</span>
+<span id="L214">214 `L1`. -/</span>
+<span id="L215">215 theorem</span>
+<span id="L216">216     memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedBehaviorExpectedRegret</span>
+<span id="L217">217     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L218">218     [IsProbabilityMeasure initialState]</span>
+<span id="L219">219     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L220">220     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L221">221     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L222">222     (baseVisitFloor : Real)</span>
+<span id="L223">223     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L224">224     (scheduleIndex : Nat) :</span>
+<span id="L225">225     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L226">226       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L227">227     let stoppingPrefix :=</span>
+<span id="L228">228       selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L229">229         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L230">230           baseVisitFloor</span>
+<span id="L231">231     let behaviorProcess :=</span>
+<span id="L232">232       selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L233">233         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L234">234           baseVisitFloor stoppingPrefix</span>
+<span id="L235">235     MemLp (behaviorProcess scheduleIndex) 1 source.trajectoryMeasure := by</span>
+<span id="L236">236   dsimp only</span>
+<span id="L237">237   rw [memLp_one_iff_integrable]</span>
+<span id="L238">238   refine Integrable.of_bound</span>
+<span id="L239">239     (measurable_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedBehaviorExpectedRegret</span>
+<span id="L240">240       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L241">241         baseVisitFloor scheduleIndex).aestronglyMeasurable</span>
+<span id="L242">242     (2 * (mdp.horizon : Real)) ?_</span>
+<span id="L243">243   exact Filter.Eventually.of_forall fun trajectory =&gt; by</span>
+<span id="L244">244     rw [Real.norm_eq_abs, abs_of_nonneg]</span>
+<span id="L245">245     · exact</span>
+<span id="L246">246         selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess_le_two_mul_horizon</span>
+<span id="L247">247           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L248">248             baseVisitFloor hrewardBound _ scheduleIndex trajectory</span>
+<span id="L249">249     · exact</span>
+<span id="L250">250         selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess_nonneg</span>
+<span id="L251">251           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L252">252             baseVisitFloor _ scheduleIndex trajectory</span>
+<span id="L253">253 </span>
+<span id="L254">254 /-- The exponent-one norm of the capped stopped behavior expected regret</span>
+<span id="L255">255 tends to zero. -/</span>
+<span id="L256">256 theorem</span>
+<span id="L257">257     eLpNorm_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedBehaviorExpectedRegret_tendsto_zero</span>
+<span id="L258">258     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L259">259     [IsProbabilityMeasure initialState]</span>
+<span id="L260">260     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L261">261     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L262">262     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L263">263     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L264">264     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L265">265     (defaultState : State)</span>
+<span id="L266">266     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L267">267     (baseVisitFloor : Real)</span>
+<span id="L268">268     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L269">269     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L270">270     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L271">271     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L272">272       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L273">273     let stoppingPrefix :=</span>
+<span id="L274">274       selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L275">275         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L276">276           baseVisitFloor</span>
+<span id="L277">277     let behaviorProcess :=</span>
+<span id="L278">278       selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L279">279         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L280">280           baseVisitFloor stoppingPrefix</span>
+<span id="L281">281     Tendsto</span>
+<span id="L282">282       (fun scheduleIndex =&gt;</span>
+<span id="L283">283         eLpNorm (behaviorProcess scheduleIndex) 1 source.trajectoryMeasure)</span>
+<span id="L284">284       atTop (nhds 0) := by</span>
+<span id="L285">285   dsimp only</span>
+<span id="L286">286   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L287">287     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L288">288   let stoppingPrefix :=</span>
+<span id="L289">289     selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L290">290       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L291">291         baseVisitFloor</span>
+<span id="L292">292   let behaviorProcess :=</span>
+<span id="L293">293     selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L294">294       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L295">295         baseVisitFloor stoppingPrefix</span>
+<span id="L296">296   have hmeas : forall scheduleIndex,</span>
+<span id="L297">297       AEStronglyMeasurable (behaviorProcess scheduleIndex)</span>
+<span id="L298">298         source.trajectoryMeasure := fun scheduleIndex =&gt;</span>
+<span id="L299">299     (measurable_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedBehaviorExpectedRegret</span>
+<span id="L300">300       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L301">301         baseVisitFloor scheduleIndex).aestronglyMeasurable</span>
+<span id="L302">302   have hbound : exists C : Real, ∀ᶠ scheduleIndex in atTop,</span>
+<span id="L303">303       ∀ᵐ trajectory ∂source.trajectoryMeasure,</span>
+<span id="L304">304         ‖behaviorProcess scheduleIndex trajectory‖ &lt;= C := by</span>
+<span id="L305">305     refine ⟨2 * (mdp.horizon : Real),</span>
+<span id="L306">306       Filter.Eventually.of_forall fun scheduleIndex =&gt;</span>
+<span id="L307">307         Filter.Eventually.of_forall fun trajectory =&gt; ?_⟩</span>
+<span id="L308">308     rw [Real.norm_eq_abs, abs_of_nonneg]</span>
+<span id="L309">309     · exact</span>
+<span id="L310">310         selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess_le_two_mul_horizon</span>
+<span id="L311">311           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L312">312             baseVisitFloor hrewardBound stoppingPrefix scheduleIndex trajectory</span>
+<span id="L313">313     · exact</span>
+<span id="L314">314         selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess_nonneg</span>
+<span id="L315">315           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L316">316             baseVisitFloor stoppingPrefix scheduleIndex trajectory</span>
+<span id="L317">317   have hlimit : ∀ᵐ trajectory ∂source.trajectoryMeasure,</span>
+<span id="L318">318       Tendsto (fun scheduleIndex =&gt; behaviorProcess scheduleIndex trajectory)</span>
+<span id="L319">319         atTop (nhds 0) := by</span>
+<span id="L320">320     simpa only [source, stoppingPrefix, behaviorProcess] using</span>
+<span id="L321">321       (selfConsistentScheduledCausalSource_inverseSqrtThresholdCapped_stoppedBehaviorExpectedRegret_tendstoAlmostEverywhere_zero</span>
+<span id="L322">322         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L323">323           defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L324">324             hbaseVisitFloor)</span>
+<span id="L325">325   have hintegral :</span>
+<span id="L326">326       Tendsto (fun scheduleIndex =&gt;</span>
+<span id="L327">327         integral source.trajectoryMeasure (behaviorProcess scheduleIndex))</span>
+<span id="L328">328         atTop (nhds 0) := by</span>
+<span id="L329">329     simpa using</span>
+<span id="L330">330       (tendsto_integral_filter_of_norm_le_const</span>
+<span id="L331">331         (l := atTop) (μ := source.trajectoryMeasure)</span>
+<span id="L332">332         (F := behaviorProcess) (f := fun _ =&gt; (0 : Real))</span>
+<span id="L333">333         (Filter.Eventually.of_forall hmeas) hbound hlimit)</span>
+<span id="L334">334   have habs :</span>
+<span id="L335">335       (fun scheduleIndex =&gt; integral source.trajectoryMeasure</span>
+<span id="L336">336         (fun trajectory =&gt; |behaviorProcess scheduleIndex trajectory|)) =</span>
+<span id="L337">337       (fun scheduleIndex =&gt;</span>
+<span id="L338">338         integral source.trajectoryMeasure (behaviorProcess scheduleIndex)) := by</span>
+<span id="L339">339     funext scheduleIndex</span>
+<span id="L340">340     apply integral_congr_ae</span>
+<span id="L341">341     exact Filter.Eventually.of_forall fun trajectory =&gt;</span>
+<span id="L342">342       abs_of_nonneg</span>
+<span id="L343">343         (selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess_nonneg</span>
+<span id="L344">344           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L345">345             baseVisitFloor stoppingPrefix scheduleIndex trajectory)</span>
+<span id="L346">346   have habsLimit : Tendsto</span>
+<span id="L347">347       (fun scheduleIndex =&gt; integral source.trajectoryMeasure</span>
+<span id="L348">348         (fun trajectory =&gt; |behaviorProcess scheduleIndex trajectory|))</span>
+<span id="L349">349       atTop (nhds 0) := by</span>
+<span id="L350">350     rw [habs]</span>
+<span id="L351">351     exact hintegral</span>
+<span id="L352">352   have hofReal := (ENNReal.continuous_ofReal.tendsto 0).comp habsLimit</span>
+<span id="L353">353   have hnormEq : forall scheduleIndex,</span>
+<span id="L354">354       eLpNorm (behaviorProcess scheduleIndex) 1 source.trajectoryMeasure =</span>
+<span id="L355">355         ENNReal.ofReal</span>
+<span id="L356">356           (integral source.trajectoryMeasure</span>
+<span id="L357">357             (fun trajectory =&gt; |behaviorProcess scheduleIndex trajectory|)) :=</span>
+<span id="L358">358     fun scheduleIndex =&gt; by</span>
+<span id="L359">359       rw [MemLp.eLpNorm_eq_integral_rpow_norm one_ne_zero ENNReal.one_ne_top]</span>
+<span id="L360">360       · simp [Real.norm_eq_abs]</span>
+<span id="L361">361       · simpa only [source, stoppingPrefix, behaviorProcess] using</span>
+<span id="L362">362           (memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedBehaviorExpectedRegret</span>
+<span id="L363">363             mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L364">364               baseVisitFloor hrewardBound scheduleIndex)</span>
+<span id="L365">365   change Tendsto</span>
+<span id="L366">366     (fun scheduleIndex =&gt;</span>
+<span id="L367">367       eLpNorm (behaviorProcess scheduleIndex) 1 source.trajectoryMeasure)</span>
+<span id="L368">368     atTop (nhds 0)</span>
+<span id="L369">369   simpa only [Function.comp_apply, ENNReal.ofReal_zero, hnormEq] using hofReal</span>
+<span id="L370">370 </span>
+<span id="L371">371 /-- Signed expectation of the capped stopped behavior expected regret tends</span>
+<span id="L372">372 to zero. -/</span>
+<span id="L373">373 theorem</span>
+<span id="L374">374     selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedBehaviorExpectedRegretIntegral_tendsto_zero</span>
+<span id="L375">375     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L376">376     [IsProbabilityMeasure initialState]</span>
+<span id="L377">377     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L378">378     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L379">379     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L380">380     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L381">381     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L382">382     (defaultState : State)</span>
+<span id="L383">383     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L384">384     (baseVisitFloor : Real)</span>
+<span id="L385">385     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L386">386     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L387">387     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L388">388     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L389">389       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L390">390     let stoppingPrefix :=</span>
+<span id="L391">391       selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L392">392         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L393">393           baseVisitFloor</span>
+<span id="L394">394     let behaviorProcess :=</span>
+<span id="L395">395       selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L396">396         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L397">397           baseVisitFloor stoppingPrefix</span>
+<span id="L398">398     Tendsto</span>
+<span id="L399">399       (fun scheduleIndex =&gt;</span>
+<span id="L400">400         integral source.trajectoryMeasure (behaviorProcess scheduleIndex))</span>
+<span id="L401">401       atTop (nhds 0) := by</span>
+<span id="L402">402   dsimp only</span>
+<span id="L403">403   exact integral_tendsto_zero_of_memLp_one_of_eLpNorm_tendsto_zero</span>
+<span id="L404">404     (fun scheduleIndex =&gt;</span>
+<span id="L405">405       memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedBehaviorExpectedRegret</span>
+<span id="L406">406         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L407">407           baseVisitFloor hrewardBound scheduleIndex)</span>
+<span id="L408">408     (eLpNorm_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedBehaviorExpectedRegret_tendsto_zero</span>
+<span id="L409">409       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L410">410         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L411">411           hbaseVisitFloor)</span>
+<span id="L412">412 </span>
+<span id="L413">413 /-- Every capped stopped return-deviation coordinate belongs to `L1`. -/</span>
+<span id="L414">414 theorem</span>
+<span id="L415">415     memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedReturnDeviation</span>
+<span id="L416">416     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L417">417     [IsProbabilityMeasure initialState]</span>
+<span id="L418">418     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L419">419     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L420">420     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L421">421     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L422">422     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L423">423     (defaultState : State)</span>
+<span id="L424">424     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L425">425     (baseVisitFloor : Real)</span>
+<span id="L426">426     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L427">427     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L428">428     (hhorizon : 4 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L429">429     (scheduleIndex : Nat) :</span>
+<span id="L430">430     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L431">431       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L432">432     let stoppingPrefix :=</span>
+<span id="L433">433       selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L434">434         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L435">435           baseVisitFloor</span>
+<span id="L436">436     let returnProcess :=</span>
+<span id="L437">437       selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess</span>
+<span id="L438">438         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L439">439           baseVisitFloor stoppingPrefix</span>
+<span id="L440">440     MemLp (returnProcess scheduleIndex) 1 source.trajectoryMeasure := by</span>
+<span id="L441">441   dsimp only</span>
+<span id="L442">442   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L443">443     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L444">444   let stoppingPrefix :=</span>
+<span id="L445">445     selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L446">446       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L447">447         baseVisitFloor</span>
+<span id="L448">448   let behaviorProcess :=</span>
+<span id="L449">449     selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L450">450       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L451">451         baseVisitFloor stoppingPrefix</span>
+<span id="L452">452   let realizedProcess :=</span>
+<span id="L453">453     selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess</span>
+<span id="L454">454       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L455">455         baseVisitFloor stoppingPrefix</span>
+<span id="L456">456   let returnProcess :=</span>
+<span id="L457">457     selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess</span>
+<span id="L458">458       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L459">459         baseVisitFloor stoppingPrefix</span>
+<span id="L460">460   have hbehavior : MemLp (behaviorProcess scheduleIndex) 1</span>
+<span id="L461">461       source.trajectoryMeasure := by</span>
+<span id="L462">462     simpa only [source, stoppingPrefix, behaviorProcess] using</span>
+<span id="L463">463       (memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedBehaviorExpectedRegret</span>
+<span id="L464">464         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L465">465           baseVisitFloor hrewardBound scheduleIndex)</span>
+<span id="L466">466   have hrealized : MemLp (realizedProcess scheduleIndex) 1</span>
+<span id="L467">467       source.trajectoryMeasure := by</span>
+<span id="L468">468     simpa only [source, stoppingPrefix, realizedProcess] using</span>
+<span id="L469">469       (memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedAverageRealizedBehaviorRegret</span>
+<span id="L470">470         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L471">471           defaultState support baseVisitFloor hbaseFloor hrewardBound</span>
+<span id="L472">472             (lt_trans (by decide : 0 &lt; 4) hhorizon) hbaseVisitFloor scheduleIndex)</span>
+<span id="L473">473   have heq : returnProcess scheduleIndex =ᵐ[source.trajectoryMeasure]</span>
+<span id="L474">474       behaviorProcess scheduleIndex - realizedProcess scheduleIndex :=</span>
+<span id="L475">475     Filter.Eventually.of_forall fun trajectory =&gt; by</span>
+<span id="L476">476       have hdecomp :=</span>
+<span id="L477">477         selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess_eq_behaviorExpected_sub_returnDeviation</span>
+<span id="L478">478           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L479">479             baseVisitFloor stoppingPrefix scheduleIndex trajectory</span>
+<span id="L480">480       change realizedProcess scheduleIndex trajectory =</span>
+<span id="L481">481         behaviorProcess scheduleIndex trajectory -</span>
+<span id="L482">482           returnProcess scheduleIndex trajectory at hdecomp</span>
+<span id="L483">483       change returnProcess scheduleIndex trajectory =</span>
+<span id="L484">484         behaviorProcess scheduleIndex trajectory -</span>
+<span id="L485">485           realizedProcess scheduleIndex trajectory</span>
+<span id="L486">486       linarith</span>
+<span id="L487">487   exact (memLp_congr_ae heq).mpr (hbehavior.sub hrealized)</span>
+<span id="L488">488 </span>
+<span id="L489">489 /-- Exponent-one norm of the capped stopped return deviation tends to zero. -/</span>
+<span id="L490">490 theorem</span>
+<span id="L491">491     eLpNorm_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedReturnDeviation_tendsto_zero</span>
+<span id="L492">492     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L493">493     [IsProbabilityMeasure initialState]</span>
+<span id="L494">494     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L495">495     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L496">496     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L497">497     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L498">498     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L499">499     (defaultState : State)</span>
+<span id="L500">500     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L501">501     (baseVisitFloor : Real)</span>
+<span id="L502">502     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L503">503     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L504">504     (hhorizon : 4 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L505">505     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L506">506       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L507">507     let stoppingPrefix :=</span>
+<span id="L508">508       selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L509">509         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L510">510           baseVisitFloor</span>
+<span id="L511">511     let returnProcess :=</span>
+<span id="L512">512       selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess</span>
+<span id="L513">513         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L514">514           baseVisitFloor stoppingPrefix</span>
+<span id="L515">515     Tendsto</span>
+<span id="L516">516       (fun scheduleIndex =&gt;</span>
+<span id="L517">517         eLpNorm (returnProcess scheduleIndex) 1 source.trajectoryMeasure)</span>
+<span id="L518">518       atTop (nhds 0) := by</span>
+<span id="L519">519   dsimp only</span>
+<span id="L520">520   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L521">521     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L522">522   let stoppingPrefix :=</span>
+<span id="L523">523     selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L524">524       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L525">525         baseVisitFloor</span>
+<span id="L526">526   let behaviorProcess :=</span>
+<span id="L527">527     selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L528">528       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L529">529         baseVisitFloor stoppingPrefix</span>
+<span id="L530">530   let realizedProcess :=</span>
+<span id="L531">531     selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess</span>
+<span id="L532">532       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L533">533         baseVisitFloor stoppingPrefix</span>
+<span id="L534">534   let returnProcess :=</span>
+<span id="L535">535     selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess</span>
+<span id="L536">536       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L537">537         baseVisitFloor stoppingPrefix</span>
+<span id="L538">538   have hbehaviorNorm : Tendsto</span>
+<span id="L539">539       (fun scheduleIndex =&gt;</span>
+<span id="L540">540         eLpNorm (behaviorProcess scheduleIndex) 1 source.trajectoryMeasure)</span>
+<span id="L541">541       atTop (nhds 0) := by</span>
+<span id="L542">542     simpa only [source, stoppingPrefix, behaviorProcess] using</span>
+<span id="L543">543       (eLpNorm_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedBehaviorExpectedRegret_tendsto_zero</span>
+<span id="L544">544         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L545">545           defaultState support baseVisitFloor hbaseFloor hrewardBound</span>
+<span id="L546">546             (lt_trans (by decide : 0 &lt; 4) hhorizon) hbaseVisitFloor)</span>
+<span id="L547">547   have hrealizedNorm : Tendsto</span>
+<span id="L548">548       (fun scheduleIndex =&gt;</span>
+<span id="L549">549         eLpNorm (realizedProcess scheduleIndex) 1 source.trajectoryMeasure)</span>
+<span id="L550">550       atTop (nhds 0) := by</span>
+<span id="L551">551     simpa only [source, stoppingPrefix, realizedProcess] using</span>
+<span id="L552">552       (eLpNorm_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedAverageRealizedBehaviorRegret_tendsto_zero</span>
+<span id="L553">553         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L554">554           defaultState support baseVisitFloor hbaseFloor hrewardBound</span>
+<span id="L555">555             (lt_trans (by decide : 0 &lt; 4) hhorizon) hbaseVisitFloor)</span>
+<span id="L556">556   have hsum : Tendsto</span>
+<span id="L557">557       (fun scheduleIndex =&gt;</span>
+<span id="L558">558         eLpNorm (behaviorProcess scheduleIndex) 1 source.trajectoryMeasure +</span>
+<span id="L559">559           eLpNorm (realizedProcess scheduleIndex) 1 source.trajectoryMeasure)</span>
+<span id="L560">560       atTop (nhds 0) := by</span>
+<span id="L561">561     simpa only [zero_add] using hbehaviorNorm.add hrealizedNorm</span>
+<span id="L562">562   have hbehaviorMem : forall scheduleIndex,</span>
+<span id="L563">563       MemLp (behaviorProcess scheduleIndex) 1 source.trajectoryMeasure :=</span>
+<span id="L564">564     fun scheduleIndex =&gt; by</span>
+<span id="L565">565       simpa only [source, stoppingPrefix, behaviorProcess] using</span>
+<span id="L566">566         (memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedBehaviorExpectedRegret</span>
+<span id="L567">567           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L568">568             baseVisitFloor hrewardBound scheduleIndex)</span>
+<span id="L569">569   have hrealizedMem : forall scheduleIndex,</span>
+<span id="L570">570       MemLp (realizedProcess scheduleIndex) 1 source.trajectoryMeasure :=</span>
+<span id="L571">571     fun scheduleIndex =&gt; by</span>
+<span id="L572">572       simpa only [source, stoppingPrefix, realizedProcess] using</span>
+<span id="L573">573         (memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedAverageRealizedBehaviorRegret</span>
+<span id="L574">574           mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L575">575             defaultState support baseVisitFloor hbaseFloor hrewardBound</span>
+<span id="L576">576               (lt_trans (by decide : 0 &lt; 4) hhorizon) hbaseVisitFloor scheduleIndex)</span>
+<span id="L577">577   have heq : forall scheduleIndex,</span>
+<span id="L578">578       returnProcess scheduleIndex =ᵐ[source.trajectoryMeasure]</span>
+<span id="L579">579         behaviorProcess scheduleIndex - realizedProcess scheduleIndex :=</span>
+<span id="L580">580     fun scheduleIndex =&gt; Filter.Eventually.of_forall fun trajectory =&gt; by</span>
+<span id="L581">581       have hdecomp :=</span>
+<span id="L582">582         selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess_eq_behaviorExpected_sub_returnDeviation</span>
+<span id="L583">583           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L584">584             baseVisitFloor stoppingPrefix scheduleIndex trajectory</span>
+<span id="L585">585       change realizedProcess scheduleIndex trajectory =</span>
+<span id="L586">586         behaviorProcess scheduleIndex trajectory -</span>
+<span id="L587">587           returnProcess scheduleIndex trajectory at hdecomp</span>
+<span id="L588">588       change returnProcess scheduleIndex trajectory =</span>
+<span id="L589">589         behaviorProcess scheduleIndex trajectory -</span>
+<span id="L590">590           realizedProcess scheduleIndex trajectory</span>
+<span id="L591">591       linarith</span>
+<span id="L592">592   change Tendsto</span>
+<span id="L593">593     (fun scheduleIndex =&gt;</span>
+<span id="L594">594       eLpNorm (returnProcess scheduleIndex) 1 source.trajectoryMeasure)</span>
+<span id="L595">595     atTop (nhds 0)</span>
+<span id="L596">596   exact tendsto_of_tendsto_of_tendsto_of_le_of_le&#x27;</span>
+<span id="L597">597     tendsto_const_nhds hsum</span>
+<span id="L598">598     (Filter.Eventually.of_forall fun _ =&gt; bot_le)</span>
+<span id="L599">599     (Filter.Eventually.of_forall fun scheduleIndex =&gt; by</span>
+<span id="L600">600       rw [eLpNorm_congr_ae (heq scheduleIndex)]</span>
+<span id="L601">601       exact eLpNorm_sub_le</span>
+<span id="L602">602         (hbehaviorMem scheduleIndex).aestronglyMeasurable</span>
+<span id="L603">603         (hrealizedMem scheduleIndex).aestronglyMeasurable (by norm_num))</span>
+<span id="L604">604 </span>
+<span id="L605">605 /-- Signed expectation of the capped stopped return deviation tends to zero. -/</span>
+<span id="L606">606 theorem</span>
+<span id="L607">607     selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedReturnDeviationIntegral_tendsto_zero</span>
+<span id="L608">608     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L609">609     [IsProbabilityMeasure initialState]</span>
+<span id="L610">610     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L611">611     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L612">612     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L613">613     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L614">614     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L615">615     (defaultState : State)</span>
+<span id="L616">616     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L617">617     (baseVisitFloor : Real)</span>
+<span id="L618">618     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L619">619     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L620">620     (hhorizon : 4 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L621">621     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L622">622       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L623">623     let stoppingPrefix :=</span>
+<span id="L624">624       selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L625">625         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L626">626           baseVisitFloor</span>
+<span id="L627">627     let returnProcess :=</span>
+<span id="L628">628       selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess</span>
+<span id="L629">629         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L630">630           baseVisitFloor stoppingPrefix</span>
+<span id="L631">631     Tendsto</span>
+<span id="L632">632       (fun scheduleIndex =&gt;</span>
+<span id="L633">633         integral source.trajectoryMeasure (returnProcess scheduleIndex))</span>
+<span id="L634">634       atTop (nhds 0) := by</span>
+<span id="L635">635   dsimp only</span>
+<span id="L636">636   exact integral_tendsto_zero_of_memLp_one_of_eLpNorm_tendsto_zero</span>
+<span id="L637">637     (fun scheduleIndex =&gt;</span>
+<span id="L638">638       memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedReturnDeviation</span>
+<span id="L639">639         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L640">640           defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L641">641             hbaseVisitFloor scheduleIndex)</span>
+<span id="L642">642     (eLpNorm_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedReturnDeviation_tendsto_zero</span>
+<span id="L643">643       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L644">644         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L645">645           hbaseVisitFloor)</span>
+<span id="L646">646 </span>
+<span id="L647">647 /-- The uncapped-minus-capped stopped behavior expected-regret coordinate</span>
+<span id="L648">648 belongs to `L1`. -/</span>
+<span id="L649">649 theorem</span>
+<span id="L650">650     memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedBehaviorExpectedRegretDifference</span>
+<span id="L651">651     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L652">652     [IsProbabilityMeasure initialState]</span>
+<span id="L653">653     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L654">654     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L655">655     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L656">656     (baseVisitFloor : Real)</span>
+<span id="L657">657     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L658">658     (scheduleIndex : Nat) :</span>
+<span id="L659">659     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L660">660       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L661">661     let cappedStoppingPrefix :=</span>
+<span id="L662">662       selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L663">663         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L664">664           baseVisitFloor</span>
+<span id="L665">665     let uncappedStoppingPrefix :=</span>
+<span id="L666">666       selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L667">667         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L668">668           baseVisitFloor</span>
+<span id="L669">669     let cappedBehavior :=</span>
+<span id="L670">670       selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L671">671         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L672">672           baseVisitFloor cappedStoppingPrefix</span>
+<span id="L673">673     let uncappedBehavior :=</span>
+<span id="L674">674       selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L675">675         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L676">676           baseVisitFloor uncappedStoppingPrefix</span>
+<span id="L677">677     MemLp (uncappedBehavior scheduleIndex - cappedBehavior scheduleIndex) 1</span>
+<span id="L678">678       source.trajectoryMeasure := by</span>
+<span id="L679">679   dsimp only</span>
+<span id="L680">680   exact</span>
+<span id="L681">681     (memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppedBehaviorExpectedRegret</span>
+<span id="L682">682       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L683">683         baseVisitFloor hrewardBound scheduleIndex).sub</span>
+<span id="L684">684       (memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedBehaviorExpectedRegret</span>
+<span id="L685">685         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L686">686           baseVisitFloor hrewardBound scheduleIndex)</span>
+<span id="L687">687 </span>
+<span id="L688">688 /-- Capped and uncapped stopped behavior expected regret are asymptotically</span>
+<span id="L689">689 equivalent in exponent-one norm. -/</span>
+<span id="L690">690 theorem</span>
+<span id="L691">691     eLpNorm_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedBehaviorExpectedRegretDifference_tendsto_zero</span>
+<span id="L692">692     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L693">693     [IsProbabilityMeasure initialState]</span>
+<span id="L694">694     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L695">695     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L696">696     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L697">697     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L698">698     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L699">699     (defaultState : State)</span>
+<span id="L700">700     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L701">701     (baseVisitFloor : Real)</span>
+<span id="L702">702     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L703">703     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L704">704     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L705">705     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L706">706       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L707">707     let cappedStoppingPrefix :=</span>
+<span id="L708">708       selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L709">709         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L710">710           baseVisitFloor</span>
+<span id="L711">711     let uncappedStoppingPrefix :=</span>
+<span id="L712">712       selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L713">713         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L714">714           baseVisitFloor</span>
+<span id="L715">715     let cappedBehavior :=</span>
+<span id="L716">716       selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L717">717         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L718">718           baseVisitFloor cappedStoppingPrefix</span>
+<span id="L719">719     let uncappedBehavior :=</span>
+<span id="L720">720       selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L721">721         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L722">722           baseVisitFloor uncappedStoppingPrefix</span>
+<span id="L723">723     Tendsto</span>
+<span id="L724">724       (fun scheduleIndex =&gt; eLpNorm</span>
+<span id="L725">725         (uncappedBehavior scheduleIndex - cappedBehavior scheduleIndex) 1</span>
+<span id="L726">726           source.trajectoryMeasure)</span>
+<span id="L727">727       atTop (nhds 0) := by</span>
+<span id="L728">728   dsimp only</span>
+<span id="L729">729   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L730">730     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L731">731   let cappedStoppingPrefix :=</span>
+<span id="L732">732     selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L733">733       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L734">734         baseVisitFloor</span>
+<span id="L735">735   let uncappedStoppingPrefix :=</span>
+<span id="L736">736     selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L737">737       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L738">738         baseVisitFloor</span>
+<span id="L739">739   let cappedBehavior :=</span>
+<span id="L740">740     selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L741">741       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L742">742         baseVisitFloor cappedStoppingPrefix</span>
+<span id="L743">743   let uncappedBehavior :=</span>
+<span id="L744">744     selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L745">745       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L746">746         baseVisitFloor uncappedStoppingPrefix</span>
+<span id="L747">747   have huncappedNorm : Tendsto</span>
+<span id="L748">748       (fun scheduleIndex =&gt;</span>
+<span id="L749">749         eLpNorm (uncappedBehavior scheduleIndex) 1 source.trajectoryMeasure)</span>
+<span id="L750">750       atTop (nhds 0) := by</span>
+<span id="L751">751     simpa only [source, uncappedStoppingPrefix, uncappedBehavior] using</span>
+<span id="L752">752       (eLpNorm_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppedBehaviorExpectedRegret_tendsto_zero</span>
+<span id="L753">753         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L754">754           defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L755">755             hbaseVisitFloor)</span>
+<span id="L756">756   have hcappedNorm : Tendsto</span>
+<span id="L757">757       (fun scheduleIndex =&gt;</span>
+<span id="L758">758         eLpNorm (cappedBehavior scheduleIndex) 1 source.trajectoryMeasure)</span>
+<span id="L759">759       atTop (nhds 0) := by</span>
+<span id="L760">760     simpa only [source, cappedStoppingPrefix, cappedBehavior] using</span>
+<span id="L761">761       (eLpNorm_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedBehaviorExpectedRegret_tendsto_zero</span>
+<span id="L762">762         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L763">763           defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L764">764             hbaseVisitFloor)</span>
+<span id="L765">765   have hsum : Tendsto</span>
+<span id="L766">766       (fun scheduleIndex =&gt;</span>
+<span id="L767">767         eLpNorm (uncappedBehavior scheduleIndex) 1 source.trajectoryMeasure +</span>
+<span id="L768">768           eLpNorm (cappedBehavior scheduleIndex) 1 source.trajectoryMeasure)</span>
+<span id="L769">769       atTop (nhds 0) := by</span>
+<span id="L770">770     simpa only [zero_add] using huncappedNorm.add hcappedNorm</span>
+<span id="L771">771   have huncappedMem : forall scheduleIndex,</span>
+<span id="L772">772       MemLp (uncappedBehavior scheduleIndex) 1 source.trajectoryMeasure :=</span>
+<span id="L773">773     fun scheduleIndex =&gt; by</span>
+<span id="L774">774       simpa only [source, uncappedStoppingPrefix, uncappedBehavior] using</span>
+<span id="L775">775         (memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppedBehaviorExpectedRegret</span>
+<span id="L776">776           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L777">777             baseVisitFloor hrewardBound scheduleIndex)</span>
+<span id="L778">778   have hcappedMem : forall scheduleIndex,</span>
+<span id="L779">779       MemLp (cappedBehavior scheduleIndex) 1 source.trajectoryMeasure :=</span>
+<span id="L780">780     fun scheduleIndex =&gt; by</span>
+<span id="L781">781       simpa only [source, cappedStoppingPrefix, cappedBehavior] using</span>
+<span id="L782">782         (memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedBehaviorExpectedRegret</span>
+<span id="L783">783           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L784">784             baseVisitFloor hrewardBound scheduleIndex)</span>
+<span id="L785">785   change Tendsto</span>
+<span id="L786">786     (fun scheduleIndex =&gt; eLpNorm</span>
+<span id="L787">787       (uncappedBehavior scheduleIndex - cappedBehavior scheduleIndex) 1</span>
+<span id="L788">788         source.trajectoryMeasure)</span>
+<span id="L789">789     atTop (nhds 0)</span>
+<span id="L790">790   exact tendsto_of_tendsto_of_tendsto_of_le_of_le&#x27;</span>
+<span id="L791">791     tendsto_const_nhds hsum</span>
+<span id="L792">792     (Filter.Eventually.of_forall fun _ =&gt; bot_le)</span>
+<span id="L793">793     (Filter.Eventually.of_forall fun scheduleIndex =&gt;</span>
+<span id="L794">794       eLpNorm_sub_le</span>
+<span id="L795">795         (huncappedMem scheduleIndex).aestronglyMeasurable</span>
+<span id="L796">796         (hcappedMem scheduleIndex).aestronglyMeasurable (by norm_num))</span>
+<span id="L797">797 </span>
+<span id="L798">798 /-- Signed integral of the stopped behavior truncation difference tends to</span>
+<span id="L799">799 zero. -/</span>
+<span id="L800">800 theorem</span>
+<span id="L801">801     selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedBehaviorExpectedRegretDifferenceIntegral_tendsto_zero</span>
+<span id="L802">802     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L803">803     [IsProbabilityMeasure initialState]</span>
+<span id="L804">804     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L805">805     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L806">806     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L807">807     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L808">808     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L809">809     (defaultState : State)</span>
+<span id="L810">810     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L811">811     (baseVisitFloor : Real)</span>
+<span id="L812">812     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L813">813     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L814">814     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L815">815     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L816">816       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L817">817     let cappedStoppingPrefix :=</span>
+<span id="L818">818       selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L819">819         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L820">820           baseVisitFloor</span>
+<span id="L821">821     let uncappedStoppingPrefix :=</span>
+<span id="L822">822       selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L823">823         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L824">824           baseVisitFloor</span>
+<span id="L825">825     let cappedBehavior :=</span>
+<span id="L826">826       selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L827">827         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L828">828           baseVisitFloor cappedStoppingPrefix</span>
+<span id="L829">829     let uncappedBehavior :=</span>
+<span id="L830">830       selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L831">831         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L832">832           baseVisitFloor uncappedStoppingPrefix</span>
+<span id="L833">833     Tendsto</span>
+<span id="L834">834       (fun scheduleIndex =&gt; integral source.trajectoryMeasure</span>
+<span id="L835">835         (uncappedBehavior scheduleIndex - cappedBehavior scheduleIndex))</span>
+<span id="L836">836       atTop (nhds 0) := by</span>
+<span id="L837">837   dsimp only</span>
+<span id="L838">838   exact integral_tendsto_zero_of_memLp_one_of_eLpNorm_tendsto_zero</span>
+<span id="L839">839     (fun scheduleIndex =&gt;</span>
+<span id="L840">840       memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedBehaviorExpectedRegretDifference</span>
+<span id="L841">841         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L842">842           baseVisitFloor hrewardBound scheduleIndex)</span>
+<span id="L843">843     (eLpNorm_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedBehaviorExpectedRegretDifference_tendsto_zero</span>
+<span id="L844">844       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L845">845         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L846">846           hbaseVisitFloor)</span>
+<span id="L847">847 </span>
+<span id="L848">848 /-- The semantic return-difference is exactly the behavior-value difference</span>
+<span id="L849">849 minus the realized-regret difference. -/</span>
+<span id="L850">850 theorem</span>
+<span id="L851">851     selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedReturnDeviationDifference_eq_behaviorExpectedRegretDifference_sub_realizedBehaviorRegretDifference</span>
+<span id="L852">852     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L853">853     [IsProbabilityMeasure initialState]</span>
+<span id="L854">854     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L855">855     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L856">856     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L857">857     (baseVisitFloor : Real) (scheduleIndex : Nat)</span>
+<span id="L858">858     (trajectory : HeterogeneousStochasticEpisodeBatchTrajectory mdp</span>
+<span id="L859">859       (fun t =&gt;</span>
+<span id="L860">860         AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L861">861           mdp varianceProxy baseVisitFloor t)) :</span>
+<span id="L862">862     let cappedStoppingPrefix :=</span>
+<span id="L863">863       selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L864">864         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L865">865           baseVisitFloor</span>
+<span id="L866">866     let uncappedStoppingPrefix :=</span>
+<span id="L867">867       selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L868">868         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L869">869           baseVisitFloor</span>
+<span id="L870">870     let cappedBehavior :=</span>
+<span id="L871">871       selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L872">872         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L873">873           baseVisitFloor cappedStoppingPrefix</span>
+<span id="L874">874     let uncappedBehavior :=</span>
+<span id="L875">875       selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L876">876         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L877">877           baseVisitFloor uncappedStoppingPrefix</span>
+<span id="L878">878     let cappedRealized :=</span>
+<span id="L879">879       selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess</span>
+<span id="L880">880         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L881">881           baseVisitFloor cappedStoppingPrefix</span>
+<span id="L882">882     let uncappedRealized :=</span>
+<span id="L883">883       selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess</span>
+<span id="L884">884         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L885">885           baseVisitFloor uncappedStoppingPrefix</span>
+<span id="L886">886     let cappedReturn :=</span>
+<span id="L887">887       selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess</span>
+<span id="L888">888         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L889">889           baseVisitFloor cappedStoppingPrefix</span>
+<span id="L890">890     let uncappedReturn :=</span>
+<span id="L891">891       selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess</span>
+<span id="L892">892         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L893">893           baseVisitFloor uncappedStoppingPrefix</span>
+<span id="L894">894     uncappedReturn scheduleIndex trajectory -</span>
+<span id="L895">895         cappedReturn scheduleIndex trajectory =</span>
+<span id="L896">896       (uncappedBehavior scheduleIndex trajectory -</span>
+<span id="L897">897           cappedBehavior scheduleIndex trajectory) -</span>
+<span id="L898">898         (uncappedRealized scheduleIndex trajectory -</span>
+<span id="L899">899           cappedRealized scheduleIndex trajectory) := by</span>
+<span id="L900">900   dsimp only</span>
+<span id="L901">901   have huncapped :=</span>
+<span id="L902">902     selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess_eq_behaviorExpected_sub_returnDeviation</span>
+<span id="L903">903       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L904">904         baseVisitFloor</span>
+<span id="L905">905           (selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L906">906             mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L907">907               baseVisitFloor)</span>
+<span id="L908">908           scheduleIndex trajectory</span>
+<span id="L909">909   have hcapped :=</span>
+<span id="L910">910     selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess_eq_behaviorExpected_sub_returnDeviation</span>
+<span id="L911">911       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L912">912         baseVisitFloor</span>
+<span id="L913">913           (selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L914">914             mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L915">915               baseVisitFloor)</span>
+<span id="L916">916           scheduleIndex trajectory</span>
+<span id="L917">917   linarith</span>
+<span id="L918">918 </span>
+<span id="L919">919 /-- The uncapped-minus-capped stopped return-deviation coordinate belongs to</span>
+<span id="L920">920 `L1`. -/</span>
+<span id="L921">921 theorem</span>
+<span id="L922">922     memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedReturnDeviationDifference</span>
+<span id="L923">923     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L924">924     [IsProbabilityMeasure initialState]</span>
+<span id="L925">925     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L926">926     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L927">927     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L928">928     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L929">929     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L930">930     (defaultState : State)</span>
+<span id="L931">931     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L932">932     (baseVisitFloor : Real)</span>
+<span id="L933">933     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L934">934     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L935">935     (hhorizon : 4 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L936">936     (scheduleIndex : Nat) :</span>
+<span id="L937">937     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L938">938       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L939">939     let cappedStoppingPrefix :=</span>
+<span id="L940">940       selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L941">941         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L942">942           baseVisitFloor</span>
+<span id="L943">943     let uncappedStoppingPrefix :=</span>
+<span id="L944">944       selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L945">945         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L946">946           baseVisitFloor</span>
+<span id="L947">947     let cappedReturn :=</span>
+<span id="L948">948       selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess</span>
+<span id="L949">949         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L950">950           baseVisitFloor cappedStoppingPrefix</span>
+<span id="L951">951     let uncappedReturn :=</span>
+<span id="L952">952       selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess</span>
+<span id="L953">953         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L954">954           baseVisitFloor uncappedStoppingPrefix</span>
+<span id="L955">955     MemLp (uncappedReturn scheduleIndex - cappedReturn scheduleIndex) 1</span>
+<span id="L956">956       source.trajectoryMeasure := by</span>
+<span id="L957">957   dsimp only</span>
+<span id="L958">958   exact</span>
+<span id="L959">959     (memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppedReturnDeviation</span>
+<span id="L960">960       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L961">961         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L962">962           hbaseVisitFloor scheduleIndex).sub</span>
+<span id="L963">963       (memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedReturnDeviation</span>
+<span id="L964">964         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L965">965           defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L966">966             hbaseVisitFloor scheduleIndex)</span>
+<span id="L967">967 </span>
+<span id="L968">968 /-- Capped and uncapped stopped return deviation are asymptotically equivalent</span>
+<span id="L969">969 in exponent-one norm. -/</span>
+<span id="L970">970 theorem</span>
+<span id="L971">971     eLpNorm_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedReturnDeviationDifference_tendsto_zero</span>
+<span id="L972">972     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L973">973     [IsProbabilityMeasure initialState]</span>
+<span id="L974">974     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L975">975     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L976">976     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L977">977     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L978">978     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L979">979     (defaultState : State)</span>
+<span id="L980">980     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L981">981     (baseVisitFloor : Real)</span>
+<span id="L982">982     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L983">983     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L984">984     (hhorizon : 4 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L985">985     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L986">986       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L987">987     let cappedStoppingPrefix :=</span>
+<span id="L988">988       selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L989">989         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L990">990           baseVisitFloor</span>
+<span id="L991">991     let uncappedStoppingPrefix :=</span>
+<span id="L992">992       selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L993">993         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L994">994           baseVisitFloor</span>
+<span id="L995">995     let cappedReturn :=</span>
+<span id="L996">996       selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess</span>
+<span id="L997">997         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L998">998           baseVisitFloor cappedStoppingPrefix</span>
+<span id="L999">999     let uncappedReturn :=</span>
+<span id="L1000">1000       selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess</span>
+<span id="L1001">1001         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1002">1002           baseVisitFloor uncappedStoppingPrefix</span>
+<span id="L1003">1003     Tendsto</span>
+<span id="L1004">1004       (fun scheduleIndex =&gt; eLpNorm</span>
+<span id="L1005">1005         (uncappedReturn scheduleIndex - cappedReturn scheduleIndex) 1</span>
+<span id="L1006">1006           source.trajectoryMeasure)</span>
+<span id="L1007">1007       atTop (nhds 0) := by</span>
+<span id="L1008">1008   dsimp only</span>
+<span id="L1009">1009   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L1010">1010     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L1011">1011   let cappedStoppingPrefix :=</span>
+<span id="L1012">1012     selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L1013">1013       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1014">1014         baseVisitFloor</span>
+<span id="L1015">1015   let uncappedStoppingPrefix :=</span>
+<span id="L1016">1016     selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L1017">1017       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1018">1018         baseVisitFloor</span>
+<span id="L1019">1019   let cappedBehavior :=</span>
+<span id="L1020">1020     selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L1021">1021       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1022">1022         baseVisitFloor cappedStoppingPrefix</span>
+<span id="L1023">1023   let uncappedBehavior :=</span>
+<span id="L1024">1024     selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L1025">1025       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1026">1026         baseVisitFloor uncappedStoppingPrefix</span>
+<span id="L1027">1027   let cappedRealized :=</span>
+<span id="L1028">1028     selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess</span>
+<span id="L1029">1029       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1030">1030         baseVisitFloor cappedStoppingPrefix</span>
+<span id="L1031">1031   let uncappedRealized :=</span>
+<span id="L1032">1032     selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess</span>
+<span id="L1033">1033       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1034">1034         baseVisitFloor uncappedStoppingPrefix</span>
+<span id="L1035">1035   let cappedReturn :=</span>
+<span id="L1036">1036     selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess</span>
+<span id="L1037">1037       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1038">1038         baseVisitFloor cappedStoppingPrefix</span>
+<span id="L1039">1039   let uncappedReturn :=</span>
+<span id="L1040">1040     selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess</span>
+<span id="L1041">1041       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1042">1042         baseVisitFloor uncappedStoppingPrefix</span>
+<span id="L1043">1043   let behaviorDifference := fun scheduleIndex =&gt;</span>
+<span id="L1044">1044     uncappedBehavior scheduleIndex - cappedBehavior scheduleIndex</span>
+<span id="L1045">1045   let realizedDifference := fun scheduleIndex =&gt;</span>
+<span id="L1046">1046     uncappedRealized scheduleIndex - cappedRealized scheduleIndex</span>
+<span id="L1047">1047   have hbehaviorNorm : Tendsto</span>
+<span id="L1048">1048       (fun scheduleIndex =&gt;</span>
+<span id="L1049">1049         eLpNorm (behaviorDifference scheduleIndex) 1 source.trajectoryMeasure)</span>
+<span id="L1050">1050       atTop (nhds 0) := by</span>
+<span id="L1051">1051     simpa only [source, cappedStoppingPrefix, uncappedStoppingPrefix,</span>
+<span id="L1052">1052       cappedBehavior, uncappedBehavior, behaviorDifference] using</span>
+<span id="L1053">1053       (eLpNorm_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedBehaviorExpectedRegretDifference_tendsto_zero</span>
+<span id="L1054">1054         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L1055">1055           defaultState support baseVisitFloor hbaseFloor hrewardBound</span>
+<span id="L1056">1056             (lt_trans (by decide : 0 &lt; 4) hhorizon) hbaseVisitFloor)</span>
+<span id="L1057">1057   have hrealizedNorm : Tendsto</span>
+<span id="L1058">1058       (fun scheduleIndex =&gt;</span>
+<span id="L1059">1059         eLpNorm (realizedDifference scheduleIndex) 1 source.trajectoryMeasure)</span>
+<span id="L1060">1060       atTop (nhds 0) := by</span>
+<span id="L1061">1061     simpa only [source, cappedStoppingPrefix, uncappedStoppingPrefix,</span>
+<span id="L1062">1062       cappedRealized, uncappedRealized, realizedDifference] using</span>
+<span id="L1063">1063       (eLpNorm_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedAverageRealizedBehaviorRegretDifference_tendsto_zero</span>
+<span id="L1064">1064         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L1065">1065           defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L1066">1066             hbaseVisitFloor)</span>
+<span id="L1067">1067   have hsum : Tendsto</span>
+<span id="L1068">1068       (fun scheduleIndex =&gt;</span>
+<span id="L1069">1069         eLpNorm (behaviorDifference scheduleIndex) 1 source.trajectoryMeasure +</span>
+<span id="L1070">1070           eLpNorm (realizedDifference scheduleIndex) 1 source.trajectoryMeasure)</span>
+<span id="L1071">1071       atTop (nhds 0) := by</span>
+<span id="L1072">1072     simpa only [zero_add] using hbehaviorNorm.add hrealizedNorm</span>
+<span id="L1073">1073   have hbehaviorMem : forall scheduleIndex,</span>
+<span id="L1074">1074       MemLp (behaviorDifference scheduleIndex) 1 source.trajectoryMeasure :=</span>
+<span id="L1075">1075     fun scheduleIndex =&gt; by</span>
+<span id="L1076">1076       simpa only [source, cappedStoppingPrefix, uncappedStoppingPrefix,</span>
+<span id="L1077">1077         cappedBehavior, uncappedBehavior, behaviorDifference] using</span>
+<span id="L1078">1078         (memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedBehaviorExpectedRegretDifference</span>
+<span id="L1079">1079           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1080">1080             baseVisitFloor hrewardBound scheduleIndex)</span>
+<span id="L1081">1081   have hrealizedMem : forall scheduleIndex,</span>
+<span id="L1082">1082       MemLp (realizedDifference scheduleIndex) 1 source.trajectoryMeasure :=</span>
+<span id="L1083">1083     fun scheduleIndex =&gt; by</span>
+<span id="L1084">1084       simpa only [source, cappedStoppingPrefix, uncappedStoppingPrefix,</span>
+<span id="L1085">1085         cappedRealized, uncappedRealized, realizedDifference] using</span>
+<span id="L1086">1086         (memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedAverageRealizedBehaviorRegretDifference</span>
+<span id="L1087">1087           mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L1088">1088             defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L1089">1089               hbaseVisitFloor scheduleIndex)</span>
+<span id="L1090">1090   have heq : forall scheduleIndex,</span>
+<span id="L1091">1091       uncappedReturn scheduleIndex - cappedReturn scheduleIndex</span>
+<span id="L1092">1092         =ᵐ[source.trajectoryMeasure]</span>
+<span id="L1093">1093           behaviorDifference scheduleIndex - realizedDifference scheduleIndex :=</span>
+<span id="L1094">1094     fun scheduleIndex =&gt; Filter.Eventually.of_forall fun trajectory =&gt; by</span>
+<span id="L1095">1095       simpa only [cappedStoppingPrefix, uncappedStoppingPrefix,</span>
+<span id="L1096">1096         cappedBehavior, uncappedBehavior, cappedRealized, uncappedRealized,</span>
+<span id="L1097">1097         cappedReturn, uncappedReturn, behaviorDifference, realizedDifference]</span>
+<span id="L1098">1098         using</span>
+<span id="L1099">1099           (selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedReturnDeviationDifference_eq_behaviorExpectedRegretDifference_sub_realizedBehaviorRegretDifference</span>
+<span id="L1100">1100             mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1101">1101               baseVisitFloor scheduleIndex trajectory)</span>
+<span id="L1102">1102   change Tendsto</span>
+<span id="L1103">1103     (fun scheduleIndex =&gt; eLpNorm</span>
+<span id="L1104">1104       (uncappedReturn scheduleIndex - cappedReturn scheduleIndex) 1</span>
+<span id="L1105">1105         source.trajectoryMeasure)</span>
+<span id="L1106">1106     atTop (nhds 0)</span>
+<span id="L1107">1107   exact tendsto_of_tendsto_of_tendsto_of_le_of_le&#x27;</span>
+<span id="L1108">1108     tendsto_const_nhds hsum</span>
+<span id="L1109">1109     (Filter.Eventually.of_forall fun _ =&gt; bot_le)</span>
+<span id="L1110">1110     (Filter.Eventually.of_forall fun scheduleIndex =&gt; by</span>
+<span id="L1111">1111       rw [eLpNorm_congr_ae (heq scheduleIndex)]</span>
+<span id="L1112">1112       exact eLpNorm_sub_le</span>
+<span id="L1113">1113         (hbehaviorMem scheduleIndex).aestronglyMeasurable</span>
+<span id="L1114">1114         (hrealizedMem scheduleIndex).aestronglyMeasurable (by norm_num))</span>
+<span id="L1115">1115 </span>
+<span id="L1116">1116 /-- Signed integral of the stopped return-deviation truncation difference</span>
+<span id="L1117">1117 tends to zero. -/</span>
+<span id="L1118">1118 theorem</span>
+<span id="L1119">1119     selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedReturnDeviationDifferenceIntegral_tendsto_zero</span>
+<span id="L1120">1120     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L1121">1121     [IsProbabilityMeasure initialState]</span>
+<span id="L1122">1122     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L1123">1123     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L1124">1124     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L1125">1125     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L1126">1126     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L1127">1127     (defaultState : State)</span>
+<span id="L1128">1128     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L1129">1129     (baseVisitFloor : Real)</span>
+<span id="L1130">1130     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L1131">1131     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L1132">1132     (hhorizon : 4 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L1133">1133     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L1134">1134       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L1135">1135     let cappedStoppingPrefix :=</span>
+<span id="L1136">1136       selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L1137">1137         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1138">1138           baseVisitFloor</span>
+<span id="L1139">1139     let uncappedStoppingPrefix :=</span>
+<span id="L1140">1140       selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L1141">1141         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1142">1142           baseVisitFloor</span>
+<span id="L1143">1143     let cappedReturn :=</span>
+<span id="L1144">1144       selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess</span>
+<span id="L1145">1145         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1146">1146           baseVisitFloor cappedStoppingPrefix</span>
+<span id="L1147">1147     let uncappedReturn :=</span>
+<span id="L1148">1148       selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess</span>
+<span id="L1149">1149         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1150">1150           baseVisitFloor uncappedStoppingPrefix</span>
+<span id="L1151">1151     Tendsto</span>
+<span id="L1152">1152       (fun scheduleIndex =&gt; integral source.trajectoryMeasure</span>
+<span id="L1153">1153         (uncappedReturn scheduleIndex - cappedReturn scheduleIndex))</span>
+<span id="L1154">1154       atTop (nhds 0) := by</span>
+<span id="L1155">1155   dsimp only</span>
+<span id="L1156">1156   exact integral_tendsto_zero_of_memLp_one_of_eLpNorm_tendsto_zero</span>
+<span id="L1157">1157     (fun scheduleIndex =&gt;</span>
+<span id="L1158">1158       memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedReturnDeviationDifference</span>
+<span id="L1159">1159         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L1160">1160           defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L1161">1161             hbaseVisitFloor scheduleIndex)</span>
+<span id="L1162">1162     (eLpNorm_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedReturnDeviationDifference_tendsto_zero</span>
+<span id="L1163">1163       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L1164">1164         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L1165">1165           hbaseVisitFloor)</span>
+<span id="L1166">1166 </span>
+<span id="L1167">1167 /-- Terminal componentwise semantic and `L1` truncation-equivalence package</span>
+<span id="L1168">1168 for the capped and genuine uncapped first-passage prefixes. -/</span>
+<span id="L1169">1169 theorem</span>
+<span id="L1170">1170     selfConsistentScheduledCausalSource_inverseSqrtThresholdCappedUnboundedHittingAfter_stoppedBehaviorExpectedRegret_and_returnDeviation_L1_truncation_equivalence</span>
+<span id="L1171">1171     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L1172">1172     [IsProbabilityMeasure initialState]</span>
+<span id="L1173">1173     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L1174">1174     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L1175">1175     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L1176">1176     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L1177">1177     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L1178">1178     (defaultState : State)</span>
+<span id="L1179">1179     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L1180">1180     (baseVisitFloor : Real)</span>
+<span id="L1181">1181     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L1182">1182     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L1183">1183     (hhorizon : 4 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L1184">1184     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L1185">1185       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L1186">1186     let cappedStoppingPrefix :=</span>
+<span id="L1187">1187       selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L1188">1188         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1189">1189           baseVisitFloor</span>
+<span id="L1190">1190     let uncappedStoppingPrefix :=</span>
+<span id="L1191">1191       selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L1192">1192         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1193">1193           baseVisitFloor</span>
+<span id="L1194">1194     let cappedBehavior :=</span>
+<span id="L1195">1195       selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L1196">1196         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1197">1197           baseVisitFloor cappedStoppingPrefix</span>
+<span id="L1198">1198     let uncappedBehavior :=</span>
+<span id="L1199">1199       selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L1200">1200         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1201">1201           baseVisitFloor uncappedStoppingPrefix</span>
+<span id="L1202">1202     let cappedRealized :=</span>
+<span id="L1203">1203       selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess</span>
+<span id="L1204">1204         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1205">1205           baseVisitFloor cappedStoppingPrefix</span>
+<span id="L1206">1206     let uncappedRealized :=</span>
+<span id="L1207">1207       selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess</span>
+<span id="L1208">1208         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1209">1209           baseVisitFloor uncappedStoppingPrefix</span>
+<span id="L1210">1210     let cappedReturn :=</span>
+<span id="L1211">1211       selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess</span>
+<span id="L1212">1212         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1213">1213           baseVisitFloor cappedStoppingPrefix</span>
+<span id="L1214">1214     let uncappedReturn :=</span>
+<span id="L1215">1215       selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess</span>
+<span id="L1216">1216         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1217">1217           baseVisitFloor uncappedStoppingPrefix</span>
+<span id="L1218">1218     (forall scheduleIndex,</span>
+<span id="L1219">1219       Measurable (cappedBehavior scheduleIndex) /\</span>
+<span id="L1220">1220         MemLp (cappedBehavior scheduleIndex) 1 source.trajectoryMeasure /\</span>
+<span id="L1221">1221         MemLp (cappedReturn scheduleIndex) 1 source.trajectoryMeasure /\</span>
+<span id="L1222">1222         MemLp (uncappedBehavior scheduleIndex - cappedBehavior scheduleIndex) 1</span>
+<span id="L1223">1223           source.trajectoryMeasure /\</span>
+<span id="L1224">1224         MemLp (uncappedReturn scheduleIndex - cappedReturn scheduleIndex) 1</span>
+<span id="L1225">1225           source.trajectoryMeasure) /\</span>
+<span id="L1226">1226       (forall scheduleIndex trajectory,</span>
+<span id="L1227">1227         0 &lt;= cappedBehavior scheduleIndex trajectory /\</span>
+<span id="L1228">1228           cappedBehavior scheduleIndex trajectory &lt;=</span>
+<span id="L1229">1229             2 * (mdp.horizon : Real) /\</span>
+<span id="L1230">1230           cappedRealized scheduleIndex trajectory =</span>
+<span id="L1231">1231             cappedBehavior scheduleIndex trajectory -</span>
+<span id="L1232">1232               cappedReturn scheduleIndex trajectory /\</span>
+<span id="L1233">1233           uncappedRealized scheduleIndex trajectory =</span>
+<span id="L1234">1234             uncappedBehavior scheduleIndex trajectory -</span>
+<span id="L1235">1235               uncappedReturn scheduleIndex trajectory /\</span>
+<span id="L1236">1236           uncappedReturn scheduleIndex trajectory -</span>
+<span id="L1237">1237               cappedReturn scheduleIndex trajectory =</span>
+<span id="L1238">1238             (uncappedBehavior scheduleIndex trajectory -</span>
+<span id="L1239">1239                 cappedBehavior scheduleIndex trajectory) -</span>
+<span id="L1240">1240               (uncappedRealized scheduleIndex trajectory -</span>
+<span id="L1241">1241                 cappedRealized scheduleIndex trajectory)) /\</span>
+<span id="L1242">1242       (∀ᵐ trajectory ∂source.trajectoryMeasure,</span>
+<span id="L1243">1243         ∀ᶠ scheduleIndex in atTop,</span>
+<span id="L1244">1244           cappedBehavior scheduleIndex trajectory =</span>
+<span id="L1245">1245               uncappedBehavior scheduleIndex trajectory /\</span>
+<span id="L1246">1246             cappedReturn scheduleIndex trajectory =</span>
+<span id="L1247">1247               uncappedReturn scheduleIndex trajectory) /\</span>
+<span id="L1248">1248       Tendsto</span>
+<span id="L1249">1249         (fun scheduleIndex =&gt;</span>
+<span id="L1250">1250           eLpNorm (cappedBehavior scheduleIndex) 1 source.trajectoryMeasure)</span>
+<span id="L1251">1251         atTop (nhds 0) /\</span>
+<span id="L1252">1252       Tendsto</span>
+<span id="L1253">1253         (fun scheduleIndex =&gt;</span>
+<span id="L1254">1254           integral source.trajectoryMeasure (cappedBehavior scheduleIndex))</span>
+<span id="L1255">1255         atTop (nhds 0) /\</span>
+<span id="L1256">1256       Tendsto</span>
+<span id="L1257">1257         (fun scheduleIndex =&gt;</span>
+<span id="L1258">1258           eLpNorm (cappedReturn scheduleIndex) 1 source.trajectoryMeasure)</span>
+<span id="L1259">1259         atTop (nhds 0) /\</span>
+<span id="L1260">1260       Tendsto</span>
+<span id="L1261">1261         (fun scheduleIndex =&gt;</span>
+<span id="L1262">1262           integral source.trajectoryMeasure (cappedReturn scheduleIndex))</span>
+<span id="L1263">1263         atTop (nhds 0) /\</span>
+<span id="L1264">1264       Tendsto</span>
+<span id="L1265">1265         (fun scheduleIndex =&gt; eLpNorm</span>
+<span id="L1266">1266           (uncappedBehavior scheduleIndex - cappedBehavior scheduleIndex) 1</span>
+<span id="L1267">1267             source.trajectoryMeasure)</span>
+<span id="L1268">1268         atTop (nhds 0) /\</span>
+<span id="L1269">1269       Tendsto</span>
+<span id="L1270">1270         (fun scheduleIndex =&gt; integral source.trajectoryMeasure</span>
+<span id="L1271">1271           (uncappedBehavior scheduleIndex - cappedBehavior scheduleIndex))</span>
+<span id="L1272">1272         atTop (nhds 0) /\</span>
+<span id="L1273">1273       Tendsto</span>
+<span id="L1274">1274         (fun scheduleIndex =&gt; eLpNorm</span>
+<span id="L1275">1275           (uncappedReturn scheduleIndex - cappedReturn scheduleIndex) 1</span>
+<span id="L1276">1276             source.trajectoryMeasure)</span>
+<span id="L1277">1277         atTop (nhds 0) /\</span>
+<span id="L1278">1278       Tendsto</span>
+<span id="L1279">1279         (fun scheduleIndex =&gt; integral source.trajectoryMeasure</span>
+<span id="L1280">1280           (uncappedReturn scheduleIndex - cappedReturn scheduleIndex))</span>
+<span id="L1281">1281         atTop (nhds 0) := by</span>
+<span id="L1282">1282   dsimp only</span>
+<span id="L1283">1283   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L1284">1284     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L1285">1285   let cappedStoppingPrefix :=</span>
+<span id="L1286">1286     selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L1287">1287       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1288">1288         baseVisitFloor</span>
+<span id="L1289">1289   let uncappedStoppingPrefix :=</span>
+<span id="L1290">1290     selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix</span>
+<span id="L1291">1291       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1292">1292         baseVisitFloor</span>
+<span id="L1293">1293   let cappedBehavior :=</span>
+<span id="L1294">1294     selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L1295">1295       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1296">1296         baseVisitFloor cappedStoppingPrefix</span>
+<span id="L1297">1297   let uncappedBehavior :=</span>
+<span id="L1298">1298     selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess</span>
+<span id="L1299">1299       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1300">1300         baseVisitFloor uncappedStoppingPrefix</span>
+<span id="L1301">1301   let cappedRealized :=</span>
+<span id="L1302">1302     selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess</span>
+<span id="L1303">1303       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1304">1304         baseVisitFloor cappedStoppingPrefix</span>
+<span id="L1305">1305   let uncappedRealized :=</span>
+<span id="L1306">1306     selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess</span>
+<span id="L1307">1307       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1308">1308         baseVisitFloor uncappedStoppingPrefix</span>
+<span id="L1309">1309   let cappedReturn :=</span>
+<span id="L1310">1310     selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess</span>
+<span id="L1311">1311       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1312">1312         baseVisitFloor cappedStoppingPrefix</span>
+<span id="L1313">1313   let uncappedReturn :=</span>
+<span id="L1314">1314     selfConsistentScheduledNaturalCausalStoppingTimeAverageReturnDeviationProcess</span>
+<span id="L1315">1315       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1316">1316         baseVisitFloor uncappedStoppingPrefix</span>
+<span id="L1317">1317   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩</span>
+<span id="L1318">1318   · intro scheduleIndex</span>
+<span id="L1319">1319     refine ⟨?_, ?_, ?_, ?_, ?_⟩</span>
+<span id="L1320">1320     · simpa only [cappedStoppingPrefix, cappedBehavior] using</span>
+<span id="L1321">1321         (measurable_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedBehaviorExpectedRegret</span>
+<span id="L1322">1322           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1323">1323             baseVisitFloor scheduleIndex)</span>
+<span id="L1324">1324     · simpa only [source, cappedStoppingPrefix, cappedBehavior] using</span>
+<span id="L1325">1325         (memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedBehaviorExpectedRegret</span>
+<span id="L1326">1326           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1327">1327             baseVisitFloor hrewardBound scheduleIndex)</span>
+<span id="L1328">1328     · simpa only [source, cappedStoppingPrefix, cappedReturn] using</span>
+<span id="L1329">1329         (memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedReturnDeviation</span>
+<span id="L1330">1330           mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L1331">1331             defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L1332">1332               hbaseVisitFloor scheduleIndex)</span>
+<span id="L1333">1333     · simpa only [source, cappedStoppingPrefix, uncappedStoppingPrefix,</span>
+<span id="L1334">1334         cappedBehavior, uncappedBehavior] using</span>
+<span id="L1335">1335         (memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedBehaviorExpectedRegretDifference</span>
+<span id="L1336">1336           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1337">1337             baseVisitFloor hrewardBound scheduleIndex)</span>
+<span id="L1338">1338     · simpa only [source, cappedStoppingPrefix, uncappedStoppingPrefix,</span>
+<span id="L1339">1339         cappedReturn, uncappedReturn] using</span>
+<span id="L1340">1340         (memLp_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedReturnDeviationDifference</span>
+<span id="L1341">1341           mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L1342">1342             defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L1343">1343               hbaseVisitFloor scheduleIndex)</span>
+<span id="L1344">1344   · intro scheduleIndex trajectory</span>
+<span id="L1345">1345     refine ⟨?_, ?_, ?_, ?_, ?_⟩</span>
+<span id="L1346">1346     · exact</span>
+<span id="L1347">1347         selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess_nonneg</span>
+<span id="L1348">1348           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1349">1349             baseVisitFloor cappedStoppingPrefix scheduleIndex trajectory</span>
+<span id="L1350">1350     · exact</span>
+<span id="L1351">1351         selfConsistentScheduledNaturalCausalStoppingTimeAverageBehaviorExpectedRegretProcess_le_two_mul_horizon</span>
+<span id="L1352">1352           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1353">1353             baseVisitFloor hrewardBound cappedStoppingPrefix scheduleIndex</span>
+<span id="L1354">1354               trajectory</span>
+<span id="L1355">1355     · exact</span>
+<span id="L1356">1356         selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess_eq_behaviorExpected_sub_returnDeviation</span>
+<span id="L1357">1357           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1358">1358             baseVisitFloor cappedStoppingPrefix scheduleIndex trajectory</span>
+<span id="L1359">1359     · exact</span>
+<span id="L1360">1360         selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess_eq_behaviorExpected_sub_returnDeviation</span>
+<span id="L1361">1361           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1362">1362             baseVisitFloor uncappedStoppingPrefix scheduleIndex trajectory</span>
+<span id="L1363">1363     · simpa only [cappedStoppingPrefix, uncappedStoppingPrefix,</span>
+<span id="L1364">1364         cappedBehavior, uncappedBehavior, cappedRealized, uncappedRealized,</span>
+<span id="L1365">1365         cappedReturn, uncappedReturn] using</span>
+<span id="L1366">1366         (selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedReturnDeviationDifference_eq_behaviorExpectedRegretDifference_sub_realizedBehaviorRegretDifference</span>
+<span id="L1367">1367           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L1368">1368             baseVisitFloor scheduleIndex trajectory)</span>
+<span id="L1369">1369   · simpa only [source, cappedStoppingPrefix, uncappedStoppingPrefix,</span>
+<span id="L1370">1370       cappedBehavior, uncappedBehavior, cappedReturn, uncappedReturn] using</span>
+<span id="L1371">1371       (ae_eventually_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedBehaviorExpectedRegret_and_returnDeviation_eq</span>
+<span id="L1372">1372         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L1373">1373           defaultState support baseVisitFloor hbaseFloor hrewardBound</span>
+<span id="L1374">1374             (lt_trans (by decide : 0 &lt; 4) hhorizon) hbaseVisitFloor)</span>
+<span id="L1375">1375   · simpa only [source, cappedStoppingPrefix, cappedBehavior] using</span>
+<span id="L1376">1376       (eLpNorm_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedBehaviorExpectedRegret_tendsto_zero</span>
+<span id="L1377">1377         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L1378">1378           defaultState support baseVisitFloor hbaseFloor hrewardBound</span>
+<span id="L1379">1379             (lt_trans (by decide : 0 &lt; 4) hhorizon) hbaseVisitFloor)</span>
+<span id="L1380">1380   · simpa only [source, cappedStoppingPrefix, cappedBehavior] using</span>
+<span id="L1381">1381       (selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedBehaviorExpectedRegretIntegral_tendsto_zero</span>
+<span id="L1382">1382         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L1383">1383           defaultState support baseVisitFloor hbaseFloor hrewardBound</span>
+<span id="L1384">1384             (lt_trans (by decide : 0 &lt; 4) hhorizon) hbaseVisitFloor)</span>
+<span id="L1385">1385   · simpa only [source, cappedStoppingPrefix, cappedReturn] using</span>
+<span id="L1386">1386       (eLpNorm_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedReturnDeviation_tendsto_zero</span>
+<span id="L1387">1387         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L1388">1388           defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L1389">1389             hbaseVisitFloor)</span>
+<span id="L1390">1390   · simpa only [source, cappedStoppingPrefix, cappedReturn] using</span>
+<span id="L1391">1391       (selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedStoppedReturnDeviationIntegral_tendsto_zero</span>
+<span id="L1392">1392         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L1393">1393           defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L1394">1394             hbaseVisitFloor)</span>
+<span id="L1395">1395   · simpa only [source, cappedStoppingPrefix, uncappedStoppingPrefix,</span>
+<span id="L1396">1396       cappedBehavior, uncappedBehavior] using</span>
+<span id="L1397">1397       (eLpNorm_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedBehaviorExpectedRegretDifference_tendsto_zero</span>
+<span id="L1398">1398         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L1399">1399           defaultState support baseVisitFloor hbaseFloor hrewardBound</span>
+<span id="L1400">1400             (lt_trans (by decide : 0 &lt; 4) hhorizon) hbaseVisitFloor)</span>
+<span id="L1401">1401   · simpa only [source, cappedStoppingPrefix, uncappedStoppingPrefix,</span>
+<span id="L1402">1402       cappedBehavior, uncappedBehavior] using</span>
+<span id="L1403">1403       (selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedBehaviorExpectedRegretDifferenceIntegral_tendsto_zero</span>
+<span id="L1404">1404         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L1405">1405           defaultState support baseVisitFloor hbaseFloor hrewardBound</span>
+<span id="L1406">1406             (lt_trans (by decide : 0 &lt; 4) hhorizon) hbaseVisitFloor)</span>
+<span id="L1407">1407   · simpa only [source, cappedStoppingPrefix, uncappedStoppingPrefix,</span>
+<span id="L1408">1408       cappedReturn, uncappedReturn] using</span>
+<span id="L1409">1409       (eLpNorm_one_selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedReturnDeviationDifference_tendsto_zero</span>
+<span id="L1410">1410         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L1411">1411           defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L1412">1412             hbaseVisitFloor)</span>
+<span id="L1413">1413   · simpa only [source, cappedStoppingPrefix, uncappedStoppingPrefix,</span>
+<span id="L1414">1414       cappedReturn, uncappedReturn] using</span>
+<span id="L1415">1415       (selfConsistentScheduledNaturalCausalInverseSqrtThresholdCappedUnboundedHittingAfterStoppedReturnDeviationDifferenceIntegral_tendsto_zero</span>
+<span id="L1416">1416         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L1417">1417           defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L1418">1418             hbaseVisitFloor)</span>
+<span id="L1419">1419 </span>
+<span id="L1420">1420 end AdaptiveStochasticSampledEmpiricalOptimisticSource</span>
+<span id="L1421">1421 </span>
+<span id="L1422">1422 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

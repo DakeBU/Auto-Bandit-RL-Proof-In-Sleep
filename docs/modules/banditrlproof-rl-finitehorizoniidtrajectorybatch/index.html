@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.RL.FiniteHorizonIIDTrajectoryBatch · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.RL.FiniteHorizonIIDTrajectoryBatch · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.RL.FiniteHorizonIIDTrajectoryBatch · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Finite-horizon RL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>RL.<wbr>Finite<wbr>Horizon<wbr>IID<wbr>Trajectory<wbr>Batch</h1>
+  <p class="lede">This module maps a finite product of genuine policy trajectory laws into the finite-batch empirical-model surface. It exposes both the episode/stage marginal law and independence across episode coordinates. The policy is fixed across episodes; adaptive cross-episode policy updates and concentration of visit-conditioned empirical ratios remain downstream.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html"><code>BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/finite-horizon-rl/index.html">9. Finite-horizon reinforcement learning</a></dd></div>
+    <div><dt>Declarations</dt><dd>27</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-rl-finitehorizonempiricalmodel/index.html"><code>BanditRLProof.RL.FiniteHorizonEmpiricalModel</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-rl-finitehorizoniidcountconcentration/index.html"><code>BanditRLProof.RL.FiniteHorizonIIDCountConcentration</code></a>, <a href="../banditrlproof-rl-finitehorizoniidgeneratedempiricalrewardexactness/index.html"><code>BanditRLProof.RL.FiniteHorizonIIDGeneratedEmpiricalRewardExactness</code></a>, <a href="../banditrlproof-rl-finitehorizonstochasticrewarderasurelaw/index.html"><code>BanditRLProof.RL.FiniteHorizonStochasticRewardErasureLaw</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-30ee24a710b2">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.trajectoryStateAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Current state immediately before a recorded trajectory action.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> trajectoryStateAt (mdp : MDP State Action) (trajectory : State × StepTrace Action State mdp.horizon) (stage : Fin mdp.horizon) : State</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L33">Source line 33</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5da81f3505a0">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.episodeStepOfTrajectory</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A full generated trajectory viewed as one empirical record at a stage.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> episodeStepOfTrajectory (mdp : MDP State Action) (trajectory : State × StepTrace Action State mdp.horizon) (stage : Fin mdp.horizon) : EpisodeStep State Action <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L42">Source line 42</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2c4382396408">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.episodeBatchOfTrajectories</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A finite family of full trajectories mapped to empirical episode records.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> episodeBatchOfTrajectories (mdp : MDP State Action) (episodes : Nat) (trajectories : Fin episodes -&gt; State × StepTrace Action State mdp.horizon) : EpisodeBatch mdp episodes</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L52">Source line 52</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c098a474add1">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.trajectoryVisitContribution</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">One trajectory&#x27;s contribution to a stage/state/action visit count.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> trajectoryVisitContribution (mdp : MDP State Action) (stage : Fin mdp.horizon) (state : State) (action : Action) (trajectory : State × StepTrace Action State mdp.horizon) : Nat</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L59">Source line 59</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b05a6d19534f">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.trajectoryRewardContribution</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">One trajectory&#x27;s contribution to a stage/state/action reward sum.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> trajectoryRewardContribution (mdp : MDP State Action) (stage : Fin mdp.horizon) (state : State) (action : Action) (trajectory : State × StepTrace Action State mdp.horizon) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L66">Source line 66</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6ad88a44089b">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.trajectoryTransitionContribution</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">One trajectory&#x27;s contribution to a stage/state/action/next-state count.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> trajectoryTransitionContribution (mdp : MDP State Action) (stage : Fin mdp.horizon) (state : State) (action : Action) (nextState : State) (trajectory : State × StepTrace Action State mdp.horizon) : Nat</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L73">Source line 73</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3cf57252c158">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.measurable_episodeStepOfTrajectory</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The stage record extracted from a finite trajectory is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_episodeStepOfTrajectory (mdp : MDP State Action) (stage : Fin mdp.horizon) : Measurable (<span class="kw">fun</span> trajectory =&gt; mdp.episodeStepOfTrajectory trajectory stage)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L84">Source line 84</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f0030b075efb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.measurable_episodeBatchOfTrajectories</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Mapping a finite trajectory family to its empirical batch is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_episodeBatchOfTrajectories (mdp : MDP State Action) (episodes : Nat) : Measurable (mdp.episodeBatchOfTrajectories episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L92">Source line 92</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-253e4f72faae">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.episodeBatchOfTrajectories_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> episodeBatchOfTrajectories_apply (mdp : MDP State Action) (episodes : Nat) (trajectories : Fin episodes -&gt; State × StepTrace Action State mdp.horizon) (episode : Fin episodes) (stage : Fin mdp.horizon) : mdp.episodeBatchOfTrajectories episodes trajectories episode stage = mdp.episodeStepOfTrajectory (trajectories episode) stage</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L101">Source line 101</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-dd313aa4282f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.episodeBatchOfTrajectories_visitCount</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Extracted batch visits are exactly the sum of trajectory contributions.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> episodeBatchOfTrajectories_visitCount (mdp : MDP State Action) (episodes : Nat) (trajectories : Fin episodes -&gt; State × StepTrace Action State mdp.horizon) (stage : Fin mdp.horizon) (state : State) (action : Action) : (mdp.episodeBatchOfTrajectories episodes trajectories).visitCount stage state action = ∑ episode, mdp.trajectoryVisitContribution stage state action (trajectories episode)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L113">Source line 113</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6fd897ccd0a3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.episodeBatchOfTrajectories_rewardSum</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Extracted batch rewards are exactly the sum of trajectory contributions.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> episodeBatchOfTrajectories_rewardSum (mdp : MDP State Action) (episodes : Nat) (trajectories : Fin episodes -&gt; State × StepTrace Action State mdp.horizon) (stage : Fin mdp.horizon) (state : State) (action : Action) : (mdp.episodeBatchOfTrajectories episodes trajectories).rewardSum stage state action = ∑ episode, mdp.trajectoryRewardContribution stage state action (trajectories episode)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L128">Source line 128</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0485620f8931">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.episodeBatchOfTrajectories_transitionCount</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Extracted transition counts are exactly trajectory-indicator sums.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> episodeBatchOfTrajectories_transitionCount (mdp : MDP State Action) (episodes : Nat) (trajectories : Fin episodes -&gt; State × StepTrace Action State mdp.horizon) (stage : Fin mdp.horizon) (state : State) (action : Action) (nextState : State) : (mdp.episodeBatchOfTrajectories episodes trajectories).transitionCount stage state action nextState = ∑ episode, mdp.trajectoryTransitionContribution stage state action nextState (trajectories episode)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L143">Source line 143</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9937fcba5509">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.measurable_trajectoryVisitContribution</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A fixed visit contribution is measurable on the generated trajectory.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_trajectoryVisitContribution (mdp : MDP State Action) (stage : Fin mdp.horizon) (state : State) (action : Action) : Measurable (mdp.trajectoryVisitContribution stage state action)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L158">Source line 158</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-df801da002b6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.measurable_trajectoryRewardContribution</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A fixed reward contribution is measurable on the generated trajectory.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_trajectoryRewardContribution (mdp : MDP State Action) (stage : Fin mdp.horizon) (state : State) (action : Action) : Measurable (mdp.trajectoryRewardContribution stage state action)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L165">Source line 165</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7b9accb5e1f1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.measurable_trajectoryTransitionContribution</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A fixed transition contribution is measurable on the generated trajectory.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_trajectoryTransitionContribution (mdp : MDP State Action) (stage : Fin mdp.horizon) (state : State) (action : Action) (nextState : State) : Measurable (mdp.trajectoryTransitionContribution stage state action nextState)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L172">Source line 172</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a7b383dc0448">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.iidTrajectoryFamilyMeasure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite iid product of the generated single-episode trajectory law.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> iidTrajectoryFamilyMeasure {mdp : MDP State Action} (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) : Measure (Fin episodes -&gt; State × StepTrace Action State mdp.horizon)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L184">Source line 184</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9514155aaafe">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.iidEpisodeBatchMeasure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pushforward law of the empirical batch extracted from iid trajectories.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> iidEpisodeBatchMeasure {mdp : MDP State Action} (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) : Measure (EpisodeBatch mdp episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L201">Source line 201</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e4d8849a0b38">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.iidTrajectoryFamilyMeasure_map_eval</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every product coordinate has the generated single-episode trajectory law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iidTrajectoryFamilyMeasure_map_eval {mdp : MDP State Action} (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] {episodes : Nat} (episode : Fin episodes) : (policy.iidTrajectoryFamilyMeasure initialState episodes).map (Function.eval episode) = policy.trajectoryMeasure initialState</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L221">Source line 221</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7b2707fc3927">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.iidEpisodeBatchMeasure_map_eval</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Each episode/stage coordinate of the mapped batch has the corresponding
+pushforward of the genuine generated single-trajectory law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iidEpisodeBatchMeasure_map_eval {mdp : MDP State Action} (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] {episodes : Nat} (episode : Fin episodes) (stage : Fin mdp.horizon) : (policy.iidEpisodeBatchMeasure initialState episodes).map (<span class="kw">fun</span> batch =&gt; batch episode stage) = (policy.trajectoryMeasure initialState).map (<span class="kw">fun</span> trajectory =&gt; mdp.episodeStepOfTrajectory trajectory stage)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L239">Source line 239</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0d240687d7a1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.iIndepFun_episodeStepOfTrajectory</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Stage records from distinct product coordinates are independent.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iIndepFun_episodeStepOfTrajectory {mdp : MDP State Action} (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (stage : Fin mdp.horizon) : ProbabilityTheory.iIndepFun (<span class="kw">fun</span> episode trajectories =&gt; mdp.episodeStepOfTrajectory (trajectories episode) stage) (policy.iidTrajectoryFamilyMeasure initialState episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L273">Source line 273</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bd210332f027">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.iIndepFun_iidEpisodeBatch_eval</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Fixed-stage record coordinates are independent under the mapped batch law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iIndepFun_iidEpisodeBatch_eval {mdp : MDP State Action} (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (stage : Fin mdp.horizon) : ProbabilityTheory.iIndepFun (<span class="kw">fun</span> episode (batch : EpisodeBatch mdp episodes) =&gt; batch episode stage) (policy.iidEpisodeBatchMeasure initialState episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L288">Source line 288</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-875b985c9dc5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.iIndepFun_iidEpisodeBatch_statistic</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Measurable fixed-stage batch-record statistics are independent by episode.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iIndepFun_iidEpisodeBatch_statistic {mdp : MDP State Action} (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (stage : Fin mdp.horizon) {Target : Type w} [MeasurableSpace Target] (statistic : EpisodeStep State Action -&gt; Target) (hstatistic : Measurable statistic) : ProbabilityTheory.iIndepFun (<span class="kw">fun</span> episode (batch : EpisodeBatch mdp episodes) =&gt; statistic (batch episode stage)) (policy.iidEpisodeBatchMeasure initialState episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L342">Source line 342</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-350678eb0592">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.iIndepFun_episodeStatistic</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Any measurable statistic of a fixed-stage record remains independent by episode.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iIndepFun_episodeStatistic {mdp : MDP State Action} (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (stage : Fin mdp.horizon) {Target : Type w} [MeasurableSpace Target] (statistic : EpisodeStep State Action -&gt; Target) (hstatistic : Measurable statistic) : ProbabilityTheory.iIndepFun (<span class="kw">fun</span> episode trajectories =&gt; statistic (mdp.episodeStepOfTrajectory (trajectories episode) stage)) (policy.iidTrajectoryFamilyMeasure initialState episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L360">Source line 360</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6d90feb540a0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.iIndepFun_trajectoryVisitContribution</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Visit-count summands are independent across iid episode trajectories.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iIndepFun_trajectoryVisitContribution {mdp : MDP State Action} (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (stage : Fin mdp.horizon) (state : State) (action : Action) : ProbabilityTheory.iIndepFun (<span class="kw">fun</span> episode trajectories =&gt; mdp.trajectoryVisitContribution stage state action (trajectories episode)) (policy.iidTrajectoryFamilyMeasure initialState episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L377">Source line 377</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d69c1f66fa98">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.iIndepFun_trajectoryRewardContribution</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Reward-sum summands are independent across iid episode trajectories.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iIndepFun_trajectoryRewardContribution {mdp : MDP State Action} (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (stage : Fin mdp.horizon) (state : State) (action : Action) : ProbabilityTheory.iIndepFun (<span class="kw">fun</span> episode trajectories =&gt; mdp.trajectoryRewardContribution stage state action (trajectories episode)) (policy.iidTrajectoryFamilyMeasure initialState episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L393">Source line 393</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8c35f261a29a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.iIndepFun_trajectoryTransitionContribution</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Transition-count summands are independent across iid episode trajectories.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iIndepFun_trajectoryTransitionContribution {mdp : MDP State Action} (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (stage : Fin mdp.horizon) (state : State) (action : Action) (nextState : State) : ProbabilityTheory.iIndepFun (<span class="kw">fun</span> episode trajectories =&gt; mdp.trajectoryTransitionContribution stage state action nextState (trajectories episode)) (policy.iidTrajectoryFamilyMeasure initialState episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L409">Source line 409</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-75c12639d7bb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.iidEpisodeBatch_stepLaw_and_independence</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Route endpoint: generated batch coordinates have the correct marginal law and
+are independent across episodes at every fixed stage.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iidEpisodeBatch_stepLaw_and_independence {mdp : MDP State Action} (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (stage : Fin mdp.horizon) : (<span class="kw">forall</span> episode : Fin episodes, (policy.iidEpisodeBatchMeasure initialState episodes).map (<span class="kw">fun</span> batch =&gt; batch episode stage) = (policy.trajectoryMeasure initialState).map (<span class="kw">fun</span> trajectory =&gt; mdp.episodeStepOfTrajectory trajectory stage)) /\ ProbabilityTheory.iIndepFun (<span class="kw">fun</span> episode (batch : EpisodeBatch mdp episodes) =&gt; batch episode stage) (policy.iidEpisodeBatchMeasure initialState episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonIIDTrajectoryBatch.lean.html#L430">Source line 430</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

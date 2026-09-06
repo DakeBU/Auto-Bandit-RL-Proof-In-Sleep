@@ -1,0 +1,780 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.KLUCBBernoulli · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.KLUCBBernoulli · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.KLUCBBernoulli · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Foundations</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>KLUCB<wbr>Bernoulli</h1>
+  <p class="lede">This file owns the project-local binary relative entropy used by KL-UCB. The codomain is ENNReal: singular Bernoulli comparisons are genuinely top, not the accidental finite value obtained from Mathlib&#x27;s totalized Real.log 0.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html"><code>BanditRLProof/Algorithms/KLUCBBernoulli.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/foundations/index.html">1. Finite bandits, traces, and regret</a></dd></div>
+    <div><dt>Declarations</dt><dd>41</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><span class="empty">No project-local imports.</span></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-klucbgeneratedregret/index.html"><code>BanditRLProof.Algorithms.KLUCBGeneratedRegret</code></a>, <a href="../banditrlproof-lowerbounds-informationtheory/index.html"><code>BanditRLProof.LowerBounds.InformationTheory</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-9fc855c29a30">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.KLUCB.IsBernoulliParameter</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The closed unit interval predicate used by every KL-UCB parameter.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> IsBernoulliParameter (p : Real) : Prop</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L23">Source line 23</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ac4843545118">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.KLUCB.bernoulliKLCore</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite analytic Bernoulli relative-entropy expression.  It is used
+only when the second parameter is strictly between zero and one.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> bernoulliKLCore (p q : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L32">Source line 32</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8f99f3947abe">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.KLUCB.bernoulliKL</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Bernoulli relative entropy with exact support/endpoint conventions.
+
+parameters outside `[0,1]` have value `top`;
+`d(0,0)=d(1,1)=0`;
+`d(p,0)=top` for `p&gt;0` and `d(p,1)=top` for `p&lt;1`;
+otherwise the ordinary finite logarithmic expression is used.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> bernoulliKL (p q : Real) : ENNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L43">Source line 43</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5b3b86acc12b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.bernoulliKL_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bernoulliKL_nonneg (p q : Real) : <span class="num">0</span> &lt;= bernoulliKL p q</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L55">Source line 55</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-33a6e7778907">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.bernoulliKL_eq_top_of_not_left</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bernoulliKL_eq_top_of_not_left {p q : Real} (hp : ¬ IsBernoulliParameter p) : bernoulliKL p q = ⊤</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L59">Source line 59</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7a9048ebc6d9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.bernoulliKL_eq_top_of_not_right</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bernoulliKL_eq_top_of_not_right {p q : Real} (hq : ¬ IsBernoulliParameter q) : bernoulliKL p q = ⊤</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L65">Source line 65</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-701861f1cc9d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.bernoulliKL_zero_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bernoulliKL_zero_zero : bernoulliKL <span class="num">0</span> <span class="num">0</span> = <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L73">Source line 73</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d00cbca89d69">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.bernoulliKL_one_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bernoulliKL_one_one : bernoulliKL <span class="num">1</span> <span class="num">1</span> = <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L77">Source line 77</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3c1913a07cd0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.bernoulliKL_right_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bernoulliKL_right_zero {p : Real} (hp : IsBernoulliParameter p) : bernoulliKL p <span class="num">0</span> = <span class="kw">if</span> p = <span class="num">0</span> <span class="kw">then</span> <span class="num">0</span> <span class="kw">else</span> ⊤</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L81">Source line 81</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8dce7cbd5522">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.bernoulliKL_right_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bernoulliKL_right_one {p : Real} (hp : IsBernoulliParameter p) : bernoulliKL p <span class="num">1</span> = <span class="kw">if</span> p = <span class="num">1</span> <span class="kw">then</span> <span class="num">0</span> <span class="kw">else</span> ⊤</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L88">Source line 88</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2c6153573601">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.bernoulliKL_eq_top_right_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bernoulliKL_eq_top_right_zero {p : Real} (hp : IsBernoulliParameter p) (hp0 : p ≠ <span class="num">0</span>) : bernoulliKL p <span class="num">0</span> = ⊤</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L94">Source line 94</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cb1d03cdc301">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.bernoulliKL_eq_top_right_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bernoulliKL_eq_top_right_one {p : Real} (hp : IsBernoulliParameter p) (hp1 : p ≠ <span class="num">1</span>) : bernoulliKL p <span class="num">1</span> = ⊤</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L99">Source line 99</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f66642f4706f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.bernoulliKL_zero_left_of_interior</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bernoulliKL_zero_left_of_interior {q : Real} (hq0 : <span class="num">0</span> &lt; q) (hq1 : q &lt; <span class="num">1</span>) : bernoulliKL <span class="num">0</span> q = ENNReal.ofReal (Real.log (<span class="num">1</span> / (<span class="num">1</span> - q)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L104">Source line 104</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-95c0d4b8eaeb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.bernoulliKL_one_left_of_interior</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bernoulliKL_one_left_of_interior {q : Real} (hq0 : <span class="num">0</span> &lt; q) (hq1 : q &lt; <span class="num">1</span>) : bernoulliKL <span class="num">1</span> q = ENNReal.ofReal (Real.log (<span class="num">1</span> / q))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L116">Source line 116</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7ddd835c8384">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.bernoulliKLCore_self</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite Bernoulli expression vanishes on the diagonal away from the
+singular endpoints.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bernoulliKLCore_self {p : Real} (hp0 : p ≠ <span class="num">0</span>) (hp1 : p ≠ <span class="num">1</span>) : bernoulliKLCore p p = <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L129">Source line 129</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e47976cdf5c6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.bernoulliKLCore_eq_klFun</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The analytic binary KL expression is the two-atom `klFun` integral.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bernoulliKLCore_eq_klFun {p q : Real} (hq0 : q ≠ <span class="num">0</span>) (hq1 : q ≠ <span class="num">1</span>) : bernoulliKLCore p q = q * InformationTheory.klFun (p / q) + (<span class="num">1</span> - q) * InformationTheory.klFun ((<span class="num">1</span> - p) / (<span class="num">1</span> - q))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L135">Source line 135</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e273bb31e167">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.bernoulliKLCore_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Nontrivial nonnegativity of the finite logarithmic expression.  This is
+stronger than the order-theoretic nonnegativity of its `ENNReal` wrapper.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bernoulliKLCore_nonneg {p q : Real} (hp : IsBernoulliParameter p) (hq0 : <span class="num">0</span> &lt; q) (hq1 : q &lt; <span class="num">1</span>) : <span class="num">0</span> &lt;= bernoulliKLCore p q</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L148">Source line 148</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1e35dc95378b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.bernoulliKL_eq_of_interior</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Interior parameters expose the finite analytic expression without
+truncation: its real nonnegativity has already been proved.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bernoulliKL_eq_of_interior {p q : Real} (hp : IsBernoulliParameter p) (hq0 : <span class="num">0</span> &lt; q) (hq1 : q &lt; <span class="num">1</span>) : bernoulliKL p q = ENNReal.ofReal (bernoulliKLCore p q)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L163">Source line 163</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-658d9233fdbc">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.KLUCB.bernoulliKLExpanded</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Algebraically expanded finite KL, convenient for differentiation in the
+second parameter.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> bernoulliKLExpanded (p q : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L174">Source line 174</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a5b1877b476d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.bernoulliKLCore_eq_expanded</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bernoulliKLCore_eq_expanded {p q : Real} (hp0 : p ≠ <span class="num">0</span>) (hp1 : p ≠ <span class="num">1</span>) (hq0 : q ≠ <span class="num">0</span>) (hq1 : q ≠ <span class="num">1</span>) : bernoulliKLCore p q = bernoulliKLExpanded p q</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L179">Source line 179</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-69f550988d98">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.hasDerivAt_bernoulliKLExpanded_right</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> hasDerivAt_bernoulliKLExpanded_right (p q : Real) (hq0 : q ≠ <span class="num">0</span>) (hq1 : q ≠ <span class="num">1</span>) : HasDerivAt (<span class="kw">fun</span> r =&gt; bernoulliKLExpanded p r) ((q - p) / (q * (<span class="num">1</span> - q))) q</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L189">Source line 189</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b9aa274a9d11">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.half_sq_sub_le_bernoulliKLCore</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A conservative binary Pinsker inequality.  The constant `1/2` is weaker
+than the sharp natural-log constant `2`, but is sufficient to invert every
+KL-UCB confidence set without changing the KL score itself.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> half_sq_sub_le_bernoulliKLCore {p q : Real} (hp : IsBernoulliParameter p) (hq0 : <span class="num">0</span> &lt; q) (hq1 : q &lt; <span class="num">1</span>) : (<span class="num">1</span> / <span class="num">2</span> : Real) * (p - q) ^ <span class="num">2</span> &lt;= bernoulliKLCore p q</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L209">Source line 209</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7a3451b30ec3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.bernoulliKLCore_le_sq_div</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">On an interior reference mean, binary KL is controlled by the squared
+deviation divided by the Bernoulli variance denominator.  This is the bridge
+from the repository&#x27;s bounded-reward empirical-mean tails to a genuine KL
+confidence event.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bernoulliKLCore_le_sq_div {p q : Real} (hp : IsBernoulliParameter p) (hq0 : <span class="num">0</span> &lt; q) (hq1 : q &lt; <span class="num">1</span>) : bernoulliKLCore p q &lt;= (p - q) ^ <span class="num">2</span> / (q * (<span class="num">1</span> - q))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L305">Source line 305</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-844077b728e8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.ennnreal_half_sq_sub_le_bernoulliKL</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> ennnreal_half_sq_sub_le_bernoulliKL {p q : Real} (hp : IsBernoulliParameter p) (hq0 : <span class="num">0</span> &lt; q) (hq1 : q &lt; <span class="num">1</span>) : ENNReal.ofReal ((<span class="num">1</span> / <span class="num">2</span> : Real) * (p - q) ^ <span class="num">2</span>) &lt;= bernoulliKL p q</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L356">Source line 356</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a29538094880">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.bernoulliKL_le_of_sq_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bernoulliKL_le_of_sq_le {p q budget : Real} (hp : IsBernoulliParameter p) (hq0 : <span class="num">0</span> &lt; q) (hq1 : q &lt; <span class="num">1</span>) (hsq : (p - q) ^ <span class="num">2</span> / (q * (<span class="num">1</span> - q)) &lt;= budget) : bernoulliKL p q &lt;= ENNReal.ofReal budget</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L363">Source line 363</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e19577cf21e8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.bernoulliKL_self</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bernoulliKL_self {p : Real} (hp : IsBernoulliParameter p) : bernoulliKL p p = <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L373">Source line 373</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-aa647f7a3f3e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.continuousAt_bernoulliKLCore_right</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">On the nonsingular right-parameter domain the finite expression is
+continuous.  This is the local analytic regularity used by later inversion
+leaves; endpoint singularities remain in `ENNReal`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> continuousAt_bernoulliKLCore_right (p q : Real) (hq0 : q ≠ <span class="num">0</span>) (hq1 : q ≠ <span class="num">1</span>) : ContinuousAt (<span class="kw">fun</span> r =&gt; bernoulliKLCore p r) q</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L387">Source line 387</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-43b831ebd183">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.KLUCB.confidenceSet</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">KL confidence set at one empirical mean, pull count, and exploration
+budget.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> confidenceSet (empiricalMean : Real) (count : Nat) (budget : Real) : Set Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L408">Source line 408</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-734b1693685d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.KLUCB.index</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The KL-UCB index is the supremum of its confidence set.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> index (empiricalMean : Real) (count : Nat) (budget : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L415">Source line 415</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5e7a3f63bd61">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.confidenceSet_bddAbove</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> confidenceSet_bddAbove (empiricalMean : Real) (count : Nat) (budget : Real) : BddAbove (confidenceSet empiricalMean count budget)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L419">Source line 419</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-92c12908fd3e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.mem_confidenceSet_self</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> mem_confidenceSet_self {p : Real} (hp : IsBernoulliParameter p) (count : Nat) {budget : Real} (hbudget : <span class="num">0</span> &lt;= budget) : p ∈ confidenceSet p count budget</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L426">Source line 426</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7c8ba4ae22d5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.mem_confidenceSet_of_natCast_mul_core_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Real finite-KL arithmetic is sufficient to establish exact membership in
+the `ENNReal` confidence set.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> mem_confidenceSet_of_natCast_mul_core_le {p q budget : Real} {count : Nat} (hp : IsBernoulliParameter p) (hq0 : <span class="num">0</span> &lt; q) (hq1 : q &lt; <span class="num">1</span>) (hbudget : (count : Real) * bernoulliKLCore p q &lt;= budget) : q ∈ confidenceSet p count budget</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L436">Source line 436</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-23fe60141295">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.natCast_mul_half_sq_sub_le_budget_of_mem</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> natCast_mul_half_sq_sub_le_budget_of_mem {p q budget : Real} {count : Nat} (hp : IsBernoulliParameter p) (hq0 : <span class="num">0</span> &lt; q) (hq1 : q &lt; <span class="num">1</span>) (hbudget : <span class="num">0</span> &lt;= budget) (hmem : q ∈ confidenceSet p count budget) : (count : Real) * ((<span class="num">1</span> / <span class="num">2</span> : Real) * (p - q) ^ <span class="num">2</span>) &lt;= budget</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L448">Source line 448</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8b4a02acf103">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.confidenceSet_nonempty</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> confidenceSet_nonempty {p : Real} (hp : IsBernoulliParameter p) (count : Nat) {budget : Real} (hbudget : <span class="num">0</span> &lt;= budget) : (confidenceSet p count budget).Nonempty</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L463">Source line 463</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-218c1b42bac2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.index_le_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> index_le_one {p : Real} (hp : IsBernoulliParameter p) (count : Nat) {budget : Real} (hbudget : <span class="num">0</span> &lt;= budget) : index p count budget &lt;= <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L469">Source line 469</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-eb97a6d06977">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.index_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> index_nonneg {p : Real} (hp : IsBernoulliParameter p) (count : Nat) {budget : Real} (hbudget : <span class="num">0</span> &lt;= budget) : <span class="num">0</span> &lt;= index p count budget</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L477">Source line 477</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7f8c12a7238f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.index_mem_Icc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> index_mem_Icc {p : Real} (hp : IsBernoulliParameter p) (count : Nat) {budget : Real} (hbudget : <span class="num">0</span> &lt;= budget) : index p count budget ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L486">Source line 486</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-757d1df232f2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.mem_confidenceSet_zero_iff</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Zero empirical count makes every unit-interval parameter feasible.  This
+is the explicit KL-UCB zero-count convention.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> mem_confidenceSet_zero_iff (p q budget : Real) (hbudget : <span class="num">0</span> &lt;= budget) : q ∈ confidenceSet p <span class="num">0</span> budget ↔ IsBernoulliParameter q</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L494">Source line 494</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4198c0c45fcc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.index_zero_count</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> index_zero_count {p : Real} (hp : IsBernoulliParameter p) {budget : Real} (hbudget : <span class="num">0</span> &lt;= budget) : index p <span class="num">0</span> budget = <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L499">Source line 499</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-20ac99555da6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.le_index_of_mem_confidenceSet</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Membership of the true mean implies KL optimism.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> le_index_of_mem_confidenceSet {p q : Real} {count : Nat} {budget : Real} (hq : q ∈ confidenceSet p count budget) : q &lt;= index p count budget</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L511">Source line 511</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8e974a5e1d38">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.exists_mem_confidenceSet_of_lt_index</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A strict lower level below the supremum has a genuine feasible witness.
+No unproved claim that the supremum itself belongs to the set is used.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exists_mem_confidenceSet_of_lt_index {p level : Real} {count : Nat} {budget : Real} (hp : IsBernoulliParameter p) (hbudget : <span class="num">0</span> &lt;= budget) (hlevel : level &lt; index p count budget) : ∃ q ∈ confidenceSet p count budget, level &lt; q</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBBernoulli.lean.html#L520">Source line 520</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeInverseSqrtHighProbabilityAverageConsistency</span>
+<span id="L2">2 import Mathlib.Probability.ProbabilityMassFunction.Integrals</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Exploratory behavior regret transport</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module transports cumulative expected-regret certificates from deterministic</span>
+<span id="L8">8 recommended policies to the exploratory behavior policies actually used by the</span>
+<span id="L9">9 adaptive source.  The explicit charge is linear in the exploration rate and</span>
+<span id="L10">10 quadratic in the horizon.  For a fixed exploration rate, the vanishing statistical</span>
+<span id="L11">11 certificate therefore converges to that charge, not to zero.</span>
+<span id="L12">12 -/</span>
+<span id="L13">13 </span>
+<span id="L14">14 open MeasureTheory</span>
+<span id="L15">15 open scoped ENNReal ProbabilityTheory</span>
+<span id="L16">16 </span>
+<span id="L17">17 universe u v</span>
+<span id="L18">18 </span>
+<span id="L19">19 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L20">20 </span>
+<span id="L21">21 variable {State : Type u} {Action : Type v}</span>
+<span id="L22">22     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L23">23     [Fintype State] [Fintype Action]</span>
+<span id="L24">24     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L25">25     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L26">26     [Nonempty State] [Nonempty Action]</span>
+<span id="L27">27 </span>
+<span id="L28">28 namespace DeterministicMarkovPolicyTable</span>
+<span id="L29">29 </span>
+<span id="L30">30 theorem exploratoryActionPMF_apply</span>
+<span id="L31">31     {mdp : MDP State Action} (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L32">32     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L33">33     (stage : Fin mdp.horizon) (state : State) (action : Action) :</span>
+<span id="L34">34     table.exploratoryActionPMF explorationRate hexplorationRate</span>
+<span id="L35">35         stage state action =</span>
+<span id="L36">36       (explorationRate : ENNReal) * (Fintype.card Action : ENNReal)⁻¹ +</span>
+<span id="L37">37         ((1 - explorationRate : NNReal) : ENNReal) *</span>
+<span id="L38">38           if action = table stage state then 1 else 0 := by</span>
+<span id="L39">39   rw [exploratoryActionPMF, PMF.bind_apply]</span>
+<span id="L40">40   rw [tsum_fintype, Fintype.sum_bool]</span>
+<span id="L41">41   simp [PMF.bernoulli_apply, PMF.uniformOfFintype_apply, PMF.pure_apply]</span>
+<span id="L42">42 </span>
+<span id="L43">43 theorem integral_exploratoryActionPMF</span>
+<span id="L44">44     {mdp : MDP State Action} (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L45">45     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L46">46     (stage : Fin mdp.horizon) (state : State) (f : Action -&gt; Real) :</span>
+<span id="L47">47     (∫ action, f action ∂</span>
+<span id="L48">48         (table.exploratoryActionPMF explorationRate hexplorationRate</span>
+<span id="L49">49           stage state).toMeasure) =</span>
+<span id="L50">50       (explorationRate : Real) *</span>
+<span id="L51">51           (∑ action, f action) / (Fintype.card Action : Real) +</span>
+<span id="L52">52         (1 - (explorationRate : Real)) * f (table stage state) := by</span>
+<span id="L53">53   rw [PMF.integral_eq_sum]</span>
+<span id="L54">54   calc</span>
+<span id="L55">55     (∑ x,</span>
+<span id="L56">56         (table.exploratoryActionPMF explorationRate hexplorationRate</span>
+<span id="L57">57           stage state x).toReal • f x) =</span>
+<span id="L58">58         ∑ x,</span>
+<span id="L59">59           (((explorationRate : ENNReal) *</span>
+<span id="L60">60                 (Fintype.card Action : ENNReal)⁻¹).toReal +</span>
+<span id="L61">61             (((1 - explorationRate : NNReal) : ENNReal) *</span>
+<span id="L62">62                 if x = table stage state then 1 else 0).toReal) * f x := by</span>
+<span id="L63">63       apply Finset.sum_congr rfl</span>
+<span id="L64">64       intro x _hx</span>
+<span id="L65">65       rw [show table.exploratoryActionPMF explorationRate hexplorationRate</span>
+<span id="L66">66           stage state x =</span>
+<span id="L67">67           (explorationRate : ENNReal) *</span>
+<span id="L68">68               (Fintype.card Action : ENNReal)⁻¹ +</span>
+<span id="L69">69             (((1 - explorationRate : NNReal) : ENNReal) *</span>
+<span id="L70">70               if x = table stage state then 1 else 0) by</span>
+<span id="L71">71         rw [exploratoryActionPMF, PMF.bind_apply]</span>
+<span id="L72">72         rw [tsum_fintype, Fintype.sum_bool]</span>
+<span id="L73">73         simp [PMF.bernoulli_apply, PMF.uniformOfFintype_apply, PMF.pure_apply]]</span>
+<span id="L74">74       rw [ENNReal.toReal_add] &lt;;&gt; try finiteness</span>
+<span id="L75">75       rfl</span>
+<span id="L76">76     _ = (explorationRate : Real) *</span>
+<span id="L77">77           (∑ action, f action) / (Fintype.card Action : Real) +</span>
+<span id="L78">78         (1 - (explorationRate : Real)) * f (table stage state) := by</span>
+<span id="L79">79       simp only [ENNReal.toReal_mul, ENNReal.coe_toReal, ENNReal.toReal_inv,</span>
+<span id="L80">80         ENNReal.toReal_natCast, add_mul]</span>
+<span id="L81">81       rw [Finset.sum_add_distrib]</span>
+<span id="L82">82       simp_rw [mul_assoc]</span>
+<span id="L83">83       rw [← Finset.mul_sum, ← Finset.mul_sum]</span>
+<span id="L84">84       norm_cast</span>
+<span id="L85">85       simp only [apply_ite, Nat.cast_one, Nat.cast_zero, ite_mul,</span>
+<span id="L86">86         mul_zero, one_mul, zero_mul]</span>
+<span id="L87">87       rw [show (∑ x : Action,</span>
+<span id="L88">88             if x = table stage state then</span>
+<span id="L89">89               ((1 - explorationRate : NNReal) : Real) * f x else 0) =</span>
+<span id="L90">90           ((1 - explorationRate : NNReal) : Real) * f (table stage state) by</span>
+<span id="L91">91         simpa using</span>
+<span id="L92">92           (Finset.sum_ite_eq&#x27; (Finset.univ : Finset Action)</span>
+<span id="L93">93             (table stage state)</span>
+<span id="L94">94             (fun x =&gt; ((1 - explorationRate : NNReal) : Real) * f x))]</span>
+<span id="L95">95       rw [NNReal.coe_sub hexplorationRate]</span>
+<span id="L96">96       norm_num</span>
+<span id="L97">97       ring</span>
+<span id="L98">98 </span>
+<span id="L99">99 theorem selected_sub_integral_exploratoryActionPMF_le</span>
+<span id="L100">100     {mdp : MDP State Action} (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L101">101     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L102">102     (stage : Fin mdp.horizon) (state : State) (f : Action -&gt; Real)</span>
+<span id="L103">103     (bound : Real) (hbound : forall action, |f action| &lt;= bound) :</span>
+<span id="L104">104     f (table stage state) -</span>
+<span id="L105">105         (∫ action, f action ∂</span>
+<span id="L106">106           (table.exploratoryActionPMF explorationRate hexplorationRate</span>
+<span id="L107">107             stage state).toMeasure) &lt;=</span>
+<span id="L108">108       2 * (explorationRate : Real) * bound := by</span>
+<span id="L109">109   rw [table.integral_exploratoryActionPMF explorationRate hexplorationRate</span>
+<span id="L110">110     stage state f]</span>
+<span id="L111">111   have hcardPos : (0 : Real) &lt; Fintype.card Action := by</span>
+<span id="L112">112     exact_mod_cast Fintype.card_pos</span>
+<span id="L113">113   have hsumLower :</span>
+<span id="L114">114       (Fintype.card Action : Real) * (-bound) &lt;= ∑ action, f action := by</span>
+<span id="L115">115     calc</span>
+<span id="L116">116       (Fintype.card Action : Real) * (-bound) = ∑ _action : Action, -bound := by</span>
+<span id="L117">117         simp</span>
+<span id="L118">118       _ &lt;= ∑ action, f action := by</span>
+<span id="L119">119         apply Finset.sum_le_sum</span>
+<span id="L120">120         intro action _haction</span>
+<span id="L121">121         exact (abs_le.mp (hbound action)).1</span>
+<span id="L122">122   have haverageLower :</span>
+<span id="L123">123       -bound &lt;= (∑ action, f action) / (Fintype.card Action : Real) := by</span>
+<span id="L124">124     rw [le_div_iff₀ hcardPos]</span>
+<span id="L125">125     nlinarith</span>
+<span id="L126">126   have hselectedUpper : f (table stage state) &lt;= bound :=</span>
+<span id="L127">127     (abs_le.mp (hbound (table stage state))).2</span>
+<span id="L128">128   have hgap :</span>
+<span id="L129">129       f (table stage state) -</span>
+<span id="L130">130           (∑ action, f action) / (Fintype.card Action : Real) &lt;=</span>
+<span id="L131">131         2 * bound := by</span>
+<span id="L132">132     linarith</span>
+<span id="L133">133   have hp : 0 &lt;= (explorationRate : Real) := by positivity</span>
+<span id="L134">134   have hscaled := mul_le_mul_of_nonneg_left hgap hp</span>
+<span id="L135">135   calc</span>
+<span id="L136">136     f (table stage state) -</span>
+<span id="L137">137           ((explorationRate : Real) *</span>
+<span id="L138">138               (∑ action, f action) / (Fintype.card Action : Real) +</span>
+<span id="L139">139             (1 - (explorationRate : Real)) * f (table stage state)) =</span>
+<span id="L140">140         (explorationRate : Real) *</span>
+<span id="L141">141           (f (table stage state) -</span>
+<span id="L142">142             (∑ action, f action) / (Fintype.card Action : Real)) := by ring</span>
+<span id="L143">143     _ &lt;= (explorationRate : Real) * (2 * bound) := hscaled</span>
+<span id="L144">144     _ = 2 * (explorationRate : Real) * bound := by ring</span>
+<span id="L145">145 </span>
+<span id="L146">146 end DeterministicMarkovPolicyTable</span>
+<span id="L147">147 </span>
+<span id="L148">148 namespace MDP</span>
+<span id="L149">149 </span>
+<span id="L150">150 /-- A bounded continuation gives a bounded one-step action value. -/</span>
+<span id="L151">151 theorem bellmanQ_abs_le</span>
+<span id="L152">152     (mdp : MDP State Action) (rewardBound continuationBound : Real)</span>
+<span id="L153">153     (hrewardBound : forall state action, |mdp.reward state action| &lt;= rewardBound)</span>
+<span id="L154">154     {value : State -&gt; Real}</span>
+<span id="L155">155     (hvalue : forall state, |value state| &lt;= continuationBound)</span>
+<span id="L156">156     (state : State) (action : Action) :</span>
+<span id="L157">157     |mdp.bellmanQ value state action| &lt;= rewardBound + continuationBound := by</span>
+<span id="L158">158   have htransition :</span>
+<span id="L159">159       |mdp.transitionValue value state action| &lt;= continuationBound := by</span>
+<span id="L160">160     rw [← Real.norm_eq_abs]</span>
+<span id="L161">161     have hnorm := norm_integral_le_of_norm_le_const</span>
+<span id="L162">162       (μ := mdp.transition (state, action)) (C := continuationBound)</span>
+<span id="L163">163       (Filter.Eventually.of_forall fun nextState =&gt; by</span>
+<span id="L164">164         rw [Real.norm_eq_abs]</span>
+<span id="L165">165         exact hvalue nextState)</span>
+<span id="L166">166     simpa [MDP.transitionValue] using hnorm</span>
+<span id="L167">167   unfold bellmanQ</span>
+<span id="L168">168   exact (abs_add_le _ _).trans</span>
+<span id="L169">169     (add_le_add (hrewardBound state action) htransition)</span>
+<span id="L170">170 </span>
+<span id="L171">171 /-- A pointwise continuation difference bound transports through one transition kernel. -/</span>
+<span id="L172">172 theorem transitionValue_sub_le_const</span>
+<span id="L173">173     (mdp : MDP State Action) {left right : State -&gt; Real} {bound : Real}</span>
+<span id="L174">174     (hbound : forall state, left state - right state &lt;= bound)</span>
+<span id="L175">175     (state : State) (action : Action) :</span>
+<span id="L176">176     mdp.transitionValue left state action -</span>
+<span id="L177">177         mdp.transitionValue right state action &lt;= bound := by</span>
+<span id="L178">178   have hleft : Integrable left (mdp.transition (state, action)) :=</span>
+<span id="L179">179     integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L180">180   have hright : Integrable right (mdp.transition (state, action)) :=</span>
+<span id="L181">181     integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L182">182   unfold transitionValue</span>
+<span id="L183">183   rw [← integral_sub hleft hright]</span>
+<span id="L184">184   calc</span>
+<span id="L185">185     (∫ nextState, left nextState - right nextState ∂</span>
+<span id="L186">186         mdp.transition (state, action)) &lt;=</span>
+<span id="L187">187         ∫ _nextState, bound ∂mdp.transition (state, action) := by</span>
+<span id="L188">188       apply integral_mono</span>
+<span id="L189">189       · exact hleft.sub hright</span>
+<span id="L190">190       · exact integrable_const bound</span>
+<span id="L191">191       · exact hbound</span>
+<span id="L192">192     _ = bound := by simp</span>
+<span id="L193">193 </span>
+<span id="L194">194 end MDP</span>
+<span id="L195">195 </span>
+<span id="L196">196 namespace MarkovPolicy</span>
+<span id="L197">197 </span>
+<span id="L198">198 /-- Every bounded-reward policy value is bounded by remaining horizon times the reward bound. -/</span>
+<span id="L199">199 theorem valueRemaining_abs_le</span>
+<span id="L200">200     {mdp : MDP State Action} (policy : MarkovPolicy mdp)</span>
+<span id="L201">201     (rewardBound : Real)</span>
+<span id="L202">202     (hrewardBound : forall state action, |mdp.reward state action| &lt;= rewardBound)</span>
+<span id="L203">203     (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) (state : State) :</span>
+<span id="L204">204     |policy.valueRemaining remaining hremaining state| &lt;=</span>
+<span id="L205">205       (remaining : Real) * rewardBound := by</span>
+<span id="L206">206   induction remaining generalizing state with</span>
+<span id="L207">207   | zero =&gt;</span>
+<span id="L208">208       simp [valueRemaining]</span>
+<span id="L209">209   | succ remaining ih =&gt;</span>
+<span id="L210">210       rw [valueRemaining]</span>
+<span id="L211">211       rw [← Real.norm_eq_abs]</span>
+<span id="L212">212       have hnorm := norm_integral_le_of_norm_le_const</span>
+<span id="L213">213         (μ := policy.actionKernel</span>
+<span id="L214">214           ⟨mdp.horizon - (remaining + 1), by omega⟩ state)</span>
+<span id="L215">215         (C := ((remaining + 1 : Nat) : Real) * rewardBound)</span>
+<span id="L216">216         (Filter.Eventually.of_forall fun action =&gt; by</span>
+<span id="L217">217           rw [Real.norm_eq_abs]</span>
+<span id="L218">218           calc</span>
+<span id="L219">219             |mdp.bellmanQ</span>
+<span id="L220">220                 (policy.valueRemaining remaining (by omega)) state action| &lt;=</span>
+<span id="L221">221                 rewardBound + (remaining : Real) * rewardBound :=</span>
+<span id="L222">222               mdp.bellmanQ_abs_le rewardBound ((remaining : Real) * rewardBound)</span>
+<span id="L223">223                 hrewardBound (fun nextState =&gt; ih (by omega) nextState) state action</span>
+<span id="L224">224             _ = ((remaining + 1 : Nat) : Real) * rewardBound := by</span>
+<span id="L225">225               push_cast</span>
+<span id="L226">226               ring)</span>
+<span id="L227">227       simpa [MarkovPolicy.bellman] using hnorm</span>
+<span id="L228">228 </span>
+<span id="L229">229 end MarkovPolicy</span>
+<span id="L230">230 </span>
+<span id="L231">231 namespace DeterministicMarkovPolicyTable</span>
+<span id="L232">232 </span>
+<span id="L233">233 /-- Bellman evaluation of a deterministic table selects exactly its table action. -/</span>
+<span id="L234">234 theorem toMarkovPolicy_bellman</span>
+<span id="L235">235     {mdp : MDP State Action} (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L236">236     (stage : Fin mdp.horizon) (value : State -&gt; Real) (state : State) :</span>
+<span id="L237">237     table.toMarkovPolicy.bellman stage value state =</span>
+<span id="L238">238       mdp.bellmanQ value state (table stage state) := by</span>
+<span id="L239">239   unfold MarkovPolicy.bellman toMarkovPolicy</span>
+<span id="L240">240   rw [ProbabilityTheory.Kernel.deterministic_apply]</span>
+<span id="L241">241   rw [integral_dirac&#x27;]</span>
+<span id="L242">242   exact</span>
+<span id="L243">243     ((mdp.measurable_bellmanQ (measurable_of_finite value)).comp</span>
+<span id="L244">244       (measurable_const.prodMk measurable_id)).stronglyMeasurable</span>
+<span id="L245">245 </span>
+<span id="L246">246 /-- Bellman evaluation of the exploratory table is its explicit PMF mixture. -/</span>
+<span id="L247">247 theorem exploratoryPolicy_bellman</span>
+<span id="L248">248     {mdp : MDP State Action} (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L249">249     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L250">250     (stage : Fin mdp.horizon) (value : State -&gt; Real) (state : State) :</span>
+<span id="L251">251     (table.exploratoryPolicy explorationRate hexplorationRate).bellman</span>
+<span id="L252">252         stage value state =</span>
+<span id="L253">253       (explorationRate : Real) *</span>
+<span id="L254">254           (∑ action, mdp.bellmanQ value state action) /</span>
+<span id="L255">255             (Fintype.card Action : Real) +</span>
+<span id="L256">256         (1 - (explorationRate : Real)) *</span>
+<span id="L257">257           mdp.bellmanQ value state (table stage state) := by</span>
+<span id="L258">258   unfold MarkovPolicy.bellman exploratoryPolicy</span>
+<span id="L259">259   change (∫ action, mdp.bellmanQ value state action ∂</span>
+<span id="L260">260       (table.exploratoryActionPMF explorationRate hexplorationRate</span>
+<span id="L261">261         stage state).toMeasure) = _</span>
+<span id="L262">262   exact table.integral_exploratoryActionPMF explorationRate hexplorationRate</span>
+<span id="L263">263     stage state (fun action =&gt; mdp.bellmanQ value state action)</span>
+<span id="L264">264 </span>
+<span id="L265">265 /--</span>
+<span id="L266">266 Exploration around a deterministic table loses at most the explicit quadratic-horizon charge.</span>
+<span id="L267">267 The charge is linear in the exploration rate and reward bound.</span>
+<span id="L268">268 -/</span>
+<span id="L269">269 theorem toMarkovPolicy_valueRemaining_sub_exploratoryPolicy_valueRemaining_le</span>
+<span id="L270">270     {mdp : MDP State Action} (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L271">271     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L272">272     (rewardBound : Real)</span>
+<span id="L273">273     (hrewardBound : forall state action, |mdp.reward state action| &lt;= rewardBound)</span>
+<span id="L274">274     (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) (state : State) :</span>
+<span id="L275">275     table.toMarkovPolicy.valueRemaining remaining hremaining state -</span>
+<span id="L276">276         (table.exploratoryPolicy explorationRate hexplorationRate).valueRemaining</span>
+<span id="L277">277           remaining hremaining state &lt;=</span>
+<span id="L278">278       (explorationRate : Real) * rewardBound * (remaining : Real) *</span>
+<span id="L279">279         ((remaining + 1 : Nat) : Real) := by</span>
+<span id="L280">280   induction remaining generalizing state with</span>
+<span id="L281">281   | zero =&gt;</span>
+<span id="L282">282       simp [MarkovPolicy.valueRemaining]</span>
+<span id="L283">283   | succ remaining ih =&gt;</span>
+<span id="L284">284       let stage : Fin mdp.horizon :=</span>
+<span id="L285">285         ⟨mdp.horizon - (remaining + 1), by omega⟩</span>
+<span id="L286">286       let deterministicTail :=</span>
+<span id="L287">287         table.toMarkovPolicy.valueRemaining remaining (by omega)</span>
+<span id="L288">288       let exploratoryTail :=</span>
+<span id="L289">289         (table.exploratoryPolicy explorationRate hexplorationRate).valueRemaining</span>
+<span id="L290">290           remaining (by omega)</span>
+<span id="L291">291       have hpropagation :</span>
+<span id="L292">292           table.toMarkovPolicy.bellman stage deterministicTail state -</span>
+<span id="L293">293               table.toMarkovPolicy.bellman stage exploratoryTail state &lt;=</span>
+<span id="L294">294             (explorationRate : Real) * rewardBound * (remaining : Real) *</span>
+<span id="L295">295               ((remaining + 1 : Nat) : Real) := by</span>
+<span id="L296">296         rw [table.toMarkovPolicy_bellman, table.toMarkovPolicy_bellman]</span>
+<span id="L297">297         unfold MDP.bellmanQ</span>
+<span id="L298">298         have htransition := mdp.transitionValue_sub_le_const</span>
+<span id="L299">299           (left := deterministicTail) (right := exploratoryTail)</span>
+<span id="L300">300           (bound := (explorationRate : Real) * rewardBound * (remaining : Real) *</span>
+<span id="L301">301             ((remaining + 1 : Nat) : Real))</span>
+<span id="L302">302           (fun nextState =&gt; ih (by omega) nextState) state (table stage state)</span>
+<span id="L303">303         linarith</span>
+<span id="L304">304       have hactionValue (action : Action) :</span>
+<span id="L305">305           |mdp.bellmanQ exploratoryTail state action| &lt;=</span>
+<span id="L306">306             ((remaining + 1 : Nat) : Real) * rewardBound := by</span>
+<span id="L307">307         exact (mdp.bellmanQ_abs_le rewardBound</span>
+<span id="L308">308           ((remaining : Real) * rewardBound) hrewardBound</span>
+<span id="L309">309           (fun nextState =&gt;</span>
+<span id="L310">310             (table.exploratoryPolicy explorationRate hexplorationRate).valueRemaining_abs_le</span>
+<span id="L311">311               rewardBound hrewardBound remaining (by omega) nextState)</span>
+<span id="L312">312           state action).trans_eq (by</span>
+<span id="L313">313             push_cast</span>
+<span id="L314">314             ring)</span>
+<span id="L315">315       have hexplorationStep :</span>
+<span id="L316">316           table.toMarkovPolicy.bellman stage exploratoryTail state -</span>
+<span id="L317">317               (table.exploratoryPolicy explorationRate hexplorationRate).bellman</span>
+<span id="L318">318                 stage exploratoryTail state &lt;=</span>
+<span id="L319">319             2 * (explorationRate : Real) *</span>
+<span id="L320">320               (((remaining + 1 : Nat) : Real) * rewardBound) := by</span>
+<span id="L321">321         rw [table.toMarkovPolicy_bellman]</span>
+<span id="L322">322         unfold MarkovPolicy.bellman exploratoryPolicy</span>
+<span id="L323">323         change mdp.bellmanQ exploratoryTail state (table stage state) -</span>
+<span id="L324">324             (∫ action, mdp.bellmanQ exploratoryTail state action ∂</span>
+<span id="L325">325               (table.exploratoryActionPMF explorationRate hexplorationRate</span>
+<span id="L326">326                 stage state).toMeasure) &lt;= _</span>
+<span id="L327">327         exact table.selected_sub_integral_exploratoryActionPMF_le</span>
+<span id="L328">328           explorationRate hexplorationRate stage state</span>
+<span id="L329">329           (fun action =&gt; mdp.bellmanQ exploratoryTail state action)</span>
+<span id="L330">330           (((remaining + 1 : Nat) : Real) * rewardBound) hactionValue</span>
+<span id="L331">331       rw [MarkovPolicy.valueRemaining, MarkovPolicy.valueRemaining]</span>
+<span id="L332">332       change table.toMarkovPolicy.bellman stage deterministicTail state -</span>
+<span id="L333">333           (table.exploratoryPolicy explorationRate hexplorationRate).bellman</span>
+<span id="L334">334             stage exploratoryTail state &lt;= _</span>
+<span id="L335">335       calc</span>
+<span id="L336">336         table.toMarkovPolicy.bellman stage deterministicTail state -</span>
+<span id="L337">337               (table.exploratoryPolicy explorationRate hexplorationRate).bellman</span>
+<span id="L338">338                 stage exploratoryTail state =</span>
+<span id="L339">339             (table.toMarkovPolicy.bellman stage deterministicTail state -</span>
+<span id="L340">340               table.toMarkovPolicy.bellman stage exploratoryTail state) +</span>
+<span id="L341">341             (table.toMarkovPolicy.bellman stage exploratoryTail state -</span>
+<span id="L342">342               (table.exploratoryPolicy explorationRate hexplorationRate).bellman</span>
+<span id="L343">343                 stage exploratoryTail state) := by ring</span>
+<span id="L344">344         _ &lt;= (explorationRate : Real) * rewardBound * (remaining : Real) *</span>
+<span id="L345">345               ((remaining + 1 : Nat) : Real) +</span>
+<span id="L346">346             2 * (explorationRate : Real) *</span>
+<span id="L347">347               (((remaining + 1 : Nat) : Real) * rewardBound) :=</span>
+<span id="L348">348           add_le_add hpropagation hexplorationStep</span>
+<span id="L349">349         _ = (explorationRate : Real) * rewardBound *</span>
+<span id="L350">350               ((remaining + 1 : Nat) : Real) *</span>
+<span id="L351">351               ((remaining + 2 : Nat) : Real) := by</span>
+<span id="L352">352           push_cast</span>
+<span id="L353">353           ring</span>
+<span id="L354">354 </span>
+<span id="L355">355 /-- Exploratory-behavior expected regret is bounded by table regret plus its exploration charge. -/</span>
+<span id="L356">356 theorem exploratoryPolicy_expectedRegret_le_toMarkovPolicy_expectedRegret_add_charge</span>
+<span id="L357">357     {mdp : MDP State Action} (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L358">358     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L359">359     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L360">360     (rewardBound : Real)</span>
+<span id="L361">361     (hrewardBound : forall state action, |mdp.reward state action| &lt;= rewardBound) :</span>
+<span id="L362">362     (table.exploratoryPolicy explorationRate hexplorationRate).expectedRegret</span>
+<span id="L363">363         initialState &lt;=</span>
+<span id="L364">364       table.toMarkovPolicy.expectedRegret initialState +</span>
+<span id="L365">365         (explorationRate : Real) * rewardBound * (mdp.horizon : Real) *</span>
+<span id="L366">366           ((mdp.horizon + 1 : Nat) : Real) := by</span>
+<span id="L367">367   let charge := (explorationRate : Real) * rewardBound *</span>
+<span id="L368">368     (mdp.horizon : Real) * ((mdp.horizon + 1 : Nat) : Real)</span>
+<span id="L369">369   have hvalueGap (state : State) :</span>
+<span id="L370">370       table.toMarkovPolicy.valueAt 0 (Nat.zero_le mdp.horizon) state -</span>
+<span id="L371">371           (table.exploratoryPolicy explorationRate hexplorationRate).valueAt</span>
+<span id="L372">372             0 (Nat.zero_le mdp.horizon) state &lt;= charge := by</span>
+<span id="L373">373     simpa [MarkovPolicy.valueAt, charge] using</span>
+<span id="L374">374       table.toMarkovPolicy_valueRemaining_sub_exploratoryPolicy_valueRemaining_le</span>
+<span id="L375">375         explorationRate hexplorationRate rewardBound hrewardBound</span>
+<span id="L376">376         mdp.horizon le_rfl state</span>
+<span id="L377">377   rw [MarkovPolicy.expectedRegret_eq_integral_optimalValueAt_sub_valueAt</span>
+<span id="L378">378     (table.exploratoryPolicy explorationRate hexplorationRate) initialState]</span>
+<span id="L379">379   rw [MarkovPolicy.expectedRegret_eq_integral_optimalValueAt_sub_valueAt</span>
+<span id="L380">380     table.toMarkovPolicy initialState]</span>
+<span id="L381">381   have hoptimalSubTable : Integrable</span>
+<span id="L382">382       (fun state =&gt;</span>
+<span id="L383">383         mdp.optimalValueAt 0 (Nat.zero_le mdp.horizon) state -</span>
+<span id="L384">384           table.toMarkovPolicy.valueAt 0 (Nat.zero_le mdp.horizon) state)</span>
+<span id="L385">385       initialState :=</span>
+<span id="L386">386     integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L387">387   have htableSubExploratory : Integrable</span>
+<span id="L388">388       (fun state =&gt;</span>
+<span id="L389">389         table.toMarkovPolicy.valueAt 0 (Nat.zero_le mdp.horizon) state -</span>
+<span id="L390">390           (table.exploratoryPolicy explorationRate hexplorationRate).valueAt</span>
+<span id="L391">391             0 (Nat.zero_le mdp.horizon) state)</span>
+<span id="L392">392       initialState :=</span>
+<span id="L393">393     integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L394">394   calc</span>
+<span id="L395">395     (∫ state,</span>
+<span id="L396">396         mdp.optimalValueAt 0 (Nat.zero_le mdp.horizon) state -</span>
+<span id="L397">397           (table.exploratoryPolicy explorationRate hexplorationRate).valueAt</span>
+<span id="L398">398             0 (Nat.zero_le mdp.horizon) state ∂initialState) =</span>
+<span id="L399">399         (∫ state,</span>
+<span id="L400">400           (mdp.optimalValueAt 0 (Nat.zero_le mdp.horizon) state -</span>
+<span id="L401">401             table.toMarkovPolicy.valueAt 0 (Nat.zero_le mdp.horizon) state) +</span>
+<span id="L402">402           (table.toMarkovPolicy.valueAt 0 (Nat.zero_le mdp.horizon) state -</span>
+<span id="L403">403             (table.exploratoryPolicy explorationRate hexplorationRate).valueAt</span>
+<span id="L404">404               0 (Nat.zero_le mdp.horizon) state) ∂initialState) := by</span>
+<span id="L405">405       apply integral_congr_ae</span>
+<span id="L406">406       filter_upwards [] with state</span>
+<span id="L407">407       ring</span>
+<span id="L408">408     _ = (∫ state,</span>
+<span id="L409">409           mdp.optimalValueAt 0 (Nat.zero_le mdp.horizon) state -</span>
+<span id="L410">410             table.toMarkovPolicy.valueAt 0 (Nat.zero_le mdp.horizon) state</span>
+<span id="L411">411             ∂initialState) +</span>
+<span id="L412">412         ∫ state,</span>
+<span id="L413">413           table.toMarkovPolicy.valueAt 0 (Nat.zero_le mdp.horizon) state -</span>
+<span id="L414">414             (table.exploratoryPolicy explorationRate hexplorationRate).valueAt</span>
+<span id="L415">415               0 (Nat.zero_le mdp.horizon) state ∂initialState := by</span>
+<span id="L416">416       rw [integral_add hoptimalSubTable htableSubExploratory]</span>
+<span id="L417">417     _ &lt;= (∫ state,</span>
+<span id="L418">418           mdp.optimalValueAt 0 (Nat.zero_le mdp.horizon) state -</span>
+<span id="L419">419             table.toMarkovPolicy.valueAt 0 (Nat.zero_le mdp.horizon) state</span>
+<span id="L420">420             ∂initialState) +</span>
+<span id="L421">421         ∫ _state, charge ∂initialState := by</span>
+<span id="L422">422       apply add_le_add (le_refl _)</span>
+<span id="L423">423       apply integral_mono</span>
+<span id="L424">424       · exact htableSubExploratory</span>
+<span id="L425">425       · exact integrable_const charge</span>
+<span id="L426">426       · exact hvalueGap</span>
+<span id="L427">427     _ = (∫ state,</span>
+<span id="L428">428           mdp.optimalValueAt 0 (Nat.zero_le mdp.horizon) state -</span>
+<span id="L429">429             table.toMarkovPolicy.valueAt 0 (Nat.zero_le mdp.horizon) state</span>
+<span id="L430">430             ∂initialState) +</span>
+<span id="L431">431         (explorationRate : Real) * rewardBound * (mdp.horizon : Real) *</span>
+<span id="L432">432           ((mdp.horizon + 1 : Nat) : Real) := by</span>
+<span id="L433">433       simp [charge]</span>
+<span id="L434">434 </span>
+<span id="L435">435 end DeterministicMarkovPolicyTable</span>
+<span id="L436">436 </span>
+<span id="L437">437 /-- The per-policy price of uniform exploration over a bounded-reward horizon. -/</span>
+<span id="L438">438 noncomputable def exploratoryBehaviorRegretCharge</span>
+<span id="L439">439     (mdp : MDP State Action) (explorationRate : NNReal)</span>
+<span id="L440">440     (rewardBound : Real) : Real :=</span>
+<span id="L441">441   (explorationRate : Real) * rewardBound * (mdp.horizon : Real) *</span>
+<span id="L442">442     ((mdp.horizon + 1 : Nat) : Real)</span>
+<span id="L443">443 </span>
+<span id="L444">444 /-- Sum of expected regrets of exploratory behaviors centered on cumulative recommendations. -/</span>
+<span id="L445">445 noncomputable def adaptiveCumulativeEmpiricalOptimisticExploratoryBehaviorExpectedRegret</span>
+<span id="L446">446     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L447">447     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L448">448     (trajectory : EpisodeBatchTrajectory mdp episodes)</span>
+<span id="L449">449     (defaultState : State) (countRadius : TransitionCountRadius)</span>
+<span id="L450">450     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L451">451     (rounds : Nat) : Real :=</span>
+<span id="L452">452   ∑ round : Fin rounds,</span>
+<span id="L453">453     (((cumulativeTransitionCountSummaryAt trajectory round)</span>
+<span id="L454">454         |&gt;.countRadiusOptimisticPolicyTable mdp defaultState countRadius)</span>
+<span id="L455">455       |&gt;.exploratoryPolicy explorationRate hexplorationRate).expectedRegret initialState</span>
+<span id="L456">456 </span>
+<span id="L457">457 /-- Average expected regret of those exploratory behaviors. -/</span>
+<span id="L458">458 noncomputable def adaptiveCumulativeEmpiricalOptimisticAverageExploratoryBehaviorExpectedRegret</span>
+<span id="L459">459     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L460">460     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L461">461     (trajectory : EpisodeBatchTrajectory mdp episodes)</span>
+<span id="L462">462     (defaultState : State) (countRadius : TransitionCountRadius)</span>
+<span id="L463">463     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L464">464     (rounds : Nat) : Real :=</span>
+<span id="L465">465   adaptiveCumulativeEmpiricalOptimisticExploratoryBehaviorExpectedRegret</span>
+<span id="L466">466       (initialState := initialState) trajectory defaultState countRadius</span>
+<span id="L467">467       explorationRate hexplorationRate rounds /</span>
+<span id="L468">468     (rounds : Real)</span>
+<span id="L469">469 </span>
+<span id="L470">470 /-- Cumulative exploratory behavior regret is bounded by recommendation regret plus one charge per round. -/</span>
+<span id="L471">471 theorem adaptiveCumulativeEmpiricalOptimisticExploratoryBehaviorExpectedRegret_le</span>
+<span id="L472">472     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L473">473     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L474">474     (trajectory : EpisodeBatchTrajectory mdp episodes)</span>
+<span id="L475">475     (defaultState : State) (countRadius : TransitionCountRadius)</span>
+<span id="L476">476     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L477">477     (rewardBound : Real)</span>
+<span id="L478">478     (hrewardBound : forall state action, |mdp.reward state action| &lt;= rewardBound)</span>
+<span id="L479">479     (rounds : Nat) :</span>
+<span id="L480">480     adaptiveCumulativeEmpiricalOptimisticExploratoryBehaviorExpectedRegret</span>
+<span id="L481">481         (initialState := initialState) trajectory defaultState countRadius</span>
+<span id="L482">482         explorationRate hexplorationRate rounds &lt;=</span>
+<span id="L483">483       adaptiveCumulativeEmpiricalOptimisticRecommendedExpectedRegret</span>
+<span id="L484">484           (initialState := initialState) trajectory defaultState countRadius rounds +</span>
+<span id="L485">485         (rounds : Real) *</span>
+<span id="L486">486           exploratoryBehaviorRegretCharge mdp explorationRate rewardBound := by</span>
+<span id="L487">487   unfold adaptiveCumulativeEmpiricalOptimisticExploratoryBehaviorExpectedRegret</span>
+<span id="L488">488     adaptiveCumulativeEmpiricalOptimisticRecommendedExpectedRegret</span>
+<span id="L489">489   calc</span>
+<span id="L490">490     (∑ round : Fin rounds,</span>
+<span id="L491">491         (((cumulativeTransitionCountSummaryAt trajectory round)</span>
+<span id="L492">492             |&gt;.countRadiusOptimisticPolicyTable mdp defaultState countRadius)</span>
+<span id="L493">493           |&gt;.exploratoryPolicy explorationRate hexplorationRate).expectedRegret</span>
+<span id="L494">494             initialState) &lt;=</span>
+<span id="L495">495         ∑ round : Fin rounds,</span>
+<span id="L496">496           ((adaptiveCumulativeEmpiricalOptimisticPlanAt trajectory defaultState</span>
+<span id="L497">497               countRadius round).optimisticPolicy.expectedRegret initialState +</span>
+<span id="L498">498             exploratoryBehaviorRegretCharge mdp explorationRate rewardBound) := by</span>
+<span id="L499">499       apply Finset.sum_le_sum</span>
+<span id="L500">500       intro round _hround</span>
+<span id="L501">501       let summary := cumulativeTransitionCountSummaryAt trajectory round</span>
+<span id="L502">502       let table := summary.countRadiusOptimisticPolicyTable</span>
+<span id="L503">503         mdp defaultState countRadius</span>
+<span id="L504">504       have htransport :=</span>
+<span id="L505">505         table.exploratoryPolicy_expectedRegret_le_toMarkovPolicy_expectedRegret_add_charge</span>
+<span id="L506">506           initialState explorationRate hexplorationRate rewardBound hrewardBound</span>
+<span id="L507">507       simpa [summary, table, exploratoryBehaviorRegretCharge,</span>
+<span id="L508">508         adaptiveCumulativeEmpiricalOptimisticPlanAt,</span>
+<span id="L509">509         TransitionCountSummary.countRadiusOptimisticPolicyTable_toMarkovPolicy]</span>
+<span id="L510">510         using htransport</span>
+<span id="L511">511     _ = (∑ round : Fin rounds,</span>
+<span id="L512">512           (adaptiveCumulativeEmpiricalOptimisticPlanAt trajectory defaultState</span>
+<span id="L513">513             countRadius round).optimisticPolicy.expectedRegret initialState) +</span>
+<span id="L514">514         (rounds : Real) *</span>
+<span id="L515">515           exploratoryBehaviorRegretCharge mdp explorationRate rewardBound := by</span>
+<span id="L516">516       rw [Finset.sum_add_distrib]</span>
+<span id="L517">517       simp</span>
+<span id="L518">518 </span>
+<span id="L519">519 /-- For a nonempty window, averaging removes the repeated-round factor from the charge. -/</span>
+<span id="L520">520 theorem adaptiveCumulativeEmpiricalOptimisticAverageExploratoryBehaviorExpectedRegret_le</span>
+<span id="L521">521     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L522">522     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L523">523     (trajectory : EpisodeBatchTrajectory mdp episodes)</span>
+<span id="L524">524     (defaultState : State) (countRadius : TransitionCountRadius)</span>
+<span id="L525">525     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L526">526     (rewardBound : Real)</span>
+<span id="L527">527     (hrewardBound : forall state action, |mdp.reward state action| &lt;= rewardBound)</span>
+<span id="L528">528     (rounds : Nat) (hrounds : 0 &lt; rounds) :</span>
+<span id="L529">529     adaptiveCumulativeEmpiricalOptimisticAverageExploratoryBehaviorExpectedRegret</span>
+<span id="L530">530         (initialState := initialState) trajectory defaultState countRadius</span>
+<span id="L531">531         explorationRate hexplorationRate rounds &lt;=</span>
+<span id="L532">532       adaptiveCumulativeEmpiricalOptimisticAverageRecommendedExpectedRegret</span>
+<span id="L533">533           (initialState := initialState) trajectory defaultState countRadius rounds +</span>
+<span id="L534">534         exploratoryBehaviorRegretCharge mdp explorationRate rewardBound := by</span>
+<span id="L535">535   unfold adaptiveCumulativeEmpiricalOptimisticAverageExploratoryBehaviorExpectedRegret</span>
+<span id="L536">536     adaptiveCumulativeEmpiricalOptimisticAverageRecommendedExpectedRegret</span>
+<span id="L537">537   have hroundsReal : (0 : Real) &lt; rounds := by exact_mod_cast hrounds</span>
+<span id="L538">538   have hsum :=</span>
+<span id="L539">539     adaptiveCumulativeEmpiricalOptimisticExploratoryBehaviorExpectedRegret_le</span>
+<span id="L540">540       (initialState := initialState) trajectory defaultState countRadius</span>
+<span id="L541">541       explorationRate hexplorationRate</span>
+<span id="L542">542       rewardBound hrewardBound rounds</span>
+<span id="L543">543   calc</span>
+<span id="L544">544     adaptiveCumulativeEmpiricalOptimisticExploratoryBehaviorExpectedRegret</span>
+<span id="L545">545           (initialState := initialState) trajectory defaultState countRadius</span>
+<span id="L546">546           explorationRate hexplorationRate rounds /</span>
+<span id="L547">547         (rounds : Real) &lt;=</span>
+<span id="L548">548       (adaptiveCumulativeEmpiricalOptimisticRecommendedExpectedRegret</span>
+<span id="L549">549           (initialState := initialState) trajectory defaultState countRadius rounds +</span>
+<span id="L550">550         (rounds : Real) *</span>
+<span id="L551">551           exploratoryBehaviorRegretCharge mdp explorationRate rewardBound) /</span>
+<span id="L552">552         (rounds : Real) :=</span>
+<span id="L553">553       (div_le_div_iff_of_pos_right hroundsReal).2 hsum</span>
+<span id="L554">554     _ = adaptiveCumulativeEmpiricalOptimisticRecommendedExpectedRegret</span>
+<span id="L555">555           (initialState := initialState) trajectory defaultState countRadius rounds /</span>
+<span id="L556">556           (rounds : Real) +</span>
+<span id="L557">557         exploratoryBehaviorRegretCharge mdp explorationRate rewardBound := by</span>
+<span id="L558">558       field_simp</span>
+<span id="L559">559 </span>
+<span id="L560">560 namespace AdaptiveEpisodeBatchSource</span>
+<span id="L561">561 </span>
+<span id="L562">562 /-- The finite-window behavior-regret certificate adds the explicit exploration charge. -/</span>
+<span id="L563">563 noncomputable def vanishingDeltaScheduledAverageExploratoryBehaviorExpectedRegretBound</span>
+<span id="L564">564     (mdp : MDP State Action) (n : Nat) (visitFloor : Real)</span>
+<span id="L565">565     (explorationRate : NNReal) : Real :=</span>
+<span id="L566">566   vanishingDeltaScheduledAverageRecommendedExpectedRegretBound mdp n visitFloor +</span>
+<span id="L567">567     exploratoryBehaviorRegretCharge mdp explorationRate 1</span>
+<span id="L568">568 </span>
+<span id="L569">569 /-- With a fixed exploration rate, the deterministic certificate tends to its exploration charge. -/</span>
+<span id="L570">570 theorem vanishingDeltaScheduledAverageExploratoryBehaviorBound_tendsto_charge</span>
+<span id="L571">571     (mdp : MDP State Action) (hhorizon : 0 &lt; mdp.horizon)</span>
+<span id="L572">572     (visitFloor : Real) (hvisitFloor : 0 &lt; visitFloor)</span>
+<span id="L573">573     (explorationRate : NNReal) :</span>
+<span id="L574">574     Filter.Tendsto</span>
+<span id="L575">575       (fun n =&gt;</span>
+<span id="L576">576         vanishingDeltaScheduledAverageExploratoryBehaviorExpectedRegretBound</span>
+<span id="L577">577           mdp n visitFloor explorationRate)</span>
+<span id="L578">578       Filter.atTop</span>
+<span id="L579">579       (nhds (exploratoryBehaviorRegretCharge mdp explorationRate 1)) := by</span>
+<span id="L580">580   unfold vanishingDeltaScheduledAverageExploratoryBehaviorExpectedRegretBound</span>
+<span id="L581">581   simpa using</span>
+<span id="L582">582     (vanishingDeltaScheduledAverageBound_tendsto_zero</span>
+<span id="L583">583       mdp hhorizon visitFloor hvisitFloor).add tendsto_const_nhds</span>
+<span id="L584">584 </span>
+<span id="L585">585 end AdaptiveEpisodeBatchSource</span>
+<span id="L586">586 </span>
+<span id="L587">587 namespace AdaptiveCumulativeEmpiricalOptimisticSource</span>
+<span id="L588">588 </span>
+<span id="L589">589 omit [Nonempty State] in</span>
+<span id="L590">590 /--</span>
+<span id="L591">591 The regret term indexed by `round` is the source&#x27;s successor behavior at coordinate</span>
+<span id="L592">592 `round + 1`; the initial behavior at coordinate zero is intentionally excluded.</span>
+<span id="L593">593 -/</span>
+<span id="L594">594 theorem exploratorySource_policyAt_succ_eq_cumulativeOptimisticExploratoryPolicy</span>
+<span id="L595">595     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L596">596     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L597">597     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L598">598     (defaultState : State) (countRadius : TransitionCountRadius)</span>
+<span id="L599">599     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L600">600     (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat) :</span>
+<span id="L601">601     (exploratorySource mdp initialState episodes initialTable defaultState</span>
+<span id="L602">602       countRadius explorationRate hexplorationRate).policyAt trajectory (round + 1) =</span>
+<span id="L603">603       ((cumulativeTransitionCountSummaryAt trajectory round)</span>
+<span id="L604">604         |&gt;.countRadiusOptimisticPolicyTable mdp defaultState countRadius</span>
+<span id="L605">605         |&gt;.exploratoryPolicy explorationRate hexplorationRate) := by</span>
+<span id="L606">606   rfl</span>
+<span id="L607">607 </span>
+<span id="L608">608 /-- Trajectories whose average exploratory-behavior regret exceeds its charged certificate. -/</span>
+<span id="L609">609 noncomputable def vanishingDeltaScheduledAverageExploratoryBehaviorRegretViolationSet</span>
+<span id="L610">610     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L611">611     [IsProbabilityMeasure initialState]</span>
+<span id="L612">612     (defaultState : State) (n : Nat) (visitFloor : Real)</span>
+<span id="L613">613     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1) :</span>
+<span id="L614">614     Set</span>
+<span id="L615">615       (EpisodeBatchTrajectory mdp</span>
+<span id="L616">616         (AdaptiveEpisodeBatchSource.vanishingDeltaScheduledEpisodes</span>
+<span id="L617">617           mdp n visitFloor)) :=</span>
+<span id="L618">618   {trajectory |</span>
+<span id="L619">619     AdaptiveEpisodeBatchSource.vanishingDeltaScheduledAverageExploratoryBehaviorExpectedRegretBound</span>
+<span id="L620">620           mdp n visitFloor explorationRate &lt;</span>
+<span id="L621">621       adaptiveCumulativeEmpiricalOptimisticAverageExploratoryBehaviorExpectedRegret</span>
+<span id="L622">622         (initialState := initialState) trajectory defaultState</span>
+<span id="L623">623         (AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtCountRadius</span>
+<span id="L624">624           mdp (n + 1)</span>
+<span id="L625">625             (AdaptiveEpisodeBatchSource.vanishingAverageConfidenceDelta n)</span>
+<span id="L626">626             visitFloor)</span>
+<span id="L627">627         explorationRate hexplorationRate (n + 1)}</span>
+<span id="L628">628 </span>
+<span id="L629">629 /--</span>
+<span id="L630">630 Finite-window high-probability endpoint for successor exploratory behaviors at source coordinates</span>
+<span id="L631">631 `1` through `n + 1`; the initial-table behavior at coordinate zero is not charged here.</span>
+<span id="L632">632 The violation set is contained in the measurable count bad event; outside that event, optimism and</span>
+<span id="L633">633 the charged average behavior-regret certificate hold simultaneously.</span>
+<span id="L634">634 -/</span>
+<span id="L635">635 theorem exploratorySource_trajectoryMeasure_cumulativeInverseSqrtPathSupport_optimism_and_vanishingDeltaScheduledAverageExploratoryBehaviorExpectedRegret</span>
+<span id="L636">636     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L637">637     [IsProbabilityMeasure initialState]</span>
+<span id="L638">638     (n : Nat) (visitFloor : Real)</span>
+<span id="L639">639     [StandardBorelSpace</span>
+<span id="L640">640       (EpisodeBatch mdp</span>
+<span id="L641">641         (AdaptiveEpisodeBatchSource.vanishingDeltaScheduledEpisodes</span>
+<span id="L642">642           mdp n visitFloor))]</span>
+<span id="L643">643     [StandardBorelSpace</span>
+<span id="L644">644       (EpisodeBatchTrajectory mdp</span>
+<span id="L645">645         (AdaptiveEpisodeBatchSource.vanishingDeltaScheduledEpisodes</span>
+<span id="L646">646           mdp n visitFloor))]</span>
+<span id="L647">647     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L648">648     (defaultState : State)</span>
+<span id="L649">649     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L650">650     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L651">651     (hfloor : ExploratoryPathUniformVisitFloor support explorationRate visitFloor)</span>
+<span id="L652">652     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L653">653     (hhorizon : 0 &lt; mdp.horizon) (hvisitFloor : 0 &lt; visitFloor) :</span>
+<span id="L654">654     let episodes :=</span>
+<span id="L655">655       AdaptiveEpisodeBatchSource.vanishingDeltaScheduledEpisodes</span>
+<span id="L656">656         mdp n visitFloor</span>
+<span id="L657">657     let delta := AdaptiveEpisodeBatchSource.vanishingAverageConfidenceDelta n</span>
+<span id="L658">658     let countRadius :=</span>
+<span id="L659">659       AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtCountRadius</span>
+<span id="L660">660         mdp (n + 1) delta visitFloor</span>
+<span id="L661">661     let source := exploratorySource mdp initialState episodes initialTable</span>
+<span id="L662">662       defaultState countRadius explorationRate hexplorationRate</span>
+<span id="L663">663     let violationSet :=</span>
+<span id="L664">664       vanishingDeltaScheduledAverageExploratoryBehaviorRegretViolationSet</span>
+<span id="L665">665         mdp initialState defaultState n visitFloor explorationRate hexplorationRate</span>
+<span id="L666">666     MeasurableSet (source.adaptiveCumulativeCountBadEvent (n + 1) delta) /\</span>
+<span id="L667">667       source.trajectoryMeasure</span>
+<span id="L668">668           (source.adaptiveCumulativeCountBadEvent (n + 1) delta) &lt;=</span>
+<span id="L669">669         ENNReal.ofReal delta /\</span>
+<span id="L670">670       violationSet ⊆ source.adaptiveCumulativeCountBadEvent (n + 1) delta /\</span>
+<span id="L671">671       source.trajectoryMeasure violationSet &lt;= ENNReal.ofReal delta /\</span>
+<span id="L672">672       forall trajectory,</span>
+<span id="L673">673         trajectory ∉ source.adaptiveCumulativeCountBadEvent (n + 1) delta -&gt;</span>
+<span id="L674">674         (forall round : Fin (n + 1), forall state,</span>
+<span id="L675">675           mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;=</span>
+<span id="L676">676             (adaptiveCumulativeEmpiricalOptimisticPlanAt</span>
+<span id="L677">677               trajectory defaultState countRadius round).upperValueRemaining</span>
+<span id="L678">678                 mdp.horizon le_rfl state) /\</span>
+<span id="L679">679         adaptiveCumulativeEmpiricalOptimisticAverageExploratoryBehaviorExpectedRegret</span>
+<span id="L680">680             (initialState := initialState) trajectory defaultState countRadius</span>
+<span id="L681">681             explorationRate hexplorationRate (n + 1) &lt;=</span>
+<span id="L682">682           AdaptiveEpisodeBatchSource.vanishingDeltaScheduledAverageExploratoryBehaviorExpectedRegretBound</span>
+<span id="L683">683               mdp n visitFloor explorationRate := by</span>
+<span id="L684">684   let episodes :=</span>
+<span id="L685">685     AdaptiveEpisodeBatchSource.vanishingDeltaScheduledEpisodes mdp n visitFloor</span>
+<span id="L686">686   let delta := AdaptiveEpisodeBatchSource.vanishingAverageConfidenceDelta n</span>
+<span id="L687">687   let countRadius :=</span>
+<span id="L688">688     AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtCountRadius</span>
+<span id="L689">689       mdp (n + 1) delta visitFloor</span>
+<span id="L690">690   let source := exploratorySource mdp initialState episodes initialTable</span>
+<span id="L691">691     defaultState countRadius explorationRate hexplorationRate</span>
+<span id="L692">692   let violationSet :=</span>
+<span id="L693">693     vanishingDeltaScheduledAverageExploratoryBehaviorRegretViolationSet</span>
+<span id="L694">694       mdp initialState defaultState n visitFloor explorationRate hexplorationRate</span>
+<span id="L695">695   have hparent :=</span>
+<span id="L696">696     exploratorySource_trajectoryMeasure_cumulativeInverseSqrtPathSupport_optimism_and_vanishingDeltaScheduledAverageRecommendedExpectedRegret</span>
+<span id="L697">697       mdp initialState n visitFloor initialTable defaultState explorationRate</span>
+<span id="L698">698       hexplorationRate support hfloor hrewardBound hhorizon hvisitFloor</span>
+<span id="L699">699   dsimp only at hparent</span>
+<span id="L700">700   rcases hparent with ⟨hmeasurable, hbadTail, _hrecommendedSubset,</span>
+<span id="L701">701     _hrecommendedTail, houtside⟩</span>
+<span id="L702">702   have hbehaviorOutside : forall trajectory,</span>
+<span id="L703">703       trajectory ∉ source.adaptiveCumulativeCountBadEvent (n + 1) delta -&gt;</span>
+<span id="L704">704       (forall round : Fin (n + 1), forall state,</span>
+<span id="L705">705         mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;=</span>
+<span id="L706">706           (adaptiveCumulativeEmpiricalOptimisticPlanAt</span>
+<span id="L707">707             trajectory defaultState countRadius round).upperValueRemaining</span>
+<span id="L708">708               mdp.horizon le_rfl state) /\</span>
+<span id="L709">709       adaptiveCumulativeEmpiricalOptimisticAverageExploratoryBehaviorExpectedRegret</span>
+<span id="L710">710           (initialState := initialState) trajectory defaultState countRadius</span>
+<span id="L711">711           explorationRate hexplorationRate (n + 1) &lt;=</span>
+<span id="L712">712         AdaptiveEpisodeBatchSource.vanishingDeltaScheduledAverageExploratoryBehaviorExpectedRegretBound</span>
+<span id="L713">713             mdp n visitFloor explorationRate := by</span>
+<span id="L714">714     intro trajectory htrajectory</span>
+<span id="L715">715     have hrecommendation := houtside trajectory htrajectory</span>
+<span id="L716">716     refine ⟨hrecommendation.1, ?_⟩</span>
+<span id="L717">717     have htransport :=</span>
+<span id="L718">718       adaptiveCumulativeEmpiricalOptimisticAverageExploratoryBehaviorExpectedRegret_le</span>
+<span id="L719">719         (initialState := initialState) trajectory defaultState countRadius</span>
+<span id="L720">720         explorationRate hexplorationRate 1 hrewardBound (n + 1) (by omega)</span>
+<span id="L721">721     apply htransport.trans</span>
+<span id="L722">722     unfold AdaptiveEpisodeBatchSource.vanishingDeltaScheduledAverageExploratoryBehaviorExpectedRegretBound</span>
+<span id="L723">723     exact add_le_add hrecommendation.2 (le_refl _)</span>
+<span id="L724">724   have hsubset :</span>
+<span id="L725">725       violationSet ⊆ source.adaptiveCumulativeCountBadEvent (n + 1) delta := by</span>
+<span id="L726">726     intro trajectory hviolation</span>
+<span id="L727">727     by_contra houtsideBad</span>
+<span id="L728">728     have hbound := (hbehaviorOutside trajectory houtsideBad).2</span>
+<span id="L729">729     exact (not_lt_of_ge hbound) hviolation</span>
+<span id="L730">730   have hviolationTail :</span>
+<span id="L731">731       source.trajectoryMeasure violationSet &lt;= ENNReal.ofReal delta :=</span>
+<span id="L732">732     (measure_mono hsubset).trans hbadTail</span>
+<span id="L733">733   exact ⟨hmeasurable, hbadTail, hsubset, hviolationTail, hbehaviorOutside⟩</span>
+<span id="L734">734 </span>
+<span id="L735">735 end AdaptiveCumulativeEmpiricalOptimisticSource</span>
+<span id="L736">736 </span>
+<span id="L737">737 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

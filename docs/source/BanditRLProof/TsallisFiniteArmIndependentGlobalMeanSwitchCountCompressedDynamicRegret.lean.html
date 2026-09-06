@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/TsallisFiniteArmIndependentGlobalMeanSwitchCountCompressedDynamicRegret.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/TsallisFiniteArmIndependentGlobalMeanSwitchCountCompressedDynamicRegret.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/TsallisFiniteArmIndependentGlobalMeanSwitchCountCompressedDynamicRegret.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/TsallisFiniteArmIndependentGlobalMeanSwitchCountCompressedDynamicRegret.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.TsallisFiniteArmIndependentGlobalMeanSwitchCountDynamicRegret</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Horizon-compressed global mean-switch-count dynamic regret</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module replaces every time-indexed global prefix count in the</span>
+<span id="L7">7 logarithmic dynamic-regret route by the single terminal count at `horizon`.</span>
+<span id="L8">8 The resulting bound is explicit and finite-sum free in its</span>
+<span id="L9">9 nonstationarity term, but remains linear rather than minimax-sharp.</span>
+<span id="L10">10 -/</span>
+<span id="L11">11 </span>
+<span id="L12">12 open scoped ENNReal NNReal Topology ProbabilityTheory</span>
+<span id="L13">13 open MeasureTheory ProbabilityTheory Set Filter Finset</span>
+<span id="L14">14 </span>
+<span id="L15">15 namespace BanditRLProof</span>
+<span id="L16">16 namespace Tsallis</span>
+<span id="L17">17 </span>
+<span id="L18">18 /-- The global population-mean switch count is nonnegative. -/</span>
+<span id="L19">19 theorem finiteArmIndependentCumulativeGlobalMeanSwitchCount_nonneg {K : Nat}</span>
+<span id="L20">20     (armLaw : Nat -&gt; Fin K -&gt; Measure Rat) (t : Nat) :</span>
+<span id="L21">21     0 &lt;= finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw t := by</span>
+<span id="L22">22   classical</span>
+<span id="L23">23   unfold finiteArmIndependentCumulativeGlobalMeanSwitchCount</span>
+<span id="L24">24   apply Finset.sum_nonneg</span>
+<span id="L25">25   intro s _hs</span>
+<span id="L26">26   split &lt;;&gt; norm_num</span>
+<span id="L27">27 </span>
+<span id="L28">28 /-- Enlarging the prefix cannot decrease the global switch count. -/</span>
+<span id="L29">29 theorem finiteArmIndependentCumulativeGlobalMeanSwitchCount_mono {K : Nat}</span>
+<span id="L30">30     (armLaw : Nat -&gt; Fin K -&gt; Measure Rat) {t u : Nat} (htu : t &lt;= u) :</span>
+<span id="L31">31     finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw t &lt;=</span>
+<span id="L32">32       finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw u := by</span>
+<span id="L33">33   classical</span>
+<span id="L34">34   unfold finiteArmIndependentCumulativeGlobalMeanSwitchCount</span>
+<span id="L35">35   apply Finset.sum_le_sum_of_subset_of_nonneg (Finset.range_mono htu)</span>
+<span id="L36">36   intro s _hs _hnot</span>
+<span id="L37">37   split &lt;;&gt; norm_num</span>
+<span id="L38">38 </span>
+<span id="L39">39 /-- The fixed-comparator mean-deviation budget at the global prefix envelope</span>
+<span id="L40">40 is bounded by the terminal count times horizon mass and suboptimal-arm</span>
+<span id="L41">41 cardinality. -/</span>
+<span id="L42">42 theorem finiteArmIndependentMeanDeviationBudget_globalMeanSwitchCount_le</span>
+<span id="L43">43     {K : Nat} (model : FiniteBanditModel K)</span>
+<span id="L44">44     (armLaw : Nat -&gt; Fin K -&gt; Measure Rat) (horizon : Nat) :</span>
+<span id="L45">45     finiteArmIndependentMeanDeviationBudget model horizon</span>
+<span id="L46">46         (fun t _ =&gt;</span>
+<span id="L47">47           finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw t) &lt;=</span>
+<span id="L48">48       2 *</span>
+<span id="L49">49         (((Finset.univ : Finset (Fin K)).erase model.bestArm).card : Real) *</span>
+<span id="L50">50         (((horizon + 1 : Nat) : Real)) *</span>
+<span id="L51">51         finiteArmIndependentCumulativeGlobalMeanSwitchCount</span>
+<span id="L52">52           armLaw horizon := by</span>
+<span id="L53">53   classical</span>
+<span id="L54">54   rw [finiteArmIndependentMeanDeviationBudget_eq]</span>
+<span id="L55">55   let actions := (Finset.univ : Finset (Fin K)).erase model.bestArm</span>
+<span id="L56">56   let terminalCount :=</span>
+<span id="L57">57     finiteArmIndependentCumulativeGlobalMeanSwitchCount</span>
+<span id="L58">58       armLaw horizon</span>
+<span id="L59">59   change</span>
+<span id="L60">60     (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L61">61       actions.sum (fun _ =&gt;</span>
+<span id="L62">62         finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw t +</span>
+<span id="L63">63           finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw t)) &lt;=</span>
+<span id="L64">64       2 * (actions.card : Real) * (((horizon + 1 : Nat) : Real)) *</span>
+<span id="L65">65         terminalCount</span>
+<span id="L66">66   calc</span>
+<span id="L67">67     _ &lt;= (Finset.range (horizon + 1)).sum (fun _ =&gt;</span>
+<span id="L68">68         (actions.card : Real) * (2 * terminalCount)) := by</span>
+<span id="L69">69       apply Finset.sum_le_sum</span>
+<span id="L70">70       intro t ht</span>
+<span id="L71">71       have ht_le : t &lt;= horizon := by</span>
+<span id="L72">72         have ht_lt := Finset.mem_range.mp ht</span>
+<span id="L73">73         omega</span>
+<span id="L74">74       have hcount :=</span>
+<span id="L75">75         finiteArmIndependentCumulativeGlobalMeanSwitchCount_mono</span>
+<span id="L76">76           armLaw ht_le</span>
+<span id="L77">77       have hinner :=</span>
+<span id="L78">78         Finset.sum_le_card_nsmul actions</span>
+<span id="L79">79           (fun _ =&gt;</span>
+<span id="L80">80             finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw t +</span>
+<span id="L81">81               finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw t)</span>
+<span id="L82">82           (2 * terminalCount)</span>
+<span id="L83">83           (fun _ _ =&gt; by</span>
+<span id="L84">84             linarith)</span>
+<span id="L85">85       simpa [nsmul_eq_mul] using hinner</span>
+<span id="L86">86     _ = 2 * (actions.card : Real) * (((horizon + 1 : Nat) : Real)) *</span>
+<span id="L87">87         terminalCount := by</span>
+<span id="L88">88       simp [nsmul_eq_mul]</span>
+<span id="L89">89       ring</span>
+<span id="L90">90 </span>
+<span id="L91">91 /-- The moving-comparator penalty at the global prefix envelope is bounded by</span>
+<span id="L92">92 the same terminal-count expression as the fixed-comparator deviation budget.</span>
+<span id="L93">93 The erased-arm cardinality makes the bound exactly zero for `Fin 1`. -/</span>
+<span id="L94">94 theorem finiteArmIndependentDynamicComparatorPenalty_globalMeanSwitchCount_le</span>
+<span id="L95">95     {K : Nat} (model : FiniteBanditModel K)</span>
+<span id="L96">96     (armLaw : Nat -&gt; Fin K -&gt; Measure Rat) (horizon : Nat) :</span>
+<span id="L97">97     finiteArmIndependentDynamicComparatorPenalty model armLaw horizon</span>
+<span id="L98">98         (fun t _ =&gt;</span>
+<span id="L99">99           finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw t) &lt;=</span>
+<span id="L100">100       2 *</span>
+<span id="L101">101         (((Finset.univ : Finset (Fin K)).erase model.bestArm).card : Real) *</span>
+<span id="L102">102         (((horizon + 1 : Nat) : Real)) *</span>
+<span id="L103">103         finiteArmIndependentCumulativeGlobalMeanSwitchCount</span>
+<span id="L104">104           armLaw horizon := by</span>
+<span id="L105">105   classical</span>
+<span id="L106">106   let actions := (Finset.univ : Finset (Fin K)).erase model.bestArm</span>
+<span id="L107">107   let terminalCount :=</span>
+<span id="L108">108     finiteArmIndependentCumulativeGlobalMeanSwitchCount</span>
+<span id="L109">109       armLaw horizon</span>
+<span id="L110">110   unfold finiteArmIndependentDynamicComparatorPenalty</span>
+<span id="L111">111   change</span>
+<span id="L112">112     (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L113">113       if finiteArmIndependentBestArmAt model armLaw t = model.bestArm then</span>
+<span id="L114">114         0</span>
+<span id="L115">115       else</span>
+<span id="L116">116         finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw t +</span>
+<span id="L117">117           finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw t) &lt;=</span>
+<span id="L118">118       2 * (actions.card : Real) * (((horizon + 1 : Nat) : Real)) *</span>
+<span id="L119">119         terminalCount</span>
+<span id="L120">120   have hterminalNonneg :</span>
+<span id="L121">121       0 &lt;= terminalCount := by</span>
+<span id="L122">122     exact</span>
+<span id="L123">123       finiteArmIndependentCumulativeGlobalMeanSwitchCount_nonneg</span>
+<span id="L124">124         armLaw horizon</span>
+<span id="L125">125   have hsum :=</span>
+<span id="L126">126     Finset.sum_le_card_nsmul (Finset.range (horizon + 1))</span>
+<span id="L127">127       (fun t =&gt;</span>
+<span id="L128">128         if finiteArmIndependentBestArmAt model armLaw t = model.bestArm then</span>
+<span id="L129">129           0</span>
+<span id="L130">130         else</span>
+<span id="L131">131           finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw t +</span>
+<span id="L132">132             finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw t)</span>
+<span id="L133">133       (2 * (actions.card : Real) * terminalCount)</span>
+<span id="L134">134       (fun t ht =&gt; by</span>
+<span id="L135">135         by_cases hsame :</span>
+<span id="L136">136             finiteArmIndependentBestArmAt model armLaw t = model.bestArm</span>
+<span id="L137">137         · simp only [hsame, if_true]</span>
+<span id="L138">138           positivity</span>
+<span id="L139">139         · simp only [hsame, if_false]</span>
+<span id="L140">140           have ht_le : t &lt;= horizon := by</span>
+<span id="L141">141             have ht_lt := Finset.mem_range.mp ht</span>
+<span id="L142">142             omega</span>
+<span id="L143">143           have hcount :=</span>
+<span id="L144">144             finiteArmIndependentCumulativeGlobalMeanSwitchCount_mono</span>
+<span id="L145">145               armLaw ht_le</span>
+<span id="L146">146           have hselectedMem : finiteArmIndependentBestArmAt model armLaw t ∈</span>
+<span id="L147">147               actions := by</span>
+<span id="L148">148             exact Finset.mem_erase.mpr ⟨hsame, Finset.mem_univ _⟩</span>
+<span id="L149">149           have hcardNat : 1 &lt;= actions.card :=</span>
+<span id="L150">150             Finset.one_le_card.mpr ⟨_, hselectedMem⟩</span>
+<span id="L151">151           have hcard : (1 : Real) &lt;= (actions.card : Real) := by</span>
+<span id="L152">152             exact_mod_cast hcardNat</span>
+<span id="L153">153           nlinarith)</span>
+<span id="L154">154   calc</span>
+<span id="L155">155     _ &lt;= (horizon + 1) •</span>
+<span id="L156">156         (2 * (actions.card : Real) * terminalCount) := by</span>
+<span id="L157">157       simpa only [Finset.card_range] using hsum</span>
+<span id="L158">158     _ = 2 * (actions.card : Real) * (((horizon + 1 : Nat) : Real)) *</span>
+<span id="L159">159         terminalCount := by</span>
+<span id="L160">160       simp [nsmul_eq_mul]</span>
+<span id="L161">161       ring</span>
+<span id="L162">162 </span>
+<span id="L163">163 /-- One terminal global switch count controls both the fixed-comparator</span>
+<span id="L164">164 mean-deviation budget and the moving-comparator penalty. -/</span>
+<span id="L165">165 theorem finiteArmIndependentGlobalMeanSwitchCount_totalBudget_le</span>
+<span id="L166">166     {K : Nat} (model : FiniteBanditModel K)</span>
+<span id="L167">167     (armLaw : Nat -&gt; Fin K -&gt; Measure Rat) (horizon : Nat) :</span>
+<span id="L168">168     finiteArmIndependentMeanDeviationBudget model horizon</span>
+<span id="L169">169           (fun t _ =&gt;</span>
+<span id="L170">170             finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw t) +</span>
+<span id="L171">171         finiteArmIndependentDynamicComparatorPenalty model armLaw horizon</span>
+<span id="L172">172           (fun t _ =&gt;</span>
+<span id="L173">173             finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw t) &lt;=</span>
+<span id="L174">174       4 *</span>
+<span id="L175">175         (((Finset.univ : Finset (Fin K)).erase model.bestArm).card : Real) *</span>
+<span id="L176">176         (((horizon + 1 : Nat) : Real)) *</span>
+<span id="L177">177         finiteArmIndependentCumulativeGlobalMeanSwitchCount</span>
+<span id="L178">178           armLaw horizon := by</span>
+<span id="L179">179   have hfixed :=</span>
+<span id="L180">180     finiteArmIndependentMeanDeviationBudget_globalMeanSwitchCount_le</span>
+<span id="L181">181       model armLaw horizon</span>
+<span id="L182">182   have hdynamic :=</span>
+<span id="L183">183     finiteArmIndependentDynamicComparatorPenalty_globalMeanSwitchCount_le</span>
+<span id="L184">184       model armLaw horizon</span>
+<span id="L185">185   nlinarith</span>
+<span id="L186">186 </span>
+<span id="L187">187 /-- Explicit logarithmic dynamic-regret bound with a single terminal global</span>
+<span id="L188">188 population-mean switch count. -/</span>
+<span id="L189">189 noncomputable def</span>
+<span id="L190">190     finiteArmIndependentGlobalMeanSwitchCountHorizonCompressedLogDynamicBound</span>
+<span id="L191">191     {K : Nat} (model : FiniteBanditModel K)</span>
+<span id="L192">192     (armLaw : Nat -&gt; Fin K -&gt; Measure Rat) (horizon : Nat) : Real :=</span>
+<span id="L193">193   (1 + Real.log (((horizon + 1 : Nat) : Real))) *</span>
+<span id="L194">194       (1 + 25 * ((Finset.univ : Finset (Fin K)).erase model.bestArm).sum</span>
+<span id="L195">195         (fun arm =&gt; 1 / ((model.gap arm : Rat) : Real))) +</span>
+<span id="L196">196     4 * (((Finset.univ : Finset (Fin K)).erase model.bestArm).card : Real) *</span>
+<span id="L197">197       (((horizon + 1 : Nat) : Real)) *</span>
+<span id="L198">198       finiteArmIndependentCumulativeGlobalMeanSwitchCount</span>
+<span id="L199">199         armLaw horizon</span>
+<span id="L200">200 </span>
+<span id="L201">201 @[simp]</span>
+<span id="L202">202 theorem</span>
+<span id="L203">203     finiteArmIndependentGlobalMeanSwitchCountHorizonCompressedLogDynamicBound_fin_one</span>
+<span id="L204">204     (model : FiniteBanditModel 1)</span>
+<span id="L205">205     (armLaw : Nat -&gt; Fin 1 -&gt; Measure Rat) (horizon : Nat) :</span>
+<span id="L206">206     finiteArmIndependentGlobalMeanSwitchCountHorizonCompressedLogDynamicBound</span>
+<span id="L207">207         model armLaw horizon =</span>
+<span id="L208">208       1 + Real.log (((horizon + 1 : Nat) : Real)) := by</span>
+<span id="L209">209   have hbest : model.bestArm = 0 := Subsingleton.elim _ _</span>
+<span id="L210">210   simp [</span>
+<span id="L211">211     finiteArmIndependentGlobalMeanSwitchCountHorizonCompressedLogDynamicBound,</span>
+<span id="L212">212     hbest]</span>
+<span id="L213">213 </span>
+<span id="L214">214 /-- Generated expected predictable-environment dynamic regret with all</span>
+<span id="L215">215 time-indexed population-mean switch envelopes compressed into the terminal</span>
+<span id="L216">216 global count. This is a linear horizon-level compression, not a minimax</span>
+<span id="L217">217 switch-rate theorem. -/</span>
+<span id="L218">218 theorem integral_sampledScheduledHalfTsallisFiniteArmIndependentGlobalMeanSwitchCountHorizonCompressedDynamicRegret_le_log</span>
+<span id="L219">219     {K : Nat} (model : FiniteBanditModel K)</span>
+<span id="L220">220     (armLaw : Nat -&gt; Fin K -&gt; Measure Rat)</span>
+<span id="L221">221     (hprob : forall t arm, IsProbabilityMeasure (armLaw t arm))</span>
+<span id="L222">222     (hbound : forall t arm, ∀ᵐ reward ∂armLaw t arm,</span>
+<span id="L223">223       ((reward : Rat) : Real) ∈ Set.Icc (0 : Real) 1)</span>
+<span id="L224">224     (hinitialMean : forall arm,</span>
+<span id="L225">225       finiteArmIndependentRewardMean armLaw 0 arm =</span>
+<span id="L226">226         ((model.mean arm : Rat) : Real))</span>
+<span id="L227">227     (hgapPos : forall arm, arm ≠ model.bestArm -&gt;</span>
+<span id="L228">228       0 &lt; ((model.gap arm : Rat) : Real))</span>
+<span id="L229">229     (horizon : Nat) :</span>
+<span id="L230">230     letI : Nonempty (Fin K) := ⟨model.bestArm⟩</span>
+<span id="L231">231     let law := finiteArmIndependentRewardVectorLaw armLaw</span>
+<span id="L232">232     let value := fun _ : Nat =&gt; finiteArmIIDRewardVectorLoss</span>
+<span id="L233">233     let loss := iidTimeVaryingLossStatePredictableLossVector value</span>
+<span id="L234">234       (fun _ =&gt; measurable_finiteArmIIDRewardVectorLoss)</span>
+<span id="L235">235       (fun _ =&gt; finiteArmIIDRewardVectorLoss_nonneg)</span>
+<span id="L236">236       (fun _ =&gt; finiteArmIIDRewardVectorLoss_le_one)</span>
+<span id="L237">237     let selector :=</span>
+<span id="L238">238       canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L239">239         (Finset.univ : Finset (Fin K)) Finset.univ_nonempty</span>
+<span id="L240">240         sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L241">241     let prior := Measure.infinitePi law</span>
+<span id="L242">242     let mu := prior.compProd</span>
+<span id="L243">243       (sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L244">244         (Finset.univ : Finset (Fin K)) Finset.univ_nonempty</span>
+<span id="L245">245         sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L246">246         selector.finiteHistory loss.environment)</span>
+<span id="L247">247     integral mu</span>
+<span id="L248">248         (sampledScheduledHalfTsallisPredictableMovingComparatorEnvironmentRegret</span>
+<span id="L249">249           (Finset.univ : Finset (Fin K)) Finset.univ_nonempty</span>
+<span id="L250">250           sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L251">251           (finiteArmIndependentBestArmAt model armLaw) horizon) &lt;=</span>
+<span id="L252">252       finiteArmIndependentGlobalMeanSwitchCountHorizonCompressedLogDynamicBound</span>
+<span id="L253">253         model armLaw horizon := by</span>
+<span id="L254">254   dsimp only</span>
+<span id="L255">255   have hdecomposition :=</span>
+<span id="L256">256     integral_sampledScheduledHalfTsallisFiniteArmIndependentMovingComparatorRewardLawRegret_eq_fixed_add_meanAdvantage</span>
+<span id="L257">257       model armLaw hprob hbound</span>
+<span id="L258">258         (finiteArmIndependentBestArmAt model armLaw) horizon</span>
+<span id="L259">259   dsimp only at hdecomposition</span>
+<span id="L260">260   rw [hdecomposition]</span>
+<span id="L261">261   have hfixed :=</span>
+<span id="L262">262     integral_sampledScheduledHalfTsallisFiniteArmIndependentDriftingMeanRewardLawRegret_le_log</span>
+<span id="L263">263       model armLaw hprob hbound</span>
+<span id="L264">264       (fun t _ =&gt;</span>
+<span id="L265">265         finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw t)</span>
+<span id="L266">266       (abs_finiteArmIndependentRewardMean_sub_model_le_globalMeanSwitchCount</span>
+<span id="L267">267         model armLaw hprob hbound hinitialMean)</span>
+<span id="L268">268       hgapPos horizon</span>
+<span id="L269">269   dsimp only at hfixed</span>
+<span id="L270">270   have hdynamic :</span>
+<span id="L271">271       (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L272">272           finiteArmIndependentRewardMean armLaw t</span>
+<span id="L273">273               (finiteArmIndependentBestArmAt model armLaw t) -</span>
+<span id="L274">274             finiteArmIndependentRewardMean armLaw t model.bestArm) &lt;=</span>
+<span id="L275">275         finiteArmIndependentDynamicComparatorPenalty model armLaw horizon</span>
+<span id="L276">276           (fun t _ =&gt;</span>
+<span id="L277">277             finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw t) := by</span>
+<span id="L278">278     unfold finiteArmIndependentDynamicComparatorPenalty</span>
+<span id="L279">279     apply Finset.sum_le_sum</span>
+<span id="L280">280     intro t _ht</span>
+<span id="L281">281     by_cases hsame :</span>
+<span id="L282">282         finiteArmIndependentBestArmAt model armLaw t = model.bestArm</span>
+<span id="L283">283     · simp [hsame]</span>
+<span id="L284">284     · simp only [hsame, if_false]</span>
+<span id="L285">285       exact</span>
+<span id="L286">286         finiteArmIndependentRewardMean_sub_bestArm_le_meanDeviation</span>
+<span id="L287">287           model armLaw</span>
+<span id="L288">288           (fun t _ =&gt;</span>
+<span id="L289">289             finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw t)</span>
+<span id="L290">290           (abs_finiteArmIndependentRewardMean_sub_model_le_globalMeanSwitchCount</span>
+<span id="L291">291             model armLaw hprob hbound hinitialMean)</span>
+<span id="L292">292           t (finiteArmIndependentBestArmAt model armLaw t)</span>
+<span id="L293">293   have htotal :=</span>
+<span id="L294">294     finiteArmIndependentGlobalMeanSwitchCount_totalBudget_le</span>
+<span id="L295">295       model armLaw horizon</span>
+<span id="L296">296   unfold</span>
+<span id="L297">297     finiteArmIndependentGlobalMeanSwitchCountHorizonCompressedLogDynamicBound</span>
+<span id="L298">298   calc</span>
+<span id="L299">299     _ &lt;=</span>
+<span id="L300">300         ((1 + Real.log (((horizon + 1 : Nat) : Real))) *</span>
+<span id="L301">301             (1 + 25 *</span>
+<span id="L302">302               ((Finset.univ : Finset (Fin K)).erase model.bestArm).sum</span>
+<span id="L303">303                 (fun arm =&gt; 1 / ((model.gap arm : Rat) : Real))) +</span>
+<span id="L304">304           finiteArmIndependentMeanDeviationBudget model horizon</span>
+<span id="L305">305             (fun t _ =&gt;</span>
+<span id="L306">306               finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw t)) +</span>
+<span id="L307">307         finiteArmIndependentDynamicComparatorPenalty model armLaw horizon</span>
+<span id="L308">308           (fun t _ =&gt;</span>
+<span id="L309">309             finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw t) :=</span>
+<span id="L310">310       add_le_add hfixed hdynamic</span>
+<span id="L311">311     _ =</span>
+<span id="L312">312         (1 + Real.log (((horizon + 1 : Nat) : Real))) *</span>
+<span id="L313">313             (1 + 25 *</span>
+<span id="L314">314               ((Finset.univ : Finset (Fin K)).erase model.bestArm).sum</span>
+<span id="L315">315                 (fun arm =&gt; 1 / ((model.gap arm : Rat) : Real))) +</span>
+<span id="L316">316           (finiteArmIndependentMeanDeviationBudget model horizon</span>
+<span id="L317">317               (fun t _ =&gt;</span>
+<span id="L318">318                 finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw t) +</span>
+<span id="L319">319             finiteArmIndependentDynamicComparatorPenalty model armLaw horizon</span>
+<span id="L320">320               (fun t _ =&gt;</span>
+<span id="L321">321                 finiteArmIndependentCumulativeGlobalMeanSwitchCount armLaw t)) := by</span>
+<span id="L322">322       ring</span>
+<span id="L323">323     _ &lt;=</span>
+<span id="L324">324         (1 + Real.log (((horizon + 1 : Nat) : Real))) *</span>
+<span id="L325">325             (1 + 25 *</span>
+<span id="L326">326               ((Finset.univ : Finset (Fin K)).erase model.bestArm).sum</span>
+<span id="L327">327                 (fun arm =&gt; 1 / ((model.gap arm : Rat) : Real))) +</span>
+<span id="L328">328           4 *</span>
+<span id="L329">329             (((Finset.univ : Finset (Fin K)).erase model.bestArm).card : Real) *</span>
+<span id="L330">330             (((horizon + 1 : Nat) : Real)) *</span>
+<span id="L331">331             finiteArmIndependentCumulativeGlobalMeanSwitchCount</span>
+<span id="L332">332               armLaw horizon :=</span>
+<span id="L333">333       add_le_add (le_refl _) htotal</span>
+<span id="L334">334 </span>
+<span id="L335">335 end Tsallis</span>
+<span id="L336">336 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

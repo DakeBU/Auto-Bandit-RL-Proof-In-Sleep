@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.RL.FiniteHorizonNaturalCausalRealizedBehaviorRegretUpperTailInProbability · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.RL.FiniteHorizonNaturalCausalRealizedBehaviorRegretUpperTailInProbability · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.RL.FiniteHorizonNaturalCausalRealizedBehaviorRegretUpperTailInProbability · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Finite-horizon RL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>RL.<wbr>Finite<wbr>Horizon<wbr>Natural<wbr>Causal<wbr>Realized<wbr>Behavior<wbr>Regret<wbr>Upper<wbr>Tail<wbr>In<wbr>Probability</h1>
+  <p class="lede">This module consumes the explicit fourth-power prefix high-probability terminal. For every fixed positive threshold, the deterministic regret envelope is eventually below that threshold, so the threshold violation is contained in the compiled envelope violation and inherits its vanishing exact failure budget.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalRealizedBehaviorRegretUpperTailInProbability.lean.html"><code>BanditRLProof/RL/FiniteHorizonNaturalCausalRealizedBehaviorRegretUpperTailInProbability.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/finite-horizon-rl/index.html">9. Finite-horizon reinforcement learning</a></dd></div>
+    <div><dt>Declarations</dt><dd>8</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-rl-finitehorizonnaturalcausalrealizedbehaviorregrethighprobabilityexplicitschedule/index.html"><code>BanditRLProof.RL.FiniteHorizonNaturalCausalRealizedBehaviorRegretHighProbabilityExplicitSchedule</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-rl-finitehorizonnaturalcausalrealizedbehaviorregretinmeasureexplicitschedule/index.html"><code>BanditRLProof.RL.FiniteHorizonNaturalCausalRealizedBehaviorRegretInMeasureExplicitSchedule</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-37c524b8c301">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailSet</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Fixed-threshold upper-tail event for the scheduled average realized regret.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailSet (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (varianceProxy : NNReal) (baseVisitFloor epsilon : Real) (n : Nat) : Set (HeterogeneousStochasticEpisodeBatchTrajectory mdp (<span class="kw">fun</span> t =&gt; AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes mdp varianceProxy baseVisitFloor t))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalRealizedBehaviorRegretUpperTailInProbability.lean.html#L34">Source line 34</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-36f0418ae7a0">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailProbability</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Trajectory probability of the fixed-threshold scheduled upper tail.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailProbability (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (varianceProxy : NNReal) (baseVisitFloor epsilon : Real) (n : Nat) : ENNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalRealizedBehaviorRegretUpperTailInProbability.lean.html#L53">Source line 53</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b463f782d852">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.measurableSet_explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailSet</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every fixed-threshold scheduled upper-tail event is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailSet (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (varianceProxy : NNReal) (baseVisitFloor epsilon : Real) (n : Nat) : MeasurableSet (explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailSet mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor epsilon n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalRealizedBehaviorRegretUpperTailInProbability.lean.html#L69">Source line 69</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ef3fe5c77e9b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.eventually_explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailSet_subset_violationSet</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Once the deterministic envelope is below a positive fixed threshold, the
+fixed-threshold upper tail is contained in the compiled envelope violation.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> eventually_explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailSet_subset_violationSet (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (varianceProxy : NNReal) (baseVisitFloor epsilon : Real) (hepsilon : <span class="num">0</span> &lt; epsilon) : ∀ᶠ n <span class="kw">in</span> atTop, explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailSet mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor epsilon n ⊆ explicitPolynomialPrefixAverageRealizedBehaviorRegretViolationSet mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalRealizedBehaviorRegretUpperTailInProbability.lean.html#L92">Source line 92</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-56b717004c7a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_trajectoryMeasure_explicitPolynomialPrefixAverageRealizedBehaviorRegretViolationSet_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Direct projection of the compiled scheduled violation probability bound.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledCausalSource_trajectoryMeasure_explicitPolynomialPrefixAverageRealizedBehaviorRegretViolationSet_le (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : <span class="num">0</span> &lt; varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support <span class="num">1</span> baseVisitFloor) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) (n : Nat) : <span class="kw">let</span> source := selfConsistentScheduledCausalSource mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor source.trajectoryMeasure (explicitPolynomialPrefixAverageRealizedBehaviorRegretViolationSet mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor n) &lt;= explicitPolynomialPrefixTailModelReturnFailureBudget mdp n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalRealizedBehaviorRegretUpperTailInProbability.lean.html#L124">Source line 124</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-91f9675420cf">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.eventually_explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailProbability_le_failureBudget</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Eventually every fixed positive upper tail is bounded by the exact budget.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> eventually_explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailProbability_le_failureBudget (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : <span class="num">0</span> &lt; varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support <span class="num">1</span> baseVisitFloor) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) (epsilon : Real) (hepsilon : <span class="num">0</span> &lt; epsilon) : ∀ᶠ n <span class="kw">in</span> atTop, explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailProbability mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor epsilon n &lt;= explicitPolynomialPrefixTailModelReturnFailureBudget mdp n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalRealizedBehaviorRegretUpperTailInProbability.lean.html#L157">Source line 157</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f00b97c591c1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailProbability_tendsto_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The fixed-positive-threshold scheduled upper-tail probability vanishes.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailProbability_tendsto_zero (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : <span class="num">0</span> &lt; varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support <span class="num">1</span> baseVisitFloor) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) (epsilon : Real) (hepsilon : <span class="num">0</span> &lt; epsilon) : Tendsto (explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailProbability mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor epsilon) atTop (nhds <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalRealizedBehaviorRegretUpperTailInProbability.lean.html#L192">Source line 192</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1e43e0bb0a0a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailInProbability</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">All fixed positive one-sided upper-tail probabilities vanish on the same
+explicit fourth-power prefix subsequence.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledCausalSource_explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailInProbability (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : <span class="num">0</span> &lt; varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support <span class="num">1</span> baseVisitFloor) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) : <span class="kw">forall</span> epsilon, <span class="num">0</span> &lt; epsilon -&gt; (<span class="kw">forall</span> n, MeasurableSet (explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailSet mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor epsilon n)) /\ (∀ᶠ n <span class="kw">in</span> atTop, explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailSet mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor epsilon n ⊆ explicitPolynomialPrefixAverageRealizedBehaviorRegretViolationSet mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor n /\ explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailProbability mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor epsilon n &lt;= explicitPolynomialPrefixTailModelReturnFailureBudget mdp n) /\ Tendsto (explicitPolynomialPrefixAverageRealizedBehaviorRegretUpperTailProbability mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor epsilon) atTop (nhds <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalRealizedBehaviorRegretUpperTailInProbability.lean.html#L225">Source line 225</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/OFULGeneratedTrajectoryRadiusWidth.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/OFULGeneratedTrajectoryRadiusWidth.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/OFULGeneratedTrajectoryRadiusWidth.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/OFULGeneratedTrajectoryRadiusWidth.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.OFULHistoryEnvironmentRewardLaw</span>
+<span id="L2">2 import BanditRLProof.OFULSelectedWidthSummation</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Canonical OFUL radius-times-width assembly</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module connects the canonical successor-gap tail to the deterministic</span>
+<span id="L8">8 selected-width theorem. It first bounds every finite-horizon scalar confidence</span>
+<span id="L9">9 radius by one standard log-determinant radius at the terminal horizon.</span>
+<span id="L10">10 -/</span>
+<span id="L11">11 </span>
+<span id="L12">12 namespace BanditRLProof</span>
+<span id="L13">13 namespace OFUL</span>
+<span id="L14">14 </span>
+<span id="L15">15 open MeasureTheory ProbabilityTheory Real Matrix Set</span>
+<span id="L16">16 open scoped ENNReal NNReal ProbabilityTheory MatrixOrder</span>
+<span id="L17">17 </span>
+<span id="L18">18 universe u</span>
+<span id="L19">19 </span>
+<span id="L20">20 /-- The standard log-determinant budget for a bounded scalar-ridge prefix. -/</span>
+<span id="L21">21 noncomputable def standardScalarLogDetBudget</span>
+<span id="L22">22     {Feature : Type u} [Fintype Feature]</span>
+<span id="L23">23     (lambda : Real) (T : Nat) (L2 : Real) : Real :=</span>
+<span id="L24">24   (Fintype.card Feature : Real) *</span>
+<span id="L25">25     Real.log</span>
+<span id="L26">26       (1 +</span>
+<span id="L27">27         (T * L2) /</span>
+<span id="L28">28           ((Fintype.card Feature : Real) * lambda))</span>
+<span id="L29">29 </span>
+<span id="L30">30 /--</span>
+<span id="L31">31 A deterministic upper radius obtained by replacing the random determinant</span>
+<span id="L32">32 ratio with `exp (standardScalarLogDetBudget ...)`.</span>
+<span id="L33">33 -/</span>
+<span id="L34">34 noncomputable def standardScalarConfidenceRadiusUpper</span>
+<span id="L35">35     {Feature : Type u} [Fintype Feature]</span>
+<span id="L36">36     (R delta lambda S : Real) (T : Nat) (L2 : Real) : Real :=</span>
+<span id="L37">37   Real.sqrt</span>
+<span id="L38">38       (2 * R ^ 2 *</span>
+<span id="L39">39         Real.log</span>
+<span id="L40">40           (Real.sqrt</span>
+<span id="L41">41               (Real.exp</span>
+<span id="L42">42                 (standardScalarLogDetBudget</span>
+<span id="L43">43                   (Feature := Feature) lambda T L2)) /</span>
+<span id="L44">44             delta)) +</span>
+<span id="L45">45     Real.sqrt lambda * S</span>
+<span id="L46">46 </span>
+<span id="L47">47 /-- The selected-width budget paired with the standard log-determinant term. -/</span>
+<span id="L48">48 noncomputable def standardSelectedWidthBudget</span>
+<span id="L49">49     {Feature : Type u} [Fintype Feature]</span>
+<span id="L50">50     (lambda : Real) (T : Nat) (L2 : Real) : Real :=</span>
+<span id="L51">51   Real.sqrt (T : Real) *</span>
+<span id="L52">52     Real.sqrt</span>
+<span id="L53">53       (2 *</span>
+<span id="L54">54         standardScalarLogDetBudget</span>
+<span id="L55">55           (Feature := Feature) lambda T L2)</span>
+<span id="L56">56 </span>
+<span id="L57">57 /-- Deterministic radius-times-width budget used by the canonical gap theorem. -/</span>
+<span id="L58">58 noncomputable def standardScalarRadiusWidthBound</span>
+<span id="L59">59     {Feature : Type u} [Fintype Feature]</span>
+<span id="L60">60     (R delta lambda S : Real) (T : Nat) (L2 : Real) : Real :=</span>
+<span id="L61">61   2 *</span>
+<span id="L62">62     standardScalarConfidenceRadiusUpper</span>
+<span id="L63">63       (Feature := Feature) R delta lambda S T L2 *</span>
+<span id="L64">64     standardSelectedWidthBudget</span>
+<span id="L65">65       (Feature := Feature) lambda T L2</span>
+<span id="L66">66 </span>
+<span id="L67">67 /-- The process scalar Gram is definitionally the regularized feature prefix. -/</span>
+<span id="L68">68 theorem finiteHorizonScalarGram_eq_regularizedPrefixFeatureGram</span>
+<span id="L69">69     {Omega Feature : Type*}</span>
+<span id="L70">70     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L71">71     (lambda : Real)</span>
+<span id="L72">72     (feature : Nat -&gt; Omega -&gt; Feature -&gt; Real)</span>
+<span id="L73">73     (n : Nat) (omega : Omega) :</span>
+<span id="L74">74     finiteHorizonScalarGram lambda feature n omega =</span>
+<span id="L75">75       regularizedPrefixFeatureGram lambda (fun t =&gt; feature t omega) n := by</span>
+<span id="L76">76   rfl</span>
+<span id="L77">77 </span>
+<span id="L78">78 /-- The standard log-determinant budget is monotone in the horizon. -/</span>
+<span id="L79">79 theorem standardScalarLogDetBudget_mono</span>
+<span id="L80">80     {Feature : Type u}</span>
+<span id="L81">81     [Fintype Feature] [Nonempty Feature]</span>
+<span id="L82">82     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L83">83     (L2 : Real) (hL2 : 0 &lt;= L2)</span>
+<span id="L84">84     {n T : Nat} (hnT : n &lt;= T) :</span>
+<span id="L85">85     standardScalarLogDetBudget (Feature := Feature) lambda n L2 &lt;=</span>
+<span id="L86">86       standardScalarLogDetBudget (Feature := Feature) lambda T L2 := by</span>
+<span id="L87">87   have hcard_pos : 0 &lt; (Fintype.card Feature : Real) := by</span>
+<span id="L88">88     exact_mod_cast (Fintype.card_pos_iff.mpr inferInstance :</span>
+<span id="L89">89       0 &lt; Fintype.card Feature)</span>
+<span id="L90">90   have hdenom_pos :</span>
+<span id="L91">91       0 &lt; (Fintype.card Feature : Real) * lambda :=</span>
+<span id="L92">92     mul_pos hcard_pos hlambda</span>
+<span id="L93">93   have hnT_real : (n : Real) &lt;= (T : Real) := by</span>
+<span id="L94">94     exact_mod_cast hnT</span>
+<span id="L95">95   have hmul :</span>
+<span id="L96">96       (n : Real) * L2 &lt;= (T : Real) * L2 :=</span>
+<span id="L97">97     mul_le_mul_of_nonneg_right hnT_real hL2</span>
+<span id="L98">98   have hfrac :</span>
+<span id="L99">99       (n * L2) / ((Fintype.card Feature : Real) * lambda) &lt;=</span>
+<span id="L100">100         (T * L2) / ((Fintype.card Feature : Real) * lambda) :=</span>
+<span id="L101">101     (div_le_div_iff_of_pos_right hdenom_pos).2 hmul</span>
+<span id="L102">102   have harg_nonneg :</span>
+<span id="L103">103       0 &lt;=</span>
+<span id="L104">104         (n * L2) / ((Fintype.card Feature : Real) * lambda) :=</span>
+<span id="L105">105     div_nonneg</span>
+<span id="L106">106       (mul_nonneg (Nat.cast_nonneg _) hL2) hdenom_pos.le</span>
+<span id="L107">107   have hlog :</span>
+<span id="L108">108       Real.log</span>
+<span id="L109">109           (1 + (n * L2) /</span>
+<span id="L110">110             ((Fintype.card Feature : Real) * lambda)) &lt;=</span>
+<span id="L111">111         Real.log</span>
+<span id="L112">112           (1 + (T * L2) /</span>
+<span id="L113">113             ((Fintype.card Feature : Real) * lambda)) :=</span>
+<span id="L114">114     Real.log_le_log (by linarith) (add_le_add_right hfrac 1)</span>
+<span id="L115">115   exact mul_le_mul_of_nonneg_left hlog (Nat.cast_nonneg _)</span>
+<span id="L116">116 </span>
+<span id="L117">117 /-- The standard log-determinant budget is nonnegative. -/</span>
+<span id="L118">118 theorem standardScalarLogDetBudget_nonneg</span>
+<span id="L119">119     {Feature : Type u}</span>
+<span id="L120">120     [Fintype Feature] [Nonempty Feature]</span>
+<span id="L121">121     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L122">122     (T : Nat) (L2 : Real) (hL2 : 0 &lt;= L2) :</span>
+<span id="L123">123     0 &lt;= standardScalarLogDetBudget (Feature := Feature) lambda T L2 := by</span>
+<span id="L124">124   have hcard_pos : 0 &lt; (Fintype.card Feature : Real) := by</span>
+<span id="L125">125     exact_mod_cast (Fintype.card_pos_iff.mpr inferInstance :</span>
+<span id="L126">126       0 &lt; Fintype.card Feature)</span>
+<span id="L127">127   have hdenom_pos :</span>
+<span id="L128">128       0 &lt; (Fintype.card Feature : Real) * lambda :=</span>
+<span id="L129">129     mul_pos hcard_pos hlambda</span>
+<span id="L130">130   have hfrac_nonneg :</span>
+<span id="L131">131       0 &lt;=</span>
+<span id="L132">132         (T * L2) / ((Fintype.card Feature : Real) * lambda) :=</span>
+<span id="L133">133     div_nonneg</span>
+<span id="L134">134       (mul_nonneg (Nat.cast_nonneg _) hL2) hdenom_pos.le</span>
+<span id="L135">135   exact mul_nonneg (Nat.cast_nonneg _)</span>
+<span id="L136">136     (Real.log_nonneg (by linarith))</span>
+<span id="L137">137 </span>
+<span id="L138">138 /--</span>
+<span id="L139">139 Every prefix scalar confidence radius is bounded by the standard deterministic</span>
+<span id="L140">140 radius at a later horizon.</span>
+<span id="L141">141 -/</span>
+<span id="L142">142 theorem finiteHorizonScalarConfidenceRadius_le_standardUpper</span>
+<span id="L143">143     {Omega Feature : Type*}</span>
+<span id="L144">144     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L145">145     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L146">146     (feature : Nat -&gt; Omega -&gt; Feature -&gt; Real)</span>
+<span id="L147">147     (R delta S : Real)</span>
+<span id="L148">148     (omega : Omega) (n T : Nat) (hnT : n &lt;= T)</span>
+<span id="L149">149     (L2 : Real) (hL2 : 0 &lt;= L2)</span>
+<span id="L150">150     (hbound : forall t, t &lt; T -&gt;</span>
+<span id="L151">151       dotProduct (feature t omega) (feature t omega) &lt;= L2)</span>
+<span id="L152">152     (hdelta : 0 &lt; delta) :</span>
+<span id="L153">153     finiteHorizonScalarConfidenceRadius</span>
+<span id="L154">154         feature R delta lambda S n omega &lt;=</span>
+<span id="L155">155       standardScalarConfidenceRadiusUpper</span>
+<span id="L156">156         (Feature := Feature) R delta lambda S T L2 := by</span>
+<span id="L157">157   let history : Nat -&gt; Feature -&gt; Real := fun t =&gt; feature t omega</span>
+<span id="L158">158   let Bn :=</span>
+<span id="L159">159     standardScalarLogDetBudget (Feature := Feature) lambda n L2</span>
+<span id="L160">160   let BT :=</span>
+<span id="L161">161     standardScalarLogDetBudget (Feature := Feature) lambda T L2</span>
+<span id="L162">162   have hbound_n : forall t, t &lt; n -&gt;</span>
+<span id="L163">163       dotProduct (history t) (history t) &lt;= L2 := by</span>
+<span id="L164">164     intro t htn</span>
+<span id="L165">165     exact hbound t (lt_of_lt_of_le htn hnT)</span>
+<span id="L166">166   have hdet_n :</span>
+<span id="L167">167       (regularizedPrefixFeatureGram lambda history n).det &lt;=</span>
+<span id="L168">168         lambda ^ Fintype.card Feature * Real.exp Bn := by</span>
+<span id="L169">169     simpa only [Bn, standardScalarLogDetBudget] using</span>
+<span id="L170">170       (standardLogDeterminantAndEllipticalPotential</span>
+<span id="L171">171         lambda hlambda history n L2 hL2 hbound_n).1</span>
+<span id="L172">172   have hbudget : Bn &lt;= BT := by</span>
+<span id="L173">173     exact standardScalarLogDetBudget_mono</span>
+<span id="L174">174       (Feature := Feature) lambda hlambda L2 hL2 hnT</span>
+<span id="L175">175   have hdet :</span>
+<span id="L176">176       (regularizedPrefixFeatureGram lambda history n).det &lt;=</span>
+<span id="L177">177         lambda ^ Fintype.card Feature * Real.exp BT :=</span>
+<span id="L178">178     hdet_n.trans</span>
+<span id="L179">179       (mul_le_mul_of_nonneg_left</span>
+<span id="L180">180         (Real.exp_le_exp.mpr hbudget)</span>
+<span id="L181">181         (pow_nonneg hlambda.le _))</span>
+<span id="L182">182   have hbase_pos : 0 &lt; lambda ^ Fintype.card Feature :=</span>
+<span id="L183">183     pow_pos hlambda _</span>
+<span id="L184">184   have hratio :</span>
+<span id="L185">185       (regularizedPrefixFeatureGram lambda history n).det /</span>
+<span id="L186">186           (Matrix.scalar Feature lambda).det &lt;=</span>
+<span id="L187">187         Real.exp BT := by</span>
+<span id="L188">188     rw [det_scalar_identity]</span>
+<span id="L189">189     calc</span>
+<span id="L190">190       (regularizedPrefixFeatureGram lambda history n).det /</span>
+<span id="L191">191           lambda ^ Fintype.card Feature &lt;=</span>
+<span id="L192">192         (lambda ^ Fintype.card Feature * Real.exp BT) /</span>
+<span id="L193">193           lambda ^ Fintype.card Feature :=</span>
+<span id="L194">194         (div_le_div_iff_of_pos_right hbase_pos).2 hdet</span>
+<span id="L195">195       _ = Real.exp BT := by</span>
+<span id="L196">196         field_simp</span>
+<span id="L197">197   have hdet_pos :</span>
+<span id="L198">198       0 &lt; (regularizedPrefixFeatureGram lambda history n).det :=</span>
+<span id="L199">199     regularizedPrefixFeatureGram_det_pos lambda hlambda history n</span>
+<span id="L200">200   have hratio_pos :</span>
+<span id="L201">201       0 &lt;</span>
+<span id="L202">202         (regularizedPrefixFeatureGram lambda history n).det /</span>
+<span id="L203">203           (Matrix.scalar Feature lambda).det := by</span>
+<span id="L204">204     rw [det_scalar_identity]</span>
+<span id="L205">205     exact div_pos hdet_pos hbase_pos</span>
+<span id="L206">206   have hsqrt :</span>
+<span id="L207">207       Real.sqrt</span>
+<span id="L208">208           ((regularizedPrefixFeatureGram lambda history n).det /</span>
+<span id="L209">209             (Matrix.scalar Feature lambda).det) &lt;=</span>
+<span id="L210">210         Real.sqrt (Real.exp BT) :=</span>
+<span id="L211">211     Real.sqrt_le_sqrt hratio</span>
+<span id="L212">212   have hlog :</span>
+<span id="L213">213       Real.log</span>
+<span id="L214">214           (Real.sqrt</span>
+<span id="L215">215               ((regularizedPrefixFeatureGram lambda history n).det /</span>
+<span id="L216">216                 (Matrix.scalar Feature lambda).det) /</span>
+<span id="L217">217             delta) &lt;=</span>
+<span id="L218">218         Real.log (Real.sqrt (Real.exp BT) / delta) := by</span>
+<span id="L219">219     apply Real.log_le_log</span>
+<span id="L220">220     · exact div_pos (Real.sqrt_pos.2 hratio_pos) hdelta</span>
+<span id="L221">221     · exact (div_le_div_iff_of_pos_right hdelta).2 hsqrt</span>
+<span id="L222">222   have hthreshold :</span>
+<span id="L223">223       2 * R ^ 2 *</span>
+<span id="L224">224           Real.log</span>
+<span id="L225">225             (Real.sqrt</span>
+<span id="L226">226                 ((regularizedPrefixFeatureGram lambda history n).det /</span>
+<span id="L227">227                   (Matrix.scalar Feature lambda).det) /</span>
+<span id="L228">228               delta) &lt;=</span>
+<span id="L229">229         2 * R ^ 2 *</span>
+<span id="L230">230           Real.log (Real.sqrt (Real.exp BT) / delta) :=</span>
+<span id="L231">231     mul_le_mul_of_nonneg_left hlog</span>
+<span id="L232">232       (mul_nonneg (by norm_num) (sq_nonneg R))</span>
+<span id="L233">233   unfold finiteHorizonScalarConfidenceRadius finiteHorizonConfidenceRadius</span>
+<span id="L234">234     finiteHorizonConfidenceThreshold standardScalarConfidenceRadiusUpper</span>
+<span id="L235">235   change</span>
+<span id="L236">236     Real.sqrt</span>
+<span id="L237">237           (2 * R ^ 2 *</span>
+<span id="L238">238             Real.log</span>
+<span id="L239">239               (Real.sqrt</span>
+<span id="L240">240                   ((regularizedPrefixFeatureGram lambda history n).det /</span>
+<span id="L241">241                     (Matrix.scalar Feature lambda).det) /</span>
+<span id="L242">242                 delta)) +</span>
+<span id="L243">243         Real.sqrt lambda * S &lt;=</span>
+<span id="L244">244       Real.sqrt</span>
+<span id="L245">245           (2 * R ^ 2 *</span>
+<span id="L246">246             Real.log (Real.sqrt (Real.exp BT) / delta)) +</span>
+<span id="L247">247         Real.sqrt lambda * S</span>
+<span id="L248">248   exact add_le_add (Real.sqrt_le_sqrt hthreshold) le_rfl</span>
+<span id="L249">249 </span>
+<span id="L250">250 /-- The standard deterministic confidence-radius upper bound is nonnegative. -/</span>
+<span id="L251">251 theorem standardScalarConfidenceRadiusUpper_nonneg</span>
+<span id="L252">252     {Feature : Type u} [Fintype Feature]</span>
+<span id="L253">253     (R delta lambda S : Real) (T : Nat) (L2 : Real)</span>
+<span id="L254">254     (hS : 0 &lt;= S) :</span>
+<span id="L255">255     0 &lt;= standardScalarConfidenceRadiusUpper</span>
+<span id="L256">256       (Feature := Feature) R delta lambda S T L2 := by</span>
+<span id="L257">257   exact add_nonneg (Real.sqrt_nonneg _)</span>
+<span id="L258">258     (mul_nonneg (Real.sqrt_nonneg _) hS)</span>
+<span id="L259">259 </span>
+<span id="L260">260 /-- The standard selected-width budget is nonnegative. -/</span>
+<span id="L261">261 theorem standardSelectedWidthBudget_nonneg</span>
+<span id="L262">262     {Feature : Type u} [Fintype Feature]</span>
+<span id="L263">263     (lambda : Real) (T : Nat) (L2 : Real) :</span>
+<span id="L264">264     0 &lt;= standardSelectedWidthBudget</span>
+<span id="L265">265       (Feature := Feature) lambda T L2 := by</span>
+<span id="L266">266   exact mul_nonneg (Real.sqrt_nonneg _) (Real.sqrt_nonneg _)</span>
+<span id="L267">267 </span>
+<span id="L268">268 /--</span>
+<span id="L269">269 Pointwise canonical successor bonus bound. The full action prefix through</span>
+<span id="L270">270 `horizon` is charged to the selected-width theorem, while the gap sum only</span>
+<span id="L271">271 uses successor rounds `1, ..., horizon`.</span>
+<span id="L272">272 -/</span>
+<span id="L273">273 theorem</span>
+<span id="L274">274     canonicalHistoryTrajectory_sum_range_succ_radius_mul_width_le_standard</span>
+<span id="L275">275     {K : Nat} {Feature : Type u}</span>
+<span id="L276">276     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L277">277     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L278">278     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L279">279     (R delta S : Real) (hdelta : 0 &lt; delta) (hS : 0 &lt;= S)</span>
+<span id="L280">280     (horizon : Nat) (L2 : Real) (hL2 : 0 &lt;= L2)</span>
+<span id="L281">281     (hactionFeatureBound : forall action,</span>
+<span id="L282">282       dotProduct (actionFeature action) (actionFeature action) &lt;= L2)</span>
+<span id="L283">283     (trajectory : Nat -&gt; Fin K × Real)</span>
+<span id="L284">284     (hwidth : forall t, t &lt; horizon + 1 -&gt;</span>
+<span id="L285">285       confidenceWidth</span>
+<span id="L286">286           (finiteHorizonScalarGram lambda</span>
+<span id="L287">287             (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L288">288             t trajectory)</span>
+<span id="L289">289           (actionFeature</span>
+<span id="L290">290             (Thompson.canonicalHistoryTrajectoryAction trajectory t)) &lt;= 1) :</span>
+<span id="L291">291     (Finset.range horizon).sum (fun n =&gt;</span>
+<span id="L292">292         2 *</span>
+<span id="L293">293           finiteHorizonScalarConfidenceRadius</span>
+<span id="L294">294             (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L295">295             R (delta / ((horizon + 1 : Nat) : Real))</span>
+<span id="L296">296             lambda S (n + 1) trajectory *</span>
+<span id="L297">297           confidenceWidth</span>
+<span id="L298">298             (finiteHorizonScalarGram lambda</span>
+<span id="L299">299               (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L300">300               (n + 1) trajectory)</span>
+<span id="L301">301             (actionFeature</span>
+<span id="L302">302               (Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L303">303                 trajectory (n + 1)))) &lt;=</span>
+<span id="L304">304       standardScalarRadiusWidthBound</span>
+<span id="L305">305         (Feature := Feature)</span>
+<span id="L306">306         R (delta / ((horizon + 1 : Nat) : Real))</span>
+<span id="L307">307         lambda S (horizon + 1) L2 := by</span>
+<span id="L308">308   let selectedAction : Nat -&gt; Fin K :=</span>
+<span id="L309">309     fun t =&gt; Thompson.canonicalHistoryTrajectoryAction trajectory t</span>
+<span id="L310">310   let widthAt : Nat -&gt; Real := fun t =&gt;</span>
+<span id="L311">311     confidenceWidth</span>
+<span id="L312">312       (finiteHorizonScalarGram lambda</span>
+<span id="L313">313         (canonicalHistoryTrajectoryFeature actionFeature) t trajectory)</span>
+<span id="L314">314       (actionFeature (selectedAction t))</span>
+<span id="L315">315   let beta :=</span>
+<span id="L316">316     standardScalarConfidenceRadiusUpper</span>
+<span id="L317">317       (Feature := Feature)</span>
+<span id="L318">318       R (delta / ((horizon + 1 : Nat) : Real))</span>
+<span id="L319">319       lambda S (horizon + 1) L2</span>
+<span id="L320">320   let widthBudget :=</span>
+<span id="L321">321     standardSelectedWidthBudget</span>
+<span id="L322">322       (Feature := Feature) lambda (horizon + 1) L2</span>
+<span id="L323">323   have hdelta_local :</span>
+<span id="L324">324       0 &lt; delta / ((horizon + 1 : Nat) : Real) := by</span>
+<span id="L325">325     exact div_pos hdelta (by positivity)</span>
+<span id="L326">326   have hfeatureBound : forall t, t &lt; horizon + 1 -&gt;</span>
+<span id="L327">327       dotProduct</span>
+<span id="L328">328           (canonicalHistoryTrajectoryFeature actionFeature t trajectory)</span>
+<span id="L329">329           (canonicalHistoryTrajectoryFeature actionFeature t trajectory) &lt;=</span>
+<span id="L330">330         L2 := by</span>
+<span id="L331">331     intro t _ht</span>
+<span id="L332">332     exact hactionFeatureBound</span>
+<span id="L333">333       (Thompson.canonicalHistoryTrajectoryAction trajectory t)</span>
+<span id="L334">334   have hradius : forall n, n &lt; horizon -&gt;</span>
+<span id="L335">335       finiteHorizonScalarConfidenceRadius</span>
+<span id="L336">336           (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L337">337           R (delta / ((horizon + 1 : Nat) : Real))</span>
+<span id="L338">338           lambda S (n + 1) trajectory &lt;= beta := by</span>
+<span id="L339">339     intro n hn</span>
+<span id="L340">340     exact finiteHorizonScalarConfidenceRadius_le_standardUpper</span>
+<span id="L341">341       lambda hlambda</span>
+<span id="L342">342       (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L343">343       R (delta / ((horizon + 1 : Nat) : Real)) S</span>
+<span id="L344">344       trajectory (n + 1) (horizon + 1)</span>
+<span id="L345">345       (Nat.succ_le_succ (Nat.le_of_lt hn))</span>
+<span id="L346">346       L2 hL2 hfeatureBound hdelta_local</span>
+<span id="L347">347   have hbeta : 0 &lt;= beta :=</span>
+<span id="L348">348     standardScalarConfidenceRadiusUpper_nonneg</span>
+<span id="L349">349       (Feature := Feature)</span>
+<span id="L350">350       R (delta / ((horizon + 1 : Nat) : Real))</span>
+<span id="L351">351       lambda S (horizon + 1) L2 hS</span>
+<span id="L352">352   have hwidth_nonneg : forall t, 0 &lt;= widthAt t := by</span>
+<span id="L353">353     intro t</span>
+<span id="L354">354     exact Real.sqrt_nonneg _</span>
+<span id="L355">355   have hselectedWidth :</span>
+<span id="L356">356       (Finset.range (horizon + 1)).sum widthAt &lt;= widthBudget := by</span>
+<span id="L357">357     simpa only [selectedAction, widthAt, widthBudget,</span>
+<span id="L358">358       finiteHorizonScalarGram_eq_regularizedPrefixFeatureGram,</span>
+<span id="L359">359       canonicalHistoryTrajectoryFeature] using</span>
+<span id="L360">360       (sum_range_selectedAction_confidenceWidth_le_sqrt_mul_sqrt_log_of_width_le_one</span>
+<span id="L361">361         lambda hlambda actionFeature selectedAction</span>
+<span id="L362">362         (horizon + 1) L2 hL2</span>
+<span id="L363">363         (fun t _ht =&gt; hactionFeatureBound (selectedAction t))</span>
+<span id="L364">364         (fun t ht =&gt; by</span>
+<span id="L365">365           simpa only [selectedAction, widthAt,</span>
+<span id="L366">366             finiteHorizonScalarGram_eq_regularizedPrefixFeatureGram,</span>
+<span id="L367">367             canonicalHistoryTrajectoryFeature] using hwidth t ht))</span>
+<span id="L368">368   have hsuccessorWidth :</span>
+<span id="L369">369       (Finset.range horizon).sum (fun n =&gt; widthAt (n + 1)) &lt;=</span>
+<span id="L370">370         (Finset.range (horizon + 1)).sum widthAt := by</span>
+<span id="L371">371     rw [Finset.sum_range_succ&#x27;]</span>
+<span id="L372">372     exact le_add_of_nonneg_right (hwidth_nonneg 0)</span>
+<span id="L373">373   have hsum :</span>
+<span id="L374">374       (Finset.range horizon).sum (fun n =&gt;</span>
+<span id="L375">375           2 *</span>
+<span id="L376">376             finiteHorizonScalarConfidenceRadius</span>
+<span id="L377">377               (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L378">378               R (delta / ((horizon + 1 : Nat) : Real))</span>
+<span id="L379">379               lambda S (n + 1) trajectory *</span>
+<span id="L380">380             widthAt (n + 1)) &lt;=</span>
+<span id="L381">381         (Finset.range horizon).sum (fun n =&gt;</span>
+<span id="L382">382           2 * beta * widthAt (n + 1)) := by</span>
+<span id="L383">383     apply Finset.sum_le_sum</span>
+<span id="L384">384     intro n hn</span>
+<span id="L385">385     exact mul_le_mul_of_nonneg_right</span>
+<span id="L386">386       (mul_le_mul_of_nonneg_left</span>
+<span id="L387">387         (hradius n (Finset.mem_range.mp hn)) (by norm_num))</span>
+<span id="L388">388       (hwidth_nonneg (n + 1))</span>
+<span id="L389">389   calc</span>
+<span id="L390">390     (Finset.range horizon).sum (fun n =&gt;</span>
+<span id="L391">391         2 *</span>
+<span id="L392">392           finiteHorizonScalarConfidenceRadius</span>
+<span id="L393">393             (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L394">394             R (delta / ((horizon + 1 : Nat) : Real))</span>
+<span id="L395">395             lambda S (n + 1) trajectory *</span>
+<span id="L396">396           confidenceWidth</span>
+<span id="L397">397             (finiteHorizonScalarGram lambda</span>
+<span id="L398">398               (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L399">399               (n + 1) trajectory)</span>
+<span id="L400">400             (actionFeature</span>
+<span id="L401">401               (Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L402">402                 trajectory (n + 1)))) =</span>
+<span id="L403">403         (Finset.range horizon).sum (fun n =&gt;</span>
+<span id="L404">404           2 *</span>
+<span id="L405">405             finiteHorizonScalarConfidenceRadius</span>
+<span id="L406">406               (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L407">407               R (delta / ((horizon + 1 : Nat) : Real))</span>
+<span id="L408">408               lambda S (n + 1) trajectory *</span>
+<span id="L409">409             widthAt (n + 1)) := by</span>
+<span id="L410">410       rfl</span>
+<span id="L411">411     _ &lt;= (Finset.range horizon).sum (fun n =&gt;</span>
+<span id="L412">412         2 * beta * widthAt (n + 1)) := hsum</span>
+<span id="L413">413     _ = 2 * beta *</span>
+<span id="L414">414         (Finset.range horizon).sum (fun n =&gt; widthAt (n + 1)) := by</span>
+<span id="L415">415       rw [Finset.mul_sum]</span>
+<span id="L416">416     _ &lt;= 2 * beta * (Finset.range (horizon + 1)).sum widthAt := by</span>
+<span id="L417">417       exact mul_le_mul_of_nonneg_left hsuccessorWidth</span>
+<span id="L418">418         (mul_nonneg (by norm_num) hbeta)</span>
+<span id="L419">419     _ &lt;= 2 * beta * widthBudget := by</span>
+<span id="L420">420       exact mul_le_mul_of_nonneg_left hselectedWidth</span>
+<span id="L421">421         (mul_nonneg (by norm_num) hbeta)</span>
+<span id="L422">422     _ = standardScalarRadiusWidthBound</span>
+<span id="L423">423         (Feature := Feature)</span>
+<span id="L424">424         R (delta / ((horizon + 1 : Nat) : Real))</span>
+<span id="L425">425         lambda S (horizon + 1) L2 := by</span>
+<span id="L426">426       rfl</span>
+<span id="L427">427 </span>
+<span id="L428">428 /--</span>
+<span id="L429">429 Violation of the deterministic standard radius-times-width successor-gap</span>
+<span id="L430">430 budget. The fixed initial gap is still excluded.</span>
+<span id="L431">431 -/</span>
+<span id="L432">432 def canonicalHistoryTrajectorySumRangeSuccGapStandardViolationSet</span>
+<span id="L433">433     {K : Nat} {Feature : Type u}</span>
+<span id="L434">434     [Fintype Feature]</span>
+<span id="L435">435     (lambda : Real)</span>
+<span id="L436">436     (thetaStar : Feature -&gt; Real)</span>
+<span id="L437">437     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L438">438     (R delta S : Real)</span>
+<span id="L439">439     (horizon : Nat) (L2 : Real)</span>
+<span id="L440">440     (comparator : Nat -&gt; Fin K) :</span>
+<span id="L441">441     Set (Nat -&gt; Fin K × Real) :=</span>
+<span id="L442">442   {trajectory |</span>
+<span id="L443">443     standardScalarRadiusWidthBound</span>
+<span id="L444">444         (Feature := Feature)</span>
+<span id="L445">445         R (delta / ((horizon + 1 : Nat) : Real))</span>
+<span id="L446">446         lambda S (horizon + 1) L2 &lt;</span>
+<span id="L447">447       (Finset.range horizon).sum (fun n =&gt;</span>
+<span id="L448">448         linearValue thetaStar (actionFeature (comparator (n + 1))) -</span>
+<span id="L449">449           linearValue thetaStar</span>
+<span id="L450">450             (actionFeature</span>
+<span id="L451">451               (Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L452">452                 trajectory (n + 1))))}</span>
+<span id="L453">453 </span>
+<span id="L454">454 /--</span>
+<span id="L455">455 The deterministic-budget violation event is contained in the compiled random</span>
+<span id="L456">456 radius-times-width violation event.</span>
+<span id="L457">457 -/</span>
+<span id="L458">458 theorem</span>
+<span id="L459">459     canonicalHistoryTrajectorySumRangeSuccGapStandardViolationSet_subset</span>
+<span id="L460">460     {K : Nat} {Feature : Type u}</span>
+<span id="L461">461     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L462">462     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L463">463     (thetaStar : Feature -&gt; Real)</span>
+<span id="L464">464     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L465">465     (R delta S : Real) (hdelta : 0 &lt; delta) (hS : 0 &lt;= S)</span>
+<span id="L466">466     (horizon : Nat) (L2 : Real) (hL2 : 0 &lt;= L2)</span>
+<span id="L467">467     (hactionFeatureBound : forall action,</span>
+<span id="L468">468       dotProduct (actionFeature action) (actionFeature action) &lt;= L2)</span>
+<span id="L469">469     (comparator : Nat -&gt; Fin K)</span>
+<span id="L470">470     (hwidth : forall trajectory t, t &lt; horizon + 1 -&gt;</span>
+<span id="L471">471       confidenceWidth</span>
+<span id="L472">472           (finiteHorizonScalarGram lambda</span>
+<span id="L473">473             (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L474">474             t trajectory)</span>
+<span id="L475">475           (actionFeature</span>
+<span id="L476">476             (Thompson.canonicalHistoryTrajectoryAction trajectory t)) &lt;= 1) :</span>
+<span id="L477">477     canonicalHistoryTrajectorySumRangeSuccGapStandardViolationSet</span>
+<span id="L478">478         lambda thetaStar actionFeature R delta S horizon L2 comparator &lt;=</span>
+<span id="L479">479       canonicalHistoryTrajectorySumRangeSuccGapViolationSet</span>
+<span id="L480">480         lambda thetaStar actionFeature R delta S horizon comparator := by</span>
+<span id="L481">481   intro trajectory hviolation</span>
+<span id="L482">482   have hbonus :=</span>
+<span id="L483">483     canonicalHistoryTrajectory_sum_range_succ_radius_mul_width_le_standard</span>
+<span id="L484">484       lambda hlambda actionFeature R delta S hdelta hS</span>
+<span id="L485">485       horizon L2 hL2 hactionFeatureBound trajectory</span>
+<span id="L486">486       (hwidth trajectory)</span>
+<span id="L487">487   change</span>
+<span id="L488">488     (Finset.range horizon).sum (fun n =&gt;</span>
+<span id="L489">489         2 *</span>
+<span id="L490">490           finiteHorizonScalarConfidenceRadius</span>
+<span id="L491">491             (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L492">492             R (delta / ((horizon + 1 : Nat) : Real))</span>
+<span id="L493">493             lambda S (n + 1) trajectory *</span>
+<span id="L494">494           confidenceWidth</span>
+<span id="L495">495             (finiteHorizonScalarGram lambda</span>
+<span id="L496">496               (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L497">497               (n + 1) trajectory)</span>
+<span id="L498">498             (actionFeature</span>
+<span id="L499">499               (Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L500">500                 trajectory (n + 1)))) &lt;</span>
+<span id="L501">501       (Finset.range horizon).sum (fun n =&gt;</span>
+<span id="L502">502         linearValue thetaStar (actionFeature (comparator (n + 1))) -</span>
+<span id="L503">503           linearValue thetaStar</span>
+<span id="L504">504             (actionFeature</span>
+<span id="L505">505               (Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L506">506                 trajectory (n + 1))))</span>
+<span id="L507">507   change</span>
+<span id="L508">508     standardScalarRadiusWidthBound</span>
+<span id="L509">509         (Feature := Feature)</span>
+<span id="L510">510         R (delta / ((horizon + 1 : Nat) : Real))</span>
+<span id="L511">511         lambda S (horizon + 1) L2 &lt;</span>
+<span id="L512">512       (Finset.range horizon).sum (fun n =&gt;</span>
+<span id="L513">513         linearValue thetaStar (actionFeature (comparator (n + 1))) -</span>
+<span id="L514">514           linearValue thetaStar</span>
+<span id="L515">515             (actionFeature</span>
+<span id="L516">516               (Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L517">517                 trajectory (n + 1)))) at hviolation</span>
+<span id="L518">518   exact lt_of_le_of_lt hbonus hviolation</span>
+<span id="L519">519 </span>
+<span id="L520">520 /--</span>
+<span id="L521">521 Concrete high-probability successor-gap theorem with a deterministic standard</span>
+<span id="L522">522 radius-times-width budget under the linear-sub-Gaussian environment law.</span>
+<span id="L523">523 -/</span>
+<span id="L524">524 theorem</span>
+<span id="L525">525     measure_canonicalHistoryTrajectorySumRangeSuccGapStandardViolationSet_le_of_linearSubgaussianEnvironment</span>
+<span id="L526">526     {K : Nat} {Feature : Type u}</span>
+<span id="L527">527     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L528">528     (hK : 0 &lt; K)</span>
+<span id="L529">529     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L530">530     (thetaStar : Feature -&gt; Real)</span>
+<span id="L531">531     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L532">532     (R : Real) (hR : 0 &lt; R)</span>
+<span id="L533">533     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_one : delta &lt;= 1)</span>
+<span id="L534">534     (S : Real) (hS : 0 &lt;= S)</span>
+<span id="L535">535     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L536">536     (horizon : Nat) (L2 : Real) (hL2 : 0 &lt;= L2)</span>
+<span id="L537">537     (hactionFeatureBound : forall action,</span>
+<span id="L538">538       dotProduct (actionFeature action) (actionFeature action) &lt;= L2)</span>
+<span id="L539">539     (comparator : Nat -&gt; Fin K)</span>
+<span id="L540">540     (hwidth : forall trajectory t, t &lt; horizon + 1 -&gt;</span>
+<span id="L541">541       confidenceWidth</span>
+<span id="L542">542           (finiteHorizonScalarGram lambda</span>
+<span id="L543">543             (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L544">544             t trajectory)</span>
+<span id="L545">545           (actionFeature</span>
+<span id="L546">546             (Thompson.canonicalHistoryTrajectoryAction trajectory t)) &lt;= 1)</span>
+<span id="L547">547     (source : CanonicalLinearSubgaussianEnvironmentLaw</span>
+<span id="L548">548       hK thetaStar actionFeature R S environment) :</span>
+<span id="L549">549     Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L550">550         (finiteHistoryScalarRidgeOptimisticAlgorithm</span>
+<span id="L551">551           hK lambda actionFeature R</span>
+<span id="L552">552             (delta / ((horizon + 1 : Nat) : Real)) S)</span>
+<span id="L553">553         environment</span>
+<span id="L554">554         (canonicalHistoryTrajectorySumRangeSuccGapStandardViolationSet</span>
+<span id="L555">555           lambda thetaStar actionFeature R delta S horizon L2 comparator) &lt;=</span>
+<span id="L556">556       ENNReal.ofReal delta := by</span>
+<span id="L557">557   calc</span>
+<span id="L558">558     Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L559">559         (finiteHistoryScalarRidgeOptimisticAlgorithm</span>
+<span id="L560">560           hK lambda actionFeature R</span>
+<span id="L561">561             (delta / ((horizon + 1 : Nat) : Real)) S)</span>
+<span id="L562">562         environment</span>
+<span id="L563">563         (canonicalHistoryTrajectorySumRangeSuccGapStandardViolationSet</span>
+<span id="L564">564           lambda thetaStar actionFeature R delta S horizon L2 comparator) &lt;=</span>
+<span id="L565">565       Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L566">566         (finiteHistoryScalarRidgeOptimisticAlgorithm</span>
+<span id="L567">567           hK lambda actionFeature R</span>
+<span id="L568">568             (delta / ((horizon + 1 : Nat) : Real)) S)</span>
+<span id="L569">569         environment</span>
+<span id="L570">570         (canonicalHistoryTrajectorySumRangeSuccGapViolationSet</span>
+<span id="L571">571           lambda thetaStar actionFeature R delta S horizon comparator) := by</span>
+<span id="L572">572       exact measure_mono</span>
+<span id="L573">573         (canonicalHistoryTrajectorySumRangeSuccGapStandardViolationSet_subset</span>
+<span id="L574">574           lambda hlambda thetaStar actionFeature R delta S hdelta hS</span>
+<span id="L575">575           horizon L2 hL2 hactionFeatureBound comparator hwidth)</span>
+<span id="L576">576     _ &lt;= ENNReal.ofReal delta :=</span>
+<span id="L577">577       measure_canonicalHistoryTrajectorySumRangeSuccGapViolationSet_le_of_linearSubgaussianEnvironment</span>
+<span id="L578">578         hK lambda hlambda thetaStar actionFeature R hR</span>
+<span id="L579">579         delta hdelta hdelta_one S environment horizon comparator source</span>
+<span id="L580">580 </span>
+<span id="L581">581 end OFUL</span>
+<span id="L582">582 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

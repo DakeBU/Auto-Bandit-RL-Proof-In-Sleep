@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Finite-horizon RL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>RL.<wbr>Finite<wbr>Horizon<wbr>Adaptive<wbr>Cumulative<wbr>Realized<wbr>Behavior<wbr>Regret</h1>
+  <p class="lede">This module transports the compiled adaptive exploratory-policy expected-regret route to realized rewards on the same infinite episode-batch trajectory law. Successor coordinates 1 through rounds are charged; coordinate zero is the uncontrolled initial batch and is excluded.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html"><code>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/finite-horizon-rl/index.html">9. Finite-horizon reinforcement learning</a></dd></div>
+    <div><dt>Declarations</dt><dd>46</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-rl-finitehorizonadaptivecumulativedecayingexplorationbehaviorconsistency/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeDecayingExplorationBehaviorConsistency</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-rl-finitehorizonadaptivecumulativedecayingexplorationrealizedbehaviorconsistency/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeDecayingExplorationRealizedBehaviorConsistency</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-db8e8e3a3cce">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.traceStateAtFrom</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> traceStateAtFrom (state : State) {n : Nat} (trace : StepTrace Action State n) (stage : Fin n) : State</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L37">Source line 37</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3436c51587ef">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.traceStateAtFrom_tail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> traceStateAtFrom_tail (state : State) {n : Nat} (trace : StepTrace Action State (n + <span class="num">1</span>)) (stage : Fin n) : traceStateAtFrom (trace <span class="num">0</span>).<span class="num">2</span> (Fin.tail trace) stage = traceStateAtFrom state trace stage.succ</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L42">Source line 42</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9003883c90f4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.cumulativeRewardFrom_eq_sum_traceReward</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> cumulativeRewardFrom_eq_sum_traceReward (mdp : MDP State Action) (n : Nat) (state : State) (trace : StepTrace Action State n) : mdp.cumulativeRewardFrom n state trace = ∑ stage : Fin n, mdp.reward (traceStateAtFrom state trace stage) (trace stage).<span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L53">Source line 53</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5319e772e5d8">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.EpisodeBatch.episodeReturn</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> episodeReturn {mdp : MDP State Action} {episodes : Nat} (batch : EpisodeBatch mdp episodes) (episode : Fin episodes) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L74">Source line 74</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8f7a6afa0f49">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.EpisodeBatch.totalReturn</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> totalReturn {mdp : MDP State Action} {episodes : Nat} (batch : EpisodeBatch mdp episodes) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L78">Source line 78</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2a3f97267725">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.EpisodeBatch.measurable_episodeReturn</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_episodeReturn {mdp : MDP State Action} {episodes : Nat} (episode : Fin episodes) : Measurable (<span class="kw">fun</span> batch : EpisodeBatch mdp episodes =&gt; episodeReturn batch episode)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L82">Source line 82</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0a14ed9e8f34">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.EpisodeBatch.measurable_totalReturn</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_totalReturn {mdp : MDP State Action} {episodes : Nat} : Measurable (totalReturn : EpisodeBatch mdp episodes -&gt; Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L90">Source line 90</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ba6dec9fdc87">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.EpisodeBatch.abs_episodeReturn_le_horizon_of_rewardConsistent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> abs_episodeReturn_le_horizon_of_rewardConsistent {mdp : MDP State Action} {episodes : Nat} (batch : EpisodeBatch mdp episodes) (hbatch : batch.RewardConsistent) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (episode : Fin episodes) : |episodeReturn batch episode| &lt;= (mdp.horizon : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L95">Source line 95</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-26af6d60a9bd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.EpisodeBatch.abs_totalReturn_le_of_rewardConsistent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> abs_totalReturn_le_of_rewardConsistent {mdp : MDP State Action} {episodes : Nat} (batch : EpisodeBatch mdp episodes) (hbatch : batch.RewardConsistent) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) : |totalReturn batch| &lt;= (episodes : Real) * (mdp.horizon : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L112">Source line 112</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-240e5b580fcc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.episodeReturn_episodeBatchOfTrajectories</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> episodeReturn_episodeBatchOfTrajectories (mdp : MDP State Action) (episodes : Nat) (trajectories : Fin episodes -&gt; State × StepTrace Action State mdp.horizon) (episode : Fin episodes) : EpisodeBatch.episodeReturn (mdp.episodeBatchOfTrajectories episodes trajectories) episode = mdp.cumulativeReward (trajectories episode)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L132">Source line 132</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-41676f114bfd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.totalReturn_episodeBatchOfTrajectories</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> totalReturn_episodeBatchOfTrajectories (mdp : MDP State Action) (episodes : Nat) (trajectories : Fin episodes -&gt; State × StepTrace Action State mdp.horizon) : EpisodeBatch.totalReturn (mdp.episodeBatchOfTrajectories episodes trajectories) = ∑ episode : Fin episodes, mdp.cumulativeReward (trajectories episode)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L144">Source line 144</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-578a0272ffdf">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.batchReturnVarianceProxy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> batchReturnVarianceProxy (mdp : MDP State Action) (episodes : Nat) : NNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L159">Source line 159</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a63ea118e01d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.integral_cumulativeReward_eval_iidTrajectoryFamilyMeasure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_cumulativeReward_eval_iidTrajectoryFamilyMeasure {mdp : MDP State Action} (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] {episodes : Nat} (episode : Fin episodes) : (∫ trajectories, mdp.cumulativeReward (trajectories episode) ∂policy.iidTrajectoryFamilyMeasure initialState episodes) = ∫ trajectory, mdp.cumulativeReward trajectory ∂policy.trajectoryMeasure initialState</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L165">Source line 165</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b7733d07305b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.integral_totalReturn_iidEpisodeBatchMeasure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_totalReturn_iidEpisodeBatchMeasure {mdp : MDP State Action} (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) : integral (policy.iidEpisodeBatchMeasure initialState episodes) EpisodeBatch.totalReturn = (episodes : Real) * integral (policy.trajectoryMeasure initialState) mdp.cumulativeReward</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L183">Source line 183</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-883789bcccd3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.totalReturn_centered_hasSubgaussianMGF</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> totalReturn_centered_hasSubgaussianMGF {mdp : MDP State Action} (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) : ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> batch : EpisodeBatch mdp episodes =&gt; EpisodeBatch.totalReturn batch - integral (policy.iidEpisodeBatchMeasure initialState episodes) EpisodeBatch.totalReturn) (batchReturnVarianceProxy mdp episodes) (policy.iidEpisodeBatchMeasure initialState episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L210">Source line 210</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3589355cda04">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.successorReturnKernelMean</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> successorReturnKernelMean {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (n : Nat) (history : EpisodeBatchPrefix mdp episodes n) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L244">Source line 244</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-de0816fa1484">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.measurable_successorReturnKernelMean</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_successorReturnKernelMean {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (n : Nat) : Measurable (source.successorReturnKernelMean n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L251">Source line 251</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f7162f6b9a55">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.successorReturnKernelMean_eq_selectedPolicy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> successorReturnKernelMean_eq_selectedPolicy {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (n : Nat) (history : EpisodeBatchPrefix mdp episodes n) : source.successorReturnKernelMean n history = (episodes : Real) * integral ((source.successorPolicy n history).trajectoryMeasure initialState) mdp.cumulativeReward</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L258">Source line 258</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7326a67a9773">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.successorReturnPrefixIncrement</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> successorReturnPrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) : (round : Nat) -&gt; EpisodeBatchPrefix mdp episodes round -&gt; Real | <span class="num">0</span>, _history =&gt; <span class="num">0</span> | n + <span class="num">1</span>, history =&gt; EpisodeBatch.totalReturn (history ⟨n + <span class="num">1</span>, Finset.mem_Iic.mpr le_rfl⟩) - source.successorReturnKernelMean n (Preorder.frestrictLe₂ (π := <span class="kw">fun</span> _ : Nat =&gt; EpisodeBatch mdp episodes) (Nat.le_succ n) history) <span class="kw">theorem</span> measurable_successorReturnPrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (round : Nat) : Measurable (source.successorReturnPrefixIncrement round)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L273">Source line 273</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9eac5ed84530">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.measurable_successorReturnPrefixIncrement</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_successorReturnPrefixIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (round : Nat) : Measurable (source.successorReturnPrefixIncrement round)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L287">Source line 287</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-921fd98339df">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.successorReturnIncrement</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> successorReturnIncrement {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (round : Nat) (trajectory : EpisodeBatchTrajectory mdp episodes) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L307">Source line 307</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1e9e09935e67">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.successorReturnIncrement_stronglyAdapted_piLE</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> successorReturnIncrement_stronglyAdapted_piLE {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) : StronglyAdapted (Filtration.piLE (X := <span class="kw">fun</span> _ : Nat =&gt; EpisodeBatch mdp episodes)) source.successorReturnIncrement</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L315">Source line 315</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-059860871bfa">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.trajectoryMeasure_condDistrib_totalReturn</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> trajectoryMeasure_condDistrib_totalReturn {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} [StandardBorelSpace (EpisodeBatch mdp episodes)] (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (n : Nat) : ProbabilityTheory.condDistrib (<span class="kw">fun</span> trajectory : EpisodeBatchTrajectory mdp episodes =&gt; EpisodeBatch.totalReturn (trajectory (n + <span class="num">1</span>))) (Preorder.frestrictLe n) source.trajectoryMeasure =ᵐ[ source.trajectoryMeasure.map (Preorder.frestrictLe n)] (source.batchKernel n).map EpisodeBatch.totalReturn</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L327">Source line 327</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-60fa718cf4ee">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.condExpKernel_map_totalReturn_eq_batchKernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> condExpKernel_map_totalReturn_eq_batchKernel {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} [StandardBorelSpace (EpisodeBatch mdp episodes)] [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)] (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (n : Nat) : Filter.Eventually (<span class="kw">fun</span> trajectory : EpisodeBatchTrajectory mdp episodes =&gt; Measure.map (<span class="kw">fun</span> path : EpisodeBatchTrajectory mdp episodes =&gt; EpisodeBatch.totalReturn (path (n + <span class="num">1</span>))) (ProbabilityTheory.condExpKernel source.trajectoryMeasure ((inferInstance : MeasurableSpace (EpisodeBatchPrefix mdp episodes n)).comap (Preorder.frestrictLe n)) trajectory) = ((source.batchKernel n).map EpisodeBatch.totalReturn) (Preorder.frestrictLe n trajectory)) (ae (source.trajectoryMeasure.trim (Preorder.measurable_frestrictLe n).comap_le))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L370">Source line 370</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-18e6b7ac8c41">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.successorReturnIncrement_succ_hasCondSubgaussianMGF</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> successorReturnIncrement_succ_hasCondSubgaussianMGF {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} [StandardBorelSpace (EpisodeBatch mdp episodes)] [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)] (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (n : Nat) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) : ProbabilityTheory.HasCondSubgaussianMGF (Filtration.piLE (X := <span class="kw">fun</span> _ : Nat =&gt; EpisodeBatch mdp episodes) n) ((Filtration.piLE (X := <span class="kw">fun</span> _ : Nat =&gt; EpisodeBatch mdp episodes)).le n) (source.successorReturnIncrement (n + <span class="num">1</span>)) (MarkovPolicy.batchReturnVarianceProxy mdp episodes) source.trajectoryMeasure</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L409">Source line 409</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9278de9a4434">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.cumulativeSuccessorReturnVarianceProxy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> cumulativeSuccessorReturnVarianceProxy (mdp : MDP State Action) (episodes rounds : Nat) : NNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L523">Source line 523</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-86e3ea7e3239">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.cumulativeSuccessorReturnDeviation</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> cumulativeSuccessorReturnDeviation {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (rounds : Nat) (trajectory : EpisodeBatchTrajectory mdp episodes) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L530">Source line 530</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f874ec0a7177">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.batchReturnVarianceProxy_pos</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> batchReturnVarianceProxy_pos (mdp : MDP State Action) (episodes : Nat) (hepisodes : <span class="num">0</span> &lt; episodes) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) : <span class="num">0</span> &lt; MarkovPolicy.batchReturnVarianceProxy mdp episodes</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L537">Source line 537</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-42645d37064f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.trajectoryMeasure_cumulativeSuccessorReturnDeviation_abs_tail_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> trajectoryMeasure_cumulativeSuccessorReturnDeviation_abs_tail_le {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} [StandardBorelSpace (EpisodeBatch mdp episodes)] [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)] (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (rounds : Nat) (hrounds : <span class="num">0</span> &lt; rounds) (hepisodes : <span class="num">0</span> &lt; episodes) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) : source.trajectoryMeasure {trajectory | Concentration.subGaussianSumConfidenceRadius (cumulativeSuccessorReturnVarianceProxy mdp episodes rounds) delta &lt;= |source.cumulativeSuccessorReturnDeviation rounds trajectory|} &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L553">Source line 553</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0260c4c234a4">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.optimalInitialExpectedReturn</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> optimalInitialExpectedReturn (mdp : MDP State Action) (initialState : Measure State) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L600">Source line 600</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0089ce0e1878">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.successorExpectedCumulativeRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> successorExpectedCumulativeRegret {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (trajectory : EpisodeBatchTrajectory mdp episodes) (rounds : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L605">Source line 605</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f6bf820a3d4e">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.successorExpectedAverageRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> successorExpectedAverageRegret {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (trajectory : EpisodeBatchTrajectory mdp episodes) (rounds : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L613">Source line 613</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bad5a84b0aa5">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.realizedSuccessorCumulativeRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> realizedSuccessorCumulativeRegret {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (trajectory : EpisodeBatchTrajectory mdp episodes) (rounds : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L620">Source line 620</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-34ccc20c8dfb">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.realizedSuccessorAverageRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> realizedSuccessorAverageRegret {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (trajectory : EpisodeBatchTrajectory mdp episodes) (rounds : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L629">Source line 629</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1881de4f40ba">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.successorReturnDeviationBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> successorReturnDeviationBadEvent {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (rounds : Nat) (delta : Real) : Set (EpisodeBatchTrajectory mdp episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L637">Source line 637</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8ce35bb3aa9d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.measurable_cumulativeSuccessorReturnDeviation</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_cumulativeSuccessorReturnDeviation {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (rounds : Nat) : Measurable (source.cumulativeSuccessorReturnDeviation rounds)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L648">Source line 648</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5c576ad54f2a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.measurableSet_successorReturnDeviationBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_successorReturnDeviationBadEvent {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (rounds : Nat) (delta : Real) : MeasurableSet (source.successorReturnDeviationBadEvent rounds delta)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L659">Source line 659</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3687cbfe8616">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.successorReturnIncrement_succ_eq_totalReturn_sub_selectedPolicyMean</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> successorReturnIncrement_succ_eq_totalReturn_sub_selectedPolicyMean {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (trajectory : EpisodeBatchTrajectory mdp episodes) (n : Nat) : source.successorReturnIncrement (n + <span class="num">1</span>) trajectory = EpisodeBatch.totalReturn (trajectory (n + <span class="num">1</span>)) - (episodes : Real) * integral ((source.policyAt trajectory (n + <span class="num">1</span>)).trajectoryMeasure initialState) mdp.cumulativeReward</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L668">Source line 668</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-dcb5951d4c65">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.cumulativeSuccessorReturnDeviation_eq_fin_sum</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> cumulativeSuccessorReturnDeviation_eq_fin_sum {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (trajectory : EpisodeBatchTrajectory mdp episodes) (rounds : Nat) : source.cumulativeSuccessorReturnDeviation rounds trajectory = ∑ round : Fin rounds, source.successorReturnIncrement ((round : Nat) + <span class="num">1</span>) trajectory</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L684">Source line 684</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3991d7eba902">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.realizedSuccessorCumulativeRegret_eq_expected_sub_deviation</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> realizedSuccessorCumulativeRegret_eq_expected_sub_deviation {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (trajectory : EpisodeBatchTrajectory mdp episodes) (rounds : Nat) : source.realizedSuccessorCumulativeRegret trajectory rounds = (episodes : Real) * source.successorExpectedCumulativeRegret trajectory rounds - source.cumulativeSuccessorReturnDeviation rounds trajectory</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L701">Source line 701</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-189dc6f36165">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.realizedSuccessorAverageRegret_eq_expected_sub_deviation</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> realizedSuccessorAverageRegret_eq_expected_sub_deviation {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (trajectory : EpisodeBatchTrajectory mdp episodes) (rounds : Nat) (hrounds : <span class="num">0</span> &lt; rounds) (hepisodes : <span class="num">0</span> &lt; episodes) : source.realizedSuccessorAverageRegret trajectory rounds = source.successorExpectedAverageRegret trajectory rounds - source.cumulativeSuccessorReturnDeviation rounds trajectory / ((episodes : Real) * (rounds : Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L733">Source line 733</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a2c20ab6cbbe">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.trajectoryMeasure_successorReturnDeviationBadEvent_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> trajectoryMeasure_successorReturnDeviationBadEvent_le {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} [StandardBorelSpace (EpisodeBatch mdp episodes)] [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)] (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (rounds : Nat) (hrounds : <span class="num">0</span> &lt; rounds) (hepisodes : <span class="num">0</span> &lt; episodes) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) : source.trajectoryMeasure (source.successorReturnDeviationBadEvent rounds delta) &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L750">Source line 750</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3fc02ea37637">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.trajectoryMeasure_expected_to_realized_successor_average_regret_transport</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> trajectoryMeasure_expected_to_realized_successor_average_regret_transport {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} [StandardBorelSpace (EpisodeBatch mdp episodes)] [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)] (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (rounds : Nat) (hrounds : <span class="num">0</span> &lt; rounds) (hepisodes : <span class="num">0</span> &lt; episodes) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) (countBadEvent : Set (EpisodeBatchTrajectory mdp episodes)) (expectedBound : Real) (Good : EpisodeBatchTrajectory mdp episodes -&gt; Prop) (hcountMeasurable : MeasurableSet countBadEvent) (hcountTail : source.trajectoryMeasure countBadEvent &lt;= ENNReal.ofReal delta) (hcountGood : <span class="kw">forall</span> trajectory, trajectory ∉ countBadEvent -&gt; Good trajectory /\ source.successorExpectedAverageRegret trajectory rounds &lt;= expectedBound) : <span class="kw">let</span> returnBadEvent := source.successorReturnDeviationBadEvent rounds delta <span class="kw">let</span> combinedBadEvent := countBadEvent ∪ returnBadEvent MeasurableSet combinedBadEvent /\ source.trajectoryMeasure combinedBadEvent &lt;= ENNReal.ofReal delta + ENNReal.ofReal delta /\ <span class="kw">forall</span> trajectory, trajectory ∉ combinedBadEvent -&gt; Good trajectory /\ source.realizedSuccessorAverageRegret trajectory rounds &lt;= expectedBound + Concentration.subGaussianSumConfidenceRadius (cumulativeSuccessorReturnVarianceProxy mdp episodes rounds) delta / ((episodes : Real) * (rounds : Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L767">Source line 767</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bf562cd3130f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeEmpiricalOptimisticSource.exploratorySource_successorExpectedCumulativeRegret_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_successorExpectedCumulativeRegret_eq {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (countRadius : TransitionCountRadius) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (trajectory : EpisodeBatchTrajectory mdp episodes) (rounds : Nat) : (exploratorySource mdp initialState episodes initialTable defaultState countRadius explorationRate hexplorationRate).successorExpectedCumulativeRegret trajectory rounds = adaptiveCumulativeEmpiricalOptimisticExploratoryBehaviorExpectedRegret (initialState := initialState) trajectory defaultState countRadius explorationRate hexplorationRate rounds</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L854">Source line 854</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a9867cbf0d90">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeEmpiricalOptimisticSource.exploratorySource_successorExpectedAverageRegret_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_successorExpectedAverageRegret_eq {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (countRadius : TransitionCountRadius) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (trajectory : EpisodeBatchTrajectory mdp episodes) (rounds : Nat) : (exploratorySource mdp initialState episodes initialTable defaultState countRadius explorationRate hexplorationRate).successorExpectedAverageRegret trajectory rounds = adaptiveCumulativeEmpiricalOptimisticAverageExploratoryBehaviorExpectedRegret (initialState := initialState) trajectory defaultState countRadius explorationRate hexplorationRate rounds</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L873">Source line 873</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b7406d6c9012">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_cumulativeInverseSqrtPathSupport_optimism_and_decayingExplorationAverageRealizedBehaviorRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_trajectoryMeasure_cumulativeInverseSqrtPathSupport_optimism_and_decayingExplorationAverageRealizedBehaviorRegret (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (baseVisitFloor : Real) (n : Nat) [StandardBorelSpace (EpisodeBatch mdp (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes mdp baseVisitFloor n))] [StandardBorelSpace (EpisodeBatchTrajectory mdp (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes mdp baseVisitFloor n))] (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (hbaseFloor : ExploratoryPathUniformVisitFloor support <span class="num">1</span> baseVisitFloor) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) : <span class="kw">let</span> rounds := AdaptiveEpisodeBatchSource.decayingExplorationRounds mdp n <span class="kw">let</span> delta := AdaptiveEpisodeBatchSource.vanishingAverageConfidenceDelta n <span class="kw">let</span> explorationRate := AdaptiveEpisodeBatchSource.decayingExplorationRate n <span class="kw">let</span> visitFloor := AdaptiveEpisodeBatchSource.decayingExplorationVisitFloor mdp baseVisitFloor n <span class="kw">let</span> episodes := AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes mdp baseVisitFloor n <span class="kw">let</span> countRadius := AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtCountRadius mdp rounds delta visitFloor <span class="kw">let</span> source := exploratorySource mdp initialState episodes initialTable defaultState countRadius explorationRate (AdaptiveEpisodeBatchSource.decayingExplorationRate_le_one n) <span class="kw">let</span> countBadEvent := source.adaptiveCumulativeCountBadEvent rounds delta <span class="kw">let</span> returnBadEvent := source.successorReturnDeviationBadEvent rounds delta <span class="kw">let</span> combinedBadEvent := countBadEvent ∪ returnBadEvent MeasurableSet combinedBadEvent /\ source.trajectoryMeasure combinedBadEvent &lt;= ENNReal.ofReal delta + ENNReal.ofReal delta /\ <span class="kw">forall</span> trajectory, trajectory ∉ combinedBadEvent -&gt; (<span class="kw">forall</span> round : Fin rounds, <span class="kw">forall</span> state, mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;= (adaptiveCumulativeEmpiricalOptimisticPlanAt trajectory defaultState countRadius round).upperValueRemaining mdp.horizon le_rfl state) /\ source.realizedSuccessorAverageRegret trajectory rounds &lt;= AdaptiveEpisodeBatchSource.decayingExplorationAverageExploratoryBehaviorExpectedRegretBound mdp baseVisitFloor n + Concentration.subGaussianSumConfidenceRadius (AdaptiveEpisodeBatchSource.cumulativeSuccessorReturnVarianceProxy mdp episodes rounds) delta / ((episodes : Real) * (rounds : Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeRealizedBehaviorRegret.lean.html#L890">Source line 890</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

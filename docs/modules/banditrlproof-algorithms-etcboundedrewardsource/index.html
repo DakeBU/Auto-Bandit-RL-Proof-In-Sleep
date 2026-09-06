@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.ETCBoundedRewardSource · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.ETCBoundedRewardSource · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.ETCBoundedRewardSource · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · ETC</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>ETC<wbr>Bounded<wbr>Reward<wbr>Source</h1>
+  <p class="lede">This module packages the stochastic source facts consumed by the bounded-reward ETC wrong-commit route. It does not construct those facts from a concrete environment, product space, kernel, or filtration.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSource.lean.html"><code>BanditRLProof/Algorithms/ETCBoundedRewardSource.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/etc/index.html">3. Explore-Then-Commit</a></dd></div>
+    <div><dt>Declarations</dt><dd>17</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-algorithms-etcboundedrewardsubgaussian/index.html"><code>BanditRLProof.Algorithms.ETCBoundedRewardSubGaussian</code></a>, <a href="../banditrlproof-algorithms-etccondsubgaussianwitnesses/index.html"><code>BanditRLProof.Algorithms.ETCCondSubGaussianWitnesses</code></a>, <a href="../banditrlproof-martingaledifference/index.html"><code>BanditRLProof.MartingaleDifference</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-etcboundedrewardinfinitepisource/index.html"><code>BanditRLProof.Algorithms.ETCBoundedRewardInfinitePiSource</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-1147f58f18a0">
+  <summary>
+    <span class="kind">structure</span>
+    <code>BanditRLProof.ETC.BoundedRewardTraceSource</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Source contract for the bounded-reward ETC wrong-commit route.
+
+This is intentionally a thin structure: it records trace-level reward-coordinate
+independence, a.e. coordinate measurability, a.s. interval bounds, and exact
+mean identities over the ETC exploration horizon.</p>
+    <pre class="lean-code"><code><span class="kw">structure</span> BoundedRewardTraceSource {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (lo hi : Fin K -&gt; Nat -&gt; Real) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSource.lean.html#L23">Source line 23</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-21515060d33c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredReward_integrable_of_boundedRewardTraceSource</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A bounded reward source supplies raw reward integrability for the action
+actually pulled at time `t`.
+
+This packages the `meas` and `bound` fields into the bounded-to-integrable side
+condition consumed by the conditional mean-zero route.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredReward_integrable_of_boundedRewardTraceSource {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (lo hi : Fin K -&gt; Nat -&gt; Real) (source : ETC.BoundedRewardTraceSource mu spec model commitArm reward lo hi) (t : Nat) (ht : t &lt; spec.explorationPulls * K) : MeasureTheory.Integrable (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t : Rat) : Real))) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSource.lean.html#L60">Source line 60</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7608e80fc3dc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredReward_integral_eq_zero_of_boundedRewardTraceSource_mean</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A bounded reward source supplies the action-matched zero-integral fact for the
+centered reward coordinate.
+
+This packages the `meas`, `bound`, and `mean` fields into the zero-integral
+side condition consumed by the conditional mean-zero route.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredReward_integral_eq_zero_of_boundedRewardTraceSource_mean {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (lo hi : Fin K -&gt; Nat -&gt; Real) (source : ETC.BoundedRewardTraceSource mu spec model commitArm reward lo hi) (t : Nat) (ht : t &lt; spec.explorationPulls * K) : MeasureTheory.integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t - model.mean (ETC.actionWithCommit spec commitArm t) : Rat) : Real))) = <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSource.lean.html#L86">Source line 86</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e12041efa8ea">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurable_centeredReward_actionWithCommit_historyFiltrationSucc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The action-matched centered reward at time `t` is measurable with respect to
+the shifted generated history filtration at time `t`.
+
+This is the adaptedness side of the fixed-commit martingale-difference route.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_centeredReward_actionWithCommit_historyFiltrationSucc {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, @Measurable Omega Rat mOmega inferInstance (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (t : Nat) : @Measurable Omega Real (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward t) inferInstance (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t - model.mean (ETC.actionWithCommit spec commitArm t) : Rat) : Real)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSource.lean.html#L115">Source line 115</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-490870e5a49d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.stronglyAdapted_centeredReward_actionWithCommit_historyFiltrationSucc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The fixed-commit action-matched centered reward process is strongly adapted to
+the shifted generated history filtration.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stronglyAdapted_centeredReward_actionWithCommit_historyFiltrationSucc {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, @Measurable Omega Rat mOmega inferInstance (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) : MeasureTheory.StronglyAdapted (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward) (<span class="kw">fun</span> t omega =&gt; (((reward omega t - model.mean (ETC.actionWithCommit spec commitArm t) : Rat) : Real)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSource.lean.html#L163">Source line 163</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-44f3e82bcb09">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredReward_actionWithCommit_integrable_of_boundedRewardTraceSource</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A bounded reward source supplies integrability of the action-matched centered
+reward coordinate.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredReward_actionWithCommit_integrable_of_boundedRewardTraceSource {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (lo hi : Fin K -&gt; Nat -&gt; Real) (source : ETC.BoundedRewardTraceSource mu spec model commitArm reward lo hi) (t : Nat) (ht : t &lt; spec.explorationPulls * K) : MeasureTheory.Integrable (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t - model.mean (ETC.actionWithCommit spec commitArm t) : Rat) : Real))) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSource.lean.html#L192">Source line 192</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1a2c38cf6da2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredReward_succ_condExp_historyFiltrationSucc_eq_zero_of_boundedRewardTraceSource</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A bounded reward source supplies the succ-indexed conditional mean-zero witness
+for the fixed-commit shifted history filtration.
+
+The source gives reward-coordinate independence and the action-matched
+zero-integral identity.  The action equality rewrites that identity into the
+sampled-arm shape consumed by the reward-level conditional mean-zero wrapper.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredReward_succ_condExp_historyFiltrationSucc_eq_zero_of_boundedRewardTraceSource {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (lo hi : Fin K -&gt; Nat -&gt; Real) (source : ETC.BoundedRewardTraceSource mu spec model commitArm reward lo hi) (hreward : <span class="kw">forall</span> t : Nat, @Measurable Omega Rat mOmega inferInstance (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (b : Fin K) (i : Nat) (hact : ETC.actionWithCommit spec commitArm (i + <span class="num">1</span>) = b) (ht : i + <span class="num">1</span> &lt; spec.explorationPulls * K) : Filter.EventuallyEq (MeasureTheory.ae mu) (MeasureTheory.condExp (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward i) mu (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega (i + <span class="num">1</span>) - model.mean b : Rat) : Real)))) (<span class="kw">fun</span> _omega : Omega =&gt; (<span class="num">0</span> : Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSource.lean.html#L241">Source line 241</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-31e71fecfb2b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredReward_actionWithCommit_succMartingaleDifferencePrefix_of_boundedRewardTraceSource</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Bounded fixed-commit rewards form a finite-prefix martingale-difference
+witness after centering by the action-matched arm mean.
+
+This packages the adaptedness, integrability, and succ-indexed conditional
+mean-zero fields.  It remains a witness surface, not a final martingale
+stopping or regret theorem.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredReward_actionWithCommit_succMartingaleDifferencePrefix_of_boundedRewardTraceSource {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (lo hi : Fin K -&gt; Nat -&gt; Real) (source : ETC.BoundedRewardTraceSource mu spec model commitArm reward lo hi) (hreward : <span class="kw">forall</span> t : Nat, @Measurable Omega Rat mOmega inferInstance (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (n : Nat) (hn : n &lt;= spec.explorationPulls * K) : MartingaleDiff.SuccMartingaleDifferencePrefix mu (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward) (<span class="kw">fun</span> t omega =&gt; (((reward omega t - model.mean (ETC.actionWithCommit spec commitArm t) : Rat) : Real))) n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSource.lean.html#L294">Source line 294</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-56b3090dba17">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredReward_hasSubgaussianMGF_of_boundedRewardTraceSource</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A bounded reward source contract yields the per-coordinate centered reward
+sub-Gaussian witness used by the reward-law route.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredReward_hasSubgaussianMGF_of_boundedRewardTraceSource {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (lo hi : Fin K -&gt; Nat -&gt; Real) (source : ETC.BoundedRewardTraceSource mu spec model commitArm reward lo hi) (t : Nat) (ht : t &lt; spec.explorationPulls * K) : ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t - model.mean (ETC.actionWithCommit spec commitArm t) : Rat) : Real))) (ETC.centeredRewardBoundVarianceProxy lo hi (ETC.actionWithCommit spec commitArm t) t) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSource.lean.html#L342">Source line 342</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fea79416fb8d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredReward_succ_hasCondSubgaussianMGF_historyFiltrationSucc_of_boundedRewardTraceSource</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A bounded reward source supplies the succ-indexed conditional MGF witness for
+the fixed-commit shifted history filtration.
+
+The source only records action-matched boundedness and exact means, so this
+wrapper keeps the concrete reward measurability contract explicit.  The action
+equality rewrites the action-matched unconditional sub-Gaussian witness into the
+sampled-arm shape consumed by the reward-level conditional witness package.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredReward_succ_hasCondSubgaussianMGF_historyFiltrationSucc_of_boundedRewardTraceSource {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (lo hi : Fin K -&gt; Nat -&gt; Real) (source : ETC.BoundedRewardTraceSource mu spec model commitArm reward lo hi) (hreward : <span class="kw">forall</span> t : Nat, @Measurable Omega Rat mOmega inferInstance (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (b : Fin K) (i : Nat) (hact : ETC.actionWithCommit spec commitArm (i + <span class="num">1</span>) = b) (ht : i + <span class="num">1</span> &lt; spec.explorationPulls * K) : ProbabilityTheory.HasCondSubgaussianMGF (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward i) ((History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward).le i) (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega (i + <span class="num">1</span>) - model.mean b : Rat) : Real))) (ETC.centeredRewardBoundVarianceProxy lo hi b (i + <span class="num">1</span>)) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSource.lean.html#L376">Source line 376</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-54f3eecea511">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.centeredRewardCondSubGaussianWitnesses_of_boundedRewardTraceSource</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Construct the reward-level conditional sub-Gaussian witness package from a
+bounded reward source.
+
+This is the bounded/source assembly leaf: bounded exact-mean rewards provide
+the zeroth unconditional MGF and the later conditional MGF witnesses via the
+independence bridge, while tail domination remains an explicit contract for the
+consumer theorem.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> centeredRewardCondSubGaussianWitnesses_of_boundedRewardTraceSource {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (lo hi : Fin K -&gt; Nat -&gt; Real) (source : ETC.BoundedRewardTraceSource mu spec model commitArm reward lo hi) (hreward : <span class="kw">forall</span> t : Nat, @Measurable Omega Rat mOmega inferInstance (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (tail : Fin K -&gt; ENNReal) (horizon_pos : <span class="num">0</span> &lt; spec.explorationPulls * K) (htail : <span class="kw">forall</span> a : Fin K, (a = model.bestArm -&gt; False) -&gt; ENNReal.ofReal (Real.exp (-(ETC.centeredPairwiseGapThreshold spec model a) ^ <span class="num">2</span> / (<span class="num">2</span> * (((Finset.range (spec.explorationPulls * K)).sum (<span class="kw">fun</span> t =&gt; ETC.centeredPairwiseRewardDiffVarianceProxy spec model commitArm (ETC.centeredRewardBoundVarianceProxy lo hi) a t) : NNReal) : Real)))) &lt;= tail a) : ETC.CenteredRewardCondSubGaussianWitnesses mu spec model commitArm reward tail <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSource.lean.html#L437">Source line 437</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d74a4876d571">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.pairwiseEmpMeanTailContract_of_boundedRewardTraceSource_condSubGaussian</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Consume a bounded reward source contract through the conditional
+sub-Gaussian route to obtain the fixed-commit pairwise empirical-mean tail
+contract.
+
+This theorem closes the local source-to-tail-contract chain for fixed
+`actionWithCommit`; it still keeps the final tail domination contract explicit
+and does not address arbitrary policy predictability.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pairwiseEmpMeanTailContract_of_boundedRewardTraceSource_condSubGaussian {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (lo hi : Fin K -&gt; Nat -&gt; Real) (source : ETC.BoundedRewardTraceSource mu spec model commitArm reward lo hi) (hreward : <span class="kw">forall</span> t : Nat, @Measurable Omega Rat mOmega inferInstance (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (tail : Fin K -&gt; ENNReal) (horizon_pos : <span class="num">0</span> &lt; spec.explorationPulls * K) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (htail : <span class="kw">forall</span> a : Fin K, (a = model.bestArm -&gt; False) -&gt; ENNReal.ofReal (Real.exp (-(ETC.centeredPairwiseGapThreshold spec model a) ^ <span class="num">2</span> / (<span class="num">2</span> * (((Finset.range (spec.explorationPulls * K)).sum (<span class="kw">fun</span> t =&gt; ETC.centeredPairwiseRewardDiffVarianceProxy spec model commitArm (ETC.centeredRewardBoundVarianceProxy lo hi) a t) : NNReal) : Real)))) &lt;= tail a) : ETC.PairwiseEmpMeanTailContract mu spec model commitArm reward tail</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSource.lean.html#L501">Source line 501</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-caec757824cf">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_pairwise_tail_of_boundedRewardTraceSource_condSubGaussian</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Consume a bounded reward source contract through the conditional
+sub-Gaussian route to obtain the fixed-commit argmax-oracle wrong-commit
+probability wrapper.
+
+This is the probability-facing wrapper for the bounded/source conditional route;
+the numerical tail budget is still supplied explicitly by `htail`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_pairwise_tail_of_boundedRewardTraceSource_condSubGaussian {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (hK : <span class="num">0</span> &lt; K) (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (lo hi : Fin K -&gt; Nat -&gt; Real) (source : ETC.BoundedRewardTraceSource mu spec model commitArm reward lo hi) (hreward : <span class="kw">forall</span> t : Nat, @Measurable Omega Rat mOmega inferInstance (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (tail : Fin K -&gt; ENNReal) (horizon_pos : <span class="num">0</span> &lt; spec.explorationPulls * K) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (htail : <span class="kw">forall</span> a : Fin K, (a = model.bestArm -&gt; False) -&gt; ENNReal.ofReal (Real.exp (-(ETC.centeredPairwiseGapThreshold spec model a) ^ <span class="num">2</span> / (<span class="num">2</span> * (((Finset.range (spec.explorationPulls * K)).sum (<span class="kw">fun</span> t =&gt; ETC.centeredPairwiseRewardDiffVarianceProxy spec model commitArm (ETC.centeredRewardBoundVarianceProxy lo hi) a t) : NNReal) : Real)))) &lt;= tail a) : mu {omega : Omega | (ETC.argmaxCommitOracle hK).choose (<span class="kw">fun</span> a : Fin K =&gt; ETC.empMeanAtExploration spec commitArm (reward omega) a) = model.bestArm -&gt; False} &lt;= ((Finset.univ : Finset (Fin K)).filter (<span class="kw">fun</span> a : Fin K =&gt; a = model.bestArm -&gt; False)).sum tail</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSource.lean.html#L550">Source line 550</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-195a4d2d7a4f">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.centeredRewardCondSubGaussianWitnesses_of_boundedRewardTraceSource_canonicalTail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Construct the reward-level conditional witness package from a bounded reward
+source when the caller chooses the canonical centered-diff exponential tail.
+
+This removes the explicit tail-domination assumption from
+`centeredRewardCondSubGaussianWitnesses_of_boundedRewardTraceSource` for the
+fixed `actionWithCommit` route.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> centeredRewardCondSubGaussianWitnesses_of_boundedRewardTraceSource_canonicalTail {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (lo hi : Fin K -&gt; Nat -&gt; Real) (source : ETC.BoundedRewardTraceSource mu spec model commitArm reward lo hi) (hreward : <span class="kw">forall</span> t : Nat, @Measurable Omega Rat mOmega inferInstance (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (horizon_pos : <span class="num">0</span> &lt; spec.explorationPulls * K) : ETC.CenteredRewardCondSubGaussianWitnesses mu spec model commitArm reward (ETC.centeredDiffSubGaussianTail spec model (ETC.centeredPairwiseRewardDiffVarianceProxy spec model commitArm (ETC.centeredRewardBoundVarianceProxy lo hi)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSource.lean.html#L603">Source line 603</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0c04443514a1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.pairwiseEmpMeanTailContract_of_boundedRewardTraceSource_condSubGaussian_canonicalTail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Produce the fixed-commit pairwise empirical-mean tail contract from a bounded
+reward source through the conditional sub-Gaussian route, using the canonical
+centered-diff exponential tail.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pairwiseEmpMeanTailContract_of_boundedRewardTraceSource_condSubGaussian_canonicalTail {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (lo hi : Fin K -&gt; Nat -&gt; Real) (source : ETC.BoundedRewardTraceSource mu spec model commitArm reward lo hi) (hreward : <span class="kw">forall</span> t : Nat, @Measurable Omega Rat mOmega inferInstance (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (horizon_pos : <span class="num">0</span> &lt; spec.explorationPulls * K) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) : ETC.PairwiseEmpMeanTailContract mu spec model commitArm reward (ETC.centeredDiffSubGaussianTail spec model (ETC.centeredPairwiseRewardDiffVarianceProxy spec model commitArm (ETC.centeredRewardBoundVarianceProxy lo hi)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSource.lean.html#L639">Source line 639</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-559966f45a5a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_centeredDiffSubGaussianTail_of_boundedRewardTraceSource_condSubGaussian</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Probability-facing fixed-commit bounded-source conditional sub-Gaussian route
+with the canonical centered-diff exponential tail budget.
+
+This theorem removes the explicit `htail` contract from
+`prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_pairwise_tail_of_boundedRewardTraceSource_condSubGaussian`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_centeredDiffSubGaussianTail_of_boundedRewardTraceSource_condSubGaussian {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (hK : <span class="num">0</span> &lt; K) (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (lo hi : Fin K -&gt; Nat -&gt; Real) (source : ETC.BoundedRewardTraceSource mu spec model commitArm reward lo hi) (hreward : <span class="kw">forall</span> t : Nat, @Measurable Omega Rat mOmega inferInstance (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (horizon_pos : <span class="num">0</span> &lt; spec.explorationPulls * K) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) : mu {omega : Omega | (ETC.argmaxCommitOracle hK).choose (<span class="kw">fun</span> a : Fin K =&gt; ETC.empMeanAtExploration spec commitArm (reward omega) a) = model.bestArm -&gt; False} &lt;= ((Finset.univ : Finset (Fin K)).filter (<span class="kw">fun</span> a : Fin K =&gt; a = model.bestArm -&gt; False)).sum (ETC.centeredDiffSubGaussianTail spec model (ETC.centeredPairwiseRewardDiffVarianceProxy spec model commitArm (ETC.centeredRewardBoundVarianceProxy lo hi)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSource.lean.html#L682">Source line 682</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2cb7bdc90d51">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_centeredDiffSubGaussianTail_of_boundedRewardTraceSource</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Consume a bounded reward source contract to obtain the concrete argmax-oracle
+wrong-commit probability bound.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_centeredDiffSubGaussianTail_of_boundedRewardTraceSource {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (hK : <span class="num">0</span> &lt; K) (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (lo hi : Fin K -&gt; Nat -&gt; Real) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (source : ETC.BoundedRewardTraceSource mu spec model commitArm reward lo hi) : mu {omega : Omega | (ETC.argmaxCommitOracle hK).choose (<span class="kw">fun</span> a : Fin K =&gt; ETC.empMeanAtExploration spec commitArm (reward omega) a) = model.bestArm -&gt; False} &lt;= ((Finset.univ : Finset (Fin K)).filter (<span class="kw">fun</span> a : Fin K =&gt; a = model.bestArm -&gt; False)).sum (ETC.centeredDiffSubGaussianTail spec model (ETC.centeredPairwiseRewardDiffVarianceProxy spec model commitArm (ETC.centeredRewardBoundVarianceProxy lo hi)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSource.lean.html#L723">Source line 723</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

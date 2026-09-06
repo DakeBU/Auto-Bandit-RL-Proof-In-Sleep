@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/FTRLOneStep.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/FTRLOneStep.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/FTRLOneStep.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/FTRLOneStep.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import Mathlib.Algebra.BigOperators.Group.Finset.Basic</span>
+<span id="L2">2 import Mathlib.Algebra.Order.Field.Basic</span>
+<span id="L3">3 import Mathlib.Data.Real.Basic</span>
+<span id="L4">4 import Mathlib.Tactic.Linarith</span>
+<span id="L5">5 import Mathlib.Tactic.Ring</span>
+<span id="L6">6 </span>
+<span id="L7">7 /-!</span>
+<span id="L8">8 # FTRL one-step finite-sum wrapper</span>
+<span id="L9">9 </span>
+<span id="L10">10 This module records the deterministic optimization primitive used by FTRL/OMD</span>
+<span id="L11">11 routes.  It consumes an explicit minimizer certificate for the regularized</span>
+<span id="L12">12 finite-action objective and returns the one-step linear-loss inequality against</span>
+<span id="L13">13 any feasible comparator.</span>
+<span id="L14">14 </span>
+<span id="L15">15 It does not prove convexity, minimizer existence, a Tsallis regularizer, a</span>
+<span id="L16">16 stability/penalty decomposition, or a regret theorem.</span>
+<span id="L17">17 -/</span>
+<span id="L18">18 </span>
+<span id="L19">19 namespace BanditRLProof</span>
+<span id="L20">20 namespace FTRL</span>
+<span id="L21">21 </span>
+<span id="L22">22 universe u</span>
+<span id="L23">23 </span>
+<span id="L24">24 /-- Finite-action linear loss of a weight vector against a loss vector. -/</span>
+<span id="L25">25 noncomputable def linearLoss {Action : Type u}</span>
+<span id="L26">26     (arms : Finset Action) (p loss : Action -&gt; Real) : Real :=</span>
+<span id="L27">27   arms.sum (fun a =&gt; p a * loss a)</span>
+<span id="L28">28 </span>
+<span id="L29">29 /-- The finite probability-simplex predicate over an explicit action set. -/</span>
+<span id="L30">30 def finiteSimplex {Action : Type u}</span>
+<span id="L31">31     (arms : Finset Action) (p : Action -&gt; Real) : Prop :=</span>
+<span id="L32">32   (forall a, a ∈ arms -&gt; 0 &lt;= p a) ∧ arms.sum p = 1</span>
+<span id="L33">33 </span>
+<span id="L34">34 /--</span>
+<span id="L35">35 Regularized one-round FTRL objective `eta * &lt;p, loss&gt; + R p`.</span>
+<span id="L36">36 </span>
+<span id="L37">37 The learning-rate positivity contract is kept on the theorem, not the</span>
+<span id="L38">38 definition, so future leaves can reuse the objective algebraically.</span>
+<span id="L39">39 -/</span>
+<span id="L40">40 noncomputable def regularizedObjective {Action : Type u}</span>
+<span id="L41">41     (arms : Finset Action) (eta : Real)</span>
+<span id="L42">42     (regularizer : (Action -&gt; Real) -&gt; Real)</span>
+<span id="L43">43     (loss : Action -&gt; Real) (p : Action -&gt; Real) : Real :=</span>
+<span id="L44">44   eta * linearLoss arms p loss + regularizer p</span>
+<span id="L45">45 </span>
+<span id="L46">46 /-- A point `p` minimizes the regularized objective over a feasible predicate. -/</span>
+<span id="L47">47 def IsRegularizedMinimizer {Action : Type u}</span>
+<span id="L48">48     (feasible : (Action -&gt; Real) -&gt; Prop)</span>
+<span id="L49">49     (arms : Finset Action) (eta : Real)</span>
+<span id="L50">50     (regularizer : (Action -&gt; Real) -&gt; Real)</span>
+<span id="L51">51     (loss : Action -&gt; Real) (p : Action -&gt; Real) : Prop :=</span>
+<span id="L52">52   feasible p ∧</span>
+<span id="L53">53     forall q, feasible q -&gt;</span>
+<span id="L54">54       regularizedObjective arms eta regularizer loss p &lt;=</span>
+<span id="L55">55         regularizedObjective arms eta regularizer loss q</span>
+<span id="L56">56 </span>
+<span id="L57">57 /--</span>
+<span id="L58">58 FTRL one-step inequality from an explicit regularized-objective minimizer.</span>
+<span id="L59">59 </span>
+<span id="L60">60 The conclusion is the deterministic algebraic form used before later leaves</span>
+<span id="L61">61 choose a concrete regularizer or prove a stability/penalty sum.</span>
+<span id="L62">62 -/</span>
+<span id="L63">63 theorem linearLoss_sub_le_regularizer_sub_div_of_isRegularizedMinimizer</span>
+<span id="L64">64     {Action : Type u}</span>
+<span id="L65">65     (feasible : (Action -&gt; Real) -&gt; Prop)</span>
+<span id="L66">66     (arms : Finset Action) (eta : Real)</span>
+<span id="L67">67     (regularizer : (Action -&gt; Real) -&gt; Real)</span>
+<span id="L68">68     (loss : Action -&gt; Real) (p q : Action -&gt; Real)</span>
+<span id="L69">69     (heta : 0 &lt; eta)</span>
+<span id="L70">70     (hp : IsRegularizedMinimizer feasible arms eta regularizer loss p)</span>
+<span id="L71">71     (hq : feasible q) :</span>
+<span id="L72">72     linearLoss arms p loss - linearLoss arms q loss &lt;=</span>
+<span id="L73">73       (regularizer q - regularizer p) / eta := by</span>
+<span id="L74">74   set Lp := linearLoss arms p loss</span>
+<span id="L75">75   set Lq := linearLoss arms q loss</span>
+<span id="L76">76   set Rp := regularizer p</span>
+<span id="L77">77   set Rq := regularizer q</span>
+<span id="L78">78   have hmin :</span>
+<span id="L79">79       eta * Lp + Rp &lt;= eta * Lq + Rq := by</span>
+<span id="L80">80     simpa [IsRegularizedMinimizer, regularizedObjective, Lp, Lq, Rp, Rq]</span>
+<span id="L81">81       using hp.2 q hq</span>
+<span id="L82">82   have hscaled : eta * Lp - eta * Lq &lt;= Rq - Rp := by</span>
+<span id="L83">83     linarith</span>
+<span id="L84">84   have hmul : (Lp - Lq) * eta &lt;= Rq - Rp := by</span>
+<span id="L85">85     calc</span>
+<span id="L86">86       (Lp - Lq) * eta = eta * Lp - eta * Lq := by</span>
+<span id="L87">87         ring</span>
+<span id="L88">88       _ &lt;= Rq - Rp := hscaled</span>
+<span id="L89">89   have hdiv : Lp - Lq &lt;= (Rq - Rp) / eta :=</span>
+<span id="L90">90     (le_div_iff₀ heta).2 hmul</span>
+<span id="L91">91   simpa [Lp, Lq, Rp, Rq] using hdiv</span>
+<span id="L92">92 </span>
+<span id="L93">93 /-- FTRL one-step inequality specialized to the finite simplex. -/</span>
+<span id="L94">94 theorem linearLoss_sub_le_regularizer_sub_div_of_simplex_minimizer</span>
+<span id="L95">95     {Action : Type u}</span>
+<span id="L96">96     (arms : Finset Action) (eta : Real)</span>
+<span id="L97">97     (regularizer : (Action -&gt; Real) -&gt; Real)</span>
+<span id="L98">98     (loss : Action -&gt; Real) (p q : Action -&gt; Real)</span>
+<span id="L99">99     (heta : 0 &lt; eta)</span>
+<span id="L100">100     (hp : IsRegularizedMinimizer (finiteSimplex arms) arms eta</span>
+<span id="L101">101       regularizer loss p)</span>
+<span id="L102">102     (hq : finiteSimplex arms q) :</span>
+<span id="L103">103     linearLoss arms p loss - linearLoss arms q loss &lt;=</span>
+<span id="L104">104       (regularizer q - regularizer p) / eta := by</span>
+<span id="L105">105   exact</span>
+<span id="L106">106     linearLoss_sub_le_regularizer_sub_div_of_isRegularizedMinimizer</span>
+<span id="L107">107       (finiteSimplex arms) arms eta regularizer loss p q heta hp hq</span>
+<span id="L108">108 </span>
+<span id="L109">109 end FTRL</span>
+<span id="L110">110 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

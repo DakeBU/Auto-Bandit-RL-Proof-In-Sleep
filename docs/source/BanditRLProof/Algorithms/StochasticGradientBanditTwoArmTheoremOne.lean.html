@@ -1,0 +1,1236 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Algorithms.StochasticGradientBanditTwoArmUnconditionalRecurrence</span>
+<span id="L2">2 import BanditRLProof.Algorithms.StochasticGradientBanditTwoArmFixedIID</span>
+<span id="L3">3 import Mathlib.Analysis.Convex.Integral</span>
+<span id="L4">4 </span>
+<span id="L5">5 /-!</span>
+<span id="L6">6 # Two-arm stochastic-gradient bandit: source Theorem 1</span>
+<span id="L7">7 </span>
+<span id="L8">8 This module closes Theorem 1 of Baudry, Johnson, Vary, Pike-Burke, and</span>
+<span id="L9">9 Rebeschini, *Does Stochastic Gradient really succeed for Bandits?*</span>
+<span id="L10">10 (NeurIPS 2025), for the paper&#x27;s fixed two-arm IID reward model.</span>
+<span id="L11">11 </span>
+<span id="L12">12 The route stays on the generated Algorithm-1 trajectory.  It proves the</span>
+<span id="L13">13 Equation-(5) conditional-expectation tower, the exact expected-parameter</span>
+<span id="L14">14 telescope, the forward-potential Jensen/log bound, the Equation-(7)</span>
+<span id="L15">15 success/failure decomposition, and the bridge from generated probabilities to</span>
+<span id="L16">16 the regret of the actually sampled actions.  The terminal</span>
+<span id="L17">17 `twoArmFixedIIDDirac_theoremOne` uses a Dirac environment prior and maps Lean</span>
+<span id="L18">18 `tailHorizon + 1` to the source horizon `T`, including the uniform first</span>
+<span id="L19">19 action.  Its right-hand side and hypotheses retain the source constants,</span>
+<span id="L20">20 `0 &lt; Delta &lt; 1`, and `eta * sourceC eta &lt; Delta` exactly.</span>
+<span id="L21">21 </span>
+<span id="L22">22 This module does not claim the paper&#x27;s Theorems 2--4, a general-`K` endpoint,</span>
+<span id="L23">23 or verification of the paper beyond this named theorem.</span>
+<span id="L24">24 -/</span>
+<span id="L25">25 </span>
+<span id="L26">26 namespace BanditRLProof</span>
+<span id="L27">27 namespace StochasticGradientBandit</span>
+<span id="L28">28 </span>
+<span id="L29">29 open MeasureTheory ProbabilityTheory</span>
+<span id="L30">30 open scoped BigOperators ProbabilityTheory</span>
+<span id="L31">31 noncomputable section</span>
+<span id="L32">32 universe v</span>
+<span id="L33">33 </span>
+<span id="L34">34 def twoArmTrajectorySourceIncrement</span>
+<span id="L35">35     {Env : Type v} [MeasurableSpace Env]</span>
+<span id="L36">36     (eta : Real) (n : Nat)</span>
+<span id="L37">37     (sample : Env × ((k : Nat) -&gt; Fin 2 × Real)) : Real :=</span>
+<span id="L38">38   sourceIncrement</span>
+<span id="L39">39     (softmaxProbability</span>
+<span id="L40">40       (historyParameter (fun _ : Fin 2 =&gt; 0) eta n</span>
+<span id="L41">41         (twoArmEnvironmentPrefix n sample).2))</span>
+<span id="L42">42     (twoArmNextPair n sample).2 (twoArmNextPair n sample).1 0</span>
+<span id="L43">43 </span>
+<span id="L44">44 theorem measurable_twoArmTrajectorySourceIncrement</span>
+<span id="L45">45     {Env : Type v} [MeasurableSpace Env]</span>
+<span id="L46">46     (eta : Real) (n : Nat) :</span>
+<span id="L47">47     Measurable (twoArmTrajectorySourceIncrement (Env := Env) eta n) := by</span>
+<span id="L48">48   let theta := fun sample : Env × ((k : Nat) -&gt; Fin 2 × Real) =&gt;</span>
+<span id="L49">49     historyParameter (fun _ : Fin 2 =&gt; 0) eta n</span>
+<span id="L50">50       (twoArmEnvironmentPrefix n sample).2</span>
+<span id="L51">51   have htheta (arm : Fin 2) : Measurable (fun sample =&gt; theta sample arm) :=</span>
+<span id="L52">52     (measurable_historyParameter (fun _ : Fin 2 =&gt; 0) eta n arm).comp</span>
+<span id="L53">53       (measurable_snd.comp (measurable_twoArmEnvironmentPrefix n))</span>
+<span id="L54">54   have hprob : Measurable</span>
+<span id="L55">55       (fun sample =&gt; softmaxProbability (theta sample) 0) :=</span>
+<span id="L56">56     measurable_softmaxProbability theta htheta 0</span>
+<span id="L57">57   simpa [twoArmTrajectorySourceIncrement, theta] using</span>
+<span id="L58">58     measurable_sourceIncrement</span>
+<span id="L59">59       (fun sample =&gt; softmaxProbability (theta sample))</span>
+<span id="L60">60       (fun sample =&gt; (twoArmNextPair n sample).2)</span>
+<span id="L61">61       (fun sample =&gt; (twoArmNextPair n sample).1) 0</span>
+<span id="L62">62       hprob (measurable_snd.comp (measurable_twoArmNextPair n))</span>
+<span id="L63">63       (measurable_fst.comp (measurable_twoArmNextPair n))</span>
+<span id="L64">64 </span>
+<span id="L65">65 theorem integrable_twoArmTrajectorySourceIncrement</span>
+<span id="L66">66     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L67">67     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L68">68     (eta : Real)</span>
+<span id="L69">69     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L70">70     (mean : Fin 2 -&gt; Real)</span>
+<span id="L71">71     (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean)</span>
+<span id="L72">72     (n : Nat) :</span>
+<span id="L73">73     Integrable (twoArmTrajectorySourceIncrement (Env := Env) eta n)</span>
+<span id="L74">74       (twoArmTrajectoryMeasure prior eta environment) := by</span>
+<span id="L75">75   apply Integrable.of_bound</span>
+<span id="L76">76     (measurable_twoArmTrajectorySourceIncrement eta n).aestronglyMeasurable 1</span>
+<span id="L77">77   filter_upwards</span>
+<span id="L78">78       [twoArmTrajectoryMeasure_reward_succ_abs_le_one_ae</span>
+<span id="L79">79         prior eta environment mean contract n]</span>
+<span id="L80">80     with sample hreward</span>
+<span id="L81">81   rw [twoArmTrajectorySourceIncrement, Real.norm_eq_abs]</span>
+<span id="L82">82   exact (abs_sourceIncrement_softmax_le_abs_reward</span>
+<span id="L83">83     (historyParameter (fun _ : Fin 2 =&gt; 0) eta n</span>
+<span id="L84">84       (twoArmEnvironmentPrefix n sample).2)</span>
+<span id="L85">85     (twoArmNextPair n sample).2 (twoArmNextPair n sample).1 0).trans hreward</span>
+<span id="L86">86 </span>
+<span id="L87">87 theorem twoArmTrajectorySourceIncrement_condExp_ae_eq_integral_condDistrib</span>
+<span id="L88">88     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L89">89     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L90">90     (eta : Real)</span>
+<span id="L91">91     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L92">92     (mean : Fin 2 -&gt; Real)</span>
+<span id="L93">93     (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean)</span>
+<span id="L94">94     (n : Nat) :</span>
+<span id="L95">95     (twoArmTrajectoryMeasure prior eta environment)[</span>
+<span id="L96">96       twoArmTrajectorySourceIncrement (Env := Env) eta n |</span>
+<span id="L97">97       twoArmPrefixSigma (Env := Env) n] =ᵐ[</span>
+<span id="L98">98         twoArmTrajectoryMeasure prior eta environment]</span>
+<span id="L99">99       fun sample : Env × ((k : Nat) -&gt; Fin 2 × Real) =&gt;</span>
+<span id="L100">100         integral</span>
+<span id="L101">101           (condDistrib (twoArmNextPair n) (twoArmEnvironmentPrefix n)</span>
+<span id="L102">102             (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L103">103             (twoArmEnvironmentPrefix n sample))</span>
+<span id="L104">104           (fun pair : Fin 2 × Real =&gt;</span>
+<span id="L105">105             sourceIncrement</span>
+<span id="L106">106               (softmaxProbability</span>
+<span id="L107">107                 (historyParameter (fun _ : Fin 2 =&gt; 0) eta n</span>
+<span id="L108">108                   (twoArmEnvironmentPrefix n sample).2))</span>
+<span id="L109">109               pair.2 pair.1 0) := by</span>
+<span id="L110">110   let pairIncrement :=</span>
+<span id="L111">111     fun input :</span>
+<span id="L112">112         (Env × History.FinitePairHistory (Fin 2) Real n) ×</span>
+<span id="L113">113           (Fin 2 × Real) =&gt;</span>
+<span id="L114">114       sourceIncrement</span>
+<span id="L115">115         (softmaxProbability</span>
+<span id="L116">116           (historyParameter (fun _ : Fin 2 =&gt; 0) eta n input.1.2))</span>
+<span id="L117">117         input.2.2 input.2.1 0</span>
+<span id="L118">118   have hpairIncrement : Measurable pairIncrement := by</span>
+<span id="L119">119     have htheta (arm : Fin 2) : Measurable</span>
+<span id="L120">120         (fun input :</span>
+<span id="L121">121             (Env × History.FinitePairHistory (Fin 2) Real n) ×</span>
+<span id="L122">122               (Fin 2 × Real) =&gt;</span>
+<span id="L123">123           historyParameter (fun _ : Fin 2 =&gt; 0) eta n input.1.2 arm) :=</span>
+<span id="L124">124       (measurable_historyParameter (fun _ : Fin 2 =&gt; 0) eta n arm).comp</span>
+<span id="L125">125         (measurable_snd.comp measurable_fst)</span>
+<span id="L126">126     have hprob : Measurable (fun input :</span>
+<span id="L127">127         (Env × History.FinitePairHistory (Fin 2) Real n) ×</span>
+<span id="L128">128           (Fin 2 × Real) =&gt;</span>
+<span id="L129">129       softmaxProbability</span>
+<span id="L130">130         (historyParameter (fun _ : Fin 2 =&gt; 0) eta n input.1.2) 0) :=</span>
+<span id="L131">131       measurable_softmaxProbability</span>
+<span id="L132">132         (fun input :</span>
+<span id="L133">133             (Env × History.FinitePairHistory (Fin 2) Real n) ×</span>
+<span id="L134">134               (Fin 2 × Real) =&gt;</span>
+<span id="L135">135           historyParameter (fun _ : Fin 2 =&gt; 0) eta n input.1.2)</span>
+<span id="L136">136         htheta 0</span>
+<span id="L137">137     exact measurable_sourceIncrement</span>
+<span id="L138">138       (fun input :</span>
+<span id="L139">139           (Env × History.FinitePairHistory (Fin 2) Real n) ×</span>
+<span id="L140">140             (Fin 2 × Real) =&gt;</span>
+<span id="L141">141         softmaxProbability</span>
+<span id="L142">142         (historyParameter (fun _ : Fin 2 =&gt; 0) eta n input.1.2))</span>
+<span id="L143">143       (fun input :</span>
+<span id="L144">144           (Env × History.FinitePairHistory (Fin 2) Real n) ×</span>
+<span id="L145">145             (Fin 2 × Real) =&gt; input.2.2)</span>
+<span id="L146">146       (fun input :</span>
+<span id="L147">147           (Env × History.FinitePairHistory (Fin 2) Real n) ×</span>
+<span id="L148">148             (Fin 2 × Real) =&gt; input.2.1) 0 hprob</span>
+<span id="L149">149       (measurable_snd.comp measurable_snd)</span>
+<span id="L150">150       (measurable_fst.comp measurable_snd)</span>
+<span id="L151">151   simpa [pairIncrement, twoArmTrajectorySourceIncrement,</span>
+<span id="L152">152       twoArmPrefixSigma] using</span>
+<span id="L153">153     (condExp_prod_ae_eq_integral_condDistrib</span>
+<span id="L154">154       (μ := twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L155">155       (f := pairIncrement)</span>
+<span id="L156">156       (measurable_twoArmEnvironmentPrefix (Env := Env) n)</span>
+<span id="L157">157       (measurable_twoArmNextPair (Env := Env) n).aemeasurable</span>
+<span id="L158">158       hpairIncrement.stronglyMeasurable</span>
+<span id="L159">159       (integrable_twoArmTrajectorySourceIncrement</span>
+<span id="L160">160         prior eta environment mean contract n))</span>
+<span id="L161">161 </span>
+<span id="L162">162 theorem twoArmTrajectorySourceIncrement_condExp_ae_eq_successFailure</span>
+<span id="L163">163     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L164">164     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L165">165     (eta Delta : Real)</span>
+<span id="L166">166     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L167">167     (mean : Fin 2 -&gt; Real)</span>
+<span id="L168">168     (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean)</span>
+<span id="L169">169     (hgap : mean 0 - mean 1 = Delta)</span>
+<span id="L170">170     (n : Nat) :</span>
+<span id="L171">171     (twoArmTrajectoryMeasure prior eta environment)[</span>
+<span id="L172">172       twoArmTrajectorySourceIncrement (Env := Env) eta n |</span>
+<span id="L173">173       twoArmPrefixSigma (Env := Env) n] =ᵐ[</span>
+<span id="L174">174         twoArmTrajectoryMeasure prior eta environment]</span>
+<span id="L175">175       fun sample =&gt; Delta * twoArmSuccessProbability eta n sample *</span>
+<span id="L176">176         twoArmFailureMass eta n sample := by</span>
+<span id="L177">177   have hcond :=</span>
+<span id="L178">178     twoArmTrajectorySourceIncrement_condExp_ae_eq_integral_condDistrib</span>
+<span id="L179">179       prior eta environment mean contract n</span>
+<span id="L180">180   have hkernel := trajectoryMeasure_condDistrib_nextPair_given_environment_prefix</span>
+<span id="L181">181     prior (fun _ : Fin 2 =&gt; 0) eta environment n</span>
+<span id="L182">182   have hkernel&#x27; := MeasureTheory.ae_of_ae_map</span>
+<span id="L183">183     (measurable_twoArmEnvironmentPrefix (Env := Env) n).aemeasurable hkernel</span>
+<span id="L184">184   filter_upwards [hcond, hkernel&#x27;] with sample hcond hkernel</span>
+<span id="L185">185   have hkernelExact :</span>
+<span id="L186">186       condDistrib (twoArmNextPair n) (twoArmEnvironmentPrefix n)</span>
+<span id="L187">187           (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L188">188           (twoArmEnvironmentPrefix n sample) =</span>
+<span id="L189">189         Thompson.measurableEnvironmentHistoryStepKernel</span>
+<span id="L190">190           (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta) environment n</span>
+<span id="L191">191           (twoArmEnvironmentPrefix n sample) := by</span>
+<span id="L192">192     simpa [twoArmNextPair, twoArmEnvironmentPrefix,</span>
+<span id="L193">193       twoArmTrajectoryMeasure] using hkernel</span>
+<span id="L194">194   rw [hcond, hkernelExact]</span>
+<span id="L195">195   have hEqFive :=</span>
+<span id="L196">196     integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_gapCoordinate</span>
+<span id="L197">197       (fun _ : Fin 2 =&gt; 0) eta environment n sample.1</span>
+<span id="L198">198       (twoArmEnvironmentPrefix n sample).2 mean</span>
+<span id="L199">199       (fun action =&gt; mean 0 - mean action) (mean 0) 0</span>
+<span id="L200">200       (integrable_measurableTwoArmHistoryStepKernel_sourceIncrement_of_contract</span>
+<span id="L201">201         (fun _ : Fin 2 =&gt; 0) eta environment mean contract n sample.1</span>
+<span id="L202">202         (twoArmEnvironmentPrefix n sample).2 0)</span>
+<span id="L203">203       (contract.successor_mean n sample.1</span>
+<span id="L204">204         (twoArmEnvironmentPrefix n sample).2)</span>
+<span id="L205">205       (fun _ =&gt; rfl)</span>
+<span id="L206">206   have hEqFiveExact :</span>
+<span id="L207">207       integral</span>
+<span id="L208">208           (Thompson.measurableEnvironmentHistoryStepKernel</span>
+<span id="L209">209             (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta) environment n</span>
+<span id="L210">210             (twoArmEnvironmentPrefix n sample))</span>
+<span id="L211">211           (fun pair : Fin 2 × Real =&gt;</span>
+<span id="L212">212             sourceIncrement</span>
+<span id="L213">213               (softmaxProbability</span>
+<span id="L214">214                 (historyParameter (fun _ : Fin 2 =&gt; 0) eta n</span>
+<span id="L215">215                   (twoArmEnvironmentPrefix n sample).2))</span>
+<span id="L216">216               pair.2 pair.1 0) =</span>
+<span id="L217">217         softmaxProbability</span>
+<span id="L218">218             (historyParameter (fun _ : Fin 2 =&gt; 0) eta n</span>
+<span id="L219">219               (twoArmEnvironmentPrefix n sample).2) 0 *</span>
+<span id="L220">220           (instantaneousGap</span>
+<span id="L221">221               (softmaxProbability</span>
+<span id="L222">222                 (historyParameter (fun _ : Fin 2 =&gt; 0) eta n</span>
+<span id="L223">223                   (twoArmEnvironmentPrefix n sample).2))</span>
+<span id="L224">224               (fun action =&gt; mean 0 - mean action) -</span>
+<span id="L225">225             (mean 0 - mean 0)) := by</span>
+<span id="L226">226     simpa [twoArmEnvironmentPrefix] using hEqFive</span>
+<span id="L227">227   rw [hEqFiveExact]</span>
+<span id="L228">228   simp only [instantaneousGap, Fin.sum_univ_two]</span>
+<span id="L229">229   rw [softmaxProbability_one_eq_one_sub_zero]</span>
+<span id="L230">230   simp only [sub_self, mul_zero, zero_add, twoArmSuccessProbability,</span>
+<span id="L231">231     twoArmFailureMass]</span>
+<span id="L232">232   rw [← hgap]</span>
+<span id="L233">233   ring</span>
+<span id="L234">234 </span>
+<span id="L235">235 theorem twoArmTrajectoryParameterZero_succ</span>
+<span id="L236">236     {Env : Type v} [MeasurableSpace Env]</span>
+<span id="L237">237     (eta : Real) (n : Nat)</span>
+<span id="L238">238     (sample : Env × ((k : Nat) -&gt; Fin 2 × Real)) :</span>
+<span id="L239">239     twoArmTrajectoryParameterZero eta (n + 1) sample =</span>
+<span id="L240">240       twoArmTrajectoryParameterZero eta n sample +</span>
+<span id="L241">241         eta * twoArmTrajectorySourceIncrement eta n sample := by</span>
+<span id="L242">242   rw [twoArmTrajectoryParameterZero, historyParameter_succ]</span>
+<span id="L243">243   have hprevious :</span>
+<span id="L244">244       Exp3.previousPairHistory (Preorder.frestrictLe (n + 1) sample.2) =</span>
+<span id="L245">245         Preorder.frestrictLe n sample.2 := by</span>
+<span id="L246">246     funext i</span>
+<span id="L247">247     rfl</span>
+<span id="L248">248   simp only [twoArmEnvironmentPrefix]</span>
+<span id="L249">249   rw [hprevious]</span>
+<span id="L250">250   rfl</span>
+<span id="L251">251 </span>
+<span id="L252">252 theorem integrable_twoArmTrajectoryParameterZero</span>
+<span id="L253">253     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L254">254     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L255">255     (eta : Real)</span>
+<span id="L256">256     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L257">257     (mean : Fin 2 -&gt; Real)</span>
+<span id="L258">258     (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean)</span>
+<span id="L259">259     (n : Nat) :</span>
+<span id="L260">260     Integrable (twoArmTrajectoryParameterZero (Env := Env) eta n)</span>
+<span id="L261">261       (twoArmTrajectoryMeasure prior eta environment) := by</span>
+<span id="L262">262   apply Integrable.of_bound</span>
+<span id="L263">263     (measurable_twoArmTrajectoryParameterZero eta n).aestronglyMeasurable</span>
+<span id="L264">264     (((n + 1 : Nat) : Real) * |eta|)</span>
+<span id="L265">265   filter_upwards</span>
+<span id="L266">266       [twoArmTrajectoryMeasure_prefix_rewards_abs_le_one_ae</span>
+<span id="L267">267         prior eta environment mean contract n]</span>
+<span id="L268">268     with sample hreward</span>
+<span id="L269">269   rw [twoArmTrajectoryParameterZero, Real.norm_eq_abs]</span>
+<span id="L270">270   exact abs_historyParameter_zeroInitialization_le eta n</span>
+<span id="L271">271     (twoArmEnvironmentPrefix n sample).2 0 hreward</span>
+<span id="L272">272 </span>
+<span id="L273">273 theorem integral_twoArmTrajectorySourceIncrement_eq_successFailure</span>
+<span id="L274">274     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L275">275     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L276">276     (eta Delta : Real)</span>
+<span id="L277">277     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L278">278     (mean : Fin 2 -&gt; Real)</span>
+<span id="L279">279     (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean)</span>
+<span id="L280">280     (hgap : mean 0 - mean 1 = Delta)</span>
+<span id="L281">281     (n : Nat) :</span>
+<span id="L282">282     integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L283">283         (twoArmTrajectorySourceIncrement (Env := Env) eta n) =</span>
+<span id="L284">284       integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L285">285         (fun sample =&gt; Delta * twoArmSuccessProbability eta n sample *</span>
+<span id="L286">286           twoArmFailureMass eta n sample) := by</span>
+<span id="L287">287   let mu := twoArmTrajectoryMeasure prior eta environment</span>
+<span id="L288">288   have htower := integral_condExp</span>
+<span id="L289">289     (m := twoArmPrefixSigma (Env := Env) n)</span>
+<span id="L290">290     (μ := mu)</span>
+<span id="L291">291     (f := twoArmTrajectorySourceIncrement (Env := Env) eta n)</span>
+<span id="L292">292     ((twoArmPrefixFiltration (Env := Env)).le n)</span>
+<span id="L293">293   have hcond :=</span>
+<span id="L294">294     twoArmTrajectorySourceIncrement_condExp_ae_eq_successFailure</span>
+<span id="L295">295       prior eta Delta environment mean contract hgap n</span>
+<span id="L296">296   calc</span>
+<span id="L297">297     integral mu (twoArmTrajectorySourceIncrement eta n) =</span>
+<span id="L298">298         integral mu</span>
+<span id="L299">299           (mu[twoArmTrajectorySourceIncrement eta n |</span>
+<span id="L300">300             twoArmPrefixSigma (Env := Env) n]) := htower.symm</span>
+<span id="L301">301     _ = integral mu (fun sample =&gt;</span>
+<span id="L302">302           Delta * twoArmSuccessProbability eta n sample *</span>
+<span id="L303">303             twoArmFailureMass eta n sample) := integral_congr_ae hcond</span>
+<span id="L304">304 </span>
+<span id="L305">305 theorem integral_twoArmTrajectoryParameterZero_succ</span>
+<span id="L306">306     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L307">307     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L308">308     (eta Delta : Real)</span>
+<span id="L309">309     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L310">310     (mean : Fin 2 -&gt; Real)</span>
+<span id="L311">311     (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean)</span>
+<span id="L312">312     (hgap : mean 0 - mean 1 = Delta)</span>
+<span id="L313">313     (n : Nat) :</span>
+<span id="L314">314     integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L315">315         (twoArmTrajectoryParameterZero (Env := Env) eta (n + 1)) =</span>
+<span id="L316">316       integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L317">317           (twoArmTrajectoryParameterZero (Env := Env) eta n) +</span>
+<span id="L318">318         eta * integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L319">319           (fun sample =&gt; Delta * twoArmSuccessProbability eta n sample *</span>
+<span id="L320">320             twoArmFailureMass eta n sample) := by</span>
+<span id="L321">321   let mu := twoArmTrajectoryMeasure prior eta environment</span>
+<span id="L322">322   have htheta := integrable_twoArmTrajectoryParameterZero</span>
+<span id="L323">323     prior eta environment mean contract n</span>
+<span id="L324">324   have hincrement := integrable_twoArmTrajectorySourceIncrement</span>
+<span id="L325">325     prior eta environment mean contract n</span>
+<span id="L326">326   calc</span>
+<span id="L327">327     integral mu (twoArmTrajectoryParameterZero eta (n + 1)) =</span>
+<span id="L328">328         integral mu (fun sample =&gt;</span>
+<span id="L329">329           twoArmTrajectoryParameterZero eta n sample +</span>
+<span id="L330">330             eta * twoArmTrajectorySourceIncrement eta n sample) := by</span>
+<span id="L331">331       apply integral_congr_ae</span>
+<span id="L332">332       exact Filter.Eventually.of_forall fun sample =&gt;</span>
+<span id="L333">333         twoArmTrajectoryParameterZero_succ eta n sample</span>
+<span id="L334">334     _ = integral mu (twoArmTrajectoryParameterZero eta n) +</span>
+<span id="L335">335         eta * integral mu (twoArmTrajectorySourceIncrement eta n) := by</span>
+<span id="L336">336       rw [integral_add htheta (hincrement.const_mul eta),</span>
+<span id="L337">337         integral_const_mul]</span>
+<span id="L338">338     _ = integral mu (twoArmTrajectoryParameterZero eta n) +</span>
+<span id="L339">339         eta * integral mu (fun sample =&gt;</span>
+<span id="L340">340           Delta * twoArmSuccessProbability eta n sample *</span>
+<span id="L341">341             twoArmFailureMass eta n sample) := by</span>
+<span id="L342">342       rw [integral_twoArmTrajectorySourceIncrement_eq_successFailure</span>
+<span id="L343">343         prior eta Delta environment mean contract hgap n]</span>
+<span id="L344">344 </span>
+<span id="L345">345 def twoArmInitialSourceIncrement</span>
+<span id="L346">346     (pair : Fin 2 × Real) : Real :=</span>
+<span id="L347">347   sourceIncrement (fun _ : Fin 2 =&gt; (1 : Real) / 2)</span>
+<span id="L348">348     pair.2 pair.1 0</span>
+<span id="L349">349 </span>
+<span id="L350">350 theorem measurable_twoArmInitialSourceIncrement :</span>
+<span id="L351">351     Measurable twoArmInitialSourceIncrement := by</span>
+<span id="L352">352   exact measurable_sourceIncrement</span>
+<span id="L353">353     (fun _ : Fin 2 × Real =&gt; fun _ : Fin 2 =&gt; (1 : Real) / 2)</span>
+<span id="L354">354     Prod.snd Prod.fst 0 measurable_const measurable_snd measurable_fst</span>
+<span id="L355">355 </span>
+<span id="L356">356 theorem integral_twoArmInitialSourceIncrement_eq_quarter_gap</span>
+<span id="L357">357     {Env : Type v} [MeasurableSpace Env]</span>
+<span id="L358">358     (eta Delta : Real)</span>
+<span id="L359">359     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L360">360     (env : Env) (mean : Fin 2 -&gt; Real)</span>
+<span id="L361">361     (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean)</span>
+<span id="L362">362     (hgap : mean 0 - mean 1 = Delta) :</span>
+<span id="L363">363     integral</span>
+<span id="L364">364         (Thompson.measurableEnvironmentInitialPairKernel</span>
+<span id="L365">365           (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta) environment env)</span>
+<span id="L366">366         twoArmInitialSourceIncrement = Delta / 4 := by</span>
+<span id="L367">367   have hprob : softmaxProbability (fun _ : Fin 2 =&gt; 0) =</span>
+<span id="L368">368       fun _ : Fin 2 =&gt; (1 : Real) / 2 := by</span>
+<span id="L369">369     funext selected</span>
+<span id="L370">370     exact softmaxProbability_zeroInitialization_finTwo selected</span>
+<span id="L371">371   have hEqFive :=</span>
+<span id="L372">372     integral_measurableEnvironmentInitialPairKernel_sourceIncrement_eq_expectedSourceIncrement</span>
+<span id="L373">373       (fun _ : Fin 2 =&gt; 0) eta environment env mean 0</span>
+<span id="L374">374       (integrable_measurableTwoArmInitialPairKernel_sourceIncrement_of_contract</span>
+<span id="L375">375         (fun _ : Fin 2 =&gt; 0) eta environment mean contract env 0)</span>
+<span id="L376">376       (contract.initial_mean env)</span>
+<span id="L377">377   rw [hprob] at hEqFive</span>
+<span id="L378">378   have hEqFiveExact : integral</span>
+<span id="L379">379         (Thompson.measurableEnvironmentInitialPairKernel</span>
+<span id="L380">380           (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta) environment env)</span>
+<span id="L381">381         twoArmInitialSourceIncrement =</span>
+<span id="L382">382       expectedSourceIncrement (fun _ : Fin 2 =&gt; (1 : Real) / 2) mean 0 := by</span>
+<span id="L383">383     change integral</span>
+<span id="L384">384         (Thompson.measurableEnvironmentInitialPairKernel</span>
+<span id="L385">385           (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta) environment env)</span>
+<span id="L386">386         (fun pair : Fin 2 × Real =&gt;</span>
+<span id="L387">387           sourceIncrement (fun _ : Fin 2 =&gt; (1 : Real) / 2)</span>
+<span id="L388">388             pair.2 pair.1 0) = _</span>
+<span id="L389">389     exact hEqFive</span>
+<span id="L390">390   rw [hEqFiveExact]</span>
+<span id="L391">391   rw [expectedSourceIncrement_eq_gradientCoordinate]</span>
+<span id="L392">392   simp only [policyValue, Fin.sum_univ_two]</span>
+<span id="L393">393   rw [← hgap]</span>
+<span id="L394">394   ring</span>
+<span id="L395">395 </span>
+<span id="L396">396 theorem integral_twoArmTrajectoryParameterZero_zero</span>
+<span id="L397">397     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L398">398     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L399">399     (eta Delta : Real)</span>
+<span id="L400">400     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L401">401     (mean : Fin 2 -&gt; Real)</span>
+<span id="L402">402     (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean)</span>
+<span id="L403">403     (hgap : mean 0 - mean 1 = Delta) :</span>
+<span id="L404">404     integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L405">405         (twoArmTrajectoryParameterZero (Env := Env) eta 0) =</span>
+<span id="L406">406       eta * Delta / 4 := by</span>
+<span id="L407">407   let kernel := trajectoryKernel (fun _ : Fin 2 =&gt; 0) eta environment</span>
+<span id="L408">408   let parameter := twoArmTrajectoryParameterZero (Env := Env) eta 0</span>
+<span id="L409">409   have hparameter := integrable_twoArmTrajectoryParameterZero</span>
+<span id="L410">410     prior eta environment mean contract 0</span>
+<span id="L411">411   change Integrable (fun sample =&gt; parameter sample) (prior ⊗ₘ kernel) at hparameter</span>
+<span id="L412">412   have hinnerStrong : StronglyMeasurable</span>
+<span id="L413">413       (fun env =&gt; integral (kernel env)</span>
+<span id="L414">414         (fun trajectory =&gt; parameter (env, trajectory))) := by</span>
+<span id="L415">415     exact (measurable_twoArmTrajectoryParameterZero (Env := Env) eta 0).stronglyMeasurable</span>
+<span id="L416">416       |&gt;.integral_kernel_prod_right&#x27;</span>
+<span id="L417">417   have hnorm :=</span>
+<span id="L418">418     (Measure.integrable_compProd_iff hparameter.1).mp hparameter |&gt;.2</span>
+<span id="L419">419   have hinner : Integrable</span>
+<span id="L420">420       (fun env =&gt; integral (kernel env)</span>
+<span id="L421">421         (fun trajectory =&gt; parameter (env, trajectory))) prior := by</span>
+<span id="L422">422     apply hnorm.mono&#x27; hinnerStrong.aestronglyMeasurable</span>
+<span id="L423">423     filter_upwards [] with env</span>
+<span id="L424">424     exact norm_integral_le_integral_norm _</span>
+<span id="L425">425   have hpoint (env : Env) :</span>
+<span id="L426">426       integral (kernel env)</span>
+<span id="L427">427           (fun trajectory =&gt; parameter (env, trajectory)) =</span>
+<span id="L428">428         eta * Delta / 4 := by</span>
+<span id="L429">429     have hparameterPoint :</span>
+<span id="L430">430         (fun trajectory =&gt; parameter (env, trajectory)) =</span>
+<span id="L431">431           fun trajectory =&gt; eta * twoArmInitialSourceIncrement (trajectory 0) := by</span>
+<span id="L432">432       funext trajectory</span>
+<span id="L433">433       have hprob : softmaxProbability (fun _ : Fin 2 =&gt; 0) =</span>
+<span id="L434">434           fun _ : Fin 2 =&gt; (1 : Real) / 2 := by</span>
+<span id="L435">435         funext selected</span>
+<span id="L436">436         exact softmaxProbability_zeroInitialization_finTwo selected</span>
+<span id="L437">437       simp only [parameter, twoArmTrajectoryParameterZero,</span>
+<span id="L438">438         twoArmEnvironmentPrefix, historyParameter_zero, zero_add]</span>
+<span id="L439">439       rw [hprob]</span>
+<span id="L440">440       rfl</span>
+<span id="L441">441     rw [hparameterPoint, integral_const_mul]</span>
+<span id="L442">442     have hintegral :</span>
+<span id="L443">443         integral (kernel env)</span>
+<span id="L444">444             (fun trajectory =&gt; twoArmInitialSourceIncrement (trajectory 0)) =</span>
+<span id="L445">445           integral</span>
+<span id="L446">446             (Thompson.measurableEnvironmentInitialPairKernel</span>
+<span id="L447">447               (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta) environment env)</span>
+<span id="L448">448             twoArmInitialSourceIncrement := by</span>
+<span id="L449">449       calc</span>
+<span id="L450">450         integral (trajectoryKernel (fun _ : Fin 2 =&gt; 0) eta environment env)</span>
+<span id="L451">451             (fun trajectory =&gt; twoArmInitialSourceIncrement (trajectory 0)) =</span>
+<span id="L452">452           integral</span>
+<span id="L453">453             (Measure.map</span>
+<span id="L454">454               (fun trajectory : (k : Nat) -&gt; Fin 2 × Real =&gt; trajectory 0)</span>
+<span id="L455">455               (trajectoryKernel (fun _ : Fin 2 =&gt; 0) eta environment env))</span>
+<span id="L456">456             twoArmInitialSourceIncrement := by</span>
+<span id="L457">457                 symm</span>
+<span id="L458">458                 exact integral_map (measurable_pi_apply 0).aemeasurable</span>
+<span id="L459">459                   measurable_twoArmInitialSourceIncrement.aestronglyMeasurable</span>
+<span id="L460">460         _ = integral</span>
+<span id="L461">461             ((trajectoryKernel (fun _ : Fin 2 =&gt; 0) eta environment).map</span>
+<span id="L462">462               (fun trajectory =&gt; trajectory 0) env)</span>
+<span id="L463">463             twoArmInitialSourceIncrement := by</span>
+<span id="L464">464               rw [Kernel.map_apply _ (measurable_pi_apply 0)]</span>
+<span id="L465">465         _ = _ := by</span>
+<span id="L466">466           rw [trajectoryKernel,</span>
+<span id="L467">467             Thompson.canonicalMeasurableEnvironmentTrajectoryKernel_map_eval_zero]</span>
+<span id="L468">468     rw [hintegral,</span>
+<span id="L469">469       integral_twoArmInitialSourceIncrement_eq_quarter_gap</span>
+<span id="L470">470         eta Delta environment env mean contract hgap]</span>
+<span id="L471">471     ring</span>
+<span id="L472">472   change integral (prior ⊗ₘ kernel)</span>
+<span id="L473">473       (fun sample =&gt; parameter sample) = eta * Delta / 4</span>
+<span id="L474">474   calc</span>
+<span id="L475">475     integral (prior ⊗ₘ kernel) (fun sample =&gt; parameter sample) =</span>
+<span id="L476">476       integral prior (fun env =&gt; integral (kernel env)</span>
+<span id="L477">477         (fun trajectory =&gt; parameter (env, trajectory))) := by</span>
+<span id="L478">478           exact Measure.integral_compProd hparameter</span>
+<span id="L479">479     _ = integral prior (fun _ : Env =&gt; eta * Delta / 4) := by</span>
+<span id="L480">480       apply integral_congr_ae</span>
+<span id="L481">481       exact Filter.Eventually.of_forall hpoint</span>
+<span id="L482">482     _ = eta * Delta / 4 := by</span>
+<span id="L483">483       rw [integral_const, probReal_univ]</span>
+<span id="L484">484       simp</span>
+<span id="L485">485 </span>
+<span id="L486">486 theorem integral_twoArmTrajectoryParameterZero_eq_successFailureSum</span>
+<span id="L487">487     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L488">488     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L489">489     (eta Delta : Real)</span>
+<span id="L490">490     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L491">491     (mean : Fin 2 -&gt; Real)</span>
+<span id="L492">492     (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean)</span>
+<span id="L493">493     (hgap : mean 0 - mean 1 = Delta)</span>
+<span id="L494">494     (tailHorizon : Nat) :</span>
+<span id="L495">495     integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L496">496         (twoArmTrajectoryParameterZero (Env := Env) eta tailHorizon) =</span>
+<span id="L497">497       eta * Delta *</span>
+<span id="L498">498         ((1 : Real) / 4 +</span>
+<span id="L499">499           (Finset.range tailHorizon).sum (fun n =&gt;</span>
+<span id="L500">500             integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L501">501               (fun sample =&gt; twoArmSuccessProbability eta n sample *</span>
+<span id="L502">502                 twoArmFailureMass eta n sample))) := by</span>
+<span id="L503">503   induction tailHorizon with</span>
+<span id="L504">504   | zero =&gt;</span>
+<span id="L505">505       rw [integral_twoArmTrajectoryParameterZero_zero</span>
+<span id="L506">506         prior eta Delta environment mean contract hgap]</span>
+<span id="L507">507       simp</span>
+<span id="L508">508       ring</span>
+<span id="L509">509   | succ n ih =&gt;</span>
+<span id="L510">510       rw [integral_twoArmTrajectoryParameterZero_succ</span>
+<span id="L511">511         prior eta Delta environment mean contract hgap n, ih,</span>
+<span id="L512">512         Finset.sum_range_succ]</span>
+<span id="L513">513       have hfactor :</span>
+<span id="L514">514           integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L515">515               (fun sample =&gt; Delta * twoArmSuccessProbability eta n sample *</span>
+<span id="L516">516                 twoArmFailureMass eta n sample) =</span>
+<span id="L517">517             Delta * integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L518">518               (fun sample =&gt; twoArmSuccessProbability eta n sample *</span>
+<span id="L519">519                 twoArmFailureMass eta n sample) := by</span>
+<span id="L520">520         rw [show (fun sample =&gt;</span>
+<span id="L521">521             Delta * twoArmSuccessProbability eta n sample *</span>
+<span id="L522">522               twoArmFailureMass eta n sample) =</span>
+<span id="L523">523           fun sample =&gt; Delta *</span>
+<span id="L524">524             (twoArmSuccessProbability eta n sample *</span>
+<span id="L525">525               twoArmFailureMass eta n sample) by</span>
+<span id="L526">526             funext sample</span>
+<span id="L527">527             ring]</span>
+<span id="L528">528         rw [integral_const_mul]</span>
+<span id="L529">529       rw [hfactor]</span>
+<span id="L530">530       ring</span>
+<span id="L531">531 </span>
+<span id="L532">532 theorem measurable_twoArmSuccessFailureMass</span>
+<span id="L533">533     {Env : Type v} [MeasurableSpace Env]</span>
+<span id="L534">534     (eta : Real) (n : Nat) :</span>
+<span id="L535">535     Measurable (fun sample : Env × ((k : Nat) -&gt; Fin 2 × Real) =&gt;</span>
+<span id="L536">536       twoArmSuccessProbability eta n sample *</span>
+<span id="L537">537         twoArmFailureMass eta n sample) :=</span>
+<span id="L538">538   (measurable_twoArmSuccessProbability eta n).mul</span>
+<span id="L539">539     (measurable_twoArmFailureMass eta n)</span>
+<span id="L540">540 </span>
+<span id="L541">541 theorem integrable_twoArmSuccessFailureMass</span>
+<span id="L542">542     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L543">543     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L544">544     (eta : Real)</span>
+<span id="L545">545     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L546">546     (n : Nat) :</span>
+<span id="L547">547     Integrable (fun sample =&gt;</span>
+<span id="L548">548       twoArmSuccessProbability (Env := Env) eta n sample *</span>
+<span id="L549">549         twoArmFailureMass eta n sample)</span>
+<span id="L550">550       (twoArmTrajectoryMeasure prior eta environment) := by</span>
+<span id="L551">551   apply Integrable.of_bound</span>
+<span id="L552">552     (measurable_twoArmSuccessFailureMass (Env := Env) eta n).aestronglyMeasurable 1</span>
+<span id="L553">553   filter_upwards [] with sample</span>
+<span id="L554">554   rw [Real.norm_eq_abs, abs_of_nonneg]</span>
+<span id="L555">555   · have hp0 : 0 &lt;= twoArmSuccessProbability (Env := Env) eta n sample :=</span>
+<span id="L556">556       softmaxProbability_nonneg _ 0</span>
+<span id="L557">557     have hp1 : twoArmSuccessProbability (Env := Env) eta n sample &lt;= 1 :=</span>
+<span id="L558">558       softmaxProbability_le_one _ 0</span>
+<span id="L559">559     change twoArmSuccessProbability (Env := Env) eta n sample *</span>
+<span id="L560">560         (1 - twoArmSuccessProbability eta n sample) &lt;= 1</span>
+<span id="L561">561     nlinarith</span>
+<span id="L562">562   · exact mul_nonneg (softmaxProbability_nonneg _ 0)</span>
+<span id="L563">563       (sub_nonneg.mpr (softmaxProbability_le_one _ 0))</span>
+<span id="L564">564 </span>
+<span id="L565">565 theorem integral_twoArmFailureMass_eq_successFailure_add_sq</span>
+<span id="L566">566     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L567">567     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L568">568     (eta : Real)</span>
+<span id="L569">569     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L570">570     (n : Nat) :</span>
+<span id="L571">571     integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L572">572         (fun sample =&gt; twoArmFailureMass (Env := Env) eta n sample) =</span>
+<span id="L573">573       integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L574">574           (fun sample =&gt; twoArmSuccessProbability eta n sample *</span>
+<span id="L575">575             twoArmFailureMass eta n sample) +</span>
+<span id="L576">576         integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L577">577           (fun sample =&gt; twoArmFailureMass eta n sample ^ 2) := by</span>
+<span id="L578">578   let mu := twoArmTrajectoryMeasure prior eta environment</span>
+<span id="L579">579   have hsuccessFailure := integrable_twoArmSuccessFailureMass</span>
+<span id="L580">580     prior eta environment n</span>
+<span id="L581">581   have hfailureSq := integrable_twoArmFailureMass_sq</span>
+<span id="L582">582     prior eta environment n</span>
+<span id="L583">583   calc</span>
+<span id="L584">584     integral mu (fun sample =&gt; twoArmFailureMass eta n sample) =</span>
+<span id="L585">585         integral mu (fun sample =&gt;</span>
+<span id="L586">586           twoArmSuccessProbability eta n sample *</span>
+<span id="L587">587               twoArmFailureMass eta n sample +</span>
+<span id="L588">588             twoArmFailureMass eta n sample ^ 2) := by</span>
+<span id="L589">589       apply integral_congr_ae</span>
+<span id="L590">590       filter_upwards [] with sample</span>
+<span id="L591">591       exact failureMass_eq_successFailure_add_sq</span>
+<span id="L592">592         (twoArmSuccessProbability eta n sample)</span>
+<span id="L593">593     _ = _ := integral_add hsuccessFailure hfailureSq</span>
+<span id="L594">594 </span>
+<span id="L595">595 /-- Expected pseudo-regret for source rounds `1, ..., tailHorizon + 1`.</span>
+<span id="L596">596 The first round is uniform, and Lean tail index `n` is source round `n + 2`. -/</span>
+<span id="L597">597 def twoArmGeneratedExpectedPseudoRegret</span>
+<span id="L598">598     {Env : Type v} [MeasurableSpace Env]</span>
+<span id="L599">599     (prior : Measure Env) (eta Delta : Real)</span>
+<span id="L600">600     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L601">601     (tailHorizon : Nat) : Real :=</span>
+<span id="L602">602   Delta * ((1 : Real) / 2 +</span>
+<span id="L603">603     (Finset.range tailHorizon).sum (fun n =&gt;</span>
+<span id="L604">604       integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L605">605         (fun sample =&gt; twoArmFailureMass eta n sample)))</span>
+<span id="L606">606 </span>
+<span id="L607">607 theorem twoArmGeneratedExpectedPseudoRegret_eq_parameter_add_failureSq</span>
+<span id="L608">608     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L609">609     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L610">610     (eta Delta : Real) (heta : 0 &lt; eta)</span>
+<span id="L611">611     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L612">612     (mean : Fin 2 -&gt; Real)</span>
+<span id="L613">613     (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean)</span>
+<span id="L614">614     (hgap : mean 0 - mean 1 = Delta)</span>
+<span id="L615">615     (tailHorizon : Nat) :</span>
+<span id="L616">616     twoArmGeneratedExpectedPseudoRegret prior eta Delta environment tailHorizon =</span>
+<span id="L617">617       integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L618">618           (twoArmTrajectoryParameterZero (Env := Env) eta tailHorizon) / eta +</span>
+<span id="L619">619         Delta * ((1 : Real) / 4 +</span>
+<span id="L620">620           (Finset.range tailHorizon).sum (fun n =&gt;</span>
+<span id="L621">621             integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L622">622               (fun sample =&gt; twoArmFailureMass eta n sample ^ 2))) := by</span>
+<span id="L623">623   have hsplit :</span>
+<span id="L624">624       (Finset.range tailHorizon).sum (fun n =&gt;</span>
+<span id="L625">625           integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L626">626             (fun sample =&gt; twoArmFailureMass eta n sample)) =</span>
+<span id="L627">627         (Finset.range tailHorizon).sum (fun n =&gt;</span>
+<span id="L628">628           integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L629">629             (fun sample =&gt; twoArmSuccessProbability eta n sample *</span>
+<span id="L630">630               twoArmFailureMass eta n sample)) +</span>
+<span id="L631">631         (Finset.range tailHorizon).sum (fun n =&gt;</span>
+<span id="L632">632           integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L633">633             (fun sample =&gt; twoArmFailureMass eta n sample ^ 2)) := by</span>
+<span id="L634">634     rw [← Finset.sum_add_distrib]</span>
+<span id="L635">635     apply Finset.sum_congr rfl</span>
+<span id="L636">636     intro n _hn</span>
+<span id="L637">637     exact integral_twoArmFailureMass_eq_successFailure_add_sq</span>
+<span id="L638">638       prior eta environment n</span>
+<span id="L639">639   rw [twoArmGeneratedExpectedPseudoRegret,</span>
+<span id="L640">640     integral_twoArmTrajectoryParameterZero_eq_successFailureSum</span>
+<span id="L641">641       prior eta Delta environment mean contract hgap tailHorizon,</span>
+<span id="L642">642     hsplit]</span>
+<span id="L643">643   field_simp</span>
+<span id="L644">644   ring</span>
+<span id="L645">645 </span>
+<span id="L646">646 theorem integral_twoArmTrajectoryParameterZero_le_half_log_forwardPotential</span>
+<span id="L647">647     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L648">648     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L649">649     (eta : Real)</span>
+<span id="L650">650     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L651">651     (mean : Fin 2 -&gt; Real)</span>
+<span id="L652">652     (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean)</span>
+<span id="L653">653     (tailHorizon : Nat) :</span>
+<span id="L654">654     integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L655">655         (twoArmTrajectoryParameterZero (Env := Env) eta tailHorizon) &lt;=</span>
+<span id="L656">656       Real.log</span>
+<span id="L657">657         (integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L658">658           (twoArmForwardPotential (Env := Env) eta tailHorizon)) / 2 := by</span>
+<span id="L659">659   letI : IsProbabilityMeasure</span>
+<span id="L660">660       (twoArmTrajectoryMeasure prior eta environment) := by</span>
+<span id="L661">661     unfold twoArmTrajectoryMeasure</span>
+<span id="L662">662     infer_instance</span>
+<span id="L663">663   let mu := twoArmTrajectoryMeasure prior eta environment</span>
+<span id="L664">664   let parameter := twoArmTrajectoryParameterZero (Env := Env) eta tailHorizon</span>
+<span id="L665">665   let doubled := fun sample : Env × ((k : Nat) -&gt; Fin 2 × Real) =&gt;</span>
+<span id="L666">666     2 * parameter sample</span>
+<span id="L667">667   have hparameter := integrable_twoArmTrajectoryParameterZero</span>
+<span id="L668">668     prior eta environment mean contract tailHorizon</span>
+<span id="L669">669   have hdoubled : Integrable doubled mu := by</span>
+<span id="L670">670     simpa [doubled] using hparameter.const_mul 2</span>
+<span id="L671">671   have hexp : Integrable (Real.exp ∘ doubled) mu := by</span>
+<span id="L672">672     simpa [Function.comp_def, doubled, parameter, mu,</span>
+<span id="L673">673       twoArmForwardPotential] using</span>
+<span id="L674">674       (integrable_twoArmForwardPotential</span>
+<span id="L675">675         prior eta environment mean contract tailHorizon)</span>
+<span id="L676">676   have hjensen := convexOn_exp.map_integral_le</span>
+<span id="L677">677     Real.continuous_exp.continuousOn isClosed_univ</span>
+<span id="L678">678     (Filter.Eventually.of_forall fun _ =&gt; Set.mem_univ _)</span>
+<span id="L679">679     hdoubled hexp</span>
+<span id="L680">680   have hjensenExact :</span>
+<span id="L681">681       Real.exp (2 * integral mu parameter) &lt;=</span>
+<span id="L682">682         integral mu (twoArmForwardPotential eta tailHorizon) := by</span>
+<span id="L683">683     simpa [doubled, Function.comp_def, parameter,</span>
+<span id="L684">684       twoArmForwardPotential, integral_const_mul] using hjensen</span>
+<span id="L685">685   have hpositive : 0 &lt; integral mu</span>
+<span id="L686">686       (twoArmForwardPotential eta tailHorizon) :=</span>
+<span id="L687">687     (Real.exp_pos (2 * integral mu parameter)).trans_le hjensenExact</span>
+<span id="L688">688   have hlog : 2 * integral mu parameter &lt;=</span>
+<span id="L689">689       Real.log (integral mu (twoArmForwardPotential eta tailHorizon)) :=</span>
+<span id="L690">690     (Real.le_log_iff_exp_le hpositive).2 hjensenExact</span>
+<span id="L691">691   change integral mu parameter &lt;= _</span>
+<span id="L692">692   linarith</span>
+<span id="L693">693 </span>
+<span id="L694">694 theorem integral_twoArmSuccessProbability_sq_le_one</span>
+<span id="L695">695     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L696">696     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L697">697     (eta : Real)</span>
+<span id="L698">698     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L699">699     (n : Nat) :</span>
+<span id="L700">700     integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L701">701         (fun sample =&gt; twoArmSuccessProbability (Env := Env) eta n sample ^ 2) &lt;=</span>
+<span id="L702">702       1 := by</span>
+<span id="L703">703   letI : IsProbabilityMeasure</span>
+<span id="L704">704       (twoArmTrajectoryMeasure prior eta environment) := by</span>
+<span id="L705">705     unfold twoArmTrajectoryMeasure</span>
+<span id="L706">706     infer_instance</span>
+<span id="L707">707   have hintegrable := integrable_twoArmSuccessProbability_sq</span>
+<span id="L708">708     prior eta environment n</span>
+<span id="L709">709   calc</span>
+<span id="L710">710     integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L711">711         (fun sample =&gt; twoArmSuccessProbability (Env := Env) eta n sample ^ 2) &lt;=</span>
+<span id="L712">712       integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L713">713         (fun _ =&gt; (1 : Real)) := by</span>
+<span id="L714">714       apply integral_mono hintegrable (integrable_const 1)</span>
+<span id="L715">715       intro sample</span>
+<span id="L716">716       have hp0 : 0 &lt;= twoArmSuccessProbability (Env := Env) eta n sample :=</span>
+<span id="L717">717         softmaxProbability_nonneg _ 0</span>
+<span id="L718">718       have hp1 : twoArmSuccessProbability (Env := Env) eta n sample &lt;= 1 :=</span>
+<span id="L719">719         softmaxProbability_le_one _ 0</span>
+<span id="L720">720       nlinarith</span>
+<span id="L721">721     _ = 1 := by</span>
+<span id="L722">722       rw [integral_const, probReal_univ]</span>
+<span id="L723">723       simp</span>
+<span id="L724">724 </span>
+<span id="L725">725 theorem integral_twoArmForwardPotential_le_source_bound</span>
+<span id="L726">726     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L727">727     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L728">728     (eta Delta : Real) (heta : 0 &lt; eta) (hDelta : 0 &lt; Delta)</span>
+<span id="L729">729     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L730">730     (mean : Fin 2 -&gt; Real)</span>
+<span id="L731">731     (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean)</span>
+<span id="L732">732     (hgap : mean 0 - mean 1 = Delta)</span>
+<span id="L733">733     (hmargin : eta * sourceC eta &lt; Delta)</span>
+<span id="L734">734     (tailHorizon : Nat) :</span>
+<span id="L735">735     integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L736">736         (twoArmForwardPotential (Env := Env) eta tailHorizon) &lt;=</span>
+<span id="L737">737       1 + 4 * eta * Delta * ((tailHorizon + 1 : Nat) : Real) := by</span>
+<span id="L738">738   let mu := twoArmTrajectoryMeasure prior eta environment</span>
+<span id="L739">739   let coefficient := eta * Delta + eta ^ 2 * sourceC eta</span>
+<span id="L740">740   have hcoefficient_nonneg : 0 &lt;= coefficient := by</span>
+<span id="L741">741     have hC : 0 &lt;= sourceC eta := sourceC_nonneg eta heta.le</span>
+<span id="L742">742     dsimp [coefficient]</span>
+<span id="L743">743     positivity</span>
+<span id="L744">744   have hcoefficient_le : coefficient &lt;= 2 * eta * Delta := by</span>
+<span id="L745">745     have hscaled : eta ^ 2 * sourceC eta &lt; eta * Delta := by</span>
+<span id="L746">746       have := mul_lt_mul_of_pos_left hmargin heta</span>
+<span id="L747">747       nlinarith</span>
+<span id="L748">748     dsimp [coefficient]</span>
+<span id="L749">749     linarith</span>
+<span id="L750">750   have hiterate := twoArmForwardFiniteIteration_from_source_initial</span>
+<span id="L751">751     prior eta Delta heta.le environment mean contract hgap tailHorizon</span>
+<span id="L752">752   have hterm :</span>
+<span id="L753">753       (Finset.range tailHorizon).sum (fun n =&gt;</span>
+<span id="L754">754           2 * integral mu (fun sample =&gt;</span>
+<span id="L755">755             twoArmSuccessProbability (Env := Env) eta n sample ^ 2) *</span>
+<span id="L756">756               coefficient) &lt;=</span>
+<span id="L757">757         (Finset.range tailHorizon).sum (fun _ =&gt; 2 * coefficient) := by</span>
+<span id="L758">758     apply Finset.sum_le_sum</span>
+<span id="L759">759     intro n _hn</span>
+<span id="L760">760     have hp := integral_twoArmSuccessProbability_sq_le_one</span>
+<span id="L761">761       prior eta environment n</span>
+<span id="L762">762     have hproduct := mul_nonneg (sub_nonneg.mpr hp) hcoefficient_nonneg</span>
+<span id="L763">763     nlinarith</span>
+<span id="L764">764   have hfirst :</span>
+<span id="L765">765       integral mu (twoArmForwardPotential eta tailHorizon) &lt;=</span>
+<span id="L766">766         1 + coefficient / 2 +</span>
+<span id="L767">767           (Finset.range tailHorizon).sum (fun n =&gt;</span>
+<span id="L768">768             2 * integral mu (fun sample =&gt;</span>
+<span id="L769">769               twoArmSuccessProbability (Env := Env) eta n sample ^ 2) *</span>
+<span id="L770">770                 coefficient) := by</span>
+<span id="L771">771     simpa [mu, coefficient] using hiterate</span>
+<span id="L772">772   calc</span>
+<span id="L773">773     integral mu (twoArmForwardPotential eta tailHorizon) &lt;=</span>
+<span id="L774">774         1 + coefficient / 2 +</span>
+<span id="L775">775           (Finset.range tailHorizon).sum (fun n =&gt;</span>
+<span id="L776">776             2 * integral mu (fun sample =&gt;</span>
+<span id="L777">777               twoArmSuccessProbability (Env := Env) eta n sample ^ 2) *</span>
+<span id="L778">778                 coefficient) := hfirst</span>
+<span id="L779">779     _ &lt;= 1 + coefficient / 2 +</span>
+<span id="L780">780         (Finset.range tailHorizon).sum (fun _ =&gt; 2 * coefficient) := by</span>
+<span id="L781">781       linarith</span>
+<span id="L782">782     _ = 1 + coefficient / 2 +</span>
+<span id="L783">783         (tailHorizon : Real) * (2 * coefficient) := by</span>
+<span id="L784">784       simp</span>
+<span id="L785">785     _ &lt;= 1 + 4 * eta * Delta * ((tailHorizon + 1 : Nat) : Real) := by</span>
+<span id="L786">786       push_cast</span>
+<span id="L787">787       have htail : 0 &lt;= (tailHorizon : Real) := Nat.cast_nonneg _</span>
+<span id="L788">788       nlinarith</span>
+<span id="L789">789 </span>
+<span id="L790">790 theorem integral_twoArmTrajectoryParameterZero_le_source_log_bound</span>
+<span id="L791">791     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L792">792     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L793">793     (eta Delta : Real) (heta : 0 &lt; eta) (hDelta : 0 &lt; Delta)</span>
+<span id="L794">794     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L795">795     (mean : Fin 2 -&gt; Real)</span>
+<span id="L796">796     (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean)</span>
+<span id="L797">797     (hgap : mean 0 - mean 1 = Delta)</span>
+<span id="L798">798     (hmargin : eta * sourceC eta &lt; Delta)</span>
+<span id="L799">799     (tailHorizon : Nat) :</span>
+<span id="L800">800     integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L801">801         (twoArmTrajectoryParameterZero (Env := Env) eta tailHorizon) &lt;=</span>
+<span id="L802">802       Real.log</span>
+<span id="L803">803         (1 + 4 * eta * Delta * ((tailHorizon + 1 : Nat) : Real)) / 2 := by</span>
+<span id="L804">804   have hjensen :=</span>
+<span id="L805">805     integral_twoArmTrajectoryParameterZero_le_half_log_forwardPotential</span>
+<span id="L806">806       prior eta environment mean contract tailHorizon</span>
+<span id="L807">807   have hmoment := integral_twoArmForwardPotential_le_source_bound</span>
+<span id="L808">808     prior eta Delta heta hDelta environment mean contract hgap hmargin tailHorizon</span>
+<span id="L809">809   have hmoment_pos : 0 &lt; integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L810">810       (twoArmForwardPotential (Env := Env) eta tailHorizon) := by</span>
+<span id="L811">811     have hpositive := Real.exp_pos</span>
+<span id="L812">812       (2 * integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L813">813         (twoArmTrajectoryParameterZero (Env := Env) eta tailHorizon))</span>
+<span id="L814">814     letI : IsProbabilityMeasure</span>
+<span id="L815">815         (twoArmTrajectoryMeasure prior eta environment) := by</span>
+<span id="L816">816       unfold twoArmTrajectoryMeasure</span>
+<span id="L817">817       infer_instance</span>
+<span id="L818">818     have hjensenRaw := convexOn_exp.map_integral_le</span>
+<span id="L819">819       Real.continuous_exp.continuousOn isClosed_univ</span>
+<span id="L820">820       (Filter.Eventually.of_forall fun _ =&gt; Set.mem_univ _)</span>
+<span id="L821">821       ((integrable_twoArmTrajectoryParameterZero</span>
+<span id="L822">822         prior eta environment mean contract tailHorizon).const_mul 2)</span>
+<span id="L823">823       (by simpa [Function.comp_def, twoArmForwardPotential] using</span>
+<span id="L824">824         (integrable_twoArmForwardPotential</span>
+<span id="L825">825           prior eta environment mean contract tailHorizon))</span>
+<span id="L826">826     have : Real.exp</span>
+<span id="L827">827         (integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L828">828           (fun sample =&gt; 2 * twoArmTrajectoryParameterZero eta tailHorizon sample)) &lt;=</span>
+<span id="L829">829         integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L830">830           (twoArmForwardPotential eta tailHorizon) := by</span>
+<span id="L831">831       simpa [Function.comp_def, twoArmForwardPotential] using hjensenRaw</span>
+<span id="L832">832     rw [integral_const_mul] at this</span>
+<span id="L833">833     exact hpositive.trans_le this</span>
+<span id="L834">834   have hsource_pos : 0 &lt;</span>
+<span id="L835">835       1 + 4 * eta * Delta * ((tailHorizon + 1 : Nat) : Real) := by</span>
+<span id="L836">836     positivity</span>
+<span id="L837">837   have hlogmono : Real.log</span>
+<span id="L838">838       (integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L839">839         (twoArmForwardPotential eta tailHorizon)) &lt;=</span>
+<span id="L840">840       Real.log (1 + 4 * eta * Delta * ((tailHorizon + 1 : Nat) : Real)) :=</span>
+<span id="L841">841     Real.log_le_log hmoment_pos hmoment</span>
+<span id="L842">842   linarith</span>
+<span id="L843">843 </span>
+<span id="L844">844 def twoArmActionGap (Delta : Real) (action : Fin 2) : Real :=</span>
+<span id="L845">845   if action = 0 then 0 else Delta</span>
+<span id="L846">846 </span>
+<span id="L847">847 theorem measurable_twoArmActionGap (Delta : Real) :</span>
+<span id="L848">848     Measurable (twoArmActionGap Delta) := by</span>
+<span id="L849">849   fun_prop</span>
+<span id="L850">850 </span>
+<span id="L851">851 theorem integral_twoArmInitialActionGap_eq_half</span>
+<span id="L852">852     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L853">853     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L854">854     (eta Delta : Real)</span>
+<span id="L855">855     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) :</span>
+<span id="L856">856     integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L857">857         (fun sample =&gt; twoArmActionGap Delta (sample.2 0).1) =</span>
+<span id="L858">858       Delta / 2 := by</span>
+<span id="L859">859   let mu := twoArmTrajectoryMeasure prior eta environment</span>
+<span id="L860">860   let history := fun sample : Env × ((k : Nat) -&gt; Fin 2 × Real) =&gt; sample.1</span>
+<span id="L861">861   let action := fun sample : Env × ((k : Nat) -&gt; Fin 2 × Real) =&gt;</span>
+<span id="L862">862     (sample.2 0).1</span>
+<span id="L863">863   let prob := fun _ : Env =&gt; softmaxProbability (fun _ : Fin 2 =&gt; 0)</span>
+<span id="L864">864   let policy := Kernel.const Env</span>
+<span id="L865">865     (Exp3.finiteActionMeasure (Finset.univ : Finset (Fin 2))</span>
+<span id="L866">866       (softmaxProbability (fun _ : Fin 2 =&gt; 0)))</span>
+<span id="L867">867   let score := fun input : Env × Fin 2 =&gt; twoArmActionGap Delta input.2</span>
+<span id="L868">868   letI : IsProbabilityMeasure mu := by</span>
+<span id="L869">869     dsimp [mu, twoArmTrajectoryMeasure]</span>
+<span id="L870">870     infer_instance</span>
+<span id="L871">871   letI : IsProbabilityMeasure</span>
+<span id="L872">872       (Exp3.finiteActionMeasure (Finset.univ : Finset (Fin 2))</span>
+<span id="L873">873         (softmaxProbability (fun _ : Fin 2 =&gt; 0))) :=</span>
+<span id="L874">874     Exp3.finiteActionMeasure_isProbabilityMeasure _ _</span>
+<span id="L875">875       (softmaxFiniteActionDistribution (fun _ : Fin 2 =&gt; 0))</span>
+<span id="L876">876   letI : IsMarkovKernel policy := by</span>
+<span id="L877">877     dsimp [policy]</span>
+<span id="L878">878     infer_instance</span>
+<span id="L879">879   have hcond : condDistrib action history mu =ᵐ[mu.map history] policy := by</span>
+<span id="L880">880     simpa [mu, history, action, policy, twoArmTrajectoryMeasure] using</span>
+<span id="L881">881       (trajectoryMeasure_condDistrib_action_zero_given_environment</span>
+<span id="L882">882         prior (fun _ : Fin 2 =&gt; 0) eta environment)</span>
+<span id="L883">883   have hscore : Measurable score :=</span>
+<span id="L884">884     (measurable_twoArmActionGap Delta).comp measurable_snd</span>
+<span id="L885">885   have hscoreIntegrable : Integrable score (mu.map history ⊗ₘ policy) := by</span>
+<span id="L886">886     apply Integrable.of_bound hscore.aestronglyMeasurable |Delta|</span>
+<span id="L887">887     filter_upwards [] with input</span>
+<span id="L888">888     by_cases h : input.2 = 0 &lt;;&gt; simp [score, twoArmActionGap, h]</span>
+<span id="L889">889   have hformula :=</span>
+<span id="L890">890     Exp3.integral_historyAction_eq_integral_sum_of_condDistrib_ae_eq_finiteActionMeasure</span>
+<span id="L891">891       mu history measurable_fst action</span>
+<span id="L892">892       (measurable_fst.comp ((measurable_pi_apply 0).comp measurable_snd))</span>
+<span id="L893">893       (Finset.univ : Finset (Fin 2)) prob</span>
+<span id="L894">894       (fun _ =&gt; softmaxFiniteActionDistribution (fun _ : Fin 2 =&gt; 0))</span>
+<span id="L895">895       policy (Filter.Eventually.of_forall fun _ =&gt; rfl) hcond</span>
+<span id="L896">896       score hscore hscoreIntegrable</span>
+<span id="L897">897   have hsum : (fun env : Env =&gt;</span>
+<span id="L898">898       (Finset.univ : Finset (Fin 2)).sum (fun candidate =&gt;</span>
+<span id="L899">899         prob env candidate * score (env, candidate))) =</span>
+<span id="L900">900       fun _ =&gt; Delta / 2 := by</span>
+<span id="L901">901     funext env</span>
+<span id="L902">902     simp only [Fin.sum_univ_two, prob, score, twoArmActionGap,</span>
+<span id="L903">903       if_pos, Fin.isValue]</span>
+<span id="L904">904     norm_num [softmaxProbability, softmaxDenominator]</span>
+<span id="L905">905     ring</span>
+<span id="L906">906   rw [show (fun sample =&gt; twoArmActionGap Delta (sample.2 0).1) =</span>
+<span id="L907">907       fun sample =&gt; score (history sample, action sample) by rfl]</span>
+<span id="L908">908   rw [hformula]</span>
+<span id="L909">909   rw [hsum]</span>
+<span id="L910">910   letI : IsProbabilityMeasure (mu.map history) :=</span>
+<span id="L911">911     Measure.isProbabilityMeasure_map measurable_fst.aemeasurable</span>
+<span id="L912">912   rw [integral_const, probReal_univ]</span>
+<span id="L913">913   simp</span>
+<span id="L914">914 </span>
+<span id="L915">915 theorem integral_twoArmSuccessorActionGap_eq_failureMass</span>
+<span id="L916">916     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L917">917     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L918">918     (eta Delta : Real)</span>
+<span id="L919">919     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L920">920     (n : Nat) :</span>
+<span id="L921">921     integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L922">922         (fun sample =&gt; twoArmActionGap Delta (sample.2 (n + 1)).1) =</span>
+<span id="L923">923       Delta * integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L924">924         (fun sample =&gt; twoArmFailureMass (Env := Env) eta n sample) := by</span>
+<span id="L925">925   let mu := twoArmTrajectoryMeasure prior eta environment</span>
+<span id="L926">926   let history := fun sample : Env × ((k : Nat) -&gt; Fin 2 × Real) =&gt;</span>
+<span id="L927">927     Preorder.frestrictLe n sample.2</span>
+<span id="L928">928   let action := fun sample : Env × ((k : Nat) -&gt; Fin 2 × Real) =&gt;</span>
+<span id="L929">929     (sample.2 (n + 1)).1</span>
+<span id="L930">930   let prob := fun h : History.FinitePairHistory (Fin 2) Real n =&gt;</span>
+<span id="L931">931     softmaxProbability (historyParameter (fun _ : Fin 2 =&gt; 0) eta n h)</span>
+<span id="L932">932   let policy := Exp3.finiteActionKernel (Finset.univ : Finset (Fin 2)) prob</span>
+<span id="L933">933     (historySoftmaxDistributionSource (fun _ : Fin 2 =&gt; 0) eta n)</span>
+<span id="L934">934   let score := fun input :</span>
+<span id="L935">935       History.FinitePairHistory (Fin 2) Real n × Fin 2 =&gt;</span>
+<span id="L936">936     twoArmActionGap Delta input.2</span>
+<span id="L937">937   letI : IsProbabilityMeasure mu := by</span>
+<span id="L938">938     dsimp [mu, twoArmTrajectoryMeasure]</span>
+<span id="L939">939     infer_instance</span>
+<span id="L940">940   letI : IsMarkovKernel policy := by</span>
+<span id="L941">941     dsimp [policy]</span>
+<span id="L942">942     infer_instance</span>
+<span id="L943">943   have hpolicy : policy =ᵐ[mu.map history]</span>
+<span id="L944">944       fun h =&gt; Exp3.finiteActionMeasure (Finset.univ : Finset (Fin 2))</span>
+<span id="L945">945         (prob h) := by</span>
+<span id="L946">946     filter_upwards [] with h</span>
+<span id="L947">947     exact Exp3.finiteActionKernel_apply _ _ _ h</span>
+<span id="L948">948   have hcond : condDistrib action history mu =ᵐ[mu.map history] policy := by</span>
+<span id="L949">949     simpa [mu, history, action, policy, prob, twoArmTrajectoryMeasure] using</span>
+<span id="L950">950       (trajectoryMeasure_condDistrib_action</span>
+<span id="L951">951         prior (fun _ : Fin 2 =&gt; 0) eta environment n)</span>
+<span id="L952">952   have hscore : Measurable score :=</span>
+<span id="L953">953     (measurable_twoArmActionGap Delta).comp measurable_snd</span>
+<span id="L954">954   have hscoreIntegrable : Integrable score (mu.map history ⊗ₘ policy) := by</span>
+<span id="L955">955     apply Integrable.of_bound hscore.aestronglyMeasurable |Delta|</span>
+<span id="L956">956     filter_upwards [] with input</span>
+<span id="L957">957     by_cases h : input.2 = 0 &lt;;&gt; simp [score, twoArmActionGap, h]</span>
+<span id="L958">958   have hformula :=</span>
+<span id="L959">959     Exp3.integral_historyAction_eq_integral_sum_of_condDistrib_ae_eq_finiteActionMeasure</span>
+<span id="L960">960       mu history ((Preorder.measurable_frestrictLe n).comp measurable_snd)</span>
+<span id="L961">961       action (measurable_fst.comp</span>
+<span id="L962">962         ((measurable_pi_apply (n + 1)).comp measurable_snd))</span>
+<span id="L963">963       (Finset.univ : Finset (Fin 2)) prob</span>
+<span id="L964">964       (fun h =&gt; (historySoftmaxDistributionSource</span>
+<span id="L965">965         (fun _ : Fin 2 =&gt; 0) eta n).distribution h)</span>
+<span id="L966">966       policy hpolicy hcond score hscore hscoreIntegrable</span>
+<span id="L967">967   have hsum (h : History.FinitePairHistory (Fin 2) Real n) :</span>
+<span id="L968">968       (Finset.univ : Finset (Fin 2)).sum (fun candidate =&gt;</span>
+<span id="L969">969         prob h candidate * score (h, candidate)) =</span>
+<span id="L970">970       Delta * (1 - prob h 0) := by</span>
+<span id="L971">971     simp only [Fin.sum_univ_two, prob, score, twoArmActionGap,</span>
+<span id="L972">972       if_pos, Fin.isValue]</span>
+<span id="L973">973     rw [if_neg (by decide : (1 : Fin 2) ≠ 0),</span>
+<span id="L974">974       softmaxProbability_one_eq_one_sub_zero]</span>
+<span id="L975">975     ring</span>
+<span id="L976">976   rw [show (fun sample =&gt; twoArmActionGap Delta (sample.2 (n + 1)).1) =</span>
+<span id="L977">977       fun sample =&gt; score (history sample, action sample) by rfl]</span>
+<span id="L978">978   rw [hformula]</span>
+<span id="L979">979   have hright :</span>
+<span id="L980">980       integral (mu.map history) (fun h =&gt; Delta * (1 - prob h 0)) =</span>
+<span id="L981">981         integral mu (fun sample =&gt;</span>
+<span id="L982">982           Delta * twoArmFailureMass (Env := Env) eta n sample) := by</span>
+<span id="L983">983     have hfunc : AEStronglyMeasurable</span>
+<span id="L984">984         (fun h : History.FinitePairHistory (Fin 2) Real n =&gt;</span>
+<span id="L985">985           Delta * (1 - prob h 0)) (mu.map history) :=</span>
+<span id="L986">986       (measurable_const.mul</span>
+<span id="L987">987         (measurable_const.sub</span>
+<span id="L988">988           (measurable_softmaxProbability</span>
+<span id="L989">989             (fun h =&gt; historyParameter (fun _ : Fin 2 =&gt; 0) eta n h)</span>
+<span id="L990">990             (measurable_historyParameter (fun _ : Fin 2 =&gt; 0) eta n) 0))).aestronglyMeasurable</span>
+<span id="L991">991     have hmap := integral_map</span>
+<span id="L992">992       (μ := mu) (φ := history)</span>
+<span id="L993">993       (f := fun h : History.FinitePairHistory (Fin 2) Real n =&gt;</span>
+<span id="L994">994         Delta * (1 - prob h 0))</span>
+<span id="L995">995       ((Preorder.measurable_frestrictLe n).comp measurable_snd).aemeasurable</span>
+<span id="L996">996       hfunc</span>
+<span id="L997">997     simpa [history, prob, twoArmFailureMass,</span>
+<span id="L998">998       twoArmSuccessProbability] using hmap</span>
+<span id="L999">999   rw [show (fun h =&gt;</span>
+<span id="L1000">1000       (Finset.univ : Finset (Fin 2)).sum (fun candidate =&gt;</span>
+<span id="L1001">1001         prob h candidate * score (h, candidate))) =</span>
+<span id="L1002">1002       fun h =&gt; Delta * (1 - prob h 0) by</span>
+<span id="L1003">1003         funext h</span>
+<span id="L1004">1004         exact hsum h]</span>
+<span id="L1005">1005   rw [hright, integral_const_mul]</span>
+<span id="L1006">1006 </span>
+<span id="L1007">1007 def twoArmSampledPseudoRegret</span>
+<span id="L1008">1008     {Env : Type v} (Delta : Real) (horizon : Nat)</span>
+<span id="L1009">1009     (sample : Env × ((k : Nat) -&gt; Fin 2 × Real)) : Real :=</span>
+<span id="L1010">1010   (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L1011">1011     twoArmActionGap Delta (sample.2 t).1)</span>
+<span id="L1012">1012 </span>
+<span id="L1013">1013 theorem integral_twoArmSampledPseudoRegret_eq_generated</span>
+<span id="L1014">1014     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L1015">1015     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L1016">1016     (eta Delta : Real)</span>
+<span id="L1017">1017     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L1018">1018     (tailHorizon : Nat) :</span>
+<span id="L1019">1019     integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L1020">1020         (twoArmSampledPseudoRegret (Env := Env) Delta (tailHorizon + 1)) =</span>
+<span id="L1021">1021       twoArmGeneratedExpectedPseudoRegret</span>
+<span id="L1022">1022         prior eta Delta environment tailHorizon := by</span>
+<span id="L1023">1023   let mu := twoArmTrajectoryMeasure prior eta environment</span>
+<span id="L1024">1024   have hroundIntegrable (t : Nat) : Integrable</span>
+<span id="L1025">1025       (fun sample : Env × ((k : Nat) -&gt; Fin 2 × Real) =&gt;</span>
+<span id="L1026">1026         twoArmActionGap Delta (sample.2 t).1) mu := by</span>
+<span id="L1027">1027     have hmeas : Measurable (fun sample :</span>
+<span id="L1028">1028         Env × ((k : Nat) -&gt; Fin 2 × Real) =&gt;</span>
+<span id="L1029">1029       twoArmActionGap Delta (sample.2 t).1) :=</span>
+<span id="L1030">1030       (measurable_twoArmActionGap Delta).comp</span>
+<span id="L1031">1031         (measurable_fst.comp ((measurable_pi_apply t).comp measurable_snd))</span>
+<span id="L1032">1032     apply Integrable.of_bound hmeas.aestronglyMeasurable |Delta|</span>
+<span id="L1033">1033     filter_upwards [] with sample</span>
+<span id="L1034">1034     by_cases h : (sample.2 t).1 = 0 &lt;;&gt; simp [twoArmActionGap, h]</span>
+<span id="L1035">1035   change integral mu (fun sample =&gt;</span>
+<span id="L1036">1036       (Finset.range (tailHorizon + 1)).sum (fun t =&gt;</span>
+<span id="L1037">1037         twoArmActionGap Delta (sample.2 t).1)) = _</span>
+<span id="L1038">1038   rw [integral_finset_sum (Finset.range (tailHorizon + 1))</span>
+<span id="L1039">1039     (fun t _ht =&gt; hroundIntegrable t)]</span>
+<span id="L1040">1040   rw [Finset.sum_range_succ&#x27;, integral_twoArmInitialActionGap_eq_half</span>
+<span id="L1041">1041     prior eta Delta environment]</span>
+<span id="L1042">1042   have htail :</span>
+<span id="L1043">1043       (Finset.range tailHorizon).sum (fun n =&gt;</span>
+<span id="L1044">1044         integral mu (fun sample =&gt;</span>
+<span id="L1045">1045           twoArmActionGap Delta (sample.2 (n + 1)).1)) =</span>
+<span id="L1046">1046         Delta * (Finset.range tailHorizon).sum (fun n =&gt;</span>
+<span id="L1047">1047           integral mu (fun sample =&gt; twoArmFailureMass eta n sample)) := by</span>
+<span id="L1048">1048     rw [Finset.mul_sum]</span>
+<span id="L1049">1049     apply Finset.sum_congr rfl</span>
+<span id="L1050">1050     intro n _hn</span>
+<span id="L1051">1051     exact integral_twoArmSuccessorActionGap_eq_failureMass</span>
+<span id="L1052">1052       prior eta Delta environment n</span>
+<span id="L1053">1053   rw [htail]</span>
+<span id="L1054">1054   simp [twoArmGeneratedExpectedPseudoRegret]</span>
+<span id="L1055">1055   ring</span>
+<span id="L1056">1056 </span>
+<span id="L1057">1057 theorem twoArmGeneratedExpectedPseudoRegret_le_sourceTheoremOne</span>
+<span id="L1058">1058     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L1059">1059     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L1060">1060     (eta Delta : Real) (heta : 0 &lt; eta) (hDelta : 0 &lt; Delta)</span>
+<span id="L1061">1061     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L1062">1062     (mean : Fin 2 -&gt; Real)</span>
+<span id="L1063">1063     (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean)</span>
+<span id="L1064">1064     (hgap : mean 0 - mean 1 = Delta)</span>
+<span id="L1065">1065     (hmargin : eta * sourceC eta &lt; Delta)</span>
+<span id="L1066">1066     (tailHorizon : Nat) :</span>
+<span id="L1067">1067     twoArmGeneratedExpectedPseudoRegret</span>
+<span id="L1068">1068         prior eta Delta environment tailHorizon &lt;=</span>
+<span id="L1069">1069       Real.log</span>
+<span id="L1070">1070           (1 + 4 * eta * Delta * ((tailHorizon + 1 : Nat) : Real)) /</span>
+<span id="L1071">1071           (2 * eta) +</span>
+<span id="L1072">1072         Delta / (2 * eta * (Delta - eta * sourceC eta)) := by</span>
+<span id="L1073">1073   have hdecomposition :=</span>
+<span id="L1074">1074     twoArmGeneratedExpectedPseudoRegret_eq_parameter_add_failureSq</span>
+<span id="L1075">1075       prior eta Delta heta environment mean contract hgap tailHorizon</span>
+<span id="L1076">1076   have hparameter :=</span>
+<span id="L1077">1077     integral_twoArmTrajectoryParameterZero_le_source_log_bound</span>
+<span id="L1078">1078       prior eta Delta heta hDelta environment mean contract hgap hmargin</span>
+<span id="L1079">1079         tailHorizon</span>
+<span id="L1080">1080   have hfailure := twoArmFullFailureMassSqSum_le</span>
+<span id="L1081">1081     prior eta Delta heta environment mean contract hgap hmargin tailHorizon</span>
+<span id="L1082">1082   rw [hdecomposition]</span>
+<span id="L1083">1083   calc</span>
+<span id="L1084">1084     integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L1085">1085           (twoArmTrajectoryParameterZero (Env := Env) eta tailHorizon) / eta +</span>
+<span id="L1086">1086         Delta * ((1 : Real) / 4 +</span>
+<span id="L1087">1087           (Finset.range tailHorizon).sum (fun n =&gt;</span>
+<span id="L1088">1088             integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L1089">1089               (fun sample =&gt; twoArmFailureMass eta n sample ^ 2))) &lt;=</span>
+<span id="L1090">1090       (Real.log</span>
+<span id="L1091">1091           (1 + 4 * eta * Delta * ((tailHorizon + 1 : Nat) : Real)) / 2) /</span>
+<span id="L1092">1092           eta +</span>
+<span id="L1093">1093         Delta * (1 / (2 * eta * (Delta - eta * sourceC eta))) := by</span>
+<span id="L1094">1094       apply add_le_add</span>
+<span id="L1095">1095       · exact (div_le_div_iff_of_pos_right heta).2 hparameter</span>
+<span id="L1096">1096       · exact mul_le_mul_of_nonneg_left hfailure hDelta.le</span>
+<span id="L1097">1097     _ = Real.log</span>
+<span id="L1098">1098           (1 + 4 * eta * Delta * ((tailHorizon + 1 : Nat) : Real)) /</span>
+<span id="L1099">1099           (2 * eta) +</span>
+<span id="L1100">1100         Delta / (2 * eta * (Delta - eta * sourceC eta)) := by</span>
+<span id="L1101">1101       have heta0 : eta ≠ 0 := ne_of_gt heta</span>
+<span id="L1102">1102       have hmargin0 : Delta - eta * sourceC eta ≠ 0 :=</span>
+<span id="L1103">1103         ne_of_gt (sub_pos.mpr hmargin)</span>
+<span id="L1104">1104       field_simp</span>
+<span id="L1105">1105 </span>
+<span id="L1106">1106 theorem integral_twoArmSampledPseudoRegret_le_sourceTheoremOne</span>
+<span id="L1107">1107     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L1108">1108     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L1109">1109     (eta Delta : Real) (heta : 0 &lt; eta) (hDelta : 0 &lt; Delta)</span>
+<span id="L1110">1110     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L1111">1111     (mean : Fin 2 -&gt; Real)</span>
+<span id="L1112">1112     (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean)</span>
+<span id="L1113">1113     (hgap : mean 0 - mean 1 = Delta)</span>
+<span id="L1114">1114     (hmargin : eta * sourceC eta &lt; Delta)</span>
+<span id="L1115">1115     (tailHorizon : Nat) :</span>
+<span id="L1116">1116     integral (twoArmTrajectoryMeasure prior eta environment)</span>
+<span id="L1117">1117         (twoArmSampledPseudoRegret (Env := Env) Delta (tailHorizon + 1)) &lt;=</span>
+<span id="L1118">1118       Real.log</span>
+<span id="L1119">1119           (1 + 4 * eta * Delta * ((tailHorizon + 1 : Nat) : Real)) /</span>
+<span id="L1120">1120           (2 * eta) +</span>
+<span id="L1121">1121         Delta / (2 * eta * (Delta - eta * sourceC eta)) := by</span>
+<span id="L1122">1122   rw [integral_twoArmSampledPseudoRegret_eq_generated</span>
+<span id="L1123">1123     prior eta Delta environment tailHorizon]</span>
+<span id="L1124">1124   exact twoArmGeneratedExpectedPseudoRegret_le_sourceTheoremOne</span>
+<span id="L1125">1125     prior eta Delta heta hDelta environment mean contract hgap hmargin</span>
+<span id="L1126">1126       tailHorizon</span>
+<span id="L1127">1127 </span>
+<span id="L1128">1128 /-- Source-faithful Theorem 1 of Baudry--Johnson--Vary--Pike-Burke--</span>
+<span id="L1129">1129 Rebeschini (NeurIPS 2025), for a fixed pair of IID arm laws.  Lean horizon</span>
+<span id="L1130">1130 `tailHorizon + 1` is source `T`, including the uniform first action. -/</span>
+<span id="L1131">1131 theorem twoArmFixedIIDDirac_theoremOne</span>
+<span id="L1132">1132     (armLaw : Fin 2 -&gt; Measure Real)</span>
+<span id="L1133">1133     (hprob : forall arm, IsProbabilityMeasure (armLaw arm))</span>
+<span id="L1134">1134     (mean : Fin 2 -&gt; Real)</span>
+<span id="L1135">1135     (hbound : forall arm, ∀ᵐ reward ∂armLaw arm, |reward| &lt;= 1)</span>
+<span id="L1136">1136     (hmean : forall arm, integral (armLaw arm) id = mean arm)</span>
+<span id="L1137">1137     (eta Delta : Real) (heta : 0 &lt; eta)</span>
+<span id="L1138">1138     (hDelta : 0 &lt; Delta) (_hDelta_lt_one : Delta &lt; 1)</span>
+<span id="L1139">1139     (hgap : mean 0 - mean 1 = Delta)</span>
+<span id="L1140">1140     (hmargin : eta * sourceC eta &lt; Delta)</span>
+<span id="L1141">1141     (tailHorizon : Nat) :</span>
+<span id="L1142">1142     integral</span>
+<span id="L1143">1143         (twoArmTrajectoryMeasure (Measure.dirac ()) eta</span>
+<span id="L1144">1144           (twoArmFixedIIDEnvironment armLaw hprob))</span>
+<span id="L1145">1145         (twoArmSampledPseudoRegret (Env := Unit) Delta</span>
+<span id="L1146">1146           (tailHorizon + 1)) &lt;=</span>
+<span id="L1147">1147       Real.log</span>
+<span id="L1148">1148           (1 + 4 * eta * Delta * ((tailHorizon + 1 : Nat) : Real)) /</span>
+<span id="L1149">1149           (2 * eta) +</span>
+<span id="L1150">1150         Delta / (2 * eta * (Delta - eta * sourceC eta)) := by</span>
+<span id="L1151">1151   let environment := twoArmFixedIIDEnvironment armLaw hprob</span>
+<span id="L1152">1152   let contract := twoArmFixedIIDEnvironment_contract</span>
+<span id="L1153">1153     armLaw hprob mean hbound hmean</span>
+<span id="L1154">1154   exact integral_twoArmSampledPseudoRegret_le_sourceTheoremOne</span>
+<span id="L1155">1155     (Measure.dirac ()) eta Delta heta hDelta environment mean contract hgap</span>
+<span id="L1156">1156       hmargin tailHorizon</span>
+<span id="L1157">1157 </span>
+<span id="L1158">1158 end</span>
+<span id="L1159">1159 end StochasticGradientBandit</span>
+<span id="L1160">1160 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

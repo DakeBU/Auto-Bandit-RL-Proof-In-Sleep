@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/TsallisScheduledSuboptimalExpectedBound.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/TsallisScheduledSuboptimalExpectedBound.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/TsallisScheduledSuboptimalExpectedBound.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/TsallisScheduledSuboptimalExpectedBound.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.TsallisScheduledExpectedRegret</span>
+<span id="L2">2 import BanditRLProof.TsallisRefinedSuboptimalStability</span>
+<span id="L3">3 import Mathlib.Analysis.Convex.Integral</span>
+<span id="L4">4 import Mathlib.Analysis.Convex.SpecificFunctions.Pow</span>
+<span id="L5">5 </span>
+<span id="L6">6 /-!</span>
+<span id="L7">7 # Expected suboptimal-arm bound for scheduled half-Tsallis FTRL</span>
+<span id="L8">8 </span>
+<span id="L9">9 This module converts the generated pathwise refined half-power budget into a</span>
+<span id="L10">10 deterministic expression involving square roots of expected action</span>
+<span id="L11">11 probabilities.  It is the Jensen bridge between the compiled scheduled</span>
+<span id="L12">12 expected-regret theorem and the self-bounding completion-of-squares consumer.</span>
+<span id="L13">13 -/</span>
+<span id="L14">14 </span>
+<span id="L15">15 namespace BanditRLProof</span>
+<span id="L16">16 namespace Tsallis</span>
+<span id="L17">17 </span>
+<span id="L18">18 open MeasureTheory ProbabilityTheory</span>
+<span id="L19">19 </span>
+<span id="L20">20 universe u v</span>
+<span id="L21">21 </span>
+<span id="L22">22 /-- Expected probability of one action under an arbitrary trajectory law. -/</span>
+<span id="L23">23 noncomputable def sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L24">24     {Env : Type u} {Action : Type v}</span>
+<span id="L25">25     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L26">26     (mu : Measure (Env × ((k : Nat) -&gt; Action × Real)))</span>
+<span id="L27">27     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L28">28     (t : Nat) (action : Action) : Real :=</span>
+<span id="L29">29   integral mu (fun sample =&gt;</span>
+<span id="L30">30     sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L31">31       arms harms eta t sample action)</span>
+<span id="L32">32 </span>
+<span id="L33">33 theorem integrable_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L34">34     {Env : Type u} {Action : Type v}</span>
+<span id="L35">35     [MeasurableSpace Env]</span>
+<span id="L36">36     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L37">37     [DecidableEq Action]</span>
+<span id="L38">38     (mu : Measure (Env × ((k : Nat) -&gt; Action × Real))) [IsFiniteMeasure mu]</span>
+<span id="L39">39     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L40">40     (t : Nat) (action : Action) (haction : action ∈ arms) :</span>
+<span id="L41">41     Integrable (fun sample =&gt;</span>
+<span id="L42">42       sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L43">43         arms harms eta t sample action) mu := by</span>
+<span id="L44">44   have hmeas := measurable_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L45">45     (Env := Env) arms harms eta t action haction</span>
+<span id="L46">46   refine Integrable.of_bound hmeas.aestronglyMeasurable 1 ?_</span>
+<span id="L47">47   exact Filter.Eventually.of_forall fun sample =&gt; by</span>
+<span id="L48">48     have hp := finiteSimplex_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L49">49       arms harms eta t sample</span>
+<span id="L50">50     rw [Real.norm_eq_abs, abs_of_nonneg (hp.1 action haction)]</span>
+<span id="L51">51     exact finiteSimplex_apply_le_one hp haction</span>
+<span id="L52">52 </span>
+<span id="L53">53 theorem integrable_sqrt_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L54">54     {Env : Type u} {Action : Type v}</span>
+<span id="L55">55     [MeasurableSpace Env]</span>
+<span id="L56">56     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L57">57     [DecidableEq Action]</span>
+<span id="L58">58     (mu : Measure (Env × ((k : Nat) -&gt; Action × Real))) [IsFiniteMeasure mu]</span>
+<span id="L59">59     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L60">60     (t : Nat) (action : Action) (haction : action ∈ arms) :</span>
+<span id="L61">61     Integrable (fun sample =&gt;</span>
+<span id="L62">62       Real.sqrt (sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L63">63         arms harms eta t sample action)) mu := by</span>
+<span id="L64">64   have hmeas := (measurable_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L65">65     (Env := Env) arms harms eta t action haction).sqrt</span>
+<span id="L66">66   refine Integrable.of_bound hmeas.aestronglyMeasurable 1 ?_</span>
+<span id="L67">67   exact Filter.Eventually.of_forall fun sample =&gt; by</span>
+<span id="L68">68     have hp := finiteSimplex_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L69">69       arms harms eta t sample</span>
+<span id="L70">70     have hsqrtNonneg : 0 &lt;= Real.sqrt</span>
+<span id="L71">71         (sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L72">72           arms harms eta t sample action) := Real.sqrt_nonneg _</span>
+<span id="L73">73     rw [Real.norm_eq_abs, abs_of_nonneg hsqrtNonneg]</span>
+<span id="L74">74     exact (Real.sqrt_le_one).2 (finiteSimplex_apply_le_one hp haction)</span>
+<span id="L75">75 </span>
+<span id="L76">76 /-- Integrating a generated finite-simplex law under a probability measure</span>
+<span id="L77">77 again gives a finite-simplex law. -/</span>
+<span id="L78">78 theorem finiteSimplex_sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L79">79     {Env : Type u} {Action : Type v}</span>
+<span id="L80">80     [MeasurableSpace Env]</span>
+<span id="L81">81     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L82">82     [DecidableEq Action]</span>
+<span id="L83">83     (mu : Measure (Env × ((k : Nat) -&gt; Action × Real)))</span>
+<span id="L84">84     [IsProbabilityMeasure mu]</span>
+<span id="L85">85     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L86">86     (t : Nat) :</span>
+<span id="L87">87     FTRL.finiteSimplex arms</span>
+<span id="L88">88       (sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L89">89         mu arms harms eta t) := by</span>
+<span id="L90">90   constructor</span>
+<span id="L91">91   · intro action haction</span>
+<span id="L92">92     unfold sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L93">93     exact integral_nonneg_of_ae (Filter.Eventually.of_forall fun sample =&gt;</span>
+<span id="L94">94       (finiteSimplex_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L95">95         arms harms eta t sample).1 action haction)</span>
+<span id="L96">96   · unfold sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L97">97     rw [← ExpectationBochnerSums.integral_finset_sum mu arms</span>
+<span id="L98">98       (fun action sample =&gt;</span>
+<span id="L99">99         sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L100">100           arms harms eta t sample action)</span>
+<span id="L101">101       (fun action haction =&gt;</span>
+<span id="L102">102         integrable_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L103">103           mu arms harms eta t action haction)]</span>
+<span id="L104">104     have hpointwise : (fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L105">105         arms.sum (fun action =&gt;</span>
+<span id="L106">106           sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L107">107             arms harms eta t sample action)) = fun _sample =&gt; (1 : Real) := by</span>
+<span id="L108">108       funext sample</span>
+<span id="L109">109       exact (finiteSimplex_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L110">110         arms harms eta t sample).2</span>
+<span id="L111">111     rw [hpointwise]</span>
+<span id="L112">112     simp</span>
+<span id="L113">113 </span>
+<span id="L114">114 /-- Jensen transport for one scheduled action coordinate. -/</span>
+<span id="L115">115 theorem integral_sqrt_sampledScheduledHalfTsallisProbabilityAtTime_le_sqrt_expected</span>
+<span id="L116">116     {Env : Type u} {Action : Type v}</span>
+<span id="L117">117     [MeasurableSpace Env]</span>
+<span id="L118">118     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L119">119     [DecidableEq Action]</span>
+<span id="L120">120     (mu : Measure (Env × ((k : Nat) -&gt; Action × Real)))</span>
+<span id="L121">121     [IsProbabilityMeasure mu]</span>
+<span id="L122">122     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L123">123     (t : Nat) (action : Action) (haction : action ∈ arms) :</span>
+<span id="L124">124     integral mu (fun sample =&gt;</span>
+<span id="L125">125         Real.sqrt (sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L126">126           arms harms eta t sample action)) &lt;=</span>
+<span id="L127">127       Real.sqrt (sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L128">128         mu arms harms eta t action) := by</span>
+<span id="L129">129   let probability := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L130">130     sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L131">131       arms harms eta t sample action</span>
+<span id="L132">132   have hprobability : Integrable probability mu :=</span>
+<span id="L133">133     integrable_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L134">134       mu arms harms eta t action haction</span>
+<span id="L135">135   have hsqrt : Integrable (fun sample =&gt; Real.sqrt (probability sample)) mu :=</span>
+<span id="L136">136     integrable_sqrt_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L137">137       mu arms harms eta t action haction</span>
+<span id="L138">138   have hnonneg : ∀ᵐ sample ∂mu, probability sample ∈ Set.Ici (0 : Real) :=</span>
+<span id="L139">139     Filter.Eventually.of_forall fun sample =&gt;</span>
+<span id="L140">140       (finiteSimplex_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L141">141         arms harms eta t sample).1 action haction</span>
+<span id="L142">142   have hjensen := Real.strictConcaveOn_sqrt.concaveOn.le_map_integral</span>
+<span id="L143">143     Real.continuous_sqrt.continuousOn isClosed_Ici hnonneg hprobability hsqrt</span>
+<span id="L144">144   simpa [probability, sampledScheduledHalfTsallisExpectedProbabilityAt,</span>
+<span id="L145">145     Function.comp_def] using hjensen</span>
+<span id="L146">146 </span>
+<span id="L147">147 /-- On the small-rate branch, the all-rate actual-time budget is the refined</span>
+<span id="L148">148 half-power budget of the actual scheduled probability. -/</span>
+<span id="L149">149 theorem sampledScheduledHalfTsallisAllRatePotentialStabilityBoundAtTime_eq_refined</span>
+<span id="L150">150     {Env : Type u} {Action : Type v} [DecidableEq Action]</span>
+<span id="L151">151     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L152">152     (sample : Env × ((k : Nat) -&gt; Action × Real)) (t : Nat)</span>
+<span id="L153">153     (heta_le : eta t &lt;= 1 / 2) :</span>
+<span id="L154">154     sampledScheduledHalfTsallisAllRatePotentialStabilityBoundAtTime</span>
+<span id="L155">155         arms harms eta sample t =</span>
+<span id="L156">156       refinedPotentialStabilityBound arms (eta t)</span>
+<span id="L157">157         (fun sample action =&gt;</span>
+<span id="L158">158           sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L159">159             arms harms eta t sample action) sample := by</span>
+<span id="L160">160   cases t with</span>
+<span id="L161">161   | zero =&gt;</span>
+<span id="L162">162       unfold sampledScheduledHalfTsallisAllRatePotentialStabilityBoundAtTime</span>
+<span id="L163">163         sampledScheduledHalfTsallisInitialAllRatePotentialStabilityBound</span>
+<span id="L164">164       rw [if_pos heta_le]</span>
+<span id="L165">165       unfold sampledScheduledHalfTsallisInitialRefinedPotentialStabilityBound</span>
+<span id="L166">166         sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L167">167       rfl</span>
+<span id="L168">168   | succ n =&gt;</span>
+<span id="L169">169       unfold sampledScheduledHalfTsallisAllRatePotentialStabilityBoundAtTime</span>
+<span id="L170">170         sampledScheduledHalfTsallisSuccessorAllRatePotentialStabilityBoundAt</span>
+<span id="L171">171       change (if eta (n + 1) &lt;= 1 / 2 then</span>
+<span id="L172">172           sampledScheduledHalfTsallisRefinedPotentialStabilityBoundAt</span>
+<span id="L173">173             arms harms eta n (sampledScheduledHalfTsallisHistoryAt n sample)</span>
+<span id="L174">174         else 1) = _</span>
+<span id="L175">175       rw [if_pos heta_le]</span>
+<span id="L176">176       unfold sampledScheduledHalfTsallisRefinedPotentialStabilityBoundAt</span>
+<span id="L177">177         sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L178">178         sampledScheduledHalfTsallisProbabilityAt</span>
+<span id="L179">179         sampledScheduledHalfTsallisHistoryAt</span>
+<span id="L180">180       rfl</span>
+<span id="L181">181 </span>
+<span id="L182">182 /-- One integrated small-rate budget is bounded by suboptimal-arm square roots</span>
+<span id="L183">183 of expected scheduled probabilities. -/</span>
+<span id="L184">184 theorem integral_sampledScheduledHalfTsallisAllRatePotentialStabilityBoundAtTime_le_suboptimalExpectedSqrt</span>
+<span id="L185">185     {Env : Type u} {Action : Type v}</span>
+<span id="L186">186     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L187">187     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L188">188     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L189">189     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L190">190     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L191">191     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L192">192     {best : Action} (hbest : best ∈ arms) (t : Nat)</span>
+<span id="L193">193     (heta : 0 &lt; eta t) (heta_le : eta t &lt;= 1 / 2) :</span>
+<span id="L194">194     let selector :=</span>
+<span id="L195">195       canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L196">196         arms harms eta loss</span>
+<span id="L197">197     let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L198">198       arms harms eta selector.finiteHistory loss.environment</span>
+<span id="L199">199     integral mu (fun sample =&gt;</span>
+<span id="L200">200         sampledScheduledHalfTsallisAllRatePotentialStabilityBoundAtTime</span>
+<span id="L201">201           arms harms eta sample t) &lt;=</span>
+<span id="L202">202       2 * eta t * (arms.erase best).sum (fun action =&gt;</span>
+<span id="L203">203         Real.sqrt (sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L204">204           mu arms harms eta t action)) + 2 * (eta t) ^ 2 := by</span>
+<span id="L205">205   dsimp only</span>
+<span id="L206">206   let selector :=</span>
+<span id="L207">207     canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L208">208       arms harms eta loss</span>
+<span id="L209">209   let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L210">210     arms harms eta selector.finiteHistory loss.environment</span>
+<span id="L211">211   let probability := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L212">212     sampledScheduledHalfTsallisProbabilityAtTime arms harms eta t sample</span>
+<span id="L213">213   let suboptimalSqrt := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L214">214     (arms.erase best).sum (fun action =&gt; Real.sqrt (probability sample action))</span>
+<span id="L215">215   haveI : IsProbabilityMeasure mu := inferInstance</span>
+<span id="L216">216   have hbudget :=</span>
+<span id="L217">217     integral_sampledScheduledHalfTsallisPotentialStabilityAtTime_le_allRateBound</span>
+<span id="L218">218       prior arms harms eta loss t heta</span>
+<span id="L219">219   dsimp only at hbudget</span>
+<span id="L220">220   have hallRateIntegrable : Integrable (fun sample =&gt;</span>
+<span id="L221">221       sampledScheduledHalfTsallisAllRatePotentialStabilityBoundAtTime</span>
+<span id="L222">222         arms harms eta sample t) mu := hbudget.2.1</span>
+<span id="L223">223   have hsuboptimalIntegrable : Integrable suboptimalSqrt mu := by</span>
+<span id="L224">224     unfold suboptimalSqrt</span>
+<span id="L225">225     exact IntegrabilitySums.integrable_finset_sum mu (arms.erase best)</span>
+<span id="L226">226       (fun action sample =&gt; Real.sqrt (probability sample action))</span>
+<span id="L227">227       (fun action haction =&gt; by</span>
+<span id="L228">228         have hairm : action ∈ arms := Finset.mem_of_mem_erase haction</span>
+<span id="L229">229         simpa [probability] using</span>
+<span id="L230">230           (integrable_sqrt_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L231">231             mu arms harms eta t action hairm))</span>
+<span id="L232">232   let rhs := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L233">233     2 * eta t * suboptimalSqrt sample + 2 * (eta t) ^ 2</span>
+<span id="L234">234   have hrhsIntegrable : Integrable rhs mu := by</span>
+<span id="L235">235     unfold rhs</span>
+<span id="L236">236     exact (hsuboptimalIntegrable.const_mul (2 * eta t)).add</span>
+<span id="L237">237       (integrable_const _)</span>
+<span id="L238">238   have hpointwise : ∀ᵐ sample ∂mu,</span>
+<span id="L239">239       sampledScheduledHalfTsallisAllRatePotentialStabilityBoundAtTime</span>
+<span id="L240">240           arms harms eta sample t &lt;= rhs sample := by</span>
+<span id="L241">241     filter_upwards [] with sample</span>
+<span id="L242">242     rw [sampledScheduledHalfTsallisAllRatePotentialStabilityBoundAtTime_eq_refined</span>
+<span id="L243">243       arms harms eta sample t heta_le]</span>
+<span id="L244">244     have hsimplex :=</span>
+<span id="L245">245       finiteSimplex_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L246">246         arms harms eta t sample</span>
+<span id="L247">247     have heliminate :=</span>
+<span id="L248">248       sum_sqrt_mul_one_sub_le_two_mul_sum_erase_sqrt</span>
+<span id="L249">249         arms hbest (probability sample) hsimplex</span>
+<span id="L250">250     unfold refinedPotentialStabilityBound rhs suboptimalSqrt probability</span>
+<span id="L251">251     nlinarith</span>
+<span id="L252">252   have hintegrated :=</span>
+<span id="L253">253     integral_mono_ae hallRateIntegrable hrhsIntegrable hpointwise</span>
+<span id="L254">254   have hrhsIntegral : integral mu rhs =</span>
+<span id="L255">255       2 * eta t * (arms.erase best).sum (fun action =&gt;</span>
+<span id="L256">256         integral mu (fun sample =&gt; Real.sqrt (probability sample action))) +</span>
+<span id="L257">257         2 * (eta t) ^ 2 := by</span>
+<span id="L258">258     unfold rhs</span>
+<span id="L259">259     rw [integral_add (hsuboptimalIntegrable.const_mul (2 * eta t))</span>
+<span id="L260">260       (integrable_const _)]</span>
+<span id="L261">261     rw [integral_const_mul]</span>
+<span id="L262">262     rw [ExpectationBochnerSums.integral_finset_sum mu (arms.erase best)</span>
+<span id="L263">263       (fun action sample =&gt; Real.sqrt (probability sample action))]</span>
+<span id="L264">264     · simp</span>
+<span id="L265">265     · intro action haction</span>
+<span id="L266">266       have hairm : action ∈ arms := Finset.mem_of_mem_erase haction</span>
+<span id="L267">267       simpa [probability] using</span>
+<span id="L268">268         (integrable_sqrt_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L269">269           mu arms harms eta t action hairm)</span>
+<span id="L270">270   rw [hrhsIntegral] at hintegrated</span>
+<span id="L271">271   have hjensen :</span>
+<span id="L272">272       (arms.erase best).sum (fun action =&gt;</span>
+<span id="L273">273           integral mu (fun sample =&gt; Real.sqrt (probability sample action))) &lt;=</span>
+<span id="L274">274         (arms.erase best).sum (fun action =&gt;</span>
+<span id="L275">275           Real.sqrt (sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L276">276             mu arms harms eta t action)) := by</span>
+<span id="L277">277     apply Finset.sum_le_sum</span>
+<span id="L278">278     intro action haction</span>
+<span id="L279">279     have hairm : action ∈ arms := Finset.mem_of_mem_erase haction</span>
+<span id="L280">280     simpa [probability] using</span>
+<span id="L281">281       (integral_sqrt_sampledScheduledHalfTsallisProbabilityAtTime_le_sqrt_expected</span>
+<span id="L282">282         mu arms harms eta t action hairm)</span>
+<span id="L283">283   nlinarith</span>
+<span id="L284">284 </span>
+<span id="L285">285 /-- The complete integrated all-rate budget, on its small-rate branch, is</span>
+<span id="L286">286 bounded by a deterministic time/suboptimal-arm sum of square roots of expected</span>
+<span id="L287">287 scheduled probabilities. -/</span>
+<span id="L288">288 theorem integral_sum_sampledScheduledHalfTsallisAllRatePotentialStabilityBoundAtTime_le_suboptimalExpectedSqrt</span>
+<span id="L289">289     {Env : Type u} {Action : Type v}</span>
+<span id="L290">290     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L291">291     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L292">292     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L293">293     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L294">294     (horizon : Nat) (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L295">295     (eta : Nat -&gt; Real) (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L296">296     {best : Action} (hbest : best ∈ arms)</span>
+<span id="L297">297     (heta : forall t, t &lt;= horizon -&gt; 0 &lt; eta t)</span>
+<span id="L298">298     (heta_le : forall t, t &lt;= horizon -&gt; eta t &lt;= 1 / 2) :</span>
+<span id="L299">299     let selector :=</span>
+<span id="L300">300       canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L301">301         arms harms eta loss</span>
+<span id="L302">302     let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L303">303       arms harms eta selector.finiteHistory loss.environment</span>
+<span id="L304">304     integral mu (fun sample =&gt; (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L305">305         sampledScheduledHalfTsallisAllRatePotentialStabilityBoundAtTime</span>
+<span id="L306">306           arms harms eta sample t)) &lt;=</span>
+<span id="L307">307       (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L308">308         2 * eta t * (arms.erase best).sum (fun action =&gt;</span>
+<span id="L309">309           Real.sqrt (sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L310">310             mu arms harms eta t action)) + 2 * (eta t) ^ 2) := by</span>
+<span id="L311">311   dsimp only</span>
+<span id="L312">312   let selector :=</span>
+<span id="L313">313     canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L314">314       arms harms eta loss</span>
+<span id="L315">315   let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L316">316     arms harms eta selector.finiteHistory loss.environment</span>
+<span id="L317">317   have hround (t : Nat) (ht : t ∈ Finset.range (horizon + 1)) :=</span>
+<span id="L318">318     integral_sampledScheduledHalfTsallisPotentialStabilityAtTime_le_allRateBound</span>
+<span id="L319">319       prior arms harms eta loss t</span>
+<span id="L320">320         (heta t (by</span>
+<span id="L321">321           have ht&#x27; := Finset.mem_range.mp ht</span>
+<span id="L322">322           omega))</span>
+<span id="L323">323   dsimp only at hround</span>
+<span id="L324">324   calc</span>
+<span id="L325">325     integral mu (fun sample =&gt; (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L326">326         sampledScheduledHalfTsallisAllRatePotentialStabilityBoundAtTime</span>
+<span id="L327">327           arms harms eta sample t)) =</span>
+<span id="L328">328       (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L329">329         integral mu (fun sample =&gt;</span>
+<span id="L330">330           sampledScheduledHalfTsallisAllRatePotentialStabilityBoundAtTime</span>
+<span id="L331">331             arms harms eta sample t)) := by</span>
+<span id="L332">332         exact ExpectationBochnerSums.integral_finset_sum mu</span>
+<span id="L333">333           (Finset.range (horizon + 1)) _</span>
+<span id="L334">334           (fun t ht =&gt; (hround t ht).2.1)</span>
+<span id="L335">335     _ &lt;= (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L336">336         2 * eta t * (arms.erase best).sum (fun action =&gt;</span>
+<span id="L337">337           Real.sqrt (sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L338">338             mu arms harms eta t action)) + 2 * (eta t) ^ 2) := by</span>
+<span id="L339">339       apply Finset.sum_le_sum</span>
+<span id="L340">340       intro t ht</span>
+<span id="L341">341       exact</span>
+<span id="L342">342         integral_sampledScheduledHalfTsallisAllRatePotentialStabilityBoundAtTime_le_suboptimalExpectedSqrt</span>
+<span id="L343">343           prior arms harms eta loss hbest t</span>
+<span id="L344">344             (heta t (by</span>
+<span id="L345">345               have ht&#x27; := Finset.mem_range.mp ht</span>
+<span id="L346">346               omega))</span>
+<span id="L347">347             (heta_le t (by</span>
+<span id="L348">348               have ht&#x27; := Finset.mem_range.mp ht</span>
+<span id="L349">349               omega))</span>
+<span id="L350">350 </span>
+<span id="L351">351 /-- Generated scheduled predictable environment regret against the best-arm</span>
+<span id="L352">352 point mass has the deterministic suboptimal-arm upper needed by the</span>
+<span id="L353">353 self-bounding completion-of-squares step. -/</span>
+<span id="L354">354 theorem integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_suboptimalExpectedSqrt</span>
+<span id="L355">355     {Env : Type u} {Action : Type v}</span>
+<span id="L356">356     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L357">357     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L358">358     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L359">359     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L360">360     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L361">361     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L362">362     {best : Action} (hbest : best ∈ arms) (horizon : Nat)</span>
+<span id="L363">363     (heta : forall t, t &lt;= horizon -&gt; 0 &lt; eta t)</span>
+<span id="L364">364     (heta_le : forall t, t &lt;= horizon -&gt; eta t &lt;= 1 / 2)</span>
+<span id="L365">365     (hetaMono : forall t, t &lt; horizon -&gt; eta (t + 1) &lt;= eta t) :</span>
+<span id="L366">366     let selector :=</span>
+<span id="L367">367       canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L368">368         arms harms eta loss</span>
+<span id="L369">369     let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L370">370       arms harms eta selector.finiteHistory loss.environment</span>
+<span id="L371">371     integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L372">372         arms harms eta loss (pointMass best) horizon) &lt;=</span>
+<span id="L373">373       (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L374">374         2 * eta t * (arms.erase best).sum (fun action =&gt;</span>
+<span id="L375">375           Real.sqrt (sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L376">376             mu arms harms eta t action)) + 2 * (eta t) ^ 2) +</span>
+<span id="L377">377         halfTsallisPotentialMass arms</span>
+<span id="L378">378           (initialHalfTsallisDistribution arms harms (eta 0)) / eta horizon -</span>
+<span id="L379">379         1 / eta horizon := by</span>
+<span id="L380">380   dsimp only</span>
+<span id="L381">381   let selector :=</span>
+<span id="L382">382     canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L383">383       arms harms eta loss</span>
+<span id="L384">384   let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L385">385     arms harms eta selector.finiteHistory loss.environment</span>
+<span id="L386">386   have hregret :=</span>
+<span id="L387">387     integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_allRateBound</span>
+<span id="L388">388       prior arms harms eta loss hbest horizon heta hetaMono</span>
+<span id="L389">389   dsimp only at hregret</span>
+<span id="L390">390   have hbudget :=</span>
+<span id="L391">391     integral_sum_sampledScheduledHalfTsallisAllRatePotentialStabilityBoundAtTime_le_suboptimalExpectedSqrt</span>
+<span id="L392">392       prior horizon arms harms eta loss hbest heta heta_le</span>
+<span id="L393">393   dsimp only at hbudget</span>
+<span id="L394">394   linarith</span>
+<span id="L395">395 </span>
+<span id="L396">396 /-- The generated scheduled upper bound feeds the abstract self-bounding</span>
+<span id="L397">397 completion-of-squares theorem without any remaining pathwise or Jensen</span>
+<span id="L398">398 obligation. -/</span>
+<span id="L399">399 theorem integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_of_selfBounding</span>
+<span id="L400">400     {Env : Type u} {Action : Type v}</span>
+<span id="L401">401     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L402">402     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L403">403     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L404">404     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L405">405     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L406">406     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L407">407     {best : Action} (hbest : best ∈ arms) (horizon : Nat)</span>
+<span id="L408">408     (heta : forall t, t &lt;= horizon -&gt; 0 &lt; eta t)</span>
+<span id="L409">409     (heta_le : forall t, t &lt;= horizon -&gt; eta t &lt;= 1 / 2)</span>
+<span id="L410">410     (hetaMono : forall t, t &lt; horizon -&gt; eta (t + 1) &lt;= eta t)</span>
+<span id="L411">411     (gap : Action -&gt; Real)</span>
+<span id="L412">412     (hgap : forall action, action ∈ arms.erase best -&gt; 0 &lt; gap action)</span>
+<span id="L413">413     (corruption : Real)</span>
+<span id="L414">414     (hselfBounding :</span>
+<span id="L415">415       (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L416">416           (arms.erase best).sum (fun action =&gt;</span>
+<span id="L417">417             gap action * sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L418">418               (prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L419">419                 arms harms eta</span>
+<span id="L420">420                   (canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L421">421                     arms harms eta loss).finiteHistory</span>
+<span id="L422">422                   loss.environment)</span>
+<span id="L423">423               arms harms eta t action)) - corruption &lt;=</span>
+<span id="L424">424         integral</span>
+<span id="L425">425           (prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L426">426             arms harms eta</span>
+<span id="L427">427               (canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L428">428                 arms harms eta loss).finiteHistory</span>
+<span id="L429">429               loss.environment)</span>
+<span id="L430">430           (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L431">431             arms harms eta loss (pointMass best) horizon)) :</span>
+<span id="L432">432     let selector :=</span>
+<span id="L433">433       canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L434">434         arms harms eta loss</span>
+<span id="L435">435     let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L436">436       arms harms eta selector.finiteHistory loss.environment</span>
+<span id="L437">437     integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L438">438         arms harms eta loss (pointMass best) horizon) &lt;=</span>
+<span id="L439">439       2 * ((Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L440">440           2 * (eta t) ^ 2) +</span>
+<span id="L441">441         (halfTsallisPotentialMass arms</span>
+<span id="L442">442             (initialHalfTsallisDistribution arms harms (eta 0)) / eta horizon -</span>
+<span id="L443">443           1 / eta horizon)) +</span>
+<span id="L444">444         ((Finset.range (horizon + 1)).product (arms.erase best)).sum</span>
+<span id="L445">445           (fun index =&gt; (2 * eta index.1) ^ 2 / gap index.2) +</span>
+<span id="L446">446         corruption := by</span>
+<span id="L447">447   dsimp only</span>
+<span id="L448">448   let selector :=</span>
+<span id="L449">449     canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L450">450       arms harms eta loss</span>
+<span id="L451">451   let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L452">452     arms harms eta selector.finiteHistory loss.environment</span>
+<span id="L453">453   let times := Finset.range (horizon + 1)</span>
+<span id="L454">454   let indices := times.product (arms.erase best)</span>
+<span id="L455">455   let probability := fun index : Nat × Action =&gt;</span>
+<span id="L456">456     sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L457">457       mu arms harms eta index.1 index.2</span>
+<span id="L458">458   let coefficient := fun index : Nat × Action =&gt; 2 * eta index.1</span>
+<span id="L459">459   let indexGap := fun index : Nat × Action =&gt; gap index.2</span>
+<span id="L460">460   let regret := integral mu</span>
+<span id="L461">461     (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L462">462       arms harms eta loss (pointMass best) horizon)</span>
+<span id="L463">463   let base := times.sum (fun t =&gt; 2 * (eta t) ^ 2) +</span>
+<span id="L464">464     (halfTsallisPotentialMass arms</span>
+<span id="L465">465         (initialHalfTsallisDistribution arms harms (eta 0)) / eta horizon -</span>
+<span id="L466">466       1 / eta horizon)</span>
+<span id="L467">467   have hprobability : forall index, index ∈ indices -&gt;</span>
+<span id="L468">468       0 &lt;= probability index := by</span>
+<span id="L469">469     intro index hindex</span>
+<span id="L470">470     have htime : index.1 ∈ times := (Finset.mem_product.mp hindex).1</span>
+<span id="L471">471     have haction : index.2 ∈ arms.erase best :=</span>
+<span id="L472">472       (Finset.mem_product.mp hindex).2</span>
+<span id="L473">473     have hsimplex :=</span>
+<span id="L474">474       finiteSimplex_sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L475">475         mu arms harms eta index.1</span>
+<span id="L476">476     exact hsimplex.1 index.2 (Finset.mem_of_mem_erase haction)</span>
+<span id="L477">477   have hgapIndex : forall index, index ∈ indices -&gt;</span>
+<span id="L478">478       0 &lt; indexGap index := by</span>
+<span id="L479">479     intro index hindex</span>
+<span id="L480">480     exact hgap index.2 (Finset.mem_product.mp hindex).2</span>
+<span id="L481">481   have hselfBoundingIndex :</span>
+<span id="L482">482       indices.sum (fun index =&gt; indexGap index * probability index) -</span>
+<span id="L483">483           corruption &lt;= regret := by</span>
+<span id="L484">484     simpa [indices, times, indexGap, probability, regret, mu, selector,</span>
+<span id="L485">485       Finset.sum_product] using hselfBounding</span>
+<span id="L486">486   have hregret :=</span>
+<span id="L487">487     integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_suboptimalExpectedSqrt</span>
+<span id="L488">488       prior arms harms eta loss hbest horizon heta heta_le hetaMono</span>
+<span id="L489">489   dsimp only at hregret</span>
+<span id="L490">490   have hupper : regret &lt;= base + indices.sum (fun index =&gt;</span>
+<span id="L491">491       coefficient index * Real.sqrt (probability index)) := by</span>
+<span id="L492">492     calc</span>
+<span id="L493">493       regret &lt;= (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L494">494           2 * eta t * (arms.erase best).sum (fun action =&gt;</span>
+<span id="L495">495             Real.sqrt (sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L496">496               mu arms harms eta t action)) + 2 * (eta t) ^ 2) +</span>
+<span id="L497">497           halfTsallisPotentialMass arms</span>
+<span id="L498">498             (initialHalfTsallisDistribution arms harms (eta 0)) / eta horizon -</span>
+<span id="L499">499           1 / eta horizon := by</span>
+<span id="L500">500         simpa [regret, mu, selector] using hregret</span>
+<span id="L501">501       _ = base + indices.sum (fun index =&gt;</span>
+<span id="L502">502           coefficient index * Real.sqrt (probability index)) := by</span>
+<span id="L503">503         simp [base, indices, times, coefficient, probability,</span>
+<span id="L504">504           Finset.sum_product, Finset.sum_add_distrib, Finset.mul_sum]</span>
+<span id="L505">505         ring</span>
+<span id="L506">506   have hfinal := regret_le_two_mul_base_add_sum_sq_div_gap_add_corruption</span>
+<span id="L507">507     indices probability coefficient indexGap regret base corruption</span>
+<span id="L508">508       hprobability hgapIndex hselfBoundingIndex hupper</span>
+<span id="L509">509   simpa [regret, base, indices, times, coefficient, indexGap, probability,</span>
+<span id="L510">510     mu, selector] using hfinal</span>
+<span id="L511">511 </span>
+<span id="L512">512 end Tsallis</span>
+<span id="L513">513 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

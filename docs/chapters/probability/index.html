@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="2. Probability, kernels, filtrations, and concentration · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="2. Probability, kernels, filtrations, and concentration · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>2. Probability, kernels, filtrations, and concentration · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group active" data-nav-group="book-map" data-nav-group-active="true" open><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="index.html" aria-current="page"><span>02</span>Probability layer</a><a class="book-nav-link" href="../etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="chapter">
+  <p class="eyebrow">Teaching chapter 02 of 10 · <span class="status compiled">Canonical route compiled</span></p>
+  <h1 class="page-title">2. Probability, kernels, filtrations, and concentration</h1>
+  <p class="lede">Measure-theoretic infrastructure for generated histories, conditional reward laws, martingale differences, posterior kernels, stopping times, and concentration.</p>
+  <p class="chapter-scope-note"><strong>How to read the status.</strong> It describes this page's canonical local Lean route, not completion of the cited textbook chapter or every extension listed below.</p>
+</section>
+
+
+<nav class="chapter-compass" data-chapter-compass aria-label="Chapter reading order">
+  <a href="#orientation"><span class="chapter-compass-step">01 · Orient</span><strong>What you need</strong><small>3 learning goals and the intended reader.</small></a>
+  <a href="#source-guide"><span class="chapter-compass-step">02 · Learn</span><strong>A reusable confidence-event route</strong><small>Ch. 2, Ch. 3, and Ch. 5 · online pp. 18–42, 46–54, and 74–81. 1 source theorem restatement, with assumptions and original links. Includes a three-step worked example.</small></a>
+  <a href="#teaching-notes"><span class="chapter-compass-step">03 · Verify</span><strong>Mathematics ↔ Lean</strong><small>Read intuition and proof structure, then open the exact compiled declaration.</small></a>
+</nav>
+
+<section id="orientation">
+  <h2>Orientation</h2>
+  <p><strong>Who should read this.</strong> Read after Foundations; familiarity with conditional expectation helps but is not required.</p>
+  <h3>Learning goals</h3>
+  <ul><li>See why policies and history selectors must be measurable maps.</li><li>Separate a marginal reward distribution from a history-conditioned kernel law.</li><li>Track adaptedness, integrability, finite-measure, and variance-proxy assumptions explicitly.</li></ul>
+</section>
+
+
+<section id="source-guide" class="source-guide">
+  <p class="eyebrow">Textbook crosswalk</p>
+  <h2>Read the mathematics before the Lean interface</h2>
+  <p class="section-intro">The Book Map is a curated formalization curriculum anchored in <em>Bandit Algorithms</em>, not a chapter-for-chapter reproduction of one book. Visible page labels use the numbered pages of its free online edition; source buttons use the PDF viewer's physical page index, which includes front matter and can therefore be larger. Companion papers cover algorithm-specific results.</p>
+  <div class="source-grid source-grid-1">
+<article class="source-card">
+  <span class="panel-kicker">Primary spine · free online edition</span>
+  <h3>Bandit Algorithms</h3>
+  <p>Tor Lattimore and Csaba Szepesvári</p>
+  <dl><div><dt>Location</dt><dd>Ch. 2, Ch. 3, and Ch. 5</dd></div><div><dt>Pages</dt><dd>online pp. 18–42, 46–54, and 74–81</dd></div></dl>
+  <a class="button compact" href="https://tor-lattimore.com/downloads/book/book.pdf#page=27">Open at the cited pages <span aria-hidden="true">↗</span></a>
+</article></div>
+
+
+  <aside class="notation-primer" id="notation" aria-labelledby="notation-title">
+    <div><span class="panel-kicker">Reader checkpoint</span><h3 id="notation-title">Notation you will meet</h3></div>
+    <dl><div><dt><code>𝓕_t</code></dt><dd>the sigma-algebra generated by the history observed through time t</dd></div><div><dt><code>E[X | 𝓕_t]</code></dt><dd>conditional expectation given the information currently available</dd></div><div><dt><code>δ</code></dt><dd>the total probability budget assigned to confidence failures</dd></div></dl>
+  </aside>
+  <div class="algorithm-panel" id="algorithm">
+    <div><span class="panel-kicker">proof flow · ordered flow</span><h3>A reusable confidence-event route</h3><p class="algorithm-intro">Read top to bottom: each step supplies the state or proof fact used by the next one.</p></div>
+    <ol class="algorithm-flow"><li><span class="algorithm-step-number" aria-hidden="true">01</span><div><strong>Model conditional noise</strong><p>State a conditional MGF or bounded-reward assumption on the generated history.</p></div></li><li><span class="algorithm-step-number" aria-hidden="true">02</span><div><strong>Derive one tail bound</strong><p>Convert the MGF bound into a deviation probability at a fixed index.</p></div></li><li><span class="algorithm-step-number" aria-hidden="true">03</span><div><strong>Allocate confidence</strong><p>Assign a finite, geometric, or telescoping share δ_i to every arm and time.</p></div></li><li><span class="algorithm-step-number" aria-hidden="true">04</span><div><strong>Join the events</strong><p>Use a union bound to obtain one good event consumed by an algorithm proof.</p></div></li></ol>
+
+  </div>
+
+  <aside class="worked-example" id="worked-example" aria-labelledby="worked-example-title">
+    <div class="worked-example-heading"><span class="panel-kicker">Worked example · follow one decision</span><h3 id="worked-example-title">Spend one confidence budget across six events</h3><p>Suppose two arms are inspected at three checkpoints and the total allowed failure probability is delta = 0.05. The union-bound step is visible without hiding the accounting inside an algorithm.</p></div>
+    <ol class="worked-example-flow"><li class="worked-example-step"><span class="worked-example-number" aria-hidden="true">01</span><div class="worked-example-copy"><strong>Name the six bad events</strong><p>Each event says that one arm&#x27;s empirical estimate misses its confidence radius at one checkpoint.</p></div><div class="math-statement" data-math-statement data-scroll-label="Worked example step 1"><strong>Worked example step 1.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">There is one deviation event for each of two arms at each of three checkpoints, for six events in total.</span><span class="math-tex" aria-hidden="true">\[E_{a,j}=\{\lvert\widehat\mu_{a,j}-\mu_a\rvert&gt;r_{a,j}\},\qquad a\in\{1,2\},\ j\in\{1,2,3\}.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div></li><li class="worked-example-step"><span class="worked-example-number" aria-hidden="true">02</span><div class="worked-example-copy"><strong>Give every event an explicit share</strong><p>An equal schedule assigns delta divided by six to each fixed-index tail bound.</p></div><div class="math-statement" data-math-statement data-scroll-label="Worked example step 2"><strong>Worked example step 2.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Each event receives failure budget one over 120, and its fixed-index tail probability is bounded by that share.</span><span class="math-tex" aria-hidden="true">\[\delta_{a,j}=\frac{0.05}{6}=\frac1{120},\qquad \Pr(E_{a,j})\le\frac1{120}.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div></li><li class="worked-example-step"><span class="worked-example-number" aria-hidden="true">03</span><div class="worked-example-copy"><strong>Join the events once</strong><p>No independence is needed for the union bound; adding the six shares preserves the declared total budget.</p></div><div class="math-statement" data-math-statement data-scroll-label="Worked example step 3"><strong>Worked example step 3.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">The chance that any of the six deviations occurs is at most the sum of their probabilities, which is 0.05.</span><span class="math-tex" aria-hidden="true">\[\Pr\!\left(\bigcup_{a=1}^{2}\bigcup_{j=1}^{3}E_{a,j}\right)\le\sum_{a,j}\Pr(E_{a,j})\le6\cdot\frac1{120}=0.05.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div></li></ol>
+    <p class="worked-example-takeaway"><strong>Takeaway.</strong> A simultaneous good event is a budgeted collection of fixed-index facts. Finite, geometric, and telescoping schedules differ in how they distribute delta, not in the final union-bound logic.</p>
+    <p class="worked-example-boundary"><strong>Scope.</strong> The event probabilities are illustrative inputs to the union bound. The compiled concentration declarations below specify the MGF, measurability, filtration, and index assumptions that justify each tail estimate.</p>
+  </aside>
+
+
+<article class="source-theorem-card">
+  <div class="source-theorem-heading"><div><span class="panel-kicker">Source theorem · faithful restatement</span><h3>Corollary 5.5 (sub-Gaussian tail)</h3></div><a href="https://tor-lattimore.com/downloads/book/book.pdf#page=86">Original at online pp. 77–78 ↗</a></div>
+
+  <p>The fixed-index tail estimate is the mathematical atom from which finite and all-time confidence schedules are assembled.</p>
+  <dl class="source-theorem-contract" aria-label="Source theorem contract"><div><dt>Model</dt><dd>A real-valued random variable X on a probability space.</dd></div><div><dt>Assumptions</dt><dd>X is centered and σ-sub-Gaussian in the moment-generating-function sense; the deviation ε is nonnegative.</dd></div><div><dt>Algorithm parameters</dt><dd>Sub-Gaussian scale σ and deviation threshold ε.</dd></div><div><dt>Regret notion</dt><dd>Not a regret theorem; this is a one-sided concentration primitive consumed by later regret proofs.</dd></div><div><dt>Guarantee</dt><dd>The upper-tail probability is at most exp(-ε²/(2σ²)).</dd></div></dl>
+  <div class="math-statement" data-math-statement data-scroll-label="Source mathematical statement"><strong>Source mathematical statement.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">A centered sub-Gaussian variable has an exponentially small upper-tail probability.</span><span class="math-tex" aria-hidden="true">\[\Pr(X\ge\varepsilon)\le\exp\!\left(-\frac{\varepsilon^2}{2\sigma^2}\right)\quad\text{for a zero-mean }\sigma^2\text{-sub-Gaussian }X.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p class="source-note"><strong>BanditRLlib relationship.</strong> The local library adds measure, kernel, filtration, conditional-law, finite-index, and countable-all-time adapters needed by generated bandit trajectories.</p>
+  <p class="copyright-note">The mathematical content is restated in this site's notation; wording is ours. See online pp. 77–78 in the linked source for the original statement and full assumptions.</p>
+</article>
+</section>
+
+<section id="teaching-notes">
+  <h2>Natural-language and Lean side by side</h2>
+  <p>The mathematical readings are explanatory summaries. The exact generated Lean statement and its source link remain authoritative for hypotheses, types, constants, and indexing.</p>
+  <p class="section-intro">A curated route through definitions, key bridges, and canonical terminals stays visible. 4 additional dependency, extension, or research-frontier notes are grouped below.</p>
+
+<article class="theorem-panel" id="decl-42431bda83c8-teaching" aria-labelledby="decl-42431bda83c8-teaching-title decl-42431bda83c8-teaching-name">
+  <div class="theorem-header">
+    <div class="declaration-heading"><span class="panel-kicker">Mathematics ↔ Lean</span><h3 id="decl-42431bda83c8-teaching-title">Measurable policies define legitimate random actions</h3><p class="declaration-name" id="decl-42431bda83c8-teaching-name"><span>Lean declaration</span><code>Bandit<wbr>RL<wbr>Proof.<wbr>Policy.<wbr>Measurable<wbr>Policy</code></p></div>
+    <span class="status compiled">Compiled</span>
+  </div>
+  <div class="theorem-body">
+    <p><strong>Plain-English statement.</strong> A policy is an action-valued function of a state together with proof that this function is measurable.</p>
+    <div class="math-statement" data-math-statement data-scroll-label="Mathematical reading"><strong>Mathematical reading.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">A policy is an action-valued function of a state together with proof that this function is measurable.</span><span class="math-tex" aria-hidden="true">\(\pi:S\to A\quad\text{with}\quad\pi\text{ measurable}.\)</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+    <dl class="teaching-grid">
+      <div><dt>Intuition</dt><dd>An algorithmic formula is not enough for a probability theorem: the selected action must be a legitimate random variable.</dd></div>
+      <div><dt>Why it is needed</dt><dd>Generated trajectories, conditional distributions, filtrations, and expected regret all depend on policy measurability.</dd></div>
+      <div><dt>Place in the proof</dt><dd>This structure is the interface from deterministic state computation to probability-kernel construction.</dd></div>
+    </dl>
+    <details class="technical-reading">
+      <summary>Proof and Lean reading notes</summary>
+      <dl class="technical-teaching-grid">
+        <div><dt>Proof idea</dt><dd>The structure stores the action function and its measurability proof. Composition lemmas then obtain measurable actions from measurable states.</dd></div>
+        <div><dt>Lean reading notes</dt><dd>Measurable spaces are typeclass arguments. The structure makes the regularity contract explicit instead of relying on an informal claim that the policy is well behaved.</dd></div>
+        <div><dt>Teaching dependencies</dt><dd>No direct teaching dependency recorded.</dd></div>
+      </dl>
+    </details>
+    <details class="exact-lean">
+      <summary>Exact Lean statement</summary>
+      <pre class="lean-code" tabindex="0" role="region" aria-label="Exact Lean statement"><code><span class="kw">structure</span> MeasurablePolicy (State : Type u) (Action : Type v) [MeasurableSpace State] [MeasurableSpace Action] <span class="kw">where</span></code></pre>
+    </details>
+    <div class="source-links">
+      <a href="../../modules/banditrlproof-policymeasurability/index.html#decl-42431bda83c8">Open in the declaration catalog</a>
+      <a href="../../source/BanditRLProof/PolicyMeasurability.lean.html#L21">Open source at line 21</a>
+    </div>
+  </div>
+</article>
+
+<article class="theorem-panel" id="decl-1967507777d8-teaching" aria-labelledby="decl-1967507777d8-teaching-title decl-1967507777d8-teaching-name">
+  <div class="theorem-header">
+    <div class="declaration-heading"><span class="panel-kicker">Mathematics ↔ Lean</span><h3 id="decl-1967507777d8-teaching-title">Conditional sub-Gaussian rewards on the generated trajectory</h3><p class="declaration-name" id="decl-1967507777d8-teaching-name"><span>Lean declaration</span><code>Bandit<wbr>RL<wbr>Proof.<wbr>Conditional<wbr>Expectation<wbr>Reward.<wbr>history<wbr>Step<wbr>Kernel<wbr>Family_<wbr>centered<wbr>Reward_<wbr>succ_<wbr>has<wbr>Cond<wbr>Subgaussian<wbr>MGF_<wbr>traj<wbr>Measure</code></p></div>
+    <span class="status compiled">Compiled</span>
+  </div>
+  <div class="theorem-body">
+    <p><strong>Plain-English statement.</strong> On the canonical trajectory generated by a measurable history step-kernel family, the selected centered successor reward has the promised conditional sub-Gaussian MGF.</p>
+    <div class="math-statement" data-math-statement data-scroll-label="Mathematical reading"><strong>Mathematical reading.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">On the canonical trajectory generated by a measurable history step-kernel family, the selected centered successor reward has the promised conditional sub-Gaussian MGF.</span><span class="math-tex" aria-hidden="true">\(\mathbb E[\exp(\lambda(R_{t+1}-m_t))\mid\mathcal F_t]\le\exp(\lambda^2v_t/2).\)</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+    <dl class="teaching-grid">
+      <div><dt>Intuition</dt><dd>The theorem closes the gap between a one-step kernel law and the random reward actually observed on the recursively generated path.</dd></div>
+      <div><dt>Why it is needed</dt><dd>UCB, ETC, and adversarial high-probability routes need conditional concentration on the same measure that generates the policy history.</dd></div>
+      <div><dt>Place in the proof</dt><dd>It is a reusable law-transport endpoint in the conditional-reward layer.</dd></div>
+    </dl>
+    <details class="technical-reading">
+      <summary>Proof and Lean reading notes</summary>
+      <dl class="technical-teaching-grid">
+        <div><dt>Proof idea</dt><dd>Identify the conditional kernel of the successor reward under trajMeasure, center the selected law by its declared mean, and reuse the kernel-level conditional-MGF contract.</dd></div>
+        <div><dt>Lean reading notes</dt><dd>The long name records the transport path. The exact Lean statement below is the authoritative list of measurable-space, kernel, mean, and proxy hypotheses.</dd></div>
+        <div><dt>Teaching dependencies</dt><dd><code>BanditRLProof.Policy.MeasurablePolicy</code></dd></div>
+      </dl>
+    </details>
+    <details class="exact-lean">
+      <summary>Exact Lean statement</summary>
+      <pre class="lean-code" tabindex="0" role="region" aria-label="Exact Lean statement"><code><span class="kw">theorem</span> historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure {Context : Type v} {State : Type w} {Action : Type x} [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Countable Action] (mu0 : Measure Rat) [MeasureTheory.IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat) (policy : Nat -&gt; Policy.MeasurablePolicy State Action) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (state : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; State) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hstate : <span class="kw">forall</span> n : Nat, Measurable (state n)) (mean : Context -&gt; Action -&gt; Rat) (varianceProxy : Context -&gt; Action -&gt; NNReal) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hmean : Measurable (<span class="kw">fun</span> pair : Prod Context Action =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (defaultAction : Action) (i : Nat) (c : NNReal) (hvariance : <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), varianceProxy (context i history) ((policy i).action (state i history)) &lt;= c) : <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext hstate <span class="kw">let</span> trajMeasure := ProbabilityTheory.Kernel.trajMeasure (X := <span class="kw">fun</span> _ : Nat =&gt; Rat) mu0 stepKernel <span class="kw">let</span> reward : RewardTrace Rat -&gt; RewardTrace Rat := <span class="kw">fun</span> trajectory =&gt; trajectory <span class="kw">let</span> hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> trajectory : RewardTrace Rat =&gt; reward trajectory t)</code></pre>
+    </details>
+    <div class="source-links">
+      <a href="../../modules/banditrlproof-conditionalrewardlawsource/index.html#decl-1967507777d8">Open in the declaration catalog</a>
+      <a href="../../source/BanditRLProof/ConditionalRewardLawSource.lean.html#L2719">Open source at line 2719</a>
+    </div>
+  </div>
+</article>
+
+<article class="theorem-panel" id="decl-761e6a46f5e6-teaching" aria-labelledby="decl-761e6a46f5e6-teaching-title decl-761e6a46f5e6-teaching-name">
+  <div class="theorem-header">
+    <div class="declaration-heading"><span class="panel-kicker">Mathematics ↔ Lean</span><h3 id="decl-761e6a46f5e6-teaching-title">One confidence budget across every arm and time</h3><p class="declaration-name" id="decl-761e6a46f5e6-teaching-name"><span>Lean declaration</span><code>Bandit<wbr>RL<wbr>Proof.<wbr>Concentration.<wbr>measure_<wbr>i<wbr>Union_<wbr>i<wbr>Union_<wbr>fintype_<wbr>le_<wbr>delta_<wbr>of_<wbr>geometric<wbr>Confidence<wbr>Share</code></p></div>
+    <span class="status compiled">Compiled</span>
+  </div>
+  <div class="theorem-body">
+    <p><strong>Plain-English statement.</strong> A geometric budget over all times can be shared equally across every member of one nonempty finite index type while preserving the total outer confidence budget.</p>
+    <div class="math-statement" data-math-statement data-scroll-label="Mathematical reading"><strong>Mathematical reading.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">A geometric budget over all times can be shared equally across every member of one nonempty finite index type while preserving the total outer confidence budget.</span><span class="math-tex" aria-hidden="true">\(\mu(\bigcup_{n\ge0}\bigcup_{i\in I}E_{n,i})\le\delta\) when \(\mu(E_{n,i})\le\delta_n/|I|\) and \(\sum_n\delta_n=\delta\).</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+    <dl class="teaching-grid">
+      <div><dt>Intuition</dt><dd>Use a finite union bound across arms or contexts at each time, then a summable geometric schedule across all times.</dd></div>
+      <div><dt>Why it is needed</dt><dd>ETC and UCB confidence arguments repeatedly need simultaneous control over a finite family and more than one horizon; this theorem packages only that reusable bookkeeping step.</dd></div>
+      <div><dt>Place in the proof</dt><dd>It joins the finite outer-union wrapper to the geometric confidence schedule in Chapter 2, before any algorithm-specific tail producer.</dd></div>
+    </dl>
+    <details class="technical-reading">
+      <summary>Proof and Lean reading notes</summary>
+      <dl class="technical-teaching-grid">
+        <div><dt>Proof idea</dt><dd>Apply countable outer-measure subadditivity over time, invoke the compiled equal-share finite-union theorem at each time, compare the ENNReal series termwise, and rewrite the exact geometric total.</dd></div>
+        <div><dt>Lean reading notes</dt><dd>The exact statement assumes only a measurable ambient space, a nonempty Fintype index, nonnegative delta, and the pointwise outer-measure bounds. It does not require event measurability, a probability measure, independence, filtration, or a concentration producer.</dd></div>
+        <div><dt>Teaching dependencies</dt><dd><code>BanditRLProof.ProbabilityUnionBound.measure_biUnion_finset_le_of_uniform</code>, <code>BanditRLProof.Concentration.tsum_ofReal_geometricConfidenceShare</code></dd></div>
+      </dl>
+    </details>
+    <details class="exact-lean">
+      <summary>Exact Lean statement</summary>
+      <pre class="lean-code" tabindex="0" role="region" aria-label="Exact Lean statement"><code><span class="kw">theorem</span> measure_iUnion_iUnion_fintype_le_delta_of_geometricConfidenceShare {Omega : Type u} {Idx : Type v} [MeasurableSpace Omega] [Fintype Idx] [Nonempty Idx] (mu : Measure Omega) (bad : Nat -&gt; Idx -&gt; Set Omega) (delta : Real) (hdelta : <span class="num">0</span> &lt;= delta) (hbad : <span class="kw">forall</span> n i, mu (bad n i) &lt;= ENNReal.ofReal (geometricConfidenceShare delta n / (Fintype.card Idx : Real))) : mu (⋃ n, ⋃ i, bad n i) &lt;= ENNReal.ofReal delta</code></pre>
+    </details>
+    <div class="source-links">
+      <a href="../../modules/banditrlproof-concentrationfintypegeometricalltime/index.html#decl-761e6a46f5e6">Open in the declaration catalog</a>
+      <a href="../../source/BanditRLProof/ConcentrationFintypeGeometricAllTime.lean.html#L50">Open source at line 50</a>
+    </div>
+  </div>
+</article>
+
+<article class="theorem-panel" id="decl-ffd763bcc092-teaching" aria-labelledby="decl-ffd763bcc092-teaching-title decl-ffd763bcc092-teaching-name">
+  <div class="theorem-header">
+    <div class="declaration-heading"><span class="panel-kicker">Mathematics ↔ Lean</span><h3 id="decl-ffd763bcc092-teaching-title">Simultaneous empirical-mean confidence for every arm and horizon</h3><p class="declaration-name" id="decl-ffd763bcc092-teaching-name"><span>Lean declaration</span><code>Bandit<wbr>RL<wbr>Proof.<wbr>Conditional<wbr>Expectation<wbr>Reward.<wbr>action<wbr>Reward<wbr>History<wbr>Step<wbr>Kernel<wbr>Family_<wbr>successor<wbr>Arm<wbr>Empirical<wbr>Mean_<wbr>simultaneous_<wbr>fintype_<wbr>geometric<wbr>All<wbr>Time_<wbr>abs_<wbr>tail_<wbr>ennreal_<wbr>delta_<wbr>traj<wbr>Measure</code></p></div>
+    <span class="status compiled">Compiled</span>
+  </div>
+  <div class="theorem-body">
+    <p><strong>Plain-English statement.</strong> One canonical generated action/reward trajectory satisfies the existing random-pull-count empirical-mean confidence radius simultaneously for every finite arm and every positive successor horizon, outside one geometrically budgeted failure event.</p>
+    <div class="math-statement" data-math-statement data-scroll-label="Mathematical reading"><strong>Mathematical reading.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">One canonical generated action/reward trajectory satisfies the existing random-pull-count empirical-mean confidence radius simultaneously for every finite arm and every positive successor horizon, outside one geometrically budgeted failure event.</span><span class="math-tex" aria-hidden="true">\(\mu(\bigcup_{n\ge0}\bigcup_{a\in A}\{N_a(n+1)&gt;0,\ r_{a,n+1}(\delta_n/|A|)\le |\widehat\mu_a(n+1)-\mu_a|\})\le\delta.\)</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+    <dl class="teaching-grid">
+      <div><dt>Intuition</dt><dd>The fixed-arm tail already adapts to the random number of pulls inside a fixed horizon. This theorem keeps the generated law fixed, shares each time budget across all arms, and then sums the geometric schedule over all horizons.</dd></div>
+      <div><dt>Why it is needed</dt><dd>It closes the gap between generic confidence-budget bookkeeping and a real finite-arm trajectory-level empirical-mean event needed by UCB-facing work.</dd></div>
+      <div><dt>Place in the proof</dt><dd>It sits above the canonical random-pull-count tail and finite-index geometric union, and below any UCB score-selection or regret consumer.</dd></div>
+    </dl>
+    <details class="technical-reading">
+      <summary>Proof and Lean reading notes</summary>
+      <dl class="technical-teaching-grid">
+        <div><dt>Proof idea</dt><dd>At each pair (n, arm), instantiate the compiled canonical tail at horizon n+1 and confidence share delta_n divided by the arm count; then apply the accepted finite-index geometric all-time union to the identical trajectory measure.</dd></div>
+        <div><dt>Lean reading notes</dt><dd>The theorem requires a probability initial pair law, measurable generated context/state, a centered reward-kernel law, a global selected-history variance ceiling, stationary per-arm means, and positive sigma2 and delta. It assumes neither event measurability nor delta at most one, and it proves no maximal inequality or UCB regret bound.</dd></div>
+        <div><dt>Teaching dependencies</dt><dd><code>BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_abs_tail_random_pullCount_ennreal_delta_trajMeasure_on_horizon</code>, <code>BanditRLProof.Concentration.measure_iUnion_iUnion_fintype_le_delta_of_geometricConfidenceShare</code></dd></div>
+      </dl>
+    </details>
+    <details class="exact-lean">
+      <summary>Exact Lean statement</summary>
+      <pre class="lean-code" tabindex="0" role="region" aria-label="Exact Lean statement"><code><span class="kw">theorem</span> actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_geometricAllTime_abs_tail_ennreal_delta_trajMeasure {Context : Type v} {State : Type w} {Action : Type x} [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [StandardBorelSpace Action] [MeasurableSingletonClass Action] [Fintype Action] [Nonempty Action] [DecidableEq Action] (mu0 : Measure (Prod Action Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat) (policy : Nat -&gt; Policy.MeasurablePolicy State Action) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (state : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; State) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hstate : <span class="kw">forall</span> n : Nat, Measurable (state n)) (mean : Context -&gt; Action -&gt; Rat) (varianceProxy : Context -&gt; Action -&gt; NNReal) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hmean : Measurable (<span class="kw">fun</span> pair : Prod Context Action =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (armMean : Action -&gt; Rat) (sigma2 : NNReal) (hvariance : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), varianceProxy (context i history) ((policy i).action (state i history)) &lt;= sigma2) (harmMean : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), <span class="kw">forall</span> arm : Action, mean (context i history) arm = armMean arm) (hsigma2 : <span class="num">0</span> &lt; (((sigma2 : NNReal) : Real))) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) : <span class="kw">let</span> pairContext : (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod Action Rat) -&gt; Context</code></pre>
+    </details>
+    <div class="source-links">
+      <a href="../../modules/banditrlproof-conditionalrewardpartialtrajectorygeometricalltime/index.html#decl-ffd763bcc092">Open in the declaration catalog</a>
+      <a href="../../source/BanditRLProof/ConditionalRewardPartialTrajectoryGeometricAllTime.lean.html#L49">Open source at line 49</a>
+    </div>
+  </div>
+</article>
+<details class="inventory-disclosure teaching-disclosure"><summary>Explore 4 additional Lean teaching notes</summary><div>
+<article class="theorem-panel" id="decl-3e08f74cd5ef-teaching" aria-labelledby="decl-3e08f74cd5ef-teaching-title decl-3e08f74cd5ef-teaching-name">
+  <div class="theorem-header">
+    <div class="declaration-heading"><span class="panel-kicker">Mathematics ↔ Lean</span><h3 id="decl-3e08f74cd5ef-teaching-title">One canonical generated action/reward trajectory satisfies the…</h3><p class="declaration-name" id="decl-3e08f74cd5ef-teaching-name"><span>Lean declaration</span><code>Bandit<wbr>RL<wbr>Proof.<wbr>Conditional<wbr>Expectation<wbr>Reward.<wbr>action<wbr>Reward<wbr>History<wbr>Step<wbr>Kernel<wbr>Family_<wbr>successor<wbr>Arm<wbr>Empirical<wbr>Mean_<wbr>simultaneous_<wbr>fintype_<wbr>telescoping<wbr>All<wbr>Time_<wbr>abs_<wbr>tail_<wbr>ennreal_<wbr>delta_<wbr>traj<wbr>Measure</code></p></div>
+    <span class="status compiled">Compiled</span>
+  </div>
+  <div class="theorem-body">
+    <p><strong>Plain-English statement.</strong> One canonical generated action/reward trajectory satisfies the random-pull-count empirical-mean confidence radius for every finite arm and every positive successor horizon under a telescoping confidence schedule.</p>
+    <div class="math-statement" data-math-statement data-scroll-label="Mathematical reading"><strong>Mathematical reading.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">One canonical generated action/reward trajectory satisfies the random-pull-count empirical-mean confidence radius for every finite arm and every positive successor horizon under a telescoping confidence schedule.</span><span class="math-tex" aria-hidden="true">\(\mu(\bigcup_{n\ge0}\bigcup_{a\in A}\{N_a(n+1)&gt;0,\ r_{a,n+1}(\delta/(|A|(n+1)(n+2)))\le|\widehat\mu_a-\mu_a|\})\le\delta.\)</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+    <dl class="teaching-grid">
+      <div><dt>Intuition</dt><dd>The shares telescope exactly to delta while their reciprocal grows only polynomially, so logarithmic radii retain logarithmic time growth instead of the linear growth caused by geometric shares.</dd></div>
+      <div><dt>Why it is needed</dt><dd>This supplies the confidence schedule now consumed by the fixed-policy ordinary-UCB route on the canonical Rat trajectory.</dd></div>
+      <div><dt>Place in the proof</dt><dd>It sits above the fixed-horizon random-count tail and directly below the compiled same-source scheduled UCB score, policy, all-horizon count, and finite-time expected-regret consumers.</dd></div>
+    </dl>
+    <details class="technical-reading">
+      <summary>Proof and Lean reading notes</summary>
+      <dl class="technical-teaching-grid">
+        <div><dt>Proof idea</dt><dd>Prove the reciprocal telescope, convert its exact Real HasSum to ENNReal, share each time budget across the finite arm type, instantiate the accepted fixed-horizon tail at n+1, and apply countable outer-measure subadditivity without changing trajMeasure.</dd></div>
+        <div><dt>Lean reading notes</dt><dd>The theorem retains the same probability, measurability, centered-kernel, stationary-mean, variance-ceiling, and positivity contracts as the geometric producer. It adds no independence, event-measurability, optional-stopping, or delta-at-most-one premise.</dd></div>
+        <div><dt>Teaching dependencies</dt><dd><code>BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_abs_tail_random_pullCount_ennreal_delta_trajMeasure_on_horizon</code>, <code>BanditRLProof.Concentration.measure_iUnion_iUnion_fintype_le_delta_of_telescopingConfidenceShare</code></dd></div>
+      </dl>
+    </details>
+    <details class="exact-lean">
+      <summary>Exact Lean statement</summary>
+      <pre class="lean-code" tabindex="0" role="region" aria-label="Exact Lean statement"><code><span class="kw">theorem</span> actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_telescopingAllTime_abs_tail_ennreal_delta_trajMeasure {Context : Type v} {State : Type w} {Action : Type x} [MeasurableSpace Context] [MeasurableSpace State] [MeasurableSpace Action] [StandardBorelSpace Action] [MeasurableSingletonClass Action] [Fintype Action] [Nonempty Action] [DecidableEq Action] (mu0 : Measure (Prod Action Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat) (policy : Nat -&gt; Policy.MeasurablePolicy State Action) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (state : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; State) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hstate : <span class="kw">forall</span> n : Nat, Measurable (state n)) (mean : Context -&gt; Action -&gt; Rat) (varianceProxy : Context -&gt; Action -&gt; NNReal) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hmean : Measurable (<span class="kw">fun</span> pair : Prod Context Action =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (armMean : Action -&gt; Rat) (sigma2 : NNReal) (hvariance : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), varianceProxy (context i history) ((policy i).action (state i history)) &lt;= sigma2) (harmMean : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), <span class="kw">forall</span> arm : Action, mean (context i history) arm = armMean arm) (hsigma2 : <span class="num">0</span> &lt; (((sigma2 : NNReal) : Real))) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) : <span class="kw">let</span> pairContext : (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod Action Rat) -&gt; Context</code></pre>
+    </details>
+    <div class="source-links">
+      <a href="../../modules/banditrlproof-conditionalrewardpartialtrajectorytelescopingalltime/index.html#decl-3e08f74cd5ef">Open in the declaration catalog</a>
+      <a href="../../source/BanditRLProof/ConditionalRewardPartialTrajectoryTelescopingAllTime.lean.html#L49">Open source at line 49</a>
+    </div>
+  </div>
+</article>
+
+<article class="theorem-panel" id="decl-104ff246858b-teaching" aria-labelledby="decl-104ff246858b-teaching-title decl-104ff246858b-teaching-name">
+  <div class="theorem-header">
+    <div class="declaration-heading"><span class="panel-kicker">Mathematics ↔ Lean</span><h3 id="decl-104ff246858b-teaching-title">If the joint law of environment and history is the canonical…</h3><p class="declaration-name" id="decl-104ff246858b-teaching-name"><span>Lean declaration</span><code>Bandit<wbr>RL<wbr>Proof.<wbr>Posterior<wbr>Kernel.<wbr>canonical<wbr>Posterior_<wbr>kernel_<wbr>ae_<wbr>eq_<wbr>cond<wbr>Distrib_<wbr>of_<wbr>pair_<wbr>map_<wbr>eq</code></p></div>
+    <span class="status compiled">Compiled</span>
+  </div>
+  <div class="theorem-body">
+    <p><strong>Plain-English statement.</strong> If the joint law of environment and history is the canonical prior-likelihood law, the canonical posterior kernel agrees almost everywhere with the conditional distribution of the environment given history.</p>
+    <div class="math-statement" data-math-statement data-scroll-label="Mathematical reading"><strong>Mathematical reading.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">If the joint law of environment and history is the canonical prior-likelihood law, the canonical posterior kernel agrees almost everywhere with the conditional distribution of the environment given history.</span><span class="math-tex" aria-hidden="true">\(\mathcal L(E,H)=\pi\otimes L\Longrightarrow \Pi(\cdot\mid H)=\operatorname{condDistrib}(E\mid H)\quad\text{a.e.}\)</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+    <dl class="teaching-grid">
+      <div><dt>Intuition</dt><dd>Bayes&#x27; posterior and measure-theoretic conditional distribution are two descriptions of the same object once their joint law is identified.</dd></div>
+      <div><dt>Why it is needed</dt><dd>Thompson sampling needs to replace a reference posterior sampler by the actual conditional environment law along a generated history.</dd></div>
+      <div><dt>Place in the proof</dt><dd>This theorem is the principal posterior-law transport in the Thompson proof DAG.</dd></div>
+    </dl>
+    <details class="technical-reading">
+      <summary>Proof and Lean reading notes</summary>
+      <dl class="technical-teaching-grid">
+        <div><dt>Proof idea</dt><dd>Rewrite the supplied pair pushforward as the canonical joint measure and use Mathlib&#x27;s posterior/conditional-distribution identity, transporting the almost-everywhere statement along the history marginal.</dd></div>
+        <div><dt>Lean reading notes</dt><dd>The conclusion is kernel equality almost everywhere, not pointwise equality. Standard Borel and finiteness hypotheses make conditional distributions available.</dd></div>
+        <div><dt>Teaching dependencies</dt><dd>No direct teaching dependency recorded.</dd></div>
+      </dl>
+    </details>
+    <details class="exact-lean">
+      <summary>Exact Lean statement</summary>
+      <pre class="lean-code" tabindex="0" role="region" aria-label="Exact Lean statement"><code><span class="kw">theorem</span> canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq {Omega : Type*} [MeasurableSpace Omega] [StandardBorelSpace Env] [Nonempty Env] (mu : Measure Omega) [IsFiniteMeasure mu] (env : Omega -&gt; Env) (history : Omega -&gt; History) (henv : Measurable env) (hhistory : Measurable history) (prior : Measure Env) [IsProbabilityMeasure prior] (likelihood : ProbabilityTheory.Kernel Env History) [ProbabilityTheory.IsMarkovKernel likelihood] (hpair : mu.map (<span class="kw">fun</span> omega =&gt; (env omega, history omega)) = canonicalJointMeasure prior likelihood) : (canonicalPosterior prior likelihood).kernel =ᵐ[mu.map history] ProbabilityTheory.condDistrib env history mu</code></pre>
+    </details>
+    <div class="source-links">
+      <a href="../../modules/banditrlproof-posteriorkernel/index.html#decl-104ff246858b">Open in the declaration catalog</a>
+      <a href="../../source/BanditRLProof/PosteriorKernel.lean.html#L194">Open source at line 194</a>
+    </div>
+  </div>
+</article>
+
+<article class="theorem-panel" id="decl-17188820c890-teaching" aria-labelledby="decl-17188820c890-teaching-title decl-17188820c890-teaching-name">
+  <div class="theorem-header">
+    <div class="declaration-heading"><span class="panel-kicker">Mathematics ↔ Lean</span><h3 id="decl-17188820c890-teaching-title">The partial sums of an adapted integrable successor-indexed…</h3><p class="declaration-name" id="decl-17188820c890-teaching-name"><span>Lean declaration</span><code>Bandit<wbr>RL<wbr>Proof.<wbr>Martingale<wbr>Diff.<wbr>martingale_<wbr>partial<wbr>Sums<wbr>Succ_<wbr>of_<wbr>succ<wbr>Martingale<wbr>Difference</code></p></div>
+    <span class="status compiled">Compiled</span>
+  </div>
+  <div class="theorem-body">
+    <p><strong>Plain-English statement.</strong> The partial sums of an adapted integrable successor-indexed martingale-difference sequence form a martingale.</p>
+    <div class="math-statement" data-math-statement data-scroll-label="Mathematical reading"><strong>Mathematical reading.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">The partial sums of an adapted integrable successor-indexed martingale-difference sequence form a martingale.</span><span class="math-tex" aria-hidden="true">\(\mathbb E[X_{t+1}\mid\mathcal F_t]=0\Longrightarrow S_n=\sum_{i&lt;n}X_{i+1}\text{ is an }(\mathcal F_n)\text{-martingale}.\)</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+    <dl class="teaching-grid">
+      <div><dt>Intuition</dt><dd>Zero conditional drift is exactly the local condition needed for cumulative noise to have no predictable trend.</dd></div>
+      <div><dt>Why it is needed</dt><dd>Concentration and optional-stopping arguments reason about cumulative centered reward, not isolated one-step rewards.</dd></div>
+      <div><dt>Place in the proof</dt><dd>This theorem converts conditional reward-law work into Mathlib&#x27;s martingale API.</dd></div>
+    </dl>
+    <details class="technical-reading">
+      <summary>Proof and Lean reading notes</summary>
+      <dl class="technical-teaching-grid">
+        <div><dt>Proof idea</dt><dd>Use the witness fields for strong adaptedness, integrability, and zero conditional expectation; unfold the successor partial sum and verify the martingale conditional-expectation equation.</dd></div>
+        <div><dt>Lean reading notes</dt><dd>The packaged witness prevents measurability and integrability assumptions from disappearing inside a tactic proof.</dd></div>
+        <div><dt>Teaching dependencies</dt><dd>No direct teaching dependency recorded.</dd></div>
+      </dl>
+    </details>
+    <details class="exact-lean">
+      <summary>Exact Lean statement</summary>
+      <pre class="lean-code" tabindex="0" role="region" aria-label="Exact Lean statement"><code><span class="kw">theorem</span> martingale_partialSumsSucc_of_succMartingaleDifference {Omega : Type u} [mOmega : MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] {F : Filtration Nat mOmega} {Y : Nat -&gt; Omega -&gt; Real} (h : SuccMartingaleDifference mu F Y) : Martingale (partialSumsSucc Y) F mu</code></pre>
+    </details>
+    <div class="source-links">
+      <a href="../../modules/banditrlproof-martingaledifference/index.html#decl-17188820c890">Open in the declaration catalog</a>
+      <a href="../../source/BanditRLProof/MartingaleDifference.lean.html#L234">Open source at line 234</a>
+    </div>
+  </div>
+</article>
+
+<article class="theorem-panel" id="decl-e61e72f328d0-teaching" aria-labelledby="decl-e61e72f328d0-teaching-title decl-e61e72f328d0-teaching-name">
+  <div class="theorem-header">
+    <div class="declaration-heading"><span class="panel-kicker">Mathematics ↔ Lean</span><h3 id="decl-e61e72f328d0-teaching-title">A countable family of deviation events, each controlled by its own…</h3><p class="declaration-name" id="decl-e61e72f328d0-teaching-name"><span>Lean declaration</span><code>Bandit<wbr>RL<wbr>Proof.<wbr>Concentration.<wbr>measure_<wbr>i<wbr>Union_<wbr>scheduled_<wbr>deviation_<wbr>ge_<wbr>inter_<wbr>variance_<wbr>le_<wbr>delta_<wbr>of_<wbr>fixed<wbr>Tilt_<wbr>quadratic_<wbr>tail</code></p></div>
+    <span class="status compiled">Compiled</span>
+  </div>
+  <div class="theorem-body">
+    <p><strong>Plain-English statement.</strong> A countable family of deviation events, each controlled by its own fixed-MGF quadratic tail and confidence share, has total outer probability at most the supplied overall budget.</p>
+    <div class="math-statement" data-math-statement data-scroll-label="Mathematical reading"><strong>Mathematical reading.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">A countable family of deviation events, each controlled by its own fixed-MGF quadratic tail and confidence share, has total outer probability at most the supplied overall budget.</span><span class="math-tex" aria-hidden="true">\(E_n=\{D_n\ge r_n,\,V_n\le v_n\},\qquad \mu(\bigcup_{n\ge0}E_n)\le\sum_{n\ge0}\delta_n\le\delta.\)</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+    <dl class="teaching-grid">
+      <div><dt>Intuition</dt><dd>Spend a small part of the confidence budget at each index, prove the corresponding one-event tail, and add the possible failures. Countable subadditivity is enough; the events need not form a martingale stopping argument.</dd></div>
+      <div><dt>Why it is needed</dt><dd>Many all-time algorithm statements need one event covering every deterministic prefix. This theorem turns a reusable fixed-index MGF bound into such a scheduled union without overstating it as Ville, Doob, mixture, optional-stopping, or general Freedman theory.</dd></div>
+      <div><dt>Place in the proof</dt><dd>It is the generic probability bridge consumed by the new all-positive-prefix EXP3 predictable-variance theorem.</dd></div>
+    </dl>
+    <details class="technical-reading">
+      <summary>Proof and Lean reading notes</summary>
+      <dl class="technical-teaching-grid">
+        <div><dt>Proof idea</dt><dd>Apply the measure-of-countable-union upper bound, instantiate the optimized one-event quadratic fixed-MGF theorem at every index, compare termwise ENNReal bounds, and finish with the caller&#x27;s total confidence-budget inequality.</dd></div>
+        <div><dt>Lean reading notes</dt><dd>The conclusion is an outer-measure inequality, so event measurability is not assumed. Positivity of every scale, variance budget, tilt cap, and confidence share is explicit in the signature.</dd></div>
+        <div><dt>Teaching dependencies</dt><dd><code>BanditRLProof.Concentration.measure_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail</code></dd></div>
+      </dl>
+    </details>
+    <details class="exact-lean">
+      <summary>Exact Lean statement</summary>
+      <pre class="lean-code" tabindex="0" role="region" aria-label="Exact Lean statement"><code><span class="kw">theorem</span> measure_iUnion_scheduled_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail {Omega : Type*} [MeasurableSpace Omega] (mu : Measure Omega) (deviation predictableVariance : Nat -&gt; Omega -&gt; Real) (varianceScale varianceBudget tiltCap deltaAt : Nat -&gt; Real) (delta : Real) (hvarianceScale : <span class="kw">forall</span> n, <span class="num">0</span> &lt; varianceScale n) (hvarianceBudget : <span class="kw">forall</span> n, <span class="num">0</span> &lt; varianceBudget n) (htiltCap : <span class="kw">forall</span> n, <span class="num">0</span> &lt; tiltCap n) (hdeltaAt : <span class="kw">forall</span> n, <span class="num">0</span> &lt; deltaAt n) (hfixed : <span class="kw">forall</span> n tilt, <span class="num">0</span> &lt;= tilt -&gt; tilt &lt;= tiltCap n -&gt; mu {omega | quadraticFixedMGFScheduledRadius varianceScale varianceBudget tiltCap deltaAt n &lt;= deviation n omega ∧ predictableVariance n omega &lt;= varianceBudget n} &lt;= ENNReal.ofReal (Real.exp (-tilt * quadraticFixedMGFScheduledRadius varianceScale varianceBudget tiltCap deltaAt n + varianceScale n * (tilt ^ <span class="num">2</span> * varianceBudget n)))) (hbudget : (∑&#x27; n, ENNReal.ofReal (deltaAt n)) &lt;= ENNReal.ofReal delta) : mu (⋃ n, {omega | quadraticFixedMGFScheduledRadius varianceScale varianceBudget tiltCap deltaAt n &lt;= deviation n omega ∧ predictableVariance n omega &lt;= varianceBudget n}) &lt;= ENNReal.ofReal delta</code></pre>
+    </details>
+    <div class="source-links">
+      <a href="../../modules/banditrlproof-concentrationquadraticscheduled/index.html#decl-e61e72f328d0">Open in the declaration catalog</a>
+      <a href="../../source/BanditRLProof/ConcentrationQuadraticScheduled.lean.html#L78">Open source at line 78</a>
+    </div>
+  </div>
+</article>
+</div></details>
+</section>
+
+
+<nav class="chapter-pager chapter-pager-primary" id="continue-reading" aria-label="Continue after the teaching route">
+  <div class="chapter-pager-heading"><span class="eyebrow">Continue reading</span><strong>BanditRLlib Book Map</strong></div>
+  <div class="chapter-pager-links">
+    <a class="chapter-pager-link previous" href="../foundations/index.html"><span class="chapter-pager-direction"><span aria-hidden="true">←</span> Previous</span><strong>1. Finite bandits, traces, and regret</strong></a>
+    <a class="chapter-pager-index" href="../../learning/index.html"><span>All chapters</span><strong>2 of 10</strong></a>
+    <a class="chapter-pager-link next" href="../etc/index.html"><span class="chapter-pager-direction">Next <span aria-hidden="true">→</span></span><strong>3. Explore-Then-Commit</strong></a>
+  </div>
+</nav>
+
+
+<section id="completion-contract">
+  <h2>Maintainer contract</h2>
+  <details class="maintainer-contract"><summary>Open the canonical completion definition and blockers</summary><div>
+    <p>Complete within the Book Map scope when the reusable measure, kernel, filtration, conditional-law, finite-time concentration, and finite/countable all-time confidence-budget adapters required by canonical generated ETC and ordinary-UCB routes compile with explicit regularity contracts. The telescoping all-time producer must remain on the same canonical trajectory when consumed by the fixed-policy UCB extension. Self-normalized and RL-specific confidence remain separate chapters or extensions.</p>
+    <h3>Remaining blockers</h3>
+    <ul><li>No remaining blocker inside the scoped ETC/ordinary-UCB dependency surface: the finite-arm/time event feeds the horizon-indexed family, while the telescoping all-time event now feeds a horizon-free scheduled UCB policy on the same canonical trajectory through all-horizon pull counts and finite-time expected regret.</li></ul>
+  </div></details>
+</section>
+
+
+<section id="milestones">
+  <h2>Chapter implementation status</h2>
+  <p class="section-intro">The compact summary keeps the reading route visible. Open it for source-linked declarations and exact remaining gaps.</p>
+  <details class="chapter-ledger-disclosure"><summary><span>Open 6 implementation records</span><span>6 compiled · 0 partial · 0 blocked · 0 planned</span></summary><div class="table-wrap chapter-milestone-table" tabindex="0" role="region" aria-label="Chapter implementation milestones"><table><thead><tr><th>Milestone</th><th>Status</th><th>Lean declaration</th><th>Remaining gap</th></tr></thead><tbody><tr><td data-label="Milestone">Generated-history conditional sub-Gaussian reward law</td><td data-label="Status"><span class="status compiled">Compiled</span></td><td data-label="Lean evidence"><div class="chapter-milestone-declarations"><a href="../../modules/banditrlproof-conditionalrewardlawsource/index.html#decl-1967507777d8"><code>BanditRLProof.ConditionalExpectationReward.historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure</code></a></div></td><td data-label="Remaining gap">—</td></tr><tr><td data-label="Milestone">Finite-index geometric all-time confidence union</td><td data-label="Status"><span class="status compiled">Compiled</span></td><td data-label="Lean evidence"><div class="chapter-milestone-declarations"><a href="../../modules/banditrlproof-concentrationfintypegeometricalltime/index.html#decl-1479880bd324"><code>BanditRLProof.Concentration.measure_iUnion_iUnion_fintype_le_tsum_of_uniform</code></a><a href="../../modules/banditrlproof-concentrationfintypegeometricalltime/index.html#decl-761e6a46f5e6"><code>BanditRLProof.Concentration.measure_iUnion_iUnion_fintype_le_delta_of_geometricConfidenceShare</code></a></div></td><td data-label="Remaining gap">Each ETC, UCB, or RL consumer must still supply its per-time, per-index tail events and model-specific law assumptions.</td></tr><tr><td data-label="Milestone">Generated finite-arm empirical-mean all-time confidence</td><td data-label="Status"><span class="status compiled">Compiled</span></td><td data-label="Lean evidence"><div class="chapter-milestone-declarations"><a href="../../modules/banditrlproof-conditionalrewardpartialtrajectorygeometricalltime/index.html#decl-e888594ecbdd"><code>BanditRLProof.ConditionalExpectationReward.successorArmEmpiricalMeanFintypeGeometricAllTimeBadEvent</code></a><a href="../../modules/banditrlproof-conditionalrewardpartialtrajectorygeometricalltime/index.html#decl-ffd763bcc092"><code>BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_geometricAllTime_abs_tail_ennreal_delta_trajMeasure</code></a></div></td><td data-label="Remaining gap">The ordinary-UCB chapter uses its exact finite-arm/time confidence producer. A fixed-policy anytime UCB consumer for this stronger geometric event remains a separate extension.</td></tr><tr><td data-label="Milestone">Generated finite-arm telescoping all-time empirical-mean confidence</td><td data-label="Status"><span class="status compiled">Compiled</span></td><td data-label="Lean evidence"><div class="chapter-milestone-declarations"><a href="../../modules/banditrlproof-concentrationconfidenceschedule/index.html#decl-22ecca312ba8"><code>BanditRLProof.Concentration.tsum_ofReal_telescopingConfidenceShare</code></a><a href="../../modules/banditrlproof-concentrationfintypetelescopingalltime/index.html#decl-3316b8632e74"><code>BanditRLProof.Concentration.measure_iUnion_iUnion_fintype_le_delta_of_telescopingConfidenceShare</code></a><a href="../../modules/banditrlproof-conditionalrewardpartialtrajectorytelescopingalltime/index.html#decl-119c2a232994"><code>BanditRLProof.ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent</code></a><details class="chapter-milestone-more"><summary>Open 1 more declarations</summary><div><a href="../../modules/banditrlproof-conditionalrewardpartialtrajectorytelescopingalltime/index.html#decl-3e08f74cd5ef"><code>BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_telescopingAllTime_abs_tail_ennreal_delta_trajMeasure</code></a></div></details></div></td><td data-label="Remaining gap">—</td></tr><tr><td data-label="Milestone">Probability interfaces used by canonical ETC and ordinary UCB</td><td data-label="Status"><span class="status compiled">Compiled</span></td><td data-label="Lean evidence"><div class="chapter-milestone-declarations"><a href="../../modules/banditrlproof-conditionalrewardlawsource/index.html#decl-0de8e72851a0"><code>BanditRLProof.ConditionalExpectationReward.historyStepKernelFamily_generatedActionPartialTrajectoryPairLawSource_trajMeasure</code></a><a href="../../modules/banditrlproof-conditionalrewardlawsource/index.html#decl-1967507777d8"><code>BanditRLProof.ConditionalExpectationReward.historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure</code></a><a href="../../modules/banditrlproof-conditionalrewardpartialtrajectorymaskedlaw/index.html#decl-4c2a6c6e92a3"><code>BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_finiteArmTime_abs_tail_ennreal_delta_trajMeasure</code></a></div></td><td data-label="Remaining gap">—</td></tr><tr><td data-label="Milestone">Countable scheduled quadratic fixed-MGF tail</td><td data-label="Status"><span class="status compiled">Compiled</span></td><td data-label="Lean evidence"><div class="chapter-milestone-declarations"><a href="../../modules/banditrlproof-concentrationquadraticscheduled/index.html#decl-e61e72f328d0"><code>BanditRLProof.Concentration.measure_iUnion_scheduled_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail</code></a></div></td><td data-label="Remaining gap">—</td></tr></tbody></table></div></details>
+</section>
+
+<section id="open-gaps">
+  <h2>Open boundaries</h2>
+  <ul><li>The telescoping all-time empirical-mean producer now has an explicit same-source fixed-policy UCB consumer; the geometric producer remains confidence infrastructure rather than the logarithmic scheduled-regret route.</li><li>There is intentionally no single producer for every adaptive environment or every fixed-policy anytime algorithm.</li><li>Self-normalized and RL-specific concentration remain explicit downstream theorem routes rather than one universal wrapper.</li></ul>
+</section>
+
+<section id="module-list">
+  <h2>All Lean modules in this chapter</h2>
+  <details class="inventory-disclosure"><summary>Open the complete module list (45 modules)</summary><div class="table-wrap" tabindex="0" role="region" aria-label="Lean modules in this chapter"><table><thead><tr><th>Module</th><th>Declarations</th><th>Project imports</th><th>Status</th></tr></thead><tbody><tr><td><a href="../../modules/banditrlproof-boundedrewardkernellaw/index.html"><code>BanditRLProof.BoundedRewardKernelLaw</code></a></td><td>3</td><td>2</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-concentrationcappedoccupancy/index.html"><code>BanditRLProof.ConcentrationCappedOccupancy</code></a></td><td>5</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-concentrationconfidenceschedule/index.html"><code>BanditRLProof.ConcentrationConfidenceSchedule</code></a></td><td>12</td><td>0</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-concentrationdyadicexponential/index.html"><code>BanditRLProof.ConcentrationDyadicExponential</code></a></td><td>6</td><td>0</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-concentrationfintypegeometricalltime/index.html"><code>BanditRLProof.ConcentrationFintypeGeometricAllTime</code></a></td><td>2</td><td>2</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-concentrationfintypetelescopingalltime/index.html"><code>BanditRLProof.ConcentrationFintypeTelescopingAllTime</code></a></td><td>1</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-concentrationfixedmgf/index.html"><code>BanditRLProof.ConcentrationFixedMGF</code></a></td><td>24</td><td>0</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-concentrationgaussianoccupancy/index.html"><code>BanditRLProof.ConcentrationGaussianOccupancy</code></a></td><td>12</td><td>0</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-concentrationindexoccupancy/index.html"><code>BanditRLProof.ConcentrationIndexOccupancy</code></a></td><td>8</td><td>3</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-concentrationmartingalemaximal/index.html"><code>BanditRLProof.ConcentrationMartingaleMaximal</code></a></td><td>4</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-concentrationquadraticfixedmgf/index.html"><code>BanditRLProof.ConcentrationQuadraticFixedMGF</code></a></td><td>3</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-concentrationquadraticmaximal/index.html"><code>BanditRLProof.ConcentrationQuadraticMaximal</code></a></td><td>2</td><td>2</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-concentrationquadraticscheduled/index.html"><code>BanditRLProof.ConcentrationQuadraticScheduled</code></a></td><td>3</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-concentrationsubgaussian/index.html"><code>BanditRLProof.ConcentrationSubGaussian</code></a></td><td>31</td><td>3</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-concentrationtailintegration/index.html"><code>BanditRLProof.ConcentrationTailIntegration</code></a></td><td>1</td><td>0</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-concentrationvariance/index.html"><code>BanditRLProof.ConcentrationVariance</code></a></td><td>3</td><td>0</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-conditionalexpectationreward/index.html"><code>BanditRLProof.ConditionalExpectationReward</code></a></td><td>89</td><td>3</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-conditionalrewardfoundation/index.html"><code>BanditRLProof.ConditionalRewardFoundation</code></a></td><td>2</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-conditionalrewardlawsource/index.html"><code>BanditRLProof.ConditionalRewardLawSource</code></a></td><td>347</td><td>3</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-conditionalrewardpartialtrajectorygeometricalltime/index.html"><code>BanditRLProof.ConditionalRewardPartialTrajectoryGeometricAllTime</code></a></td><td>2</td><td>2</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-conditionalrewardpartialtrajectorylaw/index.html"><code>BanditRLProof.ConditionalRewardPartialTrajectoryLaw</code></a></td><td>8</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-conditionalrewardpartialtrajectorymaskedlaw/index.html"><code>BanditRLProof.ConditionalRewardPartialTrajectoryMaskedLaw</code></a></td><td>6</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-conditionalrewardpartialtrajectorytelescopingalltime/index.html"><code>BanditRLProof.ConditionalRewardPartialTrajectoryTelescopingAllTime</code></a></td><td>2</td><td>2</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-finitearmrewardkernellaw/index.html"><code>BanditRLProof.FiniteArmRewardKernelLaw</code></a></td><td>12</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-finitecontextvarianceproxy/index.html"><code>BanditRLProof.FiniteContextVarianceProxy</code></a></td><td>6</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-historyfiltration/index.html"><code>BanditRLProof.HistoryFiltration</code></a></td><td>49</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-independencefoundation/index.html"><code>BanditRLProof.IndependenceFoundation</code></a></td><td>2</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-integrabilitysums/index.html"><code>BanditRLProof.IntegrabilitySums</code></a></td><td>2</td><td>0</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-kernelindependentextension/index.html"><code>BanditRLProof.KernelIndependentExtension</code></a></td><td>6</td><td>0</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-kerneltrajectoryprefix/index.html"><code>BanditRLProof.KernelTrajectoryPrefix</code></a></td><td>2</td><td>0</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-martingaledifference/index.html"><code>BanditRLProof.MartingaleDifference</code></a></td><td>15</td><td>0</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-measurablelocalquantities/index.html"><code>BanditRLProof.MeasurableLocalQuantities</code></a></td><td>2</td><td>2</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-measurablepullcount/index.html"><code>BanditRLProof.MeasurablePullCount</code></a></td><td>1</td><td>2</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-measurablepullcountcast/index.html"><code>BanditRLProof.MeasurablePullCountCast</code></a></td><td>1</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-measurableregret/index.html"><code>BanditRLProof.MeasurableRegret</code></a></td><td>1</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-measurablesums/index.html"><code>BanditRLProof.MeasurableSums</code></a></td><td>1</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-measurefoundation/index.html"><code>BanditRLProof.MeasureFoundation</code></a></td><td>3</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-measurel2indicator/index.html"><code>BanditRLProof.MeasureL2Indicator</code></a></td><td>1</td><td>0</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-policymeasurability/index.html"><code>BanditRLProof.PolicyMeasurability</code></a></td><td>14</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-posteriorkernel/index.html"><code>BanditRLProof.PosteriorKernel</code></a></td><td>18</td><td>0</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-probabilityunionbound/index.html"><code>BanditRLProof.ProbabilityUnionBound</code></a></td><td>3</td><td>0</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-rewardkernel/index.html"><code>BanditRLProof.RewardKernel</code></a></td><td>74</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-rewardtracelaw/index.html"><code>BanditRLProof.RewardTraceLaw</code></a></td><td>4</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-unboundedstoppingtimel2coordinateintegrability/index.html"><code>BanditRLProof.UnboundedStoppingTimeL2CoordinateIntegrability</code></a></td><td>10</td><td>2</td><td><span class="status compiled">Compiled</span></td></tr><tr><td><a href="../../modules/banditrlproof-unboundedstoppingtimeweightedl2coordinateintegrability/index.html"><code>BanditRLProof.UnboundedStoppingTimeWeightedL2CoordinateIntegrability</code></a></td><td>3</td><td>1</td><td><span class="status compiled">Compiled</span></td></tr></tbody></table></div></details>
+</section>
+
+
+<nav class="chapter-pager chapter-pager-secondary" id="continue-reading-again" aria-label="Chapter navigation at end">
+  <div class="chapter-pager-heading"><span class="eyebrow">Next stop</span><strong>BanditRLlib Book Map</strong></div>
+  <div class="chapter-pager-links">
+    <a class="chapter-pager-link previous" href="../foundations/index.html"><span class="chapter-pager-direction"><span aria-hidden="true">←</span> Previous</span><strong>1. Finite bandits, traces, and regret</strong></a>
+    <a class="chapter-pager-index" href="../../learning/index.html"><span>All chapters</span><strong>2 of 10</strong></a>
+    <a class="chapter-pager-link next" href="../etc/index.html"><span class="chapter-pager-direction">Next <span aria-hidden="true">→</span></span><strong>3. Explore-Then-Commit</strong></a>
+  </div>
+</nav>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Chapter</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#chapter">Chapter</a><a data-toc-link href="#orientation">Orientation</a><a data-toc-link href="#source-guide">Sources</a><a data-toc-link href="#notation">Notation</a><a data-toc-link href="#algorithm">Proof flow</a><a data-toc-link href="#worked-example">Worked example</a><a data-toc-link href="#teaching-notes">Lean teaching notes</a><a data-toc-link href="#completion-contract">Maintainer contract</a><a data-toc-link href="#milestones">Status</a><a data-toc-link href="#open-gaps">Open boundaries</a><a data-toc-link href="#module-list">Modules</a><a data-toc-link href="#continue-reading">Continue reading</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.TsallisFiniteArmIIDCorruptedRewardLaw · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.TsallisFiniteArmIIDCorruptedRewardLaw · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.TsallisFiniteArmIIDCorruptedRewardLaw · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Tsallis-FTRL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Tsallis<wbr>Finite<wbr>Arm<wbr>IID<wbr>Corrupted<wbr>Reward<wbr>Law</h1>
+  <p class="lede">This module replaces the free nonnegative corruption parameter of the abstract self-bounding endpoint by a quantity derived from a concrete process. Each arm receives a fixed real reward shift, the shifted reward is projected back to [0, 1], and fresh finite reward vectors remain IID across rounds.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean.html"><code>BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/tsallis/index.html">8. Tsallis-FTRL, corruption, and nonstationarity</a></dd></div>
+    <div><dt>Declarations</dt><dd>20</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-tsallisfinitearmiidrewardlaw/index.html"><code>BanditRLProof.TsallisFiniteArmIIDRewardLaw</code></a>, <a href="../banditrlproof-tsallissqrtschedulefixedgap/index.html"><code>BanditRLProof.TsallisSqrtScheduleFixedGap</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-tsallisscheduledtimevaryingexpectedgap/index.html"><code>BanditRLProof.TsallisScheduledTimeVaryingExpectedGap</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-b0003f64c504">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.clippedUnitReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Projection of a real value to the unit interval.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> clippedUnitReal (value : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean.html#L23">Source line 23</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c42b38e687f2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.clippedUnitReal_mem_Icc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> clippedUnitReal_mem_Icc (value : Real) : clippedUnitReal value ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean.html#L26">Source line 26</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-630d97a510bb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.clippedUnitReal_eq_of_mem_Icc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> clippedUnitReal_eq_of_mem_Icc (value : Real) (hvalue : value ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) : clippedUnitReal value = value</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean.html#L30">Source line 30</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8275f5f6e65d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.abs_clippedUnitReal_add_sub_self_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> abs_clippedUnitReal_add_sub_self_le (value shift : Real) (hvalue : value ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) : |clippedUnitReal (value + shift) - value| &lt;= |shift|</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean.html#L36">Source line 36</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-aa0d10eab797">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.finiteArmIIDStationaryCorruptedReward</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Reward after a stationary arm-dependent shift and unit-interval clipping.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteArmIIDStationaryCorruptedReward {K : Nat} (rewardShift : Fin K -&gt; Real) (state : Fin K -&gt; Rat) (arm : Fin K) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean.html#L51">Source line 51</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-998efd00e88c">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.finiteArmIIDStationaryCorruptedRewardVectorLoss</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Selected loss associated with the stationary corrupted reward vector.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteArmIIDStationaryCorruptedRewardVectorLoss {K : Nat} (rewardShift : Fin K -&gt; Real) (state : Fin K -&gt; Rat) (arm : Fin K) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean.html#L56">Source line 56</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-56b6970d21d3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.measurable_finiteArmIIDStationaryCorruptedRewardVectorLoss</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_finiteArmIIDStationaryCorruptedRewardVectorLoss {K : Nat} (rewardShift : Fin K -&gt; Real) : Measurable (<span class="kw">fun</span> input : (Fin K -&gt; Rat) × Fin K =&gt; finiteArmIIDStationaryCorruptedRewardVectorLoss rewardShift input.<span class="num">1</span> input.<span class="num">2</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean.html#L60">Source line 60</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a35063e6bf4d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.finiteArmIIDStationaryCorruptedRewardVectorLoss_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteArmIIDStationaryCorruptedRewardVectorLoss_nonneg {K : Nat} (rewardShift : Fin K -&gt; Real) (state : Fin K -&gt; Rat) (arm : Fin K) : <span class="num">0</span> &lt;= finiteArmIIDStationaryCorruptedRewardVectorLoss rewardShift state arm</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean.html#L67">Source line 67</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1564fb72c08d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.finiteArmIIDStationaryCorruptedRewardVectorLoss_le_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteArmIIDStationaryCorruptedRewardVectorLoss_le_one {K : Nat} (rewardShift : Fin K -&gt; Real) (state : Fin K -&gt; Rat) (arm : Fin K) : finiteArmIIDStationaryCorruptedRewardVectorLoss rewardShift state arm &lt;= <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean.html#L77">Source line 77</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-07d90a64d796">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.abs_finiteArmIIDStationaryCorruptedReward_sub_base_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> abs_finiteArmIIDStationaryCorruptedReward_sub_base_le {K : Nat} (rewardShift : Fin K -&gt; Real) (state : Fin K -&gt; Rat) (arm : Fin K) : |finiteArmIIDStationaryCorruptedReward rewardShift state arm - clippedUnitReward (state arm)| &lt;= |rewardShift arm|</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean.html#L86">Source line 86</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-16fc6cabd579">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.abs_stationaryCorruptedLossDiff_sub_baseLossDiff_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> abs_stationaryCorruptedLossDiff_sub_baseLossDiff_le {K : Nat} (rewardShift : Fin K -&gt; Real) (state : Fin K -&gt; Rat) (best arm : Fin K) : |(finiteArmIIDStationaryCorruptedRewardVectorLoss rewardShift state arm - finiteArmIIDStationaryCorruptedRewardVectorLoss rewardShift state best) - (finiteArmIIDRewardVectorLoss state arm - finiteArmIIDRewardVectorLoss state best)| &lt;= |rewardShift arm| + |rewardShift best|</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean.html#L94">Source line 94</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-533d14d5a18c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integrable_iidLossStateDiff</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_iidLossStateDiff {LossState Action : Type*} [MeasurableSpace LossState] [MeasurableSpace Action] (law : Measure LossState) [IsFiniteMeasure law] (value : LossState -&gt; Action -&gt; Real) (hvalue : Measurable (<span class="kw">fun</span> input : LossState × Action =&gt; value input.<span class="num">1</span> input.<span class="num">2</span>)) (hvalue_nonneg : <span class="kw">forall</span> state action, <span class="num">0</span> &lt;= value state action) (hvalue_le_one : <span class="kw">forall</span> state action, value state action &lt;= <span class="num">1</span>) (best arm : Action) : Integrable (<span class="kw">fun</span> state =&gt; value state arm - value state best) law</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean.html#L126">Source line 126</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2f24daea7df4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.abs_iidLossStateMeanGap_stationaryCorrupted_sub_modelGap_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The actual stationary-corrupted IID loss gap remains within the two
+affected arm shifts of the uncorrupted finite-bandit model gap.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> abs_iidLossStateMeanGap_stationaryCorrupted_sub_modelGap_le {K : Nat} (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (hbound : <span class="kw">forall</span> arm, ∀ᵐ reward ∂armLaw arm, ((reward : Rat) : Real) ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; ((reward : Rat) : Real)) = ((model.mean arm : Rat) : Real)) (rewardShift : Fin K -&gt; Real) (arm : Fin K) : |iidLossStateMeanGap (finiteArmIIDRewardVectorLaw armLaw) (finiteArmIIDStationaryCorruptedRewardVectorLoss rewardShift) model.bestArm arm - ((model.gap arm : Rat) : Real)| &lt;= |rewardShift arm| + |rewardShift model.bestArm|</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean.html#L149">Source line 149</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-646d415acc8f">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.scheduledGapDeviationBudget</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Total baseline-gap perturbation allowance through the inclusive horizon.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> scheduledGapDeviationBudget {Action : Type*} [DecidableEq Action] (arms : Finset Action) (best : Action) (horizon : Nat) (deviation : Action -&gt; Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean.html#L205">Source line 205</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-dd9c457836a7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.scheduledGapDeviationBudget_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> scheduledGapDeviationBudget_eq {Action : Type*} [DecidableEq Action] (arms : Finset Action) (best : Action) (horizon : Nat) (deviation : Action -&gt; Real) : scheduledGapDeviationBudget arms best horizon deviation = (((horizon + <span class="num">1</span> : Nat) : Real)) * (arms.erase best).sum deviation</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean.html#L212">Source line 212</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cad216d3b7fa">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_hasSelfBounding_of_perturbedExpectedGapLaw</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">An expected law for perturbed gaps yields the baseline-gap self-bound with
+the accumulated coordinatewise gap-deviation budget.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_hasSelfBounding_of_perturbedExpectedGapLaw {Env Action : Type*} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (mu : Measure (Env × ((k : Nat) -&gt; Action × Real))) [IsProbabilityMeasure mu] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (loss : Exp3.PredictableLossVector Env Action) {best : Action} (hbest : best ∈ arms) (horizon : Nat) (baseGap actualGap deviation : Action -&gt; Real) (hactualGapLaw : HasScheduledExpectedGapLaw mu arms harms eta loss best actualGap horizon) (hdeviation : <span class="kw">forall</span> action, action ∈ arms.erase best -&gt; |actualGap action - baseGap action| &lt;= deviation action) : (Finset.range (horizon + <span class="num">1</span>)).sum (<span class="kw">fun</span> t =&gt; (arms.erase best).sum (<span class="kw">fun</span> action =&gt; baseGap action * sampledScheduledHalfTsallisExpectedProbabilityAt mu arms harms eta t action)) - scheduledGapDeviationBudget arms best horizon deviation &lt;= integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret arms harms eta loss (pointMass best) horizon)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean.html#L222">Source line 222</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0ba018d70ed3">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.finiteArmIIDStationaryRewardCorruptionBudget</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Explicit corruption budget for a stationary arm-dependent reward shift.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteArmIIDStationaryRewardCorruptionBudget {K : Nat} (model : FiniteBanditModel K) (horizon : Nat) (rewardShift : Fin K -&gt; Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean.html#L301">Source line 301</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-365bb175f1ea">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.finiteArmIIDStationaryRewardCorruptionBudget_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteArmIIDStationaryRewardCorruptionBudget_eq {K : Nat} (model : FiniteBanditModel K) (horizon : Nat) (rewardShift : Fin K -&gt; Real) : finiteArmIIDStationaryRewardCorruptionBudget model horizon rewardShift = (((horizon + <span class="num">1</span> : Nat) : Real)) * ((Finset.univ : Finset (Fin K)).erase model.bestArm).sum (<span class="kw">fun</span> arm =&gt; |rewardShift arm| + |rewardShift model.bestArm|)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean.html#L307">Source line 307</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-27b65c01a1a5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.finiteArmIIDStationaryRewardCorruptionBudget_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteArmIIDStationaryRewardCorruptionBudget_zero {K : Nat} (model : FiniteBanditModel K) (horizon : Nat) : finiteArmIIDStationaryRewardCorruptionBudget model horizon (<span class="kw">fun</span> _ =&gt; <span class="num">0</span>) = <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean.html#L317">Source line 317</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-69e56c13a3fd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDStationaryCorruptedRewardLawRegret_le_log</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Scheduled half-Tsallis logarithmic regret for an IID finite-arm reward
+model with a fixed clipped reward shift.  The additive corruption term is
+derived from `rewardShift`; it is not a free theorem parameter.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_sampledScheduledHalfTsallisFiniteArmIIDStationaryCorruptedRewardLawRegret_le_log {K : Nat} (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (hbound : <span class="kw">forall</span> arm, ∀ᵐ reward ∂armLaw arm, ((reward : Rat) : Real) ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; ((reward : Rat) : Real)) = ((model.mean arm : Rat) : Real)) (rewardShift : Fin K -&gt; Real) (hgapPos : <span class="kw">forall</span> arm, arm ≠ model.bestArm -&gt; <span class="num">0</span> &lt; ((model.gap arm : Rat) : Real)) (horizon : Nat) : letI : Nonempty (Fin K)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean.html#L327">Source line 327</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

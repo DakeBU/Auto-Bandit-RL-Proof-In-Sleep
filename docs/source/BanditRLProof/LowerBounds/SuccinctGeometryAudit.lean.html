@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import Mathlib.Analysis.InnerProductSpace.Basic</span>
+<span id="L2">2 import Mathlib.Analysis.InnerProductSpace.Orthonormal</span>
+<span id="L3">3 import Mathlib.Order.ConditionallyCompleteLattice.Basic</span>
+<span id="L4">4 import Mathlib.Tactic</span>
+<span id="L5">5 </span>
+<span id="L6">6 /-!</span>
+<span id="L7">7 # Succinct-support geometry audit</span>
+<span id="L8">8 </span>
+<span id="L9">9 This module formalizes the first geometric layer of Zeng--Honorio (NeurIPS</span>
+<span id="L10">10 2025), Definitions 3.1--3.3 and Lemmas 3.1--3.4.  It keeps the atom set</span>
+<span id="L11">11 possibly infinite and makes every boundedness premise for real `sSup`</span>
+<span id="L12">12 explicit.</span>
+<span id="L13">13 </span>
+<span id="L14">14 The final diagnostic records a source boundary rather than a source theorem:</span>
+<span id="L15">15 if the atoms do not span the ambient inner-product space, the candidate set</span>
+<span id="L16">16 defining the paper&#x27;s globally real-valued `R` can be unbounded.  Later source</span>
+<span id="L17">17 lemmas that consume global `R` therefore remain outside this module until a</span>
+<span id="L18">18 spanning, extended-real, or span/quotient repair is chosen explicitly.  The</span>
+<span id="L19">19 local Lemma-3.2 identities suffice for Lemmas 3.3--3.4 and do not assume such a</span>
+<span id="L20">20 repair.</span>
+<span id="L21">21 -/</span>
+<span id="L22">22 </span>
+<span id="L23">23 namespace BanditRLProof</span>
+<span id="L24">24 namespace LowerBounds</span>
+<span id="L25">25 namespace Succinct</span>
+<span id="L26">26 </span>
+<span id="L27">27 open scoped BigOperators InnerProductSpace</span>
+<span id="L28">28 </span>
+<span id="L29">29 noncomputable section</span>
+<span id="L30">30 </span>
+<span id="L31">31 /-- Source Axiom 3.1: a nonempty collection of unit atoms closed under</span>
+<span id="L32">32 negation.  No spanning assumption is added. -/</span>
+<span id="L33">33 structure SuccinctUnitSystem (V : Type*) [NormedAddCommGroup V]</span>
+<span id="L34">34     [InnerProductSpace ℝ V] where</span>
+<span id="L35">35   atoms : Set V</span>
+<span id="L36">36   atoms_nonempty : atoms.Nonempty</span>
+<span id="L37">37   norm_eq_one : ∀ e ∈ atoms, ‖e‖ = 1</span>
+<span id="L38">38   neg_mem : ∀ e ∈ atoms, -e ∈ atoms</span>
+<span id="L39">39 </span>
+<span id="L40">40 namespace SuccinctUnitSystem</span>
+<span id="L41">41 </span>
+<span id="L42">42 variable {V : Type*} [NormedAddCommGroup V] [InnerProductSpace ℝ V]</span>
+<span id="L43">43 </span>
+<span id="L44">44 /-- The source quantity `Q(X)=sup_{E in U} &lt;X,E&gt;`. -/</span>
+<span id="L45">45 def sourceQ (system : SuccinctUnitSystem V) (x : V) : ℝ :=</span>
+<span id="L46">46   sSup ((fun e : V =&gt; ⟪x, e⟫_ℝ) &#x27;&#x27; system.atoms)</span>
+<span id="L47">47 </span>
+<span id="L48">48 theorem sourceQSet_bddAbove (system : SuccinctUnitSystem V) (x : V) :</span>
+<span id="L49">49     BddAbove ((fun e : V =&gt; ⟪x, e⟫_ℝ) &#x27;&#x27; system.atoms) := by</span>
+<span id="L50">50   refine ⟨‖x‖, ?_⟩</span>
+<span id="L51">51   rintro value ⟨e, he, rfl⟩</span>
+<span id="L52">52   calc</span>
+<span id="L53">53     ⟪x, e⟫_ℝ ≤ |⟪x, e⟫_ℝ| := le_abs_self _</span>
+<span id="L54">54     _ ≤ ‖x‖ * ‖e‖ := abs_real_inner_le_norm x e</span>
+<span id="L55">55     _ = ‖x‖ := by rw [system.norm_eq_one e he, mul_one]</span>
+<span id="L56">56 </span>
+<span id="L57">57 theorem le_sourceQ_of_mem (system : SuccinctUnitSystem V)</span>
+<span id="L58">58     {x e : V} (he : e ∈ system.atoms) :</span>
+<span id="L59">59     ⟪x, e⟫_ℝ ≤ system.sourceQ x := by</span>
+<span id="L60">60   exact le_csSup (system.sourceQSet_bddAbove x) ⟨e, he, rfl⟩</span>
+<span id="L61">61 </span>
+<span id="L62">62 theorem sourceQ_le_norm (system : SuccinctUnitSystem V) (x : V) :</span>
+<span id="L63">63     system.sourceQ x ≤ ‖x‖ := by</span>
+<span id="L64">64   apply csSup_le</span>
+<span id="L65">65   · exact system.atoms_nonempty.image _</span>
+<span id="L66">66   · rintro value ⟨e, he, rfl⟩</span>
+<span id="L67">67     calc</span>
+<span id="L68">68       ⟪x, e⟫_ℝ ≤ |⟪x, e⟫_ℝ| := le_abs_self _</span>
+<span id="L69">69       _ ≤ ‖x‖ * ‖e‖ := abs_real_inner_le_norm x e</span>
+<span id="L70">70       _ = ‖x‖ := by rw [system.norm_eq_one e he, mul_one]</span>
+<span id="L71">71 </span>
+<span id="L72">72 theorem sourceQ_nonneg (system : SuccinctUnitSystem V) (x : V) :</span>
+<span id="L73">73     0 ≤ system.sourceQ x := by</span>
+<span id="L74">74   rcases system.atoms_nonempty with ⟨e, he⟩</span>
+<span id="L75">75   by_cases hinner : 0 ≤ ⟪x, e⟫_ℝ</span>
+<span id="L76">76   · exact hinner.trans (system.le_sourceQ_of_mem he)</span>
+<span id="L77">77   · have hneg : 0 ≤ ⟪x, -e⟫_ℝ := by</span>
+<span id="L78">78       rw [inner_neg_right]</span>
+<span id="L79">79       exact neg_nonneg.mpr (le_of_not_ge hinner)</span>
+<span id="L80">80     exact hneg.trans (system.le_sourceQ_of_mem (system.neg_mem e he))</span>
+<span id="L81">81 </span>
+<span id="L82">82 @[simp]</span>
+<span id="L83">83 theorem sourceQ_zero (system : SuccinctUnitSystem V) : system.sourceQ 0 = 0 := by</span>
+<span id="L84">84   apply le_antisymm</span>
+<span id="L85">85   · simpa using system.sourceQ_le_norm 0</span>
+<span id="L86">86   · exact system.sourceQ_nonneg 0</span>
+<span id="L87">87 </span>
+<span id="L88">88 theorem abs_inner_le_sourceQ_of_mem (system : SuccinctUnitSystem V)</span>
+<span id="L89">89     {x e : V} (he : e ∈ system.atoms) :</span>
+<span id="L90">90     |⟪x, e⟫_ℝ| ≤ system.sourceQ x := by</span>
+<span id="L91">91   apply abs_le.mpr</span>
+<span id="L92">92   constructor</span>
+<span id="L93">93   · have hneg : -⟪x, e⟫_ℝ ≤ system.sourceQ x := by</span>
+<span id="L94">94       simpa using system.le_sourceQ_of_mem (x := x) (system.neg_mem e he)</span>
+<span id="L95">95     linarith</span>
+<span id="L96">96   · exact system.le_sourceQ_of_mem he</span>
+<span id="L97">97 </span>
+<span id="L98">98 theorem sourceQ_eq_zero_of_atom_orthogonal (system : SuccinctUnitSystem V)</span>
+<span id="L99">99     {x : V} (horthogonal : ∀ e ∈ system.atoms, ⟪x, e⟫_ℝ = 0) :</span>
+<span id="L100">100     system.sourceQ x = 0 := by</span>
+<span id="L101">101   apply le_antisymm</span>
+<span id="L102">102   · apply csSup_le</span>
+<span id="L103">103     · exact system.atoms_nonempty.image _</span>
+<span id="L104">104     · rintro value ⟨e, he, rfl⟩</span>
+<span id="L105">105       exact le_of_eq (horthogonal e he)</span>
+<span id="L106">106   · exact system.sourceQ_nonneg x</span>
+<span id="L107">107 </span>
+<span id="L108">108 /-- The source quantity `R(X)=sup_{Q(Y)&lt;=1} &lt;X,Y&gt;`, retained as a real-valued</span>
+<span id="L109">109 `sSup`.  Consumers must separately prove the defining set is bounded. -/</span>
+<span id="L110">110 def sourceR (system : SuccinctUnitSystem V) (x : V) : ℝ :=</span>
+<span id="L111">111   sSup ((fun y : V =&gt; ⟪x, y⟫_ℝ) &#x27;&#x27; {y | system.sourceQ y ≤ 1})</span>
+<span id="L112">112 </span>
+<span id="L113">113 /-- If a nonzero ambient direction is orthogonal to every atom, the set used</span>
+<span id="L114">114 to define its source `R` is unbounded.  This exposes the hidden global</span>
+<span id="L115">115 regularity/codomain obligation in Definition 3.2. -/</span>
+<span id="L116">116 theorem sourceRSet_not_bddAbove_of_nonzero_atom_orthogonal</span>
+<span id="L117">117     (system : SuccinctUnitSystem V) {x : V} (hx : x ≠ 0)</span>
+<span id="L118">118     (horthogonal : ∀ e ∈ system.atoms, ⟪x, e⟫_ℝ = 0) :</span>
+<span id="L119">119     ¬ BddAbove ((fun y : V =&gt; ⟪x, y⟫_ℝ) &#x27;&#x27; {y | system.sourceQ y ≤ 1}) := by</span>
+<span id="L120">120   intro hbounded</span>
+<span id="L121">121   rcases hbounded with ⟨bound, hbound⟩</span>
+<span id="L122">122   have hself : 0 &lt; ⟪x, x⟫_ℝ := real_inner_self_pos.mpr hx</span>
+<span id="L123">123   let scale : ℝ := (bound + 1) / ⟪x, x⟫_ℝ</span>
+<span id="L124">124   let y : V := scale • x</span>
+<span id="L125">125   have hqy : system.sourceQ y = 0 := by</span>
+<span id="L126">126     apply system.sourceQ_eq_zero_of_atom_orthogonal</span>
+<span id="L127">127     intro e he</span>
+<span id="L128">128     simp [y, inner_smul_left, horthogonal e he]</span>
+<span id="L129">129   have hy : y ∈ {z | system.sourceQ z ≤ 1} := by</span>
+<span id="L130">130     simp [hqy]</span>
+<span id="L131">131   have hvalue : ⟪x, y⟫_ℝ ≤ bound := hbound ⟨y, hy, rfl⟩</span>
+<span id="L132">132   have hinner : ⟪x, y⟫_ℝ = bound + 1 := by</span>
+<span id="L133">133     change ⟪x, scale • x⟫_ℝ = bound + 1</span>
+<span id="L134">134     rw [inner_smul_right]</span>
+<span id="L135">135     dsimp [scale]</span>
+<span id="L136">136     field_simp</span>
+<span id="L137">137   linarith</span>
+<span id="L138">138 </span>
+<span id="L139">139 /-- Source Definition 3.1.  The explicit boundedness field is the ordinary</span>
+<span id="L140">140 mathematical meaning of the displayed finite real supremum, not a replacement</span>
+<span id="L141">141 for the source equality. -/</span>
+<span id="L142">142 structure IsSuccinctSupport (system : SuccinctUnitSystem V) {s : Nat}</span>
+<span id="L143">143     (basis : Fin s → V) : Prop where</span>
+<span id="L144">144   mem_atoms : ∀ i, basis i ∈ system.atoms</span>
+<span id="L145">145   correlation_bddAbove :</span>
+<span id="L146">146     BddAbove ((fun e : V =&gt; ∑ i, |⟪e, basis i⟫_ℝ|) &#x27;&#x27; system.atoms)</span>
+<span id="L147">147   correlation_sSup_eq_one :</span>
+<span id="L148">148     sSup ((fun e : V =&gt; ∑ i, |⟪e, basis i⟫_ℝ|) &#x27;&#x27; system.atoms) = 1</span>
+<span id="L149">149 </span>
+<span id="L150">150 namespace IsSuccinctSupport</span>
+<span id="L151">151 </span>
+<span id="L152">152 variable {system : SuccinctUnitSystem V} {s : Nat} {basis : Fin s → V}</span>
+<span id="L153">153 </span>
+<span id="L154">154 theorem correlationSum_le_one (support : IsSuccinctSupport system basis)</span>
+<span id="L155">155     {e : V} (he : e ∈ system.atoms) :</span>
+<span id="L156">156     (∑ i, |⟪e, basis i⟫_ℝ|) ≤ 1 := by</span>
+<span id="L157">157   have hle :</span>
+<span id="L158">158       (∑ i, |⟪e, basis i⟫_ℝ|) ≤</span>
+<span id="L159">159         sSup ((fun z : V =&gt; ∑ i, |⟪z, basis i⟫_ℝ|) &#x27;&#x27; system.atoms) :=</span>
+<span id="L160">160     le_csSup support.correlation_bddAbove ⟨e, he, rfl⟩</span>
+<span id="L161">161   simpa [support.correlation_sSup_eq_one] using hle</span>
+<span id="L162">162 </span>
+<span id="L163">163 /-- The mutual-orthogonality consequence stated after source Definition 3.1. -/</span>
+<span id="L164">164 theorem inner_basis_basis (support : IsSuccinctSupport system basis)</span>
+<span id="L165">165     (i j : Fin s) :</span>
+<span id="L166">166     ⟪basis i, basis j⟫_ℝ = if i = j then 1 else 0 := by</span>
+<span id="L167">167   classical</span>
+<span id="L168">168   by_cases hij : i = j</span>
+<span id="L169">169   · subst j</span>
+<span id="L170">170     rw [if_pos rfl, real_inner_self_eq_norm_sq,</span>
+<span id="L171">171       system.norm_eq_one (basis i) (support.mem_atoms i)]</span>
+<span id="L172">172     norm_num</span>
+<span id="L173">173   · rw [if_neg hij]</span>
+<span id="L174">174     have hsum := support.correlationSum_le_one (support.mem_atoms i)</span>
+<span id="L175">175     have hdiag : |⟪basis i, basis i⟫_ℝ| = 1 := by</span>
+<span id="L176">176       rw [real_inner_self_eq_norm_sq,</span>
+<span id="L177">177         system.norm_eq_one (basis i) (support.mem_atoms i)]</span>
+<span id="L178">178       norm_num</span>
+<span id="L179">179     have herase_nonneg :</span>
+<span id="L180">180         0 ≤ ∑ k ∈ (Finset.univ : Finset (Fin s)).erase i,</span>
+<span id="L181">181           |⟪basis i, basis k⟫_ℝ| := by positivity</span>
+<span id="L182">182     have herase_add := Finset.sum_erase_add (Finset.univ : Finset (Fin s))</span>
+<span id="L183">183       (fun k =&gt; |⟪basis i, basis k⟫_ℝ|) (Finset.mem_univ i)</span>
+<span id="L184">184     have herase_zero :</span>
+<span id="L185">185         (∑ k ∈ (Finset.univ : Finset (Fin s)).erase i,</span>
+<span id="L186">186           |⟪basis i, basis k⟫_ℝ|) = 0 := by</span>
+<span id="L187">187       change</span>
+<span id="L188">188         (∑ k ∈ (Finset.univ : Finset (Fin s)).erase i,</span>
+<span id="L189">189           |⟪basis i, basis k⟫_ℝ|) + |⟪basis i, basis i⟫_ℝ| =</span>
+<span id="L190">190             ∑ k, |⟪basis i, basis k⟫_ℝ| at herase_add</span>
+<span id="L191">191       rw [hdiag] at herase_add</span>
+<span id="L192">192       linarith</span>
+<span id="L193">193     have hjmem : j ∈ (Finset.univ : Finset (Fin s)).erase i := by</span>
+<span id="L194">194       simp [Ne.symm hij]</span>
+<span id="L195">195     have hjzero : |⟪basis i, basis j⟫_ℝ| = 0 :=</span>
+<span id="L196">196       (Finset.sum_eq_zero_iff_of_nonneg</span>
+<span id="L197">197         (fun k _hk =&gt; abs_nonneg ⟪basis i, basis k⟫_ℝ)).mp herase_zero j hjmem</span>
+<span id="L198">198     exact abs_eq_zero.mp hjzero</span>
+<span id="L199">199 </span>
+<span id="L200">200 /-- A source succinct support is an orthonormal family.  This is the Mathlib</span>
+<span id="L201">201 interface consumed by the finite Bessel step in source Lemma 3.3. -/</span>
+<span id="L202">202 theorem orthonormal (support : IsSuccinctSupport system basis) :</span>
+<span id="L203">203     Orthonormal ℝ basis := by</span>
+<span id="L204">204   classical</span>
+<span id="L205">205   exact orthonormal_iff_ite.mpr support.inner_basis_basis</span>
+<span id="L206">206 </span>
+<span id="L207">207 /-- The finite maximum appearing in source Lemma 3.1. -/</span>
+<span id="L208">208 def maxAbsCoefficient [Nonempty (Fin s)] (a : Fin s → ℝ) : ℝ :=</span>
+<span id="L209">209   (Finset.univ : Finset (Fin s)).sup&#x27; Finset.univ_nonempty (fun i =&gt; |a i|)</span>
+<span id="L210">210 </span>
+<span id="L211">211 theorem abs_le_maxAbsCoefficient [Nonempty (Fin s)] (a : Fin s → ℝ) (i : Fin s) :</span>
+<span id="L212">212     |a i| ≤ maxAbsCoefficient a := by</span>
+<span id="L213">213   exact Finset.le_sup&#x27; (fun j =&gt; |a j|) (Finset.mem_univ i)</span>
+<span id="L214">214 </span>
+<span id="L215">215 theorem maxAbsCoefficient_nonneg [Nonempty (Fin s)] (a : Fin s → ℝ) :</span>
+<span id="L216">216     0 ≤ maxAbsCoefficient a := by</span>
+<span id="L217">217   let i : Fin s := Classical.choice inferInstance</span>
+<span id="L218">218   exact (abs_nonneg (a i)).trans (abs_le_maxAbsCoefficient a i)</span>
+<span id="L219">219 </span>
+<span id="L220">220 theorem exists_abs_eq_maxAbsCoefficient [Nonempty (Fin s)] (a : Fin s → ℝ) :</span>
+<span id="L221">221     ∃ i : Fin s, |a i| = maxAbsCoefficient a := by</span>
+<span id="L222">222   rcases Finset.exists_mem_eq_sup&#x27; (Finset.univ_nonempty :</span>
+<span id="L223">223       (Finset.univ : Finset (Fin s)).Nonempty) (fun i =&gt; |a i|) with</span>
+<span id="L224">224     ⟨i, _hi, hmax⟩</span>
+<span id="L225">225   exact ⟨i, hmax.symm⟩</span>
+<span id="L226">226 </span>
+<span id="L227">227 def supportCombination (basis : Fin s → V) (a : Fin s → ℝ) : V :=</span>
+<span id="L228">228   ∑ i, a i • basis i</span>
+<span id="L229">229 </span>
+<span id="L230">230 def signedSupportAtom (coefficient : ℝ) (atom : V) : V :=</span>
+<span id="L231">231   if 0 ≤ coefficient then atom else -atom</span>
+<span id="L232">232 </span>
+<span id="L233">233 theorem signedSupportAtom_mem (support : IsSuccinctSupport system basis)</span>
+<span id="L234">234     (a : Fin s → ℝ) (i : Fin s) :</span>
+<span id="L235">235     signedSupportAtom (a i) (basis i) ∈ system.atoms := by</span>
+<span id="L236">236   by_cases h : 0 ≤ a i</span>
+<span id="L237">237   · simpa [signedSupportAtom, h] using support.mem_atoms i</span>
+<span id="L238">238   · simpa [signedSupportAtom, h] using system.neg_mem (basis i) (support.mem_atoms i)</span>
+<span id="L239">239 </span>
+<span id="L240">240 theorem sourceQ_supportCombination_le [Nonempty (Fin s)]</span>
+<span id="L241">241     (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) :</span>
+<span id="L242">242     system.sourceQ (supportCombination basis a) ≤ maxAbsCoefficient a := by</span>
+<span id="L243">243   apply csSup_le</span>
+<span id="L244">244   · exact system.atoms_nonempty.image _</span>
+<span id="L245">245   · rintro value ⟨e, he, rfl⟩</span>
+<span id="L246">246     calc</span>
+<span id="L247">247       ⟪supportCombination basis a, e⟫_ℝ ≤</span>
+<span id="L248">248           |⟪supportCombination basis a, e⟫_ℝ| := le_abs_self _</span>
+<span id="L249">249       _ = |∑ i, a i * ⟪basis i, e⟫_ℝ| := by</span>
+<span id="L250">250         simp [supportCombination, sum_inner, inner_smul_left]</span>
+<span id="L251">251       _ ≤ ∑ i, |a i * ⟪basis i, e⟫_ℝ| :=</span>
+<span id="L252">252         Finset.abs_sum_le_sum_abs _ _</span>
+<span id="L253">253       _ = ∑ i, |a i| * |⟪e, basis i⟫_ℝ| := by</span>
+<span id="L254">254         apply Finset.sum_congr rfl</span>
+<span id="L255">255         intro i _hi</span>
+<span id="L256">256         rw [abs_mul, real_inner_comm]</span>
+<span id="L257">257       _ ≤ ∑ i, maxAbsCoefficient a * |⟪e, basis i⟫_ℝ| := by</span>
+<span id="L258">258         apply Finset.sum_le_sum</span>
+<span id="L259">259         intro i _hi</span>
+<span id="L260">260         exact mul_le_mul_of_nonneg_right (abs_le_maxAbsCoefficient a i) (abs_nonneg _)</span>
+<span id="L261">261       _ = maxAbsCoefficient a * ∑ i, |⟪e, basis i⟫_ℝ| := by</span>
+<span id="L262">262         rw [Finset.mul_sum]</span>
+<span id="L263">263       _ ≤ maxAbsCoefficient a * 1 :=</span>
+<span id="L264">264         mul_le_mul_of_nonneg_left (support.correlationSum_le_one he)</span>
+<span id="L265">265           (maxAbsCoefficient_nonneg a)</span>
+<span id="L266">266       _ = maxAbsCoefficient a := mul_one _</span>
+<span id="L267">267 </span>
+<span id="L268">268 theorem inner_supportCombination_basis</span>
+<span id="L269">269     (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) (m : Fin s) :</span>
+<span id="L270">270     ⟪supportCombination basis a, basis m⟫_ℝ = a m := by</span>
+<span id="L271">271   rw [supportCombination, sum_inner]</span>
+<span id="L272">272   calc</span>
+<span id="L273">273     (∑ i, ⟪a i • basis i, basis m⟫_ℝ) =</span>
+<span id="L274">274         ∑ i, a i * (if i = m then 1 else 0) := by</span>
+<span id="L275">275       apply Finset.sum_congr rfl</span>
+<span id="L276">276       intro i _hi</span>
+<span id="L277">277       rw [inner_smul_left, support.inner_basis_basis]</span>
+<span id="L278">278       simp</span>
+<span id="L279">279     _ = a m := by simp</span>
+<span id="L280">280 </span>
+<span id="L281">281 theorem inner_supportCombination_signedSupportAtom</span>
+<span id="L282">282     (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) (m : Fin s) :</span>
+<span id="L283">283     ⟪supportCombination basis a, signedSupportAtom (a m) (basis m)⟫_ℝ = |a m| := by</span>
+<span id="L284">284   by_cases h : 0 ≤ a m</span>
+<span id="L285">285   · rw [signedSupportAtom, if_pos h, support.inner_supportCombination_basis,</span>
+<span id="L286">286       abs_of_nonneg h]</span>
+<span id="L287">287   · have hneg : a m &lt; 0 := lt_of_not_ge h</span>
+<span id="L288">288     rw [signedSupportAtom, if_neg h, inner_neg_right,</span>
+<span id="L289">289       support.inner_supportCombination_basis, abs_of_neg hneg]</span>
+<span id="L290">290 </span>
+<span id="L291">291 /-- Source Lemma 3.1: `Q` is the coefficient maximum on a succinct support. -/</span>
+<span id="L292">292 theorem sourceQ_supportCombination_eq [Nonempty (Fin s)]</span>
+<span id="L293">293     (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) :</span>
+<span id="L294">294     system.sourceQ (supportCombination basis a) = maxAbsCoefficient a := by</span>
+<span id="L295">295   apply le_antisymm (support.sourceQ_supportCombination_le a)</span>
+<span id="L296">296   rcases exists_abs_eq_maxAbsCoefficient a with ⟨m, hm⟩</span>
+<span id="L297">297   calc</span>
+<span id="L298">298     maxAbsCoefficient a = |a m| := hm.symm</span>
+<span id="L299">299     _ = ⟪supportCombination basis a,</span>
+<span id="L300">300         signedSupportAtom (a m) (basis m)⟫_ℝ :=</span>
+<span id="L301">301       (support.inner_supportCombination_signedSupportAtom a m).symm</span>
+<span id="L302">302     _ ≤ system.sourceQ (supportCombination basis a) :=</span>
+<span id="L303">303       system.le_sourceQ_of_mem (support.signedSupportAtom_mem a m)</span>
+<span id="L304">304 </span>
+<span id="L305">305 def coefficientSign (coefficient : ℝ) : ℝ :=</span>
+<span id="L306">306   if 0 ≤ coefficient then 1 else -1</span>
+<span id="L307">307 </span>
+<span id="L308">308 @[simp]</span>
+<span id="L309">309 theorem abs_coefficientSign (coefficient : ℝ) : |coefficientSign coefficient| = 1 := by</span>
+<span id="L310">310   by_cases h : 0 ≤ coefficient &lt;;&gt; simp [coefficientSign, h]</span>
+<span id="L311">311 </span>
+<span id="L312">312 theorem coefficientSign_mul (coefficient : ℝ) :</span>
+<span id="L313">313     coefficientSign coefficient * coefficient = |coefficient| := by</span>
+<span id="L314">314   by_cases h : 0 ≤ coefficient</span>
+<span id="L315">315   · simp [coefficientSign, h, abs_of_nonneg h]</span>
+<span id="L316">316   · have hneg : coefficient &lt; 0 := lt_of_not_ge h</span>
+<span id="L317">317     simp [coefficientSign, h, abs_of_neg hneg]</span>
+<span id="L318">318 </span>
+<span id="L319">319 @[simp]</span>
+<span id="L320">320 theorem coefficientSign_coefficientSign (coefficient : ℝ) :</span>
+<span id="L321">321     coefficientSign (coefficientSign coefficient) = coefficientSign coefficient := by</span>
+<span id="L322">322   by_cases h : 0 ≤ coefficient</span>
+<span id="L323">323   · simp [coefficientSign, h]</span>
+<span id="L324">324   · simp [coefficientSign, h]</span>
+<span id="L325">325 </span>
+<span id="L326">326 @[simp]</span>
+<span id="L327">327 theorem coefficientSign_mul_self (coefficient : ℝ) :</span>
+<span id="L328">328     coefficientSign coefficient * coefficientSign coefficient = 1 := by</span>
+<span id="L329">329   by_cases h : 0 ≤ coefficient &lt;;&gt; simp [coefficientSign, h]</span>
+<span id="L330">330 </span>
+<span id="L331">331 def supportSignCombination (basis : Fin s → V) (a : Fin s → ℝ) : V :=</span>
+<span id="L332">332   supportCombination basis (fun i =&gt; coefficientSign (a i))</span>
+<span id="L333">333 </span>
+<span id="L334">334 theorem maxAbsCoefficient_coefficientSign [Nonempty (Fin s)] (a : Fin s → ℝ) :</span>
+<span id="L335">335     maxAbsCoefficient (fun i =&gt; coefficientSign (a i)) = 1 := by</span>
+<span id="L336">336   simp [maxAbsCoefficient]</span>
+<span id="L337">337 </span>
+<span id="L338">338 theorem sourceQ_supportSignCombination [Nonempty (Fin s)]</span>
+<span id="L339">339     (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) :</span>
+<span id="L340">340     system.sourceQ (supportSignCombination basis a) = 1 := by</span>
+<span id="L341">341   rw [supportSignCombination, support.sourceQ_supportCombination_eq,</span>
+<span id="L342">342     maxAbsCoefficient_coefficientSign]</span>
+<span id="L343">343 </span>
+<span id="L344">344 /-- The sign sum used in Appendix A.3 has squared norm equal to the support</span>
+<span id="L345">345 size. -/</span>
+<span id="L346">346 theorem norm_sq_supportSignCombination [Nonempty (Fin s)]</span>
+<span id="L347">347     (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) :</span>
+<span id="L348">348     ‖supportSignCombination basis a‖ ^ 2 = (s : ℝ) := by</span>
+<span id="L349">349   rw [← real_inner_self_eq_norm_sq]</span>
+<span id="L350">350   have hinner := support.orthonormal.inner_sum</span>
+<span id="L351">351       (fun i =&gt; coefficientSign (a i)) (fun i =&gt; coefficientSign (a i))</span>
+<span id="L352">352       (Finset.univ : Finset (Fin s))</span>
+<span id="L353">353   calc</span>
+<span id="L354">354     ⟪supportSignCombination basis a, supportSignCombination basis a⟫_ℝ =</span>
+<span id="L355">355         ∑ i : Fin s, coefficientSign (a i) * coefficientSign (a i) := by</span>
+<span id="L356">356       simpa [supportSignCombination, supportCombination] using hinner</span>
+<span id="L357">357     _ = (s : ℝ) := by simp</span>
+<span id="L358">358 </span>
+<span id="L359">359 theorem inner_supportCombination_supportSignCombination</span>
+<span id="L360">360     (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) :</span>
+<span id="L361">361     ⟪supportCombination basis a, supportSignCombination basis a⟫_ℝ =</span>
+<span id="L362">362       ∑ i, |a i| := by</span>
+<span id="L363">363   simp only [supportSignCombination, supportCombination]</span>
+<span id="L364">364   rw [inner_sum]</span>
+<span id="L365">365   calc</span>
+<span id="L366">366     (∑ i, ⟪∑ j, a j • basis j, coefficientSign (a i) • basis i⟫_ℝ) =</span>
+<span id="L367">367         ∑ i, coefficientSign (a i) * a i := by</span>
+<span id="L368">368       apply Finset.sum_congr rfl</span>
+<span id="L369">369       intro i _hi</span>
+<span id="L370">370       rw [inner_smul_right]</span>
+<span id="L371">371       exact congrArg (fun value =&gt; coefficientSign (a i) * value)</span>
+<span id="L372">372         (support.inner_supportCombination_basis a i)</span>
+<span id="L373">373     _ = ∑ i, |a i| := by</span>
+<span id="L374">374       apply Finset.sum_congr rfl</span>
+<span id="L375">375       intro i _hi</span>
+<span id="L376">376       exact coefficientSign_mul (a i)</span>
+<span id="L377">377 </span>
+<span id="L378">378 theorem inner_supportCombination_le_sumAbs_mul_sourceQ</span>
+<span id="L379">379     (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) (y : V) :</span>
+<span id="L380">380     |⟪supportCombination basis a, y⟫_ℝ| ≤</span>
+<span id="L381">381       (∑ i, |a i|) * system.sourceQ y := by</span>
+<span id="L382">382   calc</span>
+<span id="L383">383     |⟪supportCombination basis a, y⟫_ℝ| =</span>
+<span id="L384">384         |∑ i, a i * ⟪basis i, y⟫_ℝ| := by</span>
+<span id="L385">385       simp [supportCombination, sum_inner, inner_smul_left]</span>
+<span id="L386">386     _ ≤ ∑ i, |a i * ⟪basis i, y⟫_ℝ| :=</span>
+<span id="L387">387       Finset.abs_sum_le_sum_abs _ _</span>
+<span id="L388">388     _ = ∑ i, |a i| * |⟪y, basis i⟫_ℝ| := by</span>
+<span id="L389">389       apply Finset.sum_congr rfl</span>
+<span id="L390">390       intro i _hi</span>
+<span id="L391">391       rw [abs_mul, real_inner_comm]</span>
+<span id="L392">392     _ ≤ ∑ i, |a i| * system.sourceQ y := by</span>
+<span id="L393">393       apply Finset.sum_le_sum</span>
+<span id="L394">394       intro i _hi</span>
+<span id="L395">395       exact mul_le_mul_of_nonneg_left</span>
+<span id="L396">396         (system.abs_inner_le_sourceQ_of_mem (support.mem_atoms i)) (abs_nonneg _)</span>
+<span id="L397">397     _ = (∑ i, |a i|) * system.sourceQ y := by</span>
+<span id="L398">398       rw [Finset.sum_mul]</span>
+<span id="L399">399 </span>
+<span id="L400">400 theorem inner_supportCombination_le_sumAbs_of_sourceQ_le_one</span>
+<span id="L401">401     (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) {y : V}</span>
+<span id="L402">402     (hy : system.sourceQ y ≤ 1) :</span>
+<span id="L403">403     ⟪supportCombination basis a, y⟫_ℝ ≤ ∑ i, |a i| := by</span>
+<span id="L404">404   calc</span>
+<span id="L405">405     ⟪supportCombination basis a, y⟫_ℝ ≤</span>
+<span id="L406">406         |⟪supportCombination basis a, y⟫_ℝ| := le_abs_self _</span>
+<span id="L407">407     _ ≤ (∑ i, |a i|) * system.sourceQ y :=</span>
+<span id="L408">408       support.inner_supportCombination_le_sumAbs_mul_sourceQ a y</span>
+<span id="L409">409     _ ≤ (∑ i, |a i|) * 1 :=</span>
+<span id="L410">410       mul_le_mul_of_nonneg_left hy (by positivity)</span>
+<span id="L411">411     _ = ∑ i, |a i| := mul_one _</span>
+<span id="L412">412 </span>
+<span id="L413">413 theorem sourceRSet_bddAbove</span>
+<span id="L414">414     (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) :</span>
+<span id="L415">415     BddAbove ((fun y : V =&gt; ⟪supportCombination basis a, y⟫_ℝ) &#x27;&#x27;</span>
+<span id="L416">416       {y | system.sourceQ y ≤ 1}) := by</span>
+<span id="L417">417   refine ⟨∑ i, |a i|, ?_⟩</span>
+<span id="L418">418   rintro value ⟨y, hy, rfl⟩</span>
+<span id="L419">419   exact support.inner_supportCombination_le_sumAbs_of_sourceQ_le_one a hy</span>
+<span id="L420">420 </span>
+<span id="L421">421 /-- Source Lemma 3.2 for a succinct vector.  The proof also supplies the</span>
+<span id="L422">422 boundedness evidence missing from a bare use of real `sSup`. -/</span>
+<span id="L423">423 theorem sourceR_supportCombination_eq [Nonempty (Fin s)]</span>
+<span id="L424">424     (support : IsSuccinctSupport system basis) (a : Fin s → ℝ) :</span>
+<span id="L425">425     system.sourceR (supportCombination basis a) = ∑ i, |a i| := by</span>
+<span id="L426">426   apply le_antisymm</span>
+<span id="L427">427   · apply csSup_le</span>
+<span id="L428">428     · refine ⟨0, ?_⟩</span>
+<span id="L429">429       exact ⟨0, by simp, by simp⟩</span>
+<span id="L430">430     · rintro value ⟨y, hy, rfl⟩</span>
+<span id="L431">431       exact support.inner_supportCombination_le_sumAbs_of_sourceQ_le_one a hy</span>
+<span id="L432">432   · have hwitness : supportSignCombination basis a ∈</span>
+<span id="L433">433         {y | system.sourceQ y ≤ 1} := by</span>
+<span id="L434">434       simp [support.sourceQ_supportSignCombination a]</span>
+<span id="L435">435     calc</span>
+<span id="L436">436       (∑ i, |a i|) =</span>
+<span id="L437">437           ⟪supportCombination basis a, supportSignCombination basis a⟫_ℝ :=</span>
+<span id="L438">438         (support.inner_supportCombination_supportSignCombination a).symm</span>
+<span id="L439">439       _ ≤ system.sourceR (supportCombination basis a) :=</span>
+<span id="L440">440         le_csSup (support.sourceRSet_bddAbove a)</span>
+<span id="L441">441           ⟨supportSignCombination basis a, hwitness, rfl⟩</span>
+<span id="L442">442 </span>
+<span id="L443">443 end IsSuccinctSupport</span>
+<span id="L444">444 </span>
+<span id="L445">445 /-- Source Definition 3.3, represented with its witness data exposed.  The</span>
+<span id="L446">446 positive support-size premise is recorded explicitly. -/</span>
+<span id="L447">447 structure SuccinctRepresentation (system : SuccinctUnitSystem V) (x : V)</span>
+<span id="L448">448     (s : Nat) where</span>
+<span id="L449">449   size_pos : 0 &lt; s</span>
+<span id="L450">450   basis : Fin s → V</span>
+<span id="L451">451   coefficients : Fin s → ℝ</span>
+<span id="L452">452   support : IsSuccinctSupport system basis</span>
+<span id="L453">453   eq_combination : x = IsSuccinctSupport.supportCombination basis coefficients</span>
+<span id="L454">454 </span>
+<span id="L455">455 /-- The strict clause in source Definition 3.3: every coefficient in the</span>
+<span id="L456">456 chosen succinct representation is nonzero. -/</span>
+<span id="L457">457 structure StrictSuccinctRepresentation (system : SuccinctUnitSystem V) (x : V)</span>
+<span id="L458">458     (s : Nat) extends SuccinctRepresentation system x s where</span>
+<span id="L459">459   coefficients_ne_zero : ∀ i, toSuccinctRepresentation.coefficients i ≠ 0</span>
+<span id="L460">460 </span>
+<span id="L461">461 /-- Proposition-level source wording: `x` admits an `s`-succinct</span>
+<span id="L462">462 representation. -/</span>
+<span id="L463">463 def IsSuccinctAt (system : SuccinctUnitSystem V) (x : V) (s : Nat) : Prop :=</span>
+<span id="L464">464   Nonempty (SuccinctRepresentation system x s)</span>
+<span id="L465">465 </span>
+<span id="L466">466 /-- Proposition-level source wording: `x` admits a strictly `s`-succinct</span>
+<span id="L467">467 representation. -/</span>
+<span id="L468">468 def IsStrictlySuccinctAt (system : SuccinctUnitSystem V) (x : V) (s : Nat) : Prop :=</span>
+<span id="L469">469   Nonempty (StrictSuccinctRepresentation system x s)</span>
+<span id="L470">470 </span>
+<span id="L471">471 namespace SuccinctRepresentation</span>
+<span id="L472">472 </span>
+<span id="L473">473 variable {system : SuccinctUnitSystem V} {x : V} {s z : Nat}</span>
+<span id="L474">474 </span>
+<span id="L475">475 theorem sourceR_eq_sumAbs (representation : SuccinctRepresentation system x s) :</span>
+<span id="L476">476     system.sourceR x = ∑ i, |representation.coefficients i| := by</span>
+<span id="L477">477   letI : Nonempty (Fin s) := ⟨⟨0, representation.size_pos⟩⟩</span>
+<span id="L478">478   calc</span>
+<span id="L479">479     system.sourceR x = system.sourceR</span>
+<span id="L480">480         (IsSuccinctSupport.supportCombination representation.basis</span>
+<span id="L481">481           representation.coefficients) :=</span>
+<span id="L482">482       congrArg system.sourceR representation.eq_combination</span>
+<span id="L483">483     _ = ∑ i, |representation.coefficients i| :=</span>
+<span id="L484">484       representation.support.sourceR_supportCombination_eq representation.coefficients</span>
+<span id="L485">485 </span>
+<span id="L486">486 theorem inner_supportSignCombination_eq_sumAbs</span>
+<span id="L487">487     (representation : SuccinctRepresentation system x s) :</span>
+<span id="L488">488     ⟪x, IsSuccinctSupport.supportSignCombination representation.basis</span>
+<span id="L489">489       representation.coefficients⟫_ℝ =</span>
+<span id="L490">490         ∑ i, |representation.coefficients i| := by</span>
+<span id="L491">491   calc</span>
+<span id="L492">492     ⟪x, IsSuccinctSupport.supportSignCombination representation.basis</span>
+<span id="L493">493         representation.coefficients⟫_ℝ =</span>
+<span id="L494">494         ⟪IsSuccinctSupport.supportCombination representation.basis</span>
+<span id="L495">495             representation.coefficients,</span>
+<span id="L496">496           IsSuccinctSupport.supportSignCombination representation.basis</span>
+<span id="L497">497             representation.coefficients⟫_ℝ :=</span>
+<span id="L498">498       congrArg (fun value =&gt; ⟪value,</span>
+<span id="L499">499         IsSuccinctSupport.supportSignCombination representation.basis</span>
+<span id="L500">500           representation.coefficients⟫_ℝ) representation.eq_combination</span>
+<span id="L501">501     _ = ∑ i, |representation.coefficients i| :=</span>
+<span id="L502">502       representation.support.inner_supportCombination_supportSignCombination</span>
+<span id="L503">503         representation.coefficients</span>
+<span id="L504">504 </span>
+<span id="L505">505 theorem sourceQ_supportSignCombination_eq_one</span>
+<span id="L506">506     (representation : SuccinctRepresentation system x s) :</span>
+<span id="L507">507     system.sourceQ (IsSuccinctSupport.supportSignCombination representation.basis</span>
+<span id="L508">508       representation.coefficients) = 1 := by</span>
+<span id="L509">509   letI : Nonempty (Fin s) := ⟨⟨0, representation.size_pos⟩⟩</span>
+<span id="L510">510   exact representation.support.sourceQ_supportSignCombination representation.coefficients</span>
+<span id="L511">511 </span>
+<span id="L512">512 theorem norm_sq_supportSignCombination_eq_size</span>
+<span id="L513">513     (representation : SuccinctRepresentation system x s) :</span>
+<span id="L514">514     ‖IsSuccinctSupport.supportSignCombination representation.basis</span>
+<span id="L515">515       representation.coefficients‖ ^ 2 = (s : ℝ) := by</span>
+<span id="L516">516   letI : Nonempty (Fin s) := ⟨⟨0, representation.size_pos⟩⟩</span>
+<span id="L517">517   exact representation.support.norm_sq_supportSignCombination representation.coefficients</span>
+<span id="L518">518 </span>
+<span id="L519">519 /-- The two local Lemma-3.2 identities give equality of coefficient `l1`</span>
+<span id="L520">520 sums for any two succinct representations of the same vector. -/</span>
+<span id="L521">521 theorem sumAbs_eq (first : SuccinctRepresentation system x s)</span>
+<span id="L522">522     (second : SuccinctRepresentation system x z) :</span>
+<span id="L523">523     (∑ i, |first.coefficients i|) = ∑ j, |second.coefficients j| := by</span>
+<span id="L524">524   calc</span>
+<span id="L525">525     (∑ i, |first.coefficients i|) = system.sourceR x :=</span>
+<span id="L526">526       first.sourceR_eq_sumAbs.symm</span>
+<span id="L527">527     _ = ∑ j, |second.coefficients j| := second.sourceR_eq_sumAbs</span>
+<span id="L528">528 </span>
+<span id="L529">529 /-- Appendix A.3 equality case: if the second representation is strict,</span>
+<span id="L530">530 every second-support atom has unit absolute correlation with the sign sum of</span>
+<span id="L531">531 the first support. -/</span>
+<span id="L532">532 theorem abs_inner_strictBasis_supportSignCombination_eq_one</span>
+<span id="L533">533     (first : SuccinctRepresentation system x s)</span>
+<span id="L534">534     (second : StrictSuccinctRepresentation system x z) (j : Fin z) :</span>
+<span id="L535">535     |⟪second.toSuccinctRepresentation.basis j,</span>
+<span id="L536">536       IsSuccinctSupport.supportSignCombination first.basis first.coefficients⟫_ℝ| = 1 := by</span>
+<span id="L537">537   let secondRep := second.toSuccinctRepresentation</span>
+<span id="L538">538   let y := IsSuccinctSupport.supportSignCombination first.basis first.coefficients</span>
+<span id="L539">539   have hcorr_le (i : Fin z) : |⟪secondRep.basis i, y⟫_ℝ| ≤ 1 := by</span>
+<span id="L540">540     have h := system.abs_inner_le_sourceQ_of_mem</span>
+<span id="L541">541       (x := y) (secondRep.support.mem_atoms i)</span>
+<span id="L542">542     rw [first.sourceQ_supportSignCombination_eq_one] at h</span>
+<span id="L543">543     simpa [real_inner_comm] using h</span>
+<span id="L544">544   have hterm_le (i : Fin z) :</span>
+<span id="L545">545       |secondRep.coefficients i| * |⟪secondRep.basis i, y⟫_ℝ| ≤</span>
+<span id="L546">546         |secondRep.coefficients i| := by</span>
+<span id="L547">547     calc</span>
+<span id="L548">548       |secondRep.coefficients i| * |⟪secondRep.basis i, y⟫_ℝ| ≤</span>
+<span id="L549">549           |secondRep.coefficients i| * 1 :=</span>
+<span id="L550">550         mul_le_mul_of_nonneg_left (hcorr_le i) (abs_nonneg _)</span>
+<span id="L551">551       _ = |secondRep.coefficients i| := mul_one _</span>
+<span id="L552">552   have hweighted_le :</span>
+<span id="L553">553       (∑ i, |secondRep.coefficients i| * |⟪secondRep.basis i, y⟫_ℝ|) ≤</span>
+<span id="L554">554         ∑ i, |secondRep.coefficients i| := by</span>
+<span id="L555">555     apply Finset.sum_le_sum</span>
+<span id="L556">556     intro i _hi</span>
+<span id="L557">557     exact hterm_le i</span>
+<span id="L558">558   have hlower :</span>
+<span id="L559">559       (∑ i, |secondRep.coefficients i|) ≤</span>
+<span id="L560">560         ∑ i, |secondRep.coefficients i| * |⟪secondRep.basis i, y⟫_ℝ| := by</span>
+<span id="L561">561     calc</span>
+<span id="L562">562       (∑ i, |secondRep.coefficients i|) =</span>
+<span id="L563">563           ∑ i, |first.coefficients i| :=</span>
+<span id="L564">564         (first.sumAbs_eq secondRep).symm</span>
+<span id="L565">565       _ = ⟪x, y⟫_ℝ := first.inner_supportSignCombination_eq_sumAbs.symm</span>
+<span id="L566">566       _ = ∑ i, secondRep.coefficients i * ⟪secondRep.basis i, y⟫_ℝ := by</span>
+<span id="L567">567         calc</span>
+<span id="L568">568           ⟪x, y⟫_ℝ =</span>
+<span id="L569">569               ⟪IsSuccinctSupport.supportCombination secondRep.basis</span>
+<span id="L570">570                   secondRep.coefficients, y⟫_ℝ :=</span>
+<span id="L571">571             congrArg (fun value =&gt; ⟪value, y⟫_ℝ) secondRep.eq_combination</span>
+<span id="L572">572           _ = ∑ i, secondRep.coefficients i * ⟪secondRep.basis i, y⟫_ℝ := by</span>
+<span id="L573">573             simp [IsSuccinctSupport.supportCombination, sum_inner, inner_smul_left]</span>
+<span id="L574">574       _ ≤ |∑ i, secondRep.coefficients i * ⟪secondRep.basis i, y⟫_ℝ| :=</span>
+<span id="L575">575         le_abs_self _</span>
+<span id="L576">576       _ ≤ ∑ i, |secondRep.coefficients i * ⟪secondRep.basis i, y⟫_ℝ| :=</span>
+<span id="L577">577         Finset.abs_sum_le_sum_abs _ _</span>
+<span id="L578">578       _ = ∑ i, |secondRep.coefficients i| * |⟪secondRep.basis i, y⟫_ℝ| := by</span>
+<span id="L579">579         apply Finset.sum_congr rfl</span>
+<span id="L580">580         intro i _hi</span>
+<span id="L581">581         rw [abs_mul]</span>
+<span id="L582">582   have hweighted_eq :</span>
+<span id="L583">583       (∑ i, |secondRep.coefficients i| * |⟪secondRep.basis i, y⟫_ℝ|) =</span>
+<span id="L584">584         ∑ i, |secondRep.coefficients i| :=</span>
+<span id="L585">585     le_antisymm hweighted_le hlower</span>
+<span id="L586">586   have hterms := (Finset.sum_eq_sum_iff_of_le</span>
+<span id="L587">587       (s := (Finset.univ : Finset (Fin z)))</span>
+<span id="L588">588       (fun i _hi =&gt; hterm_le i)).mp (by simpa using hweighted_eq)</span>
+<span id="L589">589   have hj := hterms j (Finset.mem_univ j)</span>
+<span id="L590">590   have hbpos : 0 &lt; |secondRep.coefficients j| :=</span>
+<span id="L591">591     abs_pos.mpr (second.coefficients_ne_zero j)</span>
+<span id="L592">592   change |⟪secondRep.basis j, y⟫_ℝ| = 1</span>
+<span id="L593">593   nlinarith [abs_nonneg ⟪secondRep.basis j, y⟫_ℝ]</span>
+<span id="L594">594 </span>
+<span id="L595">595 /-- Source Lemma 3.3 on explicit witnesses: if the same vector has an</span>
+<span id="L596">596 `s`-succinct representation and a strictly `z`-succinct representation, then</span>
+<span id="L597">597 `z &lt;= s`. -/</span>
+<span id="L598">598 theorem strictSize_le (first : SuccinctRepresentation system x s)</span>
+<span id="L599">599     (second : StrictSuccinctRepresentation system x z) : z ≤ s := by</span>
+<span id="L600">600   let secondRep := second.toSuccinctRepresentation</span>
+<span id="L601">601   let y := IsSuccinctSupport.supportSignCombination first.basis first.coefficients</span>
+<span id="L602">602   have hbessel := secondRep.support.orthonormal.sum_inner_products_le</span>
+<span id="L603">603     (s := (Finset.univ : Finset (Fin z))) y</span>
+<span id="L604">604   have hunit (i : Fin z) : |⟪secondRep.basis i, y⟫_ℝ| = 1 := by</span>
+<span id="L605">605     change |⟪secondRep.basis i,</span>
+<span id="L606">606       IsSuccinctSupport.supportSignCombination first.basis first.coefficients⟫_ℝ| = 1</span>
+<span id="L607">607     exact first.abs_inner_strictBasis_supportSignCombination_eq_one second i</span>
+<span id="L608">608   have hcast : (z : ℝ) ≤ (s : ℝ) := by</span>
+<span id="L609">609     calc</span>
+<span id="L610">610       (z : ℝ) =</span>
+<span id="L611">611           ∑ i : Fin z, ‖⟪secondRep.basis i, y⟫_ℝ‖ ^ 2 := by</span>
+<span id="L612">612         symm</span>
+<span id="L613">613         calc</span>
+<span id="L614">614           (∑ i : Fin z, ‖⟪secondRep.basis i, y⟫_ℝ‖ ^ 2) =</span>
+<span id="L615">615               ∑ i : Fin z, |⟪secondRep.basis i, y⟫_ℝ| ^ 2 := by</span>
+<span id="L616">616             simp [Real.norm_eq_abs]</span>
+<span id="L617">617           _ = ∑ _i : Fin z, (1 : ℝ) ^ 2 := by</span>
+<span id="L618">618             apply Finset.sum_congr rfl</span>
+<span id="L619">619             intro i _hi</span>
+<span id="L620">620             rw [hunit i]</span>
+<span id="L621">621           _ = (z : ℝ) := by simp</span>
+<span id="L622">622       _ ≤ ‖y‖ ^ 2 := hbessel</span>
+<span id="L623">623       _ = (s : ℝ) := first.norm_sq_supportSignCombination_eq_size</span>
+<span id="L624">624   exact Nat.cast_le.mp hcast</span>
+<span id="L625">625 </span>
+<span id="L626">626 end SuccinctRepresentation</span>
+<span id="L627">627 </span>
+<span id="L628">628 namespace StrictSuccinctRepresentation</span>
+<span id="L629">629 </span>
+<span id="L630">630 variable {system : SuccinctUnitSystem V} {x : V} {s : Nat}</span>
+<span id="L631">631 </span>
+<span id="L632">632 theorem abs_coefficient_pos (representation : StrictSuccinctRepresentation system x s)</span>
+<span id="L633">633     (i : Fin s) :</span>
+<span id="L634">634     0 &lt; |representation.toSuccinctRepresentation.coefficients i| :=</span>
+<span id="L635">635   abs_pos.mpr (representation.coefficients_ne_zero i)</span>
+<span id="L636">636 </span>
+<span id="L637">637 end StrictSuccinctRepresentation</span>
+<span id="L638">638 </span>
+<span id="L639">639 /-- Source Lemma 3.3 in proposition-level Definition-3.3 wording. -/</span>
+<span id="L640">640 theorem succinctSize_ge_strictSize {system : SuccinctUnitSystem V} {x : V}</span>
+<span id="L641">641     {s z : Nat} (hs : IsSuccinctAt system x s)</span>
+<span id="L642">642     (hz : IsStrictlySuccinctAt system x z) : z ≤ s := by</span>
+<span id="L643">643   rcases hs with ⟨first⟩</span>
+<span id="L644">644   rcases hz with ⟨second⟩</span>
+<span id="L645">645   exact first.strictSize_le second</span>
+<span id="L646">646 </span>
+<span id="L647">647 /-- Source Lemma 3.4: two strict succinct representations of the same vector</span>
+<span id="L648">648 have the same size. -/</span>
+<span id="L649">649 theorem strictlySuccinctSize_unique {system : SuccinctUnitSystem V} {x : V}</span>
+<span id="L650">650     {s z : Nat} (hs : IsStrictlySuccinctAt system x s)</span>
+<span id="L651">651     (hz : IsStrictlySuccinctAt system x z) : s = z := by</span>
+<span id="L652">652   apply Nat.le_antisymm</span>
+<span id="L653">653   · exact succinctSize_ge_strictSize</span>
+<span id="L654">654       (show IsSuccinctAt system x z from hz.map</span>
+<span id="L655">655         StrictSuccinctRepresentation.toSuccinctRepresentation) hs</span>
+<span id="L656">656   · exact succinctSize_ge_strictSize</span>
+<span id="L657">657       (show IsSuccinctAt system x s from hs.map</span>
+<span id="L658">658         StrictSuccinctRepresentation.toSuccinctRepresentation) hz</span>
+<span id="L659">659 end SuccinctUnitSystem</span>
+<span id="L660">660 </span>
+<span id="L661">661 end</span>
+<span id="L662">662 end Succinct</span>
+<span id="L663">663 end LowerBounds</span>
+<span id="L664">664 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

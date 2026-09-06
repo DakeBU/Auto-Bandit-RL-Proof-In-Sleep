@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="Underlying Lean Graph · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Underlying Lean Graph · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>Underlying Lean Graph · BanditRLlib</title>
+  <link rel="icon" href="../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../index.html">Overview</a><a href="../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../learning/index.html">All chapters</a><a class="book-nav-link" href="../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../banditrlwiki/index.html">BanditRLwiki</a><a href="../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../banditrlwiki/papers/index.html">Paper index</a><a href="../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../declarations/index.html">Lean declarations</a><a href="../implementation-map/index.html">Implementation map</a><a href="index.html" aria-current="page">Lean Graph</a><a href="../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../ide/index.html">Local Formalization Lab</a><a href="../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../community/index.html">Contribute</a><a href="../roadmap/index.html">Roadmap</a><a href="../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell wide-page">
+      <main class="page-main" id="main-content">
+<section class="hero lean-graph-hero" id="lean-graph">
+  <p class="eyebrow">Generated library topology · progressive disclosure</p>
+  <h1 class="page-title">Underlying Lean Graph of BanditRLlib</h1>
+  <p class="lede">Start with the library trunk, then open one curriculum, source chapter, module, milestone, or declaration branch at a time. Search can jump directly to any of the 8,877 indexed Lean declarations without drawing the whole library at once.</p>
+  <div class="stats-grid lean-graph-stats">
+    <div class="stat"><span class="stat-value">10</span><span class="stat-label">Book Map chapters</span></div>
+    <div class="stat"><span class="stat-value">5</span><span class="stat-label">Part IV source chapters</span></div>
+    <div class="stat"><span class="stat-value">662</span><span class="stat-label">Lean modules</span></div>
+    <div class="stat"><span class="stat-value">8,877</span><span class="stat-label">indexed declarations</span></div>
+  </div>
+  <div class="callout"><strong>Reading rule.</strong> Labeled proof, import, and order edges point from prerequisite to consumer. Dashed <em>contains</em> edges describe navigation. Whole-chapter status and individual compiled declarations remain separate.</div>
+</section>
+
+<section id="explorer">
+  <div class="lean-graph-app" data-lean-graph data-graph-overview-source="overview.json" data-graph-search-source="search-index.json">
+    <header class="lean-graph-toolbar">
+      <div class="lean-graph-views" role="group" aria-label="Lean Graph view">
+        <button type="button" data-graph-view="overview" data-graph-view-source="overview.json" aria-pressed="true">Overview</button>
+        <button type="button" data-graph-view="book" data-graph-view-source="views/book.json" aria-pressed="false">Book Map</button>
+        <button type="button" data-graph-view="spine" data-graph-view-source="views/spine.json" aria-pressed="false">Part IV</button>
+        <button type="button" data-graph-view="milestones" data-graph-view-source="views/milestones.json" aria-pressed="false">Milestones</button>
+      </div>
+      <div class="lean-graph-search-shell">
+        <label for="lean-graph-search">Search theorem, module, milestone, or chapter</label>
+        <input id="lean-graph-search" type="search" data-graph-search placeholder="e.g. GaussianMinimax, UCBVI, pullCount" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="lean-graph-suggestions" aria-expanded="false">
+        <ul id="lean-graph-suggestions" data-graph-suggestions role="listbox" hidden></ul>
+      </div>
+      <div class="lean-graph-actions">
+        <label for="lean-graph-branch-size">Branch size</label>
+        <select id="lean-graph-branch-size" data-graph-branch-size><option value="12">12</option><option value="24">24</option><option value="48">48</option></select>
+        <button type="button" data-graph-fit>Fit</button>
+        <button type="button" data-graph-reset>Reset</button>
+        <span data-graph-count aria-live="polite">Loading graph…</span>
+      </div>
+    </header>
+    <div class="lean-graph-mobile-start">
+      <span class="panel-kicker">Mobile starting view</span>
+      <h2>Choose a readable branch first</h2>
+      <p>The interactive canvas is available on demand; these direct routes keep the first mobile view readable and leave vertical scrolling uninterrupted.</p>
+      <div class="lean-graph-mobile-links">
+        <a href="../learning/index.html"><strong>Book Map</strong><span>Ten teaching chapters</span></a>
+        <a href="../textbook-spine/index.html"><strong>Part IV</strong><span>Source-faithful lower bounds</span></a>
+        <a href="../implementation-map/index.html"><strong>Milestones</strong><span>Compiled and open routes</span></a>
+        <a href="../declarations/index.html"><strong>Declarations</strong><span>Search the exact Lean index</span></a>
+      </div>
+      <button type="button" class="button" data-graph-mobile-open aria-expanded="false" aria-controls="lean-graph-stage">Open interactive canvas</button>
+    </div>
+    <div class="lean-graph-stage" id="lean-graph-stage">
+      <div class="lean-graph-canvas" data-graph-canvas tabindex="0" aria-label="Interactive Lean graph canvas. Drag to pan and use the mouse wheel to zoom.">
+        <svg data-graph-svg role="img" aria-label="Interactive BanditRLlib Lean graph"></svg>
+        <p class="lean-graph-empty" data-graph-empty hidden>No matching branch is visible.</p>
+        <small>Click or press Enter on a node to inspect and expand it · drag to pan · wheel to zoom</small>
+      </div>
+      <aside class="lean-graph-detail" data-graph-detail aria-live="polite">
+        <div class="lean-graph-placeholder"><span>Branch inspector</span><h2>Select a node</h2><p>Status, exact source links, branch children, immediate prerequisites, and consumers will appear here.</p></div>
+      </aside>
+    </div>
+    <noscript><div class="callout"><strong>JavaScript is optional for reading.</strong> Use the <a href="../learning/index.html">Book Map</a>, <a href="../textbook-spine/index.html">Part IV spine</a>, <a href="../implementation-map/index.html">Implementation Map</a>, or <a href="../declarations/index.html">declaration catalogue</a> when the interactive graph is unavailable.</div></noscript>
+  </div>
+</section>
+
+<section id="semantics">
+  <h2>Three graph layers, three meanings</h2>
+  <div class="card-grid lean-graph-explainers">
+    <article class="info-card"><span class="level-label">Learn</span><h3>Curriculum topology</h3><p>Book Map and Part IV nodes connect mathematical reading order to the modules and declarations that currently support each chapter.</p></article>
+    <article class="info-card"><span class="level-label">Reuse</span><h3>Lean library topology</h3><p>Module-import and reviewed teaching edges expose reusable prerequisites. Search reveals an exact declaration together with its parent module and recorded neighbors.</p></article>
+    <article class="info-card"><span class="level-label">Audit</span><h3>Proof-structure evidence</h3><p>The <a href="../proof-graph-laboratory/index.html">Proof Graph Laboratory</a> separately reports the frozen compiled-environment observation and experimental support-compression metrics.</p></article>
+  </div>
+  <div class="callout"><strong>Progressive-loading boundary.</strong> Views, searches, and module branches load independent generated JSON slices. The complete 9,642-node export is never fetched automatically; researchers can <a href="graph.json.gz">download the full graph artifact (gzip)</a> explicitly.</div>
+  <div class="callout warning"><strong>Evidence boundary.</strong> The browser graph is a generated navigation index, not a kernel trace, elaborator trace, or proof certificate. Exact Lean statements and the verified build gate remain authoritative.</div>
+</section>
+
+<section id="contribute-graph">
+  <h2>What a contribution changes</h2>
+  <ol class="contribution-steps">
+    <li><strong>Reuse an existing branch.</strong><span>A new theorem points to the exact modules and declarations it consumes instead of duplicating them.</span></li>
+    <li><strong>Close a named leaf.</strong><span>A partial or blocked milestone gains compiled evidence while its broader chapter boundary stays honest.</span></li>
+    <li><strong>Add a cross-branch bridge.</strong><span>A reviewed dependency edge records a reusable connection between algorithm families or mathematical layers.</span></li>
+    <li><strong>Expose an unresolved interface.</strong><span>A missing history law, concentration bridge, or source theorem remains visible rather than appearing as proved.</span></li>
+  </ol>
+  <p class="reference-note">The independent interaction design is informed by Samplinglib's public <a href="../source-access/index.html">Underlying Lean Graph of Libraries</a>. No Samplinglib source, stylesheet, template, or graph data is copied.</p>
+</section>
+</main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../static/site.js?v=20260903f"></script>
+  <script src="../static/lean-graph.js?v=20260903f"></script>
+</body>
+</html>

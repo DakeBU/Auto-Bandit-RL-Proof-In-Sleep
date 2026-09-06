@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Algorithms.StochasticGradientBanditTrajectoryAudit</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Two-arm stochastic-gradient-bandit rate identities</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module starts the source-facing rate layer for Theorem 1 of</span>
+<span id="L7">7 Baudry--Johnson--Vary--Pike-Burke--Rebeschini (NeurIPS 2025).  It proves that</span>
+<span id="L8">8 Algorithm 1 preserves the zero sum of its parameter vector on every generated</span>
+<span id="L9">9 finite history, then specializes the two-arm softmax law to the exact odds</span>
+<span id="L10">10 identities used as Equation (11) in the source proof.</span>
+<span id="L11">11 </span>
+<span id="L12">12 These pathwise identities are inputs to the exponential-moment and</span>
+<span id="L13">13 telescoping arguments.  They do not by themselves prove Equation (8), the</span>
+<span id="L14">14 failure-mass estimate, or Theorem 1&#x27;s regret bound.</span>
+<span id="L15">15 -/</span>
+<span id="L16">16 </span>
+<span id="L17">17 namespace BanditRLProof</span>
+<span id="L18">18 namespace StochasticGradientBandit</span>
+<span id="L19">19 </span>
+<span id="L20">20 open scoped BigOperators</span>
+<span id="L21">21 </span>
+<span id="L22">22 noncomputable section</span>
+<span id="L23">23 </span>
+<span id="L24">24 universe u</span>
+<span id="L25">25 </span>
+<span id="L26">26 /-- Algorithm 1 preserves the sum of an arbitrary initial parameter vector</span>
+<span id="L27">27 on every inclusive finite action/reward history. -/</span>
+<span id="L28">28 theorem historyParameter_sum_eq_initial</span>
+<span id="L29">29     {Action : Type u} [Fintype Action] [DecidableEq Action] [Nonempty Action]</span>
+<span id="L30">30     (initialTheta : Action -&gt; Real) (eta : Real) :</span>
+<span id="L31">31     forall n (history : History.FinitePairHistory Action Real n),</span>
+<span id="L32">32       (∑ coordinate, historyParameter initialTheta eta n history coordinate) =</span>
+<span id="L33">33         ∑ coordinate, initialTheta coordinate := by</span>
+<span id="L34">34   classical</span>
+<span id="L35">35   intro n</span>
+<span id="L36">36   induction n with</span>
+<span id="L37">37   | zero =&gt;</span>
+<span id="L38">38       intro history</span>
+<span id="L39">39       rw [show (∑ coordinate,</span>
+<span id="L40">40           historyParameter initialTheta eta 0 history coordinate) =</span>
+<span id="L41">41           ∑ coordinate,</span>
+<span id="L42">42             (initialTheta coordinate + eta *</span>
+<span id="L43">43               sourceIncrement (softmaxProbability initialTheta)</span>
+<span id="L44">44                 (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).2</span>
+<span id="L45">45                 (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 coordinate) by</span>
+<span id="L46">46         apply Finset.sum_congr rfl</span>
+<span id="L47">47         intro coordinate _</span>
+<span id="L48">48         rw [historyParameter_zero]]</span>
+<span id="L49">49       rw [Finset.sum_add_distrib, ← Finset.mul_sum,</span>
+<span id="L50">50         sum_sourceIncrement]</span>
+<span id="L51">51       · ring</span>
+<span id="L52">52       · exact softmaxProbability_sum initialTheta</span>
+<span id="L53">53   | succ n ih =&gt;</span>
+<span id="L54">54       intro history</span>
+<span id="L55">55       rw [show (∑ coordinate,</span>
+<span id="L56">56           historyParameter initialTheta eta (n + 1) history coordinate) =</span>
+<span id="L57">57           ∑ coordinate,</span>
+<span id="L58">58             (historyParameter initialTheta eta n</span>
+<span id="L59">59                 (Exp3.previousPairHistory history) coordinate +</span>
+<span id="L60">60               eta * sourceIncrement</span>
+<span id="L61">61                 (softmaxProbability</span>
+<span id="L62">62                   (historyParameter initialTheta eta n</span>
+<span id="L63">63                     (Exp3.previousPairHistory history)))</span>
+<span id="L64">64                 (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).2</span>
+<span id="L65">65                 (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).1 coordinate) by</span>
+<span id="L66">66         apply Finset.sum_congr rfl</span>
+<span id="L67">67         intro coordinate _</span>
+<span id="L68">68         rw [historyParameter_succ]]</span>
+<span id="L69">69       rw [Finset.sum_add_distrib, ← Finset.mul_sum,</span>
+<span id="L70">70         sum_sourceIncrement]</span>
+<span id="L71">71       · simpa using ih (Exp3.previousPairHistory history)</span>
+<span id="L72">72       · exact softmaxProbability_sum</span>
+<span id="L73">73           (historyParameter initialTheta eta n</span>
+<span id="L74">74             (Exp3.previousPairHistory history))</span>
+<span id="L75">75 </span>
+<span id="L76">76 /-- The source initialization `theta = 0` therefore stays zero-sum pathwise. -/</span>
+<span id="L77">77 theorem historyParameter_zeroInitialization_sum</span>
+<span id="L78">78     {Action : Type u} [Fintype Action] [DecidableEq Action] [Nonempty Action]</span>
+<span id="L79">79     (eta : Real) (n : Nat)</span>
+<span id="L80">80     (history : History.FinitePairHistory Action Real n) :</span>
+<span id="L81">81     ∑ coordinate,</span>
+<span id="L82">82       historyParameter (fun _ : Action =&gt; 0) eta n history coordinate = 0 := by</span>
+<span id="L83">83   rw [historyParameter_sum_eq_initial]</span>
+<span id="L84">84   simp</span>
+<span id="L85">85 </span>
+<span id="L86">86 /-- Source-time parameter adapter for one infinite two-arm action/reward trace.</span>
+<span id="L87">87 Lean time `0` is the pre-action source parameter `theta_{.,1} = 0`; Lean time</span>
+<span id="L88">88 `n + 1` is the parameter after consuming trace pair `n`, namely source</span>
+<span id="L89">89 `theta_{.,n+2}`. -/</span>
+<span id="L90">90 noncomputable def twoArmParameterAt (eta : Real)</span>
+<span id="L91">91     (trace : Nat -&gt; Fin 2 × Real) : Nat -&gt; Fin 2 -&gt; Real</span>
+<span id="L92">92   | 0 =&gt; fun _ =&gt; 0</span>
+<span id="L93">93   | n + 1 =&gt;</span>
+<span id="L94">94       historyParameter (fun _ : Fin 2 =&gt; 0) eta n</span>
+<span id="L95">95         (Preorder.frestrictLe n trace)</span>
+<span id="L96">96 </span>
+<span id="L97">97 /-- The two-arm softmax law generated from the source-time parameter adapter. -/</span>
+<span id="L98">98 def twoArmProbabilityAt (eta : Real) (trace : Nat -&gt; Fin 2 × Real)</span>
+<span id="L99">99     (time : Nat) : Fin 2 -&gt; Real :=</span>
+<span id="L100">100   softmaxProbability (twoArmParameterAt eta trace time)</span>
+<span id="L101">101 </span>
+<span id="L102">102 @[simp]</span>
+<span id="L103">103 theorem twoArmParameterAt_zero (eta : Real)</span>
+<span id="L104">104     (trace : Nat -&gt; Fin 2 × Real) (arm : Fin 2) :</span>
+<span id="L105">105     twoArmParameterAt eta trace 0 arm = 0 := rfl</span>
+<span id="L106">106 </span>
+<span id="L107">107 @[simp]</span>
+<span id="L108">108 theorem twoArmParameterAt_succ (eta : Real)</span>
+<span id="L109">109     (trace : Nat -&gt; Fin 2 × Real) (n : Nat) (arm : Fin 2) :</span>
+<span id="L110">110     twoArmParameterAt eta trace (n + 1) arm =</span>
+<span id="L111">111       historyParameter (fun _ : Fin 2 =&gt; 0) eta n</span>
+<span id="L112">112         (Preorder.frestrictLe n trace) arm := rfl</span>
+<span id="L113">113 </span>
+<span id="L114">114 /-- The source-time two-arm parameter stays zero-sum on every path. -/</span>
+<span id="L115">115 theorem twoArmParameterAt_sum_eq_zero (eta : Real)</span>
+<span id="L116">116     (trace : Nat -&gt; Fin 2 × Real) (time : Nat) :</span>
+<span id="L117">117     ∑ arm, twoArmParameterAt eta trace time arm = 0 := by</span>
+<span id="L118">118   cases time with</span>
+<span id="L119">119   | zero =&gt; simp</span>
+<span id="L120">120   | succ n =&gt;</span>
+<span id="L121">121       simpa using historyParameter_zeroInitialization_sum eta n</span>
+<span id="L122">122         (Preorder.frestrictLe n trace)</span>
+<span id="L123">123 </span>
+<span id="L124">124 /-- Hence source arm `2` has the negative parameter of source arm `1`. -/</span>
+<span id="L125">125 theorem twoArmParameterAt_one_eq_neg_zero (eta : Real)</span>
+<span id="L126">126     (trace : Nat -&gt; Fin 2 × Real) (time : Nat) :</span>
+<span id="L127">127     twoArmParameterAt eta trace time 1 =</span>
+<span id="L128">128       -twoArmParameterAt eta trace time 0 := by</span>
+<span id="L129">129   have hsum := twoArmParameterAt_sum_eq_zero eta trace time</span>
+<span id="L130">130   simp only [Fin.sum_univ_two] at hsum</span>
+<span id="L131">131   linarith</span>
+<span id="L132">132 </span>
+<span id="L133">133 /-- Algorithm 1&#x27;s zero initialization gives the uniform two-arm law before</span>
+<span id="L134">134 the first action. -/</span>
+<span id="L135">135 @[simp]</span>
+<span id="L136">136 theorem twoArmProbabilityAt_zero (eta : Real)</span>
+<span id="L137">137     (trace : Nat -&gt; Fin 2 × Real) (arm : Fin 2) :</span>
+<span id="L138">138     twoArmProbabilityAt eta trace 0 arm = 1 / 2 := by</span>
+<span id="L139">139   fin_cases arm &lt;;&gt;</span>
+<span id="L140">140     norm_num [twoArmProbabilityAt, softmaxProbability,</span>
+<span id="L141">141       softmaxDenominator, Fin.sum_univ_two]</span>
+<span id="L142">142 </span>
+<span id="L143">143 /-- On two arms, normalization identifies the second softmax probability with</span>
+<span id="L144">144 the failure probability of the first arm. -/</span>
+<span id="L145">145 theorem softmaxProbability_one_eq_one_sub_zero (theta : Fin 2 -&gt; Real) :</span>
+<span id="L146">146     softmaxProbability theta 1 = 1 - softmaxProbability theta 0 := by</span>
+<span id="L147">147   have hsum := softmaxProbability_sum theta</span>
+<span id="L148">148   simp only [Fin.sum_univ_two] at hsum</span>
+<span id="L149">149   linarith</span>
+<span id="L150">150 </span>
+<span id="L151">151 /-- The exact two-arm softmax odds before using the zero-sum invariant. -/</span>
+<span id="L152">152 theorem softmaxProbability_zero_div_one (theta : Fin 2 -&gt; Real) :</span>
+<span id="L153">153     softmaxProbability theta 0 / softmaxProbability theta 1 =</span>
+<span id="L154">154       Real.exp (theta 0 - theta 1) := by</span>
+<span id="L155">155   have hden : softmaxDenominator theta ≠ 0 :=</span>
+<span id="L156">156     ne_of_gt (softmaxDenominator_pos theta)</span>
+<span id="L157">157   have hexpOne : Real.exp (theta 1) ≠ 0 := ne_of_gt (Real.exp_pos _)</span>
+<span id="L158">158   calc</span>
+<span id="L159">159     softmaxProbability theta 0 / softmaxProbability theta 1 =</span>
+<span id="L160">160         Real.exp (theta 0) / Real.exp (theta 1) := by</span>
+<span id="L161">161       simp only [softmaxProbability]</span>
+<span id="L162">162       field_simp</span>
+<span id="L163">163     _ = Real.exp (theta 0 - theta 1) := by rw [Real.exp_sub]</span>
+<span id="L164">164 </span>
+<span id="L165">165 /-- A zero-sum two-arm parameter has opposite coordinates. -/</span>
+<span id="L166">166 theorem finTwo_one_eq_neg_zero_of_sum_eq_zero</span>
+<span id="L167">167     (theta : Fin 2 -&gt; Real) (hsum : ∑ coordinate, theta coordinate = 0) :</span>
+<span id="L168">168     theta 1 = -theta 0 := by</span>
+<span id="L169">169   simp only [Fin.sum_univ_two] at hsum</span>
+<span id="L170">170   linarith</span>
+<span id="L171">171 </span>
+<span id="L172">172 /-- The printed division form of Equation (11). Lean arm `0` is source arm</span>
+<span id="L173">173 `1`, and strict softmax positivity makes the denominator nonzero. -/</span>
+<span id="L174">174 theorem softmaxProbability_zero_div_one_sub_zero_eq_exp_two_mul</span>
+<span id="L175">175     (theta : Fin 2 -&gt; Real) (hsum : ∑ coordinate, theta coordinate = 0) :</span>
+<span id="L176">176     softmaxProbability theta 0 / (1 - softmaxProbability theta 0) =</span>
+<span id="L177">177       Real.exp (2 * theta 0) := by</span>
+<span id="L178">178   rw [← softmaxProbability_one_eq_one_sub_zero]</span>
+<span id="L179">179   rw [softmaxProbability_zero_div_one,</span>
+<span id="L180">180     finTwo_one_eq_neg_zero_of_sum_eq_zero theta hsum, sub_neg_eq_add,</span>
+<span id="L181">181     ← two_mul]</span>
+<span id="L182">182 </span>
+<span id="L183">183 /-- The multiplication form of Equation (11) used in the source Theorem 1</span>
+<span id="L184">184 proof: `exp(2 theta_1) (1 - p_1) = p_1`. Lean arm `0` is source arm `1`. -/</span>
+<span id="L185">185 theorem exp_two_mul_zero_mul_one_sub_softmaxProbability_zero</span>
+<span id="L186">186     (theta : Fin 2 -&gt; Real) (hsum : ∑ coordinate, theta coordinate = 0) :</span>
+<span id="L187">187     Real.exp (2 * theta 0) * (1 - softmaxProbability theta 0) =</span>
+<span id="L188">188       softmaxProbability theta 0 := by</span>
+<span id="L189">189   rw [← softmaxProbability_one_eq_one_sub_zero]</span>
+<span id="L190">190   have hprobOne : softmaxProbability theta 1 ≠ 0 :=</span>
+<span id="L191">191     ne_of_gt (softmaxProbability_pos theta 1)</span>
+<span id="L192">192   have hodds := softmaxProbability_zero_div_one theta</span>
+<span id="L193">193   rw [finTwo_one_eq_neg_zero_of_sum_eq_zero theta hsum] at hodds</span>
+<span id="L194">194   rw [sub_neg_eq_add, ← two_mul] at hodds</span>
+<span id="L195">195   exact ((div_eq_iff hprobOne).mp hodds).symm</span>
+<span id="L196">196 </span>
+<span id="L197">197 /-- The inverse-odds form used for the failure-mass telescoping potential in</span>
+<span id="L198">198 the second half of the source Theorem 1 proof. -/</span>
+<span id="L199">199 theorem exp_neg_two_mul_zero_mul_softmaxProbability_zero</span>
+<span id="L200">200     (theta : Fin 2 -&gt; Real) (hsum : ∑ coordinate, theta coordinate = 0) :</span>
+<span id="L201">201     Real.exp (-2 * theta 0) * softmaxProbability theta 0 =</span>
+<span id="L202">202       1 - softmaxProbability theta 0 := by</span>
+<span id="L203">203   rw [← softmaxProbability_one_eq_one_sub_zero]</span>
+<span id="L204">204   have heq :=</span>
+<span id="L205">205     exp_two_mul_zero_mul_one_sub_softmaxProbability_zero theta hsum</span>
+<span id="L206">206   rw [← softmaxProbability_one_eq_one_sub_zero] at heq</span>
+<span id="L207">207   rw [← heq, ← mul_assoc, ← Real.exp_add]</span>
+<span id="L208">208   ring_nf</span>
+<span id="L209">209   simp</span>
+<span id="L210">210 </span>
+<span id="L211">211 /-- Source-time Equation (11) on every infinite action/reward trace. -/</span>
+<span id="L212">212 theorem twoArmProbabilityAt_exp_two_mul_failure_eq_success</span>
+<span id="L213">213     (eta : Real) (trace : Nat -&gt; Fin 2 × Real) (time : Nat) :</span>
+<span id="L214">214     Real.exp (2 * twoArmParameterAt eta trace time 0) *</span>
+<span id="L215">215         (1 - twoArmProbabilityAt eta trace time 0) =</span>
+<span id="L216">216       twoArmProbabilityAt eta trace time 0 := by</span>
+<span id="L217">217   exact exp_two_mul_zero_mul_one_sub_softmaxProbability_zero</span>
+<span id="L218">218     (twoArmParameterAt eta trace time)</span>
+<span id="L219">219     (twoArmParameterAt_sum_eq_zero eta trace time)</span>
+<span id="L220">220 </span>
+<span id="L221">221 /-- The printed Equation (11) on the explicitly fenced source-time trace. -/</span>
+<span id="L222">222 theorem twoArmProbabilityAt_zero_div_failure_eq_exp_two_mul</span>
+<span id="L223">223     (eta : Real) (trace : Nat -&gt; Fin 2 × Real) (time : Nat) :</span>
+<span id="L224">224     twoArmProbabilityAt eta trace time 0 /</span>
+<span id="L225">225         (1 - twoArmProbabilityAt eta trace time 0) =</span>
+<span id="L226">226       Real.exp (2 * twoArmParameterAt eta trace time 0) := by</span>
+<span id="L227">227   exact softmaxProbability_zero_div_one_sub_zero_eq_exp_two_mul</span>
+<span id="L228">228     (twoArmParameterAt eta trace time)</span>
+<span id="L229">229     (twoArmParameterAt_sum_eq_zero eta trace time)</span>
+<span id="L230">230 </span>
+<span id="L231">231 /-- Finite-history multiplication form of Equation (11) under Algorithm 1&#x27;s</span>
+<span id="L232">232 source initialization. -/</span>
+<span id="L233">233 theorem historyParameter_exp_two_mul_zero_eq_odds</span>
+<span id="L234">234     (eta : Real) (n : Nat)</span>
+<span id="L235">235     (history : History.FinitePairHistory (Fin 2) Real n) :</span>
+<span id="L236">236     Real.exp</span>
+<span id="L237">237         (2 * historyParameter (fun _ : Fin 2 =&gt; 0) eta n history 0) *</span>
+<span id="L238">238         (1 - softmaxProbability</span>
+<span id="L239">239           (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history) 0) =</span>
+<span id="L240">240       softmaxProbability</span>
+<span id="L241">241         (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history) 0 := by</span>
+<span id="L242">242   apply exp_two_mul_zero_mul_one_sub_softmaxProbability_zero</span>
+<span id="L243">243   exact historyParameter_zeroInitialization_sum eta n history</span>
+<span id="L244">244 </span>
+<span id="L245">245 end</span>
+<span id="L246">246 </span>
+<span id="L247">247 end StochasticGradientBandit</span>
+<span id="L248">248 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

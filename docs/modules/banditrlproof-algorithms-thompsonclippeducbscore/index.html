@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.ThompsonClippedUCBScore · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.ThompsonClippedUCBScore · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.ThompsonClippedUCBScore · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Thompson sampling</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>Thompson<wbr>Clipped<wbr>UCB<wbr>Score</h1>
+  <p class="lede">This module instantiates HistoryActionScore with the clipped upper-confidence score used by the pinned LML Thompson regret proof. The finite-history score is measurable and lies in [l, u]; those bounds discharge every score integrability premise in the compiled Bayesian-regret decomposition.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html"><code>BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/thompson/index.html">6. Thompson sampling and Bayesian regret</a></dd></div>
+    <div><dt>Declarations</dt><dd>20</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-algorithms-thompsonbayesregretdecomposition/index.html"><code>BanditRLProof.Algorithms.ThompsonBayesRegretDecomposition</code></a>, <a href="../banditrlproof-algorithms-ucbrealhistoryindex/index.html"><code>BanditRLProof.Algorithms.UCBRealHistoryIndex</code></a>, <a href="../banditrlproof-pullcountdecomposition/index.html"><code>BanditRLProof.PullCountDecomposition</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-thompsonstationaryreward/index.html"><code>BanditRLProof.Algorithms.ThompsonStationaryReward</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-1923b536baef">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.clippedUCB</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The clipped UCB score on a complete action/reward trace.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> clippedUCB {K : Nat} (l u sigma2 delta : Real) (action : ActionTrace (Fin K)) (reward : RewardTrace Real) (arm : Fin K) (t : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html#L24">Source line 24</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b2268a491820">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.clippedUCBHistory</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The same clipped score on the inclusive history through time `n`.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> clippedUCBHistory {K : Nat} (l u sigma2 delta : Real) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (arm : Fin K) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html#L37">Source line 37</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8ec9a62e471e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.clippedUCB_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> clippedUCB_zero {K : Nat} (l u sigma2 delta : Real) (action : ActionTrace (Fin K)) (reward : RewardTrace Real) (arm : Fin K) : clippedUCB l u sigma2 delta action reward arm <span class="num">0</span> = u</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html#L50">Source line 50</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8c851e912230">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.clippedUCB_mem_Icc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> clippedUCB_mem_Icc {K : Nat} (l u sigma2 delta : Real) (hlu : l &lt;= u) (action : ActionTrace (Fin K)) (reward : RewardTrace Real) (arm : Fin K) (t : Nat) : clippedUCB l u sigma2 delta action reward arm t ∈ Set.Icc l u</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html#L57">Source line 57</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fc3fc350842e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.finset_sum_sqrt_le</code>
+    <span><span class="status compiled">Compiled</span> <span class="status source">Internal helper</span></span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">private</span> <span class="kw">theorem</span> finset_sum_sqrt_le {ι : Type*} (s : Finset ι) (c : ι -&gt; Real) (hc : <span class="kw">forall</span> i, <span class="num">0</span> &lt;= c i) : ∑ i ∈ s, Real.sqrt (c i) &lt;= Real.sqrt (s.card * ∑ i ∈ s, c i)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html#L68">Source line 68</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-694639d50535">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.finset_sum_one_div_sqrt_le</code>
+    <span><span class="status compiled">Compiled</span> <span class="status source">Internal helper</span></span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">private</span> <span class="kw">theorem</span> finset_sum_one_div_sqrt_le {n : Nat} (hn : <span class="num">0</span> &lt; n) : ∑ k ∈ Finset.range (n + <span class="num">1</span>), <span class="num">1</span> / Real.sqrt k &lt;= <span class="num">2</span> * Real.sqrt n - <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html#L77">Source line 77</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6cc39e90186e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.sum_clippedUCB_action_sub_mean_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pathwise selected-action clipped-UCB excess bound from the pinned LML
+Thompson route. The only hypothesis is that every positive-count empirical
+mean is strictly below its arm mean plus the confidence width.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sum_clippedUCB_action_sub_mean_le {K : Nat} [NeZero K] (action : ActionTrace (Fin K)) (reward : RewardTrace Real) (mean : Fin K -&gt; Real) (l u sigma2 delta : Real) (hmeanMem : <span class="kw">forall</span> arm, mean arm ∈ Set.Icc l u) (hlu : l &lt;= u) (hgood : <span class="kw">forall</span> s, s &lt; n -&gt; pullCount action (action s) s ≠ <span class="num">0</span> -&gt; UCB.realEmpiricalMean action reward (action s) s - mean (action s) &lt; Real.sqrt (<span class="num">2</span> * sigma2 * Real.log (<span class="num">1</span> / delta) / (pullCount action (action s) s : Real))) : ∑ s ∈ Finset.range n, (clippedUCB l u sigma2 delta action reward (action s) s - mean (action s)) &lt;= (u - l) * K + <span class="num">4</span> * Real.sqrt (<span class="num">2</span> * sigma2 * Real.log (<span class="num">1</span> / delta) * K * n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html#L106">Source line 106</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-21cc6b3a0d28">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.clippedUCBHistory_mem_Icc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> clippedUCBHistory_mem_Icc {K : Nat} (l u sigma2 delta : Real) (hlu : l &lt;= u) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (arm : Fin K) : clippedUCBHistory l u sigma2 delta n history arm ∈ Set.Icc l u</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html#L237">Source line 237</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6670e85e609d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measurable_clippedUCBHistory</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A fixed-arm clipped score is measurable on inclusive pair histories.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_clippedUCBHistory {K : Nat} (l u sigma2 delta : Real) (n : Nat) (arm : Fin K) : Measurable (<span class="kw">fun</span> history : History.FinitePairHistory (Fin K) Real n =&gt; clippedUCBHistory l u sigma2 delta n history arm)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html#L249">Source line 249</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-96b2a68eb559">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measurable_uncurry_clippedUCBHistory</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Joint measurability in the visible history and candidate action.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_uncurry_clippedUCBHistory {K : Nat} (l u sigma2 delta : Real) (n : Nat) : Measurable (<span class="kw">fun</span> pair : History.FinitePairHistory (Fin K) Real n × Fin K =&gt; clippedUCBHistory l u sigma2 delta n pair.<span class="num">1</span> pair.<span class="num">2</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html#L275">Source line 275</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f83ac72246e2">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.clippedUCBHistoryScore</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">`HistoryActionScore` instance for the pinned LML clipped-UCB formula.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> clippedUCBHistoryScore {K : Nat} (l u sigma2 delta : Real) : HistoryActionScore (Fin K) Real <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html#L285">Source line 285</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a315a631c8eb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.clippedUCBHistory_finitePairHistoryOfTrace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Inclusive finite-history and exclusive trace versions agree at `n + 1`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> clippedUCBHistory_finitePairHistoryOfTrace {K : Nat} (l u sigma2 delta : Real) (action : ActionTrace (Fin K)) (reward : RewardTrace Real) (n : Nat) (arm : Fin K) : clippedUCBHistory l u sigma2 delta n (History.finitePairHistoryOfTrace action reward n) arm = clippedUCB l u sigma2 delta action reward arm (n + <span class="num">1</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html#L296">Source line 296</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fb5ac984899f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.clippedUCBHistoryScore_atTrace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Evaluating the history score at the selected action recovers `clippedUCB`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> clippedUCBHistoryScore_atTrace {K : Nat} (l u sigma2 delta : Real) (action : ActionTrace (Fin K)) (reward : RewardTrace Real) (t : Nat) : (clippedUCBHistoryScore l u sigma2 delta).atTrace action reward t = clippedUCB l u sigma2 delta action reward (action t) t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html#L308">Source line 308</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-976910f375de">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.clippedUCBHistoryScore_atBestTrace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Evaluating at a comparison arm recovers the same trace score.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> clippedUCBHistoryScore_atBestTrace {K : Nat} (l u sigma2 delta : Real) (bestArm : Fin K) (action : ActionTrace (Fin K)) (reward : RewardTrace Real) (t : Nat) : (clippedUCBHistoryScore l u sigma2 delta).atBestTrace bestArm action reward t = clippedUCB l u sigma2 delta action reward bestArm t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html#L320">Source line 320</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-67a42aad2928">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.integrable_of_measurable_mem_Icc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A measurable real function with pointwise range in `[l, u]` is integrable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_of_measurable_mem_Icc {Omega : Type u} [MeasurableSpace Omega] (mu : Measure Omega) [IsFiniteMeasure mu] (f : Omega -&gt; Real) (hf : Measurable f) {l u : Real} (hmem : <span class="kw">forall</span> omega, f omega ∈ Set.Icc l u) : Integrable f mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html#L334">Source line 334</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b58693d758cc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.integrable_trajectoryHistoryScore_clippedUCB</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_trajectoryHistoryScore_clippedUCB {Env : Type u} {K : Nat} [MeasurableSpace Env] (mu : Measure (Env × ((n : Nat) -&gt; Fin K × Real))) [IsFiniteMeasure mu] (l u sigma2 delta : Real) (hlu : l &lt;= u) (t : Nat) : Integrable (<span class="kw">fun</span> sample =&gt; trajectoryHistoryScore (clippedUCBHistoryScore l u sigma2 delta) sample t) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html#L347">Source line 347</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d467c024853b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.integrable_trajectoryBestHistoryScore_clippedUCB</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_trajectoryBestHistoryScore_clippedUCB {Env : Type u} {K : Nat} [MeasurableSpace Env] (mu : Measure (Env × ((n : Nat) -&gt; Fin K × Real))) [IsFiniteMeasure mu] (bestAction : Env -&gt; Fin K) (hbestAction : Measurable bestAction) (l u sigma2 delta : Real) (hlu : l &lt;= u) (t : Nat) : Integrable (<span class="kw">fun</span> sample =&gt; trajectoryBestHistoryScore (clippedUCBHistoryScore l u sigma2 delta) bestAction sample t) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html#L368">Source line 368</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c1ed377822d1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.integrable_trajectoryMean_bestAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_trajectoryMean_bestAction {Env : Type u} {K : Nat} [MeasurableSpace Env] (mu : Measure (Env × ((n : Nat) -&gt; Fin K × Real))) [IsFiniteMeasure mu] (mean : Env -&gt; Fin K -&gt; Real) (hmean : Measurable (<span class="kw">fun</span> pair : Env × Fin K =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (hmeanMem : <span class="kw">forall</span> env arm, mean env arm ∈ Set.Icc l u) (bestAction : Env -&gt; Fin K) (hbestAction : Measurable bestAction) : Integrable (<span class="kw">fun</span> sample : Env × ((n : Nat) -&gt; Fin K × Real) =&gt; mean sample.<span class="num">1</span> (bestAction sample.<span class="num">1</span>)) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html#L391">Source line 391</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-49b337dbf0a1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.integrable_trajectoryMean_action</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_trajectoryMean_action {Env : Type u} {K : Nat} [MeasurableSpace Env] (mu : Measure (Env × ((n : Nat) -&gt; Fin K × Real))) [IsFiniteMeasure mu] (mean : Env -&gt; Fin K -&gt; Real) (hmean : Measurable (<span class="kw">fun</span> pair : Env × Fin K =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (hmeanMem : <span class="kw">forall</span> env arm, mean env arm ∈ Set.Icc l u) (t : Nat) : Integrable (<span class="kw">fun</span> sample : Env × ((n : Nat) -&gt; Fin K × Real) =&gt; mean sample.<span class="num">1</span> (environmentTrajectoryAction sample t)) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html#L407">Source line 407</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cdc4f419f1bd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.integral_trajectoryBayesMeanRegret_eq_add_clippedUCB</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Concrete clipped-UCB specialization of the actual-trajectory Thompson
+Bayesian-regret decomposition.  Range and measurability assumptions discharge
+all four integrability families from `integral_trajectoryBayesMeanRegret_eq_add_historyScore`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_trajectoryBayesMeanRegret_eq_add_clippedUCB {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [Nonempty (Fin K)] (prior : Measure Env) [IsProbabilityMeasure prior] (environment : MeasurableHistoryEnvironment Env (Fin K) Real) (bestAction : Env -&gt; Fin K) (hbestAction : Measurable bestAction) (mean : Env -&gt; Fin K -&gt; Real) (hmean : Measurable (<span class="kw">fun</span> pair : Env × Fin K =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (l u sigma2 delta : Real) (hlu : l &lt;= u) (hmeanMem : <span class="kw">forall</span> env arm, mean env arm ∈ Set.Icc l u) (horizon : Nat) : <span class="kw">let</span> algorithm := uniformReferenceThompsonAlgorithm prior environment bestAction hbestAction <span class="kw">let</span> actualMeasure := prior ⊗ₘ canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment integral actualMeasure (<span class="kw">fun</span> sample =&gt; trajectoryBayesMeanRegret mean bestAction sample horizon) = integral actualMeasure (<span class="kw">fun</span> sample =&gt; ∑ t ∈ range horizon, (mean sample.<span class="num">1</span> (bestAction sample.<span class="num">1</span>) - clippedUCB l u sigma2 delta (environmentTrajectoryAction sample) (environmentTrajectoryReward sample) (bestAction sample.<span class="num">1</span>) t)) + integral actualMeasure (<span class="kw">fun</span> sample =&gt; ∑ t ∈ range horizon, (clippedUCB l u sigma2 delta (environmentTrajectoryAction sample) (environmentTrajectoryReward sample) (environmentTrajectoryAction sample t) t - mean sample.<span class="num">1</span> (environmentTrajectoryAction sample t)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean.html#L428">Source line 428</a>
+      <a href="../../chapters/thompson/index.html#decl-cdc4f419f1bd-teaching">Open teaching explanation</a>
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

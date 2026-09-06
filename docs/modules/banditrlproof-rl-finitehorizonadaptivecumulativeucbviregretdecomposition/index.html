@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Finite-horizon RL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>RL.<wbr>Finite<wbr>Horizon<wbr>Adaptive<wbr>Cumulative<wbr>UCBVI<wbr>Regret<wbr>Decomposition</h1>
+  <p class="lede">Pathwise recurrent UCBVI-CH episode-regret decomposition.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html"><code>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/finite-horizon-rl/index.html">9. Finite-horizon reinforcement learning</a></dd></div>
+    <div><dt>Declarations</dt><dd>23</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-rl-finitehorizonadaptivecumulativeucbviadaptivebellmanmartingale/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof-rl-finitehorizonadaptivecumulativeucbvicounting/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVICounting</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-2d9ac9c072d1">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.successorPreviousQ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Previous Q table for successor episode `n+1`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> successorPreviousQ (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>) (n : Nat) : QTable mdp</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L22">Source line 22</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fbefddb828b8">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.successorSummary</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact pooled summary available before successor episode `n+1`.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> successorSummary {mdp : MDP State Action} (trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>) (n : Nat) : TransitionCountSummary mdp</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L31">Source line 31</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-096918747c36">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.successorPolicyTable</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Greedy recurrent table actually used by successor episode `n+1`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> successorPolicyTable (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>) (n : Nat) : DeterministicMarkovPolicyTable mdp</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L38">Source line 38</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-273960adaec8">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.successorPolicyGapRemaining</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Same-policy continuation gap in the successor episode.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> successorPolicyGapRemaining (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>) (n remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) (state : State) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L49">Source line 49</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4a76983b1e26">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.successorLocalCharge</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Per-stage deterministic charge.  A zero previous count is paid by `H`;
+positive counts pay the `9HL/sqrt N` bonus/projection term plus the explicit
+`66 S H^2 L/N` Bernstein correction.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> successorLocalCharge (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>) (n remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (state : State) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L63">Source line 63</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-54325535f0c8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.successorPolicyGapRemaining_mem_Icc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> successorPolicyGapRemaining_mem_Icc {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] (source : AdaptiveEpisodeBatchSource mdp initialState <span class="num">1</span>) {episodes : Nat} {delta : Real} {trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>} (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hepisodes : <span class="num">0</span> &lt; episodes) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) (hrewardNonneg : <span class="kw">forall</span> state action, <span class="num">0</span> &lt;= mdp.reward state action) (hrewardOne : <span class="kw">forall</span> state action, mdp.reward state action &lt;= <span class="num">1</span>) (htrajectory : trajectory ∉ AdaptiveEpisodeBatchSource.simultaneousTransitionFailureEvent source episodes (logFactor (State := State) (Action := Action) mdp episodes delta)) (defaultState : State) (n : Nat) (hn : n + <span class="num">1</span> &lt;= episodes) (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) (state : State) : successorPolicyGapRemaining mdp defaultState episodes delta trajectory n remaining hremaining state ∈ Set.Icc (<span class="num">0</span> : Real) mdp.horizon</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L83">Source line 83</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-13019eeb68ff">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.successorLocalCharge_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> successorLocalCharge_nonneg (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>) (n remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (state : State) : <span class="num">0</span> &lt;= successorLocalCharge mdp defaultState episodes delta trajectory n remaining hremaining state</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L143">Source line 143</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e1e7041c3a37">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.normalizedBellmanRemainingWeight</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Normalized weight at the start of a subproblem with `remaining` decisions.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> normalizedBellmanRemainingWeight (mdp : MDP State Action) (remaining : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L158">Source line 158</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9dced3872ac9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.normalizedBellmanRemainingWeight_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> normalizedBellmanRemainingWeight_zero (mdp : MDP State Action) : normalizedBellmanRemainingWeight mdp mdp.horizon = <span class="num">31</span> / <span class="num">32</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L162">Source line 162</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a07424c4677f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.normalizedBellmanRemainingWeight_succ_eq_chargeWeight</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> normalizedBellmanRemainingWeight_succ_eq_chargeWeight (mdp : MDP State Action) (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) : normalizedBellmanRemainingWeight mdp (remaining + <span class="num">1</span>) = normalizedBellmanChargeWeight mdp (mdp.decisionStageRemaining remaining hremaining)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L167">Source line 167</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c77667c4eb33">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.normalizedBellmanRemainingWeight_eq_stageWeight</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> normalizedBellmanRemainingWeight_eq_stageWeight (mdp : MDP State Action) (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) : normalizedBellmanRemainingWeight mdp remaining = normalizedBellmanWeight mdp (mdp.decisionStageRemaining remaining hremaining)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L176">Source line 176</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7a80611c0131">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.successorWeightedChargeFrom</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Weighted local charges along the state sequence reconstructed recursively
+from one successor batch.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> successorWeightedChargeFrom (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>) (n : Nat) : (remaining : Nat) -&gt; remaining &lt;= mdp.horizon -&gt; State -&gt; StepTrace Action State remaining -&gt; Real | <span class="num">0</span>, _, _, _ =&gt; <span class="num">0</span> | remaining + <span class="num">1</span>, hremaining, state, trace =&gt; <span class="kw">let</span> stage := mdp.decisionStageRemaining remaining hremaining normalizedBellmanChargeWeight mdp stage * successorLocalCharge mdp defaultState episodes delta trajectory n remaining hremaining state + successorWeightedChargeFrom mdp defaultState episodes delta trajectory n remaining (<span class="kw">by</span> omega) (trace <span class="num">0</span>).<span class="num">2</span> (Fin.tail trace) /-- Full successor-episode charge on the canonical state reconstruction. -/ <span class="kw">noncomputable</span> <span class="kw">def</span> successorCanonicalWeightedCharge (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>) (n : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L191">Source line 191</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-172c91da5919">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.successorCanonicalWeightedCharge</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Full successor-episode charge on the canonical state reconstruction.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> successorCanonicalWeightedCharge (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>) (n : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L207">Source line 207</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1c36b0e9d3a6">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.successorWeightedChargeSum</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Chronological weighted charge of one successor episode.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> successorWeightedChargeSum (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>) (n : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L217">Source line 217</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-100ef610d68d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.successorWeightedChargeSum_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> successorWeightedChargeSum_nonneg (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>) (n : Nat) : <span class="num">0</span> &lt;= successorWeightedChargeSum mdp defaultState episodes delta trajectory n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L227">Source line 227</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8ca6d10a7463">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.successorWeightedVisitedGap</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Weighted state-gap transported along one generated successor batch.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> successorWeightedVisitedGap (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>) (n : Nat) (stage : Fin mdp.horizon) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L240">Source line 240</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a56d259d5a01">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.successorPolicyGapRemaining_le_inflation_mul_transition_add_charge</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The good same-source transition event discharges the complete local
+inflated Bellman recursion at every successor episode and state.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> successorPolicyGapRemaining_le_inflation_mul_transition_add_charge {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] (source : AdaptiveEpisodeBatchSource mdp initialState <span class="num">1</span>) {episodes : Nat} {delta : Real} {trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>} (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hepisodes : <span class="num">0</span> &lt; episodes) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) (hrewardNonneg : <span class="kw">forall</span> state action, <span class="num">0</span> &lt;= mdp.reward state action) (hrewardOne : <span class="kw">forall</span> state action, mdp.reward state action &lt;= <span class="num">1</span>) (htrajectory : trajectory ∉ simultaneousTransitionFailureEvent source episodes (logFactor (State := State) (Action := Action) mdp episodes delta)) (defaultState : State) (n : Nat) (hn : n + <span class="num">1</span> &lt; episodes) (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (state : State) : successorPolicyGapRemaining mdp defaultState episodes delta trajectory n (remaining + <span class="num">1</span>) hremaining state &lt;= bellmanInflation mdp * mdp.transitionValue (successorPolicyGapRemaining mdp defaultState episodes delta trajectory n remaining (<span class="kw">by</span> omega)) state (successorPolicyTable mdp defaultState episodes delta trajectory n (mdp.decisionStageRemaining remaining hremaining) state) + successorLocalCharge mdp defaultState episodes delta trajectory n remaining hremaining state</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L254">Source line 254</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3785c8ea76d4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.clippedSuccessorGapFeatureOfSummaries_eq_weight_mul_gap</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">On the joint confidence event, the globally clipped martingale feature is
+exactly the normalized recurrent policy gap.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> clippedSuccessorGapFeatureOfSummaries_eq_weight_mul_gap {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] (source : AdaptiveEpisodeBatchSource mdp initialState <span class="num">1</span>) {episodes : Nat} {delta : Real} {trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>} (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hepisodes : <span class="num">0</span> &lt; episodes) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) (hrewardNonneg : <span class="kw">forall</span> state action, <span class="num">0</span> &lt;= mdp.reward state action) (hrewardOne : <span class="kw">forall</span> state action, mdp.reward state action &lt;= <span class="num">1</span>) (htrajectory : trajectory ∉ simultaneousTransitionFailureEvent source episodes (logFactor (State := State) (Action := Action) mdp episodes delta)) (defaultState : State) (n : Nat) (hn : n + <span class="num">1</span> &lt;= episodes) (stage : Fin mdp.horizon) (state : State) : clippedSuccessorGapFeatureOfSummaries mdp defaultState episodes delta n (<span class="kw">fun</span> i =&gt; (trajectory i).transitionCountSummary) stage state = normalizedBellmanWeight mdp stage * successorPolicyGapRemaining mdp defaultState episodes delta trajectory n (mdp.horizon - (stage.val + <span class="num">1</span>)) (<span class="kw">by</span> omega) state</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L410">Source line 410</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-70970b8eaa47">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.normalizedGap_le_weightedChargeFrom_add_deterministicInnovation</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact weighted Bellman telescope for one successor episode.  The charge,
+policy table, recursively reconstructed state path, and martingale innovation
+are all the same objects used by the recurrent generated source.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> normalizedGap_le_weightedChargeFrom_add_deterministicInnovation {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] (source : AdaptiveEpisodeBatchSource mdp initialState <span class="num">1</span>) {episodes : Nat} {delta : Real} {trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>} (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hepisodes : <span class="num">0</span> &lt; episodes) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) (hrewardNonneg : <span class="kw">forall</span> state action, <span class="num">0</span> &lt;= mdp.reward state action) (hrewardOne : <span class="kw">forall</span> state action, mdp.reward state action &lt;= <span class="num">1</span>) (htrajectory : trajectory ∉ simultaneousTransitionFailureEvent source episodes (logFactor (State := State) (Action := Action) mdp episodes delta)) (defaultState : State) (n : Nat) (hn : n + <span class="num">1</span> &lt; episodes) : <span class="kw">forall</span> (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) (state : State) (trace : StepTrace Action State remaining), normalizedBellmanRemainingWeight mdp remaining * successorPolicyGapRemaining mdp defaultState episodes delta trajectory n remaining hremaining state &lt;= successorWeightedChargeFrom mdp defaultState episodes delta trajectory n remaining hremaining state trace + mdp.sampledCumulativeDeterministicGapInnovationFrom (successorPolicyTable mdp defaultState episodes delta trajectory n) (clippedSuccessorGapFeatureOfSummaries mdp defaultState episodes delta n (<span class="kw">fun</span> i =&gt; (trajectory i).transitionCountSummary)) remaining hremaining state trace</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L460">Source line 460</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7e0bcf1a2d83">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.successorPolicyGapRemaining_le_cap_mul_charge_add_innovation</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The full-horizon successor policy gap is bounded by the globally capped
+canonical charge plus the exact successor Bellman innovation.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> successorPolicyGapRemaining_le_cap_mul_charge_add_innovation {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] (source : AdaptiveEpisodeBatchSource mdp initialState <span class="num">1</span>) {episodes : Nat} {delta : Real} {trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>} (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hepisodes : <span class="num">0</span> &lt; episodes) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) (hrewardNonneg : <span class="kw">forall</span> state action, <span class="num">0</span> &lt;= mdp.reward state action) (hrewardOne : <span class="kw">forall</span> state action, mdp.reward state action &lt;= <span class="num">1</span>) (htrajectory : trajectory ∉ simultaneousTransitionFailureEvent source episodes (logFactor (State := State) (Action := Action) mdp episodes delta)) (defaultState : State) (n : Nat) (hn : n + <span class="num">1</span> &lt; episodes) : successorPolicyGapRemaining mdp defaultState episodes delta trajectory n mdp.horizon le_rfl ((trajectory (n + <span class="num">1</span>)).reconstructedInitialState defaultState) &lt;= bellmanWeightCap * (successorCanonicalWeightedCharge mdp defaultState episodes delta trajectory n + mdp.sampledCumulativeDeterministicGapInnovationFrom (successorPolicyTable mdp defaultState episodes delta trajectory n) (clippedSuccessorGapFeatureOfSummaries mdp defaultState episodes delta n (<span class="kw">fun</span> i =&gt; (trajectory i).transitionCountSummary)) mdp.horizon le_rfl ((trajectory (n + <span class="num">1</span>)).reconstructedInitialState defaultState) ((trajectory (n + <span class="num">1</span>)).reconstructedStepTrace))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L571">Source line 571</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-687264ece725">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentSource_generatedEpisodePseudoRegret_le_successorPolicyGapRemaining</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Optimism converts the generated successor episode&#x27;s policy-value
+pseudo-regret into the same recurrent policy gap used by the telescope.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> recurrentSource_generatedEpisodePseudoRegret_le_successorPolicyGapRemaining {mdp : MDP State Action} (initialState : Measure State) [IsProbabilityMeasure initialState] {episodes : Nat} {delta : Real} {trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>} (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hepisodes : <span class="num">0</span> &lt; episodes) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) (hrewardNonneg : <span class="kw">forall</span> state action, <span class="num">0</span> &lt;= mdp.reward state action) (hrewardOne : <span class="kw">forall</span> state action, mdp.reward state action &lt;= <span class="num">1</span>) (defaultState : State) (htrajectory : trajectory ∉ simultaneousTransitionFailureEvent (recurrentSource mdp initialState defaultState episodes delta) episodes (logFactor (State := State) (Action := Action) mdp episodes delta)) (n : Nat) (hn : n + <span class="num">1</span> &lt; episodes) : generatedEpisodePseudoRegret (recurrentSource mdp initialState defaultState episodes delta) defaultState trajectory (n + <span class="num">1</span>) &lt;= successorPolicyGapRemaining mdp defaultState episodes delta trajectory n mdp.horizon le_rfl ((trajectory (n + <span class="num">1</span>)).reconstructedInitialState defaultState)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L613">Source line 613</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8236e9e2c6cd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentBellmanInnovationProcess_succ_eq_canonical</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The named adaptive martingale process is definitionally the direct
+canonical innovation used in the successor telescope.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> recurrentBellmanInnovationProcess_succ_eq_canonical (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>) (n : Nat) : recurrentBellmanInnovationProcess mdp defaultState episodes delta (n + <span class="num">1</span>) trajectory = mdp.sampledCumulativeDeterministicGapInnovationFrom (successorPolicyTable mdp defaultState episodes delta trajectory n) (clippedSuccessorGapFeatureOfSummaries mdp defaultState episodes delta n (<span class="kw">fun</span> i =&gt; (trajectory i).transitionCountSummary)) mdp.horizon le_rfl ((trajectory (n + <span class="num">1</span>)).reconstructedInitialState defaultState) ((trajectory (n + <span class="num">1</span>)).reconstructedStepTrace)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L684">Source line 684</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b631547f72c5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentSource_generatedSuccessorPseudoRegret_le_charge_add_innovation</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">End-to-end good-event decomposition for one generated successor episode.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> recurrentSource_generatedSuccessorPseudoRegret_le_charge_add_innovation {mdp : MDP State Action} (initialState : Measure State) [IsProbabilityMeasure initialState] {episodes : Nat} {delta : Real} {trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>} (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hepisodes : <span class="num">0</span> &lt; episodes) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_le_one : delta &lt;= <span class="num">1</span>) (hrewardNonneg : <span class="kw">forall</span> state action, <span class="num">0</span> &lt;= mdp.reward state action) (hrewardOne : <span class="kw">forall</span> state action, mdp.reward state action &lt;= <span class="num">1</span>) (defaultState : State) (htrajectory : trajectory ∉ simultaneousTransitionFailureEvent (recurrentSource mdp initialState defaultState episodes delta) episodes (logFactor (State := State) (Action := Action) mdp episodes delta)) (n : Nat) (hn : n + <span class="num">1</span> &lt; episodes) : generatedEpisodePseudoRegret (recurrentSource mdp initialState defaultState episodes delta) defaultState trajectory (n + <span class="num">1</span>) &lt;= bellmanWeightCap * (successorCanonicalWeightedCharge mdp defaultState episodes delta trajectory n + recurrentBellmanInnovationProcess mdp defaultState episodes delta (n + <span class="num">1</span>) trajectory)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition.lean.html#L700">Source line 700</a>
+      <a href="../../chapters/finite-horizon-rl/index.html#decl-b631547f72c5-teaching">Open teaching explanation</a>
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

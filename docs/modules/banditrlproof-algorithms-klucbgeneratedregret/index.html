@@ -1,0 +1,870 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.KLUCBGeneratedRegret · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.KLUCBGeneratedRegret · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.KLUCBGeneratedRegret · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Foundations</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>KLUCB<wbr>Generated<wbr>Regret</h1>
+  <p class="lede">This module defines one horizon-free KL-UCB policy on the canonical generated Rat action/reward trajectory. The confidence budget is calibrated from the accepted telescoping empirical-mean radius and an explicit common interior margin. The selected score is nevertheless the supremum of the genuine Bernoulli-KL confidence set; it is not the ordinary additive UCB score.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html"><code>BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/foundations/index.html">1. Finite bandits, traces, and regret</a></dd></div>
+    <div><dt>Declarations</dt><dd>47</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-algorithms-klucbbernoulli/index.html"><code>BanditRLProof.Algorithms.KLUCBBernoulli</code></a>, <a href="../banditrlproof-algorithms-ucbfixedpolicytelescopinganytimeregret/index.html"><code>BanditRLProof.Algorithms.UCBFixedPolicyTelescopingAnytimeRegret</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-2de4a3f0c998">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.KLUCB.generatedBudgetAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">KL exploration budget on a realized generated prefix.  The margin is a
+known regularity contract, while the empirical count and radius are computed
+from the actual action/reward trace.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> generatedBudgetAt {Omega : Type} {K : Nat} (action : Omega -&gt; ActionTrace (Fin K)) (sigma2 : NNReal) (delta margin : Real) (omega : Omega) (t : Nat) (arm : Fin K) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L24">Source line 24</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4a01a14fa5c5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.generatedBudgetAt_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> generatedBudgetAt_nonneg {Omega : Type} {K : Nat} (action : Omega -&gt; ActionTrace (Fin K)) (sigma2 : NNReal) (delta margin : Real) (hmargin0 : <span class="num">0</span> &lt; margin) (hmargin1 : margin &lt; <span class="num">1</span>) (omega : Omega) (t : Nat) (arm : Fin K) : <span class="num">0</span> &lt;= generatedBudgetAt action sigma2 delta margin omega t arm</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L34">Source line 34</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a373474e0a80">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.KLUCB.generatedIndexAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Genuine Bernoulli-KL index on one generated prefix.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> generatedIndexAt {Omega : Type} {K : Nat} (action : Omega -&gt; ActionTrace (Fin K)) (reward : Omega -&gt; RewardTrace Rat) (sigma2 : NNReal) (delta margin : Real) (omega : Omega) (t : Nat) (arm : Fin K) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L46">Source line 46</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-96542d879a06">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.KLUCB.historyIndex</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">KL score reconstructed from a finite generated pair history.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> historyIndex {K : Nat} (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (t : Nat) (history : History.FinitePairHistory (Fin K) Rat t) (arm : Fin K) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L59">Source line 59</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-556dc4d5ccee">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.measurable_historyIndex</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_historyIndex {K : Nat} (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (t : Nat) (arm : Fin K) : Measurable (<span class="kw">fun</span> history : History.FinitePairHistory (Fin K) Rat t =&gt; historyIndex sigma2 delta margin defaultAction t history arm)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L79">Source line 79</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3e2e01da1983">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.KLUCB.historyNextArm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Round-robin initialization followed by KL-index maximization.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> historyNextArm {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (t : Nat) (history : History.FinitePairHistory (Fin K) Rat t) : Fin K</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L87">Source line 87</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5c2afd949491">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.historyIndex_le_nextArm_of_K_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> historyIndex_le_nextArm_of_K_le {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (t : Nat) (history : History.FinitePairHistory (Fin K) Rat t) (ht : K &lt;= t) (arm : Fin K) : historyIndex sigma2 delta margin defaultAction t history arm &lt;= historyIndex sigma2 delta margin defaultAction t history (historyNextArm hK sigma2 delta margin defaultAction t history)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L95">Source line 95</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7a767d26f373">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.KLUCB.pairHistory</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pair-history reconstruction for the KL-UCB policy.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> pairHistory {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) : (n : Nat) -&gt; History.FiniteRewardHistory Rat n -&gt; History.FinitePairHistory (Fin K) Rat n | <span class="num">0</span>, rewardHistory =&gt; <span class="kw">fun</span> i =&gt; (defaultAction, rewardHistory i) | n + <span class="num">1</span>, rewardHistory =&gt; <span class="kw">let</span> previousRewardHistory : History.FiniteRewardHistory Rat n := <span class="kw">fun</span> i =&gt; rewardHistory ⟨i.<span class="num">1</span>, Finset.mem_Iic.mpr ((Finset.mem_Iic.mp i.<span class="num">2</span>).trans (Nat.le_succ n))⟩ <span class="kw">let</span> previousHistory := pairHistory hK sigma2 delta margin defaultAction n previousRewardHistory <span class="kw">let</span> nextAction := historyNextArm hK sigma2 delta margin defaultAction n previousHistory History.extendPairHistorySucc previousHistory (nextAction, rewardHistory ⟨n + <span class="num">1</span>, Finset.mem_Iic.mpr le_rfl⟩) <span class="kw">def</span> historyState {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (n : Nat) (rewardHistory : History.FiniteRewardHistory Rat n) : UCB.SelectedPolicySuccessorFiniteHistoryState K</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L108">Source line 108</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f190874d316f">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.KLUCB.historyState</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> historyState {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (n : Nat) (rewardHistory : History.FiniteRewardHistory Rat n) : UCB.SelectedPolicySuccessorFiniteHistoryState K</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L126">Source line 126</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-03ae58d06644">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.measurable_historyState</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_historyState {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (n : Nat) : Measurable (historyState hK sigma2 delta margin defaultAction n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L133">Source line 133</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1911081ac60d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.KLUCB.historyPolicy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The measurable KL-UCB policy.  Its declaration has no terminal horizon.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> historyPolicy {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (_t : Nat) : Policy.MeasurablePolicy (UCB.SelectedPolicySuccessorFiniteHistoryState K) (Fin K) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L140">Source line 140</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-87af22d5d1a4">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.KLUCB.generatedAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical generated action trace of the KL-UCB policy.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> generatedAction {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) : Omega -&gt; ActionTrace (Fin K)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L150">Source line 150</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1daaf2e5c8ed">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.generatedAction_succ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> generatedAction_succ {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (omega : Omega) (t : Nat) : generatedAction hK sigma2 delta margin defaultAction reward omega (t + <span class="num">1</span>) = historyNextArm hK sigma2 delta margin defaultAction t (pairHistory hK sigma2 delta margin defaultAction t (History.finiteRewardHistoryOfTrace (reward omega) t))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L160">Source line 160</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e28e5a6090a5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.pairHistory_eq_finitePairHistoryOfTrace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pairHistory_eq_finitePairHistoryOfTrace {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (omega : Omega) (n : Nat) : pairHistory hK sigma2 delta margin defaultAction n (History.finiteRewardHistoryOfTrace (reward omega) n) = History.finitePairHistoryOfTrace (generatedAction hK sigma2 delta margin defaultAction reward omega) (reward omega) n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L172">Source line 172</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-daa74196f9cb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.historyIndex_finitePairHistoryOfTrace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite-history score, count, mean, and budget are definitionally the
+ones on the same generated trajectory.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> historyIndex_finitePairHistoryOfTrace {Omega : Type} {K : Nat} (action : Omega -&gt; ActionTrace (Fin K)) (reward : Omega -&gt; RewardTrace Rat) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (omega : Omega) (t : Nat) (arm : Fin K) : historyIndex sigma2 delta margin defaultAction t (History.finitePairHistoryOfTrace (action omega) (reward omega) t) arm = generatedIndexAt action reward sigma2 delta margin omega t arm</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L214">Source line 214</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-904c5fff61ca">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.generatedIndexAt_le_selected_of_K_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Selected KL index maximality on the actual generated action/reward trace.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> generatedIndexAt_le_selected_of_K_le {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (omega : Omega) (t : Nat) (ht : K &lt;= t) (arm : Fin K) : <span class="kw">let</span> action := generatedAction hK sigma2 delta margin defaultAction reward generatedIndexAt action reward sigma2 delta margin omega t arm &lt;= generatedIndexAt action reward sigma2 delta margin omega t (action omega (t + <span class="num">1</span>))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L232">Source line 232</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4eeefd5c4767">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.generatedAction_succ_eq_initializationArm_of_lt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> generatedAction_succ_eq_initializationArm_of_lt {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (omega : Omega) (t : Nat) (ht : t &lt; K) : generatedAction hK sigma2 delta margin defaultAction reward omega (t + <span class="num">1</span>) = UCB.initializationArm hK t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L266">Source line 266</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fb77fc28513a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.successorArmPullCount_generatedAction_K_add_one_eq_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> successorArmPullCount_generatedAction_K_add_one_eq_one {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (omega : Omega) (arm : Fin K) : ConditionalExpectationReward.successorArmPullCount (generatedAction hK sigma2 delta margin defaultAction reward omega) arm (K + <span class="num">1</span>) = <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L275">Source line 275</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3ef23b85aaa5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.successorArmPullCount_generatedAction_pos_of_K_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> successorArmPullCount_generatedAction_pos_of_K_le {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (omega : Omega) (arm : Fin K) (t : Nat) (ht : K &lt;= t) : <span class="num">0</span> &lt; ConditionalExpectationReward.successorArmPullCount (generatedAction hK sigma2 delta margin defaultAction reward omega) arm (t + <span class="num">1</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L298">Source line 298</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1107f628ba3d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.K_le_of_generatedAction_selected_and_count_pos</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> K_le_of_generatedAction_selected_and_count_pos {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (omega : Omega) (arm : Fin K) (t : Nat) (hselected : generatedAction hK sigma2 delta margin defaultAction reward omega (t + <span class="num">1</span>) = arm) (hcount : <span class="num">0</span> &lt; ConditionalExpectationReward.successorArmPullCount (generatedAction hK sigma2 delta margin defaultAction reward omega) arm (t + <span class="num">1</span>)) : K &lt;= t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L317">Source line 317</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4a6c3d291bd5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.armMean_mem_confidenceSet_of_abs_lt_radius</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A bounded empirical-mean deviation on the actual prefix makes the true
+interior arm mean feasible for the KL confidence set used by the policy.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> armMean_mem_confidenceSet_of_abs_lt_radius {Omega : Type} {K : Nat} (action : Omega -&gt; ActionTrace (Fin K)) (reward : Omega -&gt; RewardTrace Rat) (sigma2 : NNReal) (delta margin : Real) (hmargin0 : <span class="num">0</span> &lt; margin) (hmarginHalf : margin &lt;= <span class="num">1</span> / <span class="num">2</span>) (armMean : Fin K -&gt; Rat) (omega : Omega) (t : Nat) (arm : Fin K) (hemp : IsBernoulliParameter (UCB.selectedPolicySuccessorEmpiricalMeanAt action reward omega t arm)) (hmean : (armMean arm : Real) ∈ Set.Icc margin (<span class="num">1</span> - margin)) (hdev : |UCB.selectedPolicySuccessorEmpiricalMeanAt action reward omega t arm - (armMean arm : Real)| &lt; UCB.selectedPolicySuccessorTelescopingRadiusAt action sigma2 delta omega t arm) : (armMean arm : Real) ∈ confidenceSet (UCB.selectedPolicySuccessorEmpiricalMeanAt action reward omega t arm) (ConditionalExpectationReward.successorArmPullCount (action omega) arm (t + <span class="num">1</span>)) (generatedBudgetAt action sigma2 delta margin omega t arm)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L347">Source line 347</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-290d0c4dfde2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.armMean_le_generatedIndexAt_of_abs_lt_radius</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> armMean_le_generatedIndexAt_of_abs_lt_radius {Omega : Type} {K : Nat} (action : Omega -&gt; ActionTrace (Fin K)) (reward : Omega -&gt; RewardTrace Rat) (sigma2 : NNReal) (delta margin : Real) (hmargin0 : <span class="num">0</span> &lt; margin) (hmarginHalf : margin &lt;= <span class="num">1</span> / <span class="num">2</span>) (armMean : Fin K -&gt; Rat) (omega : Omega) (t : Nat) (arm : Fin K) (hemp : IsBernoulliParameter (UCB.selectedPolicySuccessorEmpiricalMeanAt action reward omega t arm)) (hmean : (armMean arm : Real) ∈ Set.Icc margin (<span class="num">1</span> - margin)) (hdev : |UCB.selectedPolicySuccessorEmpiricalMeanAt action reward omega t arm - (armMean arm : Real)| &lt; UCB.selectedPolicySuccessorTelescopingRadiusAt action sigma2 delta omega t arm) : (armMean arm : Real) &lt;= generatedIndexAt action reward sigma2 delta margin omega t arm</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L413">Source line 413</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-98e444052886">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.margin_mul_gap_div_eight_le_radius_of_selected_of_not_badEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">On the common generated all-time good event, selection of a positive-gap
+arm forces its realized KL calibration radius to remain large.  This is the
+single-arm, single-round KL pull-threshold leaf.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> margin_mul_gap_div_eight_le_radius_of_selected_of_not_badEvent {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (reward : Omega -&gt; RewardTrace Rat) (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (delta margin : Real) (hmargin0 : <span class="num">0</span> &lt; margin) (hmarginHalf : margin &lt;= <span class="num">1</span> / <span class="num">2</span>) (hmean : <span class="kw">forall</span> arm : Fin K, (armMean arm : Real) ∈ Set.Icc margin (<span class="num">1</span> - margin)) (defaultAction best : Fin K) (omega : Omega) (t : Nat) (ht : K &lt;= t) (hemp : <span class="kw">forall</span> arm : Fin K, IsBernoulliParameter (UCB.selectedPolicySuccessorEmpiricalMeanAt (generatedAction hK sigma2 delta margin defaultAction reward) reward omega t arm)) (hbest : <span class="kw">forall</span> arm : Fin K, (armMean arm : Real) &lt;= (armMean best : Real)) (hgap : <span class="num">0</span> &lt; UCB.meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) best (generatedAction hK sigma2 delta margin defaultAction reward omega (t + <span class="num">1</span>))) (hgood : omega ∉ ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (generatedAction hK sigma2 delta margin defaultAction reward) reward armMean sigma2 delta) : margin * UCB.meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) best (generatedAction hK sigma2 delta margin defaultAction reward omega (t + <span class="num">1</span>)) / <span class="num">8</span> &lt;= UCB.selectedPolicySuccessorTelescopingRadiusAt (generatedAction hK sigma2 delta margin defaultAction reward) sigma2 delta omega t (generatedAction hK sigma2 delta margin defaultAction reward omega (t + <span class="num">1</span>))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L438">Source line 438</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fb18a67a225b">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.KLUCB.pullThreshold</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Explicit KL-UCB pull threshold, obtained by inverting the accepted
+telescoping radius at the effective gap `margin * gap / 4`.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> pullThreshold (K : Nat) (sigma2 : NNReal) (T : Nat) (delta margin gap : Real) : Nat</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L610">Source line 610</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-02b10ceab239">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.pullCount_le_of_not_badEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pullCount_le_of_not_badEvent {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (reward : Omega -&gt; RewardTrace Rat) (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (delta margin : Real) (hdelta : <span class="num">0</span> &lt; delta) (hmargin0 : <span class="num">0</span> &lt; margin) (hmarginHalf : margin &lt;= <span class="num">1</span> / <span class="num">2</span>) (hmean : <span class="kw">forall</span> arm : Fin K, (armMean arm : Real) ∈ Set.Icc margin (<span class="num">1</span> - margin)) (defaultAction best chosen : Fin K) (omega : Omega) (T : Nat) (hbest : <span class="kw">forall</span> arm : Fin K, (armMean arm : Real) &lt;= (armMean best : Real)) (hemp : <span class="kw">forall</span> t : Nat, <span class="kw">forall</span> arm : Fin K, IsBernoulliParameter (UCB.selectedPolicySuccessorEmpiricalMeanAt (generatedAction hK sigma2 delta margin defaultAction reward) reward omega t arm)) (hgap : <span class="num">0</span> &lt; UCB.meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) best chosen) (hgood : omega ∉ ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (generatedAction hK sigma2 delta margin defaultAction reward) reward armMean sigma2 delta) : ConditionalExpectationReward.successorArmPullCount (generatedAction hK sigma2 delta margin defaultAction reward omega) chosen (T + <span class="num">1</span>) &lt;= pullThreshold K sigma2 T delta margin (UCB.meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) best chosen)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L616">Source line 616</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ccdac7dfaa3f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.actionRewardHistoryStepKernelFamily_allTimeConfidence</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The accepted all-time telescoping confidence producer instantiated on the
+KL-UCB policy.  The theorem explicitly transports the sampled pair action to
+the reward-reconstructed action used by `generatedIndexAt`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> actionRewardHistoryStepKernelFamily_allTimeConfidence {Context : Type} {K : Nat} [MeasurableSpace Context] (hK : <span class="num">0</span> &lt; K) (mu0 : Measure (Prod (Fin K) Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (mean : Context -&gt; Fin K -&gt; Rat) (varianceProxy : Context -&gt; Fin K -&gt; NNReal) (defaultAction : Fin K) (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (delta margin : Real) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hmean : Measurable (<span class="kw">fun</span> pair : Prod Context (Fin K) =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hvariance : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), varianceProxy (context i history) ((historyPolicy hK sigma2 delta margin defaultAction i).action (historyState hK sigma2 delta margin defaultAction i history)) &lt;= sigma2) (harmMean : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), <span class="kw">forall</span> arm : Fin K, mean (context i history) arm = armMean arm) (hsigma2 : <span class="num">0</span> &lt; (((sigma2 : NNReal) : Real))) (hdelta : <span class="num">0</span> &lt; delta) : <span class="kw">let</span> policy := historyPolicy hK sigma2 delta margin defaultAction <span class="kw">let</span> state := historyState hK sigma2 delta margin defaultAction <span class="kw">let</span> pairContext : (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod (Fin K) Rat) -&gt; Context</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L708">Source line 708</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d9b395c57d7b">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.KLUCB.generatedKLAllTimeBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Arms-by-times KL-confidence failure event on the exact generated trace.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> generatedKLAllTimeBadEvent {Omega : Type} {K : Nat} (action : Omega -&gt; ActionTrace (Fin K)) (reward : Omega -&gt; RewardTrace Rat) (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (delta margin : Real) : Set Omega</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L839">Source line 839</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-85acfd2b7db4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.generatedKLAllTimeBadEvent_subset_absBadEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> generatedKLAllTimeBadEvent_subset_absBadEvent {Omega : Type} {K : Nat} (action : Omega -&gt; ActionTrace (Fin K)) (reward : Omega -&gt; RewardTrace Rat) (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (delta margin : Real) (hmargin0 : <span class="num">0</span> &lt; margin) (hmarginHalf : margin &lt;= <span class="num">1</span> / <span class="num">2</span>) (hmean : <span class="kw">forall</span> arm : Fin K, (armMean arm : Real) ∈ Set.Icc margin (<span class="num">1</span> - margin)) (hemp : <span class="kw">forall</span> omega t arm, IsBernoulliParameter (UCB.selectedPolicySuccessorEmpiricalMeanAt action reward omega t arm)) : generatedKLAllTimeBadEvent action reward armMean sigma2 delta margin ⊆ ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent action reward armMean sigma2 delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L855">Source line 855</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-41a2d6031676">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.measure_generatedKLAllTimeBadEvent_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_generatedKLAllTimeBadEvent_le {Omega : Type} [MeasurableSpace Omega] {K : Nat} (mu : Measure Omega) (action : Omega -&gt; ActionTrace (Fin K)) (reward : Omega -&gt; RewardTrace Rat) (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (delta margin : Real) (hmargin0 : <span class="num">0</span> &lt; margin) (hmarginHalf : margin &lt;= <span class="num">1</span> / <span class="num">2</span>) (hmean : <span class="kw">forall</span> arm : Fin K, (armMean arm : Real) ∈ Set.Icc margin (<span class="num">1</span> - margin)) (hemp : ∀ᵐ omega ∂mu, <span class="kw">forall</span> t arm, IsBernoulliParameter (UCB.selectedPolicySuccessorEmpiricalMeanAt action reward omega t arm)) (hconfidence : mu (ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent action reward armMean sigma2 delta) &lt;= ENNReal.ofReal delta) : mu (generatedKLAllTimeBadEvent action reward armMean sigma2 delta margin) &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L890">Source line 890</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b4424e1e5f73">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.sumRewards_nonneg_of_mem_Icc_zero_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Selected reward sums remain nonnegative under a pathwise `[0,1]` reward
+contract.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sumRewards_nonneg_of_mem_Icc_zero_one {Action : Type} [DecidableEq Action] (action : ActionTrace Action) (reward : RewardTrace Real) (arm : Action) (n : Nat) (hraw : <span class="kw">forall</span> i, i &lt; n -&gt; reward i ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) : <span class="num">0</span> &lt;= sumRewards action reward arm n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L932">Source line 932</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-14516f86189f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.sumRewards_le_pullCount_of_mem_Icc_zero_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sumRewards_le_pullCount_of_mem_Icc_zero_one {Action : Type} [DecidableEq Action] (action : ActionTrace Action) (reward : RewardTrace Real) (arm : Action) (n : Nat) (hraw : <span class="kw">forall</span> i, i &lt; n -&gt; reward i ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) : sumRewards action reward arm n &lt;= (pullCount action arm n : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L947">Source line 947</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b2ba03d346a9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.successorArmEmpiricalMean_isBernoulliParameter_of_rewards_mem_Icc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Hence every positive-count empirical mean on the canonical successor
+trace is a Bernoulli parameter.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> successorArmEmpiricalMean_isBernoulliParameter_of_rewards_mem_Icc {Action : Type} [DecidableEq Action] (action : ActionTrace Action) (reward : RewardTrace Rat) (arm : Action) (n : Nat) (hcount : <span class="num">0</span> &lt; ConditionalExpectationReward.successorArmPullCount action arm n) (hraw : <span class="kw">forall</span> i : Nat, (((reward i : Rat) : Real)) ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) : IsBernoulliParameter (ConditionalExpectationReward.successorArmEmpiricalMean action reward arm n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L966">Source line 966</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3b80306d23ce">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.generatedEmpiricalMean_isBernoulliParameter_of_rewards_mem_Icc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> generatedEmpiricalMean_isBernoulliParameter_of_rewards_mem_Icc {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (omega : Omega) (hraw : <span class="kw">forall</span> i : Nat, (((reward omega i : Rat) : Real)) ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) (t : Nat) (ht : K &lt;= t) (arm : Fin K) : IsBernoulliParameter (UCB.selectedPolicySuccessorEmpiricalMeanAt (generatedAction hK sigma2 delta margin defaultAction reward) reward omega t arm)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L998">Source line 998</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f5940aa0069e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.successorArmEmpiricalMean_isBernoulliParameter_of_rewards_mem_Icc&#x27;</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> successorArmEmpiricalMean_isBernoulliParameter_of_rewards_mem_Icc&#x27; {Action : Type} [DecidableEq Action] (action : ActionTrace Action) (reward : RewardTrace Rat) (arm : Action) (n : Nat) (hraw : <span class="kw">forall</span> i : Nat, (((reward i : Rat) : Real)) ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) : IsBernoulliParameter (ConditionalExpectationReward.successorArmEmpiricalMean action reward arm n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L1013">Source line 1013</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-56b57bf12eec">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.generatedEmpiricalMean_isBernoulliParameter_of_rewards_mem_Icc&#x27;</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> generatedEmpiricalMean_isBernoulliParameter_of_rewards_mem_Icc&#x27; {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (omega : Omega) (hraw : <span class="kw">forall</span> i : Nat, (((reward omega i : Rat) : Real)) ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) (t : Nat) (arm : Fin K) : IsBernoulliParameter (UCB.selectedPolicySuccessorEmpiricalMeanAt (generatedAction hK sigma2 delta margin defaultAction reward) reward omega t arm)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L1027">Source line 1027</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-67068023b655">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.measure_pullCount_gt_threshold_le_of_allTimeConfidence</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_pullCount_gt_threshold_le_of_allTimeConfidence {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : <span class="num">0</span> &lt; K) (mu : Measure Omega) (reward : Omega -&gt; RewardTrace Rat) (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (delta margin : Real) (hdelta : <span class="num">0</span> &lt; delta) (hmargin0 : <span class="num">0</span> &lt; margin) (hmarginHalf : margin &lt;= <span class="num">1</span> / <span class="num">2</span>) (hmean : <span class="kw">forall</span> arm : Fin K, (armMean arm : Real) ∈ Set.Icc margin (<span class="num">1</span> - margin)) (hraw : ∀ᵐ omega ∂mu, <span class="kw">forall</span> i, (((reward omega i : Rat) : Real)) ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) (defaultAction best chosen : Fin K) (T : Nat) (hbest : <span class="kw">forall</span> arm : Fin K, (armMean arm : Real) &lt;= (armMean best : Real)) (hgap : <span class="num">0</span> &lt; UCB.meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) best chosen) (hconfidence : mu (ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (generatedAction hK sigma2 delta margin defaultAction reward) reward armMean sigma2 delta) &lt;= ENNReal.ofReal delta) : mu {omega | pullThreshold K sigma2 T delta margin (UCB.meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) best chosen) &lt; ConditionalExpectationReward.successorArmPullCount (generatedAction hK sigma2 delta margin defaultAction reward omega) chosen (T + <span class="num">1</span>)} &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L1040">Source line 1040</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-114978c834a6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.lintegral_pullCount_le_of_allTimeConfidence</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> lintegral_pullCount_le_of_allTimeConfidence {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : <span class="num">0</span> &lt; K) (mu : Measure Omega) [IsProbabilityMeasure mu] (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (delta margin : Real) (hdelta : <span class="num">0</span> &lt; delta) (hmargin0 : <span class="num">0</span> &lt; margin) (hmarginHalf : margin &lt;= <span class="num">1</span> / <span class="num">2</span>) (hmean : <span class="kw">forall</span> arm : Fin K, (armMean arm : Real) ∈ Set.Icc margin (<span class="num">1</span> - margin)) (hraw : ∀ᵐ omega ∂mu, <span class="kw">forall</span> i, (((reward omega i : Rat) : Real)) ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) (defaultAction best chosen : Fin K) (T : Nat) (hbest : <span class="kw">forall</span> arm : Fin K, (armMean arm : Real) &lt;= (armMean best : Real)) (hgap : <span class="num">0</span> &lt; UCB.meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) best chosen) (hconfidence : mu (ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (generatedAction hK sigma2 delta margin defaultAction reward) reward armMean sigma2 delta) &lt;= ENNReal.ofReal delta) : ∫⁻ omega, (ConditionalExpectationReward.successorArmPullCount (generatedAction hK sigma2 delta margin defaultAction reward omega) chosen (T + <span class="num">1</span>) : ENNReal) ∂mu &lt;= (pullThreshold K sigma2 T delta margin (UCB.meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) best chosen) : ENNReal) + (T : ENNReal) * ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L1075">Source line 1075</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4f53f4c206ba">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.KLUCB.generatedRegretAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Regret-time shift of the canonical generated KL-UCB action.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> generatedRegretAction {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) : Omega -&gt; ActionTrace (Fin K)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L1132">Source line 1132</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b82f84f25808">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.measurable_generatedRegretAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_generatedRegretAction {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (t : Nat) : Measurable (<span class="kw">fun</span> omega =&gt; generatedRegretAction hK sigma2 delta margin defaultAction reward omega t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L1139">Source line 1139</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9f06560e8120">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.pullCount_generatedRegretAction_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pullCount_generatedRegretAction_eq {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (omega : Omega) (arm : Fin K) (T : Nat) : pullCount (generatedRegretAction hK sigma2 delta margin defaultAction reward omega) arm T = ConditionalExpectationReward.successorArmPullCount (generatedAction hK sigma2 delta margin defaultAction reward omega) arm (T + <span class="num">1</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L1153">Source line 1153</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-42334c4c9831">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.lintegral_ofReal_pseudoRegret_generatedKLUCBBounded_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-time expected pseudo-regret of the actual generated KL-UCB policy.
+The `T * delta` failure-event term is explicit; this theorem makes no
+asymptotic-optimality or leading-constant claim.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> lintegral_ofReal_pseudoRegret_generatedKLUCBBounded_le {Omega : Type} [MeasurableSpace Omega] {K : Nat} (mu : Measure Omega) [IsProbabilityMeasure mu] (model : FiniteBanditModel K) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (sigma2 : NNReal) (delta margin : Real) (hdelta : <span class="num">0</span> &lt; delta) (hmargin0 : <span class="num">0</span> &lt; margin) (hmarginHalf : margin &lt;= <span class="num">1</span> / <span class="num">2</span>) (hmean : <span class="kw">forall</span> arm : Fin K, (model.mean arm : Real) ∈ Set.Icc margin (<span class="num">1</span> - margin)) (hraw : ∀ᵐ omega ∂mu, <span class="kw">forall</span> i, (((reward omega i : Rat) : Real)) ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) (defaultAction : Fin K) (T : Nat) (hconfidence : mu (ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (generatedAction model.hK sigma2 delta margin defaultAction reward) reward model.mean sigma2 delta) &lt;= ENNReal.ofReal delta) : ∫⁻ omega, ENNReal.ofReal (((pseudoRegret model (generatedRegretAction model.hK sigma2 delta margin defaultAction reward omega) T : Rat) : Real)) ∂mu &lt;= (Finset.univ : Finset (Fin K)).sum (<span class="kw">fun</span> arm =&gt; ENNReal.ofReal (((model.gap arm : Rat) : Real)) * ((pullThreshold K sigma2 T delta margin (((model.gap arm : Rat) : Real)) : Nat) : ENNReal) + ENNReal.ofReal (((model.gap arm : Rat) : Real)) * ((T : ENNReal) * ENNReal.ofReal delta))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L1169">Source line 1169</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ba40d323e44f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.allHorizonPullCount_of_not_badEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">One good generated sample controls every finite horizon and positive-gap
+arm for the same KL-UCB policy.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> allHorizonPullCount_of_not_badEvent {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (reward : Omega -&gt; RewardTrace Rat) (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (delta margin : Real) (hdelta : <span class="num">0</span> &lt; delta) (hmargin0 : <span class="num">0</span> &lt; margin) (hmarginHalf : margin &lt;= <span class="num">1</span> / <span class="num">2</span>) (hmean : <span class="kw">forall</span> arm : Fin K, (armMean arm : Real) ∈ Set.Icc margin (<span class="num">1</span> - margin)) (defaultAction best : Fin K) (omega : Omega) (hraw : <span class="kw">forall</span> i : Nat, (((reward omega i : Rat) : Real)) ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) (hbest : <span class="kw">forall</span> arm : Fin K, (armMean arm : Real) &lt;= (armMean best : Real)) (hgood : omega ∉ ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (generatedAction hK sigma2 delta margin defaultAction reward) reward armMean sigma2 delta) : <span class="kw">forall</span> T : Nat, <span class="kw">forall</span> chosen : Fin K, <span class="num">0</span> &lt; UCB.meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) best chosen -&gt; ConditionalExpectationReward.successorArmPullCount (generatedAction hK sigma2 delta margin defaultAction reward omega) chosen (T + <span class="num">1</span>) &lt;= pullThreshold K sigma2 T delta margin (UCB.meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) best chosen)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L1228">Source line 1228</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-127d1df8afe3">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.KLUCB.actionRewardTrajMeasure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical action/reward trajectory measure of the KL-UCB policy.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> actionRewardTrajMeasure {Context : Type} {K : Nat} [MeasurableSpace Context] (hK : <span class="num">0</span> &lt; K) (mu0 : Measure (Prod (Fin K) Rat)) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) : Measure (Nat -&gt; Prod (Fin K) Rat)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L1258">Source line 1258</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-44c379c5a59c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.measure_allTimeBadEvent_le_trajMeasure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_allTimeBadEvent_le_trajMeasure {Context : Type} {K : Nat} [MeasurableSpace Context] (hK : <span class="num">0</span> &lt; K) (mu0 : Measure (Prod (Fin K) Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (mean : Context -&gt; Fin K -&gt; Rat) (varianceProxy : Context -&gt; Fin K -&gt; NNReal) (defaultAction : Fin K) (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (delta margin : Real) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hmean : Measurable (<span class="kw">fun</span> pair : Prod Context (Fin K) =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hvariance : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), varianceProxy (context i history) ((historyPolicy hK sigma2 delta margin defaultAction i).action (historyState hK sigma2 delta margin defaultAction i history)) &lt;= sigma2) (harmMean : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), <span class="kw">forall</span> arm : Fin K, mean (context i history) arm = armMean arm) (hsigma2 : <span class="num">0</span> &lt; (((sigma2 : NNReal) : Real))) (hdelta : <span class="num">0</span> &lt; delta) : <span class="kw">let</span> mu := actionRewardTrajMeasure hK mu0 rewardKernel context hcontext sigma2 delta margin defaultAction <span class="kw">let</span> reward : (Nat -&gt; Prod (Fin K) Rat) -&gt; RewardTrace Rat := <span class="kw">fun</span> trajectory t =&gt; (trajectory t).<span class="num">2</span> <span class="kw">let</span> action := generatedAction hK sigma2 delta margin defaultAction reward mu (ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent action reward armMean sigma2 delta) &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L1287">Source line 1287</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-262848501d20">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.measure_generatedKLAllTimeBadEvent_le_trajMeasure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_generatedKLAllTimeBadEvent_le_trajMeasure {Context : Type} {K : Nat} [MeasurableSpace Context] (hK : <span class="num">0</span> &lt; K) (mu0 : Measure (Prod (Fin K) Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (mean : Context -&gt; Fin K -&gt; Rat) (varianceProxy : Context -&gt; Fin K -&gt; NNReal) (defaultAction : Fin K) (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (delta margin : Real) (hmargin0 : <span class="num">0</span> &lt; margin) (hmarginHalf : margin &lt;= <span class="num">1</span> / <span class="num">2</span>) (harmMargin : <span class="kw">forall</span> arm : Fin K, (armMean arm : Real) ∈ Set.Icc margin (<span class="num">1</span> - margin)) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hraw : ∀ᵐ trajectory ∂(actionRewardTrajMeasure hK mu0 rewardKernel context hcontext sigma2 delta margin defaultAction), <span class="kw">forall</span> i : Nat, ((((trajectory i).<span class="num">2</span> : Rat) : Real)) ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) (hmean : Measurable (<span class="kw">fun</span> pair : Prod Context (Fin K) =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hvariance : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), varianceProxy (context i history) ((historyPolicy hK sigma2 delta margin defaultAction i).action (historyState hK sigma2 delta margin defaultAction i history)) &lt;= sigma2) (harmMean : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), <span class="kw">forall</span> arm : Fin K, mean (context i history) arm = armMean arm) (hsigma2 : <span class="num">0</span> &lt; (((sigma2 : NNReal) : Real))) (hdelta : <span class="num">0</span> &lt; delta) : <span class="kw">let</span> mu := actionRewardTrajMeasure hK mu0 rewardKernel context hcontext sigma2 delta margin defaultAction <span class="kw">let</span> reward : (Nat -&gt; Prod (Fin K) Rat) -&gt; RewardTrace Rat := <span class="kw">fun</span> trajectory t =&gt; (trajectory t).<span class="num">2</span> <span class="kw">let</span> action := generatedAction hK sigma2 delta margin defaultAction reward mu (generatedKLAllTimeBadEvent action reward armMean sigma2 delta margin) &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L1321">Source line 1321</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f0183508accc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.lintegral_ofReal_pseudoRegret_generatedKLUCBBounded_le_trajMeasure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical generated-policy KL-UCB regret theorem on the very trajectory
+measure built from the same measurable KL policy and reward kernel.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> lintegral_ofReal_pseudoRegret_generatedKLUCBBounded_le_trajMeasure {Context : Type} {K : Nat} [MeasurableSpace Context] (model : FiniteBanditModel K) (mu0 : Measure (Prod (Fin K) Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (mean : Context -&gt; Fin K -&gt; Rat) (varianceProxy : Context -&gt; Fin K -&gt; NNReal) (defaultAction : Fin K) (sigma2 : NNReal) (delta margin : Real) (T : Nat) (hdelta : <span class="num">0</span> &lt; delta) (hmargin0 : <span class="num">0</span> &lt; margin) (hmarginHalf : margin &lt;= <span class="num">1</span> / <span class="num">2</span>) (harmMargin : <span class="kw">forall</span> arm : Fin K, (model.mean arm : Real) ∈ Set.Icc margin (<span class="num">1</span> - margin)) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hraw : ∀ᵐ trajectory ∂(actionRewardTrajMeasure model.hK mu0 rewardKernel context hcontext sigma2 delta margin defaultAction), <span class="kw">forall</span> i : Nat, ((((trajectory i).<span class="num">2</span> : Rat) : Real)) ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) (hmean : Measurable (<span class="kw">fun</span> pair : Prod Context (Fin K) =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hvariance : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), varianceProxy (context i history) ((historyPolicy model.hK sigma2 delta margin defaultAction i).action (historyState model.hK sigma2 delta margin defaultAction i history)) &lt;= sigma2) (harmMean : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), <span class="kw">forall</span> arm : Fin K, mean (context i history) arm = model.mean arm) (hsigma2 : <span class="num">0</span> &lt; (((sigma2 : NNReal) : Real))) : <span class="kw">let</span> mu := actionRewardTrajMeasure model.hK mu0 rewardKernel context hcontext sigma2 delta margin defaultAction <span class="kw">let</span> reward : (Nat -&gt; Prod (Fin K) Rat) -&gt; RewardTrace Rat := <span class="kw">fun</span> trajectory t =&gt; (trajectory t).<span class="num">2</span> <span class="kw">let</span> action := generatedRegretAction model.hK sigma2 delta margin defaultAction reward ∫⁻ trajectory, ENNReal.ofReal (((pseudoRegret model (action trajectory) T : Rat) : Real)) ∂mu &lt;= (Finset.univ : Finset (Fin K)).sum (<span class="kw">fun</span> arm =&gt; ENNReal.ofReal (((model.gap arm : Rat) : Real)) * ((pullThreshold K sigma2 T delta margin (((model.gap arm : Rat) : Real)) : Nat) : ENNReal) + ENNReal.ofReal (((model.gap arm : Rat) : Real)) * ((T : ENNReal) * ENNReal.ofReal delta))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L1380">Source line 1380</a>
+      <a href="../../chapters/ucb/index.html#decl-f0183508accc-teaching">Open teaching explanation</a>
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c0c8fb8f5e3f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.KLUCB.measurable_generatedAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_generatedAction {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta margin : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (t : Nat) : Measurable (<span class="kw">fun</span> omega =&gt; generatedAction hK sigma2 delta margin defaultAction reward omega t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/KLUCBGeneratedRegret.lean.html#L1442">Source line 1442</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

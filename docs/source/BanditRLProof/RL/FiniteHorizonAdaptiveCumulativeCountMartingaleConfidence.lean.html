@@ -1,0 +1,1347 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeEmpiricalOptimisticRegret</span>
+<span id="L2">2 import BanditRLProof.ConditionalExpectationReward</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Adaptive cumulative count martingale confidence</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module supplies the statistical producer required by the cumulative</span>
+<span id="L8">8 count-radius planner.  Each raw episode-batch count is centered by its</span>
+<span id="L9">9 history-kernel integral.  The exact adaptive iid batch law then gives a</span>
+<span id="L10">10 conditionally sub-Gaussian increment with the within-batch Bernoulli proxy,</span>
+<span id="L11">11 rather than the weaker whole-batch bounded-range proxy.</span>
+<span id="L12">12 </span>
+<span id="L13">13 The final route unions cumulative prefix tails over the finite round/count</span>
+<span id="L14">14 coordinate family and feeds the resulting empirical-transition coordinate</span>
+<span id="L15">15 confidence into the compiled optimism and recommended-policy expected-regret</span>
+<span id="L16">16 terminal.  It does not identify behavior or realized regret.</span>
+<span id="L17">17 -/</span>
+<span id="L18">18 </span>
+<span id="L19">19 open MeasureTheory</span>
+<span id="L20">20 open scoped ENNReal ProbabilityTheory</span>
+<span id="L21">21 </span>
+<span id="L22">22 universe u v</span>
+<span id="L23">23 </span>
+<span id="L24">24 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L25">25 </span>
+<span id="L26">26 variable {State : Type u} {Action : Type v}</span>
+<span id="L27">27     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L28">28     [Fintype State] [Fintype Action]</span>
+<span id="L29">29     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L30">30     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L31">31     [Nonempty State] [Nonempty Action]</span>
+<span id="L32">32 </span>
+<span id="L33">33 namespace CountCoordinate</span>
+<span id="L34">34 </span>
+<span id="L35">35 /-- The uncentered real count selected by a visit or transition coordinate. -/</span>
+<span id="L36">36 def rawCount</span>
+<span id="L37">37     {mdp : MDP State Action} (coordinate : CountCoordinate mdp)</span>
+<span id="L38">38     {episodes : Nat} (batch : EpisodeBatch mdp episodes) : Real :=</span>
+<span id="L39">39   match coordinate with</span>
+<span id="L40">40   | .visit stage state action =&gt; batch.visitCount stage state action</span>
+<span id="L41">41   | .transition stage state action nextState =&gt;</span>
+<span id="L42">42       batch.transitionCount stage state action nextState</span>
+<span id="L43">43 </span>
+<span id="L44">44 /-- The iid batch mean of the selected raw count. -/</span>
+<span id="L45">45 noncomputable def policyMean</span>
+<span id="L46">46     {mdp : MDP State Action} (coordinate : CountCoordinate mdp)</span>
+<span id="L47">47     (policy : MarkovPolicy mdp)</span>
+<span id="L48">48     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L49">49     (episodes : Nat) : Real :=</span>
+<span id="L50">50   match coordinate with</span>
+<span id="L51">51   | .visit stage state action =&gt;</span>
+<span id="L52">52       (episodes : Real) *</span>
+<span id="L53">53         policy.stageVisitProbability initialState stage state action</span>
+<span id="L54">54   | .transition stage state action nextState =&gt;</span>
+<span id="L55">55       (episodes : Real) *</span>
+<span id="L56">56         policy.stageTransitionJointProbability initialState stage state action nextState</span>
+<span id="L57">57 </span>
+<span id="L58">58 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L59">59 /-- Every selected raw count is measurable on the batch space. -/</span>
+<span id="L60">60 theorem measurable_rawCount</span>
+<span id="L61">61     {mdp : MDP State Action} (coordinate : CountCoordinate mdp)</span>
+<span id="L62">62     {episodes : Nat} :</span>
+<span id="L63">63     Measurable (coordinate.rawCount : EpisodeBatch mdp episodes -&gt; Real) := by</span>
+<span id="L64">64   cases coordinate with</span>
+<span id="L65">65   | visit stage state action =&gt;</span>
+<span id="L66">66       exact MarkovPolicy.measurable_cast_visitCount stage state action</span>
+<span id="L67">67   | transition stage state action nextState =&gt;</span>
+<span id="L68">68       exact MarkovPolicy.measurable_cast_transitionCount</span>
+<span id="L69">69         stage state action nextState</span>
+<span id="L70">70 </span>
+<span id="L71">71 omit [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L72">72     [Nonempty State] [Nonempty Action] in</span>
+<span id="L73">73 /-- The existing coordinate deviation is raw count minus policy mean. -/</span>
+<span id="L74">74 theorem deviation_eq_rawCount_sub_policyMean</span>
+<span id="L75">75     {mdp : MDP State Action} (coordinate : CountCoordinate mdp)</span>
+<span id="L76">76     (policy : MarkovPolicy mdp)</span>
+<span id="L77">77     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L78">78     {episodes : Nat} (batch : EpisodeBatch mdp episodes) :</span>
+<span id="L79">79     coordinate.deviation policy initialState batch =</span>
+<span id="L80">80       coordinate.rawCount batch -</span>
+<span id="L81">81         coordinate.policyMean policy initialState episodes := by</span>
+<span id="L82">82   cases coordinate &lt;;&gt; rfl</span>
+<span id="L83">83 </span>
+<span id="L84">84 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L85">85 /-- The kernel integral of a selected raw count is its policy mean. -/</span>
+<span id="L86">86 theorem integral_rawCount_iidEpisodeBatchMeasure</span>
+<span id="L87">87     {mdp : MDP State Action} (coordinate : CountCoordinate mdp)</span>
+<span id="L88">88     (policy : MarkovPolicy mdp)</span>
+<span id="L89">89     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L90">90     (episodes : Nat) :</span>
+<span id="L91">91     integral (policy.iidEpisodeBatchMeasure initialState episodes)</span>
+<span id="L92">92         coordinate.rawCount =</span>
+<span id="L93">93       coordinate.policyMean policy initialState episodes := by</span>
+<span id="L94">94   cases coordinate with</span>
+<span id="L95">95   | visit stage state action =&gt;</span>
+<span id="L96">96       let mu := policy.iidEpisodeBatchMeasure initialState episodes</span>
+<span id="L97">97       have hint : forall episode : Fin episodes,</span>
+<span id="L98">98           Integrable</span>
+<span id="L99">99             (fun batch : EpisodeBatch mdp episodes =&gt;</span>
+<span id="L100">100               EpisodeStep.visitIndicator state action (batch episode stage)) mu := by</span>
+<span id="L101">101         intro episode</span>
+<span id="L102">102         have hmeas : Measurable</span>
+<span id="L103">103             (fun batch : EpisodeBatch mdp episodes =&gt;</span>
+<span id="L104">104               EpisodeStep.visitIndicator state action (batch episode stage)) :=</span>
+<span id="L105">105           (EpisodeStep.measurable_visitIndicator state action).comp</span>
+<span id="L106">106             ((measurable_pi_apply stage).comp (measurable_pi_apply episode))</span>
+<span id="L107">107         refine Integrable.of_bound hmeas.aestronglyMeasurable 1 ?_</span>
+<span id="L108">108         exact Filter.Eventually.of_forall fun batch =&gt; by</span>
+<span id="L109">109           rw [Real.norm_eq_abs]</span>
+<span id="L110">110           have hmem :=</span>
+<span id="L111">111             EpisodeStep.visitIndicator_mem_Icc state action (batch episode stage)</span>
+<span id="L112">112           exact abs_le.2 ⟨by linarith [hmem.1], hmem.2⟩</span>
+<span id="L113">113       calc</span>
+<span id="L114">114         integral mu (rawCount (.visit stage state action)) =</span>
+<span id="L115">115             integral mu (fun batch : EpisodeBatch mdp episodes =&gt;</span>
+<span id="L116">116               ∑ episode : Fin episodes,</span>
+<span id="L117">117                 EpisodeStep.visitIndicator state action (batch episode stage)) := by</span>
+<span id="L118">118               apply integral_congr_ae</span>
+<span id="L119">119               exact Filter.Eventually.of_forall fun batch =&gt; by</span>
+<span id="L120">120                 simpa [rawCount] using</span>
+<span id="L121">121                   (MarkovPolicy.sum_visitIndicator_eq_cast_visitCount</span>
+<span id="L122">122                     batch stage state action).symm</span>
+<span id="L123">123         _ = ∑ episode : Fin episodes,</span>
+<span id="L124">124               integral mu (fun batch : EpisodeBatch mdp episodes =&gt;</span>
+<span id="L125">125                 EpisodeStep.visitIndicator state action (batch episode stage)) := by</span>
+<span id="L126">126               exact integral_finset_sum Finset.univ (fun episode _ =&gt; hint episode)</span>
+<span id="L127">127         _ = policyMean (.visit stage state action) policy initialState episodes := by</span>
+<span id="L128">128               simp [mu, policyMean,</span>
+<span id="L129">129                 policy.integral_visitIndicator_iidEpisodeBatchMeasure_eval</span>
+<span id="L130">130                   initialState]</span>
+<span id="L131">131   | transition stage state action nextState =&gt;</span>
+<span id="L132">132       let mu := policy.iidEpisodeBatchMeasure initialState episodes</span>
+<span id="L133">133       have hint : forall episode : Fin episodes,</span>
+<span id="L134">134           Integrable</span>
+<span id="L135">135             (fun batch : EpisodeBatch mdp episodes =&gt;</span>
+<span id="L136">136               EpisodeStep.transitionIndicator state action nextState</span>
+<span id="L137">137                 (batch episode stage)) mu := by</span>
+<span id="L138">138         intro episode</span>
+<span id="L139">139         have hmeas : Measurable</span>
+<span id="L140">140             (fun batch : EpisodeBatch mdp episodes =&gt;</span>
+<span id="L141">141               EpisodeStep.transitionIndicator state action nextState</span>
+<span id="L142">142                 (batch episode stage)) :=</span>
+<span id="L143">143           (EpisodeStep.measurable_transitionIndicator state action nextState).comp</span>
+<span id="L144">144             ((measurable_pi_apply stage).comp (measurable_pi_apply episode))</span>
+<span id="L145">145         refine Integrable.of_bound hmeas.aestronglyMeasurable 1 ?_</span>
+<span id="L146">146         exact Filter.Eventually.of_forall fun batch =&gt; by</span>
+<span id="L147">147           rw [Real.norm_eq_abs]</span>
+<span id="L148">148           have hmem := EpisodeStep.transitionIndicator_mem_Icc</span>
+<span id="L149">149             state action nextState (batch episode stage)</span>
+<span id="L150">150           exact abs_le.2 ⟨by linarith [hmem.1], hmem.2⟩</span>
+<span id="L151">151       calc</span>
+<span id="L152">152         integral mu (rawCount (.transition stage state action nextState)) =</span>
+<span id="L153">153             integral mu (fun batch : EpisodeBatch mdp episodes =&gt;</span>
+<span id="L154">154               ∑ episode : Fin episodes,</span>
+<span id="L155">155                 EpisodeStep.transitionIndicator state action nextState</span>
+<span id="L156">156                   (batch episode stage)) := by</span>
+<span id="L157">157               apply integral_congr_ae</span>
+<span id="L158">158               exact Filter.Eventually.of_forall fun batch =&gt; by</span>
+<span id="L159">159                 simpa [rawCount] using</span>
+<span id="L160">160                   (MarkovPolicy.sum_transitionIndicator_eq_cast_transitionCount</span>
+<span id="L161">161                     batch stage state action nextState).symm</span>
+<span id="L162">162         _ = ∑ episode : Fin episodes,</span>
+<span id="L163">163               integral mu (fun batch : EpisodeBatch mdp episodes =&gt;</span>
+<span id="L164">164                 EpisodeStep.transitionIndicator state action nextState</span>
+<span id="L165">165                   (batch episode stage)) := by</span>
+<span id="L166">166               exact integral_finset_sum Finset.univ (fun episode _ =&gt; hint episode)</span>
+<span id="L167">167         _ = policyMean (.transition stage state action nextState)</span>
+<span id="L168">168               policy initialState episodes := by</span>
+<span id="L169">169               simp [mu, policyMean,</span>
+<span id="L170">170                 policy.integral_transitionIndicator_iidEpisodeBatchMeasure_eval</span>
+<span id="L171">171                   initialState]</span>
+<span id="L172">172 </span>
+<span id="L173">173 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L174">174 /--</span>
+<span id="L175">175 The selected batch-count deviation has the sharp within-batch Bernoulli proxy.</span>
+<span id="L176">176 -/</span>
+<span id="L177">177 theorem deviation_hasSubgaussianMGF</span>
+<span id="L178">178     {mdp : MDP State Action} (coordinate : CountCoordinate mdp)</span>
+<span id="L179">179     (policy : MarkovPolicy mdp)</span>
+<span id="L180">180     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L181">181     (episodes : Nat) :</span>
+<span id="L182">182     ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L183">183       (coordinate.deviation policy initialState)</span>
+<span id="L184">184       (MarkovPolicy.iidBernoulliVarianceProxy episodes)</span>
+<span id="L185">185       (policy.iidEpisodeBatchMeasure initialState episodes) := by</span>
+<span id="L186">186   cases coordinate with</span>
+<span id="L187">187   | visit stage state action =&gt;</span>
+<span id="L188">188       have hsum :=</span>
+<span id="L189">189         ProbabilityTheory.HasSubgaussianMGF.sum_of_iIndepFun</span>
+<span id="L190">190           (policy.iIndepFun_centeredVisitIndicator</span>
+<span id="L191">191             initialState episodes stage state action)</span>
+<span id="L192">192           (s := Finset.univ)</span>
+<span id="L193">193           (c := fun _episode : Fin episodes =&gt;</span>
+<span id="L194">194             Concentration.intervalVarianceProxy 0 1)</span>
+<span id="L195">195           (fun episode _ =&gt;</span>
+<span id="L196">196             policy.centeredVisitIndicator_hasSubgaussianMGF</span>
+<span id="L197">197               initialState stage state action episode)</span>
+<span id="L198">198       simpa [CountCoordinate.deviation,</span>
+<span id="L199">199         MarkovPolicy.iidBernoulliVarianceProxy,</span>
+<span id="L200">200         policy.sum_centeredVisitIndicator_eq_cast_visitCount_sub] using hsum</span>
+<span id="L201">201   | transition stage state action nextState =&gt;</span>
+<span id="L202">202       have hsum :=</span>
+<span id="L203">203         ProbabilityTheory.HasSubgaussianMGF.sum_of_iIndepFun</span>
+<span id="L204">204           (policy.iIndepFun_centeredTransitionIndicator</span>
+<span id="L205">205             initialState episodes stage state action nextState)</span>
+<span id="L206">206           (s := Finset.univ)</span>
+<span id="L207">207           (c := fun _episode : Fin episodes =&gt;</span>
+<span id="L208">208             Concentration.intervalVarianceProxy 0 1)</span>
+<span id="L209">209           (fun episode _ =&gt;</span>
+<span id="L210">210             policy.centeredTransitionIndicator_hasSubgaussianMGF</span>
+<span id="L211">211               initialState stage state action nextState episode)</span>
+<span id="L212">212       simpa [CountCoordinate.deviation,</span>
+<span id="L213">213         MarkovPolicy.iidBernoulliVarianceProxy,</span>
+<span id="L214">214         policy.sum_centeredTransitionIndicator_eq_cast_transitionCount_sub] using hsum</span>
+<span id="L215">215 </span>
+<span id="L216">216 end CountCoordinate</span>
+<span id="L217">217 </span>
+<span id="L218">218 namespace AdaptiveEpisodeBatchSource</span>
+<span id="L219">219 </span>
+<span id="L220">220 /-- Predictable mean of the next selected raw count under the history kernel. -/</span>
+<span id="L221">221 noncomputable def coordinateKernelMean</span>
+<span id="L222">222     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L223">223     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L224">224     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L225">225     (n : Nat) (coordinate : CountCoordinate mdp)</span>
+<span id="L226">226     (history : EpisodeBatchPrefix mdp episodes n) : Real :=</span>
+<span id="L227">227   integral (source.batchKernel n history) coordinate.rawCount</span>
+<span id="L228">228 </span>
+<span id="L229">229 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L230">230 /-- The history-kernel raw-count mean is measurable in the finite prefix. -/</span>
+<span id="L231">231 theorem measurable_coordinateKernelMean</span>
+<span id="L232">232     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L233">233     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L234">234     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L235">235     (n : Nat) (coordinate : CountCoordinate mdp) :</span>
+<span id="L236">236     Measurable (source.coordinateKernelMean n coordinate) := by</span>
+<span id="L237">237   exact coordinate.measurable_rawCount.stronglyMeasurable.integral_kernel.measurable</span>
+<span id="L238">238 </span>
+<span id="L239">239 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L240">240 /-- The predictable kernel mean equals the selected-policy iid batch mean. -/</span>
+<span id="L241">241 theorem coordinateKernelMean_eq_policyMean</span>
+<span id="L242">242     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L243">243     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L244">244     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L245">245     (n : Nat) (coordinate : CountCoordinate mdp)</span>
+<span id="L246">246     (history : EpisodeBatchPrefix mdp episodes n) :</span>
+<span id="L247">247     source.coordinateKernelMean n coordinate history =</span>
+<span id="L248">248       coordinate.policyMean (source.successorPolicy n history)</span>
+<span id="L249">249         initialState episodes := by</span>
+<span id="L250">250   rw [coordinateKernelMean, source.batchKernel_eq_iidEpisodeBatchMeasure]</span>
+<span id="L251">251   exact coordinate.integral_rawCount_iidEpisodeBatchMeasure</span>
+<span id="L252">252     (source.successorPolicy n history) initialState episodes</span>
+<span id="L253">253 </span>
+<span id="L254">254 /--</span>
+<span id="L255">255 Count increment at a finite prefix.  At successor rounds the center is the</span>
+<span id="L256">256 measurable history-kernel integral, not the potentially nonmeasurable policy</span>
+<span id="L257">257 selector exposed by the source structure.</span>
+<span id="L258">258 -/</span>
+<span id="L259">259 noncomputable def coordinatePrefixIncrement</span>
+<span id="L260">260     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L261">261     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L262">262     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L263">263     (coordinate : CountCoordinate mdp) :</span>
+<span id="L264">264     (round : Nat) -&gt; EpisodeBatchPrefix mdp episodes round -&gt; Real</span>
+<span id="L265">265   | 0, history =&gt;</span>
+<span id="L266">266       coordinate.rawCount (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩) -</span>
+<span id="L267">267         coordinate.policyMean source.initialPolicy initialState episodes</span>
+<span id="L268">268   | n + 1, history =&gt;</span>
+<span id="L269">269       coordinate.rawCount</span>
+<span id="L270">270           (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩) -</span>
+<span id="L271">271         source.coordinateKernelMean n coordinate</span>
+<span id="L272">272           (Preorder.frestrictLe₂</span>
+<span id="L273">273             (π := fun _ : Nat =&gt; EpisodeBatch mdp episodes)</span>
+<span id="L274">274             (Nat.le_succ n) history)</span>
+<span id="L275">275 </span>
+<span id="L276">276 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L277">277 /-- Every finite-prefix increment is measurable. -/</span>
+<span id="L278">278 theorem measurable_coordinatePrefixIncrement</span>
+<span id="L279">279     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L280">280     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L281">281     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L282">282     (coordinate : CountCoordinate mdp) (round : Nat) :</span>
+<span id="L283">283     Measurable (source.coordinatePrefixIncrement coordinate round) := by</span>
+<span id="L284">284   cases round with</span>
+<span id="L285">285   | zero =&gt;</span>
+<span id="L286">286       simpa [coordinatePrefixIncrement] using</span>
+<span id="L287">287         ((coordinate.measurable_rawCount.comp (measurable_pi_apply</span>
+<span id="L288">288           (⟨0, Finset.mem_Iic.mpr le_rfl⟩ : Finset.Iic 0))).sub</span>
+<span id="L289">289           measurable_const)</span>
+<span id="L290">290   | succ n =&gt;</span>
+<span id="L291">291       simpa [coordinatePrefixIncrement] using</span>
+<span id="L292">292         ((coordinate.measurable_rawCount.comp (measurable_pi_apply</span>
+<span id="L293">293           (⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩ : Finset.Iic (n + 1)))).sub</span>
+<span id="L294">294           ((source.measurable_coordinateKernelMean n coordinate).comp</span>
+<span id="L295">295             (Preorder.measurable_frestrictLe₂</span>
+<span id="L296">296               (X := fun _ : Nat =&gt; EpisodeBatch mdp episodes)</span>
+<span id="L297">297               (Nat.le_succ n))))</span>
+<span id="L298">298 </span>
+<span id="L299">299 /-- The adaptive kernel-centered coordinate increment process. -/</span>
+<span id="L300">300 noncomputable def coordinateIncrement</span>
+<span id="L301">301     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L302">302     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L303">303     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L304">304     (coordinate : CountCoordinate mdp) (round : Nat)</span>
+<span id="L305">305     (trajectory : EpisodeBatchTrajectory mdp episodes) : Real :=</span>
+<span id="L306">306   source.coordinatePrefixIncrement coordinate round</span>
+<span id="L307">307     (Preorder.frestrictLe round trajectory)</span>
+<span id="L308">308 </span>
+<span id="L309">309 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L310">310 /-- The coordinate increment process is adapted to the canonical prefix filtration. -/</span>
+<span id="L311">311 theorem coordinateIncrement_stronglyAdapted_piLE</span>
+<span id="L312">312     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L313">313     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L314">314     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L315">315     (coordinate : CountCoordinate mdp) :</span>
+<span id="L316">316     StronglyAdapted</span>
+<span id="L317">317       (Filtration.piLE (X := fun _ : Nat =&gt; EpisodeBatch mdp episodes))</span>
+<span id="L318">318       (source.coordinateIncrement coordinate) := by</span>
+<span id="L319">319   intro round</span>
+<span id="L320">320   rw [Filtration.piLE_eq_comap_frestrictLe]</span>
+<span id="L321">321   exact ((source.measurable_coordinatePrefixIncrement coordinate round).comp</span>
+<span id="L322">322     (Measurable.of_comap_le le_rfl)).stronglyMeasurable</span>
+<span id="L323">323 </span>
+<span id="L324">324 /-- The next raw-count conditional distribution is the mapped batch kernel. -/</span>
+<span id="L325">325 theorem trajectoryMeasure_condDistrib_rawCount</span>
+<span id="L326">326     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L327">327     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L328">328     [StandardBorelSpace (EpisodeBatch mdp episodes)]</span>
+<span id="L329">329     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L330">330     (n : Nat) (coordinate : CountCoordinate mdp) :</span>
+<span id="L331">331     ProbabilityTheory.condDistrib</span>
+<span id="L332">332         (fun trajectory : EpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L333">333           coordinate.rawCount (trajectory (n + 1)))</span>
+<span id="L334">334         (Preorder.frestrictLe n) source.trajectoryMeasure =ᵐ[</span>
+<span id="L335">335           source.trajectoryMeasure.map (Preorder.frestrictLe n)]</span>
+<span id="L336">336       (source.batchKernel n).map coordinate.rawCount := by</span>
+<span id="L337">337   letI : ProbabilityTheory.IsMarkovKernel (source.batchKernel n) :=</span>
+<span id="L338">338     source.batchKernel_isMarkov n</span>
+<span id="L339">339   have hcomp :</span>
+<span id="L340">340       ProbabilityTheory.condDistrib</span>
+<span id="L341">341           (coordinate.rawCount ∘</span>
+<span id="L342">342             (fun trajectory : EpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L343">343               trajectory (n + 1)))</span>
+<span id="L344">344           (Preorder.frestrictLe n) source.trajectoryMeasure =ᵐ[</span>
+<span id="L345">345             source.trajectoryMeasure.map (Preorder.frestrictLe n)]</span>
+<span id="L346">346         (ProbabilityTheory.condDistrib</span>
+<span id="L347">347           (fun trajectory : EpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L348">348             trajectory (n + 1))</span>
+<span id="L349">349           (Preorder.frestrictLe n) source.trajectoryMeasure).map</span>
+<span id="L350">350             coordinate.rawCount :=</span>
+<span id="L351">351     ProbabilityTheory.condDistrib_comp</span>
+<span id="L352">352       (μ := source.trajectoryMeasure)</span>
+<span id="L353">353       (Preorder.frestrictLe n)</span>
+<span id="L354">354       (measurable_pi_apply (n + 1)).aemeasurable</span>
+<span id="L355">355       coordinate.measurable_rawCount</span>
+<span id="L356">356   filter_upwards [hcomp, source.trajectoryMeasure_condDistrib n] with history hc hk</span>
+<span id="L357">357   have hmap :</span>
+<span id="L358">358       ((ProbabilityTheory.condDistrib</span>
+<span id="L359">359           (fun trajectory : EpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L360">360             trajectory (n + 1))</span>
+<span id="L361">361           (Preorder.frestrictLe n) source.trajectoryMeasure).map</span>
+<span id="L362">362             coordinate.rawCount) history =</span>
+<span id="L363">363         ((source.batchKernel n).map coordinate.rawCount) history := by</span>
+<span id="L364">364     rw [ProbabilityTheory.Kernel.map_apply _ coordinate.measurable_rawCount,</span>
+<span id="L365">365       ProbabilityTheory.Kernel.map_apply _ coordinate.measurable_rawCount, hk]</span>
+<span id="L366">366   simpa only [Function.comp_def] using hc.trans hmap</span>
+<span id="L367">367 </span>
+<span id="L368">368 /--</span>
+<span id="L369">369 Trimmed conditional-expectation-kernel law for the next adaptive raw count.</span>
+<span id="L370">370 -/</span>
+<span id="L371">371 theorem condExpKernel_map_rawCount_eq_batchKernel</span>
+<span id="L372">372     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L373">373     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L374">374     [StandardBorelSpace (EpisodeBatch mdp episodes)]</span>
+<span id="L375">375     [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)]</span>
+<span id="L376">376     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L377">377     (n : Nat) (coordinate : CountCoordinate mdp) :</span>
+<span id="L378">378     Filter.Eventually</span>
+<span id="L379">379       (fun trajectory : EpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L380">380         Measure.map</span>
+<span id="L381">381             (fun path : EpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L382">382               coordinate.rawCount (path (n + 1)))</span>
+<span id="L383">383             (ProbabilityTheory.condExpKernel source.trajectoryMeasure</span>
+<span id="L384">384               ((inferInstance : MeasurableSpace</span>
+<span id="L385">385                 (EpisodeBatchPrefix mdp episodes n)).comap</span>
+<span id="L386">386                   (Preorder.frestrictLe n)) trajectory) =</span>
+<span id="L387">387           ((source.batchKernel n).map coordinate.rawCount)</span>
+<span id="L388">388             (Preorder.frestrictLe n trajectory))</span>
+<span id="L389">389       (ae (source.trajectoryMeasure.trim</span>
+<span id="L390">390         (Preorder.measurable_frestrictLe n).comap_le)) := by</span>
+<span id="L391">391   letI : ProbabilityTheory.IsMarkovKernel (source.batchKernel n) :=</span>
+<span id="L392">392     source.batchKernel_isMarkov n</span>
+<span id="L393">393   letI : ProbabilityTheory.IsMarkovKernel</span>
+<span id="L394">394       ((source.batchKernel n).map coordinate.rawCount) :=</span>
+<span id="L395">395     ProbabilityTheory.Kernel.IsMarkovKernel.map</span>
+<span id="L396">396       (source.batchKernel n) coordinate.measurable_rawCount</span>
+<span id="L397">397   exact</span>
+<span id="L398">398     ConditionalExpectationReward.condExpKernel_map_eq_of_condDistrib_ae_eq_real_trim</span>
+<span id="L399">399       source.trajectoryMeasure</span>
+<span id="L400">400       (fun trajectory : EpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L401">401         coordinate.rawCount (trajectory (n + 1)))</span>
+<span id="L402">402       (Preorder.frestrictLe n)</span>
+<span id="L403">403       (coordinate.measurable_rawCount.comp (measurable_pi_apply (n + 1)))</span>
+<span id="L404">404       (Preorder.measurable_frestrictLe n)</span>
+<span id="L405">405       ((source.batchKernel n).map coordinate.rawCount)</span>
+<span id="L406">406       (source.trajectoryMeasure_condDistrib_rawCount n coordinate)</span>
+<span id="L407">407 </span>
+<span id="L408">408 /-- Initial adaptive batch-count increment has the iid Bernoulli sum proxy. -/</span>
+<span id="L409">409 theorem coordinateIncrement_zero_hasSubgaussianMGF</span>
+<span id="L410">410     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L411">411     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L412">412     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L413">413     (coordinate : CountCoordinate mdp) :</span>
+<span id="L414">414     ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L415">415       (source.coordinateIncrement coordinate 0)</span>
+<span id="L416">416       (MarkovPolicy.iidBernoulliVarianceProxy episodes)</span>
+<span id="L417">417       source.trajectoryMeasure := by</span>
+<span id="L418">418   have hbatch := coordinate.deviation_hasSubgaussianMGF</span>
+<span id="L419">419     source.initialPolicy initialState episodes</span>
+<span id="L420">420   rw [← source.trajectoryMeasure_map_eval_zero] at hbatch</span>
+<span id="L421">421   have hlift := ProbabilityTheory.HasSubgaussianMGF.of_map</span>
+<span id="L422">422     (Y := fun trajectory : EpisodeBatchTrajectory mdp episodes =&gt; trajectory 0)</span>
+<span id="L423">423     (X := coordinate.deviation source.initialPolicy initialState)</span>
+<span id="L424">424     (measurable_pi_apply 0).aemeasurable hbatch</span>
+<span id="L425">425   simpa only [coordinateIncrement, coordinatePrefixIncrement,</span>
+<span id="L426">426     Preorder.frestrictLe_apply,</span>
+<span id="L427">427     CountCoordinate.deviation_eq_rawCount_sub_policyMean,</span>
+<span id="L428">428     Function.comp_def] using hlift</span>
+<span id="L429">429 </span>
+<span id="L430">430 /-- Every successor adaptive count increment is conditionally sub-Gaussian. -/</span>
+<span id="L431">431 theorem coordinateIncrement_succ_hasCondSubgaussianMGF</span>
+<span id="L432">432     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L433">433     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L434">434     [StandardBorelSpace (EpisodeBatch mdp episodes)]</span>
+<span id="L435">435     [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)]</span>
+<span id="L436">436     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L437">437     (n : Nat) (coordinate : CountCoordinate mdp) :</span>
+<span id="L438">438     ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L439">439       (Filtration.piLE (X := fun _ : Nat =&gt; EpisodeBatch mdp episodes) n)</span>
+<span id="L440">440       ((Filtration.piLE (X := fun _ : Nat =&gt; EpisodeBatch mdp episodes)).le n)</span>
+<span id="L441">441       (source.coordinateIncrement coordinate (n + 1))</span>
+<span id="L442">442       (MarkovPolicy.iidBernoulliVarianceProxy episodes)</span>
+<span id="L443">443       source.trajectoryMeasure := by</span>
+<span id="L444">444   let prefixMap : EpisodeBatchTrajectory mdp episodes -&gt;</span>
+<span id="L445">445       EpisodeBatchPrefix mdp episodes n := Preorder.frestrictLe n</span>
+<span id="L446">446   let X : EpisodeBatchTrajectory mdp episodes -&gt; Real := fun trajectory =&gt;</span>
+<span id="L447">447     coordinate.rawCount (trajectory (n + 1))</span>
+<span id="L448">448   let center : EpisodeBatchTrajectory mdp episodes -&gt; Real := fun trajectory =&gt;</span>
+<span id="L449">449     source.coordinateKernelMean n coordinate (prefixMap trajectory)</span>
+<span id="L450">450   let target : EpisodeBatchTrajectory mdp episodes -&gt; Measure Real := fun trajectory =&gt;</span>
+<span id="L451">451     ((source.batchKernel n).map coordinate.rawCount) (prefixMap trajectory)</span>
+<span id="L452">452   have hspace :</span>
+<span id="L453">453       Filtration.piLE (X := fun _ : Nat =&gt; EpisodeBatch mdp episodes) n =</span>
+<span id="L454">454         (inferInstance : MeasurableSpace (EpisodeBatchPrefix mdp episodes n)).comap</span>
+<span id="L455">455           prefixMap := by</span>
+<span id="L456">456     simpa [prefixMap] using</span>
+<span id="L457">457       (Filtration.piLE_eq_comap_frestrictLe</span>
+<span id="L458">458         (X := fun _ : Nat =&gt; EpisodeBatch mdp episodes) n)</span>
+<span id="L459">459   have hX : Measurable X :=</span>
+<span id="L460">460     coordinate.measurable_rawCount.comp (measurable_pi_apply (n + 1))</span>
+<span id="L461">461   let mcond : MeasurableSpace (EpisodeBatchTrajectory mdp episodes) :=</span>
+<span id="L462">462     (inferInstance : MeasurableSpace (EpisodeBatchPrefix mdp episodes n)).comap</span>
+<span id="L463">463       prefixMap</span>
+<span id="L464">464   have hmcond : mcond &lt;= MeasurableSpace.pi := by</span>
+<span id="L465">465     simpa [mcond, prefixMap] using</span>
+<span id="L466">466       (Preorder.measurable_frestrictLe</span>
+<span id="L467">467         (X := fun _ : Nat =&gt; EpisodeBatch mdp episodes) n).comap_le</span>
+<span id="L468">468   have hcenter : @Measurable (EpisodeBatchTrajectory mdp episodes) Real</span>
+<span id="L469">469       mcond inferInstance center := by</span>
+<span id="L470">470     exact (source.measurable_coordinateKernelMean n coordinate).comp</span>
+<span id="L471">471       (Measurable.of_comap_le le_rfl)</span>
+<span id="L472">472   have hkernel : Filter.Eventually</span>
+<span id="L473">473       (fun trajectory : EpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L474">474         @Measure.map (EpisodeBatchTrajectory mdp episodes) Real</span>
+<span id="L475">475             MeasurableSpace.pi inferInstance X</span>
+<span id="L476">476             ((@ProbabilityTheory.condExpKernel</span>
+<span id="L477">477               (EpisodeBatchTrajectory mdp episodes)</span>
+<span id="L478">478               MeasurableSpace.pi _</span>
+<span id="L479">479               source.trajectoryMeasure _ mcond) trajectory) =</span>
+<span id="L480">480           target trajectory)</span>
+<span id="L481">481       (ae (source.trajectoryMeasure.trim</span>
+<span id="L482">482         hmcond)) := by</span>
+<span id="L483">483     simpa [X, target, prefixMap, mcond] using</span>
+<span id="L484">484       source.condExpKernel_map_rawCount_eq_batchKernel n coordinate</span>
+<span id="L485">485   have htarget : Filter.Eventually</span>
+<span id="L486">486       (fun trajectory : EpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L487">487         ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L488">488           (fun z : Real =&gt; z - center trajectory)</span>
+<span id="L489">489           (MarkovPolicy.iidBernoulliVarianceProxy episodes)</span>
+<span id="L490">490           (target trajectory))</span>
+<span id="L491">491       (ae (source.trajectoryMeasure.trim</span>
+<span id="L492">492         hmcond)) := by</span>
+<span id="L493">493     exact Filter.Eventually.of_forall fun trajectory =&gt; by</span>
+<span id="L494">494       let history := prefixMap trajectory</span>
+<span id="L495">495       let policy := source.successorPolicy n history</span>
+<span id="L496">496       have hbatch := coordinate.deviation_hasSubgaussianMGF</span>
+<span id="L497">497         policy initialState episodes</span>
+<span id="L498">498       have hresidual : ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L499">499           (fun batch : EpisodeBatch mdp episodes =&gt;</span>
+<span id="L500">500             coordinate.rawCount batch -</span>
+<span id="L501">501               coordinate.policyMean policy initialState episodes)</span>
+<span id="L502">502           (MarkovPolicy.iidBernoulliVarianceProxy episodes)</span>
+<span id="L503">503           (policy.iidEpisodeBatchMeasure initialState episodes) := by</span>
+<span id="L504">504         exact hbatch.congr (Filter.Eventually.of_forall fun batch =&gt;</span>
+<span id="L505">505           coordinate.deviation_eq_rawCount_sub_policyMean</span>
+<span id="L506">506             policy initialState batch)</span>
+<span id="L507">507       have hid :=</span>
+<span id="L508">508         (ProbabilityTheory.HasSubgaussianMGF.id_map_iff</span>
+<span id="L509">509           (coordinate.measurable_rawCount.sub_const</span>
+<span id="L510">510             (coordinate.policyMean policy initialState episodes)).aemeasurable).2</span>
+<span id="L511">511           hresidual</span>
+<span id="L512">512       change ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L513">513         (fun z : Real =&gt;</span>
+<span id="L514">514           z - source.coordinateKernelMean n coordinate history)</span>
+<span id="L515">515         (MarkovPolicy.iidBernoulliVarianceProxy episodes)</span>
+<span id="L516">516         (((source.batchKernel n).map coordinate.rawCount) history)</span>
+<span id="L517">517       rw [ProbabilityTheory.Kernel.map_apply _ coordinate.measurable_rawCount,</span>
+<span id="L518">518         source.batchKernel_eq_iidEpisodeBatchMeasure n history]</span>
+<span id="L519">519       have hmean : source.coordinateKernelMean n coordinate history =</span>
+<span id="L520">520           coordinate.policyMean policy initialState episodes :=</span>
+<span id="L521">521         source.coordinateKernelMean_eq_policyMean n coordinate history</span>
+<span id="L522">522       rw [← hmean] at hid</span>
+<span id="L523">523       apply (ProbabilityTheory.HasSubgaussianMGF.id_map_iff</span>
+<span id="L524">524         (measurable_id.sub_const</span>
+<span id="L525">525           (source.coordinateKernelMean n coordinate history)).aemeasurable).1</span>
+<span id="L526">526       rw [Measure.map_map</span>
+<span id="L527">527         (measurable_id.sub_const</span>
+<span id="L528">528           (source.coordinateKernelMean n coordinate history))</span>
+<span id="L529">529         coordinate.measurable_rawCount]</span>
+<span id="L530">530       simpa [Function.comp_def] using hid</span>
+<span id="L531">531   have hcondComap :=</span>
+<span id="L532">532     ConditionalExpectationReward.hasCondSubgaussianMGF_centered_of_condExpKernel_map_eq</span>
+<span id="L533">533       (mOmega := MeasurableSpace.pi)</span>
+<span id="L534">534       source.trajectoryMeasure</span>
+<span id="L535">535       mcond hmcond</span>
+<span id="L536">536       X center (MarkovPolicy.iidBernoulliVarianceProxy episodes)</span>
+<span id="L537">537       hX hcenter target hkernel htarget</span>
+<span id="L538">538   have hcond :=</span>
+<span id="L539">539     ConditionalExpectationReward.hasCondSubgaussianMGF_congr_measurableSpace</span>
+<span id="L540">540       (mOmega := MeasurableSpace.pi)</span>
+<span id="L541">541       source.trajectoryMeasure mcond</span>
+<span id="L542">542       (Filtration.piLE (X := fun _ : Nat =&gt; EpisodeBatch mdp episodes) n)</span>
+<span id="L543">543       hmcond</span>
+<span id="L544">544       ((Filtration.piLE (X := fun _ : Nat =&gt; EpisodeBatch mdp episodes)).le n)</span>
+<span id="L545">545       hspace.symm</span>
+<span id="L546">546       (fun trajectory =&gt; X trajectory - center trajectory)</span>
+<span id="L547">547       (MarkovPolicy.iidBernoulliVarianceProxy episodes) hcondComap</span>
+<span id="L548">548   simpa [coordinateIncrement, coordinatePrefixIncrement, X, center, prefixMap,</span>
+<span id="L549">549     Preorder.frestrictLe_apply,</span>
+<span id="L550">550     Preorder.frestrictLe₂_apply] using hcond</span>
+<span id="L551">551 </span>
+<span id="L552">552 /-- Total within-batch variance proxy for a finite adaptive prefix. -/</span>
+<span id="L553">553 noncomputable def cumulativeCoordinateVarianceProxy (episodes rounds : Nat) : NNReal :=</span>
+<span id="L554">554   ∑ _round ∈ Finset.range rounds,</span>
+<span id="L555">555     MarkovPolicy.iidBernoulliVarianceProxy episodes</span>
+<span id="L556">556 </span>
+<span id="L557">557 /-- Delta-calibrated radius for one adaptive cumulative count coordinate. -/</span>
+<span id="L558">558 noncomputable def cumulativeCoordinateConfidenceRadius</span>
+<span id="L559">559     (episodes rounds : Nat) (delta : Real) : Real :=</span>
+<span id="L560">560   Concentration.subGaussianSumConfidenceRadius</span>
+<span id="L561">561     (cumulativeCoordinateVarianceProxy episodes rounds) delta</span>
+<span id="L562">562 </span>
+<span id="L563">563 /-- Sum of kernel-centered increments over the first `rounds` batches. -/</span>
+<span id="L564">564 noncomputable def cumulativeCoordinateDeviation</span>
+<span id="L565">565     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L566">566     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L567">567     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L568">568     (coordinate : CountCoordinate mdp) (rounds : Nat)</span>
+<span id="L569">569     (trajectory : EpisodeBatchTrajectory mdp episodes) : Real :=</span>
+<span id="L570">570   ∑ round ∈ Finset.range rounds,</span>
+<span id="L571">571     source.coordinateIncrement coordinate round trajectory</span>
+<span id="L572">572 </span>
+<span id="L573">573 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L574">574 /-- Every fixed cumulative coordinate deviation is measurable. -/</span>
+<span id="L575">575 theorem measurable_cumulativeCoordinateDeviation</span>
+<span id="L576">576     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L577">577     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L578">578     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L579">579     (coordinate : CountCoordinate mdp) (rounds : Nat) :</span>
+<span id="L580">580     Measurable (source.cumulativeCoordinateDeviation coordinate rounds) := by</span>
+<span id="L581">581   refine Finset.measurable_sum (Finset.range rounds) fun round _ =&gt; ?_</span>
+<span id="L582">582   exact (((source.coordinateIncrement_stronglyAdapted_piLE coordinate) round).mono</span>
+<span id="L583">583     ((Filtration.piLE</span>
+<span id="L584">584       (X := fun _ : Nat =&gt; EpisodeBatch mdp episodes)).le round)).measurable</span>
+<span id="L585">585 </span>
+<span id="L586">586 /--</span>
+<span id="L587">587 Two-sided square-root prefix tail for one adaptive cumulative count coordinate.</span>
+<span id="L588">588 -/</span>
+<span id="L589">589 theorem trajectoryMeasure_cumulativeCoordinateDeviation_abs_tail_le</span>
+<span id="L590">590     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L591">591     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L592">592     [StandardBorelSpace (EpisodeBatch mdp episodes)]</span>
+<span id="L593">593     [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)]</span>
+<span id="L594">594     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L595">595     (coordinate : CountCoordinate mdp)</span>
+<span id="L596">596     (rounds : Nat) (hrounds : 0 &lt; rounds)</span>
+<span id="L597">597     (hepisodes : 0 &lt; episodes)</span>
+<span id="L598">598     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1) :</span>
+<span id="L599">599     source.trajectoryMeasure</span>
+<span id="L600">600         {trajectory |</span>
+<span id="L601">601           cumulativeCoordinateConfidenceRadius episodes rounds delta &lt;=</span>
+<span id="L602">602             |source.cumulativeCoordinateDeviation coordinate rounds trajectory|} &lt;=</span>
+<span id="L603">603       ENNReal.ofReal delta := by</span>
+<span id="L604">604   let F := Filtration.piLE</span>
+<span id="L605">605     (X := fun _ : Nat =&gt; EpisodeBatch mdp episodes)</span>
+<span id="L606">606   let cY : Nat -&gt; NNReal := fun _ =&gt;</span>
+<span id="L607">607     MarkovPolicy.iidBernoulliVarianceProxy episodes</span>
+<span id="L608">608   have hadapted : StronglyAdapted F (source.coordinateIncrement coordinate) := by</span>
+<span id="L609">609     simpa [F] using source.coordinateIncrement_stronglyAdapted_piLE coordinate</span>
+<span id="L610">610   have hzero := source.coordinateIncrement_zero_hasSubgaussianMGF coordinate</span>
+<span id="L611">611   have hsucc : forall i, i &lt; rounds - 1 -&gt;</span>
+<span id="L612">612       ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L613">613         (F i) (F.le i) (source.coordinateIncrement coordinate (i + 1))</span>
+<span id="L614">614         (cY (i + 1)) source.trajectoryMeasure := by</span>
+<span id="L615">615     intro i _hi</span>
+<span id="L616">616     simpa [F, cY] using</span>
+<span id="L617">617       source.coordinateIncrement_succ_hasCondSubgaussianMGF i coordinate</span>
+<span id="L618">618   have hvariance :</span>
+<span id="L619">619       0 &lt; ((((Finset.range rounds).sum cY : NNReal) : Real)) := by</span>
+<span id="L620">620     have hproxy := MarkovPolicy.iidBernoulliVarianceProxy_pos hepisodes</span>
+<span id="L621">621     have hmem : 0 ∈ Finset.range rounds := Finset.mem_range.mpr hrounds</span>
+<span id="L622">622     exact_mod_cast Finset.sum_pos&#x27; (fun _ _ =&gt; zero_le _) ⟨0, hmem, by</span>
+<span id="L623">623       exact_mod_cast hproxy⟩</span>
+<span id="L624">624   simpa [cumulativeCoordinateConfidenceRadius,</span>
+<span id="L625">625     cumulativeCoordinateVarianceProxy, cumulativeCoordinateDeviation, cY] using</span>
+<span id="L626">626     (Concentration.condSubGaussian_sum_abs_tail_ennreal_delta_of_stronglyAdapted</span>
+<span id="L627">627       hadapted hzero rounds hsucc hvariance delta hdelta hdelta_le_one)</span>
+<span id="L628">628 </span>
+<span id="L629">629 /-- Equal confidence share for every queried prefix/coordinate pair. -/</span>
+<span id="L630">630 noncomputable def cumulativeCountLocalDelta</span>
+<span id="L631">631     (mdp : MDP State Action) (rounds : Nat) (delta : Real) : Real :=</span>
+<span id="L632">632   delta /</span>
+<span id="L633">633     (Fintype.card (Fin rounds × CountCoordinate mdp) : Real)</span>
+<span id="L634">634 </span>
+<span id="L635">635 /-- One global bad event covering every cumulative prefix and count coordinate. -/</span>
+<span id="L636">636 noncomputable def adaptiveCumulativeCountBadEvent</span>
+<span id="L637">637     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L638">638     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L639">639     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L640">640     (rounds : Nat) (delta : Real) :</span>
+<span id="L641">641     Set (EpisodeBatchTrajectory mdp episodes) :=</span>
+<span id="L642">642   ⋃ index : Fin rounds × CountCoordinate mdp,</span>
+<span id="L643">643     {trajectory |</span>
+<span id="L644">644       cumulativeCoordinateConfidenceRadius episodes (index.1 + 1)</span>
+<span id="L645">645           (cumulativeCountLocalDelta mdp rounds delta) &lt;=</span>
+<span id="L646">646         |source.cumulativeCoordinateDeviation index.2 (index.1 + 1) trajectory|}</span>
+<span id="L647">647 </span>
+<span id="L648">648 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L649">649 /-- The finite round-coordinate cumulative bad event is measurable. -/</span>
+<span id="L650">650 theorem measurableSet_adaptiveCumulativeCountBadEvent</span>
+<span id="L651">651     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L652">652     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L653">653     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L654">654     (rounds : Nat) (delta : Real) :</span>
+<span id="L655">655     MeasurableSet (source.adaptiveCumulativeCountBadEvent rounds delta) := by</span>
+<span id="L656">656   unfold adaptiveCumulativeCountBadEvent</span>
+<span id="L657">657   exact MeasurableSet.iUnion fun index =&gt;</span>
+<span id="L658">658     measurableSet_le measurable_const</span>
+<span id="L659">659       (source.measurable_cumulativeCoordinateDeviation index.2 (index.1 + 1)).abs</span>
+<span id="L660">660 </span>
+<span id="L661">661 /-- The finite round-coordinate family is nonempty at positive horizon/rounds. -/</span>
+<span id="L662">662 theorem cumulativeCountIndex_nonempty</span>
+<span id="L663">663     {mdp : MDP State Action} {rounds : Nat}</span>
+<span id="L664">664     (hhorizon : 0 &lt; mdp.horizon) (hrounds : 0 &lt; rounds) :</span>
+<span id="L665">665     Nonempty (Fin rounds × CountCoordinate mdp) := by</span>
+<span id="L666">666   exact ⟨⟨⟨0, hrounds⟩,</span>
+<span id="L667">667     CountCoordinate.visit ⟨0, hhorizon⟩</span>
+<span id="L668">668       (Classical.choice inferInstance) (Classical.choice inferInstance)⟩⟩</span>
+<span id="L669">669 </span>
+<span id="L670">670 /-- A positive global delta gives a positive local round-coordinate share. -/</span>
+<span id="L671">671 theorem cumulativeCountLocalDelta_pos</span>
+<span id="L672">672     {mdp : MDP State Action} {rounds : Nat}</span>
+<span id="L673">673     (hindex : Nonempty (Fin rounds × CountCoordinate mdp))</span>
+<span id="L674">674     {delta : Real} (hdelta : 0 &lt; delta) :</span>
+<span id="L675">675     0 &lt; cumulativeCountLocalDelta mdp rounds delta := by</span>
+<span id="L676">676   unfold cumulativeCountLocalDelta</span>
+<span id="L677">677   exact div_pos hdelta (by</span>
+<span id="L678">678     exact_mod_cast Fintype.card_pos_iff.mpr hindex)</span>
+<span id="L679">679 </span>
+<span id="L680">680 /-- A valid global delta gives every nonempty-family local share at most one. -/</span>
+<span id="L681">681 theorem cumulativeCountLocalDelta_le_one</span>
+<span id="L682">682     {mdp : MDP State Action} {rounds : Nat}</span>
+<span id="L683">683     (hindex : Nonempty (Fin rounds × CountCoordinate mdp))</span>
+<span id="L684">684     {delta : Real} (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1) :</span>
+<span id="L685">685     cumulativeCountLocalDelta mdp rounds delta &lt;= 1 := by</span>
+<span id="L686">686   have hcard : (1 : Real) &lt;=</span>
+<span id="L687">687       Fintype.card (Fin rounds × CountCoordinate mdp) := by</span>
+<span id="L688">688     exact_mod_cast Fintype.card_pos_iff.mpr hindex</span>
+<span id="L689">689   exact (div_le_self (le_of_lt hdelta) hcard).trans hdelta_le_one</span>
+<span id="L690">690 </span>
+<span id="L691">691 /-- The global adaptive cumulative count event has the requested delta budget. -/</span>
+<span id="L692">692 theorem trajectoryMeasure_adaptiveCumulativeCountBadEvent_le</span>
+<span id="L693">693     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L694">694     [IsProbabilityMeasure initialState] {episodes rounds : Nat}</span>
+<span id="L695">695     [StandardBorelSpace (EpisodeBatch mdp episodes)]</span>
+<span id="L696">696     [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)]</span>
+<span id="L697">697     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L698">698     (hhorizon : 0 &lt; mdp.horizon) (hrounds : 0 &lt; rounds)</span>
+<span id="L699">699     (hepisodes : 0 &lt; episodes)</span>
+<span id="L700">700     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1) :</span>
+<span id="L701">701     source.trajectoryMeasure</span>
+<span id="L702">702         (source.adaptiveCumulativeCountBadEvent rounds delta) &lt;=</span>
+<span id="L703">703       ENNReal.ofReal delta := by</span>
+<span id="L704">704   letI : Nonempty (Fin rounds × CountCoordinate mdp) :=</span>
+<span id="L705">705     cumulativeCountIndex_nonempty hhorizon hrounds</span>
+<span id="L706">706   simpa [adaptiveCumulativeCountBadEvent, cumulativeCountLocalDelta] using</span>
+<span id="L707">707     (ProbabilityUnionBound.measure_biUnion_finset_le_of_uniform</span>
+<span id="L708">708       source.trajectoryMeasure</span>
+<span id="L709">709       (Finset.univ : Finset (Fin rounds × CountCoordinate mdp))</span>
+<span id="L710">710       Finset.univ_nonempty delta</span>
+<span id="L711">711       (fun index =&gt;</span>
+<span id="L712">712         {trajectory |</span>
+<span id="L713">713           cumulativeCoordinateConfidenceRadius episodes (index.1 + 1)</span>
+<span id="L714">714               (cumulativeCountLocalDelta mdp rounds delta) &lt;=</span>
+<span id="L715">715             |source.cumulativeCoordinateDeviation</span>
+<span id="L716">716               index.2 (index.1 + 1) trajectory|})</span>
+<span id="L717">717       (fun index _ =&gt; by</span>
+<span id="L718">718         simpa [cumulativeCountLocalDelta] using</span>
+<span id="L719">719           source.trajectoryMeasure_cumulativeCoordinateDeviation_abs_tail_le</span>
+<span id="L720">720             index.2 (index.1 + 1) (Nat.succ_pos index.1) hepisodes</span>
+<span id="L721">721             (cumulativeCountLocalDelta mdp rounds delta)</span>
+<span id="L722">722             (cumulativeCountLocalDelta_pos inferInstance hdelta)</span>
+<span id="L723">723             (cumulativeCountLocalDelta_le_one</span>
+<span id="L724">724               inferInstance hdelta hdelta_le_one)))</span>
+<span id="L725">725 </span>
+<span id="L726">726 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L727">727 /-- Outside the union, every queried cumulative deviation is strictly small. -/</span>
+<span id="L728">728 theorem cumulativeCoordinateDeviation_abs_lt_of_not_mem_badEvent</span>
+<span id="L729">729     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L730">730     [IsProbabilityMeasure initialState] {episodes rounds : Nat}</span>
+<span id="L731">731     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L732">732     {delta : Real} {trajectory : EpisodeBatchTrajectory mdp episodes}</span>
+<span id="L733">733     (htrajectory : trajectory ∉ source.adaptiveCumulativeCountBadEvent rounds delta)</span>
+<span id="L734">734     (round : Fin rounds) (coordinate : CountCoordinate mdp) :</span>
+<span id="L735">735     |source.cumulativeCoordinateDeviation coordinate (round + 1) trajectory| &lt;</span>
+<span id="L736">736       cumulativeCoordinateConfidenceRadius episodes (round + 1)</span>
+<span id="L737">737         (cumulativeCountLocalDelta mdp rounds delta) := by</span>
+<span id="L738">738   apply lt_of_not_ge</span>
+<span id="L739">739   intro hge</span>
+<span id="L740">740   apply htrajectory</span>
+<span id="L741">741   exact Set.mem_iUnion.2 ⟨(round, coordinate), hge⟩</span>
+<span id="L742">742 </span>
+<span id="L743">743 /-- Predictable center used at one adaptive batch coordinate. -/</span>
+<span id="L744">744 noncomputable def coordinateMeanAt</span>
+<span id="L745">745     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L746">746     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L747">747     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L748">748     (coordinate : CountCoordinate mdp) :</span>
+<span id="L749">749     Nat -&gt; EpisodeBatchTrajectory mdp episodes -&gt; Real</span>
+<span id="L750">750   | 0, _trajectory =&gt;</span>
+<span id="L751">751       coordinate.policyMean source.initialPolicy initialState episodes</span>
+<span id="L752">752   | n + 1, trajectory =&gt;</span>
+<span id="L753">753       source.coordinateKernelMean n coordinate</span>
+<span id="L754">754         (Preorder.frestrictLe n trajectory)</span>
+<span id="L755">755 </span>
+<span id="L756">756 /-- Sum of predictable coordinate means over a finite prefix. -/</span>
+<span id="L757">757 noncomputable def cumulativeCoordinateMean</span>
+<span id="L758">758     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L759">759     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L760">760     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L761">761     (coordinate : CountCoordinate mdp) (rounds : Nat)</span>
+<span id="L762">762     (trajectory : EpisodeBatchTrajectory mdp episodes) : Real :=</span>
+<span id="L763">763   ∑ round ∈ Finset.range rounds,</span>
+<span id="L764">764     source.coordinateMeanAt coordinate round trajectory</span>
+<span id="L765">765 </span>
+<span id="L766">766 /-- Sum of uncentered coordinate counts over a finite prefix. -/</span>
+<span id="L767">767 def cumulativeCoordinateRawCount</span>
+<span id="L768">768     {mdp : MDP State Action} {episodes : Nat}</span>
+<span id="L769">769     (coordinate : CountCoordinate mdp) (rounds : Nat)</span>
+<span id="L770">770     (trajectory : EpisodeBatchTrajectory mdp episodes) : Real :=</span>
+<span id="L771">771   ∑ round ∈ Finset.range rounds,</span>
+<span id="L772">772     coordinate.rawCount (trajectory round)</span>
+<span id="L773">773 </span>
+<span id="L774">774 /-- Each adaptive increment is raw count minus its predictable mean. -/</span>
+<span id="L775">775 theorem coordinateIncrement_eq_rawCount_sub_meanAt</span>
+<span id="L776">776     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L777">777     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L778">778     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L779">779     (coordinate : CountCoordinate mdp) (round : Nat)</span>
+<span id="L780">780     (trajectory : EpisodeBatchTrajectory mdp episodes) :</span>
+<span id="L781">781     source.coordinateIncrement coordinate round trajectory =</span>
+<span id="L782">782       coordinate.rawCount (trajectory round) -</span>
+<span id="L783">783         source.coordinateMeanAt coordinate round trajectory := by</span>
+<span id="L784">784   cases round with</span>
+<span id="L785">785   | zero =&gt;</span>
+<span id="L786">786       simp [coordinateIncrement, coordinatePrefixIncrement, coordinateMeanAt]</span>
+<span id="L787">787   | succ n =&gt;</span>
+<span id="L788">788       rfl</span>
+<span id="L789">789 </span>
+<span id="L790">790 /-- The cumulative martingale deviation is raw count minus cumulative mean. -/</span>
+<span id="L791">791 theorem cumulativeCoordinateDeviation_eq_rawCount_sub_mean</span>
+<span id="L792">792     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L793">793     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L794">794     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L795">795     (coordinate : CountCoordinate mdp) (rounds : Nat)</span>
+<span id="L796">796     (trajectory : EpisodeBatchTrajectory mdp episodes) :</span>
+<span id="L797">797     source.cumulativeCoordinateDeviation coordinate rounds trajectory =</span>
+<span id="L798">798       cumulativeCoordinateRawCount coordinate rounds trajectory -</span>
+<span id="L799">799         source.cumulativeCoordinateMean coordinate rounds trajectory := by</span>
+<span id="L800">800   unfold cumulativeCoordinateDeviation cumulativeCoordinateRawCount</span>
+<span id="L801">801     cumulativeCoordinateMean</span>
+<span id="L802">802   calc</span>
+<span id="L803">803     (∑ round ∈ Finset.range rounds,</span>
+<span id="L804">804         source.coordinateIncrement coordinate round trajectory) =</span>
+<span id="L805">805         ∑ round ∈ Finset.range rounds,</span>
+<span id="L806">806           (coordinate.rawCount (trajectory round) -</span>
+<span id="L807">807             source.coordinateMeanAt coordinate round trajectory) := by</span>
+<span id="L808">808           apply Finset.sum_congr rfl</span>
+<span id="L809">809           intro round _hround</span>
+<span id="L810">810           rw [source.coordinateIncrement_eq_rawCount_sub_meanAt]</span>
+<span id="L811">811     _ = (∑ round ∈ Finset.range rounds,</span>
+<span id="L812">812           coordinate.rawCount (trajectory round)) -</span>
+<span id="L813">813         ∑ round ∈ Finset.range rounds,</span>
+<span id="L814">814           source.coordinateMeanAt coordinate round trajectory := by</span>
+<span id="L815">815           rw [Finset.sum_sub_distrib]</span>
+<span id="L816">816 </span>
+<span id="L817">817 /-- Cumulative visit raw counts are exactly the summary&#x27;s visit count. -/</span>
+<span id="L818">818 theorem cumulativeCoordinateRawCount_visit</span>
+<span id="L819">819     {mdp : MDP State Action} {episodes : Nat}</span>
+<span id="L820">820     (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat)</span>
+<span id="L821">821     (stage : Fin mdp.horizon) (state : State) (action : Action) :</span>
+<span id="L822">822     cumulativeCoordinateRawCount (.visit stage state action) (round + 1) trajectory =</span>
+<span id="L823">823       ((cumulativeTransitionCountSummaryAt trajectory round).visitCount</span>
+<span id="L824">824         stage state action : Real) := by</span>
+<span id="L825">825   unfold cumulativeCoordinateRawCount</span>
+<span id="L826">826   rw [← Fin.sum_univ_eq_sum_range]</span>
+<span id="L827">827   simp only [CountCoordinate.rawCount]</span>
+<span id="L828">828   norm_cast</span>
+<span id="L829">829   simpa [cumulativeTransitionCountSummaryAt] using</span>
+<span id="L830">830     (EpisodeBatchPrefix.cumulativeTransitionCountSummary_visitCount</span>
+<span id="L831">831       (Preorder.frestrictLe round trajectory) stage state action).symm</span>
+<span id="L832">832 </span>
+<span id="L833">833 /-- Cumulative transition raw counts are exactly the summary coordinate. -/</span>
+<span id="L834">834 theorem cumulativeCoordinateRawCount_transition</span>
+<span id="L835">835     {mdp : MDP State Action} {episodes : Nat}</span>
+<span id="L836">836     (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat)</span>
+<span id="L837">837     (stage : Fin mdp.horizon) (state : State) (action : Action)</span>
+<span id="L838">838     (nextState : State) :</span>
+<span id="L839">839     cumulativeCoordinateRawCount</span>
+<span id="L840">840         (.transition stage state action nextState) (round + 1) trajectory =</span>
+<span id="L841">841       (cumulativeTransitionCountSummaryAt trajectory round</span>
+<span id="L842">842         stage state action nextState : Real) := by</span>
+<span id="L843">843   unfold cumulativeCoordinateRawCount</span>
+<span id="L844">844   rw [← Fin.sum_univ_eq_sum_range]</span>
+<span id="L845">845   simp only [CountCoordinate.rawCount]</span>
+<span id="L846">846   norm_cast</span>
+<span id="L847">847 </span>
+<span id="L848">848 /-- Each transition-count predictable mean factors through its visit mean. -/</span>
+<span id="L849">849 theorem coordinateMeanAt_transition_eq_visit_mul_transition</span>
+<span id="L850">850     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L851">851     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L852">852     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L853">853     (round : Nat) (trajectory : EpisodeBatchTrajectory mdp episodes)</span>
+<span id="L854">854     (stage : Fin mdp.horizon) (state : State) (action : Action)</span>
+<span id="L855">855     (nextState : State) :</span>
+<span id="L856">856     source.coordinateMeanAt (.transition stage state action nextState)</span>
+<span id="L857">857         round trajectory =</span>
+<span id="L858">858       source.coordinateMeanAt (.visit stage state action) round trajectory *</span>
+<span id="L859">859         (mdp.transition (state, action)).real {nextState} := by</span>
+<span id="L860">860   cases round with</span>
+<span id="L861">861   | zero =&gt;</span>
+<span id="L862">862       simp only [coordinateMeanAt, CountCoordinate.policyMean]</span>
+<span id="L863">863       rw [source.initialPolicy.stageTransitionJointProbability_eq_stageVisitProbability_mul_transition]</span>
+<span id="L864">864       simp only [Measure.real]</span>
+<span id="L865">865       ring</span>
+<span id="L866">866   | succ n =&gt;</span>
+<span id="L867">867       rw [coordinateMeanAt, coordinateMeanAt,</span>
+<span id="L868">868         source.coordinateKernelMean_eq_policyMean,</span>
+<span id="L869">869         source.coordinateKernelMean_eq_policyMean]</span>
+<span id="L870">870       simp only [CountCoordinate.policyMean]</span>
+<span id="L871">871       rw [(source.successorPolicy n</span>
+<span id="L872">872         (Preorder.frestrictLe n trajectory)).stageTransitionJointProbability_eq_stageVisitProbability_mul_transition]</span>
+<span id="L873">873       simp only [Measure.real]</span>
+<span id="L874">874       ring</span>
+<span id="L875">875 </span>
+<span id="L876">876 /-- Cumulative transition centers factor through the cumulative visit center. -/</span>
+<span id="L877">877 theorem cumulativeCoordinateMean_transition_eq_visit_mul_transition</span>
+<span id="L878">878     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L879">879     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L880">880     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L881">881     (rounds : Nat) (trajectory : EpisodeBatchTrajectory mdp episodes)</span>
+<span id="L882">882     (stage : Fin mdp.horizon) (state : State) (action : Action)</span>
+<span id="L883">883     (nextState : State) :</span>
+<span id="L884">884     source.cumulativeCoordinateMean (.transition stage state action nextState)</span>
+<span id="L885">885         rounds trajectory =</span>
+<span id="L886">886       source.cumulativeCoordinateMean (.visit stage state action)</span>
+<span id="L887">887           rounds trajectory *</span>
+<span id="L888">888         (mdp.transition (state, action)).real {nextState} := by</span>
+<span id="L889">889   unfold cumulativeCoordinateMean</span>
+<span id="L890">890   rw [Finset.sum_mul]</span>
+<span id="L891">891   apply Finset.sum_congr rfl</span>
+<span id="L892">892   intro round _hround</span>
+<span id="L893">893   exact source.coordinateMeanAt_transition_eq_visit_mul_transition</span>
+<span id="L894">894     round trajectory stage state action nextState</span>
+<span id="L895">895 </span>
+<span id="L896">896 /--</span>
+<span id="L897">897 Positive cumulative visits convert the two martingale deviations into a</span>
+<span id="L898">898 random-denominator empirical-transition singleton bound.</span>
+<span id="L899">899 -/</span>
+<span id="L900">900 theorem cumulativeEmpiricalTransitionMass_abs_sub_transition_lt</span>
+<span id="L901">901     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L902">902     [IsProbabilityMeasure initialState] {episodes rounds : Nat}</span>
+<span id="L903">903     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L904">904     (trajectory : EpisodeBatchTrajectory mdp episodes)</span>
+<span id="L905">905     (round : Fin rounds)</span>
+<span id="L906">906     (defaultState : State)</span>
+<span id="L907">907     (stage : Fin mdp.horizon) (state : State) (action : Action)</span>
+<span id="L908">908     (nextState : State) (radius : Real)</span>
+<span id="L909">909     (hvisitPos : 0 &lt;</span>
+<span id="L910">910       (cumulativeTransitionCountSummaryAt trajectory round).visitCount</span>
+<span id="L911">911         stage state action)</span>
+<span id="L912">912     (hvisitDeviation :</span>
+<span id="L913">913       |((cumulativeTransitionCountSummaryAt trajectory round).visitCount</span>
+<span id="L914">914           stage state action : Real) -</span>
+<span id="L915">915         source.cumulativeCoordinateMean (.visit stage state action)</span>
+<span id="L916">916           (round + 1) trajectory| &lt; radius)</span>
+<span id="L917">917     (htransitionDeviation :</span>
+<span id="L918">918       |(cumulativeTransitionCountSummaryAt trajectory round</span>
+<span id="L919">919           stage state action nextState : Real) -</span>
+<span id="L920">920         source.cumulativeCoordinateMean (.transition stage state action nextState)</span>
+<span id="L921">921           (round + 1) trajectory| &lt; radius) :</span>
+<span id="L922">922     |((cumulativeTransitionCountSummaryAt trajectory round).empiricalTransitionKernel</span>
+<span id="L923">923           defaultState stage (state, action)).real {nextState} -</span>
+<span id="L924">924         (mdp.transition (state, action)).real {nextState}| &lt;</span>
+<span id="L925">925       2 * radius /</span>
+<span id="L926">926         ((cumulativeTransitionCountSummaryAt trajectory round).visitCount</span>
+<span id="L927">927           stage state action : Real) := by</span>
+<span id="L928">928   let summary := cumulativeTransitionCountSummaryAt trajectory round</span>
+<span id="L929">929   let visit : Real := summary.visitCount stage state action</span>
+<span id="L930">930   let joint : Real := summary stage state action nextState</span>
+<span id="L931">931   let expectedVisit : Real :=</span>
+<span id="L932">932     source.cumulativeCoordinateMean (.visit stage state action)</span>
+<span id="L933">933       (round + 1) trajectory</span>
+<span id="L934">934   let trueMass : Real := (mdp.transition (state, action)).real {nextState}</span>
+<span id="L935">935   have hvisit : 0 &lt; visit := by</span>
+<span id="L936">936     dsimp [visit, summary]</span>
+<span id="L937">937     exact_mod_cast hvisitPos</span>
+<span id="L938">938   have hvisitNe : summary.visitCount stage state action ≠ 0 :=</span>
+<span id="L939">939     Nat.ne_of_gt hvisitPos</span>
+<span id="L940">940   have hmassNonneg : 0 &lt;= trueMass := measureReal_nonneg</span>
+<span id="L941">941   have hmassLeOne : trueMass &lt;= 1 := measureReal_le_one</span>
+<span id="L942">942   have hjointDeviation : |joint - expectedVisit * trueMass| &lt; radius := by</span>
+<span id="L943">943     rw [← source.cumulativeCoordinateMean_transition_eq_visit_mul_transition</span>
+<span id="L944">944       (round + 1) trajectory stage state action nextState]</span>
+<span id="L945">945     simpa [joint, summary, expectedVisit] using htransitionDeviation</span>
+<span id="L946">946   have hnumerator : |joint - visit * trueMass| &lt; 2 * radius := by</span>
+<span id="L947">947     calc</span>
+<span id="L948">948       |joint - visit * trueMass| =</span>
+<span id="L949">949           |(joint - expectedVisit * trueMass) -</span>
+<span id="L950">950             trueMass * (visit - expectedVisit)| := by</span>
+<span id="L951">951               congr 1</span>
+<span id="L952">952               ring</span>
+<span id="L953">953       _ &lt;= |joint - expectedVisit * trueMass| +</span>
+<span id="L954">954           |trueMass * (visit - expectedVisit)| := abs_sub _ _</span>
+<span id="L955">955       _ = |joint - expectedVisit * trueMass| +</span>
+<span id="L956">956           trueMass * |visit - expectedVisit| := by</span>
+<span id="L957">957             rw [abs_mul, abs_of_nonneg hmassNonneg]</span>
+<span id="L958">958       _ &lt; radius + trueMass * radius :=</span>
+<span id="L959">959         add_lt_add_of_lt_of_le hjointDeviation</span>
+<span id="L960">960           (mul_le_mul_of_nonneg_left</span>
+<span id="L961">961             (le_of_lt (by simpa [visit, summary, expectedVisit] using hvisitDeviation))</span>
+<span id="L962">962             hmassNonneg)</span>
+<span id="L963">963       _ &lt;= 2 * radius := by</span>
+<span id="L964">964         have hradius : 0 &lt;= radius :=</span>
+<span id="L965">965           (abs_nonneg (joint - expectedVisit * trueMass)).trans</span>
+<span id="L966">966             (le_of_lt hjointDeviation)</span>
+<span id="L967">967         nlinarith</span>
+<span id="L968">968   change</span>
+<span id="L969">969     |(summary.empiricalTransitionPMF defaultState stage state action).toMeasure.real</span>
+<span id="L970">970           {nextState} - trueMass| &lt; 2 * radius / visit</span>
+<span id="L971">971   rw [Measure.real,</span>
+<span id="L972">972     PMF.toMeasure_apply_singleton _ _ (MeasurableSet.singleton nextState)]</span>
+<span id="L973">973   simp only [TransitionCountSummary.empiricalTransitionPMF, dif_neg hvisitNe,</span>
+<span id="L974">974     PMF.ofFintype_apply, ENNReal.toReal_div, ENNReal.toReal_natCast]</span>
+<span id="L975">975   change |joint / visit - trueMass| &lt; 2 * radius / visit</span>
+<span id="L976">976   rw [show joint / visit - trueMass =</span>
+<span id="L977">977       (joint - visit * trueMass) / visit by field_simp]</span>
+<span id="L978">978   rw [abs_div, abs_of_pos hvisit]</span>
+<span id="L979">979   exact (div_lt_div_iff_of_pos_right hvisit).2 hnumerator</span>
+<span id="L980">980 </span>
+<span id="L981">981 /--</span>
+<span id="L982">982 Coordinate radius obtained from the cumulative visit denominator.  The zero</span>
+<span id="L983">983 visit branch uses the trivial probability-mass bound; the positive branch</span>
+<span id="L984">984 uses the paired visit and transition martingale deviations.</span>
+<span id="L985">985 -/</span>
+<span id="L986">986 noncomputable def adaptiveCumulativeTransitionCoordinateRadius</span>
+<span id="L987">987     {mdp : MDP State Action} {episodes rounds : Nat}</span>
+<span id="L988">988     (trajectory : EpisodeBatchTrajectory mdp episodes)</span>
+<span id="L989">989     (round : Fin rounds) (delta : Real)</span>
+<span id="L990">990     (stage : Fin mdp.horizon) (state : State) (action : Action)</span>
+<span id="L991">991     (_nextState : State) : Real :=</span>
+<span id="L992">992   let visits :=</span>
+<span id="L993">993     (cumulativeTransitionCountSummaryAt trajectory round).visitCount</span>
+<span id="L994">994       stage state action</span>
+<span id="L995">995   if visits = 0 then 1</span>
+<span id="L996">996   else</span>
+<span id="L997">997     2 * cumulativeCoordinateConfidenceRadius episodes (round + 1)</span>
+<span id="L998">998         (cumulativeCountLocalDelta mdp rounds delta) /</span>
+<span id="L999">999       (visits : Real)</span>
+<span id="L1000">1000 </span>
+<span id="L1001">1001 /--</span>
+<span id="L1002">1002 Regularity contract connecting the statistical coordinate radius to the</span>
+<span id="L1003">1003 planner&#x27;s count radius after multiplication by the recursive value envelope.</span>
+<span id="L1004">1004 -/</span>
+<span id="L1005">1005 def AdaptiveCumulativeCountMartingaleCover</span>
+<span id="L1006">1006     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L1007">1007     [IsProbabilityMeasure initialState] {episodes rounds : Nat}</span>
+<span id="L1008">1008     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L1009">1009     (countRadius : TransitionCountRadius) (delta rewardBound : Real) : Prop :=</span>
+<span id="L1010">1010   forall trajectory,</span>
+<span id="L1011">1011     trajectory ∉ source.adaptiveCumulativeCountBadEvent rounds delta -&gt;</span>
+<span id="L1012">1012     forall (round : Fin rounds) (remaining : Nat)</span>
+<span id="L1013">1013       (hremaining : remaining + 1 &lt;= mdp.horizon)</span>
+<span id="L1014">1014       (state : State) (action : Action),</span>
+<span id="L1015">1015       (∑ nextState,</span>
+<span id="L1016">1016         adaptiveCumulativeTransitionCoordinateRadius trajectory round delta</span>
+<span id="L1017">1017             (mdp.decisionStageRemaining remaining hremaining)</span>
+<span id="L1018">1018             state action nextState *</span>
+<span id="L1019">1019           empiricalFiniteBatchValueEnvelope</span>
+<span id="L1020">1020             rewardBound (countRadius.radius 0) remaining) &lt;=</span>
+<span id="L1021">1021         countRadius.radius</span>
+<span id="L1022">1022           ((cumulativeTransitionCountSummaryAt trajectory round).visitCount</span>
+<span id="L1023">1023             (mdp.decisionStageRemaining remaining hremaining) state action)</span>
+<span id="L1024">1024 </span>
+<span id="L1025">1025 /--</span>
+<span id="L1026">1026 Outside the cumulative count-martingale event, the cumulative empirical plan</span>
+<span id="L1027">1027 has the finite-coordinate confidence required by the optimistic Bellman route.</span>
+<span id="L1028">1028 -/</span>
+<span id="L1029">1029 noncomputable def coordinateConfidence_of_not_mem_adaptiveCumulativeCountBadEvent</span>
+<span id="L1030">1030     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L1031">1031     [IsProbabilityMeasure initialState] {episodes rounds : Nat}</span>
+<span id="L1032">1032     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L1033">1033     {delta : Real} {trajectory : EpisodeBatchTrajectory mdp episodes}</span>
+<span id="L1034">1034     (htrajectory :</span>
+<span id="L1035">1035       trajectory ∉ source.adaptiveCumulativeCountBadEvent rounds delta)</span>
+<span id="L1036">1036     (round : Fin rounds) (defaultState : State)</span>
+<span id="L1037">1037     (countRadius : TransitionCountRadius) (rewardBound : Real)</span>
+<span id="L1038">1038     (hrewardBound : forall state action,</span>
+<span id="L1039">1039       |mdp.reward state action| &lt;= rewardBound)</span>
+<span id="L1040">1040     (hcover : forall (remaining : Nat)</span>
+<span id="L1041">1041       (hremaining : remaining + 1 &lt;= mdp.horizon)</span>
+<span id="L1042">1042       (state : State) (action : Action),</span>
+<span id="L1043">1043       (∑ nextState,</span>
+<span id="L1044">1044         adaptiveCumulativeTransitionCoordinateRadius trajectory round delta</span>
+<span id="L1045">1045             (mdp.decisionStageRemaining remaining hremaining)</span>
+<span id="L1046">1046             state action nextState *</span>
+<span id="L1047">1047           empiricalFiniteBatchValueEnvelope</span>
+<span id="L1048">1048             rewardBound (countRadius.radius 0) remaining) &lt;=</span>
+<span id="L1049">1049         countRadius.radius</span>
+<span id="L1050">1050           ((cumulativeTransitionCountSummaryAt trajectory round).visitCount</span>
+<span id="L1051">1051             (mdp.decisionStageRemaining remaining hremaining) state action)) :</span>
+<span id="L1052">1052     (adaptiveCumulativeEmpiricalOptimisticPlanAt</span>
+<span id="L1053">1053       trajectory defaultState countRadius round).CoordinateConfidence where</span>
+<span id="L1054">1054   transitionCoordinateRadius :=</span>
+<span id="L1055">1055     adaptiveCumulativeTransitionCoordinateRadius trajectory round delta</span>
+<span id="L1056">1056   valueEnvelope :=</span>
+<span id="L1057">1057     empiricalFiniteBatchValueEnvelope rewardBound (countRadius.radius 0)</span>
+<span id="L1058">1058   rewardError_le_radius := by</span>
+<span id="L1059">1059     intro stage state action</span>
+<span id="L1060">1060     simp [adaptiveCumulativeEmpiricalOptimisticPlanAt,</span>
+<span id="L1061">1061       TransitionCountSummary.countRadiusOptimisticPlan]</span>
+<span id="L1062">1062   transitionCoordinateError_le_radius := by</span>
+<span id="L1063">1063     intro remaining hremaining state action nextState</span>
+<span id="L1064">1064     let stage := mdp.decisionStageRemaining remaining hremaining</span>
+<span id="L1065">1065     let summary := cumulativeTransitionCountSummaryAt trajectory round</span>
+<span id="L1066">1066     change</span>
+<span id="L1067">1067       |(summary.empiricalTransitionKernel defaultState stage</span>
+<span id="L1068">1068             (state, action)).real {nextState} -</span>
+<span id="L1069">1069           (mdp.transition (state, action)).real {nextState}| &lt;=</span>
+<span id="L1070">1070         adaptiveCumulativeTransitionCoordinateRadius trajectory round delta</span>
+<span id="L1071">1071           stage state action nextState</span>
+<span id="L1072">1072     by_cases hzero : summary.visitCount stage state action = 0</span>
+<span id="L1073">1073     · letI := summary.empiricalTransitionKernel_isMarkov defaultState stage</span>
+<span id="L1074">1074       have hestimatedNonneg :</span>
+<span id="L1075">1075           0 &lt;= (summary.empiricalTransitionKernel defaultState stage</span>
+<span id="L1076">1076             (state, action)).real {nextState} := measureReal_nonneg</span>
+<span id="L1077">1077       have hestimatedLeOne :</span>
+<span id="L1078">1078           (summary.empiricalTransitionKernel defaultState stage</span>
+<span id="L1079">1079             (state, action)).real {nextState} &lt;= 1 := measureReal_le_one</span>
+<span id="L1080">1080       have htrueNonneg :</span>
+<span id="L1081">1081           0 &lt;= (mdp.transition (state, action)).real {nextState} :=</span>
+<span id="L1082">1082         measureReal_nonneg</span>
+<span id="L1083">1083       have htrueLeOne :</span>
+<span id="L1084">1084           (mdp.transition (state, action)).real {nextState} &lt;= 1 :=</span>
+<span id="L1085">1085         measureReal_le_one</span>
+<span id="L1086">1086       rw [adaptiveCumulativeTransitionCoordinateRadius, if_pos hzero]</span>
+<span id="L1087">1087       exact abs_le.2 ⟨by linarith, by linarith⟩</span>
+<span id="L1088">1088     · have hvisitPos : 0 &lt; summary.visitCount stage state action :=</span>
+<span id="L1089">1089         Nat.pos_of_ne_zero hzero</span>
+<span id="L1090">1090       have hvisitDeviation :=</span>
+<span id="L1091">1091         source.cumulativeCoordinateDeviation_abs_lt_of_not_mem_badEvent</span>
+<span id="L1092">1092           htrajectory round (.visit stage state action)</span>
+<span id="L1093">1093       rw [source.cumulativeCoordinateDeviation_eq_rawCount_sub_mean,</span>
+<span id="L1094">1094         cumulativeCoordinateRawCount_visit] at hvisitDeviation</span>
+<span id="L1095">1095       have htransitionDeviation :=</span>
+<span id="L1096">1096         source.cumulativeCoordinateDeviation_abs_lt_of_not_mem_badEvent</span>
+<span id="L1097">1097           htrajectory round (.transition stage state action nextState)</span>
+<span id="L1098">1098       rw [source.cumulativeCoordinateDeviation_eq_rawCount_sub_mean,</span>
+<span id="L1099">1099         cumulativeCoordinateRawCount_transition] at htransitionDeviation</span>
+<span id="L1100">1100       have hbound :=</span>
+<span id="L1101">1101         source.cumulativeEmpiricalTransitionMass_abs_sub_transition_lt</span>
+<span id="L1102">1102           trajectory round defaultState stage state action nextState</span>
+<span id="L1103">1103           (cumulativeCoordinateConfidenceRadius episodes (round + 1)</span>
+<span id="L1104">1104             (cumulativeCountLocalDelta mdp rounds delta))</span>
+<span id="L1105">1105           hvisitPos hvisitDeviation htransitionDeviation</span>
+<span id="L1106">1106       simpa [adaptiveCumulativeTransitionCoordinateRadius, summary, stage,</span>
+<span id="L1107">1107         hzero] using le_of_lt hbound</span>
+<span id="L1108">1108   upperValue_abs_le_envelope := by</span>
+<span id="L1109">1109     intro remaining hremaining state</span>
+<span id="L1110">1110     exact</span>
+<span id="L1111">1111       (cumulativeTransitionCountSummaryAt trajectory round).countRadiusOptimisticPlan_upperValueRemaining_abs_le</span>
+<span id="L1112">1112         mdp defaultState countRadius rewardBound hrewardBound remaining</span>
+<span id="L1113">1113           (by omega) state</span>
+<span id="L1114">1114   transitionRadius_cover := by</span>
+<span id="L1115">1115     intro remaining hremaining state action</span>
+<span id="L1116">1116     simpa [adaptiveCumulativeEmpiricalOptimisticPlanAt,</span>
+<span id="L1117">1117       TransitionCountSummary.countRadiusOptimisticPlan] using</span>
+<span id="L1118">1118         hcover remaining hremaining state action</span>
+<span id="L1119">1119 </span>
+<span id="L1120">1120 /--</span>
+<span id="L1121">1121 The cumulative count martingale event and cover produce the reusable global</span>
+<span id="L1122">1122 coordinate-confidence contract for cumulative optimistic recommendations.</span>
+<span id="L1123">1123 -/</span>
+<span id="L1124">1124 noncomputable def adaptiveCumulativeCoordinateConfidenceContract_of_martingale</span>
+<span id="L1125">1125     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L1126">1126     [IsProbabilityMeasure initialState] {episodes rounds : Nat}</span>
+<span id="L1127">1127     [StandardBorelSpace (EpisodeBatch mdp episodes)]</span>
+<span id="L1128">1128     [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)]</span>
+<span id="L1129">1129     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L1130">1130     (defaultState : State) (countRadius : TransitionCountRadius)</span>
+<span id="L1131">1131     (rewardBound : Real)</span>
+<span id="L1132">1132     (hrewardBound : forall state action,</span>
+<span id="L1133">1133       |mdp.reward state action| &lt;= rewardBound)</span>
+<span id="L1134">1134     (hhorizon : 0 &lt; mdp.horizon) (hrounds : 0 &lt; rounds)</span>
+<span id="L1135">1135     (hepisodes : 0 &lt; episodes)</span>
+<span id="L1136">1136     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L1137">1137     (hcover : AdaptiveCumulativeCountMartingaleCover</span>
+<span id="L1138">1138       (rounds := rounds) source countRadius delta rewardBound) :</span>
+<span id="L1139">1139     AdaptiveCumulativeCoordinateConfidenceContract</span>
+<span id="L1140">1140       source defaultState countRadius rounds delta where</span>
+<span id="L1141">1141   badEvent := source.adaptiveCumulativeCountBadEvent rounds delta</span>
+<span id="L1142">1142   measurable_badEvent :=</span>
+<span id="L1143">1143     source.measurableSet_adaptiveCumulativeCountBadEvent rounds delta</span>
+<span id="L1144">1144   measure_badEvent_le :=</span>
+<span id="L1145">1145     source.trajectoryMeasure_adaptiveCumulativeCountBadEvent_le</span>
+<span id="L1146">1146       hhorizon hrounds hepisodes delta hdelta hdelta_le_one</span>
+<span id="L1147">1147   coordinateConfidence_of_not_mem := by</span>
+<span id="L1148">1148     intro trajectory htrajectory round</span>
+<span id="L1149">1149     exact source.coordinateConfidence_of_not_mem_adaptiveCumulativeCountBadEvent</span>
+<span id="L1150">1150       htrajectory round defaultState countRadius rewardBound hrewardBound</span>
+<span id="L1151">1151         (hcover trajectory htrajectory round)</span>
+<span id="L1152">1152 </span>
+<span id="L1153">1153 /--</span>
+<span id="L1154">1154 Generic route endpoint: cumulative count martingales supply the probability</span>
+<span id="L1155">1155 producer for optimism and explicit recommended-policy expected regret.</span>
+<span id="L1156">1156 -/</span>
+<span id="L1157">1157 theorem trajectoryMeasure_adaptiveCumulativeCountMartingale_optimism_and_explicitRecommendedExpectedRegret</span>
+<span id="L1158">1158     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L1159">1159     [IsProbabilityMeasure initialState] {episodes rounds : Nat}</span>
+<span id="L1160">1160     [StandardBorelSpace (EpisodeBatch mdp episodes)]</span>
+<span id="L1161">1161     [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)]</span>
+<span id="L1162">1162     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L1163">1163     (defaultState : State) (countRadius : TransitionCountRadius)</span>
+<span id="L1164">1164     (rewardBound : Real)</span>
+<span id="L1165">1165     (hrewardBound : forall state action,</span>
+<span id="L1166">1166       |mdp.reward state action| &lt;= rewardBound)</span>
+<span id="L1167">1167     (hhorizon : 0 &lt; mdp.horizon) (hrounds : 0 &lt; rounds)</span>
+<span id="L1168">1168     (hepisodes : 0 &lt; episodes)</span>
+<span id="L1169">1169     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L1170">1170     (hcover : AdaptiveCumulativeCountMartingaleCover</span>
+<span id="L1171">1171       (rounds := rounds) source countRadius delta rewardBound)</span>
+<span id="L1172">1172     (radiusEnvelope : Fin rounds -&gt; Real)</span>
+<span id="L1173">1173     (hradius : forall trajectory,</span>
+<span id="L1174">1174       trajectory ∉ source.adaptiveCumulativeCountBadEvent rounds delta -&gt;</span>
+<span id="L1175">1175       forall (round : Fin rounds) (remaining : Nat)</span>
+<span id="L1176">1176         (hremaining : remaining + 1 &lt;= mdp.horizon) (state : State),</span>
+<span id="L1177">1177         (adaptiveCumulativeEmpiricalOptimisticPlanAt</span>
+<span id="L1178">1178           trajectory defaultState countRadius round).selectedRadiusRemaining</span>
+<span id="L1179">1179             remaining hremaining state &lt;= radiusEnvelope round) :</span>
+<span id="L1180">1180     MeasurableSet (source.adaptiveCumulativeCountBadEvent rounds delta) /\</span>
+<span id="L1181">1181       source.trajectoryMeasure</span>
+<span id="L1182">1182           (source.adaptiveCumulativeCountBadEvent rounds delta) &lt;=</span>
+<span id="L1183">1183         ENNReal.ofReal delta /\</span>
+<span id="L1184">1184       forall trajectory,</span>
+<span id="L1185">1185         trajectory ∉ source.adaptiveCumulativeCountBadEvent rounds delta -&gt;</span>
+<span id="L1186">1186         (forall round : Fin rounds, forall state,</span>
+<span id="L1187">1187           mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;=</span>
+<span id="L1188">1188             (adaptiveCumulativeEmpiricalOptimisticPlanAt</span>
+<span id="L1189">1189               trajectory defaultState countRadius round).upperValueRemaining</span>
+<span id="L1190">1190                 mdp.horizon le_rfl state) /\</span>
+<span id="L1191">1191         adaptiveCumulativeEmpiricalOptimisticRecommendedExpectedRegret</span>
+<span id="L1192">1192             (initialState := initialState) trajectory defaultState countRadius rounds &lt;=</span>
+<span id="L1193">1193           ∑ round : Fin rounds,</span>
+<span id="L1194">1194             (mdp.horizon : Real) * (2 * radiusEnvelope round) := by</span>
+<span id="L1195">1195   let contract :=</span>
+<span id="L1196">1196     source.adaptiveCumulativeCoordinateConfidenceContract_of_martingale</span>
+<span id="L1197">1197       defaultState countRadius rewardBound hrewardBound hhorizon hrounds</span>
+<span id="L1198">1198         hepisodes delta hdelta hdelta_le_one hcover</span>
+<span id="L1199">1199   simpa [contract,</span>
+<span id="L1200">1200     adaptiveCumulativeCoordinateConfidenceContract_of_martingale] using</span>
+<span id="L1201">1201     (AdaptiveCumulativeCoordinateConfidenceContract.trajectoryMeasure_optimism_and_explicitRecommendedExpectedRegret</span>
+<span id="L1202">1202       source defaultState countRadius delta contract radiusEnvelope</span>
+<span id="L1203">1203         (by</span>
+<span id="L1204">1204           intro trajectory htrajectory round remaining hremaining state</span>
+<span id="L1205">1205           exact hradius trajectory htrajectory round remaining hremaining state))</span>
+<span id="L1206">1206 </span>
+<span id="L1207">1207 end AdaptiveEpisodeBatchSource</span>
+<span id="L1208">1208 </span>
+<span id="L1209">1209 namespace AdaptiveCumulativeEmpiricalOptimisticSource</span>
+<span id="L1210">1210 </span>
+<span id="L1211">1211 /--</span>
+<span id="L1212">1212 Concrete exploratory-source endpoint for the cumulative count-martingale</span>
+<span id="L1213">1213 confidence route.  The conclusion concerns recommended policies, not behavior</span>
+<span id="L1214">1214 or realized regret.</span>
+<span id="L1215">1215 -/</span>
+<span id="L1216">1216 theorem exploratorySource_trajectoryMeasure_cumulativeCountMartingale_optimism_and_explicitRecommendedExpectedRegret</span>
+<span id="L1217">1217     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L1218">1218     [IsProbabilityMeasure initialState] (episodes rounds : Nat)</span>
+<span id="L1219">1219     [StandardBorelSpace (EpisodeBatch mdp episodes)]</span>
+<span id="L1220">1220     [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)]</span>
+<span id="L1221">1221     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L1222">1222     (defaultState : State) (countRadius : TransitionCountRadius)</span>
+<span id="L1223">1223     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L1224">1224     (rewardBound : Real)</span>
+<span id="L1225">1225     (hrewardBound : forall state action,</span>
+<span id="L1226">1226       |mdp.reward state action| &lt;= rewardBound)</span>
+<span id="L1227">1227     (hhorizon : 0 &lt; mdp.horizon) (hrounds : 0 &lt; rounds)</span>
+<span id="L1228">1228     (hepisodes : 0 &lt; episodes)</span>
+<span id="L1229">1229     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L1230">1230     (hcover : AdaptiveEpisodeBatchSource.AdaptiveCumulativeCountMartingaleCover</span>
+<span id="L1231">1231       (rounds := rounds)</span>
+<span id="L1232">1232       (exploratorySource mdp initialState episodes initialTable defaultState</span>
+<span id="L1233">1233         countRadius explorationRate hexplorationRate)</span>
+<span id="L1234">1234       countRadius delta rewardBound)</span>
+<span id="L1235">1235     (radiusEnvelope : Fin rounds -&gt; Real)</span>
+<span id="L1236">1236     (hradius : forall trajectory,</span>
+<span id="L1237">1237       trajectory ∉</span>
+<span id="L1238">1238         (exploratorySource mdp initialState episodes initialTable defaultState</span>
+<span id="L1239">1239           countRadius explorationRate hexplorationRate).adaptiveCumulativeCountBadEvent</span>
+<span id="L1240">1240             rounds delta -&gt;</span>
+<span id="L1241">1241       forall (round : Fin rounds) (remaining : Nat)</span>
+<span id="L1242">1242         (hremaining : remaining + 1 &lt;= mdp.horizon) (state : State),</span>
+<span id="L1243">1243         (adaptiveCumulativeEmpiricalOptimisticPlanAt</span>
+<span id="L1244">1244           trajectory defaultState countRadius round).selectedRadiusRemaining</span>
+<span id="L1245">1245             remaining hremaining state &lt;= radiusEnvelope round) :</span>
+<span id="L1246">1246     let source := exploratorySource mdp initialState episodes initialTable</span>
+<span id="L1247">1247       defaultState countRadius explorationRate hexplorationRate</span>
+<span id="L1248">1248     MeasurableSet (source.adaptiveCumulativeCountBadEvent rounds delta) /\</span>
+<span id="L1249">1249       source.trajectoryMeasure</span>
+<span id="L1250">1250           (source.adaptiveCumulativeCountBadEvent rounds delta) &lt;=</span>
+<span id="L1251">1251         ENNReal.ofReal delta /\</span>
+<span id="L1252">1252       forall trajectory,</span>
+<span id="L1253">1253         trajectory ∉ source.adaptiveCumulativeCountBadEvent rounds delta -&gt;</span>
+<span id="L1254">1254         (forall round : Fin rounds, forall state,</span>
+<span id="L1255">1255           mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;=</span>
+<span id="L1256">1256             (adaptiveCumulativeEmpiricalOptimisticPlanAt</span>
+<span id="L1257">1257               trajectory defaultState countRadius round).upperValueRemaining</span>
+<span id="L1258">1258                 mdp.horizon le_rfl state) /\</span>
+<span id="L1259">1259         adaptiveCumulativeEmpiricalOptimisticRecommendedExpectedRegret</span>
+<span id="L1260">1260             (initialState := initialState) trajectory defaultState countRadius rounds &lt;=</span>
+<span id="L1261">1261           ∑ round : Fin rounds,</span>
+<span id="L1262">1262             (mdp.horizon : Real) * (2 * radiusEnvelope round) := by</span>
+<span id="L1263">1263   exact</span>
+<span id="L1264">1264     (exploratorySource mdp initialState episodes initialTable defaultState</span>
+<span id="L1265">1265       countRadius explorationRate hexplorationRate).trajectoryMeasure_adaptiveCumulativeCountMartingale_optimism_and_explicitRecommendedExpectedRegret</span>
+<span id="L1266">1266         defaultState countRadius rewardBound hrewardBound hhorizon hrounds</span>
+<span id="L1267">1267           hepisodes delta hdelta hdelta_le_one hcover radiusEnvelope hradius</span>
+<span id="L1268">1268 </span>
+<span id="L1269">1269 end AdaptiveCumulativeEmpiricalOptimisticSource</span>
+<span id="L1270">1270 </span>
+<span id="L1271">1271 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

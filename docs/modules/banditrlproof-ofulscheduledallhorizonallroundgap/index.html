@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.OFULScheduledAllHorizonAllRoundGap · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.OFULScheduledAllHorizonAllRoundGap · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.OFULScheduledAllHorizonAllRoundGap · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · OFUL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>OFUL<wbr>Scheduled<wbr>All<wbr>Horizon<wbr>All<wbr>Round<wbr>Gap</h1>
+  <p class="lede">This module adds the fixed canonical initial round to the compiled one-policy all-horizon successor-gap tail. The resulting event still uses the same telescoping-schedule policy and the same all-time confidence failure event.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/OFULScheduledAllHorizonAllRoundGap.lean.html"><code>BanditRLProof/OFULScheduledAllHorizonAllRoundGap.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/oful/index.html">5. OFUL, self-normalized confidence, and stopping times</a></dd></div>
+    <div><dt>Declarations</dt><dd>7</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-ofulscheduledallhorizoncumulativegap/index.html"><code>BanditRLProof.OFULScheduledAllHorizonCumulativeGap</code></a>, <a href="../banditrlproof-ofulhighprobabilityregretrate/index.html"><code>BanditRLProof.OFULHighProbabilityRegretRate</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-ofulscheduledallhorizonhighprobabilityregretrate/index.html"><code>BanditRLProof.OFULScheduledAllHorizonHighProbabilityRegretRate</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-56cb24acdfe3">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.telescopingStandardScalarAllRoundGapBound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Scheduled deterministic cumulative-gap budget including time zero.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> telescopingStandardScalarAllRoundGapBound {Feature : Type u} [Fintype Feature] (R delta lambda S : Real) (horizon : Nat) (L2 : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULScheduledAllHorizonAllRoundGap.lean.html#L21">Source line 21</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7fc1c11a9dd0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.telescopingCanonicalHistoryTrajectory_initialGap_le_ae</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The time-zero gap envelope holds on the trajectory generated by the single
+telescoping-schedule policy.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> telescopingCanonicalHistoryTrajectory_initialGap_le_ae {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (thetaStar : Feature -&gt; Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta S : Real) (hS : <span class="num">0</span> &lt;= S) (L2 : Real) (hactionFeatureBound : <span class="kw">forall</span> action, dotProduct (actionFeature action) (actionFeature action) &lt;= L2) (environment : Thompson.HistoryEnvironment (Fin K) Real) (comparator : Fin K) (htheta : euclideanLength thetaStar &lt;= S) : ∀ᵐ trajectory ∂ Thompson.canonicalHistoryTrajectoryMeasure (finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm hK lambda actionFeature R delta S) environment, linearValue thetaStar (actionFeature comparator) - linearValue thetaStar (actionFeature (Thompson.canonicalHistoryTrajectoryAction trajectory <span class="num">0</span>)) &lt;= standardScalarInitialGapBound S L2</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULScheduledAllHorizonAllRoundGap.lean.html#L32">Source line 32</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ae421ada92dd">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.telescopingCanonicalHistoryTrajectoryAllHorizonAllRoundGapStandardViolationSet</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">There exists a finite horizon whose complete gap over rounds `0, ..., horizon`
+exceeds the corresponding scheduled initial-plus-radius-width budget.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> telescopingCanonicalHistoryTrajectoryAllHorizonAllRoundGapStandardViolationSet {K : Nat} {Feature : Type u} [Fintype Feature] (lambda : Real) (thetaStar : Feature -&gt; Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta S L2 : Real) (comparator : Nat -&gt; Fin K) : Set (Nat -&gt; Fin K × Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULScheduledAllHorizonAllRoundGap.lean.html#L72">Source line 72</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3a627d4f7a06">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.telescopingCanonicalHistoryTrajectoryAllHorizonAllRoundGapStandardViolationSet_subset_succ_ae</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Almost surely, every all-round all-horizon violation gives a successor-only
+all-horizon violation at the same witness horizon.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> telescopingCanonicalHistoryTrajectoryAllHorizonAllRoundGapStandardViolationSet_subset_succ_ae {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (thetaStar : Feature -&gt; Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta S : Real) (hS : <span class="num">0</span> &lt;= S) (environment : Thompson.HistoryEnvironment (Fin K) Real) (L2 : Real) (hactionFeatureBound : <span class="kw">forall</span> action, dotProduct (actionFeature action) (actionFeature action) &lt;= L2) (comparator : Nat -&gt; Fin K) (htheta : euclideanLength thetaStar &lt;= S) : ∀ᵐ trajectory ∂ Thompson.canonicalHistoryTrajectoryMeasure (finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm hK lambda actionFeature R delta S) environment, trajectory ∈ telescopingCanonicalHistoryTrajectoryAllHorizonAllRoundGapStandardViolationSet lambda thetaStar actionFeature R delta S L2 comparator -&gt; trajectory ∈ telescopingCanonicalHistoryTrajectoryAllHorizonSuccGapStandardViolationSet lambda thetaStar actionFeature R delta S L2 comparator</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULScheduledAllHorizonAllRoundGap.lean.html#L95">Source line 95</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-154451968e72">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measure_telescopingCanonicalHistoryTrajectoryAllHorizonAllRoundGapStandardViolationSet_le_of_linearSubgaussianEnvironment_of_featureBound_le_regularization</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The probability of any finite-horizon complete cumulative-gap violation for
+the one telescoping-schedule policy is at most `delta`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_telescopingCanonicalHistoryTrajectoryAllHorizonAllRoundGapStandardViolationSet_le_of_linearSubgaussianEnvironment_of_featureBound_le_regularization {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (hlambda : <span class="num">0</span> &lt; lambda) (thetaStar : Feature -&gt; Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R : Real) (hR : <span class="num">0</span> &lt; R) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (S : Real) (hS : <span class="num">0</span> &lt;= S) (environment : Thompson.HistoryEnvironment (Fin K) Real) (L2 : Real) (hL2 : <span class="num">0</span> &lt;= L2) (hactionFeatureBound : <span class="kw">forall</span> action, dotProduct (actionFeature action) (actionFeature action) &lt;= L2) (hL2lambda : L2 &lt;= lambda) (comparator : Nat -&gt; Fin K) (source : CanonicalLinearSubgaussianEnvironmentLaw hK thetaStar actionFeature R S environment) : Thompson.canonicalHistoryTrajectoryMeasure (finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm hK lambda actionFeature R delta S) environment (telescopingCanonicalHistoryTrajectoryAllHorizonAllRoundGapStandardViolationSet lambda thetaStar actionFeature R delta S L2 comparator) &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULScheduledAllHorizonAllRoundGap.lean.html#L136">Source line 136</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c384ba9acc61">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.telescopingCanonicalStandardHighProbabilityPseudoRegretAllHorizonViolationSet</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">All-horizon violation event for the named fixed-best pseudo-regret.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> telescopingCanonicalStandardHighProbabilityPseudoRegretAllHorizonViolationSet {K : Nat} {Feature : Type u} [Fintype Feature] (lambda : Real) (thetaStar : Feature -&gt; Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta S L2 : Real) (best : Fin K) : Set (Nat -&gt; Fin K × Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULScheduledAllHorizonAllRoundGap.lean.html#L187">Source line 187</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a24463ffc52e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.telescopingCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_allHorizon_tail_le_of_linearSubgaussianEnvironment_of_featureBound_le_regularization</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Complete one-policy all-horizon high-probability pseudo-regret theorem. The
+fixed-best pseudo-regret is nonnegative at every finite horizon, and the
+probability that any horizon exceeds its scheduled standard budget is at most
+`delta`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> telescopingCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_allHorizon_tail_le_of_linearSubgaussianEnvironment_of_featureBound_le_regularization {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (hlambda : <span class="num">0</span> &lt; lambda) (thetaStar : Feature -&gt; Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R : Real) (hR : <span class="num">0</span> &lt; R) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (S : Real) (hS : <span class="num">0</span> &lt;= S) (environment : Thompson.HistoryEnvironment (Fin K) Real) (L2 : Real) (hL2 : <span class="num">0</span> &lt;= L2) (hactionFeatureBound : <span class="kw">forall</span> action, dotProduct (actionFeature action) (actionFeature action) &lt;= L2) (hL2lambda : L2 &lt;= lambda) (best : Fin K) (hbest : IsOptimalLinearArm thetaStar actionFeature best) (source : CanonicalLinearSubgaussianEnvironmentLaw hK thetaStar actionFeature R S environment) : (<span class="kw">forall</span> horizon trajectory, <span class="num">0</span> &lt;= canonicalStandardHighProbabilityPseudoRegret thetaStar actionFeature best horizon trajectory) /\ Thompson.canonicalHistoryTrajectoryMeasure (finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm hK lambda actionFeature R delta S) environment (telescopingCanonicalStandardHighProbabilityPseudoRegretAllHorizonViolationSet lambda thetaStar actionFeature R delta S L2 best) &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULScheduledAllHorizonAllRoundGap.lean.html#L209">Source line 209</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

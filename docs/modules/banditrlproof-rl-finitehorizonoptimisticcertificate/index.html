@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.RL.FiniteHorizonOptimisticCertificate · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.RL.FiniteHorizonOptimisticCertificate · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.RL.FiniteHorizonOptimisticCertificate · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Finite-horizon RL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>RL.<wbr>Finite<wbr>Horizon<wbr>Optimistic<wbr>Certificate</h1>
+  <p class="lede">This module isolates the deterministic dynamic-programming interface needed by optimistic finite-horizon RL. A certificate supplies upper values with zero terminal value and a one-step upper Bellman inequality. Backward induction turns that local contract into global optimism. For any Markov policy, the upper-value minus policy-value difference is then exactly a recursive sum of Bellman residuals under the true policy-induced state laws. A pointwise bonus bound on those residuals yields a finite-episode expected-regret bound.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/RL/FiniteHorizonOptimisticCertificate.lean.html"><code>BanditRLProof/RL/FiniteHorizonOptimisticCertificate.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/finite-horizon-rl/index.html">9. Finite-horizon reinforcement learning</a></dd></div>
+    <div><dt>Declarations</dt><dd>18</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-rl-finitehorizonoccupancyregret/index.html"><code>BanditRLProof.RL.FiniteHorizonOccupancyRegret</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-rl-finitehorizonestimatedmodelcertificate/index.html"><code>BanditRLProof.RL.FiniteHorizonEstimatedModelCertificate</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-e21504e90167">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.optimalBellman_mono</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite-action optimal Bellman operator is monotone in its continuation value.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> optimalBellman_mono (mdp : MDP State Action) {left right : State -&gt; Real} (hle : <span class="kw">forall</span> state, left state &lt;= right state) (state : State) : mdp.optimalBellman left state &lt;= mdp.optimalBellman right state</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonOptimisticCertificate.lean.html#L31">Source line 31</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-99f66e3c4d82">
+  <summary>
+    <span class="kind">structure</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.OptimisticBellmanCertificate</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">An upper-value plan whose terminal value is zero and whose successor surface
+dominates one true optimal Bellman backup of its tail surface.</p>
+    <pre class="lean-code"><code><span class="kw">structure</span> OptimisticBellmanCertificate (mdp : MDP State Action) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonOptimisticCertificate.lean.html#L47">Source line 47</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-afe1d336bd21">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.optimalBellmanCertificate</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The true optimal value itself is the canonical exact optimistic certificate.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> optimalBellmanCertificate (mdp : MDP State Action) : OptimisticBellmanCertificate mdp <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonOptimisticCertificate.lean.html#L60">Source line 60</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1040aecab783">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.OptimisticBellmanCertificate.measurable_upperValueRemaining</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every upper-value surface is measurable on the finite discrete state space.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_upperValueRemaining {mdp : MDP State Action} (certificate : OptimisticBellmanCertificate mdp) (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) : Measurable (certificate.upperValueRemaining remaining hremaining)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonOptimisticCertificate.lean.html#L71">Source line 71</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-aa5cda262d2f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.OptimisticBellmanCertificate.optimalValueRemaining_le_upperValueRemaining</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Local Bellman optimism implies the upper values dominate the true optimal values.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> optimalValueRemaining_le_upperValueRemaining {mdp : MDP State Action} (certificate : OptimisticBellmanCertificate mdp) (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) (state : State) : mdp.optimalValueRemaining remaining hremaining state &lt;= certificate.upperValueRemaining remaining hremaining state</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonOptimisticCertificate.lean.html#L78">Source line 78</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b72f0045dbfd">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.occupancySumRemaining</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Recursive occupancy sum for a remaining-horizon-indexed stage cost.  At a
+successor step, cost index `remaining` is chronological stage
+`horizon - (remaining + 1)`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> occupancySumRemaining {mdp : MDP State Action} (policy : MarkovPolicy mdp) (cost : (remaining : Nat) -&gt; remaining + <span class="num">1</span> &lt;= mdp.horizon -&gt; State -&gt; Real) : (remaining : Nat) -&gt; remaining &lt;= mdp.horizon -&gt; Measure State -&gt; Real | <span class="num">0</span>, _, _ =&gt; <span class="num">0</span> | remaining + <span class="num">1</span>, hremaining, mu =&gt; <span class="kw">let</span> stage : Fin mdp.horizon := ⟨mdp.horizon - (remaining + <span class="num">1</span>), <span class="kw">by</span> omega⟩ (∫ state, cost remaining hremaining state ∂mu) + policy.occupancySumRemaining cost remaining (<span class="kw">by</span> omega) (policy.inducedStateKernel stage ∘ₘ mu) omit [MeasurableSingletonClass State] [Nonempty Action] <span class="kw">in</span> /-- Successor equation for a generic recursive occupancy sum. -/ <span class="kw">theorem</span> occupancySumRemaining_succ {mdp : MDP State Action} (policy : MarkovPolicy mdp) (cost : (remaining : Nat) -&gt; remaining + <span class="num">1</span> &lt;= mdp.horizon -&gt; State -&gt; Real) (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (mu : Measure State) : policy.occupancySumRemaining cost (remaining + <span class="num">1</span>) hremaining mu = (∫ state, cost remaining hremaining state ∂mu) + policy.occupancySumRemaining cost remaining (<span class="kw">by</span> omega) (policy.inducedStateKernel ⟨mdp.horizon - (remaining + <span class="num">1</span>), <span class="kw">by</span> omega⟩ ∘ₘ mu)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonOptimisticCertificate.lean.html#L105">Source line 105</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7c5c09b84808">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.occupancySumRemaining_succ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Successor equation for a generic recursive occupancy sum.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> occupancySumRemaining_succ {mdp : MDP State Action} (policy : MarkovPolicy mdp) (cost : (remaining : Nat) -&gt; remaining + <span class="num">1</span> &lt;= mdp.horizon -&gt; State -&gt; Real) (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (mu : Measure State) : policy.occupancySumRemaining cost (remaining + <span class="num">1</span>) hremaining mu = (∫ state, cost remaining hremaining state ∂mu) + policy.occupancySumRemaining cost remaining (<span class="kw">by</span> omega) (policy.inducedStateKernel ⟨mdp.horizon - (remaining + <span class="num">1</span>), <span class="kw">by</span> omega⟩ ∘ₘ mu)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonOptimisticCertificate.lean.html#L120">Source line 120</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c5feeaf673a4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.occupancySumRemaining_mono</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pointwise domination of stage costs lifts to domination of their occupancy sums.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> occupancySumRemaining_mono {mdp : MDP State Action} (policy : MarkovPolicy mdp) {left right : (remaining : Nat) -&gt; remaining + <span class="num">1</span> &lt;= mdp.horizon -&gt; State -&gt; Real} (hle : <span class="kw">forall</span> (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (state : State), left remaining hremaining state &lt;= right remaining hremaining state) (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) (mu : Measure State) [IsProbabilityMeasure mu] : policy.occupancySumRemaining left remaining hremaining mu &lt;= policy.occupancySumRemaining right remaining hremaining mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonOptimisticCertificate.lean.html#L135">Source line 135</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6546dc373ead">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.OptimisticBellmanCertificate.policyBellmanResidual</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Policy Bellman residual of an optimistic upper-value plan.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> policyBellmanResidual {mdp : MDP State Action} (certificate : OptimisticBellmanCertificate mdp) (policy : MarkovPolicy mdp) (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (state : State) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonOptimisticCertificate.lean.html#L169">Source line 169</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-150567bca838">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.OptimisticBellmanCertificate.measurable_policyBellmanResidual</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The optimistic policy Bellman residual is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_policyBellmanResidual {mdp : MDP State Action} (certificate : OptimisticBellmanCertificate mdp) (policy : MarkovPolicy mdp) (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) : Measurable (certificate.policyBellmanResidual policy remaining hremaining)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonOptimisticCertificate.lean.html#L178">Source line 178</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-58b3d6f873fc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.OptimisticBellmanCertificate.policyBellmanResidual_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every policy Bellman residual of an optimistic certificate is nonnegative.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> policyBellmanResidual_nonneg {mdp : MDP State Action} (certificate : OptimisticBellmanCertificate mdp) (policy : MarkovPolicy mdp) (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (state : State) : <span class="num">0</span> &lt;= certificate.policyBellmanResidual policy remaining hremaining state</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonOptimisticCertificate.lean.html#L188">Source line 188</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ac03c5f77219">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.OptimisticBellmanCertificate.residualOccupancyRemaining</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Recursive true-occupancy sum of the certificate&#x27;s policy Bellman residuals.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> residualOccupancyRemaining {mdp : MDP State Action} (certificate : OptimisticBellmanCertificate mdp) (policy : MarkovPolicy mdp) (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) (mu : Measure State) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonOptimisticCertificate.lean.html#L203">Source line 203</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b8df39e05087">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.OptimisticBellmanCertificate.residualOccupancyRemaining_eq_integral_upperValueRemaining_sub_valueRemaining</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The residual occupancy sum is exactly the integrated difference between the
+certificate upper value and the supplied policy value.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> residualOccupancyRemaining_eq_integral_upperValueRemaining_sub_valueRemaining {mdp : MDP State Action} (certificate : OptimisticBellmanCertificate mdp) (policy : MarkovPolicy mdp) (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) (mu : Measure State) [IsProbabilityMeasure mu] : certificate.residualOccupancyRemaining policy remaining hremaining mu = ∫ state, certificate.upperValueRemaining remaining hremaining state - policy.valueRemaining remaining hremaining state ∂mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonOptimisticCertificate.lean.html#L214">Source line 214</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0dea7f44d4a6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.OptimisticBellmanCertificate.optimalBellmanCertificate_residualOccupancyRemaining_eq_occupancyGapRemaining</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">For the canonical exact certificate, residual occupancy is the previously compiled optimality
+gap occupancy sum.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> optimalBellmanCertificate_residualOccupancyRemaining_eq_occupancyGapRemaining {mdp : MDP State Action} (policy : MarkovPolicy mdp) (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) (mu : Measure State) [IsProbabilityMeasure mu] : mdp.optimalBellmanCertificate.residualOccupancyRemaining policy remaining hremaining mu = policy.occupancyGapRemaining remaining hremaining mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonOptimisticCertificate.lean.html#L266">Source line 266</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8712299d54a1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.OptimisticBellmanCertificate.residualOccupancyRemaining_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The residual occupancy sum is nonnegative.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> residualOccupancyRemaining_nonneg {mdp : MDP State Action} (certificate : OptimisticBellmanCertificate mdp) (policy : MarkovPolicy mdp) (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) (mu : Measure State) [IsProbabilityMeasure mu] : <span class="num">0</span> &lt;= certificate.residualOccupancyRemaining policy remaining hremaining mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonOptimisticCertificate.lean.html#L278">Source line 278</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-94108d9c9b3f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.OptimisticBellmanCertificate.expectedRegret_le_residualOccupancyRemaining</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Single-episode expected regret is bounded by the optimistic residual occupancy sum.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> expectedRegret_le_residualOccupancyRemaining {mdp : MDP State Action} (certificate : OptimisticBellmanCertificate mdp) (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] : policy.expectedRegret initialState &lt;= certificate.residualOccupancyRemaining policy mdp.horizon le_rfl initialState</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonOptimisticCertificate.lean.html#L294">Source line 294</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f9c03b524798">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.OptimisticBellmanCertificate.residualOccupancyRemaining_le_occupancySumRemaining</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A pointwise bonus bound on Bellman residuals bounds the residual occupancy sum.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> residualOccupancyRemaining_le_occupancySumRemaining {mdp : MDP State Action} (certificate : OptimisticBellmanCertificate mdp) (policy : MarkovPolicy mdp) (bonus : (remaining : Nat) -&gt; remaining + <span class="num">1</span> &lt;= mdp.horizon -&gt; State -&gt; Real) (hbonus : <span class="kw">forall</span> (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (state : State), certificate.policyBellmanResidual policy remaining hremaining state &lt;= bonus remaining hremaining state) (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) (mu : Measure State) [IsProbabilityMeasure mu] : certificate.residualOccupancyRemaining policy remaining hremaining mu &lt;= policy.occupancySumRemaining bonus remaining hremaining mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonOptimisticCertificate.lean.html#L313">Source line 313</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0cda61a26836">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.OptimisticBellmanCertificate.expectedRegret_le_residual_le_occupancyBonusRemaining</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Route endpoint: local true-Bellman optimism induces global value optimism;
+single-episode expected regret is bounded by the true-occupancy residual sum;
+and any pointwise bonus dominating those residuals bounds regret.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> expectedRegret_le_residual_le_occupancyBonusRemaining {mdp : MDP State Action} (certificate : OptimisticBellmanCertificate mdp) (policy : MarkovPolicy mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (bonus : (remaining : Nat) -&gt; remaining + <span class="num">1</span> &lt;= mdp.horizon -&gt; State -&gt; Real) (hbonus : <span class="kw">forall</span> (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (state : State), certificate.policyBellmanResidual policy remaining hremaining state &lt;= bonus remaining hremaining state) : <span class="num">0</span> &lt;= certificate.residualOccupancyRemaining policy mdp.horizon le_rfl initialState /\ policy.expectedRegret initialState &lt;= certificate.residualOccupancyRemaining policy mdp.horizon le_rfl initialState /\ certificate.residualOccupancyRemaining policy mdp.horizon le_rfl initialState &lt;= policy.occupancySumRemaining bonus mdp.horizon le_rfl initialState /\ policy.expectedRegret initialState &lt;= policy.occupancySumRemaining bonus mdp.horizon le_rfl initialState</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonOptimisticCertificate.lean.html#L334">Source line 334</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

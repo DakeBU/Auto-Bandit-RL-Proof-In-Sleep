@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Exp3RealizedPredictableVarianceTail.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Exp3RealizedPredictableVarianceTail.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Exp3RealizedPredictableVarianceTail.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Exp3RealizedPredictableVarianceTail.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Exp3RealizedPredictableVariance</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Predictable-variance tail for realized EXP3 loss</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module iterates the exact selected-loss variance-compensated conditional</span>
+<span id="L7">7 MGF along the generated trajectory. It yields a Bernstein-shaped upper tail</span>
+<span id="L8">8 for realized-minus-predictable selected loss jointly with a pathwise budget on</span>
+<span id="L9">9 the cumulative selected-loss predictable variance.</span>
+<span id="L10">10 -/</span>
+<span id="L11">11 </span>
+<span id="L12">12 namespace BanditRLProof.Exp3</span>
+<span id="L13">13 </span>
+<span id="L14">14 open MeasureTheory ProbabilityTheory</span>
+<span id="L15">15 </span>
+<span id="L16">16 universe u v</span>
+<span id="L17">17 </span>
+<span id="L18">18 /-- Shifted exact-variance compensated realized-loss process. -/</span>
+<span id="L19">19 noncomputable def sampledPredictableRealizedCompensatedProcess</span>
+<span id="L20">20     {Env : Type u} {Action : Type v}</span>
+<span id="L21">21     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L22">22     (arms : Finset Action) (eta gamma tilt : Real)</span>
+<span id="L23">23     (loss : PredictableLossVector Env Action) :</span>
+<span id="L24">24     Nat → Env × ((k : Nat) → Action × Real) → Real :=</span>
+<span id="L25">25   fun i sample =&gt;</span>
+<span id="L26">26     tilt * sampledPredictableRealizedDeviationProcess</span>
+<span id="L27">27         arms eta gamma loss i sample -</span>
+<span id="L28">28       tilt ^ 2 * sampledPredictableRealizedVarianceProcess</span>
+<span id="L29">29         arms eta gamma loss i sample</span>
+<span id="L30">30 </span>
+<span id="L31">31 theorem sampledPredictableRealizedCompensatedProcess_stronglyAdapted</span>
+<span id="L32">32     {Env : Type u} {Action : Type v}</span>
+<span id="L33">33     [MeasurableSpace Env]</span>
+<span id="L34">34     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L35">35     [DecidableEq Action]</span>
+<span id="L36">36     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L37">37     (eta gamma tilt : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L38">38     (hgamma_le_one : gamma ≤ 1)</span>
+<span id="L39">39     (loss : PredictableLossVector Env Action) :</span>
+<span id="L40">40     StronglyAdapted (sampledPredictableDeviationFiltration Env Action)</span>
+<span id="L41">41       (sampledPredictableRealizedCompensatedProcess</span>
+<span id="L42">42         arms eta gamma tilt loss) := by</span>
+<span id="L43">43   have hdeviation :=</span>
+<span id="L44">44     sampledPredictableRealizedDeviationProcess_stronglyAdapted</span>
+<span id="L45">45       arms harms eta gamma hgamma_pos.le hgamma_le_one loss</span>
+<span id="L46">46   have hvariance :=</span>
+<span id="L47">47     (sampledPredictableRealizedVarianceProcess_isPredictable</span>
+<span id="L48">48       arms harms eta gamma hgamma_pos hgamma_le_one loss).adapted</span>
+<span id="L49">49   intro i</span>
+<span id="L50">50   exact ((hdeviation i).const_mul tilt).sub</span>
+<span id="L51">51     ((hvariance i).const_mul (tilt ^ 2))</span>
+<span id="L52">52 </span>
+<span id="L53">53 theorem sampledPredictableRealizedCompensatedProcess_sum_range_succ</span>
+<span id="L54">54     {Env : Type u} {Action : Type v}</span>
+<span id="L55">55     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L56">56     (arms : Finset Action) (eta gamma tilt : Real)</span>
+<span id="L57">57     (loss : PredictableLossVector Env Action)</span>
+<span id="L58">58     (horizon : Nat) (sample : Env × ((k : Nat) → Action × Real)) :</span>
+<span id="L59">59     (Finset.range (horizon + 1)).sum (fun i =&gt;</span>
+<span id="L60">60         sampledPredictableRealizedCompensatedProcess</span>
+<span id="L61">61           arms eta gamma tilt loss i sample) =</span>
+<span id="L62">62       tilt * (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L63">63           sampledTrajectoryRealizedDeviationAt</span>
+<span id="L64">64             arms eta gamma loss i sample) -</span>
+<span id="L65">65         tilt ^ 2 * (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L66">66           sampledTrajectoryPredictableRealizedVarianceAt</span>
+<span id="L67">67             arms eta gamma loss i sample) := by</span>
+<span id="L68">68   simp_rw [sampledPredictableRealizedCompensatedProcess]</span>
+<span id="L69">69   rw [Finset.sum_sub_distrib, ← Finset.mul_sum, ← Finset.mul_sum,</span>
+<span id="L70">70     sampledPredictableRealizedDeviationProcess_sum_range_succ,</span>
+<span id="L71">71     sampledPredictableRealizedVarianceProcess_sum_range_succ]</span>
+<span id="L72">72 </span>
+<span id="L73">73 /-- Fixed-tilt upper tail retaining the random cumulative selected-loss</span>
+<span id="L74">74 predictable variance. -/</span>
+<span id="L75">75 theorem sampledPredictableRealizedDeviation_sum_tail_predictableVariance_fixedTilt</span>
+<span id="L76">76     {Env : Type u} {Action : Type v}</span>
+<span id="L77">77     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L78">78     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L79">79     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L80">80     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L81">81     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L82">82     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L83">83     (hgamma_le_one : gamma ≤ 1)</span>
+<span id="L84">84     (loss : PredictableLossVector Env Action)</span>
+<span id="L85">85     (horizon : Nat) (tilt : Real) (htilt_nonneg : 0 ≤ tilt)</span>
+<span id="L86">86     (htilt_le_one : tilt ≤ 1)</span>
+<span id="L87">87     (threshold varianceBudget : Real) :</span>
+<span id="L88">88     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L89">89       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L90">90     mu {sample |</span>
+<span id="L91">91         threshold ≤ (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L92">92           sampledTrajectoryRealizedDeviationAt</span>
+<span id="L93">93             arms eta gamma loss i sample) ∧</span>
+<span id="L94">94         (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L95">95           sampledTrajectoryPredictableRealizedVarianceAt</span>
+<span id="L96">96             arms eta gamma loss i sample) ≤ varianceBudget} ≤</span>
+<span id="L97">97       ENNReal.ofReal (Real.exp</span>
+<span id="L98">98         (-tilt * threshold + tilt ^ 2 * varianceBudget)) := by</span>
+<span id="L99">99   dsimp only</span>
+<span id="L100">100   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L101">101     eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L102">102   let F := sampledPredictableDeviationFiltration Env Action</span>
+<span id="L103">103   let Y := sampledPredictableRealizedDeviationProcess arms eta gamma loss</span>
+<span id="L104">104   let V := sampledPredictableRealizedVarianceProcess arms eta gamma loss</span>
+<span id="L105">105   let Z := sampledPredictableRealizedCompensatedProcess</span>
+<span id="L106">106     arms eta gamma tilt loss</span>
+<span id="L107">107   let psiZ : Nat → Real := fun _ =&gt; 0</span>
+<span id="L108">108   letI : IsProbabilityMeasure mu := by</span>
+<span id="L109">109     dsimp [mu]</span>
+<span id="L110">110     infer_instance</span>
+<span id="L111">111   have hadapted : StronglyAdapted F Z := by</span>
+<span id="L112">112     simpa [F, Z] using</span>
+<span id="L113">113       sampledPredictableRealizedCompensatedProcess_stronglyAdapted</span>
+<span id="L114">114         arms harms eta gamma tilt hgamma_pos hgamma_le_one loss</span>
+<span id="L115">115   have hzero : Concentration.HasMGFUpperBoundAt (Z 0) 1 (psiZ 0) mu := by</span>
+<span id="L116">116     have hzero&#x27; : Concentration.HasMGFUpperBoundAt</span>
+<span id="L117">117         (fun _ : Env × ((k : Nat) → Action × Real) =&gt; 0) 1 0 mu := by</span>
+<span id="L118">118       constructor</span>
+<span id="L119">119       · intro s</span>
+<span id="L120">120         simp</span>
+<span id="L121">121       · simp [ProbabilityTheory.mgf]</span>
+<span id="L122">122     have hZ0 : Z 0 =</span>
+<span id="L123">123         (fun _ : Env × ((k : Nat) → Action × Real) =&gt; 0) := by</span>
+<span id="L124">124       funext sample</span>
+<span id="L125">125       simp [Z, sampledPredictableRealizedCompensatedProcess,</span>
+<span id="L126">126         sampledPredictableRealizedDeviationProcess,</span>
+<span id="L127">127         sampledPredictableRealizedVarianceProcess]</span>
+<span id="L128">128     rw [hZ0]</span>
+<span id="L129">129     simpa [psiZ] using hzero&#x27;</span>
+<span id="L130">130   have hcond : ∀ i, i &lt; (horizon + 1) - 1 →</span>
+<span id="L131">131       Concentration.HasCondMGFUpperBoundAt</span>
+<span id="L132">132         (F i) (F.le i) (Z (i + 1)) 1 (psiZ (i + 1)) mu := by</span>
+<span id="L133">133     intro i _hi</span>
+<span id="L134">134     cases i with</span>
+<span id="L135">135     | zero =&gt;</span>
+<span id="L136">136         simpa [mu, F, Z, psiZ,</span>
+<span id="L137">137           sampledPredictableRealizedCompensatedProcess,</span>
+<span id="L138">138           sampledPredictableRealizedDeviationProcess,</span>
+<span id="L139">139           sampledPredictableRealizedVarianceProcess] using</span>
+<span id="L140">140           (sampledPredictableRealizedCompensated_zero_hasCondMGFUpperBoundAt</span>
+<span id="L141">141             prior arms harms eta gamma hgamma_pos hgamma_le_one loss</span>
+<span id="L142">142               tilt htilt_nonneg htilt_le_one)</span>
+<span id="L143">143     | succ n =&gt;</span>
+<span id="L144">144         simpa [mu, F, Z, psiZ,</span>
+<span id="L145">145           sampledPredictableRealizedCompensatedProcess,</span>
+<span id="L146">146           sampledPredictableRealizedDeviationProcess,</span>
+<span id="L147">147           sampledPredictableRealizedVarianceProcess,</span>
+<span id="L148">148           Nat.succ_eq_add_one, Nat.add_assoc] using</span>
+<span id="L149">149           (sampledPredictableRealizedCompensated_succ_hasCondMGFUpperBoundAt</span>
+<span id="L150">150             prior arms harms eta gamma hgamma_pos hgamma_le_one loss n</span>
+<span id="L151">151               tilt htilt_nonneg htilt_le_one)</span>
+<span id="L152">152   have htail :=</span>
+<span id="L153">153     Concentration.measure_sum_ge_inter_sum_le_of_compensated_hasCondMGFUpperBoundAt</span>
+<span id="L154">154       (μ := mu) (ℱ := F) Y V (horizon + 1) tilt (tilt ^ 2)</span>
+<span id="L155">155         threshold varianceBudget</span>
+<span id="L156">156         (by simpa [Y, V, Z, sampledPredictableRealizedCompensatedProcess]</span>
+<span id="L157">157           using hadapted)</span>
+<span id="L158">158         (by simpa [Y, V, Z, psiZ,</span>
+<span id="L159">159           sampledPredictableRealizedCompensatedProcess] using hzero)</span>
+<span id="L160">160         (by simpa [Y, V, Z, psiZ,</span>
+<span id="L161">161           sampledPredictableRealizedCompensatedProcess] using hcond)</span>
+<span id="L162">162         htilt_nonneg (sq_nonneg tilt)</span>
+<span id="L163">163   simpa [Y, V, sampledPredictableRealizedDeviationProcess_sum_range_succ,</span>
+<span id="L164">164     sampledPredictableRealizedVarianceProcess_sum_range_succ] using htail</span>
+<span id="L165">165 </span>
+<span id="L166">166 /-- Bernstein radius for realized selected-loss deviation under a pathwise</span>
+<span id="L167">167 predictable-variance budget. -/</span>
+<span id="L168">168 noncomputable def sampledRealizedPredictableVarianceRadius</span>
+<span id="L169">169     (varianceBudget delta : Real) : Real :=</span>
+<span id="L170">170   let budget := max (Real.log (1 / delta)) 0</span>
+<span id="L171">171   2 * Real.sqrt (varianceBudget * budget) + budget</span>
+<span id="L172">172 </span>
+<span id="L173">173 theorem sampledPredictableRealizedDeviation_sum_tail_predictableVariance_delta</span>
+<span id="L174">174     {Env : Type u} {Action : Type v}</span>
+<span id="L175">175     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L176">176     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L177">177     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L178">178     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L179">179     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L180">180     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L181">181     (hgamma_le_one : gamma ≤ 1)</span>
+<span id="L182">182     (loss : PredictableLossVector Env Action)</span>
+<span id="L183">183     (horizon : Nat) (varianceBudget delta : Real)</span>
+<span id="L184">184     (hvarianceBudget : 0 &lt; varianceBudget) (hdelta : 0 &lt; delta) :</span>
+<span id="L185">185     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L186">186       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L187">187     mu {sample |</span>
+<span id="L188">188         sampledRealizedPredictableVarianceRadius varianceBudget delta ≤</span>
+<span id="L189">189           (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L190">190             sampledTrajectoryRealizedDeviationAt</span>
+<span id="L191">191               arms eta gamma loss i sample) ∧</span>
+<span id="L192">192         (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L193">193           sampledTrajectoryPredictableRealizedVarianceAt</span>
+<span id="L194">194             arms eta gamma loss i sample) ≤ varianceBudget} ≤</span>
+<span id="L195">195       ENNReal.ofReal delta := by</span>
+<span id="L196">196   dsimp only</span>
+<span id="L197">197   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L198">198     eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L199">199   let deviation := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L200">200     (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L201">201       sampledTrajectoryRealizedDeviationAt arms eta gamma loss i sample)</span>
+<span id="L202">202   let predictableVariance := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L203">203     (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L204">204       sampledTrajectoryPredictableRealizedVarianceAt</span>
+<span id="L205">205         arms eta gamma loss i sample)</span>
+<span id="L206">206   have htail :=</span>
+<span id="L207">207     Concentration.measure_deviation_ge_inter_variance_le_delta_of_fixedTilt_quadratic_tail</span>
+<span id="L208">208       mu deviation predictableVariance 1 varianceBudget 1 delta</span>
+<span id="L209">209         (by norm_num) hvarianceBudget (by norm_num) hdelta (by</span>
+<span id="L210">210           intro tilt htilt_nonneg htilt_le_one</span>
+<span id="L211">211           simpa [mu, deviation, predictableVariance] using</span>
+<span id="L212">212             (sampledPredictableRealizedDeviation_sum_tail_predictableVariance_fixedTilt</span>
+<span id="L213">213               prior arms harms eta gamma hgamma_pos hgamma_le_one loss horizon</span>
+<span id="L214">214                 tilt htilt_nonneg htilt_le_one</span>
+<span id="L215">215                 (Concentration.quadraticFixedMGFRadius</span>
+<span id="L216">216                   1 varianceBudget 1 delta) varianceBudget))</span>
+<span id="L217">217   simpa [sampledRealizedPredictableVarianceRadius,</span>
+<span id="L218">218     Concentration.quadraticFixedMGFRadius, mu, deviation,</span>
+<span id="L219">219     predictableVariance] using htail</span>
+<span id="L220">220 </span>
+<span id="L221">221 end BanditRLProof.Exp3</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

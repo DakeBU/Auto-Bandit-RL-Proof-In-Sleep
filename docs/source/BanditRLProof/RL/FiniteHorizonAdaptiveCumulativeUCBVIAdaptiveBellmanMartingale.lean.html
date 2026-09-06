@@ -1,0 +1,940 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVIBellmanInnovation</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-! Predictable episode-level Bellman innovations on the recurrent source. -/</span>
+<span id="L4">4 </span>
+<span id="L5">5 open MeasureTheory</span>
+<span id="L6">6 open scoped ENNReal ProbabilityTheory BigOperators</span>
+<span id="L7">7 </span>
+<span id="L8">8 universe u v w</span>
+<span id="L9">9 </span>
+<span id="L10">10 namespace BanditRLProof</span>
+<span id="L11">11 </span>
+<span id="L12">12 /-- A function with a countable discrete left coordinate is measurable when</span>
+<span id="L13">13 every right section is measurable. -/</span>
+<span id="L14">14 theorem measurable_prod_of_countable_left</span>
+<span id="L15">15     {Alpha Beta Gamma : Type*}</span>
+<span id="L16">16     [MeasurableSpace Alpha] [MeasurableSpace Beta] [MeasurableSpace Gamma]</span>
+<span id="L17">17     [Countable Alpha] [MeasurableSingletonClass Alpha]</span>
+<span id="L18">18     (f : Alpha × Beta -&gt; Gamma)</span>
+<span id="L19">19     (hf : forall a, Measurable (fun b =&gt; f (a, b))) :</span>
+<span id="L20">20     Measurable f := by</span>
+<span id="L21">21   intro s hs</span>
+<span id="L22">22   have hpreimage : f ⁻¹&#x27; s =</span>
+<span id="L23">23       ⋃ a : Alpha, ({a} : Set Alpha) ×ˢ</span>
+<span id="L24">24         ((fun b =&gt; f (a, b)) ⁻¹&#x27; s) := by</span>
+<span id="L25">25     ext p</span>
+<span id="L26">26     simp only [Set.mem_preimage, Set.mem_iUnion, Set.mem_prod,</span>
+<span id="L27">27       Set.mem_singleton_iff]</span>
+<span id="L28">28     constructor</span>
+<span id="L29">29     · intro hp</span>
+<span id="L30">30       exact ⟨p.1, rfl, hp⟩</span>
+<span id="L31">31     · rintro ⟨a, ha, hp⟩</span>
+<span id="L32">32       subst a</span>
+<span id="L33">33       exact hp</span>
+<span id="L34">34   rw [hpreimage]</span>
+<span id="L35">35   exact MeasurableSet.iUnion fun a =&gt;</span>
+<span id="L36">36     MeasurableSet.singleton a |&gt;.prod ((hf a) hs)</span>
+<span id="L37">37 </span>
+<span id="L38">38 end BanditRLProof</span>
+<span id="L39">39 </span>
+<span id="L40">40 namespace MeasureTheory.Measure</span>
+<span id="L41">41 </span>
+<span id="L42">42 /-- Mapping a composition-product by a function which may also read the</span>
+<span id="L43">43 conditioning coordinate is the composition-product with the correspondingly</span>
+<span id="L44">44 mapped copy-and-kernel law. -/</span>
+<span id="L45">45 lemma compProd_map_dependent</span>
+<span id="L46">46     {Alpha : Type u} {Beta : Type v} {Gamma : Type w}</span>
+<span id="L47">47     [MeasurableSpace Alpha] [MeasurableSpace Beta] [MeasurableSpace Gamma]</span>
+<span id="L48">48     (mu : Measure Alpha) [SFinite mu]</span>
+<span id="L49">49     (kappa : ProbabilityTheory.Kernel Alpha Beta)</span>
+<span id="L50">50     [ProbabilityTheory.IsSFiniteKernel kappa]</span>
+<span id="L51">51     (f : Alpha × Beta -&gt; Gamma) (hf : Measurable f) :</span>
+<span id="L52">52     (mu ⊗ₘ kappa).map (fun p =&gt; (p.1, f p)) =</span>
+<span id="L53">53       mu ⊗ₘ ((ProbabilityTheory.Kernel.id ×ₖ kappa).map f) := by</span>
+<span id="L54">54   ext s hs</span>
+<span id="L55">55   rw [Measure.map_apply (measurable_fst.prodMk hf) hs,</span>
+<span id="L56">56     Measure.compProd_apply</span>
+<span id="L57">57       (hs.preimage (measurable_fst.prodMk hf)),</span>
+<span id="L58">58     Measure.compProd_apply hs]</span>
+<span id="L59">59   congr with a</span>
+<span id="L60">60   rw [ProbabilityTheory.Kernel.map_apply _ hf]</span>
+<span id="L61">61   rw [ProbabilityTheory.Kernel.prod_apply]</span>
+<span id="L62">62   rw [ProbabilityTheory.Kernel.id_apply, Measure.dirac_prod]</span>
+<span id="L63">63   rw [Measure.map_map hf measurable_prodMk_left]</span>
+<span id="L64">64   rw [Measure.map_apply (hf.comp measurable_prodMk_left)</span>
+<span id="L65">65     (hs.preimage measurable_prodMk_left)]</span>
+<span id="L66">66   rfl</span>
+<span id="L67">67 </span>
+<span id="L68">68 end MeasureTheory.Measure</span>
+<span id="L69">69 </span>
+<span id="L70">70 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L71">71 </span>
+<span id="L72">72 variable {State : Type u} {Action : Type v}</span>
+<span id="L73">73     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L74">74     [Fintype State] [Fintype Action]</span>
+<span id="L75">75     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L76">76     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L77">77     [Nonempty State] [Nonempty Action]</span>
+<span id="L78">78 </span>
+<span id="L79">79 namespace AdaptiveEpisodeBatchSource</span>
+<span id="L80">80 </span>
+<span id="L81">81 /-- Conditional law of a statistic which may depend measurably on both the</span>
+<span id="L82">82 observed prefix and the newly generated batch. -/</span>
+<span id="L83">83 theorem trajectoryMeasure_condDistrib_historyBatchStatistic</span>
+<span id="L84">84     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L85">85     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L86">86     [StandardBorelSpace (EpisodeBatch mdp episodes)]</span>
+<span id="L87">87     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L88">88     (n : Nat)</span>
+<span id="L89">89     (statistic : EpisodeBatchPrefix mdp episodes n ×</span>
+<span id="L90">90       EpisodeBatch mdp episodes -&gt; Real)</span>
+<span id="L91">91     (hstatistic : Measurable statistic) :</span>
+<span id="L92">92     ProbabilityTheory.condDistrib</span>
+<span id="L93">93         (fun trajectory : EpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L94">94           statistic (Preorder.frestrictLe n trajectory, trajectory (n + 1)))</span>
+<span id="L95">95         (Preorder.frestrictLe n) source.trajectoryMeasure =ᵐ[</span>
+<span id="L96">96           source.trajectoryMeasure.map (Preorder.frestrictLe n)]</span>
+<span id="L97">97       ((ProbabilityTheory.Kernel.id ×ₖ source.batchKernel n).map statistic) := by</span>
+<span id="L98">98   let history : EpisodeBatchTrajectory mdp episodes -&gt;</span>
+<span id="L99">99       EpisodeBatchPrefix mdp episodes n := Preorder.frestrictLe n</span>
+<span id="L100">100   let nextBatch : EpisodeBatchTrajectory mdp episodes -&gt;</span>
+<span id="L101">101       EpisodeBatch mdp episodes := fun trajectory =&gt; trajectory (n + 1)</span>
+<span id="L102">102   have hnext : AEMeasurable nextBatch source.trajectoryMeasure :=</span>
+<span id="L103">103     (measurable_pi_apply (n + 1)).aemeasurable</span>
+<span id="L104">104   have hpairCond :</span>
+<span id="L105">105       ProbabilityTheory.condDistrib</span>
+<span id="L106">106           (fun trajectory =&gt; (history trajectory, nextBatch trajectory))</span>
+<span id="L107">107           history source.trajectoryMeasure =ᵐ[</span>
+<span id="L108">108             source.trajectoryMeasure.map history]</span>
+<span id="L109">109         (ProbabilityTheory.Kernel.id ×ₖ source.batchKernel n) := by</span>
+<span id="L110">110     apply (ProbabilityTheory.condDistrib_ae_eq_iff_measure_eq_compProd</span>
+<span id="L111">111       (μ := source.trajectoryMeasure) history</span>
+<span id="L112">112       ((Preorder.measurable_frestrictLe n).prodMk</span>
+<span id="L113">113         (measurable_pi_apply (n + 1)) |&gt;.aemeasurable)</span>
+<span id="L114">114       (ProbabilityTheory.Kernel.id ×ₖ source.batchKernel n)).2</span>
+<span id="L115">115     have hnextCond := source.trajectoryMeasure_condDistrib n</span>
+<span id="L116">116     have hjoint :</span>
+<span id="L117">117         source.trajectoryMeasure.map</span>
+<span id="L118">118             (fun trajectory =&gt; (history trajectory, nextBatch trajectory)) =</span>
+<span id="L119">119           source.trajectoryMeasure.map history ⊗ₘ source.batchKernel n := by</span>
+<span id="L120">120       exact (ProbabilityTheory.condDistrib_ae_eq_iff_measure_eq_compProd</span>
+<span id="L121">121         (μ := source.trajectoryMeasure) history hnext</span>
+<span id="L122">122         (source.batchKernel n)).1 hnextCond</span>
+<span id="L123">123     let duplicate :</span>
+<span id="L124">124         (EpisodeBatchPrefix mdp episodes n × EpisodeBatch mdp episodes) -&gt;</span>
+<span id="L125">125           EpisodeBatchPrefix mdp episodes n ×</span>
+<span id="L126">126             (EpisodeBatchPrefix mdp episodes n × EpisodeBatch mdp episodes) :=</span>
+<span id="L127">127       fun p =&gt; (p.1, p)</span>
+<span id="L128">128     calc</span>
+<span id="L129">129       source.trajectoryMeasure.map</span>
+<span id="L130">130           (fun trajectory =&gt;</span>
+<span id="L131">131             (history trajectory, (history trajectory, nextBatch trajectory))) =</span>
+<span id="L132">132         (source.trajectoryMeasure.map</span>
+<span id="L133">133           (fun trajectory =&gt; (history trajectory, nextBatch trajectory))).map</span>
+<span id="L134">134             duplicate := by</span>
+<span id="L135">135               rw [Measure.map_map]</span>
+<span id="L136">136               · rfl</span>
+<span id="L137">137               · exact (measurable_fst.prodMk measurable_id)</span>
+<span id="L138">138               · exact (Preorder.measurable_frestrictLe n).prodMk</span>
+<span id="L139">139                   (measurable_pi_apply (n + 1))</span>
+<span id="L140">140       _ = (source.trajectoryMeasure.map history ⊗ₘ source.batchKernel n).map</span>
+<span id="L141">141             duplicate := by rw [hjoint]</span>
+<span id="L142">142       _ = source.trajectoryMeasure.map history ⊗ₘ</span>
+<span id="L143">143           (ProbabilityTheory.Kernel.id ×ₖ source.batchKernel n) := by</span>
+<span id="L144">144             simpa [duplicate] using</span>
+<span id="L145">145               (MeasureTheory.Measure.compProd_map_dependent</span>
+<span id="L146">146                 (source.trajectoryMeasure.map history)</span>
+<span id="L147">147                 (source.batchKernel n) (fun p =&gt; p)</span>
+<span id="L148">148                 (measurable_id : Measurable</span>
+<span id="L149">149                   (fun p : EpisodeBatchPrefix mdp episodes n ×</span>
+<span id="L150">150                     EpisodeBatch mdp episodes =&gt; p)))</span>
+<span id="L151">151   have hcomp :</span>
+<span id="L152">152       ProbabilityTheory.condDistrib</span>
+<span id="L153">153           (statistic ∘ fun trajectory =&gt;</span>
+<span id="L154">154             (history trajectory, nextBatch trajectory))</span>
+<span id="L155">155           history source.trajectoryMeasure =ᵐ[</span>
+<span id="L156">156             source.trajectoryMeasure.map history]</span>
+<span id="L157">157         (ProbabilityTheory.condDistrib</span>
+<span id="L158">158           (fun trajectory =&gt; (history trajectory, nextBatch trajectory))</span>
+<span id="L159">159           history source.trajectoryMeasure).map statistic :=</span>
+<span id="L160">160     ProbabilityTheory.condDistrib_comp</span>
+<span id="L161">161       (μ := source.trajectoryMeasure)</span>
+<span id="L162">162       (Y := fun trajectory =&gt; (history trajectory, nextBatch trajectory))</span>
+<span id="L163">163       history</span>
+<span id="L164">164       (((Preorder.measurable_frestrictLe n).prodMk</span>
+<span id="L165">165         (measurable_pi_apply (n + 1))).aemeasurable)</span>
+<span id="L166">166       hstatistic</span>
+<span id="L167">167   filter_upwards [hcomp, hpairCond] with observed hcompAt hpairAt</span>
+<span id="L168">168   rw [ProbabilityTheory.Kernel.map_apply _ hstatistic] at hcompAt</span>
+<span id="L169">169   rw [hpairAt] at hcompAt</span>
+<span id="L170">170   rw [ProbabilityTheory.Kernel.map_apply _ hstatistic]</span>
+<span id="L171">171   simpa [history, nextBatch, Function.comp_def] using hcompAt</span>
+<span id="L172">172 </span>
+<span id="L173">173 /-- Trimmed conditional-expectation-kernel version of the preceding dependent</span>
+<span id="L174">174 statistic law. -/</span>
+<span id="L175">175 theorem condExpKernel_map_historyBatchStatistic_eq_batchKernel</span>
+<span id="L176">176     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L177">177     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L178">178     [StandardBorelSpace (EpisodeBatch mdp episodes)]</span>
+<span id="L179">179     [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)]</span>
+<span id="L180">180     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L181">181     (n : Nat)</span>
+<span id="L182">182     (statistic : EpisodeBatchPrefix mdp episodes n ×</span>
+<span id="L183">183       EpisodeBatch mdp episodes -&gt; Real)</span>
+<span id="L184">184     (hstatistic : Measurable statistic) :</span>
+<span id="L185">185     Filter.Eventually</span>
+<span id="L186">186       (fun trajectory : EpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L187">187         Measure.map</span>
+<span id="L188">188             (fun path : EpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L189">189               statistic</span>
+<span id="L190">190                 (Preorder.frestrictLe n path, path (n + 1)))</span>
+<span id="L191">191             (ProbabilityTheory.condExpKernel source.trajectoryMeasure</span>
+<span id="L192">192               ((inferInstance : MeasurableSpace</span>
+<span id="L193">193                 (EpisodeBatchPrefix mdp episodes n)).comap</span>
+<span id="L194">194                   (Preorder.frestrictLe n)) trajectory) =</span>
+<span id="L195">195           ((ProbabilityTheory.Kernel.id ×ₖ source.batchKernel n).map statistic)</span>
+<span id="L196">196             (Preorder.frestrictLe n trajectory))</span>
+<span id="L197">197       (ae (source.trajectoryMeasure.trim</span>
+<span id="L198">198         (Preorder.measurable_frestrictLe n).comap_le)) := by</span>
+<span id="L199">199   let target :=</span>
+<span id="L200">200     ((ProbabilityTheory.Kernel.id ×ₖ source.batchKernel n).map statistic)</span>
+<span id="L201">201   letI : ProbabilityTheory.IsMarkovKernel target :=</span>
+<span id="L202">202     ProbabilityTheory.Kernel.IsMarkovKernel.map _ hstatistic</span>
+<span id="L203">203   exact</span>
+<span id="L204">204     ConditionalExpectationReward.condExpKernel_map_eq_of_condDistrib_ae_eq_real_trim</span>
+<span id="L205">205       source.trajectoryMeasure</span>
+<span id="L206">206       (fun trajectory : EpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L207">207         statistic (Preorder.frestrictLe n trajectory, trajectory (n + 1)))</span>
+<span id="L208">208       (Preorder.frestrictLe n)</span>
+<span id="L209">209       (hstatistic.comp</span>
+<span id="L210">210         ((Preorder.measurable_frestrictLe n).prodMk</span>
+<span id="L211">211           (measurable_pi_apply (n + 1))))</span>
+<span id="L212">212       (Preorder.measurable_frestrictLe n)</span>
+<span id="L213">213       target</span>
+<span id="L214">214       (source.trajectoryMeasure_condDistrib_historyBatchStatistic</span>
+<span id="L215">215         n statistic hstatistic)</span>
+<span id="L216">216 </span>
+<span id="L217">217 end AdaptiveEpisodeBatchSource</span>
+<span id="L218">218 </span>
+<span id="L219">219 namespace AdaptiveCumulativeHoeffdingUCBVI</span>
+<span id="L220">220 </span>
+<span id="L221">221 /-- Inflation factor generated by the `z/(32H)` self-bounding term. -/</span>
+<span id="L222">222 noncomputable def bellmanInflation (mdp : MDP State Action) : Real :=</span>
+<span id="L223">223   1 + 1 / (32 * (mdp.horizon : Real))</span>
+<span id="L224">224 </span>
+<span id="L225">225 /-- Uniform cap for every finite-horizon power of `bellmanInflation`. -/</span>
+<span id="L226">226 noncomputable def bellmanWeightCap : Real := 32 / 31</span>
+<span id="L227">227 </span>
+<span id="L228">228 theorem bellmanInflation_one_le</span>
+<span id="L229">229     (mdp : MDP State Action) :</span>
+<span id="L230">230     1 &lt;= bellmanInflation mdp := by</span>
+<span id="L231">231   unfold bellmanInflation</span>
+<span id="L232">232   have : (0 : Real) &lt;= 1 / (32 * (mdp.horizon : Real)) := by positivity</span>
+<span id="L233">233   linarith</span>
+<span id="L234">234 </span>
+<span id="L235">235 theorem bellmanInflation_pow_le_cap</span>
+<span id="L236">236     (mdp : MDP State Action) (hhorizon : 0 &lt; mdp.horizon)</span>
+<span id="L237">237     (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) :</span>
+<span id="L238">238     bellmanInflation mdp ^ remaining &lt;= bellmanWeightCap := by</span>
+<span id="L239">239   let x : Real := 1 / (32 * (mdp.horizon : Real))</span>
+<span id="L240">240   have hhorizonReal : 0 &lt; (mdp.horizon : Real) := by exact_mod_cast hhorizon</span>
+<span id="L241">241   have hx : 0 &lt;= x := by dsimp [x]; positivity</span>
+<span id="L242">242   have hbase : bellmanInflation mdp &lt;= Real.exp x := by</span>
+<span id="L243">243     simpa [bellmanInflation, x, add_comm] using Real.add_one_le_exp x</span>
+<span id="L244">244   have hpow : bellmanInflation mdp ^ remaining &lt;= Real.exp x ^ remaining := by</span>
+<span id="L245">245     have hnonneg : 0 &lt;= bellmanInflation mdp := by</span>
+<span id="L246">246       linarith [bellmanInflation_one_le mdp]</span>
+<span id="L247">247     gcongr</span>
+<span id="L248">248   have hremainingReal : (remaining : Real) &lt;= mdp.horizon := by exact_mod_cast hremaining</span>
+<span id="L249">249   have hmul : (remaining : Real) * x &lt;= (1 : Real) / 32 := by</span>
+<span id="L250">250     dsimp [x]</span>
+<span id="L251">251     have hdiv := div_le_div_of_nonneg_right hremainingReal</span>
+<span id="L252">252       (by positivity : (0 : Real) &lt;= 32 * mdp.horizon)</span>
+<span id="L253">253     calc</span>
+<span id="L254">254       (remaining : Real) * (1 / (32 * (mdp.horizon : Real))) =</span>
+<span id="L255">255           (remaining : Real) / (32 * (mdp.horizon : Real)) := by ring</span>
+<span id="L256">256       _ &lt;= (mdp.horizon : Real) / (32 * (mdp.horizon : Real)) := hdiv</span>
+<span id="L257">257       _ = (1 : Real) / 32 := by field_simp</span>
+<span id="L258">258   have hexp : Real.exp x ^ remaining &lt;= Real.exp ((1 : Real) / 32) := by</span>
+<span id="L259">259     rw [← Real.exp_nat_mul]</span>
+<span id="L260">260     exact Real.exp_le_exp.mpr hmul</span>
+<span id="L261">261   have hcap := Real.exp_bound_div_one_sub_of_interval</span>
+<span id="L262">262     (x := (1 : Real) / 32) (by norm_num) (by norm_num)</span>
+<span id="L263">263   calc</span>
+<span id="L264">264     bellmanInflation mdp ^ remaining &lt;= Real.exp x ^ remaining := hpow</span>
+<span id="L265">265     _ &lt;= Real.exp ((1 : Real) / 32) := hexp</span>
+<span id="L266">266     _ &lt;= 1 / (1 - (1 : Real) / 32) := hcap</span>
+<span id="L267">267     _ = bellmanWeightCap := by norm_num [bellmanWeightCap]</span>
+<span id="L268">268 </span>
+<span id="L269">269 /-- Normalized chronological recursion weight.  Multiplication by the global</span>
+<span id="L270">270 cap `32/31` later recovers the exact factor `alpha^(stage+1)`. -/</span>
+<span id="L271">271 noncomputable def normalizedBellmanWeight</span>
+<span id="L272">272     (mdp : MDP State Action) (stage : Fin mdp.horizon) : Real :=</span>
+<span id="L273">273   (31 / 32 : Real) * bellmanInflation mdp ^ (stage.val + 1)</span>
+<span id="L274">274 </span>
+<span id="L275">275 /-- Weight of the local charge at a chronological stage. -/</span>
+<span id="L276">276 noncomputable def normalizedBellmanChargeWeight</span>
+<span id="L277">277     (mdp : MDP State Action) (stage : Fin mdp.horizon) : Real :=</span>
+<span id="L278">278   (31 / 32 : Real) * bellmanInflation mdp ^ stage.val</span>
+<span id="L279">279 </span>
+<span id="L280">280 theorem normalizedBellmanChargeWeight_mem_Icc</span>
+<span id="L281">281     (mdp : MDP State Action) (hhorizon : 0 &lt; mdp.horizon)</span>
+<span id="L282">282     (stage : Fin mdp.horizon) :</span>
+<span id="L283">283     normalizedBellmanChargeWeight mdp stage ∈ Set.Icc (0 : Real) 1 := by</span>
+<span id="L284">284   have hpow := bellmanInflation_pow_le_cap mdp hhorizon stage.val</span>
+<span id="L285">285     (Nat.le_of_lt stage.isLt)</span>
+<span id="L286">286   have hpowNonneg : 0 &lt;= bellmanInflation mdp ^ stage.val := by</span>
+<span id="L287">287     have : 0 &lt;= bellmanInflation mdp := by</span>
+<span id="L288">288       linarith [bellmanInflation_one_le mdp]</span>
+<span id="L289">289     positivity</span>
+<span id="L290">290   constructor</span>
+<span id="L291">291   · unfold normalizedBellmanChargeWeight</span>
+<span id="L292">292     positivity</span>
+<span id="L293">293   · unfold normalizedBellmanChargeWeight</span>
+<span id="L294">294     have hscale : (0 : Real) &lt;= 31 / 32 := by norm_num</span>
+<span id="L295">295     calc</span>
+<span id="L296">296       (31 / 32 : Real) * bellmanInflation mdp ^ stage.val &lt;=</span>
+<span id="L297">297           (31 / 32 : Real) * bellmanWeightCap :=</span>
+<span id="L298">298         mul_le_mul_of_nonneg_left hpow hscale</span>
+<span id="L299">299       _ = 1 := by norm_num [bellmanWeightCap]</span>
+<span id="L300">300 </span>
+<span id="L301">301 theorem normalizedBellmanChargeWeight_mul_inflation</span>
+<span id="L302">302     (mdp : MDP State Action) (stage : Fin mdp.horizon) :</span>
+<span id="L303">303     normalizedBellmanChargeWeight mdp stage * bellmanInflation mdp =</span>
+<span id="L304">304       normalizedBellmanWeight mdp stage := by</span>
+<span id="L305">305   unfold normalizedBellmanChargeWeight normalizedBellmanWeight</span>
+<span id="L306">306   rw [pow_succ&#x27;]</span>
+<span id="L307">307   ring</span>
+<span id="L308">308 </span>
+<span id="L309">309 theorem normalizedBellmanWeight_mem_Icc</span>
+<span id="L310">310     (mdp : MDP State Action) (hhorizon : 0 &lt; mdp.horizon)</span>
+<span id="L311">311     (stage : Fin mdp.horizon) :</span>
+<span id="L312">312     normalizedBellmanWeight mdp stage ∈ Set.Icc (0 : Real) 1 := by</span>
+<span id="L313">313   have hpow := bellmanInflation_pow_le_cap mdp hhorizon (stage.val + 1)</span>
+<span id="L314">314     (by omega)</span>
+<span id="L315">315   have hpowNonneg : 0 &lt;= bellmanInflation mdp ^ (stage.val + 1) := by</span>
+<span id="L316">316     have : 0 &lt;= bellmanInflation mdp := by</span>
+<span id="L317">317       linarith [bellmanInflation_one_le mdp]</span>
+<span id="L318">318     positivity</span>
+<span id="L319">319   constructor</span>
+<span id="L320">320   · unfold normalizedBellmanWeight</span>
+<span id="L321">321     positivity</span>
+<span id="L322">322   · unfold normalizedBellmanWeight</span>
+<span id="L323">323     have hscale : (0 : Real) &lt;= 31 / 32 := by norm_num</span>
+<span id="L324">324     calc</span>
+<span id="L325">325       (31 / 32 : Real) * bellmanInflation mdp ^ (stage.val + 1) &lt;=</span>
+<span id="L326">326           (31 / 32 : Real) * bellmanWeightCap :=</span>
+<span id="L327">327         mul_le_mul_of_nonneg_left hpow hscale</span>
+<span id="L328">328       _ = 1 := by norm_num [bellmanWeightCap]</span>
+<span id="L329">329 </span>
+<span id="L330">330 /-- The clipped, normalized and chronologically weighted continuation gap used</span>
+<span id="L331">331 by the predictable martingale.  Clipping is inactive on the joint confidence</span>
+<span id="L332">332 event; normalization keeps the global MGF range exactly `[0,H]`. -/</span>
+<span id="L333">333 noncomputable def clippedSuccessorGapFeatureOfSummaries</span>
+<span id="L334">334     (mdp : MDP State Action) (defaultState : State)</span>
+<span id="L335">335     (episodes : Nat) (delta : Real) (n : Nat)</span>
+<span id="L336">336     (summaries : Fin (n + 1) -&gt; TransitionCountSummary mdp)</span>
+<span id="L337">337     (stage : Fin mdp.horizon) (state : State) : Real :=</span>
+<span id="L338">338   let previous := recurrentQTableOfSummaries mdp defaultState</span>
+<span id="L339">339     (scale (State := State) (Action := Action) mdp episodes delta) n</span>
+<span id="L340">340     (fun i =&gt; summaries i.castSucc)</span>
+<span id="L341">341   let summary := cumulativeSummaryOfSequence summaries</span>
+<span id="L342">342   let remaining := mdp.horizon - (stage.val + 1)</span>
+<span id="L343">343   let raw := clippedPolicyGapRemaining previous summary defaultState</span>
+<span id="L344">344     (scale (State := State) (Action := Action) mdp episodes delta)</span>
+<span id="L345">345     remaining (by omega) state</span>
+<span id="L346">346   normalizedBellmanWeight mdp stage *</span>
+<span id="L347">347     max 0 (min raw (mdp.horizon : Real))</span>
+<span id="L348">348 </span>
+<span id="L349">349 /-- The martingale feature is globally in `[0,H]`, independently of whether</span>
+<span id="L350">350 the statistical event holds. -/</span>
+<span id="L351">351 theorem clippedSuccessorGapFeatureOfSummaries_mem_Icc</span>
+<span id="L352">352     (mdp : MDP State Action) (defaultState : State)</span>
+<span id="L353">353     (episodes : Nat) (delta : Real) (n : Nat)</span>
+<span id="L354">354     (summaries : Fin (n + 1) -&gt; TransitionCountSummary mdp)</span>
+<span id="L355">355     (stage : Fin mdp.horizon) (state : State) :</span>
+<span id="L356">356     clippedSuccessorGapFeatureOfSummaries mdp defaultState episodes delta n</span>
+<span id="L357">357       summaries stage state ∈ Set.Icc (0 : Real) mdp.horizon := by</span>
+<span id="L358">358   have hstage := stage.isLt</span>
+<span id="L359">359   have hhorizon : 0 &lt; mdp.horizon := by omega</span>
+<span id="L360">360   have hweight := normalizedBellmanWeight_mem_Icc mdp hhorizon stage</span>
+<span id="L361">361   have hgap : max 0 (min</span>
+<span id="L362">362       (clippedPolicyGapRemaining</span>
+<span id="L363">363         (recurrentQTableOfSummaries mdp defaultState</span>
+<span id="L364">364           (scale (State := State) (Action := Action) mdp episodes delta) n</span>
+<span id="L365">365           (fun i =&gt; summaries i.castSucc))</span>
+<span id="L366">366         (cumulativeSummaryOfSequence summaries) defaultState</span>
+<span id="L367">367         (scale (State := State) (Action := Action) mdp episodes delta)</span>
+<span id="L368">368         (mdp.horizon - (stage.val + 1)) (by omega) state)</span>
+<span id="L369">369       (mdp.horizon : Real)) ∈ Set.Icc (0 : Real) mdp.horizon := by</span>
+<span id="L370">370     exact ⟨le_max_left _ _, max_le (Nat.cast_nonneg _) (min_le_right _ _)⟩</span>
+<span id="L371">371   constructor</span>
+<span id="L372">372   · exact mul_nonneg hweight.1 hgap.1</span>
+<span id="L373">373   · unfold clippedSuccessorGapFeatureOfSummaries</span>
+<span id="L374">374     exact (mul_le_mul hweight.2 hgap.2 hgap.1 (by norm_num)).trans_eq</span>
+<span id="L375">375       (one_mul _)</span>
+<span id="L376">376 </span>
+<span id="L377">377 /-- Compensated batch statistic for one fixed discrete prefix-summary table. -/</span>
+<span id="L378">378 noncomputable def successorBellmanStatisticOfSummaries</span>
+<span id="L379">379     (mdp : MDP State Action) (defaultState : State)</span>
+<span id="L380">380     (episodes : Nat) (delta : Real) (n : Nat) (tilt : Real)</span>
+<span id="L381">381     (input : (Fin (n + 1) -&gt; TransitionCountSummary mdp) ×</span>
+<span id="L382">382       EpisodeBatch mdp 1) : Real :=</span>
+<span id="L383">383   let summaries := input.1</span>
+<span id="L384">384   let table := recurrentPolicyTableOfSummaries mdp defaultState</span>
+<span id="L385">385     (scale (State := State) (Action := Action) mdp episodes delta)</span>
+<span id="L386">386     (n + 1) summaries</span>
+<span id="L387">387   let feature := clippedSuccessorGapFeatureOfSummaries mdp defaultState</span>
+<span id="L388">388     episodes delta n summaries</span>
+<span id="L389">389   tilt * input.2.cumulativeDeterministicGapInnovation defaultState table feature -</span>
+<span id="L390">390     (mdp.horizon : Real) * tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8</span>
+<span id="L391">391 </span>
+<span id="L392">392 theorem measurable_successorBellmanStatisticOfSummaries</span>
+<span id="L393">393     (mdp : MDP State Action) (defaultState : State)</span>
+<span id="L394">394     (episodes : Nat) (delta : Real) (n : Nat) (tilt : Real) :</span>
+<span id="L395">395     Measurable (successorBellmanStatisticOfSummaries mdp defaultState</span>
+<span id="L396">396       episodes delta n tilt) := by</span>
+<span id="L397">397   letI : MeasurableSingletonClass</span>
+<span id="L398">398       (Fin (n + 1) -&gt; TransitionCountSummary mdp) :=</span>
+<span id="L399">399     Pi.instMeasurableSingletonClass</span>
+<span id="L400">400   apply measurable_prod_of_countable_left</span>
+<span id="L401">401   intro summaries</span>
+<span id="L402">402   let table := recurrentPolicyTableOfSummaries mdp defaultState</span>
+<span id="L403">403     (scale (State := State) (Action := Action) mdp episodes delta)</span>
+<span id="L404">404     (n + 1) summaries</span>
+<span id="L405">405   let feature := clippedSuccessorGapFeatureOfSummaries mdp defaultState</span>
+<span id="L406">406     episodes delta n summaries</span>
+<span id="L407">407   exact (EpisodeBatch.measurable_cumulativeDeterministicGapInnovation</span>
+<span id="L408">408       defaultState table feature |&gt;.const_mul tilt).sub measurable_const</span>
+<span id="L409">409 </span>
+<span id="L410">410 /-- The same statistic with the prefix summarized exactly as the recurrent</span>
+<span id="L411">411 planner summarizes it. -/</span>
+<span id="L412">412 noncomputable def successorBellmanHistoryBatchStatistic</span>
+<span id="L413">413     (mdp : MDP State Action) (defaultState : State)</span>
+<span id="L414">414     (episodes : Nat) (delta : Real) (n : Nat) (tilt : Real)</span>
+<span id="L415">415     (input : EpisodeBatchPrefix mdp 1 n × EpisodeBatch mdp 1) : Real :=</span>
+<span id="L416">416   successorBellmanStatisticOfSummaries mdp defaultState episodes delta n tilt</span>
+<span id="L417">417     (prefixTransitionSummaries input.1, input.2)</span>
+<span id="L418">418 </span>
+<span id="L419">419 theorem measurable_successorBellmanHistoryBatchStatistic</span>
+<span id="L420">420     (mdp : MDP State Action) (defaultState : State)</span>
+<span id="L421">421     (episodes : Nat) (delta : Real) (n : Nat) (tilt : Real) :</span>
+<span id="L422">422     Measurable (successorBellmanHistoryBatchStatistic mdp defaultState</span>
+<span id="L423">423       episodes delta n tilt) := by</span>
+<span id="L424">424   exact (measurable_successorBellmanStatisticOfSummaries mdp defaultState</span>
+<span id="L425">425     episodes delta n tilt).comp</span>
+<span id="L426">426       ((measurable_prefixTransitionSummaries.comp measurable_fst).prodMk</span>
+<span id="L427">427         measurable_snd)</span>
+<span id="L428">428 </span>
+<span id="L429">429 namespace AdaptiveEpisodeBatchSource</span>
+<span id="L430">430 </span>
+<span id="L431">431 /-- A successor episode&#x27;s compensated, prefix-predictable Bellman innovation</span>
+<span id="L432">432 has conditional MGF at most one under the literal recurrent batch kernel. -/</span>
+<span id="L433">433 theorem recurrentSuccessorBellmanInnovation_compensated_hasCondMGFUpperBoundAt</span>
+<span id="L434">434     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L435">435     [IsProbabilityMeasure initialState]</span>
+<span id="L436">436     [StandardBorelSpace (EpisodeBatch mdp 1)]</span>
+<span id="L437">437     [StandardBorelSpace (EpisodeBatchTrajectory mdp 1)]</span>
+<span id="L438">438     (defaultState : State) (episodes : Nat) (delta : Real)</span>
+<span id="L439">439     (hhorizon : 0 &lt; mdp.horizon) (n : Nat) (tilt : Real) :</span>
+<span id="L440">440     Concentration.HasCondMGFUpperBoundAt</span>
+<span id="L441">441       (BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.batchPrefixFiltration</span>
+<span id="L442">442         (mdp := mdp) 1 n)</span>
+<span id="L443">443       ((BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.batchPrefixFiltration</span>
+<span id="L444">444         (mdp := mdp) 1).le n)</span>
+<span id="L445">445       (fun trajectory : EpisodeBatchTrajectory mdp 1 =&gt;</span>
+<span id="L446">446         successorBellmanHistoryBatchStatistic mdp defaultState episodes delta</span>
+<span id="L447">447           n tilt (Preorder.frestrictLe n trajectory, trajectory (n + 1)))</span>
+<span id="L448">448       1 0</span>
+<span id="L449">449       (recurrentSource mdp initialState defaultState episodes delta</span>
+<span id="L450">450         |&gt;.trajectoryMeasure) := by</span>
+<span id="L451">451   let source := recurrentSource mdp initialState defaultState episodes delta</span>
+<span id="L452">452   let statistic := successorBellmanHistoryBatchStatistic mdp defaultState</span>
+<span id="L453">453     episodes delta n tilt</span>
+<span id="L454">454   have hstatistic : Measurable statistic :=</span>
+<span id="L455">455     measurable_successorBellmanHistoryBatchStatistic mdp defaultState</span>
+<span id="L456">456       episodes delta n tilt</span>
+<span id="L457">457   have hX : Measurable (fun trajectory : EpisodeBatchTrajectory mdp 1 =&gt;</span>
+<span id="L458">458       statistic (Preorder.frestrictLe n trajectory, trajectory (n + 1))) :=</span>
+<span id="L459">459     hstatistic.comp ((Preorder.measurable_frestrictLe n).prodMk</span>
+<span id="L460">460       (measurable_pi_apply (n + 1)))</span>
+<span id="L461">461   let target :=</span>
+<span id="L462">462     ((ProbabilityTheory.Kernel.id ×ₖ source.batchKernel n).map statistic)</span>
+<span id="L463">463   have hmap := source.condExpKernel_map_historyBatchStatistic_eq_batchKernel</span>
+<span id="L464">464     n statistic hstatistic</span>
+<span id="L465">465   have htarget : Filter.Eventually</span>
+<span id="L466">466       (fun trajectory : EpisodeBatchTrajectory mdp 1 =&gt;</span>
+<span id="L467">467         Concentration.HasMGFUpperBoundAt id 1 0</span>
+<span id="L468">468           (target (Preorder.frestrictLe n trajectory)))</span>
+<span id="L469">469       (ae (source.trajectoryMeasure.trim</span>
+<span id="L470">470         ((BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.batchPrefixFiltration</span>
+<span id="L471">471           (mdp := mdp) 1).le n))) := by</span>
+<span id="L472">472     exact Filter.Eventually.of_forall fun trajectory =&gt; by</span>
+<span id="L473">473       let history := Preorder.frestrictLe n trajectory</span>
+<span id="L474">474       let summaries := prefixTransitionSummaries history</span>
+<span id="L475">475       let table := recurrentPolicyTableOfSummaries mdp defaultState</span>
+<span id="L476">476         (scale (State := State) (Action := Action) mdp episodes delta)</span>
+<span id="L477">477         (n + 1) summaries</span>
+<span id="L478">478       let feature := clippedSuccessorGapFeatureOfSummaries mdp defaultState</span>
+<span id="L479">479         episodes delta n summaries</span>
+<span id="L480">480       let Zbatch : EpisodeBatch mdp 1 -&gt; Real := fun batch =&gt;</span>
+<span id="L481">481         tilt * batch.cumulativeDeterministicGapInnovation defaultState table feature -</span>
+<span id="L482">482           (mdp.horizon : Real) * tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8</span>
+<span id="L483">483       have hbatch : Concentration.HasMGFUpperBoundAt Zbatch 1 0</span>
+<span id="L484">484           (source.batchKernel n history) := by</span>
+<span id="L485">485         rw [source.batchKernel_eq_iidEpisodeBatchMeasure n history]</span>
+<span id="L486">486         simpa [Zbatch, table, feature, summaries, source,</span>
+<span id="L487">487           successorBellmanHistoryBatchStatistic,</span>
+<span id="L488">488           successorBellmanStatisticOfSummaries] using</span>
+<span id="L489">489           table.iidEpisodeBatchMeasure_one_cumulativeDeterministicGapInnovation_compensated_hasMGFUpperBoundAt</span>
+<span id="L490">490             initialState defaultState hhorizon feature</span>
+<span id="L491">491             (clippedSuccessorGapFeatureOfSummaries_mem_Icc mdp defaultState</span>
+<span id="L492">492               episodes delta n summaries) tilt</span>
+<span id="L493">493       have hZbatch : Measurable Zbatch :=</span>
+<span id="L494">494         (EpisodeBatch.measurable_cumulativeDeterministicGapInnovation</span>
+<span id="L495">495           defaultState table feature |&gt;.const_mul tilt).sub measurable_const</span>
+<span id="L496">496       change Concentration.HasMGFUpperBoundAt id 1 0 (target history)</span>
+<span id="L497">497       have htargetEq : target history = Measure.map Zbatch</span>
+<span id="L498">498           (source.batchKernel n history) := by</span>
+<span id="L499">499         dsimp [target]</span>
+<span id="L500">500         rw [ProbabilityTheory.Kernel.map_apply _ hstatistic]</span>
+<span id="L501">501         rw [ProbabilityTheory.Kernel.prod_apply,</span>
+<span id="L502">502           ProbabilityTheory.Kernel.id_apply, Measure.dirac_prod]</span>
+<span id="L503">503         rw [Measure.map_map hstatistic measurable_prodMk_left]</span>
+<span id="L504">504         rfl</span>
+<span id="L505">505       rw [htargetEq]</span>
+<span id="L506">506       exact (Concentration.HasMGFUpperBoundAt.id_map_iff</span>
+<span id="L507">507         hZbatch.aemeasurable).2 hbatch</span>
+<span id="L508">508   have hintegrable : forall s, Integrable</span>
+<span id="L509">509       (fun trajectory : EpisodeBatchTrajectory mdp 1 =&gt;</span>
+<span id="L510">510         Real.exp (s * statistic</span>
+<span id="L511">511           (Preorder.frestrictLe n trajectory, trajectory (n + 1))))</span>
+<span id="L512">512       source.trajectoryMeasure := by</span>
+<span id="L513">513     intro s</span>
+<span id="L514">514     let bound := |tilt| * (mdp.horizon : Real) ^ 2 +</span>
+<span id="L515">515       |(mdp.horizon : Real) * tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8|</span>
+<span id="L516">516     apply Integrable.of_bound</span>
+<span id="L517">517       ((Real.measurable_exp.comp (hX.const_mul s)).aestronglyMeasurable)</span>
+<span id="L518">518       (Real.exp (|s| * bound))</span>
+<span id="L519">519     exact Filter.Eventually.of_forall fun trajectory =&gt; by</span>
+<span id="L520">520       let history := Preorder.frestrictLe n trajectory</span>
+<span id="L521">521       let summaries := prefixTransitionSummaries history</span>
+<span id="L522">522       let table := recurrentPolicyTableOfSummaries mdp defaultState</span>
+<span id="L523">523         (scale (State := State) (Action := Action) mdp episodes delta)</span>
+<span id="L524">524         (n + 1) summaries</span>
+<span id="L525">525       let feature := clippedSuccessorGapFeatureOfSummaries mdp defaultState</span>
+<span id="L526">526         episodes delta n summaries</span>
+<span id="L527">527       have hinnovation := mdp.abs_sampledCumulativeDeterministicGapInnovationFrom_le</span>
+<span id="L528">528         table feature</span>
+<span id="L529">529         (clippedSuccessorGapFeatureOfSummaries_mem_Icc mdp defaultState</span>
+<span id="L530">530           episodes delta n summaries)</span>
+<span id="L531">531         mdp.horizon le_rfl</span>
+<span id="L532">532         ((trajectory (n + 1)).reconstructedInitialState defaultState)</span>
+<span id="L533">533         ((trajectory (n + 1)).reconstructedStepTrace)</span>
+<span id="L534">534       have hstatBound :</span>
+<span id="L535">535           |statistic (history, trajectory (n + 1))| &lt;= bound := by</span>
+<span id="L536">536         dsimp [statistic, successorBellmanHistoryBatchStatistic,</span>
+<span id="L537">537           successorBellmanStatisticOfSummaries, summaries, table, feature,</span>
+<span id="L538">538           EpisodeBatch.cumulativeDeterministicGapInnovation]</span>
+<span id="L539">539         calc</span>
+<span id="L540">540           |_ - _| &lt;= |tilt *</span>
+<span id="L541">541               mdp.sampledCumulativeDeterministicGapInnovationFrom table feature</span>
+<span id="L542">542                 mdp.horizon le_rfl</span>
+<span id="L543">543                 ((trajectory (n + 1)).reconstructedInitialState defaultState)</span>
+<span id="L544">544                 ((trajectory (n + 1)).reconstructedStepTrace)| +</span>
+<span id="L545">545               |(mdp.horizon : Real) * tilt ^ 2 *</span>
+<span id="L546">546                 (mdp.horizon : Real) ^ 2 / 8| := abs_sub _ _</span>
+<span id="L547">547           _ &lt;= bound := by</span>
+<span id="L548">548             rw [abs_mul]</span>
+<span id="L549">549             exact add_le_add</span>
+<span id="L550">550               (mul_le_mul_of_nonneg_left (by simpa only [pow_two] using hinnovation)</span>
+<span id="L551">551                 (abs_nonneg tilt)) le_rfl</span>
+<span id="L552">552       change |Real.exp (s * statistic (history, trajectory (n + 1)))| &lt;= _</span>
+<span id="L553">553       rw [abs_of_pos (Real.exp_pos _)]</span>
+<span id="L554">554       apply Real.exp_le_exp.mpr</span>
+<span id="L555">555       calc</span>
+<span id="L556">556         s * statistic (history, trajectory (n + 1)) &lt;=</span>
+<span id="L557">557             |s| * |statistic (history, trajectory (n + 1))| :=</span>
+<span id="L558">558           (le_abs_self _).trans_eq (abs_mul _ _)</span>
+<span id="L559">559         _ &lt;= |s| * bound :=</span>
+<span id="L560">560           mul_le_mul_of_nonneg_left hstatBound (abs_nonneg s)</span>
+<span id="L561">561   have hcond :=</span>
+<span id="L562">562     BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.hasCondMGFUpperBoundAt_of_condExpKernel_map_eq</span>
+<span id="L563">563     source.trajectoryMeasure</span>
+<span id="L564">564     (BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.batchPrefixFiltration</span>
+<span id="L565">565       (mdp := mdp) 1 n)</span>
+<span id="L566">566     ((BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.batchPrefixFiltration</span>
+<span id="L567">567       (mdp := mdp) 1).le n)</span>
+<span id="L568">568     (fun trajectory : EpisodeBatchTrajectory mdp 1 =&gt;</span>
+<span id="L569">569       statistic (Preorder.frestrictLe n trajectory, trajectory (n + 1)))</span>
+<span id="L570">570     hX 1 0</span>
+<span id="L571">571     (fun trajectory =&gt; target (Preorder.frestrictLe n trajectory))</span>
+<span id="L572">572     hintegrable (by</span>
+<span id="L573">573       simpa [BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.batchPrefixFiltration,</span>
+<span id="L574">574         source] using hmap) htarget</span>
+<span id="L575">575   simpa [source, statistic] using hcond</span>
+<span id="L576">576 </span>
+<span id="L577">577 end AdaptiveEpisodeBatchSource</span>
+<span id="L578">578 </span>
+<span id="L579">579 /-- The un-compensated Bellman innovation of one successor episode, with the</span>
+<span id="L580">580 policy and clipped gap feature read from one fixed prefix-summary table. -/</span>
+<span id="L581">581 noncomputable def successorBellmanInnovationOfSummaries</span>
+<span id="L582">582     (mdp : MDP State Action) (defaultState : State)</span>
+<span id="L583">583     (episodes : Nat) (delta : Real) (n : Nat)</span>
+<span id="L584">584     (input : (Fin (n + 1) -&gt; TransitionCountSummary mdp) ×</span>
+<span id="L585">585       EpisodeBatch mdp 1) : Real :=</span>
+<span id="L586">586   let summaries := input.1</span>
+<span id="L587">587   let table := recurrentPolicyTableOfSummaries mdp defaultState</span>
+<span id="L588">588     (scale (State := State) (Action := Action) mdp episodes delta)</span>
+<span id="L589">589     (n + 1) summaries</span>
+<span id="L590">590   let feature := clippedSuccessorGapFeatureOfSummaries mdp defaultState</span>
+<span id="L591">591     episodes delta n summaries</span>
+<span id="L592">592   input.2.cumulativeDeterministicGapInnovation defaultState table feature</span>
+<span id="L593">593 </span>
+<span id="L594">594 theorem measurable_successorBellmanInnovationOfSummaries</span>
+<span id="L595">595     (mdp : MDP State Action) (defaultState : State)</span>
+<span id="L596">596     (episodes : Nat) (delta : Real) (n : Nat) :</span>
+<span id="L597">597     Measurable (successorBellmanInnovationOfSummaries mdp defaultState</span>
+<span id="L598">598       episodes delta n) := by</span>
+<span id="L599">599   letI : MeasurableSingletonClass</span>
+<span id="L600">600       (Fin (n + 1) -&gt; TransitionCountSummary mdp) :=</span>
+<span id="L601">601     Pi.instMeasurableSingletonClass</span>
+<span id="L602">602   apply measurable_prod_of_countable_left</span>
+<span id="L603">603   intro summaries</span>
+<span id="L604">604   let table := recurrentPolicyTableOfSummaries mdp defaultState</span>
+<span id="L605">605     (scale (State := State) (Action := Action) mdp episodes delta)</span>
+<span id="L606">606     (n + 1) summaries</span>
+<span id="L607">607   let feature := clippedSuccessorGapFeatureOfSummaries mdp defaultState</span>
+<span id="L608">608     episodes delta n summaries</span>
+<span id="L609">609   exact EpisodeBatch.measurable_cumulativeDeterministicGapInnovation</span>
+<span id="L610">610     defaultState table feature</span>
+<span id="L611">611 </span>
+<span id="L612">612 /-- The successor Bellman innovation with the recurrent prefix summarized in</span>
+<span id="L613">613 exactly the same way as the generated source. -/</span>
+<span id="L614">614 noncomputable def successorBellmanInnovationOfHistoryBatch</span>
+<span id="L615">615     (mdp : MDP State Action) (defaultState : State)</span>
+<span id="L616">616     (episodes : Nat) (delta : Real) (n : Nat)</span>
+<span id="L617">617     (input : EpisodeBatchPrefix mdp 1 n × EpisodeBatch mdp 1) : Real :=</span>
+<span id="L618">618   successorBellmanInnovationOfSummaries mdp defaultState episodes delta n</span>
+<span id="L619">619     (prefixTransitionSummaries input.1, input.2)</span>
+<span id="L620">620 </span>
+<span id="L621">621 theorem measurable_successorBellmanInnovationOfHistoryBatch</span>
+<span id="L622">622     (mdp : MDP State Action) (defaultState : State)</span>
+<span id="L623">623     (episodes : Nat) (delta : Real) (n : Nat) :</span>
+<span id="L624">624     Measurable (successorBellmanInnovationOfHistoryBatch mdp defaultState</span>
+<span id="L625">625       episodes delta n) := by</span>
+<span id="L626">626   exact (measurable_successorBellmanInnovationOfSummaries mdp defaultState</span>
+<span id="L627">627     episodes delta n).comp</span>
+<span id="L628">628       ((measurable_prefixTransitionSummaries.comp measurable_fst).prodMk</span>
+<span id="L629">629         measurable_snd)</span>
+<span id="L630">630 </span>
+<span id="L631">631 /-- Prefix-predictable Bellman innovation.  Coordinate zero is deliberately</span>
+<span id="L632">632 zero: the canonical initial episode is charged separately by its deterministic</span>
+<span id="L633">633 `H` envelope, while every successor coordinate uses its strict prefix. -/</span>
+<span id="L634">634 noncomputable def recurrentBellmanInnovationPrefix</span>
+<span id="L635">635     (mdp : MDP State Action) (defaultState : State)</span>
+<span id="L636">636     (episodes : Nat) (delta : Real) :</span>
+<span id="L637">637     (round : Nat) -&gt; EpisodeBatchPrefix mdp 1 round -&gt; Real</span>
+<span id="L638">638   | 0, _history =&gt; 0</span>
+<span id="L639">639   | n + 1, history =&gt;</span>
+<span id="L640">640       successorBellmanInnovationOfHistoryBatch mdp defaultState episodes delta n</span>
+<span id="L641">641         (Preorder.frestrictLe₂</span>
+<span id="L642">642           (π := fun _ : Nat =&gt; EpisodeBatch mdp 1)</span>
+<span id="L643">643           (Nat.le_succ n) history,</span>
+<span id="L644">644           history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩)</span>
+<span id="L645">645 </span>
+<span id="L646">646 theorem measurable_recurrentBellmanInnovationPrefix</span>
+<span id="L647">647     (mdp : MDP State Action) (defaultState : State)</span>
+<span id="L648">648     (episodes : Nat) (delta : Real) (round : Nat) :</span>
+<span id="L649">649     Measurable (recurrentBellmanInnovationPrefix mdp defaultState</span>
+<span id="L650">650       episodes delta round) := by</span>
+<span id="L651">651   cases round with</span>
+<span id="L652">652   | zero =&gt;</span>
+<span id="L653">653       change Measurable (fun _ : EpisodeBatchPrefix mdp 1 0 =&gt; (0 : Real))</span>
+<span id="L654">654       exact measurable_const</span>
+<span id="L655">655   | succ n =&gt;</span>
+<span id="L656">656       simpa [recurrentBellmanInnovationPrefix] using</span>
+<span id="L657">657         (measurable_successorBellmanInnovationOfHistoryBatch mdp defaultState</span>
+<span id="L658">658           episodes delta n).comp</span>
+<span id="L659">659           ((Preorder.measurable_frestrictLe₂</span>
+<span id="L660">660               (X := fun _ : Nat =&gt; EpisodeBatch mdp 1) (Nat.le_succ n)).prodMk</span>
+<span id="L661">661             (measurable_pi_apply</span>
+<span id="L662">662               (⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩ : Finset.Iic (n + 1))))</span>
+<span id="L663">663 </span>
+<span id="L664">664 /-- Actual successor-episode Bellman innovation process on the generated</span>
+<span id="L665">665 recurrent trajectory. -/</span>
+<span id="L666">666 noncomputable def recurrentBellmanInnovationProcess</span>
+<span id="L667">667     (mdp : MDP State Action) (defaultState : State)</span>
+<span id="L668">668     (episodes : Nat) (delta : Real) (round : Nat)</span>
+<span id="L669">669     (trajectory : EpisodeBatchTrajectory mdp 1) : Real :=</span>
+<span id="L670">670   recurrentBellmanInnovationPrefix mdp defaultState episodes delta round</span>
+<span id="L671">671     (Preorder.frestrictLe round trajectory)</span>
+<span id="L672">672 </span>
+<span id="L673">673 /-- Deterministic per-episode variance budget.  Coordinate zero is zero because</span>
+<span id="L674">674 its regret is paid separately; every successor episode has budget `H^3`. -/</span>
+<span id="L675">675 noncomputable def recurrentBellmanInnovationVarianceProcess</span>
+<span id="L676">676     (mdp : MDP State Action) (round : Nat)</span>
+<span id="L677">677     (_trajectory : EpisodeBatchTrajectory mdp 1) : Real :=</span>
+<span id="L678">678   match round with</span>
+<span id="L679">679   | 0 =&gt; 0</span>
+<span id="L680">680   | _ + 1 =&gt; (mdp.horizon : Real) * (mdp.horizon : Real) ^ 2</span>
+<span id="L681">681 </span>
+<span id="L682">682 theorem recurrentBellmanInnovation_compensated_stronglyAdapted</span>
+<span id="L683">683     (mdp : MDP State Action) (defaultState : State)</span>
+<span id="L684">684     (episodes : Nat) (delta tilt : Real) :</span>
+<span id="L685">685     StronglyAdapted</span>
+<span id="L686">686       (BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.batchPrefixFiltration</span>
+<span id="L687">687         (mdp := mdp) 1)</span>
+<span id="L688">688       (fun round trajectory =&gt;</span>
+<span id="L689">689         tilt * recurrentBellmanInnovationProcess mdp defaultState episodes delta</span>
+<span id="L690">690             round trajectory -</span>
+<span id="L691">691           (tilt ^ 2 / 8) *</span>
+<span id="L692">692             recurrentBellmanInnovationVarianceProcess mdp round trajectory) := by</span>
+<span id="L693">693   intro round</span>
+<span id="L694">694   cases round with</span>
+<span id="L695">695   | zero =&gt;</span>
+<span id="L696">696       have hprefix : Measurable</span>
+<span id="L697">697           (fun _history : EpisodeBatchPrefix mdp 1 0 =&gt; (0 : Real)) :=</span>
+<span id="L698">698         measurable_const</span>
+<span id="L699">699       simpa [recurrentBellmanInnovationProcess,</span>
+<span id="L700">700         recurrentBellmanInnovationPrefix,</span>
+<span id="L701">701         recurrentBellmanInnovationVarianceProcess] using</span>
+<span id="L702">702         (hprefix.comp (Measurable.of_comap_le le_rfl)).stronglyMeasurable</span>
+<span id="L703">703   | succ n =&gt;</span>
+<span id="L704">704       have hprefix : Measurable</span>
+<span id="L705">705           (fun history : EpisodeBatchPrefix mdp 1 (n + 1) =&gt;</span>
+<span id="L706">706             tilt * recurrentBellmanInnovationPrefix mdp defaultState episodes</span>
+<span id="L707">707                 delta (n + 1) history -</span>
+<span id="L708">708               (tilt ^ 2 / 8) *</span>
+<span id="L709">709                 ((mdp.horizon : Real) * (mdp.horizon : Real) ^ 2)) :=</span>
+<span id="L710">710         ((measurable_recurrentBellmanInnovationPrefix mdp defaultState episodes</span>
+<span id="L711">711           delta (n + 1)).const_mul tilt).sub measurable_const</span>
+<span id="L712">712       simpa [recurrentBellmanInnovationProcess,</span>
+<span id="L713">713         recurrentBellmanInnovationVarianceProcess] using</span>
+<span id="L714">714         (hprefix.comp (Measurable.of_comap_le le_rfl)).stronglyMeasurable</span>
+<span id="L715">715 </span>
+<span id="L716">716 /-- Coordinate zero has the trivial compensated MGF certificate. -/</span>
+<span id="L717">717 theorem recurrentBellmanInnovation_zero_compensated_hasMGFUpperBoundAt</span>
+<span id="L718">718     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L719">719     [IsProbabilityMeasure initialState]</span>
+<span id="L720">720     (defaultState : State) (episodes : Nat) (delta tilt : Real) :</span>
+<span id="L721">721     Concentration.HasMGFUpperBoundAt</span>
+<span id="L722">722       (fun trajectory : EpisodeBatchTrajectory mdp 1 =&gt;</span>
+<span id="L723">723         tilt * recurrentBellmanInnovationProcess mdp defaultState episodes delta</span>
+<span id="L724">724             0 trajectory -</span>
+<span id="L725">725           (tilt ^ 2 / 8) *</span>
+<span id="L726">726             recurrentBellmanInnovationVarianceProcess mdp 0 trajectory)</span>
+<span id="L727">727       1 0</span>
+<span id="L728">728       (recurrentSource mdp initialState defaultState episodes delta</span>
+<span id="L729">729         |&gt;.trajectoryMeasure) := by</span>
+<span id="L730">730   constructor</span>
+<span id="L731">731   · intro s</span>
+<span id="L732">732     simp [recurrentBellmanInnovationProcess,</span>
+<span id="L733">733       recurrentBellmanInnovationPrefix,</span>
+<span id="L734">734       recurrentBellmanInnovationVarianceProcess]</span>
+<span id="L735">735   · simp [ProbabilityTheory.mgf, recurrentBellmanInnovationProcess,</span>
+<span id="L736">736       recurrentBellmanInnovationPrefix,</span>
+<span id="L737">737       recurrentBellmanInnovationVarianceProcess]</span>
+<span id="L738">738 </span>
+<span id="L739">739 /-- Fixed-tilt upper tail for the sum of the generated successor-episode</span>
+<span id="L740">740 Bellman innovations.  The source, prefix policy, and transition law are the</span>
+<span id="L741">741 same objects as in the recurrent planner. -/</span>
+<span id="L742">742 theorem trajectoryMeasure_recurrentBellmanInnovation_sum_ge_le</span>
+<span id="L743">743     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L744">744     [IsProbabilityMeasure initialState]</span>
+<span id="L745">745     [StandardBorelSpace (EpisodeBatch mdp 1)]</span>
+<span id="L746">746     [StandardBorelSpace (EpisodeBatchTrajectory mdp 1)]</span>
+<span id="L747">747     (defaultState : State) (episodes : Nat) (delta : Real)</span>
+<span id="L748">748     (hhorizon : 0 &lt; mdp.horizon)</span>
+<span id="L749">749     (tilt threshold : Real) (htilt : 0 &lt; tilt) :</span>
+<span id="L750">750     let source := recurrentSource mdp initialState defaultState episodes delta</span>
+<span id="L751">751     source.trajectoryMeasure</span>
+<span id="L752">752         {trajectory |</span>
+<span id="L753">753           threshold &lt;= (Finset.range episodes).sum (fun round =&gt;</span>
+<span id="L754">754             recurrentBellmanInnovationProcess mdp defaultState episodes delta</span>
+<span id="L755">755               round trajectory)} &lt;=</span>
+<span id="L756">756       ENNReal.ofReal (Real.exp</span>
+<span id="L757">757         (-tilt * threshold + (tilt ^ 2 / 8) *</span>
+<span id="L758">758           ((episodes : Real) *</span>
+<span id="L759">759             ((mdp.horizon : Real) * (mdp.horizon : Real) ^ 2)))) := by</span>
+<span id="L760">760   dsimp only</span>
+<span id="L761">761   let source := recurrentSource mdp initialState defaultState episodes delta</span>
+<span id="L762">762   let F :=</span>
+<span id="L763">763     BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.batchPrefixFiltration</span>
+<span id="L764">764       (mdp := mdp) 1</span>
+<span id="L765">765   let Y : Nat -&gt; EpisodeBatchTrajectory mdp 1 -&gt; Real :=</span>
+<span id="L766">766     recurrentBellmanInnovationProcess mdp defaultState episodes delta</span>
+<span id="L767">767   let V : Nat -&gt; EpisodeBatchTrajectory mdp 1 -&gt; Real :=</span>
+<span id="L768">768     recurrentBellmanInnovationVarianceProcess mdp</span>
+<span id="L769">769   let varianceCoeff := tilt ^ 2 / 8</span>
+<span id="L770">770   let varianceBudget := (episodes : Real) *</span>
+<span id="L771">771     ((mdp.horizon : Real) * (mdp.horizon : Real) ^ 2)</span>
+<span id="L772">772   have hadapted : StronglyAdapted F (fun round trajectory =&gt;</span>
+<span id="L773">773       tilt * Y round trajectory - varianceCoeff * V round trajectory) := by</span>
+<span id="L774">774     simpa [F, Y, V, varianceCoeff] using</span>
+<span id="L775">775       recurrentBellmanInnovation_compensated_stronglyAdapted mdp defaultState</span>
+<span id="L776">776         episodes delta tilt</span>
+<span id="L777">777   have hzero : Concentration.HasMGFUpperBoundAt</span>
+<span id="L778">778       (fun trajectory =&gt; tilt * Y 0 trajectory - varianceCoeff * V 0 trajectory)</span>
+<span id="L779">779       1 0 source.trajectoryMeasure := by</span>
+<span id="L780">780     simpa [source, Y, V, varianceCoeff] using</span>
+<span id="L781">781       recurrentBellmanInnovation_zero_compensated_hasMGFUpperBoundAt</span>
+<span id="L782">782         (mdp := mdp) (initialState := initialState)</span>
+<span id="L783">783         defaultState episodes delta tilt</span>
+<span id="L784">784   have hsucc : ∀ i, i &lt; episodes - 1 -&gt;</span>
+<span id="L785">785       Concentration.HasCondMGFUpperBoundAt</span>
+<span id="L786">786         (F i) (F.le i)</span>
+<span id="L787">787         (fun trajectory =&gt;</span>
+<span id="L788">788           tilt * Y (i + 1) trajectory - varianceCoeff * V (i + 1) trajectory)</span>
+<span id="L789">789         1 0 source.trajectoryMeasure := by</span>
+<span id="L790">790     intro i _hi</span>
+<span id="L791">791     have h :=</span>
+<span id="L792">792       AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentSuccessorBellmanInnovation_compensated_hasCondMGFUpperBoundAt</span>
+<span id="L793">793         (mdp := mdp) (initialState := initialState) defaultState episodes delta</span>
+<span id="L794">794         hhorizon i tilt</span>
+<span id="L795">795     have hrestrict (trajectory : EpisodeBatchTrajectory mdp 1) :</span>
+<span id="L796">796         Preorder.frestrictLe₂</span>
+<span id="L797">797             (π := fun _ : Nat =&gt; EpisodeBatch mdp 1) (Nat.le_succ i)</span>
+<span id="L798">798             (Preorder.frestrictLe (i + 1) trajectory) =</span>
+<span id="L799">799           Preorder.frestrictLe i trajectory := rfl</span>
+<span id="L800">800     have hfun :</span>
+<span id="L801">801         (fun trajectory =&gt;</span>
+<span id="L802">802           tilt * Y (i + 1) trajectory - varianceCoeff * V (i + 1) trajectory) =</span>
+<span id="L803">803         (fun trajectory =&gt;</span>
+<span id="L804">804           successorBellmanHistoryBatchStatistic mdp defaultState episodes delta</span>
+<span id="L805">805             i tilt (Preorder.frestrictLe i trajectory, trajectory (i + 1))) := by</span>
+<span id="L806">806       funext trajectory</span>
+<span id="L807">807       simp [Y, V, varianceCoeff, recurrentBellmanInnovationProcess,</span>
+<span id="L808">808         recurrentBellmanInnovationPrefix,</span>
+<span id="L809">809         recurrentBellmanInnovationVarianceProcess, hrestrict,</span>
+<span id="L810">810         successorBellmanInnovationOfHistoryBatch,</span>
+<span id="L811">811         successorBellmanInnovationOfSummaries,</span>
+<span id="L812">812         successorBellmanHistoryBatchStatistic,</span>
+<span id="L813">813         successorBellmanStatisticOfSummaries]</span>
+<span id="L814">814       ring</span>
+<span id="L815">815     rw [hfun]</span>
+<span id="L816">816     simpa [F, source] using h</span>
+<span id="L817">817   have hvarianceCoeff : 0 &lt;= varianceCoeff := by</span>
+<span id="L818">818     dsimp [varianceCoeff]</span>
+<span id="L819">819     positivity</span>
+<span id="L820">820   have htail :=</span>
+<span id="L821">821     Concentration.measure_sum_ge_inter_sum_le_of_compensated_hasCondMGFUpperBoundAt</span>
+<span id="L822">822       Y V episodes tilt varianceCoeff threshold varianceBudget</span>
+<span id="L823">823       hadapted hzero hsucc htilt.le hvarianceCoeff</span>
+<span id="L824">824   have hbudget : ∀ trajectory,</span>
+<span id="L825">825       (Finset.range episodes).sum (fun round =&gt; V round trajectory) &lt;=</span>
+<span id="L826">826         varianceBudget := by</span>
+<span id="L827">827     intro trajectory</span>
+<span id="L828">828     calc</span>
+<span id="L829">829       (Finset.range episodes).sum (fun round =&gt; V round trajectory) &lt;=</span>
+<span id="L830">830           (Finset.range episodes).sum (fun _round =&gt;</span>
+<span id="L831">831             (mdp.horizon : Real) * (mdp.horizon : Real) ^ 2) := by</span>
+<span id="L832">832         apply Finset.sum_le_sum</span>
+<span id="L833">833         intro round _hround</span>
+<span id="L834">834         cases round with</span>
+<span id="L835">835         | zero =&gt;</span>
+<span id="L836">836             simp [V, recurrentBellmanInnovationVarianceProcess]</span>
+<span id="L837">837             positivity</span>
+<span id="L838">838         | succ n =&gt;</span>
+<span id="L839">839             simp [V, recurrentBellmanInnovationVarianceProcess]</span>
+<span id="L840">840       _ = varianceBudget := by simp [varianceBudget]</span>
+<span id="L841">841   calc</span>
+<span id="L842">842     source.trajectoryMeasure</span>
+<span id="L843">843         {trajectory | threshold &lt;= (Finset.range episodes).sum (fun round =&gt;</span>
+<span id="L844">844           Y round trajectory)} &lt;=</span>
+<span id="L845">845       source.trajectoryMeasure</span>
+<span id="L846">846         {trajectory |</span>
+<span id="L847">847           threshold &lt;= (Finset.range episodes).sum (fun round =&gt;</span>
+<span id="L848">848             Y round trajectory) ∧</span>
+<span id="L849">849           (Finset.range episodes).sum (fun round =&gt; V round trajectory) &lt;=</span>
+<span id="L850">850             varianceBudget} := by</span>
+<span id="L851">851         apply measure_mono</span>
+<span id="L852">852         intro trajectory htrajectory</span>
+<span id="L853">853         exact ⟨htrajectory, hbudget trajectory⟩</span>
+<span id="L854">854     _ &lt;= ENNReal.ofReal (Real.exp</span>
+<span id="L855">855         (-tilt * threshold + varianceCoeff * varianceBudget)) := htail</span>
+<span id="L856">856     _ = ENNReal.ofReal (Real.exp</span>
+<span id="L857">857         (-tilt * threshold + (tilt ^ 2 / 8) *</span>
+<span id="L858">858           ((episodes : Real) *</span>
+<span id="L859">859             ((mdp.horizon : Real) * (mdp.horizon : Real) ^ 2)))) := by</span>
+<span id="L860">860       rfl</span>
+<span id="L861">861 </span>
+<span id="L862">862 end AdaptiveCumulativeHoeffdingUCBVI</span>
+<span id="L863">863 </span>
+<span id="L864">864 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

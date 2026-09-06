@@ -1,0 +1,1142 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardRealizedBehaviorRegret.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardRealizedBehaviorRegret.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardRealizedBehaviorRegret.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardRealizedBehaviorRegret.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardTotalReturnConcentration</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Adaptive stochastic-reward realized behavior regret</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module changes the stochastic episode return from centering at each</span>
+<span id="L7">7 sampled initial state&#x27;s policy value to centering at the selected policy&#x27;s</span>
+<span id="L8">8 global initial-law value. The missing term is the policy-value fluctuation of</span>
+<span id="L9">9 the sampled initial state. Complete episodes remain the independent units</span>
+<span id="L10">10 inside one batch; no independence is assumed between the two terms inside an</span>
+<span id="L11">11 episode or across adaptive rounds.</span>
+<span id="L12">12 -/</span>
+<span id="L13">13 </span>
+<span id="L14">14 open MeasureTheory</span>
+<span id="L15">15 open scoped ENNReal ProbabilityTheory BigOperators</span>
+<span id="L16">16 </span>
+<span id="L17">17 universe u v</span>
+<span id="L18">18 </span>
+<span id="L19">19 namespace BanditRLProof</span>
+<span id="L20">20 namespace FiniteHorizonRL</span>
+<span id="L21">21 </span>
+<span id="L22">22 variable {State : Type u} {Action : Type v}</span>
+<span id="L23">23     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L24">24     [Fintype State] [Fintype Action]</span>
+<span id="L25">25 </span>
+<span id="L26">26 namespace MDP</span>
+<span id="L27">27 </span>
+<span id="L28">28 /-- The sampled policy-value fluctuation at one complete episode coordinate. -/</span>
+<span id="L29">29 noncomputable def initialPolicyValueDeviation</span>
+<span id="L30">30     (mdp : MDP State Action) (policy : MarkovPolicy mdp)</span>
+<span id="L31">31     (initialState : Measure State)</span>
+<span id="L32">32     (trajectory : State × RewardStepTrace Action State mdp.horizon) : Real :=</span>
+<span id="L33">33   policy.valueAt 0 (Nat.zero_le mdp.horizon) trajectory.1 -</span>
+<span id="L34">34     integral initialState (policy.valueAt 0 (Nat.zero_le mdp.horizon))</span>
+<span id="L35">35 </span>
+<span id="L36">36 theorem measurable_initialPolicyValueDeviation</span>
+<span id="L37">37     (mdp : MDP State Action) (policy : MarkovPolicy mdp)</span>
+<span id="L38">38     (initialState : Measure State) :</span>
+<span id="L39">39     Measurable (mdp.initialPolicyValueDeviation policy initialState) := by</span>
+<span id="L40">40   exact ((policy.measurable_valueAt 0 (Nat.zero_le mdp.horizon)).comp</span>
+<span id="L41">41     measurable_fst).sub measurable_const</span>
+<span id="L42">42 </span>
+<span id="L43">43 /-- Hoeffding proxy for the policy value of one sampled initial state. -/</span>
+<span id="L44">44 noncomputable def initialPolicyValueVarianceProxy</span>
+<span id="L45">45     (mdp : MDP State Action) (rewardBound : NNReal) : NNReal :=</span>
+<span id="L46">46   Concentration.intervalVarianceProxy</span>
+<span id="L47">47     (-((mdp.horizon : Real) * (rewardBound : Real)))</span>
+<span id="L48">48     ((mdp.horizon : Real) * (rewardBound : Real))</span>
+<span id="L49">49 </span>
+<span id="L50">50 namespace MeanCompatibleRewardKernel</span>
+<span id="L51">51 </span>
+<span id="L52">52 variable {mdp : MDP State Action}</span>
+<span id="L53">53 </span>
+<span id="L54">54 /-- The generated complete trajectory has the exact supplied initial marginal. -/</span>
+<span id="L55">55 theorem stochasticTrajectoryMeasure_map_fst</span>
+<span id="L56">56     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L57">57     (policy : MarkovPolicy mdp) (initialState : Measure State)</span>
+<span id="L58">58     [IsProbabilityMeasure initialState] :</span>
+<span id="L59">59     (source.stochasticTrajectoryMeasure policy initialState).map Prod.fst =</span>
+<span id="L60">60       initialState := by</span>
+<span id="L61">61   unfold stochasticTrajectoryMeasure</span>
+<span id="L62">62   rw [← Measure.fst, Measure.fst_compProd]</span>
+<span id="L63">63 </span>
+<span id="L64">64 /-- The initial-state policy-value fluctuation is sub-Gaussian. -/</span>
+<span id="L65">65 theorem stochasticTrajectoryMeasure_initialPolicyValueDeviation_hasSubgaussianMGF</span>
+<span id="L66">66     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L67">67     (policy : MarkovPolicy mdp) (initialState : Measure State)</span>
+<span id="L68">68     [IsProbabilityMeasure initialState]</span>
+<span id="L69">69     (rewardBound : NNReal)</span>
+<span id="L70">70     (hrewardBound : ∀ state action,</span>
+<span id="L71">71       |mdp.reward state action| ≤ (rewardBound : Real)) :</span>
+<span id="L72">72     ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L73">73       (mdp.initialPolicyValueDeviation policy initialState)</span>
+<span id="L74">74       (mdp.initialPolicyValueVarianceProxy rewardBound)</span>
+<span id="L75">75       (source.stochasticTrajectoryMeasure policy initialState) := by</span>
+<span id="L76">76   let value := policy.valueAt 0 (Nat.zero_le mdp.horizon)</span>
+<span id="L77">77   have hbound : ∀ᵐ state ∂initialState,</span>
+<span id="L78">78       Set.Icc</span>
+<span id="L79">79         (-((mdp.horizon : Real) * (rewardBound : Real)))</span>
+<span id="L80">80         ((mdp.horizon : Real) * (rewardBound : Real))</span>
+<span id="L81">81         (value state) := by</span>
+<span id="L82">82     exact Filter.Eventually.of_forall fun state =&gt; by</span>
+<span id="L83">83       exact abs_le.mp (by</span>
+<span id="L84">84         simpa [value, MarkovPolicy.valueAt] using</span>
+<span id="L85">85           policy.valueRemaining_abs_le_of_rewardBound rewardBound hrewardBound</span>
+<span id="L86">86             mdp.horizon le_rfl state)</span>
+<span id="L87">87   have hbase : ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L88">88       (fun state =&gt; value state - integral initialState value)</span>
+<span id="L89">89       (mdp.initialPolicyValueVarianceProxy rewardBound) initialState := by</span>
+<span id="L90">90     simpa [MDP.initialPolicyValueVarianceProxy] using</span>
+<span id="L91">91       (Concentration.boundedCentered_hasSubgaussianMGF_of_mem_Icc_integral_eq</span>
+<span id="L92">92         (mu := initialState) (X := value)</span>
+<span id="L93">93         (mean := integral initialState value)</span>
+<span id="L94">94         (policy.measurable_valueAt 0</span>
+<span id="L95">95           (Nat.zero_le mdp.horizon)).aemeasurable hbound rfl)</span>
+<span id="L96">96   have hbaseMap : ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L97">97       (fun state =&gt; value state - integral initialState value)</span>
+<span id="L98">98       (mdp.initialPolicyValueVarianceProxy rewardBound)</span>
+<span id="L99">99       ((source.stochasticTrajectoryMeasure policy initialState).map Prod.fst) := by</span>
+<span id="L100">100     rw [source.stochasticTrajectoryMeasure_map_fst policy initialState]</span>
+<span id="L101">101     exact hbase</span>
+<span id="L102">102   have hlift := ProbabilityTheory.HasSubgaussianMGF.of_map</span>
+<span id="L103">103     (μ := source.stochasticTrajectoryMeasure policy initialState)</span>
+<span id="L104">104     (Y := Prod.fst)</span>
+<span id="L105">105     (X := fun state =&gt; value state - integral initialState value)</span>
+<span id="L106">106     measurable_fst.aemeasurable hbaseMap</span>
+<span id="L107">107   simpa [MDP.initialPolicyValueDeviation, value, Function.comp_def] using hlift</span>
+<span id="L108">108 </span>
+<span id="L109">109 end MeanCompatibleRewardKernel</span>
+<span id="L110">110 </span>
+<span id="L111">111 /-- Initial-state value fluctuation at one coordinate of an iid episode family. -/</span>
+<span id="L112">112 noncomputable def initialPolicyValueDeviationAtEpisode</span>
+<span id="L113">113     (mdp : MDP State Action) (policy : MarkovPolicy mdp)</span>
+<span id="L114">114     (initialState : Measure State) {episodes : Nat} (episode : Fin episodes)</span>
+<span id="L115">115     (trajectories : StochasticEpisodeBatch mdp episodes) : Real :=</span>
+<span id="L116">116   mdp.initialPolicyValueDeviation policy initialState (trajectories episode)</span>
+<span id="L117">117 </span>
+<span id="L118">118 theorem measurable_initialPolicyValueDeviationAtEpisode</span>
+<span id="L119">119     (mdp : MDP State Action) (policy : MarkovPolicy mdp)</span>
+<span id="L120">120     (initialState : Measure State) {episodes : Nat} (episode : Fin episodes) :</span>
+<span id="L121">121     Measurable</span>
+<span id="L122">122       (mdp.initialPolicyValueDeviationAtEpisode policy initialState episode) := by</span>
+<span id="L123">123   exact (mdp.measurable_initialPolicyValueDeviation policy initialState).comp</span>
+<span id="L124">124     (measurable_pi_apply episode)</span>
+<span id="L125">125 </span>
+<span id="L126">126 /-- Sum of initial-state policy-value fluctuations in one iid batch. -/</span>
+<span id="L127">127 noncomputable def initialPolicyValueDeviationSum</span>
+<span id="L128">128     (mdp : MDP State Action) (policy : MarkovPolicy mdp)</span>
+<span id="L129">129     (initialState : Measure State) (episodes : Nat)</span>
+<span id="L130">130     (trajectories : StochasticEpisodeBatch mdp episodes) : Real :=</span>
+<span id="L131">131   ∑ episode : Fin episodes,</span>
+<span id="L132">132     mdp.initialPolicyValueDeviationAtEpisode</span>
+<span id="L133">133       policy initialState episode trajectories</span>
+<span id="L134">134 </span>
+<span id="L135">135 theorem measurable_initialPolicyValueDeviationSum</span>
+<span id="L136">136     (mdp : MDP State Action) (policy : MarkovPolicy mdp)</span>
+<span id="L137">137     (initialState : Measure State) (episodes : Nat) :</span>
+<span id="L138">138     Measurable</span>
+<span id="L139">139       (mdp.initialPolicyValueDeviationSum policy initialState episodes) := by</span>
+<span id="L140">140   exact Finset.measurable_sum Finset.univ fun episode _ =&gt;</span>
+<span id="L141">141     mdp.measurable_initialPolicyValueDeviationAtEpisode</span>
+<span id="L142">142       policy initialState episode</span>
+<span id="L143">143 </span>
+<span id="L144">144 /-- Episode-linear proxy for the initial-state value fluctuation sum. -/</span>
+<span id="L145">145 noncomputable def iidInitialPolicyValueDeviationVarianceProxy</span>
+<span id="L146">146     (mdp : MDP State Action) (episodes : Nat)</span>
+<span id="L147">147     (rewardBound : NNReal) : NNReal :=</span>
+<span id="L148">148   (episodes : NNReal) * mdp.initialPolicyValueVarianceProxy rewardBound</span>
+<span id="L149">149 </span>
+<span id="L150">150 /-- Sum of all sampled rewards in one complete stochastic episode batch. -/</span>
+<span id="L151">151 def sampledCumulativeRewardSum</span>
+<span id="L152">152     (mdp : MDP State Action) (episodes : Nat)</span>
+<span id="L153">153     (trajectories : StochasticEpisodeBatch mdp episodes) : Real :=</span>
+<span id="L154">154   ∑ episode : Fin episodes,</span>
+<span id="L155">155     MeanCompatibleRewardKernel.sampledCumulativeReward</span>
+<span id="L156">156       (mdp := mdp) (trajectories episode)</span>
+<span id="L157">157 </span>
+<span id="L158">158 theorem measurable_sampledCumulativeRewardSum</span>
+<span id="L159">159     (mdp : MDP State Action) (episodes : Nat) :</span>
+<span id="L160">160     Measurable (mdp.sampledCumulativeRewardSum episodes) := by</span>
+<span id="L161">161   exact Finset.measurable_sum Finset.univ fun episode _ =&gt;</span>
+<span id="L162">162     MeanCompatibleRewardKernel.measurable_sampledCumulativeReward.comp</span>
+<span id="L163">163       (measurable_pi_apply episode)</span>
+<span id="L164">164 </span>
+<span id="L165">165 /--</span>
+<span id="L166">166 One batch&#x27;s sampled return centered by the selected policy&#x27;s global</span>
+<span id="L167">167 initial-law value.</span>
+<span id="L168">168 -/</span>
+<span id="L169">169 noncomputable def globalSampledCumulativeReturnDeviationSum</span>
+<span id="L170">170     (mdp : MDP State Action) (policy : MarkovPolicy mdp)</span>
+<span id="L171">171     (initialState : Measure State) (episodes : Nat)</span>
+<span id="L172">172     (trajectories : StochasticEpisodeBatch mdp episodes) : Real :=</span>
+<span id="L173">173   mdp.sampledCumulativeReturnDeviationSum policy episodes trajectories +</span>
+<span id="L174">174     mdp.initialPolicyValueDeviationSum</span>
+<span id="L175">175       policy initialState episodes trajectories</span>
+<span id="L176">176 </span>
+<span id="L177">177 /-- The global batch deviation is actual sampled return minus its policy mean. -/</span>
+<span id="L178">178 theorem globalSampledCumulativeReturnDeviationSum_eq</span>
+<span id="L179">179     (mdp : MDP State Action) (policy : MarkovPolicy mdp)</span>
+<span id="L180">180     (initialState : Measure State) (episodes : Nat)</span>
+<span id="L181">181     (trajectories : StochasticEpisodeBatch mdp episodes) :</span>
+<span id="L182">182     mdp.globalSampledCumulativeReturnDeviationSum</span>
+<span id="L183">183         policy initialState episodes trajectories =</span>
+<span id="L184">184       mdp.sampledCumulativeRewardSum episodes trajectories -</span>
+<span id="L185">185         (episodes : Real) *</span>
+<span id="L186">186           integral initialState</span>
+<span id="L187">187             (policy.valueAt 0 (Nat.zero_le mdp.horizon)) := by</span>
+<span id="L188">188   unfold globalSampledCumulativeReturnDeviationSum</span>
+<span id="L189">189     sampledCumulativeReturnDeviationSum</span>
+<span id="L190">190     initialPolicyValueDeviationSum</span>
+<span id="L191">191   simp_rw [sampledCumulativeReturnDeviationAtEpisode,</span>
+<span id="L192">192     sampledCumulativeReturnDeviation,</span>
+<span id="L193">193     sampledCumulativeReturnDeviationFrom,</span>
+<span id="L194">194     initialPolicyValueDeviationAtEpisode,</span>
+<span id="L195">195     initialPolicyValueDeviation, MarkovPolicy.valueAt]</span>
+<span id="L196">196   rw [Finset.sum_sub_distrib, Finset.sum_sub_distrib]</span>
+<span id="L197">197   simp [sampledCumulativeRewardSum,</span>
+<span id="L198">198     MeanCompatibleRewardKernel.sampledCumulativeReward]</span>
+<span id="L199">199 </span>
+<span id="L200">200 theorem measurable_globalSampledCumulativeReturnDeviationSum</span>
+<span id="L201">201     (mdp : MDP State Action) (policy : MarkovPolicy mdp)</span>
+<span id="L202">202     (initialState : Measure State) (episodes : Nat) :</span>
+<span id="L203">203     Measurable</span>
+<span id="L204">204       (mdp.globalSampledCumulativeReturnDeviationSum</span>
+<span id="L205">205         policy initialState episodes) := by</span>
+<span id="L206">206   exact (mdp.measurable_sampledCumulativeReturnDeviationSum policy episodes).add</span>
+<span id="L207">207     (mdp.measurable_initialPolicyValueDeviationSum</span>
+<span id="L208">208       policy initialState episodes)</span>
+<span id="L209">209 </span>
+<span id="L210">210 /-- Honest same-space proxy for the two globally centered batch components. -/</span>
+<span id="L211">211 noncomputable def iidGlobalSampledCumulativeReturnDeviationVarianceProxy</span>
+<span id="L212">212     (mdp : MDP State Action) (episodes : Nat)</span>
+<span id="L213">213     (rewardBound rewardVarianceProxy : NNReal) : NNReal :=</span>
+<span id="L214">214   ((mdp.iidSampledCumulativeReturnDeviationVarianceProxy</span>
+<span id="L215">215       episodes rewardBound rewardVarianceProxy).sqrt +</span>
+<span id="L216">216     (mdp.iidInitialPolicyValueDeviationVarianceProxy</span>
+<span id="L217">217       episodes rewardBound).sqrt) ^ 2</span>
+<span id="L218">218 </span>
+<span id="L219">219 namespace MeanCompatibleRewardKernel</span>
+<span id="L220">220 </span>
+<span id="L221">221 variable {mdp : MDP State Action}</span>
+<span id="L222">222 </span>
+<span id="L223">223 theorem iIndepFun_initialPolicyValueDeviationAtEpisode</span>
+<span id="L224">224     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L225">225     (policy : MarkovPolicy mdp) (initialState : Measure State)</span>
+<span id="L226">226     [IsProbabilityMeasure initialState] (episodes : Nat) :</span>
+<span id="L227">227     ProbabilityTheory.iIndepFun</span>
+<span id="L228">228       (fun episode trajectories =&gt;</span>
+<span id="L229">229         mdp.initialPolicyValueDeviationAtEpisode</span>
+<span id="L230">230           policy initialState episode trajectories)</span>
+<span id="L231">231       (source.iidStochasticTrajectoryFamilyMeasure</span>
+<span id="L232">232         policy initialState episodes) := by</span>
+<span id="L233">233   unfold iidStochasticTrajectoryFamilyMeasure</span>
+<span id="L234">234   exact ProbabilityTheory.iIndepFun_pi fun _episode =&gt;</span>
+<span id="L235">235     (mdp.measurable_initialPolicyValueDeviation</span>
+<span id="L236">236       policy initialState).aemeasurable</span>
+<span id="L237">237 </span>
+<span id="L238">238 theorem initialPolicyValueDeviationAtEpisode_hasSubgaussianMGF</span>
+<span id="L239">239     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L240">240     (policy : MarkovPolicy mdp) (initialState : Measure State)</span>
+<span id="L241">241     [IsProbabilityMeasure initialState]</span>
+<span id="L242">242     (rewardBound : NNReal)</span>
+<span id="L243">243     (hrewardBound : ∀ state action,</span>
+<span id="L244">244       |mdp.reward state action| ≤ (rewardBound : Real))</span>
+<span id="L245">245     {episodes : Nat} (episode : Fin episodes) :</span>
+<span id="L246">246     ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L247">247       (mdp.initialPolicyValueDeviationAtEpisode</span>
+<span id="L248">248         policy initialState episode)</span>
+<span id="L249">249       (mdp.initialPolicyValueVarianceProxy rewardBound)</span>
+<span id="L250">250       (source.iidStochasticTrajectoryFamilyMeasure</span>
+<span id="L251">251         policy initialState episodes) := by</span>
+<span id="L252">252   have hbase :=</span>
+<span id="L253">253     source.stochasticTrajectoryMeasure_initialPolicyValueDeviation_hasSubgaussianMGF</span>
+<span id="L254">254       policy initialState rewardBound hrewardBound</span>
+<span id="L255">255   rw [← source.iidStochasticTrajectoryFamilyMeasure_map_eval</span>
+<span id="L256">256     policy initialState episode] at hbase</span>
+<span id="L257">257   have hlift := ProbabilityTheory.HasSubgaussianMGF.of_map</span>
+<span id="L258">258     (μ := source.iidStochasticTrajectoryFamilyMeasure</span>
+<span id="L259">259       policy initialState episodes)</span>
+<span id="L260">260     (Y := Function.eval episode)</span>
+<span id="L261">261     (X := mdp.initialPolicyValueDeviation policy initialState)</span>
+<span id="L262">262     (measurable_pi_apply episode).aemeasurable hbase</span>
+<span id="L263">263   simpa [MDP.initialPolicyValueDeviationAtEpisode,</span>
+<span id="L264">264     Function.comp_def] using hlift</span>
+<span id="L265">265 </span>
+<span id="L266">266 theorem iidStochasticTrajectoryFamilyMeasure_initialPolicyValueDeviationSum_hasSubgaussianMGF</span>
+<span id="L267">267     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L268">268     (policy : MarkovPolicy mdp) (initialState : Measure State)</span>
+<span id="L269">269     [IsProbabilityMeasure initialState]</span>
+<span id="L270">270     (episodes : Nat) (rewardBound : NNReal)</span>
+<span id="L271">271     (hrewardBound : ∀ state action,</span>
+<span id="L272">272       |mdp.reward state action| ≤ (rewardBound : Real)) :</span>
+<span id="L273">273     ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L274">274       (mdp.initialPolicyValueDeviationSum</span>
+<span id="L275">275         policy initialState episodes)</span>
+<span id="L276">276       (mdp.iidInitialPolicyValueDeviationVarianceProxy</span>
+<span id="L277">277         episodes rewardBound)</span>
+<span id="L278">278       (source.iidStochasticTrajectoryFamilyMeasure</span>
+<span id="L279">279         policy initialState episodes) := by</span>
+<span id="L280">280   have hindep := source.iIndepFun_initialPolicyValueDeviationAtEpisode</span>
+<span id="L281">281     policy initialState episodes</span>
+<span id="L282">282   have hsum := ProbabilityTheory.HasSubgaussianMGF.sum_of_iIndepFun</span>
+<span id="L283">283     (s := (Finset.univ : Finset (Fin episodes))) hindep</span>
+<span id="L284">284     (c := fun _episode =&gt; mdp.initialPolicyValueVarianceProxy rewardBound)</span>
+<span id="L285">285     (fun episode _ =&gt;</span>
+<span id="L286">286       source.initialPolicyValueDeviationAtEpisode_hasSubgaussianMGF</span>
+<span id="L287">287         policy initialState rewardBound hrewardBound episode)</span>
+<span id="L288">288   simpa [MDP.initialPolicyValueDeviationSum,</span>
+<span id="L289">289     MDP.iidInitialPolicyValueDeviationVarianceProxy] using hsum</span>
+<span id="L290">290 </span>
+<span id="L291">291 theorem iidStochasticTrajectoryFamilyMeasure_globalSampledCumulativeReturnDeviationSum_hasSubgaussianMGF</span>
+<span id="L292">292     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L293">293     [Nonempty Action]</span>
+<span id="L294">294     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L295">295     (policy : MarkovPolicy mdp) (initialState : Measure State)</span>
+<span id="L296">296     [IsProbabilityMeasure initialState]</span>
+<span id="L297">297     (episodes : Nat) (rewardBound rewardVarianceProxy : NNReal)</span>
+<span id="L298">298     (hrewardBound : ∀ state action,</span>
+<span id="L299">299       |mdp.reward state action| ≤ (rewardBound : Real))</span>
+<span id="L300">300     (law : source.UniformSubgaussianRewardLaw rewardVarianceProxy) :</span>
+<span id="L301">301     ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L302">302       (mdp.globalSampledCumulativeReturnDeviationSum</span>
+<span id="L303">303         policy initialState episodes)</span>
+<span id="L304">304       (mdp.iidGlobalSampledCumulativeReturnDeviationVarianceProxy</span>
+<span id="L305">305         episodes rewardBound rewardVarianceProxy)</span>
+<span id="L306">306       (source.iidStochasticTrajectoryFamilyMeasure</span>
+<span id="L307">307         policy initialState episodes) := by</span>
+<span id="L308">308   have hreturn :=</span>
+<span id="L309">309     source.iidStochasticTrajectoryFamilyMeasure_sampledCumulativeReturnDeviationSum_hasSubgaussianMGF</span>
+<span id="L310">310       policy initialState episodes rewardBound rewardVarianceProxy</span>
+<span id="L311">311       hrewardBound law</span>
+<span id="L312">312   have hvalue :=</span>
+<span id="L313">313     source.iidStochasticTrajectoryFamilyMeasure_initialPolicyValueDeviationSum_hasSubgaussianMGF</span>
+<span id="L314">314       policy initialState episodes rewardBound hrewardBound</span>
+<span id="L315">315   simpa [MDP.globalSampledCumulativeReturnDeviationSum,</span>
+<span id="L316">316     MDP.iidGlobalSampledCumulativeReturnDeviationVarianceProxy] using</span>
+<span id="L317">317     hreturn.add hvalue</span>
+<span id="L318">318 </span>
+<span id="L319">319 end MeanCompatibleRewardKernel</span>
+<span id="L320">320 end MDP</span>
+<span id="L321">321 </span>
+<span id="L322">322 namespace AdaptiveStochasticEpisodeBatchSource</span>
+<span id="L323">323 </span>
+<span id="L324">324 /-- Explicit measurability of the history-selected globally centered batch return. -/</span>
+<span id="L325">325 class GlobalReturnMeasurability</span>
+<span id="L326">326     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L327">327     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L328">328     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) :</span>
+<span id="L329">329     Prop where</span>
+<span id="L330">330   measurable_successorGlobalReturnDeviation : ∀ n,</span>
+<span id="L331">331     Measurable fun pair :</span>
+<span id="L332">332         StochasticEpisodeBatchPrefix mdp episodes n ×</span>
+<span id="L333">333           StochasticEpisodeBatch mdp episodes =&gt;</span>
+<span id="L334">334       mdp.globalSampledCumulativeReturnDeviationSum</span>
+<span id="L335">335         (source.successorPolicy n pair.1) initialState episodes pair.2</span>
+<span id="L336">336 </span>
+<span id="L337">337 /-- Dynamic globally centered return on a prefix/next-batch pair. -/</span>
+<span id="L338">338 noncomputable def successorGlobalReturnDeviation</span>
+<span id="L339">339     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L340">340     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L341">341     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L342">342     (n : Nat)</span>
+<span id="L343">343     (pair : StochasticEpisodeBatchPrefix mdp episodes n ×</span>
+<span id="L344">344       StochasticEpisodeBatch mdp episodes) : Real :=</span>
+<span id="L345">345   mdp.globalSampledCumulativeReturnDeviationSum</span>
+<span id="L346">346     (source.successorPolicy n pair.1) initialState episodes pair.2</span>
+<span id="L347">347 </span>
+<span id="L348">348 theorem measurable_successorGlobalReturnDeviation</span>
+<span id="L349">349     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L350">350     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L351">351     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L352">352     [source.GlobalReturnMeasurability] (n : Nat) :</span>
+<span id="L353">353     Measurable (source.successorGlobalReturnDeviation n) := by</span>
+<span id="L354">354   exact GlobalReturnMeasurability.measurable_successorGlobalReturnDeviation n</span>
+<span id="L355">355 </span>
+<span id="L356">356 /-- Selected conditional law of the globally centered next-batch return. -/</span>
+<span id="L357">357 noncomputable def successorGlobalReturnDeviationKernel</span>
+<span id="L358">358     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L359">359     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L360">360     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L361">361     (n : Nat) :</span>
+<span id="L362">362     ProbabilityTheory.Kernel</span>
+<span id="L363">363       (StochasticEpisodeBatchPrefix mdp episodes n) Real :=</span>
+<span id="L364">364   (ProbabilityTheory.Kernel.retainedInputKernel (source.batchKernel n)).map</span>
+<span id="L365">365     (source.successorGlobalReturnDeviation n)</span>
+<span id="L366">366 </span>
+<span id="L367">367 instance instSuccessorGlobalReturnDeviationKernelIsMarkov</span>
+<span id="L368">368     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L369">369     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L370">370     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L371">371     [source.GlobalReturnMeasurability] (n : Nat) :</span>
+<span id="L372">372     ProbabilityTheory.IsMarkovKernel</span>
+<span id="L373">373       (source.successorGlobalReturnDeviationKernel n) := by</span>
+<span id="L374">374   unfold successorGlobalReturnDeviationKernel</span>
+<span id="L375">375   exact ProbabilityTheory.Kernel.IsMarkovKernel.map _</span>
+<span id="L376">376     (source.measurable_successorGlobalReturnDeviation n)</span>
+<span id="L377">377 </span>
+<span id="L378">378 theorem successorGlobalReturnDeviationKernel_apply</span>
+<span id="L379">379     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L380">380     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L381">381     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L382">382     [source.GlobalReturnMeasurability]</span>
+<span id="L383">383     (n : Nat) (history : StochasticEpisodeBatchPrefix mdp episodes n) :</span>
+<span id="L384">384     source.successorGlobalReturnDeviationKernel n history =</span>
+<span id="L385">385       (source.rewardSource.iidStochasticTrajectoryFamilyMeasure</span>
+<span id="L386">386         (source.successorPolicy n history) initialState episodes).map</span>
+<span id="L387">387           (mdp.globalSampledCumulativeReturnDeviationSum</span>
+<span id="L388">388             (source.successorPolicy n history) initialState episodes) := by</span>
+<span id="L389">389   unfold successorGlobalReturnDeviationKernel</span>
+<span id="L390">390   rw [ProbabilityTheory.Kernel.map_apply</span>
+<span id="L391">391       (f := source.successorGlobalReturnDeviation n)</span>
+<span id="L392">392       (ProbabilityTheory.Kernel.retainedInputKernel (source.batchKernel n))</span>
+<span id="L393">393       (source.measurable_successorGlobalReturnDeviation n) history,</span>
+<span id="L394">394     ProbabilityTheory.Kernel.retainedInputKernel_apply]</span>
+<span id="L395">395   calc</span>
+<span id="L396">396     Measure.map (source.successorGlobalReturnDeviation n)</span>
+<span id="L397">397           (Measure.map (Prod.mk history) (source.batchKernel n history)) =</span>
+<span id="L398">398         Measure.map</span>
+<span id="L399">399           ((source.successorGlobalReturnDeviation n) ∘ Prod.mk history)</span>
+<span id="L400">400           (source.batchKernel n history) :=</span>
+<span id="L401">401       Measure.map_map</span>
+<span id="L402">402         (source.measurable_successorGlobalReturnDeviation n)</span>
+<span id="L403">403         (measurable_const.prodMk measurable_id)</span>
+<span id="L404">404     _ = (source.rewardSource.iidStochasticTrajectoryFamilyMeasure</span>
+<span id="L405">405           (source.successorPolicy n history) initialState episodes).map</span>
+<span id="L406">406             (mdp.globalSampledCumulativeReturnDeviationSum</span>
+<span id="L407">407               (source.successorPolicy n history) initialState episodes) := by</span>
+<span id="L408">408       rw [source.batchKernel_eq_iidStochasticTrajectoryFamilyMeasure]</span>
+<span id="L409">409       rfl</span>
+<span id="L410">410 </span>
+<span id="L411">411 /-- Trajectory-level globally centered return at successor coordinate `n + 1`. -/</span>
+<span id="L412">412 noncomputable def successorGlobalReturnDeviationAt</span>
+<span id="L413">413     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L414">414     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L415">415     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L416">416     (n : Nat) (trajectory : StochasticEpisodeBatchTrajectory mdp episodes) : Real :=</span>
+<span id="L417">417   source.successorGlobalReturnDeviation n</span>
+<span id="L418">418     (Preorder.frestrictLe n trajectory, trajectory (n + 1))</span>
+<span id="L419">419 </span>
+<span id="L420">420 theorem measurable_successorGlobalReturnDeviationAt</span>
+<span id="L421">421     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L422">422     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L423">423     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L424">424     [source.GlobalReturnMeasurability] (n : Nat) :</span>
+<span id="L425">425     Measurable (source.successorGlobalReturnDeviationAt n) := by</span>
+<span id="L426">426   exact (source.measurable_successorGlobalReturnDeviation n).comp</span>
+<span id="L427">427     ((Preorder.measurable_frestrictLe n).prodMk</span>
+<span id="L428">428       (measurable_pi_apply (n + 1)))</span>
+<span id="L429">429 </span>
+<span id="L430">430 theorem trajectoryMeasure_condDistrib_successorGlobalReturnDeviationAt</span>
+<span id="L431">431     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L432">432     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L433">433     [StandardBorelSpace (StochasticEpisodeBatch mdp episodes)]</span>
+<span id="L434">434     [Nonempty (StochasticEpisodeBatch mdp episodes)]</span>
+<span id="L435">435     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L436">436     [source.GlobalReturnMeasurability] (n : Nat) :</span>
+<span id="L437">437     ProbabilityTheory.condDistrib</span>
+<span id="L438">438         (source.successorGlobalReturnDeviationAt n)</span>
+<span id="L439">439         (Preorder.frestrictLe n) source.trajectoryMeasure =ᵐ[</span>
+<span id="L440">440           source.trajectoryMeasure.map (Preorder.frestrictLe n)]</span>
+<span id="L441">441       source.successorGlobalReturnDeviationKernel n := by</span>
+<span id="L442">442   exact</span>
+<span id="L443">443     ProbabilityTheory.Kernel.condDistrib_dynamic_map_ae_eq_of_pair_map_eq_compProd</span>
+<span id="L444">444       source.trajectoryMeasure</span>
+<span id="L445">445       (Preorder.frestrictLe n)</span>
+<span id="L446">446       (fun trajectory : StochasticEpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L447">447         trajectory (n + 1))</span>
+<span id="L448">448       (source.batchKernel n)</span>
+<span id="L449">449       (source.successorGlobalReturnDeviation n)</span>
+<span id="L450">450       (Preorder.measurable_frestrictLe n)</span>
+<span id="L451">451       (measurable_pi_apply (n + 1))</span>
+<span id="L452">452       (source.measurable_successorGlobalReturnDeviation n)</span>
+<span id="L453">453       (source.trajectoryMeasure_prefix_compProd n).symm</span>
+<span id="L454">454 </span>
+<span id="L455">455 theorem condExpKernel_map_successorGlobalReturnDeviationAt_eq</span>
+<span id="L456">456     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L457">457     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L458">458     [StandardBorelSpace (StochasticEpisodeBatch mdp episodes)]</span>
+<span id="L459">459     [Nonempty (StochasticEpisodeBatch mdp episodes)]</span>
+<span id="L460">460     [StandardBorelSpace (StochasticEpisodeBatchTrajectory mdp episodes)]</span>
+<span id="L461">461     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L462">462     [source.GlobalReturnMeasurability] (n : Nat) :</span>
+<span id="L463">463     Filter.Eventually</span>
+<span id="L464">464       (fun trajectory : StochasticEpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L465">465         Measure.map (source.successorGlobalReturnDeviationAt n)</span>
+<span id="L466">466             (ProbabilityTheory.condExpKernel source.trajectoryMeasure</span>
+<span id="L467">467               ((inferInstance : MeasurableSpace</span>
+<span id="L468">468                 (StochasticEpisodeBatchPrefix mdp episodes n)).comap</span>
+<span id="L469">469                   (Preorder.frestrictLe n)) trajectory) =</span>
+<span id="L470">470           source.successorGlobalReturnDeviationKernel n</span>
+<span id="L471">471             (Preorder.frestrictLe n trajectory))</span>
+<span id="L472">472       (ae (source.trajectoryMeasure.trim</span>
+<span id="L473">473         (Preorder.measurable_frestrictLe n).comap_le)) := by</span>
+<span id="L474">474   exact</span>
+<span id="L475">475     ConditionalExpectationReward.condExpKernel_map_eq_of_condDistrib_ae_eq_real_trim</span>
+<span id="L476">476       source.trajectoryMeasure</span>
+<span id="L477">477       (source.successorGlobalReturnDeviationAt n)</span>
+<span id="L478">478       (Preorder.frestrictLe n)</span>
+<span id="L479">479       (source.measurable_successorGlobalReturnDeviationAt n)</span>
+<span id="L480">480       (Preorder.measurable_frestrictLe n)</span>
+<span id="L481">481       (source.successorGlobalReturnDeviationKernel n)</span>
+<span id="L482">482       (source.trajectoryMeasure_condDistrib_successorGlobalReturnDeviationAt n)</span>
+<span id="L483">483 </span>
+<span id="L484">484 /-- Prefix process that deliberately leaves coordinate zero uncharged. -/</span>
+<span id="L485">485 noncomputable def successorGlobalReturnPrefixIncrement</span>
+<span id="L486">486     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L487">487     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L488">488     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes) :</span>
+<span id="L489">489     (round : Nat) → StochasticEpisodeBatchPrefix mdp episodes round → Real</span>
+<span id="L490">490   | 0, _history =&gt; 0</span>
+<span id="L491">491   | n + 1, history =&gt;</span>
+<span id="L492">492       source.successorGlobalReturnDeviation n</span>
+<span id="L493">493         (Preorder.frestrictLe₂</span>
+<span id="L494">494           (π := fun _ : Nat =&gt; StochasticEpisodeBatch mdp episodes)</span>
+<span id="L495">495           (Nat.le_succ n) history,</span>
+<span id="L496">496         history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩)</span>
+<span id="L497">497 </span>
+<span id="L498">498 theorem measurable_successorGlobalReturnPrefixIncrement</span>
+<span id="L499">499     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L500">500     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L501">501     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L502">502     [source.GlobalReturnMeasurability] (round : Nat) :</span>
+<span id="L503">503     Measurable (source.successorGlobalReturnPrefixIncrement round) := by</span>
+<span id="L504">504   cases round with</span>
+<span id="L505">505   | zero =&gt;</span>
+<span id="L506">506       simpa only [successorGlobalReturnPrefixIncrement] using</span>
+<span id="L507">507         (measurable_const : Measurable</span>
+<span id="L508">508           (fun _ : StochasticEpisodeBatchPrefix mdp episodes 0 =&gt; (0 : Real)))</span>
+<span id="L509">509   | succ n =&gt;</span>
+<span id="L510">510       exact (source.measurable_successorGlobalReturnDeviation n).comp</span>
+<span id="L511">511         ((Preorder.measurable_frestrictLe₂</span>
+<span id="L512">512           (X := fun _ : Nat =&gt; StochasticEpisodeBatch mdp episodes)</span>
+<span id="L513">513           (Nat.le_succ n)).prodMk</span>
+<span id="L514">514             (measurable_pi_apply</span>
+<span id="L515">515               (⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩ : Finset.Iic (n + 1))))</span>
+<span id="L516">516 </span>
+<span id="L517">517 noncomputable def successorGlobalReturnIncrement</span>
+<span id="L518">518     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L519">519     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L520">520     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L521">521     (round : Nat)</span>
+<span id="L522">522     (trajectory : StochasticEpisodeBatchTrajectory mdp episodes) : Real :=</span>
+<span id="L523">523   source.successorGlobalReturnPrefixIncrement round</span>
+<span id="L524">524     (Preorder.frestrictLe round trajectory)</span>
+<span id="L525">525 </span>
+<span id="L526">526 theorem successorGlobalReturnIncrement_stronglyAdapted_piLE</span>
+<span id="L527">527     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L528">528     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L529">529     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L530">530     [source.GlobalReturnMeasurability] :</span>
+<span id="L531">531     StronglyAdapted</span>
+<span id="L532">532       (Filtration.piLE</span>
+<span id="L533">533         (X := fun _ : Nat =&gt; StochasticEpisodeBatch mdp episodes))</span>
+<span id="L534">534       source.successorGlobalReturnIncrement := by</span>
+<span id="L535">535   intro round</span>
+<span id="L536">536   rw [Filtration.piLE_eq_comap_frestrictLe]</span>
+<span id="L537">537   exact ((source.measurable_successorGlobalReturnPrefixIncrement round).comp</span>
+<span id="L538">538     (Measurable.of_comap_le le_rfl)).stronglyMeasurable</span>
+<span id="L539">539 </span>
+<span id="L540">540 theorem successorGlobalReturnIncrement_succ_hasCondSubgaussianMGF</span>
+<span id="L541">541     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L542">542     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L543">543     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L544">544     [Nonempty Action]</span>
+<span id="L545">545     [StandardBorelSpace (StochasticEpisodeBatch mdp episodes)]</span>
+<span id="L546">546     [Nonempty (StochasticEpisodeBatch mdp episodes)]</span>
+<span id="L547">547     [StandardBorelSpace (StochasticEpisodeBatchTrajectory mdp episodes)]</span>
+<span id="L548">548     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L549">549     [source.GlobalReturnMeasurability]</span>
+<span id="L550">550     (n : Nat) (rewardBound rewardVarianceProxy : NNReal)</span>
+<span id="L551">551     (hrewardBound : ∀ state action,</span>
+<span id="L552">552       |mdp.reward state action| ≤ (rewardBound : Real))</span>
+<span id="L553">553     (law : source.rewardSource.UniformSubgaussianRewardLaw</span>
+<span id="L554">554       rewardVarianceProxy) :</span>
+<span id="L555">555     ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L556">556       (Filtration.piLE</span>
+<span id="L557">557         (X := fun _ : Nat =&gt; StochasticEpisodeBatch mdp episodes) n)</span>
+<span id="L558">558       ((Filtration.piLE</span>
+<span id="L559">559         (X := fun _ : Nat =&gt; StochasticEpisodeBatch mdp episodes)).le n)</span>
+<span id="L560">560       (source.successorGlobalReturnIncrement (n + 1))</span>
+<span id="L561">561       (mdp.iidGlobalSampledCumulativeReturnDeviationVarianceProxy</span>
+<span id="L562">562         episodes rewardBound rewardVarianceProxy)</span>
+<span id="L563">563       source.trajectoryMeasure := by</span>
+<span id="L564">564   let prefixMap : StochasticEpisodeBatchTrajectory mdp episodes →</span>
+<span id="L565">565       StochasticEpisodeBatchPrefix mdp episodes n := Preorder.frestrictLe n</span>
+<span id="L566">566   let X := source.successorGlobalReturnDeviationAt n</span>
+<span id="L567">567   let target : StochasticEpisodeBatchTrajectory mdp episodes → Measure Real :=</span>
+<span id="L568">568     fun trajectory =&gt;</span>
+<span id="L569">569       source.successorGlobalReturnDeviationKernel n (prefixMap trajectory)</span>
+<span id="L570">570   let mcond : MeasurableSpace</span>
+<span id="L571">571       (StochasticEpisodeBatchTrajectory mdp episodes) :=</span>
+<span id="L572">572     (inferInstance : MeasurableSpace</span>
+<span id="L573">573       (StochasticEpisodeBatchPrefix mdp episodes n)).comap prefixMap</span>
+<span id="L574">574   have hmcond : mcond ≤ MeasurableSpace.pi := by</span>
+<span id="L575">575     simpa [mcond, prefixMap] using</span>
+<span id="L576">576       (Preorder.measurable_frestrictLe</span>
+<span id="L577">577         (X := fun _ : Nat =&gt; StochasticEpisodeBatch mdp episodes) n).comap_le</span>
+<span id="L578">578   have hspace :</span>
+<span id="L579">579       Filtration.piLE</span>
+<span id="L580">580           (X := fun _ : Nat =&gt; StochasticEpisodeBatch mdp episodes) n =</span>
+<span id="L581">581         mcond := by</span>
+<span id="L582">582     simpa [mcond, prefixMap] using</span>
+<span id="L583">583       (Filtration.piLE_eq_comap_frestrictLe</span>
+<span id="L584">584         (X := fun _ : Nat =&gt; StochasticEpisodeBatch mdp episodes) n)</span>
+<span id="L585">585   have hkernel : Filter.Eventually</span>
+<span id="L586">586       (fun trajectory : StochasticEpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L587">587         @Measure.map (StochasticEpisodeBatchTrajectory mdp episodes) Real</span>
+<span id="L588">588             MeasurableSpace.pi inferInstance X</span>
+<span id="L589">589             ((@ProbabilityTheory.condExpKernel</span>
+<span id="L590">590               (StochasticEpisodeBatchTrajectory mdp episodes)</span>
+<span id="L591">591               MeasurableSpace.pi _ source.trajectoryMeasure _ mcond)</span>
+<span id="L592">592                 trajectory) =</span>
+<span id="L593">593           target trajectory)</span>
+<span id="L594">594       (ae (source.trajectoryMeasure.trim hmcond)) := by</span>
+<span id="L595">595     simpa [X, target, prefixMap, mcond] using</span>
+<span id="L596">596       source.condExpKernel_map_successorGlobalReturnDeviationAt_eq n</span>
+<span id="L597">597   have htarget : Filter.Eventually</span>
+<span id="L598">598       (fun trajectory : StochasticEpisodeBatchTrajectory mdp episodes =&gt;</span>
+<span id="L599">599         ProbabilityTheory.HasSubgaussianMGF id</span>
+<span id="L600">600           (mdp.iidGlobalSampledCumulativeReturnDeviationVarianceProxy</span>
+<span id="L601">601             episodes rewardBound rewardVarianceProxy)</span>
+<span id="L602">602           (target trajectory))</span>
+<span id="L603">603       (ae (source.trajectoryMeasure.trim hmcond)) := by</span>
+<span id="L604">604     exact Filter.Eventually.of_forall fun trajectory =&gt; by</span>
+<span id="L605">605       let history := prefixMap trajectory</span>
+<span id="L606">606       let policy := source.successorPolicy n history</span>
+<span id="L607">607       have hbase :=</span>
+<span id="L608">608         source.rewardSource.iidStochasticTrajectoryFamilyMeasure_globalSampledCumulativeReturnDeviationSum_hasSubgaussianMGF</span>
+<span id="L609">609           policy initialState episodes rewardBound rewardVarianceProxy</span>
+<span id="L610">610           hrewardBound law</span>
+<span id="L611">611       have hid :=</span>
+<span id="L612">612         (ProbabilityTheory.HasSubgaussianMGF.id_map_iff</span>
+<span id="L613">613           (mdp.measurable_globalSampledCumulativeReturnDeviationSum</span>
+<span id="L614">614             policy initialState episodes).aemeasurable).2 hbase</span>
+<span id="L615">615       change ProbabilityTheory.HasSubgaussianMGF id</span>
+<span id="L616">616         (mdp.iidGlobalSampledCumulativeReturnDeviationVarianceProxy</span>
+<span id="L617">617           episodes rewardBound rewardVarianceProxy)</span>
+<span id="L618">618         (source.successorGlobalReturnDeviationKernel n history)</span>
+<span id="L619">619       rw [source.successorGlobalReturnDeviationKernel_apply n history]</span>
+<span id="L620">620       exact hid</span>
+<span id="L621">621   have hcondComap :=</span>
+<span id="L622">622     ConditionalExpectationReward.hasCondSubgaussianMGF_of_condExpKernel_map_eq</span>
+<span id="L623">623       (mOmega := MeasurableSpace.pi)</span>
+<span id="L624">624       source.trajectoryMeasure mcond hmcond X</span>
+<span id="L625">625       (mdp.iidGlobalSampledCumulativeReturnDeviationVarianceProxy</span>
+<span id="L626">626         episodes rewardBound rewardVarianceProxy)</span>
+<span id="L627">627       (source.measurable_successorGlobalReturnDeviationAt n)</span>
+<span id="L628">628       target hkernel htarget</span>
+<span id="L629">629   have hcond :=</span>
+<span id="L630">630     ConditionalExpectationReward.hasCondSubgaussianMGF_congr_measurableSpace</span>
+<span id="L631">631       (mOmega := MeasurableSpace.pi)</span>
+<span id="L632">632       source.trajectoryMeasure mcond</span>
+<span id="L633">633       (Filtration.piLE</span>
+<span id="L634">634         (X := fun _ : Nat =&gt; StochasticEpisodeBatch mdp episodes) n)</span>
+<span id="L635">635       hmcond</span>
+<span id="L636">636       ((Filtration.piLE</span>
+<span id="L637">637         (X := fun _ : Nat =&gt; StochasticEpisodeBatch mdp episodes)).le n)</span>
+<span id="L638">638       hspace.symm X</span>
+<span id="L639">639       (mdp.iidGlobalSampledCumulativeReturnDeviationVarianceProxy</span>
+<span id="L640">640         episodes rewardBound rewardVarianceProxy)</span>
+<span id="L641">641       hcondComap</span>
+<span id="L642">642   simpa [successorGlobalReturnIncrement,</span>
+<span id="L643">643     successorGlobalReturnPrefixIncrement,</span>
+<span id="L644">644     successorGlobalReturnDeviationAt, X, prefixMap,</span>
+<span id="L645">645     Preorder.frestrictLe_apply, Preorder.frestrictLe₂_apply] using hcond</span>
+<span id="L646">646 </span>
+<span id="L647">647 /-- Zero plus `rounds` successor proxies. -/</span>
+<span id="L648">648 noncomputable def cumulativeSuccessorGlobalReturnVarianceProxy</span>
+<span id="L649">649     (mdp : MDP State Action) (rounds episodes : Nat)</span>
+<span id="L650">650     (rewardBound rewardVarianceProxy : NNReal) : NNReal :=</span>
+<span id="L651">651   ∑ t ∈ Finset.range (rounds + 1),</span>
+<span id="L652">652     match t with</span>
+<span id="L653">653     | 0 =&gt; 0</span>
+<span id="L654">654     | _ + 1 =&gt;</span>
+<span id="L655">655         mdp.iidGlobalSampledCumulativeReturnDeviationVarianceProxy</span>
+<span id="L656">656           episodes rewardBound rewardVarianceProxy</span>
+<span id="L657">657 </span>
+<span id="L658">658 theorem cumulativeSuccessorGlobalReturnVarianceProxy_eq</span>
+<span id="L659">659     (mdp : MDP State Action) (rounds episodes : Nat)</span>
+<span id="L660">660     (rewardBound rewardVarianceProxy : NNReal) :</span>
+<span id="L661">661     cumulativeSuccessorGlobalReturnVarianceProxy mdp rounds episodes</span>
+<span id="L662">662         rewardBound rewardVarianceProxy =</span>
+<span id="L663">663       (rounds : NNReal) *</span>
+<span id="L664">664         mdp.iidGlobalSampledCumulativeReturnDeviationVarianceProxy</span>
+<span id="L665">665           episodes rewardBound rewardVarianceProxy := by</span>
+<span id="L666">666   simp [cumulativeSuccessorGlobalReturnVarianceProxy,</span>
+<span id="L667">667     Finset.sum_range_succ&#x27;]</span>
+<span id="L668">668 </span>
+<span id="L669">669 /-- Cumulative globally centered deviation over successor coordinates only. -/</span>
+<span id="L670">670 noncomputable def cumulativeSuccessorGlobalReturnDeviation</span>
+<span id="L671">671     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L672">672     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L673">673     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L674">674     (rounds : Nat)</span>
+<span id="L675">675     (trajectory : StochasticEpisodeBatchTrajectory mdp episodes) : Real :=</span>
+<span id="L676">676   ∑ t ∈ Finset.range (rounds + 1),</span>
+<span id="L677">677     source.successorGlobalReturnIncrement t trajectory</span>
+<span id="L678">678 </span>
+<span id="L679">679 theorem trajectoryMeasure_cumulativeSuccessorGlobalReturnDeviation_abs_tail_le</span>
+<span id="L680">680     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L681">681     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L682">682     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L683">683     [Nonempty Action]</span>
+<span id="L684">684     [StandardBorelSpace (StochasticEpisodeBatch mdp episodes)]</span>
+<span id="L685">685     [Nonempty (StochasticEpisodeBatch mdp episodes)]</span>
+<span id="L686">686     [StandardBorelSpace (StochasticEpisodeBatchTrajectory mdp episodes)]</span>
+<span id="L687">687     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L688">688     [source.GlobalReturnMeasurability]</span>
+<span id="L689">689     (rounds : Nat) (rewardBound rewardVarianceProxy : NNReal)</span>
+<span id="L690">690     (hrewardBound : ∀ state action,</span>
+<span id="L691">691       |mdp.reward state action| ≤ (rewardBound : Real))</span>
+<span id="L692">692     (law : source.rewardSource.UniformSubgaussianRewardLaw</span>
+<span id="L693">693       rewardVarianceProxy)</span>
+<span id="L694">694     (htotal : 0 &lt;</span>
+<span id="L695">695       ((cumulativeSuccessorGlobalReturnVarianceProxy mdp rounds episodes</span>
+<span id="L696">696         rewardBound rewardVarianceProxy : NNReal) : Real))</span>
+<span id="L697">697     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_le_one : delta ≤ 1) :</span>
+<span id="L698">698     source.trajectoryMeasure</span>
+<span id="L699">699         {trajectory |</span>
+<span id="L700">700           Concentration.subGaussianSumConfidenceRadius</span>
+<span id="L701">701               (cumulativeSuccessorGlobalReturnVarianceProxy mdp rounds episodes</span>
+<span id="L702">702                 rewardBound rewardVarianceProxy) delta ≤</span>
+<span id="L703">703             |source.cumulativeSuccessorGlobalReturnDeviation</span>
+<span id="L704">704               rounds trajectory|} ≤</span>
+<span id="L705">705       ENNReal.ofReal delta := by</span>
+<span id="L706">706   let F := Filtration.piLE</span>
+<span id="L707">707     (X := fun _ : Nat =&gt; StochasticEpisodeBatch mdp episodes)</span>
+<span id="L708">708   let cY : Nat → NNReal := fun t =&gt;</span>
+<span id="L709">709     match t with</span>
+<span id="L710">710     | 0 =&gt; 0</span>
+<span id="L711">711     | _ + 1 =&gt;</span>
+<span id="L712">712         mdp.iidGlobalSampledCumulativeReturnDeviationVarianceProxy</span>
+<span id="L713">713           episodes rewardBound rewardVarianceProxy</span>
+<span id="L714">714   have hadapted : StronglyAdapted F source.successorGlobalReturnIncrement := by</span>
+<span id="L715">715     simpa [F] using source.successorGlobalReturnIncrement_stronglyAdapted_piLE</span>
+<span id="L716">716   have hzero : ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L717">717       (source.successorGlobalReturnIncrement 0) (cY 0)</span>
+<span id="L718">718       source.trajectoryMeasure := by</span>
+<span id="L719">719     change ProbabilityTheory.HasSubgaussianMGF (fun _ =&gt; 0) 0</span>
+<span id="L720">720       source.trajectoryMeasure</span>
+<span id="L721">721     exact ProbabilityTheory.HasSubgaussianMGF.fun_zero</span>
+<span id="L722">722   have hsucc : ∀ i, i &lt; (rounds + 1) - 1 →</span>
+<span id="L723">723       ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L724">724         (F i) (F.le i) (source.successorGlobalReturnIncrement (i + 1))</span>
+<span id="L725">725         (cY (i + 1)) source.trajectoryMeasure := by</span>
+<span id="L726">726     intro i _hi</span>
+<span id="L727">727     simpa [F, cY] using</span>
+<span id="L728">728       source.successorGlobalReturnIncrement_succ_hasCondSubgaussianMGF</span>
+<span id="L729">729         i rewardBound rewardVarianceProxy hrewardBound law</span>
+<span id="L730">730   have hvariance :</span>
+<span id="L731">731       0 &lt; ((((Finset.range (rounds + 1)).sum cY : NNReal) : Real)) := by</span>
+<span id="L732">732     simpa [cY, cumulativeSuccessorGlobalReturnVarianceProxy] using htotal</span>
+<span id="L733">733   simpa [cumulativeSuccessorGlobalReturnVarianceProxy,</span>
+<span id="L734">734     cumulativeSuccessorGlobalReturnDeviation, cY] using</span>
+<span id="L735">735     (Concentration.condSubGaussian_sum_abs_tail_ennreal_delta_of_stronglyAdapted</span>
+<span id="L736">736       hadapted hzero (rounds + 1) hsucc hvariance</span>
+<span id="L737">737       delta hdelta hdelta_le_one)</span>
+<span id="L738">738 </span>
+<span id="L739">739 /-- The selected successor policy after observing coordinates through `n`. -/</span>
+<span id="L740">740 noncomputable def successorPolicyAt</span>
+<span id="L741">741     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L742">742     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L743">743     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L744">744     (trajectory : StochasticEpisodeBatchTrajectory mdp episodes) (n : Nat) :</span>
+<span id="L745">745     MarkovPolicy mdp :=</span>
+<span id="L746">746   source.successorPolicy n (Preorder.frestrictLe n trajectory)</span>
+<span id="L747">747 </span>
+<span id="L748">748 /-- Optimal expected return under the supplied initial-state law. -/</span>
+<span id="L749">749 noncomputable def optimalInitialExpectedReturn</span>
+<span id="L750">750     [Nonempty Action]</span>
+<span id="L751">751     (mdp : MDP State Action) (initialState : Measure State) : Real :=</span>
+<span id="L752">752   integral initialState</span>
+<span id="L753">753     (mdp.optimalValueAt 0 (Nat.zero_le mdp.horizon))</span>
+<span id="L754">754 </span>
+<span id="L755">755 /-- Sum of selected successor-policy expected regrets. -/</span>
+<span id="L756">756 noncomputable def successorExpectedCumulativeRegret</span>
+<span id="L757">757     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L758">758     [IsProbabilityMeasure initialState] [Nonempty Action] {episodes : Nat}</span>
+<span id="L759">759     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L760">760     (trajectory : StochasticEpisodeBatchTrajectory mdp episodes)</span>
+<span id="L761">761     (rounds : Nat) : Real :=</span>
+<span id="L762">762   ∑ round : Fin rounds,</span>
+<span id="L763">763     (source.successorPolicyAt trajectory round).expectedRegret initialState</span>
+<span id="L764">764 </span>
+<span id="L765">765 /-- Average selected successor-policy expected regret per adaptive round. -/</span>
+<span id="L766">766 noncomputable def successorExpectedAverageRegret</span>
+<span id="L767">767     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L768">768     [IsProbabilityMeasure initialState] [Nonempty Action] {episodes : Nat}</span>
+<span id="L769">769     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L770">770     (trajectory : StochasticEpisodeBatchTrajectory mdp episodes)</span>
+<span id="L771">771     (rounds : Nat) : Real :=</span>
+<span id="L772">772   source.successorExpectedCumulativeRegret trajectory rounds / (rounds : Real)</span>
+<span id="L773">773 </span>
+<span id="L774">774 /-- Realized regret of all sampled successor batches. -/</span>
+<span id="L775">775 noncomputable def realizedSuccessorCumulativeRegret</span>
+<span id="L776">776     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L777">777     [IsProbabilityMeasure initialState] [Nonempty Action] {episodes : Nat}</span>
+<span id="L778">778     (_source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L779">779     (trajectory : StochasticEpisodeBatchTrajectory mdp episodes)</span>
+<span id="L780">780     (rounds : Nat) : Real :=</span>
+<span id="L781">781   ∑ round : Fin rounds,</span>
+<span id="L782">782     ((episodes : Real) * optimalInitialExpectedReturn mdp initialState -</span>
+<span id="L783">783       mdp.sampledCumulativeRewardSum episodes</span>
+<span id="L784">784         (trajectory ((round : Nat) + 1)))</span>
+<span id="L785">785 </span>
+<span id="L786">786 /-- Realized successor regret averaged over sampled episodes and rounds. -/</span>
+<span id="L787">787 noncomputable def realizedSuccessorAverageRegret</span>
+<span id="L788">788     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L789">789     [IsProbabilityMeasure initialState] [Nonempty Action] {episodes : Nat}</span>
+<span id="L790">790     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L791">791     (trajectory : StochasticEpisodeBatchTrajectory mdp episodes)</span>
+<span id="L792">792     (rounds : Nat) : Real :=</span>
+<span id="L793">793   source.realizedSuccessorCumulativeRegret trajectory rounds /</span>
+<span id="L794">794     ((episodes : Real) * (rounds : Real))</span>
+<span id="L795">795 </span>
+<span id="L796">796 /-- The adaptive successor increment is actual batch return minus policy mean. -/</span>
+<span id="L797">797 theorem successorGlobalReturnIncrement_succ_eq</span>
+<span id="L798">798     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L799">799     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L800">800     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L801">801     (trajectory : StochasticEpisodeBatchTrajectory mdp episodes) (n : Nat) :</span>
+<span id="L802">802     source.successorGlobalReturnIncrement (n + 1) trajectory =</span>
+<span id="L803">803       mdp.sampledCumulativeRewardSum episodes (trajectory (n + 1)) -</span>
+<span id="L804">804         (episodes : Real) *</span>
+<span id="L805">805           integral initialState</span>
+<span id="L806">806             ((source.successorPolicyAt trajectory n).valueAt</span>
+<span id="L807">807               0 (Nat.zero_le mdp.horizon)) := by</span>
+<span id="L808">808   simp only [successorGlobalReturnIncrement,</span>
+<span id="L809">809     successorGlobalReturnPrefixIncrement, successorGlobalReturnDeviation,</span>
+<span id="L810">810     successorPolicyAt, Preorder.frestrictLe_apply]</span>
+<span id="L811">811   exact mdp.globalSampledCumulativeReturnDeviationSum_eq</span>
+<span id="L812">812     (source.successorPolicy n (Preorder.frestrictLe n trajectory))</span>
+<span id="L813">813     initialState episodes (trajectory (n + 1))</span>
+<span id="L814">814 </span>
+<span id="L815">815 /-- The cumulative deviation is the finite sum over successor coordinates. -/</span>
+<span id="L816">816 theorem cumulativeSuccessorGlobalReturnDeviation_eq_fin_sum</span>
+<span id="L817">817     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L818">818     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L819">819     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L820">820     (trajectory : StochasticEpisodeBatchTrajectory mdp episodes)</span>
+<span id="L821">821     (rounds : Nat) :</span>
+<span id="L822">822     source.cumulativeSuccessorGlobalReturnDeviation rounds trajectory =</span>
+<span id="L823">823       ∑ round : Fin rounds,</span>
+<span id="L824">824         source.successorGlobalReturnIncrement ((round : Nat) + 1) trajectory := by</span>
+<span id="L825">825   unfold cumulativeSuccessorGlobalReturnDeviation</span>
+<span id="L826">826   rw [Finset.sum_range_succ&#x27;]</span>
+<span id="L827">827   simp only [successorGlobalReturnIncrement,</span>
+<span id="L828">828     successorGlobalReturnPrefixIncrement, add_zero]</span>
+<span id="L829">829   rw [Finset.sum_fin_eq_sum_range]</span>
+<span id="L830">830   apply Finset.sum_congr rfl</span>
+<span id="L831">831   intro round hround</span>
+<span id="L832">832   have hround_lt : round &lt; rounds := Finset.mem_range.mp hround</span>
+<span id="L833">833   rw [dif_pos hround_lt]</span>
+<span id="L834">834 </span>
+<span id="L835">835 /-- Exact realized equals expected minus globally centered return deviation. -/</span>
+<span id="L836">836 theorem realizedSuccessorCumulativeRegret_eq_expected_sub_deviation</span>
+<span id="L837">837     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L838">838     [IsProbabilityMeasure initialState] [Nonempty Action] {episodes : Nat}</span>
+<span id="L839">839     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L840">840     (trajectory : StochasticEpisodeBatchTrajectory mdp episodes)</span>
+<span id="L841">841     (rounds : Nat) :</span>
+<span id="L842">842     source.realizedSuccessorCumulativeRegret trajectory rounds =</span>
+<span id="L843">843       (episodes : Real) *</span>
+<span id="L844">844           source.successorExpectedCumulativeRegret trajectory rounds -</span>
+<span id="L845">845         source.cumulativeSuccessorGlobalReturnDeviation rounds trajectory := by</span>
+<span id="L846">846   rw [source.cumulativeSuccessorGlobalReturnDeviation_eq_fin_sum]</span>
+<span id="L847">847   unfold realizedSuccessorCumulativeRegret successorExpectedCumulativeRegret</span>
+<span id="L848">848   calc</span>
+<span id="L849">849     (∑ round : Fin rounds,</span>
+<span id="L850">850         ((episodes : Real) * optimalInitialExpectedReturn mdp initialState -</span>
+<span id="L851">851           mdp.sampledCumulativeRewardSum episodes</span>
+<span id="L852">852             (trajectory ((round : Nat) + 1)))) =</span>
+<span id="L853">853         ∑ round : Fin rounds,</span>
+<span id="L854">854           ((episodes : Real) *</span>
+<span id="L855">855               (source.successorPolicyAt trajectory round).expectedRegret</span>
+<span id="L856">856                 initialState -</span>
+<span id="L857">857             source.successorGlobalReturnIncrement</span>
+<span id="L858">858               ((round : Nat) + 1) trajectory) := by</span>
+<span id="L859">859       apply Finset.sum_congr rfl</span>
+<span id="L860">860       intro round _hround</span>
+<span id="L861">861       rw [source.successorGlobalReturnIncrement_succ_eq]</span>
+<span id="L862">862       unfold MarkovPolicy.expectedRegret optimalInitialExpectedReturn</span>
+<span id="L863">863       rw [(source.successorPolicyAt trajectory round).integral_cumulativeReward_trajectoryMeasure_eq_integral_valueAt_zero]</span>
+<span id="L864">864       ring</span>
+<span id="L865">865     _ = (episodes : Real) *</span>
+<span id="L866">866           (∑ round : Fin rounds,</span>
+<span id="L867">867             (source.successorPolicyAt trajectory round).expectedRegret</span>
+<span id="L868">868               initialState) -</span>
+<span id="L869">869         ∑ round : Fin rounds,</span>
+<span id="L870">870           source.successorGlobalReturnIncrement</span>
+<span id="L871">871             ((round : Nat) + 1) trajectory := by</span>
+<span id="L872">872       rw [Finset.sum_sub_distrib, ← Finset.mul_sum]</span>
+<span id="L873">873 </span>
+<span id="L874">874 /-- Exact averaged form of the stochastic realized-regret decomposition. -/</span>
+<span id="L875">875 theorem realizedSuccessorAverageRegret_eq_expected_sub_deviation</span>
+<span id="L876">876     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L877">877     [IsProbabilityMeasure initialState] [Nonempty Action] {episodes : Nat}</span>
+<span id="L878">878     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L879">879     (trajectory : StochasticEpisodeBatchTrajectory mdp episodes)</span>
+<span id="L880">880     (rounds : Nat) (hrounds : 0 &lt; rounds) (hepisodes : 0 &lt; episodes) :</span>
+<span id="L881">881     source.realizedSuccessorAverageRegret trajectory rounds =</span>
+<span id="L882">882       source.successorExpectedAverageRegret trajectory rounds -</span>
+<span id="L883">883         source.cumulativeSuccessorGlobalReturnDeviation rounds trajectory /</span>
+<span id="L884">884           ((episodes : Real) * (rounds : Real)) := by</span>
+<span id="L885">885   have hroundsReal : (rounds : Real) ≠ 0 := by</span>
+<span id="L886">886     exact_mod_cast (ne_of_gt hrounds)</span>
+<span id="L887">887   have hepisodesReal : (episodes : Real) ≠ 0 := by</span>
+<span id="L888">888     exact_mod_cast (ne_of_gt hepisodes)</span>
+<span id="L889">889   rw [realizedSuccessorAverageRegret, successorExpectedAverageRegret,</span>
+<span id="L890">890     source.realizedSuccessorCumulativeRegret_eq_expected_sub_deviation]</span>
+<span id="L891">891   field_simp</span>
+<span id="L892">892 </span>
+<span id="L893">893 /-- Return-deviation event used by fixed-window stochastic regret transport. -/</span>
+<span id="L894">894 noncomputable def successorGlobalReturnDeviationBadEvent</span>
+<span id="L895">895     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L896">896     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L897">897     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L898">898     (rounds : Nat) (rewardBound rewardVarianceProxy : NNReal)</span>
+<span id="L899">899     (delta : Real) : Set (StochasticEpisodeBatchTrajectory mdp episodes) :=</span>
+<span id="L900">900   {trajectory |</span>
+<span id="L901">901     Concentration.subGaussianSumConfidenceRadius</span>
+<span id="L902">902         (cumulativeSuccessorGlobalReturnVarianceProxy mdp rounds episodes</span>
+<span id="L903">903           rewardBound rewardVarianceProxy) delta ≤</span>
+<span id="L904">904       |source.cumulativeSuccessorGlobalReturnDeviation rounds trajectory|}</span>
+<span id="L905">905 </span>
+<span id="L906">906 theorem measurable_cumulativeSuccessorGlobalReturnDeviation</span>
+<span id="L907">907     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L908">908     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L909">909     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L910">910     [source.GlobalReturnMeasurability] (rounds : Nat) :</span>
+<span id="L911">911     Measurable (source.cumulativeSuccessorGlobalReturnDeviation rounds) := by</span>
+<span id="L912">912   refine Finset.measurable_sum (Finset.range (rounds + 1)) fun t _ =&gt; ?_</span>
+<span id="L913">913   exact (((source.successorGlobalReturnIncrement_stronglyAdapted_piLE t).mono</span>
+<span id="L914">914     ((Filtration.piLE</span>
+<span id="L915">915       (X := fun _ : Nat =&gt; StochasticEpisodeBatch mdp episodes)).le t)).measurable)</span>
+<span id="L916">916 </span>
+<span id="L917">917 theorem measurableSet_successorGlobalReturnDeviationBadEvent</span>
+<span id="L918">918     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L919">919     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L920">920     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L921">921     [source.GlobalReturnMeasurability]</span>
+<span id="L922">922     (rounds : Nat) (rewardBound rewardVarianceProxy : NNReal)</span>
+<span id="L923">923     (delta : Real) :</span>
+<span id="L924">924     MeasurableSet (source.successorGlobalReturnDeviationBadEvent</span>
+<span id="L925">925       rounds rewardBound rewardVarianceProxy delta) := by</span>
+<span id="L926">926   exact measurableSet_le measurable_const</span>
+<span id="L927">927     (source.measurable_cumulativeSuccessorGlobalReturnDeviation rounds).abs</span>
+<span id="L928">928 </span>
+<span id="L929">929 theorem trajectoryMeasure_successorGlobalReturnDeviationBadEvent_le</span>
+<span id="L930">930     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L931">931     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L932">932     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L933">933     [Nonempty Action]</span>
+<span id="L934">934     [StandardBorelSpace (StochasticEpisodeBatch mdp episodes)]</span>
+<span id="L935">935     [Nonempty (StochasticEpisodeBatch mdp episodes)]</span>
+<span id="L936">936     [StandardBorelSpace (StochasticEpisodeBatchTrajectory mdp episodes)]</span>
+<span id="L937">937     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L938">938     [source.GlobalReturnMeasurability]</span>
+<span id="L939">939     (rounds : Nat) (rewardBound rewardVarianceProxy : NNReal)</span>
+<span id="L940">940     (hrewardBound : ∀ state action,</span>
+<span id="L941">941       |mdp.reward state action| ≤ (rewardBound : Real))</span>
+<span id="L942">942     (law : source.rewardSource.UniformSubgaussianRewardLaw rewardVarianceProxy)</span>
+<span id="L943">943     (htotal : 0 &lt;</span>
+<span id="L944">944       ((cumulativeSuccessorGlobalReturnVarianceProxy mdp rounds episodes</span>
+<span id="L945">945         rewardBound rewardVarianceProxy : NNReal) : Real))</span>
+<span id="L946">946     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_le_one : delta ≤ 1) :</span>
+<span id="L947">947     source.trajectoryMeasure</span>
+<span id="L948">948         (source.successorGlobalReturnDeviationBadEvent</span>
+<span id="L949">949           rounds rewardBound rewardVarianceProxy delta) ≤</span>
+<span id="L950">950       ENNReal.ofReal delta := by</span>
+<span id="L951">951   simpa only [successorGlobalReturnDeviationBadEvent] using</span>
+<span id="L952">952     source.trajectoryMeasure_cumulativeSuccessorGlobalReturnDeviation_abs_tail_le</span>
+<span id="L953">953       rounds rewardBound rewardVarianceProxy hrewardBound law htotal</span>
+<span id="L954">954       delta hdelta hdelta_le_one</span>
+<span id="L955">955 </span>
+<span id="L956">956 /--</span>
+<span id="L957">957 Combine a caller-supplied count/optimism event with the stochastic return event.</span>
+<span id="L958">958 -/</span>
+<span id="L959">959 theorem trajectoryMeasure_expected_to_realized_successor_average_regret_transport</span>
+<span id="L960">960     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L961">961     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L962">962     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L963">963     [Nonempty Action]</span>
+<span id="L964">964     [StandardBorelSpace (StochasticEpisodeBatch mdp episodes)]</span>
+<span id="L965">965     [Nonempty (StochasticEpisodeBatch mdp episodes)]</span>
+<span id="L966">966     [StandardBorelSpace (StochasticEpisodeBatchTrajectory mdp episodes)]</span>
+<span id="L967">967     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L968">968     [source.GlobalReturnMeasurability]</span>
+<span id="L969">969     (rounds : Nat) (hrounds : 0 &lt; rounds) (hepisodes : 0 &lt; episodes)</span>
+<span id="L970">970     (rewardBound rewardVarianceProxy : NNReal)</span>
+<span id="L971">971     (hrewardBound : ∀ state action,</span>
+<span id="L972">972       |mdp.reward state action| ≤ (rewardBound : Real))</span>
+<span id="L973">973     (law : source.rewardSource.UniformSubgaussianRewardLaw rewardVarianceProxy)</span>
+<span id="L974">974     (htotal : 0 &lt;</span>
+<span id="L975">975       ((cumulativeSuccessorGlobalReturnVarianceProxy mdp rounds episodes</span>
+<span id="L976">976         rewardBound rewardVarianceProxy : NNReal) : Real))</span>
+<span id="L977">977     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_le_one : delta ≤ 1)</span>
+<span id="L978">978     (countBadEvent : Set (StochasticEpisodeBatchTrajectory mdp episodes))</span>
+<span id="L979">979     (expectedBound : Real)</span>
+<span id="L980">980     (Good : StochasticEpisodeBatchTrajectory mdp episodes → Prop)</span>
+<span id="L981">981     (hcountMeasurable : MeasurableSet countBadEvent)</span>
+<span id="L982">982     (hcountTail : source.trajectoryMeasure countBadEvent ≤ ENNReal.ofReal delta)</span>
+<span id="L983">983     (hcountGood : ∀ trajectory, trajectory ∉ countBadEvent →</span>
+<span id="L984">984       Good trajectory ∧</span>
+<span id="L985">985         source.successorExpectedAverageRegret trajectory rounds ≤ expectedBound) :</span>
+<span id="L986">986     let returnBadEvent := source.successorGlobalReturnDeviationBadEvent</span>
+<span id="L987">987       rounds rewardBound rewardVarianceProxy delta</span>
+<span id="L988">988     let combinedBadEvent := countBadEvent ∪ returnBadEvent</span>
+<span id="L989">989     MeasurableSet combinedBadEvent ∧</span>
+<span id="L990">990       source.trajectoryMeasure combinedBadEvent ≤</span>
+<span id="L991">991         ENNReal.ofReal delta + ENNReal.ofReal delta ∧</span>
+<span id="L992">992       ∀ trajectory, trajectory ∉ combinedBadEvent →</span>
+<span id="L993">993         Good trajectory ∧</span>
+<span id="L994">994           source.realizedSuccessorAverageRegret trajectory rounds ≤</span>
+<span id="L995">995             expectedBound +</span>
+<span id="L996">996               Concentration.subGaussianSumConfidenceRadius</span>
+<span id="L997">997                   (cumulativeSuccessorGlobalReturnVarianceProxy</span>
+<span id="L998">998                     mdp rounds episodes rewardBound rewardVarianceProxy) delta /</span>
+<span id="L999">999                 ((episodes : Real) * (rounds : Real)) := by</span>
+<span id="L1000">1000   let returnBadEvent := source.successorGlobalReturnDeviationBadEvent</span>
+<span id="L1001">1001     rounds rewardBound rewardVarianceProxy delta</span>
+<span id="L1002">1002   let combinedBadEvent := countBadEvent ∪ returnBadEvent</span>
+<span id="L1003">1003   have hreturnMeasurable : MeasurableSet returnBadEvent := by</span>
+<span id="L1004">1004     simpa [returnBadEvent] using</span>
+<span id="L1005">1005       source.measurableSet_successorGlobalReturnDeviationBadEvent</span>
+<span id="L1006">1006         rounds rewardBound rewardVarianceProxy delta</span>
+<span id="L1007">1007   have hreturnTail : source.trajectoryMeasure returnBadEvent ≤</span>
+<span id="L1008">1008       ENNReal.ofReal delta := by</span>
+<span id="L1009">1009     simpa [returnBadEvent] using</span>
+<span id="L1010">1010       source.trajectoryMeasure_successorGlobalReturnDeviationBadEvent_le</span>
+<span id="L1011">1011         rounds rewardBound rewardVarianceProxy hrewardBound law htotal</span>
+<span id="L1012">1012         delta hdelta hdelta_le_one</span>
+<span id="L1013">1013   refine ⟨hcountMeasurable.union hreturnMeasurable, ?_, ?_⟩</span>
+<span id="L1014">1014   · exact (measure_union_le countBadEvent returnBadEvent).trans</span>
+<span id="L1015">1015       (add_le_add hcountTail hreturnTail)</span>
+<span id="L1016">1016   · intro trajectory htrajectory</span>
+<span id="L1017">1017     have hnotCount : trajectory ∉ countBadEvent := by</span>
+<span id="L1018">1018       exact fun hmem =&gt; htrajectory (Set.mem_union_left returnBadEvent hmem)</span>
+<span id="L1019">1019     have hnotReturn : trajectory ∉ returnBadEvent := by</span>
+<span id="L1020">1020       exact fun hmem =&gt; htrajectory (Set.mem_union_right countBadEvent hmem)</span>
+<span id="L1021">1021     have hgood := hcountGood trajectory hnotCount</span>
+<span id="L1022">1022     refine ⟨hgood.1, ?_⟩</span>
+<span id="L1023">1023     have hdeviation :</span>
+<span id="L1024">1024         |source.cumulativeSuccessorGlobalReturnDeviation rounds trajectory| &lt;</span>
+<span id="L1025">1025           Concentration.subGaussianSumConfidenceRadius</span>
+<span id="L1026">1026             (cumulativeSuccessorGlobalReturnVarianceProxy</span>
+<span id="L1027">1027               mdp rounds episodes rewardBound rewardVarianceProxy) delta := by</span>
+<span id="L1028">1028       exact lt_of_not_ge (by simpa [returnBadEvent,</span>
+<span id="L1029">1029         successorGlobalReturnDeviationBadEvent] using hnotReturn)</span>
+<span id="L1030">1030     have hdenom : 0 &lt; (episodes : Real) * (rounds : Real) := by</span>
+<span id="L1031">1031       positivity</span>
+<span id="L1032">1032     rw [source.realizedSuccessorAverageRegret_eq_expected_sub_deviation</span>
+<span id="L1033">1033       trajectory rounds hrounds hepisodes]</span>
+<span id="L1034">1034     have hnoise :</span>
+<span id="L1035">1035         -source.cumulativeSuccessorGlobalReturnDeviation rounds trajectory /</span>
+<span id="L1036">1036             ((episodes : Real) * (rounds : Real)) ≤</span>
+<span id="L1037">1037           Concentration.subGaussianSumConfidenceRadius</span>
+<span id="L1038">1038               (cumulativeSuccessorGlobalReturnVarianceProxy</span>
+<span id="L1039">1039                 mdp rounds episodes rewardBound rewardVarianceProxy) delta /</span>
+<span id="L1040">1040             ((episodes : Real) * (rounds : Real)) := by</span>
+<span id="L1041">1041       apply div_le_div_of_nonneg_right _ hdenom.le</span>
+<span id="L1042">1042       exact (neg_le_abs _).trans hdeviation.le</span>
+<span id="L1043">1043     calc</span>
+<span id="L1044">1044       source.successorExpectedAverageRegret trajectory rounds -</span>
+<span id="L1045">1045           source.cumulativeSuccessorGlobalReturnDeviation rounds trajectory /</span>
+<span id="L1046">1046             ((episodes : Real) * (rounds : Real)) =</span>
+<span id="L1047">1047         source.successorExpectedAverageRegret trajectory rounds +</span>
+<span id="L1048">1048           (-source.cumulativeSuccessorGlobalReturnDeviation rounds trajectory /</span>
+<span id="L1049">1049             ((episodes : Real) * (rounds : Real))) := by ring</span>
+<span id="L1050">1050       _ ≤ source.successorExpectedAverageRegret trajectory rounds +</span>
+<span id="L1051">1051           Concentration.subGaussianSumConfidenceRadius</span>
+<span id="L1052">1052               (cumulativeSuccessorGlobalReturnVarianceProxy</span>
+<span id="L1053">1053                 mdp rounds episodes rewardBound rewardVarianceProxy) delta /</span>
+<span id="L1054">1054             ((episodes : Real) * (rounds : Real)) :=</span>
+<span id="L1055">1055         add_le_add le_rfl hnoise</span>
+<span id="L1056">1056       _ ≤ expectedBound +</span>
+<span id="L1057">1057           Concentration.subGaussianSumConfidenceRadius</span>
+<span id="L1058">1058               (cumulativeSuccessorGlobalReturnVarianceProxy</span>
+<span id="L1059">1059                 mdp rounds episodes rewardBound rewardVarianceProxy) delta /</span>
+<span id="L1060">1060             ((episodes : Real) * (rounds : Real)) :=</span>
+<span id="L1061">1061         add_le_add hgood.2 le_rfl</span>
+<span id="L1062">1062 </span>
+<span id="L1063">1063 end AdaptiveStochasticEpisodeBatchSource</span>
+<span id="L1064">1064 </span>
+<span id="L1065">1065 end FiniteHorizonRL</span>
+<span id="L1066">1066 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

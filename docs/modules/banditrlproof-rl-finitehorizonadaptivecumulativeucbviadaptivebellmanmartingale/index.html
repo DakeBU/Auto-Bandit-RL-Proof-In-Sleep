@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Finite-horizon RL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>RL.<wbr>Finite<wbr>Horizon<wbr>Adaptive<wbr>Cumulative<wbr>UCBVI<wbr>Adaptive<wbr>Bellman<wbr>Martingale</h1>
+  <p class="lede">Predictable episode-level Bellman innovations on the recurrent source.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html"><code>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/finite-horizon-rl/index.html">9. Finite-horizon reinforcement learning</a></dd></div>
+    <div><dt>Declarations</dt><dd>31</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-rl-finitehorizonadaptivecumulativeucbvibellmaninnovation/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVIBellmanInnovation</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof-rl-finitehorizonadaptivecumulativeucbviregretdecomposition/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVIRegretDecomposition</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-bd3a4d3c94ce">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.measurable_prod_of_countable_left</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A function with a countable discrete left coordinate is measurable when
+every right section is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_prod_of_countable_left {Alpha Beta Gamma : Type*} [MeasurableSpace Alpha] [MeasurableSpace Beta] [MeasurableSpace Gamma] [Countable Alpha] [MeasurableSingletonClass Alpha] (f : Alpha × Beta -&gt; Gamma) (hf : <span class="kw">forall</span> a, Measurable (<span class="kw">fun</span> b =&gt; f (a, b))) : Measurable f</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L14">Source line 14</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2c1c2f029a5f">
+  <summary>
+    <span class="kind">lemma</span>
+    <code>MeasureTheory.Measure.compProd_map_dependent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Mapping a composition-product by a function which may also read the
+conditioning coordinate is the composition-product with the correspondingly
+mapped copy-and-kernel law.</p>
+    <pre class="lean-code"><code><span class="kw">lemma</span> compProd_map_dependent {Alpha : Type u} {Beta : Type v} {Gamma : Type w} [MeasurableSpace Alpha] [MeasurableSpace Beta] [MeasurableSpace Gamma] (mu : Measure Alpha) [SFinite mu] (kappa : ProbabilityTheory.Kernel Alpha Beta) [ProbabilityTheory.IsSFiniteKernel kappa] (f : Alpha × Beta -&gt; Gamma) (hf : Measurable f) : (mu ⊗ₘ kappa).map (<span class="kw">fun</span> p =&gt; (p.<span class="num">1</span>, f p)) = mu ⊗ₘ ((ProbabilityTheory.Kernel.id ×ₖ kappa).map f)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L45">Source line 45</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f5d47a31ba16">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.trajectoryMeasure_condDistrib_historyBatchStatistic</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Conditional law of a statistic which may depend measurably on both the
+observed prefix and the newly generated batch.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> trajectoryMeasure_condDistrib_historyBatchStatistic {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} [StandardBorelSpace (EpisodeBatch mdp episodes)] (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (n : Nat) (statistic : EpisodeBatchPrefix mdp episodes n × EpisodeBatch mdp episodes -&gt; Real) (hstatistic : Measurable statistic) : ProbabilityTheory.condDistrib (<span class="kw">fun</span> trajectory : EpisodeBatchTrajectory mdp episodes =&gt; statistic (Preorder.frestrictLe n trajectory, trajectory (n + <span class="num">1</span>))) (Preorder.frestrictLe n) source.trajectoryMeasure =ᵐ[ source.trajectoryMeasure.map (Preorder.frestrictLe n)] ((ProbabilityTheory.Kernel.id ×ₖ source.batchKernel n).map statistic)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L83">Source line 83</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-755c082a909a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.condExpKernel_map_historyBatchStatistic_eq_batchKernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Trimmed conditional-expectation-kernel version of the preceding dependent
+statistic law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> condExpKernel_map_historyBatchStatistic_eq_batchKernel {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} [StandardBorelSpace (EpisodeBatch mdp episodes)] [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)] (source : AdaptiveEpisodeBatchSource mdp initialState episodes) (n : Nat) (statistic : EpisodeBatchPrefix mdp episodes n × EpisodeBatch mdp episodes -&gt; Real) (hstatistic : Measurable statistic) : Filter.Eventually (<span class="kw">fun</span> trajectory : EpisodeBatchTrajectory mdp episodes =&gt; Measure.map (<span class="kw">fun</span> path : EpisodeBatchTrajectory mdp episodes =&gt; statistic (Preorder.frestrictLe n path, path (n + <span class="num">1</span>))) (ProbabilityTheory.condExpKernel source.trajectoryMeasure ((inferInstance : MeasurableSpace (EpisodeBatchPrefix mdp episodes n)).comap (Preorder.frestrictLe n)) trajectory) = ((ProbabilityTheory.Kernel.id ×ₖ source.batchKernel n).map statistic) (Preorder.frestrictLe n trajectory)) (ae (source.trajectoryMeasure.trim (Preorder.measurable_frestrictLe n).comap_le))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L175">Source line 175</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8dc13a5e50ad">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.bellmanInflation</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Inflation factor generated by the `z/(32H)` self-bounding term.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> bellmanInflation (mdp : MDP State Action) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L222">Source line 222</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8ba56b2b5ec4">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.bellmanWeightCap</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Uniform cap for every finite-horizon power of `bellmanInflation`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> bellmanWeightCap : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L226">Source line 226</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-06d9b5ce01cb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.bellmanInflation_one_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bellmanInflation_one_le (mdp : MDP State Action) : <span class="num">1</span> &lt;= bellmanInflation mdp</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L228">Source line 228</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0518813617cd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.bellmanInflation_pow_le_cap</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bellmanInflation_pow_le_cap (mdp : MDP State Action) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) : bellmanInflation mdp ^ remaining &lt;= bellmanWeightCap</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L235">Source line 235</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f32725e8e4b2">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.normalizedBellmanWeight</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Normalized chronological recursion weight.  Multiplication by the global
+cap `32/31` later recovers the exact factor `alpha^(stage+1)`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> normalizedBellmanWeight (mdp : MDP State Action) (stage : Fin mdp.horizon) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L271">Source line 271</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-24b8855a512f">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.normalizedBellmanChargeWeight</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Weight of the local charge at a chronological stage.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> normalizedBellmanChargeWeight (mdp : MDP State Action) (stage : Fin mdp.horizon) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L276">Source line 276</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-16feab418cf4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.normalizedBellmanChargeWeight_mem_Icc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> normalizedBellmanChargeWeight_mem_Icc (mdp : MDP State Action) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (stage : Fin mdp.horizon) : normalizedBellmanChargeWeight mdp stage ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L280">Source line 280</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c9281103e3b8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.normalizedBellmanChargeWeight_mul_inflation</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> normalizedBellmanChargeWeight_mul_inflation (mdp : MDP State Action) (stage : Fin mdp.horizon) : normalizedBellmanChargeWeight mdp stage * bellmanInflation mdp = normalizedBellmanWeight mdp stage</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L301">Source line 301</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ffb3b6350d8e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.normalizedBellmanWeight_mem_Icc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> normalizedBellmanWeight_mem_Icc (mdp : MDP State Action) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (stage : Fin mdp.horizon) : normalizedBellmanWeight mdp stage ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L309">Source line 309</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-dfe6a22a23bf">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.clippedSuccessorGapFeatureOfSummaries</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The clipped, normalized and chronologically weighted continuation gap used
+by the predictable martingale.  Clipping is inactive on the joint confidence
+event; normalization keeps the global MGF range exactly `[0,H]`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> clippedSuccessorGapFeatureOfSummaries (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) (summaries : Fin (n + <span class="num">1</span>) -&gt; TransitionCountSummary mdp) (stage : Fin mdp.horizon) (state : State) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L333">Source line 333</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cd78cc38da32">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.clippedSuccessorGapFeatureOfSummaries_mem_Icc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The martingale feature is globally in `[0,H]`, independently of whether
+the statistical event holds.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> clippedSuccessorGapFeatureOfSummaries_mem_Icc (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) (summaries : Fin (n + <span class="num">1</span>) -&gt; TransitionCountSummary mdp) (stage : Fin mdp.horizon) (state : State) : clippedSuccessorGapFeatureOfSummaries mdp defaultState episodes delta n summaries stage state ∈ Set.Icc (<span class="num">0</span> : Real) mdp.horizon</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L351">Source line 351</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1bb39982ba71">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.successorBellmanStatisticOfSummaries</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Compensated batch statistic for one fixed discrete prefix-summary table.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> successorBellmanStatisticOfSummaries (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) (tilt : Real) (input : (Fin (n + <span class="num">1</span>) -&gt; TransitionCountSummary mdp) × EpisodeBatch mdp <span class="num">1</span>) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L378">Source line 378</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-43a1e5556da8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.measurable_successorBellmanStatisticOfSummaries</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_successorBellmanStatisticOfSummaries (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) (tilt : Real) : Measurable (successorBellmanStatisticOfSummaries mdp defaultState episodes delta n tilt)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L392">Source line 392</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f7e6f933d9d1">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.successorBellmanHistoryBatchStatistic</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The same statistic with the prefix summarized exactly as the recurrent
+planner summarizes it.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> successorBellmanHistoryBatchStatistic (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) (tilt : Real) (input : EpisodeBatchPrefix mdp <span class="num">1</span> n × EpisodeBatch mdp <span class="num">1</span>) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L412">Source line 412</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fd7404aa2488">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.measurable_successorBellmanHistoryBatchStatistic</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_successorBellmanHistoryBatchStatistic (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) (tilt : Real) : Measurable (successorBellmanHistoryBatchStatistic mdp defaultState episodes delta n tilt)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L419">Source line 419</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4955b4f64358">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentSuccessorBellmanInnovation_compensated_hasCondMGFUpperBoundAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A successor episode&#x27;s compensated, prefix-predictable Bellman innovation
+has conditional MGF at most one under the literal recurrent batch kernel.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> recurrentSuccessorBellmanInnovation_compensated_hasCondMGFUpperBoundAt {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] [StandardBorelSpace (EpisodeBatch mdp <span class="num">1</span>)] [StandardBorelSpace (EpisodeBatchTrajectory mdp <span class="num">1</span>)] (defaultState : State) (episodes : Nat) (delta : Real) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (n : Nat) (tilt : Real) : Concentration.HasCondMGFUpperBoundAt (BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.batchPrefixFiltration (mdp := mdp) <span class="num">1</span> n) ((BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.batchPrefixFiltration (mdp := mdp) <span class="num">1</span>).le n) (<span class="kw">fun</span> trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span> =&gt; successorBellmanHistoryBatchStatistic mdp defaultState episodes delta n tilt (Preorder.frestrictLe n trajectory, trajectory (n + <span class="num">1</span>))) <span class="num">1</span> <span class="num">0</span> (recurrentSource mdp initialState defaultState episodes delta |&gt;.trajectoryMeasure)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L433">Source line 433</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-27fc91501648">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.successorBellmanInnovationOfSummaries</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The un-compensated Bellman innovation of one successor episode, with the
+policy and clipped gap feature read from one fixed prefix-summary table.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> successorBellmanInnovationOfSummaries (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) (input : (Fin (n + <span class="num">1</span>) -&gt; TransitionCountSummary mdp) × EpisodeBatch mdp <span class="num">1</span>) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L581">Source line 581</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-84452b90b253">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.measurable_successorBellmanInnovationOfSummaries</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_successorBellmanInnovationOfSummaries (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) : Measurable (successorBellmanInnovationOfSummaries mdp defaultState episodes delta n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L594">Source line 594</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b017d57b1eed">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.successorBellmanInnovationOfHistoryBatch</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The successor Bellman innovation with the recurrent prefix summarized in
+exactly the same way as the generated source.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> successorBellmanInnovationOfHistoryBatch (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) (input : EpisodeBatchPrefix mdp <span class="num">1</span> n × EpisodeBatch mdp <span class="num">1</span>) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L614">Source line 614</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-65355809939a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.measurable_successorBellmanInnovationOfHistoryBatch</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_successorBellmanInnovationOfHistoryBatch (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (n : Nat) : Measurable (successorBellmanInnovationOfHistoryBatch mdp defaultState episodes delta n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L621">Source line 621</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4807e7bd1f61">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentBellmanInnovationPrefix</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Prefix-predictable Bellman innovation.  Coordinate zero is deliberately
+zero: the canonical initial episode is charged separately by its deterministic
+`H` envelope, while every successor coordinate uses its strict prefix.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> recurrentBellmanInnovationPrefix (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) : (round : Nat) -&gt; EpisodeBatchPrefix mdp <span class="num">1</span> round -&gt; Real | <span class="num">0</span>, _history =&gt; <span class="num">0</span> | n + <span class="num">1</span>, history =&gt; successorBellmanInnovationOfHistoryBatch mdp defaultState episodes delta n (Preorder.frestrictLe₂ (π := <span class="kw">fun</span> _ : Nat =&gt; EpisodeBatch mdp <span class="num">1</span>) (Nat.le_succ n) history, history ⟨n + <span class="num">1</span>, Finset.mem_Iic.mpr le_rfl⟩) <span class="kw">theorem</span> measurable_recurrentBellmanInnovationPrefix (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (round : Nat) : Measurable (recurrentBellmanInnovationPrefix mdp defaultState episodes delta round)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L634">Source line 634</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-80be6a7f641c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.measurable_recurrentBellmanInnovationPrefix</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_recurrentBellmanInnovationPrefix (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (round : Nat) : Measurable (recurrentBellmanInnovationPrefix mdp defaultState episodes delta round)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L646">Source line 646</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bacc84b13014">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentBellmanInnovationProcess</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Actual successor-episode Bellman innovation process on the generated
+recurrent trajectory.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> recurrentBellmanInnovationProcess (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta : Real) (round : Nat) (trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L666">Source line 666</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ac18e4d227d5">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentBellmanInnovationVarianceProcess</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Deterministic per-episode variance budget.  Coordinate zero is zero because
+its regret is paid separately; every successor episode has budget `H^3`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> recurrentBellmanInnovationVarianceProcess (mdp : MDP State Action) (round : Nat) (_trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span>) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L675">Source line 675</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a3e0c5e6b905">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentBellmanInnovation_compensated_stronglyAdapted</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> recurrentBellmanInnovation_compensated_stronglyAdapted (mdp : MDP State Action) (defaultState : State) (episodes : Nat) (delta tilt : Real) : StronglyAdapted (BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.batchPrefixFiltration (mdp := mdp) <span class="num">1</span>) (<span class="kw">fun</span> round trajectory =&gt; tilt * recurrentBellmanInnovationProcess mdp defaultState episodes delta round trajectory - (tilt ^ <span class="num">2</span> / <span class="num">8</span>) * recurrentBellmanInnovationVarianceProcess mdp round trajectory)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L682">Source line 682</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e96f3f95789a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentBellmanInnovation_zero_compensated_hasMGFUpperBoundAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Coordinate zero has the trivial compensated MGF certificate.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> recurrentBellmanInnovation_zero_compensated_hasMGFUpperBoundAt {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] (defaultState : State) (episodes : Nat) (delta tilt : Real) : Concentration.HasMGFUpperBoundAt (<span class="kw">fun</span> trajectory : EpisodeBatchTrajectory mdp <span class="num">1</span> =&gt; tilt * recurrentBellmanInnovationProcess mdp defaultState episodes delta <span class="num">0</span> trajectory - (tilt ^ <span class="num">2</span> / <span class="num">8</span>) * recurrentBellmanInnovationVarianceProcess mdp <span class="num">0</span> trajectory) <span class="num">1</span> <span class="num">0</span> (recurrentSource mdp initialState defaultState episodes delta |&gt;.trajectoryMeasure)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L717">Source line 717</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7d8ebe110ccc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.trajectoryMeasure_recurrentBellmanInnovation_sum_ge_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Fixed-tilt upper tail for the sum of the generated successor-episode
+Bellman innovations.  The source, prefix policy, and transition law are the
+same objects as in the recurrent planner.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> trajectoryMeasure_recurrentBellmanInnovation_sum_ge_le {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] [StandardBorelSpace (EpisodeBatch mdp <span class="num">1</span>)] [StandardBorelSpace (EpisodeBatchTrajectory mdp <span class="num">1</span>)] (defaultState : State) (episodes : Nat) (delta : Real) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (tilt threshold : Real) (htilt : <span class="num">0</span> &lt; tilt) : <span class="kw">let</span> source := recurrentSource mdp initialState defaultState episodes delta source.trajectoryMeasure {trajectory | threshold &lt;= (Finset.range episodes).sum (<span class="kw">fun</span> round =&gt; recurrentBellmanInnovationProcess mdp defaultState episodes delta round trajectory)} &lt;= ENNReal.ofReal (Real.exp (-tilt * threshold + (tilt ^ <span class="num">2</span> / <span class="num">8</span>) * ((episodes : Real) * ((mdp.horizon : Real) * (mdp.horizon : Real) ^ <span class="num">2</span>))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAdaptiveBellmanMartingale.lean.html#L742">Source line 742</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

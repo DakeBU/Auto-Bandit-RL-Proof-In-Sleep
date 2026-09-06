@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.ETCCondSubGaussianWitnesses · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.ETCCondSubGaussianWitnesses · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.ETCCondSubGaussianWitnesses · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · ETC</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>ETC<wbr>Cond<wbr>Sub<wbr>Gaussian<wbr>Witnesses</h1>
+  <p class="lede">This module packages the conditional reward-law witnesses needed to use the compiled Mathlib conditional sub-Gaussian concentration wrapper on ETC centered reward differences. It does not prove those witnesses from a concrete reward kernel or conditional expectation identity.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html"><code>BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/etc/index.html">3. Explore-Then-Commit</a></dd></div>
+    <div><dt>Declarations</dt><dd>24</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-algorithms-etccentereddiffrewardsubgaussian/index.html"><code>BanditRLProof.Algorithms.ETCCenteredDiffRewardSubGaussian</code></a>, <a href="../banditrlproof-algorithms-etcpairwisecenteredsubgaussiantail/index.html"><code>BanditRLProof.Algorithms.ETCPairwiseCenteredSubGaussianTail</code></a>, <a href="../banditrlproof-concentrationsubgaussian/index.html"><code>BanditRLProof.ConcentrationSubGaussian</code></a>, <a href="../banditrlproof-historyfiltration/index.html"><code>BanditRLProof.HistoryFiltration</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-etcboundedrewardinfinitepisource/index.html"><code>BanditRLProof.Algorithms.ETCBoundedRewardInfinitePiSource</code></a>, <a href="../banditrlproof-algorithms-etcboundedrewardsource/index.html"><code>BanditRLProof.Algorithms.ETCBoundedRewardSource</code></a>, <a href="../banditrlproof-algorithms-etcfinitearmrewardlaw/index.html"><code>BanditRLProof.Algorithms.ETCFiniteArmRewardLaw</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-2e2c7c3932b7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurable_centeredPairwiseRewardDiff_historyFiltrationSucc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Centered pairwise reward differences are measurable at time `t` with respect to
+the shifted generated history filtration.
+
+The shifted filtration contains action/reward observations with index `&lt; t+1`,
+so the reward coordinate at time `t` is available.  This proves only the
+adaptedness/measurability part of the conditional route; it does not prove any
+conditional MGF or conditional expectation identity.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_centeredPairwiseRewardDiff_historyFiltrationSucc {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (a : Fin K) (t : Nat) : @Measurable Omega Real (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward t) inferInstance (<span class="kw">fun</span> omega =&gt; ETC.centeredPairwiseRewardDiff spec model commitArm reward a t omega)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L28">Source line 28</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9d8aa2d183e7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.stronglyAdapted_centeredPairwiseRewardDiff_historyFiltrationSucc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The fixed-commit ETC centered reward-difference process is strongly adapted to
+the shifted generated history filtration.
+
+This discharges the `StronglyAdapted` witness field for the conditional
+centered-diff package under the local discrete history model.  Conditional MGF
+witnesses remain separate assumptions.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stronglyAdapted_centeredPairwiseRewardDiff_historyFiltrationSucc {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (a : Fin K) : MeasureTheory.StronglyAdapted (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward) (<span class="kw">fun</span> t omega =&gt; ETC.centeredPairwiseRewardDiff spec model commitArm reward a t omega)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L82">Source line 82</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-492f87b775dd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredReward_condExp_eq_zero_of_indep</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Independence-based conditional mean-zero source for one centered reward
+coordinate.
+
+If the sigma-algebra generated by the centered reward coordinate is independent
+of the conditioning sigma-algebra, and the centered reward has global integral
+zero, then its conditional expectation against that sigma-algebra is zero.  This
+is a thin ETC-shaped wrapper around Mathlib&#x27;s `condExp_indep_eq`; it does not
+derive the required independence or integral identity from a reward kernel.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredReward_condExp_eq_zero_of_indep {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (mcond : MeasurableSpace Omega) (hm : mcond &lt;= mOmega) (model : FiniteBanditModel K) (reward : Omega -&gt; RewardTrace Rat) (b : Fin K) (t : Nat) (hmeas : @Measurable Omega Real mOmega inferInstance (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t - model.mean b : Rat) : Real)))) (h_indep : ProbabilityTheory.Indep (MeasurableSpace.comap (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t - model.mean b : Rat) : Real))) inferInstance) mcond mu) (h_integral : MeasureTheory.integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t - model.mean b : Rat) : Real))) = <span class="num">0</span>) : Filter.EventuallyEq (MeasureTheory.ae mu) (MeasureTheory.condExp mcond mu (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t - model.mean b : Rat) : Real)))) (<span class="kw">fun</span> _omega : Omega =&gt; (<span class="num">0</span> : Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L116">Source line 116</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ed7ee391ffbc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredReward_condExp_historyFiltrationSucc_eq_zero_of_indep</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Shifted-history specialization of `centeredReward_condExp_eq_zero_of_indep`.
+
+This is the first compiled conditional mean-zero source for the fixed-commit
+ETC history filtration.  It still assumes the centered reward coordinate is
+independent of the shifted generated history sigma-algebra and has integral
+zero; later product-law work should discharge those two assumptions.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredReward_condExp_historyFiltrationSucc_eq_zero_of_indep {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, @Measurable Omega Rat mOmega inferInstance (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (b : Fin K) (t : Nat) (h_indep : ProbabilityTheory.Indep (MeasurableSpace.comap (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t - model.mean b : Rat) : Real))) inferInstance) (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward t) mu) (h_integral : MeasureTheory.integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t - model.mean b : Rat) : Real))) = <span class="num">0</span>) : Filter.EventuallyEq (MeasureTheory.ae mu) (MeasureTheory.condExp (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward t) mu (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t - model.mean b : Rat) : Real)))) (<span class="kw">fun</span> _omega : Omega =&gt; (<span class="num">0</span> : Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L172">Source line 172</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-72cbf26ecd38">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.indep_centeredReward_succ_pastReward_iSup_of_iIndepFun_reward</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Future centered reward coordinates are independent of the reward-only past
+sigma-algebra generated by earlier coordinates, provided the reward trace
+coordinates are mutually independent.
+
+This is a product-law/history-independence bridge for the conditional
+mean-zero route.  It deliberately targets only the reward-coordinate past
+`iSup`; adding the deterministic action generators from the local history
+filtration is a separate wrapper.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> indep_centeredReward_succ_pastReward_iSup_of_iIndepFun_reward {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) (model : FiniteBanditModel K) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, @Measurable Omega Rat mOmega inferInstance (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (h_reward_indep : ProbabilityTheory.iIndepFun (<span class="kw">fun</span> t omega =&gt; reward omega t) mu) (b : Fin K) (i : Nat) : ProbabilityTheory.Indep (MeasurableSpace.comap (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega (i + <span class="num">1</span>) - model.mean b : Rat) : Real))) inferInstance) (iSup <span class="kw">fun</span> j : Nat =&gt; iSup <span class="kw">fun</span> _h : j &lt;= i =&gt; MeasurableSpace.comap (<span class="kw">fun</span> omega : Omega =&gt; reward omega j) inferInstance) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L243">Source line 243</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2ca4bd844fcf">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.historyFiltrationSucc_actionWithCommit_le_pastReward_iSup</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">For a fixed-commit ETC action trace, the shifted generated history filtration
+is contained in the reward-only past sigma-algebra.
+
+The action generators are deterministic singleton preimages, hence either
+`univ` or `empty`; the reward generators at filtration level `i` are exactly
+coordinates `j &lt;= i`.  This is the missing deterministic-action bridge from the
+reward-only past independence leaf to the local `History.historyFiltrationSucc`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> historyFiltrationSucc_actionWithCommit_le_pastReward_iSup {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] (spec : ETC.Spec K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, @Measurable Omega Rat mOmega inferInstance (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (i : Nat) : (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward i : MeasurableSpace Omega) &lt;= (iSup <span class="kw">fun</span> j : Nat =&gt; iSup <span class="kw">fun</span> _h : j &lt;= i =&gt; MeasurableSpace.comap (<span class="kw">fun</span> omega : Omega =&gt; reward omega j) inferInstance)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L327">Source line 327</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-12a5e2e5c27a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.indep_centeredReward_succ_historyFiltrationSucc_of_iIndepFun_reward</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Future centered reward coordinates are independent of the full fixed-commit
+shifted history filtration when reward coordinates are mutually independent.
+
+This extends `indep_centeredReward_succ_pastReward_iSup_of_iIndepFun_reward`
+from the reward-only past to `History.historyFiltrationSucc` by the deterministic
+action-generator inclusion above.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> indep_centeredReward_succ_historyFiltrationSucc_of_iIndepFun_reward {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, @Measurable Omega Rat mOmega inferInstance (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (h_reward_indep : ProbabilityTheory.iIndepFun (<span class="kw">fun</span> t omega =&gt; reward omega t) mu) (b : Fin K) (i : Nat) : ProbabilityTheory.Indep (MeasurableSpace.comap (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega (i + <span class="num">1</span>) - model.mean b : Rat) : Real))) inferInstance) (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward i) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L433">Source line 433</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-df8345cf6638">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredReward_succ_condExp_historyFiltrationSucc_eq_zero_of_indep</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">One-step conditional mean-zero wrapper for Mathlib&#x27;s conditional tail API.
+
+Mathlib asks for the summand at `i + 1` to be conditionally controlled against
+filtration level `i`.  This theorem specializes the generic independence-based
+conditional expectation wrapper to that index shape.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredReward_succ_condExp_historyFiltrationSucc_eq_zero_of_indep {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, @Measurable Omega Rat mOmega inferInstance (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (b : Fin K) (i : Nat) (h_indep : ProbabilityTheory.Indep (MeasurableSpace.comap (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega (i + <span class="num">1</span>) - model.mean b : Rat) : Real))) inferInstance) (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward i) mu) (h_integral : MeasureTheory.integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega (i + <span class="num">1</span>) - model.mean b : Rat) : Real))) = <span class="num">0</span>) : Filter.EventuallyEq (MeasureTheory.ae mu) (MeasureTheory.condExp (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward i) mu (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega (i + <span class="num">1</span>) - model.mean b : Rat) : Real)))) (<span class="kw">fun</span> _omega : Omega =&gt; (<span class="num">0</span> : Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L475">Source line 475</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b952f8f67c1b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredReward_succ_condExp_historyFiltrationSucc_eq_zero_of_iIndepFun_reward</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">One-step conditional mean-zero source from reward-coordinate independence.
+
+This combines the full fixed-commit history independence theorem with the
+existing `condExp_indep_eq` wrapper.  It still leaves the zero-integral identity
+as an explicit side condition, supplied separately by exact-mean or bounded
+source leaves.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredReward_succ_condExp_historyFiltrationSucc_eq_zero_of_iIndepFun_reward {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, @Measurable Omega Rat mOmega inferInstance (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (h_reward_indep : ProbabilityTheory.iIndepFun (<span class="kw">fun</span> t omega =&gt; reward omega t) mu) (b : Fin K) (i : Nat) (h_integral : MeasureTheory.integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega (i + <span class="num">1</span>) - model.mean b : Rat) : Real))) = <span class="num">0</span>) : Filter.EventuallyEq (MeasureTheory.ae mu) (MeasureTheory.condExp (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward i) mu (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega (i + <span class="num">1</span>) - model.mean b : Rat) : Real)))) (<span class="kw">fun</span> _omega : Omega =&gt; (<span class="num">0</span> : Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L544">Source line 544</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9b065252cebf">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.hasCondSubgaussianMGF_of_indep_comap</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Unconditional sub-Gaussianity plus independence from the conditioning
+sigma-algebra gives conditional sub-Gaussianity.
+
+This is a Mathlib-shaped source for later sampled reward-law witnesses.  It
+uses `Kernel.HasSubgaussianMGF.of_rat`: for each rational exponent the
+conditional MGF is the unconditional MGF by `condExp_indep_eq`, and Mathlib
+extends the bound to all real exponents by continuity/density.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> hasCondSubgaussianMGF_of_indep_comap {Omega : Type u} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (mcond : MeasurableSpace Omega) (hm : mcond &lt;= mOmega) (X : Omega -&gt; Real) (c : NNReal) (hmeasX : @Measurable Omega Real mOmega inferInstance X) (h_subG : ProbabilityTheory.HasSubgaussianMGF X c mu) (h_indep : ProbabilityTheory.Indep (MeasurableSpace.comap X inferInstance) mcond mu) : ProbabilityTheory.HasCondSubgaussianMGF mcond hm X c mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L592">Source line 592</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-121efcf32cd3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredReward_succ_hasCondSubgaussianMGF_historyFiltrationSucc_of_iIndepFun_reward</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">One-step conditional sub-Gaussian source from reward-coordinate independence.
+
+This is the sampled centered-reward MGF analogue of
+`centeredReward_succ_condExp_historyFiltrationSucc_eq_zero_of_iIndepFun_reward`:
+unconditional sub-Gaussianity of the future centered reward, together with
+`iIndepFun` reward coordinates, gives the conditional MGF witness against the
+fixed-commit shifted history filtration.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredReward_succ_hasCondSubgaussianMGF_historyFiltrationSucc_of_iIndepFun_reward {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, @Measurable Omega Rat mOmega inferInstance (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (h_reward_indep : ProbabilityTheory.iIndepFun (<span class="kw">fun</span> t omega =&gt; reward omega t) mu) (b : Fin K) (i : Nat) (c : NNReal) (h_subG : ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega (i + <span class="num">1</span>) - model.mean b : Rat) : Real))) c mu) : ProbabilityTheory.HasCondSubgaussianMGF (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward i) ((History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward).le i) (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega (i + <span class="num">1</span>) - model.mean b : Rat) : Real))) c mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L723">Source line 723</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a18a4726dcbe">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredPairwiseRewardDiff_hasSubgaussianMGF_of_action_miss</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">If the fixed ETC trace at time `t` pulls neither arm `a` nor the selected best
+arm, the centered pairwise reward-difference summand is identically zero and
+therefore has a zero-variance sub-Gaussian MGF.
+
+This is a small reward-law source for the independent/zeroth MGF side only; it
+does not cover the sampled-arm times where the reward coordinate appears.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredPairwiseRewardDiff_hasSubgaussianMGF_of_action_miss {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsZeroOrProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (a : Fin K) (t : Nat) (h_ne_a : ETC.actionWithCommit spec commitArm t ≠ a) (h_ne_best : ETC.actionWithCommit spec commitArm t ≠ model.bestArm) : ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> omega =&gt; ETC.centeredPairwiseRewardDiff spec model commitArm reward a t omega) <span class="num">0</span> mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L793">Source line 793</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f64327a213ff">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredPairwiseRewardDiff_hasCondSubgaussianMGF_of_action_miss</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">If the fixed ETC trace at time `t` pulls neither arm `a` nor the selected best
+arm, the centered pairwise reward-difference summand is conditionally
+sub-Gaussian with zero variance proxy with respect to any sub-sigma-algebra.
+
+This discharges only the zero summand cases of the conditional MGF field.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredPairwiseRewardDiff_hasCondSubgaussianMGF_of_action_miss {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (m : MeasurableSpace Omega) (hm : m ≤ mOmega) (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (a : Fin K) (t : Nat) (h_ne_a : ETC.actionWithCommit spec commitArm t ≠ a) (h_ne_best : ETC.actionWithCommit spec commitArm t ≠ model.bestArm) : ProbabilityTheory.HasCondSubgaussianMGF m hm (<span class="kw">fun</span> omega =&gt; ETC.centeredPairwiseRewardDiff spec model commitArm reward a t omega) <span class="num">0</span> mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L820">Source line 820</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6f4f5bcf3be7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredPairwiseRewardDiff_hasCondSubgaussianMGF_historyFiltrationSucc_of_action_miss</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">History-filtration specialization of the zero-summand conditional MGF source.
+
+For conditional concentration over the shifted generated history filtration,
+the summand at process time `t` is conditionally sub-Gaussian with zero variance
+whenever `actionWithCommit t` is neither the comparison arm nor the best arm.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredPairwiseRewardDiff_hasCondSubgaussianMGF_historyFiltrationSucc_of_action_miss {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (a : Fin K) (t : Nat) (h_ne_a : ETC.actionWithCommit spec commitArm t ≠ a) (h_ne_best : ETC.actionWithCommit spec commitArm t ≠ model.bestArm) : ProbabilityTheory.HasCondSubgaussianMGF (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward t) ((History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward).le t) (<span class="kw">fun</span> omega =&gt; ETC.centeredPairwiseRewardDiff spec model commitArm reward a t omega) <span class="num">0</span> mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L849">Source line 849</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e9d2307ac8f8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredPairwiseRewardDiff_hasCondSubgaussianMGF_of_action_eq_arm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Sampled comparison-arm conditional MGF transfer.
+
+When the fixed ETC trace pulls the comparison arm `a` at time `t`, the centered
+pairwise reward-difference summand is exactly the centered reward
+`reward t - mean a`, so any conditional MGF witness for that centered reward
+transfers to the pairwise summand.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredPairwiseRewardDiff_hasCondSubgaussianMGF_of_action_eq_arm {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (m : MeasurableSpace Omega) (hm : m ≤ mOmega) (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (a : Fin K) (t : Nat) (c : NNReal) (hne : a = model.bestArm -&gt; False) (h_action : ETC.actionWithCommit spec commitArm t = a) (h_subG : ProbabilityTheory.HasCondSubgaussianMGF m hm (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t - model.mean a : Rat) : Real))) c mu) : ProbabilityTheory.HasCondSubgaussianMGF m hm (<span class="kw">fun</span> omega =&gt; ETC.centeredPairwiseRewardDiff spec model commitArm reward a t omega) c mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L902">Source line 902</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fb09790fe817">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredPairwiseRewardDiff_hasCondSubgaussianMGF_of_action_eq_bestArm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Sampled best-arm conditional MGF transfer.
+
+When the fixed ETC trace pulls `model.bestArm` at time `t`, the centered
+pairwise reward-difference summand is the negative centered best-arm reward
+`mean bestArm - reward t`.  This theorem consumes that negative-direction
+conditional MGF witness explicitly.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredPairwiseRewardDiff_hasCondSubgaussianMGF_of_action_eq_bestArm {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (m : MeasurableSpace Omega) (hm : m ≤ mOmega) (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (a : Fin K) (t : Nat) (c : NNReal) (hne : a = model.bestArm -&gt; False) (h_action : ETC.actionWithCommit spec commitArm t = model.bestArm) (h_subG : ProbabilityTheory.HasCondSubgaussianMGF m hm (<span class="kw">fun</span> omega : Omega =&gt; (((model.mean model.bestArm - reward omega t : Rat) : Real))) c mu) : ProbabilityTheory.HasCondSubgaussianMGF m hm (<span class="kw">fun</span> omega =&gt; ETC.centeredPairwiseRewardDiff spec model commitArm reward a t omega) c mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L943">Source line 943</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-37e504f296f4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredPairwiseRewardDiff_hasCondSubgaussianMGF_historyFiltrationSucc_of_action_eq_arm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Shifted-history specialization of the sampled comparison-arm conditional MGF
+transfer.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredPairwiseRewardDiff_hasCondSubgaussianMGF_historyFiltrationSucc_of_action_eq_arm {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (a : Fin K) (t : Nat) (c : NNReal) (hne : a = model.bestArm -&gt; False) (h_action : ETC.actionWithCommit spec commitArm t = a) (h_subG : ProbabilityTheory.HasCondSubgaussianMGF (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward t) ((History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward).le t) (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t - model.mean a : Rat) : Real))) c mu) : ProbabilityTheory.HasCondSubgaussianMGF (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward t) ((History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward).le t) (<span class="kw">fun</span> omega =&gt; ETC.centeredPairwiseRewardDiff spec model commitArm reward a t omega) c mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L983">Source line 983</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5679520035b4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredPairwiseRewardDiff_hasCondSubgaussianMGF_historyFiltrationSucc_of_action_eq_bestArm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Shifted-history specialization of the sampled best-arm conditional MGF
+transfer.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredPairwiseRewardDiff_hasCondSubgaussianMGF_historyFiltrationSucc_of_action_eq_bestArm {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (a : Fin K) (t : Nat) (c : NNReal) (hne : a = model.bestArm -&gt; False) (h_action : ETC.actionWithCommit spec commitArm t = model.bestArm) (h_subG : ProbabilityTheory.HasCondSubgaussianMGF (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward t) ((History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward).le t) (<span class="kw">fun</span> omega : Omega =&gt; (((model.mean model.bestArm - reward omega t : Rat) : Real))) c mu) : ProbabilityTheory.HasCondSubgaussianMGF (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward t) ((History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward).le t) (<span class="kw">fun</span> omega =&gt; ETC.centeredPairwiseRewardDiff spec model commitArm reward a t omega) c mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L1046">Source line 1046</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-75e14e95716f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredPairwiseRewardDiff_hasCondSubgaussianMGF_of_centeredReward</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Action-case assembly for sampled centered-reward conditional MGF witnesses.
+
+This is the conditional analogue of
+`ETC.centeredPairwiseRewardDiff_hasSubgaussianMGF_of_centeredReward`: if the
+reward coordinate pulled by the fixed ETC trace has the appropriate centered
+conditional MGF witness, then the concrete centered pairwise reward-difference
+summand has the corresponding action-selected variance proxy.  The miss case is
+closed by the zero-summand theorem, and the best-arm case uses the sign-flipped
+conditional MGF witness.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredPairwiseRewardDiff_hasCondSubgaussianMGF_of_centeredReward {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (m : MeasurableSpace Omega) (hm : m ≤ mOmega) (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (cReward : Fin K -&gt; Nat -&gt; NNReal) (a : Fin K) (t : Nat) (hne : a = model.bestArm -&gt; False) (h_subG : <span class="kw">forall</span> b : Fin K, ETC.actionWithCommit spec commitArm t = b -&gt; ProbabilityTheory.HasCondSubgaussianMGF m hm (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t - model.mean b : Rat) : Real))) (cReward b t) mu) : ProbabilityTheory.HasCondSubgaussianMGF m hm (<span class="kw">fun</span> omega =&gt; ETC.centeredPairwiseRewardDiff spec model commitArm reward a t omega) (ETC.centeredPairwiseRewardDiffVarianceProxy spec model commitArm cReward a t) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L1117">Source line 1117</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ee1bb0db0057">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredPairwiseRewardDiff_hasCondSubgaussianMGF_historyFiltrationSucc_of_centeredReward</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Shifted-history specialization of the action-case conditional MGF assembly from
+sampled centered-reward witnesses.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredPairwiseRewardDiff_hasCondSubgaussianMGF_historyFiltrationSucc_of_centeredReward {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (cReward : Fin K -&gt; Nat -&gt; NNReal) (a : Fin K) (t : Nat) (hne : a = model.bestArm -&gt; False) (h_subG : <span class="kw">forall</span> b : Fin K, ETC.actionWithCommit spec commitArm t = b -&gt; ProbabilityTheory.HasCondSubgaussianMGF (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward t) ((History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward).le t) (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t - model.mean b : Rat) : Real))) (cReward b t) mu) : ProbabilityTheory.HasCondSubgaussianMGF (History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward t) ((History.historyFiltrationSucc (<span class="kw">fun</span> _omega : Omega =&gt; ETC.actionWithCommit spec commitArm) reward (<span class="kw">fun</span> _t : Nat =&gt; measurable_const) hreward).le t) (<span class="kw">fun</span> omega =&gt; ETC.centeredPairwiseRewardDiff spec model commitArm reward a t omega) (ETC.centeredPairwiseRewardDiffVarianceProxy spec model commitArm cReward a t) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L1194">Source line 1194</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8a38748ddc00">
+  <summary>
+    <span class="kind">structure</span>
+    <code>BanditRLProof.ETC.CenteredRewardCondSubGaussianWitnesses</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Reward-level conditional sub-Gaussian source contract for the fixed-commit ETC
+centered-diff route.
+
+This contract is one layer closer to a concrete reward law than
+`CenteredDiffCondSubGaussianWitnesses`: it asks for conditional MGF witnesses for
+the sampled reward coordinate centered at the arm actually pulled by
+`actionWithCommit`, plus the zeroth unconditional witness and the final tail
+budget.  The constructor below turns it into the centered-diff witness package.</p>
+    <pre class="lean-code"><code><span class="kw">structure</span> CenteredRewardCondSubGaussianWitnesses {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] [MeasureTheory.IsZeroOrProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (tail : Fin K -&gt; ENNReal) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L1266">Source line 1266</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c06a5edd5709">
+  <summary>
+    <span class="kind">structure</span>
+    <code>BanditRLProof.ETC.CenteredDiffCondSubGaussianWitnesses</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Witness package for the concrete centered reward-difference conditional
+sub-Gaussian ETC tail route.
+
+This is a project-local conditional reward-law surface: it records the
+filtration, strong adaptedness, zeroth unconditional MGF witness, later
+conditional MGF witnesses, and tail domination needed to produce the fixed
+ETC pairwise empirical-mean tail contract.</p>
+    <pre class="lean-code"><code><span class="kw">structure</span> CenteredDiffCondSubGaussianWitnesses {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] [MeasureTheory.IsZeroOrProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (tail : Fin K -&gt; ENNReal) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L1325">Source line 1325</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9f9b87f237c2">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.centeredDiffCondSubGaussianWitnesses_of_centeredRewardCondSubGaussianWitnesses</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Build the centered-diff conditional witness package from reward-level sampled
+conditional MGF witnesses.
+
+This bridges the remaining action-case gap between raw reward-law conditional
+MGF facts and the already compiled centered-diff conditional tail consumer.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> centeredDiffCondSubGaussianWitnesses_of_centeredRewardCondSubGaussianWitnesses {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] [MeasureTheory.IsZeroOrProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (tail : Fin K -&gt; ENNReal) (w : ETC.CenteredRewardCondSubGaussianWitnesses mu spec model commitArm reward tail) : ETC.CenteredDiffCondSubGaussianWitnesses mu spec model commitArm reward tail <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L1377">Source line 1377</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e767092c2f16">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.pairwiseEmpMeanTailContract_of_centeredDiffCondSubGaussianWitnesses</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Consume a centered reward-difference conditional witness package to build the
+fixed-commit ETC pairwise empirical-mean tail contract.
+
+This is the first compiled conditional reward-law bridge for the ETC route. It
+uses the generated centered-diff event inclusion plus the Mathlib-backed
+conditional sub-Gaussian finite-prefix wrapper, while keeping the actual
+conditional MGF and adaptedness facts explicit in the witness package.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pairwiseEmpMeanTailContract_of_centeredDiffCondSubGaussianWitnesses {Omega : Type u} {K : Nat} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] [MeasureTheory.IsZeroOrProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (tail : Fin K -&gt; ENNReal) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (w : ETC.CenteredDiffCondSubGaussianWitnesses mu spec model commitArm reward tail) : ETC.PairwiseEmpMeanTailContract mu spec model commitArm reward tail</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean.html#L1442">Source line 1442</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

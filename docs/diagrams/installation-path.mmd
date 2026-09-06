@@ -1,0 +1,7 @@
+flowchart LR
+    Clone["Clone canonical repository"] --> Elan["Install Elan<br/>use pinned lean-toolchain"]
+    Elan --> Update["lake update"]
+    Update --> Check["python tools/bandit.py check"]
+    Check --> Query["Query BanditRLlib declarations"]
+    Check --> Site["Build and check website"]
+    Check --> IDE["Run loopback Live Formalization server"]

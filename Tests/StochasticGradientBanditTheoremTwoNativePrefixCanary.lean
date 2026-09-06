@@ -1,0 +1,30 @@
+import BanditRLProof.Algorithms.StochasticGradientBanditTheoremTwoNativePrefix
+
+namespace BanditRLProof
+
+open MeasureTheory ProbabilityTheory
+open scoped ProbabilityTheory
+
+namespace Thompson
+
+#check stationaryRewardHistoryEnvironment
+#check historyStepKernel_stationaryRewardHistoryEnvironment
+#check latentArmStreamVisiblePrefixNextPair_eq_compProd
+#check latentArmStreamVisibleInitialPair_eq_compProd
+#check trajMeasure_map_eval_zero
+#check frestrictLe_succ_eq_extendPairHistorySucc
+#check nativeStationaryTrajectoryMeasure
+#check instNativeStationaryTrajectoryMeasureIsProbability
+#check latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native
+#check latentArmStreamVisibleTrajectoryMeasure_eq_native
+
+#print axioms historyStepKernel_stationaryRewardHistoryEnvironment
+#print axioms latentArmStreamVisiblePrefixNextPair_eq_compProd
+#print axioms latentArmStreamVisibleInitialPair_eq_compProd
+#print axioms trajMeasure_map_eval_zero
+#print axioms frestrictLe_succ_eq_extendPairHistorySucc
+#print axioms latentArmStreamVisibleTrajectoryMeasure_map_frestrictLe_eq_native
+#print axioms latentArmStreamVisibleTrajectoryMeasure_eq_native
+
+end Thompson
+end BanditRLProof

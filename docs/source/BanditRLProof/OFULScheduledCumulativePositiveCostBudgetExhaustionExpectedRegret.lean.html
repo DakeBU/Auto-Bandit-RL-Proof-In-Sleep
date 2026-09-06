@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/OFULScheduledCumulativePositiveCostBudgetExhaustionExpectedRegret.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/OFULScheduledCumulativePositiveCostBudgetExhaustionExpectedRegret.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/OFULScheduledCumulativePositiveCostBudgetExhaustionExpectedRegret.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/OFULScheduledCumulativePositiveCostBudgetExhaustionExpectedRegret.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.OFULScheduledUnitGrowthBudgetExhaustionExpectedRegret</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Scheduled OFUL expected regret under cumulative positive costs</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module constructs an adapted Nat-valued resource process by summing</span>
+<span id="L7">7 per-round costs over completed rounds. Pointwise positive costs give the</span>
+<span id="L8">8 unit-growth contract required by the compiled budget-exhaustion OFUL theorem.</span>
+<span id="L9">9 -/</span>
+<span id="L10">10 </span>
+<span id="L11">11 namespace BanditRLProof</span>
+<span id="L12">12 </span>
+<span id="L13">13 open MeasureTheory Real Matrix Set</span>
+<span id="L14">14 open scoped ENNReal</span>
+<span id="L15">15 </span>
+<span id="L16">16 universe u v</span>
+<span id="L17">17 </span>
+<span id="L18">18 namespace Budget</span>
+<span id="L19">19 </span>
+<span id="L20">20 /--</span>
+<span id="L21">21 Resource spent after `t` completed rounds, using the half-open index set</span>
+<span id="L22">22 `{0, ..., t - 1}`.</span>
+<span id="L23">23 -/</span>
+<span id="L24">24 def cumulativeSpent</span>
+<span id="L25">25     {Omega : Type v}</span>
+<span id="L26">26     (cost : Nat -&gt; Omega -&gt; Nat)</span>
+<span id="L27">27     (t : Nat)</span>
+<span id="L28">28     (omega : Omega) : Nat :=</span>
+<span id="L29">29   (Finset.range t).sum fun s =&gt; cost s omega</span>
+<span id="L30">30 </span>
+<span id="L31">31 @[simp]</span>
+<span id="L32">32 theorem cumulativeSpent_zero</span>
+<span id="L33">33     {Omega : Type v}</span>
+<span id="L34">34     (cost : Nat -&gt; Omega -&gt; Nat)</span>
+<span id="L35">35     (omega : Omega) :</span>
+<span id="L36">36     cumulativeSpent cost 0 omega = 0 := by</span>
+<span id="L37">37   simp [cumulativeSpent]</span>
+<span id="L38">38 </span>
+<span id="L39">39 @[simp]</span>
+<span id="L40">40 theorem cumulativeSpent_succ</span>
+<span id="L41">41     {Omega : Type v}</span>
+<span id="L42">42     (cost : Nat -&gt; Omega -&gt; Nat)</span>
+<span id="L43">43     (t : Nat)</span>
+<span id="L44">44     (omega : Omega) :</span>
+<span id="L45">45     cumulativeSpent cost (t + 1) omega =</span>
+<span id="L46">46       cumulativeSpent cost t omega + cost t omega := by</span>
+<span id="L47">47   simp [cumulativeSpent, Finset.sum_range_succ]</span>
+<span id="L48">48 </span>
+<span id="L49">49 /--</span>
+<span id="L50">50 Finite prefix sums of an adapted per-round Nat-valued cost process remain</span>
+<span id="L51">51 adapted. A cost observed at `s &lt; t` is promoted from `F s` to `F t`.</span>
+<span id="L52">52 -/</span>
+<span id="L53">53 theorem adapted_cumulativeSpent</span>
+<span id="L54">54     {Omega : Type v} [mOmega : MeasurableSpace Omega]</span>
+<span id="L55">55     {F : Filtration Nat mOmega}</span>
+<span id="L56">56     {cost : Nat -&gt; Omega -&gt; Nat}</span>
+<span id="L57">57     (hcost : Adapted F cost) :</span>
+<span id="L58">58     Adapted F (cumulativeSpent cost) := by</span>
+<span id="L59">59   intro t</span>
+<span id="L60">60   unfold cumulativeSpent</span>
+<span id="L61">61   exact Finset.measurable_sum (Finset.range t) fun s hs =&gt;</span>
+<span id="L62">62     hcost.measurable_le</span>
+<span id="L63">63       (Nat.le_of_lt (Finset.mem_range.mp hs))</span>
+<span id="L64">64 </span>
+<span id="L65">65 /--</span>
+<span id="L66">66 If every completed round costs at least one, cumulative spend grows by at</span>
+<span id="L67">67 least one at each step.</span>
+<span id="L68">68 -/</span>
+<span id="L69">69 theorem cumulativeSpent_unitGrowth_of_one_le</span>
+<span id="L70">70     {Omega : Type v}</span>
+<span id="L71">71     (cost : Nat -&gt; Omega -&gt; Nat)</span>
+<span id="L72">72     (hcost : forall t omega, 1 &lt;= cost t omega) :</span>
+<span id="L73">73     forall t omega,</span>
+<span id="L74">74       cumulativeSpent cost t omega + 1 &lt;=</span>
+<span id="L75">75         cumulativeSpent cost (t + 1) omega := by</span>
+<span id="L76">76   intro t omega</span>
+<span id="L77">77   rw [cumulativeSpent_succ]</span>
+<span id="L78">78   exact Nat.add_le_add_left (hcost t omega) _</span>
+<span id="L79">79 </span>
+<span id="L80">80 /--</span>
+<span id="L81">81 Canonical expected pseudo-regret bound for the single telescoping-schedule</span>
+<span id="L82">82 OFUL policy stopped when the cumulative positive per-round cost reaches the</span>
+<span id="L83">83 budget.</span>
+<span id="L84">84 -/</span>
+<span id="L85">85 theorem</span>
+<span id="L86">86     integral_stoppedValue_canonicalStandardHighProbabilityPseudoRegret_nonneg_and_le_quadraticCoefficient_mul_budgetRoundsSq_add_initialGap_mul_budgetRounds_mul_sqrt_delta_and_stoppedViolation_measure_le_of_cumulativePositiveCostBudgetExhaustionTime</span>
+<span id="L87">87     {K : Nat} {Feature : Type u}</span>
+<span id="L88">88     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L89">89     (hK : 0 &lt; K)</span>
+<span id="L90">90     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L91">91     (thetaStar : Feature -&gt; Real)</span>
+<span id="L92">92     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L93">93     (R : Real) (hR : 0 &lt; R)</span>
+<span id="L94">94     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_one : delta &lt;= 1)</span>
+<span id="L95">95     (S : Real) (hS : 0 &lt;= S)</span>
+<span id="L96">96     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L97">97     (L2 : Real) (hL2 : 0 &lt;= L2)</span>
+<span id="L98">98     (hactionFeatureBound : forall action,</span>
+<span id="L99">99       dotProduct (actionFeature action) (actionFeature action) &lt;= L2)</span>
+<span id="L100">100     (hL2lambda : L2 &lt;= lambda)</span>
+<span id="L101">101     (best : Fin K)</span>
+<span id="L102">102     (hbest : OFUL.IsOptimalLinearArm thetaStar actionFeature best)</span>
+<span id="L103">103     (source : OFUL.CanonicalLinearSubgaussianEnvironmentLaw</span>
+<span id="L104">104       hK thetaStar actionFeature R S environment)</span>
+<span id="L105">105     (cost : Nat -&gt; (Nat -&gt; Fin K × Real) -&gt; Nat)</span>
+<span id="L106">106     (budget : Nat)</span>
+<span id="L107">107     (hcost : Adapted</span>
+<span id="L108">108       (OFUL.canonicalHistoryTrajectoryAllRoundFiltration (K := K))</span>
+<span id="L109">109       cost)</span>
+<span id="L110">110     (hpositive : forall t trajectory, 1 &lt;= cost t trajectory) :</span>
+<span id="L111">111     let mu :=</span>
+<span id="L112">112       Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L113">113         (OFUL.finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm</span>
+<span id="L114">114           hK lambda actionFeature R delta S)</span>
+<span id="L115">115         environment</span>
+<span id="L116">116     let tau := budgetExhaustionTime (cumulativeSpent cost) budget</span>
+<span id="L117">117     let stoppedRegret :=</span>
+<span id="L118">118       stoppedValue</span>
+<span id="L119">119         (fun horizon trajectory =&gt;</span>
+<span id="L120">120           OFUL.canonicalStandardHighProbabilityPseudoRegret</span>
+<span id="L121">121             thetaStar actionFeature best horizon trajectory)</span>
+<span id="L122">122         tau</span>
+<span id="L123">123     let bad :=</span>
+<span id="L124">124       OFUL.telescopingCanonicalExplicitHighProbabilityPseudoRegretStoppedViolationSet</span>
+<span id="L125">125         lambda thetaStar actionFeature R delta S L2 best tau</span>
+<span id="L126">126     0 &lt;= integral mu stoppedRegret /\</span>
+<span id="L127">127       integral mu stoppedRegret &lt;=</span>
+<span id="L128">128         OFUL.telescopingHighProbabilityPseudoRegretQuadraticCoefficient</span>
+<span id="L129">129             (Feature := Feature) R delta lambda S L2 *</span>
+<span id="L130">130           (((budget + 1 : Nat) : Real)) ^ 2 +</span>
+<span id="L131">131         OFUL.standardScalarInitialGapBound S L2 *</span>
+<span id="L132">132           (((budget + 1 : Nat) : Real)) * Real.sqrt delta /\</span>
+<span id="L133">133       mu bad &lt;= ENNReal.ofReal delta := by</span>
+<span id="L134">134   exact</span>
+<span id="L135">135     integral_stoppedValue_canonicalStandardHighProbabilityPseudoRegret_nonneg_and_le_quadraticCoefficient_mul_budgetRoundsSq_add_initialGap_mul_budgetRounds_mul_sqrt_delta_and_stoppedViolation_measure_le_of_budgetExhaustionTime_of_unitGrowth</span>
+<span id="L136">136       hK lambda hlambda thetaStar actionFeature R hR</span>
+<span id="L137">137       delta hdelta hdelta_one S hS environment L2 hL2</span>
+<span id="L138">138       hactionFeatureBound hL2lambda best hbest source</span>
+<span id="L139">139       (cumulativeSpent cost) budget</span>
+<span id="L140">140       (adapted_cumulativeSpent hcost)</span>
+<span id="L141">141       (cumulativeSpent_unitGrowth_of_one_le cost hpositive)</span>
+<span id="L142">142 </span>
+<span id="L143">143 end Budget</span>
+<span id="L144">144 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,764 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.StochasticGradientBanditTheoremTwoSelectedIID · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.StochasticGradientBanditTheoremTwoSelectedIID · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.StochasticGradientBanditTheoremTwoSelectedIID · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Frontier</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>Stochastic<wbr>Gradient<wbr>Bandit<wbr>Theorem<wbr>Two<wbr>Selected<wbr>IID</h1>
+  <p class="lede">Appendix C of Baudry--Johnson--Vary--Pike-Burke--Rebeschini works with rewards in optimal-arm pull order. Adaptive selection makes a naive stopped-value IID statement false as a proof interface: a requested pull can be absent, and the event that a block of pulls occurs can itself depend on earlier rewards.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html"><code>BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/frontier/index.html">10. Automation, resources, and open routes</a></dd></div>
+    <div><dt>Declarations</dt><dd>37</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-algorithms-stochasticgradientbandittheoremtwonativeprefix/index.html"><code>BanditRLProof.Algorithms.StochasticGradientBanditTheoremTwoNativePrefix</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-ff1aff9e73ce">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmHistoryEnvironment_ext</code>
+    <span><span class="status compiled">Compiled</span> <span class="status source">Internal helper</span></span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">private</span> <span class="kw">theorem</span> twoArmHistoryEnvironment_ext (environment₁ environment₂ : Thompson.HistoryEnvironment (Fin <span class="num">2</span>) Real) (hfeedback : environment₁.feedback = environment₂.feedback) (hinitial : environment₁.initialFeedback = environment₂.initialFeedback) : environment₁ = environment₂</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L35">Source line 35</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bcc853c96efb">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmOptimalPullTimeRewardBlock</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The first `m` optimal-arm pull records on an observable trajectory.
+
+The time coordinate is part of the value, so `top` remains visible.  The
+reward coordinate has source semantics only when that time is finite.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmOptimalPullTimeRewardBlock {Env : Type u} [MeasurableSpace Env] (m : Nat) : Env × ((t : Nat) -&gt; Fin <span class="num">2</span> × Real) -&gt; ((i : Fin m) -&gt; WithTop Nat × Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L50">Source line 50</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3924d27d7135">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.measurable_twoArmOptimalPullTimeRewardBlock</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_twoArmOptimalPullTimeRewardBlock {Env : Type u} [MeasurableSpace Env] (m : Nat) : Measurable (twoArmOptimalPullTimeRewardBlock (Env := Env) m)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L58">Source line 58</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-429b04c9d3d4">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmLatentMaskedOptimalPullBlock</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The latent comparison block.  A finite pull reads its corresponding
+arm-`0` stream coordinate.  A missing pull retains the stopped-value fallback
+rather than silently turning an absent observation into an IID reward.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmLatentMaskedOptimalPullBlock (m : Nat) : UCB.ArmRewardStream <span class="num">2</span> × ((t : Nat) -&gt; Fin <span class="num">2</span> × Real) -&gt; ((i : Fin m) -&gt; WithTop Nat × Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L69">Source line 69</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2af477d6355e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.measurable_twoArmLatentMaskedOptimalPullBlock</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_twoArmLatentMaskedOptimalPullBlock (m : Nat) : Measurable (twoArmLatentMaskedOptimalPullBlock m)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L84">Source line 84</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fe68e51bf2fc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmOptimalPullTimeRewardBlock_eq_latentMasked_ae</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">On the latent coupling, the observable finite pull block agrees almost
+surely with the missing-pull-aware latent block.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmOptimalPullTimeRewardBlock_eq_latentMasked_ae (armLaw : Fin <span class="num">2</span> -&gt; Measure Real) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (m : Nat) : (<span class="kw">fun</span> sample : UCB.ArmRewardStream <span class="num">2</span> × ((t : Nat) -&gt; Fin <span class="num">2</span> × Real) =&gt; twoArmOptimalPullTimeRewardBlock (Env := Unit) m ((), sample.<span class="num">2</span>)) =ᵐ[ twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta] twoArmLatentMaskedOptimalPullBlock m</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L116">Source line 116</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-533621ed24d1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmNativeOptimalPullTimeRewardBlock_map_eq_latentMasked</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact finite selected-block law on the native stationary fixed-IID SGB
+process.  The right side is a masked latent-coupling law, not a product law;
+this retained dependence is what makes the statement valid under adaptive
+selection and possible missing pulls.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmNativeOptimalPullTimeRewardBlock_map_eq_latentMasked (armLaw : Fin <span class="num">2</span> -&gt; Measure Real) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (m : Nat) : letI : IsMarkovKernel (UCB.finiteArmRealRewardKernel armLaw)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L163">Source line 163</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-93dcdb7008f0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The source-shaped `Unit`-environment trajectory measure has the same
+observable marginal as the native stationary history construction.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmFixedIIDTrajectoryMeasure_map_snd_eq_nativeStationary (armLaw : Fin <span class="num">2</span> -&gt; Measure Real) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) : letI : IsMarkovKernel (UCB.finiteArmRealRewardKernel armLaw)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L212">Source line 212</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3713c2e1224f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_map_visible_eq_generated</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The latent coupling and the source-generated fixed-IID trajectory have
+exactly the same visible `Unit`-environment marginal.  This is a full
+trajectory-law transport; it does not identify selected rewards as IID or
+condition on occurrence of any pull.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmFixedIIDLatentTrajectoryMeasure_map_visible_eq_generated (armLaw : Fin <span class="num">2</span> -&gt; Measure Real) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) : Measure.map (<span class="kw">fun</span> sample : UCB.ArmRewardStream <span class="num">2</span> × ((t : Nat) -&gt; Fin <span class="num">2</span> × Real) =&gt; ((), sample.<span class="num">2</span>)) (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) = twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L276">Source line 276</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-05346404836e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Source-facing finite selected-block transport on the actual generated
+two-arm trajectory measure.  Missing pulls remain visible in the `WithTop`
+time coordinates; the theorem does not promote the masked block to IID.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmFixedIIDTrajectoryMeasure_map_optimalPullTimeRewardBlock_eq_latentMasked (armLaw : Fin <span class="num">2</span> -&gt; Measure Real) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (m : Nat) : Measure.map (twoArmOptimalPullTimeRewardBlock (Env := Unit) m) (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) = Measure.map (twoArmLatentMaskedOptimalPullBlock m) (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L335">Source line 335</a>
+      <a href="../../chapters/frontier/index.html#decl-05346404836e-teaching">Open teaching explanation</a>
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-eee0dad40e2d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmAppendixCPhaseOnePrefixSum</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The running reward sum inside Appendix C&#x27;s recovery phase.
+
+The index `k : Fin (n1 + 1)` permits every prefix length from `0` through
+`n1`.  The ambient reward block contains the unlucky phase of length `n0`
+followed by the recovery phase of length `n1`.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmAppendixCPhaseOnePrefixSum (n0 n1 : Nat) (rewardBlock : Fin (n0 + n1) -&gt; Real) (k : Fin (n1 + <span class="num">1</span>)) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L383">Source line 383</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3f45ecac5696">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.measurable_twoArmAppendixCPhaseOnePrefixSum</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_twoArmAppendixCPhaseOnePrefixSum (n0 n1 : Nat) (k : Fin (n1 + <span class="num">1</span>)) : Measurable (<span class="kw">fun</span> rewardBlock : Fin (n0 + n1) -&gt; Real =&gt; twoArmAppendixCPhaseOnePrefixSum n0 n1 rewardBlock k)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L388">Source line 388</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4c40b30a1d7e">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmAppendixCRewardPhaseEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The exact finite reward event used by the two phases in Appendix C.
+
+Phase `S0` consists of `n0` rewards equal to `-1`.  Phase `S1` consists only
+of `{-1, 1}` rewards, has the specified exact terminal sum, and has running
+sum at most zero at every prefix.  The later arithmetic layer will instantiate
+`phaseOneTotal` with the rounded Rademacher count selected by the source; this
+definition itself contains no probability or IID premise.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmAppendixCRewardPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : Set (Fin (n0 + n1) -&gt; Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L403">Source line 403</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4d80268b7063">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCRewardPhaseEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_twoArmAppendixCRewardPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : MeasurableSet (twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L416">Source line 416</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9e3efb5b73e1">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmAppendixCAllPullsPresent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every requested optimal-arm pull in a finite block has occurred.
+
+This set is kept separate from the reward pattern because occurrence depends
+on the adaptive trajectory.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmAppendixCAllPullsPresent (m : Nat) : Set ((i : Fin m) -&gt; WithTop Nat × Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L464">Source line 464</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-dba5c71750d4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCAllPullsPresent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_twoArmAppendixCAllPullsPresent (m : Nat) : MeasurableSet (twoArmAppendixCAllPullsPresent m)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L468">Source line 468</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-21e4e1ad4393">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmAppendixCObservedPhaseEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Observable Appendix-C phase event on a pull-time/reward block.
+
+It requires the full block to occur and only then reads the phase reward
+pattern.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmAppendixCObservedPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : Set ((i : Fin (n0 + n1)) -&gt; WithTop Nat × Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L483">Source line 483</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9b5ada0e8ea2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCObservedPhaseEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_twoArmAppendixCObservedPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : MeasurableSet (twoArmAppendixCObservedPhaseEvent n0 n1 phaseOneTotal)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L490">Source line 490</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-78dd6975a552">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmAppendixCLatentPhaseEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The latent Appendix-C event without occurrence conditioning.
+
+The first conjunct still depends on the generated visible trajectory and says
+that all requested pulls occur.  The second conjunct reads the unconditional
+latent arm-`0` stream.  Keeping both in the same event avoids the invalid step
+of declaring the reward block IID after conditioning on occurrence.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmAppendixCLatentPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : Set (UCB.ArmRewardStream <span class="num">2</span> × ((t : Nat) -&gt; Fin <span class="num">2</span> × Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L506">Source line 506</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-90e745092757">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCLatentPhaseEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_twoArmAppendixCLatentPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : MeasurableSet (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L516">Source line 516</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-22d2d32ba847">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmLatentMaskedOptimalPullBlock_preimage_appendixCObservedPhaseEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">On the all-pulls-present boundary, the masked block reads exactly the
+latent arm-`0` prefix.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmLatentMaskedOptimalPullBlock_preimage_appendixCObservedPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : (twoArmLatentMaskedOptimalPullBlock (n0 + n1)) ⁻¹&#x27; twoArmAppendixCObservedPhaseEvent n0 n1 phaseOneTotal = twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L531">Source line 531</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4e7693a9613e">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmAppendixCGeneratedPhaseEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Source-shaped generated-process event corresponding to the finite
+Appendix-C pull-ordered phase.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmAppendixCGeneratedPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : Set (Unit × ((t : Nat) -&gt; Fin <span class="num">2</span> × Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L589">Source line 589</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9536ce065cbf">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCGeneratedPhaseEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_twoArmAppendixCGeneratedPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : MeasurableSet (twoArmAppendixCGeneratedPhaseEvent n0 n1 phaseOneTotal)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L595">Source line 595</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f48b673b0321">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact transport of the finite Appendix-C phase event to the source-shaped
+generated SGB trajectory.
+
+The right side is an intersection of the latent reward pattern with the
+adaptive all-pulls-present event.  This theorem does not assert a product law,
+selected IID, a probability lower bound, future no-return, or Theorem 2.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmFixedIIDTrajectoryMeasure_appendixCGeneratedPhaseEvent_eq_latent (armLaw : Fin <span class="num">2</span> -&gt; Measure Real) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) : (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmAppendixCGeneratedPhaseEvent n0 n1 phaseOneTotal) = (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L610">Source line 610</a>
+      <a href="../../chapters/frontier/index.html#decl-f48b673b0321-teaching">Open teaching explanation</a>
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4cfa896d57a5">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmAppendixCPureLatentRewardEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The pure latent Appendix-C reward pattern, before intersecting it with the
+adaptive event that all requested optimal-arm pulls occur.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmAppendixCPureLatentRewardEvent (n0 n1 : Nat) (phaseOneTotal : Real) : Set (UCB.ArmRewardStream <span class="num">2</span> × ((t : Nat) -&gt; Fin <span class="num">2</span> × Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L652">Source line 652</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7483c1098c6e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCPureLatentRewardEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_twoArmAppendixCPureLatentRewardEvent (n0 n1 : Nat) (phaseOneTotal : Real) : MeasurableSet (twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L660">Source line 660</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f02a9e8c45bb">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The pure latent reward pattern together with failure of at least one
+requested optimal-arm pull to occur.  This is the complementary branch to the
+existing all-present latent phase event, not yet a fixed-cutoff starvation
+event.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmAppendixCMissingPullLatentPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : Set (UCB.ArmRewardStream <span class="num">2</span> × ((t : Nat) -&gt; Fin <span class="num">2</span> × Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L674">Source line 674</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-13047c4e98f3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.measurableSet_twoArmAppendixCMissingPullLatentPhaseEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_twoArmAppendixCMissingPullLatentPhaseEvent (n0 n1 : Nat) (phaseOneTotal : Real) : MeasurableSet (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L681">Source line 681</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f48ff16d9404">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Membership in the missing branch exposes an actual `WithTop.top` pull-time
+coordinate while retaining the pure latent reward pattern.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> mem_twoArmAppendixCMissingPullLatentPhaseEvent_iff (n0 n1 : Nat) (phaseOneTotal : Real) (sample : UCB.ArmRewardStream <span class="num">2</span> × ((t : Nat) -&gt; Fin <span class="num">2</span> × Real)) : sample ∈ twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal ↔ (<span class="kw">fun</span> i : Fin (n0 + n1) =&gt; sample.<span class="num">1</span> (i : Nat) <span class="num">0</span>) ∈ twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal ∧ ∃ i : Fin (n0 + n1), twoArmNthOptimalPullTime (Env := Unit) (i : Nat) ((), sample.<span class="num">2</span>) = (⊤ : WithTop Nat)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L695">Source line 695</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8d8bced0077d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every missing-pull Appendix-C phase lies in the finite-horizon
+below-threshold count event, at every chosen finite horizon.  This is the
+deterministic missing-pull-to-starvation bridge; it asserts neither the source
+trigger inequality nor a probability lower bound.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmAppendixCMissingPullLatentPhaseEvent_subset_terminalCountBelow (n0 n1 : Nat) (phaseOneTotal : Real) (horizon : Nat) : twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal ⊆ (<span class="kw">fun</span> sample : UCB.ArmRewardStream <span class="num">2</span> × ((t : Nat) -&gt; Fin <span class="num">2</span> × Real) =&gt; ((), sample.<span class="num">2</span>)) ⁻¹&#x27; twoArmOptimalPullCountBelowEvent (Env := Unit) (n0 + n1) horizon</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L716">Source line 716</a>
+      <a href="../../chapters/frontier/index.html#decl-8d8bced0077d-teaching">Open teaching explanation</a>
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e45e6d945121">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmFixedIIDMissingPullLatentPhase_probability_le_countBelow</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The latent missing-pull phase mass is bounded by the probability of the
+visible generated trajectory having fewer than the requested block of
+optimal-arm pulls.  The inequality transports existing mass only; it does
+not prove that the missing branch has positive probability.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmFixedIIDMissingPullLatentPhase_probability_le_countBelow (armLaw : Fin <span class="num">2</span> -&gt; Measure Real) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) (horizon : Nat) : (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta).real (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal) ≤ (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)).real (twoArmOptimalPullCountBelowEvent (Env := Unit) (n0 + n1) horizon)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L737">Source line 737</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2f32eec8ea0c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-horizon expected-regret consumer for the latent missing-pull
+branch.  Nonnegative gap times the horizon-minus-block-size charge times the
+existing missing-branch probability is bounded by expected sampled
+pseudo-regret on the actual generated trajectory.  This theorem supplies no
+lower bound on that probability and no source trigger, selected-IID,
+future/no-return, ballot, asymptotic, or Theorem-2 conclusion.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmFixedIIDMissingPullLatentPhase_charge_mul_probability_le_integral (armLaw : Fin <span class="num">2</span> -&gt; Measure Real) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (eta Delta : Real) (hDelta : <span class="num">0</span> ≤ Delta) (n0 n1 : Nat) (phaseOneTotal : Real) (horizon : Nat) : Delta * ((horizon - (n0 + n1) : Nat) : Real) * (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta).real (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal) ≤ integral (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmSampledPseudoRegret (Env := Unit) Delta horizon)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L791">Source line 791</a>
+      <a href="../../chapters/frontier/index.html#decl-2f32eec8ea0c-teaching">Open teaching explanation</a>
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b4179a3ca784">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The unconditional latent reward event is exactly the union of the
+all-present phase and the missing-pull phase.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmAppendixCPureLatentRewardEvent_eq_union_phase_missing (n0 n1 : Nat) (phaseOneTotal : Real) : twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal = twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal ∪ twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L835">Source line 835</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a0d714eb4a72">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.disjoint_twoArmAppendixCLatentPhaseEvent_missing</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> disjoint_twoArmAppendixCLatentPhaseEvent_missing (n0 n1 : Nat) (phaseOneTotal : Real) : Disjoint (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal) (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L852">Source line 852</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fbcb80c28eb3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_pi</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The pure latent phase probability is evaluated under the already compiled
+finite arm-0 product law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_pi (armLaw : Fin <span class="num">2</span> -&gt; Measure Real) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) : (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal) = (Measure.pi (<span class="kw">fun</span> _ : Fin (n0 + n1) =&gt; armLaw <span class="num">0</span>) : Measure (Fin (n0 + n1) -&gt; Real)) (twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L864">Source line 864</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f0e3e09364d6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Probability additivity for the disjoint all-present and missing-pull
+branches of the pure latent phase event.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmFixedIIDLatentTrajectoryMeasure_purePhaseEvent_eq_phase_add_missing (armLaw : Fin <span class="num">2</span> -&gt; Measure Real) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) : (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCPureLatentRewardEvent n0 n1 phaseOneTotal) = (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCLatentPhaseEvent n0 n1 phaseOneTotal) + (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L899">Source line 899</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e051a3f15441">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Source-facing missing-pull/all-present dichotomy.
+
+The unconditional product-law probability of the pure finite reward phase is
+the sum of the generated all-present phase probability and the latent
+missing-pull branch probability.  This theorem does not identify the missing
+branch with a fixed-cutoff starvation event, condition rewards on occurrence,
+or prove a positive phase bound, future no-return, ballot asymptotics, or
+Theorem 2.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmAppendixCRewardPhaseProbability_eq_generated_add_missing (armLaw : Fin <span class="num">2</span> -&gt; Measure Real) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (eta : Real) (n0 n1 : Nat) (phaseOneTotal : Real) : (Measure.pi (<span class="kw">fun</span> _ : Fin (n0 + n1) =&gt; armLaw <span class="num">0</span>) : Measure (Fin (n0 + n1) -&gt; Real)) (twoArmAppendixCRewardPhaseEvent n0 n1 phaseOneTotal) = (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmAppendixCGeneratedPhaseEvent n0 n1 phaseOneTotal) + (twoArmFixedIIDLatentTrajectoryMeasure armLaw hprob eta) (twoArmAppendixCMissingPullLatentPhaseEvent n0 n1 phaseOneTotal)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean.html#L925">Source line 925</a>
+      <a href="../../chapters/frontier/index.html#decl-e051a3f15441-teaching">Open teaching explanation</a>
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

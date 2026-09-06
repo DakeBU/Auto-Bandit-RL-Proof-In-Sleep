@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.RL.FiniteHorizonNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingTimeL1AverageRealizedBehaviorRegretConsistency · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.RL.FiniteHorizonNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingTimeL1AverageRealizedBehaviorRegretConsistency · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.RL.FiniteHorizonNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingTimeL1AverageRealizedBehaviorRegretConsistency · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Finite-horizon RL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>RL.<wbr>Finite<wbr>Horizon<wbr>Natural<wbr>Causal<wbr>Threshold<wbr>Triggered<wbr>Double<wbr>Linear<wbr>Raw<wbr>Window<wbr>Stopping<wbr>Time<wbr>L1Average<wbr>Realized<wbr>Behavior<wbr>Regret<wbr>Consistency</h1>
+  <p class="lede">At schedule index n, this module observes the compiled natural average realized behavior-regret process at the fourth-power prefix (n+1)^4. It stops at that prefix when the observation is at most a deterministic threshold and otherwise waits exactly 2*n+1 additional raw prefixes.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingTimeL1AverageRealizedBehaviorRegretConsistency.lean.html"><code>BanditRLProof/RL/FiniteHorizonNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingTimeL1AverageRealizedBehaviorRegretConsistency.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/finite-horizon-rl/index.html">9. Finite-horizon reinforcement learning</a></dd></div>
+    <div><dt>Declarations</dt><dd>9</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-rl-finitehorizonnaturalcausalratecontrolledrawwindowstoppingtimel1ave-142f68002d96/index.html"><code>BanditRLProof.RL.FiniteHorizonNaturalCausalRateControlledRawWindowStoppingTimeL1AverageRealizedBehaviorRegretConsistency</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-dc9915563b5f">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowEarlyStopSet</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Event on which the observed base-prefix average regret triggers early stopping.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowEarlyStopSet (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (varianceProxy : NNReal) (baseVisitFloor : Real) (threshold : Nat -&gt; Real) (scheduleIndex : Nat) : Set (HeterogeneousStochasticEpisodeBatchTrajectory mdp (<span class="kw">fun</span> t =&gt; AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes mdp varianceProxy baseVisitFloor t))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingTimeL1AverageRealizedBehaviorRegretConsistency.lean.html#L35">Source line 35</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1f226ed763f6">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingPrefix</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Stop at the observed fourth-power prefix, or wait exactly `2*n+1` more prefixes.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingPrefix (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (varianceProxy : NNReal) (baseVisitFloor : Real) (threshold : Nat -&gt; Real) (scheduleIndex : Nat) : HeterogeneousStochasticEpisodeBatchTrajectory mdp (<span class="kw">fun</span> t =&gt; AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes mdp varianceProxy baseVisitFloor t) -&gt; WithTop Nat</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingTimeL1AverageRealizedBehaviorRegretConsistency.lean.html#L56">Source line 56</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8348cb7c8ce8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingPrefix_eq_base_of_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The threshold-success branch stops at the observed base prefix.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingPrefix_eq_base_of_le (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (varianceProxy : NNReal) (baseVisitFloor : Real) (threshold : Nat -&gt; Real) (scheduleIndex : Nat) (trajectory) (hthreshold : selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor (explicitHighProbabilityRounds scheduleIndex) trajectory &lt;= threshold scheduleIndex) : selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingPrefix mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor threshold scheduleIndex trajectory = (explicitHighProbabilityRounds scheduleIndex : WithTop Nat)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingTimeL1AverageRealizedBehaviorRegretConsistency.lean.html#L80">Source line 80</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d4a831b95e19">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingPrefix_eq_right_of_lt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The threshold-failure branch waits to the right endpoint.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingPrefix_eq_right_of_lt (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (varianceProxy : NNReal) (baseVisitFloor : Real) (threshold : Nat -&gt; Real) (scheduleIndex : Nat) (trajectory) (hthreshold : threshold scheduleIndex &lt; selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor (explicitHighProbabilityRounds scheduleIndex) trajectory) : selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingPrefix mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor threshold scheduleIndex trajectory = (explicitHighProbabilityRounds scheduleIndex + (<span class="num">2</span> * scheduleIndex + <span class="num">1</span>) : WithTop Nat)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingTimeL1AverageRealizedBehaviorRegretConsistency.lean.html#L105">Source line 105</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-da382f44132e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.measurableSet_selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowEarlyStopSet</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The early-stop event is known at the fourth-power base prefix.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowEarlyStopSet (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (varianceProxy : NNReal) (baseVisitFloor : Real) (threshold : Nat -&gt; Real) (scheduleIndex : Nat) : MeasurableSet[ selfConsistentScheduledNaturalCausalTrajectoryFiltration mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor (explicitHighProbabilityRounds scheduleIndex)] (selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowEarlyStopSet mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor threshold scheduleIndex)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingTimeL1AverageRealizedBehaviorRegretConsistency.lean.html#L136">Source line 136</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9de83938eaea">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingPrefix_isStoppingTime</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The threshold-triggered two-endpoint rule is an exact natural-filtration stopping time.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingPrefix_isStoppingTime (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (varianceProxy : NNReal) (baseVisitFloor : Real) (threshold : Nat -&gt; Real) (scheduleIndex : Nat) : IsStoppingTime (selfConsistentScheduledNaturalCausalTrajectoryFiltration mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor) (selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingPrefix mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor threshold scheduleIndex)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingTimeL1AverageRealizedBehaviorRegretConsistency.lean.html#L173">Source line 173</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-84285769791e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingPrefix_lower</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The threshold rule never stops before its observed base prefix.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingPrefix_lower (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (varianceProxy : NNReal) (baseVisitFloor : Real) (threshold : Nat -&gt; Real) (scheduleIndex : Nat) (trajectory) : (explicitHighProbabilityRounds scheduleIndex : WithTop Nat) &lt;= selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingPrefix mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor threshold scheduleIndex trajectory</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingTimeL1AverageRealizedBehaviorRegretConsistency.lean.html#L210">Source line 210</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c8460b2be3e4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingPrefix_upper</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The threshold rule never exceeds the double-linear right endpoint.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingPrefix_upper (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (varianceProxy : NNReal) (baseVisitFloor : Real) (threshold : Nat -&gt; Real) (scheduleIndex : Nat) (trajectory) : selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingPrefix mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor threshold scheduleIndex trajectory &lt;= (explicitHighProbabilityRounds scheduleIndex + (<span class="num">2</span> * scheduleIndex + <span class="num">1</span>) : WithTop Nat)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingTimeL1AverageRealizedBehaviorRegretConsistency.lean.html#L233">Source line 233</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-17ae0aa1cae7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_thresholdTriggeredDoubleLinearRawWindowStoppingTimeNaturalAverageRealizedBehaviorRegret_L1_consistency</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The threshold rule never exceeds the double-linear right endpoint. -/
+theorem
+selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingPrefix_upper
+(mdp : MDP State Action) (initialState : Measure State)
+[IsProbabilityMeasure initialState]
+(rewardSource : mdp.MeanCompatibleRewardKernel)
+(initialTable : DeterministicMarkovPolicyTable mdp)
+(defaultState : State) (varianceProxy : NNReal)
+(baseVisitFloor : Real) (threshold : Nat -&gt; Real)
+(scheduleIndex : Nat) (trajectory) :
+selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingPrefix
+mdp initialState rewardSource initialTable defaultState varianceProxy
+baseVisitFloor threshold scheduleIndex trajectory &lt;=
+(explicitHighProbabilityRounds scheduleIndex +
+(2 * scheduleIndex + 1) : WithTop Nat) := by
+classical
+unfold selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingPrefix
+by_cases htrajectory : trajectory ∈
+selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowEarlyStopSet
+mdp initialState rewardSource initialTable defaultState varianceProxy
+baseVisitFloor threshold scheduleIndex
+· simp [htrajectory]
+· simp [htrajectory]
+
+/-
+Terminal L1 theorem for the threshold-triggered choice between the fourth-power
+base prefix and its `2*n+1`-wider right endpoint.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledCausalSource_thresholdTriggeredDoubleLinearRawWindowStoppingTimeNaturalAverageRealizedBehaviorRegret_L1_consistency (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : <span class="num">0</span> &lt; varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support <span class="num">1</span> baseVisitFloor) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) (threshold : Nat -&gt; Real) : <span class="kw">let</span> stoppingPrefix := selfConsistentScheduledNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingPrefix mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor threshold <span class="kw">let</span> source := selfConsistentScheduledCausalSource mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor <span class="kw">let</span> process := selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor <span class="kw">let</span> stoppedProcess := selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor stoppingPrefix <span class="kw">let</span> expectedAbsolute := selfConsistentScheduledNaturalCausalExpectedAbsoluteRateControlledRawWindowStoppingAverageRealizedBehaviorRegret mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor stoppingPrefix <span class="kw">let</span> budget := selfConsistentScheduledNaturalCausalRateControlledRawWindowStoppingL1Budget mdp varianceProxy baseVisitFloor explicitHighProbabilityRounds (<span class="kw">fun</span> scheduleIndex =&gt; <span class="num">2</span> * scheduleIndex + <span class="num">1</span>) <span class="kw">let</span> rate := selfConsistentScheduledNaturalCausalRateControlledRawWindowStoppingL1Rate mdp varianceProxy explicitHighProbabilityRounds (<span class="kw">fun</span> scheduleIndex =&gt; <span class="num">2</span> * scheduleIndex + <span class="num">1</span>) Tendsto (<span class="kw">fun</span> scheduleIndex : Nat =&gt; scheduleIndex) atTop atTop /\ StronglyAdapted (selfConsistentScheduledNaturalCausalTrajectoryFiltration mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor) process /\ (<span class="kw">forall</span> scheduleIndex, Measurable (stoppedProcess scheduleIndex)) /\ (<span class="kw">forall</span> scheduleIndex, MemLp (stoppedProcess scheduleIndex) <span class="num">1</span> source.trajectoryMeasure) /\ (<span class="kw">forall</span> scheduleIndex, expectedAbsolute scheduleIndex &lt;= budget scheduleIndex) /\ (<span class="kw">forall</span> scheduleIndex, budget scheduleIndex &lt;= rate scheduleIndex) /\ Tendsto budget atTop (nhds <span class="num">0</span>) /\ Tendsto expectedAbsolute atTop (nhds <span class="num">0</span>) /\ Tendsto (<span class="kw">fun</span> scheduleIndex =&gt; eLpNorm (stoppedProcess scheduleIndex - (<span class="kw">fun</span> _ =&gt; <span class="num">0</span>)) <span class="num">1</span> source.trajectoryMeasure) atTop (nhds <span class="num">0</span>) /\ TendstoInMeasure source.trajectoryMeasure stoppedProcess atTop (<span class="kw">fun</span> _ =&gt; <span class="num">0</span>) /\ ∀ᵐ trajectory ∂source.trajectoryMeasure, Tendsto (<span class="kw">fun</span> scheduleIndex =&gt; stoppedProcess scheduleIndex trajectory) atTop (nhds <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalThresholdTriggeredDoubleLinearRawWindowStoppingTimeL1AverageRealizedBehaviorRegretConsistency.lean.html#L260">Source line 260</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

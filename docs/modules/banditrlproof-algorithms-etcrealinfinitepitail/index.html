@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.ETCRealInfinitePiTail · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.ETCRealInfinitePiTail · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.ETCRealInfinitePiTail · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · ETC</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>ETC<wbr>Real<wbr>Infinite<wbr>Pi<wbr>Tail</h1>
+  <p class="lede">This module proves the exact single-arm ETC wrong-commit tail for a native Real reward kernel under the canonical independent-coordinate product law. It then consumes that tail in the expected pull-count and finite-sum kernel regret identities. Transport from an arbitrary external algorithm/environment sequence remains a downstream law-identification obligation.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/ETCRealInfinitePiTail.lean.html"><code>BanditRLProof/Algorithms/ETCRealInfinitePiTail.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/etc/index.html">3. Explore-Then-Commit</a></dd></div>
+    <div><dt>Declarations</dt><dd>17</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-algorithms-etcrealempiricalmean/index.html"><code>BanditRLProof.Algorithms.ETCRealEmpiricalMean</code></a>, <a href="../banditrlproof-concentrationsubgaussian/index.html"><code>BanditRLProof.ConcentrationSubGaussian</code></a>, <a href="../banditrlproof-independencefoundation/index.html"><code>BanditRLProof.IndependenceFoundation</code></a>, <a href="../banditrlproof-realkernelregretpullcount/index.html"><code>BanditRLProof.RealKernelRegretPullCount</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-etcrealprefixlawtransport/index.html"><code>BanditRLProof.Algorithms.ETCRealPrefixLawTransport</code></a>, <a href="../banditrlproof-algorithms-ucbarmstreamexpectedpullcount/index.html"><code>BanditRLProof.Algorithms.UCBArmStreamExpectedPullCount</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-b6fbf673e5f5">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.realKernelBestArm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A finite maximizer of the identity-integral means of a Real reward kernel.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> realKernelBestArm {K : Nat} (hK : <span class="num">0</span> &lt; K) (nu : ProbabilityTheory.Kernel (Fin K) Real) : Fin K</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealInfinitePiTail.lean.html#L27">Source line 27</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-14c48a190d06">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.realKernelMean_le_realKernelBestArm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The selected kernel best arm dominates every arm mean.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> realKernelMean_le_realKernelBestArm {K : Nat} (hK : <span class="num">0</span> &lt; K) (nu : ProbabilityTheory.Kernel (Fin K) Real) (a : Fin K) : realKernelMean nu a &lt;= realKernelMean nu (ETC.realKernelBestArm hK nu)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealInfinitePiTail.lean.html#L32">Source line 32</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-22a669c6213c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.ciSup_realKernelMean_eq_realKernelBestArm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite supremum of kernel means is attained at `realKernelBestArm`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> ciSup_realKernelMean_eq_realKernelBestArm {K : Nat} (hK : <span class="num">0</span> &lt; K) (nu : ProbabilityTheory.Kernel (Fin K) Real) : (⨆ a : Fin K, realKernelMean nu a) = realKernelMean nu (ETC.realKernelBestArm hK nu)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealInfinitePiTail.lean.html#L39">Source line 39</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ee76936bbfa9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.realKernelGap_eq_realKernelBestArm_sub</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Kernel gap is the selected best mean minus the queried arm mean.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> realKernelGap_eq_realKernelBestArm_sub {K : Nat} (hK : <span class="num">0</span> &lt; K) (nu : ProbabilityTheory.Kernel (Fin K) Real) (a : Fin K) : realKernelGap nu a = realKernelMean nu (ETC.realKernelBestArm hK nu) - realKernelMean nu a</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealInfinitePiTail.lean.html#L50">Source line 50</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e67a0790d211">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.realCenteredPairwiseRewardDiff</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Native Real centered candidate-minus-best reward difference.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> realCenteredPairwiseRewardDiff {Omega : Type u} {K : Nat} (spec : ETC.Spec K) (mean : Fin K -&gt; Real) (best commitArm : Fin K) (reward : Omega -&gt; RewardTrace Real) (a : Fin K) (t : Nat) (omega : Omega) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealInfinitePiTail.lean.html#L59">Source line 59</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d1280fe0eefb">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.realCenteredPairwiseGapThreshold</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Native Real threshold of the centered pairwise exploration event.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> realCenteredPairwiseGapThreshold {K : Nat} (spec : ETC.Spec K) (mean : Fin K -&gt; Real) (best a : Fin K) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealInfinitePiTail.lean.html#L70">Source line 70</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7cbc5a7d0497">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.realCenteredPairwiseRewardDiffVarianceProxy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Variance proxy charged at candidate and best-arm exploration coordinates.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> realCenteredPairwiseRewardDiffVarianceProxy {K : Nat} (spec : ETC.Spec K) (best commitArm : Fin K) (cReward : Fin K -&gt; Nat -&gt; NNReal) (a : Fin K) (t : Nat) : NNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealInfinitePiTail.lean.html#L76">Source line 76</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-dd5cd45dc323">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.real_selectedSubMean_sum_eq_sumRewards_sub_pullCount_mul</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Selected centered Real rewards equal reward sum minus count times mean.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> real_selectedSubMean_sum_eq_sumRewards_sub_pullCount_mul {Action : Type} [DecidableEq Action] (action : ActionTrace Action) (reward : RewardTrace Real) (a : Action) (n : Nat) (mu : Real) : (Finset.range n).sum (<span class="kw">fun</span> t =&gt; <span class="kw">if</span> action t = a <span class="kw">then</span> reward t - mu <span class="kw">else</span> <span class="num">0</span>) = sumRewards action reward a n - (pullCount action a n : Real) * mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealInfinitePiTail.lean.html#L84">Source line 84</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9486c2fc5d69">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.real_meanSubSelected_sum_eq_pullCount_mul_sub_sumRewards</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Selected negative centered Real rewards equal count times mean minus sum.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> real_meanSubSelected_sum_eq_pullCount_mul_sub_sumRewards {Action : Type} [DecidableEq Action] (action : ActionTrace Action) (reward : RewardTrace Real) (a : Action) (n : Nat) (mu : Real) : (Finset.range n).sum (<span class="kw">fun</span> t =&gt; <span class="kw">if</span> action t = a <span class="kw">then</span> mu - reward t <span class="kw">else</span> <span class="num">0</span>) = (pullCount action a n : Real) * mu - sumRewards action reward a n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealInfinitePiTail.lean.html#L109">Source line 109</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-baa6330473d7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.real_sumRewards_le_imp_centered_pairwise_sum_ge</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Equal exploration counts turn a raw reward comparison into a centered sum.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> real_sumRewards_le_imp_centered_pairwise_sum_ge {Action : Type} [DecidableEq Action] (action : ActionTrace Action) (reward : RewardTrace Real) (a b : Action) (n m : Nat) (muA muB : Real) (hcount_a : pullCount action a n = m) (hcount_b : pullCount action b n = m) (hraw : sumRewards action reward b n &lt;= sumRewards action reward a n) : (m : Real) * (muB - muA) &lt;= (Finset.range n).sum (<span class="kw">fun</span> t =&gt; (<span class="kw">if</span> action t = a <span class="kw">then</span> reward t - muA <span class="kw">else</span> <span class="num">0</span>) + (<span class="kw">if</span> action t = b <span class="kw">then</span> muB - reward t <span class="kw">else</span> <span class="num">0</span>))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealInfinitePiTail.lean.html#L141">Source line 141</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-12f431c34292">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.realExplorationArgmaxCommit_eq_arm_event_subset_centeredPairwise_sum_event</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A native Real commit fiber is contained in its centered pairwise tail event.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> realExplorationArgmaxCommit_eq_arm_event_subset_centeredPairwise_sum_event {Omega : Type u} {K : Nat} (spec : ETC.Spec K) (mean : Fin K -&gt; Real) (best baseCommitArm : Fin K) (reward : Omega -&gt; RewardTrace Real) (a : Fin K) (hm : <span class="num">0</span> &lt; spec.explorationPulls) : Set.Subset {omega | ETC.realExplorationArgmaxCommit spec baseCommitArm (reward omega) = a} {omega | ETC.realCenteredPairwiseGapThreshold spec mean best a &lt;= (Finset.range (spec.explorationPulls * K)).sum (<span class="kw">fun</span> t =&gt; ETC.realCenteredPairwiseRewardDiff spec mean best baseCommitArm reward a t omega)}</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealInfinitePiTail.lean.html#L168">Source line 168</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a84215038f8a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.iIndepFun_realCenteredPairwiseRewardDiff_of_iIndepFun_reward</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Coordinate independence survives the native Real pairwise transform.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> iIndepFun_realCenteredPairwiseRewardDiff_of_iIndepFun_reward {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) (spec : ETC.Spec K) (mean : Fin K -&gt; Real) (best commitArm : Fin K) (reward : Omega -&gt; RewardTrace Real) (h_reward_indep : ProbabilityTheory.iIndepFun (<span class="kw">fun</span> t omega =&gt; reward omega t) mu) (a : Fin K) : ProbabilityTheory.iIndepFun (<span class="kw">fun</span> t omega =&gt; ETC.realCenteredPairwiseRewardDiff spec mean best commitArm reward a t omega) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealInfinitePiTail.lean.html#L206">Source line 206</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-12173d7354b0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.realCenteredPairwiseRewardDiff_hasSubgaussianMGF_of_centeredReward</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Per-coordinate centered sub-Gaussianity transfers to the pairwise summand.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> realCenteredPairwiseRewardDiff_hasSubgaussianMGF_of_centeredReward {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsZeroOrProbabilityMeasure mu] (spec : ETC.Spec K) (mean : Fin K -&gt; Real) (best commitArm : Fin K) (reward : Omega -&gt; RewardTrace Real) (cReward : Fin K -&gt; Nat -&gt; NNReal) (a : Fin K) (t : Nat) (hne : a ≠ best) (h_subG : <span class="kw">forall</span> b, ETC.actionWithCommit spec commitArm t = b -&gt; ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> omega =&gt; reward omega t - mean b) (cReward b t) mu) : ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> omega =&gt; ETC.realCenteredPairwiseRewardDiff spec mean best commitArm reward a t omega) (ETC.realCenteredPairwiseRewardDiffVarianceProxy spec best commitArm cReward a t) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealInfinitePiTail.lean.html#L226">Source line 226</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-787bf55002c4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.sum_realCenteredPairwiseRewardDiffVarianceProxy_const_eq_two_mul</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The constant pairwise proxy sums to exactly `2 * m * sigma2`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sum_realCenteredPairwiseRewardDiffVarianceProxy_const_eq_two_mul {K : Nat} (spec : ETC.Spec K) (best : Fin K) (sigma2 : NNReal) (a : Fin K) (hne : a ≠ best) : (Finset.range (spec.explorationPulls * K)).sum (<span class="kw">fun</span> t =&gt; ETC.realCenteredPairwiseRewardDiffVarianceProxy spec best best (<span class="kw">fun</span> _ _ =&gt; sigma2) a t) = (<span class="num">2</span> : NNReal) * (spec.explorationPulls : NNReal) * sigma2</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealInfinitePiTail.lean.html#L266">Source line 266</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6ebf57d3aba2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.real_measure_realExplorationArgmaxCommit_eq_arm_le_exp_of_infinitePi_kernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact native Real single-arm wrong-commit tail under action-matched independent
+kernel coordinates.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> real_measure_realExplorationArgmaxCommit_eq_arm_le_exp_of_infinitePi_kernel {K : Nat} (spec : ETC.Spec K) (nu : ProbabilityTheory.Kernel (Fin K) Real) [ProbabilityTheory.IsMarkovKernel nu] (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> arm, ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - realKernelMean nu arm) sigma2 (nu arm)) (hm : <span class="num">0</span> &lt; spec.explorationPulls) (a : Fin K) (hne : a ≠ ETC.realKernelBestArm spec.hK nu) : <span class="kw">let</span> best := ETC.realKernelBestArm spec.hK nu <span class="kw">let</span> coordLaw := <span class="kw">fun</span> t : Nat =&gt; nu (ETC.exploreArm spec t) (Measure.infinitePi coordLaw).real {trajectory : RewardTrace Real | ETC.realExplorationArgmaxCommit spec best trajectory = a} &lt;= Real.exp (-(spec.explorationPulls : Real) * (realKernelGap nu a) ^ <span class="num">2</span> / (<span class="num">4</span> * (sigma2 : Real)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealInfinitePiTail.lean.html#L313">Source line 313</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ed6b1748f72d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pullCount_realExplorationArgmaxAction_le_exp_of_infinitePi_kernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact native Real per-arm expected pull-count bound under `infinitePi`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pullCount_realExplorationArgmaxAction_le_exp_of_infinitePi_kernel {K : Nat} (spec : ETC.Spec K) (nu : ProbabilityTheory.Kernel (Fin K) Real) [ProbabilityTheory.IsMarkovKernel nu] (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> arm, ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - realKernelMean nu arm) sigma2 (nu arm)) (hm : <span class="num">0</span> &lt; spec.explorationPulls) (a : Fin K) (n : Nat) (hn : K * spec.explorationPulls &lt;= n) (hne : a ≠ ETC.realKernelBestArm spec.hK nu) : <span class="kw">let</span> best := ETC.realKernelBestArm spec.hK nu <span class="kw">let</span> coordLaw := <span class="kw">fun</span> t : Nat =&gt; nu (ETC.exploreArm spec t) integral (Measure.infinitePi coordLaw) (<span class="kw">fun</span> trajectory : RewardTrace Real =&gt; (pullCount (ETC.realExplorationArgmaxAction spec best trajectory) a n : Real)) &lt;= (spec.explorationPulls : Real) + ((n - K * spec.explorationPulls : Nat) : Real) * Real.exp (-(spec.explorationPulls : Real) * (realKernelGap nu a) ^ <span class="num">2</span> / (<span class="num">4</span> * (sigma2 : Real)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealInfinitePiTail.lean.html#L439">Source line 439</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0e7560ae5236">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_realKernelRegret_realExplorationArgmaxAction_le_exact_sum_of_infinitePi_kernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact LML-shaped finite-sum native Real kernel regret bound under the canonical
+independent exploration-coordinate law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_realKernelRegret_realExplorationArgmaxAction_le_exact_sum_of_infinitePi_kernel {K : Nat} (spec : ETC.Spec K) (nu : ProbabilityTheory.Kernel (Fin K) Real) [ProbabilityTheory.IsMarkovKernel nu] (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> arm, ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - realKernelMean nu arm) sigma2 (nu arm)) (hm : <span class="num">0</span> &lt; spec.explorationPulls) (n : Nat) (hn : K * spec.explorationPulls &lt;= n) : <span class="kw">let</span> best := ETC.realKernelBestArm spec.hK nu <span class="kw">let</span> coordLaw := <span class="kw">fun</span> t : Nat =&gt; nu (ETC.exploreArm spec t) integral (Measure.infinitePi coordLaw) (<span class="kw">fun</span> trajectory : RewardTrace Real =&gt; realKernelRegret nu (ETC.realExplorationArgmaxAction spec best trajectory) n) &lt;= (Finset.univ : Finset (Fin K)).sum (<span class="kw">fun</span> arm =&gt; realKernelGap nu arm * ((spec.explorationPulls : Real) + ((n - K * spec.explorationPulls : Nat) : Real) * Real.exp (-(spec.explorationPulls : Real) * (realKernelGap nu arm) ^ <span class="num">2</span> / (<span class="num">4</span> * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealInfinitePiTail.lean.html#L479">Source line 479</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/ConcentrationIndexOccupancy.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/ConcentrationIndexOccupancy.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/ConcentrationIndexOccupancy.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/ConcentrationIndexOccupancy.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.ConcentrationGaussianOccupancy</span>
+<span id="L2">2 import BanditRLProof.ConcentrationMartingaleMaximal</span>
+<span id="L3">3 import BanditRLProof.ConcentrationCappedOccupancy</span>
+<span id="L4">4 </span>
+<span id="L5">5 noncomputable section</span>
+<span id="L6">6 open MeasureTheory ProbabilityTheory Real Finset</span>
+<span id="L7">7 open scoped ENNReal NNReal</span>
+<span id="L8">8 namespace BanditRLProof.Concentration</span>
+<span id="L9">9 variable {Ω : Type*} [MeasurableSpace Ω] {μ : Measure Ω} [IsProbabilityMeasure μ]</span>
+<span id="L10">10 </span>
+<span id="L11">11 def fixedRadiusMeanEvent (X : ℕ → Ω → ℝ) (a ε : ℝ) (s : ℕ) : Set Ω :=</span>
+<span id="L12">12   {ω | ε ≤ (∑ j ∈ range s, X (j+1) ω)/(s : ℝ)+sqrt (2*a/(s : ℝ))}</span>
+<span id="L13">13 </span>
+<span id="L14">14 theorem measure_fixedRadiusMeanEvent_le (X : ℕ → Ω → ℝ)</span>
+<span id="L15">15     (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ)</span>
+<span id="L16">16     (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ)</span>
+<span id="L17">17     (a ε : ℝ) (ha : 0 &lt; a) (hε : 0 &lt; ε) (s : ℕ) (hs : 2*a/ε^2 &lt; (s : ℝ)) :</span>
+<span id="L18">18     μ (fixedRadiusMeanEvent X a ε s) ≤ ENNReal.ofReal (occupancyTail a ε s) := by</span>
+<span id="L19">19   have hsR : 0 &lt; (s : ℝ) := (by positivity : 0 &lt; 2*a/ε^2).trans hs</span>
+<span id="L20">20   have hsN : 0 &lt; s := Nat.cast_pos.mp hsR</span>
+<span id="L21">21   have hsq := sq_sqrt hsR.le</span>
+<span id="L22">22   have haSq := sq_sqrt (by positivity : 0 ≤ 2*a)</span>
+<span id="L23">23   have hlarge : 2*a &lt; (s : ℝ)*ε^2 := (div_lt_iff₀ (sq_pos_of_pos hε)).mp hs</span>
+<span id="L24">24   have hpos : 0 &lt; ε*sqrt (s : ℝ)-sqrt (2*a) := by</span>
+<span id="L25">25     have he : (ε*sqrt (s : ℝ))^2 = ε^2*(s : ℝ) := by rw [mul_pow, hsq]</span>
+<span id="L26">26     nlinarith [mul_pos hε (sqrt_pos.mpr hsR), sqrt_nonneg (2*a)]</span>
+<span id="L27">27   let A := sqrt (s : ℝ)*(ε*sqrt (s : ℝ)-sqrt (2*a))</span>
+<span id="L28">28   have hA : 0 &lt; A := mul_pos (sqrt_pos.mpr hsR) hpos</span>
+<span id="L29">29   have hr : (s : ℝ)*sqrt (2*a/(s : ℝ)) = sqrt (s : ℝ)*sqrt (2*a) := by</span>
+<span id="L30">30     rw [sqrt_div (by positivity), div_eq_mul_inv]</span>
+<span id="L31">31     field_simp</span>
+<span id="L32">32     nlinarith</span>
+<span id="L33">33   have hbound := measure_exists_le_independent_partialSum_ge_le_subgaussian</span>
+<span id="L34">34     X hXm hind hmean 1 (by norm_num) hsubG s hsN A hA</span>
+<span id="L35">35   have hevent : fixedRadiusMeanEvent X a ε s ⊆</span>
+<span id="L36">36       {ω | ∃ i, i ≤ s ∧ A ≤ ∑ j ∈ range i, X (j+1) ω} := by</span>
+<span id="L37">37     intro ω hω</span>
+<span id="L38">38     refine ⟨s, le_rfl, ?_⟩</span>
+<span id="L39">39     have h := mul_le_mul_of_nonneg_left hω hsR.le</span>
+<span id="L40">40     change (s : ℝ)*ε ≤ (s : ℝ)*((∑ j ∈ range s, X (j+1) ω)/(s : ℝ)+sqrt (2*a/(s : ℝ))) at h</span>
+<span id="L41">41     rw [mul_add, mul_div_cancel₀ _ hsR.ne&#x27;, hr] at h</span>
+<span id="L42">42     dsimp [A]</span>
+<span id="L43">43     nlinarith</span>
+<span id="L44">44   apply (measure_mono hevent).trans</span>
+<span id="L45">45   convert hbound using 1</span>
+<span id="L46">46   unfold occupancyTail</span>
+<span id="L47">47   congr 2</span>
+<span id="L48">48   dsimp [A]</span>
+<span id="L49">49   rw [mul_pow, hsq]</span>
+<span id="L50">50   field_simp</span>
+<span id="L51">51 </span>
+<span id="L52">52 theorem sum_measureReal_fixedRadiusMeanEvent_le (X : ℕ → Ω → ℝ)</span>
+<span id="L53">53     (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ)</span>
+<span id="L54">54     (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ)</span>
+<span id="L55">55     (a ε : ℝ) (ha : 0 &lt; a) (hε : 0 &lt; ε) (n : ℕ) :</span>
+<span id="L56">56     (∑ i ∈ range n, μ.real (fixedRadiusMeanEvent X a ε (i+1))) ≤</span>
+<span id="L57">57       1+(2/ε^2)*(a+sqrt (Real.pi*a)+1) := by</span>
+<span id="L58">58   apply sum_le_occupancy_bound _ a ε ha hε (fun _ =&gt; measureReal_le_one) _ n</span>
+<span id="L59">59   intro s hs</span>
+<span id="L60">60   have h := ENNReal.toReal_mono ENNReal.ofReal_ne_top</span>
+<span id="L61">61     (measure_fixedRadiusMeanEvent_le X hXm hind hmean hsubG a ε ha hε s hs)</span>
+<span id="L62">62   have hn : 0 ≤ occupancyTail a ε s := (exp_pos _).le</span>
+<span id="L63">63   simpa only [ENNReal.toReal_ofReal hn] using h</span>
+<span id="L64">64 </span>
+<span id="L65">65 theorem measurableSet_fixedRadiusMeanEvent (X : ℕ → Ω → ℝ)</span>
+<span id="L66">66     (hXm : ∀ i, StronglyMeasurable (X i)) (a ε : ℝ) (s : ℕ) :</span>
+<span id="L67">67     MeasurableSet (fixedRadiusMeanEvent X a ε s) := by</span>
+<span id="L68">68   have hm : StronglyMeasurable (fun ω =&gt; ∑ j ∈ range s, X (j+1) ω) := by</span>
+<span id="L69">69     convert Finset.stronglyMeasurable_sum (range s) (fun i _ =&gt; hXm (i+1)) using 1</span>
+<span id="L70">70     ext ω; simp</span>
+<span id="L71">71   exact measurableSet_le measurable_const ((hm.measurable.div_const _).add_const _)</span>
+<span id="L72">72 </span>
+<span id="L73">73 def fixedRadiusCount (X : ℕ → Ω → ℝ) (a ε : ℝ) (n : ℕ) (ω : Ω) : ℝ :=</span>
+<span id="L74">74   ∑ i ∈ range n, (fixedRadiusMeanEvent X a ε (i+1)).indicator (fun _ =&gt; (1 : ℝ)) ω</span>
+<span id="L75">75 </span>
+<span id="L76">76 theorem integrable_fixedRadiusCount (X : ℕ → Ω → ℝ)</span>
+<span id="L77">77     (hXm : ∀ i, StronglyMeasurable (X i)) (a ε : ℝ) (n : ℕ) :</span>
+<span id="L78">78     Integrable (fixedRadiusCount X a ε n) μ := by</span>
+<span id="L79">79   exact integrable_finset_sum _ (fun i _ =&gt; (integrable_const (1 : ℝ)).indicator</span>
+<span id="L80">80     (measurableSet_fixedRadiusMeanEvent X hXm a ε (i+1)))</span>
+<span id="L81">81 </span>
+<span id="L82">82 /-- Source Lemma 8.2 expected-count conclusion for centered unit-subgaussian coordinates. -/</span>
+<span id="L83">83 theorem integral_fixedRadiusCount_le (X : ℕ → Ω → ℝ)</span>
+<span id="L84">84     (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ)</span>
+<span id="L85">85     (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ)</span>
+<span id="L86">86     (a ε : ℝ) (ha : 0 &lt; a) (hε : 0 &lt; ε) (n : ℕ) :</span>
+<span id="L87">87     (∫ ω, fixedRadiusCount X a ε n ω ∂μ) ≤</span>
+<span id="L88">88       1+(2/ε^2)*(a+sqrt (Real.pi*a)+1) := by</span>
+<span id="L89">89   unfold fixedRadiusCount</span>
+<span id="L90">90   rw [integral_finset_sum _ (fun i _ =&gt; (integrable_const (1 : ℝ)).indicator</span>
+<span id="L91">91     (measurableSet_fixedRadiusMeanEvent X hXm a ε (i+1)))]</span>
+<span id="L92">92   have he : (∑ i ∈ range n, ∫ ω, (fixedRadiusMeanEvent X a ε (i+1)).indicator (fun _ =&gt; (1 : ℝ)) ω ∂μ) =</span>
+<span id="L93">93       ∑ i ∈ range n, μ.real (fixedRadiusMeanEvent X a ε (i+1)) := by</span>
+<span id="L94">94     apply Finset.sum_congr rfl</span>
+<span id="L95">95     intro i hi</span>
+<span id="L96">96     rw [integral_indicator (measurableSet_fixedRadiusMeanEvent X hXm a ε (i+1))]</span>
+<span id="L97">97     simp</span>
+<span id="L98">98   rw [he]</span>
+<span id="L99">99   exact sum_measureReal_fixedRadiusMeanEvent_le X hXm hind hmean hsubG a ε ha hε n</span>
+<span id="L100">100 </span>
+<span id="L101">101 /-- Sharper count bound: the removed additive one pays for MOSS initialization. -/</span>
+<span id="L102">102 theorem integral_fixedRadiusCount_le_sharp (X : ℕ → Ω → ℝ)</span>
+<span id="L103">103     (hXm : ∀ i, StronglyMeasurable (X i)) (hind : iIndepFun X μ)</span>
+<span id="L104">104     (hmean : ∀ i, ∫ ω, X i ω ∂μ = 0) (hsubG : ∀ i, HasSubgaussianMGF (X i) 1 μ)</span>
+<span id="L105">105     (a ε : ℝ) (ha : 0 &lt; a) (hε : 0 &lt; ε) (n : ℕ) :</span>
+<span id="L106">106     (∫ ω, fixedRadiusCount X a ε n ω ∂μ) ≤</span>
+<span id="L107">107       (2/ε^2)*(a+sqrt (Real.pi*a)+1) := by</span>
+<span id="L108">108   unfold fixedRadiusCount</span>
+<span id="L109">109   rw [integral_finset_sum _ (fun i _ =&gt; (integrable_const (1 : ℝ)).indicator</span>
+<span id="L110">110     (measurableSet_fixedRadiusMeanEvent X hXm a ε (i+1)))]</span>
+<span id="L111">111   have he : (∑ i ∈ range n, ∫ ω, (fixedRadiusMeanEvent X a ε (i+1)).indicator (fun _ =&gt; (1 : ℝ)) ω ∂μ) =</span>
+<span id="L112">112       ∑ i ∈ range n, μ.real (fixedRadiusMeanEvent X a ε (i+1)) := by</span>
+<span id="L113">113     apply Finset.sum_congr rfl</span>
+<span id="L114">114     intro i hi</span>
+<span id="L115">115     rw [integral_indicator (measurableSet_fixedRadiusMeanEvent X hXm a ε (i+1))]</span>
+<span id="L116">116     simp</span>
+<span id="L117">117   rw [he]</span>
+<span id="L118">118   apply sum_le_occupancy_bound_sharp _ a ε ha hε (fun _ =&gt; measureReal_le_one) _ n</span>
+<span id="L119">119   intro s hs</span>
+<span id="L120">120   have h := ENNReal.toReal_mono ENNReal.ofReal_ne_top</span>
+<span id="L121">121     (measure_fixedRadiusMeanEvent_le X hXm hind hmean hsubG a ε ha hε s hs)</span>
+<span id="L122">122   have hn : 0 ≤ occupancyTail a ε s := (exp_pos _).le</span>
+<span id="L123">123   simpa only [ENNReal.toReal_ofReal hn] using h</span>
+<span id="L124">124 </span>
+<span id="L125">125 end BanditRLProof.Concentration</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

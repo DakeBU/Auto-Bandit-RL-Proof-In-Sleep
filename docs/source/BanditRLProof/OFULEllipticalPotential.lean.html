@@ -1,0 +1,2199 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/OFULEllipticalPotential.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/OFULEllipticalPotential.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/OFULEllipticalPotential.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/OFULEllipticalPotential.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import Mathlib.Algebra.BigOperators.Group.Finset.Basic</span>
+<span id="L2">2 import Mathlib.Algebra.Order.Field.Basic</span>
+<span id="L3">3 import Mathlib.Analysis.MeanInequalities</span>
+<span id="L4">4 import Mathlib.Analysis.Matrix.PosDef</span>
+<span id="L5">5 import Mathlib.Data.Matrix.Basic</span>
+<span id="L6">6 import Mathlib.Data.Real.Basic</span>
+<span id="L7">7 import Mathlib.LinearAlgebra.Matrix.SchurComplement</span>
+<span id="L8">8 import Mathlib.Tactic.Ring</span>
+<span id="L9">9 </span>
+<span id="L10">10 /-!</span>
+<span id="L11">11 # OFUL elliptical-potential linear algebra wrappers</span>
+<span id="L12">12 </span>
+<span id="L13">13 This module records the deterministic finite-dimensional linear-algebra</span>
+<span id="L14">14 surface needed by OFUL/LinUCB routes.  It packages rank-one and finite-history</span>
+<span id="L15">15 feature Gram matrices, positive-definiteness and inverse facts, determinant</span>
+<span id="L16">16 updates, log-determinant telescoping, trace/eigenvalue determinant bounds, and</span>
+<span id="L17">17 the standard logarithmic clipped elliptical-potential endpoint.</span>
+<span id="L18">18 </span>
+<span id="L19">19 It does not prove self-normalized concentration, confidence ellipsoids,</span>
+<span id="L20">20 optimism, or an OFUL regret theorem.</span>
+<span id="L21">21 -/</span>
+<span id="L22">22 </span>
+<span id="L23">23 namespace BanditRLProof</span>
+<span id="L24">24 namespace OFUL</span>
+<span id="L25">25 </span>
+<span id="L26">26 universe u v</span>
+<span id="L27">27 </span>
+<span id="L28">28 /-- Rank-one Gram matrix generated by one feature vector. -/</span>
+<span id="L29">29 def rankOneGram {Feature : Type u}</span>
+<span id="L30">30     (x : Feature -&gt; Real) : Matrix Feature Feature Real :=</span>
+<span id="L31">31   fun i j =&gt; x i * x j</span>
+<span id="L32">32 </span>
+<span id="L33">33 /-- The local rank-one Gram matrix is Mathlib&#x27;s column-row product shape. -/</span>
+<span id="L34">34 theorem rankOneGram_eq_replicateCol_mul_replicateRow</span>
+<span id="L35">35     {Feature : Type u} [Fintype Feature]</span>
+<span id="L36">36     (x : Feature -&gt; Real) :</span>
+<span id="L37">37     rankOneGram x =</span>
+<span id="L38">38       Matrix.replicateCol Unit x * Matrix.replicateRow Unit x := by</span>
+<span id="L39">39   ext i j</span>
+<span id="L40">40   simp [rankOneGram, Matrix.mul_apply]</span>
+<span id="L41">41 </span>
+<span id="L42">42 /-- Rank-one Gram matrices are Hermitian. -/</span>
+<span id="L43">43 theorem rankOneGram_isHermitian</span>
+<span id="L44">44     {Feature : Type u} [Fintype Feature]</span>
+<span id="L45">45     (x : Feature -&gt; Real) :</span>
+<span id="L46">46     (rankOneGram x).IsHermitian := by</span>
+<span id="L47">47   refine Matrix.IsHermitian.ext ?_</span>
+<span id="L48">48   intro i j</span>
+<span id="L49">49   simp [rankOneGram, mul_comm]</span>
+<span id="L50">50 </span>
+<span id="L51">51 /--</span>
+<span id="L52">52 Rank-one determinant lemma at the identity, specialized to feature Gram</span>
+<span id="L53">53 updates.</span>
+<span id="L54">54 -/</span>
+<span id="L55">55 theorem det_one_add_rankOneGram</span>
+<span id="L56">56     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L57">57     (x : Feature -&gt; Real) :</span>
+<span id="L58">58     (1 + rankOneGram x).det = 1 + dotProduct x x := by</span>
+<span id="L59">59   rw [rankOneGram_eq_replicateCol_mul_replicateRow]</span>
+<span id="L60">60   simpa using</span>
+<span id="L61">61     Matrix.det_one_add_replicateCol_mul_replicateRow (ι := Unit)</span>
+<span id="L62">62       (u := x) (v := x)</span>
+<span id="L63">63 </span>
+<span id="L64">64 /--</span>
+<span id="L65">65 The one-dimensional determinant factor in the rank-one matrix determinant</span>
+<span id="L66">66 lemma is the scalar `1 + x^T A^{-1} x`.</span>
+<span id="L67">67 -/</span>
+<span id="L68">68 theorem det_rankOne_update_factor_eq_one_add_dotProduct_inv_mulVec</span>
+<span id="L69">69     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L70">70     (A : Matrix Feature Feature Real) (x : Feature -&gt; Real) :</span>
+<span id="L71">71     (1 + Matrix.replicateRow Unit x * A⁻¹ *</span>
+<span id="L72">72         Matrix.replicateCol Unit x).det =</span>
+<span id="L73">73       1 + dotProduct x (Matrix.mulVec (A⁻¹) x) := by</span>
+<span id="L74">74   rw [Matrix.det_unique]</span>
+<span id="L75">75   simp [Matrix.mul_apply, dotProduct, Matrix.mulVec, Finset.sum_mul]</span>
+<span id="L76">76   rw [Finset.sum_comm]</span>
+<span id="L77">77   apply Finset.sum_congr rfl</span>
+<span id="L78">78   intro i _hi</span>
+<span id="L79">79   rw [Finset.mul_sum]</span>
+<span id="L80">80   apply Finset.sum_congr rfl</span>
+<span id="L81">81   intro j _hj</span>
+<span id="L82">82   ring</span>
+<span id="L83">83 </span>
+<span id="L84">84 /--</span>
+<span id="L85">85 Rank-one matrix determinant lemma in OFUL feature notation.</span>
+<span id="L86">86 </span>
+<span id="L87">87 The invertibility side condition is kept as Mathlib&#x27;s `IsUnit A.det`, matching</span>
+<span id="L88">88 the upstream Schur-complement API.</span>
+<span id="L89">89 -/</span>
+<span id="L90">90 theorem det_add_rankOneGram</span>
+<span id="L91">91     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L92">92     (A : Matrix Feature Feature Real) (hA : IsUnit A.det)</span>
+<span id="L93">93     (x : Feature -&gt; Real) :</span>
+<span id="L94">94     (A + rankOneGram x).det =</span>
+<span id="L95">95       A.det * (1 + dotProduct x (Matrix.mulVec (A⁻¹) x)) := by</span>
+<span id="L96">96   rw [rankOneGram_eq_replicateCol_mul_replicateRow]</span>
+<span id="L97">97   rw [Matrix.det_add_replicateCol_mul_replicateRow (ι := Unit)</span>
+<span id="L98">98     (A := A) hA x x]</span>
+<span id="L99">99   rw [det_rankOne_update_factor_eq_one_add_dotProduct_inv_mulVec]</span>
+<span id="L100">100 </span>
+<span id="L101">101 /-- Determinant of the scalar regularization matrix `lambda I`. -/</span>
+<span id="L102">102 theorem det_scalar_identity</span>
+<span id="L103">103     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L104">104     (lambda : Real) :</span>
+<span id="L105">105     (Matrix.scalar Feature lambda : Matrix Feature Feature Real).det =</span>
+<span id="L106">106       lambda ^ Fintype.card Feature := by</span>
+<span id="L107">107   rw [Matrix.scalar_apply]</span>
+<span id="L108">108   rw [Matrix.det_diagonal]</span>
+<span id="L109">109   simp</span>
+<span id="L110">110 </span>
+<span id="L111">111 /-- Nonzero scalar regularization has nonzero determinant. -/</span>
+<span id="L112">112 theorem det_scalar_identity_ne_zero</span>
+<span id="L113">113     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L114">114     {lambda : Real} (hlambda : lambda ≠ 0) :</span>
+<span id="L115">115     (Matrix.scalar Feature lambda : Matrix Feature Feature Real).det ≠ 0 := by</span>
+<span id="L116">116   rw [det_scalar_identity]</span>
+<span id="L117">117   exact pow_ne_zero _ hlambda</span>
+<span id="L118">118 </span>
+<span id="L119">119 /--</span>
+<span id="L120">120 Nonzero scalar regularization satisfies Mathlib&#x27;s determinant-unit side</span>
+<span id="L121">121 condition for the rank-one determinant update lemma.</span>
+<span id="L122">122 -/</span>
+<span id="L123">123 theorem isUnit_det_scalar_identity</span>
+<span id="L124">124     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L125">125     {lambda : Real} (hlambda : lambda ≠ 0) :</span>
+<span id="L126">126     IsUnit (Matrix.scalar Feature lambda : Matrix Feature Feature Real).det := by</span>
+<span id="L127">127   exact IsUnit.mk0 _ (det_scalar_identity_ne_zero hlambda)</span>
+<span id="L128">128 </span>
+<span id="L129">129 /--</span>
+<span id="L130">130 First determinant update from the regularized scalar base `lambda I`.</span>
+<span id="L131">131 </span>
+<span id="L132">132 This is the one-step OFUL/LinUCB determinant recursion specialized to the</span>
+<span id="L133">133 empty-history base matrix.  General log-det telescoping and determinant-growth</span>
+<span id="L134">134 bounds remain separate leaves.</span>
+<span id="L135">135 -/</span>
+<span id="L136">136 theorem det_scalar_add_rankOneGram</span>
+<span id="L137">137     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L138">138     {lambda : Real} (hlambda : lambda ≠ 0) (x : Feature -&gt; Real) :</span>
+<span id="L139">139     ((Matrix.scalar Feature lambda : Matrix Feature Feature Real) +</span>
+<span id="L140">140         rankOneGram x).det =</span>
+<span id="L141">141       (Matrix.scalar Feature lambda : Matrix Feature Feature Real).det *</span>
+<span id="L142">142         (1 + dotProduct x</span>
+<span id="L143">143           (Matrix.mulVec</span>
+<span id="L144">144             ((Matrix.scalar Feature lambda :</span>
+<span id="L145">145               Matrix Feature Feature Real)⁻¹) x)) := by</span>
+<span id="L146">146   exact det_add_rankOneGram</span>
+<span id="L147">147     (Matrix.scalar Feature lambda : Matrix Feature Feature Real)</span>
+<span id="L148">148     (isUnit_det_scalar_identity hlambda) x</span>
+<span id="L149">149 </span>
+<span id="L150">150 /-- Quadratic form associated with a finite real matrix. -/</span>
+<span id="L151">151 noncomputable def quadraticForm {Feature : Type u} [Fintype Feature]</span>
+<span id="L152">152     (A : Matrix Feature Feature Real) (y : Feature -&gt; Real) : Real :=</span>
+<span id="L153">153   (Finset.univ : Finset Feature).sum</span>
+<span id="L154">154     (fun i =&gt; (Finset.univ : Finset Feature).sum</span>
+<span id="L155">155       (fun j =&gt; y i * A i j * y j))</span>
+<span id="L156">156 </span>
+<span id="L157">157 /-- Quadratic forms distribute over matrix addition. -/</span>
+<span id="L158">158 theorem quadraticForm_add</span>
+<span id="L159">159     {Feature : Type u} [Fintype Feature]</span>
+<span id="L160">160     (A B : Matrix Feature Feature Real) (y : Feature -&gt; Real) :</span>
+<span id="L161">161     quadraticForm (A + B) y = quadraticForm A y + quadraticForm B y := by</span>
+<span id="L162">162   unfold quadraticForm</span>
+<span id="L163">163   calc</span>
+<span id="L164">164     (Finset.univ : Finset Feature).sum</span>
+<span id="L165">165         (fun i =&gt; (Finset.univ : Finset Feature).sum</span>
+<span id="L166">166           (fun j =&gt; y i * (A i j + B i j) * y j)) =</span>
+<span id="L167">167       (Finset.univ : Finset Feature).sum</span>
+<span id="L168">168         (fun i =&gt; (Finset.univ : Finset Feature).sum</span>
+<span id="L169">169           (fun j =&gt; y i * A i j * y j + y i * B i j * y j)) := by</span>
+<span id="L170">170       apply Finset.sum_congr rfl</span>
+<span id="L171">171       intro i _hi</span>
+<span id="L172">172       apply Finset.sum_congr rfl</span>
+<span id="L173">173       intro j _hj</span>
+<span id="L174">174       ring</span>
+<span id="L175">175     _ =</span>
+<span id="L176">176       (Finset.univ : Finset Feature).sum</span>
+<span id="L177">177         (fun i =&gt;</span>
+<span id="L178">178           (Finset.univ : Finset Feature).sum</span>
+<span id="L179">179             (fun j =&gt; y i * A i j * y j) +</span>
+<span id="L180">180           (Finset.univ : Finset Feature).sum</span>
+<span id="L181">181             (fun j =&gt; y i * B i j * y j)) := by</span>
+<span id="L182">182       apply Finset.sum_congr rfl</span>
+<span id="L183">183       intro i _hi</span>
+<span id="L184">184       rw [Finset.sum_add_distrib]</span>
+<span id="L185">185     _ =</span>
+<span id="L186">186       (Finset.univ : Finset Feature).sum</span>
+<span id="L187">187         (fun i =&gt; (Finset.univ : Finset Feature).sum</span>
+<span id="L188">188           (fun j =&gt; y i * A i j * y j)) +</span>
+<span id="L189">189       (Finset.univ : Finset Feature).sum</span>
+<span id="L190">190         (fun i =&gt; (Finset.univ : Finset Feature).sum</span>
+<span id="L191">191           (fun j =&gt; y i * B i j * y j)) := by</span>
+<span id="L192">192       rw [Finset.sum_add_distrib]</span>
+<span id="L193">193 </span>
+<span id="L194">194 /-- The Mathlib dot-product/mulVec form agrees with the local quadratic form. -/</span>
+<span id="L195">195 theorem dotProduct_mulVec_eq_quadraticForm</span>
+<span id="L196">196     {Feature : Type u} [Fintype Feature]</span>
+<span id="L197">197     (A : Matrix Feature Feature Real) (y : Feature -&gt; Real) :</span>
+<span id="L198">198     dotProduct y (Matrix.mulVec A y) = quadraticForm A y := by</span>
+<span id="L199">199   simp [dotProduct, Matrix.mulVec, quadraticForm, Finset.mul_sum, mul_assoc]</span>
+<span id="L200">200 </span>
+<span id="L201">201 /-- Quadratic form of the scalar regularization matrix `lambda I`. -/</span>
+<span id="L202">202 theorem quadraticForm_scalar_identity</span>
+<span id="L203">203     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L204">204     (lambda : Real) (y : Feature -&gt; Real) :</span>
+<span id="L205">205     quadraticForm</span>
+<span id="L206">206         (Matrix.scalar Feature lambda : Matrix Feature Feature Real) y =</span>
+<span id="L207">207       lambda * (Finset.univ : Finset Feature).sum (fun i =&gt; y i ^ 2) := by</span>
+<span id="L208">208   unfold quadraticForm</span>
+<span id="L209">209   rw [Matrix.scalar_apply]</span>
+<span id="L210">210   simp [Matrix.diagonal_apply]</span>
+<span id="L211">211   calc</span>
+<span id="L212">212     (Finset.univ : Finset Feature).sum</span>
+<span id="L213">213         (fun x =&gt; y x * lambda * y x) =</span>
+<span id="L214">214       (Finset.univ : Finset Feature).sum</span>
+<span id="L215">215         (fun x =&gt; lambda * y x ^ 2) := by</span>
+<span id="L216">216       apply Finset.sum_congr rfl</span>
+<span id="L217">217       intro x _hx</span>
+<span id="L218">218       ring</span>
+<span id="L219">219     _ =</span>
+<span id="L220">220       lambda * (Finset.univ : Finset Feature).sum (fun i =&gt; y i ^ 2) := by</span>
+<span id="L221">221       rw [Finset.mul_sum]</span>
+<span id="L222">222 </span>
+<span id="L223">223 /-- A finite sum of coordinate squares is positive for a nonzero vector. -/</span>
+<span id="L224">224 theorem sum_sq_pos_of_exists_ne_zero</span>
+<span id="L225">225     {Feature : Type u} [Fintype Feature]</span>
+<span id="L226">226     (y : Feature -&gt; Real) (hy : ∃ i : Feature, y i ≠ 0) :</span>
+<span id="L227">227     0 &lt; (Finset.univ : Finset Feature).sum (fun i =&gt; y i ^ 2) := by</span>
+<span id="L228">228   classical</span>
+<span id="L229">229   let i := Classical.choose hy</span>
+<span id="L230">230   have hi : y i ≠ 0 := Classical.choose_spec hy</span>
+<span id="L231">231   refine Finset.sum_pos&#x27; (fun j _hj =&gt; sq_nonneg (y j)) ?_</span>
+<span id="L232">232   exact Exists.intro i</span>
+<span id="L233">233     (And.intro (Finset.mem_univ i) (sq_pos_of_ne_zero hi))</span>
+<span id="L234">234 </span>
+<span id="L235">235 /-- A nonzero vector has a nonzero coordinate. -/</span>
+<span id="L236">236 theorem exists_coord_ne_zero_of_ne_zero</span>
+<span id="L237">237     {Feature : Type u} (y : Feature -&gt; Real) (hy : y ≠ 0) :</span>
+<span id="L238">238     ∃ i : Feature, y i ≠ 0 := by</span>
+<span id="L239">239   by_contra h</span>
+<span id="L240">240   apply hy</span>
+<span id="L241">241   funext i</span>
+<span id="L242">242   by_contra hi</span>
+<span id="L243">243   exact h (Exists.intro i hi)</span>
+<span id="L244">244 </span>
+<span id="L245">245 /-- Finite-history feature Gram matrix `sum_t x_t x_t^T`. -/</span>
+<span id="L246">246 noncomputable def featureGram {Time : Type v} {Feature : Type u}</span>
+<span id="L247">247     [Fintype Time] (x : Time -&gt; Feature -&gt; Real) :</span>
+<span id="L248">248     Matrix Feature Feature Real :=</span>
+<span id="L249">249   fun i j =&gt; (Finset.univ : Finset Time).sum</span>
+<span id="L250">250     (fun t =&gt; x t i * x t j)</span>
+<span id="L251">251 </span>
+<span id="L252">252 /-- Finite-history feature Gram matrices are Hermitian. -/</span>
+<span id="L253">253 theorem featureGram_isHermitian</span>
+<span id="L254">254     {Time : Type v} {Feature : Type u}</span>
+<span id="L255">255     [Fintype Time] [Fintype Feature]</span>
+<span id="L256">256     (x : Time -&gt; Feature -&gt; Real) :</span>
+<span id="L257">257     (featureGram x).IsHermitian := by</span>
+<span id="L258">258   refine Matrix.IsHermitian.ext ?_</span>
+<span id="L259">259   intro i j</span>
+<span id="L260">260   simp [featureGram, mul_comm]</span>
+<span id="L261">261 </span>
+<span id="L262">262 /-- Regularized finite-history Gram matrix `lambda I + sum_t x_t x_t^T`. -/</span>
+<span id="L263">263 noncomputable def regularizedFeatureGram</span>
+<span id="L264">264     {Time : Type v} {Feature : Type u}</span>
+<span id="L265">265     [Fintype Time] [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L266">266     (lambda : Real) (x : Time -&gt; Feature -&gt; Real) :</span>
+<span id="L267">267     Matrix Feature Feature Real :=</span>
+<span id="L268">268   Matrix.scalar Feature lambda + featureGram x</span>
+<span id="L269">269 </span>
+<span id="L270">270 /-- The named regularized Gram unfolds to scalar regularization plus Gram. -/</span>
+<span id="L271">271 theorem regularizedFeatureGram_eq_scalar_add_featureGram</span>
+<span id="L272">272     {Time : Type v} {Feature : Type u}</span>
+<span id="L273">273     [Fintype Time] [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L274">274     (lambda : Real) (x : Time -&gt; Feature -&gt; Real) :</span>
+<span id="L275">275     regularizedFeatureGram lambda x =</span>
+<span id="L276">276       Matrix.scalar Feature lambda + featureGram x := by</span>
+<span id="L277">277   rfl</span>
+<span id="L278">278 </span>
+<span id="L279">279 /-- Regularized finite-history feature Gram matrices are Hermitian. -/</span>
+<span id="L280">280 theorem regularizedFeatureGram_isHermitian</span>
+<span id="L281">281     {Time : Type v} {Feature : Type u}</span>
+<span id="L282">282     [Fintype Time] [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L283">283     (lambda : Real) (x : Time -&gt; Feature -&gt; Real) :</span>
+<span id="L284">284     (regularizedFeatureGram lambda x).IsHermitian := by</span>
+<span id="L285">285   rw [regularizedFeatureGram_eq_scalar_add_featureGram]</span>
+<span id="L286">286   exact Matrix.IsHermitian.add (by</span>
+<span id="L287">287     rw [Matrix.scalar_apply]</span>
+<span id="L288">288     exact Matrix.isHermitian_diagonal _) (featureGram_isHermitian x)</span>
+<span id="L289">289 </span>
+<span id="L290">290 /-- Prefix Gram matrix `sum_{t &lt; T} x_t x_t^T` for a Nat-indexed history. -/</span>
+<span id="L291">291 noncomputable def prefixFeatureGram {Feature : Type u}</span>
+<span id="L292">292     (x : Nat -&gt; Feature -&gt; Real) (T : Nat) :</span>
+<span id="L293">293     Matrix Feature Feature Real :=</span>
+<span id="L294">294   fun i j =&gt; (Finset.range T).sum (fun t =&gt; x t i * x t j)</span>
+<span id="L295">295 </span>
+<span id="L296">296 /-- Regularized prefix Gram matrix `lambda I + sum_{t &lt; T} x_t x_t^T`. -/</span>
+<span id="L297">297 noncomputable def regularizedPrefixFeatureGram</span>
+<span id="L298">298     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L299">299     (lambda : Real) (x : Nat -&gt; Feature -&gt; Real) (T : Nat) :</span>
+<span id="L300">300     Matrix Feature Feature Real :=</span>
+<span id="L301">301   Matrix.scalar Feature lambda + prefixFeatureGram x T</span>
+<span id="L302">302 </span>
+<span id="L303">303 /-- Prefix Grams grow by one rank-one feature update. -/</span>
+<span id="L304">304 theorem prefixFeatureGram_succ</span>
+<span id="L305">305     {Feature : Type u}</span>
+<span id="L306">306     (x : Nat -&gt; Feature -&gt; Real) (T : Nat) :</span>
+<span id="L307">307     prefixFeatureGram x (T + 1) =</span>
+<span id="L308">308       prefixFeatureGram x T + rankOneGram (x T) := by</span>
+<span id="L309">309   ext i j</span>
+<span id="L310">310   simp [prefixFeatureGram, rankOneGram, Finset.sum_range_succ]</span>
+<span id="L311">311 </span>
+<span id="L312">312 /-- Regularized prefix Grams grow by one rank-one feature update. -/</span>
+<span id="L313">313 theorem regularizedPrefixFeatureGram_succ</span>
+<span id="L314">314     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L315">315     (lambda : Real) (x : Nat -&gt; Feature -&gt; Real) (T : Nat) :</span>
+<span id="L316">316     regularizedPrefixFeatureGram lambda x (T + 1) =</span>
+<span id="L317">317       regularizedPrefixFeatureGram lambda x T + rankOneGram (x T) := by</span>
+<span id="L318">318   ext i j</span>
+<span id="L319">319   simp [regularizedPrefixFeatureGram, prefixFeatureGram, rankOneGram,</span>
+<span id="L320">320     Finset.sum_range_succ]</span>
+<span id="L321">321   ring</span>
+<span id="L322">322 </span>
+<span id="L323">323 /-- The zero-horizon prefix Gram is the zero matrix. -/</span>
+<span id="L324">324 theorem prefixFeatureGram_zero</span>
+<span id="L325">325     {Feature : Type u} (x : Nat -&gt; Feature -&gt; Real) :</span>
+<span id="L326">326     prefixFeatureGram x 0 = 0 := by</span>
+<span id="L327">327   ext i j</span>
+<span id="L328">328   simp [prefixFeatureGram]</span>
+<span id="L329">329 </span>
+<span id="L330">330 /-- The zero-horizon regularized prefix Gram is the scalar base `lambda I`. -/</span>
+<span id="L331">331 theorem regularizedPrefixFeatureGram_zero</span>
+<span id="L332">332     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L333">333     (lambda : Real) (x : Nat -&gt; Feature -&gt; Real) :</span>
+<span id="L334">334     regularizedPrefixFeatureGram lambda x 0 =</span>
+<span id="L335">335       (Matrix.scalar Feature lambda : Matrix Feature Feature Real) := by</span>
+<span id="L336">336   rw [regularizedPrefixFeatureGram, prefixFeatureGram_zero]</span>
+<span id="L337">337   simp</span>
+<span id="L338">338 </span>
+<span id="L339">339 /-- The zero-horizon regularized prefix Gram determinant is `lambda^d`. -/</span>
+<span id="L340">340 theorem det_regularizedPrefixFeatureGram_zero</span>
+<span id="L341">341     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L342">342     (lambda : Real) (x : Nat -&gt; Feature -&gt; Real) :</span>
+<span id="L343">343     (regularizedPrefixFeatureGram lambda x 0).det =</span>
+<span id="L344">344       lambda ^ Fintype.card Feature := by</span>
+<span id="L345">345   rw [regularizedPrefixFeatureGram_zero]</span>
+<span id="L346">346   exact det_scalar_identity lambda</span>
+<span id="L347">347 </span>
+<span id="L348">348 /-- Prefix Gram matrices are Hermitian. -/</span>
+<span id="L349">349 theorem prefixFeatureGram_isHermitian</span>
+<span id="L350">350     {Feature : Type u} [Fintype Feature]</span>
+<span id="L351">351     (x : Nat -&gt; Feature -&gt; Real) (T : Nat) :</span>
+<span id="L352">352     (prefixFeatureGram x T).IsHermitian := by</span>
+<span id="L353">353   refine Matrix.IsHermitian.ext ?_</span>
+<span id="L354">354   intro i j</span>
+<span id="L355">355   simp [prefixFeatureGram, mul_comm]</span>
+<span id="L356">356 </span>
+<span id="L357">357 /-- Regularized prefix Gram matrices are Hermitian. -/</span>
+<span id="L358">358 theorem regularizedPrefixFeatureGram_isHermitian</span>
+<span id="L359">359     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L360">360     (lambda : Real) (x : Nat -&gt; Feature -&gt; Real) (T : Nat) :</span>
+<span id="L361">361     (regularizedPrefixFeatureGram lambda x T).IsHermitian := by</span>
+<span id="L362">362   rw [regularizedPrefixFeatureGram]</span>
+<span id="L363">363   exact Matrix.IsHermitian.add (by</span>
+<span id="L364">364     rw [Matrix.scalar_apply]</span>
+<span id="L365">365     exact Matrix.isHermitian_diagonal _) (prefixFeatureGram_isHermitian x T)</span>
+<span id="L366">366 </span>
+<span id="L367">367 /-- The trace of a rank-one Gram is the squared feature norm. -/</span>
+<span id="L368">368 theorem trace_rankOneGram</span>
+<span id="L369">369     {Feature : Type u} [Fintype Feature]</span>
+<span id="L370">370     (x : Feature -&gt; Real) :</span>
+<span id="L371">371     (rankOneGram x).trace = dotProduct x x := by</span>
+<span id="L372">372   simp [Matrix.trace, rankOneGram, dotProduct]</span>
+<span id="L373">373 </span>
+<span id="L374">374 /-- The trace of the scalar regularization matrix is `d * lambda`. -/</span>
+<span id="L375">375 theorem trace_scalar_identity</span>
+<span id="L376">376     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L377">377     (lambda : Real) :</span>
+<span id="L378">378     (Matrix.scalar Feature lambda : Matrix Feature Feature Real).trace =</span>
+<span id="L379">379       (Fintype.card Feature : Real) * lambda := by</span>
+<span id="L380">380   rw [Matrix.scalar_apply]</span>
+<span id="L381">381   simp [Matrix.trace]</span>
+<span id="L382">382 </span>
+<span id="L383">383 /-- Prefix Gram trace as the finite sum of squared feature norms. -/</span>
+<span id="L384">384 theorem trace_prefixFeatureGram</span>
+<span id="L385">385     {Feature : Type u} [Fintype Feature]</span>
+<span id="L386">386     (x : Nat -&gt; Feature -&gt; Real) (T : Nat) :</span>
+<span id="L387">387     (prefixFeatureGram x T).trace =</span>
+<span id="L388">388       (Finset.range T).sum (fun t =&gt; dotProduct (x t) (x t)) := by</span>
+<span id="L389">389   unfold prefixFeatureGram</span>
+<span id="L390">390   simp [Matrix.trace, dotProduct]</span>
+<span id="L391">391   rw [Finset.sum_comm]</span>
+<span id="L392">392 </span>
+<span id="L393">393 /-- Regularized prefix Gram trace as scalar base plus squared feature norms. -/</span>
+<span id="L394">394 theorem trace_regularizedPrefixFeatureGram</span>
+<span id="L395">395     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L396">396     (lambda : Real) (x : Nat -&gt; Feature -&gt; Real) (T : Nat) :</span>
+<span id="L397">397     (regularizedPrefixFeatureGram lambda x T).trace =</span>
+<span id="L398">398       (Fintype.card Feature : Real) * lambda +</span>
+<span id="L399">399         (Finset.range T).sum (fun t =&gt; dotProduct (x t) (x t)) := by</span>
+<span id="L400">400   rw [regularizedPrefixFeatureGram]</span>
+<span id="L401">401   rw [Matrix.trace_add]</span>
+<span id="L402">402   rw [trace_scalar_identity, trace_prefixFeatureGram]</span>
+<span id="L403">403 </span>
+<span id="L404">404 /--</span>
+<span id="L405">405 If each feature vector has squared norm at most `L2`, the regularized prefix</span>
+<span id="L406">406 Gram trace is bounded by `d * lambda + T * L2`.</span>
+<span id="L407">407 -/</span>
+<span id="L408">408 theorem trace_regularizedPrefixFeatureGram_le</span>
+<span id="L409">409     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L410">410     (lambda : Real) (x : Nat -&gt; Feature -&gt; Real) (T : Nat) (L2 : Real)</span>
+<span id="L411">411     (hbound : forall t : Nat, t &lt; T -&gt; dotProduct (x t) (x t) &lt;= L2) :</span>
+<span id="L412">412     (regularizedPrefixFeatureGram lambda x T).trace &lt;=</span>
+<span id="L413">413       (Fintype.card Feature : Real) * lambda + T * L2 := by</span>
+<span id="L414">414   rw [trace_regularizedPrefixFeatureGram]</span>
+<span id="L415">415   have hsum :</span>
+<span id="L416">416       (Finset.range T).sum (fun t =&gt; dotProduct (x t) (x t)) &lt;= T * L2 := by</span>
+<span id="L417">417     simpa [Finset.card_range, nsmul_eq_mul] using</span>
+<span id="L418">418       (Finset.sum_le_card_nsmul (Finset.range T)</span>
+<span id="L419">419       (fun t =&gt; dotProduct (x t) (x t)) L2</span>
+<span id="L420">420       (fun t ht =&gt; hbound t (Finset.mem_range.mp ht)))</span>
+<span id="L421">421   linarith</span>
+<span id="L422">422 </span>
+<span id="L423">423 /-- Finite nonnegative product is bounded by the corresponding arithmetic mean power. -/</span>
+<span id="L424">424 theorem finset_prod_le_pow_sum_div_card_of_nonneg</span>
+<span id="L425">425     {ι : Type v} (s : Finset ι) (hs : s.Nonempty)</span>
+<span id="L426">426     (z : ι -&gt; Real) (hz : forall i : ι, i ∈ s -&gt; 0 &lt;= z i) :</span>
+<span id="L427">427     (s.prod z) &lt;= ((s.sum z) / (s.card : Real)) ^ s.card := by</span>
+<span id="L428">428   have hcard_ne : s.card ≠ 0 := hs.card_ne_zero</span>
+<span id="L429">429   have hsumw : (s.sum (fun _ : ι =&gt; (1 : Real))) = (s.card : Real) := by</span>
+<span id="L430">430     simp</span>
+<span id="L431">431   have hwpos : 0 &lt; s.sum (fun _ : ι =&gt; (1 : Real)) := by</span>
+<span id="L432">432     rw [hsumw]</span>
+<span id="L433">433     exact_mod_cast hs.card_pos</span>
+<span id="L434">434   have hamgm := Real.geom_mean_le_arith_mean s</span>
+<span id="L435">435     (fun _ : ι =&gt; (1 : Real)) z</span>
+<span id="L436">436     (fun _ _ =&gt; by norm_num) hwpos hz</span>
+<span id="L437">437   have hgeom :</span>
+<span id="L438">438       (s.prod z) ^ ((s.card : Real)⁻¹) &lt;=</span>
+<span id="L439">439         (s.sum z) / (s.card : Real) := by</span>
+<span id="L440">440     simpa [hsumw] using hamgm</span>
+<span id="L441">441   have hprod_nonneg : 0 &lt;= s.prod z :=</span>
+<span id="L442">442     Finset.prod_nonneg (fun i hi =&gt; hz i hi)</span>
+<span id="L443">443   have hpow := pow_le_pow_left₀</span>
+<span id="L444">444     (Real.rpow_nonneg hprod_nonneg _) hgeom s.card</span>
+<span id="L445">445   simpa [Real.rpow_inv_natCast_pow hprod_nonneg hcard_ne] using hpow</span>
+<span id="L446">446 </span>
+<span id="L447">447 /-- Fintype specialization of the finite AM-GM product bound. -/</span>
+<span id="L448">448 theorem prod_univ_le_pow_sum_div_card_of_nonneg</span>
+<span id="L449">449     {ι : Type v} [Fintype ι] [Nonempty ι]</span>
+<span id="L450">450     (z : ι -&gt; Real) (hz : forall i : ι, 0 &lt;= z i) :</span>
+<span id="L451">451     (Finset.univ.prod z) &lt;=</span>
+<span id="L452">452       ((Finset.univ.sum z) / (Fintype.card ι : Real)) ^ Fintype.card ι := by</span>
+<span id="L453">453   exact finset_prod_le_pow_sum_div_card_of_nonneg</span>
+<span id="L454">454     (Finset.univ : Finset ι) Finset.univ_nonempty z</span>
+<span id="L455">455     (fun i _hi =&gt; hz i)</span>
+<span id="L456">456 </span>
+<span id="L457">457 /-- Positive-semidefinite determinant upper bound from AM-GM on eigenvalues. -/</span>
+<span id="L458">458 theorem det_posSemidef_le_pow_trace_div_card</span>
+<span id="L459">459     {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L460">460     (A : Matrix Feature Feature Real) (hA : A.PosSemidef) :</span>
+<span id="L461">461     A.det &lt;= (A.trace / (Fintype.card Feature : Real)) ^</span>
+<span id="L462">462       Fintype.card Feature := by</span>
+<span id="L463">463   have hprod := prod_univ_le_pow_sum_div_card_of_nonneg</span>
+<span id="L464">464     (fun i : Feature =&gt; hA.isHermitian.eigenvalues i)</span>
+<span id="L465">465     (fun i =&gt; hA.eigenvalues_nonneg i)</span>
+<span id="L466">466   rw [hA.isHermitian.det_eq_prod_eigenvalues,</span>
+<span id="L467">467     hA.isHermitian.trace_eq_sum_eigenvalues]</span>
+<span id="L468">468   exact hprod</span>
+<span id="L469">469 </span>
+<span id="L470">470 /--</span>
+<span id="L471">471 If a separate AM-GM/eigenvalue route supplies</span>
+<span id="L472">472 `det(V_T) &lt;= (trace(V_T) / d)^d`, the prefix trace bound converts it into a</span>
+<span id="L473">473 dimension/radius determinant upper bound.</span>
+<span id="L474">474 -/</span>
+<span id="L475">475 theorem det_regularizedPrefixFeatureGram_le_pow_trace_bound_average</span>
+<span id="L476">476     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L477">477     (lambda : Real) (x : Nat -&gt; Feature -&gt; Real) (T : Nat) (L2 : Real)</span>
+<span id="L478">478     (hdet_by_trace :</span>
+<span id="L479">479       (regularizedPrefixFeatureGram lambda x T).det &lt;=</span>
+<span id="L480">480         ((regularizedPrefixFeatureGram lambda x T).trace /</span>
+<span id="L481">481           (Fintype.card Feature : Real)) ^ Fintype.card Feature)</span>
+<span id="L482">482     (havg_nonneg :</span>
+<span id="L483">483       0 &lt;= (regularizedPrefixFeatureGram lambda x T).trace /</span>
+<span id="L484">484         (Fintype.card Feature : Real))</span>
+<span id="L485">485     (hbound : forall t : Nat, t &lt; T -&gt; dotProduct (x t) (x t) &lt;= L2) :</span>
+<span id="L486">486     (regularizedPrefixFeatureGram lambda x T).det &lt;=</span>
+<span id="L487">487       (((Fintype.card Feature : Real) * lambda + T * L2) /</span>
+<span id="L488">488         (Fintype.card Feature : Real)) ^ Fintype.card Feature := by</span>
+<span id="L489">489   have htrace :=</span>
+<span id="L490">490     trace_regularizedPrefixFeatureGram_le lambda x T L2 hbound</span>
+<span id="L491">491   have hcard_nonneg : 0 &lt;= (Fintype.card Feature : Real) := by</span>
+<span id="L492">492     exact_mod_cast (Nat.zero_le (Fintype.card Feature))</span>
+<span id="L493">493   have hdiv :</span>
+<span id="L494">494       (regularizedPrefixFeatureGram lambda x T).trace /</span>
+<span id="L495">495           (Fintype.card Feature : Real) &lt;=</span>
+<span id="L496">496         ((Fintype.card Feature : Real) * lambda + T * L2) /</span>
+<span id="L497">497           (Fintype.card Feature : Real) := by</span>
+<span id="L498">498     exact div_le_div_of_nonneg_right htrace hcard_nonneg</span>
+<span id="L499">499   exact hdet_by_trace.trans</span>
+<span id="L500">500     (pow_le_pow_left₀ havg_nonneg hdiv (Fintype.card Feature))</span>
+<span id="L501">501 </span>
+<span id="L502">502 /--</span>
+<span id="L503">503 The quadratic form of a rank-one Gram matrix is the square of the projection</span>
+<span id="L504">504 of the query vector onto the feature vector.</span>
+<span id="L505">505 -/</span>
+<span id="L506">506 theorem rankOneGram_quadraticForm_eq_sq</span>
+<span id="L507">507     {Feature : Type u} [Fintype Feature]</span>
+<span id="L508">508     (x y : Feature -&gt; Real) :</span>
+<span id="L509">509     quadraticForm (rankOneGram x) y =</span>
+<span id="L510">510       ((Finset.univ : Finset Feature).sum (fun i =&gt; x i * y i)) ^ 2 := by</span>
+<span id="L511">511   unfold quadraticForm rankOneGram</span>
+<span id="L512">512   calc</span>
+<span id="L513">513     (Finset.univ : Finset Feature).sum</span>
+<span id="L514">514         (fun i =&gt; (Finset.univ : Finset Feature).sum</span>
+<span id="L515">515           (fun j =&gt; y i * (x i * x j) * y j))</span>
+<span id="L516">516         =</span>
+<span id="L517">517       (Finset.univ : Finset Feature).sum</span>
+<span id="L518">518         (fun i =&gt; (Finset.univ : Finset Feature).sum</span>
+<span id="L519">519           (fun j =&gt; (y i * x i) * (x j * y j))) := by</span>
+<span id="L520">520       apply Finset.sum_congr rfl</span>
+<span id="L521">521       intro i _hi</span>
+<span id="L522">522       apply Finset.sum_congr rfl</span>
+<span id="L523">523       intro j _hj</span>
+<span id="L524">524       ring</span>
+<span id="L525">525     _ =</span>
+<span id="L526">526       (Finset.univ : Finset Feature).sum</span>
+<span id="L527">527         (fun i =&gt; (y i * x i) *</span>
+<span id="L528">528           (Finset.univ : Finset Feature).sum (fun j =&gt; x j * y j)) := by</span>
+<span id="L529">529       apply Finset.sum_congr rfl</span>
+<span id="L530">530       intro i _hi</span>
+<span id="L531">531       rw [Finset.mul_sum]</span>
+<span id="L532">532     _ =</span>
+<span id="L533">533       ((Finset.univ : Finset Feature).sum (fun i =&gt; y i * x i)) *</span>
+<span id="L534">534         ((Finset.univ : Finset Feature).sum (fun j =&gt; x j * y j)) := by</span>
+<span id="L535">535       rw [Finset.sum_mul]</span>
+<span id="L536">536     _ =</span>
+<span id="L537">537       ((Finset.univ : Finset Feature).sum (fun i =&gt; x i * y i)) *</span>
+<span id="L538">538         ((Finset.univ : Finset Feature).sum (fun j =&gt; x j * y j)) := by</span>
+<span id="L539">539       have hleft :</span>
+<span id="L540">540           ((Finset.univ : Finset Feature).sum (fun i =&gt; y i * x i)) =</span>
+<span id="L541">541             ((Finset.univ : Finset Feature).sum (fun i =&gt; x i * y i)) := by</span>
+<span id="L542">542         apply Finset.sum_congr rfl</span>
+<span id="L543">543         intro i _hi</span>
+<span id="L544">544         ring</span>
+<span id="L545">545       rw [hleft]</span>
+<span id="L546">546     _ = ((Finset.univ : Finset Feature).sum (fun i =&gt; x i * y i)) ^ 2 := by</span>
+<span id="L547">547       ring</span>
+<span id="L548">548 </span>
+<span id="L549">549 /-- Rank-one Gram matrices are Mathlib-positive semidefinite. -/</span>
+<span id="L550">550 theorem rankOneGram_posSemidef</span>
+<span id="L551">551     {Feature : Type u} [Fintype Feature]</span>
+<span id="L552">552     (x : Feature -&gt; Real) :</span>
+<span id="L553">553     (rankOneGram x).PosSemidef := by</span>
+<span id="L554">554   refine Matrix.PosSemidef.of_dotProduct_mulVec_nonneg</span>
+<span id="L555">555     (rankOneGram_isHermitian x) ?_</span>
+<span id="L556">556   intro y</span>
+<span id="L557">557   have hstar : star y = y := by</span>
+<span id="L558">558     funext i</span>
+<span id="L559">559     simp</span>
+<span id="L560">560   rw [hstar]</span>
+<span id="L561">561   rw [dotProduct_mulVec_eq_quadraticForm]</span>
+<span id="L562">562   rw [rankOneGram_quadraticForm_eq_sq]</span>
+<span id="L563">563   exact sq_nonneg _</span>
+<span id="L564">564 </span>
+<span id="L565">565 /-- Rank-one Gram matrices have nonnegative quadratic forms. -/</span>
+<span id="L566">566 theorem rankOneGram_quadraticForm_nonneg</span>
+<span id="L567">567     {Feature : Type u} [Fintype Feature]</span>
+<span id="L568">568     (x y : Feature -&gt; Real) :</span>
+<span id="L569">569     0 &lt;= quadraticForm (rankOneGram x) y := by</span>
+<span id="L570">570   rw [rankOneGram_quadraticForm_eq_sq]</span>
+<span id="L571">571   exact sq_nonneg _</span>
+<span id="L572">572 </span>
+<span id="L573">573 /--</span>
+<span id="L574">574 The quadratic form of a finite-history Gram matrix is a finite sum of squared</span>
+<span id="L575">575 feature projections.</span>
+<span id="L576">576 -/</span>
+<span id="L577">577 theorem featureGram_quadraticForm_eq_sum_sq</span>
+<span id="L578">578     {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature]</span>
+<span id="L579">579     (x : Time -&gt; Feature -&gt; Real) (y : Feature -&gt; Real) :</span>
+<span id="L580">580     quadraticForm (featureGram x) y =</span>
+<span id="L581">581       (Finset.univ : Finset Time).sum</span>
+<span id="L582">582         (fun t =&gt;</span>
+<span id="L583">583           ((Finset.univ : Finset Feature).sum</span>
+<span id="L584">584             (fun i =&gt; x t i * y i)) ^ 2) := by</span>
+<span id="L585">585   unfold quadraticForm featureGram</span>
+<span id="L586">586   calc</span>
+<span id="L587">587     (Finset.univ : Finset Feature).sum</span>
+<span id="L588">588         (fun i =&gt; (Finset.univ : Finset Feature).sum</span>
+<span id="L589">589           (fun j =&gt;</span>
+<span id="L590">590             y i *</span>
+<span id="L591">591               ((Finset.univ : Finset Time).sum</span>
+<span id="L592">592                 (fun t =&gt; x t i * x t j)) *</span>
+<span id="L593">593               y j))</span>
+<span id="L594">594         =</span>
+<span id="L595">595       (Finset.univ : Finset Feature).sum</span>
+<span id="L596">596         (fun i =&gt; (Finset.univ : Finset Feature).sum</span>
+<span id="L597">597           (fun j =&gt; (Finset.univ : Finset Time).sum</span>
+<span id="L598">598             (fun t =&gt; y i * (x t i * x t j) * y j))) := by</span>
+<span id="L599">599       apply Finset.sum_congr rfl</span>
+<span id="L600">600       intro i _hi</span>
+<span id="L601">601       apply Finset.sum_congr rfl</span>
+<span id="L602">602       intro j _hj</span>
+<span id="L603">603       rw [Finset.mul_sum, Finset.sum_mul]</span>
+<span id="L604">604     _ =</span>
+<span id="L605">605       (Finset.univ : Finset Feature).sum</span>
+<span id="L606">606         (fun i =&gt; (Finset.univ : Finset Time).sum</span>
+<span id="L607">607           (fun t =&gt; (Finset.univ : Finset Feature).sum</span>
+<span id="L608">608             (fun j =&gt; y i * (x t i * x t j) * y j))) := by</span>
+<span id="L609">609       apply Finset.sum_congr rfl</span>
+<span id="L610">610       intro i _hi</span>
+<span id="L611">611       rw [Finset.sum_comm]</span>
+<span id="L612">612     _ =</span>
+<span id="L613">613       (Finset.univ : Finset Time).sum</span>
+<span id="L614">614         (fun t =&gt; (Finset.univ : Finset Feature).sum</span>
+<span id="L615">615           (fun i =&gt; (Finset.univ : Finset Feature).sum</span>
+<span id="L616">616             (fun j =&gt; y i * (x t i * x t j) * y j))) := by</span>
+<span id="L617">617       rw [Finset.sum_comm]</span>
+<span id="L618">618     _ =</span>
+<span id="L619">619       (Finset.univ : Finset Time).sum</span>
+<span id="L620">620         (fun t =&gt;</span>
+<span id="L621">621           ((Finset.univ : Finset Feature).sum</span>
+<span id="L622">622             (fun i =&gt; x t i * y i)) ^ 2) := by</span>
+<span id="L623">623       apply Finset.sum_congr rfl</span>
+<span id="L624">624       intro t _ht</span>
+<span id="L625">625       simpa [quadraticForm, rankOneGram] using</span>
+<span id="L626">626         rankOneGram_quadraticForm_eq_sq (x := x t) (y := y)</span>
+<span id="L627">627 </span>
+<span id="L628">628 /--</span>
+<span id="L629">629 The quadratic form of a Nat-prefix Gram matrix is a finite range sum of</span>
+<span id="L630">630 squared feature projections.</span>
+<span id="L631">631 -/</span>
+<span id="L632">632 theorem prefixFeatureGram_quadraticForm_eq_sum_sq</span>
+<span id="L633">633     {Feature : Type u} [Fintype Feature]</span>
+<span id="L634">634     (x : Nat -&gt; Feature -&gt; Real) (T : Nat) (y : Feature -&gt; Real) :</span>
+<span id="L635">635     quadraticForm (prefixFeatureGram x T) y =</span>
+<span id="L636">636       (Finset.range T).sum</span>
+<span id="L637">637         (fun t =&gt;</span>
+<span id="L638">638           ((Finset.univ : Finset Feature).sum</span>
+<span id="L639">639             (fun i =&gt; x t i * y i)) ^ 2) := by</span>
+<span id="L640">640   unfold quadraticForm prefixFeatureGram</span>
+<span id="L641">641   calc</span>
+<span id="L642">642     (Finset.univ : Finset Feature).sum</span>
+<span id="L643">643         (fun i =&gt; (Finset.univ : Finset Feature).sum</span>
+<span id="L644">644           (fun j =&gt;</span>
+<span id="L645">645             y i *</span>
+<span id="L646">646               ((Finset.range T).sum</span>
+<span id="L647">647                 (fun t =&gt; x t i * x t j)) *</span>
+<span id="L648">648               y j))</span>
+<span id="L649">649         =</span>
+<span id="L650">650       (Finset.univ : Finset Feature).sum</span>
+<span id="L651">651         (fun i =&gt; (Finset.univ : Finset Feature).sum</span>
+<span id="L652">652           (fun j =&gt; (Finset.range T).sum</span>
+<span id="L653">653             (fun t =&gt; y i * (x t i * x t j) * y j))) := by</span>
+<span id="L654">654       apply Finset.sum_congr rfl</span>
+<span id="L655">655       intro i _hi</span>
+<span id="L656">656       apply Finset.sum_congr rfl</span>
+<span id="L657">657       intro j _hj</span>
+<span id="L658">658       rw [Finset.mul_sum, Finset.sum_mul]</span>
+<span id="L659">659     _ =</span>
+<span id="L660">660       (Finset.univ : Finset Feature).sum</span>
+<span id="L661">661         (fun i =&gt; (Finset.range T).sum</span>
+<span id="L662">662           (fun t =&gt; (Finset.univ : Finset Feature).sum</span>
+<span id="L663">663             (fun j =&gt; y i * (x t i * x t j) * y j))) := by</span>
+<span id="L664">664       apply Finset.sum_congr rfl</span>
+<span id="L665">665       intro i _hi</span>
+<span id="L666">666       rw [Finset.sum_comm]</span>
+<span id="L667">667     _ =</span>
+<span id="L668">668       (Finset.range T).sum</span>
+<span id="L669">669         (fun t =&gt; (Finset.univ : Finset Feature).sum</span>
+<span id="L670">670           (fun i =&gt; (Finset.univ : Finset Feature).sum</span>
+<span id="L671">671             (fun j =&gt; y i * (x t i * x t j) * y j))) := by</span>
+<span id="L672">672       rw [Finset.sum_comm]</span>
+<span id="L673">673     _ =</span>
+<span id="L674">674       (Finset.range T).sum</span>
+<span id="L675">675         (fun t =&gt;</span>
+<span id="L676">676           ((Finset.univ : Finset Feature).sum</span>
+<span id="L677">677             (fun i =&gt; x t i * y i)) ^ 2) := by</span>
+<span id="L678">678       apply Finset.sum_congr rfl</span>
+<span id="L679">679       intro t _ht</span>
+<span id="L680">680       simpa [quadraticForm, rankOneGram] using</span>
+<span id="L681">681         rankOneGram_quadraticForm_eq_sq (x := x t) (y := y)</span>
+<span id="L682">682 </span>
+<span id="L683">683 /--</span>
+<span id="L684">684 The regularized Gram quadratic form is the scalar regularization term plus the</span>
+<span id="L685">685 finite-history Gram sum of squared feature projections.</span>
+<span id="L686">686 -/</span>
+<span id="L687">687 theorem regularizedFeatureGram_quadraticForm_eq_sum_sq</span>
+<span id="L688">688     {Time : Type v} {Feature : Type u}</span>
+<span id="L689">689     [Fintype Time] [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L690">690     (lambda : Real) (x : Time -&gt; Feature -&gt; Real) (y : Feature -&gt; Real) :</span>
+<span id="L691">691     quadraticForm (regularizedFeatureGram lambda x) y =</span>
+<span id="L692">692       lambda * (Finset.univ : Finset Feature).sum (fun i =&gt; y i ^ 2) +</span>
+<span id="L693">693         (Finset.univ : Finset Time).sum</span>
+<span id="L694">694           (fun t =&gt;</span>
+<span id="L695">695             ((Finset.univ : Finset Feature).sum</span>
+<span id="L696">696               (fun i =&gt; x t i * y i)) ^ 2) := by</span>
+<span id="L697">697   rw [regularizedFeatureGram_eq_scalar_add_featureGram]</span>
+<span id="L698">698   rw [quadraticForm_add]</span>
+<span id="L699">699   rw [quadraticForm_scalar_identity]</span>
+<span id="L700">700   rw [featureGram_quadraticForm_eq_sum_sq]</span>
+<span id="L701">701 </span>
+<span id="L702">702 /--</span>
+<span id="L703">703 The regularized prefix Gram quadratic form is the scalar regularization term</span>
+<span id="L704">704 plus the prefix sum of squared feature projections.</span>
+<span id="L705">705 -/</span>
+<span id="L706">706 theorem regularizedPrefixFeatureGram_quadraticForm_eq_sum_sq</span>
+<span id="L707">707     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L708">708     (lambda : Real) (x : Nat -&gt; Feature -&gt; Real) (T : Nat)</span>
+<span id="L709">709     (y : Feature -&gt; Real) :</span>
+<span id="L710">710     quadraticForm (regularizedPrefixFeatureGram lambda x T) y =</span>
+<span id="L711">711       lambda * (Finset.univ : Finset Feature).sum (fun i =&gt; y i ^ 2) +</span>
+<span id="L712">712         (Finset.range T).sum</span>
+<span id="L713">713           (fun t =&gt;</span>
+<span id="L714">714             ((Finset.univ : Finset Feature).sum</span>
+<span id="L715">715               (fun i =&gt; x t i * y i)) ^ 2) := by</span>
+<span id="L716">716   rw [regularizedPrefixFeatureGram]</span>
+<span id="L717">717   rw [quadraticForm_add]</span>
+<span id="L718">718   rw [quadraticForm_scalar_identity]</span>
+<span id="L719">719   rw [prefixFeatureGram_quadraticForm_eq_sum_sq]</span>
+<span id="L720">720 </span>
+<span id="L721">721 /-- Finite-history Gram matrices have nonnegative quadratic forms. -/</span>
+<span id="L722">722 theorem featureGram_quadraticForm_nonneg</span>
+<span id="L723">723     {Time : Type v} {Feature : Type u} [Fintype Time] [Fintype Feature]</span>
+<span id="L724">724     (x : Time -&gt; Feature -&gt; Real) (y : Feature -&gt; Real) :</span>
+<span id="L725">725     0 &lt;= quadraticForm (featureGram x) y := by</span>
+<span id="L726">726   rw [featureGram_quadraticForm_eq_sum_sq]</span>
+<span id="L727">727   exact Finset.sum_nonneg (fun t _ht =&gt; sq_nonneg _)</span>
+<span id="L728">728 </span>
+<span id="L729">729 /-- Nat-prefix Gram matrices have nonnegative quadratic forms. -/</span>
+<span id="L730">730 theorem prefixFeatureGram_quadraticForm_nonneg</span>
+<span id="L731">731     {Feature : Type u} [Fintype Feature]</span>
+<span id="L732">732     (x : Nat -&gt; Feature -&gt; Real) (T : Nat) (y : Feature -&gt; Real) :</span>
+<span id="L733">733     0 &lt;= quadraticForm (prefixFeatureGram x T) y := by</span>
+<span id="L734">734   rw [prefixFeatureGram_quadraticForm_eq_sum_sq]</span>
+<span id="L735">735   exact Finset.sum_nonneg (fun t _ht =&gt; sq_nonneg _)</span>
+<span id="L736">736 </span>
+<span id="L737">737 /-- Regularized finite-history Gram matrices are PSD when `0 &lt;= lambda`. -/</span>
+<span id="L738">738 theorem regularizedFeatureGram_quadraticForm_nonneg</span>
+<span id="L739">739     {Time : Type v} {Feature : Type u}</span>
+<span id="L740">740     [Fintype Time] [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L741">741     (lambda : Real) (hlambda : 0 &lt;= lambda)</span>
+<span id="L742">742     (x : Time -&gt; Feature -&gt; Real) (y : Feature -&gt; Real) :</span>
+<span id="L743">743     0 &lt;= quadraticForm (regularizedFeatureGram lambda x) y := by</span>
+<span id="L744">744   rw [regularizedFeatureGram_eq_scalar_add_featureGram]</span>
+<span id="L745">745   rw [quadraticForm_add]</span>
+<span id="L746">746   rw [quadraticForm_scalar_identity]</span>
+<span id="L747">747   exact add_nonneg</span>
+<span id="L748">748     (mul_nonneg hlambda (Finset.sum_nonneg (fun i _hi =&gt; sq_nonneg _)))</span>
+<span id="L749">749     (featureGram_quadraticForm_nonneg x y)</span>
+<span id="L750">750 </span>
+<span id="L751">751 /-- Regularized Nat-prefix Gram matrices are PSD when `0 &lt;= lambda`. -/</span>
+<span id="L752">752 theorem regularizedPrefixFeatureGram_quadraticForm_nonneg</span>
+<span id="L753">753     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L754">754     (lambda : Real) (hlambda : 0 &lt;= lambda)</span>
+<span id="L755">755     (x : Nat -&gt; Feature -&gt; Real) (T : Nat) (y : Feature -&gt; Real) :</span>
+<span id="L756">756     0 &lt;= quadraticForm (regularizedPrefixFeatureGram lambda x T) y := by</span>
+<span id="L757">757   rw [regularizedPrefixFeatureGram]</span>
+<span id="L758">758   rw [quadraticForm_add]</span>
+<span id="L759">759   rw [quadraticForm_scalar_identity]</span>
+<span id="L760">760   exact add_nonneg</span>
+<span id="L761">761     (mul_nonneg hlambda (Finset.sum_nonneg (fun i _hi =&gt; sq_nonneg _)))</span>
+<span id="L762">762     (prefixFeatureGram_quadraticForm_nonneg x T y)</span>
+<span id="L763">763 </span>
+<span id="L764">764 /--</span>
+<span id="L765">765 Regularized finite-history Gram matrices have strictly positive quadratic</span>
+<span id="L766">766 forms on nonzero vectors when `0 &lt; lambda`.</span>
+<span id="L767">767 -/</span>
+<span id="L768">768 theorem regularizedFeatureGram_quadraticForm_pos_of_pos_lambda</span>
+<span id="L769">769     {Time : Type v} {Feature : Type u}</span>
+<span id="L770">770     [Fintype Time] [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L771">771     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L772">772     (x : Time -&gt; Feature -&gt; Real) (y : Feature -&gt; Real)</span>
+<span id="L773">773     (hy : ∃ i : Feature, y i ≠ 0) :</span>
+<span id="L774">774     0 &lt; quadraticForm (regularizedFeatureGram lambda x) y := by</span>
+<span id="L775">775   rw [regularizedFeatureGram_quadraticForm_eq_sum_sq]</span>
+<span id="L776">776   exact add_pos_of_pos_of_nonneg</span>
+<span id="L777">777     (mul_pos hlambda (sum_sq_pos_of_exists_ne_zero y hy))</span>
+<span id="L778">778     (Finset.sum_nonneg (fun t _ht =&gt; sq_nonneg _))</span>
+<span id="L779">779 </span>
+<span id="L780">780 /--</span>
+<span id="L781">781 Regularized Nat-prefix Gram matrices have strictly positive quadratic forms on</span>
+<span id="L782">782 nonzero vectors when `0 &lt; lambda`.</span>
+<span id="L783">783 -/</span>
+<span id="L784">784 theorem regularizedPrefixFeatureGram_quadraticForm_pos_of_pos_lambda</span>
+<span id="L785">785     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L786">786     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L787">787     (x : Nat -&gt; Feature -&gt; Real) (T : Nat) (y : Feature -&gt; Real)</span>
+<span id="L788">788     (hy : ∃ i : Feature, y i ≠ 0) :</span>
+<span id="L789">789     0 &lt; quadraticForm (regularizedPrefixFeatureGram lambda x T) y := by</span>
+<span id="L790">790   rw [regularizedPrefixFeatureGram_quadraticForm_eq_sum_sq]</span>
+<span id="L791">791   exact add_pos_of_pos_of_nonneg</span>
+<span id="L792">792     (mul_pos hlambda (sum_sq_pos_of_exists_ne_zero y hy))</span>
+<span id="L793">793     (Finset.sum_nonneg (fun t _ht =&gt; sq_nonneg _))</span>
+<span id="L794">794 </span>
+<span id="L795">795 /-- Regularized finite-history Gram matrices are Mathlib-positive definite. -/</span>
+<span id="L796">796 theorem regularizedFeatureGram_posDef</span>
+<span id="L797">797     {Time : Type v} {Feature : Type u}</span>
+<span id="L798">798     [Fintype Time] [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L799">799     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L800">800     (x : Time -&gt; Feature -&gt; Real) :</span>
+<span id="L801">801     (regularizedFeatureGram lambda x).PosDef := by</span>
+<span id="L802">802   refine Matrix.PosDef.of_dotProduct_mulVec_pos</span>
+<span id="L803">803     (regularizedFeatureGram_isHermitian lambda x) ?_</span>
+<span id="L804">804   intro y hy</span>
+<span id="L805">805   have hstar : star y = y := by</span>
+<span id="L806">806     funext i</span>
+<span id="L807">807     simp</span>
+<span id="L808">808   rw [hstar]</span>
+<span id="L809">809   rw [dotProduct_mulVec_eq_quadraticForm]</span>
+<span id="L810">810   exact regularizedFeatureGram_quadraticForm_pos_of_pos_lambda</span>
+<span id="L811">811     lambda hlambda x y (exists_coord_ne_zero_of_ne_zero y hy)</span>
+<span id="L812">812 </span>
+<span id="L813">813 /-- Regularized Nat-prefix Gram matrices are Mathlib-positive definite. -/</span>
+<span id="L814">814 theorem regularizedPrefixFeatureGram_posDef</span>
+<span id="L815">815     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L816">816     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L817">817     (x : Nat -&gt; Feature -&gt; Real) (T : Nat) :</span>
+<span id="L818">818     (regularizedPrefixFeatureGram lambda x T).PosDef := by</span>
+<span id="L819">819   refine Matrix.PosDef.of_dotProduct_mulVec_pos</span>
+<span id="L820">820     (regularizedPrefixFeatureGram_isHermitian lambda x T) ?_</span>
+<span id="L821">821   intro y hy</span>
+<span id="L822">822   have hstar : star y = y := by</span>
+<span id="L823">823     funext i</span>
+<span id="L824">824     simp</span>
+<span id="L825">825   rw [hstar]</span>
+<span id="L826">826   rw [dotProduct_mulVec_eq_quadraticForm]</span>
+<span id="L827">827   exact regularizedPrefixFeatureGram_quadraticForm_pos_of_pos_lambda</span>
+<span id="L828">828     lambda hlambda x T y (exists_coord_ne_zero_of_ne_zero y hy)</span>
+<span id="L829">829 </span>
+<span id="L830">830 /-- Regularized Nat-prefix Gram determinant is bounded by trace average power. -/</span>
+<span id="L831">831 theorem det_regularizedPrefixFeatureGram_le_pow_trace_div_card</span>
+<span id="L832">832     {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L833">833     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L834">834     (x : Nat -&gt; Feature -&gt; Real) (T : Nat) :</span>
+<span id="L835">835     (regularizedPrefixFeatureGram lambda x T).det &lt;=</span>
+<span id="L836">836       ((regularizedPrefixFeatureGram lambda x T).trace /</span>
+<span id="L837">837         (Fintype.card Feature : Real)) ^ Fintype.card Feature := by</span>
+<span id="L838">838   exact det_posSemidef_le_pow_trace_div_card</span>
+<span id="L839">839     (regularizedPrefixFeatureGram lambda x T)</span>
+<span id="L840">840     (Matrix.PosDef.posSemidef</span>
+<span id="L841">841       (regularizedPrefixFeatureGram_posDef lambda hlambda x T))</span>
+<span id="L842">842 </span>
+<span id="L843">843 /--</span>
+<span id="L844">844 Concrete trace/radius determinant upper bound for regularized Nat-prefix</span>
+<span id="L845">845 Grams.</span>
+<span id="L846">846 -/</span>
+<span id="L847">847 theorem det_regularizedPrefixFeatureGram_le_pow_trace_bound_average_of_pos_lambda</span>
+<span id="L848">848     {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L849">849     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L850">850     (x : Nat -&gt; Feature -&gt; Real) (T : Nat) (L2 : Real)</span>
+<span id="L851">851     (hbound : forall t : Nat, t &lt; T -&gt; dotProduct (x t) (x t) &lt;= L2) :</span>
+<span id="L852">852     (regularizedPrefixFeatureGram lambda x T).det &lt;=</span>
+<span id="L853">853       (((Fintype.card Feature : Real) * lambda + T * L2) /</span>
+<span id="L854">854         (Fintype.card Feature : Real)) ^ Fintype.card Feature := by</span>
+<span id="L855">855   have hposdef := regularizedPrefixFeatureGram_posDef lambda hlambda x T</span>
+<span id="L856">856   have htrace_nonneg :</span>
+<span id="L857">857       0 &lt;= (regularizedPrefixFeatureGram lambda x T).trace :=</span>
+<span id="L858">858     Matrix.PosSemidef.trace_nonneg hposdef.posSemidef</span>
+<span id="L859">859   have hcard_pos : 0 &lt; (Fintype.card Feature : Real) := by</span>
+<span id="L860">860     exact_mod_cast (Fintype.card_pos_iff.mpr inferInstance :</span>
+<span id="L861">861       0 &lt; Fintype.card Feature)</span>
+<span id="L862">862   exact det_regularizedPrefixFeatureGram_le_pow_trace_bound_average</span>
+<span id="L863">863     lambda x T L2</span>
+<span id="L864">864     (det_regularizedPrefixFeatureGram_le_pow_trace_div_card</span>
+<span id="L865">865       lambda hlambda x T)</span>
+<span id="L866">866     (div_nonneg htrace_nonneg (le_of_lt hcard_pos))</span>
+<span id="L867">867     hbound</span>
+<span id="L868">868 </span>
+<span id="L869">869 /-- Inverses of regularized Nat-prefix Gram matrices are positive definite. -/</span>
+<span id="L870">870 theorem regularizedPrefixFeatureGram_inv_posDef</span>
+<span id="L871">871     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L872">872     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L873">873     (x : Nat -&gt; Feature -&gt; Real) (T : Nat) :</span>
+<span id="L874">874     ((regularizedPrefixFeatureGram lambda x T)⁻¹).PosDef := by</span>
+<span id="L875">875   exact Matrix.PosDef.inv</span>
+<span id="L876">876     (regularizedPrefixFeatureGram_posDef lambda hlambda x T)</span>
+<span id="L877">877 </span>
+<span id="L878">878 /--</span>
+<span id="L879">879 Inverse-quadratic scalars of regularized Nat-prefix Gram matrices are</span>
+<span id="L880">880 nonnegative.</span>
+<span id="L881">881 -/</span>
+<span id="L882">882 theorem regularizedPrefixFeatureGram_inv_quadratic_nonneg</span>
+<span id="L883">883     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L884">884     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L885">885     (x : Nat -&gt; Feature -&gt; Real) (T : Nat) (y : Feature -&gt; Real) :</span>
+<span id="L886">886     0 &lt;= dotProduct y</span>
+<span id="L887">887       (Matrix.mulVec ((regularizedPrefixFeatureGram lambda x T)⁻¹) y) := by</span>
+<span id="L888">888   have hsemidef :</span>
+<span id="L889">889       ((regularizedPrefixFeatureGram lambda x T)⁻¹).PosSemidef :=</span>
+<span id="L890">890     Matrix.PosDef.posSemidef</span>
+<span id="L891">891       (regularizedPrefixFeatureGram_inv_posDef lambda hlambda x T)</span>
+<span id="L892">892   have hnonneg := hsemidef.dotProduct_mulVec_nonneg y</span>
+<span id="L893">893   have hstar : star y = y := by</span>
+<span id="L894">894     funext i</span>
+<span id="L895">895     simp</span>
+<span id="L896">896   simpa [hstar] using hnonneg</span>
+<span id="L897">897 </span>
+<span id="L898">898 /-- Regularized finite-history Gram matrices have positive determinant. -/</span>
+<span id="L899">899 theorem regularizedFeatureGram_det_pos</span>
+<span id="L900">900     {Time : Type v} {Feature : Type u}</span>
+<span id="L901">901     [Fintype Time] [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L902">902     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L903">903     (x : Time -&gt; Feature -&gt; Real) :</span>
+<span id="L904">904     0 &lt; (regularizedFeatureGram lambda x).det := by</span>
+<span id="L905">905   exact Matrix.PosDef.det_pos (regularizedFeatureGram_posDef lambda hlambda x)</span>
+<span id="L906">906 </span>
+<span id="L907">907 /-- Regularized Nat-prefix Gram matrices have positive determinant. -/</span>
+<span id="L908">908 theorem regularizedPrefixFeatureGram_det_pos</span>
+<span id="L909">909     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L910">910     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L911">911     (x : Nat -&gt; Feature -&gt; Real) (T : Nat) :</span>
+<span id="L912">912     0 &lt; (regularizedPrefixFeatureGram lambda x T).det := by</span>
+<span id="L913">913   exact Matrix.PosDef.det_pos</span>
+<span id="L914">914     (regularizedPrefixFeatureGram_posDef lambda hlambda x T)</span>
+<span id="L915">915 </span>
+<span id="L916">916 /-- Regularized finite-history Gram matrices have nonzero determinant. -/</span>
+<span id="L917">917 theorem regularizedFeatureGram_det_ne_zero</span>
+<span id="L918">918     {Time : Type v} {Feature : Type u}</span>
+<span id="L919">919     [Fintype Time] [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L920">920     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L921">921     (x : Time -&gt; Feature -&gt; Real) :</span>
+<span id="L922">922     (regularizedFeatureGram lambda x).det ≠ 0 := by</span>
+<span id="L923">923   exact ne_of_gt (regularizedFeatureGram_det_pos lambda hlambda x)</span>
+<span id="L924">924 </span>
+<span id="L925">925 /-- Regularized Nat-prefix Gram matrices have nonzero determinant. -/</span>
+<span id="L926">926 theorem regularizedPrefixFeatureGram_det_ne_zero</span>
+<span id="L927">927     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L928">928     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L929">929     (x : Nat -&gt; Feature -&gt; Real) (T : Nat) :</span>
+<span id="L930">930     (regularizedPrefixFeatureGram lambda x T).det ≠ 0 := by</span>
+<span id="L931">931   exact ne_of_gt (regularizedPrefixFeatureGram_det_pos lambda hlambda x T)</span>
+<span id="L932">932 </span>
+<span id="L933">933 /--</span>
+<span id="L934">934 Positive regularization supplies Mathlib&#x27;s determinant-unit side condition for</span>
+<span id="L935">935 arbitrary finite-history regularized Gram matrices.</span>
+<span id="L936">936 -/</span>
+<span id="L937">937 theorem isUnit_det_regularizedFeatureGram</span>
+<span id="L938">938     {Time : Type v} {Feature : Type u}</span>
+<span id="L939">939     [Fintype Time] [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L940">940     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L941">941     (x : Time -&gt; Feature -&gt; Real) :</span>
+<span id="L942">942     IsUnit (regularizedFeatureGram lambda x).det := by</span>
+<span id="L943">943   exact IsUnit.mk0 _ (regularizedFeatureGram_det_ne_zero lambda hlambda x)</span>
+<span id="L944">944 </span>
+<span id="L945">945 /--</span>
+<span id="L946">946 Positive regularization supplies Mathlib&#x27;s determinant-unit side condition for</span>
+<span id="L947">947 Nat-prefix regularized Gram matrices.</span>
+<span id="L948">948 -/</span>
+<span id="L949">949 theorem isUnit_det_regularizedPrefixFeatureGram</span>
+<span id="L950">950     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L951">951     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L952">952     (x : Nat -&gt; Feature -&gt; Real) (T : Nat) :</span>
+<span id="L953">953     IsUnit (regularizedPrefixFeatureGram lambda x T).det := by</span>
+<span id="L954">954   exact IsUnit.mk0 _</span>
+<span id="L955">955     (regularizedPrefixFeatureGram_det_ne_zero lambda hlambda x T)</span>
+<span id="L956">956 </span>
+<span id="L957">957 /--</span>
+<span id="L958">958 One-step determinant recursion for an arbitrary finite-history regularized Gram</span>
+<span id="L959">959 matrix.</span>
+<span id="L960">960 </span>
+<span id="L961">961 This is the determinant identity consumed by OFUL/LinUCB log-det telescoping:</span>
+<span id="L962">962 the `IsUnit det` side condition is discharged from positive regularization.</span>
+<span id="L963">963 -/</span>
+<span id="L964">964 theorem det_regularizedFeatureGram_add_rankOneGram</span>
+<span id="L965">965     {Time : Type v} {Feature : Type u}</span>
+<span id="L966">966     [Fintype Time] [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L967">967     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L968">968     (history : Time -&gt; Feature -&gt; Real) (x : Feature -&gt; Real) :</span>
+<span id="L969">969     (regularizedFeatureGram lambda history + rankOneGram x).det =</span>
+<span id="L970">970       (regularizedFeatureGram lambda history).det *</span>
+<span id="L971">971         (1 + dotProduct x</span>
+<span id="L972">972           (Matrix.mulVec</span>
+<span id="L973">973             ((regularizedFeatureGram lambda history)⁻¹) x)) := by</span>
+<span id="L974">974   exact det_add_rankOneGram (regularizedFeatureGram lambda history)</span>
+<span id="L975">975     (isUnit_det_regularizedFeatureGram lambda hlambda history) x</span>
+<span id="L976">976 </span>
+<span id="L977">977 /--</span>
+<span id="L978">978 One-step determinant recursion for Nat-prefix regularized Gram matrices.</span>
+<span id="L979">979 </span>
+<span id="L980">980 This keeps the growing-history surface in a single Nat-indexed feature stream.</span>
+<span id="L981">981 -/</span>
+<span id="L982">982 theorem det_regularizedPrefixFeatureGram_add_rankOneGram</span>
+<span id="L983">983     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L984">984     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L985">985     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (x : Feature -&gt; Real) :</span>
+<span id="L986">986     (regularizedPrefixFeatureGram lambda history T + rankOneGram x).det =</span>
+<span id="L987">987       (regularizedPrefixFeatureGram lambda history T).det *</span>
+<span id="L988">988         (1 + dotProduct x</span>
+<span id="L989">989           (Matrix.mulVec</span>
+<span id="L990">990             ((regularizedPrefixFeatureGram lambda history T)⁻¹) x)) := by</span>
+<span id="L991">991   exact det_add_rankOneGram (regularizedPrefixFeatureGram lambda history T)</span>
+<span id="L992">992     (isUnit_det_regularizedPrefixFeatureGram lambda hlambda history T) x</span>
+<span id="L993">993 </span>
+<span id="L994">994 /-- Positive regularized Grams stay positive definite after a rank-one update. -/</span>
+<span id="L995">995 theorem regularizedFeatureGram_add_rankOneGram_posDef</span>
+<span id="L996">996     {Time : Type v} {Feature : Type u}</span>
+<span id="L997">997     [Fintype Time] [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L998">998     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L999">999     (history : Time -&gt; Feature -&gt; Real) (x : Feature -&gt; Real) :</span>
+<span id="L1000">1000     (regularizedFeatureGram lambda history + rankOneGram x).PosDef := by</span>
+<span id="L1001">1001   exact Matrix.PosDef.add_posSemidef</span>
+<span id="L1002">1002     (regularizedFeatureGram_posDef lambda hlambda history)</span>
+<span id="L1003">1003     (rankOneGram_posSemidef x)</span>
+<span id="L1004">1004 </span>
+<span id="L1005">1005 /-- Positive regularized prefix Grams stay positive definite after a rank-one update. -/</span>
+<span id="L1006">1006 theorem regularizedPrefixFeatureGram_add_rankOneGram_posDef</span>
+<span id="L1007">1007     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1008">1008     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1009">1009     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (x : Feature -&gt; Real) :</span>
+<span id="L1010">1010     (regularizedPrefixFeatureGram lambda history T + rankOneGram x).PosDef := by</span>
+<span id="L1011">1011   exact Matrix.PosDef.add_posSemidef</span>
+<span id="L1012">1012     (regularizedPrefixFeatureGram_posDef lambda hlambda history T)</span>
+<span id="L1013">1013     (rankOneGram_posSemidef x)</span>
+<span id="L1014">1014 </span>
+<span id="L1015">1015 /-- The determinant after a positive regularized rank-one update is positive. -/</span>
+<span id="L1016">1016 theorem det_regularizedFeatureGram_add_rankOneGram_pos</span>
+<span id="L1017">1017     {Time : Type v} {Feature : Type u}</span>
+<span id="L1018">1018     [Fintype Time] [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1019">1019     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1020">1020     (history : Time -&gt; Feature -&gt; Real) (x : Feature -&gt; Real) :</span>
+<span id="L1021">1021     0 &lt; (regularizedFeatureGram lambda history + rankOneGram x).det := by</span>
+<span id="L1022">1022   exact Matrix.PosDef.det_pos</span>
+<span id="L1023">1023     (regularizedFeatureGram_add_rankOneGram_posDef</span>
+<span id="L1024">1024       lambda hlambda history x)</span>
+<span id="L1025">1025 </span>
+<span id="L1026">1026 /-- The determinant after a positive regularized prefix rank-one update is positive. -/</span>
+<span id="L1027">1027 theorem det_regularizedPrefixFeatureGram_add_rankOneGram_pos</span>
+<span id="L1028">1028     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1029">1029     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1030">1030     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (x : Feature -&gt; Real) :</span>
+<span id="L1031">1031     0 &lt; (regularizedPrefixFeatureGram lambda history T + rankOneGram x).det := by</span>
+<span id="L1032">1032   exact Matrix.PosDef.det_pos</span>
+<span id="L1033">1033     (regularizedPrefixFeatureGram_add_rankOneGram_posDef</span>
+<span id="L1034">1034       lambda hlambda history T x)</span>
+<span id="L1035">1035 </span>
+<span id="L1036">1036 /-- The scalar rank-one determinant-update factor is positive. -/</span>
+<span id="L1037">1037 theorem regularizedFeatureGram_rankOne_update_factor_pos</span>
+<span id="L1038">1038     {Time : Type v} {Feature : Type u}</span>
+<span id="L1039">1039     [Fintype Time] [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1040">1040     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1041">1041     (history : Time -&gt; Feature -&gt; Real) (x : Feature -&gt; Real) :</span>
+<span id="L1042">1042     0 &lt; 1 + dotProduct x</span>
+<span id="L1043">1043       (Matrix.mulVec ((regularizedFeatureGram lambda history)⁻¹) x) := by</span>
+<span id="L1044">1044   set factor := 1 + dotProduct x</span>
+<span id="L1045">1045     (Matrix.mulVec ((regularizedFeatureGram lambda history)⁻¹) x)</span>
+<span id="L1046">1046   have hdet :</span>
+<span id="L1047">1047       (regularizedFeatureGram lambda history + rankOneGram x).det =</span>
+<span id="L1048">1048         (regularizedFeatureGram lambda history).det * factor := by</span>
+<span id="L1049">1049     simpa [factor] using</span>
+<span id="L1050">1050       det_regularizedFeatureGram_add_rankOneGram</span>
+<span id="L1051">1051         lambda hlambda history x</span>
+<span id="L1052">1052   have hnew : 0 &lt;</span>
+<span id="L1053">1053       (regularizedFeatureGram lambda history + rankOneGram x).det :=</span>
+<span id="L1054">1054     det_regularizedFeatureGram_add_rankOneGram_pos</span>
+<span id="L1055">1055       lambda hlambda history x</span>
+<span id="L1056">1056   have hmul : 0 &lt;</span>
+<span id="L1057">1057       (regularizedFeatureGram lambda history).det * factor := by</span>
+<span id="L1058">1058     simpa [hdet] using hnew</span>
+<span id="L1059">1059   exact pos_of_mul_pos_right hmul</span>
+<span id="L1060">1060     (le_of_lt (regularizedFeatureGram_det_pos lambda hlambda history))</span>
+<span id="L1061">1061 </span>
+<span id="L1062">1062 /-- The scalar Nat-prefix rank-one determinant-update factor is positive. -/</span>
+<span id="L1063">1063 theorem regularizedPrefixFeatureGram_rankOne_update_factor_pos</span>
+<span id="L1064">1064     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1065">1065     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1066">1066     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (x : Feature -&gt; Real) :</span>
+<span id="L1067">1067     0 &lt; 1 + dotProduct x</span>
+<span id="L1068">1068       (Matrix.mulVec ((regularizedPrefixFeatureGram lambda history T)⁻¹) x) := by</span>
+<span id="L1069">1069   set factor := 1 + dotProduct x</span>
+<span id="L1070">1070     (Matrix.mulVec ((regularizedPrefixFeatureGram lambda history T)⁻¹) x)</span>
+<span id="L1071">1071   have hdet :</span>
+<span id="L1072">1072       (regularizedPrefixFeatureGram lambda history T + rankOneGram x).det =</span>
+<span id="L1073">1073         (regularizedPrefixFeatureGram lambda history T).det * factor := by</span>
+<span id="L1074">1074     simpa [factor] using</span>
+<span id="L1075">1075       det_regularizedPrefixFeatureGram_add_rankOneGram</span>
+<span id="L1076">1076         lambda hlambda history T x</span>
+<span id="L1077">1077   have hnew : 0 &lt;</span>
+<span id="L1078">1078       (regularizedPrefixFeatureGram lambda history T + rankOneGram x).det :=</span>
+<span id="L1079">1079     det_regularizedPrefixFeatureGram_add_rankOneGram_pos</span>
+<span id="L1080">1080       lambda hlambda history T x</span>
+<span id="L1081">1081   have hmul : 0 &lt;</span>
+<span id="L1082">1082       (regularizedPrefixFeatureGram lambda history T).det * factor := by</span>
+<span id="L1083">1083     simpa [hdet] using hnew</span>
+<span id="L1084">1084   exact pos_of_mul_pos_right hmul</span>
+<span id="L1085">1085     (le_of_lt (regularizedPrefixFeatureGram_det_pos lambda hlambda history T))</span>
+<span id="L1086">1086 </span>
+<span id="L1087">1087 /-- Logarithmic one-step determinant recursion for regularized Grams. -/</span>
+<span id="L1088">1088 theorem log_det_regularizedFeatureGram_add_rankOneGram</span>
+<span id="L1089">1089     {Time : Type v} {Feature : Type u}</span>
+<span id="L1090">1090     [Fintype Time] [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1091">1091     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1092">1092     (history : Time -&gt; Feature -&gt; Real) (x : Feature -&gt; Real) :</span>
+<span id="L1093">1093     Real.log (regularizedFeatureGram lambda history + rankOneGram x).det =</span>
+<span id="L1094">1094       Real.log (regularizedFeatureGram lambda history).det +</span>
+<span id="L1095">1095         Real.log (1 + dotProduct x</span>
+<span id="L1096">1096           (Matrix.mulVec ((regularizedFeatureGram lambda history)⁻¹) x)) := by</span>
+<span id="L1097">1097   rw [det_regularizedFeatureGram_add_rankOneGram</span>
+<span id="L1098">1098     lambda hlambda history x]</span>
+<span id="L1099">1099   exact Real.log_mul</span>
+<span id="L1100">1100     (regularizedFeatureGram_det_ne_zero lambda hlambda history)</span>
+<span id="L1101">1101     (ne_of_gt (regularizedFeatureGram_rankOne_update_factor_pos</span>
+<span id="L1102">1102       lambda hlambda history x))</span>
+<span id="L1103">1103 </span>
+<span id="L1104">1104 /-- Logarithmic one-step determinant recursion for regularized prefix Grams. -/</span>
+<span id="L1105">1105 theorem log_det_regularizedPrefixFeatureGram_add_rankOneGram</span>
+<span id="L1106">1106     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1107">1107     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1108">1108     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (x : Feature -&gt; Real) :</span>
+<span id="L1109">1109     Real.log (regularizedPrefixFeatureGram lambda history T + rankOneGram x).det =</span>
+<span id="L1110">1110       Real.log (regularizedPrefixFeatureGram lambda history T).det +</span>
+<span id="L1111">1111         Real.log (1 + dotProduct x</span>
+<span id="L1112">1112           (Matrix.mulVec</span>
+<span id="L1113">1113             ((regularizedPrefixFeatureGram lambda history T)⁻¹) x)) := by</span>
+<span id="L1114">1114   rw [det_regularizedPrefixFeatureGram_add_rankOneGram</span>
+<span id="L1115">1115     lambda hlambda history T x]</span>
+<span id="L1116">1116   exact Real.log_mul</span>
+<span id="L1117">1117     (regularizedPrefixFeatureGram_det_ne_zero lambda hlambda history T)</span>
+<span id="L1118">1118     (ne_of_gt (regularizedPrefixFeatureGram_rankOne_update_factor_pos</span>
+<span id="L1119">1119       lambda hlambda history T x))</span>
+<span id="L1120">1120 </span>
+<span id="L1121">1121 /-- Increment form of the logarithmic determinant recursion. -/</span>
+<span id="L1122">1122 theorem log_det_regularizedFeatureGram_add_rankOneGram_sub</span>
+<span id="L1123">1123     {Time : Type v} {Feature : Type u}</span>
+<span id="L1124">1124     [Fintype Time] [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1125">1125     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1126">1126     (history : Time -&gt; Feature -&gt; Real) (x : Feature -&gt; Real) :</span>
+<span id="L1127">1127     Real.log (regularizedFeatureGram lambda history + rankOneGram x).det -</span>
+<span id="L1128">1128         Real.log (regularizedFeatureGram lambda history).det =</span>
+<span id="L1129">1129       Real.log (1 + dotProduct x</span>
+<span id="L1130">1130         (Matrix.mulVec ((regularizedFeatureGram lambda history)⁻¹) x)) := by</span>
+<span id="L1131">1131   rw [log_det_regularizedFeatureGram_add_rankOneGram</span>
+<span id="L1132">1132     lambda hlambda history x]</span>
+<span id="L1133">1133   ring</span>
+<span id="L1134">1134 </span>
+<span id="L1135">1135 /-- Increment form of the logarithmic determinant recursion for prefix Grams. -/</span>
+<span id="L1136">1136 theorem log_det_regularizedPrefixFeatureGram_add_rankOneGram_sub</span>
+<span id="L1137">1137     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1138">1138     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1139">1139     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (x : Feature -&gt; Real) :</span>
+<span id="L1140">1140     Real.log (regularizedPrefixFeatureGram lambda history T + rankOneGram x).det -</span>
+<span id="L1141">1141         Real.log (regularizedPrefixFeatureGram lambda history T).det =</span>
+<span id="L1142">1142       Real.log (1 + dotProduct x</span>
+<span id="L1143">1143         (Matrix.mulVec</span>
+<span id="L1144">1144           ((regularizedPrefixFeatureGram lambda history T)⁻¹) x)) := by</span>
+<span id="L1145">1145   rw [log_det_regularizedPrefixFeatureGram_add_rankOneGram</span>
+<span id="L1146">1146     lambda hlambda history T x]</span>
+<span id="L1147">1147   ring</span>
+<span id="L1148">1148 </span>
+<span id="L1149">1149 /-- Determinant recursion for the concrete prefix update `T -&gt; T + 1`. -/</span>
+<span id="L1150">1150 theorem det_regularizedPrefixFeatureGram_succ</span>
+<span id="L1151">1151     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1152">1152     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1153">1153     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) :</span>
+<span id="L1154">1154     (regularizedPrefixFeatureGram lambda history (T + 1)).det =</span>
+<span id="L1155">1155       (regularizedPrefixFeatureGram lambda history T).det *</span>
+<span id="L1156">1156         (1 + dotProduct (history T)</span>
+<span id="L1157">1157           (Matrix.mulVec</span>
+<span id="L1158">1158             ((regularizedPrefixFeatureGram lambda history T)⁻¹)</span>
+<span id="L1159">1159             (history T))) := by</span>
+<span id="L1160">1160   rw [regularizedPrefixFeatureGram_succ]</span>
+<span id="L1161">1161   exact det_regularizedPrefixFeatureGram_add_rankOneGram</span>
+<span id="L1162">1162     lambda hlambda history T (history T)</span>
+<span id="L1163">1163 </span>
+<span id="L1164">1164 /-- Log-det increment recursion for the concrete prefix update `T -&gt; T + 1`. -/</span>
+<span id="L1165">1165 theorem log_det_regularizedPrefixFeatureGram_succ_sub</span>
+<span id="L1166">1166     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1167">1167     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1168">1168     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) :</span>
+<span id="L1169">1169     Real.log (regularizedPrefixFeatureGram lambda history (T + 1)).det -</span>
+<span id="L1170">1170         Real.log (regularizedPrefixFeatureGram lambda history T).det =</span>
+<span id="L1171">1171       Real.log (1 + dotProduct (history T)</span>
+<span id="L1172">1172         (Matrix.mulVec</span>
+<span id="L1173">1173           ((regularizedPrefixFeatureGram lambda history T)⁻¹)</span>
+<span id="L1174">1174           (history T))) := by</span>
+<span id="L1175">1175   rw [regularizedPrefixFeatureGram_succ]</span>
+<span id="L1176">1176   exact log_det_regularizedPrefixFeatureGram_add_rankOneGram_sub</span>
+<span id="L1177">1177     lambda hlambda history T (history T)</span>
+<span id="L1178">1178 </span>
+<span id="L1179">1179 /-- Finite forward-difference telescope used by log-det recursions. -/</span>
+<span id="L1180">1180 theorem sum_range_forward_difference</span>
+<span id="L1181">1181     (Phi : Nat -&gt; Real) (T : Nat) :</span>
+<span id="L1182">1182     (Finset.range T).sum (fun t =&gt; Phi (t + 1) - Phi t) =</span>
+<span id="L1183">1183       Phi T - Phi 0 := by</span>
+<span id="L1184">1184   induction T with</span>
+<span id="L1185">1185   | zero =&gt; simp</span>
+<span id="L1186">1186   | succ T ih =&gt;</span>
+<span id="L1187">1187       rw [Finset.sum_range_succ, ih]</span>
+<span id="L1188">1188       ring</span>
+<span id="L1189">1189 </span>
+<span id="L1190">1190 /--</span>
+<span id="L1191">1191 Abstract finite-horizon log-det telescope from one-step log-update factors.</span>
+<span id="L1192">1192 </span>
+<span id="L1193">1193 This packages the shape needed after instantiating `detSeq` with an OFUL</span>
+<span id="L1194">1194 regularized Gram determinant process and `factor` with the corresponding</span>
+<span id="L1195">1195 rank-one update factor.</span>
+<span id="L1196">1196 -/</span>
+<span id="L1197">1197 theorem sum_range_log_update_factor_eq_log_det_ratio</span>
+<span id="L1198">1198     (detSeq factor : Nat -&gt; Real) (T : Nat)</span>
+<span id="L1199">1199     (hstep : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L1200">1200       Real.log (detSeq (t + 1)) - Real.log (detSeq t) =</span>
+<span id="L1201">1201         Real.log (factor t)) :</span>
+<span id="L1202">1202     (Finset.range T).sum (fun t =&gt; Real.log (factor t)) =</span>
+<span id="L1203">1203       Real.log (detSeq T) - Real.log (detSeq 0) := by</span>
+<span id="L1204">1204   calc</span>
+<span id="L1205">1205     (Finset.range T).sum (fun t =&gt; Real.log (factor t)) =</span>
+<span id="L1206">1206       (Finset.range T).sum</span>
+<span id="L1207">1207         (fun t =&gt; Real.log (detSeq (t + 1)) - Real.log (detSeq t)) := by</span>
+<span id="L1208">1208       apply Finset.sum_congr rfl</span>
+<span id="L1209">1209       intro t ht</span>
+<span id="L1210">1210       exact (hstep t (Finset.mem_range.mp ht)).symm</span>
+<span id="L1211">1211     _ = Real.log (detSeq T) - Real.log (detSeq 0) := by</span>
+<span id="L1212">1212       exact sum_range_forward_difference</span>
+<span id="L1213">1213         (fun t =&gt; Real.log (detSeq t)) T</span>
+<span id="L1214">1214 </span>
+<span id="L1215">1215 /-- Lower bound for `log (1 + z)` used in elliptical-potential estimates. -/</span>
+<span id="L1216">1216 theorem div_one_add_self_le_log_one_add</span>
+<span id="L1217">1217     {z : Real} (hz : 0 &lt;= z) :</span>
+<span id="L1218">1218     z / (1 + z) &lt;= Real.log (1 + z) := by</span>
+<span id="L1219">1219   have hpos : 0 &lt; 1 + z := by linarith</span>
+<span id="L1220">1220   have hinvpos : 0 &lt; 1 / (1 + z) := by positivity</span>
+<span id="L1221">1221   have hlog := Real.log_le_sub_one_of_pos hinvpos</span>
+<span id="L1222">1222   rw [Real.log_div one_ne_zero (ne_of_gt hpos), Real.log_one] at hlog</span>
+<span id="L1223">1223   have hsub : 1 / (1 + z) - 1 = - z / (1 + z) := by</span>
+<span id="L1224">1224     field_simp [ne_of_gt hpos]</span>
+<span id="L1225">1225     ring</span>
+<span id="L1226">1226   rw [hsub] at hlog</span>
+<span id="L1227">1227   have hneg&#x27; : - Real.log (1 + z) &lt;= -z / (1 + z) := by</span>
+<span id="L1228">1228     simpa [zero_sub] using hlog</span>
+<span id="L1229">1229   have hneg : - Real.log (1 + z) &lt;= - (z / (1 + z)) := by</span>
+<span id="L1230">1230     simpa [neg_div] using hneg&#x27;</span>
+<span id="L1231">1231   exact neg_le_neg_iff.mp hneg</span>
+<span id="L1232">1232 </span>
+<span id="L1233">1233 /-- For `0 &lt;= z &lt;= 1`, `z` is bounded by twice the log update. -/</span>
+<span id="L1234">1234 theorem self_le_two_log_one_add_of_le_one</span>
+<span id="L1235">1235     {z : Real} (hz0 : 0 &lt;= z) (hz1 : z &lt;= 1) :</span>
+<span id="L1236">1236     z &lt;= 2 * Real.log (1 + z) := by</span>
+<span id="L1237">1237   have hbase : z / (1 + z) &lt;= Real.log (1 + z) :=</span>
+<span id="L1238">1238     div_one_add_self_le_log_one_add hz0</span>
+<span id="L1239">1239   have hpos : 0 &lt; 1 + z := by linarith</span>
+<span id="L1240">1240   have hdiv : z &lt;= 2 * (z / (1 + z)) := by</span>
+<span id="L1241">1241     rw [show 2 * (z / (1 + z)) = (2 * z) / (1 + z) by ring]</span>
+<span id="L1242">1242     rw [le_div_iff₀ hpos]</span>
+<span id="L1243">1243     nlinarith [mul_nonneg hz0 (sub_nonneg.mpr hz1)]</span>
+<span id="L1244">1244   nlinarith</span>
+<span id="L1245">1245 </span>
+<span id="L1246">1246 /-- Numeric endpoint: `1 &lt;= 2 * log 2`. -/</span>
+<span id="L1247">1247 theorem one_le_two_log_two : (1 : Real) &lt;= 2 * Real.log 2 := by</span>
+<span id="L1248">1248   have hbase : (1 : Real) / (1 + 1) &lt;= Real.log (1 + 1) :=</span>
+<span id="L1249">1249     div_one_add_self_le_log_one_add (by norm_num)</span>
+<span id="L1250">1250   norm_num at hbase ⊢</span>
+<span id="L1251">1251   nlinarith</span>
+<span id="L1252">1252 </span>
+<span id="L1253">1253 /-- Elliptical-potential scalar inequality: `min 1 z &lt;= 2 log (1+z)`. -/</span>
+<span id="L1254">1254 theorem min_one_le_two_log_one_add</span>
+<span id="L1255">1255     {z : Real} (hz : 0 &lt;= z) :</span>
+<span id="L1256">1256     min 1 z &lt;= 2 * Real.log (1 + z) := by</span>
+<span id="L1257">1257   by_cases hz1 : z &lt;= 1</span>
+<span id="L1258">1258   · rw [min_eq_right hz1]</span>
+<span id="L1259">1259     exact self_le_two_log_one_add_of_le_one hz hz1</span>
+<span id="L1260">1260   · have hge : (1 : Real) &lt;= z := le_of_lt (lt_of_not_ge hz1)</span>
+<span id="L1261">1261     rw [min_eq_left hge]</span>
+<span id="L1262">1262     have hmono : Real.log 2 &lt;= Real.log (1 + z) := by</span>
+<span id="L1263">1263       exact Real.log_le_log (by norm_num) (by linarith)</span>
+<span id="L1264">1264     nlinarith [one_le_two_log_two, hmono]</span>
+<span id="L1265">1265 </span>
+<span id="L1266">1266 /--</span>
+<span id="L1267">1267 Finite-sum scalar elliptical-potential wrapper.</span>
+<span id="L1268">1268 </span>
+<span id="L1269">1269 This consumes nonnegativity of each update scalar and leaves the log telescope</span>
+<span id="L1270">1270 or determinant-ratio identity as a separate input.</span>
+<span id="L1271">1271 -/</span>
+<span id="L1272">1272 theorem sum_range_min_one_le_two_sum_log_one_add</span>
+<span id="L1273">1273     (u : Nat -&gt; Real) (T : Nat)</span>
+<span id="L1274">1274     (hu : forall t : Nat, t &lt; T -&gt; 0 &lt;= u t) :</span>
+<span id="L1275">1275     (Finset.range T).sum (fun t =&gt; min 1 (u t)) &lt;=</span>
+<span id="L1276">1276       2 * (Finset.range T).sum (fun t =&gt; Real.log (1 + u t)) := by</span>
+<span id="L1277">1277   calc</span>
+<span id="L1278">1278     (Finset.range T).sum (fun t =&gt; min 1 (u t)) &lt;=</span>
+<span id="L1279">1279       (Finset.range T).sum (fun t =&gt; 2 * Real.log (1 + u t)) := by</span>
+<span id="L1280">1280       apply Finset.sum_le_sum</span>
+<span id="L1281">1281       intro t ht</span>
+<span id="L1282">1282       exact min_one_le_two_log_one_add (hu t (Finset.mem_range.mp ht))</span>
+<span id="L1283">1283     _ = 2 * (Finset.range T).sum (fun t =&gt; Real.log (1 + u t)) := by</span>
+<span id="L1284">1284       rw [Finset.mul_sum]</span>
+<span id="L1285">1285 </span>
+<span id="L1286">1286 /--</span>
+<span id="L1287">1287 Clipped finite-sum upper-bound handoff under an explicit log-sum certificate.</span>
+<span id="L1288">1288 </span>
+<span id="L1289">1289 This is the scalar clipped counterpart of the later small-update raw-sum</span>
+<span id="L1290">1290 handoff and does not mention any determinant or matrix route.</span>
+<span id="L1291">1291 -/</span>
+<span id="L1292">1292 theorem sum_range_min_one_le_two_of_sum_log_one_add_le</span>
+<span id="L1293">1293     (u : Nat -&gt; Real) (T : Nat) (B : Real)</span>
+<span id="L1294">1294     (hu : forall t : Nat, t &lt; T -&gt; 0 &lt;= u t)</span>
+<span id="L1295">1295     (hlog_sum_le :</span>
+<span id="L1296">1296       (Finset.range T).sum (fun t =&gt; Real.log (1 + u t)) &lt;= B) :</span>
+<span id="L1297">1297     (Finset.range T).sum (fun t =&gt; min 1 (u t)) &lt;= 2 * B := by</span>
+<span id="L1298">1298   exact (sum_range_min_one_le_two_sum_log_one_add u T hu).trans</span>
+<span id="L1299">1299     (mul_le_mul_of_nonneg_left hlog_sum_le (by norm_num))</span>
+<span id="L1300">1300 </span>
+<span id="L1301">1301 /--</span>
+<span id="L1302">1302 Raw finite-sum log upper bound under an explicit small-update contract.</span>
+<span id="L1303">1303 </span>
+<span id="L1304">1304 For nonnegative update scalars bounded by one, the unclipped sum agrees with</span>
+<span id="L1305">1305 the clipped sum consumed by the determinant-growth route.</span>
+<span id="L1306">1306 -/</span>
+<span id="L1307">1307 theorem sum_range_le_two_sum_log_one_add_of_le_one</span>
+<span id="L1308">1308     (u : Nat -&gt; Real) (T : Nat)</span>
+<span id="L1309">1309     (hu_nonneg : forall t : Nat, t &lt; T -&gt; 0 &lt;= u t)</span>
+<span id="L1310">1310     (hu_le_one : forall t : Nat, t &lt; T -&gt; u t &lt;= 1) :</span>
+<span id="L1311">1311     (Finset.range T).sum (fun t =&gt; u t) &lt;=</span>
+<span id="L1312">1312       2 * (Finset.range T).sum (fun t =&gt; Real.log (1 + u t)) := by</span>
+<span id="L1313">1313   have hsum_eq :</span>
+<span id="L1314">1314       (Finset.range T).sum (fun t =&gt; u t) =</span>
+<span id="L1315">1315         (Finset.range T).sum (fun t =&gt; min 1 (u t)) := by</span>
+<span id="L1316">1316     apply Finset.sum_congr rfl</span>
+<span id="L1317">1317     intro t ht</span>
+<span id="L1318">1318     have htT : t &lt; T := Finset.mem_range.mp ht</span>
+<span id="L1319">1319     have hmin : min 1 (u t) = u t := min_eq_right (hu_le_one t htT)</span>
+<span id="L1320">1320     exact hmin.symm</span>
+<span id="L1321">1321   rw [hsum_eq]</span>
+<span id="L1322">1322   exact sum_range_min_one_le_two_sum_log_one_add u T hu_nonneg</span>
+<span id="L1323">1323 </span>
+<span id="L1324">1324 /--</span>
+<span id="L1325">1325 Raw finite-sum upper-bound handoff under an explicit log-sum certificate.</span>
+<span id="L1326">1326 </span>
+<span id="L1327">1327 This keeps the scalar small-update proof independent from any determinant or</span>
+<span id="L1328">1328 matrix route that might later prove the log-sum upper bound.</span>
+<span id="L1329">1329 -/</span>
+<span id="L1330">1330 theorem sum_range_le_two_of_sum_log_one_add_le_of_le_one</span>
+<span id="L1331">1331     (u : Nat -&gt; Real) (T : Nat) (B : Real)</span>
+<span id="L1332">1332     (hu_nonneg : forall t : Nat, t &lt; T -&gt; 0 &lt;= u t)</span>
+<span id="L1333">1333     (hu_le_one : forall t : Nat, t &lt; T -&gt; u t &lt;= 1)</span>
+<span id="L1334">1334     (hlog_sum_le :</span>
+<span id="L1335">1335       (Finset.range T).sum (fun t =&gt; Real.log (1 + u t)) &lt;= B) :</span>
+<span id="L1336">1336     (Finset.range T).sum (fun t =&gt; u t) &lt;= 2 * B := by</span>
+<span id="L1337">1337   exact (sum_range_le_two_sum_log_one_add_of_le_one</span>
+<span id="L1338">1338     u T hu_nonneg hu_le_one).trans</span>
+<span id="L1339">1339     (mul_le_mul_of_nonneg_left hlog_sum_le (by norm_num))</span>
+<span id="L1340">1340 </span>
+<span id="L1341">1341 /--</span>
+<span id="L1342">1342 Concrete finite-horizon log-det telescope for Nat-prefix regularized Grams.</span>
+<span id="L1343">1343 </span>
+<span id="L1344">1344 This is the growing-history instantiation of the abstract telescope.  It does</span>
+<span id="L1345">1345 not prove any determinant-growth upper bound for the resulting ratio.</span>
+<span id="L1346">1346 -/</span>
+<span id="L1347">1347 theorem sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_ratio</span>
+<span id="L1348">1348     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1349">1349     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1350">1350     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) :</span>
+<span id="L1351">1351     (Finset.range T).sum</span>
+<span id="L1352">1352         (fun t =&gt; Real.log (1 + dotProduct (history t)</span>
+<span id="L1353">1353           (Matrix.mulVec</span>
+<span id="L1354">1354             ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1355">1355             (history t)))) =</span>
+<span id="L1356">1356       Real.log (regularizedPrefixFeatureGram lambda history T).det -</span>
+<span id="L1357">1357         Real.log (regularizedPrefixFeatureGram lambda history 0).det := by</span>
+<span id="L1358">1358   exact sum_range_log_update_factor_eq_log_det_ratio</span>
+<span id="L1359">1359     (fun t =&gt; (regularizedPrefixFeatureGram lambda history t).det)</span>
+<span id="L1360">1360     (fun t =&gt; 1 + dotProduct (history t)</span>
+<span id="L1361">1361       (Matrix.mulVec</span>
+<span id="L1362">1362         ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1363">1363         (history t)))</span>
+<span id="L1364">1364     T</span>
+<span id="L1365">1365     (fun t _ht =&gt;</span>
+<span id="L1366">1366       log_det_regularizedPrefixFeatureGram_succ_sub</span>
+<span id="L1367">1367         lambda hlambda history t)</span>
+<span id="L1368">1368 </span>
+<span id="L1369">1369 /--</span>
+<span id="L1370">1370 Concrete prefix log-det telescope with the scalar-base determinant expanded as</span>
+<span id="L1371">1371 `lambda ^ d`.</span>
+<span id="L1372">1372 -/</span>
+<span id="L1373">1373 theorem sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_sub_base</span>
+<span id="L1374">1374     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1375">1375     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1376">1376     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) :</span>
+<span id="L1377">1377     (Finset.range T).sum</span>
+<span id="L1378">1378         (fun t =&gt; Real.log (1 + dotProduct (history t)</span>
+<span id="L1379">1379           (Matrix.mulVec</span>
+<span id="L1380">1380             ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1381">1381             (history t)))) =</span>
+<span id="L1382">1382       Real.log (regularizedPrefixFeatureGram lambda history T).det -</span>
+<span id="L1383">1383         Real.log (lambda ^ Fintype.card Feature) := by</span>
+<span id="L1384">1384   rw [sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_ratio</span>
+<span id="L1385">1385     lambda hlambda history T]</span>
+<span id="L1386">1386   rw [det_regularizedPrefixFeatureGram_zero]</span>
+<span id="L1387">1387 </span>
+<span id="L1388">1388 /--</span>
+<span id="L1389">1389 Concrete prefix determinant-growth consumer with the inverse-quadratic</span>
+<span id="L1390">1390 nonnegativity contract left explicit.</span>
+<span id="L1391">1391 </span>
+<span id="L1392">1392 This is the finite-sum elliptical-potential inequality once each update</span>
+<span id="L1393">1393 scalar `x_t^T V_t^{-1} x_t` is known nonnegative.</span>
+<span id="L1394">1394 -/</span>
+<span id="L1395">1395 theorem sum_range_min_prefix_update_le_two_log_det_sub_base</span>
+<span id="L1396">1396     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1397">1397     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1398">1398     (history : Nat -&gt; Feature -&gt; Real) (T : Nat)</span>
+<span id="L1399">1399     (hquad_nonneg : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L1400">1400       0 &lt;= dotProduct (history t)</span>
+<span id="L1401">1401         (Matrix.mulVec</span>
+<span id="L1402">1402           ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1403">1403           (history t))) :</span>
+<span id="L1404">1404     (Finset.range T).sum</span>
+<span id="L1405">1405         (fun t =&gt; min 1 (dotProduct (history t)</span>
+<span id="L1406">1406           (Matrix.mulVec</span>
+<span id="L1407">1407             ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1408">1408             (history t)))) &lt;=</span>
+<span id="L1409">1409       2 * (Real.log (regularizedPrefixFeatureGram lambda history T).det -</span>
+<span id="L1410">1410         Real.log (lambda ^ Fintype.card Feature)) := by</span>
+<span id="L1411">1411   have hsum := sum_range_min_one_le_two_sum_log_one_add</span>
+<span id="L1412">1412     (fun t =&gt; dotProduct (history t)</span>
+<span id="L1413">1413       (Matrix.mulVec</span>
+<span id="L1414">1414         ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1415">1415         (history t)))</span>
+<span id="L1416">1416     T hquad_nonneg</span>
+<span id="L1417">1417   rw [sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_sub_base</span>
+<span id="L1418">1418     lambda hlambda history T] at hsum</span>
+<span id="L1419">1419   exact hsum</span>
+<span id="L1420">1420 </span>
+<span id="L1421">1421 /--</span>
+<span id="L1422">1422 Raw prefix inverse-quadratic sum bound from the terminal log-determinant ratio,</span>
+<span id="L1423">1423 with inverse-quadratic nonnegativity and small-update contracts left explicit.</span>
+<span id="L1424">1424 -/</span>
+<span id="L1425">1425 theorem sum_range_prefix_update_le_two_log_det_sub_base</span>
+<span id="L1426">1426     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1427">1427     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1428">1428     (history : Nat -&gt; Feature -&gt; Real) (T : Nat)</span>
+<span id="L1429">1429     (hquad_nonneg : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L1430">1430       0 &lt;= dotProduct (history t)</span>
+<span id="L1431">1431         (Matrix.mulVec</span>
+<span id="L1432">1432           ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1433">1433           (history t)))</span>
+<span id="L1434">1434     (hupdate_le_one : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L1435">1435       dotProduct (history t)</span>
+<span id="L1436">1436         (Matrix.mulVec</span>
+<span id="L1437">1437           ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1438">1438           (history t)) &lt;= 1) :</span>
+<span id="L1439">1439     (Finset.range T).sum</span>
+<span id="L1440">1440         (fun t =&gt; dotProduct (history t)</span>
+<span id="L1441">1441           (Matrix.mulVec</span>
+<span id="L1442">1442             ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1443">1443             (history t))) &lt;=</span>
+<span id="L1444">1444       2 * (Real.log (regularizedPrefixFeatureGram lambda history T).det -</span>
+<span id="L1445">1445         Real.log (lambda ^ Fintype.card Feature)) := by</span>
+<span id="L1446">1446   let u : Nat -&gt; Real := fun t =&gt;</span>
+<span id="L1447">1447     dotProduct (history t)</span>
+<span id="L1448">1448       (Matrix.mulVec</span>
+<span id="L1449">1449         ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1450">1450         (history t))</span>
+<span id="L1451">1451   have hsum :=</span>
+<span id="L1452">1452     sum_range_le_two_sum_log_one_add_of_le_one u T hquad_nonneg hupdate_le_one</span>
+<span id="L1453">1453   rw [sum_range_log_regularizedPrefixFeatureGram_update_factor_eq_log_det_sub_base</span>
+<span id="L1454">1454     lambda hlambda history T] at hsum</span>
+<span id="L1455">1455   exact hsum</span>
+<span id="L1456">1456 </span>
+<span id="L1457">1457 /--</span>
+<span id="L1458">1458 Concrete prefix determinant-growth consumer with inverse-quadratic</span>
+<span id="L1459">1459 nonnegativity discharged from the positive-definite inverse of the</span>
+<span id="L1460">1460 regularized Gram matrix.</span>
+<span id="L1461">1461 -/</span>
+<span id="L1462">1462 theorem sum_range_min_prefix_update_le_two_log_det_sub_base_of_pos_lambda</span>
+<span id="L1463">1463     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1464">1464     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1465">1465     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) :</span>
+<span id="L1466">1466     (Finset.range T).sum</span>
+<span id="L1467">1467         (fun t =&gt; min 1 (dotProduct (history t)</span>
+<span id="L1468">1468           (Matrix.mulVec</span>
+<span id="L1469">1469             ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1470">1470             (history t)))) &lt;=</span>
+<span id="L1471">1471       2 * (Real.log (regularizedPrefixFeatureGram lambda history T).det -</span>
+<span id="L1472">1472         Real.log (lambda ^ Fintype.card Feature)) := by</span>
+<span id="L1473">1473   exact sum_range_min_prefix_update_le_two_log_det_sub_base</span>
+<span id="L1474">1474     lambda hlambda history T</span>
+<span id="L1475">1475     (fun t _ht =&gt;</span>
+<span id="L1476">1476       regularizedPrefixFeatureGram_inv_quadratic_nonneg</span>
+<span id="L1477">1477         lambda hlambda history t (history t))</span>
+<span id="L1478">1478 </span>
+<span id="L1479">1479 /--</span>
+<span id="L1480">1480 Raw prefix inverse-quadratic sum bound from the terminal log-determinant ratio,</span>
+<span id="L1481">1481 under a small-update contract.</span>
+<span id="L1482">1482 </span>
+<span id="L1483">1483 When every update scalar is at most one, the raw update sum agrees with the</span>
+<span id="L1484">1484 clipped sum controlled by the log-det telescope endpoint.</span>
+<span id="L1485">1485 -/</span>
+<span id="L1486">1486 theorem sum_range_prefix_update_le_two_log_det_sub_base_of_update_le_one</span>
+<span id="L1487">1487     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1488">1488     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1489">1489     (history : Nat -&gt; Feature -&gt; Real) (T : Nat)</span>
+<span id="L1490">1490     (hupdate_le_one : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L1491">1491       dotProduct (history t)</span>
+<span id="L1492">1492         (Matrix.mulVec</span>
+<span id="L1493">1493           ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1494">1494           (history t)) &lt;= 1) :</span>
+<span id="L1495">1495     (Finset.range T).sum</span>
+<span id="L1496">1496         (fun t =&gt; dotProduct (history t)</span>
+<span id="L1497">1497           (Matrix.mulVec</span>
+<span id="L1498">1498             ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1499">1499             (history t))) &lt;=</span>
+<span id="L1500">1500       2 * (Real.log (regularizedPrefixFeatureGram lambda history T).det -</span>
+<span id="L1501">1501         Real.log (lambda ^ Fintype.card Feature)) := by</span>
+<span id="L1502">1502   exact sum_range_prefix_update_le_two_log_det_sub_base</span>
+<span id="L1503">1503     lambda hlambda history T</span>
+<span id="L1504">1504     (fun t _ht =&gt;</span>
+<span id="L1505">1505       regularizedPrefixFeatureGram_inv_quadratic_nonneg</span>
+<span id="L1506">1506         lambda hlambda history t (history t))</span>
+<span id="L1507">1507     hupdate_le_one</span>
+<span id="L1508">1508 </span>
+<span id="L1509">1509 /--</span>
+<span id="L1510">1510 If a separate route supplies a terminal log-determinant upper bound, the</span>
+<span id="L1511">1511 clipped prefix inverse-quadratic sum inherits the corresponding bound.</span>
+<span id="L1512">1512 -/</span>
+<span id="L1513">1513 theorem sum_range_min_prefix_update_le_two_log_det_upper</span>
+<span id="L1514">1514     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1515">1515     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1516">1516     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (B : Real)</span>
+<span id="L1517">1517     (hlog_upper :</span>
+<span id="L1518">1518       Real.log (regularizedPrefixFeatureGram lambda history T).det -</span>
+<span id="L1519">1519         Real.log (lambda ^ Fintype.card Feature) &lt;= B) :</span>
+<span id="L1520">1520     (Finset.range T).sum</span>
+<span id="L1521">1521         (fun t =&gt; min 1 (dotProduct (history t)</span>
+<span id="L1522">1522           (Matrix.mulVec</span>
+<span id="L1523">1523             ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1524">1524             (history t)))) &lt;=</span>
+<span id="L1525">1525       2 * B := by</span>
+<span id="L1526">1526   exact (sum_range_min_prefix_update_le_two_log_det_sub_base_of_pos_lambda</span>
+<span id="L1527">1527     lambda hlambda history T).trans</span>
+<span id="L1528">1528     (mul_le_mul_of_nonneg_left hlog_upper (by norm_num))</span>
+<span id="L1529">1529 </span>
+<span id="L1530">1530 /--</span>
+<span id="L1531">1531 Raw prefix inverse-quadratic sum bound from a terminal log-determinant upper</span>
+<span id="L1532">1532 bound, under a small-update contract.</span>
+<span id="L1533">1533 </span>
+<span id="L1534">1534 When every update scalar is at most one, the raw update sum agrees with the</span>
+<span id="L1535">1535 clipped sum consumed by the determinant-growth route.</span>
+<span id="L1536">1536 -/</span>
+<span id="L1537">1537 theorem sum_range_prefix_update_le_two_log_det_upper_of_update_le_one</span>
+<span id="L1538">1538     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1539">1539     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1540">1540     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (B : Real)</span>
+<span id="L1541">1541     (hlog_upper :</span>
+<span id="L1542">1542       Real.log (regularizedPrefixFeatureGram lambda history T).det -</span>
+<span id="L1543">1543         Real.log (lambda ^ Fintype.card Feature) &lt;= B)</span>
+<span id="L1544">1544     (hupdate_le_one : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L1545">1545       dotProduct (history t)</span>
+<span id="L1546">1546         (Matrix.mulVec</span>
+<span id="L1547">1547           ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1548">1548           (history t)) &lt;= 1) :</span>
+<span id="L1549">1549     (Finset.range T).sum</span>
+<span id="L1550">1550         (fun t =&gt; dotProduct (history t)</span>
+<span id="L1551">1551           (Matrix.mulVec</span>
+<span id="L1552">1552             ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1553">1553             (history t))) &lt;=</span>
+<span id="L1554">1554       2 * B := by</span>
+<span id="L1555">1555   exact (sum_range_prefix_update_le_two_log_det_sub_base_of_update_le_one</span>
+<span id="L1556">1556     lambda hlambda history T hupdate_le_one).trans</span>
+<span id="L1557">1557     (mul_le_mul_of_nonneg_left hlog_upper (by norm_num))</span>
+<span id="L1558">1558 </span>
+<span id="L1559">1559 /--</span>
+<span id="L1560">1560 A multiplicative determinant upper bound of the form</span>
+<span id="L1561">1561 `det(V_T) &lt;= lambda^d * exp(B)` supplies the terminal log-determinant upper</span>
+<span id="L1562">1562 bound used by the clipped elliptical-potential consumer.</span>
+<span id="L1563">1563 -/</span>
+<span id="L1564">1564 theorem log_det_regularizedPrefixFeatureGram_sub_base_le_of_det_le_mul_exp</span>
+<span id="L1565">1565     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1566">1566     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1567">1567     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (B : Real)</span>
+<span id="L1568">1568     (hdet_upper :</span>
+<span id="L1569">1569       (regularizedPrefixFeatureGram lambda history T).det &lt;=</span>
+<span id="L1570">1570         lambda ^ Fintype.card Feature * Real.exp B) :</span>
+<span id="L1571">1571     Real.log (regularizedPrefixFeatureGram lambda history T).det -</span>
+<span id="L1572">1572         Real.log (lambda ^ Fintype.card Feature) &lt;= B := by</span>
+<span id="L1573">1573   have hdet_pos :</span>
+<span id="L1574">1574       0 &lt; (regularizedPrefixFeatureGram lambda history T).det :=</span>
+<span id="L1575">1575     regularizedPrefixFeatureGram_det_pos lambda hlambda history T</span>
+<span id="L1576">1576   have hbase_pos : 0 &lt; lambda ^ Fintype.card Feature := by</span>
+<span id="L1577">1577     exact pow_pos hlambda _</span>
+<span id="L1578">1578   have hlog_le := Real.log_le_log hdet_pos hdet_upper</span>
+<span id="L1579">1579   have hlog_prod :</span>
+<span id="L1580">1580       Real.log (lambda ^ Fintype.card Feature * Real.exp B) =</span>
+<span id="L1581">1581         Real.log (lambda ^ Fintype.card Feature) + B := by</span>
+<span id="L1582">1582     rw [Real.log_mul (ne_of_gt hbase_pos) (ne_of_gt (Real.exp_pos B))]</span>
+<span id="L1583">1583     rw [Real.log_exp]</span>
+<span id="L1584">1584   rw [hlog_prod] at hlog_le</span>
+<span id="L1585">1585   linarith</span>
+<span id="L1586">1586 </span>
+<span id="L1587">1587 /--</span>
+<span id="L1588">1588 Clipped prefix inverse-quadratic sum bound from a multiplicative terminal</span>
+<span id="L1589">1589 determinant upper bound.</span>
+<span id="L1590">1590 -/</span>
+<span id="L1591">1591 theorem sum_range_min_prefix_update_le_two_det_mul_exp_upper</span>
+<span id="L1592">1592     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1593">1593     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1594">1594     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (B : Real)</span>
+<span id="L1595">1595     (hdet_upper :</span>
+<span id="L1596">1596       (regularizedPrefixFeatureGram lambda history T).det &lt;=</span>
+<span id="L1597">1597         lambda ^ Fintype.card Feature * Real.exp B) :</span>
+<span id="L1598">1598     (Finset.range T).sum</span>
+<span id="L1599">1599         (fun t =&gt; min 1 (dotProduct (history t)</span>
+<span id="L1600">1600           (Matrix.mulVec</span>
+<span id="L1601">1601             ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1602">1602             (history t)))) &lt;=</span>
+<span id="L1603">1603       2 * B := by</span>
+<span id="L1604">1604   exact sum_range_min_prefix_update_le_two_log_det_upper</span>
+<span id="L1605">1605     lambda hlambda history T B</span>
+<span id="L1606">1606     (log_det_regularizedPrefixFeatureGram_sub_base_le_of_det_le_mul_exp</span>
+<span id="L1607">1607       lambda hlambda history T B hdet_upper)</span>
+<span id="L1608">1608 </span>
+<span id="L1609">1609 /--</span>
+<span id="L1610">1610 Raw prefix inverse-quadratic sum bound from a multiplicative determinant upper</span>
+<span id="L1611">1611 bound, under a small-update contract.</span>
+<span id="L1612">1612 -/</span>
+<span id="L1613">1613 theorem sum_range_prefix_update_le_two_det_mul_exp_upper_of_update_le_one</span>
+<span id="L1614">1614     {Feature : Type u} [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1615">1615     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1616">1616     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (B : Real)</span>
+<span id="L1617">1617     (hdet_upper :</span>
+<span id="L1618">1618       (regularizedPrefixFeatureGram lambda history T).det &lt;=</span>
+<span id="L1619">1619         lambda ^ Fintype.card Feature * Real.exp B)</span>
+<span id="L1620">1620     (hupdate_le_one : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L1621">1621       dotProduct (history t)</span>
+<span id="L1622">1622         (Matrix.mulVec</span>
+<span id="L1623">1623           ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1624">1624           (history t)) &lt;= 1) :</span>
+<span id="L1625">1625     (Finset.range T).sum</span>
+<span id="L1626">1626         (fun t =&gt; dotProduct (history t)</span>
+<span id="L1627">1627           (Matrix.mulVec</span>
+<span id="L1628">1628             ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1629">1629             (history t))) &lt;=</span>
+<span id="L1630">1630       2 * B := by</span>
+<span id="L1631">1631   exact sum_range_prefix_update_le_two_log_det_upper_of_update_le_one</span>
+<span id="L1632">1632     lambda hlambda history T B</span>
+<span id="L1633">1633     (log_det_regularizedPrefixFeatureGram_sub_base_le_of_det_le_mul_exp</span>
+<span id="L1634">1634       lambda hlambda history T B hdet_upper)</span>
+<span id="L1635">1635     hupdate_le_one</span>
+<span id="L1636">1636 </span>
+<span id="L1637">1637 /--</span>
+<span id="L1638">1638 Scalar simplification for the AM-GM trace/radius determinant upper bound.</span>
+<span id="L1639">1639 </span>
+<span id="L1640">1640 With `d = Fintype.card Feature` and squared-radius bound `L2 &gt;= 0`, the</span>
+<span id="L1641">1641 trace-average expression is bounded by the multiplicative exponential form</span>
+<span id="L1642">1642 with exponent `d * (T * L2 / (d * lambda))`.</span>
+<span id="L1643">1643 -/</span>
+<span id="L1644">1644 theorem trace_average_pow_le_lambda_pow_mul_exp_dim_scaled</span>
+<span id="L1645">1645     {Feature : Type u} [Fintype Feature] [Nonempty Feature]</span>
+<span id="L1646">1646     (lambda : Real) (hlambda : 0 &lt; lambda) (T : Nat) (L2 : Real)</span>
+<span id="L1647">1647     (hL2 : 0 &lt;= L2) :</span>
+<span id="L1648">1648     (((Fintype.card Feature : Real) * lambda + T * L2) /</span>
+<span id="L1649">1649         (Fintype.card Feature : Real)) ^ Fintype.card Feature &lt;=</span>
+<span id="L1650">1650       lambda ^ Fintype.card Feature *</span>
+<span id="L1651">1651         Real.exp ((Fintype.card Feature : Real) *</span>
+<span id="L1652">1652           ((T * L2) / ((Fintype.card Feature : Real) * lambda))) := by</span>
+<span id="L1653">1653   let d : Real := Fintype.card Feature</span>
+<span id="L1654">1654   let x : Real := (T * L2) / (d * lambda)</span>
+<span id="L1655">1655   have hd_nat : 0 &lt; Fintype.card Feature := Fintype.card_pos</span>
+<span id="L1656">1656   have hd : 0 &lt; d := by</span>
+<span id="L1657">1657     dsimp [d]</span>
+<span id="L1658">1658     exact_mod_cast hd_nat</span>
+<span id="L1659">1659   have hd_ne : d ≠ 0 := ne_of_gt hd</span>
+<span id="L1660">1660   have hlambda_ne : lambda ≠ 0 := ne_of_gt hlambda</span>
+<span id="L1661">1661   have hden_pos : 0 &lt; d * lambda := mul_pos hd hlambda</span>
+<span id="L1662">1662   have hx_nonneg : 0 &lt;= x := by</span>
+<span id="L1663">1663     dsimp [x]</span>
+<span id="L1664">1664     exact div_nonneg (mul_nonneg (Nat.cast_nonneg T) hL2) (le_of_lt hden_pos)</span>
+<span id="L1665">1665   have hone_nonneg : 0 &lt;= 1 + x := by</span>
+<span id="L1666">1666     linarith</span>
+<span id="L1667">1667   have hbase_le : 1 + x &lt;= Real.exp x := by</span>
+<span id="L1668">1668     simpa [add_comm] using Real.add_one_le_exp x</span>
+<span id="L1669">1669   have hpow :</span>
+<span id="L1670">1670       (1 + x) ^ Fintype.card Feature &lt;= (Real.exp x) ^ Fintype.card Feature := by</span>
+<span id="L1671">1671     exact pow_le_pow_left₀ hone_nonneg hbase_le _</span>
+<span id="L1672">1672   have hmul :</span>
+<span id="L1673">1673       lambda ^ Fintype.card Feature * (1 + x) ^ Fintype.card Feature &lt;=</span>
+<span id="L1674">1674         lambda ^ Fintype.card Feature * (Real.exp x) ^ Fintype.card Feature := by</span>
+<span id="L1675">1675     exact mul_le_mul_of_nonneg_left hpow</span>
+<span id="L1676">1676       (pow_nonneg (le_of_lt hlambda) _)</span>
+<span id="L1677">1677   have havg :</span>
+<span id="L1678">1678       ((d * lambda + T * L2) / d) = lambda * (1 + x) := by</span>
+<span id="L1679">1679     dsimp [x]</span>
+<span id="L1680">1680     field_simp [hd_ne, hlambda_ne]</span>
+<span id="L1681">1681   calc</span>
+<span id="L1682">1682     (((Fintype.card Feature : Real) * lambda + T * L2) /</span>
+<span id="L1683">1683         (Fintype.card Feature : Real)) ^ Fintype.card Feature</span>
+<span id="L1684">1684         = (lambda * (1 + x)) ^ Fintype.card Feature := by</span>
+<span id="L1685">1685           simp [d] at havg</span>
+<span id="L1686">1686           rw [havg]</span>
+<span id="L1687">1687     _ = lambda ^ Fintype.card Feature * (1 + x) ^ Fintype.card Feature := by</span>
+<span id="L1688">1688           rw [mul_pow]</span>
+<span id="L1689">1689     _ &lt;= lambda ^ Fintype.card Feature * (Real.exp x) ^ Fintype.card Feature := hmul</span>
+<span id="L1690">1690     _ = lambda ^ Fintype.card Feature *</span>
+<span id="L1691">1691           Real.exp ((Fintype.card Feature : Real) * x) := by</span>
+<span id="L1692">1692           rw [Real.exp_nat_mul]</span>
+<span id="L1693">1693     _ = lambda ^ Fintype.card Feature *</span>
+<span id="L1694">1694           Real.exp ((Fintype.card Feature : Real) *</span>
+<span id="L1695">1695             ((T * L2) / ((Fintype.card Feature : Real) * lambda))) := by</span>
+<span id="L1696">1696           simp [d, x]</span>
+<span id="L1697">1697 </span>
+<span id="L1698">1698 /--</span>
+<span id="L1699">1699 Scalar AM-GM trace/radius simplification in the standard logarithmic</span>
+<span id="L1700">1700 determinant-growth form.</span>
+<span id="L1701">1701 </span>
+<span id="L1702">1702 This keeps the textbook `d * log (1 + T L2 / (d lambda))` exponent instead of</span>
+<span id="L1703">1703 linearizing it by `log (1 + x) &lt;= x`.</span>
+<span id="L1704">1704 -/</span>
+<span id="L1705">1705 theorem trace_average_pow_le_lambda_pow_mul_exp_log</span>
+<span id="L1706">1706     {Feature : Type u} [Fintype Feature] [Nonempty Feature]</span>
+<span id="L1707">1707     (lambda : Real) (hlambda : 0 &lt; lambda) (T : Nat) (L2 : Real)</span>
+<span id="L1708">1708     (hL2 : 0 &lt;= L2) :</span>
+<span id="L1709">1709     (((Fintype.card Feature : Real) * lambda + T * L2) /</span>
+<span id="L1710">1710         (Fintype.card Feature : Real)) ^ Fintype.card Feature &lt;=</span>
+<span id="L1711">1711       lambda ^ Fintype.card Feature *</span>
+<span id="L1712">1712         Real.exp ((Fintype.card Feature : Real) *</span>
+<span id="L1713">1713           Real.log (1 +</span>
+<span id="L1714">1714             (T * L2) / ((Fintype.card Feature : Real) * lambda))) := by</span>
+<span id="L1715">1715   let d : Real := Fintype.card Feature</span>
+<span id="L1716">1716   let x : Real := (T * L2) / (d * lambda)</span>
+<span id="L1717">1717   have hd_nat : 0 &lt; Fintype.card Feature := Fintype.card_pos</span>
+<span id="L1718">1718   have hd : 0 &lt; d := by</span>
+<span id="L1719">1719     dsimp [d]</span>
+<span id="L1720">1720     exact_mod_cast hd_nat</span>
+<span id="L1721">1721   have hd_ne : d ≠ 0 := ne_of_gt hd</span>
+<span id="L1722">1722   have hlambda_ne : lambda ≠ 0 := ne_of_gt hlambda</span>
+<span id="L1723">1723   have hden_pos : 0 &lt; d * lambda := mul_pos hd hlambda</span>
+<span id="L1724">1724   have hx_nonneg : 0 &lt;= x := by</span>
+<span id="L1725">1725     dsimp [x]</span>
+<span id="L1726">1726     exact div_nonneg (mul_nonneg (Nat.cast_nonneg T) hL2) (le_of_lt hden_pos)</span>
+<span id="L1727">1727   have hx_pos : 0 &lt; 1 + x := by</span>
+<span id="L1728">1728     linarith</span>
+<span id="L1729">1729   have havg :</span>
+<span id="L1730">1730       ((d * lambda + T * L2) / d) = lambda * (1 + x) := by</span>
+<span id="L1731">1731     dsimp [x]</span>
+<span id="L1732">1732     field_simp [hd_ne, hlambda_ne]</span>
+<span id="L1733">1733   calc</span>
+<span id="L1734">1734     (((Fintype.card Feature : Real) * lambda + T * L2) /</span>
+<span id="L1735">1735         (Fintype.card Feature : Real)) ^ Fintype.card Feature</span>
+<span id="L1736">1736         = (lambda * (1 + x)) ^ Fintype.card Feature := by</span>
+<span id="L1737">1737           simp [d] at havg</span>
+<span id="L1738">1738           rw [havg]</span>
+<span id="L1739">1739     _ = lambda ^ Fintype.card Feature * (1 + x) ^ Fintype.card Feature := by</span>
+<span id="L1740">1740           rw [mul_pow]</span>
+<span id="L1741">1741     _ = lambda ^ Fintype.card Feature *</span>
+<span id="L1742">1742           (Real.exp (Real.log (1 + x))) ^ Fintype.card Feature := by</span>
+<span id="L1743">1743           rw [Real.exp_log hx_pos]</span>
+<span id="L1744">1744     _ = lambda ^ Fintype.card Feature *</span>
+<span id="L1745">1745           Real.exp ((Fintype.card Feature : Real) *</span>
+<span id="L1746">1746             Real.log (1 + x)) := by</span>
+<span id="L1747">1747           rw [Real.exp_nat_mul]</span>
+<span id="L1748">1748     _ &lt;= lambda ^ Fintype.card Feature *</span>
+<span id="L1749">1749           Real.exp ((Fintype.card Feature : Real) *</span>
+<span id="L1750">1750             Real.log (1 +</span>
+<span id="L1751">1751               (T * L2) / ((Fintype.card Feature : Real) * lambda))) := by</span>
+<span id="L1752">1752           simp [d, x]</span>
+<span id="L1753">1753 </span>
+<span id="L1754">1754 /-- Dimension cancellation in the scalar OFUL trace-average exponent. -/</span>
+<span id="L1755">1755 theorem trace_average_exp_exponent_dim_cancel</span>
+<span id="L1756">1756     {Feature : Type u} [Fintype Feature] [Nonempty Feature]</span>
+<span id="L1757">1757     (lambda : Real) (hlambda : 0 &lt; lambda) (T : Nat) (L2 : Real) :</span>
+<span id="L1758">1758     (Fintype.card Feature : Real) *</span>
+<span id="L1759">1759         ((T * L2) / ((Fintype.card Feature : Real) * lambda)) =</span>
+<span id="L1760">1760       (T * L2) / lambda := by</span>
+<span id="L1761">1761   have hcard_ne : (Fintype.card Feature : Real) ≠ 0 := by</span>
+<span id="L1762">1762     exact_mod_cast (Fintype.card_ne_zero (α := Feature))</span>
+<span id="L1763">1763   have hlambda_ne : lambda ≠ 0 := ne_of_gt hlambda</span>
+<span id="L1764">1764   field_simp [hcard_ne, hlambda_ne]</span>
+<span id="L1765">1765 </span>
+<span id="L1766">1766 /--</span>
+<span id="L1767">1767 Scalar AM-GM trace/radius simplification with the dimension-cancelled</span>
+<span id="L1768">1768 exponent `T * L2 / lambda`.</span>
+<span id="L1769">1769 -/</span>
+<span id="L1770">1770 theorem trace_average_pow_le_lambda_pow_mul_exp</span>
+<span id="L1771">1771     {Feature : Type u} [Fintype Feature] [Nonempty Feature]</span>
+<span id="L1772">1772     (lambda : Real) (hlambda : 0 &lt; lambda) (T : Nat) (L2 : Real)</span>
+<span id="L1773">1773     (hL2 : 0 &lt;= L2) :</span>
+<span id="L1774">1774     (((Fintype.card Feature : Real) * lambda + T * L2) /</span>
+<span id="L1775">1775         (Fintype.card Feature : Real)) ^ Fintype.card Feature &lt;=</span>
+<span id="L1776">1776       lambda ^ Fintype.card Feature * Real.exp ((T * L2) / lambda) := by</span>
+<span id="L1777">1777   simpa [trace_average_exp_exponent_dim_cancel</span>
+<span id="L1778">1778     (Feature := Feature) lambda hlambda T L2] using</span>
+<span id="L1779">1779     trace_average_pow_le_lambda_pow_mul_exp_dim_scaled</span>
+<span id="L1780">1780       (Feature := Feature) lambda hlambda T L2 hL2</span>
+<span id="L1781">1781 </span>
+<span id="L1782">1782 /--</span>
+<span id="L1783">1783 If the trace-average determinant upper bound is simplified to the standard</span>
+<span id="L1784">1784 multiplicative `lambda^d * exp(B)` form, regularized Nat-prefix Grams inherit</span>
+<span id="L1785">1785 that multiplicative determinant upper bound.</span>
+<span id="L1786">1786 -/</span>
+<span id="L1787">1787 theorem det_regularizedPrefixFeatureGram_le_mul_exp_of_trace_average_bound</span>
+<span id="L1788">1788     {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L1789">1789     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1790">1790     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (L2 B : Real)</span>
+<span id="L1791">1791     (hbound : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L1792">1792       dotProduct (history t) (history t) &lt;= L2)</span>
+<span id="L1793">1793     (haverage_to_exp :</span>
+<span id="L1794">1794       (((Fintype.card Feature : Real) * lambda + T * L2) /</span>
+<span id="L1795">1795           (Fintype.card Feature : Real)) ^ Fintype.card Feature &lt;=</span>
+<span id="L1796">1796         lambda ^ Fintype.card Feature * Real.exp B) :</span>
+<span id="L1797">1797     (regularizedPrefixFeatureGram lambda history T).det &lt;=</span>
+<span id="L1798">1798       lambda ^ Fintype.card Feature * Real.exp B := by</span>
+<span id="L1799">1799   exact (det_regularizedPrefixFeatureGram_le_pow_trace_bound_average_of_pos_lambda</span>
+<span id="L1800">1800     lambda hlambda history T L2 hbound).trans haverage_to_exp</span>
+<span id="L1801">1801 </span>
+<span id="L1802">1802 /--</span>
+<span id="L1803">1803 Clipped prefix inverse-quadratic sum bound from the AM-GM determinant trace</span>
+<span id="L1804">1804 route plus a separate scalar simplification to `lambda^d * exp(B)`.</span>
+<span id="L1805">1805 -/</span>
+<span id="L1806">1806 theorem sum_range_min_prefix_update_le_two_of_trace_average_bound</span>
+<span id="L1807">1807     {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L1808">1808     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1809">1809     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (L2 B : Real)</span>
+<span id="L1810">1810     (hbound : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L1811">1811       dotProduct (history t) (history t) &lt;= L2)</span>
+<span id="L1812">1812     (haverage_to_exp :</span>
+<span id="L1813">1813       (((Fintype.card Feature : Real) * lambda + T * L2) /</span>
+<span id="L1814">1814           (Fintype.card Feature : Real)) ^ Fintype.card Feature &lt;=</span>
+<span id="L1815">1815         lambda ^ Fintype.card Feature * Real.exp B) :</span>
+<span id="L1816">1816     (Finset.range T).sum</span>
+<span id="L1817">1817         (fun t =&gt; min 1 (dotProduct (history t)</span>
+<span id="L1818">1818           (Matrix.mulVec</span>
+<span id="L1819">1819             ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1820">1820             (history t)))) &lt;=</span>
+<span id="L1821">1821       2 * B := by</span>
+<span id="L1822">1822   exact sum_range_min_prefix_update_le_two_det_mul_exp_upper</span>
+<span id="L1823">1823     lambda hlambda history T B</span>
+<span id="L1824">1824     (det_regularizedPrefixFeatureGram_le_mul_exp_of_trace_average_bound</span>
+<span id="L1825">1825       lambda hlambda history T L2 B hbound haverage_to_exp)</span>
+<span id="L1826">1826 </span>
+<span id="L1827">1827 /--</span>
+<span id="L1828">1828 Unclipped prefix inverse-quadratic sum bound from a scalar trace-average</span>
+<span id="L1829">1829 certificate, under a small-update contract.</span>
+<span id="L1830">1830 </span>
+<span id="L1831">1831 When each update scalar is at most one, the raw update sum agrees with the</span>
+<span id="L1832">1832 clipped sum used by the standard elliptical-potential route.</span>
+<span id="L1833">1833 -/</span>
+<span id="L1834">1834 theorem sum_range_prefix_update_le_two_of_trace_average_bound_of_update_le_one</span>
+<span id="L1835">1835     {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L1836">1836     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1837">1837     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (L2 B : Real)</span>
+<span id="L1838">1838     (hbound : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L1839">1839       dotProduct (history t) (history t) &lt;= L2)</span>
+<span id="L1840">1840     (haverage_to_exp :</span>
+<span id="L1841">1841       (((Fintype.card Feature : Real) * lambda + T * L2) /</span>
+<span id="L1842">1842           (Fintype.card Feature : Real)) ^ Fintype.card Feature &lt;=</span>
+<span id="L1843">1843         lambda ^ Fintype.card Feature * Real.exp B)</span>
+<span id="L1844">1844     (hupdate_le_one : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L1845">1845       dotProduct (history t)</span>
+<span id="L1846">1846         (Matrix.mulVec</span>
+<span id="L1847">1847           ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1848">1848           (history t)) &lt;= 1) :</span>
+<span id="L1849">1849     (Finset.range T).sum</span>
+<span id="L1850">1850         (fun t =&gt; dotProduct (history t)</span>
+<span id="L1851">1851           (Matrix.mulVec</span>
+<span id="L1852">1852             ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1853">1853             (history t))) &lt;=</span>
+<span id="L1854">1854       2 * B := by</span>
+<span id="L1855">1855   let u : Nat -&gt; Real := fun t =&gt;</span>
+<span id="L1856">1856     dotProduct (history t)</span>
+<span id="L1857">1857       (Matrix.mulVec</span>
+<span id="L1858">1858         ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1859">1859         (history t))</span>
+<span id="L1860">1860   have hsum_eq :</span>
+<span id="L1861">1861       (Finset.range T).sum (fun t =&gt; u t) =</span>
+<span id="L1862">1862         (Finset.range T).sum (fun t =&gt; min 1 (u t)) := by</span>
+<span id="L1863">1863     apply Finset.sum_congr rfl</span>
+<span id="L1864">1864     intro t ht</span>
+<span id="L1865">1865     have htT : t &lt; T := Finset.mem_range.mp ht</span>
+<span id="L1866">1866     have hu_le_one : u t &lt;= 1 := hupdate_le_one t htT</span>
+<span id="L1867">1867     have hmin : min 1 (u t) = u t := min_eq_right hu_le_one</span>
+<span id="L1868">1868     exact hmin.symm</span>
+<span id="L1869">1869   rw [hsum_eq]</span>
+<span id="L1870">1870   exact sum_range_min_prefix_update_le_two_of_trace_average_bound</span>
+<span id="L1871">1871     lambda hlambda history T L2 B hbound haverage_to_exp</span>
+<span id="L1872">1872 </span>
+<span id="L1873">1873 /--</span>
+<span id="L1874">1874 Concrete determinant upper bound obtained by combining the AM-GM trace/radius</span>
+<span id="L1875">1875 route with the scalar exponential simplification.</span>
+<span id="L1876">1876 -/</span>
+<span id="L1877">1877 theorem det_regularizedPrefixFeatureGram_le_mul_exp_trace_average_dim_scaled</span>
+<span id="L1878">1878     {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L1879">1879     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1880">1880     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (L2 : Real)</span>
+<span id="L1881">1881     (hL2 : 0 &lt;= L2)</span>
+<span id="L1882">1882     (hbound : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L1883">1883       dotProduct (history t) (history t) &lt;= L2) :</span>
+<span id="L1884">1884     (regularizedPrefixFeatureGram lambda history T).det &lt;=</span>
+<span id="L1885">1885       lambda ^ Fintype.card Feature *</span>
+<span id="L1886">1886         Real.exp ((Fintype.card Feature : Real) *</span>
+<span id="L1887">1887           ((T * L2) / ((Fintype.card Feature : Real) * lambda))) := by</span>
+<span id="L1888">1888   exact det_regularizedPrefixFeatureGram_le_mul_exp_of_trace_average_bound</span>
+<span id="L1889">1889     lambda hlambda history T L2</span>
+<span id="L1890">1890     ((Fintype.card Feature : Real) *</span>
+<span id="L1891">1891       ((T * L2) / ((Fintype.card Feature : Real) * lambda)))</span>
+<span id="L1892">1892     hbound</span>
+<span id="L1893">1893     (trace_average_pow_le_lambda_pow_mul_exp_dim_scaled</span>
+<span id="L1894">1894       (Feature := Feature) lambda hlambda T L2 hL2)</span>
+<span id="L1895">1895 </span>
+<span id="L1896">1896 /--</span>
+<span id="L1897">1897 Concrete clipped elliptical-potential sum bound obtained from the trace/radius</span>
+<span id="L1898">1898 route and scalar exponential simplification.</span>
+<span id="L1899">1899 -/</span>
+<span id="L1900">1900 theorem sum_range_min_prefix_update_le_two_trace_average_dim_scaled</span>
+<span id="L1901">1901     {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L1902">1902     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1903">1903     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (L2 : Real)</span>
+<span id="L1904">1904     (hL2 : 0 &lt;= L2)</span>
+<span id="L1905">1905     (hbound : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L1906">1906       dotProduct (history t) (history t) &lt;= L2) :</span>
+<span id="L1907">1907     (Finset.range T).sum</span>
+<span id="L1908">1908         (fun t =&gt; min 1 (dotProduct (history t)</span>
+<span id="L1909">1909           (Matrix.mulVec</span>
+<span id="L1910">1910             ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1911">1911             (history t)))) &lt;=</span>
+<span id="L1912">1912       2 * ((Fintype.card Feature : Real) *</span>
+<span id="L1913">1913         ((T * L2) / ((Fintype.card Feature : Real) * lambda))) := by</span>
+<span id="L1914">1914   exact sum_range_min_prefix_update_le_two_of_trace_average_bound</span>
+<span id="L1915">1915     lambda hlambda history T L2</span>
+<span id="L1916">1916     ((Fintype.card Feature : Real) *</span>
+<span id="L1917">1917       ((T * L2) / ((Fintype.card Feature : Real) * lambda)))</span>
+<span id="L1918">1918     hbound</span>
+<span id="L1919">1919     (trace_average_pow_le_lambda_pow_mul_exp_dim_scaled</span>
+<span id="L1920">1920       (Feature := Feature) lambda hlambda T L2 hL2)</span>
+<span id="L1921">1921 </span>
+<span id="L1922">1922 /--</span>
+<span id="L1923">1923 Concrete raw small-update elliptical-potential sum bound with the</span>
+<span id="L1924">1924 dimension-scaled exponent `d * (T * L2 / (d * lambda))`.</span>
+<span id="L1925">1925 -/</span>
+<span id="L1926">1926 theorem sum_range_prefix_update_le_two_trace_average_dim_scaled_of_update_le_one</span>
+<span id="L1927">1927     {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L1928">1928     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1929">1929     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (L2 : Real)</span>
+<span id="L1930">1930     (hL2 : 0 &lt;= L2)</span>
+<span id="L1931">1931     (hbound : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L1932">1932       dotProduct (history t) (history t) &lt;= L2)</span>
+<span id="L1933">1933     (hupdate_le_one : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L1934">1934       dotProduct (history t)</span>
+<span id="L1935">1935         (Matrix.mulVec</span>
+<span id="L1936">1936           ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1937">1937           (history t)) &lt;= 1) :</span>
+<span id="L1938">1938     (Finset.range T).sum</span>
+<span id="L1939">1939         (fun t =&gt; dotProduct (history t)</span>
+<span id="L1940">1940           (Matrix.mulVec</span>
+<span id="L1941">1941             ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L1942">1942             (history t))) &lt;=</span>
+<span id="L1943">1943       2 * ((Fintype.card Feature : Real) *</span>
+<span id="L1944">1944         ((T * L2) / ((Fintype.card Feature : Real) * lambda))) := by</span>
+<span id="L1945">1945   exact sum_range_prefix_update_le_two_of_trace_average_bound_of_update_le_one</span>
+<span id="L1946">1946     lambda hlambda history T L2</span>
+<span id="L1947">1947     ((Fintype.card Feature : Real) *</span>
+<span id="L1948">1948       ((T * L2) / ((Fintype.card Feature : Real) * lambda)))</span>
+<span id="L1949">1949     hbound</span>
+<span id="L1950">1950     (trace_average_pow_le_lambda_pow_mul_exp_dim_scaled</span>
+<span id="L1951">1951       (Feature := Feature) lambda hlambda T L2 hL2)</span>
+<span id="L1952">1952     hupdate_le_one</span>
+<span id="L1953">1953 </span>
+<span id="L1954">1954 /--</span>
+<span id="L1955">1955 Concrete determinant upper bound from trace/radius with the</span>
+<span id="L1956">1956 dimension-cancelled exponent `T * L2 / lambda`.</span>
+<span id="L1957">1957 -/</span>
+<span id="L1958">1958 theorem det_regularizedPrefixFeatureGram_le_mul_exp_trace_average</span>
+<span id="L1959">1959     {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L1960">1960     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1961">1961     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (L2 : Real)</span>
+<span id="L1962">1962     (hL2 : 0 &lt;= L2)</span>
+<span id="L1963">1963     (hbound : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L1964">1964       dotProduct (history t) (history t) &lt;= L2) :</span>
+<span id="L1965">1965     (regularizedPrefixFeatureGram lambda history T).det &lt;=</span>
+<span id="L1966">1966       lambda ^ Fintype.card Feature * Real.exp ((T * L2) / lambda) := by</span>
+<span id="L1967">1967   exact det_regularizedPrefixFeatureGram_le_mul_exp_of_trace_average_bound</span>
+<span id="L1968">1968     lambda hlambda history T L2 ((T * L2) / lambda) hbound</span>
+<span id="L1969">1969     (trace_average_pow_le_lambda_pow_mul_exp</span>
+<span id="L1970">1970       (Feature := Feature) lambda hlambda T L2 hL2)</span>
+<span id="L1971">1971 </span>
+<span id="L1972">1972 /--</span>
+<span id="L1973">1973 Concrete determinant upper bound from trace/radius with the standard</span>
+<span id="L1974">1974 logarithmic exponent `d * log (1 + T L2 / (d lambda))`.</span>
+<span id="L1975">1975 -/</span>
+<span id="L1976">1976 theorem det_regularizedPrefixFeatureGram_le_mul_exp_trace_average_log</span>
+<span id="L1977">1977     {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L1978">1978     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1979">1979     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (L2 : Real)</span>
+<span id="L1980">1980     (hL2 : 0 &lt;= L2)</span>
+<span id="L1981">1981     (hbound : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L1982">1982       dotProduct (history t) (history t) &lt;= L2) :</span>
+<span id="L1983">1983     (regularizedPrefixFeatureGram lambda history T).det &lt;=</span>
+<span id="L1984">1984       lambda ^ Fintype.card Feature *</span>
+<span id="L1985">1985         Real.exp ((Fintype.card Feature : Real) *</span>
+<span id="L1986">1986           Real.log (1 +</span>
+<span id="L1987">1987             (T * L2) / ((Fintype.card Feature : Real) * lambda))) := by</span>
+<span id="L1988">1988   exact det_regularizedPrefixFeatureGram_le_mul_exp_of_trace_average_bound</span>
+<span id="L1989">1989     lambda hlambda history T L2</span>
+<span id="L1990">1990     ((Fintype.card Feature : Real) *</span>
+<span id="L1991">1991       Real.log (1 +</span>
+<span id="L1992">1992         (T * L2) / ((Fintype.card Feature : Real) * lambda)))</span>
+<span id="L1993">1993     hbound</span>
+<span id="L1994">1994     (trace_average_pow_le_lambda_pow_mul_exp_log</span>
+<span id="L1995">1995       (Feature := Feature) lambda hlambda T L2 hL2)</span>
+<span id="L1996">1996 </span>
+<span id="L1997">1997 /--</span>
+<span id="L1998">1998 Concrete clipped elliptical-potential sum bound with the</span>
+<span id="L1999">1999 dimension-cancelled exponent `T * L2 / lambda`.</span>
+<span id="L2000">2000 -/</span>
+<span id="L2001">2001 theorem sum_range_min_prefix_update_le_two_trace_average</span>
+<span id="L2002">2002     {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L2003">2003     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L2004">2004     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (L2 : Real)</span>
+<span id="L2005">2005     (hL2 : 0 &lt;= L2)</span>
+<span id="L2006">2006     (hbound : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L2007">2007       dotProduct (history t) (history t) &lt;= L2) :</span>
+<span id="L2008">2008     (Finset.range T).sum</span>
+<span id="L2009">2009         (fun t =&gt; min 1 (dotProduct (history t)</span>
+<span id="L2010">2010           (Matrix.mulVec</span>
+<span id="L2011">2011             ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L2012">2012             (history t)))) &lt;=</span>
+<span id="L2013">2013       2 * ((T * L2) / lambda) := by</span>
+<span id="L2014">2014   exact sum_range_min_prefix_update_le_two_of_trace_average_bound</span>
+<span id="L2015">2015     lambda hlambda history T L2 ((T * L2) / lambda) hbound</span>
+<span id="L2016">2016     (trace_average_pow_le_lambda_pow_mul_exp</span>
+<span id="L2017">2017       (Feature := Feature) lambda hlambda T L2 hL2)</span>
+<span id="L2018">2018 </span>
+<span id="L2019">2019 /--</span>
+<span id="L2020">2020 Concrete raw small-update elliptical-potential sum bound with the</span>
+<span id="L2021">2021 dimension-cancelled exponent `T * L2 / lambda`.</span>
+<span id="L2022">2022 -/</span>
+<span id="L2023">2023 theorem sum_range_prefix_update_le_two_trace_average_of_update_le_one</span>
+<span id="L2024">2024     {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L2025">2025     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L2026">2026     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (L2 : Real)</span>
+<span id="L2027">2027     (hL2 : 0 &lt;= L2)</span>
+<span id="L2028">2028     (hbound : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L2029">2029       dotProduct (history t) (history t) &lt;= L2)</span>
+<span id="L2030">2030     (hupdate_le_one : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L2031">2031       dotProduct (history t)</span>
+<span id="L2032">2032         (Matrix.mulVec</span>
+<span id="L2033">2033           ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L2034">2034           (history t)) &lt;= 1) :</span>
+<span id="L2035">2035     (Finset.range T).sum</span>
+<span id="L2036">2036         (fun t =&gt; dotProduct (history t)</span>
+<span id="L2037">2037           (Matrix.mulVec</span>
+<span id="L2038">2038             ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L2039">2039             (history t))) &lt;=</span>
+<span id="L2040">2040       2 * ((T * L2) / lambda) := by</span>
+<span id="L2041">2041   exact sum_range_prefix_update_le_two_of_trace_average_bound_of_update_le_one</span>
+<span id="L2042">2042     lambda hlambda history T L2 ((T * L2) / lambda) hbound</span>
+<span id="L2043">2043     (trace_average_pow_le_lambda_pow_mul_exp</span>
+<span id="L2044">2044       (Feature := Feature) lambda hlambda T L2 hL2)</span>
+<span id="L2045">2045     hupdate_le_one</span>
+<span id="L2046">2046 </span>
+<span id="L2047">2047 /--</span>
+<span id="L2048">2048 Concrete clipped elliptical-potential sum bound with the standard logarithmic</span>
+<span id="L2049">2049 trace/radius endpoint.</span>
+<span id="L2050">2050 </span>
+<span id="L2051">2051 This is the deterministic OFUL/LinUCB textbook shape before self-normalized</span>
+<span id="L2052">2052 concentration and confidence-ellipsoid arguments are introduced.</span>
+<span id="L2053">2053 -/</span>
+<span id="L2054">2054 theorem sum_range_min_prefix_update_le_two_trace_average_log</span>
+<span id="L2055">2055     {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L2056">2056     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L2057">2057     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (L2 : Real)</span>
+<span id="L2058">2058     (hL2 : 0 &lt;= L2)</span>
+<span id="L2059">2059     (hbound : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L2060">2060       dotProduct (history t) (history t) &lt;= L2) :</span>
+<span id="L2061">2061     (Finset.range T).sum</span>
+<span id="L2062">2062         (fun t =&gt; min 1 (dotProduct (history t)</span>
+<span id="L2063">2063           (Matrix.mulVec</span>
+<span id="L2064">2064             ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L2065">2065             (history t)))) &lt;=</span>
+<span id="L2066">2066       2 * ((Fintype.card Feature : Real) *</span>
+<span id="L2067">2067         Real.log (1 +</span>
+<span id="L2068">2068           (T * L2) / ((Fintype.card Feature : Real) * lambda))) := by</span>
+<span id="L2069">2069   exact sum_range_min_prefix_update_le_two_of_trace_average_bound</span>
+<span id="L2070">2070     lambda hlambda history T L2</span>
+<span id="L2071">2071     ((Fintype.card Feature : Real) *</span>
+<span id="L2072">2072       Real.log (1 +</span>
+<span id="L2073">2073         (T * L2) / ((Fintype.card Feature : Real) * lambda)))</span>
+<span id="L2074">2074     hbound</span>
+<span id="L2075">2075     (trace_average_pow_le_lambda_pow_mul_exp_log</span>
+<span id="L2076">2076       (Feature := Feature) lambda hlambda T L2 hL2)</span>
+<span id="L2077">2077 </span>
+<span id="L2078">2078 /--</span>
+<span id="L2079">2079 Unclipped logarithmic elliptical-potential bound for small update scalars.</span>
+<span id="L2080">2080 </span>
+<span id="L2081">2081 If every inverse-quadratic update scalar is already at most one, the clipped</span>
+<span id="L2082">2082 sum bound applies to the raw update sum.</span>
+<span id="L2083">2083 -/</span>
+<span id="L2084">2084 theorem sum_range_prefix_update_le_two_trace_average_log_of_update_le_one</span>
+<span id="L2085">2085     {Feature : Type u} [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L2086">2086     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L2087">2087     (history : Nat -&gt; Feature -&gt; Real) (T : Nat) (L2 : Real)</span>
+<span id="L2088">2088     (hL2 : 0 &lt;= L2)</span>
+<span id="L2089">2089     (hbound : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L2090">2090       dotProduct (history t) (history t) &lt;= L2)</span>
+<span id="L2091">2091     (hupdate_le_one : forall t : Nat, t &lt; T -&gt;</span>
+<span id="L2092">2092       dotProduct (history t)</span>
+<span id="L2093">2093         (Matrix.mulVec</span>
+<span id="L2094">2094           ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L2095">2095           (history t)) &lt;= 1) :</span>
+<span id="L2096">2096     (Finset.range T).sum</span>
+<span id="L2097">2097         (fun t =&gt; dotProduct (history t)</span>
+<span id="L2098">2098           (Matrix.mulVec</span>
+<span id="L2099">2099             ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L2100">2100             (history t))) &lt;=</span>
+<span id="L2101">2101       2 * ((Fintype.card Feature : Real) *</span>
+<span id="L2102">2102         Real.log (1 +</span>
+<span id="L2103">2103           (T * L2) / ((Fintype.card Feature : Real) * lambda))) := by</span>
+<span id="L2104">2104   let u : Nat -&gt; Real := fun t =&gt;</span>
+<span id="L2105">2105     dotProduct (history t)</span>
+<span id="L2106">2106       (Matrix.mulVec</span>
+<span id="L2107">2107         ((regularizedPrefixFeatureGram lambda history t)⁻¹)</span>
+<span id="L2108">2108         (history t))</span>
+<span id="L2109">2109   have hsum_eq :</span>
+<span id="L2110">2110       (Finset.range T).sum (fun t =&gt; u t) =</span>
+<span id="L2111">2111         (Finset.range T).sum (fun t =&gt; min 1 (u t)) := by</span>
+<span id="L2112">2112     apply Finset.sum_congr rfl</span>
+<span id="L2113">2113     intro t ht</span>
+<span id="L2114">2114     have htT : t &lt; T := Finset.mem_range.mp ht</span>
+<span id="L2115">2115     have hu_le_one : u t &lt;= 1 := hupdate_le_one t htT</span>
+<span id="L2116">2116     have hmin : min 1 (u t) = u t := min_eq_right hu_le_one</span>
+<span id="L2117">2117     exact hmin.symm</span>
+<span id="L2118">2118   rw [hsum_eq]</span>
+<span id="L2119">2119   exact sum_range_min_prefix_update_le_two_trace_average_log</span>
+<span id="L2120">2120     lambda hlambda history T L2 hL2 hbound</span>
+<span id="L2121">2121 </span>
+<span id="L2122">2122 end OFUL</span>
+<span id="L2123">2123 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeInverseSqrtNormalizedRate.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeInverseSqrtNormalizedRate.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeInverseSqrtNormalizedRate.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeInverseSqrtNormalizedRate.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeInverseSqrtExplicitRate</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Normalized adaptive cumulative inverse-square-root rate</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module specializes the explicit two-scale calibration to rewards bounded</span>
+<span id="L7">7 in absolute value by one.  It fixes the zero-count budget to one, chooses the</span>
+<span id="L8">8 inverse-square-root scale from the logarithmic factor and visit floor, and</span>
+<span id="L9">9 replaces both scalar calibration premises by one episode threshold.</span>
+<span id="L10">10 -/</span>
+<span id="L11">11 </span>
+<span id="L12">12 open MeasureTheory</span>
+<span id="L13">13 open scoped ENNReal ProbabilityTheory</span>
+<span id="L14">14 </span>
+<span id="L15">15 universe u v</span>
+<span id="L16">16 </span>
+<span id="L17">17 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L18">18 </span>
+<span id="L19">19 variable {State : Type u} {Action : Type v}</span>
+<span id="L20">20     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L21">21     [Fintype State] [Fintype Action]</span>
+<span id="L22">22     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L23">23     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L24">24     [Nonempty State] [Nonempty Action]</span>
+<span id="L25">25 </span>
+<span id="L26">26 namespace AdaptiveEpisodeBatchSource</span>
+<span id="L27">27 </span>
+<span id="L28">28 /-- Canonical statistical scale for rewards and zero-count budget bounded by one. -/</span>
+<span id="L29">29 noncomputable def normalizedCumulativeInverseSqrtScale</span>
+<span id="L30">30     (mdp : MDP State Action) (rounds : Nat)</span>
+<span id="L31">31     (delta visitFloor : Real) : Real :=</span>
+<span id="L32">32   4 * (Fintype.card State : Real) * (mdp.horizon : Real) *</span>
+<span id="L33">33       Real.sqrt (cumulativeInverseSqrtLogFactor mdp rounds delta) /</span>
+<span id="L34">34     Real.sqrt visitFloor</span>
+<span id="L35">35 </span>
+<span id="L36">36 /-- One sufficient episode threshold for the normalized scale choice. -/</span>
+<span id="L37">37 noncomputable def normalizedCumulativeInverseSqrtEpisodeThreshold</span>
+<span id="L38">38     (mdp : MDP State Action) (rounds : Nat)</span>
+<span id="L39">39     (delta visitFloor : Real) : Real :=</span>
+<span id="L40">40   32 * (Fintype.card State : Real) ^ 2 * (mdp.horizon : Real) ^ 2 *</span>
+<span id="L41">41       cumulativeInverseSqrtLogFactor mdp rounds delta /</span>
+<span id="L42">42     visitFloor ^ 2</span>
+<span id="L43">43 </span>
+<span id="L44">44 /-- The normalized capped count radius used by the concrete source. -/</span>
+<span id="L45">45 noncomputable def normalizedCumulativeInverseSqrtCountRadius</span>
+<span id="L46">46     (mdp : MDP State Action) (rounds : Nat)</span>
+<span id="L47">47     (delta visitFloor : Real) : TransitionCountRadius :=</span>
+<span id="L48">48   TransitionCountRadius.cappedInverseSqrt 1</span>
+<span id="L49">49     (normalizedCumulativeInverseSqrtScale mdp rounds delta visitFloor)</span>
+<span id="L50">50     (by norm_num) (by</span>
+<span id="L51">51       unfold normalizedCumulativeInverseSqrtScale</span>
+<span id="L52">52       positivity)</span>
+<span id="L53">53 </span>
+<span id="L54">54 /-- Closed recommendation-regret bound after fixing budget and scale. -/</span>
+<span id="L55">55 noncomputable def normalizedCumulativeInverseSqrtRecommendedExpectedRegretBound</span>
+<span id="L56">56     (mdp : MDP State Action) (episodes rounds : Nat)</span>
+<span id="L57">57     (delta visitFloor : Real) : Real :=</span>
+<span id="L58">58   cumulativeInverseSqrtRecommendedExpectedRegretBound mdp episodes rounds</span>
+<span id="L59">59     visitFloor 1</span>
+<span id="L60">60     (normalizedCumulativeInverseSqrtScale mdp rounds delta visitFloor)</span>
+<span id="L61">61 </span>
+<span id="L62">62 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L63">63     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L64">64     [Nonempty Action] in</span>
+<span id="L65">65 /-- The normalized scale is nonnegative without additional scalar premises. -/</span>
+<span id="L66">66 theorem normalizedCumulativeInverseSqrtScale_nonneg</span>
+<span id="L67">67     (mdp : MDP State Action) (rounds : Nat)</span>
+<span id="L68">68     (delta visitFloor : Real) :</span>
+<span id="L69">69     0 &lt;= normalizedCumulativeInverseSqrtScale mdp rounds delta visitFloor := by</span>
+<span id="L70">70   unfold normalizedCumulativeInverseSqrtScale</span>
+<span id="L71">71   positivity</span>
+<span id="L72">72 </span>
+<span id="L73">73 /-- The normalized scale exactly covers the explicit two-scale coefficient. -/</span>
+<span id="L74">74 theorem normalizedCumulativeInverseSqrtScale_cover</span>
+<span id="L75">75     (mdp : MDP State Action) {rounds : Nat}</span>
+<span id="L76">76     (hhorizon : 0 &lt; mdp.horizon) (hrounds : 0 &lt; rounds)</span>
+<span id="L77">77     {delta visitFloor : Real} (hdelta : 0 &lt; delta)</span>
+<span id="L78">78     (hdelta_le_one : delta &lt;= 1) (hvisitFloor : 0 &lt; visitFloor) :</span>
+<span id="L79">79     (cumulativeInverseSqrtCoverCoefficient mdp 1 1) ^ 2 *</span>
+<span id="L80">80         cumulativeInverseSqrtLogFactor mdp rounds delta &lt;=</span>
+<span id="L81">81       (normalizedCumulativeInverseSqrtScale mdp rounds delta visitFloor) ^ 2 *</span>
+<span id="L82">82         visitFloor := by</span>
+<span id="L83">83   have hlog : 0 &lt;= cumulativeInverseSqrtLogFactor mdp rounds delta :=</span>
+<span id="L84">84     cumulativeInverseSqrtLogFactor_nonneg mdp hhorizon hrounds</span>
+<span id="L85">85       hdelta hdelta_le_one</span>
+<span id="L86">86   have hsqrtVisit : 0 &lt; Real.sqrt visitFloor := Real.sqrt_pos.2 hvisitFloor</span>
+<span id="L87">87   rw [normalizedCumulativeInverseSqrtScale]</span>
+<span id="L88">88   apply le_of_eq</span>
+<span id="L89">89   calc</span>
+<span id="L90">90     (cumulativeInverseSqrtCoverCoefficient mdp 1 1) ^ 2 *</span>
+<span id="L91">91           cumulativeInverseSqrtLogFactor mdp rounds delta =</span>
+<span id="L92">92         (4 * (Fintype.card State : Real) * (mdp.horizon : Real)) ^ 2 *</span>
+<span id="L93">93           cumulativeInverseSqrtLogFactor mdp rounds delta := by</span>
+<span id="L94">94             unfold cumulativeInverseSqrtCoverCoefficient</span>
+<span id="L95">95             ring</span>
+<span id="L96">96     _ = (4 * (Fintype.card State : Real) * (mdp.horizon : Real)) ^ 2 *</span>
+<span id="L97">97           (Real.sqrt (cumulativeInverseSqrtLogFactor mdp rounds delta)) ^ 2 := by</span>
+<span id="L98">98             rw [Real.sq_sqrt hlog]</span>
+<span id="L99">99     _ = (4 * (Fintype.card State : Real) * (mdp.horizon : Real) *</span>
+<span id="L100">100             Real.sqrt (cumulativeInverseSqrtLogFactor mdp rounds delta) /</span>
+<span id="L101">101               Real.sqrt visitFloor) ^ 2 * visitFloor := by</span>
+<span id="L102">102             rw [div_pow, Real.sq_sqrt hvisitFloor.le]</span>
+<span id="L103">103             field_simp</span>
+<span id="L104">104 </span>
+<span id="L105">105 /-- The old max threshold is bounded by the single normalized threshold. -/</span>
+<span id="L106">106 theorem cumulativeInverseSqrtCalibrationEpisodeThreshold_le_normalized</span>
+<span id="L107">107     (mdp : MDP State Action) {rounds : Nat}</span>
+<span id="L108">108     (hhorizon : 0 &lt; mdp.horizon) (hrounds : 0 &lt; rounds)</span>
+<span id="L109">109     {delta visitFloor : Real} (hdelta : 0 &lt; delta)</span>
+<span id="L110">110     (hdelta_le_one : delta &lt;= 1) (hvisitFloor : 0 &lt; visitFloor) :</span>
+<span id="L111">111     cumulativeInverseSqrtCalibrationEpisodeThreshold mdp rounds delta</span>
+<span id="L112">112         visitFloor 1 1 &lt;=</span>
+<span id="L113">113       normalizedCumulativeInverseSqrtEpisodeThreshold mdp rounds delta</span>
+<span id="L114">114         visitFloor := by</span>
+<span id="L115">115   have hlog : 0 &lt;= cumulativeInverseSqrtLogFactor mdp rounds delta :=</span>
+<span id="L116">116     cumulativeInverseSqrtLogFactor_nonneg mdp hhorizon hrounds</span>
+<span id="L117">117       hdelta hdelta_le_one</span>
+<span id="L118">118   have hcardNat : 0 &lt; Fintype.card State := Fintype.card_pos</span>
+<span id="L119">119   have hcard : (1 : Real) &lt;= Fintype.card State := by exact_mod_cast hcardNat</span>
+<span id="L120">120   have hhorizonReal : (1 : Real) &lt;= mdp.horizon := by exact_mod_cast hhorizon</span>
+<span id="L121">121   have hcardSq : (1 : Real) &lt;= (Fintype.card State : Real) ^ 2 := by</span>
+<span id="L122">122     nlinarith</span>
+<span id="L123">123   have hhorizonSq : (1 : Real) &lt;= (mdp.horizon : Real) ^ 2 := by</span>
+<span id="L124">124     nlinarith</span>
+<span id="L125">125   have hproduct : (1 : Real) &lt;=</span>
+<span id="L126">126       (Fintype.card State : Real) ^ 2 * (mdp.horizon : Real) ^ 2 :=</span>
+<span id="L127">127     by simpa using</span>
+<span id="L128">128       (mul_le_mul hcardSq hhorizonSq (by positivity) (by positivity))</span>
+<span id="L129">129   have hcoefficient : (2 : Real) &lt;=</span>
+<span id="L130">130       32 * (Fintype.card State : Real) ^ 2 * (mdp.horizon : Real) ^ 2 := by</span>
+<span id="L131">131     nlinarith</span>
+<span id="L132">132   have hvisitFloorSq : 0 &lt; visitFloor ^ 2 := sq_pos_of_pos hvisitFloor</span>
+<span id="L133">133   unfold cumulativeInverseSqrtCalibrationEpisodeThreshold</span>
+<span id="L134">134   apply max_le</span>
+<span id="L135">135   · unfold normalizedCumulativeInverseSqrtEpisodeThreshold</span>
+<span id="L136">136     apply (div_le_div_iff_of_pos_right hvisitFloorSq).2</span>
+<span id="L137">137     exact mul_le_mul_of_nonneg_right hcoefficient hlog</span>
+<span id="L138">138   · apply le_of_eq</span>
+<span id="L139">139     unfold normalizedCumulativeInverseSqrtEpisodeThreshold</span>
+<span id="L140">140     unfold cumulativeInverseSqrtCoverCoefficient</span>
+<span id="L141">141     norm_num</span>
+<span id="L142">142     ring</span>
+<span id="L143">143 </span>
+<span id="L144">144 /-- A strict normalized threshold implies the exact parent threshold. -/</span>
+<span id="L145">145 theorem cumulativeInverseSqrtCalibrationEpisodeThreshold_lt_of_normalizedThreshold</span>
+<span id="L146">146     (mdp : MDP State Action) {episodes rounds : Nat}</span>
+<span id="L147">147     (hhorizon : 0 &lt; mdp.horizon) (hrounds : 0 &lt; rounds)</span>
+<span id="L148">148     {delta visitFloor : Real} (hdelta : 0 &lt; delta)</span>
+<span id="L149">149     (hdelta_le_one : delta &lt;= 1) (hvisitFloor : 0 &lt; visitFloor)</span>
+<span id="L150">150     (hthreshold :</span>
+<span id="L151">151       normalizedCumulativeInverseSqrtEpisodeThreshold mdp rounds delta</span>
+<span id="L152">152           visitFloor &lt; (episodes : Real)) :</span>
+<span id="L153">153     cumulativeInverseSqrtCalibrationEpisodeThreshold mdp rounds delta</span>
+<span id="L154">154         visitFloor 1 1 &lt; (episodes : Real) :=</span>
+<span id="L155">155   lt_of_le_of_lt</span>
+<span id="L156">156     (cumulativeInverseSqrtCalibrationEpisodeThreshold_le_normalized mdp</span>
+<span id="L157">157       hhorizon hrounds hdelta hdelta_le_one hvisitFloor)</span>
+<span id="L158">158     hthreshold</span>
+<span id="L159">159 </span>
+<span id="L160">160 /-- The single normalized threshold constructs the complete parent calibration. -/</span>
+<span id="L161">161 theorem normalizedCumulativeInverseSqrtPathCalibration_of_episodeThreshold</span>
+<span id="L162">162     (mdp : MDP State Action) {episodes rounds : Nat}</span>
+<span id="L163">163     (hhorizon : 0 &lt; mdp.horizon) (hrounds : 0 &lt; rounds)</span>
+<span id="L164">164     (hepisodes : 0 &lt; episodes) {delta visitFloor : Real}</span>
+<span id="L165">165     (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L166">166     (hvisitFloor : 0 &lt; visitFloor)</span>
+<span id="L167">167     (hthreshold :</span>
+<span id="L168">168       normalizedCumulativeInverseSqrtEpisodeThreshold mdp rounds delta</span>
+<span id="L169">169           visitFloor &lt; (episodes : Real)) :</span>
+<span id="L170">170     CumulativeInverseSqrtPathCalibration mdp episodes rounds delta visitFloor</span>
+<span id="L171">171       1 1 (normalizedCumulativeInverseSqrtScale mdp rounds delta visitFloor) := by</span>
+<span id="L172">172   exact cumulativeInverseSqrtPathCalibration_of_episodeThreshold</span>
+<span id="L173">173     mdp hhorizon hrounds hepisodes hdelta hdelta_le_one hvisitFloor</span>
+<span id="L174">174     (by norm_num) (by norm_num)</span>
+<span id="L175">175     (normalizedCumulativeInverseSqrtScale_nonneg mdp rounds delta visitFloor)</span>
+<span id="L176">176     (normalizedCumulativeInverseSqrtScale_cover mdp hhorizon hrounds</span>
+<span id="L177">177       hdelta hdelta_le_one hvisitFloor)</span>
+<span id="L178">178     (cumulativeInverseSqrtCalibrationEpisodeThreshold_lt_of_normalizedThreshold</span>
+<span id="L179">179       mdp hhorizon hrounds hdelta hdelta_le_one hvisitFloor hthreshold)</span>
+<span id="L180">180 </span>
+<span id="L181">181 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L182">182     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L183">183     [Nonempty State] [Nonempty Action] in</span>
+<span id="L184">184 /-- Explicit expansion of the normalized recommendation-regret bound. -/</span>
+<span id="L185">185 theorem normalizedCumulativeInverseSqrtRecommendedExpectedRegretBound_eq</span>
+<span id="L186">186     (mdp : MDP State Action) (episodes rounds : Nat)</span>
+<span id="L187">187     (delta visitFloor : Real) :</span>
+<span id="L188">188     normalizedCumulativeInverseSqrtRecommendedExpectedRegretBound mdp episodes</span>
+<span id="L189">189         rounds delta visitFloor =</span>
+<span id="L190">190       2 * (mdp.horizon : Real) *</span>
+<span id="L191">191         min (rounds : Real)</span>
+<span id="L192">192           (8 * (Fintype.card State : Real) * (mdp.horizon : Real) *</span>
+<span id="L193">193               Real.sqrt (cumulativeInverseSqrtLogFactor mdp rounds delta) /</span>
+<span id="L194">194               Real.sqrt visitFloor * Real.sqrt (rounds : Real) /</span>
+<span id="L195">195             Real.sqrt ((episodes : Real) * visitFloor / 2)) := by</span>
+<span id="L196">196   unfold normalizedCumulativeInverseSqrtRecommendedExpectedRegretBound</span>
+<span id="L197">197   unfold cumulativeInverseSqrtRecommendedExpectedRegretBound</span>
+<span id="L198">198   unfold cumulativeInverseSqrtEnvelopeSumBound</span>
+<span id="L199">199   unfold normalizedCumulativeInverseSqrtScale</span>
+<span id="L200">200   have hinner :</span>
+<span id="L201">201       2 * (4 * (Fintype.card State : Real) * (mdp.horizon : Real) *</span>
+<span id="L202">202             Real.sqrt (cumulativeInverseSqrtLogFactor mdp rounds delta) /</span>
+<span id="L203">203               Real.sqrt visitFloor) * Real.sqrt (rounds : Real) /</span>
+<span id="L204">204           Real.sqrt ((episodes : Real) * visitFloor / 2) =</span>
+<span id="L205">205         8 * (Fintype.card State : Real) * (mdp.horizon : Real) *</span>
+<span id="L206">206             Real.sqrt (cumulativeInverseSqrtLogFactor mdp rounds delta) /</span>
+<span id="L207">207               Real.sqrt visitFloor * Real.sqrt (rounds : Real) /</span>
+<span id="L208">208           Real.sqrt ((episodes : Real) * visitFloor / 2) := by</span>
+<span id="L209">209     ring</span>
+<span id="L210">210   rw [hinner]</span>
+<span id="L211">211   norm_num</span>
+<span id="L212">212 </span>
+<span id="L213">213 end AdaptiveEpisodeBatchSource</span>
+<span id="L214">214 </span>
+<span id="L215">215 namespace AdaptiveCumulativeEmpiricalOptimisticSource</span>
+<span id="L216">216 </span>
+<span id="L217">217 /--</span>
+<span id="L218">218 Normalized deterministic-reward endpoint with one episode threshold and no</span>
+<span id="L219">219 caller-visible budget or statistical scale.</span>
+<span id="L220">220 -/</span>
+<span id="L221">221 theorem exploratorySource_trajectoryMeasure_cumulativeInverseSqrtPathSupport_optimism_and_normalizedRecommendedExpectedRegret</span>
+<span id="L222">222     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L223">223     [IsProbabilityMeasure initialState] (episodes rounds : Nat)</span>
+<span id="L224">224     [StandardBorelSpace (EpisodeBatch mdp episodes)]</span>
+<span id="L225">225     [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)]</span>
+<span id="L226">226     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L227">227     (defaultState : State)</span>
+<span id="L228">228     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L229">229     (support : ExploratoryPathSupport mdp initialState) (visitFloor : Real)</span>
+<span id="L230">230     (hfloor : ExploratoryPathUniformVisitFloor support explorationRate visitFloor)</span>
+<span id="L231">231     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L232">232     (hhorizon : 0 &lt; mdp.horizon) (hrounds : 0 &lt; rounds)</span>
+<span id="L233">233     (hepisodes : 0 &lt; episodes)</span>
+<span id="L234">234     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L235">235     (hvisitFloor : 0 &lt; visitFloor)</span>
+<span id="L236">236     (hthreshold :</span>
+<span id="L237">237       AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtEpisodeThreshold</span>
+<span id="L238">238           mdp rounds delta visitFloor &lt; (episodes : Real)) :</span>
+<span id="L239">239     let countRadius :=</span>
+<span id="L240">240       AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtCountRadius</span>
+<span id="L241">241         mdp rounds delta visitFloor</span>
+<span id="L242">242     let source := exploratorySource mdp initialState episodes initialTable</span>
+<span id="L243">243       defaultState countRadius explorationRate hexplorationRate</span>
+<span id="L244">244     MeasurableSet (source.adaptiveCumulativeCountBadEvent rounds delta) /\</span>
+<span id="L245">245       source.trajectoryMeasure</span>
+<span id="L246">246           (source.adaptiveCumulativeCountBadEvent rounds delta) &lt;=</span>
+<span id="L247">247         ENNReal.ofReal delta /\</span>
+<span id="L248">248       forall trajectory,</span>
+<span id="L249">249         trajectory ∉ source.adaptiveCumulativeCountBadEvent rounds delta -&gt;</span>
+<span id="L250">250         (forall round : Fin rounds, forall state,</span>
+<span id="L251">251           mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;=</span>
+<span id="L252">252             (adaptiveCumulativeEmpiricalOptimisticPlanAt</span>
+<span id="L253">253               trajectory defaultState countRadius round).upperValueRemaining</span>
+<span id="L254">254                 mdp.horizon le_rfl state) /\</span>
+<span id="L255">255         adaptiveCumulativeEmpiricalOptimisticRecommendedExpectedRegret</span>
+<span id="L256">256             (initialState := initialState) trajectory defaultState countRadius rounds &lt;=</span>
+<span id="L257">257           AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtRecommendedExpectedRegretBound</span>
+<span id="L258">258             mdp episodes rounds delta visitFloor := by</span>
+<span id="L259">259   let scale :=</span>
+<span id="L260">260     AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtScale</span>
+<span id="L261">261       mdp rounds delta visitFloor</span>
+<span id="L262">262   have hscale : 0 &lt;= scale :=</span>
+<span id="L263">263     AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtScale_nonneg</span>
+<span id="L264">264       mdp rounds delta visitFloor</span>
+<span id="L265">265   have hscaleCover :=</span>
+<span id="L266">266     AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtScale_cover</span>
+<span id="L267">267       mdp hhorizon hrounds hdelta hdelta_le_one hvisitFloor</span>
+<span id="L268">268   have hexactThreshold :=</span>
+<span id="L269">269     AdaptiveEpisodeBatchSource.cumulativeInverseSqrtCalibrationEpisodeThreshold_lt_of_normalizedThreshold</span>
+<span id="L270">270       mdp hhorizon hrounds hdelta hdelta_le_one hvisitFloor hthreshold</span>
+<span id="L271">271   have hparent :=</span>
+<span id="L272">272     exploratorySource_trajectoryMeasure_cumulativeInverseSqrtPathSupport_optimism_and_closedFormRecommendedExpectedRegret</span>
+<span id="L273">273       mdp initialState episodes rounds initialTable defaultState explorationRate</span>
+<span id="L274">274       hexplorationRate support visitFloor hfloor 1 1 scale hrewardBound</span>
+<span id="L275">275       (by norm_num) hscale hhorizon hrounds hepisodes delta hdelta hdelta_le_one</span>
+<span id="L276">276       hvisitFloor hscaleCover hexactThreshold</span>
+<span id="L277">277   simpa [scale,</span>
+<span id="L278">278     AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtCountRadius,</span>
+<span id="L279">279     AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtRecommendedExpectedRegretBound]</span>
+<span id="L280">280     using hparent</span>
+<span id="L281">281 </span>
+<span id="L282">282 end AdaptiveCumulativeEmpiricalOptimisticSource</span>
+<span id="L283">283 </span>
+<span id="L284">284 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

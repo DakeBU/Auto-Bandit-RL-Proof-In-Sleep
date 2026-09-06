@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Finite-horizon RL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>RL.<wbr>Finite<wbr>Horizon<wbr>Adaptive<wbr>Stochastic<wbr>Reward<wbr>Sampled<wbr>Empirical<wbr>Optimistic<wbr>Source</h1>
+  <p class="lede">This module constructs a genuinely sampled-reward adaptive optimistic source. The successor table is computed from the latest complete stochastic batch, including its observed rewards, rather than from the known-mean projection.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource.lean.html"><code>BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/finite-horizon-rl/index.html">9. Finite-horizon reinforcement learning</a></dd></div>
+    <div><dt>Declarations</dt><dd>19</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-rl-finitehorizonadaptivestochasticrewardempiricaloptimisticprojection/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardEmpiricalOptimisticProjection</code></a>, <a href="../banditrlproof-rl-finitehorizonstochasticrewardiidallcoordinateempiricalmodelconfidence/index.html"><code>BanditRLProof.RL.FiniteHorizonStochasticRewardIIDAllCoordinateEmpiricalModelConfidence</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-rl-finitehorizonadaptivestochasticrewardsampledempiricaloptimisticconfidence/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticConfidence</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-064917c2e104">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.EpisodeBatch.measurable_rewardSum</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A fixed sampled-reward sum is measurable on raw episode batches.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_rewardSum {mdp : MDP State Action} {episodes : Nat} (stage : Fin mdp.horizon) (state : State) (action : Action) : Measurable <span class="kw">fun</span> batch : EpisodeBatch mdp episodes =&gt; batch.rewardSum stage state action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource.lean.html#L38">Source line 38</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f87658eb6a16">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.EpisodeBatch.measurable_empiricalReward</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A fixed empirical sampled-reward mean is measurable on raw batches.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_empiricalReward {mdp : MDP State Action} {episodes : Nat} (stage : Fin mdp.horizon) (state : State) (action : Action) : Measurable <span class="kw">fun</span> batch : EpisodeBatch mdp episodes =&gt; batch.empiricalReward stage state action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource.lean.html#L62">Source line 62</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-75123a4f1762">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.TransitionCountSummary.stateKernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A fixed empirical next-state law as a kernel in the count summary.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> stateKernel {mdp : MDP State Action} (defaultState : State) (stage : Fin mdp.horizon) (state : State) (action : Action) : ProbabilityTheory.Kernel (TransitionCountSummary mdp) State</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource.lean.html#L76">Source line 76</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7aa0cde5e0a7">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.EpisodeBatch.empiricalTransitionStateKernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The raw-batch empirical next-state law as a Markov kernel in the batch.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> empiricalTransitionStateKernel {mdp : MDP State Action} {episodes : Nat} (defaultState : State) (stage : Fin mdp.horizon) (state : State) (action : Action) : ProbabilityTheory.Kernel (EpisodeBatch mdp episodes) State</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource.lean.html#L102">Source line 102</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3bcae36c2dc0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.EpisodeBatch.empiricalTransitionStateKernel_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> empiricalTransitionStateKernel_apply {mdp : MDP State Action} {episodes : Nat} (batch : EpisodeBatch mdp episodes) (defaultState : State) (stage : Fin mdp.horizon) (state : State) (action : Action) : empiricalTransitionStateKernel (episodes := episodes) defaultState stage state action batch = batch.empiricalTransitionKernel defaultState stage (state, action)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource.lean.html#L122">Source line 122</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3b6dab7a135b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.EpisodeBatch.measurable_uncurry_of_forall_measurable</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-state coordinatewise measurability yields joint measurability.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_uncurry_of_forall_measurable {Omega : Type*} [MeasurableSpace Omega] (value : Omega -&gt; State -&gt; Real) (hvalue : <span class="kw">forall</span> nextState : State, Measurable <span class="kw">fun</span> omega =&gt; value omega nextState) : Measurable (Function.uncurry value)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource.lean.html#L140">Source line 140</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8bf3984ccb6f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.EpisodeBatch.measurable_empiricalTransitionValue</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The empirical transition integral is measurable when every continuation-value
+coordinate is measurable in the same raw batch.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_empiricalTransitionValue {mdp : MDP State Action} {episodes : Nat} (defaultState : State) (stage : Fin mdp.horizon) (state : State) (action : Action) (value : EpisodeBatch mdp episodes -&gt; State -&gt; Real) (hvalue : <span class="kw">forall</span> nextState : State, Measurable <span class="kw">fun</span> batch =&gt; value batch nextState) : Measurable <span class="kw">fun</span> batch : EpisodeBatch mdp episodes =&gt; ∫ nextState, value batch nextState ∂batch.empiricalTransitionKernel defaultState stage (state, action)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource.lean.html#L163">Source line 163</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2222f0eb4d83">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.measurable_stochasticAllCoordinateEmpiricalOptimisticQ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every sampled empirical optimistic action-value coordinate is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_stochasticAllCoordinateEmpiricalOptimisticQ (mdp : MDP State Action) (episodes : Nat) (defaultState : State) (rewardBudget transitionBudget : Real) (stage : Fin mdp.horizon) (state : State) (action : Action) (value : EpisodeBatch mdp episodes -&gt; State -&gt; Real) (hvalue : <span class="kw">forall</span> nextState : State, Measurable <span class="kw">fun</span> batch =&gt; value batch nextState) : Measurable <span class="kw">fun</span> batch : EpisodeBatch mdp episodes =&gt; <span class="kw">let</span> model := mdp.stochasticAllCoordinateEmpiricalFiniteBatchModel episodes batch defaultState rewardBudget transitionBudget model.plan.optimisticQ stage (value batch) state action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource.lean.html#L187">Source line 187</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b7af06a885e4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.measurable_stochasticAllCoordinateEmpiricalUpperValueRemaining</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The sampled empirical optimistic value recursion is batch-measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_stochasticAllCoordinateEmpiricalUpperValueRemaining (mdp : MDP State Action) (episodes : Nat) (defaultState : State) (rewardBudget transitionBudget : Real) : <span class="kw">forall</span> (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) (state : State), Measurable <span class="kw">fun</span> batch : EpisodeBatch mdp episodes =&gt; <span class="kw">let</span> model := mdp.stochasticAllCoordinateEmpiricalFiniteBatchModel episodes batch defaultState rewardBudget transitionBudget model.plan.upperValueRemaining remaining hremaining state | <span class="num">0</span>, _hremaining, state =&gt; <span class="kw">by</span> simp [EstimatedModelPlan.upperValueRemaining] | remaining + <span class="num">1</span>, hremaining, state =&gt; <span class="kw">by</span> <span class="kw">let</span> stage := mdp.decisionStageRemaining remaining hremaining <span class="kw">let</span> value := <span class="kw">fun</span> batch : EpisodeBatch mdp episodes =&gt; <span class="kw">let</span> model := mdp.stochasticAllCoordinateEmpiricalFiniteBatchModel episodes batch defaultState rewardBudget transitionBudget model.plan.upperValueRemaining remaining (<span class="kw">by</span> omega) have hvalue : <span class="kw">forall</span> nextState : State, Measurable <span class="kw">fun</span> batch =&gt; value batch nextState</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource.lean.html#L209">Source line 209</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-36ed16cb7828">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.measurable_stochasticAllCoordinateEmpiricalOptimisticActionAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every chronological sampled empirical optimistic action is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_stochasticAllCoordinateEmpiricalOptimisticActionAt (mdp : MDP State Action) (episodes : Nat) (defaultState : State) (rewardBudget transitionBudget : Real) (stage : Fin mdp.horizon) (state : State) : Measurable <span class="kw">fun</span> batch : EpisodeBatch mdp episodes =&gt; <span class="kw">let</span> model := mdp.stochasticAllCoordinateEmpiricalFiniteBatchModel episodes batch defaultState rewardBudget transitionBudget model.plan.optimisticActionAt stage state</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource.lean.html#L256">Source line 256</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a0baea56a483">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.measurable_stochasticAllCoordinateEmpiricalOptimisticPolicyTable</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The complete sampled empirical optimistic policy table is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_stochasticAllCoordinateEmpiricalOptimisticPolicyTable (mdp : MDP State Action) (episodes : Nat) (defaultState : State) (rewardBudget transitionBudget : Real) : Measurable <span class="kw">fun</span> batch : EpisodeBatch mdp episodes =&gt; <span class="kw">fun</span> stage state =&gt; (mdp.stochasticAllCoordinateEmpiricalFiniteBatchModel episodes batch defaultState rewardBudget transitionBudget).plan |&gt;.optimisticActionAt stage state</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource.lean.html#L291">Source line 291</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-303d5eda5156">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.StochasticEpisodeBatch.sampledEmpiricalOptimisticPolicyTable</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Optimistic table computed from the actual sampled rewards in one batch.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledEmpiricalOptimisticPolicyTable {mdp : MDP State Action} {episodes : Nat} (batch : StochasticEpisodeBatch mdp episodes) (defaultState : State) (rewardBudget transitionBudget : Real) : DeterministicMarkovPolicyTable mdp</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource.lean.html#L309">Source line 309</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8ab373bf00bb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.StochasticEpisodeBatch.measurable_sampledEmpiricalOptimisticPolicyTable</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The sampled-reward optimistic table is measurable in the stochastic batch.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_sampledEmpiricalOptimisticPolicyTable {mdp : MDP State Action} {episodes : Nat} (defaultState : State) (rewardBudget transitionBudget : Real) : Measurable <span class="kw">fun</span> batch : StochasticEpisodeBatch mdp episodes =&gt; batch.sampledEmpiricalOptimisticPolicyTable defaultState rewardBudget transitionBudget</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource.lean.html#L320">Source line 320</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4129bdc98a91">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.latestBatch</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The latest complete stochastic batch in a finite nonempty prefix.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> latestBatch {mdp : MDP State Action} {episodes n : Nat} (history : StochasticEpisodeBatchPrefix mdp episodes n) : StochasticEpisodeBatch mdp episodes</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource.lean.html#L336">Source line 336</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-35f79ae01fca">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.measurable_latestBatch</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_latestBatch {mdp : MDP State Action} {episodes n : Nat} : Measurable (latestBatch : StochasticEpisodeBatchPrefix mdp episodes n -&gt; StochasticEpisodeBatch mdp episodes)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource.lean.html#L345">Source line 345</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5c01d61479ef">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.successorTable</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Sampled-reward optimistic table selected from the latest stochastic batch.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> successorTable {mdp : MDP State Action} {episodes : Nat} (defaultState : State) (rewardBudget transitionBudget : Real) (n : Nat) (history : StochasticEpisodeBatchPrefix mdp episodes n) : DeterministicMarkovPolicyTable mdp</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource.lean.html#L354">Source line 354</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a37814bd8d34">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.measurable_successorTable</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_successorTable {mdp : MDP State Action} {episodes : Nat} (defaultState : State) (rewardBudget transitionBudget : Real) (n : Nat) : Measurable (successorTable (mdp := mdp) (episodes := episodes) defaultState rewardBudget transitionBudget n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource.lean.html#L362">Source line 362</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0f041c9a5516">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.exploratorySource</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Adaptive exploratory source whose successor policy uses actual sampled rewards.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> exploratorySource (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (episodes : Nat) (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (rewardBudget transitionBudget : Real) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource.lean.html#L374">Source line 374</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-af0c737c2acd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.exploratorySource_batchKernel_eq_selectedPolicy_iidLaw</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every history fiber has the exact iid stochastic law of its selected policy.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_batchKernel_eq_selectedPolicy_iidLaw {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (rewardSource : mdp.MeanCompatibleRewardKernel) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (rewardBudget transitionBudget : Real) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (n : Nat) (history : StochasticEpisodeBatchPrefix mdp episodes n) : <span class="kw">let</span> source := exploratorySource mdp initialState episodes rewardSource initialTable defaultState rewardBudget transitionBudget explorationRate hexplorationRate source.batchKernel n history = rewardSource.iidStochasticTrajectoryFamilyMeasure ((successorTable defaultState rewardBudget transitionBudget n history) |&gt;.exploratoryPolicy explorationRate hexplorationRate) initialState episodes</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSource.lean.html#L408">Source line 408</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

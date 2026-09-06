@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.ETCRealPrefixLawTransport · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.ETCRealPrefixLawTransport · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.ETCRealPrefixLawTransport · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · ETC</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>ETC<wbr>Real<wbr>Prefix<wbr>Law<wbr>Transport</h1>
+  <p class="lede">This module factors the native Real ETC commit, action, and finite-horizon kernel regret through the finite exploration reward prefix. It then transports the canonical infinite-product regret bound to an arbitrary probability space from equality of that finite-prefix pushforward law. A final adapter permits an external action process that agrees almost surely with the local ETC action.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html"><code>BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/etc/index.html">3. Explore-Then-Commit</a></dd></div>
+    <div><dt>Declarations</dt><dd>23</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-algorithms-etcfinitearmrewardlaw/index.html"><code>BanditRLProof.Algorithms.ETCFiniteArmRewardLaw</code></a>, <a href="../banditrlproof-algorithms-etcrealinfinitepitail/index.html"><code>BanditRLProof.Algorithms.ETCRealInfinitePiTail</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-etcrealsourceadapter/index.html"><code>BanditRLProof.Algorithms.ETCRealSourceAdapter</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-eda4cc65af0f">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.realExplorationRewardPrefix</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The reward coordinates read during ETC exploration.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> realExplorationRewardPrefix {K : Nat} (spec : ETC.Spec K) (trajectory : RewardTrace Real) : Fin (spec.explorationPulls * K) -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L21">Source line 21</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1703c304e63b">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.realRewardTraceOfExplorationPrefix</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Extend a finite exploration prefix by zero outside the exploration phase.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> realRewardTraceOfExplorationPrefix {K : Nat} (spec : ETC.Spec K) (rewardPrefix : Fin (spec.explorationPulls * K) -&gt; Real) : RewardTrace Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L26">Source line 26</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1a5eecc26dc2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.realExplorationRewardPrefix_realRewardTraceOfExplorationPrefix</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Taking the exploration prefix after extension recovers the original prefix.</p>
+    <pre class="lean-code"><code>@[simp] <span class="kw">theorem</span> realExplorationRewardPrefix_realRewardTraceOfExplorationPrefix {K : Nat} (spec : ETC.Spec K) (rewardPrefix : Fin (spec.explorationPulls * K) -&gt; Real) : ETC.realExplorationRewardPrefix spec (ETC.realRewardTraceOfExplorationPrefix spec rewardPrefix) = rewardPrefix</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L31">Source line 31</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ebb10f14363b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurable_realExplorationRewardPrefix</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Prefix extraction from a Real reward trace is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_realExplorationRewardPrefix {K : Nat} (spec : ETC.Spec K) : Measurable (ETC.realExplorationRewardPrefix spec)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L42">Source line 42</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-309f82b2cf53">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurable_realRewardTraceOfExplorationPrefix</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Zero extension of a finite Real reward prefix is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_realRewardTraceOfExplorationPrefix {K : Nat} (spec : ETC.Spec K) : Measurable (ETC.realRewardTraceOfExplorationPrefix spec)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L47">Source line 47</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ae93d41b4fd0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurable_realExplorationRewardPrefix_comp</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Timewise measurable rewards give a measurable finite exploration prefix.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_realExplorationRewardPrefix_comp {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (spec : ETC.Spec K) (reward : Omega -&gt; RewardTrace Real) (hreward : <span class="kw">forall</span> t, Measurable (<span class="kw">fun</span> omega =&gt; reward omega t)) : Measurable (<span class="kw">fun</span> omega =&gt; ETC.realExplorationRewardPrefix spec (reward omega))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L58">Source line 58</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-beb9c87079ac">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.sumRewards_eq_of_eq_on_lt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Reward sums agree when the reward traces agree before the horizon.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sumRewards_eq_of_eq_on_lt {Action Reward : Type} [DecidableEq Action] [AddCommMonoid Reward] (action : ActionTrace Action) (reward reward&#x27; : RewardTrace Reward) (a : Action) (n : Nat) (hreward : <span class="kw">forall</span> t, t &lt; n -&gt; reward t = reward&#x27; t) : sumRewards action reward a n = sumRewards action reward&#x27; a n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L67">Source line 67</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8d83d877fff7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.realEmpMeanAtExploration_eq_of_eq_on_exploration</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Native Real exploration means depend only on the exploration reward prefix.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> realEmpMeanAtExploration_eq_of_eq_on_exploration {K : Nat} (spec : ETC.Spec K) (baseCommitArm : Fin K) (reward reward&#x27; : RewardTrace Real) (hreward : <span class="kw">forall</span> t, t &lt; spec.explorationPulls * K -&gt; reward t = reward&#x27; t) (a : Fin K) : ETC.realEmpMeanAtExploration spec baseCommitArm reward a = ETC.realEmpMeanAtExploration spec baseCommitArm reward&#x27; a</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L79">Source line 79</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1ec6e8080098">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.realExplorationArgmaxCommit_eq_of_eq_on_exploration</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Native Real empirical argmax commit depends only on exploration rewards.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> realExplorationArgmaxCommit_eq_of_eq_on_exploration {K : Nat} (spec : ETC.Spec K) (baseCommitArm : Fin K) (reward reward&#x27; : RewardTrace Real) (hreward : <span class="kw">forall</span> t, t &lt; spec.explorationPulls * K -&gt; reward t = reward&#x27; t) : ETC.realExplorationArgmaxCommit spec baseCommitArm reward = ETC.realExplorationArgmaxCommit spec baseCommitArm reward&#x27;</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L94">Source line 94</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-134072dca94d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.realExplorationArgmaxCommit_realRewardTraceOf_prefix_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Extending the extracted prefix does not change the ETC commit arm.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> realExplorationArgmaxCommit_realRewardTraceOf_prefix_eq {K : Nat} (spec : ETC.Spec K) (baseCommitArm : Fin K) (trajectory : RewardTrace Real) : ETC.realExplorationArgmaxCommit spec baseCommitArm trajectory = ETC.realExplorationArgmaxCommit spec baseCommitArm (ETC.realRewardTraceOfExplorationPrefix spec (ETC.realExplorationRewardPrefix spec trajectory))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L108">Source line 108</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2c35cedfd940">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.realExplorationArgmaxAction_realRewardTraceOf_prefix_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Extending the extracted prefix does not change the native Real ETC action.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> realExplorationArgmaxAction_realRewardTraceOf_prefix_eq {K : Nat} (spec : ETC.Spec K) (baseCommitArm : Fin K) (trajectory : RewardTrace Real) : ETC.realExplorationArgmaxAction spec baseCommitArm trajectory = ETC.realExplorationArgmaxAction spec baseCommitArm (ETC.realRewardTraceOfExplorationPrefix spec (ETC.realExplorationRewardPrefix spec trajectory))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L121">Source line 121</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-06d973a2fbf8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurable_realKernelRegret_of_forall_measurable_action</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Kernel regret is measurable from a timewise measurable finite-arm action.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_realKernelRegret_of_forall_measurable_action {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (nu : ProbabilityTheory.Kernel (Fin K) Real) (action : Omega -&gt; ActionTrace (Fin K)) (haction : <span class="kw">forall</span> t, Measurable (<span class="kw">fun</span> omega =&gt; action omega t)) (n : Nat) : Measurable (<span class="kw">fun</span> omega =&gt; realKernelRegret nu (action omega) n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L132">Source line 132</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cbef35961e50">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.realKernelRegretOfExplorationPrefix</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite-prefix functional whose value is native Real ETC kernel regret.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> realKernelRegretOfExplorationPrefix {K : Nat} (spec : ETC.Spec K) (nu : ProbabilityTheory.Kernel (Fin K) Real) (baseCommitArm : Fin K) (n : Nat) (rewardPrefix : Fin (spec.explorationPulls * K) -&gt; Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L149">Source line 149</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d506dc171eac">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurable_realKernelRegretOfExplorationPrefix</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite-prefix kernel-regret functional is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_realKernelRegretOfExplorationPrefix {K : Nat} (spec : ETC.Spec K) (nu : ProbabilityTheory.Kernel (Fin K) Real) (baseCommitArm : Fin K) (n : Nat) : Measurable (ETC.realKernelRegretOfExplorationPrefix spec nu baseCommitArm n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L158">Source line 158</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-08d0e078a10d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.realKernelRegret_realExplorationArgmaxAction_eq_prefixFunctional</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Native Real ETC kernel regret factors through the exploration prefix.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> realKernelRegret_realExplorationArgmaxAction_eq_prefixFunctional {K : Nat} (spec : ETC.Spec K) (nu : ProbabilityTheory.Kernel (Fin K) Real) (baseCommitArm : Fin K) (trajectory : RewardTrace Real) (n : Nat) : realKernelRegret nu (ETC.realExplorationArgmaxAction spec baseCommitArm trajectory) n = ETC.realKernelRegretOfExplorationPrefix spec nu baseCommitArm n (ETC.realExplorationRewardPrefix spec trajectory)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L184">Source line 184</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d312bb4a8e7e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.realKernelRegret_eq_of_action_eq_on_lt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Kernel regret agrees when two action traces agree before the horizon.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> realKernelRegret_eq_of_action_eq_on_lt {K : Nat} (nu : ProbabilityTheory.Kernel (Fin K) Real) (action action&#x27; : ActionTrace (Fin K)) (n : Nat) (haction : <span class="kw">forall</span> t, t &lt; n -&gt; action t = action&#x27; t) : realKernelRegret nu action n = realKernelRegret nu action&#x27; n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L196">Source line 196</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d993423d76b0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.real_trajMeasure_const_eq_infinitePi</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A constant-kernel Ionescu-Tulcea trajectory is the infinite product law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> real_trajMeasure_const_eq_infinitePi (coordLaw : Nat -&gt; Measure Real) [<span class="kw">forall</span> t, IsProbabilityMeasure (coordLaw t)] : ProbabilityTheory.Kernel.trajMeasure (coordLaw <span class="num">0</span>) (<span class="kw">fun</span> i =&gt; ProbabilityTheory.Kernel.const ((j : Finset.Iic i) -&gt; Real) (coordLaw (i + <span class="num">1</span>))) = Measure.infinitePi coordLaw</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L208">Source line 208</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-eeba14fb8643">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.realExplorationPrefixOfFiniteRewardHistory</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Convert the inclusive history through `horizon - 1` to a `Fin horizon` prefix.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> realExplorationPrefixOfFiniteRewardHistory {K : Nat} (spec : ETC.Spec K) (history : History.FiniteRewardHistory Real (spec.explorationPulls * K - <span class="num">1</span>)) : Fin (spec.explorationPulls * K) -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L231">Source line 231</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-100e9ff6d7f0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurable_realExplorationPrefixOfFiniteRewardHistory</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The inclusive-history to `Fin` exploration-prefix conversion is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_realExplorationPrefixOfFiniteRewardHistory {K : Nat} (spec : ETC.Spec K) : Measurable (ETC.realExplorationPrefixOfFiniteRewardHistory spec)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L240">Source line 240</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5143e0c2b02b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.realExplorationPrefixOfFiniteRewardHistory_of_trace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Conversion of a trace&#x27;s inclusive history is its `Fin` exploration prefix.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> realExplorationPrefixOfFiniteRewardHistory_of_trace {K : Nat} (spec : ETC.Spec K) (trajectory : RewardTrace Real) : ETC.realExplorationPrefixOfFiniteRewardHistory spec (History.finiteRewardHistoryOfTrace trajectory (spec.explorationPulls * K - <span class="num">1</span>)) = ETC.realExplorationRewardPrefix spec trajectory</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L248">Source line 248</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-61afb6d3d6c3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_realKernelRegret_realExplorationArgmaxAction_le_exact_sum_of_prefixLaw_eq_infinitePi</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Equality of finite exploration-prefix laws transports the canonical native
+Real ETC exact regret bound to an arbitrary reward process.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_realKernelRegret_realExplorationArgmaxAction_le_exact_sum_of_prefixLaw_eq_infinitePi {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (spec : ETC.Spec K) (nu : ProbabilityTheory.Kernel (Fin K) Real) [ProbabilityTheory.IsMarkovKernel nu] (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> arm, ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - realKernelMean nu arm) sigma2 (nu arm)) (hm : <span class="num">0</span> &lt; spec.explorationPulls) (n : Nat) (hn : K * spec.explorationPulls &lt;= n) (reward : Omega -&gt; RewardTrace Real) (hreward : <span class="kw">forall</span> t, Measurable (<span class="kw">fun</span> omega =&gt; reward omega t)) (hprefixLaw : Measure.map (<span class="kw">fun</span> omega =&gt; ETC.realExplorationRewardPrefix spec (reward omega)) mu = Measure.map (ETC.realExplorationRewardPrefix spec) (Measure.infinitePi (<span class="kw">fun</span> t : Nat =&gt; nu (ETC.exploreArm spec t)))) : <span class="kw">let</span> best := ETC.realKernelBestArm spec.hK nu integral mu (<span class="kw">fun</span> omega =&gt; realKernelRegret nu (ETC.realExplorationArgmaxAction spec best (reward omega)) n) &lt;= (Finset.univ : Finset (Fin K)).sum (<span class="kw">fun</span> arm =&gt; realKernelGap nu arm * ((spec.explorationPulls : Real) + ((n - K * spec.explorationPulls : Nat) : Real) * Real.exp (-(spec.explorationPulls : Real) * (realKernelGap nu arm) ^ <span class="num">2</span> / (<span class="num">4</span> * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L260">Source line 260</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4823a1f92a42">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_realKernelRegret_externalAction_le_exact_sum_of_prefixLaw_eq_infinitePi</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">External-action version of the finite-prefix law transport theorem. The two
+remaining upstream obligations are explicit: finite-prefix reward law equality
+and almost-sure equality with the local native Real ETC action.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_realKernelRegret_externalAction_le_exact_sum_of_prefixLaw_eq_infinitePi {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (spec : ETC.Spec K) (nu : ProbabilityTheory.Kernel (Fin K) Real) [ProbabilityTheory.IsMarkovKernel nu] (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> arm, ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - realKernelMean nu arm) sigma2 (nu arm)) (hm : <span class="num">0</span> &lt; spec.explorationPulls) (n : Nat) (hn : K * spec.explorationPulls &lt;= n) (action : Omega -&gt; ActionTrace (Fin K)) (reward : Omega -&gt; RewardTrace Real) (hreward : <span class="kw">forall</span> t, Measurable (<span class="kw">fun</span> omega =&gt; reward omega t)) (hprefixLaw : Measure.map (<span class="kw">fun</span> omega =&gt; ETC.realExplorationRewardPrefix spec (reward omega)) mu = Measure.map (ETC.realExplorationRewardPrefix spec) (Measure.infinitePi (<span class="kw">fun</span> t : Nat =&gt; nu (ETC.exploreArm spec t)))) (haction : Filter.Eventually (<span class="kw">fun</span> omega =&gt; <span class="kw">forall</span> t, t &lt; n -&gt; action omega t = ETC.realExplorationArgmaxAction spec (ETC.realKernelBestArm spec.hK nu) (reward omega) t) (ae mu)) : integral mu (<span class="kw">fun</span> omega =&gt; realKernelRegret nu (action omega) n) &lt;= (Finset.univ : Finset (Fin K)).sum (<span class="kw">fun</span> arm =&gt; realKernelGap nu arm * ((spec.explorationPulls : Real) + ((n - K * spec.explorationPulls : Nat) : Real) * Real.exp (-(spec.explorationPulls : Real) * (realKernelGap nu arm) ^ <span class="num">2</span> / (<span class="num">4</span> * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L364">Source line 364</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3d8aa33a6ea7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_realKernelRegret_externalAction_le_exact_sum_of_initial_map_eq_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">External native Real exact ETC regret from the scheduled exploration-arm
+initial marginal and successor conditional reward laws. This is the direct
+law surface needed before mapping an upstream `IsAlgEnvSeq` witness.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_realKernelRegret_externalAction_le_exact_sum_of_initial_map_eq_condDistrib {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (spec : ETC.Spec K) (nu : ProbabilityTheory.Kernel (Fin K) Real) [ProbabilityTheory.IsMarkovKernel nu] (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> arm, ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - realKernelMean nu arm) sigma2 (nu arm)) (hm : <span class="num">0</span> &lt; spec.explorationPulls) (n : Nat) (hn : K * spec.explorationPulls &lt;= n) (action : Omega -&gt; ActionTrace (Fin K)) (reward : Omega -&gt; RewardTrace Real) (hreward : <span class="kw">forall</span> t, Measurable (<span class="kw">fun</span> omega =&gt; reward omega t)) (hzero : Measure.map (<span class="kw">fun</span> omega =&gt; reward omega <span class="num">0</span>) mu = nu (ETC.exploreArm spec <span class="num">0</span>)) (hcond : <span class="kw">forall</span> i, i &lt; spec.explorationPulls * K - <span class="num">1</span> -&gt; ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega =&gt; reward omega (i + <span class="num">1</span>)) (<span class="kw">fun</span> omega =&gt; History.finiteRewardHistoryOfTrace (reward omega) i) mu =ᵐ[mu.map (<span class="kw">fun</span> omega =&gt; History.finiteRewardHistoryOfTrace (reward omega) i)] ProbabilityTheory.Kernel.const (History.FiniteRewardHistory Real i) (nu (ETC.exploreArm spec (i + <span class="num">1</span>)))) (haction : Filter.Eventually (<span class="kw">fun</span> omega =&gt; <span class="kw">forall</span> t, t &lt; n -&gt; action omega t = ETC.realExplorationArgmaxAction spec (ETC.realKernelBestArm spec.hK nu) (reward omega) t) (ae mu)) : integral mu (<span class="kw">fun</span> omega =&gt; realKernelRegret nu (action omega) n) &lt;= (Finset.univ : Finset (Fin K)).sum (<span class="kw">fun</span> arm =&gt; realKernelGap nu arm * ((spec.explorationPulls : Real) + ((n - K * spec.explorationPulls : Nat) : Real) * Real.exp (-(spec.explorationPulls : Real) * (realKernelGap nu arm) ^ <span class="num">2</span> / (<span class="num">4</span> * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealPrefixLawTransport.lean.html#L426">Source line 426</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

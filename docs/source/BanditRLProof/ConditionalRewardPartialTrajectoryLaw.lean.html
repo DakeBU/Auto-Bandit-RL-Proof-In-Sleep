@@ -1,0 +1,1203 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/ConditionalRewardPartialTrajectoryLaw.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/ConditionalRewardPartialTrajectoryLaw.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/ConditionalRewardPartialTrajectoryLaw.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/ConditionalRewardPartialTrajectoryLaw.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.ConditionalRewardLawSource</span>
+<span id="L2">2 </span>
+<span id="L3">3 open MeasureTheory ProbabilityTheory</span>
+<span id="L4">4 </span>
+<span id="L5">5 namespace BanditRLProof</span>
+<span id="L6">6 namespace ConditionalExpectationReward</span>
+<span id="L7">7 </span>
+<span id="L8">8 /--</span>
+<span id="L9">9 An ambient reward process satisfying the configured initial law and successor</span>
+<span id="L10">10 conditional-distribution recursion has the generated finite-pair</span>
+<span id="L11">11 `partialTraj` law on the generated history filtration.</span>
+<span id="L12">12 </span>
+<span id="L13">13 Unlike the unrestricted theorem card, the action trace here is the policy</span>
+<span id="L14">14 action generated from the reward history, and the model-side trajectory law is</span>
+<span id="L15">15 supplied by `hzero` and `hcond` rather than assumed through the conclusion.</span>
+<span id="L16">16 -/</span>
+<span id="L17">17 theorem historyStepKernelFamily_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_condDistrib</span>
+<span id="L18">18     {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}</span>
+<span id="L19">19     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]</span>
+<span id="L20">20     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L21">21     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L22">22     [Countable Action] [Nonempty Omega]</span>
+<span id="L23">23     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L24">24     (mu0 : Measure Rat) [IsProbabilityMeasure mu0]</span>
+<span id="L25">25     (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)</span>
+<span id="L26">26     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L27">27     (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context)</span>
+<span id="L28">28     (state : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; State)</span>
+<span id="L29">29     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L30">30     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L31">31     (defaultAction : Action)</span>
+<span id="L32">32     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L33">33     (hreward : forall t : Nat,</span>
+<span id="L34">34       Measurable (fun omega : Omega =&gt; reward omega t))</span>
+<span id="L35">35     (hzero : Measure.map (fun omega : Omega =&gt; reward omega 0) mu = mu0)</span>
+<span id="L36">36     (hcond : forall i : Nat,</span>
+<span id="L37">37       Filter.EventuallyEq</span>
+<span id="L38">38         (ae (mu.map (fun omega : Omega =&gt;</span>
+<span id="L39">39           Preorder.frestrictLe i (reward omega))))</span>
+<span id="L40">40         (ProbabilityTheory.condDistrib</span>
+<span id="L41">41           (fun omega : Omega =&gt; reward omega (i + 1))</span>
+<span id="L42">42           (fun omega : Omega =&gt; Preorder.frestrictLe i (reward omega))</span>
+<span id="L43">43           mu)</span>
+<span id="L44">44         (RewardKernel.historyStepKernelFamily rewardKernel policy context state</span>
+<span id="L45">45           hcontext hstate i))</span>
+<span id="L46">46     (i : Nat) :</span>
+<span id="L47">47     Filter.Eventually</span>
+<span id="L48">48       (fun omega : Omega =&gt;</span>
+<span id="L49">49         @Measure.map Omega ((j : Finset.Iic (i + 1)) -&gt; Prod Action Rat)</span>
+<span id="L50">50           mOmega inferInstance</span>
+<span id="L51">51           (fun y : Omega =&gt;</span>
+<span id="L52">52             History.finitePairHistoryOfTrace</span>
+<span id="L53">53               (generatedActionFromRewardHistory policy state defaultAction</span>
+<span id="L54">54                 reward y)</span>
+<span id="L55">55               (reward y) (i + 1))</span>
+<span id="L56">56           (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _</span>
+<span id="L57">57             ((History.historyFiltrationSucc</span>
+<span id="L58">58               (generatedActionFromRewardHistory policy state defaultAction</span>
+<span id="L59">59                 reward)</span>
+<span id="L60">60               reward</span>
+<span id="L61">61               (generatedActionFromRewardHistory_measurable</span>
+<span id="L62">62                 (policy := policy) (state := state)</span>
+<span id="L63">63                 (defaultAction := defaultAction) (reward := reward)</span>
+<span id="L64">64                 hreward hstate)</span>
+<span id="L65">65               hreward) i)</span>
+<span id="L66">66             omega) =</span>
+<span id="L67">67         RewardKernel.actionRewardPartialTrajectoryKernel rewardKernel policy</span>
+<span id="L68">68           (fun n history =&gt;</span>
+<span id="L69">69             context n (History.pairHistoryRewardProjection history))</span>
+<span id="L70">70           (fun n history =&gt;</span>
+<span id="L71">71             state n (History.pairHistoryRewardProjection history))</span>
+<span id="L72">72           (fun n : Nat =&gt;</span>
+<span id="L73">73             (hcontext n).comp</span>
+<span id="L74">74               (History.measurable_pairHistoryRewardProjection</span>
+<span id="L75">75                 (Action := Action) (Reward := Rat) n))</span>
+<span id="L76">76           (fun n : Nat =&gt;</span>
+<span id="L77">77             (hstate n).comp</span>
+<span id="L78">78               (History.measurable_pairHistoryRewardProjection</span>
+<span id="L79">79                 (Action := Action) (Reward := Rat) n))</span>
+<span id="L80">80           i (i + 1)</span>
+<span id="L81">81           (History.finitePairHistoryOfTrace</span>
+<span id="L82">82             (generatedActionFromRewardHistory policy state defaultAction</span>
+<span id="L83">83               reward omega)</span>
+<span id="L84">84             (reward omega) i))</span>
+<span id="L85">85       (ae</span>
+<span id="L86">86         (mu.trim</span>
+<span id="L87">87           ((History.historyFiltrationSucc</span>
+<span id="L88">88             (generatedActionFromRewardHistory policy state defaultAction</span>
+<span id="L89">89               reward)</span>
+<span id="L90">90             reward</span>
+<span id="L91">91             (generatedActionFromRewardHistory_measurable</span>
+<span id="L92">92               (policy := policy) (state := state)</span>
+<span id="L93">93               (defaultAction := defaultAction) (reward := reward)</span>
+<span id="L94">94               hreward hstate)</span>
+<span id="L95">95             hreward).le i))) := by</span>
+<span id="L96">96   let source :=</span>
+<span id="L97">97     historyStepKernelFamily_generatedActionPartialTrajectoryPairLawSource_of_condDistrib</span>
+<span id="L98">98       mu mu0 rewardKernel policy context state hcontext hstate defaultAction</span>
+<span id="L99">99         reward hreward hzero hcond</span>
+<span id="L100">100   simpa only using source.partialtraj_map_eq i</span>
+<span id="L101">101 </span>
+<span id="L102">102 /--</span>
+<span id="L103">103 An arbitrary measurable action/reward process has the full finite-pair</span>
+<span id="L104">104 `partialTraj` law at time `i` when its successor pair regular conditional</span>
+<span id="L105">105 distribution given the observed finite pair prefix is the configured</span>
+<span id="L106">106 history-step action/reward kernel.</span>
+<span id="L107">107 </span>
+<span id="L108">108 This is the unrestricted-action theorem-card route under a genuine upstream</span>
+<span id="L109">109 pair `condDistrib` law. It needs neither a generated-action equality nor a</span>
+<span id="L110">110 complete trajectory-law assumption.</span>
+<span id="L111">111 -/</span>
+<span id="L112">112 theorem actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_pair_condDistrib</span>
+<span id="L113">113     {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}</span>
+<span id="L114">114     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]</span>
+<span id="L115">115     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L116">116     [MeasurableSpace Action] [StandardBorelSpace Action]</span>
+<span id="L117">117     [MeasurableSingletonClass Action] [Countable Action]</span>
+<span id="L118">118     [Nonempty Omega] [Nonempty Action]</span>
+<span id="L119">119     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L120">120     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L121">121     (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)</span>
+<span id="L122">122     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L123">123     (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context)</span>
+<span id="L124">124     (state : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; State)</span>
+<span id="L125">125     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L126">126     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L127">127     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L128">128     (haction : forall t : Nat,</span>
+<span id="L129">129       Measurable (fun omega : Omega =&gt; action omega t))</span>
+<span id="L130">130     (hreward : forall t : Nat,</span>
+<span id="L131">131       Measurable (fun omega : Omega =&gt; reward omega t))</span>
+<span id="L132">132     (i : Nat)</span>
+<span id="L133">133     (hcond :</span>
+<span id="L134">134       Filter.EventuallyEq</span>
+<span id="L135">135         (ae (mu.map (fun omega : Omega =&gt;</span>
+<span id="L136">136           History.finitePairHistoryOfTrace</span>
+<span id="L137">137             (action omega) (reward omega) i)))</span>
+<span id="L138">138         (ProbabilityTheory.condDistrib</span>
+<span id="L139">139           (fun omega : Omega =&gt;</span>
+<span id="L140">140             (action omega (i + 1), reward omega (i + 1)))</span>
+<span id="L141">141           (fun omega : Omega =&gt;</span>
+<span id="L142">142             History.finitePairHistoryOfTrace</span>
+<span id="L143">143               (action omega) (reward omega) i)</span>
+<span id="L144">144           mu)</span>
+<span id="L145">145         (RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L146">146           (fun n history =&gt;</span>
+<span id="L147">147             context n (History.pairHistoryRewardProjection history))</span>
+<span id="L148">148           (fun n history =&gt;</span>
+<span id="L149">149             state n (History.pairHistoryRewardProjection history))</span>
+<span id="L150">150           (fun n : Nat =&gt;</span>
+<span id="L151">151             (hcontext n).comp</span>
+<span id="L152">152               (History.measurable_pairHistoryRewardProjection</span>
+<span id="L153">153                 (Action := Action) (Reward := Rat) n))</span>
+<span id="L154">154           (fun n : Nat =&gt;</span>
+<span id="L155">155             (hstate n).comp</span>
+<span id="L156">156               (History.measurable_pairHistoryRewardProjection</span>
+<span id="L157">157                 (Action := Action) (Reward := Rat) n))</span>
+<span id="L158">158           i)) :</span>
+<span id="L159">159     Filter.Eventually</span>
+<span id="L160">160       (fun omega : Omega =&gt;</span>
+<span id="L161">161         @Measure.map Omega ((j : Finset.Iic (i + 1)) -&gt; Prod Action Rat)</span>
+<span id="L162">162           mOmega inferInstance</span>
+<span id="L163">163           (fun y : Omega =&gt;</span>
+<span id="L164">164             History.finitePairHistoryOfTrace</span>
+<span id="L165">165               (action y) (reward y) (i + 1))</span>
+<span id="L166">166           (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _</span>
+<span id="L167">167             ((History.historyFiltrationSucc (mOmega := mOmega)</span>
+<span id="L168">168               action reward haction hreward) i)</span>
+<span id="L169">169             omega) =</span>
+<span id="L170">170         RewardKernel.actionRewardPartialTrajectoryKernel rewardKernel policy</span>
+<span id="L171">171           (fun n history =&gt;</span>
+<span id="L172">172             context n (History.pairHistoryRewardProjection history))</span>
+<span id="L173">173           (fun n history =&gt;</span>
+<span id="L174">174             state n (History.pairHistoryRewardProjection history))</span>
+<span id="L175">175           (fun n : Nat =&gt;</span>
+<span id="L176">176             (hcontext n).comp</span>
+<span id="L177">177               (History.measurable_pairHistoryRewardProjection</span>
+<span id="L178">178                 (Action := Action) (Reward := Rat) n))</span>
+<span id="L179">179           (fun n : Nat =&gt;</span>
+<span id="L180">180             (hstate n).comp</span>
+<span id="L181">181               (History.measurable_pairHistoryRewardProjection</span>
+<span id="L182">182                 (Action := Action) (Reward := Rat) n))</span>
+<span id="L183">183           i (i + 1)</span>
+<span id="L184">184           (History.finitePairHistoryOfTrace</span>
+<span id="L185">185             (action omega) (reward omega) i))</span>
+<span id="L186">186       (ae</span>
+<span id="L187">187         (mu.trim</span>
+<span id="L188">188           ((History.historyFiltrationSucc (mOmega := mOmega)</span>
+<span id="L189">189             action reward haction hreward).le i))) := by</span>
+<span id="L190">190   let pairHistory : Omega -&gt; ((j : Finset.Iic i) -&gt; Prod Action Rat) :=</span>
+<span id="L191">191     fun omega =&gt;</span>
+<span id="L192">192       History.finitePairHistoryOfTrace (action omega) (reward omega) i</span>
+<span id="L193">193   let nextPair : Omega -&gt; Prod Action Rat :=</span>
+<span id="L194">194     fun omega =&gt; (action omega (i + 1), reward omega (i + 1))</span>
+<span id="L195">195   let pairContext :</span>
+<span id="L196">196       (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Prod Action Rat) -&gt; Context :=</span>
+<span id="L197">197     fun n history =&gt;</span>
+<span id="L198">198       context n (History.pairHistoryRewardProjection history)</span>
+<span id="L199">199   let pairState :</span>
+<span id="L200">200       (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Prod Action Rat) -&gt; State :=</span>
+<span id="L201">201     fun n history =&gt;</span>
+<span id="L202">202       state n (History.pairHistoryRewardProjection history)</span>
+<span id="L203">203   let hpairContext : forall n : Nat, Measurable (pairContext n) := fun n =&gt;</span>
+<span id="L204">204     (hcontext n).comp</span>
+<span id="L205">205       (History.measurable_pairHistoryRewardProjection</span>
+<span id="L206">206         (Action := Action) (Reward := Rat) n)</span>
+<span id="L207">207   let hpairState : forall n : Nat, Measurable (pairState n) := fun n =&gt;</span>
+<span id="L208">208     (hstate n).comp</span>
+<span id="L209">209       (History.measurable_pairHistoryRewardProjection</span>
+<span id="L210">210         (Action := Action) (Reward := Rat) n)</span>
+<span id="L211">211   have h_pairHistory : Measurable pairHistory := by</span>
+<span id="L212">212     exact History.measurable_finitePairHistoryOfTrace</span>
+<span id="L213">213       action reward haction hreward i</span>
+<span id="L214">214   have h_nextPair : Measurable nextPair := by</span>
+<span id="L215">215     exact (haction (i + 1)).prod (hreward (i + 1))</span>
+<span id="L216">216   have h_pair_map_comap :=</span>
+<span id="L217">217     condExpKernel_map_eq_of_condDistrib_ae_eq_countable_trim</span>
+<span id="L218">218       (mu := mu)</span>
+<span id="L219">219       (X := nextPair)</span>
+<span id="L220">220       (Y := pairHistory)</span>
+<span id="L221">221       h_nextPair h_pairHistory</span>
+<span id="L222">222       (RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L223">223         pairContext pairState hpairContext hpairState i)</span>
+<span id="L224">224       (by simpa [nextPair, pairHistory, pairContext, pairState,</span>
+<span id="L225">225           hpairContext, hpairState] using hcond)</span>
+<span id="L226">226   let mHist : MeasurableSpace Omega :=</span>
+<span id="L227">227     (History.historyFiltrationSucc (mOmega := mOmega)</span>
+<span id="L228">228       action reward haction hreward) i</span>
+<span id="L229">229   let mComap : MeasurableSpace Omega :=</span>
+<span id="L230">230     (inferInstance :</span>
+<span id="L231">231       MeasurableSpace ((j : Finset.Iic i) -&gt; Prod Action Rat)).comap</span>
+<span id="L232">232         pairHistory</span>
+<span id="L233">233   have hfiltration : mHist = mComap := by</span>
+<span id="L234">234     simpa [mHist, mComap, pairHistory] using</span>
+<span id="L235">235       (History.historyFiltrationSucc_eq_comap_finitePairHistoryOfTrace</span>
+<span id="L236">236         (mOmega := mOmega) action reward haction hreward i)</span>
+<span id="L237">237   have hhist_le : mHist &lt;= mOmega := by</span>
+<span id="L238">238     dsimp [mHist]</span>
+<span id="L239">239     exact</span>
+<span id="L240">240       ((History.historyFiltrationSucc (mOmega := mOmega)</span>
+<span id="L241">241         action reward haction hreward).le i)</span>
+<span id="L242">242   have hcomap_le : mComap &lt;= mOmega := by</span>
+<span id="L243">243     simpa [mComap] using h_pairHistory.comap_le</span>
+<span id="L244">244   let pairMapLaw : MeasurableSpace Omega -&gt; Omega -&gt; Prop :=</span>
+<span id="L245">245     fun m omega =&gt;</span>
+<span id="L246">246       @Measure.map Omega (Prod Action Rat) mOmega inferInstance</span>
+<span id="L247">247           nextPair</span>
+<span id="L248">248           (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ m omega) =</span>
+<span id="L249">249         RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L250">250           pairContext pairState hpairContext hpairState i</span>
+<span id="L251">251           (pairHistory omega)</span>
+<span id="L252">252   let mHistWithLe : {m : MeasurableSpace Omega // m &lt;= mOmega} :=</span>
+<span id="L253">253     ⟨mHist, hhist_le⟩</span>
+<span id="L254">254   let mComapWithLe : {m : MeasurableSpace Omega // m &lt;= mOmega} :=</span>
+<span id="L255">255     ⟨mComap, hcomap_le⟩</span>
+<span id="L256">256   let pairMapEvent : {m : MeasurableSpace Omega // m &lt;= mOmega} -&gt; Prop :=</span>
+<span id="L257">257     fun m =&gt; Filter.Eventually (pairMapLaw m.1)</span>
+<span id="L258">258       (ae (mu.trim m.2))</span>
+<span id="L259">259   have h_pair_map_eq :</span>
+<span id="L260">260       Filter.Eventually</span>
+<span id="L261">261         (fun omega : Omega =&gt;</span>
+<span id="L262">262           @Measure.map Omega (Prod Action Rat) mOmega inferInstance</span>
+<span id="L263">263             nextPair</span>
+<span id="L264">264             (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _</span>
+<span id="L265">265               ((History.historyFiltrationSucc (mOmega := mOmega)</span>
+<span id="L266">266                 action reward haction hreward) i)</span>
+<span id="L267">267               omega) =</span>
+<span id="L268">268           RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L269">269             pairContext pairState hpairContext hpairState i</span>
+<span id="L270">270             (pairHistory omega))</span>
+<span id="L271">271         (ae</span>
+<span id="L272">272           (mu.trim</span>
+<span id="L273">273             ((History.historyFiltrationSucc (mOmega := mOmega)</span>
+<span id="L274">274               action reward haction hreward).le i))) := by</span>
+<span id="L275">275     have h_pair_map_mComap : pairMapEvent mComapWithLe := by</span>
+<span id="L276">276       simpa [pairMapEvent, mComapWithLe, pairMapLaw, mComap] using</span>
+<span id="L277">277         h_pair_map_comap</span>
+<span id="L278">278     have hm_eq : mHistWithLe = mComapWithLe := by</span>
+<span id="L279">279       apply Subtype.ext</span>
+<span id="L280">280       exact hfiltration</span>
+<span id="L281">281     have h_pair_map_mHist : pairMapEvent mHistWithLe := by</span>
+<span id="L282">282       exact hm_eq.symm ▸ h_pair_map_mComap</span>
+<span id="L283">283     simpa [pairMapLaw, mHist] using h_pair_map_mHist</span>
+<span id="L284">284   have h_extend_map_eq :=</span>
+<span id="L285">285     actionRewardPartialTrajectoryKernel_extend_map_eq_of_actionRewardHistoryStepKernelFamily_pair_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace</span>
+<span id="L286">286       (mOmega := mOmega)</span>
+<span id="L287">287       (mu := mu)</span>
+<span id="L288">288       (action := action)</span>
+<span id="L289">289       (rewardKernel := rewardKernel)</span>
+<span id="L290">290       (policy := policy)</span>
+<span id="L291">291       (context := context)</span>
+<span id="L292">292       (state := state)</span>
+<span id="L293">293       (hcontext := hcontext)</span>
+<span id="L294">294       (hstate := hstate)</span>
+<span id="L295">295       (reward := reward)</span>
+<span id="L296">296       (haction := haction)</span>
+<span id="L297">297       (hreward := hreward)</span>
+<span id="L298">298       (i := i)</span>
+<span id="L299">299       (by simpa [nextPair, pairHistory, pairContext, pairState,</span>
+<span id="L300">300           hpairContext, hpairState] using h_pair_map_eq)</span>
+<span id="L301">301   exact</span>
+<span id="L302">302     actionRewardPartialTrajectoryKernel_map_eq_of_extend_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace</span>
+<span id="L303">303       (mOmega := mOmega)</span>
+<span id="L304">304       (mu := mu)</span>
+<span id="L305">305       (action := action)</span>
+<span id="L306">306       (rewardKernel := rewardKernel)</span>
+<span id="L307">307       (policy := policy)</span>
+<span id="L308">308       (context := context)</span>
+<span id="L309">309       (state := state)</span>
+<span id="L310">310       (hcontext := hcontext)</span>
+<span id="L311">311       (hstate := hstate)</span>
+<span id="L312">312       (reward := reward)</span>
+<span id="L313">313       (haction := haction)</span>
+<span id="L314">314       (hreward := hreward)</span>
+<span id="L315">315       (i := i)</span>
+<span id="L316">316       h_extend_map_eq</span>
+<span id="L317">317 </span>
+<span id="L318">318 /--</span>
+<span id="L319">319 The zero-initialized successor centered-reward process is strongly adapted to</span>
+<span id="L320">320 the full action/reward history filtration for any measurable action trace.</span>
+<span id="L321">321 -/</span>
+<span id="L322">322 theorem centeredRewardSuccProcess_stronglyAdapted_historyFiltrationSucc</span>
+<span id="L323">323     {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}</span>
+<span id="L324">324     [mOmega : MeasurableSpace Omega]</span>
+<span id="L325">325     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L326">326     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L327">327     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L328">328     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L329">329     (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context)</span>
+<span id="L330">330     (state : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; State)</span>
+<span id="L331">331     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L332">332     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L333">333     (mean : Context -&gt; Action -&gt; Rat)</span>
+<span id="L334">334     (hmean : Measurable (fun pair : Prod Context Action =&gt; mean pair.1 pair.2))</span>
+<span id="L335">335     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L336">336     (haction : forall t : Nat,</span>
+<span id="L337">337       Measurable (fun omega : Omega =&gt; action omega t))</span>
+<span id="L338">338     (hreward : forall t : Nat,</span>
+<span id="L339">339       Measurable (fun omega : Omega =&gt; reward omega t)) :</span>
+<span id="L340">340     let F := History.historyFiltrationSucc action reward haction hreward</span>
+<span id="L341">341     let Y : Nat -&gt; Omega -&gt; Real := fun t omega =&gt;</span>
+<span id="L342">342       match t with</span>
+<span id="L343">343       | 0 =&gt; 0</span>
+<span id="L344">344       | i + 1 =&gt;</span>
+<span id="L345">345           (((reward omega (i + 1) -</span>
+<span id="L346">346             mean</span>
+<span id="L347">347               (context i</span>
+<span id="L348">348                 (History.finiteRewardHistoryOfTrace (reward omega) i))</span>
+<span id="L349">349               ((policy i).action</span>
+<span id="L350">350                 (state i</span>
+<span id="L351">351                   (History.finiteRewardHistoryOfTrace (reward omega) i))) :</span>
+<span id="L352">352               Rat) : Real))</span>
+<span id="L353">353     StronglyAdapted F Y := by</span>
+<span id="L354">354   let F := History.historyFiltrationSucc action reward haction hreward</span>
+<span id="L355">355   let Y : Nat -&gt; Omega -&gt; Real := fun t omega =&gt;</span>
+<span id="L356">356     match t with</span>
+<span id="L357">357     | 0 =&gt; 0</span>
+<span id="L358">358     | i + 1 =&gt;</span>
+<span id="L359">359         (((reward omega (i + 1) -</span>
+<span id="L360">360           mean</span>
+<span id="L361">361             (context i</span>
+<span id="L362">362               (History.finiteRewardHistoryOfTrace (reward omega) i))</span>
+<span id="L363">363             ((policy i).action</span>
+<span id="L364">364               (state i</span>
+<span id="L365">365                 (History.finiteRewardHistoryOfTrace (reward omega) i))) :</span>
+<span id="L366">366             Rat) : Real))</span>
+<span id="L367">367   change StronglyAdapted F Y</span>
+<span id="L368">368   intro t</span>
+<span id="L369">369   cases t with</span>
+<span id="L370">370   | zero =&gt;</span>
+<span id="L371">371       have hzero :</span>
+<span id="L372">372           @Measurable Omega Real (F 0) inferInstance</span>
+<span id="L373">373             (fun _omega : Omega =&gt; (0 : Real)) := measurable_const</span>
+<span id="L374">374       simpa [Y] using hzero.stronglyMeasurable</span>
+<span id="L375">375   | succ i =&gt;</span>
+<span id="L376">376       have hreward_succ :</span>
+<span id="L377">377           @Measurable Omega Rat (F (i + 1)) inferInstance</span>
+<span id="L378">378             (fun omega : Omega =&gt; reward omega (i + 1)) := by</span>
+<span id="L379">379         simpa [F, History.historyFiltrationSucc_apply] using</span>
+<span id="L380">380           (History.measurable_reward_mem_historyFiltration_of_lt</span>
+<span id="L381">381             (mOmega := mOmega) action reward haction hreward</span>
+<span id="L382">382             (Nat.lt_succ_self (i + 1)))</span>
+<span id="L383">383       have hhistory :</span>
+<span id="L384">384           @Measurable Omega ((j : Finset.Iic i) -&gt; Rat)</span>
+<span id="L385">385             (F (i + 1)) inferInstance</span>
+<span id="L386">386             (fun omega : Omega =&gt;</span>
+<span id="L387">387               History.finiteRewardHistoryOfTrace (reward omega) i) := by</span>
+<span id="L388">388         letI : MeasurableSpace Omega := F (i + 1)</span>
+<span id="L389">389         change Measurable</span>
+<span id="L390">390           (fun omega : Omega =&gt;</span>
+<span id="L391">391             History.finiteRewardHistoryOfTrace (reward omega) i)</span>
+<span id="L392">392         refine measurable_pi_lambda _ ?_</span>
+<span id="L393">393         intro j</span>
+<span id="L394">394         change Measurable (fun omega : Omega =&gt; reward omega j.1)</span>
+<span id="L395">395         change @Measurable Omega Rat (F (i + 1)) inferInstance</span>
+<span id="L396">396           (fun omega : Omega =&gt; reward omega j.1)</span>
+<span id="L397">397         simpa [F, History.historyFiltrationSucc_apply] using</span>
+<span id="L398">398           (History.measurable_reward_mem_historyFiltration_of_lt</span>
+<span id="L399">399             (mOmega := mOmega) action reward haction hreward</span>
+<span id="L400">400             (Nat.lt_succ_of_le</span>
+<span id="L401">401               (Nat.le_trans (Finset.mem_Iic.mp j.2) (Nat.le_succ i))))</span>
+<span id="L402">402       have hcontext_history :</span>
+<span id="L403">403           @Measurable Omega Context (F (i + 1)) inferInstance</span>
+<span id="L404">404             (fun omega : Omega =&gt;</span>
+<span id="L405">405               context i</span>
+<span id="L406">406                 (History.finiteRewardHistoryOfTrace (reward omega) i)) :=</span>
+<span id="L407">407         (hcontext i).comp hhistory</span>
+<span id="L408">408       have hstate_history :</span>
+<span id="L409">409           @Measurable Omega State (F (i + 1)) inferInstance</span>
+<span id="L410">410             (fun omega : Omega =&gt;</span>
+<span id="L411">411               state i</span>
+<span id="L412">412                 (History.finiteRewardHistoryOfTrace (reward omega) i)) :=</span>
+<span id="L413">413         (hstate i).comp hhistory</span>
+<span id="L414">414       have hselected_action :</span>
+<span id="L415">415           @Measurable Omega Action (F (i + 1)) inferInstance</span>
+<span id="L416">416             (fun omega : Omega =&gt;</span>
+<span id="L417">417               (policy i).action</span>
+<span id="L418">418                 (state i</span>
+<span id="L419">419                   (History.finiteRewardHistoryOfTrace (reward omega) i))) :=</span>
+<span id="L420">420         (policy i).measurable_action.comp hstate_history</span>
+<span id="L421">421       have hselected_mean :</span>
+<span id="L422">422           @Measurable Omega Rat (F (i + 1)) inferInstance</span>
+<span id="L423">423             (fun omega : Omega =&gt;</span>
+<span id="L424">424               mean</span>
+<span id="L425">425                 (context i</span>
+<span id="L426">426                   (History.finiteRewardHistoryOfTrace (reward omega) i))</span>
+<span id="L427">427                 ((policy i).action</span>
+<span id="L428">428                   (state i</span>
+<span id="L429">429                     (History.finiteRewardHistoryOfTrace (reward omega) i)))) :=</span>
+<span id="L430">430         hmean.comp (hcontext_history.prodMk hselected_action)</span>
+<span id="L431">431       have hreward_real :</span>
+<span id="L432">432           @Measurable Omega Real (F (i + 1)) inferInstance</span>
+<span id="L433">433             (fun omega : Omega =&gt; ((reward omega (i + 1) : Rat) : Real)) :=</span>
+<span id="L434">434         (measurable_of_countable (fun value : Rat =&gt; ((value : Rat) : Real))).comp</span>
+<span id="L435">435           hreward_succ</span>
+<span id="L436">436       have hmean_real :</span>
+<span id="L437">437           @Measurable Omega Real (F (i + 1)) inferInstance</span>
+<span id="L438">438             (fun omega : Omega =&gt;</span>
+<span id="L439">439               ((mean</span>
+<span id="L440">440                 (context i</span>
+<span id="L441">441                   (History.finiteRewardHistoryOfTrace (reward omega) i))</span>
+<span id="L442">442                 ((policy i).action</span>
+<span id="L443">443                   (state i</span>
+<span id="L444">444                     (History.finiteRewardHistoryOfTrace (reward omega) i))) :</span>
+<span id="L445">445                 Rat) : Real)) :=</span>
+<span id="L446">446         (measurable_of_countable (fun value : Rat =&gt; ((value : Rat) : Real))).comp</span>
+<span id="L447">447           hselected_mean</span>
+<span id="L448">448       have hcentered := hreward_real.sub hmean_real</span>
+<span id="L449">449       simpa [Y, Rat.cast_sub] using hcentered.stronglyMeasurable</span>
+<span id="L450">450 </span>
+<span id="L451">451 /--</span>
+<span id="L452">452 An explicit successor-pair conditional distribution and the native</span>
+<span id="L453">453 trimmed-a.e. selected-variance bound yield the centered-reward conditional MGF</span>
+<span id="L454">454 witness for an arbitrary measurable action trace.</span>
+<span id="L455">455 -/</span>
+<span id="L456">456 theorem centeredReward_succ_hasCondSubgaussianMGF_of_pair_condDistrib_of_ae_variance</span>
+<span id="L457">457     {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}</span>
+<span id="L458">458     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]</span>
+<span id="L459">459     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L460">460     [MeasurableSpace Action] [StandardBorelSpace Action]</span>
+<span id="L461">461     [MeasurableSingletonClass Action] [Countable Action]</span>
+<span id="L462">462     [Nonempty Omega] [Nonempty Action]</span>
+<span id="L463">463     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L464">464     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L465">465     (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)</span>
+<span id="L466">466     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L467">467     (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context)</span>
+<span id="L468">468     (state : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; State)</span>
+<span id="L469">469     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L470">470     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L471">471     (mean : Context -&gt; Action -&gt; Rat)</span>
+<span id="L472">472     (varianceProxy : Context -&gt; Action -&gt; NNReal)</span>
+<span id="L473">473     (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)</span>
+<span id="L474">474     (hmean : Measurable (fun pair : Prod Context Action =&gt; mean pair.1 pair.2))</span>
+<span id="L475">475     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L476">476     (haction : forall t : Nat,</span>
+<span id="L477">477       Measurable (fun omega : Omega =&gt; action omega t))</span>
+<span id="L478">478     (hreward : forall t : Nat,</span>
+<span id="L479">479       Measurable (fun omega : Omega =&gt; reward omega t))</span>
+<span id="L480">480     (i : Nat) (c : NNReal)</span>
+<span id="L481">481     (hvariance :</span>
+<span id="L482">482       Filter.Eventually</span>
+<span id="L483">483         (fun omega : Omega =&gt;</span>
+<span id="L484">484           varianceProxy</span>
+<span id="L485">485               (context i</span>
+<span id="L486">486                 (History.finiteRewardHistoryOfTrace (reward omega) i))</span>
+<span id="L487">487               ((policy i).action</span>
+<span id="L488">488                 (state i</span>
+<span id="L489">489                   (History.finiteRewardHistoryOfTrace (reward omega) i))) &lt;= c)</span>
+<span id="L490">490         (ae (mu.trim</span>
+<span id="L491">491           ((History.historyFiltrationSucc (mOmega := mOmega)</span>
+<span id="L492">492             action reward haction hreward).le i))))</span>
+<span id="L493">493     (hcond :</span>
+<span id="L494">494       Filter.EventuallyEq</span>
+<span id="L495">495         (ae (mu.map (fun omega : Omega =&gt;</span>
+<span id="L496">496           History.finitePairHistoryOfTrace</span>
+<span id="L497">497             (action omega) (reward omega) i)))</span>
+<span id="L498">498         (ProbabilityTheory.condDistrib</span>
+<span id="L499">499           (fun omega : Omega =&gt;</span>
+<span id="L500">500             (action omega (i + 1), reward omega (i + 1)))</span>
+<span id="L501">501           (fun omega : Omega =&gt;</span>
+<span id="L502">502             History.finitePairHistoryOfTrace</span>
+<span id="L503">503               (action omega) (reward omega) i)</span>
+<span id="L504">504           mu)</span>
+<span id="L505">505         (RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L506">506           (fun n history =&gt;</span>
+<span id="L507">507             context n (History.pairHistoryRewardProjection history))</span>
+<span id="L508">508           (fun n history =&gt;</span>
+<span id="L509">509             state n (History.pairHistoryRewardProjection history))</span>
+<span id="L510">510           (fun n : Nat =&gt;</span>
+<span id="L511">511             (hcontext n).comp</span>
+<span id="L512">512               (History.measurable_pairHistoryRewardProjection</span>
+<span id="L513">513                 (Action := Action) (Reward := Rat) n))</span>
+<span id="L514">514           (fun n : Nat =&gt;</span>
+<span id="L515">515             (hstate n).comp</span>
+<span id="L516">516               (History.measurable_pairHistoryRewardProjection</span>
+<span id="L517">517                 (Action := Action) (Reward := Rat) n))</span>
+<span id="L518">518           i)) :</span>
+<span id="L519">519     ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L520">520       ((History.historyFiltrationSucc (mOmega := mOmega)</span>
+<span id="L521">521         action reward haction hreward) i)</span>
+<span id="L522">522       ((History.historyFiltrationSucc (mOmega := mOmega)</span>
+<span id="L523">523         action reward haction hreward).le i)</span>
+<span id="L524">524       (fun omega : Omega =&gt;</span>
+<span id="L525">525         (((reward omega (i + 1) -</span>
+<span id="L526">526           mean</span>
+<span id="L527">527             (context i</span>
+<span id="L528">528               (History.finiteRewardHistoryOfTrace (reward omega) i))</span>
+<span id="L529">529             ((policy i).action</span>
+<span id="L530">530               (state i</span>
+<span id="L531">531                 (History.finiteRewardHistoryOfTrace (reward omega) i))) :</span>
+<span id="L532">532             Rat) : Real)))</span>
+<span id="L533">533       c mu := by</span>
+<span id="L534">534   let pairContext :</span>
+<span id="L535">535       (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Prod Action Rat) -&gt; Context :=</span>
+<span id="L536">536     fun n history =&gt; context n (History.pairHistoryRewardProjection history)</span>
+<span id="L537">537   let pairState :</span>
+<span id="L538">538       (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Prod Action Rat) -&gt; State :=</span>
+<span id="L539">539     fun n history =&gt; state n (History.pairHistoryRewardProjection history)</span>
+<span id="L540">540   let hpairContext : forall n : Nat, Measurable (pairContext n) := fun n =&gt;</span>
+<span id="L541">541     (hcontext n).comp</span>
+<span id="L542">542       (History.measurable_pairHistoryRewardProjection</span>
+<span id="L543">543         (Action := Action) (Reward := Rat) n)</span>
+<span id="L544">544   let hpairState : forall n : Nat, Measurable (pairState n) := fun n =&gt;</span>
+<span id="L545">545     (hstate n).comp</span>
+<span id="L546">546       (History.measurable_pairHistoryRewardProjection</span>
+<span id="L547">547         (Action := Action) (Reward := Rat) n)</span>
+<span id="L548">548   have hfull :=</span>
+<span id="L549">549     actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace_of_pair_condDistrib</span>
+<span id="L550">550       (mOmega := mOmega) mu action rewardKernel policy context state hcontext</span>
+<span id="L551">551         hstate reward haction hreward i hcond</span>
+<span id="L552">552   have hpair :=</span>
+<span id="L553">553     actionRewardHistoryStepKernelFamily_pair_map_eq_of_actionRewardPartialTrajectoryKernel_map_eq_historyFiltrationSucc_finitePairHistoryOfTrace</span>
+<span id="L554">554       (mOmega := mOmega) (mu := mu) (action := action)</span>
+<span id="L555">555       (rewardKernel := rewardKernel) (policy := policy) (context := context)</span>
+<span id="L556">556       (state := state) (hcontext := hcontext) (hstate := hstate)</span>
+<span id="L557">557       (reward := reward) (haction := haction) (hreward := hreward)</span>
+<span id="L558">558       (i := i) hfull</span>
+<span id="L559">559   have hhistory : Measurable</span>
+<span id="L560">560       (fun omega : Omega =&gt;</span>
+<span id="L561">561         History.finiteRewardHistoryOfTrace (reward omega) i) :=</span>
+<span id="L562">562     History.measurable_finiteRewardHistoryOfTrace reward hreward i</span>
+<span id="L563">563   have hcontext_omega := (hcontext i).comp hhistory</span>
+<span id="L564">564   have hstate_omega := (hstate i).comp hhistory</span>
+<span id="L565">565   have hselected_action := (policy i).measurable_action.comp hstate_omega</span>
+<span id="L566">566   have hselected_mean := hmean.comp (hcontext_omega.prodMk hselected_action)</span>
+<span id="L567">567   have hreward_real : Measurable</span>
+<span id="L568">568       (fun omega : Omega =&gt; ((reward omega (i + 1) : Rat) : Real)) :=</span>
+<span id="L569">569     (measurable_of_countable (fun value : Rat =&gt; ((value : Rat) : Real))).comp</span>
+<span id="L570">570       (hreward (i + 1))</span>
+<span id="L571">571   have hmean_real : Measurable</span>
+<span id="L572">572       (fun omega : Omega =&gt;</span>
+<span id="L573">573         ((mean</span>
+<span id="L574">574           (context i (History.finiteRewardHistoryOfTrace (reward omega) i))</span>
+<span id="L575">575           ((policy i).action</span>
+<span id="L576">576             (state i</span>
+<span id="L577">577               (History.finiteRewardHistoryOfTrace (reward omega) i))) : Rat) :</span>
+<span id="L578">578           Real)) :=</span>
+<span id="L579">579     (measurable_of_countable (fun value : Rat =&gt; ((value : Rat) : Real))).comp</span>
+<span id="L580">580       hselected_mean</span>
+<span id="L581">581   have hcentered : Measurable</span>
+<span id="L582">582       (fun omega : Omega =&gt;</span>
+<span id="L583">583         ((reward omega (i + 1) -</span>
+<span id="L584">584           mean</span>
+<span id="L585">585             (context i</span>
+<span id="L586">586               (History.finiteRewardHistoryOfTrace (reward omega) i))</span>
+<span id="L587">587             ((policy i).action</span>
+<span id="L588">588               (state i</span>
+<span id="L589">589                 (History.finiteRewardHistoryOfTrace (reward omega) i))) : Rat) :</span>
+<span id="L590">590           Real)) := by</span>
+<span id="L591">591     simpa [Rat.cast_sub] using hreward_real.sub hmean_real</span>
+<span id="L592">592   have hrewardMap :</span>
+<span id="L593">593       Filter.Eventually</span>
+<span id="L594">594         (fun omega : Omega =&gt;</span>
+<span id="L595">595           @Measure.map Omega Rat mOmega inferInstance</span>
+<span id="L596">596             (fun y : Omega =&gt; reward y (i + 1))</span>
+<span id="L597">597             (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _</span>
+<span id="L598">598               ((History.historyFiltrationSucc (mOmega := mOmega)</span>
+<span id="L599">599                 action reward haction hreward) i) omega) =</span>
+<span id="L600">600           RewardKernel.historyStepKernelFamily rewardKernel policy context state</span>
+<span id="L601">601             hcontext hstate i</span>
+<span id="L602">602             (History.finiteRewardHistoryOfTrace (reward omega) i))</span>
+<span id="L603">603         (ae (mu.trim</span>
+<span id="L604">604           ((History.historyFiltrationSucc (mOmega := mOmega)</span>
+<span id="L605">605             action reward haction hreward).le i))) := by</span>
+<span id="L606">606     filter_upwards [hpair] with omega hpair_eq</span>
+<span id="L607">607     let condKernel : Measure Omega :=</span>
+<span id="L608">608       @ProbabilityTheory.condExpKernel Omega mOmega _ mu _</span>
+<span id="L609">609         ((History.historyFiltrationSucc (mOmega := mOmega)</span>
+<span id="L610">610           action reward haction hreward) i) omega</span>
+<span id="L611">611     let nextPair : Omega -&gt; Prod Action Rat :=</span>
+<span id="L612">612       fun y =&gt; (action y (i + 1), reward y (i + 1))</span>
+<span id="L613">613     have hnextPair : Measurable nextPair :=</span>
+<span id="L614">614       (haction (i + 1)).prod (hreward (i + 1))</span>
+<span id="L615">615     have hleft :</span>
+<span id="L616">616         Measure.map Prod.snd (Measure.map nextPair condKernel) =</span>
+<span id="L617">617           @Measure.map Omega Rat mOmega inferInstance</span>
+<span id="L618">618             (fun y : Omega =&gt; reward y (i + 1)) condKernel := by</span>
+<span id="L619">619       rw [Measure.map_map measurable_snd hnextPair]</span>
+<span id="L620">620       rfl</span>
+<span id="L621">621     have hstep :=</span>
+<span id="L622">622       RewardKernel.actionRewardHistoryStepKernelFamily_reward_map</span>
+<span id="L623">623         rewardKernel policy pairContext pairState hpairContext hpairState i</span>
+<span id="L624">624         (History.finitePairHistoryOfTrace</span>
+<span id="L625">625           (action omega) (reward omega) i)</span>
+<span id="L626">626     calc</span>
+<span id="L627">627       @Measure.map Omega Rat mOmega inferInstance</span>
+<span id="L628">628           (fun y : Omega =&gt; reward y (i + 1)) condKernel =</span>
+<span id="L629">629         Measure.map Prod.snd (Measure.map nextPair condKernel) := hleft.symm</span>
+<span id="L630">630       _ = Measure.map Prod.snd</span>
+<span id="L631">631           (RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L632">632             pairContext pairState hpairContext hpairState i</span>
+<span id="L633">633             (History.finitePairHistoryOfTrace</span>
+<span id="L634">634               (action omega) (reward omega) i)) := by</span>
+<span id="L635">635         rw [hpair_eq]</span>
+<span id="L636">636       _ = RewardKernel.historyStepKernelFamily rewardKernel policy context state</span>
+<span id="L637">637           hcontext hstate i</span>
+<span id="L638">638           (History.finiteRewardHistoryOfTrace (reward omega) i) := by</span>
+<span id="L639">639         simpa [pairContext, pairState,</span>
+<span id="L640">640           History.pairHistoryRewardProjection_finitePairHistoryOfTrace,</span>
+<span id="L641">641           RewardKernel.historyStepKernelFamily_apply] using hstep</span>
+<span id="L642">642   exact</span>
+<span id="L643">643     centeredReward_succ_hasCondSubgaussianMGF_of_historyStepKernelFamily_condExpKernel_map_eq_historyFiltrationSucc</span>
+<span id="L644">644       (mOmega := mOmega) (mu := mu) (action := action)</span>
+<span id="L645">645       (rewardKernel := rewardKernel) (policy := policy) (context := context)</span>
+<span id="L646">646       (state := state) (hcontext := hcontext) (hstate := hstate)</span>
+<span id="L647">647       (mean := mean) (varianceProxy := varianceProxy) (law := law)</span>
+<span id="L648">648       (reward := reward) (haction := haction) (hreward := hreward)</span>
+<span id="L649">649       (i := i) (c := c) hcentered hrewardMap hvariance</span>
+<span id="L650">650 </span>
+<span id="L651">651 /--</span>
+<span id="L652">652 Compatibility wrapper for a pointwise selected-history variance ceiling.</span>
+<span id="L653">653 </span>
+<span id="L654">654 The core pair-conditional-law transfer only needs the corresponding</span>
+<span id="L655">655 trimmed-a.e. variance event.</span>
+<span id="L656">656 -/</span>
+<span id="L657">657 theorem centeredReward_succ_hasCondSubgaussianMGF_of_pair_condDistrib</span>
+<span id="L658">658     {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}</span>
+<span id="L659">659     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]</span>
+<span id="L660">660     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L661">661     [MeasurableSpace Action] [StandardBorelSpace Action]</span>
+<span id="L662">662     [MeasurableSingletonClass Action] [Countable Action]</span>
+<span id="L663">663     [Nonempty Omega] [Nonempty Action]</span>
+<span id="L664">664     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L665">665     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L666">666     (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)</span>
+<span id="L667">667     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L668">668     (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context)</span>
+<span id="L669">669     (state : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; State)</span>
+<span id="L670">670     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L671">671     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L672">672     (mean : Context -&gt; Action -&gt; Rat)</span>
+<span id="L673">673     (varianceProxy : Context -&gt; Action -&gt; NNReal)</span>
+<span id="L674">674     (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)</span>
+<span id="L675">675     (hmean : Measurable (fun pair : Prod Context Action =&gt; mean pair.1 pair.2))</span>
+<span id="L676">676     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L677">677     (haction : forall t : Nat,</span>
+<span id="L678">678       Measurable (fun omega : Omega =&gt; action omega t))</span>
+<span id="L679">679     (hreward : forall t : Nat,</span>
+<span id="L680">680       Measurable (fun omega : Omega =&gt; reward omega t))</span>
+<span id="L681">681     (i : Nat) (c : NNReal)</span>
+<span id="L682">682     (hvariance : forall history : ((j : Finset.Iic i) -&gt; Rat),</span>
+<span id="L683">683       varianceProxy (context i history)</span>
+<span id="L684">684         ((policy i).action (state i history)) &lt;= c)</span>
+<span id="L685">685     (hcond :</span>
+<span id="L686">686       Filter.EventuallyEq</span>
+<span id="L687">687         (ae (mu.map (fun omega : Omega =&gt;</span>
+<span id="L688">688           History.finitePairHistoryOfTrace</span>
+<span id="L689">689             (action omega) (reward omega) i)))</span>
+<span id="L690">690         (ProbabilityTheory.condDistrib</span>
+<span id="L691">691           (fun omega : Omega =&gt;</span>
+<span id="L692">692             (action omega (i + 1), reward omega (i + 1)))</span>
+<span id="L693">693           (fun omega : Omega =&gt;</span>
+<span id="L694">694             History.finitePairHistoryOfTrace</span>
+<span id="L695">695               (action omega) (reward omega) i)</span>
+<span id="L696">696           mu)</span>
+<span id="L697">697         (RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L698">698           (fun n history =&gt;</span>
+<span id="L699">699             context n (History.pairHistoryRewardProjection history))</span>
+<span id="L700">700           (fun n history =&gt;</span>
+<span id="L701">701             state n (History.pairHistoryRewardProjection history))</span>
+<span id="L702">702           (fun n : Nat =&gt;</span>
+<span id="L703">703             (hcontext n).comp</span>
+<span id="L704">704               (History.measurable_pairHistoryRewardProjection</span>
+<span id="L705">705                 (Action := Action) (Reward := Rat) n))</span>
+<span id="L706">706           (fun n : Nat =&gt;</span>
+<span id="L707">707             (hstate n).comp</span>
+<span id="L708">708               (History.measurable_pairHistoryRewardProjection</span>
+<span id="L709">709                 (Action := Action) (Reward := Rat) n))</span>
+<span id="L710">710           i)) :</span>
+<span id="L711">711     ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L712">712       ((History.historyFiltrationSucc (mOmega := mOmega)</span>
+<span id="L713">713         action reward haction hreward) i)</span>
+<span id="L714">714       ((History.historyFiltrationSucc (mOmega := mOmega)</span>
+<span id="L715">715         action reward haction hreward).le i)</span>
+<span id="L716">716       (fun omega : Omega =&gt;</span>
+<span id="L717">717         (((reward omega (i + 1) -</span>
+<span id="L718">718           mean</span>
+<span id="L719">719             (context i</span>
+<span id="L720">720               (History.finiteRewardHistoryOfTrace (reward omega) i))</span>
+<span id="L721">721             ((policy i).action</span>
+<span id="L722">722               (state i</span>
+<span id="L723">723                 (History.finiteRewardHistoryOfTrace (reward omega) i))) :</span>
+<span id="L724">724             Rat) : Real)))</span>
+<span id="L725">725       c mu := by</span>
+<span id="L726">726   apply</span>
+<span id="L727">727     centeredReward_succ_hasCondSubgaussianMGF_of_pair_condDistrib_of_ae_variance</span>
+<span id="L728">728       (mOmega := mOmega) (mu := mu) (action := action)</span>
+<span id="L729">729       (rewardKernel := rewardKernel) (policy := policy) (context := context)</span>
+<span id="L730">730       (state := state) (hcontext := hcontext) (hstate := hstate)</span>
+<span id="L731">731       (mean := mean) (varianceProxy := varianceProxy) (law := law)</span>
+<span id="L732">732       (hmean := hmean) (reward := reward) (haction := haction)</span>
+<span id="L733">733       (hreward := hreward) (i := i) (c := c) ?_ hcond</span>
+<span id="L734">734   exact Filter.Eventually.of_forall (fun omega =&gt;</span>
+<span id="L735">735     hvariance (History.finiteRewardHistoryOfTrace (reward omega) i))</span>
+<span id="L736">736 </span>
+<span id="L737">737 /--</span>
+<span id="L738">738 Azuma-Hoeffding upper tail for an arbitrary measurable action/reward process</span>
+<span id="L739">739 whose every successor-pair conditional law is the configured history-step</span>
+<span id="L740">740 kernel.</span>
+<span id="L741">741 -/</span>
+<span id="L742">742 theorem actionRewardHistoryStepKernelFamily_centeredRewardSuccProcess_sum_tail_ennreal_of_pair_condDistrib</span>
+<span id="L743">743     {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}</span>
+<span id="L744">744     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]</span>
+<span id="L745">745     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L746">746     [MeasurableSpace Action] [StandardBorelSpace Action]</span>
+<span id="L747">747     [MeasurableSingletonClass Action] [Countable Action]</span>
+<span id="L748">748     [Nonempty Omega] [Nonempty Action]</span>
+<span id="L749">749     (mu : Measure Omega) [IsProbabilityMeasure mu]</span>
+<span id="L750">750     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L751">751     (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)</span>
+<span id="L752">752     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L753">753     (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context)</span>
+<span id="L754">754     (state : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; State)</span>
+<span id="L755">755     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L756">756     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L757">757     (mean : Context -&gt; Action -&gt; Rat)</span>
+<span id="L758">758     (varianceProxy : Context -&gt; Action -&gt; NNReal)</span>
+<span id="L759">759     (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)</span>
+<span id="L760">760     (hmean : Measurable (fun pair : Prod Context Action =&gt; mean pair.1 pair.2))</span>
+<span id="L761">761     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L762">762     (haction : forall t : Nat,</span>
+<span id="L763">763       Measurable (fun omega : Omega =&gt; action omega t))</span>
+<span id="L764">764     (hreward : forall t : Nat,</span>
+<span id="L765">765       Measurable (fun omega : Omega =&gt; reward omega t))</span>
+<span id="L766">766     (hcondLaw : forall i : Nat,</span>
+<span id="L767">767       Filter.EventuallyEq</span>
+<span id="L768">768         (ae (mu.map (fun omega : Omega =&gt;</span>
+<span id="L769">769           History.finitePairHistoryOfTrace</span>
+<span id="L770">770             (action omega) (reward omega) i)))</span>
+<span id="L771">771         (ProbabilityTheory.condDistrib</span>
+<span id="L772">772           (fun omega : Omega =&gt;</span>
+<span id="L773">773             (action omega (i + 1), reward omega (i + 1)))</span>
+<span id="L774">774           (fun omega : Omega =&gt;</span>
+<span id="L775">775             History.finitePairHistoryOfTrace</span>
+<span id="L776">776               (action omega) (reward omega) i)</span>
+<span id="L777">777           mu)</span>
+<span id="L778">778         (RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L779">779           (fun n history =&gt;</span>
+<span id="L780">780             context n (History.pairHistoryRewardProjection history))</span>
+<span id="L781">781           (fun n history =&gt;</span>
+<span id="L782">782             state n (History.pairHistoryRewardProjection history))</span>
+<span id="L783">783           (fun n : Nat =&gt;</span>
+<span id="L784">784             (hcontext n).comp</span>
+<span id="L785">785               (History.measurable_pairHistoryRewardProjection</span>
+<span id="L786">786                 (Action := Action) (Reward := Rat) n))</span>
+<span id="L787">787           (fun n : Nat =&gt;</span>
+<span id="L788">788             (hstate n).comp</span>
+<span id="L789">789               (History.measurable_pairHistoryRewardProjection</span>
+<span id="L790">790                 (Action := Action) (Reward := Rat) n))</span>
+<span id="L791">791           i))</span>
+<span id="L792">792     (varianceCeiling : Nat -&gt; NNReal)</span>
+<span id="L793">793     (hvariance : forall i : Nat,</span>
+<span id="L794">794       forall history : ((j : Finset.Iic i) -&gt; Rat),</span>
+<span id="L795">795         varianceProxy (context i history)</span>
+<span id="L796">796           ((policy i).action (state i history)) &lt;= varianceCeiling i)</span>
+<span id="L797">797     (n : Nat) {eps : Real} (heps : 0 &lt;= eps) :</span>
+<span id="L798">798     let Y : Nat -&gt; Omega -&gt; Real := fun t omega =&gt;</span>
+<span id="L799">799       match t with</span>
+<span id="L800">800       | 0 =&gt; 0</span>
+<span id="L801">801       | i + 1 =&gt;</span>
+<span id="L802">802           (((reward omega (i + 1) -</span>
+<span id="L803">803             mean</span>
+<span id="L804">804               (context i</span>
+<span id="L805">805                 (History.finiteRewardHistoryOfTrace (reward omega) i))</span>
+<span id="L806">806               ((policy i).action</span>
+<span id="L807">807                 (state i</span>
+<span id="L808">808                   (History.finiteRewardHistoryOfTrace (reward omega) i))) :</span>
+<span id="L809">809               Rat) : Real))</span>
+<span id="L810">810     let cY : Nat -&gt; NNReal := fun t =&gt;</span>
+<span id="L811">811       match t with</span>
+<span id="L812">812       | 0 =&gt; 0</span>
+<span id="L813">813       | i + 1 =&gt; varianceCeiling i</span>
+<span id="L814">814     mu {omega | eps &lt;= (Finset.range n).sum (fun t =&gt; Y t omega)} &lt;=</span>
+<span id="L815">815       ENNReal.ofReal</span>
+<span id="L816">816         (Real.exp</span>
+<span id="L817">817           (-eps ^ 2 /</span>
+<span id="L818">818             (2 * (((Finset.range n).sum cY : NNReal) : Real)))) := by</span>
+<span id="L819">819   let F := History.historyFiltrationSucc action reward haction hreward</span>
+<span id="L820">820   let Y : Nat -&gt; Omega -&gt; Real := fun t omega =&gt;</span>
+<span id="L821">821     match t with</span>
+<span id="L822">822     | 0 =&gt; 0</span>
+<span id="L823">823     | i + 1 =&gt;</span>
+<span id="L824">824         (((reward omega (i + 1) -</span>
+<span id="L825">825           mean</span>
+<span id="L826">826             (context i</span>
+<span id="L827">827               (History.finiteRewardHistoryOfTrace (reward omega) i))</span>
+<span id="L828">828             ((policy i).action</span>
+<span id="L829">829               (state i</span>
+<span id="L830">830                 (History.finiteRewardHistoryOfTrace (reward omega) i))) :</span>
+<span id="L831">831             Rat) : Real))</span>
+<span id="L832">832   let cY : Nat -&gt; NNReal := fun t =&gt;</span>
+<span id="L833">833     match t with</span>
+<span id="L834">834     | 0 =&gt; 0</span>
+<span id="L835">835     | i + 1 =&gt; varianceCeiling i</span>
+<span id="L836">836   have hadapted : StronglyAdapted F Y := by</span>
+<span id="L837">837     simpa [F, Y] using</span>
+<span id="L838">838       (centeredRewardSuccProcess_stronglyAdapted_historyFiltrationSucc</span>
+<span id="L839">839         (mOmega := mOmega) action policy context state hcontext hstate mean</span>
+<span id="L840">840         hmean reward haction hreward)</span>
+<span id="L841">841   have hzeroMGF :</span>
+<span id="L842">842       ProbabilityTheory.HasSubgaussianMGF (Y 0) (cY 0) mu := by</span>
+<span id="L843">843     simp [Y, cY]</span>
+<span id="L844">844   have hcondMGF : forall i, i &lt; n - 1 -&gt;</span>
+<span id="L845">845       ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L846">846         (F i) (F.le i) (Y (i + 1)) (cY (i + 1)) mu := by</span>
+<span id="L847">847     intro i _hi</span>
+<span id="L848">848     have hmgf :=</span>
+<span id="L849">849       centeredReward_succ_hasCondSubgaussianMGF_of_pair_condDistrib</span>
+<span id="L850">850         (mOmega := mOmega) mu action rewardKernel policy context state hcontext</span>
+<span id="L851">851           hstate mean varianceProxy law hmean reward haction hreward i</span>
+<span id="L852">852           (varianceCeiling i) (hvariance i) (hcondLaw i)</span>
+<span id="L853">853     simpa [F, Y, cY] using hmgf</span>
+<span id="L854">854   have htail :=</span>
+<span id="L855">855     Concentration.condSubGaussian_sum_tail_ennreal_of_stronglyAdapted</span>
+<span id="L856">856       (mu := mu) (Y := Y) (cY := cY) (F := F)</span>
+<span id="L857">857       hadapted hzeroMGF n hcondMGF heps</span>
+<span id="L858">858   simpa [F, Y, cY] using htail</span>
+<span id="L859">859 </span>
+<span id="L860">860 /--</span>
+<span id="L861">861 Finite-horizon Azuma-Hoeffding upper tail for an arbitrary measurable</span>
+<span id="L862">862 action/reward process.</span>
+<span id="L863">863 </span>
+<span id="L864">864 Only successor-pair laws and trimmed-a.e. selected-variance bounds at indices</span>
+<span id="L865">865 `i &lt; n - 1` are required.  This is the native contract consumed by the</span>
+<span id="L866">866 finite-sum conditional sub-Gaussian assembler.</span>
+<span id="L867">867 -/</span>
+<span id="L868">868 theorem actionRewardHistoryStepKernelFamily_centeredRewardSuccProcess_sum_tail_ennreal_of_pair_condDistrib_on_horizon</span>
+<span id="L869">869     {Omega : Type u} {Context : Type v} {State : Type w} {Action : Type x}</span>
+<span id="L870">870     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]</span>
+<span id="L871">871     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L872">872     [MeasurableSpace Action] [StandardBorelSpace Action]</span>
+<span id="L873">873     [MeasurableSingletonClass Action] [Countable Action]</span>
+<span id="L874">874     [Nonempty Omega] [Nonempty Action]</span>
+<span id="L875">875     (mu : Measure Omega) [IsProbabilityMeasure mu]</span>
+<span id="L876">876     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L877">877     (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)</span>
+<span id="L878">878     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L879">879     (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context)</span>
+<span id="L880">880     (state : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; State)</span>
+<span id="L881">881     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L882">882     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L883">883     (mean : Context -&gt; Action -&gt; Rat)</span>
+<span id="L884">884     (varianceProxy : Context -&gt; Action -&gt; NNReal)</span>
+<span id="L885">885     (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)</span>
+<span id="L886">886     (hmean : Measurable (fun pair : Prod Context Action =&gt; mean pair.1 pair.2))</span>
+<span id="L887">887     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L888">888     (haction : forall t : Nat,</span>
+<span id="L889">889       Measurable (fun omega : Omega =&gt; action omega t))</span>
+<span id="L890">890     (hreward : forall t : Nat,</span>
+<span id="L891">891       Measurable (fun omega : Omega =&gt; reward omega t))</span>
+<span id="L892">892     (n : Nat)</span>
+<span id="L893">893     (hcondLaw : forall i : Nat, i &lt; n - 1 -&gt;</span>
+<span id="L894">894       Filter.EventuallyEq</span>
+<span id="L895">895         (ae (mu.map (fun omega : Omega =&gt;</span>
+<span id="L896">896           History.finitePairHistoryOfTrace</span>
+<span id="L897">897             (action omega) (reward omega) i)))</span>
+<span id="L898">898         (ProbabilityTheory.condDistrib</span>
+<span id="L899">899           (fun omega : Omega =&gt;</span>
+<span id="L900">900             (action omega (i + 1), reward omega (i + 1)))</span>
+<span id="L901">901           (fun omega : Omega =&gt;</span>
+<span id="L902">902             History.finitePairHistoryOfTrace</span>
+<span id="L903">903               (action omega) (reward omega) i)</span>
+<span id="L904">904           mu)</span>
+<span id="L905">905         (RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L906">906           (fun n history =&gt;</span>
+<span id="L907">907             context n (History.pairHistoryRewardProjection history))</span>
+<span id="L908">908           (fun n history =&gt;</span>
+<span id="L909">909             state n (History.pairHistoryRewardProjection history))</span>
+<span id="L910">910           (fun n : Nat =&gt;</span>
+<span id="L911">911             (hcontext n).comp</span>
+<span id="L912">912               (History.measurable_pairHistoryRewardProjection</span>
+<span id="L913">913                 (Action := Action) (Reward := Rat) n))</span>
+<span id="L914">914           (fun n : Nat =&gt;</span>
+<span id="L915">915             (hstate n).comp</span>
+<span id="L916">916               (History.measurable_pairHistoryRewardProjection</span>
+<span id="L917">917                 (Action := Action) (Reward := Rat) n))</span>
+<span id="L918">918           i))</span>
+<span id="L919">919     (varianceCeiling : Nat -&gt; NNReal)</span>
+<span id="L920">920     (hvariance : forall i : Nat, i &lt; n - 1 -&gt;</span>
+<span id="L921">921       Filter.Eventually</span>
+<span id="L922">922         (fun omega : Omega =&gt;</span>
+<span id="L923">923           varianceProxy</span>
+<span id="L924">924               (context i</span>
+<span id="L925">925                 (History.finiteRewardHistoryOfTrace (reward omega) i))</span>
+<span id="L926">926               ((policy i).action</span>
+<span id="L927">927                 (state i</span>
+<span id="L928">928                   (History.finiteRewardHistoryOfTrace (reward omega) i))) &lt;=</span>
+<span id="L929">929             varianceCeiling i)</span>
+<span id="L930">930         (ae (mu.trim</span>
+<span id="L931">931           ((History.historyFiltrationSucc (mOmega := mOmega)</span>
+<span id="L932">932             action reward haction hreward).le i))))</span>
+<span id="L933">933     {eps : Real} (heps : 0 &lt;= eps) :</span>
+<span id="L934">934     let Y : Nat -&gt; Omega -&gt; Real := fun t omega =&gt;</span>
+<span id="L935">935       match t with</span>
+<span id="L936">936       | 0 =&gt; 0</span>
+<span id="L937">937       | i + 1 =&gt;</span>
+<span id="L938">938           (((reward omega (i + 1) -</span>
+<span id="L939">939             mean</span>
+<span id="L940">940               (context i</span>
+<span id="L941">941                 (History.finiteRewardHistoryOfTrace (reward omega) i))</span>
+<span id="L942">942               ((policy i).action</span>
+<span id="L943">943                 (state i</span>
+<span id="L944">944                   (History.finiteRewardHistoryOfTrace (reward omega) i))) :</span>
+<span id="L945">945               Rat) : Real))</span>
+<span id="L946">946     let cY : Nat -&gt; NNReal := fun t =&gt;</span>
+<span id="L947">947       match t with</span>
+<span id="L948">948       | 0 =&gt; 0</span>
+<span id="L949">949       | i + 1 =&gt; varianceCeiling i</span>
+<span id="L950">950     mu {omega | eps &lt;= (Finset.range n).sum (fun t =&gt; Y t omega)} &lt;=</span>
+<span id="L951">951       ENNReal.ofReal</span>
+<span id="L952">952         (Real.exp</span>
+<span id="L953">953           (-eps ^ 2 /</span>
+<span id="L954">954             (2 * (((Finset.range n).sum cY : NNReal) : Real)))) := by</span>
+<span id="L955">955   let F := History.historyFiltrationSucc action reward haction hreward</span>
+<span id="L956">956   let Y : Nat -&gt; Omega -&gt; Real := fun t omega =&gt;</span>
+<span id="L957">957     match t with</span>
+<span id="L958">958     | 0 =&gt; 0</span>
+<span id="L959">959     | i + 1 =&gt;</span>
+<span id="L960">960         (((reward omega (i + 1) -</span>
+<span id="L961">961           mean</span>
+<span id="L962">962             (context i</span>
+<span id="L963">963               (History.finiteRewardHistoryOfTrace (reward omega) i))</span>
+<span id="L964">964             ((policy i).action</span>
+<span id="L965">965               (state i</span>
+<span id="L966">966                 (History.finiteRewardHistoryOfTrace (reward omega) i))) :</span>
+<span id="L967">967             Rat) : Real))</span>
+<span id="L968">968   let cY : Nat -&gt; NNReal := fun t =&gt;</span>
+<span id="L969">969     match t with</span>
+<span id="L970">970     | 0 =&gt; 0</span>
+<span id="L971">971     | i + 1 =&gt; varianceCeiling i</span>
+<span id="L972">972   have hadapted : StronglyAdapted F Y := by</span>
+<span id="L973">973     simpa [F, Y] using</span>
+<span id="L974">974       (centeredRewardSuccProcess_stronglyAdapted_historyFiltrationSucc</span>
+<span id="L975">975         (mOmega := mOmega) action policy context state hcontext hstate mean</span>
+<span id="L976">976         hmean reward haction hreward)</span>
+<span id="L977">977   have hzeroMGF :</span>
+<span id="L978">978       ProbabilityTheory.HasSubgaussianMGF (Y 0) (cY 0) mu := by</span>
+<span id="L979">979     simp [Y, cY]</span>
+<span id="L980">980   have hcondMGF : forall i, i &lt; n - 1 -&gt;</span>
+<span id="L981">981       ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L982">982         (F i) (F.le i) (Y (i + 1)) (cY (i + 1)) mu := by</span>
+<span id="L983">983     intro i hi</span>
+<span id="L984">984     have hmgf :=</span>
+<span id="L985">985       centeredReward_succ_hasCondSubgaussianMGF_of_pair_condDistrib_of_ae_variance</span>
+<span id="L986">986         (mOmega := mOmega) mu action rewardKernel policy context state hcontext</span>
+<span id="L987">987           hstate mean varianceProxy law hmean reward haction hreward i</span>
+<span id="L988">988           (varianceCeiling i) (hvariance i hi) (hcondLaw i hi)</span>
+<span id="L989">989     simpa [F, Y, cY] using hmgf</span>
+<span id="L990">990   have htail :=</span>
+<span id="L991">991     Concentration.condSubGaussian_sum_tail_ennreal_of_stronglyAdapted</span>
+<span id="L992">992       (mu := mu) (Y := Y) (cY := cY) (F := F)</span>
+<span id="L993">993       hadapted hzeroMGF n hcondMGF heps</span>
+<span id="L994">994   simpa [F, Y, cY] using htail</span>
+<span id="L995">995 </span>
+<span id="L996">996 /--</span>
+<span id="L997">997 Canonical action/reward `trajMeasure` Azuma-Hoeffding upper tail.</span>
+<span id="L998">998 </span>
+<span id="L999">999 The Mathlib Ionescu--Tulcea trajectory law supplies every successor-pair</span>
+<span id="L1000">1000 conditional distribution.  The caller only provides the centered reward</span>
+<span id="L1001">1001 kernel law and horizon-local selected-history variance ceilings.</span>
+<span id="L1002">1002 -/</span>
+<span id="L1003">1003 theorem actionRewardHistoryStepKernelFamily_centeredRewardSuccProcess_sum_tail_ennreal_trajMeasure_on_horizon</span>
+<span id="L1004">1004     {Context : Type v} {State : Type w} {Action : Type x}</span>
+<span id="L1005">1005     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1006">1006     [MeasurableSpace Action] [StandardBorelSpace Action]</span>
+<span id="L1007">1007     [MeasurableSingletonClass Action] [Countable Action] [Nonempty Action]</span>
+<span id="L1008">1008     (mu0 : Measure (Prod Action Rat)) [IsProbabilityMeasure mu0]</span>
+<span id="L1009">1009     (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)</span>
+<span id="L1010">1010     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1011">1011     (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context)</span>
+<span id="L1012">1012     (state : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; State)</span>
+<span id="L1013">1013     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1014">1014     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1015">1015     (mean : Context -&gt; Action -&gt; Rat)</span>
+<span id="L1016">1016     (varianceProxy : Context -&gt; Action -&gt; NNReal)</span>
+<span id="L1017">1017     (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)</span>
+<span id="L1018">1018     (hmean : Measurable (fun pair : Prod Context Action =&gt; mean pair.1 pair.2))</span>
+<span id="L1019">1019     (n : Nat)</span>
+<span id="L1020">1020     (varianceCeiling : Nat -&gt; NNReal)</span>
+<span id="L1021">1021     (hvariance : forall i : Nat, i &lt; n - 1 -&gt;</span>
+<span id="L1022">1022       forall history : ((j : Finset.Iic i) -&gt; Rat),</span>
+<span id="L1023">1023         varianceProxy (context i history)</span>
+<span id="L1024">1024           ((policy i).action (state i history)) &lt;= varianceCeiling i)</span>
+<span id="L1025">1025     {eps : Real} (heps : 0 &lt;= eps) :</span>
+<span id="L1026">1026     let pairContext :</span>
+<span id="L1027">1027         (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod Action Rat) -&gt; Context :=</span>
+<span id="L1028">1028       fun i history =&gt;</span>
+<span id="L1029">1029         context i (History.pairHistoryRewardProjection history)</span>
+<span id="L1030">1030     let pairState :</span>
+<span id="L1031">1031         (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod Action Rat) -&gt; State :=</span>
+<span id="L1032">1032       fun i history =&gt;</span>
+<span id="L1033">1033         state i (History.pairHistoryRewardProjection history)</span>
+<span id="L1034">1034     let hpairContext : forall i : Nat, Measurable (pairContext i) := fun i =&gt;</span>
+<span id="L1035">1035       (hcontext i).comp</span>
+<span id="L1036">1036         (History.measurable_pairHistoryRewardProjection</span>
+<span id="L1037">1037           (Action := Action) (Reward := Rat) i)</span>
+<span id="L1038">1038     let hpairState : forall i : Nat, Measurable (pairState i) := fun i =&gt;</span>
+<span id="L1039">1039       (hstate i).comp</span>
+<span id="L1040">1040         (History.measurable_pairHistoryRewardProjection</span>
+<span id="L1041">1041           (Action := Action) (Reward := Rat) i)</span>
+<span id="L1042">1042     let stepKernel :=</span>
+<span id="L1043">1043       RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L1044">1044         pairContext pairState hpairContext hpairState</span>
+<span id="L1045">1045     let mu :=</span>
+<span id="L1046">1046       ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L1047">1047         (X := fun _ : Nat =&gt; Prod Action Rat) mu0 stepKernel</span>
+<span id="L1048">1048     let reward : (Nat -&gt; Prod Action Rat) -&gt; RewardTrace Rat :=</span>
+<span id="L1049">1049       fun trajectory t =&gt; (trajectory t).2</span>
+<span id="L1050">1050     let Y : Nat -&gt; (Nat -&gt; Prod Action Rat) -&gt; Real := fun t trajectory =&gt;</span>
+<span id="L1051">1051       match t with</span>
+<span id="L1052">1052       | 0 =&gt; 0</span>
+<span id="L1053">1053       | i + 1 =&gt;</span>
+<span id="L1054">1054           (((reward trajectory (i + 1) -</span>
+<span id="L1055">1055             mean</span>
+<span id="L1056">1056               (context i</span>
+<span id="L1057">1057                 (History.finiteRewardHistoryOfTrace</span>
+<span id="L1058">1058                   (reward trajectory) i))</span>
+<span id="L1059">1059               ((policy i).action</span>
+<span id="L1060">1060                 (state i</span>
+<span id="L1061">1061                   (History.finiteRewardHistoryOfTrace</span>
+<span id="L1062">1062                     (reward trajectory) i))) : Rat) : Real))</span>
+<span id="L1063">1063     let cY : Nat -&gt; NNReal := fun t =&gt;</span>
+<span id="L1064">1064       match t with</span>
+<span id="L1065">1065       | 0 =&gt; 0</span>
+<span id="L1066">1066       | i + 1 =&gt; varianceCeiling i</span>
+<span id="L1067">1067     mu {trajectory | eps &lt;= (Finset.range n).sum (fun t =&gt; Y t trajectory)} &lt;=</span>
+<span id="L1068">1068       ENNReal.ofReal</span>
+<span id="L1069">1069         (Real.exp</span>
+<span id="L1070">1070           (-eps ^ 2 /</span>
+<span id="L1071">1071             (2 * (((Finset.range n).sum cY : NNReal) : Real)))) := by</span>
+<span id="L1072">1072   let pairContext :</span>
+<span id="L1073">1073       (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod Action Rat) -&gt; Context :=</span>
+<span id="L1074">1074     fun i history =&gt;</span>
+<span id="L1075">1075       context i (History.pairHistoryRewardProjection history)</span>
+<span id="L1076">1076   let pairState :</span>
+<span id="L1077">1077       (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod Action Rat) -&gt; State :=</span>
+<span id="L1078">1078     fun i history =&gt;</span>
+<span id="L1079">1079       state i (History.pairHistoryRewardProjection history)</span>
+<span id="L1080">1080   let hpairContext : forall i : Nat, Measurable (pairContext i) := fun i =&gt;</span>
+<span id="L1081">1081     (hcontext i).comp</span>
+<span id="L1082">1082       (History.measurable_pairHistoryRewardProjection</span>
+<span id="L1083">1083         (Action := Action) (Reward := Rat) i)</span>
+<span id="L1084">1084   let hpairState : forall i : Nat, Measurable (pairState i) := fun i =&gt;</span>
+<span id="L1085">1085     (hstate i).comp</span>
+<span id="L1086">1086       (History.measurable_pairHistoryRewardProjection</span>
+<span id="L1087">1087         (Action := Action) (Reward := Rat) i)</span>
+<span id="L1088">1088   let stepKernel :=</span>
+<span id="L1089">1089     RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L1090">1090       pairContext pairState hpairContext hpairState</span>
+<span id="L1091">1091   let mu :=</span>
+<span id="L1092">1092     ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L1093">1093       (X := fun _ : Nat =&gt; Prod Action Rat) mu0 stepKernel</span>
+<span id="L1094">1094   let action : (Nat -&gt; Prod Action Rat) -&gt; ActionTrace Action :=</span>
+<span id="L1095">1095     fun trajectory t =&gt; (trajectory t).1</span>
+<span id="L1096">1096   let reward : (Nat -&gt; Prod Action Rat) -&gt; RewardTrace Rat :=</span>
+<span id="L1097">1097     fun trajectory t =&gt; (trajectory t).2</span>
+<span id="L1098">1098   have haction : forall t : Nat,</span>
+<span id="L1099">1099       Measurable (fun trajectory : Nat -&gt; Prod Action Rat =&gt;</span>
+<span id="L1100">1100         action trajectory t) := fun t =&gt;</span>
+<span id="L1101">1101     measurable_fst.comp (measurable_pi_apply t)</span>
+<span id="L1102">1102   have hreward : forall t : Nat,</span>
+<span id="L1103">1103       Measurable (fun trajectory : Nat -&gt; Prod Action Rat =&gt;</span>
+<span id="L1104">1104         reward trajectory t) := fun t =&gt;</span>
+<span id="L1105">1105     measurable_snd.comp (measurable_pi_apply t)</span>
+<span id="L1106">1106   apply</span>
+<span id="L1107">1107     actionRewardHistoryStepKernelFamily_centeredRewardSuccProcess_sum_tail_ennreal_of_pair_condDistrib_on_horizon</span>
+<span id="L1108">1108       (mu := mu) (action := action) (rewardKernel := rewardKernel)</span>
+<span id="L1109">1109       (policy := policy) (context := context) (state := state)</span>
+<span id="L1110">1110       (hcontext := hcontext) (hstate := hstate) (mean := mean)</span>
+<span id="L1111">1111       (varianceProxy := varianceProxy) (law := law) (hmean := hmean)</span>
+<span id="L1112">1112       (reward := reward) (haction := haction) (hreward := hreward)</span>
+<span id="L1113">1113       (n := n) ?_ varianceCeiling ?_ heps</span>
+<span id="L1114">1114   · intro i _hi</span>
+<span id="L1115">1115     have hcanonical :=</span>
+<span id="L1116">1116       RewardKernel.actionRewardHistoryStepKernelFamily_condDistrib_trajMeasure</span>
+<span id="L1117">1117         mu0 rewardKernel policy pairContext pairState hpairContext hpairState i</span>
+<span id="L1118">1118     simpa [mu, stepKernel, action, reward, pairContext, pairState,</span>
+<span id="L1119">1119       hpairContext, hpairState, History.finitePairHistoryOfTrace] using</span>
+<span id="L1120">1120         hcanonical</span>
+<span id="L1121">1121   · intro i hi</span>
+<span id="L1122">1122     exact Filter.Eventually.of_forall (fun trajectory =&gt;</span>
+<span id="L1123">1123       hvariance i hi</span>
+<span id="L1124">1124         (History.finiteRewardHistoryOfTrace (reward trajectory) i))</span>
+<span id="L1125">1125 </span>
+<span id="L1126">1126 end ConditionalExpectationReward</span>
+<span id="L1127">1127 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

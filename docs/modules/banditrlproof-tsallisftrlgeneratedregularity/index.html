@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.TsallisFTRLGeneratedRegularity · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.TsallisFTRLGeneratedRegularity · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.TsallisFTRLGeneratedRegularity · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Tsallis-FTRL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Tsallis<wbr>FTRL<wbr>Generated<wbr>Regularity</h1>
+  <p class="lede">This module discharges integrability assumptions for the generated pure half-Tsallis stability route. The finite sampling law cancels the importance-weight denominator in the conditional absolute moment, while the simplex contracts uniformly bound the remaining finite sums.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/TsallisFTRLGeneratedRegularity.lean.html"><code>BanditRLProof/TsallisFTRLGeneratedRegularity.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/tsallis/index.html">8. Tsallis-FTRL, corruption, and nonstationarity</a></dd></div>
+    <div><dt>Declarations</dt><dd>9</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-tsallisftrlrecursivetrajectory/index.html"><code>BanditRLProof.TsallisFTRLRecursiveTrajectory</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-tsallisftrlgeneratedmeasurability/index.html"><code>BanditRLProof.TsallisFTRLGeneratedMeasurability</code></a>, <a href="../banditrlproof-tsallisrefinedimportanceweightedmoment/index.html"><code>BanditRLProof.TsallisRefinedImportanceWeightedMoment</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-0876032190ed">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.finiteSimplex_apply_le_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every supported coordinate of a finite simplex point is at most one.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteSimplex_apply_le_one {Action : Type u} {arms : Finset Action} {p : Action -&gt; Real} (hp : FTRL.finiteSimplex arms p) {action : Action} (haction : action ∈ arms) : p action &lt;= <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFTRLGeneratedRegularity.lean.html#L20">Source line 20</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-057995ee3b83">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.prob_mul_abs_importanceWeightedStabilityScore_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Sampling mass cancels the inverse probability in one realized stability
+score, leaving a bound by the current and updated selected coordinates.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> prob_mul_abs_importanceWeightedStabilityScore_le {History : Type u} {Action : Type v} [DecidableEq Action] (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real) (next : History -&gt; Action -&gt; Action -&gt; Real) (history : History) (chosen : Action) (hchosen : chosen ∈ arms) (hnextSimplex : FTRL.finiteSimplex arms (next history chosen)) (hprobPos : <span class="num">0</span> &lt; prob history chosen) (hloss : <span class="num">0</span> &lt;= loss history chosen ∧ loss history chosen &lt;= <span class="num">1</span>) : prob history chosen * |importanceWeightedStabilityScore arms prob loss next (history, chosen)| &lt;= prob history chosen + next history chosen chosen</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFTRLGeneratedRegularity.lean.html#L31">Source line 31</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0f72c5dcd9f7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integrable_finiteActionMeasure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every real-valued function is integrable under a finite action law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_finiteActionMeasure {Action : Type u} [MeasurableSpace Action] [MeasurableSingletonClass Action] (arms : Finset Action) (prob : Action -&gt; Real) (f : Action -&gt; Real) : Integrable f (Exp3.finiteActionMeasure arms prob)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFTRLGeneratedRegularity.lean.html#L99">Source line 99</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c1af29d198aa">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integrable_importanceWeightedStabilityScore_finiteActionKernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A measurable one-round stability score is automatically integrable under
+its finite sampling kernel.  No uniform lower probability floor is needed.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_importanceWeightedStabilityScore_finiteActionKernel {History : Type u} {Action : Type v} [MeasurableSpace History] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (historyMu : Measure History) [IsFiniteMeasure historyMu] (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real) (next : History -&gt; Action -&gt; Action -&gt; Real) (source : Exp3.MeasurableFiniteActionDistribution arms prob) (hprobPos : <span class="kw">forall</span> history action, action ∈ arms -&gt; <span class="num">0</span> &lt; prob history action) (hnextSimplex : <span class="kw">forall</span> history chosen, chosen ∈ arms -&gt; FTRL.finiteSimplex arms (next history chosen)) (hloss : <span class="kw">forall</span> history action, action ∈ arms -&gt; <span class="num">0</span> &lt;= loss history action ∧ loss history action &lt;= <span class="num">1</span>) (hscore : Measurable (importanceWeightedStabilityScore arms prob loss next)) : Integrable (importanceWeightedStabilityScore arms prob loss next) (historyMu ⊗ₘ Exp3.finiteActionKernel arms prob source)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFTRLGeneratedRegularity.lean.html#L110">Source line 110</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5e675dd7a637">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integrable_halfPowerStabilityBound_of_finiteSimplex</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The half-power stability budget is uniformly bounded and hence integrable
+under every finite history measure.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_halfPowerStabilityBound_of_finiteSimplex {History : Type u} {Action : Type v} [MeasurableSpace History] (historyMu : Measure History) [IsFiniteMeasure historyMu] (arms : Finset Action) (eta : Real) (prob : History -&gt; Action -&gt; Real) (source : Exp3.MeasurableFiniteActionDistribution arms prob) : Integrable (halfPowerStabilityBound arms eta prob) historyMu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFTRLGeneratedRegularity.lean.html#L195">Source line 195</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-723d0fd44f56">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sampledHalfTsallisPolicyAt_eq_finiteActionKernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The environment-lifted generated policy is exactly the finite-action
+kernel carried by its measurable distribution source.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledHalfTsallisPolicyAt_eq_finiteActionKernel {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (selector : HalfTsallisFiniteHistorySelectorMeasurability arms harms eta) (n : Nat) : sampledHalfTsallisPolicyAt (Env := Env) arms harms eta selector n = Exp3.finiteActionKernel arms (sampledHalfTsallisProbabilityAt (Env := Env) arms harms eta n) (sampledHalfTsallisEnvironmentHistoryDistributionSource (Env := Env) arms harms eta selector n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFTRLGeneratedRegularity.lean.html#L238">Source line 238</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-17accea74c9d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integrable_sampledHalfTsallisHistoryActionStabilityAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Measurability of the generated stability score now suffices for its
+integrability under the generated history/action product law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_sampledHalfTsallisHistoryActionStabilityAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (selector : HalfTsallisFiniteHistorySelectorMeasurability arms harms eta) (loss : Exp3.PredictableLossVector Env Action) (n : Nat) (hscore : Measurable (sampledHalfTsallisHistoryActionStabilityAt arms harms eta loss n)) : Integrable (sampledHalfTsallisHistoryActionStabilityAt arms harms eta loss n) (((prior ⊗ₘ sampledHalfTsallisTrajectoryKernel arms harms eta selector loss.environment).map (sampledHalfTsallisHistoryAt n)) ⊗ₘ sampledHalfTsallisPolicyAt (Env := Env) arms harms eta selector n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFTRLGeneratedRegularity.lean.html#L259">Source line 259</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-25b579f5cb1a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integrable_sampledHalfTsallisHalfPowerBoundAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The generated half-power budget is automatically integrable under every
+generated history marginal.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_sampledHalfTsallisHalfPowerBoundAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (selector : HalfTsallisFiniteHistorySelectorMeasurability arms harms eta) (loss : Exp3.PredictableLossVector Env Action) (n : Nat) : Integrable (sampledHalfTsallisHalfPowerBoundAt (Env := Env) arms harms eta n) ((prior ⊗ₘ sampledHalfTsallisTrajectoryKernel arms harms eta selector loss.environment).map (sampledHalfTsallisHistoryAt n))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFTRLGeneratedRegularity.lean.html#L308">Source line 308</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d911d966e961">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_sum_sampledHalfTsallisSuccessorStability_le_integral_sum_halfPowerStabilityBound_of_measurable</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Generated finite-horizon actual-successor stability with both integrability
+contracts discharged.  Stability-score measurability remains the exact
+selector/update regularity boundary.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_sum_sampledHalfTsallisSuccessorStability_le_integral_sum_halfPowerStabilityBound_of_measurable {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (horizon : Nat) (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (heta : <span class="num">0</span> &lt; eta) (selector : HalfTsallisFiniteHistorySelectorMeasurability arms harms eta) (loss : Exp3.PredictableLossVector Env Action) (hscore : <span class="kw">forall</span> n, Measurable (sampledHalfTsallisHistoryActionStabilityAt arms harms eta loss n)) : <span class="kw">let</span> mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel arms harms eta selector loss.environment integral mu (<span class="kw">fun</span> sample =&gt; (Finset.range horizon).sum (<span class="kw">fun</span> n =&gt; sampledHalfTsallisSuccessorStabilityAt arms harms eta loss n sample)) &lt;= integral mu (<span class="kw">fun</span> sample =&gt; (Finset.range horizon).sum (<span class="kw">fun</span> n =&gt; sampledHalfTsallisHalfPowerBoundAt (Env := Env) arms harms eta n (sampledHalfTsallisHistoryAt n sample)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFTRLGeneratedRegularity.lean.html#L335">Source line 335</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

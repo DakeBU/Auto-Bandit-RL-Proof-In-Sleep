@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.DelayedFeedback.EliminatedArmInitialization · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.DelayedFeedback.EliminatedArmInitialization · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.DelayedFeedback.EliminatedArmInitialization · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Frontier</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Delayed<wbr>Feedback.<wbr>Eliminated<wbr>Arm<wbr>Initialization</h1>
+  <p class="lede">This module records the numerical state created for each arm in the line-7 elimination set after line 8 of the frozen Delayed-SAPO algorithm. It follows physical PDF page 22, Algorithm 5 lines 9--10: the elimination round and processed prefix are frozen, the initial inactive-arm probability is formed from the processed pull count, the surrogate gap is eight empirical widths, and the first EAP phase is initialized.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html"><code>BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/frontier/index.html">10. Automation, resources, and open routes</a></dd></div>
+    <div><dt>Declarations</dt><dd>31</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-delayedfeedback-orderedprocessingtransition/index.html"><code>BanditRLProof.DelayedFeedback.OrderedProcessingTransition</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-ac0ed65bef79">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.DelayedFeedback.delayedSAPOInitialEliminatedProbability</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Algorithm 5 line 10&#x27;s initial sampling probability
+`p_i^1 = 1/(2K) + n_i(S)/(2T)`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> delayedSAPOInitialEliminatedProbability (armCount horizon pullCount : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L27">Source line 27</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cca63e7bd8c3">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.DelayedFeedback.delayedSAPOInitialPhaseTarget</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Algorithm 5 line 10&#x27;s first EAP phase target
+`N_i^1 = 1280/(p_i^1 * (Delta-tilde_i)^2)`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> delayedSAPOInitialPhaseTarget (probability surrogateGap : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L34">Source line 34</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4acbb8615a2d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.sourceEmpiricalWidthScale_pos</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A positive source scale makes the capped inverse-square-root width
+strictly positive, including the zero-count branch where the width is one.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sourceEmpiricalWidthScale_pos (scale count : Real) (hscale : <span class="num">0</span> &lt; scale) : <span class="num">0</span> &lt; sourceEmpiricalWidthScale scale count</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L40">Source line 40</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2e6f04468698">
+  <summary>
+    <span class="kind">structure</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Per-arm data created by Algorithm 5 line 10.
+
+`processedAtProbabilityLevel j` represents the source sets
+`C_i^(p_i^1 * 2^(-j))`; line 10 initializes every represented level to the
+empty set.  Later EAP calls and their phase transitions remain a separate
+state-machine leaf.</p>
+    <pre class="lean-code"><code><span class="kw">structure</span> DelayedSAPOEliminatedArmInitialization (K : Nat) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L55">Source line 55</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-620073522fe6">
+  <summary>
+    <span class="kind">abbrev</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmBank</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Registry of EAP data.  Active arms have not yet entered EAP and are
+therefore represented by `none`.</p>
+    <pre class="lean-code"><code><span class="kw">abbrev</span> DelayedSAPOEliminatedArmBank (K : Nat)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L70">Source line 70</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-58cf8bec3ec0">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.DelayedFeedback.ActiveArmsUninitialized</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Round-start invariant needed to justify that line 10 initializes rather
+than resets every arm in the newly eliminated set.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> ActiveArmsUninitialized {K : Nat} (state : DelayedSAPOStructuralRoundState K) (bank : DelayedSAPOEliminatedArmBank K) : Prop</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L75">Source line 75</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d7ec9b9f25ae">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Construct exactly the line-10 data for one candidate arm from the
+post-line-4 numerical snapshot.  Membership in the line-7 elimination set is
+enforced by `initializeIfEliminated` below.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> ofProcessOne {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : DelayedSAPOEliminatedArmInitialization K</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L85">Source line 85</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2cb7ae0e9173">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeIfEliminated</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Algorithm 5 lines 9--10 initialize precisely the arms selected by the
+line-7 elimination set.  Returning `Option` keeps that domain visible instead
+of silently producing EAP state for an arm that remains active.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> initializeIfEliminated {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : Option (DelayedSAPOEliminatedArmInitialization K)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L112">Source line 112</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-03259dcf0b87">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pointwise line-10 update of an existing EAP registry.  Arms in the new
+line-7 elimination set receive the literal source initializer; every other
+arm keeps its prior state.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> initializeNewlyEliminated {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (prior : DelayedSAPOEliminatedArmBank K) : DelayedSAPOEliminatedArmBank K</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L124">Source line 124</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fbd6f0aab817">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeIfEliminated_eq_some_iff</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> initializeIfEliminated_eq_some_iff {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : initializeIfEliminated step horizon i = some (ofProcessOne step horizon i) &lt;-&gt; i ∈ (step.toPreEliminationSummary.toConfidenceSnapshot horizon).eliminated</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L136">Source line 136</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7184bd119485">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeIfEliminated_eq_none_iff</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> initializeIfEliminated_eq_none_iff {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : initializeIfEliminated step horizon i = none &lt;-&gt; i ∉ (step.toPreEliminationSummary.toConfidenceSnapshot horizon).eliminated</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L159">Source line 159</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3e214586b15a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated_of_mem</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> initializeNewlyEliminated_of_mem {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (prior : Fin K -&gt; Option (DelayedSAPOEliminatedArmInitialization K)) (i : Fin K) (hi : i ∈ (step.toPreEliminationSummary.toConfidenceSnapshot horizon).eliminated) : initializeNewlyEliminated step horizon prior i = some (ofProcessOne step horizon i)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L181">Source line 181</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0e5b7eb0bc57">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated_of_not_mem</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> initializeNewlyEliminated_of_not_mem {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (prior : Fin K -&gt; Option (DelayedSAPOEliminatedArmInitialization K)) (i : Fin K) (hi : i ∉ (step.toPreEliminationSummary.toConfidenceSnapshot horizon).eliminated) : initializeNewlyEliminated step horizon prior i = prior i</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L194">Source line 194</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3d6fa0fb47d5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.mem_eliminated_of_initializeNewlyEliminated_ne_prior</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Line 10 can change an arm&#x27;s EAP-bank entry only when line 7 selected that
+arm for elimination in the same snapshot.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> mem_eliminated_of_initializeNewlyEliminated_ne_prior {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (prior : Fin K -&gt; Option (DelayedSAPOEliminatedArmInitialization K)) (i : Fin K) (hchanged : initializeNewlyEliminated step horizon prior i ≠ prior i) : i ∈ (step.toPreEliminationSummary.toConfidenceSnapshot horizon).eliminated</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L207">Source line 207</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-57eb80c3be45">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated_eq_prior_of_mem_remainingActive</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">An arm that remains active after line 8 is not reset by line 10.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> initializeNewlyEliminated_eq_prior_of_mem_remainingActive {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (prior : Fin K -&gt; Option (DelayedSAPOEliminatedArmInitialization K)) (i : Fin K) (hi : i ∈ (step.toPreEliminationSummary.toConfidenceSnapshot horizon).remainingActive) : initializeNewlyEliminated step horizon prior i = prior i</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L220">Source line 220</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c2077011b3c3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.prior_eq_none_of_mem_eliminated</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every arm selected by line 7 was active immediately before line 8, so a
+valid prior bank has no EAP state for it yet.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> prior_eq_none_of_mem_eliminated {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (prior : DelayedSAPOEliminatedArmBank K) (hprior : ActiveArmsUninitialized state prior) (i : Fin K) (hi : i ∈ (step.toPreEliminationSummary.toConfidenceSnapshot horizon).eliminated) : prior i = none</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L236">Source line 236</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c7d435b016ec">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.remainingActive_uninitialized_after_initialize</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">After line 10, every arm that survives line 8 is still uninitialized in
+the EAP bank.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> remainingActive_uninitialized_after_initialize {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (prior : DelayedSAPOEliminatedArmBank K) (hprior : ActiveArmsUninitialized state prior) (i : Fin K) (hi : i ∈ (step.toPreEliminationSummary.toConfidenceSnapshot horizon).remainingActive) : initializeNewlyEliminated step horizon prior i = none</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L254">Source line 254</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d8134f9540de">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne_arm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> ofProcessOne_arm {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : (ofProcessOne step horizon i).arm = i</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L273">Source line 273</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-66e5eef919a8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne_eliminationRound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> ofProcessOne_eliminationRound {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : (ofProcessOne step horizon i).eliminationRound = state.currentActionRound</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L280">Source line 280</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-815fee939577">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne_eliminationProcessedOrder</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> ofProcessOne_eliminationProcessedOrder {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : (ofProcessOne step horizon i).eliminationProcessedOrder = step.extendedOrder</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L288">Source line 288</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1d8d7153aec1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne_errorCount</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> ofProcessOne_errorCount {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : (ofProcessOne step horizon i).errorCount = <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L296">Source line 296</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7c65f757ebb7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne_phaseIndex</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> ofProcessOne_phaseIndex {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : (ofProcessOne step horizon i).phaseIndex = <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L303">Source line 303</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3a8263a1f4f3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne_phaseSamples</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> ofProcessOne_phaseSamples {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : (ofProcessOne step horizon i).phaseSamples = []</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L310">Source line 310</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-86bfab77ae7c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.ofProcessOne_processedAtProbabilityLevel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> ofProcessOne_processedAtProbabilityLevel {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) (j : Nat) : (ofProcessOne step horizon i).processedAtProbabilityLevel j = {}</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L317">Source line 317</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3b3f677a88e1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initialProbability_pos</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The source initial eliminated-arm probability is strictly positive when
+there is an arm and the horizon is positive.  No count upper bound is needed
+for this lower endpoint.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> initialProbability_pos {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : <span class="num">0</span> &lt; (ofProcessOne step horizon i).initialProbability</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L326">Source line 326</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f68fc90cee29">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initialProbability_le_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">With the source-side count bound `n_i(S) &lt;= T`, the initial probability
+is at most one.  The count bound will be generated by the full Algorithm-5
+trajectory; it is not manufactured by this numerical initializer.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> initialProbability_le_one {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) (hhorizon : <span class="num">0</span> &lt; horizon) (hcount : step.toPreEliminationSummary.toProcessedPrefix.processedPullCount i &lt;= horizon) : (ofProcessOne step horizon i).initialProbability &lt;= <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L347">Source line 347</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7c74b1065972">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.surrogateGap_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The line-10 surrogate gap is nonnegative because the exact source width
+is capped below by zero.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> surrogateGap_nonneg {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : <span class="num">0</span> &lt;= (ofProcessOne step horizon i).surrogateGap</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L378">Source line 378</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-308e4d169236">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.surrogateGap_pos</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">For the nontrivial source regime `1 &lt; T`, the frozen line-10 surrogate
+gap is strictly positive for every processed count.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> surrogateGap_pos {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) (hhorizon : <span class="num">1</span> &lt; horizon) : <span class="num">0</span> &lt; (ofProcessOne step horizon i).surrogateGap</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L390">Source line 390</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b5dcbf2459b1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initialPhaseTarget_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The first EAP phase target is nonnegative without hiding Lean&#x27;s
+totalized-division boundary.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> initialPhaseTarget_nonneg {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) : <span class="num">0</span> &lt;= (ofProcessOne step horizon i).initialPhaseTarget</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L408">Source line 408</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-62ba8c1d5893">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initialPhaseTarget_pos</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Under the explicit positive-width condition used by the source analysis,
+the first EAP phase target has a genuinely positive denominator and value.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> initialPhaseTarget_pos {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (i : Fin K) (hhorizon : <span class="num">1</span> &lt; horizon) : <span class="num">0</span> &lt; (ofProcessOne step horizon i).initialPhaseTarget</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L421">Source line 421</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-07add3be2dc8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated_spec_of_mem</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Bundled deterministic producer for the next EAP leaf: a newly eliminated
+arm receives a source-exact state with positive sampling probability,
+surrogate gap, and first phase target in the nontrivial horizon regime.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> initializeNewlyEliminated_spec_of_mem {K : Nat} {state : DelayedSAPOStructuralRoundState K} (step : DelayedSAPONoSwitchProcessOne state) (horizon : Nat) (hhorizon : <span class="num">1</span> &lt; horizon) (prior : Fin K -&gt; Option (DelayedSAPOEliminatedArmInitialization K)) (i : Fin K) (hi : i ∈ (step.toPreEliminationSummary.toConfidenceSnapshot horizon).eliminated) : initializeNewlyEliminated step horizon prior i = some (ofProcessOne step horizon i) ∧ <span class="num">0</span> &lt; (ofProcessOne step horizon i).initialProbability ∧ <span class="num">0</span> &lt; (ofProcessOne step horizon i).surrogateGap ∧ <span class="num">0</span> &lt; (ofProcessOne step horizon i).initialPhaseTarget</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/DelayedFeedback/EliminatedArmInitialization.lean.html#L436">Source line 436</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

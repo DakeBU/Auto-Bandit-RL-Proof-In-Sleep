@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/OFULScalarRegularizationBias.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/OFULScalarRegularizationBias.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/OFULScalarRegularizationBias.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/OFULScalarRegularizationBias.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.OFULConfidenceEllipsoid</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Scalar-regularization bias for OFUL confidence ellipsoids</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module discharges the deterministic ridge-bias contract in the compiled</span>
+<span id="L7">7 finite-horizon confidence ellipsoid when the base matrix is `lambda I`.</span>
+<span id="L8">8 -/</span>
+<span id="L9">9 </span>
+<span id="L10">10 namespace BanditRLProof.OFUL</span>
+<span id="L11">11 </span>
+<span id="L12">12 open MeasureTheory ProbabilityTheory Real Matrix WithLp Set</span>
+<span id="L13">13 open scoped ENNReal NNReal ProbabilityTheory InnerProductSpace MatrixOrder</span>
+<span id="L14">14 </span>
+<span id="L15">15 variable {Omega Feature : Type*}</span>
+<span id="L16">16 </span>
+<span id="L17">17 /-- The Euclidean length written on the same finite-coordinate surface as `dotProduct`. -/</span>
+<span id="L18">18 noncomputable def euclideanLength</span>
+<span id="L19">19     [Fintype Feature] (theta : Feature -&gt; Real) : Real :=</span>
+<span id="L20">20   Real.sqrt (dotProduct theta theta)</span>
+<span id="L21">21 </span>
+<span id="L22">22 /-- A positive scalar multiple of the identity is positive definite. -/</span>
+<span id="L23">23 theorem scalarIdentity_posDef</span>
+<span id="L24">24     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L25">25     (lambda : Real) (hlambda : 0 &lt; lambda) :</span>
+<span id="L26">26     (Matrix.scalar Feature lambda : Matrix Feature Feature Real).PosDef := by</span>
+<span id="L27">27   rw [Matrix.scalar_apply]</span>
+<span id="L28">28   exact Matrix.PosDef.diagonal (fun _ =&gt; hlambda)</span>
+<span id="L29">29 </span>
+<span id="L30">30 /--</span>
+<span id="L31">31 For `V = lambda I + G` with `G` positive semidefinite, the `V`-norm of the</span>
+<span id="L32">32 ridge bias `V⁻¹ (lambda theta)` is at most `sqrt lambda * ‖theta‖₂`.</span>
+<span id="L33">33 -/</span>
+<span id="L34">34 theorem matrixNorm_nonsingInv_scalar_mulVec_le_sqrt_mul_euclideanLength</span>
+<span id="L35">35     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L36">36     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L37">37     (G : Matrix Feature Feature Real) (hG : G.PosSemidef)</span>
+<span id="L38">38     (theta : Feature -&gt; Real) :</span>
+<span id="L39">39     matrixNorm</span>
+<span id="L40">40         (Matrix.scalar Feature lambda + G)</span>
+<span id="L41">41         ((Matrix.scalar Feature lambda + G)⁻¹.mulVec</span>
+<span id="L42">42           ((Matrix.scalar Feature lambda).mulVec theta)) &lt;=</span>
+<span id="L43">43       Real.sqrt lambda * euclideanLength theta := by</span>
+<span id="L44">44   let V : Matrix Feature Feature Real := Matrix.scalar Feature lambda + G</span>
+<span id="L45">45   let z : Feature -&gt; Real :=</span>
+<span id="L46">46     V⁻¹.mulVec ((Matrix.scalar Feature lambda).mulVec theta)</span>
+<span id="L47">47   change matrixNorm V z &lt;=</span>
+<span id="L48">48     Real.sqrt lambda * Real.sqrt (dotProduct theta theta)</span>
+<span id="L49">49   have hscalar :</span>
+<span id="L50">50       (Matrix.scalar Feature lambda : Matrix Feature Feature Real).PosDef :=</span>
+<span id="L51">51     scalarIdentity_posDef lambda hlambda</span>
+<span id="L52">52   have hV : V.PosDef := hscalar.add_posSemidef hG</span>
+<span id="L53">53   have hVz :</span>
+<span id="L54">54       V.mulVec z = (Matrix.scalar Feature lambda).mulVec theta := by</span>
+<span id="L55">55     exact posDef_mulVec_nonsingInv_mulVec V hV _</span>
+<span id="L56">56   have hscalar_theta :</span>
+<span id="L57">57       (Matrix.scalar Feature lambda).mulVec theta = lambda • theta := by</span>
+<span id="L58">58     ext i</span>
+<span id="L59">59     simp [Matrix.mulVec, Matrix.scalar_apply, Matrix.diagonal_apply, dotProduct]</span>
+<span id="L60">60   have hz_energy :</span>
+<span id="L61">61       matrixNorm V z ^ 2 = lambda * dotProduct z theta := by</span>
+<span id="L62">62     rw [matrixNorm_sq V hV, hVz, hscalar_theta]</span>
+<span id="L63">63     simp [dotProduct_smul, smul_eq_mul]</span>
+<span id="L64">64   have hV_energy :</span>
+<span id="L65">65       matrixNorm V z ^ 2 =</span>
+<span id="L66">66         lambda * dotProduct z z + dotProduct z (G.mulVec z) := by</span>
+<span id="L67">67     rw [matrixNorm_sq V hV]</span>
+<span id="L68">68     change dotProduct z ((Matrix.scalar Feature lambda + G).mulVec z) =</span>
+<span id="L69">69       lambda * dotProduct z z + dotProduct z (G.mulVec z)</span>
+<span id="L70">70     rw [Matrix.add_mulVec, dotProduct_add]</span>
+<span id="L71">71     have hscalar_z :</span>
+<span id="L72">72         (Matrix.scalar Feature lambda).mulVec z = lambda • z := by</span>
+<span id="L73">73       ext i</span>
+<span id="L74">74       simp [Matrix.mulVec, Matrix.scalar_apply, Matrix.diagonal_apply, dotProduct]</span>
+<span id="L75">75     rw [hscalar_z]</span>
+<span id="L76">76     simp [dotProduct_smul, smul_eq_mul]</span>
+<span id="L77">77   have hG_nonneg : 0 &lt;= dotProduct z (G.mulVec z) :=</span>
+<span id="L78">78     hG.dotProduct_mulVec_nonneg z</span>
+<span id="L79">79   have hbase :</span>
+<span id="L80">80       lambda * dotProduct z z &lt;= matrixNorm V z ^ 2 := by</span>
+<span id="L81">81     rw [hV_energy]</span>
+<span id="L82">82     linarith</span>
+<span id="L83">83   have hdot_self_z :</span>
+<span id="L84">84       dotProduct z z =</span>
+<span id="L85">85         (Finset.univ : Finset Feature).sum (fun i =&gt; z i ^ 2) := by</span>
+<span id="L86">86     simp [dotProduct, pow_two]</span>
+<span id="L87">87   have hdot_self_theta :</span>
+<span id="L88">88       dotProduct theta theta =</span>
+<span id="L89">89         (Finset.univ : Finset Feature).sum (fun i =&gt; theta i ^ 2) := by</span>
+<span id="L90">90     simp [dotProduct, pow_two]</span>
+<span id="L91">91   have hcs :</span>
+<span id="L92">92       dotProduct z theta &lt;=</span>
+<span id="L93">93         Real.sqrt (dotProduct z z) * Real.sqrt (dotProduct theta theta) := by</span>
+<span id="L94">94     rw [hdot_self_z, hdot_self_theta]</span>
+<span id="L95">95     simpa [dotProduct] using</span>
+<span id="L96">96       Real.sum_mul_le_sqrt_mul_sqrt</span>
+<span id="L97">97         (Finset.univ : Finset Feature) z theta</span>
+<span id="L98">98   have hzz_nonneg : 0 &lt;= dotProduct z z := by</span>
+<span id="L99">99     rw [hdot_self_z]</span>
+<span id="L100">100     exact Finset.sum_nonneg (fun i _hi =&gt; sq_nonneg (z i))</span>
+<span id="L101">101   have htt_nonneg : 0 &lt;= dotProduct theta theta := by</span>
+<span id="L102">102     rw [hdot_self_theta]</span>
+<span id="L103">103     exact Finset.sum_nonneg (fun i _hi =&gt; sq_nonneg (theta i))</span>
+<span id="L104">104   have hsqrt_lambda_nonneg : 0 &lt;= Real.sqrt lambda := Real.sqrt_nonneg _</span>
+<span id="L105">105   have hsqrt_z_nonneg : 0 &lt;= Real.sqrt (dotProduct z z) := Real.sqrt_nonneg _</span>
+<span id="L106">106   have hsqrt_theta_nonneg :</span>
+<span id="L107">107       0 &lt;= Real.sqrt (dotProduct theta theta) := Real.sqrt_nonneg _</span>
+<span id="L108">108   have hmatrix_nonneg : 0 &lt;= matrixNorm V z := Real.sqrt_nonneg _</span>
+<span id="L109">109   have hsqrt_z_le :</span>
+<span id="L110">110       Real.sqrt lambda * Real.sqrt (dotProduct z z) &lt;= matrixNorm V z := by</span>
+<span id="L111">111     apply (sq_le_sq₀ (mul_nonneg hsqrt_lambda_nonneg hsqrt_z_nonneg)</span>
+<span id="L112">112       hmatrix_nonneg).mp</span>
+<span id="L113">113     rw [mul_pow, Real.sq_sqrt hlambda.le, Real.sq_sqrt hzz_nonneg]</span>
+<span id="L114">114     exact hbase</span>
+<span id="L115">115   have henergy_upper :</span>
+<span id="L116">116       matrixNorm V z ^ 2 &lt;=</span>
+<span id="L117">117         lambda * Real.sqrt (dotProduct z z) *</span>
+<span id="L118">118           Real.sqrt (dotProduct theta theta) := by</span>
+<span id="L119">119     rw [hz_energy]</span>
+<span id="L120">120     calc</span>
+<span id="L121">121       lambda * dotProduct z theta &lt;=</span>
+<span id="L122">122           lambda *</span>
+<span id="L123">123             (Real.sqrt (dotProduct z z) *</span>
+<span id="L124">124               Real.sqrt (dotProduct theta theta)) :=</span>
+<span id="L125">125         mul_le_mul_of_nonneg_left hcs hlambda.le</span>
+<span id="L126">126       _ = _ := by ring</span>
+<span id="L127">127   have hmatrix_sq_le :</span>
+<span id="L128">128       matrixNorm V z ^ 2 &lt;=</span>
+<span id="L129">129         (Real.sqrt lambda * Real.sqrt (dotProduct theta theta)) *</span>
+<span id="L130">130           matrixNorm V z := by</span>
+<span id="L131">131     calc</span>
+<span id="L132">132       matrixNorm V z ^ 2 &lt;=</span>
+<span id="L133">133           lambda * Real.sqrt (dotProduct z z) *</span>
+<span id="L134">134             Real.sqrt (dotProduct theta theta) := henergy_upper</span>
+<span id="L135">135       _ =</span>
+<span id="L136">136           (Real.sqrt lambda * Real.sqrt (dotProduct z z)) *</span>
+<span id="L137">137             (Real.sqrt lambda * Real.sqrt (dotProduct theta theta)) := by</span>
+<span id="L138">138         nlinarith [Real.sq_sqrt hlambda.le]</span>
+<span id="L139">139       _ &lt;=</span>
+<span id="L140">140           matrixNorm V z *</span>
+<span id="L141">141             (Real.sqrt lambda * Real.sqrt (dotProduct theta theta)) := by</span>
+<span id="L142">142         exact mul_le_mul_of_nonneg_right hsqrt_z_le</span>
+<span id="L143">143           (mul_nonneg hsqrt_lambda_nonneg hsqrt_theta_nonneg)</span>
+<span id="L144">144       _ = _ := by ring</span>
+<span id="L145">145   by_cases hz : matrixNorm V z = 0</span>
+<span id="L146">146   · rw [hz]</span>
+<span id="L147">147     exact mul_nonneg hsqrt_lambda_nonneg hsqrt_theta_nonneg</span>
+<span id="L148">148   · have hzpos : 0 &lt; matrixNorm V z := lt_of_le_of_ne hmatrix_nonneg (Ne.symm hz)</span>
+<span id="L149">149     have hcancel :</span>
+<span id="L150">150         matrixNorm V z &lt;=</span>
+<span id="L151">151           Real.sqrt lambda * Real.sqrt (dotProduct theta theta) := by</span>
+<span id="L152">152       have hmul :</span>
+<span id="L153">153           matrixNorm V z * matrixNorm V z &lt;=</span>
+<span id="L154">154             matrixNorm V z *</span>
+<span id="L155">155               (Real.sqrt lambda * Real.sqrt (dotProduct theta theta)) := by</span>
+<span id="L156">156         simpa [pow_two, mul_assoc, mul_left_comm, mul_comm] using hmatrix_sq_le</span>
+<span id="L157">157       exact le_of_mul_le_mul_left hmul hzpos</span>
+<span id="L158">158     exact hcancel</span>
+<span id="L159">159 </span>
+<span id="L160">160 /-- The standard scalar-regularized OFUL radius `noise radius + sqrt lambda * S`. -/</span>
+<span id="L161">161 noncomputable def finiteHorizonScalarConfidenceRadius</span>
+<span id="L162">162     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L163">163     (feature : Nat -&gt; Omega -&gt; Feature -&gt; Real)</span>
+<span id="L164">164     (R delta lambda S : Real) (n : Nat) (omega : Omega) : Real :=</span>
+<span id="L165">165   finiteHorizonConfidenceRadius</span>
+<span id="L166">166     (Matrix.scalar Feature lambda) feature R delta</span>
+<span id="L167">167       (Real.sqrt lambda * S) n omega</span>
+<span id="L168">168 </span>
+<span id="L169">169 /--</span>
+<span id="L170">170 The scalar regularization bias is uniformly bounded by `sqrt lambda * S`</span>
+<span id="L171">171 whenever the true parameter has Euclidean length at most `S`.</span>
+<span id="L172">172 -/</span>
+<span id="L173">173 theorem finiteHorizon_scalarRegularizationBias_le</span>
+<span id="L174">174     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L175">175     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L176">176     (thetaStar : Feature -&gt; Real) (S : Real)</span>
+<span id="L177">177     (htheta : euclideanLength thetaStar &lt;= S)</span>
+<span id="L178">178     (feature : Nat -&gt; Omega -&gt; Feature -&gt; Real)</span>
+<span id="L179">179     (n : Nat) (omega : Omega) :</span>
+<span id="L180">180     matrixNorm</span>
+<span id="L181">181         (Matrix.scalar Feature lambda +</span>
+<span id="L182">182           finiteHorizonFeatureGram feature n omega)</span>
+<span id="L183">183         ((Matrix.scalar Feature lambda +</span>
+<span id="L184">184             finiteHorizonFeatureGram feature n omega)⁻¹.mulVec</span>
+<span id="L185">185           ((Matrix.scalar Feature lambda).mulVec thetaStar)) &lt;=</span>
+<span id="L186">186       Real.sqrt lambda * S := by</span>
+<span id="L187">187   exact</span>
+<span id="L188">188     (matrixNorm_nonsingInv_scalar_mulVec_le_sqrt_mul_euclideanLength</span>
+<span id="L189">189       lambda hlambda (finiteHorizonFeatureGram feature n omega)</span>
+<span id="L190">190       (finiteHorizonFeatureGram_posSemidef feature n omega)</span>
+<span id="L191">191       thetaStar).trans</span>
+<span id="L192">192       (mul_le_mul_of_nonneg_left htheta (Real.sqrt_nonneg lambda))</span>
+<span id="L193">193 </span>
+<span id="L194">194 /--</span>
+<span id="L195">195 Finite-horizon OFUL confidence ellipsoid with scalar ridge regularization.</span>
+<span id="L196">196 The explicit bias premise of the general theorem is discharged from</span>
+<span id="L197">197 `euclideanLength thetaStar &lt;= S`.</span>
+<span id="L198">198 -/</span>
+<span id="L199">199 theorem</span>
+<span id="L200">200     measure_finiteHorizonScalarRidgeEstimate_error_matrixNorm_gt_confidenceRadius_le</span>
+<span id="L201">201     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]</span>
+<span id="L202">202     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L203">203     (mu : Measure Omega) [IsProbabilityMeasure mu]</span>
+<span id="L204">204     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L205">205     (thetaStar : Feature -&gt; Real) (S : Real)</span>
+<span id="L206">206     (htheta : euclideanLength thetaStar &lt;= S)</span>
+<span id="L207">207     (F : Filtration Nat mOmega)</span>
+<span id="L208">208     (feature : Nat -&gt; Omega -&gt; Feature -&gt; Real)</span>
+<span id="L209">209     (response noise : Nat -&gt; Omega -&gt; Real)</span>
+<span id="L210">210     (R : Real) (hR : 0 &lt; R)</span>
+<span id="L211">211     (projectionBound : EuclideanSpace Real Feature -&gt; Nat -&gt; Real)</span>
+<span id="L212">212     (hfeature : forall i j,</span>
+<span id="L213">213       StronglyMeasurable[F i] (fun omega =&gt; feature i omega j))</span>
+<span id="L214">214     (hnoise : StronglyAdapted F (fun t omega =&gt;</span>
+<span id="L215">215       match t with</span>
+<span id="L216">216       | 0 =&gt; 0</span>
+<span id="L217">217       | i + 1 =&gt; noise i omega))</span>
+<span id="L218">218     (hprojectionBound_nonneg : forall theta i,</span>
+<span id="L219">219       0 &lt;= projectionBound theta i)</span>
+<span id="L220">220     (hprojectionBound : forall theta i omega,</span>
+<span id="L221">221       |dotProduct (WithLp.ofLp theta) (feature i omega)| &lt;=</span>
+<span id="L222">222         projectionBound theta i)</span>
+<span id="L223">223     (n : Nat)</span>
+<span id="L224">224     (hsubGaussian : forall i, i &lt; n -&gt;</span>
+<span id="L225">225       HasCondSubgaussianMGF</span>
+<span id="L226">226         (F i) (F.le i) (noise i)</span>
+<span id="L227">227         (constantSquaredVarianceProxy R i) mu)</span>
+<span id="L228">228     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_one : delta &lt;= 1)</span>
+<span id="L229">229     (hresponse : forall omega i, i &lt; n -&gt;</span>
+<span id="L230">230       response i omega =</span>
+<span id="L231">231         dotProduct thetaStar (feature i omega) + noise i omega) :</span>
+<span id="L232">232     mu {omega |</span>
+<span id="L233">233         matrixNorm</span>
+<span id="L234">234             (Matrix.scalar Feature lambda +</span>
+<span id="L235">235               finiteHorizonFeatureGram feature n omega)</span>
+<span id="L236">236             (finiteHorizonRidgeEstimate</span>
+<span id="L237">237                 (Matrix.scalar Feature lambda) feature response n omega -</span>
+<span id="L238">238               thetaStar) &gt;</span>
+<span id="L239">239           finiteHorizonScalarConfidenceRadius</span>
+<span id="L240">240             feature R delta lambda S n omega} &lt;=</span>
+<span id="L241">241       ENNReal.ofReal delta := by</span>
+<span id="L242">242   simpa [finiteHorizonScalarConfidenceRadius] using</span>
+<span id="L243">243     measure_finiteHorizonRidgeEstimate_error_matrixNorm_gt_confidenceRadius_le</span>
+<span id="L244">244       mu (Matrix.scalar Feature lambda)</span>
+<span id="L245">245       (scalarIdentity_posDef lambda hlambda)</span>
+<span id="L246">246       thetaStar F feature response noise R hR projectionBound hfeature hnoise</span>
+<span id="L247">247       hprojectionBound_nonneg hprojectionBound n hsubGaussian delta hdelta</span>
+<span id="L248">248       hdelta_one (Real.sqrt lambda * S) hresponse</span>
+<span id="L249">249       (fun omega =&gt;</span>
+<span id="L250">250         finiteHorizon_scalarRegularizationBias_le</span>
+<span id="L251">251           lambda hlambda thetaStar S htheta feature n omega)</span>
+<span id="L252">252 </span>
+<span id="L253">253 end BanditRLProof.OFUL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/LowerBounds/ArithmeticZeroExtension.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/LowerBounds/ArithmeticZeroExtension.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/LowerBounds/ArithmeticZeroExtension.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/LowerBounds/ArithmeticZeroExtension.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.LowerBounds.ArithmeticPrefixCode</span>
+<span id="L2">2 import BanditRLProof.LowerBounds.HuffmanConstruction</span>
+<span id="L3">3 </span>
+<span id="L4">4 namespace BanditRLProof.LowerBounds</span>
+<span id="L5">5 </span>
+<span id="L6">6 noncomputable def supportTaggedWord {α : Type*} (p : α → ℝ)</span>
+<span id="L7">7     (positive : BinaryPrefixCode {a // 0 &lt; p a}) (fallback : BinaryPrefixCode α)</span>
+<span id="L8">8     (a : α) : List Bool := by</span>
+<span id="L9">9   classical</span>
+<span id="L10">10   exact if h : 0 &lt; p a then false :: positive.encode ⟨a, h⟩ else true :: fallback.encode a</span>
+<span id="L11">11 </span>
+<span id="L12">12 theorem supportTaggedWord_prefixFree {α : Type*} (p : α → ℝ)</span>
+<span id="L13">13     (positive : BinaryPrefixCode {a // 0 &lt; p a}) (fallback : BinaryPrefixCode α)</span>
+<span id="L14">14     {a b : α} (h : supportTaggedWord p positive fallback a &lt;+:</span>
+<span id="L15">15       supportTaggedWord p positive fallback b) : a = b := by</span>
+<span id="L16">16   classical</span>
+<span id="L17">17   by_cases ha : 0 &lt; p a &lt;;&gt; by_cases hb : 0 &lt; p b</span>
+<span id="L18">18   · simp only [supportTaggedWord, dif_pos ha, dif_pos hb, List.cons_prefix_cons] at h</span>
+<span id="L19">19     exact congrArg Subtype.val (positive.prefixFree h.2)</span>
+<span id="L20">20   · simp [supportTaggedWord, ha, hb, List.cons_prefix_cons] at h</span>
+<span id="L21">21   · simp [supportTaggedWord, ha, hb, List.cons_prefix_cons] at h</span>
+<span id="L22">22   · simp only [supportTaggedWord, dif_neg ha, dif_neg hb, List.cons_prefix_cons] at h</span>
+<span id="L23">23     exact fallback.prefixFree h.2</span>
+<span id="L24">24 </span>
+<span id="L25">25 /-- Extend an arithmetic support code to all symbols, with a one-bit escape tag. -/</span>
+<span id="L26">26 noncomputable def BinaryPrefixCode.extendZeroMass {α : Type*} (p : α → ℝ)</span>
+<span id="L27">27     (positive : BinaryPrefixCode {a // 0 &lt; p a}) (fallback : BinaryPrefixCode α) :</span>
+<span id="L28">28     BinaryPrefixCode α where</span>
+<span id="L29">29   encode := supportTaggedWord p positive fallback</span>
+<span id="L30">30   injective := fun a b h =&gt; supportTaggedWord_prefixFree p positive fallback (by rw [h])</span>
+<span id="L31">31   nonempty := by</span>
+<span id="L32">32     classical</span>
+<span id="L33">33     intro a</span>
+<span id="L34">34     by_cases h : 0 &lt; p a &lt;;&gt; simp [supportTaggedWord, h]</span>
+<span id="L35">35   prefixFree := supportTaggedWord_prefixFree p positive fallback</span>
+<span id="L36">36 </span>
+<span id="L37">37 /-- Zero-mass fallback words cost nothing in expectation. The extra support tag</span>
+<span id="L38">38 adds only one bit to a support code with information-plus-two length bound. -/</span>
+<span id="L39">39 theorem expectedCodeLength_extendZeroMass_le {α : Type*} [Fintype α] (p : α → ℝ)</span>
+<span id="L40">40     (hp : ∀ a, 0 ≤ p a) (hs : ∑ a, p a = 1)</span>
+<span id="L41">41     (positive : BinaryPrefixCode {a // 0 &lt; p a}) (fallback : BinaryPrefixCode α)</span>
+<span id="L42">42     (hpos : ∀ a (ha : 0 &lt; p a), ((positive.encode ⟨a, ha⟩).length : ℝ) ≤</span>
+<span id="L43">43       Real.log (p a)⁻¹ / Real.log 2 + 2) :</span>
+<span id="L44">44     expectedCodeLength p (positive.extendZeroMass p fallback) ≤</span>
+<span id="L45">45       discreteEntropyBaseTwo Finset.univ p + 3 := by</span>
+<span id="L46">46   classical</span>
+<span id="L47">47   have hterm (a : α) : p a * ((supportTaggedWord p positive fallback a).length : ℝ) ≤</span>
+<span id="L48">48       p a * (Real.log (p a)⁻¹ / Real.log 2) + 3 * p a := by</span>
+<span id="L49">49     by_cases ha : 0 &lt; p a</span>
+<span id="L50">50     · have h := mul_le_mul_of_nonneg_left (hpos a ha) (hp a)</span>
+<span id="L51">51       simp only [supportTaggedWord, dif_pos ha, List.length_cons, Nat.cast_add, Nat.cast_one]</span>
+<span id="L52">52       nlinarith</span>
+<span id="L53">53     · have hz : p a = 0 := le_antisymm (not_lt.mp ha) (hp a)</span>
+<span id="L54">54       simp [hz]</span>
+<span id="L55">55   have h := Finset.sum_le_sum (s := Finset.univ) (fun a _ =&gt; hterm a)</span>
+<span id="L56">56   simpa [expectedCodeLength, BinaryPrefixCode.extendZeroMass,</span>
+<span id="L57">57     Finset.sum_add_distrib, ← Finset.mul_sum, hs, discreteEntropyBaseTwo] using h</span>
+<span id="L58">58 </span>
+<span id="L59">59 /-- Arithmetic coding on the positive support, extended to every message.</span>
+<span id="L60">60 Only the zero-mass escape branch uses the supplied total Huffman fallback. -/</span>
+<span id="L61">61 theorem exists_zeroSafe_arithmeticCode {α : Type*} [Fintype α] {k : ℕ}</span>
+<span id="L62">62     (p : Fin k → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1)</span>
+<span id="L63">63     (message : α → List (Fin k)) (hinj : Function.Injective message)</span>
+<span id="L64">64     (hlen : ∀ a b, (message a).length = (message b).length)</span>
+<span id="L65">65     (q : α → ℝ) (hq : ∀ a, 0 ≤ q a) (hqs : ∑ a, q a = 1)</span>
+<span id="L66">66     (hmass : ∀ a, ((message a).map p).prod = q a) :</span>
+<span id="L67">67     ∃ positive : BinaryPrefixCode {a // 0 &lt; q a},</span>
+<span id="L68">68       (∀ a, (positive.encode a).length = arithmeticLength (q a.val)) ∧</span>
+<span id="L69">69       (∀ a, (arithmeticInterval p (message a.val)).1 ≤</span>
+<span id="L70">70         dyadicAddressLower (positive.encode a) ∧</span>
+<span id="L71">71         dyadicAddressUpper (positive.encode a) &lt; (arithmeticInterval p (message a.val)).2) ∧</span>
+<span id="L72">72       expectedCodeLength q (positive.extendZeroMass q (huffmanCode q hq)) ≤</span>
+<span id="L73">73         discreteEntropyBaseTwo Finset.univ q + 3 := by</span>
+<span id="L74">74   classical</span>
+<span id="L75">75   have hbudget (a : {a // 0 &lt; q a}) :</span>
+<span id="L76">76       2 * (1 / (2 : ℝ) ^ arithmeticLength (q a.val)) ≤</span>
+<span id="L77">77         (arithmeticInterval p (message a.val)).2 - (arithmeticInterval p (message a.val)).1 := by</span>
+<span id="L78">78     rw [arithmeticInterval_width, hmass]</span>
+<span id="L79">79     exact (arithmeticLength_width_budget a.property).le</span>
+<span id="L80">80   obtain ⟨positive, hl, hcell⟩ := exists_arithmeticPrefixCode p hp hs</span>
+<span id="L81">81     (fun a : {a // 0 &lt; q a} =&gt; message a.val)</span>
+<span id="L82">82     (fun a b h =&gt; Subtype.ext (hinj h))</span>
+<span id="L83">83     (fun a b =&gt; hlen a.val b.val) (fun a =&gt; arithmeticLength (q a.val)) hbudget</span>
+<span id="L84">84   refine ⟨positive, hl, hcell,</span>
+<span id="L85">85     expectedCodeLength_extendZeroMass_le q hq hqs positive (huffmanCode q hq) ?_⟩</span>
+<span id="L86">86   intro a ha</span>
+<span id="L87">87   rw [hl]</span>
+<span id="L88">88   have hq1 : q a ≤ 1 := by</span>
+<span id="L89">89     rw [← hqs]</span>
+<span id="L90">90     exact Finset.single_le_sum (fun b _ =&gt; hq b) (Finset.mem_univ a)</span>
+<span id="L91">91   exact arithmeticLength_le_information_add_two ha hq1</span>
+<span id="L92">92 </span>
+<span id="L93">93 end BanditRLProof.LowerBounds</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

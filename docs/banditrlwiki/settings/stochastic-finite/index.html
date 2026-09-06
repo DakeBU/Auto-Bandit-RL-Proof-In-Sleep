@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="Finite stochastic bandits · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Finite stochastic bandits · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>Finite stochastic bandits · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group active" data-nav-group="research" data-nav-group-active="true" open><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">BanditRLwiki</a><a href="../../frontier/index.html">Frontier leaves</a><a href="../../papers/index.html">Paper index</a><a href="../../progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero wiki-hero" id="setting"><p class="eyebrow">BanditRLwiki setting</p><h1>Finite stochastic bandits</h1><p class="lede">Expected, asymptotic, and instance-dependent regret under stationary independent arm rewards.</p><p><a href="../../index.html">← All settings</a></p></section>
+<section id="signature"><h2>Comparison signature</h2><ul class="wiki-signature-list"><li><strong>Problem class.</strong> Finite-armed stationary stochastic bandits</li><li><strong>Feedback.</strong> Bandit feedback from the selected arm</li><li><strong>Objective.</strong> Expected pseudo-regret unless a case says otherwise</li><li><strong>Parameters.</strong> A arms, T rounds, gaps Delta, confidence delta when present</li></ul><div class="callout"><strong>Matching rule.</strong> A rate is called matched only when the upper and lower theorem contracts agree on the fields above; every remaining mismatch is named in the case.</div></section>
+<section id="setting-cases"><h2>2 cases</h2><div class="wiki-case-list">
+<details class="wiki-case-card" id="stochastic-finite-arm-minimax" data-wiki-case
+  data-family="stochastic-finite"
+  data-literature="minimax-matched"
+  data-lean="partial"
+  data-frontier="true"
+  data-search="stochastic-finite-arm-minimax finite-arm stochastic minimax expected regret moss-type algorithms and gaussian/bernoulli hard families identify the square-root a times t minimax scale. finite stochastic bandits moss minimax expected pseudo-regret bounded rewards gaussian lower bound universal constants and the exact hard-family reward class differ across the displayed source theorems. banditrllib compiles a unit-variance gaussian lower bound with constant 1/54 and fixed-horizon moss on unit-subgaussian laws with gaps in [0,1]. the cited anytime moss theorem is not compiled." open>
+  <summary>
+    <span class="wiki-case-id">stochastic-finite-arm-minimax</span>
+    <span class="wiki-case-summary-copy"><strong>Finite-arm stochastic minimax expected regret</strong><span>MOSS-type algorithms and Gaussian/Bernoulli hard families identify the square-root A times T minimax scale.</span></span>
+    <span class="wiki-case-statuses"><span class="wiki-badge literature minimax-matched" data-wiki-literature-status="minimax-matched">Minimax matched</span><span class="wiki-badge lean partial" data-wiki-lean-status="partial">Partial local route</span></span>
+  </summary>
+  <div class="wiki-case-body">
+    <div class="wiki-case-actions"><a href="../../cases/stochastic-finite-arm-minimax/index.html">Open stable case page →</a><span><span class="wiki-badge source faithful-restatement" data-wiki-source-status="faithful-restatement">Faithful restatement</span></span></div>
+    <div class="wiki-tags"><span>MOSS</span><span>minimax</span><span>expected pseudo-regret</span><span>bounded rewards</span><span>Gaussian lower bound</span></div>
+    <dl class="wiki-signature"><div><dt>Reward model</dt><dd>Independent stationary rewards; the literature upper uses rewards in [0,1]</dd></div><div><dt>Horizon</dt><dd>Any finite T; the cited MOSS-anytime result is horizon-free</dd></div><div><dt>Regret</dt><dd>Expected pseudo-regret</dd></div><div><dt>Target scale</dt><dd>Theta(sqrt(A T))</dd></div></dl>
+    <section class="wiki-comparison">
+      <div><p class="panel-kicker">Comparison judgment</p><h3>Minimax matched</h3><p>The literature establishes the square-root minimax order. Local Lean now supplies the unit-Gaussian lower bound and fixed-horizon Algorithm 7 on unit-subgaussian laws with gaps in [0,1]. The cited anytime theorem remains a distinct formalization target.</p><p><strong>Known gap.</strong> Universal constants and the exact hard-family reward class differ across the displayed source theorems.</p></div>
+      <div><p class="panel-kicker">Local Lean boundary</p><h3>Partial local route</h3><p>BanditRLlib compiles a unit-variance Gaussian lower bound with constant 1/54 and fixed-horizon MOSS on unit-subgaussian laws with gaps in [0,1]. The cited anytime MOSS theorem is not compiled.</p></div>
+    </section>
+    <div class="wiki-bound-grid">
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>Anytime MOSS regret</h3>
+  <p class="wiki-paper-title">Anytime optimal algorithms in stochastic multi-armed bandits</p>
+  <p class="wiki-source-meta">Rémy Degenne and Vianney Perchet · 2016 · Theorem 3 with Lemma 3</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">The anytime MOSS variant has expected regret at most 113 times square root A T plus the largest gap.</span><span class="math-tex" aria-hidden="true">\[\mathbb E R_T\le 113\sqrt{AT}+\Delta_{\max}.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Independent rewards supported in [0,1], with the source&#x27;s anytime index and initialization.</p>
+  <a href="https://proceedings.mlr.press/v48/degenne16.html">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Lower bound</p>
+  <h3>Minimax stochastic-bandit lower bound</h3>
+  <p class="wiki-paper-title">Anytime optimal algorithms in stochastic multi-armed bandits</p>
+  <p class="wiki-source-meta">Rémy Degenne and Vianney Perchet · 2016 · Lemma 3</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Lower bound guarantee"><strong>Lower bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Every policy has a stochastic instance with expected regret at least one twentieth of square root A T under the source&#x27;s parameter range.</span><span class="math-tex" aria-hidden="true">\[\inf_\pi\sup_\nu\mathbb E_\nu R_T(\pi)\ge \frac1{20}\sqrt{AT}.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Use the exact arm-count and horizon restrictions stated in the source.</p>
+  <a href="https://proceedings.mlr.press/v48/degenne16.html">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+    </div>
+    <section class="wiki-lean-evidence">
+      <div><p class="panel-kicker">Local Lean evidence</p><h3>Exact declarations</h3><ul><li><a href="../../../modules/banditrlproof-lowerbounds-gaussianminimax/index.html#decl-ae72137aa924"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>unit<wbr>Gaussian<wbr>Minimax<wbr>Expected<wbr>Pseudo<wbr>Regret_<wbr>ge_<wbr>one_<wbr>div_<wbr>fifty<wbr>Four_<wbr>sqrt</code></a></li></ul></div>
+      <div><p class="panel-kicker">Not yet proved here</p><h3>Missing steps</h3><ul><li>Define the anytime MOSS index and measurable generated history policy.</li><li>Prove the same-policy pull-count decomposition and bounded-reward confidence route.</li><li>Compile the matching square-root expected-regret upper terminal without conflating the Gaussian lower class with [0,1] rewards.</li></ul></div>
+    </section>
+
+<section class="wiki-frontier-note">
+  <p class="panel-kicker">formalization frontier</p>
+  <h3>Can the exact anytime MOSS source theorem be compiled on one generated bounded-reward trajectory?</h3>
+  <p>The local Gaussian lower terminal and fixed-horizon MOSS near-minimax theorem compile; the distinct anytime variant remains unformalized.</p>
+  <ul><li>Index measurability</li><li>armwise confidence</li><li>pull-count summation</li><li>expected-regret terminal</li><li>Named formalization leaf: MOSS-ANYTIME-GENERATED-UPPER</li></ul>
+</section>
+  </div>
+</details>
+<details class="wiki-case-card" id="stochastic-instance-dependent-klucb" data-wiki-case
+  data-family="stochastic-finite"
+  data-literature="asymptotic-matched"
+  data-lean="partial"
+  data-frontier="true"
+  data-search="stochastic-instance-dependent-klucb bernoulli kl-ucb instance-dependent asymptotic regret kl-ucb matches the lai–robbins information lower bound arm by arm on bernoulli bandits. finite stochastic bandits kl-ucb lai-robbins bernoulli kl instance dependent asymptotic no leading-constant gap in the bernoulli source model; the local lean route is a conservative finite-time theorem and does not reach this asymptotic constant. a measurable generated kl-ucb index, all-time confidence event, pull-count bound, and conservative finite-time expected pseudo-regret theorem compile. chapter 16 lemma 16.3 and gaussian theorem 16.4 compile, as does the asymptotic theorem 16.2 lower bound; the sharp kl-ucb upper leading constant remains separate." open>
+  <summary>
+    <span class="wiki-case-id">stochastic-instance-dependent-klucb</span>
+    <span class="wiki-case-summary-copy"><strong>Bernoulli KL-UCB instance-dependent asymptotic regret</strong><span>KL-UCB matches the Lai–Robbins information lower bound arm by arm on Bernoulli bandits.</span></span>
+    <span class="wiki-case-statuses"><span class="wiki-badge literature asymptotic-matched" data-wiki-literature-status="asymptotic-matched">Asymptotically matched</span><span class="wiki-badge lean partial" data-wiki-lean-status="partial">Partial local route</span></span>
+  </summary>
+  <div class="wiki-case-body">
+    <div class="wiki-case-actions"><a href="../../cases/stochastic-instance-dependent-klucb/index.html">Open stable case page →</a><span><span class="wiki-badge source faithful-restatement" data-wiki-source-status="faithful-restatement">Faithful restatement</span></span></div>
+    <div class="wiki-tags"><span>KL-UCB</span><span>Lai-Robbins</span><span>Bernoulli KL</span><span>instance dependent</span><span>asymptotic</span></div>
+    <dl class="wiki-signature"><div><dt>Reward model</dt><dd>Stationary Bernoulli arms with a unique best mean</dd></div><div><dt>Policy class</dt><dd>Uniformly efficient policies for the lower bound</dd></div><div><dt>Regret</dt><dd>Expected pseudo-regret normalized by log T</dd></div><div><dt>Target constant</dt><dd>sum over suboptimal arms of Delta_a divided by kl(mu_a, mu_star)</dd></div></dl>
+    <section class="wiki-comparison">
+      <div><p class="panel-kicker">Comparison judgment</p><h3>Asymptotically matched</h3><p>The published upper and lower information constants match. Chapter 16&#x27;s asymptotic and finite-time lower bounds compile; sharp KL-Chernoff concentration for the matching upper constant remains separate.</p><p><strong>Known gap.</strong> No leading-constant gap in the Bernoulli source model; the local Lean route is a conservative finite-time theorem and does not reach this asymptotic constant.</p></div>
+      <div><p class="panel-kicker">Local Lean boundary</p><h3>Partial local route</h3><p>A measurable generated KL-UCB index, all-time confidence event, pull-count bound, and conservative finite-time expected pseudo-regret theorem compile. Chapter 16 Lemma 16.3 and Gaussian Theorem 16.4 compile, as does the asymptotic Theorem 16.2 lower bound; the sharp KL-UCB upper leading constant remains separate.</p></div>
+    </section>
+    <div class="wiki-bound-grid">
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>KL-UCB asymptotic pull-count upper bound</h3>
+  <p class="wiki-paper-title">The KL-UCB Algorithm for Bounded Stochastic Bandits and Beyond</p>
+  <p class="wiki-source-meta">Aurélien Garivier and Olivier Cappé · 2011 · Theorems 1–2 and Corollary 3</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">For every suboptimal Bernoulli arm, KL-UCB&#x27;s expected pull count has the optimal logarithmic leading constant.</span><span class="math-tex" aria-hidden="true">\[\limsup_{T\to\infty}\frac{\mathbb E N_a(T)}{\log T}\le\frac1{\mathrm{kl}(\mu_a,\mu_*)}.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Bernoulli specialization of the source&#x27;s bounded and one-parameter models.</p>
+  <a href="https://arxiv.org/abs/1102.2490">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Lower bound</p>
+  <h3>Lai–Robbins asymptotic information lower bound</h3>
+  <p class="wiki-paper-title">Asymptotically Efficient Adaptive Allocation Rules</p>
+  <p class="wiki-source-meta">Tze Leung Lai and Herbert Robbins · 1985 · Asymptotic information lower bound</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Lower bound guarantee"><strong>Lower bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Every uniformly efficient policy must sample each suboptimal arm at least logarithmically at the information-theoretic rate.</span><span class="math-tex" aria-hidden="true">\[\liminf_{T\to\infty}\frac{\mathbb E N_a(T)}{\log T}\ge\frac1{\mathrm{kl}(\mu_a,\mu_*)}.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Use the source&#x27;s regular parametric-family and efficiency assumptions; the displayed Bernoulli form is a specialization.</p>
+  <a href="https://doi.org/10.1016/0196-8858(85)90002-8">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+    </div>
+    <section class="wiki-lean-evidence">
+      <div><p class="panel-kicker">Local Lean evidence</p><h3>Exact declarations</h3><ul><li><a href="../../../modules/banditrlproof-algorithms-klucbbernoulli/index.html#decl-8f99f3947abe"><code>Bandit<wbr>RL<wbr>Proof.<wbr>KLUCB.<wbr>bernoulli<wbr>KL</code></a></li><li><a href="../../../modules/banditrlproof-algorithms-klucbgeneratedregret/index.html#decl-f0183508accc"><code>Bandit<wbr>RL<wbr>Proof.<wbr>KLUCB.<wbr>lintegral_<wbr>of<wbr>Real_<wbr>pseudo<wbr>Regret_<wbr>generated<wbr>KLUCB<wbr>Bounded_<wbr>le_<wbr>traj<wbr>Measure</code></a></li><li><a href="../../../modules/banditrlproof-lowerbounds-instancedependent/index.html#decl-2e1714674420"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>expected<wbr>Pull<wbr>Count_<wbr>ge_<wbr>log_<wbr>gap<wbr>Pseudo<wbr>Regret_<wbr>of_<wbr>only_<wbr>arm_<wbr>changed</code></a></li></ul></div>
+      <div><p class="panel-kicker">Not yet proved here</p><h3>Missing steps</h3><ul><li>Prove sharp KL-Chernoff confidence inversion and the Garivier–Cappé leading constant.</li><li>Use the compiled Theorem 16.2 lower bound when comparing the remaining sharp upper-bound obligations.</li></ul></div>
+    </section>
+
+<section class="wiki-frontier-note">
+  <p class="panel-kicker">formalization frontier</p>
+  <h3>Can the compiled finite-mean Lemma 16.3 be lifted through d_inf and liminf to the exact KL-UCB leading constant?</h3>
+  <p>The generated conservative KL-UCB route and exact Chapter 16 Lemma 16.3 compile; the d_inf-to-liminf bridge and Theorem 16.2 also compile.</p>
+  <ul><li>d_inf branch analysis</li><li>liminf terminal</li><li>sharp KL-UCB upper constant</li><li>Named formalization leaf: CH16-THM-16-2</li></ul>
+</section>
+  </div>
+</details></div></section></main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Setting</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#setting">Setting</a><a data-toc-link href="#signature">Signature</a><a data-toc-link href="#setting-cases">Cases</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

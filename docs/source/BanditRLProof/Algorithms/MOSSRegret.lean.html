@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Algorithms/MOSSRegret.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Algorithms/MOSSRegret.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Algorithms/MOSSRegret.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Algorithms/MOSSRegret.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Algorithms.MOSSStream</span>
+<span id="L2">2 import BanditRLProof.RealMeanRegretPullCount</span>
+<span id="L3">3 import BanditRLProof.PullCountDecomposition</span>
+<span id="L4">4 </span>
+<span id="L5">5 noncomputable section</span>
+<span id="L6">6 open Real Finset MeasureTheory ProbabilityTheory</span>
+<span id="L7">7 namespace BanditRLProof.MOSS</span>
+<span id="L8">8 </span>
+<span id="L9">9 /-- Pathwise regret split with a deterministic large-gap filter for integration. -/</span>
+<span id="L10">10 theorem streamTrace_gapSum_le {Ω : Type*} [MeasurableSpace Ω]</span>
+<span id="L11">11     {k : ℕ} (hk : 0 &lt; k) (n : ℕ) (hkn : k ≤ n)</span>
+<span id="L12">12     (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) (best : Fin k)</span>
+<span id="L13">13     (hbest : ∀ a, mean a ≤ mean best) :</span>
+<span id="L14">14     (∑ a, (mean best - mean a) * (pullCount (streamTrace hk n mean X ω) a n : ℝ)) ≤</span>
+<span id="L15">15       (8*sqrt ((k : ℝ)/(n : ℝ)) + 2*optimismDeficit (X best) ((k : ℝ)/(n : ℝ)) n ω)*(n : ℝ) +</span>
+<span id="L16">16       ∑ a, if 8*sqrt ((k : ℝ)/(n : ℝ)) ≤ mean best - mean a then</span>
+<span id="L17">17         (mean best - mean a) * (1 + indexExceedanceCount (streamMean (X a) ω)</span>
+<span id="L18">18           ((k : ℝ)/(n : ℝ)) (mean best - mean a) n) else 0 := by</span>
+<span id="L19">19   classical</span>
+<span id="L20">20   let δ : ℝ := (k : ℝ)/(n : ℝ)</span>
+<span id="L21">21   let Z := optimismDeficit (X best) δ n ω</span>
+<span id="L22">22   have hZ : 0 ≤ Z := optimismDeficit_nonneg _ _ _ _</span>
+<span id="L23">23   have hbase : 0 ≤ 8*sqrt δ + 2*Z := by positivity</span>
+<span id="L24">24   have hterm (a : Fin k) :</span>
+<span id="L25">25       (mean best - mean a) * (pullCount (streamTrace hk n mean X ω) a n : ℝ) ≤</span>
+<span id="L26">26       (8*sqrt δ+2*Z)*(pullCount (streamTrace hk n mean X ω) a n : ℝ) +</span>
+<span id="L27">27       (if 8*sqrt δ ≤ mean best - mean a then</span>
+<span id="L28">28         (mean best - mean a)*(1+indexExceedanceCount (streamMean (X a) ω) δ (mean best-mean a) n)</span>
+<span id="L29">29         else 0) := by</span>
+<span id="L30">30     have hg : 0 ≤ mean best - mean a := sub_nonneg.mpr (hbest a)</span>
+<span id="L31">31     have hc : 0 ≤ indexExceedanceCount (streamMean (X a) ω) δ (mean best-mean a) n := by</span>
+<span id="L32">32       unfold indexExceedanceCount</span>
+<span id="L33">33       apply sum_nonneg</span>
+<span id="L34">34       intro s _</span>
+<span id="L35">35       split_ifs &lt;;&gt; norm_num</span>
+<span id="L36">36     by_cases hl : 8*sqrt δ ≤ mean best - mean a</span>
+<span id="L37">37     · rw [if_pos hl]</span>
+<span id="L38">38       by_cases hz : 2*Z &lt; mean best - mean a</span>
+<span id="L39">39       · have ht := mul_le_mul_of_nonneg_left</span>
+<span id="L40">40           (streamTrace_pullCount_le hk n hkn mean X ω best a hz) hg</span>
+<span id="L41">41         have hb := mul_nonneg hbase (Nat.cast_nonneg (α := ℝ) (pullCount (streamTrace hk n mean X ω) a n))</span>
+<span id="L42">42         linarith</span>
+<span id="L43">43       · have hsmall : mean best - mean a ≤ 8*sqrt δ+2*Z := by</span>
+<span id="L44">44           nlinarith [sqrt_nonneg δ]</span>
+<span id="L45">45         have ht := mul_le_mul_of_nonneg_right hsmall</span>
+<span id="L46">46           (Nat.cast_nonneg (α := ℝ) (pullCount (streamTrace hk n mean X ω) a n))</span>
+<span id="L47">47         have hr := mul_nonneg hg (show 0 ≤ 1+indexExceedanceCount (streamMean (X a) ω) δ (mean best-mean a) n by linarith)</span>
+<span id="L48">48         linarith</span>
+<span id="L49">49     · rw [if_neg hl, add_zero]</span>
+<span id="L50">50       apply mul_le_mul_of_nonneg_right _ (Nat.cast_nonneg _)</span>
+<span id="L51">51       linarith</span>
+<span id="L52">52   have hsum := sum_le_sum (fun a (_ : a ∈ (univ : Finset (Fin k))) =&gt; hterm a)</span>
+<span id="L53">53   rw [sum_add_distrib, ← mul_sum] at hsum</span>
+<span id="L54">54   have hcount : (∑ a, (pullCount (streamTrace hk n mean X ω) a n : ℝ)) = n := by</span>
+<span id="L55">55     exact_mod_cast finset_sum_pullCount_eq_time (streamTrace hk n mean X ω) n</span>
+<span id="L56">56   rw [hcount] at hsum</span>
+<span id="L57">57   exact hsum</span>
+<span id="L58">58 </span>
+<span id="L59">59 theorem streamTrace_realMeanRegret_le {Ω : Type*} [MeasurableSpace Ω]</span>
+<span id="L60">60     {k : ℕ} (hk : 0 &lt; k) (n : ℕ) (hkn : k ≤ n)</span>
+<span id="L61">61     (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) (best : Fin k)</span>
+<span id="L62">62     (hbest : ∀ a, mean a ≤ mean best) :</span>
+<span id="L63">63     realMeanRegret mean (streamTrace hk n mean X ω) n ≤</span>
+<span id="L64">64       (8*sqrt ((k : ℝ)/(n : ℝ)) + 2*optimismDeficit (X best) ((k : ℝ)/(n : ℝ)) n ω)*(n : ℝ) +</span>
+<span id="L65">65       ∑ a, if 8*sqrt ((k : ℝ)/(n : ℝ)) ≤ mean best - mean a then</span>
+<span id="L66">66         (mean best - mean a) * (1 + indexExceedanceCount (streamMean (X a) ω)</span>
+<span id="L67">67           ((k : ℝ)/(n : ℝ)) (mean best - mean a) n) else 0 := by</span>
+<span id="L68">68   letI : Nonempty (Fin k) := ⟨best⟩</span>
+<span id="L69">69   have hsup : (⨆ a, mean a) = mean best :=</span>
+<span id="L70">70     le_antisymm (ciSup_le hbest) (le_ciSup (Finite.bddAbove_range mean) best)</span>
+<span id="L71">71   rw [realMeanRegret_eq_sum_gap_mul_pullCount]</span>
+<span id="L72">72   simp only [realMeanGap, hsup]</span>
+<span id="L73">73   exact streamTrace_gapSum_le hk n hkn mean X ω best hbest</span>
+<span id="L74">74 </span>
+<span id="L75">75 /-- Integrated large-gap contribution, with the single initialization gap term. -/</span>
+<span id="L76">76 theorem integral_largeGapCountSum_le {Ω : Type*} [MeasurableSpace Ω]</span>
+<span id="L77">77     (μ : Measure Ω) [IsProbabilityMeasure μ] {k : ℕ}</span>
+<span id="L78">78     (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (best : Fin k)</span>
+<span id="L79">79     (hbest : ∀ a, mean a ≤ mean best)</span>
+<span id="L80">80     (hXm : ∀ a i, StronglyMeasurable (X a i))</span>
+<span id="L81">81     (hind : ∀ a, iIndepFun (X a) μ)</span>
+<span id="L82">82     (hmean : ∀ a i, ∫ ω, X a i ω ∂μ = 0)</span>
+<span id="L83">83     (hsubG : ∀ a i, HasSubgaussianMGF (X a i) 1 μ)</span>
+<span id="L84">84     (δ : ℝ) (hδ : 0 &lt; δ) (n : ℕ) :</span>
+<span id="L85">85     (∫ ω, ∑ a, if 8*sqrt δ ≤ mean best - mean a then</span>
+<span id="L86">86       (mean best - mean a)*(1+indexExceedanceCount (streamMean (X a) ω) δ (mean best-mean a) n)</span>
+<span id="L87">87       else 0 ∂μ) ≤ (∑ a, (mean best-mean a)) + (k : ℝ)*(15/sqrt δ) := by</span>
+<span id="L88">88   classical</span>
+<span id="L89">89   let f : Fin k → Ω → ℝ := fun a ω =&gt; if 8*sqrt δ ≤ mean best-mean a then</span>
+<span id="L90">90     (mean best-mean a)*(1+indexExceedanceCount (streamMean (X a) ω) δ (mean best-mean a) n) else 0</span>
+<span id="L91">91   have hi (a : Fin k) : Integrable (f a) μ := by</span>
+<span id="L92">92     dsimp [f]</span>
+<span id="L93">93     split_ifs</span>
+<span id="L94">94     · exact ((integrable_const 1).add (integrable_indexExceedanceCount (X a) (hXm a) δ _ n)).const_mul _</span>
+<span id="L95">95     · exact integrable_const 0</span>
+<span id="L96">96   have hb (a : Fin k) : (∫ ω, f a ω ∂μ) ≤ mean best-mean a + 15/sqrt δ := by</span>
+<span id="L97">97     have hg : 0 ≤ mean best-mean a := sub_nonneg.mpr (hbest a)</span>
+<span id="L98">98     dsimp [f]</span>
+<span id="L99">99     split_ifs with hl</span>
+<span id="L100">100     · have hgp : 0 &lt; mean best-mean a := lt_of_lt_of_le (by positivity) hl</span>
+<span id="L101">101       have hc := gap_mul_integral_indexExceedanceCount_le_sharp (X a) (hXm a) (hind a)</span>
+<span id="L102">102         (hmean a) (hsubG a) δ (mean best-mean a) hδ hgp hl n</span>
+<span id="L103">103       rw [integral_const_mul]</span>
+<span id="L104">104       rw [integral_add (integrable_const 1) (integrable_indexExceedanceCount (X a) (hXm a) δ _ n)]</span>
+<span id="L105">105       simp only [integral_const, probReal_univ, one_smul]</span>
+<span id="L106">106       nlinarith</span>
+<span id="L107">107     · simp only [integral_zero]</span>
+<span id="L108">108       positivity</span>
+<span id="L109">109   change (∫ ω, ∑ a, f a ω ∂μ) ≤ _</span>
+<span id="L110">110   rw [integral_finset_sum _ (fun a _ =&gt; hi a)]</span>
+<span id="L111">111   calc</span>
+<span id="L112">112     _ ≤ ∑ a, (mean best-mean a+15/sqrt δ) := sum_le_sum (fun a _ =&gt; hb a)</span>
+<span id="L113">113     _ = _ := by simp [sum_add_distrib, mul_comm]</span>
+<span id="L114">114 </span>
+<span id="L115">115 end BanditRLProof.MOSS</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

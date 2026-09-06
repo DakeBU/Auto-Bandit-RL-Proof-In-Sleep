@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.UCBFixedPolicyTelescopingAnytimeRegret · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.UCBFixedPolicyTelescopingAnytimeRegret · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.UCBFixedPolicyTelescopingAnytimeRegret · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · UCB</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>UCB<wbr>Fixed<wbr>Policy<wbr>Telescoping<wbr>Anytime<wbr>Regret</h1>
+  <p class="lede">This module defines one finite-arm UCB policy. Its score at history index t uses the summable confidence share telescopingConfidenceShare delta t / K; no terminal horizon occurs in the policy, state, score, or generated-action declarations. Finite horizons occur only in downstream count and regret consumers.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html"><code>BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/ucb/index.html">4. UCB: confidence events to regret</a></dd></div>
+    <div><dt>Declarations</dt><dd>43</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-algorithms-ucbconditionalrewardpairtrajectory/index.html"><code>BanditRLProof.Algorithms.UCBConditionalRewardPairTrajectory</code></a>, <a href="../banditrlproof-algorithms-ucbconditionalrewardlawregret/index.html"><code>BanditRLProof.Algorithms.UCBConditionalRewardLawRegret</code></a>, <a href="../banditrlproof-conditionalrewardpartialtrajectorytelescopingalltime/index.html"><code>BanditRLProof.ConditionalRewardPartialTrajectoryTelescopingAllTime</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-klucbgeneratedregret/index.html"><code>BanditRLProof.Algorithms.KLUCBGeneratedRegret</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-7a8ac8836695">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingRadiusAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Realized-count radius with the time-`t` telescoping share divided over the
+finite arm set.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selectedPolicySuccessorTelescopingRadiusAt {Omega : Type} {K : Nat} (action : Omega -&gt; ActionTrace (Fin K)) (sigma2 : NNReal) (delta : Real) (omega : Omega) (t : Nat) (arm : Fin K) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L22">Source line 22</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d847fd5581f2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingRadiusAt_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The scheduled radius is nonnegative, including its explicit zero-count
+convention inherited from division in `Real`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selectedPolicySuccessorTelescopingRadiusAt_nonneg {Omega : Type} {K : Nat} (action : Omega -&gt; ActionTrace (Fin K)) (sigma2 : NNReal) (delta : Real) (omega : Omega) (t : Nat) (arm : Fin K) : <span class="num">0</span> &lt;= selectedPolicySuccessorTelescopingRadiusAt action sigma2 delta omega t arm</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L35">Source line 35</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-79d23ce8e8e4">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingIndexAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The horizon-free scheduled UCB index on an action/reward trace.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selectedPolicySuccessorTelescopingIndexAt {Omega : Type} {K : Nat} (action : Omega -&gt; ActionTrace (Fin K)) (reward : Omega -&gt; RewardTrace Rat) (sigma2 : NNReal) (delta : Real) (omega : Omega) (t : Nat) (arm : Fin K) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L49">Source line 49</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1f399a547028">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingHistoryIndex</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Scheduled score reconstructed from one finite generated pair history.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selectedPolicySuccessorTelescopingHistoryIndex {K : Nat} (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (t : Nat) (history : History.FinitePairHistory (Fin K) Rat t) (arm : Fin K) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L64">Source line 64</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-17ed82ef86e1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measurable_selectedPolicySuccessorTelescopingHistoryIndex</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every fixed-arm scheduled history score is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_selectedPolicySuccessorTelescopingHistoryIndex {K : Nat} (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (t : Nat) (arm : Fin K) : Measurable (<span class="kw">fun</span> history : History.FinitePairHistory (Fin K) Rat t =&gt; selectedPolicySuccessorTelescopingHistoryIndex sigma2 delta defaultAction t history arm)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L87">Source line 87</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2d95adb00db0">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingHistoryNextArm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Round-robin initialization followed by the scheduled score argmax.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selectedPolicySuccessorTelescopingHistoryNextArm {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (t : Nat) (history : History.FinitePairHistory (Fin K) Rat t) : Fin K</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L96">Source line 96</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-350e06451f6a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingHistoryIndex_le_nextArm_of_K_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">After initialization, the scheduled selector maximizes every arm score.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selectedPolicySuccessorTelescopingHistoryIndex_le_nextArm_of_K_le {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (t : Nat) (history : History.FinitePairHistory (Fin K) Rat t) (ht : K &lt;= t) (arm : Fin K) : selectedPolicySuccessorTelescopingHistoryIndex sigma2 delta defaultAction t history arm &lt;= selectedPolicySuccessorTelescopingHistoryIndex sigma2 delta defaultAction t history (selectedPolicySuccessorTelescopingHistoryNextArm hK sigma2 delta defaultAction t history)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L108">Source line 108</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-33535fc45d10">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingPairHistory</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pair-history reconstruction for the single scheduled policy.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selectedPolicySuccessorTelescopingPairHistory {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) : (n : Nat) -&gt; History.FiniteRewardHistory Rat n -&gt; History.FinitePairHistory (Fin K) Rat n | <span class="num">0</span>, rewardHistory =&gt; <span class="kw">fun</span> i =&gt; (defaultAction, rewardHistory i) | n + <span class="num">1</span>, rewardHistory =&gt; <span class="kw">let</span> previousRewardHistory : History.FiniteRewardHistory Rat n := <span class="kw">fun</span> i =&gt; rewardHistory ⟨i.<span class="num">1</span>, Finset.mem_Iic.mpr ((Finset.mem_Iic.mp i.<span class="num">2</span>).trans (Nat.le_succ n))⟩ <span class="kw">let</span> previousHistory := selectedPolicySuccessorTelescopingPairHistory hK sigma2 delta defaultAction n previousRewardHistory <span class="kw">let</span> nextAction := selectedPolicySuccessorTelescopingHistoryNextArm hK sigma2 delta defaultAction n previousHistory History.extendPairHistorySucc previousHistory (nextAction, rewardHistory ⟨n + <span class="num">1</span>, Finset.mem_Iic.mpr le_rfl⟩) /-- Fixed state package reconstructed <span class="kw">by</span> the scheduled policy. -/ <span class="kw">noncomputable</span> <span class="kw">def</span> selectedPolicySuccessorTelescopingHistoryState {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (n : Nat) (rewardHistory : History.FiniteRewardHistory Rat n) : SelectedPolicySuccessorFiniteHistoryState K</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L126">Source line 126</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0ed6f1ceb2c2">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingHistoryState</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Fixed state package reconstructed by the scheduled policy.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selectedPolicySuccessorTelescopingHistoryState {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (n : Nat) (rewardHistory : History.FiniteRewardHistory Rat n) : SelectedPolicySuccessorFiniteHistoryState K</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L149">Source line 149</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0657fc249af9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measurable_selectedPolicySuccessorTelescopingHistoryState</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Scheduled state reconstruction is measurable at every history index.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_selectedPolicySuccessorTelescopingHistoryState {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (n : Nat) : Measurable (selectedPolicySuccessorTelescopingHistoryState hK sigma2 delta defaultAction n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L159">Source line 159</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-23dfee574caf">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingHistoryPolicy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">One measurable UCB policy.  Its declaration has no terminal horizon.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selectedPolicySuccessorTelescopingHistoryPolicy {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (_t : Nat) : Policy.MeasurablePolicy (SelectedPolicySuccessorFiniteHistoryState K) (Fin K) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L168">Source line 168</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-004769e0a23f">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingGeneratedUCBAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Generated action trace for the single scheduled UCB policy.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selectedPolicySuccessorTelescopingGeneratedUCBAction {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) : Omega -&gt; ActionTrace (Fin K)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L180">Source line 180</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-63db48aa341d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingGeneratedUCBAction_succ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selectedPolicySuccessorTelescopingGeneratedUCBAction_succ {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (omega : Omega) (t : Nat) : selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega (t + <span class="num">1</span>) = selectedPolicySuccessorTelescopingHistoryNextArm hK sigma2 delta defaultAction t (selectedPolicySuccessorTelescopingPairHistory hK sigma2 delta defaultAction t (History.finiteRewardHistoryOfTrace (reward omega) t))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L192">Source line 192</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-25dc2de2fafd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingPairHistory_eq_finitePairHistoryOfTrace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The reconstructed scheduled pair state is the generated trace prefix.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selectedPolicySuccessorTelescopingPairHistory_eq_finitePairHistoryOfTrace {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (omega : Omega) (n : Nat) : selectedPolicySuccessorTelescopingPairHistory hK sigma2 delta defaultAction n (History.finiteRewardHistoryOfTrace (reward omega) n) = History.finitePairHistoryOfTrace (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega) (reward omega) n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L210">Source line 210</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8d48d24d8557">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingHistoryIndex_finitePairHistoryOfTrace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-history score, empirical count, and empirical mean are exactly the
+score, count, and mean on the generated scheduled trajectory.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selectedPolicySuccessorTelescopingHistoryIndex_finitePairHistoryOfTrace {Omega : Type} {K : Nat} (action : Omega -&gt; ActionTrace (Fin K)) (reward : Omega -&gt; RewardTrace Rat) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (omega : Omega) (t : Nat) (arm : Fin K) : selectedPolicySuccessorTelescopingHistoryIndex sigma2 delta defaultAction t (History.finitePairHistoryOfTrace (action omega) (reward omega) t) arm = selectedPolicySuccessorTelescopingIndexAt action reward sigma2 delta omega t arm</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L261">Source line 261</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-34f5c2445bea">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingIndexAt_le_generatedAction_of_K_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">At every post-initialization generated round, the chosen scheduled score
+dominates every candidate arm score on the same generated trace.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selectedPolicySuccessorTelescopingIndexAt_le_generatedAction_of_K_le {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (omega : Omega) (t : Nat) (ht : K &lt;= t) (arm : Fin K) : <span class="kw">let</span> action := selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward selectedPolicySuccessorTelescopingIndexAt action reward sigma2 delta omega t arm &lt;= selectedPolicySuccessorTelescopingIndexAt action reward sigma2 delta omega t (action omega (t + <span class="num">1</span>))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L283">Source line 283</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d519d332c601">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingGeneratedUCBAction_succ_eq_initializationArm_of_lt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Scheduled successor initialization remains the one-pass round robin.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selectedPolicySuccessorTelescopingGeneratedUCBAction_succ_eq_initializationArm_of_lt {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (omega : Omega) (t : Nat) (ht : t &lt; K) : selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega (t + <span class="num">1</span>) = initializationArm hK t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L330">Source line 330</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-81d527344102">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.successorArmPullCount_selectedPolicySuccessorTelescopingGeneratedUCBAction_K_add_one_eq_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every arm is pulled exactly once in the scheduled initialization cycle.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> successorArmPullCount_selectedPolicySuccessorTelescopingGeneratedUCBAction_K_add_one_eq_one {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (omega : Omega) (arm : Fin K) : ConditionalExpectationReward.successorArmPullCount (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega) arm (K + <span class="num">1</span>) = <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L341">Source line 341</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-69d796a1dc79">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.successorArmPullCount_selectedPolicySuccessorTelescopingGeneratedUCBAction_pos_of_K_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">After initialization every scheduled successor arm count is positive.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> successorArmPullCount_selectedPolicySuccessorTelescopingGeneratedUCBAction_pos_of_K_le {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (omega : Omega) (arm : Fin K) (t : Nat) (ht : K &lt;= t) : <span class="num">0</span> &lt; ConditionalExpectationReward.successorArmPullCount (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega) arm (t + <span class="num">1</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L369">Source line 369</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f061f6761d42">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.K_le_of_selectedPolicySuccessorTelescopingGeneratedUCBAction_selected_and_count_pos</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A selected scheduled round with positive prior count is post-initialization.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> K_le_of_selectedPolicySuccessorTelescopingGeneratedUCBAction_selected_and_count_pos {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (omega : Omega) (arm : Fin K) (t : Nat) (hselected : selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega (t + <span class="num">1</span>) = arm) (hcount : <span class="num">0</span> &lt; ConditionalExpectationReward.successorArmPullCount (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega) arm (t + <span class="num">1</span>)) : K &lt;= t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L392">Source line 392</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9b03bcedbc97">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measurable_selectedPolicySuccessorTelescopingGeneratedUCBAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Timewise measurability of the fixed-policy generated action.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_selectedPolicySuccessorTelescopingGeneratedUCBAction {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (t : Nat) : Measurable (<span class="kw">fun</span> omega =&gt; selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L426">Source line 426</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-55c93b8bf1b1">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingLogBudget</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The logarithmic budget inside the scheduled radius at history index `n`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selectedPolicySuccessorTelescopingLogBudget (K n : Nat) (delta : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L448">Source line 448</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5c0c01bf831a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingLogBudget_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Explicit polynomial reciprocal form of the scheduled log budget.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selectedPolicySuccessorTelescopingLogBudget_eq (K n : Nat) (delta : Real) (hK : <span class="num">0</span> &lt; K) (hdelta : <span class="num">0</span> &lt; delta) : selectedPolicySuccessorTelescopingLogBudget K n delta = max (Real.log (<span class="num">2</span> * (K : Real) * ((n + <span class="num">1</span> : Nat) : Real) ^ <span class="num">2</span> * ((n + <span class="num">2</span> : Nat) : Real) / delta)) <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L454">Source line 454</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-efd4d138bf4f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingLogBudget_mono</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The scheduled log budget is nondecreasing in the history index.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selectedPolicySuccessorTelescopingLogBudget_mono (K n T : Nat) (delta : Real) (hK : <span class="num">0</span> &lt; K) (hdelta : <span class="num">0</span> &lt; delta) (hnT : n &lt;= T) : selectedPolicySuccessorTelescopingLogBudget K n delta &lt;= selectedPolicySuccessorTelescopingLogBudget K T delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L468">Source line 468</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8f5f6a3b7d85">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.successorArmEmpiricalMeanTelescopingPeelingRadius_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Expanded algebraic form of one scheduled random-count radius.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> successorArmEmpiricalMeanTelescopingPeelingRadius_eq {K : Nat} (sigma2 : NNReal) (k n : Nat) (delta : Real) : ConditionalExpectationReward.successorArmEmpiricalMeanPeelingRadius sigma2 k (n + <span class="num">1</span>) (Concentration.telescopingConfidenceShare delta n / (K : Real)) = (<span class="num">2</span> * Real.sqrt ((<span class="num">1</span> / <span class="num">2</span> : Real) * (((sigma2 : NNReal) : Real) * (k : Real)) * selectedPolicySuccessorTelescopingLogBudget K n delta) + selectedPolicySuccessorTelescopingLogBudget K n delta) / (k : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L487">Source line 487</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-91a88037ddea">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingRealPullThreshold</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Real terminal envelope for inverting every scheduled radius up to index
+`T`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selectedPolicySuccessorTelescopingRealPullThreshold (K : Nat) (sigma2 : NNReal) (T : Nat) (delta gap : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L507">Source line 507</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6dd4528b9ce2">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingPullThreshold</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">One more than the ceiling supplies the strict count-inversion margin.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selectedPolicySuccessorTelescopingPullThreshold (K : Nat) (sigma2 : NNReal) (T : Nat) (delta gap : Real) : Nat</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L515">Source line 515</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f93984a85d04">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingPullThreshold_contracts</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The terminal scheduled threshold satisfies the quadratic and linear
+radius-inversion contracts.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selectedPolicySuccessorTelescopingPullThreshold_contracts (K : Nat) (sigma2 : NNReal) (T : Nat) (delta gap : Real) (hgap : <span class="num">0</span> &lt; gap) : <span class="num">0</span> &lt; selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta gap /\ <span class="num">32</span> * (((sigma2 : NNReal) : Real)) * selectedPolicySuccessorTelescopingLogBudget K T delta &lt; gap ^ <span class="num">2</span> * (selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta gap : Real) /\ <span class="num">4</span> * selectedPolicySuccessorTelescopingLogBudget K T delta &lt; gap * (selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta gap : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L523">Source line 523</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e2cd39aa9d9d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.two_mul_successorArmEmpiricalMeanTelescopingPeelingRadius_lt_gap_of_threshold</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every count beyond the terminal envelope makes the scheduled radius at
+every earlier history index strictly smaller than half the positive gap.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> two_mul_successorArmEmpiricalMeanTelescopingPeelingRadius_lt_gap_of_threshold {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta gap : Real) (hdelta : <span class="num">0</span> &lt; delta) (hgap : <span class="num">0</span> &lt; gap) (k n T : Nat) (hk : selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta gap &lt;= k) (hnT : n &lt;= T) : <span class="num">2</span> * ConditionalExpectationReward.successorArmEmpiricalMeanPeelingRadius sigma2 k (n + <span class="num">1</span>) (Concentration.telescopingConfidenceShare delta n / (K : Real)) &lt; gap</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L576">Source line 576</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ce0dc90db82b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescoping_meanGap_le_two_radius_of_not_badEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Outside the one telescoping bad event, scheduled score maximality implies
+the standard UCB gap bound at every initialized generated round.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selectedPolicySuccessorTelescoping_meanGap_le_two_radius_of_not_badEvent {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (reward : Omega -&gt; RewardTrace Rat) (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (delta : Real) (defaultAction best : Fin K) (omega : Omega) (t : Nat) (ht : K &lt;= t) (hgood : omega ∉ ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward) reward armMean sigma2 delta) : <span class="kw">let</span> action := selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) best (action omega (t + <span class="num">1</span>)) &lt;= <span class="num">2</span> * selectedPolicySuccessorTelescopingRadiusAt action sigma2 delta omega t (action omega (t + <span class="num">1</span>))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L635">Source line 635</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-df5f78585a7d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescoping_pullCount_le_of_not_badEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The single all-time good event controls one positive-gap arm at every
+finite horizon; the horizon appears only in the deterministic bound.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selectedPolicySuccessorTelescoping_pullCount_le_of_not_badEvent {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (reward : Omega -&gt; RewardTrace Rat) (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (defaultAction best chosen : Fin K) (omega : Omega) (T : Nat) (hgap : <span class="num">0</span> &lt; meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) best chosen) (hgood : omega ∉ ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward) reward armMean sigma2 delta) : ConditionalExpectationReward.successorArmPullCount (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega) chosen (T + <span class="num">1</span>) &lt;= selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta (meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) best chosen)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L712">Source line 712</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-253ee28e0ef2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.actionRewardHistoryStepKernelFamily_selectedPolicySuccessorTelescoping_allTimeConfidence</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The accepted telescoping all-time confidence producer instantiated on the
+single scheduled policy.  The sampled pair action and the reward-reconstructed
+policy action are transported on their explicit almost-everywhere alignment
+set, so the conclusion is about the action actually consumed by the UCB score
+and regret definitions.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> actionRewardHistoryStepKernelFamily_selectedPolicySuccessorTelescoping_allTimeConfidence {Context : Type} {K : Nat} [MeasurableSpace Context] (hK : <span class="num">0</span> &lt; K) (mu0 : Measure (Prod (Fin K) Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (mean : Context -&gt; Fin K -&gt; Rat) (varianceProxy : Context -&gt; Fin K -&gt; NNReal) (defaultAction : Fin K) (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (delta : Real) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hmean : Measurable (<span class="kw">fun</span> pair : Prod Context (Fin K) =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hvariance : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), varianceProxy (context i history) ((selectedPolicySuccessorTelescopingHistoryPolicy hK sigma2 delta defaultAction i).action (selectedPolicySuccessorTelescopingHistoryState hK sigma2 delta defaultAction i history)) &lt;= sigma2) (harmMean : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), <span class="kw">forall</span> arm : Fin K, mean (context i history) arm = armMean arm) (hsigma2 : <span class="num">0</span> &lt; (((sigma2 : NNReal) : Real))) (hdelta : <span class="num">0</span> &lt; delta) : <span class="kw">let</span> policy := selectedPolicySuccessorTelescopingHistoryPolicy hK sigma2 delta defaultAction <span class="kw">let</span> state := selectedPolicySuccessorTelescopingHistoryState hK sigma2 delta defaultAction <span class="kw">let</span> pairContext : (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod (Fin K) Rat) -&gt; Context</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L790">Source line 790</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a17d9ea35b64">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measure_selectedPolicySuccessorTelescoping_pullCount_gt_threshold_le_of_allTimeConfidence</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">One global all-time confidence event yields the terminal pull-count tail
+for any requested finite horizon.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_selectedPolicySuccessorTelescoping_pullCount_gt_threshold_le_of_allTimeConfidence {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : <span class="num">0</span> &lt; K) (mu : Measure Omega) (reward : Omega -&gt; RewardTrace Rat) (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (defaultAction best chosen : Fin K) (T : Nat) (hgap : <span class="num">0</span> &lt; meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) best chosen) (hconfidence : mu (ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward) reward armMean sigma2 delta) &lt;= ENNReal.ofReal delta) : mu {omega | selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta (meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) best chosen) &lt; ConditionalExpectationReward.successorArmPullCount (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega) chosen (T + <span class="num">1</span>)} &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L956">Source line 956</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5fd3bdc3971c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.lintegral_selectedPolicySuccessorTelescoping_pullCount_le_of_allTimeConfidence</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Expected scheduled pull count at any finite horizon.  The explicit
+`T * delta` term is retained; no unconditional expectation claim is made from
+the good event alone.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> lintegral_selectedPolicySuccessorTelescoping_pullCount_le_of_allTimeConfidence {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : <span class="num">0</span> &lt; K) (mu : Measure Omega) [IsProbabilityMeasure mu] (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (defaultAction best chosen : Fin K) (T : Nat) (hgap : <span class="num">0</span> &lt; meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) best chosen) (hconfidence : mu (ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward) reward armMean sigma2 delta) &lt;= ENNReal.ofReal delta) : ∫⁻ omega, (ConditionalExpectationReward.successorArmPullCount (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega) chosen (T + <span class="num">1</span>) : ENNReal) ∂mu &lt;= (selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta (meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) best chosen) : ENNReal) + (T : ENNReal) * ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L991">Source line 991</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-87e717f25ff1">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingGeneratedUCBRegretAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Standard regret-time shift of the single scheduled generated policy.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selectedPolicySuccessorTelescopingGeneratedUCBRegretAction {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) : Omega -&gt; ActionTrace (Fin K)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L1050">Source line 1050</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c891c49f6261">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measurable_selectedPolicySuccessorTelescopingGeneratedUCBRegretAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Timewise measurability of the shifted fixed-policy regret action.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_selectedPolicySuccessorTelescopingGeneratedUCBRegretAction {Omega : Type} [MeasurableSpace Omega] {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (t : Nat) : Measurable (<span class="kw">fun</span> omega =&gt; selectedPolicySuccessorTelescopingGeneratedUCBRegretAction hK sigma2 delta defaultAction reward omega t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L1059">Source line 1059</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-04d8828ff713">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.pullCount_selectedPolicySuccessorTelescopingGeneratedUCBRegretAction_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Shifted fixed-policy pull counts are the existing successor counts.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pullCount_selectedPolicySuccessorTelescopingGeneratedUCBRegretAction_eq {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) (reward : Omega -&gt; RewardTrace Rat) (omega : Omega) (arm : Fin K) (T : Nat) : pullCount (selectedPolicySuccessorTelescopingGeneratedUCBRegretAction hK sigma2 delta defaultAction reward omega) arm T = ConditionalExpectationReward.successorArmPullCount (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega) arm (T + <span class="num">1</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L1072">Source line 1072</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a6b2b232a3ed">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.lintegral_ofReal_pseudoRegret_selectedPolicySuccessorTelescoping_le_of_allTimeConfidence</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-time expected pseudo-regret for the single scheduled policy from
+its one all-time confidence event.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> lintegral_ofReal_pseudoRegret_selectedPolicySuccessorTelescoping_le_of_allTimeConfidence {Omega : Type} [MeasurableSpace Omega] {K : Nat} (mu : Measure Omega) [IsProbabilityMeasure mu] (model : FiniteBanditModel K) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (sigma2 : NNReal) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (defaultAction : Fin K) (T : Nat) (hconfidence : mu (ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (selectedPolicySuccessorTelescopingGeneratedUCBAction model.hK sigma2 delta defaultAction reward) reward model.mean sigma2 delta) &lt;= ENNReal.ofReal delta) : ∫⁻ omega, ENNReal.ofReal (((pseudoRegret model (selectedPolicySuccessorTelescopingGeneratedUCBRegretAction model.hK sigma2 delta defaultAction reward omega) T : Rat) : Real)) ∂mu &lt;= (Finset.univ : Finset (Fin K)).sum (<span class="kw">fun</span> arm =&gt; ENNReal.ofReal (((model.gap arm : Rat) : Real)) * ((selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta (((model.gap arm : Rat) : Real)) : Nat) : ENNReal) + ENNReal.ofReal (((model.gap arm : Rat) : Real)) * ((T : ENNReal) * ENNReal.ofReal delta))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L1091">Source line 1091</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9b5e2087d0ee">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescoping_allHorizonPullCount_of_not_badEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A single good sample controls every finite horizon and every positive-gap
+arm simultaneously.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selectedPolicySuccessorTelescoping_allHorizonPullCount_of_not_badEvent {Omega : Type} {K : Nat} (hK : <span class="num">0</span> &lt; K) (reward : Omega -&gt; RewardTrace Rat) (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (defaultAction best : Fin K) (omega : Omega) (hgood : omega ∉ ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward) reward armMean sigma2 delta) : <span class="kw">forall</span> T : Nat, <span class="kw">forall</span> chosen : Fin K, <span class="num">0</span> &lt; meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) best chosen -&gt; ConditionalExpectationReward.successorArmPullCount (selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward omega) chosen (T + <span class="num">1</span>) &lt;= selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta (meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) best chosen)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L1151">Source line 1151</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8ebeb5679438">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.selectedPolicySuccessorTelescopingActionRewardTrajMeasure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The canonical action/reward trajectory measure of the single scheduled
+policy.  This declaration itself contains no terminal horizon.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selectedPolicySuccessorTelescopingActionRewardTrajMeasure {Context : Type} {K : Nat} [MeasurableSpace Context] (hK : <span class="num">0</span> &lt; K) (mu0 : Measure (Prod (Fin K) Rat)) (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (sigma2 : NNReal) (delta : Real) (defaultAction : Fin K) : Measure (Nat -&gt; Prod (Fin K) Rat)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L1177">Source line 1177</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fbe42164523d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measure_selectedPolicySuccessorTelescoping_allTimeBadEvent_le_trajMeasure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Short canonical surface for the same-policy all-time confidence theorem.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_selectedPolicySuccessorTelescoping_allTimeBadEvent_le_trajMeasure {Context : Type} {K : Nat} [MeasurableSpace Context] (hK : <span class="num">0</span> &lt; K) (mu0 : Measure (Prod (Fin K) Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (mean : Context -&gt; Fin K -&gt; Rat) (varianceProxy : Context -&gt; Fin K -&gt; NNReal) (defaultAction : Fin K) (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (delta : Real) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hmean : Measurable (<span class="kw">fun</span> pair : Prod Context (Fin K) =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hvariance : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), varianceProxy (context i history) ((selectedPolicySuccessorTelescopingHistoryPolicy hK sigma2 delta defaultAction i).action (selectedPolicySuccessorTelescopingHistoryState hK sigma2 delta defaultAction i history)) &lt;= sigma2) (harmMean : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), <span class="kw">forall</span> arm : Fin K, mean (context i history) arm = armMean arm) (hsigma2 : <span class="num">0</span> &lt; (((sigma2 : NNReal) : Real))) (hdelta : <span class="num">0</span> &lt; delta) : <span class="kw">let</span> mu := selectedPolicySuccessorTelescopingActionRewardTrajMeasure hK mu0 rewardKernel context hcontext sigma2 delta defaultAction <span class="kw">let</span> reward : (Nat -&gt; Prod (Fin K) Rat) -&gt; RewardTrace Rat := <span class="kw">fun</span> trajectory t =&gt; (trajectory t).<span class="num">2</span> <span class="kw">let</span> action := selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward mu (ConditionalExpectationReward.successorArmEmpiricalMeanFintypeTelescopingAllTimeBadEvent action reward armMean sigma2 delta) &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L1213">Source line 1213</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9116314a18d2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measure_selectedPolicySuccessorTelescoping_pullCount_gt_threshold_le_trajMeasure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical finite-horizon pull-count tail for the single scheduled policy
+and the same trajectory measure used by the all-time confidence theorem.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_selectedPolicySuccessorTelescoping_pullCount_gt_threshold_le_trajMeasure {Context : Type} {K : Nat} [MeasurableSpace Context] (hK : <span class="num">0</span> &lt; K) (mu0 : Measure (Prod (Fin K) Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (mean : Context -&gt; Fin K -&gt; Rat) (varianceProxy : Context -&gt; Fin K -&gt; NNReal) (defaultAction best chosen : Fin K) (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (delta : Real) (T : Nat) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hmean : Measurable (<span class="kw">fun</span> pair : Prod Context (Fin K) =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hvariance : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), varianceProxy (context i history) ((selectedPolicySuccessorTelescopingHistoryPolicy hK sigma2 delta defaultAction i).action (selectedPolicySuccessorTelescopingHistoryState hK sigma2 delta defaultAction i history)) &lt;= sigma2) (harmMean : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), <span class="kw">forall</span> arm : Fin K, mean (context i history) arm = armMean arm) (hsigma2 : <span class="num">0</span> &lt; (((sigma2 : NNReal) : Real))) (hdelta : <span class="num">0</span> &lt; delta) (hgap : <span class="num">0</span> &lt; meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) best chosen) : <span class="kw">let</span> mu := selectedPolicySuccessorTelescopingActionRewardTrajMeasure hK mu0 rewardKernel context hcontext sigma2 delta defaultAction <span class="kw">let</span> reward : (Nat -&gt; Prod (Fin K) Rat) -&gt; RewardTrace Rat := <span class="kw">fun</span> trajectory t =&gt; (trajectory t).<span class="num">2</span> <span class="kw">let</span> action := selectedPolicySuccessorTelescopingGeneratedUCBAction hK sigma2 delta defaultAction reward mu {trajectory | selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta (meanGap (<span class="kw">fun</span> arm =&gt; (armMean arm : Real)) best chosen) &lt; ConditionalExpectationReward.successorArmPullCount (action trajectory) chosen (T + <span class="num">1</span>)} &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L1257">Source line 1257</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8c753c946182">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.lintegral_ofReal_pseudoRegret_selectedPolicySuccessorTelescoping_le_trajMeasure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical finite-time expected pseudo-regret of the single scheduled
+policy.  The same all-time event supplies every horizon, and the failure term
+is explicitly retained as `T * delta`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> lintegral_ofReal_pseudoRegret_selectedPolicySuccessorTelescoping_le_trajMeasure {Context : Type} {K : Nat} [MeasurableSpace Context] (model : FiniteBanditModel K) (mu0 : Measure (Prod (Fin K) Rat)) [IsProbabilityMeasure mu0] (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (mean : Context -&gt; Fin K -&gt; Rat) (varianceProxy : Context -&gt; Fin K -&gt; NNReal) (defaultAction : Fin K) (sigma2 : NNReal) (delta : Real) (T : Nat) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hmean : Measurable (<span class="kw">fun</span> pair : Prod Context (Fin K) =&gt; mean pair.<span class="num">1</span> pair.<span class="num">2</span>)) (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy) (hvariance : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), varianceProxy (context i history) ((selectedPolicySuccessorTelescopingHistoryPolicy model.hK sigma2 delta defaultAction i).action (selectedPolicySuccessorTelescopingHistoryState model.hK sigma2 delta defaultAction i history)) &lt;= sigma2) (harmMean : <span class="kw">forall</span> i : Nat, <span class="kw">forall</span> history : ((j : Finset.Iic i) -&gt; Rat), <span class="kw">forall</span> arm : Fin K, mean (context i history) arm = model.mean arm) (hsigma2 : <span class="num">0</span> &lt; (((sigma2 : NNReal) : Real))) (hdelta : <span class="num">0</span> &lt; delta) : <span class="kw">let</span> mu := selectedPolicySuccessorTelescopingActionRewardTrajMeasure model.hK mu0 rewardKernel context hcontext sigma2 delta defaultAction <span class="kw">let</span> reward : (Nat -&gt; Prod (Fin K) Rat) -&gt; RewardTrace Rat := <span class="kw">fun</span> trajectory t =&gt; (trajectory t).<span class="num">2</span> <span class="kw">let</span> action := selectedPolicySuccessorTelescopingGeneratedUCBRegretAction model.hK sigma2 delta defaultAction reward ∫⁻ trajectory, ENNReal.ofReal (((pseudoRegret model (action trajectory) T : Rat) : Real)) ∂mu &lt;= (Finset.univ : Finset (Fin K)).sum (<span class="kw">fun</span> arm =&gt; ENNReal.ofReal (((model.gap arm : Rat) : Real)) * ((selectedPolicySuccessorTelescopingPullThreshold K sigma2 T delta (((model.gap arm : Rat) : Real)) : Nat) : ENNReal) + ENNReal.ofReal (((model.gap arm : Rat) : Real)) * ((T : ENNReal) * ENNReal.ofReal delta))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBFixedPolicyTelescopingAnytimeRegret.lean.html#L1314">Source line 1314</a>
+      <a href="../../chapters/ucb/index.html#decl-8c753c946182-teaching">Open teaching explanation</a>
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

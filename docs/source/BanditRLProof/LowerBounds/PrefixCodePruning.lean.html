@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/LowerBounds/PrefixCodePruning.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/LowerBounds/PrefixCodePruning.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/LowerBounds/PrefixCodePruning.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/LowerBounds/PrefixCodePruning.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.LowerBounds.PrefixCodeSiblings</span>
+<span id="L2">2 </span>
+<span id="L3">3 namespace BanditRLProof.LowerBounds</span>
+<span id="L4">4 </span>
+<span id="L5">5 /-- A deepest leaf with no sibling has a parent incomparable with every other word. -/</span>
+<span id="L6">6 theorem deepest_parent_incomparable</span>
+<span id="L7">7     {α : Type*} (code : BinaryPrefixCode α) (a : α) (w : List Bool) (b : Bool)</span>
+<span id="L8">8     (ha : code.encode a = w ++ [b])</span>
+<span id="L9">9     (hmax : ∀ i, (code.encode i).length ≤ (code.encode a).length)</span>
+<span id="L10">10     (hmissing : ∀ i, code.encode i ≠ w ++ [!b]) :</span>
+<span id="L11">11     ∀ i, i ≠ a → (¬ code.encode i &lt;+: w) ∧ (¬ w &lt;+: code.encode i) := by</span>
+<span id="L12">12   intro i hia</span>
+<span id="L13">13   have hleft : ¬ code.encode i &lt;+: w := by</span>
+<span id="L14">14     intro h</span>
+<span id="L15">15     have hp : code.encode i &lt;+: code.encode a := by</span>
+<span id="L16">16       rw [ha]</span>
+<span id="L17">17       exact h.trans (List.prefix_append _ _)</span>
+<span id="L18">18     exact hia (code.prefixFree hp)</span>
+<span id="L19">19   refine ⟨hleft, ?_⟩</span>
+<span id="L20">20   rintro ⟨t, ht⟩</span>
+<span id="L21">21   have hlen := hmax i</span>
+<span id="L22">22   rw [ha, ← ht] at hlen</span>
+<span id="L23">23   simp only [List.length_append, List.length_singleton] at hlen</span>
+<span id="L24">24   cases t with</span>
+<span id="L25">25   | nil =&gt;</span>
+<span id="L26">26     have he : w = code.encode i := by simpa using ht</span>
+<span id="L27">27     exact hleft (by rw [he])</span>
+<span id="L28">28   | cons c t =&gt;</span>
+<span id="L29">29     have ht0 : t = [] := List.length_eq_zero_iff.mp (by simp only [List.length_cons] at hlen; omega)</span>
+<span id="L30">30     subst t</span>
+<span id="L31">31     by_cases hcb : c = b</span>
+<span id="L32">32     · have he : code.encode i = code.encode a := by rw [ha, ← ht, hcb]</span>
+<span id="L33">33       exact hia (code.injective he)</span>
+<span id="L34">34     · have hc : c = !b := by cases b &lt;;&gt; cases c &lt;;&gt; simp_all</span>
+<span id="L35">35       exact hmissing i (by rw [← ht, hc])</span>
+<span id="L36">36 </span>
+<span id="L37">37 /-- Replace one word by an incomparable nonempty word, preserving code validity. -/</span>
+<span id="L38">38 def BinaryPrefixCode.replaceWord</span>
+<span id="L39">39     {α : Type*} [DecidableEq α] (code : BinaryPrefixCode α) (a : α) (w : List Bool)</span>
+<span id="L40">40     (hw : w ≠ [])</span>
+<span id="L41">41     (hsep : ∀ i, i ≠ a → (¬ code.encode i &lt;+: w) ∧ (¬ w &lt;+: code.encode i)) :</span>
+<span id="L42">42     BinaryPrefixCode α := by</span>
+<span id="L43">43   let f : α → List Bool := fun i =&gt; if i = a then w else code.encode i</span>
+<span id="L44">44   have hf : ∀ i j, f i &lt;+: f j → i = j := by</span>
+<span id="L45">45     intro i j h</span>
+<span id="L46">46     by_cases hi : i = a</span>
+<span id="L47">47     · by_cases hj : j = a</span>
+<span id="L48">48       · exact hi.trans hj.symm</span>
+<span id="L49">49       · exact ((hsep j hj).2 (by simpa [f, hi, hj] using h)).elim</span>
+<span id="L50">50     · by_cases hj : j = a</span>
+<span id="L51">51       · exact ((hsep i hi).1 (by simpa [f, hi, hj] using h)).elim</span>
+<span id="L52">52       · exact code.prefixFree (by simpa [f, hi, hj] using h)</span>
+<span id="L53">53   exact ⟨f, fun i j h =&gt; hf i j (by rw [h]),</span>
+<span id="L54">54     fun i =&gt; by dsimp [f]; split_ifs; exact hw; exact code.nonempty i,</span>
+<span id="L55">55     fun h =&gt; hf _ _ h⟩</span>
+<span id="L56">56 </span>
+<span id="L57">57 /-- Legal deletion of the last bit of a deepest sibling-free leaf. -/</span>
+<span id="L58">58 def BinaryPrefixCode.pruneDeepest</span>
+<span id="L59">59     {α : Type*} [DecidableEq α] (code : BinaryPrefixCode α) (a : α) (w : List Bool) (b : Bool)</span>
+<span id="L60">60     (hw : w ≠ []) (ha : code.encode a = w ++ [b])</span>
+<span id="L61">61     (hmax : ∀ i, (code.encode i).length ≤ (code.encode a).length)</span>
+<span id="L62">62     (hmissing : ∀ i, code.encode i ≠ w ++ [!b]) : BinaryPrefixCode α :=</span>
+<span id="L63">63   code.replaceWord a w hw (deepest_parent_incomparable code a w b ha hmax hmissing)</span>
+<span id="L64">64 </span>
+<span id="L65">65 theorem expectedCodeLength_replaceWord</span>
+<span id="L66">66     {α : Type*} [Fintype α] [DecidableEq α] (p : α → ℝ)</span>
+<span id="L67">67     (code : BinaryPrefixCode α) (a : α) (w : List Bool) (hw : w ≠ [])</span>
+<span id="L68">68     (hsep : ∀ i, i ≠ a → (¬ code.encode i &lt;+: w) ∧ (¬ w &lt;+: code.encode i)) :</span>
+<span id="L69">69     expectedCodeLength p (code.replaceWord a w hw hsep) = expectedCodeLength p code +</span>
+<span id="L70">70       p a * (w.length - (code.encode a).length : ℝ) := by</span>
+<span id="L71">71   have ht (i) : p i * ((code.replaceWord a w hw hsep).encode i).length =</span>
+<span id="L72">72       p i * (code.encode i).length +</span>
+<span id="L73">73         (if i = a then p a * (w.length - (code.encode a).length : ℝ) else 0) := by</span>
+<span id="L74">74     by_cases hi : i = a</span>
+<span id="L75">75     · subst i</span>
+<span id="L76">76       simp [BinaryPrefixCode.replaceWord]</span>
+<span id="L77">77       ring</span>
+<span id="L78">78     · simp [BinaryPrefixCode.replaceWord, hi]</span>
+<span id="L79">79   simp only [expectedCodeLength, ht, Finset.sum_add_distrib]</span>
+<span id="L80">80   simp</span>
+<span id="L81">81 </span>
+<span id="L82">82 theorem expectedCodeLength_pruneDeepest</span>
+<span id="L83">83     {α : Type*} [Fintype α] [DecidableEq α] (p : α → ℝ)</span>
+<span id="L84">84     (code : BinaryPrefixCode α) (a : α) (w : List Bool) (b : Bool)</span>
+<span id="L85">85     (hw : w ≠ []) (ha : code.encode a = w ++ [b])</span>
+<span id="L86">86     (hmax : ∀ i, (code.encode i).length ≤ (code.encode a).length)</span>
+<span id="L87">87     (hmissing : ∀ i, code.encode i ≠ w ++ [!b]) :</span>
+<span id="L88">88     expectedCodeLength p (code.pruneDeepest a w b hw ha hmax hmissing) =</span>
+<span id="L89">89       expectedCodeLength p code - p a := by</span>
+<span id="L90">90   rw [BinaryPrefixCode.pruneDeepest, expectedCodeLength_replaceWord, ha]</span>
+<span id="L91">91   simp only [List.length_append, List.length_singleton, Nat.cast_add, Nat.cast_one]</span>
+<span id="L92">92   ring</span>
+<span id="L93">93 </span>
+<span id="L94">94 /-- Pruning remains cost-nonincreasing when the removed symbol has zero mass. -/</span>
+<span id="L95">95 theorem expectedCodeLength_pruneDeepest_le</span>
+<span id="L96">96     {α : Type*} [Fintype α] [DecidableEq α] (p : α → ℝ)</span>
+<span id="L97">97     (code : BinaryPrefixCode α) (a : α) (w : List Bool) (b : Bool)</span>
+<span id="L98">98     (hp : 0 ≤ p a) (hw : w ≠ []) (ha : code.encode a = w ++ [b])</span>
+<span id="L99">99     (hmax : ∀ i, (code.encode i).length ≤ (code.encode a).length)</span>
+<span id="L100">100     (hmissing : ∀ i, code.encode i ≠ w ++ [!b]) :</span>
+<span id="L101">101     expectedCodeLength p (code.pruneDeepest a w b hw ha hmax hmissing) ≤ expectedCodeLength p code := by</span>
+<span id="L102">102   rw [expectedCodeLength_pruneDeepest]</span>
+<span id="L103">103   linarith</span>
+<span id="L104">104 </span>
+<span id="L105">105 /-- Structural termination measure, independent of source probabilities. -/</span>
+<span id="L106">106 def totalCodeLength {α : Type*} [Fintype α] (code : BinaryPrefixCode α) : ℕ :=</span>
+<span id="L107">107   ∑ i, (code.encode i).length</span>
+<span id="L108">108 </span>
+<span id="L109">109 theorem totalCodeLength_pruneDeepest</span>
+<span id="L110">110     {α : Type*} [Fintype α] [DecidableEq α]</span>
+<span id="L111">111     (code : BinaryPrefixCode α) (a : α) (w : List Bool) (b : Bool)</span>
+<span id="L112">112     (hw : w ≠ []) (ha : code.encode a = w ++ [b])</span>
+<span id="L113">113     (hmax : ∀ i, (code.encode i).length ≤ (code.encode a).length)</span>
+<span id="L114">114     (hmissing : ∀ i, code.encode i ≠ w ++ [!b]) :</span>
+<span id="L115">115     totalCodeLength (code.pruneDeepest a w b hw ha hmax hmissing) + 1 = totalCodeLength code := by</span>
+<span id="L116">116   have h := expectedCodeLength_pruneDeepest (fun _ =&gt; (1 : ℝ)) code a w b hw ha hmax hmissing</span>
+<span id="L117">117   simp only [expectedCodeLength, one_mul] at h</span>
+<span id="L118">118   have he : (∑ i, (((code.pruneDeepest a w b hw ha hmax hmissing).encode i).length : ℝ)) + 1 =</span>
+<span id="L119">119       ∑ i, ((code.encode i).length : ℝ) := by linarith</span>
+<span id="L120">120   exact_mod_cast he</span>
+<span id="L121">121 </span>
+<span id="L122">122 /-- Choose a structurally minimal no-worse competitor without assuming cost-minimizer existence. -/</span>
+<span id="L123">123 theorem exists_minimal_totalCodeLength_competitor</span>
+<span id="L124">124     {α : Type*} [Fintype α] (p : α → ℝ) (original : BinaryPrefixCode α) :</span>
+<span id="L125">125     ∃ code : BinaryPrefixCode α,</span>
+<span id="L126">126       expectedCodeLength p code ≤ expectedCodeLength p original ∧</span>
+<span id="L127">127       ∀ other : BinaryPrefixCode α,</span>
+<span id="L128">128         expectedCodeLength p other ≤ expectedCodeLength p original →</span>
+<span id="L129">129           totalCodeLength code ≤ totalCodeLength other := by</span>
+<span id="L130">130   classical</span>
+<span id="L131">131   let P : ℕ → Prop := fun n =&gt; ∃ code : BinaryPrefixCode α,</span>
+<span id="L132">132     expectedCodeLength p code ≤ expectedCodeLength p original ∧ totalCodeLength code = n</span>
+<span id="L133">133   have hex : ∃ n, P n := ⟨totalCodeLength original, original, le_rfl, rfl⟩</span>
+<span id="L134">134   obtain ⟨code, hc, hn⟩ := Nat.find_spec hex</span>
+<span id="L135">135   refine ⟨code, hc, ?_⟩</span>
+<span id="L136">136   intro other ho</span>
+<span id="L137">137   rw [hn]</span>
+<span id="L138">138   exact Nat.find_min&#x27; hex ⟨other, ho, rfl⟩</span>
+<span id="L139">139 </span>
+<span id="L140">140 /-- Normalize any competitor so that each deepest leaf has its sibling present. -/</span>
+<span id="L141">141 theorem exists_competitor_with_deepest_siblings</span>
+<span id="L142">142     {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]</span>
+<span id="L143">143     (p : α → ℝ) (hp : ∀ i, 0 ≤ p i) (original : BinaryPrefixCode α) :</span>
+<span id="L144">144     ∃ code : BinaryPrefixCode α,</span>
+<span id="L145">145       expectedCodeLength p code ≤ expectedCodeLength p original ∧</span>
+<span id="L146">146       ∀ a w b, code.encode a = w ++ [b] →</span>
+<span id="L147">147         (∀ i, (code.encode i).length ≤ (code.encode a).length) →</span>
+<span id="L148">148           ∃ j, code.encode j = w ++ [!b] := by</span>
+<span id="L149">149   classical</span>
+<span id="L150">150   obtain ⟨code, hc, hmin⟩ := exists_minimal_totalCodeLength_competitor p original</span>
+<span id="L151">151   refine ⟨code, hc, ?_⟩</span>
+<span id="L152">152   intro a w b ha hmax</span>
+<span id="L153">153   by_contra h</span>
+<span id="L154">154   have hmissing : ∀ j, code.encode j ≠ w ++ [!b] := by simpa using h</span>
+<span id="L155">155   have hw : w ≠ [] := by</span>
+<span id="L156">156     intro he</span>
+<span id="L157">157     obtain ⟨i, hi⟩ := exists_ne a</span>
+<span id="L158">158     have hn := (deepest_parent_incomparable code a w b ha hmax hmissing i hi).2</span>
+<span id="L159">159     apply hn</span>
+<span id="L160">160     simp [he]</span>
+<span id="L161">161   have hcost := expectedCodeLength_pruneDeepest_le p code a w b (hp a) hw ha hmax hmissing</span>
+<span id="L162">162   have hbound := hmin (code.pruneDeepest a w b hw ha hmax hmissing) (hcost.trans hc)</span>
+<span id="L163">163   have hdrop := totalCodeLength_pruneDeepest code a w b hw ha hmax hmissing</span>
+<span id="L164">164   omega</span>
+<span id="L165">165 </span>
+<span id="L166">166 /-- Every competitor has a no-worse code containing a deepest sibling pair. -/</span>
+<span id="L167">167 theorem exists_no_worse_deepest_sibling_pair</span>
+<span id="L168">168     {α : Type*} [Fintype α] [DecidableEq α] [Nontrivial α]</span>
+<span id="L169">169     (p : α → ℝ) (hp : ∀ i, 0 ≤ p i) (original : BinaryPrefixCode α) :</span>
+<span id="L170">170     ∃ code : BinaryPrefixCode α, expectedCodeLength p code ≤ expectedCodeLength p original ∧</span>
+<span id="L171">171       ∃ a j w b, a ≠ j ∧ code.encode a = w ++ [b] ∧ code.encode j = w ++ [!b] ∧</span>
+<span id="L172">172         ∀ i, (code.encode i).length ≤ (code.encode a).length := by</span>
+<span id="L173">173   obtain ⟨code, hc, hf⟩ := exists_competitor_with_deepest_siblings p hp original</span>
+<span id="L174">174   obtain ⟨a, _, hmax⟩ := (Finset.univ : Finset α).exists_max_image</span>
+<span id="L175">175     (fun i =&gt; (code.encode i).length) Finset.univ_nonempty</span>
+<span id="L176">176   have hsplit : ∀ v : List Bool, v ≠ [] → ∃ w b, v = w ++ [b] := by</span>
+<span id="L177">177     intro v</span>
+<span id="L178">178     induction v using List.reverseRecOn with</span>
+<span id="L179">179     | nil =&gt; simp</span>
+<span id="L180">180     | append_singleton w b _ =&gt; exact fun _ =&gt; ⟨w, b, rfl⟩</span>
+<span id="L181">181   obtain ⟨w, b, ha⟩ := hsplit (code.encode a) (code.nonempty a)</span>
+<span id="L182">182   have hm : ∀ i, (code.encode i).length ≤ (code.encode a).length :=</span>
+<span id="L183">183     fun i =&gt; hmax i (Finset.mem_univ i)</span>
+<span id="L184">184   obtain ⟨j, hj⟩ := hf a w b ha hm</span>
+<span id="L185">185   have haj : a ≠ j := by</span>
+<span id="L186">186     intro he</span>
+<span id="L187">187     have hwords : w ++ [b] = w ++ [!b] := ha.symm.trans (he ▸ hj)</span>
+<span id="L188">188     have hb := List.append_cancel_left hwords</span>
+<span id="L189">189     cases b &lt;;&gt; simp at hb</span>
+<span id="L190">190   exact ⟨code, hc, a, j, w, b, haj, ha, hj, hm⟩</span>
+<span id="L191">191 </span>
+<span id="L192">192 end BanditRLProof.LowerBounds</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/TsallisScheduledReferenceGapSelfBounding.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/TsallisScheduledReferenceGapSelfBounding.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/TsallisScheduledReferenceGapSelfBounding.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/TsallisScheduledReferenceGapSelfBounding.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.TsallisScheduledTimeVaryingExpectedGap</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Reference-gap self-bounding for predictable perturbations</span>
+<span id="L5">5 </span>
+<span id="L6">6 The action probabilities and regret are generated by `actualLoss`, while a</span>
+<span id="L7">7 second predictable loss vector on the same trajectory supplies the stochastic</span>
+<span id="L8">8 baseline gap law.  A pointwise bound between the two loss differences then</span>
+<span id="L9">9 converts the reference expected-gap law into a self-bound for the actual</span>
+<span id="L10">10 regret.  This is the generic bridge needed by history-adaptive corruption.</span>
+<span id="L11">11 -/</span>
+<span id="L12">12 </span>
+<span id="L13">13 namespace BanditRLProof</span>
+<span id="L14">14 namespace Tsallis</span>
+<span id="L15">15 </span>
+<span id="L16">16 open MeasureTheory ProbabilityTheory</span>
+<span id="L17">17 </span>
+<span id="L18">18 universe u v</span>
+<span id="L19">19 </span>
+<span id="L20">20 /-- A reference expected-gap law plus a pointwise predictable perturbation</span>
+<span id="L21">21 bound yields the fixed-baseline self-bound for the actual generated regret. -/</span>
+<span id="L22">22 theorem integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_hasSelfBounding_of_referenceExpectedGapLaw</span>
+<span id="L23">23     {Env : Type u} {Action : Type v}</span>
+<span id="L24">24     [MeasurableSpace Env]</span>
+<span id="L25">25     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L26">26     [DecidableEq Action]</span>
+<span id="L27">27     (mu : Measure (Env × ((k : Nat) -&gt; Action × Real)))</span>
+<span id="L28">28     [IsProbabilityMeasure mu]</span>
+<span id="L29">29     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L30">30     (actualLoss referenceLoss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L31">31     {best : Action} (hbest : best ∈ arms)</span>
+<span id="L32">32     (baseGap : Action -&gt; Real) (deviation : Nat -&gt; Action -&gt; Real)</span>
+<span id="L33">33     (horizon : Nat)</span>
+<span id="L34">34     (hreferenceGapLaw : HasScheduledExpectedGapLaw</span>
+<span id="L35">35       mu arms harms eta referenceLoss best baseGap horizon)</span>
+<span id="L36">36     (hdeviation : ∀ t, t &lt;= horizon -&gt; ∀ sample action,</span>
+<span id="L37">37       action ∈ arms.erase best -&gt;</span>
+<span id="L38">38       |(Exp3.predictableLossAt actualLoss t sample action -</span>
+<span id="L39">39             Exp3.predictableLossAt actualLoss t sample best) -</span>
+<span id="L40">40           (Exp3.predictableLossAt referenceLoss t sample action -</span>
+<span id="L41">41             Exp3.predictableLossAt referenceLoss t sample best)| &lt;=</span>
+<span id="L42">42         deviation t action) :</span>
+<span id="L43">43     (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L44">44         (arms.erase best).sum (fun action =&gt;</span>
+<span id="L45">45           baseGap action * sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L46">46             mu arms harms eta t action)) -</span>
+<span id="L47">47       scheduledTimeVaryingGapDeviationBudget</span>
+<span id="L48">48         arms best horizon deviation &lt;=</span>
+<span id="L49">49       integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L50">50         arms harms eta actualLoss (pointMass best) horizon) := by</span>
+<span id="L51">51   have hactualIntegral :</span>
+<span id="L52">52       integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L53">53           arms harms eta actualLoss (pointMass best) horizon) =</span>
+<span id="L54">54         (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L55">55           (arms.erase best).sum (fun action =&gt;</span>
+<span id="L56">56             integral mu (fun sample =&gt;</span>
+<span id="L57">57               sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L58">58                   arms harms eta t sample action *</span>
+<span id="L59">59                 (Exp3.predictableLossAt actualLoss t sample action -</span>
+<span id="L60">60                   Exp3.predictableLossAt actualLoss t sample best)))) := by</span>
+<span id="L61">61     rw [integral_congr_ae (Filter.Eventually.of_forall fun sample =&gt;</span>
+<span id="L62">62       sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_eq_weightedLossGapMass</span>
+<span id="L63">63         arms harms eta actualLoss hbest horizon sample)]</span>
+<span id="L64">64     rw [ExpectationBochnerSums.integral_finset_sum mu</span>
+<span id="L65">65       (Finset.range (horizon + 1))]</span>
+<span id="L66">66     · apply Finset.sum_congr rfl</span>
+<span id="L67">67       intro t _ht</span>
+<span id="L68">68       rw [ExpectationBochnerSums.integral_finset_sum mu (arms.erase best)]</span>
+<span id="L69">69       intro action haction</span>
+<span id="L70">70       exact</span>
+<span id="L71">71         integrable_sampledScheduledHalfTsallisProbability_mul_predictableLossDiffAt</span>
+<span id="L72">72           mu arms harms eta actualLoss best action</span>
+<span id="L73">73             (Finset.mem_of_mem_erase haction) t</span>
+<span id="L74">74     · intro t _ht</span>
+<span id="L75">75       exact IntegrabilitySums.integrable_finset_sum mu (arms.erase best)</span>
+<span id="L76">76         (fun action sample =&gt;</span>
+<span id="L77">77           sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L78">78               arms harms eta t sample action *</span>
+<span id="L79">79             (Exp3.predictableLossAt actualLoss t sample action -</span>
+<span id="L80">80               Exp3.predictableLossAt actualLoss t sample best))</span>
+<span id="L81">81         (fun action haction =&gt;</span>
+<span id="L82">82           integrable_sampledScheduledHalfTsallisProbability_mul_predictableLossDiffAt</span>
+<span id="L83">83             mu arms harms eta actualLoss best action</span>
+<span id="L84">84               (Finset.mem_of_mem_erase haction) t)</span>
+<span id="L85">85   have hcoordinate : ∀ t, t &lt;= horizon -&gt; ∀ action,</span>
+<span id="L86">86       action ∈ arms.erase best -&gt;</span>
+<span id="L87">87       baseGap action * sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L88">88           mu arms harms eta t action - deviation t action &lt;=</span>
+<span id="L89">89         integral mu (fun sample =&gt;</span>
+<span id="L90">90           sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L91">91               arms harms eta t sample action *</span>
+<span id="L92">92             (Exp3.predictableLossAt actualLoss t sample action -</span>
+<span id="L93">93               Exp3.predictableLossAt actualLoss t sample best)) := by</span>
+<span id="L94">94     intro t ht action haction</span>
+<span id="L95">95     let probability := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L96">96       sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L97">97         arms harms eta t sample action</span>
+<span id="L98">98     let actualDiff := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L99">99       Exp3.predictableLossAt actualLoss t sample action -</span>
+<span id="L100">100         Exp3.predictableLossAt actualLoss t sample best</span>
+<span id="L101">101     let referenceDiff := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L102">102       Exp3.predictableLossAt referenceLoss t sample action -</span>
+<span id="L103">103         Exp3.predictableLossAt referenceLoss t sample best</span>
+<span id="L104">104     have hrefIntegrable : Integrable (probability * referenceDiff) mu := by</span>
+<span id="L105">105       simpa only [probability, referenceDiff] using</span>
+<span id="L106">106         integrable_sampledScheduledHalfTsallisProbability_mul_predictableLossDiffAt</span>
+<span id="L107">107           mu arms harms eta referenceLoss best action</span>
+<span id="L108">108             (Finset.mem_of_mem_erase haction) t</span>
+<span id="L109">109     have hactualIntegrable : Integrable (probability * actualDiff) mu := by</span>
+<span id="L110">110       simpa only [probability, actualDiff] using</span>
+<span id="L111">111         integrable_sampledScheduledHalfTsallisProbability_mul_predictableLossDiffAt</span>
+<span id="L112">112           mu arms harms eta actualLoss best action</span>
+<span id="L113">113             (Finset.mem_of_mem_erase haction) t</span>
+<span id="L114">114     have hpointwise : ∀ᵐ sample ∂mu,</span>
+<span id="L115">115         probability sample * referenceDiff sample - deviation t action &lt;=</span>
+<span id="L116">116           probability sample * actualDiff sample := by</span>
+<span id="L117">117       filter_upwards [] with sample</span>
+<span id="L118">118       have hsimplex :=</span>
+<span id="L119">119         finiteSimplex_sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L120">120           arms harms eta t sample</span>
+<span id="L121">121       have hp0 : 0 &lt;= probability sample :=</span>
+<span id="L122">122         hsimplex.1 action (Finset.mem_of_mem_erase haction)</span>
+<span id="L123">123       have hp1 : probability sample &lt;= 1 :=</span>
+<span id="L124">124         finiteSimplex_apply_le_one hsimplex</span>
+<span id="L125">125           (Finset.mem_of_mem_erase haction)</span>
+<span id="L126">126       have habs : referenceDiff sample - actualDiff sample &lt;=</span>
+<span id="L127">127           |actualDiff sample - referenceDiff sample| := by</span>
+<span id="L128">128         rw [abs_sub_comm]</span>
+<span id="L129">129         exact le_abs_self _</span>
+<span id="L130">130       have hweighted :</span>
+<span id="L131">131           (referenceDiff sample - actualDiff sample) * probability sample &lt;=</span>
+<span id="L132">132             deviation t action := by</span>
+<span id="L133">133         calc</span>
+<span id="L134">134           (referenceDiff sample - actualDiff sample) * probability sample &lt;=</span>
+<span id="L135">135               |actualDiff sample - referenceDiff sample| *</span>
+<span id="L136">136                 probability sample :=</span>
+<span id="L137">137             mul_le_mul_of_nonneg_right habs hp0</span>
+<span id="L138">138           _ &lt;= |actualDiff sample - referenceDiff sample| := by</span>
+<span id="L139">139             simpa using mul_le_of_le_one_right (abs_nonneg _) hp1</span>
+<span id="L140">140           _ &lt;= deviation t action := by</span>
+<span id="L141">141             simpa only [actualDiff, referenceDiff] using</span>
+<span id="L142">142               hdeviation t ht sample action haction</span>
+<span id="L143">143       linarith</span>
+<span id="L144">144     have hmono := integral_mono_ae</span>
+<span id="L145">145       (hrefIntegrable.sub (integrable_const _))</span>
+<span id="L146">146       hactualIntegrable hpointwise</span>
+<span id="L147">147     change integral mu (fun sample =&gt;</span>
+<span id="L148">148         probability sample * referenceDiff sample - deviation t action) &lt;=</span>
+<span id="L149">149       integral mu (fun sample =&gt;</span>
+<span id="L150">150         probability sample * actualDiff sample) at hmono</span>
+<span id="L151">151     have hsubIntegral :</span>
+<span id="L152">152         integral mu (fun sample =&gt;</span>
+<span id="L153">153             probability sample * referenceDiff sample - deviation t action) =</span>
+<span id="L154">154           integral mu (fun sample =&gt;</span>
+<span id="L155">155             probability sample * referenceDiff sample) -</span>
+<span id="L156">156           integral mu (fun _sample =&gt; deviation t action) := by</span>
+<span id="L157">157       simpa only [Pi.sub_apply, Pi.mul_apply] using</span>
+<span id="L158">158         integral_sub hrefIntegrable (integrable_const (μ := mu) _)</span>
+<span id="L159">159     rw [hsubIntegral] at hmono</span>
+<span id="L160">160     have hconst : integral mu (fun _sample =&gt; deviation t action) =</span>
+<span id="L161">161         deviation t action := by simp</span>
+<span id="L162">162     rw [hconst] at hmono</span>
+<span id="L163">163     have href : integral mu (fun sample =&gt;</span>
+<span id="L164">164         probability sample * referenceDiff sample) =</span>
+<span id="L165">165         baseGap action * sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L166">166           mu arms harms eta t action := by</span>
+<span id="L167">167       simpa only [probability, referenceDiff, Pi.mul_apply] using</span>
+<span id="L168">168         hreferenceGapLaw t ht action haction</span>
+<span id="L169">169     rw [href] at hmono</span>
+<span id="L170">170     simpa only [probability, actualDiff, Pi.mul_apply] using hmono</span>
+<span id="L171">171   calc</span>
+<span id="L172">172     (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L173">173         (arms.erase best).sum (fun action =&gt;</span>
+<span id="L174">174           baseGap action * sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L175">175             mu arms harms eta t action)) -</span>
+<span id="L176">176         scheduledTimeVaryingGapDeviationBudget</span>
+<span id="L177">177           arms best horizon deviation =</span>
+<span id="L178">178       (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L179">179         (arms.erase best).sum (fun action =&gt;</span>
+<span id="L180">180           baseGap action * sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L181">181               mu arms harms eta t action - deviation t action)) := by</span>
+<span id="L182">182       simp [scheduledTimeVaryingGapDeviationBudget,</span>
+<span id="L183">183         Finset.sum_sub_distrib]</span>
+<span id="L184">184     _ &lt;= (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L185">185         (arms.erase best).sum (fun action =&gt;</span>
+<span id="L186">186           integral mu (fun sample =&gt;</span>
+<span id="L187">187             sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L188">188                 arms harms eta t sample action *</span>
+<span id="L189">189               (Exp3.predictableLossAt actualLoss t sample action -</span>
+<span id="L190">190                 Exp3.predictableLossAt actualLoss t sample best)))) := by</span>
+<span id="L191">191       apply Finset.sum_le_sum</span>
+<span id="L192">192       intro t ht</span>
+<span id="L193">193       have ht&#x27; : t &lt;= horizon :=</span>
+<span id="L194">194         Nat.lt_succ_iff.mp (Finset.mem_range.mp ht)</span>
+<span id="L195">195       apply Finset.sum_le_sum</span>
+<span id="L196">196       intro action haction</span>
+<span id="L197">197       exact hcoordinate t ht&#x27; action haction</span>
+<span id="L198">198     _ = integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L199">199         arms harms eta actualLoss (pointMass best) horizon) :=</span>
+<span id="L200">200       hactualIntegral.symm</span>
+<span id="L201">201 </span>
+<span id="L202">202 end Tsallis</span>
+<span id="L203">203 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

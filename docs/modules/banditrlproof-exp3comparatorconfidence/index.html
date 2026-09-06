@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Exp3ComparatorConfidence · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Exp3ComparatorConfidence · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Exp3ComparatorConfidence · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · EXP3</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Exp3Comparator<wbr>Confidence</h1>
+  <p class="lede">Generated source map for this Lean module.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Exp3ComparatorConfidence.lean.html"><code>BanditRLProof/Exp3ComparatorConfidence.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/exp3/index.html">7. EXP3 and adversarial concentration</a></dd></div>
+    <div><dt>Declarations</dt><dd>18</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-exp3realizeddeviationtail/index.html"><code>BanditRLProof.Exp3RealizedDeviationTail</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-exp3comparatorbernstein/index.html"><code>BanditRLProof.Exp3ComparatorBernstein</code></a>, <a href="../banditrlproof-exp3pureconfidence/index.html"><code>BanditRLProof.Exp3PureConfidence</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-f4c7fd71e01e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.comparatorEstimator_hasCondSubgaussianMGF_of_condDistrib_ae_eq_finiteActionKernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> comparatorEstimator_hasCondSubgaussianMGF_of_condDistrib_ae_eq_finiteActionKernel {Omega : Type u} {History : Type v} {Action : Type w} [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [Nonempty Omega] [mHistory : MeasurableSpace History] [StandardBorelSpace History] [mAction : MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (mu : Measure Omega) [IsFiniteMeasure mu] (history : Omega -&gt; History) (hhistory : Measurable history) (action : Omega -&gt; Action) (haction : Measurable action) (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real) (source : MeasurableFiniteActionDistribution arms prob) (epsilon : Real) (regularity : BoundedMeasurableLossWithProbabilityFloor arms prob loss epsilon) (comparator : Action) (hcomparator : comparator ∈ arms) (hcond : condDistrib action history mu =ᵐ[mu.map history] finiteActionKernel arms prob source) : ProbabilityTheory.HasCondSubgaussianMGF (mHistory.comap history) hhistory.comap_le (<span class="kw">fun</span> omega =&gt; importanceWeightedLoss (prob (history omega)) (loss (history omega)) (action omega) comparator - loss (history omega) comparator) (Concentration.intervalVarianceProxy <span class="num">0</span> (<span class="num">1</span> / epsilon)) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ComparatorConfidence.lean.html#L9">Source line 9</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-16c8433472ee">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.sampledTrajectoryPredictableComparatorEstimatorDeviationAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledTrajectoryPredictableComparatorEstimatorDeviationAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (loss : PredictableLossVector Env Action) (comparator : Action) (t : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ComparatorConfidence.lean.html#L159">Source line 159</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-30502d80eaaf">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.sampledTrajectoryObservedComparatorEstimatorDeviationAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledTrajectoryObservedComparatorEstimatorDeviationAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (loss : PredictableLossVector Env Action) (comparator : Action) (t : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ComparatorConfidence.lean.html#L170">Source line 170</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-562dee49fed1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledPredictableComparatorEstimatorDeviation_zero_hasCondSubgaussianMGF</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledPredictableComparatorEstimatorDeviation_zero_hasCondSubgaussianMGF {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) (comparator : Action) (hcomparator : comparator ∈ arms) : <span class="kw">let</span> mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms eta gamma hgamma_pos.le hgamma_le_one loss.environment ProbabilityTheory.HasCondSubgaussianMGF ((inferInstance : MeasurableSpace Env).comap (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; sample.<span class="num">1</span>)) measurable_fst.comap_le (sampledTrajectoryPredictableComparatorEstimatorDeviationAt arms eta gamma loss comparator <span class="num">0</span>) (Concentration.intervalVarianceProxy <span class="num">0</span> (<span class="num">1</span> / (gamma / (arms.card : Real)))) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ComparatorConfidence.lean.html#L179">Source line 179</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5991f75c8998">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledPredictableComparatorEstimatorDeviation_succ_hasCondSubgaussianMGF</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledPredictableComparatorEstimatorDeviation_succ_hasCondSubgaussianMGF {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) (comparator : Action) (hcomparator : comparator ∈ arms) (n : Nat) : <span class="kw">let</span> mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms eta gamma hgamma_pos.le hgamma_le_one loss.environment <span class="kw">let</span> history := <span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; (sample.<span class="num">1</span>, Preorder.frestrictLe n sample.<span class="num">2</span>) ProbabilityTheory.HasCondSubgaussianMGF ((inferInstance : MeasurableSpace (Env × History.FinitePairHistory Action Real n)).comap history) (measurable_fst.prodMk ((Preorder.measurable_frestrictLe n).comp measurable_snd)).comap_le (sampledTrajectoryPredictableComparatorEstimatorDeviationAt arms eta gamma loss comparator (n + <span class="num">1</span>)) (Concentration.intervalVarianceProxy <span class="num">0</span> (<span class="num">1</span> / (gamma / (arms.card : Real)))) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ComparatorConfidence.lean.html#L234">Source line 234</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b74a6d1ab2dc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledObservedComparatorEstimatorDeviation_zero_hasCondSubgaussianMGF</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledObservedComparatorEstimatorDeviation_zero_hasCondSubgaussianMGF {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) (comparator : Action) (hcomparator : comparator ∈ arms) : <span class="kw">let</span> mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms eta gamma hgamma_pos.le hgamma_le_one loss.environment ProbabilityTheory.HasCondSubgaussianMGF ((inferInstance : MeasurableSpace Env).comap (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; sample.<span class="num">1</span>)) measurable_fst.comap_le (sampledTrajectoryObservedComparatorEstimatorDeviationAt arms eta gamma loss comparator <span class="num">0</span>) (Concentration.intervalVarianceProxy <span class="num">0</span> (<span class="num">1</span> / (gamma / (arms.card : Real)))) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ComparatorConfidence.lean.html#L289">Source line 289</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-79bcadecd323">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledObservedComparatorEstimatorDeviation_succ_hasCondSubgaussianMGF</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledObservedComparatorEstimatorDeviation_succ_hasCondSubgaussianMGF {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) (comparator : Action) (hcomparator : comparator ∈ arms) (n : Nat) : <span class="kw">let</span> mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms eta gamma hgamma_pos.le hgamma_le_one loss.environment <span class="kw">let</span> history := <span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; (sample.<span class="num">1</span>, Preorder.frestrictLe n sample.<span class="num">2</span>) ProbabilityTheory.HasCondSubgaussianMGF ((inferInstance : MeasurableSpace (Env × History.FinitePairHistory Action Real n)).comap history) (measurable_fst.prodMk ((Preorder.measurable_frestrictLe n).comp measurable_snd)).comap_le (sampledTrajectoryObservedComparatorEstimatorDeviationAt arms eta gamma loss comparator (n + <span class="num">1</span>)) (Concentration.intervalVarianceProxy <span class="num">0</span> (<span class="num">1</span> / (gamma / (arms.card : Real)))) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ComparatorConfidence.lean.html#L354">Source line 354</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-220cd64d60fa">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.sampledObservedComparatorEstimatorDeviationProcess</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledObservedComparatorEstimatorDeviationProcess {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (loss : PredictableLossVector Env Action) (comparator : Action) : Nat -&gt; Env × ((k : Nat) -&gt; Action × Real) -&gt; Real | <span class="num">0</span>, _sample =&gt; <span class="num">0</span> | i + <span class="num">1</span>, sample =&gt; sampledTrajectoryObservedComparatorEstimatorDeviationAt arms eta gamma loss comparator i sample <span class="kw">noncomputable</span> <span class="kw">def</span> sampledComparatorEstimatorVarianceProxy {Action : Type v} (arms : Finset Action) (gamma : Real) : NNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ComparatorConfidence.lean.html#L426">Source line 426</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-049f3a1ea232">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.sampledComparatorEstimatorVarianceProxy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledComparatorEstimatorVarianceProxy {Action : Type v} (arms : Finset Action) (gamma : Real) : NNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ComparatorConfidence.lean.html#L437">Source line 437</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f80a78415eb3">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.sampledComparatorEstimatorDeviationProxy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledComparatorEstimatorDeviationProxy {Action : Type v} (arms : Finset Action) (gamma : Real) : Nat -&gt; NNReal | <span class="num">0</span> =&gt; <span class="num">0</span> | _i + <span class="num">1</span> =&gt; sampledComparatorEstimatorVarianceProxy arms gamma <span class="kw">theorem</span> sampledObservedComparatorEstimatorDeviationProcess_stronglyAdapted {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_nonneg : <span class="num">0</span> &lt;= gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) (comparator : Action) (hcomparator : comparator ∈ arms) : StronglyAdapted (sampledPredictableDeviationFiltration Env Action) (sampledObservedComparatorEstimatorDeviationProcess arms eta gamma loss comparator)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ComparatorConfidence.lean.html#L442">Source line 442</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-36aacb0faee6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledObservedComparatorEstimatorDeviationProcess_stronglyAdapted</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledObservedComparatorEstimatorDeviationProcess_stronglyAdapted {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_nonneg : <span class="num">0</span> &lt;= gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) (comparator : Action) (hcomparator : comparator ∈ arms) : StronglyAdapted (sampledPredictableDeviationFiltration Env Action) (sampledObservedComparatorEstimatorDeviationProcess arms eta gamma loss comparator)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ComparatorConfidence.lean.html#L447">Source line 447</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-99ff7a029939">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledObservedComparatorEstimatorDeviationProcess_sum_range_succ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledObservedComparatorEstimatorDeviationProcess_sum_range_succ {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (loss : PredictableLossVector Env Action) (comparator : Action) (horizon : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) : (Finset.range (horizon + <span class="num">1</span>)).sum (<span class="kw">fun</span> i =&gt; sampledObservedComparatorEstimatorDeviationProcess arms eta gamma loss comparator i sample) = (Finset.range horizon).sum (<span class="kw">fun</span> i =&gt; sampledTrajectoryObservedComparatorEstimatorDeviationAt arms eta gamma loss comparator i sample)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ComparatorConfidence.lean.html#L600">Source line 600</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-dfbb414dc0f5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledComparatorEstimatorDeviationProxy_sum_range_succ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledComparatorEstimatorDeviationProxy_sum_range_succ {Action : Type v} (arms : Finset Action) (gamma : Real) (horizon : Nat) : (Finset.range (horizon + <span class="num">1</span>)).sum (sampledComparatorEstimatorDeviationProxy arms gamma) = (horizon : NNReal) * sampledComparatorEstimatorVarianceProxy arms gamma</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ComparatorConfidence.lean.html#L638">Source line 638</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-79b71deab19a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledObservedComparatorEstimatorDeviation_sum_tail_ennreal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Fixed-comparator concentration for the observed importance-weighted EXP3
+estimator minus its true predictable comparator loss.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledObservedComparatorEstimatorDeviation_sum_tail_ennreal {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsProbabilityMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) (comparator : Action) (hcomparator : comparator ∈ arms) (horizon : Nat) {eps : Real} (heps : <span class="num">0</span> &lt;= eps) : <span class="kw">let</span> mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms eta gamma hgamma_pos.le hgamma_le_one loss.environment mu {sample | eps &lt;= (Finset.range horizon).sum (<span class="kw">fun</span> i =&gt; sampledTrajectoryObservedComparatorEstimatorDeviationAt arms eta gamma loss comparator i sample)} &lt;= ENNReal.ofReal (Real.exp (-eps ^ <span class="num">2</span> / (<span class="num">2</span> * ((((horizon : NNReal) * sampledComparatorEstimatorVarianceProxy arms gamma : NNReal)) : Real))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ComparatorConfidence.lean.html#L655">Source line 655</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-aadecee17d20">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.sampledComparatorEstimatorConfidenceRadius</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledComparatorEstimatorConfidenceRadius {Action : Type v} (arms : Finset Action) (gamma : Real) (horizon : Nat) (delta : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ComparatorConfidence.lean.html#L725">Source line 725</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cf9c89fc9867">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledComparatorEstimatorVarianceProxy_pos</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledComparatorEstimatorVarianceProxy_pos {Action : Type v} (arms : Finset Action) (harms : arms.Nonempty) (gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) : <span class="num">0</span> &lt; ((sampledComparatorEstimatorVarianceProxy arms gamma : NNReal) : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ComparatorConfidence.lean.html#L733">Source line 733</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7ec68c234482">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledObservedComparatorEstimatorDeviation_sum_tail_exp_neg_budget</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledObservedComparatorEstimatorDeviation_sum_tail_exp_neg_budget {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsProbabilityMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) (comparator : Action) (hcomparator : comparator ∈ arms) (horizon : Nat) (hhorizon : <span class="num">0</span> &lt; horizon) (budget : Real) : <span class="kw">let</span> mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms eta gamma hgamma_pos.le hgamma_le_one loss.environment mu {sample | Real.sqrt (<span class="num">2</span> * ((((horizon : NNReal) * sampledComparatorEstimatorVarianceProxy arms gamma : NNReal)) : Real) * budget) &lt;= (Finset.range horizon).sum (<span class="kw">fun</span> i =&gt; sampledTrajectoryObservedComparatorEstimatorDeviationAt arms eta gamma loss comparator i sample)} &lt;= ENNReal.ofReal (Real.exp (-budget))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ComparatorConfidence.lean.html#L750">Source line 750</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4d9e6790811a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledObservedComparatorEstimatorDeviation_sum_tail_delta</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Delta-shaped one-sided confidence bound for a fixed comparator&#x27;s observed
+importance-weighted estimator against its true predictable loss.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledObservedComparatorEstimatorDeviation_sum_tail_delta {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsProbabilityMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) (comparator : Action) (hcomparator : comparator ∈ arms) (horizon : Nat) (hhorizon : <span class="num">0</span> &lt; horizon) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) : <span class="kw">let</span> mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms eta gamma hgamma_pos.le hgamma_le_one loss.environment mu {sample | sampledComparatorEstimatorConfidenceRadius arms gamma horizon delta &lt;= (Finset.range horizon).sum (<span class="kw">fun</span> i =&gt; observedImportanceWeightedLossAt arms eta gamma i sample comparator - predictableLossAt loss i sample comparator)} &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ComparatorConfidence.lean.html#L800">Source line 800</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

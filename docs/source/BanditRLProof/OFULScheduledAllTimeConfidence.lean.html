@@ -1,0 +1,1419 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/OFULScheduledAllTimeConfidence.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/OFULScheduledAllTimeConfidence.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/OFULScheduledAllTimeConfidence.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/OFULScheduledAllTimeConfidence.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.OFULAllTimeConfidence</span>
+<span id="L2">2 import BanditRLProof.OFULHistoryEnvironmentRewardLaw</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Scheduled canonical all-time OFUL confidence</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module defines one history algorithm whose successor selector at history</span>
+<span id="L8">8 index `n` uses the confidence budget assigned to horizon `n + 1`.  It then</span>
+<span id="L9">9 constructs the corresponding strict-past predictable feature and residual</span>
+<span id="L10">10 process and transports the all-time scalar-ridge confidence event to the</span>
+<span id="L11">11 actual canonical trajectory.</span>
+<span id="L12">12 </span>
+<span id="L13">13 The final theorem also controls the event that any successor action violates</span>
+<span id="L14">14 its scheduled one-step optimism certificate.  A concrete environment-to-</span>
+<span id="L15">15 residual-law producer remains a separate law-transport theorem.</span>
+<span id="L16">16 -/</span>
+<span id="L17">17 </span>
+<span id="L18">18 open MeasureTheory ProbabilityTheory</span>
+<span id="L19">19 open scoped ENNReal ProbabilityTheory</span>
+<span id="L20">20 </span>
+<span id="L21">21 universe u</span>
+<span id="L22">22 </span>
+<span id="L23">23 namespace BanditRLProof</span>
+<span id="L24">24 namespace OFUL</span>
+<span id="L25">25 </span>
+<span id="L26">26 /-- History-indexed radius using the budget assigned to successor time `n+1`. -/</span>
+<span id="L27">27 noncomputable def finiteHistoryScheduledScalarRidgeRadius</span>
+<span id="L28">28     {K : Nat} {Feature : Type u}</span>
+<span id="L29">29     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L30">30     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L31">31     (R : Real) (deltaAt : Nat -&gt; Real) (lambda S : Real)</span>
+<span id="L32">32     (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) : Real :=</span>
+<span id="L33">33   finiteHistoryScalarRidgeRadius</span>
+<span id="L34">34     actionFeature R (deltaAt (n + 1)) lambda S n history</span>
+<span id="L35">35 </span>
+<span id="L36">36 /-- Scalar-ridge score with the successor-time confidence schedule. -/</span>
+<span id="L37">37 noncomputable def finiteHistoryScheduledScalarRidgeOptimisticScore</span>
+<span id="L38">38     {K : Nat} {Feature : Type u}</span>
+<span id="L39">39     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L40">40     (lambda : Real)</span>
+<span id="L41">41     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L42">42     (R : Real) (deltaAt : Nat -&gt; Real) (S : Real)</span>
+<span id="L43">43     (n : Nat) (history : History.FinitePairHistory (Fin K) Real n)</span>
+<span id="L44">44     (action : Fin K) : Real :=</span>
+<span id="L45">45   finiteHistoryOptimisticScore</span>
+<span id="L46">46     (finiteHistoryScalarRidgeEstimate lambda actionFeature)</span>
+<span id="L47">47     (finiteHistoryScalarRidgeDesign lambda actionFeature)</span>
+<span id="L48">48     (finiteHistoryScheduledScalarRidgeRadius</span>
+<span id="L49">49       actionFeature R deltaAt lambda S)</span>
+<span id="L50">50     (finiteHistoryFixedActionFeature actionFeature)</span>
+<span id="L51">51     n history action</span>
+<span id="L52">52 </span>
+<span id="L53">53 theorem finiteHistoryScheduledScalarRidgeOptimisticScore_eq</span>
+<span id="L54">54     {K : Nat} {Feature : Type u}</span>
+<span id="L55">55     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L56">56     (lambda : Real)</span>
+<span id="L57">57     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L58">58     (R : Real) (deltaAt : Nat -&gt; Real) (S : Real)</span>
+<span id="L59">59     (n : Nat) (history : History.FinitePairHistory (Fin K) Real n)</span>
+<span id="L60">60     (action : Fin K) :</span>
+<span id="L61">61     finiteHistoryScheduledScalarRidgeOptimisticScore</span>
+<span id="L62">62         lambda actionFeature R deltaAt S n history action =</span>
+<span id="L63">63       finiteHistoryScalarRidgeOptimisticScore</span>
+<span id="L64">64         lambda actionFeature R (deltaAt (n + 1)) S n history action := rfl</span>
+<span id="L65">65 </span>
+<span id="L66">66 /-- Every fixed-action scheduled score is measurable in finite history. -/</span>
+<span id="L67">67 theorem measurable_finiteHistoryScheduledScalarRidgeOptimisticScore</span>
+<span id="L68">68     {K : Nat} {Feature : Type u}</span>
+<span id="L69">69     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L70">70     (lambda : Real)</span>
+<span id="L71">71     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L72">72     (R : Real) (deltaAt : Nat -&gt; Real) (S : Real)</span>
+<span id="L73">73     (n : Nat) (action : Fin K) :</span>
+<span id="L74">74     Measurable</span>
+<span id="L75">75       (fun history : History.FinitePairHistory (Fin K) Real n =&gt;</span>
+<span id="L76">76         finiteHistoryScheduledScalarRidgeOptimisticScore</span>
+<span id="L77">77           lambda actionFeature R deltaAt S n history action) := by</span>
+<span id="L78">78   simpa only [finiteHistoryScheduledScalarRidgeOptimisticScore_eq] using</span>
+<span id="L79">79     measurable_finiteHistoryScalarRidgeOptimisticScore</span>
+<span id="L80">80       lambda actionFeature R (deltaAt (n + 1)) S n action</span>
+<span id="L81">81 </span>
+<span id="L82">82 /-- Deterministic strict-fold selector for the scheduled scalar-ridge score. -/</span>
+<span id="L83">83 noncomputable def finiteHistoryScheduledScalarRidgeOptimisticAction</span>
+<span id="L84">84     {K : Nat} {Feature : Type u}</span>
+<span id="L85">85     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L86">86     (hK : 0 &lt; K)</span>
+<span id="L87">87     (lambda : Real)</span>
+<span id="L88">88     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L89">89     (R : Real) (deltaAt : Nat -&gt; Real) (S : Real)</span>
+<span id="L90">90     (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) :</span>
+<span id="L91">91     Fin K :=</span>
+<span id="L92">92   finiteHistoryOptimisticAction</span>
+<span id="L93">93     hK</span>
+<span id="L94">94     (finiteHistoryScalarRidgeEstimate lambda actionFeature)</span>
+<span id="L95">95     (finiteHistoryScalarRidgeDesign lambda actionFeature)</span>
+<span id="L96">96     (finiteHistoryScheduledScalarRidgeRadius</span>
+<span id="L97">97       actionFeature R deltaAt lambda S)</span>
+<span id="L98">98     (finiteHistoryFixedActionFeature actionFeature)</span>
+<span id="L99">99     n history</span>
+<span id="L100">100 </span>
+<span id="L101">101 theorem finiteHistoryScheduledScalarRidgeOptimisticAction_eq</span>
+<span id="L102">102     {K : Nat} {Feature : Type u}</span>
+<span id="L103">103     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L104">104     (hK : 0 &lt; K)</span>
+<span id="L105">105     (lambda : Real)</span>
+<span id="L106">106     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L107">107     (R : Real) (deltaAt : Nat -&gt; Real) (S : Real)</span>
+<span id="L108">108     (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) :</span>
+<span id="L109">109     finiteHistoryScheduledScalarRidgeOptimisticAction</span>
+<span id="L110">110         hK lambda actionFeature R deltaAt S n history =</span>
+<span id="L111">111       finiteHistoryScalarRidgeOptimisticAction</span>
+<span id="L112">112         hK lambda actionFeature R (deltaAt (n + 1)) S n history := rfl</span>
+<span id="L113">113 </span>
+<span id="L114">114 /-- The scheduled selector maximizes its time-indexed score. -/</span>
+<span id="L115">115 theorem finiteHistoryScheduledScalarRidgeOptimisticAction_score_max</span>
+<span id="L116">116     {K : Nat} {Feature : Type u}</span>
+<span id="L117">117     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L118">118     (hK : 0 &lt; K)</span>
+<span id="L119">119     (lambda : Real)</span>
+<span id="L120">120     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L121">121     (R : Real) (deltaAt : Nat -&gt; Real) (S : Real)</span>
+<span id="L122">122     (n : Nat) (history : History.FinitePairHistory (Fin K) Real n)</span>
+<span id="L123">123     (action : Fin K) :</span>
+<span id="L124">124     finiteHistoryScheduledScalarRidgeOptimisticScore</span>
+<span id="L125">125         lambda actionFeature R deltaAt S n history action &lt;=</span>
+<span id="L126">126       finiteHistoryScheduledScalarRidgeOptimisticScore</span>
+<span id="L127">127         lambda actionFeature R deltaAt S n history</span>
+<span id="L128">128         (finiteHistoryScheduledScalarRidgeOptimisticAction</span>
+<span id="L129">129           hK lambda actionFeature R deltaAt S n history) := by</span>
+<span id="L130">130   exact finiteHistoryOptimisticAction_score_max</span>
+<span id="L131">131     hK</span>
+<span id="L132">132     (finiteHistoryScalarRidgeEstimate lambda actionFeature)</span>
+<span id="L133">133     (finiteHistoryScalarRidgeDesign lambda actionFeature)</span>
+<span id="L134">134     (finiteHistoryScheduledScalarRidgeRadius</span>
+<span id="L135">135       actionFeature R deltaAt lambda S)</span>
+<span id="L136">136     (finiteHistoryFixedActionFeature actionFeature)</span>
+<span id="L137">137     n history action</span>
+<span id="L138">138 </span>
+<span id="L139">139 /-- One measurable history algorithm using the supplied all-time schedule. -/</span>
+<span id="L140">140 noncomputable def finiteHistoryScheduledScalarRidgeOptimisticAlgorithm</span>
+<span id="L141">141     {K : Nat} {Feature : Type u}</span>
+<span id="L142">142     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L143">143     (hK : 0 &lt; K)</span>
+<span id="L144">144     (lambda : Real)</span>
+<span id="L145">145     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L146">146     (R : Real) (deltaAt : Nat -&gt; Real) (S : Real) :</span>
+<span id="L147">147     Thompson.HistoryAlgorithm (Fin K) Real :=</span>
+<span id="L148">148   finiteHistoryOptimisticAlgorithm</span>
+<span id="L149">149     hK</span>
+<span id="L150">150     (finiteHistoryScalarRidgeEstimate lambda actionFeature)</span>
+<span id="L151">151     (finiteHistoryScalarRidgeDesign lambda actionFeature)</span>
+<span id="L152">152     (finiteHistoryScheduledScalarRidgeRadius</span>
+<span id="L153">153       actionFeature R deltaAt lambda S)</span>
+<span id="L154">154     (finiteHistoryFixedActionFeature actionFeature)</span>
+<span id="L155">155     (measurable_finiteHistoryScheduledScalarRidgeOptimisticScore</span>
+<span id="L156">156       lambda actionFeature R deltaAt S)</span>
+<span id="L157">157 </span>
+<span id="L158">158 /-- Scheduled algorithm specialized to the exact telescoping confidence budget. -/</span>
+<span id="L159">159 noncomputable def finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm</span>
+<span id="L160">160     {K : Nat} {Feature : Type u}</span>
+<span id="L161">161     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L162">162     (hK : 0 &lt; K)</span>
+<span id="L163">163     (lambda : Real)</span>
+<span id="L164">164     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L165">165     (R delta S : Real) :</span>
+<span id="L166">166     Thompson.HistoryAlgorithm (Fin K) Real :=</span>
+<span id="L167">167   finiteHistoryScheduledScalarRidgeOptimisticAlgorithm</span>
+<span id="L168">168     hK lambda actionFeature R (allTimeTelescopingDelta delta) S</span>
+<span id="L169">169 </span>
+<span id="L170">170 /-- The telescoping scheduled policy starts from the fixed canonical arm. -/</span>
+<span id="L171">171 theorem finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm_initialAction</span>
+<span id="L172">172     {K : Nat} {Feature : Type u}</span>
+<span id="L173">173     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L174">174     (hK : 0 &lt; K)</span>
+<span id="L175">175     (lambda : Real)</span>
+<span id="L176">176     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L177">177     (R delta S : Real) :</span>
+<span id="L178">178     (finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm</span>
+<span id="L179">179       hK lambda actionFeature R delta S).initialAction =</span>
+<span id="L180">180       Measure.dirac ⟨0, hK⟩ := rfl</span>
+<span id="L181">181 </span>
+<span id="L182">182 /--</span>
+<span id="L183">183 The scheduled history-step reward marginal is the environment feedback law at</span>
+<span id="L184">184 the scheduled selected action.</span>
+<span id="L185">185 -/</span>
+<span id="L186">186 theorem finiteHistoryScheduledScalarRidge_historyStepKernel_map_snd</span>
+<span id="L187">187     {K : Nat} {Feature : Type u}</span>
+<span id="L188">188     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L189">189     (hK : 0 &lt; K)</span>
+<span id="L190">190     (lambda : Real)</span>
+<span id="L191">191     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L192">192     (R : Real) (deltaAt : Nat -&gt; Real) (S : Real)</span>
+<span id="L193">193     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L194">194     (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) :</span>
+<span id="L195">195     (Thompson.historyStepKernel</span>
+<span id="L196">196         (finiteHistoryScheduledScalarRidgeOptimisticAlgorithm</span>
+<span id="L197">197           hK lambda actionFeature R deltaAt S)</span>
+<span id="L198">198         environment n).map Prod.snd history =</span>
+<span id="L199">199       environment.feedback n</span>
+<span id="L200">200         (history,</span>
+<span id="L201">201           finiteHistoryScheduledScalarRidgeOptimisticAction</span>
+<span id="L202">202             hK lambda actionFeature R deltaAt S n history) := by</span>
+<span id="L203">203   ext s hs</span>
+<span id="L204">204   rw [ProbabilityTheory.Kernel.map_apply _ measurable_snd,</span>
+<span id="L205">205     Measure.map_apply measurable_snd hs]</span>
+<span id="L206">206   unfold Thompson.historyStepKernel</span>
+<span id="L207">207   rw [ProbabilityTheory.Kernel.compProd_apply (measurable_snd hs)]</span>
+<span id="L208">208   simp only [finiteHistoryScheduledScalarRidgeOptimisticAlgorithm,</span>
+<span id="L209">209     finiteHistoryScheduledScalarRidgeOptimisticAction,</span>
+<span id="L210">210     finiteHistoryOptimisticAlgorithm_policy_apply]</span>
+<span id="L211">211   rw [lintegral_dirac]</span>
+<span id="L212">212   let selected :=</span>
+<span id="L213">213     finiteHistoryOptimisticAction hK</span>
+<span id="L214">214       (finiteHistoryScalarRidgeEstimate lambda actionFeature)</span>
+<span id="L215">215       (finiteHistoryScalarRidgeDesign lambda actionFeature)</span>
+<span id="L216">216       (finiteHistoryScheduledScalarRidgeRadius</span>
+<span id="L217">217         actionFeature R deltaAt lambda S)</span>
+<span id="L218">218       (finiteHistoryFixedActionFeature actionFeature) n history</span>
+<span id="L219">219   change environment.feedback n (history, selected)</span>
+<span id="L220">220       (Prod.mk selected ⁻¹&#x27; (Prod.snd ⁻¹&#x27; s)) =</span>
+<span id="L221">221     environment.feedback n (history, selected) s</span>
+<span id="L222">222   have hpreimage :</span>
+<span id="L223">223       Prod.mk selected ⁻¹&#x27; (Prod.snd ⁻¹&#x27; s) = s := by</span>
+<span id="L224">224     ext reward</span>
+<span id="L225">225     rfl</span>
+<span id="L226">226   rw [hpreimage]</span>
+<span id="L227">227 </span>
+<span id="L228">228 /-- Feature selected from the scheduled finite-history ridge state. -/</span>
+<span id="L229">229 noncomputable def finiteHistoryScheduledScalarRidgeSelectedFeature</span>
+<span id="L230">230     {K : Nat} {Feature : Type u}</span>
+<span id="L231">231     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L232">232     (hK : 0 &lt; K)</span>
+<span id="L233">233     (lambda : Real)</span>
+<span id="L234">234     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L235">235     (R : Real) (deltaAt : Nat -&gt; Real) (S : Real)</span>
+<span id="L236">236     (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) :</span>
+<span id="L237">237     Feature -&gt; Real :=</span>
+<span id="L238">238   actionFeature</span>
+<span id="L239">239     (finiteHistoryScheduledScalarRidgeOptimisticAction</span>
+<span id="L240">240       hK lambda actionFeature R deltaAt S n history)</span>
+<span id="L241">241 </span>
+<span id="L242">242 /-- The actual canonical successor feature agrees with the scheduled selector. -/</span>
+<span id="L243">243 theorem</span>
+<span id="L244">244     canonicalHistoryTrajectory_observedFeature_succ_ae_eq_scheduledSelectedFeature</span>
+<span id="L245">245     {K : Nat} {Feature : Type u}</span>
+<span id="L246">246     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L247">247     (hK : 0 &lt; K)</span>
+<span id="L248">248     (lambda : Real)</span>
+<span id="L249">249     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L250">250     (R : Real) (deltaAt : Nat -&gt; Real) (S : Real)</span>
+<span id="L251">251     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L252">252     (n : Nat) :</span>
+<span id="L253">253     ∀ᵐ trajectory ∂</span>
+<span id="L254">254         Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L255">255           (finiteHistoryScheduledScalarRidgeOptimisticAlgorithm</span>
+<span id="L256">256             hK lambda actionFeature R deltaAt S)</span>
+<span id="L257">257           environment,</span>
+<span id="L258">258       actionFeature</span>
+<span id="L259">259           (Thompson.canonicalHistoryTrajectoryAction trajectory (n + 1)) =</span>
+<span id="L260">260         finiteHistoryScheduledScalarRidgeSelectedFeature</span>
+<span id="L261">261           hK lambda actionFeature R deltaAt S n</span>
+<span id="L262">262           (History.finitePairHistoryOfTrace</span>
+<span id="L263">263             (Thompson.canonicalHistoryTrajectoryAction trajectory)</span>
+<span id="L264">264             (Thompson.canonicalHistoryTrajectoryReward trajectory) n) := by</span>
+<span id="L265">265   simpa only [finiteHistoryScheduledScalarRidgeOptimisticAlgorithm,</span>
+<span id="L266">266     finiteHistoryScheduledScalarRidgeSelectedFeature,</span>
+<span id="L267">267     finiteHistoryScheduledScalarRidgeOptimisticAction,</span>
+<span id="L268">268     finiteHistoryFixedActionFeature,</span>
+<span id="L269">269     finiteHistoryOptimisticSelectedFeature] using</span>
+<span id="L270">270     canonicalHistoryTrajectory_candidateFeature_succ_ae_eq_selectedFeature</span>
+<span id="L271">271       hK</span>
+<span id="L272">272       (finiteHistoryScalarRidgeEstimate lambda actionFeature)</span>
+<span id="L273">273       (finiteHistoryScalarRidgeDesign lambda actionFeature)</span>
+<span id="L274">274       (finiteHistoryScheduledScalarRidgeRadius</span>
+<span id="L275">275         actionFeature R deltaAt lambda S)</span>
+<span id="L276">276       (finiteHistoryFixedActionFeature actionFeature)</span>
+<span id="L277">277       (measurable_finiteHistoryScheduledScalarRidgeOptimisticScore</span>
+<span id="L278">278         lambda actionFeature R deltaAt S)</span>
+<span id="L279">279       environment n</span>
+<span id="L280">280 </span>
+<span id="L281">281 /-- The scheduled selector is measurable in its finite history. -/</span>
+<span id="L282">282 theorem measurable_finiteHistoryScheduledScalarRidgeOptimisticAction</span>
+<span id="L283">283     {K : Nat} {Feature : Type u}</span>
+<span id="L284">284     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L285">285     (hK : 0 &lt; K)</span>
+<span id="L286">286     (lambda : Real)</span>
+<span id="L287">287     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L288">288     (R : Real) (deltaAt : Nat -&gt; Real) (S : Real)</span>
+<span id="L289">289     (n : Nat) :</span>
+<span id="L290">290     Measurable</span>
+<span id="L291">291       (finiteHistoryScheduledScalarRidgeOptimisticAction</span>
+<span id="L292">292         hK lambda actionFeature R deltaAt S n) := by</span>
+<span id="L293">293   simpa only [finiteHistoryScheduledScalarRidgeOptimisticAction,</span>
+<span id="L294">294     finiteHistoryScheduledScalarRidgeOptimisticScore] using</span>
+<span id="L295">295     measurable_finiteHistoryOptimisticAction</span>
+<span id="L296">296       hK</span>
+<span id="L297">297       (finiteHistoryScalarRidgeEstimate lambda actionFeature)</span>
+<span id="L298">298       (finiteHistoryScalarRidgeDesign lambda actionFeature)</span>
+<span id="L299">299       (finiteHistoryScheduledScalarRidgeRadius</span>
+<span id="L300">300         actionFeature R deltaAt lambda S)</span>
+<span id="L301">301       (finiteHistoryFixedActionFeature actionFeature)</span>
+<span id="L302">302       n</span>
+<span id="L303">303       (measurable_finiteHistoryScheduledScalarRidgeOptimisticScore</span>
+<span id="L304">304         lambda actionFeature R deltaAt S n)</span>
+<span id="L305">305 </span>
+<span id="L306">306 /-- Strict-past scheduled feature process on the canonical trajectory space. -/</span>
+<span id="L307">307 noncomputable def scheduledCanonicalHistoryTrajectoryPredictableFeature</span>
+<span id="L308">308     {K : Nat} {Feature : Type u}</span>
+<span id="L309">309     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L310">310     (hK : 0 &lt; K)</span>
+<span id="L311">311     (lambda : Real)</span>
+<span id="L312">312     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L313">313     (R : Real) (deltaAt : Nat -&gt; Real) (S : Real) :</span>
+<span id="L314">314     Nat -&gt; (Nat -&gt; Fin K × Real) -&gt; Feature -&gt; Real</span>
+<span id="L315">315   | 0, _trajectory =&gt;</span>
+<span id="L316">316       actionFeature ⟨0, hK⟩</span>
+<span id="L317">317   | n + 1, trajectory =&gt;</span>
+<span id="L318">318       finiteHistoryScheduledScalarRidgeSelectedFeature</span>
+<span id="L319">319         hK lambda actionFeature R deltaAt S n</span>
+<span id="L320">320         (Preorder.frestrictLe n trajectory)</span>
+<span id="L321">321 </span>
+<span id="L322">322 /-- Every scheduled predictable-feature coordinate is strict-past measurable. -/</span>
+<span id="L323">323 theorem</span>
+<span id="L324">324     scheduledCanonicalHistoryTrajectoryPredictableFeature_stronglyMeasurable</span>
+<span id="L325">325     {K : Nat} {Feature : Type u}</span>
+<span id="L326">326     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L327">327     (hK : 0 &lt; K)</span>
+<span id="L328">328     (lambda : Real)</span>
+<span id="L329">329     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L330">330     (R : Real) (deltaAt : Nat -&gt; Real) (S : Real)</span>
+<span id="L331">331     (t : Nat) (j : Feature) :</span>
+<span id="L332">332     StronglyMeasurable[</span>
+<span id="L333">333       canonicalHistoryTrajectoryBeforeFiltration (K := K) t]</span>
+<span id="L334">334       (fun trajectory =&gt;</span>
+<span id="L335">335         scheduledCanonicalHistoryTrajectoryPredictableFeature</span>
+<span id="L336">336           hK lambda actionFeature R deltaAt S t trajectory j) := by</span>
+<span id="L337">337   cases t with</span>
+<span id="L338">338   | zero =&gt;</span>
+<span id="L339">339       exact stronglyMeasurable_const</span>
+<span id="L340">340   | succ n =&gt;</span>
+<span id="L341">341       let F := canonicalHistoryTrajectoryBeforeFiltration (K := K)</span>
+<span id="L342">342       have hprefix :</span>
+<span id="L343">343           @Measurable (Nat -&gt; Fin K × Real)</span>
+<span id="L344">344             ((i : Finset.Iic n) -&gt; Fin K × Real)</span>
+<span id="L345">345             (F (n + 1)) inferInstance</span>
+<span id="L346">346             (Preorder.frestrictLe n) := by</span>
+<span id="L347">347         rw [canonicalHistoryTrajectoryBeforeFiltration_succ,</span>
+<span id="L348">348           Filtration.piLE_eq_comap_frestrictLe]</span>
+<span id="L349">349         exact Measurable.of_comap_le le_rfl</span>
+<span id="L350">350       have hselector :</span>
+<span id="L351">351           Measurable</span>
+<span id="L352">352             (finiteHistoryScheduledScalarRidgeOptimisticAction</span>
+<span id="L353">353               hK lambda actionFeature R deltaAt S n) :=</span>
+<span id="L354">354         measurable_finiteHistoryScheduledScalarRidgeOptimisticAction</span>
+<span id="L355">355           hK lambda actionFeature R deltaAt S n</span>
+<span id="L356">356       have hfeature :</span>
+<span id="L357">357           Measurable</span>
+<span id="L358">358             (fun history : History.FinitePairHistory (Fin K) Real n =&gt;</span>
+<span id="L359">359               actionFeature</span>
+<span id="L360">360                 (finiteHistoryScheduledScalarRidgeOptimisticAction</span>
+<span id="L361">361                   hK lambda actionFeature R deltaAt S n history) j) :=</span>
+<span id="L362">362         (measurable_of_countable</span>
+<span id="L363">363           (fun action : Fin K =&gt; actionFeature action j)).comp hselector</span>
+<span id="L364">364       exact (hfeature.comp hprefix).stronglyMeasurable</span>
+<span id="L365">365 </span>
+<span id="L366">366 /-- The scheduled algorithm starts from the same deterministic arm. -/</span>
+<span id="L367">367 theorem</span>
+<span id="L368">368     scheduledCanonicalHistoryTrajectory_action_zero_ae_eq_initialArm</span>
+<span id="L369">369     {K : Nat} {Feature : Type u}</span>
+<span id="L370">370     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L371">371     (hK : 0 &lt; K)</span>
+<span id="L372">372     (lambda : Real)</span>
+<span id="L373">373     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L374">374     (R : Real) (deltaAt : Nat -&gt; Real) (S : Real)</span>
+<span id="L375">375     (environment : Thompson.HistoryEnvironment (Fin K) Real) :</span>
+<span id="L376">376     ∀ᵐ trajectory ∂</span>
+<span id="L377">377         Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L378">378           (finiteHistoryScheduledScalarRidgeOptimisticAlgorithm</span>
+<span id="L379">379             hK lambda actionFeature R deltaAt S)</span>
+<span id="L380">380           environment,</span>
+<span id="L381">381       Thompson.canonicalHistoryTrajectoryAction trajectory 0 = ⟨0, hK⟩ := by</span>
+<span id="L382">382   letI : Nonempty (Fin K) := ⟨⟨0, hK⟩⟩</span>
+<span id="L383">383   let algorithm :=</span>
+<span id="L384">384     finiteHistoryScheduledScalarRidgeOptimisticAlgorithm</span>
+<span id="L385">385       hK lambda actionFeature R deltaAt S</span>
+<span id="L386">386   let mu := Thompson.canonicalHistoryTrajectoryMeasure algorithm environment</span>
+<span id="L387">387   have hmap :</span>
+<span id="L388">388       Measure.map</span>
+<span id="L389">389           (fun trajectory =&gt;</span>
+<span id="L390">390             Thompson.canonicalHistoryTrajectoryAction trajectory 0)</span>
+<span id="L391">391           mu =</span>
+<span id="L392">392         Measure.dirac (⟨0, hK⟩ : Fin K) := by</span>
+<span id="L393">393     have h :=</span>
+<span id="L394">394       Thompson.initialAction_map_eq_of_historyAlgorithmEnvironmentSequence</span>
+<span id="L395">395         mu</span>
+<span id="L396">396         Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L397">397         Thompson.canonicalHistoryTrajectoryReward</span>
+<span id="L398">398         algorithm environment</span>
+<span id="L399">399         (Thompson.canonicalHistoryAlgorithmEnvironmentSequence</span>
+<span id="L400">400           algorithm environment)</span>
+<span id="L401">401     simpa [algorithm, finiteHistoryScheduledScalarRidgeOptimisticAlgorithm,</span>
+<span id="L402">402       finiteHistoryOptimisticAlgorithm] using h</span>
+<span id="L403">403   have hmap_ae :</span>
+<span id="L404">404       ∀ᵐ action ∂</span>
+<span id="L405">405           Measure.map</span>
+<span id="L406">406             (fun trajectory =&gt;</span>
+<span id="L407">407               Thompson.canonicalHistoryTrajectoryAction trajectory 0)</span>
+<span id="L408">408             mu,</span>
+<span id="L409">409         action = (⟨0, hK⟩ : Fin K) := by</span>
+<span id="L410">410     rw [hmap]</span>
+<span id="L411">411     simp</span>
+<span id="L412">412   exact</span>
+<span id="L413">413     (ae_map_iff</span>
+<span id="L414">414       (Thompson.measurable_canonicalHistoryTrajectoryAction_apply</span>
+<span id="L415">415         0).aemeasurable</span>
+<span id="L416">416       (by measurability)).mp hmap_ae</span>
+<span id="L417">417 </span>
+<span id="L418">418 /-- Actual and scheduled predictable features agree at each time. -/</span>
+<span id="L419">419 theorem</span>
+<span id="L420">420     canonicalHistoryTrajectoryFeature_ae_eq_scheduledPredictableFeature</span>
+<span id="L421">421     {K : Nat} {Feature : Type u}</span>
+<span id="L422">422     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L423">423     (hK : 0 &lt; K)</span>
+<span id="L424">424     (lambda : Real)</span>
+<span id="L425">425     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L426">426     (R : Real) (deltaAt : Nat -&gt; Real) (S : Real)</span>
+<span id="L427">427     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L428">428     (t : Nat) :</span>
+<span id="L429">429     canonicalHistoryTrajectoryFeature actionFeature t =ᵐ[</span>
+<span id="L430">430       Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L431">431         (finiteHistoryScheduledScalarRidgeOptimisticAlgorithm</span>
+<span id="L432">432           hK lambda actionFeature R deltaAt S)</span>
+<span id="L433">433         environment]</span>
+<span id="L434">434       scheduledCanonicalHistoryTrajectoryPredictableFeature</span>
+<span id="L435">435         hK lambda actionFeature R deltaAt S t := by</span>
+<span id="L436">436   cases t with</span>
+<span id="L437">437   | zero =&gt;</span>
+<span id="L438">438       filter_upwards [</span>
+<span id="L439">439         scheduledCanonicalHistoryTrajectory_action_zero_ae_eq_initialArm</span>
+<span id="L440">440           hK lambda actionFeature R deltaAt S environment] with</span>
+<span id="L441">441         trajectory htrajectory</span>
+<span id="L442">442       simp [canonicalHistoryTrajectoryFeature,</span>
+<span id="L443">443         scheduledCanonicalHistoryTrajectoryPredictableFeature, htrajectory]</span>
+<span id="L444">444   | succ n =&gt;</span>
+<span id="L445">445       simpa [canonicalHistoryTrajectoryFeature,</span>
+<span id="L446">446         scheduledCanonicalHistoryTrajectoryPredictableFeature,</span>
+<span id="L447">447         History.finitePairHistoryOfTrace,</span>
+<span id="L448">448         Thompson.canonicalHistoryTrajectoryAction,</span>
+<span id="L449">449         Thompson.canonicalHistoryTrajectoryReward,</span>
+<span id="L450">450         Preorder.frestrictLe] using</span>
+<span id="L451">451         canonicalHistoryTrajectory_observedFeature_succ_ae_eq_scheduledSelectedFeature</span>
+<span id="L452">452           hK lambda actionFeature R deltaAt S environment n</span>
+<span id="L453">453 </span>
+<span id="L454">454 /-- Actual and scheduled predictable features agree simultaneously. -/</span>
+<span id="L455">455 theorem</span>
+<span id="L456">456     canonicalHistoryTrajectoryFeature_ae_eq_scheduledPredictableFeature_all</span>
+<span id="L457">457     {K : Nat} {Feature : Type u}</span>
+<span id="L458">458     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L459">459     (hK : 0 &lt; K)</span>
+<span id="L460">460     (lambda : Real)</span>
+<span id="L461">461     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L462">462     (R : Real) (deltaAt : Nat -&gt; Real) (S : Real)</span>
+<span id="L463">463     (environment : Thompson.HistoryEnvironment (Fin K) Real) :</span>
+<span id="L464">464     ∀ᵐ trajectory ∂</span>
+<span id="L465">465         Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L466">466           (finiteHistoryScheduledScalarRidgeOptimisticAlgorithm</span>
+<span id="L467">467             hK lambda actionFeature R deltaAt S)</span>
+<span id="L468">468           environment,</span>
+<span id="L469">469       ∀ t,</span>
+<span id="L470">470         canonicalHistoryTrajectoryFeature actionFeature t trajectory =</span>
+<span id="L471">471           scheduledCanonicalHistoryTrajectoryPredictableFeature</span>
+<span id="L472">472             hK lambda actionFeature R deltaAt S t trajectory := by</span>
+<span id="L473">473   rw [ae_all_iff]</span>
+<span id="L474">474   exact</span>
+<span id="L475">475     canonicalHistoryTrajectoryFeature_ae_eq_scheduledPredictableFeature</span>
+<span id="L476">476       hK lambda actionFeature R deltaAt S environment</span>
+<span id="L477">477 </span>
+<span id="L478">478 /-- Reward residual around the scheduled strict-past selected feature. -/</span>
+<span id="L479">479 noncomputable def scheduledCanonicalHistoryTrajectoryPredictableResidual</span>
+<span id="L480">480     {K : Nat} {Feature : Type u}</span>
+<span id="L481">481     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L482">482     (hK : 0 &lt; K)</span>
+<span id="L483">483     (lambda : Real)</span>
+<span id="L484">484     (thetaStar : Feature -&gt; Real)</span>
+<span id="L485">485     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L486">486     (R : Real) (deltaAt : Nat -&gt; Real) (S : Real)</span>
+<span id="L487">487     (i : Nat) (trajectory : Nat -&gt; Fin K × Real) : Real :=</span>
+<span id="L488">488   canonicalHistoryTrajectoryResponse i trajectory -</span>
+<span id="L489">489     dotProduct thetaStar</span>
+<span id="L490">490       (scheduledCanonicalHistoryTrajectoryPredictableFeature</span>
+<span id="L491">491         hK lambda actionFeature R deltaAt S i trajectory)</span>
+<span id="L492">492 </span>
+<span id="L493">493 /-- The zero-initialized scheduled residual process is strongly adapted. -/</span>
+<span id="L494">494 theorem</span>
+<span id="L495">495     scheduledCanonicalHistoryTrajectoryPredictableResidual_stronglyAdapted</span>
+<span id="L496">496     {K : Nat} {Feature : Type u}</span>
+<span id="L497">497     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L498">498     (hK : 0 &lt; K)</span>
+<span id="L499">499     (lambda : Real)</span>
+<span id="L500">500     (thetaStar : Feature -&gt; Real)</span>
+<span id="L501">501     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L502">502     (R : Real) (deltaAt : Nat -&gt; Real) (S : Real) :</span>
+<span id="L503">503     StronglyAdapted</span>
+<span id="L504">504       (canonicalHistoryTrajectoryBeforeFiltration (K := K))</span>
+<span id="L505">505       (fun t trajectory =&gt;</span>
+<span id="L506">506         match t with</span>
+<span id="L507">507         | 0 =&gt; 0</span>
+<span id="L508">508         | i + 1 =&gt;</span>
+<span id="L509">509             scheduledCanonicalHistoryTrajectoryPredictableResidual</span>
+<span id="L510">510               hK lambda thetaStar actionFeature R deltaAt S i trajectory) := by</span>
+<span id="L511">511   let F := canonicalHistoryTrajectoryBeforeFiltration (K := K)</span>
+<span id="L512">512   intro t</span>
+<span id="L513">513   cases t with</span>
+<span id="L514">514   | zero =&gt;</span>
+<span id="L515">515       exact stronglyMeasurable_const</span>
+<span id="L516">516   | succ i =&gt;</span>
+<span id="L517">517       have hresponse :</span>
+<span id="L518">518           StronglyMeasurable[F (i + 1)]</span>
+<span id="L519">519             (canonicalHistoryTrajectoryResponse i) :=</span>
+<span id="L520">520         (measurable_canonicalHistoryTrajectoryResponse_before_succ</span>
+<span id="L521">521           (K := K) i).stronglyMeasurable</span>
+<span id="L522">522       have hfeature : forall j,</span>
+<span id="L523">523           StronglyMeasurable[F (i + 1)]</span>
+<span id="L524">524             (fun trajectory =&gt;</span>
+<span id="L525">525               scheduledCanonicalHistoryTrajectoryPredictableFeature</span>
+<span id="L526">526                 hK lambda actionFeature R deltaAt S i trajectory j) := by</span>
+<span id="L527">527         intro j</span>
+<span id="L528">528         exact</span>
+<span id="L529">529           (scheduledCanonicalHistoryTrajectoryPredictableFeature_stronglyMeasurable</span>
+<span id="L530">530             hK lambda actionFeature R deltaAt S i j).mono</span>
+<span id="L531">531             (F.mono (Nat.le_succ i))</span>
+<span id="L532">532       have hdot :</span>
+<span id="L533">533           StronglyMeasurable[F (i + 1)]</span>
+<span id="L534">534             (fun trajectory =&gt;</span>
+<span id="L535">535               dotProduct thetaStar</span>
+<span id="L536">536                 (scheduledCanonicalHistoryTrajectoryPredictableFeature</span>
+<span id="L537">537                   hK lambda actionFeature R deltaAt S i trajectory)) := by</span>
+<span id="L538">538         have hsum :=</span>
+<span id="L539">539           Finset.stronglyMeasurable_sum</span>
+<span id="L540">540             (Finset.univ : Finset Feature) fun j _ =&gt;</span>
+<span id="L541">541               (stronglyMeasurable_const :</span>
+<span id="L542">542                   StronglyMeasurable[F (i + 1)]</span>
+<span id="L543">543                     (fun _trajectory : Nat -&gt; Fin K × Real =&gt;</span>
+<span id="L544">544                       thetaStar j)).mul</span>
+<span id="L545">545                 (hfeature j)</span>
+<span id="L546">546         convert hsum using 1</span>
+<span id="L547">547         funext trajectory</span>
+<span id="L548">548         simp [dotProduct, Finset.sum_apply]</span>
+<span id="L549">549       simpa [F,</span>
+<span id="L550">550         scheduledCanonicalHistoryTrajectoryPredictableResidual] using</span>
+<span id="L551">551         hresponse.sub hdot</span>
+<span id="L552">552 </span>
+<span id="L553">553 /-- Scheduled selected features obey the same finite-action projection cap. -/</span>
+<span id="L554">554 theorem</span>
+<span id="L555">555     scheduledPredictableFeature_projection_le_finiteActionProjectionBound</span>
+<span id="L556">556     {K : Nat} {Feature : Type u}</span>
+<span id="L557">557     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L558">558     (hK : 0 &lt; K)</span>
+<span id="L559">559     (lambda : Real)</span>
+<span id="L560">560     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L561">561     (R : Real) (deltaAt : Nat -&gt; Real) (S : Real)</span>
+<span id="L562">562     (theta : EuclideanSpace Real Feature)</span>
+<span id="L563">563     (i : Nat) (trajectory : Nat -&gt; Fin K × Real) :</span>
+<span id="L564">564     |dotProduct (WithLp.ofLp theta)</span>
+<span id="L565">565         (scheduledCanonicalHistoryTrajectoryPredictableFeature</span>
+<span id="L566">566           hK lambda actionFeature R deltaAt S i trajectory)| &lt;=</span>
+<span id="L567">567       finiteActionProjectionBound hK actionFeature theta := by</span>
+<span id="L568">568   letI : Nonempty (Fin K) := ⟨⟨0, hK⟩⟩</span>
+<span id="L569">569   cases i with</span>
+<span id="L570">570   | zero =&gt;</span>
+<span id="L571">571       simpa [scheduledCanonicalHistoryTrajectoryPredictableFeature,</span>
+<span id="L572">572         finiteActionProjectionBound] using</span>
+<span id="L573">573         (Finset.le_sup&#x27;</span>
+<span id="L574">574           (s := (Finset.univ : Finset (Fin K)))</span>
+<span id="L575">575           (f := fun action =&gt;</span>
+<span id="L576">576             |dotProduct (WithLp.ofLp theta) (actionFeature action)|)</span>
+<span id="L577">577           (Finset.mem_univ (⟨0, hK⟩ : Fin K)))</span>
+<span id="L578">578   | succ n =&gt;</span>
+<span id="L579">579       simpa [scheduledCanonicalHistoryTrajectoryPredictableFeature,</span>
+<span id="L580">580         finiteHistoryScheduledScalarRidgeSelectedFeature,</span>
+<span id="L581">581         finiteActionProjectionBound] using</span>
+<span id="L582">582         (Finset.le_sup&#x27;</span>
+<span id="L583">583           (s := (Finset.univ : Finset (Fin K)))</span>
+<span id="L584">584           (f := fun action =&gt;</span>
+<span id="L585">585             |dotProduct (WithLp.ofLp theta) (actionFeature action)|)</span>
+<span id="L586">586           (Finset.mem_univ</span>
+<span id="L587">587             (finiteHistoryScheduledScalarRidgeOptimisticAction</span>
+<span id="L588">588               hK lambda actionFeature R deltaAt S n</span>
+<span id="L589">589               (Preorder.frestrictLe n trajectory))))</span>
+<span id="L590">590 </span>
+<span id="L591">591 /--</span>
+<span id="L592">592 All stochastic input needed by scheduled canonical all-time confidence.</span>
+<span id="L593">593 </span>
+<span id="L594">594 The field is intentionally all-time and is stated on the one trajectory</span>
+<span id="L595">595 measure generated by the telescoping-schedule algorithm.</span>
+<span id="L596">596 -/</span>
+<span id="L597">597 structure CanonicalScheduledPredictableScalarRidgeResidualLaw</span>
+<span id="L598">598     {K : Nat} {Feature : Type u}</span>
+<span id="L599">599     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L600">600     (hK : 0 &lt; K)</span>
+<span id="L601">601     (lambda : Real)</span>
+<span id="L602">602     (thetaStar : Feature -&gt; Real)</span>
+<span id="L603">603     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L604">604     (R delta S : Real)</span>
+<span id="L605">605     (environment : Thompson.HistoryEnvironment (Fin K) Real) : Prop where</span>
+<span id="L606">606   theta_norm_le : euclideanLength thetaStar &lt;= S</span>
+<span id="L607">607   residual_hasCondSubgaussianMGF : forall i,</span>
+<span id="L608">608     HasCondSubgaussianMGF</span>
+<span id="L609">609       (canonicalHistoryTrajectoryBeforeFiltration (K := K) i)</span>
+<span id="L610">610       ((canonicalHistoryTrajectoryBeforeFiltration (K := K)).le i)</span>
+<span id="L611">611       (scheduledCanonicalHistoryTrajectoryPredictableResidual</span>
+<span id="L612">612         hK lambda thetaStar actionFeature R</span>
+<span id="L613">613           (allTimeTelescopingDelta delta) S i)</span>
+<span id="L614">614       (constantSquaredVarianceProxy R i)</span>
+<span id="L615">615       (Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L616">616         (finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm</span>
+<span id="L617">617           hK lambda actionFeature R delta S)</span>
+<span id="L618">618         environment)</span>
+<span id="L619">619 </span>
+<span id="L620">620 /--</span>
+<span id="L621">621 The kernel-level linear sub-Gaussian environment contract constructs the</span>
+<span id="L622">622 all-time predictable residual law for the single telescoping scheduled policy.</span>
+<span id="L623">623 -/</span>
+<span id="L624">624 noncomputable def</span>
+<span id="L625">625     canonicalScheduledPredictableScalarRidgeResidualLaw_of_linearSubgaussianEnvironment</span>
+<span id="L626">626     {K : Nat} {Feature : Type u}</span>
+<span id="L627">627     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L628">628     (hK : 0 &lt; K)</span>
+<span id="L629">629     (lambda : Real)</span>
+<span id="L630">630     (thetaStar : Feature -&gt; Real)</span>
+<span id="L631">631     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L632">632     (R delta S : Real)</span>
+<span id="L633">633     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L634">634     (source : CanonicalLinearSubgaussianEnvironmentLaw</span>
+<span id="L635">635       hK thetaStar actionFeature R S environment) :</span>
+<span id="L636">636     CanonicalScheduledPredictableScalarRidgeResidualLaw</span>
+<span id="L637">637       hK lambda thetaStar actionFeature R delta S environment where</span>
+<span id="L638">638   theta_norm_le := source.theta_norm_le</span>
+<span id="L639">639   residual_hasCondSubgaussianMGF i := by</span>
+<span id="L640">640     let algorithm :=</span>
+<span id="L641">641       finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm</span>
+<span id="L642">642         hK lambda actionFeature R delta S</span>
+<span id="L643">643     let mu := Thompson.canonicalHistoryTrajectoryMeasure algorithm environment</span>
+<span id="L644">644     cases i with</span>
+<span id="L645">645     | zero =&gt;</span>
+<span id="L646">646         let condition : (Nat -&gt; Fin K × Real) -&gt; Unit := fun _trajectory =&gt; ()</span>
+<span id="L647">647         let mcond :=</span>
+<span id="L648">648           (inferInstance : MeasurableSpace Unit).comap condition</span>
+<span id="L649">649         let reward0 : (Nat -&gt; Fin K × Real) -&gt; Real :=</span>
+<span id="L650">650           fun trajectory =&gt; (trajectory 0).2</span>
+<span id="L651">651         let center0 : (Nat -&gt; Fin K × Real) -&gt; Real :=</span>
+<span id="L652">652           fun _trajectory =&gt;</span>
+<span id="L653">653             dotProduct thetaStar (actionFeature ⟨0, hK⟩)</span>
+<span id="L654">654         have hmcond :</span>
+<span id="L655">655             mcond &lt;=</span>
+<span id="L656">656               (MeasurableSpace.pi :</span>
+<span id="L657">657                 MeasurableSpace (Nat -&gt; Fin K × Real)) := by</span>
+<span id="L658">658           exact measurable_const.comap_le</span>
+<span id="L659">659         have hrewardLaw :</span>
+<span id="L660">660             Filter.Eventually</span>
+<span id="L661">661               (fun trajectory : Nat -&gt; Fin K × Real =&gt;</span>
+<span id="L662">662                 @Measure.map (Nat -&gt; Fin K × Real) Real</span>
+<span id="L663">663                     MeasurableSpace.pi inferInstance reward0</span>
+<span id="L664">664                     (@ProbabilityTheory.condExpKernel</span>
+<span id="L665">665                       (Nat -&gt; Fin K × Real) MeasurableSpace.pi _ mu _</span>
+<span id="L666">666                       mcond trajectory) =</span>
+<span id="L667">667                   environment.initialFeedback ⟨0, hK⟩)</span>
+<span id="L668">668               (ae (@Measure.trim (Nat -&gt; Fin K × Real)</span>
+<span id="L669">669                 mcond MeasurableSpace.pi mu hmcond)) := by</span>
+<span id="L670">670           simpa [mu, algorithm, mcond, condition, reward0] using</span>
+<span id="L671">671             canonicalHistoryTrajectory_initialReward_condExpKernel_map_eq_historyAlgorithmInitialFeedback_unitComap</span>
+<span id="L672">672               algorithm ⟨0, hK⟩</span>
+<span id="L673">673                 (finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm_initialAction</span>
+<span id="L674">674                   hK lambda actionFeature R delta S)</span>
+<span id="L675">675               environment</span>
+<span id="L676">676         have htargetLaw :</span>
+<span id="L677">677             Filter.Eventually</span>
+<span id="L678">678               (fun _trajectory : Nat -&gt; Fin K × Real =&gt;</span>
+<span id="L679">679                 ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L680">680                   (fun reward =&gt; reward - center0 _trajectory)</span>
+<span id="L681">681                   (constantSquaredVarianceProxy R 0)</span>
+<span id="L682">682                   (environment.initialFeedback ⟨0, hK⟩))</span>
+<span id="L683">683               (ae (@Measure.trim (Nat -&gt; Fin K × Real)</span>
+<span id="L684">684                 mcond MeasurableSpace.pi mu hmcond)) :=</span>
+<span id="L685">685           Filter.Eventually.of_forall (fun _trajectory =&gt;</span>
+<span id="L686">686             source.initial_reward_hasSubgaussianMGF)</span>
+<span id="L687">687         have hconditional :=</span>
+<span id="L688">688           ConditionalExpectationReward.hasCondSubgaussianMGF_centered_of_condExpKernel_map_eq</span>
+<span id="L689">689             (mOmega := MeasurableSpace.pi)</span>
+<span id="L690">690             mu mcond hmcond reward0 center0</span>
+<span id="L691">691             (constantSquaredVarianceProxy R 0)</span>
+<span id="L692">692             (measurable_snd.comp (measurable_pi_apply 0))</span>
+<span id="L693">693             measurable_const</span>
+<span id="L694">694             (fun _trajectory =&gt; environment.initialFeedback ⟨0, hK⟩)</span>
+<span id="L695">695             hrewardLaw htargetLaw</span>
+<span id="L696">696         simpa [mu, algorithm, mcond, condition, reward0, center0,</span>
+<span id="L697">697           scheduledCanonicalHistoryTrajectoryPredictableResidual,</span>
+<span id="L698">698           canonicalHistoryTrajectoryResponse,</span>
+<span id="L699">699           scheduledCanonicalHistoryTrajectoryPredictableFeature,</span>
+<span id="L700">700           MeasurableSpace.comap_const] using hconditional</span>
+<span id="L701">701     | succ n =&gt;</span>
+<span id="L702">702         let history : (Nat -&gt; Fin K × Real) -&gt;</span>
+<span id="L703">703             History.FinitePairHistory (Fin K) Real n :=</span>
+<span id="L704">704           Preorder.frestrictLe n</span>
+<span id="L705">705         let mcond :=</span>
+<span id="L706">706           (inferInstance :</span>
+<span id="L707">707             MeasurableSpace</span>
+<span id="L708">708               (History.FinitePairHistory (Fin K) Real n)).comap history</span>
+<span id="L709">709         let response : (Nat -&gt; Fin K × Real) -&gt; Real :=</span>
+<span id="L710">710           fun trajectory =&gt; (trajectory (n + 1)).2</span>
+<span id="L711">711         let center : (Nat -&gt; Fin K × Real) -&gt; Real :=</span>
+<span id="L712">712           fun trajectory =&gt;</span>
+<span id="L713">713             dotProduct thetaStar</span>
+<span id="L714">714               (scheduledCanonicalHistoryTrajectoryPredictableFeature</span>
+<span id="L715">715                 hK lambda actionFeature R</span>
+<span id="L716">716                   (allTimeTelescopingDelta delta) S</span>
+<span id="L717">717                 (n + 1) trajectory)</span>
+<span id="L718">718         let stepRewardKernel :=</span>
+<span id="L719">719           (Thompson.historyStepKernel algorithm environment n).map Prod.snd</span>
+<span id="L720">720         let target : (Nat -&gt; Fin K × Real) -&gt; Measure Real :=</span>
+<span id="L721">721           fun trajectory =&gt; stepRewardKernel (history trajectory)</span>
+<span id="L722">722         have hmcond :</span>
+<span id="L723">723             mcond &lt;=</span>
+<span id="L724">724               (MeasurableSpace.pi :</span>
+<span id="L725">725                 MeasurableSpace (Nat -&gt; Fin K × Real)) := by</span>
+<span id="L726">726           simpa [mcond, history] using</span>
+<span id="L727">727             (Preorder.measurable_frestrictLe</span>
+<span id="L728">728               (X := fun _ : Nat =&gt; Fin K × Real) n).comap_le</span>
+<span id="L729">729         have hcenterF :</span>
+<span id="L730">730             @Measurable (Nat -&gt; Fin K × Real) Real</span>
+<span id="L731">731               (canonicalHistoryTrajectoryBeforeFiltration (K := K) (n + 1))</span>
+<span id="L732">732               inferInstance center := by</span>
+<span id="L733">733           have hcoordinates : forall j,</span>
+<span id="L734">734               StronglyMeasurable[</span>
+<span id="L735">735                 canonicalHistoryTrajectoryBeforeFiltration (K := K) (n + 1)]</span>
+<span id="L736">736                 (fun trajectory =&gt;</span>
+<span id="L737">737                   scheduledCanonicalHistoryTrajectoryPredictableFeature</span>
+<span id="L738">738                     hK lambda actionFeature R</span>
+<span id="L739">739                       (allTimeTelescopingDelta delta) S</span>
+<span id="L740">740                     (n + 1) trajectory j) := by</span>
+<span id="L741">741             intro j</span>
+<span id="L742">742             exact</span>
+<span id="L743">743               scheduledCanonicalHistoryTrajectoryPredictableFeature_stronglyMeasurable</span>
+<span id="L744">744                 hK lambda actionFeature R</span>
+<span id="L745">745                   (allTimeTelescopingDelta delta) S (n + 1) j</span>
+<span id="L746">746           have hsum :=</span>
+<span id="L747">747             Finset.stronglyMeasurable_sum</span>
+<span id="L748">748               (Finset.univ : Finset Feature) fun j _ =&gt;</span>
+<span id="L749">749                 (stronglyMeasurable_const :</span>
+<span id="L750">750                   StronglyMeasurable[</span>
+<span id="L751">751                     canonicalHistoryTrajectoryBeforeFiltration</span>
+<span id="L752">752                       (K := K) (n + 1)]</span>
+<span id="L753">753                     (fun _trajectory : Nat -&gt; Fin K × Real =&gt;</span>
+<span id="L754">754                       thetaStar j)).mul</span>
+<span id="L755">755                   (hcoordinates j)</span>
+<span id="L756">756           convert hsum.measurable using 1</span>
+<span id="L757">757           funext trajectory</span>
+<span id="L758">758           simp [center, dotProduct, Finset.sum_apply]</span>
+<span id="L759">759         have hfiltration :</span>
+<span id="L760">760             (canonicalHistoryTrajectoryBeforeFiltration (K := K) (n + 1) :</span>
+<span id="L761">761                 MeasurableSpace (Nat -&gt; Fin K × Real)) = mcond := by</span>
+<span id="L762">762           simp [mcond, history,</span>
+<span id="L763">763             canonicalHistoryTrajectoryBeforeFiltration_succ,</span>
+<span id="L764">764             Filtration.piLE_eq_comap_frestrictLe]</span>
+<span id="L765">765         have hcenter : @Measurable (Nat -&gt; Fin K × Real) Real</span>
+<span id="L766">766             mcond inferInstance center := by</span>
+<span id="L767">767           rw [← hfiltration]</span>
+<span id="L768">768           exact hcenterF</span>
+<span id="L769">769         have hrewardLaw :</span>
+<span id="L770">770             Filter.Eventually</span>
+<span id="L771">771               (fun trajectory : Nat -&gt; Fin K × Real =&gt;</span>
+<span id="L772">772                 @Measure.map (Nat -&gt; Fin K × Real) Real</span>
+<span id="L773">773                     MeasurableSpace.pi inferInstance response</span>
+<span id="L774">774                     (@ProbabilityTheory.condExpKernel</span>
+<span id="L775">775                       (Nat -&gt; Fin K × Real) MeasurableSpace.pi _ mu _</span>
+<span id="L776">776                       mcond trajectory) =</span>
+<span id="L777">777                   target trajectory)</span>
+<span id="L778">778               (ae (@Measure.trim (Nat -&gt; Fin K × Real)</span>
+<span id="L779">779                 mcond MeasurableSpace.pi mu hmcond)) := by</span>
+<span id="L780">780           simpa [mu, algorithm, mcond, history, response, target,</span>
+<span id="L781">781             stepRewardKernel] using</span>
+<span id="L782">782             canonicalHistoryTrajectory_reward_succ_condExpKernel_map_eq_historyStepReward_comap</span>
+<span id="L783">783               hK algorithm environment n</span>
+<span id="L784">784         have htargetLaw :</span>
+<span id="L785">785             Filter.Eventually</span>
+<span id="L786">786               (fun trajectory : Nat -&gt; Fin K × Real =&gt;</span>
+<span id="L787">787                 ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L788">788                   (fun reward =&gt; reward - center trajectory)</span>
+<span id="L789">789                   (constantSquaredVarianceProxy R (n + 1))</span>
+<span id="L790">790                   (target trajectory))</span>
+<span id="L791">791               (ae (@Measure.trim (Nat -&gt; Fin K × Real)</span>
+<span id="L792">792                 mcond MeasurableSpace.pi mu hmcond)) := by</span>
+<span id="L793">793           refine Filter.Eventually.of_forall (fun trajectory =&gt; ?_)</span>
+<span id="L794">794           rw [show target trajectory =</span>
+<span id="L795">795               environment.feedback n</span>
+<span id="L796">796                 (history trajectory,</span>
+<span id="L797">797                   finiteHistoryScheduledScalarRidgeOptimisticAction</span>
+<span id="L798">798                     hK lambda actionFeature R</span>
+<span id="L799">799                       (allTimeTelescopingDelta delta) S n</span>
+<span id="L800">800                       (history trajectory)) by</span>
+<span id="L801">801             exact finiteHistoryScheduledScalarRidge_historyStepKernel_map_snd</span>
+<span id="L802">802               hK lambda actionFeature R (allTimeTelescopingDelta delta) S</span>
+<span id="L803">803                 environment n (history trajectory)]</span>
+<span id="L804">804           simpa [center, history,</span>
+<span id="L805">805             scheduledCanonicalHistoryTrajectoryPredictableFeature,</span>
+<span id="L806">806             finiteHistoryScheduledScalarRidgeSelectedFeature] using</span>
+<span id="L807">807             source.feedback_reward_hasSubgaussianMGF n (history trajectory)</span>
+<span id="L808">808               (finiteHistoryScheduledScalarRidgeOptimisticAction</span>
+<span id="L809">809                 hK lambda actionFeature R</span>
+<span id="L810">810                   (allTimeTelescopingDelta delta) S n</span>
+<span id="L811">811                   (history trajectory))</span>
+<span id="L812">812         have hconditional :=</span>
+<span id="L813">813           ConditionalExpectationReward.hasCondSubgaussianMGF_centered_of_condExpKernel_map_eq</span>
+<span id="L814">814             (mOmega := MeasurableSpace.pi)</span>
+<span id="L815">815             mu mcond hmcond response center</span>
+<span id="L816">816             (constantSquaredVarianceProxy R (n + 1))</span>
+<span id="L817">817             (measurable_snd.comp (measurable_pi_apply (n + 1)))</span>
+<span id="L818">818             hcenter target hrewardLaw htargetLaw</span>
+<span id="L819">819         have hconditionalF :=</span>
+<span id="L820">820           ConditionalExpectationReward.hasCondSubgaussianMGF_congr_measurableSpace</span>
+<span id="L821">821             (mOmega := MeasurableSpace.pi) mu mcond</span>
+<span id="L822">822             (canonicalHistoryTrajectoryBeforeFiltration (K := K) (n + 1))</span>
+<span id="L823">823             hmcond</span>
+<span id="L824">824             ((canonicalHistoryTrajectoryBeforeFiltration (K := K)).le (n + 1))</span>
+<span id="L825">825             hfiltration.symm</span>
+<span id="L826">826             (fun trajectory =&gt; response trajectory - center trajectory)</span>
+<span id="L827">827             (constantSquaredVarianceProxy R (n + 1)) hconditional</span>
+<span id="L828">828         simpa [mu, algorithm, response, center,</span>
+<span id="L829">829           scheduledCanonicalHistoryTrajectoryPredictableResidual] using hconditionalF</span>
+<span id="L830">830 </span>
+<span id="L831">831 /-- Pointwise feature equality preserves the countable telescoping event. -/</span>
+<span id="L832">832 theorem</span>
+<span id="L833">833     mem_allTimeTelescopingScalarRidgeConfidenceFailureSet_iff_of_feature_eq</span>
+<span id="L834">834     {Omega : Type*} {Feature : Type u}</span>
+<span id="L835">835     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L836">836     (lambda : Real)</span>
+<span id="L837">837     (thetaStar : Feature -&gt; Real)</span>
+<span id="L838">838     (S : Real)</span>
+<span id="L839">839     (feature feature&#x27; : Nat -&gt; Omega -&gt; Feature -&gt; Real)</span>
+<span id="L840">840     (response : Nat -&gt; Omega -&gt; Real)</span>
+<span id="L841">841     (R delta : Real)</span>
+<span id="L842">842     (omega : Omega)</span>
+<span id="L843">843     (hfeature : forall i, feature i omega = feature&#x27; i omega) :</span>
+<span id="L844">844     omega ∈</span>
+<span id="L845">845         allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L846">846           lambda thetaStar S feature response R delta ↔</span>
+<span id="L847">847       omega ∈</span>
+<span id="L848">848         allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L849">849           lambda thetaStar S feature&#x27; response R delta := by</span>
+<span id="L850">850   simp only [allTimeTelescopingScalarRidgeConfidenceFailureSet,</span>
+<span id="L851">851     mem_allTimeScheduledScalarRidgeConfidenceFailureSet_iff]</span>
+<span id="L852">852   constructor</span>
+<span id="L853">853   · rintro ⟨n, hfailure⟩</span>
+<span id="L854">854     exact ⟨n,</span>
+<span id="L855">855       (mem_scalarRidgeConfidenceFailureAt_iff_of_feature_eq</span>
+<span id="L856">856         lambda thetaStar S feature feature&#x27; response R</span>
+<span id="L857">857         (allTimeTelescopingDelta delta n) n omega hfeature).mp hfailure⟩</span>
+<span id="L858">858   · rintro ⟨n, hfailure⟩</span>
+<span id="L859">859     exact ⟨n,</span>
+<span id="L860">860       (mem_scalarRidgeConfidenceFailureAt_iff_of_feature_eq</span>
+<span id="L861">861         lambda thetaStar S feature feature&#x27; response R</span>
+<span id="L862">862         (allTimeTelescopingDelta delta n) n omega hfeature).mpr hfailure⟩</span>
+<span id="L863">863 </span>
+<span id="L864">864 /--</span>
+<span id="L865">865 The scheduled canonical trajectory satisfies all deterministic-horizon</span>
+<span id="L866">866 scalar-ridge confidence ellipsoids outside one event of probability `delta`.</span>
+<span id="L867">867 -/</span>
+<span id="L868">868 theorem</span>
+<span id="L869">869     measure_telescopingCanonicalHistoryTrajectory_allTimeConfidenceFailureSet_le</span>
+<span id="L870">870     {K : Nat} {Feature : Type u}</span>
+<span id="L871">871     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L872">872     (hK : 0 &lt; K)</span>
+<span id="L873">873     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L874">874     (thetaStar : Feature -&gt; Real)</span>
+<span id="L875">875     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L876">876     (R : Real) (hR : 0 &lt; R)</span>
+<span id="L877">877     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_one : delta &lt;= 1)</span>
+<span id="L878">878     (S : Real)</span>
+<span id="L879">879     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L880">880     (source : CanonicalScheduledPredictableScalarRidgeResidualLaw</span>
+<span id="L881">881       hK lambda thetaStar actionFeature R delta S environment) :</span>
+<span id="L882">882     Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L883">883         (finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm</span>
+<span id="L884">884           hK lambda actionFeature R delta S)</span>
+<span id="L885">885         environment</span>
+<span id="L886">886         (allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L887">887           lambda thetaStar S</span>
+<span id="L888">888           (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L889">889           canonicalHistoryTrajectoryResponse R delta) &lt;=</span>
+<span id="L890">890       ENNReal.ofReal delta := by</span>
+<span id="L891">891   let deltaAt := allTimeTelescopingDelta delta</span>
+<span id="L892">892   let algorithm :=</span>
+<span id="L893">893     finiteHistoryScheduledScalarRidgeOptimisticAlgorithm</span>
+<span id="L894">894       hK lambda actionFeature R deltaAt S</span>
+<span id="L895">895   let mu := Thompson.canonicalHistoryTrajectoryMeasure algorithm environment</span>
+<span id="L896">896   let F := canonicalHistoryTrajectoryBeforeFiltration (K := K)</span>
+<span id="L897">897   let predictableFeature :=</span>
+<span id="L898">898     scheduledCanonicalHistoryTrajectoryPredictableFeature</span>
+<span id="L899">899       hK lambda actionFeature R deltaAt S</span>
+<span id="L900">900   let residual :=</span>
+<span id="L901">901     scheduledCanonicalHistoryTrajectoryPredictableResidual</span>
+<span id="L902">902       hK lambda thetaStar actionFeature R deltaAt S</span>
+<span id="L903">903   have hpredictable :</span>
+<span id="L904">904       mu</span>
+<span id="L905">905           (allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L906">906             lambda thetaStar S predictableFeature</span>
+<span id="L907">907             canonicalHistoryTrajectoryResponse R delta) &lt;=</span>
+<span id="L908">908         ENNReal.ofReal delta := by</span>
+<span id="L909">909     apply</span>
+<span id="L910">910       measure_allTimeTelescopingScalarRidgeConfidenceFailureSet_le</span>
+<span id="L911">911         mu lambda hlambda thetaStar S source.theta_norm_le F</span>
+<span id="L912">912         predictableFeature canonicalHistoryTrajectoryResponse residual</span>
+<span id="L913">913         R hR</span>
+<span id="L914">914         (fun theta _i =&gt;</span>
+<span id="L915">915           finiteActionProjectionBound hK actionFeature theta)</span>
+<span id="L916">916     · intro i j</span>
+<span id="L917">917       exact</span>
+<span id="L918">918         scheduledCanonicalHistoryTrajectoryPredictableFeature_stronglyMeasurable</span>
+<span id="L919">919           hK lambda actionFeature R deltaAt S i j</span>
+<span id="L920">920     · exact</span>
+<span id="L921">921         scheduledCanonicalHistoryTrajectoryPredictableResidual_stronglyAdapted</span>
+<span id="L922">922           hK lambda thetaStar actionFeature R deltaAt S</span>
+<span id="L923">923     · intro theta i</span>
+<span id="L924">924       exact finiteActionProjectionBound_nonneg hK actionFeature theta</span>
+<span id="L925">925     · intro theta i trajectory</span>
+<span id="L926">926       exact</span>
+<span id="L927">927         scheduledPredictableFeature_projection_le_finiteActionProjectionBound</span>
+<span id="L928">928           hK lambda actionFeature R deltaAt S theta i trajectory</span>
+<span id="L929">929     · intro i</span>
+<span id="L930">930       simpa [mu, algorithm, deltaAt, residual,</span>
+<span id="L931">931         finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm] using</span>
+<span id="L932">932         source.residual_hasCondSubgaussianMGF i</span>
+<span id="L933">933     · intro trajectory i</span>
+<span id="L934">934       simp [residual, predictableFeature,</span>
+<span id="L935">935         scheduledCanonicalHistoryTrajectoryPredictableResidual]</span>
+<span id="L936">936     · exact hdelta</span>
+<span id="L937">937     · exact hdelta_one</span>
+<span id="L938">938   have hevents :</span>
+<span id="L939">939       ∀ᵐ trajectory ∂mu,</span>
+<span id="L940">940         trajectory ∈</span>
+<span id="L941">941             allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L942">942               lambda thetaStar S</span>
+<span id="L943">943               (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L944">944               canonicalHistoryTrajectoryResponse R delta ↔</span>
+<span id="L945">945           trajectory ∈</span>
+<span id="L946">946             allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L947">947               lambda thetaStar S predictableFeature</span>
+<span id="L948">948               canonicalHistoryTrajectoryResponse R delta := by</span>
+<span id="L949">949     filter_upwards [</span>
+<span id="L950">950       canonicalHistoryTrajectoryFeature_ae_eq_scheduledPredictableFeature_all</span>
+<span id="L951">951         hK lambda actionFeature R deltaAt S environment] with</span>
+<span id="L952">952       trajectory htrajectory</span>
+<span id="L953">953     exact</span>
+<span id="L954">954       mem_allTimeTelescopingScalarRidgeConfidenceFailureSet_iff_of_feature_eq</span>
+<span id="L955">955         lambda thetaStar S</span>
+<span id="L956">956         (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L957">957         predictableFeature canonicalHistoryTrajectoryResponse</span>
+<span id="L958">958         R delta trajectory htrajectory</span>
+<span id="L959">959   change</span>
+<span id="L960">960     mu</span>
+<span id="L961">961         (allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L962">962           lambda thetaStar S</span>
+<span id="L963">963           (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L964">964           canonicalHistoryTrajectoryResponse R delta) &lt;=</span>
+<span id="L965">965       ENNReal.ofReal delta</span>
+<span id="L966">966   calc</span>
+<span id="L967">967     mu</span>
+<span id="L968">968         (allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L969">969           lambda thetaStar S</span>
+<span id="L970">970           (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L971">971           canonicalHistoryTrajectoryResponse R delta) =</span>
+<span id="L972">972         mu</span>
+<span id="L973">973           (allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L974">974             lambda thetaStar S predictableFeature</span>
+<span id="L975">975             canonicalHistoryTrajectoryResponse R delta) :=</span>
+<span id="L976">976       measure_congr (hevents.mono fun _ h =&gt; propext h)</span>
+<span id="L977">977     _ &lt;= ENNReal.ofReal delta := hpredictable</span>
+<span id="L978">978 </span>
+<span id="L979">979 /-- The actual successor action agrees with the scheduled strict-fold action. -/</span>
+<span id="L980">980 theorem</span>
+<span id="L981">981     telescopingCanonicalHistoryTrajectory_action_succ_ae_eq_scheduledAction</span>
+<span id="L982">982     {K : Nat} {Feature : Type u}</span>
+<span id="L983">983     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L984">984     (hK : 0 &lt; K)</span>
+<span id="L985">985     (lambda : Real)</span>
+<span id="L986">986     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L987">987     (R delta S : Real)</span>
+<span id="L988">988     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L989">989     (n : Nat) :</span>
+<span id="L990">990     ∀ᵐ trajectory ∂</span>
+<span id="L991">991         Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L992">992           (finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm</span>
+<span id="L993">993             hK lambda actionFeature R delta S)</span>
+<span id="L994">994           environment,</span>
+<span id="L995">995       Thompson.canonicalHistoryTrajectoryAction trajectory (n + 1) =</span>
+<span id="L996">996         finiteHistoryScheduledScalarRidgeOptimisticAction</span>
+<span id="L997">997           hK lambda actionFeature R</span>
+<span id="L998">998           (allTimeTelescopingDelta delta) S n</span>
+<span id="L999">999           (History.finitePairHistoryOfTrace</span>
+<span id="L1000">1000             (Thompson.canonicalHistoryTrajectoryAction trajectory)</span>
+<span id="L1001">1001             (Thompson.canonicalHistoryTrajectoryReward trajectory) n) := by</span>
+<span id="L1002">1002   simpa only [finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm,</span>
+<span id="L1003">1003     finiteHistoryScheduledScalarRidgeOptimisticAlgorithm,</span>
+<span id="L1004">1004     finiteHistoryScheduledScalarRidgeOptimisticAction] using</span>
+<span id="L1005">1005     canonicalHistoryTrajectory_action_succ_ae_eq_finiteHistoryOptimisticAction</span>
+<span id="L1006">1006       hK</span>
+<span id="L1007">1007       (finiteHistoryScalarRidgeEstimate lambda actionFeature)</span>
+<span id="L1008">1008       (finiteHistoryScalarRidgeDesign lambda actionFeature)</span>
+<span id="L1009">1009       (finiteHistoryScheduledScalarRidgeRadius actionFeature R</span>
+<span id="L1010">1010         (allTimeTelescopingDelta delta) lambda S)</span>
+<span id="L1011">1011       (finiteHistoryFixedActionFeature actionFeature)</span>
+<span id="L1012">1012       (measurable_finiteHistoryScheduledScalarRidgeOptimisticScore</span>
+<span id="L1013">1013         lambda actionFeature R (allTimeTelescopingDelta delta) S)</span>
+<span id="L1014">1014       environment n</span>
+<span id="L1015">1015 </span>
+<span id="L1016">1016 /--</span>
+<span id="L1017">1017 Outside the scheduled fixed-time confidence failure, the actual successor</span>
+<span id="L1018">1018 action satisfies the matching time-indexed optimism-gap certificate.</span>
+<span id="L1019">1019 -/</span>
+<span id="L1020">1020 theorem</span>
+<span id="L1021">1021     telescopingCanonicalHistoryTrajectory_action_succ_gap_le_of_not_mem_confidenceFailure</span>
+<span id="L1022">1022     {K : Nat} {Feature : Type u}</span>
+<span id="L1023">1023     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L1024">1024     (hK : 0 &lt; K)</span>
+<span id="L1025">1025     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1026">1026     (thetaStar : Feature -&gt; Real)</span>
+<span id="L1027">1027     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L1028">1028     (R delta S : Real)</span>
+<span id="L1029">1029     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L1030">1030     (n : Nat) (comparator : Fin K) :</span>
+<span id="L1031">1031     ∀ᵐ trajectory ∂</span>
+<span id="L1032">1032         Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L1033">1033           (finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm</span>
+<span id="L1034">1034             hK lambda actionFeature R delta S)</span>
+<span id="L1035">1035           environment,</span>
+<span id="L1036">1036       trajectory ∉</span>
+<span id="L1037">1037           scalarRidgeConfidenceFailureAt</span>
+<span id="L1038">1038             lambda thetaStar S</span>
+<span id="L1039">1039             (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L1040">1040             canonicalHistoryTrajectoryResponse R</span>
+<span id="L1041">1041             (allTimeTelescopingDelta delta (n + 1)) (n + 1) -&gt;</span>
+<span id="L1042">1042         linearValue thetaStar (actionFeature comparator) -</span>
+<span id="L1043">1043             linearValue thetaStar</span>
+<span id="L1044">1044               (actionFeature</span>
+<span id="L1045">1045                 (Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L1046">1046                   trajectory (n + 1))) &lt;=</span>
+<span id="L1047">1047           2 *</span>
+<span id="L1048">1048             finiteHorizonScalarConfidenceRadius</span>
+<span id="L1049">1049               (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L1050">1050               R (allTimeTelescopingDelta delta (n + 1))</span>
+<span id="L1051">1051               lambda S (n + 1) trajectory *</span>
+<span id="L1052">1052             confidenceWidth</span>
+<span id="L1053">1053               (finiteHorizonScalarGram lambda</span>
+<span id="L1054">1054                 (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L1055">1055                 (n + 1) trajectory)</span>
+<span id="L1056">1056               (actionFeature</span>
+<span id="L1057">1057                 (Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L1058">1058                   trajectory (n + 1))) := by</span>
+<span id="L1059">1059   filter_upwards [</span>
+<span id="L1060">1060     telescopingCanonicalHistoryTrajectory_action_succ_ae_eq_scheduledAction</span>
+<span id="L1061">1061       hK lambda actionFeature R delta S environment n] with</span>
+<span id="L1062">1062     trajectory haction</span>
+<span id="L1063">1063   intro hgood</span>
+<span id="L1064">1064   let history :=</span>
+<span id="L1065">1065     History.finitePairHistoryOfTrace</span>
+<span id="L1066">1066       (Thompson.canonicalHistoryTrajectoryAction trajectory)</span>
+<span id="L1067">1067       (Thompson.canonicalHistoryTrajectoryReward trajectory) n</span>
+<span id="L1068">1068   let deltaN := allTimeTelescopingDelta delta (n + 1)</span>
+<span id="L1069">1069   have hgeneric :</span>
+<span id="L1070">1070       matrixNorm</span>
+<span id="L1071">1071           (finiteHorizonScalarGram lambda</span>
+<span id="L1072">1072             (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L1073">1073             (n + 1) trajectory)</span>
+<span id="L1074">1074           (finiteHorizonRidgeEstimate</span>
+<span id="L1075">1075               (Matrix.scalar Feature lambda)</span>
+<span id="L1076">1076               (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L1077">1077               canonicalHistoryTrajectoryResponse</span>
+<span id="L1078">1078               (n + 1) trajectory -</span>
+<span id="L1079">1079             thetaStar) &lt;=</span>
+<span id="L1080">1080         finiteHorizonScalarConfidenceRadius</span>
+<span id="L1081">1081           (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L1082">1082           R deltaN lambda S (n + 1) trajectory := by</span>
+<span id="L1083">1083     simpa only [deltaN, scalarRidgeConfidenceFailureAt,</span>
+<span id="L1084">1084       finiteHorizonScalarGram, Set.mem_setOf_eq, not_lt] using hgood</span>
+<span id="L1085">1085   have hhistory :</span>
+<span id="L1086">1086       matrixNorm</span>
+<span id="L1087">1087           (finiteHistoryScalarRidgeDesign</span>
+<span id="L1088">1088             lambda actionFeature n history)</span>
+<span id="L1089">1089           (finiteHistoryScalarRidgeEstimate</span>
+<span id="L1090">1090               lambda actionFeature n history -</span>
+<span id="L1091">1091             thetaStar) &lt;=</span>
+<span id="L1092">1092         finiteHistoryScalarRidgeRadius</span>
+<span id="L1093">1093           actionFeature R deltaN lambda S n history := by</span>
+<span id="L1094">1094     simpa only [history,</span>
+<span id="L1095">1095       finiteHistoryScalarRidgeDesign_finitePairHistoryOfTrace_eq,</span>
+<span id="L1096">1096       finiteHistoryScalarRidgeEstimate_finitePairHistoryOfTrace_eq,</span>
+<span id="L1097">1097       finiteHistoryScalarRidgeRadius_finitePairHistoryOfTrace_eq] using</span>
+<span id="L1098">1098       hgeneric</span>
+<span id="L1099">1099   have hgap :=</span>
+<span id="L1100">1100     finiteHistoryScalarRidgeOptimisticAction_gap_le</span>
+<span id="L1101">1101       hK lambda hlambda thetaStar actionFeature R deltaN S n history</span>
+<span id="L1102">1102       hhistory comparator</span>
+<span id="L1103">1103   have haction&#x27; :</span>
+<span id="L1104">1104       Thompson.canonicalHistoryTrajectoryAction trajectory (n + 1) =</span>
+<span id="L1105">1105         finiteHistoryScalarRidgeOptimisticAction</span>
+<span id="L1106">1106           hK lambda actionFeature R deltaN S n history := by</span>
+<span id="L1107">1107     simpa only [history, deltaN,</span>
+<span id="L1108">1108       finiteHistoryScheduledScalarRidgeOptimisticAction_eq] using haction</span>
+<span id="L1109">1109   rw [← haction&#x27;] at hgap</span>
+<span id="L1110">1110   simpa only [history, deltaN,</span>
+<span id="L1111">1111     finiteHistoryScalarRidgeDesign_finitePairHistoryOfTrace_eq,</span>
+<span id="L1112">1112     finiteHistoryScalarRidgeRadius_finitePairHistoryOfTrace_eq] using hgap</span>
+<span id="L1113">1113 </span>
+<span id="L1114">1114 /-- Event that some successor action violates its scheduled optimism bound. -/</span>
+<span id="L1115">1115 def telescopingCanonicalHistoryTrajectoryAllTimeSuccGapViolationSet</span>
+<span id="L1116">1116     {K : Nat} {Feature : Type u}</span>
+<span id="L1117">1117     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L1118">1118     (lambda : Real)</span>
+<span id="L1119">1119     (thetaStar : Feature -&gt; Real)</span>
+<span id="L1120">1120     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L1121">1121     (R delta S : Real)</span>
+<span id="L1122">1122     (comparator : Nat -&gt; Fin K) :</span>
+<span id="L1123">1123     Set (Nat -&gt; Fin K × Real) :=</span>
+<span id="L1124">1124   {trajectory | ∃ n,</span>
+<span id="L1125">1125     2 *</span>
+<span id="L1126">1126         finiteHorizonScalarConfidenceRadius</span>
+<span id="L1127">1127           (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L1128">1128           R (allTimeTelescopingDelta delta (n + 1))</span>
+<span id="L1129">1129           lambda S (n + 1) trajectory *</span>
+<span id="L1130">1130         confidenceWidth</span>
+<span id="L1131">1131           (finiteHorizonScalarGram lambda</span>
+<span id="L1132">1132             (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L1133">1133             (n + 1) trajectory)</span>
+<span id="L1134">1134           (actionFeature</span>
+<span id="L1135">1135             (Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L1136">1136               trajectory (n + 1))) &lt;</span>
+<span id="L1137">1137       linearValue thetaStar (actionFeature (comparator (n + 1))) -</span>
+<span id="L1138">1138         linearValue thetaStar</span>
+<span id="L1139">1139           (actionFeature</span>
+<span id="L1140">1140             (Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L1141">1141               trajectory (n + 1)))}</span>
+<span id="L1142">1142 </span>
+<span id="L1143">1143 /-- Any scheduled successor-gap violation forces a confidence failure a.e. -/</span>
+<span id="L1144">1144 theorem</span>
+<span id="L1145">1145     telescopingCanonicalHistoryTrajectoryAllTimeSuccGapViolationSet_subset_confidenceFailure_ae</span>
+<span id="L1146">1146     {K : Nat} {Feature : Type u}</span>
+<span id="L1147">1147     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L1148">1148     (hK : 0 &lt; K)</span>
+<span id="L1149">1149     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1150">1150     (thetaStar : Feature -&gt; Real)</span>
+<span id="L1151">1151     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L1152">1152     (R delta S : Real)</span>
+<span id="L1153">1153     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L1154">1154     (comparator : Nat -&gt; Fin K) :</span>
+<span id="L1155">1155     ∀ᵐ trajectory ∂</span>
+<span id="L1156">1156         Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L1157">1157           (finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm</span>
+<span id="L1158">1158             hK lambda actionFeature R delta S)</span>
+<span id="L1159">1159           environment,</span>
+<span id="L1160">1160       trajectory ∈</span>
+<span id="L1161">1161           telescopingCanonicalHistoryTrajectoryAllTimeSuccGapViolationSet</span>
+<span id="L1162">1162             lambda thetaStar actionFeature R delta S comparator -&gt;</span>
+<span id="L1163">1163         trajectory ∈</span>
+<span id="L1164">1164           allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L1165">1165             lambda thetaStar S</span>
+<span id="L1166">1166             (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L1167">1167             canonicalHistoryTrajectoryResponse R delta := by</span>
+<span id="L1168">1168   have hall :</span>
+<span id="L1169">1169       ∀ᵐ trajectory ∂</span>
+<span id="L1170">1170           Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L1171">1171             (finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm</span>
+<span id="L1172">1172               hK lambda actionFeature R delta S)</span>
+<span id="L1173">1173             environment,</span>
+<span id="L1174">1174         ∀ n,</span>
+<span id="L1175">1175           trajectory ∉</span>
+<span id="L1176">1176               scalarRidgeConfidenceFailureAt</span>
+<span id="L1177">1177                 lambda thetaStar S</span>
+<span id="L1178">1178                 (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L1179">1179                 canonicalHistoryTrajectoryResponse R</span>
+<span id="L1180">1180                 (allTimeTelescopingDelta delta (n + 1)) (n + 1) -&gt;</span>
+<span id="L1181">1181             linearValue thetaStar</span>
+<span id="L1182">1182                 (actionFeature (comparator (n + 1))) -</span>
+<span id="L1183">1183                 linearValue thetaStar</span>
+<span id="L1184">1184                   (actionFeature</span>
+<span id="L1185">1185                     (Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L1186">1186                       trajectory (n + 1))) &lt;=</span>
+<span id="L1187">1187               2 *</span>
+<span id="L1188">1188                 finiteHorizonScalarConfidenceRadius</span>
+<span id="L1189">1189                   (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L1190">1190                   R (allTimeTelescopingDelta delta (n + 1))</span>
+<span id="L1191">1191                   lambda S (n + 1) trajectory *</span>
+<span id="L1192">1192                 confidenceWidth</span>
+<span id="L1193">1193                   (finiteHorizonScalarGram lambda</span>
+<span id="L1194">1194                     (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L1195">1195                     (n + 1) trajectory)</span>
+<span id="L1196">1196                   (actionFeature</span>
+<span id="L1197">1197                     (Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L1198">1198                       trajectory (n + 1))) := by</span>
+<span id="L1199">1199     rw [ae_all_iff]</span>
+<span id="L1200">1200     intro n</span>
+<span id="L1201">1201     exact</span>
+<span id="L1202">1202       telescopingCanonicalHistoryTrajectory_action_succ_gap_le_of_not_mem_confidenceFailure</span>
+<span id="L1203">1203         hK lambda hlambda thetaStar actionFeature R delta S</span>
+<span id="L1204">1204         environment n (comparator (n + 1))</span>
+<span id="L1205">1205   filter_upwards [hall] with trajectory htrajectory</span>
+<span id="L1206">1206   rintro ⟨n, hviolation⟩</span>
+<span id="L1207">1207   have hfailure :</span>
+<span id="L1208">1208       trajectory ∈</span>
+<span id="L1209">1209         scalarRidgeConfidenceFailureAt</span>
+<span id="L1210">1210           lambda thetaStar S</span>
+<span id="L1211">1211           (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L1212">1212           canonicalHistoryTrajectoryResponse R</span>
+<span id="L1213">1213           (allTimeTelescopingDelta delta (n + 1)) (n + 1) := by</span>
+<span id="L1214">1214     by_contra hgood</span>
+<span id="L1215">1215     exact (not_lt_of_ge (htrajectory n hgood)) hviolation</span>
+<span id="L1216">1216   unfold allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L1217">1217   exact</span>
+<span id="L1218">1218     (mem_allTimeScheduledScalarRidgeConfidenceFailureSet_iff</span>
+<span id="L1219">1219       lambda thetaStar S</span>
+<span id="L1220">1220       (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L1221">1221       canonicalHistoryTrajectoryResponse R</span>
+<span id="L1222">1222       (allTimeTelescopingDelta delta) trajectory).2</span>
+<span id="L1223">1223       ⟨n + 1, hfailure⟩</span>
+<span id="L1224">1224 </span>
+<span id="L1225">1225 /--</span>
+<span id="L1226">1226 Generated one-policy all-time successor-gap tail under the explicit scheduled</span>
+<span id="L1227">1227 predictable-residual law.</span>
+<span id="L1228">1228 -/</span>
+<span id="L1229">1229 theorem</span>
+<span id="L1230">1230     measure_telescopingCanonicalHistoryTrajectoryAllTimeSuccGapViolationSet_le</span>
+<span id="L1231">1231     {K : Nat} {Feature : Type u}</span>
+<span id="L1232">1232     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L1233">1233     (hK : 0 &lt; K)</span>
+<span id="L1234">1234     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1235">1235     (thetaStar : Feature -&gt; Real)</span>
+<span id="L1236">1236     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L1237">1237     (R : Real) (hR : 0 &lt; R)</span>
+<span id="L1238">1238     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_one : delta &lt;= 1)</span>
+<span id="L1239">1239     (S : Real)</span>
+<span id="L1240">1240     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L1241">1241     (comparator : Nat -&gt; Fin K)</span>
+<span id="L1242">1242     (source : CanonicalScheduledPredictableScalarRidgeResidualLaw</span>
+<span id="L1243">1243       hK lambda thetaStar actionFeature R delta S environment) :</span>
+<span id="L1244">1244     Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L1245">1245         (finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm</span>
+<span id="L1246">1246           hK lambda actionFeature R delta S)</span>
+<span id="L1247">1247         environment</span>
+<span id="L1248">1248         (telescopingCanonicalHistoryTrajectoryAllTimeSuccGapViolationSet</span>
+<span id="L1249">1249           lambda thetaStar actionFeature R delta S comparator) &lt;=</span>
+<span id="L1250">1250       ENNReal.ofReal delta := by</span>
+<span id="L1251">1251   calc</span>
+<span id="L1252">1252     Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L1253">1253         (finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm</span>
+<span id="L1254">1254           hK lambda actionFeature R delta S)</span>
+<span id="L1255">1255         environment</span>
+<span id="L1256">1256         (telescopingCanonicalHistoryTrajectoryAllTimeSuccGapViolationSet</span>
+<span id="L1257">1257           lambda thetaStar actionFeature R delta S comparator) &lt;=</span>
+<span id="L1258">1258       Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L1259">1259         (finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm</span>
+<span id="L1260">1260           hK lambda actionFeature R delta S)</span>
+<span id="L1261">1261         environment</span>
+<span id="L1262">1262         (allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L1263">1263           lambda thetaStar S</span>
+<span id="L1264">1264           (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L1265">1265           canonicalHistoryTrajectoryResponse R delta) := by</span>
+<span id="L1266">1266       exact measure_mono_ae</span>
+<span id="L1267">1267         (telescopingCanonicalHistoryTrajectoryAllTimeSuccGapViolationSet_subset_confidenceFailure_ae</span>
+<span id="L1268">1268           hK lambda hlambda thetaStar actionFeature R delta S</span>
+<span id="L1269">1269           environment comparator)</span>
+<span id="L1270">1270     _ &lt;= ENNReal.ofReal delta :=</span>
+<span id="L1271">1271       measure_telescopingCanonicalHistoryTrajectory_allTimeConfidenceFailureSet_le</span>
+<span id="L1272">1272         hK lambda hlambda thetaStar actionFeature R hR</span>
+<span id="L1273">1273         delta hdelta hdelta_one S environment source</span>
+<span id="L1274">1274 </span>
+<span id="L1275">1275 /--</span>
+<span id="L1276">1276 Generated one-policy all-time confidence tail obtained directly from the</span>
+<span id="L1277">1277 linear sub-Gaussian history-environment contract.</span>
+<span id="L1278">1278 -/</span>
+<span id="L1279">1279 theorem</span>
+<span id="L1280">1280     measure_telescopingCanonicalHistoryTrajectory_allTimeConfidenceFailureSet_le_of_linearSubgaussianEnvironment</span>
+<span id="L1281">1281     {K : Nat} {Feature : Type u}</span>
+<span id="L1282">1282     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L1283">1283     (hK : 0 &lt; K)</span>
+<span id="L1284">1284     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1285">1285     (thetaStar : Feature -&gt; Real)</span>
+<span id="L1286">1286     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L1287">1287     (R : Real) (hR : 0 &lt; R)</span>
+<span id="L1288">1288     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_one : delta &lt;= 1)</span>
+<span id="L1289">1289     (S : Real)</span>
+<span id="L1290">1290     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L1291">1291     (source : CanonicalLinearSubgaussianEnvironmentLaw</span>
+<span id="L1292">1292       hK thetaStar actionFeature R S environment) :</span>
+<span id="L1293">1293     Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L1294">1294         (finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm</span>
+<span id="L1295">1295           hK lambda actionFeature R delta S)</span>
+<span id="L1296">1296         environment</span>
+<span id="L1297">1297         (allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L1298">1298           lambda thetaStar S</span>
+<span id="L1299">1299           (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L1300">1300           canonicalHistoryTrajectoryResponse R delta) &lt;=</span>
+<span id="L1301">1301       ENNReal.ofReal delta := by</span>
+<span id="L1302">1302   exact</span>
+<span id="L1303">1303     measure_telescopingCanonicalHistoryTrajectory_allTimeConfidenceFailureSet_le</span>
+<span id="L1304">1304       hK lambda hlambda thetaStar actionFeature R hR</span>
+<span id="L1305">1305       delta hdelta hdelta_one S environment</span>
+<span id="L1306">1306       (canonicalScheduledPredictableScalarRidgeResidualLaw_of_linearSubgaussianEnvironment</span>
+<span id="L1307">1307         hK lambda thetaStar actionFeature R delta S environment source)</span>
+<span id="L1308">1308 </span>
+<span id="L1309">1309 /--</span>
+<span id="L1310">1310 Generated one-policy all-time successor-gap tail obtained directly from the</span>
+<span id="L1311">1311 linear sub-Gaussian history-environment contract.</span>
+<span id="L1312">1312 -/</span>
+<span id="L1313">1313 theorem</span>
+<span id="L1314">1314     measure_telescopingCanonicalHistoryTrajectoryAllTimeSuccGapViolationSet_le_of_linearSubgaussianEnvironment</span>
+<span id="L1315">1315     {K : Nat} {Feature : Type u}</span>
+<span id="L1316">1316     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L1317">1317     (hK : 0 &lt; K)</span>
+<span id="L1318">1318     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L1319">1319     (thetaStar : Feature -&gt; Real)</span>
+<span id="L1320">1320     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L1321">1321     (R : Real) (hR : 0 &lt; R)</span>
+<span id="L1322">1322     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_one : delta &lt;= 1)</span>
+<span id="L1323">1323     (S : Real)</span>
+<span id="L1324">1324     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L1325">1325     (comparator : Nat -&gt; Fin K)</span>
+<span id="L1326">1326     (source : CanonicalLinearSubgaussianEnvironmentLaw</span>
+<span id="L1327">1327       hK thetaStar actionFeature R S environment) :</span>
+<span id="L1328">1328     Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L1329">1329         (finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm</span>
+<span id="L1330">1330           hK lambda actionFeature R delta S)</span>
+<span id="L1331">1331         environment</span>
+<span id="L1332">1332         (telescopingCanonicalHistoryTrajectoryAllTimeSuccGapViolationSet</span>
+<span id="L1333">1333           lambda thetaStar actionFeature R delta S comparator) &lt;=</span>
+<span id="L1334">1334       ENNReal.ofReal delta := by</span>
+<span id="L1335">1335   exact</span>
+<span id="L1336">1336     measure_telescopingCanonicalHistoryTrajectoryAllTimeSuccGapViolationSet_le</span>
+<span id="L1337">1337       hK lambda hlambda thetaStar actionFeature R hR</span>
+<span id="L1338">1338       delta hdelta hdelta_one S environment comparator</span>
+<span id="L1339">1339       (canonicalScheduledPredictableScalarRidgeResidualLaw_of_linearSubgaussianEnvironment</span>
+<span id="L1340">1340         hK lambda thetaStar actionFeature R delta S environment source)</span>
+<span id="L1341">1341 </span>
+<span id="L1342">1342 end OFUL</span>
+<span id="L1343">1343 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

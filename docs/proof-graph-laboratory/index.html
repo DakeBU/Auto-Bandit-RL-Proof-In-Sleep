@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="Proof Graph Laboratory · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Proof Graph Laboratory · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>Proof Graph Laboratory · BanditRLlib</title>
+  <link rel="icon" href="../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../index.html">Overview</a><a href="../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../learning/index.html">All chapters</a><a class="book-nav-link" href="../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../banditrlwiki/index.html">BanditRLwiki</a><a href="../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../banditrlwiki/papers/index.html">Paper index</a><a href="../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../declarations/index.html">Lean declarations</a><a href="../implementation-map/index.html">Implementation map</a><a href="../lean-graph/index.html">Lean Graph</a><a href="index.html" aria-current="page">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../ide/index.html">Local Formalization Lab</a><a href="../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../community/index.html">Contribute</a><a href="../roadmap/index.html">Roadmap</a><a href="../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="proof-graph-laboratory">
+  <p class="eyebrow">Auditable proof structure · local prototypes</p>
+  <h1 class="page-title">Proof Graph Laboratory / Mathematical Motifs</h1>
+  <p class="lede">Treat the verified library as an instrument for asking whether a target-faithful proof is a coverage extension, a library consolidation, or evidence of irreducible reusable proof structure.</p>
+  <div class="callout warning"><strong>Evidence boundary.</strong> The graph is environment-extracted from compiled declaration types and values; it is not a kernel trace or an elaborator trace. Proof-cost, ZDD, hypergraph/MIP, and novelty operations are prototypes, not Lean theorems or validated scientific scores.</div>
+  <p class="hero-actions"><a class="button primary" href="../lean-graph/index.html">Explore the interactive Lean Graph</a><span>Use the graph for progressive chapter → module → declaration navigation; use this laboratory for frozen proof-structure evidence.</span></p>
+</section>
+
+<section id="frozen-graph">
+  <h2>Frozen exact-dependency observation</h2>
+  <p>The baseline is <code>review-snapshot</code>; the deterministic graph artifact has SHA-256 <code>review-snapshot</code>. Project ownership comes from the loaded Lean environment, with signature/type and value/proof dependencies kept separate.</p>
+  <div class="stats-grid">
+    <div class="stat"><span class="stat-value">13,512</span><span class="stat-label">project-owned declarations</span></div>
+    <div class="stat"><span class="stat-value">4,309</span><span class="stat-label">direct external boundary declarations</span></div>
+    <div class="stat"><span class="stat-value">664,837</span><span class="stat-label">direct type/value edges</span></div>
+    <div class="stat"><span class="stat-value">2,237</span><span class="stat-label">module import records</span></div>
+  </div>
+</section>
+
+<section id="benchmark">
+  <h2>Fixed compiled benchmark</h2>
+  <p>These terminals are unchanged observations, not claims that each complete algorithm family is formalized. The union charges each compiled declaration once: 1,238 standalone support memberships compress to 1,046 union declarations, with 175 declarations shared by at least two routes.</p>
+  <div class="info-grid">
+<article class="info-card">
+  <span class="level-label">EXP3 · compiled root</span>
+  <h3>exp3_realized_all_time</h3>
+  <p>Existing all-time realized-regret failure-set bound; benchmark only, theorem unchanged.</p>
+  <dl class="teaching-grid">
+    <div><dt>Project support</dt><dd>421 declarations</dd></div>
+    <div><dt>Shared support</dt><dd>170 (40.4%)</dd></div>
+    <div><dt>Semantic DAG</dt><dd>421 components · depth 23</dd></div>
+    <div><dt>Proof-term proxy</dt><dd>238,985 shared objects</dd></div>
+    <div><dt>Local Lean check</dt><dd>24.769332 seconds · one warm-dependency run</dd></div>
+  </dl>
+</article>
+<article class="info-card">
+  <span class="level-label">half-Tsallis · compiled root</span>
+  <h3>half_tsallis_iid_log</h3>
+  <p>Existing finite-arm IID half-Tsallis logarithmic expected-regret declaration; benchmark only, theorem unchanged.</p>
+  <dl class="teaching-grid">
+    <div><dt>Project support</dt><dd>505 declarations</dd></div>
+    <div><dt>Shared support</dt><dd>134 (26.5%)</dd></div>
+    <div><dt>Semantic DAG</dt><dd>505 components · depth 30</dd></div>
+    <div><dt>Proof-term proxy</dt><dd>341,127 shared objects</dd></div>
+    <div><dt>Local Lean check</dt><dd>22.424018 seconds · one warm-dependency run</dd></div>
+  </dl>
+</article>
+<article class="info-card">
+  <span class="level-label">OFUL · compiled root</span>
+  <h3>oful_all_time_confidence</h3>
+  <p>Existing canonical-history all-time confidence failure-set declaration; benchmark only, theorem unchanged.</p>
+  <dl class="teaching-grid">
+    <div><dt>Project support</dt><dd>312 declarations</dd></div>
+    <div><dt>Shared support</dt><dd>63 (20.2%)</dd></div>
+    <div><dt>Semantic DAG</dt><dd>312 components · depth 26</dd></div>
+    <div><dt>Proof-term proxy</dt><dd>188,840 shared objects</dd></div>
+    <div><dt>Local Lean check</dt><dd>22.872432 seconds · one warm-dependency run</dd></div>
+  </dl>
+</article></div>
+</section>
+
+<section id="support-compression">
+  <h2>ZDD support families and hypergraph lower bounds</h2>
+  <p>The ZDD contains only minimal support sets over a fixed declaration universe. Metavariables, tactics, unification constraints, and other dependent proof state remain outside. Local time and <code>tracemalloc</code> values are implementation observations, not universal complexity claims.</p>
+  <div class="table-wrap"><table><thead><tr><th>Variable order</th><th>ZDD nodes</th><th>Serialized proxy bytes</th><th>Local peak bytes</th></tr></thead><tbody><tr><td>lexical</td><td>1,238</td><td>55,872</td><td>837,910</td></tr><tr><td>frequency_desc</td><td>1,163</td><td>52,367</td><td>773,180</td></tr><tr><td>frequency_asc</td><td>1,173</td><td>52,881</td><td>736,544</td></tr><tr><td>first_seen</td><td>1,238</td><td>55,882</td><td>739,004</td></tr></tbody></table></div>
+  <p>The unit-charge hypergraph exact optimum is 1,046; both reported admissible lower bounds are 505 on this benchmark. Every concrete completion is tested to map to the relaxation. Pruning is called safe only under the explicit contract <code>LB(s) &lt;= OPT_remaining(s)</code>. The MIP is a library planner/scheduler, not a Lean elaborator.</p>
+</section>
+
+<section id="novelty-vector">
+  <h2>Non-scalar proof-structural novelty audit</h2>
+  <p>Raw new-node count is excluded: helper names and proof splitting can manipulate it. The fixed vector keeps five questions separate: conditional residual signatures with separately audited irreducibility; backward compression; proof-cost Pareto-frontier shift; held-out transfer; and target novelty versus proof novelty.</p>
+  <ol class="contribution-steps">
+    <li><strong>Freeze the library at t.</strong><span>Freeze statements, assumptions, canonicalization, compression, and benchmark roots before comparison.</span></li>
+    <li><strong>Audit residual structure.</strong><span>Compare canonical lemma motifs, support hyperedges, obligation types, and composition constraints—not declaration names.</span></li>
+    <li><strong>Test backward compression and Pareto movement.</strong><span>Report every declared cost dimension, including check time and open obligations, without scalarizing reuse into an unbounded reward.</span></li>
+    <li><strong>Transfer to held-out theorems.</strong><span>Do not use the held-out family to design the abstraction; disclose failures and unlocked obligations.</span></li>
+    <li><strong>Review interpretability.</strong><span>Run ordering/compression ablations and blind human review before assigning a neutral grade.</span></li>
+  </ol>
+  <p>Neutral audit grades:</p><ul><li><code>coverage extension</code></li><li><code>library consolidation</code></li><li><code>new proof route</code></li><li><code>reusable abstraction</code></li><li><code>cross-family conceptual compression</code></li></ul>
+</section>
+
+<section id="cng-candidate">
+  <div class="theorem-header"><div><p class="eyebrow">Candidate reusable abstraction</p><h2>Curvature–Noise–Gap finite geometry</h2></div><span class="status partial">Partial</span></div>
+  <p>A route-independent finite algebra layer is compiled after the frozen graph. A name-independent two-round structural proxy observes 9 new color signatures and 5 new direct-support signatures, but does not establish semantic irreducibility. All three frozen benchmark structural supports are unchanged, existing-to-CNG dependency edges are zero, and held-out OFUL contains zero CNG declarations; backward compression and transfer are not demonstrated, the full Pareto relation is not assessed, and structural discovery is not established.</p>
+  <p><strong>Current falsification result.</strong> The fixed two-round name-independent proxy finds 9 new neighborhood-color signatures and 5 new direct-support signatures, but explicitly does not establish irreducibility. All frozen benchmark closures are unchanged; there are 0 existing-to-CNG dependency edges and 0 CNG declarations in the held-out OFUL support. Structural discovery remains false.</p>
+  <ul><li><a href="../modules/banditrlproof-curvaturenoisegapgeometry/index.html#decl-3e13cc71a596"><code>BanditRLProof.CurvatureNoiseGap.tangentPairing_add_const_of_isSimplexTangent</code></a></li><li><a href="../modules/banditrlproof-curvaturenoisegapgeometry/index.html#decl-9c24ca49db51"><code>BanditRLProof.CurvatureNoiseGap.sum_weight_mul_sub_weightedCenter_eq_zero</code></a></li><li><a href="../modules/banditrlproof-curvaturenoisegapgeometry/index.html#decl-00f34f32a6aa"><code>BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_decomposition_of_centered</code></a></li><li><a href="../modules/banditrlproof-curvaturenoisegapgeometry/index.html#decl-204229299496"><code>BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_decomposition</code></a></li><li><a href="../modules/banditrlproof-curvaturenoisegapgeometry/index.html#decl-4f1a52eb8580"><code>BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_center_le</code></a></li><li><a href="../modules/banditrlproof-curvaturenoisegapgeometry/index.html#decl-aff241116d3a"><code>BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_eq_center_iff</code></a></li><li><a href="../modules/banditrlproof-curvaturenoisegapgeometry/index.html#decl-3530332e4676"><code>BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_add_decomposition</code></a></li><li><a href="../modules/banditrlproof-curvaturenoisegapgeometry/index.html#decl-de1665837868"><code>BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_add_le_two</code></a></li></ul>
+  <div class="callout"><strong>Falsifiable upgrade rule.</strong> CNG becomes structural-discovery evidence only if it replaces multiple audited route-specific subgraphs, improves the declared cost vector with a reported Pareto relation, and helps a theorem family held out from design or unlocks a blocked obligation. Merely restating a Tsallis-INF derivation does not qualify.</div>
+</section>
+
+<section id="execution-boundary"><h2>Snapshot boundary</h2><p>This page preserves previously reported prototype observations, not a new experiment on the current library. Operational benchmark runners are not included here. The included declaration dependency exporter can be run after building Lean; the static site cannot run proofs, ZDDs, or MIP solvers.</p></section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Laboratory</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#proof-graph-laboratory">Laboratory</a><a data-toc-link href="#frozen-graph">Frozen graph</a><a data-toc-link href="#benchmark">Benchmark</a><a data-toc-link href="#support-compression">ZDD and hypergraph</a><a data-toc-link href="#novelty-vector">Novelty vector</a><a data-toc-link href="#cng-candidate">CNG candidate</a><a data-toc-link href="#execution-boundary">Execution boundary</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../static/site.js?v=20260903f"></script>
+</body>
+</html>

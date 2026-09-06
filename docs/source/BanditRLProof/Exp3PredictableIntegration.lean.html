@@ -1,0 +1,1117 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Exp3PredictableIntegration.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Exp3PredictableIntegration.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Exp3PredictableIntegration.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Exp3PredictableIntegration.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Exp3ExplorationBias</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Integrated predictable EXP3 bridge</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module connects the pathwise sampled-Hedge inequality to the generated</span>
+<span id="L7">7 predictable trajectory moments.  The key law transport uses the exploration</span>
+<span id="L8">8 distribution `p_t` to sample an action while a distinct predictable pure-Hedge</span>
+<span id="L9">9 distribution `q_t` weights the importance-weighted estimator.</span>
+<span id="L10">10 </span>
+<span id="L11">11 The route is: construct measurable `q_t` sources, prove cross-weighted score</span>
+<span id="L12">12 regularity, transport the conditional action law, aggregate over a finite</span>
+<span id="L13">13 horizon, and only then integrate the almost-sure Hedge inequality.</span>
+<span id="L14">14 -/</span>
+<span id="L15">15 </span>
+<span id="L16">16 namespace BanditRLProof</span>
+<span id="L17">17 namespace Exp3</span>
+<span id="L18">18 </span>
+<span id="L19">19 open MeasureTheory ProbabilityTheory</span>
+<span id="L20">20 </span>
+<span id="L21">21 universe u v</span>
+<span id="L22">22 </span>
+<span id="L23">23 /-- The pure exponential-weights probability used by Hedge at an actual</span>
+<span id="L24">24 sampled-trajectory time. -/</span>
+<span id="L25">25 noncomputable def sampledTrajectoryPureProbabilityAt</span>
+<span id="L26">26     {Env : Type u} {Action : Type v} [DecidableEq Action]</span>
+<span id="L27">27     (arms : Finset Action) (eta gamma : Real) (t : Nat)</span>
+<span id="L28">28     (sample : Env × ((k : Nat) -&gt; Action × Real)) : Action -&gt; Real :=</span>
+<span id="L29">29   distribution arms eta</span>
+<span id="L30">30     (sampledTrajectoryObservedLoss arms eta gamma sample) t</span>
+<span id="L31">31 </span>
+<span id="L32">32 /-- Measurable finite-distribution source for the pure Hedge probabilities at</span>
+<span id="L33">33 every actual trajectory time. -/</span>
+<span id="L34">34 noncomputable def sampledTrajectoryPureProbabilitySourceAt</span>
+<span id="L35">35     {Env : Type u} {Action : Type v}</span>
+<span id="L36">36     [MeasurableSpace Env]</span>
+<span id="L37">37     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L38">38     [DecidableEq Action]</span>
+<span id="L39">39     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L40">40     (eta gamma : Real) (t : Nat) :</span>
+<span id="L41">41     MeasurableFiniteActionDistribution arms</span>
+<span id="L42">42       (sampledTrajectoryPureProbabilityAt (Env := Env) arms eta gamma t) := by</span>
+<span id="L43">43   refine</span>
+<span id="L44">44     { distribution := fun sample =&gt;</span>
+<span id="L45">45         { nonneg := fun action _haction =&gt;</span>
+<span id="L46">46             distribution_nonneg arms harms eta</span>
+<span id="L47">47               (sampledTrajectoryObservedLoss arms eta gamma sample) t action</span>
+<span id="L48">48           sum_eq_one := sum_distribution arms harms eta</span>
+<span id="L49">49             (sampledTrajectoryObservedLoss arms eta gamma sample) t }</span>
+<span id="L50">50       measurable_prob := ?_ }</span>
+<span id="L51">51   intro action haction</span>
+<span id="L52">52   cases t with</span>
+<span id="L53">53   | zero =&gt;</span>
+<span id="L54">54       simp [sampledTrajectoryPureProbabilityAt, distribution, totalWeight,</span>
+<span id="L55">55         weight, cumulativeLoss]</span>
+<span id="L56">56   | succ n =&gt;</span>
+<span id="L57">57       have hmeas := measurable_normalizedHistoryDistribution arms eta</span>
+<span id="L58">58         (sampledHistoryScore arms eta gamma n)</span>
+<span id="L59">59         (fun selected hselected =&gt;</span>
+<span id="L60">60           MeasurableFiniteHistoryScore.measurable_score</span>
+<span id="L61">61             (measurableFiniteHistoryScore_sampledHistoryScore arms eta gamma)</span>
+<span id="L62">62             n selected hselected)</span>
+<span id="L63">63         action haction</span>
+<span id="L64">64       simpa [sampledTrajectoryPureProbabilityAt,</span>
+<span id="L65">65         distribution_sampledTrajectoryObservedLoss_succ] using</span>
+<span id="L66">66         hmeas.comp ((Preorder.measurable_frestrictLe n).comp measurable_snd)</span>
+<span id="L67">67 </span>
+<span id="L68">68 /-- Pure-Hedge predictable loss at one actual trajectory time. -/</span>
+<span id="L69">69 noncomputable def sampledTrajectoryPurePredictableLossAt</span>
+<span id="L70">70     {Env : Type u} {Action : Type v}</span>
+<span id="L71">71     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L72">72     (arms : Finset Action) (eta gamma : Real)</span>
+<span id="L73">73     (loss : PredictableLossVector Env Action) (t : Nat)</span>
+<span id="L74">74     (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real :=</span>
+<span id="L75">75   arms.sum (fun action =&gt;</span>
+<span id="L76">76     sampledTrajectoryPureProbabilityAt arms eta gamma t sample action *</span>
+<span id="L77">77       predictableLossAt loss t sample action)</span>
+<span id="L78">78 </span>
+<span id="L79">79 /-- Exploration-mixed predictable loss at one actual trajectory time. -/</span>
+<span id="L80">80 noncomputable def sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L81">81     {Env : Type u} {Action : Type v}</span>
+<span id="L82">82     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L83">83     (arms : Finset Action) (eta gamma : Real)</span>
+<span id="L84">84     (loss : PredictableLossVector Env Action) (t : Nat)</span>
+<span id="L85">85     (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real :=</span>
+<span id="L86">86   arms.sum (fun action =&gt;</span>
+<span id="L87">87     sampledTrajectoryProbabilityAt arms eta gamma t sample action *</span>
+<span id="L88">88       predictableLossAt loss t sample action)</span>
+<span id="L89">89 </span>
+<span id="L90">90 /-- The pure-Hedge mixed observed estimator at one actual trajectory time. -/</span>
+<span id="L91">91 noncomputable def sampledTrajectoryPureObservedLossAt</span>
+<span id="L92">92     {Env : Type u} {Action : Type v} [DecidableEq Action]</span>
+<span id="L93">93     (arms : Finset Action) (eta gamma : Real) (t : Nat)</span>
+<span id="L94">94     (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real :=</span>
+<span id="L95">95   mixedLoss arms eta</span>
+<span id="L96">96     (sampledTrajectoryObservedLoss arms eta gamma sample) t</span>
+<span id="L97">97 </span>
+<span id="L98">98 theorem measurable_sampledTrajectoryPurePredictableLossAt</span>
+<span id="L99">99     {Env : Type u} {Action : Type v}</span>
+<span id="L100">100     [MeasurableSpace Env]</span>
+<span id="L101">101     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L102">102     [DecidableEq Action]</span>
+<span id="L103">103     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L104">104     (eta gamma : Real) (loss : PredictableLossVector Env Action) (t : Nat) :</span>
+<span id="L105">105     Measurable (sampledTrajectoryPurePredictableLossAt</span>
+<span id="L106">106       arms eta gamma loss t) := by</span>
+<span id="L107">107   unfold sampledTrajectoryPurePredictableLossAt</span>
+<span id="L108">108   refine Finset.measurable_sum arms fun action haction =&gt; ?_</span>
+<span id="L109">109   exact</span>
+<span id="L110">110     ((sampledTrajectoryPureProbabilitySourceAt (Env := Env) arms harms</span>
+<span id="L111">111       eta gamma t).measurable_prob action haction).mul</span>
+<span id="L112">112       (measurable_predictableLossAt loss t action)</span>
+<span id="L113">113 </span>
+<span id="L114">114 theorem sampledTrajectoryPurePredictableLossAt_mem_unitInterval</span>
+<span id="L115">115     {Env : Type u} {Action : Type v}</span>
+<span id="L116">116     [MeasurableSpace Env]</span>
+<span id="L117">117     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L118">118     [DecidableEq Action]</span>
+<span id="L119">119     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L120">120     (eta gamma : Real) (loss : PredictableLossVector Env Action) (t : Nat)</span>
+<span id="L121">121     (sample : Env × ((k : Nat) -&gt; Action × Real)) :</span>
+<span id="L122">122     sampledTrajectoryPurePredictableLossAt arms eta gamma loss t sample ∈</span>
+<span id="L123">123       Set.Icc (0 : Real) 1 := by</span>
+<span id="L124">124   let source := sampledTrajectoryPureProbabilitySourceAt (Env := Env)</span>
+<span id="L125">125     arms harms eta gamma t</span>
+<span id="L126">126   have hloss (action : Action) :</span>
+<span id="L127">127       predictableLossAt loss t sample action ∈ Set.Icc (0 : Real) 1 := by</span>
+<span id="L128">128     cases t with</span>
+<span id="L129">129     | zero =&gt; exact loss.initial_mem_unitInterval sample.1 action</span>
+<span id="L130">130     | succ n =&gt;</span>
+<span id="L131">131         exact loss.successor_mem_unitInterval n sample.1</span>
+<span id="L132">132           (Preorder.frestrictLe n sample.2) action</span>
+<span id="L133">133   constructor</span>
+<span id="L134">134   · exact Finset.sum_nonneg fun action haction =&gt;</span>
+<span id="L135">135       mul_nonneg ((source.distribution sample).nonneg action haction)</span>
+<span id="L136">136         (hloss action).1</span>
+<span id="L137">137   · calc</span>
+<span id="L138">138       sampledTrajectoryPurePredictableLossAt arms eta gamma loss t sample &lt;=</span>
+<span id="L139">139           arms.sum (fun action =&gt;</span>
+<span id="L140">140             sampledTrajectoryPureProbabilityAt arms eta gamma t sample action *</span>
+<span id="L141">141               1) := by</span>
+<span id="L142">142         apply Finset.sum_le_sum</span>
+<span id="L143">143         intro action haction</span>
+<span id="L144">144         exact mul_le_mul_of_nonneg_left (hloss action).2</span>
+<span id="L145">145           ((source.distribution sample).nonneg action haction)</span>
+<span id="L146">146       _ = 1 := by</span>
+<span id="L147">147         simpa using (source.distribution sample).sum_eq_one</span>
+<span id="L148">148 </span>
+<span id="L149">149 theorem integrable_sampledTrajectoryPurePredictableLossAt</span>
+<span id="L150">150     {Env : Type u} {Action : Type v}</span>
+<span id="L151">151     [MeasurableSpace Env]</span>
+<span id="L152">152     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L153">153     [DecidableEq Action]</span>
+<span id="L154">154     (mu : Measure (Env × ((k : Nat) -&gt; Action × Real))) [IsFiniteMeasure mu]</span>
+<span id="L155">155     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L156">156     (eta gamma : Real) (loss : PredictableLossVector Env Action) (t : Nat) :</span>
+<span id="L157">157     Integrable (sampledTrajectoryPurePredictableLossAt</span>
+<span id="L158">158       arms eta gamma loss t) mu := by</span>
+<span id="L159">159   refine Integrable.of_bound</span>
+<span id="L160">160     (measurable_sampledTrajectoryPurePredictableLossAt arms harms eta gamma</span>
+<span id="L161">161       loss t).aestronglyMeasurable 1 ?_</span>
+<span id="L162">162   exact Filter.Eventually.of_forall fun sample =&gt; by</span>
+<span id="L163">163     have hmem := sampledTrajectoryPurePredictableLossAt_mem_unitInterval</span>
+<span id="L164">164       arms harms eta gamma loss t sample</span>
+<span id="L165">165     simpa [Real.norm_eq_abs, abs_of_nonneg hmem.1] using hmem.2</span>
+<span id="L166">166 </span>
+<span id="L167">167 theorem measurable_sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L168">168     {Env : Type u} {Action : Type v}</span>
+<span id="L169">169     [MeasurableSpace Env]</span>
+<span id="L170">170     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L171">171     [DecidableEq Action]</span>
+<span id="L172">172     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L173">173     (eta gamma : Real) (hgamma_nonneg : 0 &lt;= gamma)</span>
+<span id="L174">174     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L175">175     (loss : PredictableLossVector Env Action) (t : Nat) :</span>
+<span id="L176">176     Measurable (sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L177">177       arms eta gamma loss t) := by</span>
+<span id="L178">178   unfold sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L179">179   refine Finset.measurable_sum arms fun action haction =&gt; ?_</span>
+<span id="L180">180   exact</span>
+<span id="L181">181     ((sampledTrajectoryProbabilitySourceAt (Env := Env) arms harms eta gamma</span>
+<span id="L182">182       hgamma_nonneg hgamma_le_one t).measurable_prob action haction).mul</span>
+<span id="L183">183       (measurable_predictableLossAt loss t action)</span>
+<span id="L184">184 </span>
+<span id="L185">185 theorem sampledTrajectoryExploredPredictableLossAt_mem_unitInterval</span>
+<span id="L186">186     {Env : Type u} {Action : Type v}</span>
+<span id="L187">187     [MeasurableSpace Env]</span>
+<span id="L188">188     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L189">189     [DecidableEq Action]</span>
+<span id="L190">190     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L191">191     (eta gamma : Real) (hgamma_nonneg : 0 &lt;= gamma)</span>
+<span id="L192">192     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L193">193     (loss : PredictableLossVector Env Action) (t : Nat)</span>
+<span id="L194">194     (sample : Env × ((k : Nat) -&gt; Action × Real)) :</span>
+<span id="L195">195     sampledTrajectoryExploredPredictableLossAt arms eta gamma loss t sample ∈</span>
+<span id="L196">196       Set.Icc (0 : Real) 1 := by</span>
+<span id="L197">197   let source := sampledTrajectoryProbabilitySourceAt (Env := Env)</span>
+<span id="L198">198     arms harms eta gamma hgamma_nonneg hgamma_le_one t</span>
+<span id="L199">199   have hloss (action : Action) :</span>
+<span id="L200">200       predictableLossAt loss t sample action ∈ Set.Icc (0 : Real) 1 := by</span>
+<span id="L201">201     cases t with</span>
+<span id="L202">202     | zero =&gt; exact loss.initial_mem_unitInterval sample.1 action</span>
+<span id="L203">203     | succ n =&gt;</span>
+<span id="L204">204         exact loss.successor_mem_unitInterval n sample.1</span>
+<span id="L205">205           (Preorder.frestrictLe n sample.2) action</span>
+<span id="L206">206   constructor</span>
+<span id="L207">207   · exact Finset.sum_nonneg fun action haction =&gt;</span>
+<span id="L208">208       mul_nonneg ((source.distribution sample).nonneg action haction)</span>
+<span id="L209">209         (hloss action).1</span>
+<span id="L210">210   · calc</span>
+<span id="L211">211       sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L212">212           arms eta gamma loss t sample &lt;=</span>
+<span id="L213">213         arms.sum (fun action =&gt;</span>
+<span id="L214">214           sampledTrajectoryProbabilityAt arms eta gamma t sample action * 1) := by</span>
+<span id="L215">215         apply Finset.sum_le_sum</span>
+<span id="L216">216         intro action haction</span>
+<span id="L217">217         exact mul_le_mul_of_nonneg_left (hloss action).2</span>
+<span id="L218">218           ((source.distribution sample).nonneg action haction)</span>
+<span id="L219">219       _ = 1 := by</span>
+<span id="L220">220         simpa using (source.distribution sample).sum_eq_one</span>
+<span id="L221">221 </span>
+<span id="L222">222 theorem integrable_sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L223">223     {Env : Type u} {Action : Type v}</span>
+<span id="L224">224     [MeasurableSpace Env]</span>
+<span id="L225">225     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L226">226     [DecidableEq Action]</span>
+<span id="L227">227     (mu : Measure (Env × ((k : Nat) -&gt; Action × Real))) [IsFiniteMeasure mu]</span>
+<span id="L228">228     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L229">229     (eta gamma : Real) (hgamma_nonneg : 0 &lt;= gamma)</span>
+<span id="L230">230     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L231">231     (loss : PredictableLossVector Env Action) (t : Nat) :</span>
+<span id="L232">232     Integrable (sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L233">233       arms eta gamma loss t) mu := by</span>
+<span id="L234">234   refine Integrable.of_bound</span>
+<span id="L235">235     (measurable_sampledTrajectoryExploredPredictableLossAt arms harms eta gamma</span>
+<span id="L236">236       hgamma_nonneg hgamma_le_one loss t).aestronglyMeasurable 1 ?_</span>
+<span id="L237">237   exact Filter.Eventually.of_forall fun sample =&gt; by</span>
+<span id="L238">238     have hmem := sampledTrajectoryExploredPredictableLossAt_mem_unitInterval</span>
+<span id="L239">239       arms harms eta gamma hgamma_nonneg hgamma_le_one loss t sample</span>
+<span id="L240">240     simpa [Real.norm_eq_abs, abs_of_nonneg hmem.1] using hmem.2</span>
+<span id="L241">241 </span>
+<span id="L242">242 /-- The observed scalar reward can be replaced almost surely by its selected</span>
+<span id="L243">243 predictable coordinate inside the pure-Hedge mixed estimator. -/</span>
+<span id="L244">244 theorem sampledTrajectoryPureObservedLossAt_ae_eq_weightedPredictable</span>
+<span id="L245">245     {Env : Type u} {Action : Type v}</span>
+<span id="L246">246     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L247">247     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L248">248     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L249">249     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L250">250     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L251">251     (eta gamma : Real) (hgamma_nonneg : 0 &lt;= gamma)</span>
+<span id="L252">252     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L253">253     (loss : PredictableLossVector Env Action) (t : Nat) :</span>
+<span id="L254">254     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L255">255       eta gamma hgamma_nonneg hgamma_le_one loss.environment</span>
+<span id="L256">256     (fun sample =&gt; sampledTrajectoryPureObservedLossAt</span>
+<span id="L257">257         arms eta gamma t sample) =ᵐ[mu]</span>
+<span id="L258">258       (fun sample =&gt; weightedImportanceWeightedLoss arms</span>
+<span id="L259">259         (sampledTrajectoryProbabilityAt arms eta gamma t sample)</span>
+<span id="L260">260         (sampledTrajectoryPureProbabilityAt arms eta gamma t sample)</span>
+<span id="L261">261         (predictableLossAt loss t sample) (sample.2 t).1) := by</span>
+<span id="L262">262   dsimp only</span>
+<span id="L263">263   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L264">264     eta gamma hgamma_nonneg hgamma_le_one loss.environment</span>
+<span id="L265">265   have hreward :</span>
+<span id="L266">266       (fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; (sample.2 t).2) =ᵐ[mu]</span>
+<span id="L267">267         (fun sample =&gt; predictableLossAt loss t sample (sample.2 t).1) := by</span>
+<span id="L268">268     cases t with</span>
+<span id="L269">269     | zero =&gt;</span>
+<span id="L270">270         simpa [mu, predictableLossAt,</span>
+<span id="L271">271           sampledImportanceWeightedTrajectoryKernel] using</span>
+<span id="L272">272           (canonicalPredictableTrajectoryMeasure_reward_zero_eq_initialLoss_ae</span>
+<span id="L273">273             prior</span>
+<span id="L274">274               (sampledImportanceWeightedHistoryAlgorithm arms harms eta gamma</span>
+<span id="L275">275                 hgamma_nonneg hgamma_le_one)</span>
+<span id="L276">276               loss)</span>
+<span id="L277">277     | succ n =&gt;</span>
+<span id="L278">278         simpa [mu, predictableLossAt] using</span>
+<span id="L279">279           (sampledPredictableTrajectoryMeasure_reward_eq_successorLoss_ae</span>
+<span id="L280">280             prior arms harms eta gamma hgamma_nonneg hgamma_le_one loss n)</span>
+<span id="L281">281   filter_upwards [hreward] with sample hsample</span>
+<span id="L282">282   unfold sampledTrajectoryPureObservedLossAt mixedLoss</span>
+<span id="L283">283     weightedImportanceWeightedLoss</span>
+<span id="L284">284   apply Finset.sum_congr rfl</span>
+<span id="L285">285   intro action _haction</span>
+<span id="L286">286   change</span>
+<span id="L287">287     distribution arms eta</span>
+<span id="L288">288           (sampledTrajectoryObservedLoss arms eta gamma sample) t action *</span>
+<span id="L289">289         sampledTrajectoryObservedLoss arms eta gamma sample t action =</span>
+<span id="L290">290       distribution arms eta</span>
+<span id="L291">291           (sampledTrajectoryObservedLoss arms eta gamma sample) t action *</span>
+<span id="L292">292         importanceWeightedLoss</span>
+<span id="L293">293           (sampledTrajectoryProbabilityAt arms eta gamma t sample)</span>
+<span id="L294">294           (predictableLossAt loss t sample) (sample.2 t).1 action</span>
+<span id="L295">295   congr 1</span>
+<span id="L296">296   unfold sampledTrajectoryObservedLoss observedImportanceWeightedLossAt</span>
+<span id="L297">297   by_cases hchosen : (sample.2 t).1 = action</span>
+<span id="L298">298   · simp [importanceWeightedLoss, hchosen, hsample]</span>
+<span id="L299">299   · simp [importanceWeightedLoss, hchosen]</span>
+<span id="L300">300 </span>
+<span id="L301">301 /-- The pure-Hedge observed mixed estimator is integrable on the generated</span>
+<span id="L302">302 trajectory law. -/</span>
+<span id="L303">303 theorem integrable_sampledTrajectoryPureObservedLossAt</span>
+<span id="L304">304     {Env : Type u} {Action : Type v}</span>
+<span id="L305">305     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L306">306     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L307">307     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L308">308     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L309">309     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L310">310     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L311">311     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L312">312     (loss : PredictableLossVector Env Action) (t : Nat) :</span>
+<span id="L313">313     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L314">314       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L315">315     Integrable (sampledTrajectoryPureObservedLossAt arms eta gamma t) mu := by</span>
+<span id="L316">316   dsimp only</span>
+<span id="L317">317   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L318">318     eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L319">319   let prob := sampledTrajectoryProbabilityAt (Env := Env) arms eta gamma t</span>
+<span id="L320">320   let weight := sampledTrajectoryPureProbabilityAt (Env := Env)</span>
+<span id="L321">321     arms eta gamma t</span>
+<span id="L322">322   let roundLoss := predictableLossAt loss t</span>
+<span id="L323">323   let probSource := sampledTrajectoryProbabilitySourceAt (Env := Env)</span>
+<span id="L324">324     arms harms eta gamma hgamma_pos.le hgamma_le_one t</span>
+<span id="L325">325   let weightSource := sampledTrajectoryPureProbabilitySourceAt (Env := Env)</span>
+<span id="L326">326     arms harms eta gamma t</span>
+<span id="L327">327   let regularity := sampledPredictableTrajectoryLossRegularityAt arms harms</span>
+<span id="L328">328     eta gamma hgamma_pos hgamma_le_one loss t</span>
+<span id="L329">329   have hchosen : Measurable</span>
+<span id="L330">330       (fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; (sample.2 t).1) := by</span>
+<span id="L331">331     fun_prop</span>
+<span id="L332">332   have hlatent : Integrable (fun sample =&gt;</span>
+<span id="L333">333       weightedImportanceWeightedLoss arms (prob sample) (weight sample)</span>
+<span id="L334">334         (roundLoss sample) (sample.2 t).1) mu :=</span>
+<span id="L335">335     integrable_weightedImportanceWeightedLoss_selected_of_isFiniteMeasure</span>
+<span id="L336">336       mu arms prob weight roundLoss probSource weightSource</span>
+<span id="L337">337         (gamma / (arms.card : Real)) regularity</span>
+<span id="L338">338         (fun sample =&gt; (sample.2 t).1) hchosen</span>
+<span id="L339">339   have hae := sampledTrajectoryPureObservedLossAt_ae_eq_weightedPredictable</span>
+<span id="L340">340     prior arms harms eta gamma hgamma_pos.le hgamma_le_one loss t</span>
+<span id="L341">341   dsimp only at hae</span>
+<span id="L342">342   exact hlatent.congr hae.symm</span>
+<span id="L343">343 </span>
+<span id="L344">344 /-- At time zero, the pure-Hedge mixed observed estimator has the same</span>
+<span id="L345">345 integral as the pure-Hedge predictable loss. -/</span>
+<span id="L346">346 theorem sampledPredictablePureObservedInitial_integral_eq</span>
+<span id="L347">347     {Env : Type u} {Action : Type v}</span>
+<span id="L348">348     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L349">349     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L350">350     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L351">351     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L352">352     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L353">353     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L354">354     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L355">355     (loss : PredictableLossVector Env Action) :</span>
+<span id="L356">356     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L357">357       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L358">358     integral mu (sampledTrajectoryPureObservedLossAt arms eta gamma 0) =</span>
+<span id="L359">359       integral mu</span>
+<span id="L360">360         (sampledTrajectoryPurePredictableLossAt arms eta gamma loss 0) := by</span>
+<span id="L361">361   dsimp only</span>
+<span id="L362">362   let algorithm := sampledImportanceWeightedHistoryAlgorithm arms harms</span>
+<span id="L363">363     eta gamma hgamma_pos.le hgamma_le_one</span>
+<span id="L364">364   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L365">365     eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L366">366   let history := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; sample.1</span>
+<span id="L367">367   let action := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L368">368     (sample.2 0).1</span>
+<span id="L369">369   let prob := fun _env : Env =&gt; initialExploredDistribution arms eta gamma</span>
+<span id="L370">370   let weight := fun _env : Env =&gt;</span>
+<span id="L371">371     distribution arms eta (fun _t _action =&gt; (0 : Real)) 0</span>
+<span id="L372">372   let roundLoss := loss.initial</span>
+<span id="L373">373   let probSource := sampledInitialEnvironmentDistributionSource</span>
+<span id="L374">374     (Env := Env) arms harms eta gamma hgamma_pos.le hgamma_le_one</span>
+<span id="L375">375   let weightSource : MeasurableFiniteActionDistribution arms weight :=</span>
+<span id="L376">376     { distribution := fun _env =&gt;</span>
+<span id="L377">377         { nonneg := fun selected _hselected =&gt;</span>
+<span id="L378">378             distribution_nonneg arms harms eta</span>
+<span id="L379">379               (fun _t _action =&gt; (0 : Real)) 0 selected</span>
+<span id="L380">380           sum_eq_one := sum_distribution arms harms eta</span>
+<span id="L381">381             (fun _t _action =&gt; (0 : Real)) 0 }</span>
+<span id="L382">382       measurable_prob := fun _selected _hselected =&gt; measurable_const }</span>
+<span id="L383">383   let policy := finiteActionKernel arms prob probSource</span>
+<span id="L384">384   let epsilon := gamma / (arms.card : Real)</span>
+<span id="L385">385   have hhistory : Measurable history := by fun_prop</span>
+<span id="L386">386   have haction : Measurable action := by fun_prop</span>
+<span id="L387">387   have hregularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L388">388       arms prob roundLoss epsilon := by</span>
+<span id="L389">389     simpa [prob, roundLoss, epsilon] using</span>
+<span id="L390">390       (sampledPredictableInitialLossRegularity arms harms eta gamma</span>
+<span id="L391">391         hgamma_pos hgamma_le_one loss)</span>
+<span id="L392">392   have hkernel : Kernel.const Env algorithm.initialAction = policy := by</span>
+<span id="L393">393     ext env event hevent</span>
+<span id="L394">394     rw [Kernel.const_apply, finiteActionKernel_apply]</span>
+<span id="L395">395     rfl</span>
+<span id="L396">396   have hcond : condDistrib action history mu =ᵐ[mu.map history] policy := by</span>
+<span id="L397">397     have hbase :=</span>
+<span id="L398">398       canonicalMeasurableEnvironmentTrajectoryMeasure_condDistrib_action_zero_given_environment</span>
+<span id="L399">399         prior algorithm loss.environment</span>
+<span id="L400">400     rw [hkernel] at hbase</span>
+<span id="L401">401     simpa [mu, algorithm, history, action,</span>
+<span id="L402">402       sampledImportanceWeightedTrajectoryKernel] using hbase</span>
+<span id="L403">403   have hpolicy : policy =ᵐ[mu.map history]</span>
+<span id="L404">404       fun env =&gt; finiteActionMeasure arms (prob env) := by</span>
+<span id="L405">405     filter_upwards [] with env</span>
+<span id="L406">406     rw [finiteActionKernel_apply]</span>
+<span id="L407">407   have hhistoryMarginal : mu.map history = prior := by</span>
+<span id="L408">408     change (prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L409">409       eta gamma hgamma_pos.le hgamma_le_one loss.environment).fst = prior</span>
+<span id="L410">410     exact Measure.fst_compProd prior</span>
+<span id="L411">411       (sampledImportanceWeightedTrajectoryKernel arms harms eta gamma</span>
+<span id="L412">412         hgamma_pos.le hgamma_le_one loss.environment)</span>
+<span id="L413">413   have hscore : Measurable (fun z : Env × Action =&gt;</span>
+<span id="L414">414       weightedImportanceWeightedLoss arms (prob z.1) (weight z.1)</span>
+<span id="L415">415         (roundLoss z.1) z.2) :=</span>
+<span id="L416">416     measurable_weightedImportanceWeightedLoss_score arms prob weight roundLoss</span>
+<span id="L417">417       probSource weightSource epsilon hregularity</span>
+<span id="L418">418   have hintegrable : Integrable (fun z : Env × Action =&gt;</span>
+<span id="L419">419       weightedImportanceWeightedLoss arms (prob z.1) (weight z.1)</span>
+<span id="L420">420         (roundLoss z.1) z.2) (mu.map history ⊗ₘ policy) := by</span>
+<span id="L421">421     rw [hhistoryMarginal]</span>
+<span id="L422">422     exact integrable_weightedImportanceWeightedLoss_score prior arms</span>
+<span id="L423">423       prob weight roundLoss probSource weightSource epsilon hregularity</span>
+<span id="L424">424   have hvector :=</span>
+<span id="L425">425     integral_weightedImportanceWeightedLoss_eq_integral_weightedLoss_of_condDistrib</span>
+<span id="L426">426       mu history hhistory action haction arms prob weight roundLoss</span>
+<span id="L427">427       probSource.distribution (fun env selected hselected =&gt;</span>
+<span id="L428">428         hregularity.prob_pos env selected hselected)</span>
+<span id="L429">429       policy hpolicy hcond hscore hintegrable</span>
+<span id="L430">430   rw [hhistoryMarginal] at hvector</span>
+<span id="L431">431   have hae := sampledTrajectoryPureObservedLossAt_ae_eq_weightedPredictable</span>
+<span id="L432">432     prior arms harms eta gamma hgamma_pos.le hgamma_le_one loss 0</span>
+<span id="L433">433   dsimp only at hae</span>
+<span id="L434">434   calc</span>
+<span id="L435">435     integral mu (sampledTrajectoryPureObservedLossAt arms eta gamma 0) =</span>
+<span id="L436">436         integral mu (fun sample =&gt;</span>
+<span id="L437">437           weightedImportanceWeightedLoss arms (prob (history sample))</span>
+<span id="L438">438             (weight (history sample)) (roundLoss (history sample))</span>
+<span id="L439">439             (action sample)) := by</span>
+<span id="L440">440       apply integral_congr_ae</span>
+<span id="L441">441       simpa [prob, weight, roundLoss, history, action,</span>
+<span id="L442">442         sampledTrajectoryProbabilityAt, sampledTrajectoryPureProbabilityAt,</span>
+<span id="L443">443         distribution, totalWeight, weight, cumulativeLoss] using hae</span>
+<span id="L444">444     _ = integral prior (fun env =&gt;</span>
+<span id="L445">445         arms.sum (fun selected =&gt; weight env selected * roundLoss env selected)) :=</span>
+<span id="L446">446       hvector</span>
+<span id="L447">447     _ = integral mu</span>
+<span id="L448">448         (sampledTrajectoryPurePredictableLossAt arms eta gamma loss 0) := by</span>
+<span id="L449">449       have hmeas : Measurable (fun env =&gt;</span>
+<span id="L450">450           arms.sum (fun selected =&gt; weight env selected * roundLoss env selected)) := by</span>
+<span id="L451">451         refine Finset.measurable_sum arms fun selected hselected =&gt; ?_</span>
+<span id="L452">452         exact (weightSource.measurable_prob selected hselected).mul</span>
+<span id="L453">453           (loss.measurable_initial.comp</span>
+<span id="L454">454             (measurable_id.prodMk</span>
+<span id="L455">455               (measurable_const : Measurable (fun _ : Env =&gt; selected))))</span>
+<span id="L456">456       have hmap := integral_map (μ := mu) hhistory.aemeasurable</span>
+<span id="L457">457         hmeas.aestronglyMeasurable</span>
+<span id="L458">458       rw [hhistoryMarginal] at hmap</span>
+<span id="L459">459       have hpure :</span>
+<span id="L460">460           (fun sample =&gt; arms.sum (fun selected =&gt;</span>
+<span id="L461">461             weight (history sample) selected *</span>
+<span id="L462">462               roundLoss (history sample) selected)) =</span>
+<span id="L463">463             sampledTrajectoryPurePredictableLossAt</span>
+<span id="L464">464               arms eta gamma loss 0 := by</span>
+<span id="L465">465         funext sample</span>
+<span id="L466">466         unfold sampledTrajectoryPurePredictableLossAt</span>
+<span id="L467">467         apply Finset.sum_congr rfl</span>
+<span id="L468">468         intro selected _hselected</span>
+<span id="L469">469         congr 1</span>
+<span id="L470">470       rw [← hpure]</span>
+<span id="L471">471       simpa only [Function.comp_apply] using hmap</span>
+<span id="L472">472 </span>
+<span id="L473">473 /-- At a successor time, the pure-Hedge mixed observed estimator has the same</span>
+<span id="L474">474 integral as the pure-Hedge predictable loss. -/</span>
+<span id="L475">475 theorem sampledPredictablePureObservedSuccessor_integral_eq</span>
+<span id="L476">476     {Env : Type u} {Action : Type v}</span>
+<span id="L477">477     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L478">478     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L479">479     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L480">480     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L481">481     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L482">482     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L483">483     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L484">484     (loss : PredictableLossVector Env Action) (n : Nat) :</span>
+<span id="L485">485     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L486">486       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L487">487     integral mu</span>
+<span id="L488">488         (sampledTrajectoryPureObservedLossAt arms eta gamma (n + 1)) =</span>
+<span id="L489">489       integral mu</span>
+<span id="L490">490         (sampledTrajectoryPurePredictableLossAt</span>
+<span id="L491">491           arms eta gamma loss (n + 1)) := by</span>
+<span id="L492">492   dsimp only</span>
+<span id="L493">493   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L494">494     eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L495">495   let history := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L496">496     (sample.1, Preorder.frestrictLe n sample.2)</span>
+<span id="L497">497   let action := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L498">498     (sample.2 (n + 1)).1</span>
+<span id="L499">499   let prob := fun input : Env × History.FinitePairHistory Action Real n =&gt;</span>
+<span id="L500">500     sampledHistoryDistribution arms eta gamma n input.2</span>
+<span id="L501">501   let weight := fun input : Env × History.FinitePairHistory Action Real n =&gt;</span>
+<span id="L502">502     normalizedHistoryDistribution arms eta</span>
+<span id="L503">503       (sampledHistoryScore arms eta gamma n) input.2</span>
+<span id="L504">504   let roundLoss := fun input : Env × History.FinitePairHistory Action Real n =&gt;</span>
+<span id="L505">505     loss.successor n input.1 input.2</span>
+<span id="L506">506   let localProbSource := exploredHistoryDistributionSource arms harms eta gamma</span>
+<span id="L507">507     (sampledHistoryScore arms eta gamma)</span>
+<span id="L508">508     (measurableFiniteHistoryScore_sampledHistoryScore arms eta gamma)</span>
+<span id="L509">509     hgamma_pos.le hgamma_le_one n</span>
+<span id="L510">510   let probSource := sampledEnvironmentHistoryDistributionSource</span>
+<span id="L511">511     (Env := Env) arms harms eta gamma hgamma_pos.le hgamma_le_one n</span>
+<span id="L512">512   let localWeightSource := normalizedHistoryDistributionSource arms harms eta</span>
+<span id="L513">513     (sampledHistoryScore arms eta gamma)</span>
+<span id="L514">514     (measurableFiniteHistoryScore_sampledHistoryScore arms eta gamma) n</span>
+<span id="L515">515   let weightSource : MeasurableFiniteActionDistribution arms weight :=</span>
+<span id="L516">516     { distribution := fun input =&gt; localWeightSource.distribution input.2</span>
+<span id="L517">517       measurable_prob := fun selected hselected =&gt;</span>
+<span id="L518">518         (localWeightSource.measurable_prob selected hselected).comp measurable_snd }</span>
+<span id="L519">519   let policy : Kernel</span>
+<span id="L520">520       (Env × History.FinitePairHistory Action Real n) Action :=</span>
+<span id="L521">521     (finiteActionKernel arms</span>
+<span id="L522">522       (sampledHistoryDistribution arms eta gamma n) localProbSource).comap</span>
+<span id="L523">523         (fun input : Env × History.FinitePairHistory Action Real n =&gt; input.2)</span>
+<span id="L524">524         measurable_snd</span>
+<span id="L525">525   let epsilon := gamma / (arms.card : Real)</span>
+<span id="L526">526   have hhistory : Measurable history :=</span>
+<span id="L527">527     measurable_fst.prodMk</span>
+<span id="L528">528       ((Preorder.measurable_frestrictLe n).comp measurable_snd)</span>
+<span id="L529">529   have haction : Measurable action := by fun_prop</span>
+<span id="L530">530   have hregularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L531">531       arms prob roundLoss epsilon := by</span>
+<span id="L532">532     simpa [prob, roundLoss, epsilon] using</span>
+<span id="L533">533       (sampledPredictableSuccessorLossRegularity arms harms eta gamma</span>
+<span id="L534">534         hgamma_pos hgamma_le_one loss n)</span>
+<span id="L535">535   have hpolicyEq : policy = finiteActionKernel arms prob probSource := by</span>
+<span id="L536">536     ext input event hevent</span>
+<span id="L537">537     rw [Kernel.comap_apply, finiteActionKernel_apply,</span>
+<span id="L538">538       finiteActionKernel_apply]</span>
+<span id="L539">539   have hpolicy : policy =ᵐ[mu.map history]</span>
+<span id="L540">540       fun input =&gt; finiteActionMeasure arms (prob input) := by</span>
+<span id="L541">541     filter_upwards [] with input</span>
+<span id="L542">542     rw [hpolicyEq, finiteActionKernel_apply]</span>
+<span id="L543">543   have hcond : condDistrib action history mu =ᵐ[mu.map history] policy := by</span>
+<span id="L544">544     simpa [mu, history, action, policy, localProbSource] using</span>
+<span id="L545">545       (sampledImportanceWeightedTrajectoryMeasure_condDistrib_action_given_environment</span>
+<span id="L546">546         prior arms harms eta gamma hgamma_pos.le hgamma_le_one loss n)</span>
+<span id="L547">547   have hscore : Measurable</span>
+<span id="L548">548       (fun z : (Env × History.FinitePairHistory Action Real n) × Action =&gt;</span>
+<span id="L549">549         weightedImportanceWeightedLoss arms (prob z.1) (weight z.1)</span>
+<span id="L550">550           (roundLoss z.1) z.2) :=</span>
+<span id="L551">551     measurable_weightedImportanceWeightedLoss_score arms prob weight roundLoss</span>
+<span id="L552">552       probSource weightSource epsilon hregularity</span>
+<span id="L553">553   have hintegrable : Integrable</span>
+<span id="L554">554       (fun z : (Env × History.FinitePairHistory Action Real n) × Action =&gt;</span>
+<span id="L555">555         weightedImportanceWeightedLoss arms (prob z.1) (weight z.1)</span>
+<span id="L556">556           (roundLoss z.1) z.2) (mu.map history ⊗ₘ policy) := by</span>
+<span id="L557">557     rw [hpolicyEq]</span>
+<span id="L558">558     exact integrable_weightedImportanceWeightedLoss_score (mu.map history)</span>
+<span id="L559">559       arms prob weight roundLoss probSource weightSource epsilon hregularity</span>
+<span id="L560">560   have hvector :=</span>
+<span id="L561">561     integral_weightedImportanceWeightedLoss_eq_integral_weightedLoss_of_condDistrib</span>
+<span id="L562">562       mu history hhistory action haction arms prob weight roundLoss</span>
+<span id="L563">563       probSource.distribution (fun input selected hselected =&gt;</span>
+<span id="L564">564         hregularity.prob_pos input selected hselected)</span>
+<span id="L565">565       policy hpolicy hcond hscore hintegrable</span>
+<span id="L566">566   have hae := sampledTrajectoryPureObservedLossAt_ae_eq_weightedPredictable</span>
+<span id="L567">567     prior arms harms eta gamma hgamma_pos.le hgamma_le_one loss (n + 1)</span>
+<span id="L568">568   dsimp only at hae</span>
+<span id="L569">569   calc</span>
+<span id="L570">570     integral mu</span>
+<span id="L571">571         (sampledTrajectoryPureObservedLossAt arms eta gamma (n + 1)) =</span>
+<span id="L572">572       integral mu (fun sample =&gt;</span>
+<span id="L573">573         weightedImportanceWeightedLoss arms (prob (history sample))</span>
+<span id="L574">574           (weight (history sample)) (roundLoss (history sample))</span>
+<span id="L575">575           (action sample)) := by</span>
+<span id="L576">576       apply integral_congr_ae</span>
+<span id="L577">577       filter_upwards [hae] with sample hsample</span>
+<span id="L578">578       have hweight :</span>
+<span id="L579">579           sampledTrajectoryPureProbabilityAt arms eta gamma (n + 1) sample =</span>
+<span id="L580">580             weight (history sample) := by</span>
+<span id="L581">581         funext selected</span>
+<span id="L582">582         exact distribution_sampledTrajectoryObservedLoss_succ</span>
+<span id="L583">583           arms eta gamma sample n selected</span>
+<span id="L584">584       rw [hweight] at hsample</span>
+<span id="L585">585       simpa [prob, roundLoss, history, action,</span>
+<span id="L586">586         sampledTrajectoryProbabilityAt, predictableLossAt] using hsample</span>
+<span id="L587">587     _ = integral (mu.map history) (fun input =&gt;</span>
+<span id="L588">588         arms.sum (fun selected =&gt; weight input selected *</span>
+<span id="L589">589           roundLoss input selected)) := hvector</span>
+<span id="L590">590     _ = integral mu</span>
+<span id="L591">591         (sampledTrajectoryPurePredictableLossAt</span>
+<span id="L592">592           arms eta gamma loss (n + 1)) := by</span>
+<span id="L593">593       have hmeas : Measurable (fun input =&gt;</span>
+<span id="L594">594           arms.sum (fun selected =&gt;</span>
+<span id="L595">595             weight input selected * roundLoss input selected)) := by</span>
+<span id="L596">596         refine Finset.measurable_sum arms fun selected hselected =&gt; ?_</span>
+<span id="L597">597         exact (weightSource.measurable_prob selected hselected).mul</span>
+<span id="L598">598           ((loss.measurable_successor n).comp</span>
+<span id="L599">599             (measurable_fst.prodMk</span>
+<span id="L600">600               (measurable_snd.prodMk</span>
+<span id="L601">601                 (measurable_const : Measurable</span>
+<span id="L602">602                   (fun _ : Env × History.FinitePairHistory Action Real n =&gt;</span>
+<span id="L603">603                     selected)))))</span>
+<span id="L604">604       have hmap := integral_map (μ := mu) hhistory.aemeasurable</span>
+<span id="L605">605         hmeas.aestronglyMeasurable</span>
+<span id="L606">606       have hpure :</span>
+<span id="L607">607           (fun sample =&gt; arms.sum (fun selected =&gt;</span>
+<span id="L608">608             weight (history sample) selected *</span>
+<span id="L609">609               roundLoss (history sample) selected)) =</span>
+<span id="L610">610             sampledTrajectoryPurePredictableLossAt</span>
+<span id="L611">611               arms eta gamma loss (n + 1) := by</span>
+<span id="L612">612         funext sample</span>
+<span id="L613">613         unfold sampledTrajectoryPurePredictableLossAt</span>
+<span id="L614">614         apply Finset.sum_congr rfl</span>
+<span id="L615">615         intro selected _hselected</span>
+<span id="L616">616         rw [show weight (history sample) selected =</span>
+<span id="L617">617             sampledTrajectoryPureProbabilityAt arms eta gamma (n + 1)</span>
+<span id="L618">618               sample selected by</span>
+<span id="L619">619           exact (distribution_sampledTrajectoryObservedLoss_succ</span>
+<span id="L620">620             arms eta gamma sample n selected).symm]</span>
+<span id="L621">621         rfl</span>
+<span id="L622">622       rw [← hpure]</span>
+<span id="L623">623       simpa only [Function.comp_apply] using hmap</span>
+<span id="L624">624 </span>
+<span id="L625">625 /-- Every actual time satisfies the adaptive pure-Hedge first-moment</span>
+<span id="L626">626 identity. -/</span>
+<span id="L627">627 theorem sampledPredictablePureObservedAt_integral_eq</span>
+<span id="L628">628     {Env : Type u} {Action : Type v}</span>
+<span id="L629">629     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L630">630     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L631">631     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L632">632     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L633">633     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L634">634     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L635">635     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L636">636     (loss : PredictableLossVector Env Action) (t : Nat) :</span>
+<span id="L637">637     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L638">638       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L639">639     integral mu (sampledTrajectoryPureObservedLossAt arms eta gamma t) =</span>
+<span id="L640">640       integral mu</span>
+<span id="L641">641         (sampledTrajectoryPurePredictableLossAt arms eta gamma loss t) := by</span>
+<span id="L642">642   cases t with</span>
+<span id="L643">643   | zero =&gt;</span>
+<span id="L644">644       exact sampledPredictablePureObservedInitial_integral_eq</span>
+<span id="L645">645         prior arms harms eta gamma hgamma_pos hgamma_le_one loss</span>
+<span id="L646">646   | succ n =&gt;</span>
+<span id="L647">647       exact sampledPredictablePureObservedSuccessor_integral_eq</span>
+<span id="L648">648         prior arms harms eta gamma hgamma_pos hgamma_le_one loss n</span>
+<span id="L649">649 </span>
+<span id="L650">650 /-- The adaptive pure-Hedge first-moment identity summed over a finite</span>
+<span id="L651">651 horizon. -/</span>
+<span id="L652">652 theorem sampledPredictablePureObserved_finiteHorizon_integral_eq</span>
+<span id="L653">653     {Env : Type u} {Action : Type v}</span>
+<span id="L654">654     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L655">655     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L656">656     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L657">657     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L658">658     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L659">659     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L660">660     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L661">661     (loss : PredictableLossVector Env Action) (horizon : Nat) :</span>
+<span id="L662">662     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L663">663       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L664">664     integral mu (fun sample =&gt; (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L665">665         sampledTrajectoryPureObservedLossAt arms eta gamma t sample)) =</span>
+<span id="L666">666       integral mu (fun sample =&gt; (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L667">667         sampledTrajectoryPurePredictableLossAt</span>
+<span id="L668">668           arms eta gamma loss t sample)) := by</span>
+<span id="L669">669   dsimp only</span>
+<span id="L670">670   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L671">671     eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L672">672   calc</span>
+<span id="L673">673     integral mu (fun sample =&gt; (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L674">674         sampledTrajectoryPureObservedLossAt arms eta gamma t sample)) =</span>
+<span id="L675">675       (Finset.range horizon).sum (fun t =&gt; integral mu</span>
+<span id="L676">676         (sampledTrajectoryPureObservedLossAt arms eta gamma t)) := by</span>
+<span id="L677">677       exact ExpectationBochnerSums.integral_finset_sum mu</span>
+<span id="L678">678         (Finset.range horizon)</span>
+<span id="L679">679         (fun t sample =&gt;</span>
+<span id="L680">680           sampledTrajectoryPureObservedLossAt arms eta gamma t sample)</span>
+<span id="L681">681         (fun t _ht =&gt; integrable_sampledTrajectoryPureObservedLossAt</span>
+<span id="L682">682           prior arms harms eta gamma hgamma_pos hgamma_le_one loss t)</span>
+<span id="L683">683     _ = (Finset.range horizon).sum (fun t =&gt; integral mu</span>
+<span id="L684">684         (sampledTrajectoryPurePredictableLossAt</span>
+<span id="L685">685           arms eta gamma loss t)) := by</span>
+<span id="L686">686       apply Finset.sum_congr rfl</span>
+<span id="L687">687       intro t _ht</span>
+<span id="L688">688       exact sampledPredictablePureObservedAt_integral_eq</span>
+<span id="L689">689         prior arms harms eta gamma hgamma_pos hgamma_le_one loss t</span>
+<span id="L690">690     _ = integral mu (fun sample =&gt; (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L691">691         sampledTrajectoryPurePredictableLossAt</span>
+<span id="L692">692           arms eta gamma loss t sample)) := by</span>
+<span id="L693">693       symm</span>
+<span id="L694">694       exact ExpectationBochnerSums.integral_finset_sum mu</span>
+<span id="L695">695         (Finset.range horizon)</span>
+<span id="L696">696         (fun t sample =&gt; sampledTrajectoryPurePredictableLossAt</span>
+<span id="L697">697           arms eta gamma loss t sample)</span>
+<span id="L698">698         (fun t _ht =&gt; integrable_sampledTrajectoryPurePredictableLossAt</span>
+<span id="L699">699           mu arms harms eta gamma loss t)</span>
+<span id="L700">700 </span>
+<span id="L701">701 /-- The a.e. sampled-Hedge inequality with its pure estimator-square term</span>
+<span id="L702">702 replaced by the exploration-mixed square. -/</span>
+<span id="L703">703 theorem sampledPredictableTrajectoryMeasure_hedge_exploredSecondMoment_le_ae</span>
+<span id="L704">704     {Env : Type u} {Action : Type v}</span>
+<span id="L705">705     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L706">706     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L707">707     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L708">708     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L709">709     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L710">710     (eta gamma : Real) (heta : 0 &lt; eta)</span>
+<span id="L711">711     (hgamma_pos : 0 &lt; gamma) (hgamma_lt_one : gamma &lt; 1)</span>
+<span id="L712">712     (loss : PredictableLossVector Env Action) (horizon : Nat)</span>
+<span id="L713">713     (comparator : Action) (hcomparator : comparator ∈ arms) :</span>
+<span id="L714">714     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L715">715       eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment</span>
+<span id="L716">716     ∀ᵐ sample ∂mu,</span>
+<span id="L717">717       (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L718">718           sampledTrajectoryPureObservedLossAt arms eta gamma t sample) -</span>
+<span id="L719">719         (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L720">720           observedImportanceWeightedLossAt</span>
+<span id="L721">721             arms eta gamma t sample comparator) &lt;=</span>
+<span id="L722">722       Real.log arms.card / eta +</span>
+<span id="L723">723         (eta * (1 / (1 - gamma))) *</span>
+<span id="L724">724           (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L725">725             observedMixedSquaredImportanceWeightedLossAt</span>
+<span id="L726">726               arms eta gamma t sample) := by</span>
+<span id="L727">727   dsimp only</span>
+<span id="L728">728   have hhedge := sampledPredictableTrajectoryMeasure_hedge_regret_le_ae</span>
+<span id="L729">729     prior arms harms eta gamma heta hgamma_pos.le hgamma_lt_one.le</span>
+<span id="L730">730       loss horizon comparator hcomparator</span>
+<span id="L731">731   dsimp only at hhedge</span>
+<span id="L732">732   filter_upwards [hhedge] with sample hsample</span>
+<span id="L733">733   have hsecond :=</span>
+<span id="L734">734     (sampledTrajectory_finiteHorizon_explorationBias_secondMoment</span>
+<span id="L735">735       arms harms eta gamma hgamma_pos.le hgamma_lt_one loss horizon sample).2</span>
+<span id="L736">736   calc</span>
+<span id="L737">737     (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L738">738           sampledTrajectoryPureObservedLossAt arms eta gamma t sample) -</span>
+<span id="L739">739         (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L740">740           observedImportanceWeightedLossAt</span>
+<span id="L741">741             arms eta gamma t sample comparator) =</span>
+<span id="L742">742       (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L743">743           mixedLoss arms eta</span>
+<span id="L744">744             (sampledTrajectoryObservedLoss arms eta gamma sample) t) -</span>
+<span id="L745">745         cumulativeLoss</span>
+<span id="L746">746           (sampledTrajectoryObservedLoss arms eta gamma sample)</span>
+<span id="L747">747           horizon comparator := by</span>
+<span id="L748">748       rfl</span>
+<span id="L749">749     _ &lt;= Real.log arms.card / eta + eta *</span>
+<span id="L750">750         (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L751">751           mixedSquaredLoss arms eta</span>
+<span id="L752">752             (sampledTrajectoryObservedLoss arms eta gamma sample) t) := hsample</span>
+<span id="L753">753     _ &lt;= Real.log arms.card / eta +</span>
+<span id="L754">754         (eta * (1 / (1 - gamma))) *</span>
+<span id="L755">755           (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L756">756             observedMixedSquaredImportanceWeightedLossAt</span>
+<span id="L757">757               arms eta gamma t sample) := by</span>
+<span id="L758">758       have hmul := mul_le_mul_of_nonneg_left hsecond heta.le</span>
+<span id="L759">759       nlinarith</span>
+<span id="L760">760 </span>
+<span id="L761">761 /-- Integrated sampled-Hedge control with the exploration-mixed second moment</span>
+<span id="L762">762 on the generated predictable trajectory law. -/</span>
+<span id="L763">763 theorem sampledPredictable_integral_pureHedge_le_exploredSecondMoment</span>
+<span id="L764">764     {Env : Type u} {Action : Type v}</span>
+<span id="L765">765     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L766">766     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L767">767     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L768">768     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L769">769     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L770">770     (eta gamma : Real) (heta : 0 &lt; eta)</span>
+<span id="L771">771     (hgamma_pos : 0 &lt; gamma) (hgamma_lt_one : gamma &lt; 1)</span>
+<span id="L772">772     (loss : PredictableLossVector Env Action) (horizon : Nat)</span>
+<span id="L773">773     (comparator : Action) (hcomparator : comparator ∈ arms) :</span>
+<span id="L774">774     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L775">775       eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment</span>
+<span id="L776">776     integral mu (fun sample =&gt; (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L777">777         sampledTrajectoryPureObservedLossAt arms eta gamma t sample)) -</span>
+<span id="L778">778       integral mu (fun sample =&gt; (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L779">779         observedImportanceWeightedLossAt</span>
+<span id="L780">780           arms eta gamma t sample comparator)) &lt;=</span>
+<span id="L781">781       Real.log arms.card / eta +</span>
+<span id="L782">782         (eta * (1 / (1 - gamma))) *</span>
+<span id="L783">783           integral mu (fun sample =&gt; (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L784">784             observedMixedSquaredImportanceWeightedLossAt</span>
+<span id="L785">785               arms eta gamma t sample)) := by</span>
+<span id="L786">786   dsimp only</span>
+<span id="L787">787   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L788">788     eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment</span>
+<span id="L789">789   have hpure (t : Nat) := integrable_sampledTrajectoryPureObservedLossAt</span>
+<span id="L790">790     prior arms harms eta gamma hgamma_pos hgamma_lt_one.le loss t</span>
+<span id="L791">791   have hobserved (t : Nat) := integrable_observedAt prior arms harms eta gamma</span>
+<span id="L792">792     hgamma_pos hgamma_lt_one.le loss t comparator hcomparator</span>
+<span id="L793">793   dsimp only at hpure hobserved</span>
+<span id="L794">794   have hpureSum : Integrable (fun sample =&gt; (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L795">795       sampledTrajectoryPureObservedLossAt arms eta gamma t sample)) mu :=</span>
+<span id="L796">796     IntegrabilitySums.integrable_finset_sum mu (Finset.range horizon)</span>
+<span id="L797">797       (fun t sample =&gt; sampledTrajectoryPureObservedLossAt</span>
+<span id="L798">798         arms eta gamma t sample) (fun t _ht =&gt; hpure t)</span>
+<span id="L799">799   have hcompSum : Integrable (fun sample =&gt; (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L800">800       observedImportanceWeightedLossAt</span>
+<span id="L801">801         arms eta gamma t sample comparator)) mu :=</span>
+<span id="L802">802     IntegrabilitySums.integrable_finset_sum mu (Finset.range horizon)</span>
+<span id="L803">803       (fun t sample =&gt; observedImportanceWeightedLossAt</span>
+<span id="L804">804         arms eta gamma t sample comparator) (fun t _ht =&gt; (hobserved t).1)</span>
+<span id="L805">805   have hsecondSum : Integrable (fun sample =&gt; (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L806">806       observedMixedSquaredImportanceWeightedLossAt</span>
+<span id="L807">807         arms eta gamma t sample)) mu :=</span>
+<span id="L808">808     IntegrabilitySums.integrable_finset_sum mu (Finset.range horizon)</span>
+<span id="L809">809       (fun t sample =&gt; observedMixedSquaredImportanceWeightedLossAt</span>
+<span id="L810">810         arms eta gamma t sample) (fun t _ht =&gt; (hobserved t).2)</span>
+<span id="L811">811   have hae :=</span>
+<span id="L812">812     sampledPredictableTrajectoryMeasure_hedge_exploredSecondMoment_le_ae</span>
+<span id="L813">813       prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss horizon</span>
+<span id="L814">814         comparator hcomparator</span>
+<span id="L815">815   dsimp only at hae</span>
+<span id="L816">816   have hmono := integral_mono_ae (hpureSum.sub hcompSum)</span>
+<span id="L817">817     ((integrable_const _).add</span>
+<span id="L818">818       (hsecondSum.const_mul (eta * (1 / (1 - gamma))))) hae</span>
+<span id="L819">819   change</span>
+<span id="L820">820     integral mu (fun sample =&gt;</span>
+<span id="L821">821         (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L822">822           sampledTrajectoryPureObservedLossAt arms eta gamma t sample) -</span>
+<span id="L823">823         (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L824">824           observedImportanceWeightedLossAt</span>
+<span id="L825">825             arms eta gamma t sample comparator)) &lt;=</span>
+<span id="L826">826       integral mu (fun sample =&gt; Real.log arms.card / eta +</span>
+<span id="L827">827         (eta * (1 / (1 - gamma))) *</span>
+<span id="L828">828           (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L829">829             observedMixedSquaredImportanceWeightedLossAt</span>
+<span id="L830">830               arms eta gamma t sample)) at hmono</span>
+<span id="L831">831   rw [integral_sub hpureSum hcompSum] at hmono</span>
+<span id="L832">832   rw [integral_add (integrable_const _)</span>
+<span id="L833">833     (hsecondSum.const_mul (eta * (1 / (1 - gamma))))] at hmono</span>
+<span id="L834">834   simpa [mu, MeasureTheory.integral_const_mul] using hmono</span>
+<span id="L835">835 </span>
+<span id="L836">836 /-- Expected exploration-mixed predictable loss is at most expected pure</span>
+<span id="L837">837 predictable loss plus `gamma` per round. -/</span>
+<span id="L838">838 theorem sampledPredictable_integral_exploredLoss_le_pure_add_gamma</span>
+<span id="L839">839     {Env : Type u} {Action : Type v}</span>
+<span id="L840">840     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L841">841     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L842">842     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L843">843     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L844">844     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L845">845     (eta gamma : Real) (hgamma_nonneg : 0 &lt;= gamma)</span>
+<span id="L846">846     (hgamma_lt_one : gamma &lt; 1)</span>
+<span id="L847">847     (loss : PredictableLossVector Env Action) (horizon : Nat) :</span>
+<span id="L848">848     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L849">849       eta gamma hgamma_nonneg hgamma_lt_one.le loss.environment</span>
+<span id="L850">850     integral mu (fun sample =&gt; (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L851">851         sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L852">852           arms eta gamma loss t sample)) &lt;=</span>
+<span id="L853">853       integral mu (fun sample =&gt; (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L854">854         sampledTrajectoryPurePredictableLossAt</span>
+<span id="L855">855           arms eta gamma loss t sample)) +</span>
+<span id="L856">856         gamma * (horizon : Real) := by</span>
+<span id="L857">857   dsimp only</span>
+<span id="L858">858   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L859">859     eta gamma hgamma_nonneg hgamma_lt_one.le loss.environment</span>
+<span id="L860">860   have hexploredSum : Integrable (fun sample =&gt;</span>
+<span id="L861">861       (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L862">862         sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L863">863           arms eta gamma loss t sample)) mu :=</span>
+<span id="L864">864     IntegrabilitySums.integrable_finset_sum mu (Finset.range horizon)</span>
+<span id="L865">865       (fun t sample =&gt; sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L866">866         arms eta gamma loss t sample)</span>
+<span id="L867">867       (fun t _ht =&gt; integrable_sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L868">868         mu arms harms eta gamma hgamma_nonneg hgamma_lt_one.le loss t)</span>
+<span id="L869">869   have hpureSum : Integrable (fun sample =&gt;</span>
+<span id="L870">870       (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L871">871         sampledTrajectoryPurePredictableLossAt</span>
+<span id="L872">872           arms eta gamma loss t sample)) mu :=</span>
+<span id="L873">873     IntegrabilitySums.integrable_finset_sum mu (Finset.range horizon)</span>
+<span id="L874">874       (fun t sample =&gt; sampledTrajectoryPurePredictableLossAt</span>
+<span id="L875">875         arms eta gamma loss t sample)</span>
+<span id="L876">876       (fun t _ht =&gt; integrable_sampledTrajectoryPurePredictableLossAt</span>
+<span id="L877">877         mu arms harms eta gamma loss t)</span>
+<span id="L878">878   have hae : ∀ᵐ sample ∂mu,</span>
+<span id="L879">879       (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L880">880           sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L881">881             arms eta gamma loss t sample) &lt;=</span>
+<span id="L882">882         (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L883">883           sampledTrajectoryPurePredictableLossAt</span>
+<span id="L884">884             arms eta gamma loss t sample) +</span>
+<span id="L885">885           gamma * (horizon : Real) := by</span>
+<span id="L886">886     filter_upwards [] with sample</span>
+<span id="L887">887     simpa [sampledTrajectoryExploredPredictableLossAt,</span>
+<span id="L888">888       sampledTrajectoryPurePredictableLossAt] using</span>
+<span id="L889">889       (sampledTrajectory_finiteHorizon_explorationBias_secondMoment</span>
+<span id="L890">890         arms harms eta gamma hgamma_nonneg hgamma_lt_one loss horizon sample).1</span>
+<span id="L891">891   have hmono := integral_mono_ae hexploredSum</span>
+<span id="L892">892     (hpureSum.add (integrable_const _)) hae</span>
+<span id="L893">893   change</span>
+<span id="L894">894     integral mu (fun sample =&gt; (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L895">895         sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L896">896           arms eta gamma loss t sample)) &lt;=</span>
+<span id="L897">897       integral mu (fun sample =&gt;</span>
+<span id="L898">898         (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L899">899           sampledTrajectoryPurePredictableLossAt</span>
+<span id="L900">900             arms eta gamma loss t sample) +</span>
+<span id="L901">901         gamma * (horizon : Real)) at hmono</span>
+<span id="L902">902   rw [integral_add hpureSum (integrable_const _)] at hmono</span>
+<span id="L903">903   simpa [mu] using hmono</span>
+<span id="L904">904 </span>
+<span id="L905">905 /-- The explored probability-mixed estimator square has expectation at most</span>
+<span id="L906">906 `|arms| * horizon` under predictable `[0,1]` losses. -/</span>
+<span id="L907">907 theorem sampledPredictableObserved_finiteHorizon_secondMoment_integral_le_card_mul</span>
+<span id="L908">908     {Env : Type u} {Action : Type v}</span>
+<span id="L909">909     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L910">910     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L911">911     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L912">912     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L913">913     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L914">914     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L915">915     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L916">916     (loss : PredictableLossVector Env Action) (horizon : Nat) :</span>
+<span id="L917">917     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L918">918       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L919">919     integral mu (fun sample =&gt; (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L920">920         observedMixedSquaredImportanceWeightedLossAt</span>
+<span id="L921">921           arms eta gamma t sample)) &lt;=</span>
+<span id="L922">922       (arms.card : Real) * (horizon : Real) := by</span>
+<span id="L923">923   dsimp only</span>
+<span id="L924">924   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L925">925     eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L926">926   have hmoment := sampledPredictableObserved_finiteHorizon_first_second_moment</span>
+<span id="L927">927     prior arms harms eta gamma hgamma_pos hgamma_le_one loss horizon</span>
+<span id="L928">928       (Classical.choose harms) (Classical.choose_spec harms)</span>
+<span id="L929">929   dsimp only at hmoment</span>
+<span id="L930">930   have htrueSum : Integrable (fun sample =&gt; (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L931">931       arms.sum (fun action =&gt;</span>
+<span id="L932">932         (predictableLossAt loss t sample action) ^ 2))) mu :=</span>
+<span id="L933">933     IntegrabilitySums.integrable_finset_sum mu (Finset.range horizon)</span>
+<span id="L934">934       (fun t sample =&gt; arms.sum (fun action =&gt;</span>
+<span id="L935">935         (predictableLossAt loss t sample action) ^ 2))</span>
+<span id="L936">936       (fun t _ht =&gt; integrable_predictableLossSqSumAt mu arms loss t)</span>
+<span id="L937">937   have hae : ∀ᵐ sample ∂mu,</span>
+<span id="L938">938       (Finset.range horizon).sum (fun t =&gt; arms.sum (fun action =&gt;</span>
+<span id="L939">939           (predictableLossAt loss t sample action) ^ 2)) &lt;=</span>
+<span id="L940">940         (arms.card : Real) * (horizon : Real) := by</span>
+<span id="L941">941     filter_upwards [] with sample</span>
+<span id="L942">942     calc</span>
+<span id="L943">943       (Finset.range horizon).sum (fun t =&gt; arms.sum (fun action =&gt;</span>
+<span id="L944">944           (predictableLossAt loss t sample action) ^ 2)) &lt;=</span>
+<span id="L945">945         (Finset.range horizon).sum (fun _t =&gt; (arms.card : Real)) := by</span>
+<span id="L946">946           apply Finset.sum_le_sum</span>
+<span id="L947">947           intro t _ht</span>
+<span id="L948">948           calc</span>
+<span id="L949">949             arms.sum (fun action =&gt;</span>
+<span id="L950">950                 (predictableLossAt loss t sample action) ^ 2) &lt;=</span>
+<span id="L951">951               arms.sum (fun _action =&gt; (1 : Real)) := by</span>
+<span id="L952">952                 apply Finset.sum_le_sum</span>
+<span id="L953">953                 intro action _haction</span>
+<span id="L954">954                 have hloss : predictableLossAt loss t sample action ∈</span>
+<span id="L955">955                     Set.Icc (0 : Real) 1 := by</span>
+<span id="L956">956                   cases t with</span>
+<span id="L957">957                   | zero =&gt; exact loss.initial_mem_unitInterval sample.1 action</span>
+<span id="L958">958                   | succ n =&gt;</span>
+<span id="L959">959                       exact loss.successor_mem_unitInterval n sample.1</span>
+<span id="L960">960                         (Preorder.frestrictLe n sample.2) action</span>
+<span id="L961">961                 nlinarith [hloss.1, hloss.2]</span>
+<span id="L962">962             _ = arms.card := by simp</span>
+<span id="L963">963       _ = (arms.card : Real) * (horizon : Real) := by simp [mul_comm]</span>
+<span id="L964">964   have hmono := integral_mono_ae htrueSum (integrable_const _) hae</span>
+<span id="L965">965   calc</span>
+<span id="L966">966     integral mu (fun sample =&gt; (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L967">967         observedMixedSquaredImportanceWeightedLossAt</span>
+<span id="L968">968           arms eta gamma t sample)) =</span>
+<span id="L969">969       integral mu (fun sample =&gt; (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L970">970         arms.sum (fun action =&gt;</span>
+<span id="L971">971           (predictableLossAt loss t sample action) ^ 2))) := hmoment.2</span>
+<span id="L972">972     _ &lt;= (arms.card : Real) * (horizon : Real) := by</span>
+<span id="L973">973       simpa [mu] using hmono</span>
+<span id="L974">974 </span>
+<span id="L975">975 /-- Unoptimized expected predictable EXP3 regret bound.  This is the first</span>
+<span id="L976">976 complete generated-trajectory theorem on the route; eta/gamma optimization is</span>
+<span id="L977">977 kept as a separate deterministic parameter leaf. -/</span>
+<span id="L978">978 theorem sampledPredictable_expectedRegret_le</span>
+<span id="L979">979     {Env : Type u} {Action : Type v}</span>
+<span id="L980">980     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L981">981     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L982">982     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L983">983     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L984">984     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L985">985     (eta gamma : Real) (heta : 0 &lt; eta)</span>
+<span id="L986">986     (hgamma_pos : 0 &lt; gamma) (hgamma_lt_one : gamma &lt; 1)</span>
+<span id="L987">987     (loss : PredictableLossVector Env Action) (horizon : Nat)</span>
+<span id="L988">988     (comparator : Action) (hcomparator : comparator ∈ arms) :</span>
+<span id="L989">989     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L990">990       eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment</span>
+<span id="L991">991     integral mu (fun sample =&gt;</span>
+<span id="L992">992       (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L993">993           sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L994">994             arms eta gamma loss t sample) -</span>
+<span id="L995">995         (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L996">996           predictableLossAt loss t sample comparator)) &lt;=</span>
+<span id="L997">997       Real.log arms.card / eta +</span>
+<span id="L998">998         (eta * (1 / (1 - gamma))) *</span>
+<span id="L999">999           ((arms.card : Real) * (horizon : Real)) +</span>
+<span id="L1000">1000         gamma * (horizon : Real) := by</span>
+<span id="L1001">1001   dsimp only</span>
+<span id="L1002">1002   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L1003">1003     eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment</span>
+<span id="L1004">1004   have hexploration := sampledPredictable_integral_exploredLoss_le_pure_add_gamma</span>
+<span id="L1005">1005     prior arms harms eta gamma hgamma_pos.le hgamma_lt_one loss horizon</span>
+<span id="L1006">1006   have hpureMoment := sampledPredictablePureObserved_finiteHorizon_integral_eq</span>
+<span id="L1007">1007     prior arms harms eta gamma hgamma_pos hgamma_lt_one.le loss horizon</span>
+<span id="L1008">1008   have hhedge := sampledPredictable_integral_pureHedge_le_exploredSecondMoment</span>
+<span id="L1009">1009     prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss horizon</span>
+<span id="L1010">1010       comparator hcomparator</span>
+<span id="L1011">1011   have hmoment := sampledPredictableObserved_finiteHorizon_first_second_moment</span>
+<span id="L1012">1012     prior arms harms eta gamma hgamma_pos hgamma_lt_one.le loss horizon</span>
+<span id="L1013">1013       comparator hcomparator</span>
+<span id="L1014">1014   have hsecond :=</span>
+<span id="L1015">1015     sampledPredictableObserved_finiteHorizon_secondMoment_integral_le_card_mul</span>
+<span id="L1016">1016       prior arms harms eta gamma hgamma_pos hgamma_lt_one.le loss horizon</span>
+<span id="L1017">1017   dsimp only at hexploration hpureMoment hhedge hmoment hsecond</span>
+<span id="L1018">1018   have hcoeff_nonneg : 0 &lt;= eta * (1 / (1 - gamma)) := by</span>
+<span id="L1019">1019     exact mul_nonneg heta.le</span>
+<span id="L1020">1020       (one_div_nonneg.mpr (sub_nonneg.mpr hgamma_lt_one.le))</span>
+<span id="L1021">1021   have hscaledSecond := mul_le_mul_of_nonneg_left hsecond hcoeff_nonneg</span>
+<span id="L1022">1022   have hexploredSum : Integrable (fun sample =&gt;</span>
+<span id="L1023">1023       (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L1024">1024         sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L1025">1025           arms eta gamma loss t sample)) mu :=</span>
+<span id="L1026">1026     IntegrabilitySums.integrable_finset_sum mu (Finset.range horizon)</span>
+<span id="L1027">1027       (fun t sample =&gt; sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L1028">1028         arms eta gamma loss t sample)</span>
+<span id="L1029">1029       (fun t _ht =&gt; integrable_sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L1030">1030         mu arms harms eta gamma hgamma_pos.le hgamma_lt_one.le loss t)</span>
+<span id="L1031">1031   have hcomparatorSum : Integrable (fun sample =&gt;</span>
+<span id="L1032">1032       (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L1033">1033         predictableLossAt loss t sample comparator)) mu :=</span>
+<span id="L1034">1034     IntegrabilitySums.integrable_finset_sum mu (Finset.range horizon)</span>
+<span id="L1035">1035       (fun t sample =&gt; predictableLossAt loss t sample comparator)</span>
+<span id="L1036">1036       (fun t _ht =&gt; integrable_predictableLossAt mu loss t comparator)</span>
+<span id="L1037">1037   rw [integral_sub hexploredSum hcomparatorSum]</span>
+<span id="L1038">1038   nlinarith</span>
+<span id="L1039">1039 </span>
+<span id="L1040">1040 end Exp3</span>
+<span id="L1041">1041 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

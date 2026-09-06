@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVILocalBellman.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVILocalBellman.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVILocalBellman.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVILocalBellman.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVICoordinateAlignment</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Local Bellman recursion for one recurrent UCBVI update</span>
+<span id="L5">5 </span>
+<span id="L6">6 The declarations in this file are deterministic.  The following generated</span>
+<span id="L7">7 source layer discharges their two model-error inputs from the compiled joint</span>
+<span id="L8">8 transition event.</span>
+<span id="L9">9 -/</span>
+<span id="L10">10 </span>
+<span id="L11">11 open MeasureTheory</span>
+<span id="L12">12 open scoped ENNReal ProbabilityTheory</span>
+<span id="L13">13 </span>
+<span id="L14">14 universe u v</span>
+<span id="L15">15 </span>
+<span id="L16">16 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L17">17 </span>
+<span id="L18">18 variable {State : Type u} {Action : Type v}</span>
+<span id="L19">19     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L20">20     [Fintype State] [Fintype Action]</span>
+<span id="L21">21     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L22">22     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L23">23     [Nonempty State] [Nonempty Action]</span>
+<span id="L24">24 </span>
+<span id="L25">25 namespace MDP</span>
+<span id="L26">26 </span>
+<span id="L27">27 /-- Transport the proof-indexed chronological optimal value across a stage</span>
+<span id="L28">28 equality. -/</span>
+<span id="L29">29 theorem optimalValueAt_eq_of_eq</span>
+<span id="L30">30     (mdp : MDP State Action) {left right : Nat}</span>
+<span id="L31">31     (hleft : left &lt;= mdp.horizon) (hright : right &lt;= mdp.horizon)</span>
+<span id="L32">32     (h : left = right) :</span>
+<span id="L33">33     mdp.optimalValueAt left hleft = mdp.optimalValueAt right hright := by</span>
+<span id="L34">34   subst right</span>
+<span id="L35">35   rfl</span>
+<span id="L36">36 </span>
+<span id="L37">37 /-- Nonnegative rewards give a nonnegative optimal finite-horizon value. -/</span>
+<span id="L38">38 theorem optimalValueAt_nonneg_of_reward_nonneg</span>
+<span id="L39">39     (mdp : MDP State Action)</span>
+<span id="L40">40     (hreward : forall state action, 0 &lt;= mdp.reward state action)</span>
+<span id="L41">41     (stage : Nat) (hstage : stage &lt;= mdp.horizon) (state : State) :</span>
+<span id="L42">42     0 &lt;= mdp.optimalValueAt stage hstage state := by</span>
+<span id="L43">43   rw [← mdp.optimalPolicy_valueAt_eq_optimalValueAt]</span>
+<span id="L44">44   exact mdp.optimalPolicy.valueRemaining_nonneg_of_reward_nonneg hreward</span>
+<span id="L45">45     (mdp.horizon - stage) (Nat.sub_le _ _) state</span>
+<span id="L46">46 </span>
+<span id="L47">47 end MDP</span>
+<span id="L48">48 </span>
+<span id="L49">49 namespace AdaptiveCumulativeHoeffdingUCBVI</span>
+<span id="L50">50 </span>
+<span id="L51">51 theorem decisionStageRemaining_succ_eq</span>
+<span id="L52">52     (mdp : MDP State Action) (remaining : Nat)</span>
+<span id="L53">53     (hremaining : remaining + 1 &lt;= mdp.horizon) :</span>
+<span id="L54">54     (mdp.decisionStageRemaining remaining hremaining : Nat) + 1 =</span>
+<span id="L55">55       mdp.horizon - remaining := by</span>
+<span id="L56">56   simp [MDP.decisionStageRemaining]</span>
+<span id="L57">57   omega</span>
+<span id="L58">58 </span>
+<span id="L59">59 /-- Transport the proof-indexed clipped Q surface across equality of the</span>
+<span id="L60">60 remaining-horizon coordinate. -/</span>
+<span id="L61">61 theorem clippedQRemaining_eq_of_eq</span>
+<span id="L62">62     {mdp : MDP State Action} (previousQ : QTable mdp)</span>
+<span id="L63">63     (summary : TransitionCountSummary mdp) (defaultState : State)</span>
+<span id="L64">64     (bonusScale : Real) {left right : Nat}</span>
+<span id="L65">65     (hleft : left + 1 &lt;= mdp.horizon)</span>
+<span id="L66">66     (hright : right + 1 &lt;= mdp.horizon) (h : left = right) :</span>
+<span id="L67">67     clippedQRemaining previousQ summary defaultState bonusScale left hleft =</span>
+<span id="L68">68       clippedQRemaining previousQ summary defaultState bonusScale right hright := by</span>
+<span id="L69">69   subst right</span>
+<span id="L70">70   rfl</span>
+<span id="L71">71 </span>
+<span id="L72">72 /-- The selected value in the backward recursion is the selected entry of the</span>
+<span id="L73">73 chronological clipped Q table. -/</span>
+<span id="L74">74 theorem clippedValueRemaining_succ_eq_selectedQ</span>
+<span id="L75">75     {mdp : MDP State Action} (previousQ : QTable mdp)</span>
+<span id="L76">76     (summary : TransitionCountSummary mdp) (defaultState : State)</span>
+<span id="L77">77     (bonusScale : Real) (remaining : Nat)</span>
+<span id="L78">78     (hremaining : remaining + 1 &lt;= mdp.horizon) (state : State) :</span>
+<span id="L79">79     clippedValueRemaining previousQ summary defaultState bonusScale</span>
+<span id="L80">80         (remaining + 1) hremaining state =</span>
+<span id="L81">81       clippedQRemaining previousQ summary defaultState bonusScale remaining</span>
+<span id="L82">82         hremaining state</span>
+<span id="L83">83         (clippedPolicyTable mdp previousQ summary defaultState bonusScale</span>
+<span id="L84">84           (mdp.decisionStageRemaining remaining hremaining) state) := by</span>
+<span id="L85">85   let stage := mdp.decisionStageRemaining remaining hremaining</span>
+<span id="L86">86   let q : Action -&gt; Real := fun action =&gt;</span>
+<span id="L87">87     clippedQRemaining previousQ summary defaultState bonusScale remaining</span>
+<span id="L88">88       hremaining state action</span>
+<span id="L89">89   have hq (action : Action) :</span>
+<span id="L90">90       clippedQTable mdp previousQ summary defaultState bonusScale</span>
+<span id="L91">91           stage state action = q action := by</span>
+<span id="L92">92     unfold clippedQTable</span>
+<span id="L93">93     change clippedQRemaining previousQ summary defaultState bonusScale</span>
+<span id="L94">94       (mdp.horizon - (stage.val + 1)) _ state action = q action</span>
+<span id="L95">95     have hinverse : mdp.horizon - (stage.val + 1) = remaining := by</span>
+<span id="L96">96       simp [stage, MDP.decisionStageRemaining]</span>
+<span id="L97">97       omega</span>
+<span id="L98">98     exact congrFun (congrFun</span>
+<span id="L99">99       (clippedQRemaining_eq_of_eq previousQ summary defaultState bonusScale</span>
+<span id="L100">100         _ hremaining hinverse) state) action</span>
+<span id="L101">101   have hchoice :</span>
+<span id="L102">102       FiniteRealArgmax.choose</span>
+<span id="L103">103           (fun action =&gt; clippedQTable mdp previousQ summary defaultState</span>
+<span id="L104">104             bonusScale stage state action) =</span>
+<span id="L105">105         FiniteRealArgmax.choose q := by</span>
+<span id="L106">106     congr 1</span>
+<span id="L107">107     funext action</span>
+<span id="L108">108     exact hq action</span>
+<span id="L109">109   simp only [clippedValueRemaining]</span>
+<span id="L110">110   change q (FiniteRealArgmax.choose q) =</span>
+<span id="L111">111     q (clippedPolicyTable mdp previousQ summary defaultState bonusScale</span>
+<span id="L112">112       stage state)</span>
+<span id="L113">113   unfold clippedPolicyTable</span>
+<span id="L114">114   rw [hchoice]</span>
+<span id="L115">115 </span>
+<span id="L116">116 /-- Every entry of one clipped Q update is at most `H`. -/</span>
+<span id="L117">117 theorem clippedQTable_le_horizon</span>
+<span id="L118">118     (mdp : MDP State Action) (previousQ : QTable mdp)</span>
+<span id="L119">119     (summary : TransitionCountSummary mdp) (defaultState : State)</span>
+<span id="L120">120     (bonusScale : Real) (stage : Fin mdp.horizon)</span>
+<span id="L121">121     (state : State) (action : Action) :</span>
+<span id="L122">122     clippedQTable mdp previousQ summary defaultState bonusScale</span>
+<span id="L123">123         stage state action &lt;= (mdp.horizon : Real) := by</span>
+<span id="L124">124   unfold clippedQTable</span>
+<span id="L125">125   unfold clippedQRemaining</span>
+<span id="L126">126   dsimp only</span>
+<span id="L127">127   split_ifs with hzero</span>
+<span id="L128">128   · exact le_rfl</span>
+<span id="L129">129   · exact (min_le_right _ _).trans (min_le_left _ _)</span>
+<span id="L130">130 </span>
+<span id="L131">131 /-- Clipping makes every selected upper value at most `H`, independently of</span>
+<span id="L132">132 whether the statistical event holds. -/</span>
+<span id="L133">133 theorem clippedValueRemaining_le_horizon</span>
+<span id="L134">134     {mdp : MDP State Action} (previousQ : QTable mdp)</span>
+<span id="L135">135     (summary : TransitionCountSummary mdp) (defaultState : State)</span>
+<span id="L136">136     (bonusScale : Real) (remaining : Nat)</span>
+<span id="L137">137     (hremaining : remaining &lt;= mdp.horizon) (state : State) :</span>
+<span id="L138">138     clippedValueRemaining previousQ summary defaultState bonusScale</span>
+<span id="L139">139         remaining hremaining state &lt;= (mdp.horizon : Real) := by</span>
+<span id="L140">140   cases remaining with</span>
+<span id="L141">141   | zero =&gt; simp [clippedValueRemaining]</span>
+<span id="L142">142   | succ remaining =&gt;</span>
+<span id="L143">143       rw [clippedValueRemaining_succ_eq_selectedQ]</span>
+<span id="L144">144       unfold clippedQRemaining</span>
+<span id="L145">145       dsimp only</span>
+<span id="L146">146       split_ifs with hzero</span>
+<span id="L147">147       · exact le_rfl</span>
+<span id="L148">148       · exact (min_le_right _ _).trans (min_le_left _ _)</span>
+<span id="L149">149 </span>
+<span id="L150">150 /-- Pointwise optimal-Q dominance implies that the selected clipped value</span>
+<span id="L151">151 dominates the optimal value at the matching chronological stage. -/</span>
+<span id="L152">152 theorem optimalValueAt_le_clippedValueRemaining</span>
+<span id="L153">153     {mdp : MDP State Action} (previousQ : QTable mdp)</span>
+<span id="L154">154     (summary : TransitionCountSummary mdp) (defaultState : State)</span>
+<span id="L155">155     (bonusScale : Real)</span>
+<span id="L156">156     (hdominates : QDominatesOptimal mdp</span>
+<span id="L157">157       (clippedQTable mdp previousQ summary defaultState bonusScale))</span>
+<span id="L158">158     (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon)</span>
+<span id="L159">159     (state : State) :</span>
+<span id="L160">160     mdp.optimalValueAt (mdp.horizon - remaining) (Nat.sub_le _ _ ) state &lt;=</span>
+<span id="L161">161       clippedValueRemaining previousQ summary defaultState bonusScale</span>
+<span id="L162">162         remaining hremaining state := by</span>
+<span id="L163">163   cases remaining with</span>
+<span id="L164">164   | zero =&gt;</span>
+<span id="L165">165       simp [clippedValueRemaining, mdp.optimalValueAt_horizon]</span>
+<span id="L166">166   | succ remaining =&gt;</span>
+<span id="L167">167       let stage := mdp.decisionStageRemaining remaining hremaining</span>
+<span id="L168">168       let tail := mdp.optimalValueAt (stage + 1)</span>
+<span id="L169">169         (Nat.succ_le_of_lt stage.isLt)</span>
+<span id="L170">170       let optimalAction := mdp.optimalAction tail state</span>
+<span id="L171">171       let selected := clippedPolicyTable mdp previousQ summary defaultState</span>
+<span id="L172">172         bonusScale stage state</span>
+<span id="L173">173       have hstage : mdp.horizon - (remaining + 1) = stage := by</span>
+<span id="L174">174         rfl</span>
+<span id="L175">175       have hopt : mdp.optimalValueAt stage (Nat.le_of_lt stage.isLt) state =</span>
+<span id="L176">176           optimalQAt mdp stage state optimalAction := by</span>
+<span id="L177">177         rw [mdp.optimalValueAt_bellman stage stage.isLt]</span>
+<span id="L178">178         rfl</span>
+<span id="L179">179       have hentry := hdominates stage state optimalAction</span>
+<span id="L180">180       have hselected := clippedQTable_le_selected mdp previousQ summary</span>
+<span id="L181">181         defaultState bonusScale stage state optimalAction</span>
+<span id="L182">182       have htarget :</span>
+<span id="L183">183           mdp.optimalValueAt (mdp.horizon - (remaining + 1))</span>
+<span id="L184">184               (Nat.sub_le _ _) state =</span>
+<span id="L185">185             optimalQAt mdp stage state optimalAction := by</span>
+<span id="L186">186         calc</span>
+<span id="L187">187           mdp.optimalValueAt (mdp.horizon - (remaining + 1))</span>
+<span id="L188">188               (Nat.sub_le _ _) state =</span>
+<span id="L189">189               mdp.optimalValueAt stage (Nat.le_of_lt stage.isLt) state := by</span>
+<span id="L190">190             congr 2</span>
+<span id="L191">191           _ = optimalQAt mdp stage state optimalAction := hopt</span>
+<span id="L192">192       rw [htarget]</span>
+<span id="L193">193       rw [clippedValueRemaining_succ_eq_selectedQ]</span>
+<span id="L194">194       have hq :</span>
+<span id="L195">195           clippedQTable mdp previousQ summary defaultState bonusScale</span>
+<span id="L196">196               stage state selected =</span>
+<span id="L197">197             clippedQRemaining previousQ summary defaultState bonusScale</span>
+<span id="L198">198               remaining hremaining state selected := by</span>
+<span id="L199">199         unfold clippedQTable</span>
+<span id="L200">200         change clippedQRemaining previousQ summary defaultState bonusScale</span>
+<span id="L201">201           (mdp.horizon - (stage.val + 1)) _ state selected = _</span>
+<span id="L202">202         have hinverse : mdp.horizon - (stage.val + 1) = remaining := by</span>
+<span id="L203">203           simp [stage, MDP.decisionStageRemaining]</span>
+<span id="L204">204           omega</span>
+<span id="L205">205         exact congrFun (congrFun</span>
+<span id="L206">206           (clippedQRemaining_eq_of_eq previousQ summary defaultState bonusScale</span>
+<span id="L207">207             _ hremaining hinverse) state) selected</span>
+<span id="L208">208       change optimalQAt mdp stage state optimalAction &lt;=</span>
+<span id="L209">209         clippedQRemaining previousQ summary defaultState bonusScale remaining</span>
+<span id="L210">210           hremaining state selected</span>
+<span id="L211">211       exact (hentry.trans hselected).trans_eq hq</span>
+<span id="L212">212 </span>
+<span id="L213">213 /-- At a positive actual count, the selected clipped value minus the selected</span>
+<span id="L214">214 policy value propagates through the true transition kernel, plus exactly the</span>
+<span id="L215">215 empirical-model error and the configured bonus. -/</span>
+<span id="L216">216 theorem clippedValueRemaining_sub_policyValueRemaining_le_of_pos</span>
+<span id="L217">217     {mdp : MDP State Action} (previousQ : QTable mdp)</span>
+<span id="L218">218     (summary : TransitionCountSummary mdp) (defaultState : State)</span>
+<span id="L219">219     (bonusScale modelError : Real) (remaining : Nat)</span>
+<span id="L220">220     (hremaining : remaining + 1 &lt;= mdp.horizon) (state : State)</span>
+<span id="L221">221     (hpos : 0 &lt; summary.aggregateVisitCount state</span>
+<span id="L222">222       (clippedPolicyTable mdp previousQ summary defaultState bonusScale</span>
+<span id="L223">223         (mdp.decisionStageRemaining remaining hremaining) state))</span>
+<span id="L224">224     (hmodel :</span>
+<span id="L225">225       (∫ nextState,</span>
+<span id="L226">226           clippedValueRemaining previousQ summary defaultState bonusScale</span>
+<span id="L227">227               remaining (by omega) nextState</span>
+<span id="L228">228         ∂summary.aggregateEmpiricalTransitionKernel defaultState</span>
+<span id="L229">229           (state,</span>
+<span id="L230">230             clippedPolicyTable mdp previousQ summary defaultState bonusScale</span>
+<span id="L231">231               (mdp.decisionStageRemaining remaining hremaining) state)) -</span>
+<span id="L232">232         mdp.transitionValue</span>
+<span id="L233">233           (clippedValueRemaining previousQ summary defaultState bonusScale</span>
+<span id="L234">234             remaining (by omega)) state</span>
+<span id="L235">235           (clippedPolicyTable mdp previousQ summary defaultState bonusScale</span>
+<span id="L236">236             (mdp.decisionStageRemaining remaining hremaining) state) &lt;=</span>
+<span id="L237">237         modelError) :</span>
+<span id="L238">238     clippedValueRemaining previousQ summary defaultState bonusScale</span>
+<span id="L239">239           (remaining + 1) hremaining state -</span>
+<span id="L240">240         (clippedPolicyTable mdp previousQ summary defaultState bonusScale</span>
+<span id="L241">241           |&gt;.toMarkovPolicy).valueRemaining (remaining + 1) hremaining state &lt;=</span>
+<span id="L242">242       mdp.transitionValue</span>
+<span id="L243">243           (fun nextState =&gt;</span>
+<span id="L244">244             clippedValueRemaining previousQ summary defaultState bonusScale</span>
+<span id="L245">245                 remaining (by omega) nextState -</span>
+<span id="L246">246               (clippedPolicyTable mdp previousQ summary defaultState bonusScale</span>
+<span id="L247">247                 |&gt;.toMarkovPolicy).valueRemaining remaining (by omega) nextState)</span>
+<span id="L248">248           state</span>
+<span id="L249">249           (clippedPolicyTable mdp previousQ summary defaultState bonusScale</span>
+<span id="L250">250             (mdp.decisionStageRemaining remaining hremaining) state) +</span>
+<span id="L251">251         modelError +</span>
+<span id="L252">252         bonusScale /</span>
+<span id="L253">253           Real.sqrt (summary.aggregateVisitCount state</span>
+<span id="L254">254             (clippedPolicyTable mdp previousQ summary defaultState bonusScale</span>
+<span id="L255">255               (mdp.decisionStageRemaining remaining hremaining) state)) := by</span>
+<span id="L256">256   let stage := mdp.decisionStageRemaining remaining hremaining</span>
+<span id="L257">257   let table := clippedPolicyTable mdp previousQ summary defaultState bonusScale</span>
+<span id="L258">258   let selected := table stage state</span>
+<span id="L259">259   let upperTail := clippedValueRemaining previousQ summary defaultState bonusScale</span>
+<span id="L260">260       remaining (by omega)</span>
+<span id="L261">261   let policy := table.toMarkovPolicy</span>
+<span id="L262">262   let policyTail := policy.valueRemaining remaining (by omega)</span>
+<span id="L263">263   let count := summary.aggregateVisitCount state selected</span>
+<span id="L264">264   have hq := clippedQRemaining_of_aggregateVisitCount_pos previousQ summary</span>
+<span id="L265">265     defaultState bonusScale remaining hremaining state selected hpos</span>
+<span id="L266">266   have hupper :</span>
+<span id="L267">267       clippedValueRemaining previousQ summary defaultState bonusScale</span>
+<span id="L268">268           (remaining + 1) hremaining state &lt;=</span>
+<span id="L269">269         mdp.reward state selected +</span>
+<span id="L270">270           (∫ nextState, upperTail nextState</span>
+<span id="L271">271             ∂summary.aggregateEmpiricalTransitionKernel defaultState</span>
+<span id="L272">272               (state, selected)) +</span>
+<span id="L273">273           bonusScale / Real.sqrt count := by</span>
+<span id="L274">274     rw [clippedValueRemaining_succ_eq_selectedQ, hq]</span>
+<span id="L275">275     exact (min_le_right _ _).trans (min_le_right _ _)</span>
+<span id="L276">276   have hpolicy :</span>
+<span id="L277">277       policy.valueRemaining (remaining + 1) hremaining state =</span>
+<span id="L278">278         mdp.reward state selected +</span>
+<span id="L279">279           mdp.transitionValue policyTail state selected := by</span>
+<span id="L280">280     rw [MarkovPolicy.valueRemaining]</span>
+<span id="L281">281     change policy.bellman stage policyTail state = _</span>
+<span id="L282">282     unfold MarkovPolicy.bellman policy</span>
+<span id="L283">283     unfold DeterministicMarkovPolicyTable.toMarkovPolicy</span>
+<span id="L284">284     rw [ProbabilityTheory.Kernel.deterministic_apply]</span>
+<span id="L285">285     rw [integral_dirac&#x27;]</span>
+<span id="L286">286     · rfl</span>
+<span id="L287">287     · exact</span>
+<span id="L288">288         ((mdp.measurable_bellmanQ (measurable_of_finite policyTail)).comp</span>
+<span id="L289">289           (measurable_const.prodMk measurable_id)).stronglyMeasurable</span>
+<span id="L290">290   have htransitionSub :</span>
+<span id="L291">291       mdp.transitionValue upperTail state selected -</span>
+<span id="L292">292           mdp.transitionValue policyTail state selected =</span>
+<span id="L293">293         mdp.transitionValue (fun nextState =&gt;</span>
+<span id="L294">294           upperTail nextState - policyTail nextState) state selected := by</span>
+<span id="L295">295     unfold MDP.transitionValue</span>
+<span id="L296">296     have hupperInt : Integrable upperTail (mdp.transition (state, selected)) :=</span>
+<span id="L297">297       integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L298">298     have hpolicyInt : Integrable policyTail (mdp.transition (state, selected)) :=</span>
+<span id="L299">299       integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L300">300     rw [integral_sub hupperInt hpolicyInt]</span>
+<span id="L301">301   change _ &lt;= _</span>
+<span id="L302">302   rw [hpolicy]</span>
+<span id="L303">303   change _ &lt;= mdp.transitionValue</span>
+<span id="L304">304       (fun nextState =&gt; upperTail nextState - policyTail nextState)</span>
+<span id="L305">305       state selected + modelError + bonusScale / Real.sqrt count</span>
+<span id="L306">306   rw [← htransitionSub]</span>
+<span id="L307">307   have hmodel&#x27; :</span>
+<span id="L308">308       (∫ nextState, upperTail nextState</span>
+<span id="L309">309         ∂summary.aggregateEmpiricalTransitionKernel defaultState</span>
+<span id="L310">310           (state, selected)) -</span>
+<span id="L311">311         mdp.transitionValue upperTail state selected &lt;= modelError := by</span>
+<span id="L312">312     simpa [upperTail, selected, table, stage] using hmodel</span>
+<span id="L313">313   linarith</span>
+<span id="L314">314 </span>
+<span id="L315">315 /-- Bellman gap between one clipped recurrent value surface and the policy</span>
+<span id="L316">316 selected by that same surface.  Naming this exact difference keeps the</span>
+<span id="L317">317 generated-source recursion readable without hiding either policy identity. -/</span>
+<span id="L318">318 noncomputable def clippedPolicyGapRemaining</span>
+<span id="L319">319     {mdp : MDP State Action} (previousQ : QTable mdp)</span>
+<span id="L320">320     (summary : TransitionCountSummary mdp) (defaultState : State)</span>
+<span id="L321">321     (bonusScale : Real) (remaining : Nat)</span>
+<span id="L322">322     (hremaining : remaining &lt;= mdp.horizon) (state : State) : Real :=</span>
+<span id="L323">323   clippedValueRemaining previousQ summary defaultState bonusScale remaining</span>
+<span id="L324">324       hremaining state -</span>
+<span id="L325">325     (clippedPolicyTable mdp previousQ summary defaultState bonusScale</span>
+<span id="L326">326       |&gt;.toMarkovPolicy).valueRemaining remaining hremaining state</span>
+<span id="L327">327 </span>
+<span id="L328">328 /-- The deterministic positive-count recursion, expressed through the named</span>
+<span id="L329">329 same-policy gap. -/</span>
+<span id="L330">330 theorem clippedPolicyGapRemaining_le_of_pos</span>
+<span id="L331">331     {mdp : MDP State Action} (previousQ : QTable mdp)</span>
+<span id="L332">332     (summary : TransitionCountSummary mdp) (defaultState : State)</span>
+<span id="L333">333     (bonusScale modelError : Real) (remaining : Nat)</span>
+<span id="L334">334     (hremaining : remaining + 1 &lt;= mdp.horizon) (state : State)</span>
+<span id="L335">335     (hpos : 0 &lt; summary.aggregateVisitCount state</span>
+<span id="L336">336       (clippedPolicyTable mdp previousQ summary defaultState bonusScale</span>
+<span id="L337">337         (mdp.decisionStageRemaining remaining hremaining) state))</span>
+<span id="L338">338     (hmodel :</span>
+<span id="L339">339       (∫ nextState,</span>
+<span id="L340">340           clippedValueRemaining previousQ summary defaultState bonusScale</span>
+<span id="L341">341               remaining (by omega) nextState</span>
+<span id="L342">342         ∂summary.aggregateEmpiricalTransitionKernel defaultState</span>
+<span id="L343">343           (state,</span>
+<span id="L344">344             clippedPolicyTable mdp previousQ summary defaultState bonusScale</span>
+<span id="L345">345               (mdp.decisionStageRemaining remaining hremaining) state)) -</span>
+<span id="L346">346         mdp.transitionValue</span>
+<span id="L347">347           (clippedValueRemaining previousQ summary defaultState bonusScale</span>
+<span id="L348">348             remaining (by omega)) state</span>
+<span id="L349">349           (clippedPolicyTable mdp previousQ summary defaultState bonusScale</span>
+<span id="L350">350             (mdp.decisionStageRemaining remaining hremaining) state) &lt;=</span>
+<span id="L351">351         modelError) :</span>
+<span id="L352">352     clippedPolicyGapRemaining previousQ summary defaultState bonusScale</span>
+<span id="L353">353         (remaining + 1) hremaining state &lt;=</span>
+<span id="L354">354       mdp.transitionValue</span>
+<span id="L355">355           (clippedPolicyGapRemaining previousQ summary defaultState bonusScale</span>
+<span id="L356">356             remaining (by omega))</span>
+<span id="L357">357           state</span>
+<span id="L358">358           (clippedPolicyTable mdp previousQ summary defaultState bonusScale</span>
+<span id="L359">359             (mdp.decisionStageRemaining remaining hremaining) state) +</span>
+<span id="L360">360         modelError + bonusScale /</span>
+<span id="L361">361           Real.sqrt (summary.aggregateVisitCount state</span>
+<span id="L362">362             (clippedPolicyTable mdp previousQ summary defaultState bonusScale</span>
+<span id="L363">363               (mdp.decisionStageRemaining remaining hremaining) state)) := by</span>
+<span id="L364">364   simpa only [clippedPolicyGapRemaining] using</span>
+<span id="L365">365     clippedValueRemaining_sub_policyValueRemaining_le_of_pos previousQ summary</span>
+<span id="L366">366       defaultState bonusScale modelError remaining hremaining state hpos hmodel</span>
+<span id="L367">367 </span>
+<span id="L368">368 namespace AdaptiveEpisodeBatchSource</span>
+<span id="L369">369 </span>
+<span id="L370">370 /-- On the same generated transition event, the model error of the selected</span>
+<span id="L371">371 clipped continuation is self-bounded by the true propagated policy-value gap.</span>
+<span id="L372">372 The other two terms are the sharp optimal-tail coordinate and the harmonic</span>
+<span id="L373">373 Bernstein correction. -/</span>
+<span id="L374">374 theorem selectedUpperTransitionModelError_le</span>
+<span id="L375">375     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L376">376     [IsProbabilityMeasure initialState]</span>
+<span id="L377">377     (source : AdaptiveEpisodeBatchSource mdp initialState 1)</span>
+<span id="L378">378     {episodes : Nat} {logBudget : Real}</span>
+<span id="L379">379     {trajectory : EpisodeBatchTrajectory mdp 1}</span>
+<span id="L380">380     (htrajectory : trajectory ∉</span>
+<span id="L381">381       simultaneousTransitionFailureEvent source episodes logBudget)</span>
+<span id="L382">382     (defaultState : State) (round : Fin episodes)</span>
+<span id="L383">383     (previousQ : QTable mdp) (remaining : Nat)</span>
+<span id="L384">384     (hremaining : remaining + 1 &lt;= mdp.horizon) (state : State)</span>
+<span id="L385">385     (count : Fin (episodes * mdp.horizon))</span>
+<span id="L386">386     (hactual : adaptiveCumulativeAggregateVisitCountAt trajectory round state</span>
+<span id="L387">387         (clippedPolicyTable mdp previousQ</span>
+<span id="L388">388           (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1</span>
+<span id="L389">389           defaultState (scale (State := State) (Action := Action)</span>
+<span id="L390">390             mdp episodes delta)</span>
+<span id="L391">391           (mdp.decisionStageRemaining remaining hremaining) state) = count + 1)</span>
+<span id="L392">392     (hdominates : QDominatesOptimal mdp</span>
+<span id="L393">393       (clippedQTable mdp previousQ</span>
+<span id="L394">394         (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1</span>
+<span id="L395">395         defaultState (scale (State := State) (Action := Action)</span>
+<span id="L396">396           mdp episodes delta)))</span>
+<span id="L397">397     (hhorizon : 0 &lt; mdp.horizon)</span>
+<span id="L398">398     (hrewardNonneg : forall state action, 0 &lt;= mdp.reward state action)</span>
+<span id="L399">399     (hlog : 0 &lt;= logBudget) :</span>
+<span id="L400">400     (∫ nextState,</span>
+<span id="L401">401         clippedValueRemaining previousQ</span>
+<span id="L402">402             (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1</span>
+<span id="L403">403             defaultState (scale (State := State) (Action := Action)</span>
+<span id="L404">404               mdp episodes delta)</span>
+<span id="L405">405             remaining (by omega) nextState</span>
+<span id="L406">406       ∂TransitionCountSummary.aggregateEmpiricalTransitionKernel</span>
+<span id="L407">407         (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1</span>
+<span id="L408">408         defaultState</span>
+<span id="L409">409         (state,</span>
+<span id="L410">410           clippedPolicyTable mdp previousQ</span>
+<span id="L411">411             (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1</span>
+<span id="L412">412             defaultState (scale (State := State) (Action := Action)</span>
+<span id="L413">413               mdp episodes delta)</span>
+<span id="L414">414             (mdp.decisionStageRemaining remaining hremaining) state)) -</span>
+<span id="L415">415       mdp.transitionValue</span>
+<span id="L416">416         (clippedValueRemaining previousQ</span>
+<span id="L417">417           (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1</span>
+<span id="L418">418           defaultState (scale (State := State) (Action := Action)</span>
+<span id="L419">419             mdp episodes delta)</span>
+<span id="L420">420           remaining (by omega)) state</span>
+<span id="L421">421         (clippedPolicyTable mdp previousQ</span>
+<span id="L422">422           (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1</span>
+<span id="L423">423           defaultState (scale (State := State) (Action := Action)</span>
+<span id="L424">424             mdp episodes delta)</span>
+<span id="L425">425           (mdp.decisionStageRemaining remaining hremaining) state) &lt;=</span>
+<span id="L426">426       mdp.transitionValue</span>
+<span id="L427">427           (fun nextState =&gt;</span>
+<span id="L428">428             clippedValueRemaining previousQ</span>
+<span id="L429">429                 (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1</span>
+<span id="L430">430                 defaultState (scale (State := State) (Action := Action)</span>
+<span id="L431">431                   mdp episodes delta)</span>
+<span id="L432">432                 remaining (by omega) nextState -</span>
+<span id="L433">433               ((clippedPolicyTable mdp previousQ</span>
+<span id="L434">434                 (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1</span>
+<span id="L435">435                 defaultState (scale (State := State) (Action := Action)</span>
+<span id="L436">436                   mdp episodes delta)).toMarkovPolicy.valueRemaining</span>
+<span id="L437">437                     remaining (by omega) nextState))</span>
+<span id="L438">438           state</span>
+<span id="L439">439           (clippedPolicyTable mdp previousQ</span>
+<span id="L440">440             (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1</span>
+<span id="L441">441             defaultState (scale (State := State) (Action := Action)</span>
+<span id="L442">442               mdp episodes delta)</span>
+<span id="L443">443             (mdp.decisionStageRemaining remaining hremaining) state) /</span>
+<span id="L444">444         (32 * mdp.horizon) +</span>
+<span id="L445">445       2 * mdp.horizon * logBudget / Real.sqrt (count + 1 : Nat) +</span>
+<span id="L446">446       66 * Fintype.card State * (mdp.horizon : Real) ^ 2 * logBudget /</span>
+<span id="L447">447         (count + 1 : Nat) := by</span>
+<span id="L448">448   let summary := (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1</span>
+<span id="L449">449   let bonusScale := scale (State := State) (Action := Action) mdp episodes delta</span>
+<span id="L450">450   let stage := mdp.decisionStageRemaining remaining hremaining</span>
+<span id="L451">451   let table := clippedPolicyTable mdp previousQ summary defaultState bonusScale</span>
+<span id="L452">452   let selected := table stage state</span>
+<span id="L453">453   let upperTail := clippedValueRemaining previousQ summary defaultState bonusScale</span>
+<span id="L454">454     remaining (by omega)</span>
+<span id="L455">455   let policy := table.toMarkovPolicy</span>
+<span id="L456">456   let policyTail := policy.valueRemaining remaining (by omega)</span>
+<span id="L457">457   let optimalTail := mdp.optimalValueAt (stage + 1)</span>
+<span id="L458">458     (Nat.succ_le_of_lt stage.isLt)</span>
+<span id="L459">459   let optimalGap : State -&gt; Real := fun nextState =&gt;</span>
+<span id="L460">460     upperTail nextState - optimalTail nextState</span>
+<span id="L461">461   let policyGap : State -&gt; Real := fun nextState =&gt;</span>
+<span id="L462">462     upperTail nextState - policyTail nextState</span>
+<span id="L463">463   let empirical := summary.aggregateEmpiricalTransitionKernel defaultState</span>
+<span id="L464">464       (state, selected)</span>
+<span id="L465">465   letI : IsProbabilityMeasure empirical := by</span>
+<span id="L466">466     dsimp [empirical]</span>
+<span id="L467">467     exact (summary.aggregateEmpiricalTransitionKernel_isMarkov defaultState)</span>
+<span id="L468">468       |&gt;.isProbabilityMeasure (state, selected)</span>
+<span id="L469">469   have hstageTail : (stage : Nat) + 1 = mdp.horizon - remaining :=</span>
+<span id="L470">470     decisionStageRemaining_succ_eq mdp remaining hremaining</span>
+<span id="L471">471   have hoptimalLe (nextState : State) :</span>
+<span id="L472">472       optimalTail nextState &lt;= upperTail nextState := by</span>
+<span id="L473">473     have hbase := optimalValueAt_le_clippedValueRemaining previousQ summary</span>
+<span id="L474">474       defaultState bonusScale hdominates remaining (by omega) nextState</span>
+<span id="L475">475     have heq := mdp.optimalValueAt_eq_of_eq</span>
+<span id="L476">476       (Nat.succ_le_of_lt stage.isLt) (Nat.sub_le _ _) hstageTail</span>
+<span id="L477">477     simpa [optimalTail, upperTail] using</span>
+<span id="L478">478       (show optimalTail nextState =</span>
+<span id="L479">479           mdp.optimalValueAt (mdp.horizon - remaining) (Nat.sub_le _ _)</span>
+<span id="L480">480             nextState from congrFun heq nextState).le.trans hbase</span>
+<span id="L481">481   have hupperLe (nextState : State) :</span>
+<span id="L482">482       upperTail nextState &lt;= (mdp.horizon : Real) :=</span>
+<span id="L483">483     clippedValueRemaining_le_horizon previousQ summary defaultState bonusScale</span>
+<span id="L484">484       remaining (by omega) nextState</span>
+<span id="L485">485   have hoptimalNonneg (nextState : State) : 0 &lt;= optimalTail nextState :=</span>
+<span id="L486">486     mdp.optimalValueAt_nonneg_of_reward_nonneg hrewardNonneg _ _ nextState</span>
+<span id="L487">487   have hgap : forall nextState,</span>
+<span id="L488">488       optimalGap nextState ∈ Set.Icc (0 : Real) mdp.horizon := by</span>
+<span id="L489">489     intro nextState</span>
+<span id="L490">490     constructor</span>
+<span id="L491">491     · exact sub_nonneg.mpr (hoptimalLe nextState)</span>
+<span id="L492">492     · dsimp [optimalGap]</span>
+<span id="L493">493       linarith [hupperLe nextState, hoptimalNonneg nextState]</span>
+<span id="L494">494   have hpolicyLe (nextState : State) : policyTail nextState &lt;= optimalTail nextState := by</span>
+<span id="L495">495     have hp := policy.valueAt_le_optimalValueAt (mdp.horizon - remaining)</span>
+<span id="L496">496       (Nat.sub_le _ _) nextState</span>
+<span id="L497">497     unfold MarkovPolicy.valueAt at hp</span>
+<span id="L498">498     have hinverse : mdp.horizon - (mdp.horizon - remaining) = remaining := by</span>
+<span id="L499">499       omega</span>
+<span id="L500">500     have hpEq := policy.valueRemaining_eq_of_eq</span>
+<span id="L501">501       (Nat.sub_le _ _) (Nat.le_of_succ_le hremaining) hinverse</span>
+<span id="L502">502     have hoEq := mdp.optimalValueAt_eq_of_eq (Nat.sub_le _ _)</span>
+<span id="L503">503       (Nat.succ_le_of_lt stage.isLt) hstageTail.symm</span>
+<span id="L504">504     rw [congrFun hpEq nextState] at hp</span>
+<span id="L505">505     exact hp.trans_eq (congrFun hoEq nextState)</span>
+<span id="L506">506   have hpropagate :</span>
+<span id="L507">507       mdp.transitionValue optimalGap state selected &lt;=</span>
+<span id="L508">508         mdp.transitionValue policyGap state selected := by</span>
+<span id="L509">509     apply mdp.transitionValue_mono</span>
+<span id="L510">510     intro nextState</span>
+<span id="L511">511     dsimp [optimalGap, policyGap]</span>
+<span id="L512">512     linarith [hpolicyLe nextState]</span>
+<span id="L513">513   let optimalIndex : OptimalTailIndex mdp episodes :=</span>
+<span id="L514">514     { round := round, stage := stage, state := state, action := selected,</span>
+<span id="L515">515       count := count }</span>
+<span id="L516">516   have hoptAbs := abs_empiricalTransition_optimalValue_sub_lt source</span>
+<span id="L517">517     htrajectory defaultState optimalIndex hactual</span>
+<span id="L518">518   let coordinateBound :=</span>
+<span id="L519">519       mdp.transitionValue optimalGap state selected / (32 * mdp.horizon) +</span>
+<span id="L520">520         66 * Fintype.card State * (mdp.horizon : Real) ^ 2 * logBudget /</span>
+<span id="L521">521           (count + 1 : Nat)</span>
+<span id="L522">522   have hgapAbs :=</span>
+<span id="L523">523     abs_empiricalTransition_integral_sub_le_transitionValue_div_thirtyTwo_add</span>
+<span id="L524">524       source htrajectory defaultState round state selected count hactual optimalGap hgap</span>
+<span id="L525">525         hhorizon hlog</span>
+<span id="L526">526   have hsplit :</span>
+<span id="L527">527       (∫ nextState, upperTail nextState ∂empirical) -</span>
+<span id="L528">528           mdp.transitionValue upperTail state selected =</span>
+<span id="L529">529         ((∫ nextState, optimalTail nextState ∂empirical) -</span>
+<span id="L530">530             mdp.transitionValue optimalTail state selected) +</span>
+<span id="L531">531           ((∫ nextState, optimalGap nextState ∂empirical) -</span>
+<span id="L532">532             mdp.transitionValue optimalGap state selected) := by</span>
+<span id="L533">533     have hpoint : upperTail = fun nextState =&gt;</span>
+<span id="L534">534         optimalTail nextState + optimalGap nextState := by</span>
+<span id="L535">535       funext nextState</span>
+<span id="L536">536       simp [optimalGap]</span>
+<span id="L537">537     rw [hpoint]</span>
+<span id="L538">538     unfold MDP.transitionValue</span>
+<span id="L539">539     rw [integral_add, integral_add]</span>
+<span id="L540">540     · ring</span>
+<span id="L541">541     all_goals exact integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L542">542   have hmodel :</span>
+<span id="L543">543       (∫ nextState, upperTail nextState ∂empirical) -</span>
+<span id="L544">544           mdp.transitionValue upperTail state selected &lt;=</span>
+<span id="L545">545         2 * mdp.horizon * logBudget / Real.sqrt (count + 1 : Nat) +</span>
+<span id="L546">546           coordinateBound := by</span>
+<span id="L547">547     rw [hsplit]</span>
+<span id="L548">548     have hopen :</span>
+<span id="L549">549         (∫ nextState, optimalTail nextState ∂empirical) -</span>
+<span id="L550">550             mdp.transitionValue optimalTail state selected &lt;=</span>
+<span id="L551">551           2 * mdp.horizon * logBudget / Real.sqrt (count + 1 : Nat) :=</span>
+<span id="L552">552       le_trans (le_abs_self _) (le_of_lt (by</span>
+<span id="L553">553         simpa [optimalIndex, optimalTail, empirical, summary, selected, table,</span>
+<span id="L554">554           stage] using hoptAbs))</span>
+<span id="L555">555     have hgapUpper := (le_abs_self _).trans hgapAbs</span>
+<span id="L556">556     dsimp [coordinateBound]</span>
+<span id="L557">557     linarith</span>
+<span id="L558">558   change _ &lt;= _</span>
+<span id="L559">559   change (∫ nextState, upperTail nextState ∂empirical) -</span>
+<span id="L560">560       mdp.transitionValue upperTail state selected &lt;= _</span>
+<span id="L561">561   have hhorizonReal : 0 &lt; (mdp.horizon : Real) := by exact_mod_cast hhorizon</span>
+<span id="L562">562   have hscaled :</span>
+<span id="L563">563       mdp.transitionValue optimalGap state selected / (32 * mdp.horizon) &lt;=</span>
+<span id="L564">564         mdp.transitionValue policyGap state selected / (32 * mdp.horizon) :=</span>
+<span id="L565">565     (div_le_div_iff_of_pos_right</span>
+<span id="L566">566       (mul_pos (by norm_num) hhorizonReal)).2 hpropagate</span>
+<span id="L567">567   have hresult :</span>
+<span id="L568">568       (∫ nextState, upperTail nextState ∂empirical) -</span>
+<span id="L569">569           mdp.transitionValue upperTail state selected &lt;=</span>
+<span id="L570">570         mdp.transitionValue policyGap state selected / (32 * mdp.horizon) +</span>
+<span id="L571">571           2 * mdp.horizon * logBudget / Real.sqrt (count + 1 : Nat) +</span>
+<span id="L572">572           66 * Fintype.card State * (mdp.horizon : Real) ^ 2 * logBudget /</span>
+<span id="L573">573             (count + 1 : Nat) := by</span>
+<span id="L574">574     calc</span>
+<span id="L575">575       _ &lt;= 2 * mdp.horizon * logBudget / Real.sqrt (count + 1 : Nat) +</span>
+<span id="L576">576           coordinateBound := hmodel</span>
+<span id="L577">577       _ &lt;= mdp.transitionValue policyGap state selected / (32 * mdp.horizon) +</span>
+<span id="L578">578           2 * mdp.horizon * logBudget / Real.sqrt (count + 1 : Nat) +</span>
+<span id="L579">579           66 * Fintype.card State * (mdp.horizon : Real) ^ 2 * logBudget /</span>
+<span id="L580">580             (count + 1 : Nat) := by</span>
+<span id="L581">581         dsimp [coordinateBound]</span>
+<span id="L582">582         linarith</span>
+<span id="L583">583   simpa [policyGap, upperTail, policyTail, policy, selected, table, stage,</span>
+<span id="L584">584     bonusScale, summary, empirical] using hresult</span>
+<span id="L585">585 </span>
+<span id="L586">586 /-- Complete local UCBVI-CH recursion at an actual positive generated count.</span>
+<span id="L587">587 The `7HL` planner bonus and the `2HL` sharp transition-value deviation combine</span>
+<span id="L588">588 to `9HL`; the remaining coordinate term is self-bounded by the propagated</span>
+<span id="L589">589 same-policy gap plus the explicit harmonic correction. -/</span>
+<span id="L590">590 theorem selectedPolicyGap_le_of_actual_count</span>
+<span id="L591">591     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L592">592     [IsProbabilityMeasure initialState]</span>
+<span id="L593">593     (source : AdaptiveEpisodeBatchSource mdp initialState 1)</span>
+<span id="L594">594     {episodes : Nat} {delta : Real}</span>
+<span id="L595">595     {trajectory : EpisodeBatchTrajectory mdp 1}</span>
+<span id="L596">596     (htrajectory : trajectory ∉</span>
+<span id="L597">597       simultaneousTransitionFailureEvent source episodes</span>
+<span id="L598">598         (logFactor (State := State) (Action := Action) mdp episodes delta))</span>
+<span id="L599">599     (defaultState : State) (round : Fin episodes)</span>
+<span id="L600">600     (previousQ : QTable mdp) (remaining : Nat)</span>
+<span id="L601">601     (hremaining : remaining + 1 &lt;= mdp.horizon) (state : State)</span>
+<span id="L602">602     (count : Fin (episodes * mdp.horizon))</span>
+<span id="L603">603     (hactual : adaptiveCumulativeAggregateVisitCountAt trajectory round state</span>
+<span id="L604">604         (clippedPolicyTable mdp previousQ</span>
+<span id="L605">605           (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1</span>
+<span id="L606">606           defaultState (scale (State := State) (Action := Action)</span>
+<span id="L607">607             mdp episodes delta)</span>
+<span id="L608">608           (mdp.decisionStageRemaining remaining hremaining) state) = count + 1)</span>
+<span id="L609">609     (hdominates : QDominatesOptimal mdp</span>
+<span id="L610">610       (clippedQTable mdp previousQ</span>
+<span id="L611">611         (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1</span>
+<span id="L612">612         defaultState (scale (State := State) (Action := Action)</span>
+<span id="L613">613           mdp episodes delta)))</span>
+<span id="L614">614     (hhorizon : 0 &lt; mdp.horizon)</span>
+<span id="L615">615     (hrewardNonneg : forall state action, 0 &lt;= mdp.reward state action) :</span>
+<span id="L616">616     clippedPolicyGapRemaining previousQ</span>
+<span id="L617">617         (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1</span>
+<span id="L618">618         defaultState (scale (State := State) (Action := Action)</span>
+<span id="L619">619           mdp episodes delta)</span>
+<span id="L620">620         (remaining + 1) hremaining state &lt;=</span>
+<span id="L621">621       mdp.transitionValue</span>
+<span id="L622">622           (clippedPolicyGapRemaining previousQ</span>
+<span id="L623">623             (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1</span>
+<span id="L624">624             defaultState (scale (State := State) (Action := Action)</span>
+<span id="L625">625               mdp episodes delta)</span>
+<span id="L626">626             remaining (by omega))</span>
+<span id="L627">627           state</span>
+<span id="L628">628           (clippedPolicyTable mdp previousQ</span>
+<span id="L629">629             (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1</span>
+<span id="L630">630             defaultState (scale (State := State) (Action := Action)</span>
+<span id="L631">631               mdp episodes delta)</span>
+<span id="L632">632             (mdp.decisionStageRemaining remaining hremaining) state) +</span>
+<span id="L633">633         mdp.transitionValue</span>
+<span id="L634">634           (clippedPolicyGapRemaining previousQ</span>
+<span id="L635">635             (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1</span>
+<span id="L636">636             defaultState (scale (State := State) (Action := Action)</span>
+<span id="L637">637               mdp episodes delta)</span>
+<span id="L638">638             remaining (by omega))</span>
+<span id="L639">639           state</span>
+<span id="L640">640           (clippedPolicyTable mdp previousQ</span>
+<span id="L641">641             (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1</span>
+<span id="L642">642             defaultState (scale (State := State) (Action := Action)</span>
+<span id="L643">643               mdp episodes delta)</span>
+<span id="L644">644             (mdp.decisionStageRemaining remaining hremaining) state) /</span>
+<span id="L645">645             (32 * mdp.horizon) +</span>
+<span id="L646">646         9 * mdp.horizon *</span>
+<span id="L647">647             logFactor (State := State) (Action := Action) mdp episodes delta /</span>
+<span id="L648">648           Real.sqrt (count + 1 : Nat) +</span>
+<span id="L649">649         66 * Fintype.card State * (mdp.horizon : Real) ^ 2 *</span>
+<span id="L650">650             logFactor (State := State) (Action := Action) mdp episodes delta /</span>
+<span id="L651">651           (count + 1 : Nat) := by</span>
+<span id="L652">652   let summary := (adaptiveCumulativeEmpiricalModelStateAt trajectory round).1</span>
+<span id="L653">653   let bonusScale := scale (State := State) (Action := Action) mdp episodes delta</span>
+<span id="L654">654   let stage := mdp.decisionStageRemaining remaining hremaining</span>
+<span id="L655">655   let selected := clippedPolicyTable mdp previousQ summary defaultState</span>
+<span id="L656">656     bonusScale stage state</span>
+<span id="L657">657   let gap := clippedPolicyGapRemaining previousQ summary defaultState bonusScale</span>
+<span id="L658">658     remaining (by omega)</span>
+<span id="L659">659   have hcountEq : summary.aggregateVisitCount state selected = (count : Nat) + 1 := by</span>
+<span id="L660">660     simpa [summary, selected, stage, bonusScale] using hactual</span>
+<span id="L661">661   have hcountPos : 0 &lt; summary.aggregateVisitCount state selected := by</span>
+<span id="L662">662     rw [hcountEq]</span>
+<span id="L663">663     omega</span>
+<span id="L664">664   have hmodel := selectedUpperTransitionModelError_le source htrajectory</span>
+<span id="L665">665     defaultState round previousQ remaining hremaining state count hactual</span>
+<span id="L666">666     hdominates hhorizon hrewardNonneg</span>
+<span id="L667">667       (logFactor_nonneg mdp episodes delta)</span>
+<span id="L668">668   have hlocal := clippedPolicyGapRemaining_le_of_pos previousQ summary</span>
+<span id="L669">669     defaultState bonusScale</span>
+<span id="L670">670     (mdp.transitionValue gap state selected / (32 * mdp.horizon) +</span>
+<span id="L671">671       2 * mdp.horizon *</span>
+<span id="L672">672           logFactor (State := State) (Action := Action) mdp episodes delta /</span>
+<span id="L673">673         Real.sqrt (count + 1 : Nat) +</span>
+<span id="L674">674       66 * Fintype.card State * (mdp.horizon : Real) ^ 2 *</span>
+<span id="L675">675           logFactor (State := State) (Action := Action) mdp episodes delta /</span>
+<span id="L676">676         (count + 1 : Nat))</span>
+<span id="L677">677     remaining hremaining state hcountPos (by</span>
+<span id="L678">678       simpa [gap, selected, stage, bonusScale, summary] using hmodel)</span>
+<span id="L679">679   rw [hcountEq] at hlocal</span>
+<span id="L680">680   have hlocal&#x27; :</span>
+<span id="L681">681       clippedPolicyGapRemaining previousQ summary defaultState bonusScale</span>
+<span id="L682">682           (remaining + 1) hremaining state &lt;=</span>
+<span id="L683">683         mdp.transitionValue gap state selected +</span>
+<span id="L684">684           mdp.transitionValue gap state selected / (32 * mdp.horizon) +</span>
+<span id="L685">685           2 * mdp.horizon *</span>
+<span id="L686">686               logFactor (State := State) (Action := Action) mdp episodes delta /</span>
+<span id="L687">687             Real.sqrt (count + 1 : Nat) +</span>
+<span id="L688">688           66 * Fintype.card State * (mdp.horizon : Real) ^ 2 *</span>
+<span id="L689">689               logFactor (State := State) (Action := Action) mdp episodes delta /</span>
+<span id="L690">690             (count + 1 : Nat) +</span>
+<span id="L691">691           7 * mdp.horizon *</span>
+<span id="L692">692               logFactor (State := State) (Action := Action) mdp episodes delta /</span>
+<span id="L693">693             Real.sqrt (count + 1 : Nat) := by</span>
+<span id="L694">694     simpa [gap, selected, stage, bonusScale, summary, scale, add_assoc] using hlocal</span>
+<span id="L695">695   have hcombined :</span>
+<span id="L696">696       clippedPolicyGapRemaining previousQ summary defaultState bonusScale</span>
+<span id="L697">697           (remaining + 1) hremaining state &lt;=</span>
+<span id="L698">698         mdp.transitionValue gap state selected +</span>
+<span id="L699">699           mdp.transitionValue gap state selected / (32 * mdp.horizon) +</span>
+<span id="L700">700           9 * mdp.horizon *</span>
+<span id="L701">701               logFactor (State := State) (Action := Action) mdp episodes delta /</span>
+<span id="L702">702             Real.sqrt (count + 1 : Nat) +</span>
+<span id="L703">703           66 * Fintype.card State * (mdp.horizon : Real) ^ 2 *</span>
+<span id="L704">704               logFactor (State := State) (Action := Action) mdp episodes delta /</span>
+<span id="L705">705             (count + 1 : Nat) := by</span>
+<span id="L706">706     calc</span>
+<span id="L707">707       _ &lt;= mdp.transitionValue gap state selected +</span>
+<span id="L708">708             mdp.transitionValue gap state selected / (32 * mdp.horizon) +</span>
+<span id="L709">709             2 * mdp.horizon *</span>
+<span id="L710">710                 logFactor (State := State) (Action := Action) mdp episodes delta /</span>
+<span id="L711">711               Real.sqrt (count + 1 : Nat) +</span>
+<span id="L712">712             66 * Fintype.card State * (mdp.horizon : Real) ^ 2 *</span>
+<span id="L713">713                 logFactor (State := State) (Action := Action) mdp episodes delta /</span>
+<span id="L714">714               (count + 1 : Nat) +</span>
+<span id="L715">715             7 * mdp.horizon *</span>
+<span id="L716">716                 logFactor (State := State) (Action := Action) mdp episodes delta /</span>
+<span id="L717">717               Real.sqrt (count + 1 : Nat) := hlocal&#x27;</span>
+<span id="L718">718       _ = _ := by ring</span>
+<span id="L719">719   simpa [gap, selected, stage, bonusScale, summary] using hcombined</span>
+<span id="L720">720 </span>
+<span id="L721">721 end AdaptiveEpisodeBatchSource</span>
+<span id="L722">722 </span>
+<span id="L723">723 end AdaptiveCumulativeHoeffdingUCBVI</span>
+<span id="L724">724 </span>
+<span id="L725">725 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

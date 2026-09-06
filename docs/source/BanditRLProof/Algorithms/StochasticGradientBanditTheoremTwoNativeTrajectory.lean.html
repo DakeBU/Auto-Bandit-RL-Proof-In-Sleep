@@ -1,0 +1,1762 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Algorithms.StochasticGradientBanditTheoremTwoLatentReward</span>
+<span id="L2">2 import BanditRLProof.Algorithms.ThompsonRecursiveSampler</span>
+<span id="L3">3 import BanditRLProof.Algorithms.ThompsonReferencePolicy</span>
+<span id="L4">4 import BanditRLProof.KernelIndependentExtension</span>
+<span id="L5">5 import BanditRLProof.KernelTrajectoryPrefix</span>
+<span id="L6">6 </span>
+<span id="L7">7 /-!</span>
+<span id="L8">8 # Two-arm SGB Theorem 2: deferred-decisions trajectory prefix</span>
+<span id="L9">9 </span>
+<span id="L10">10 The latent arm-stream coupling samples every reward coordinate before the</span>
+<span id="L11">11 algorithm runs.  The native fixed-IID process samples only the reward selected</span>
+<span id="L12">12 at each round.  Connecting those constructions requires a deferred-decisions</span>
+<span id="L13">13 argument, not merely equality of one-coordinate marginals.</span>
+<span id="L14">14 </span>
+<span id="L15">15 This module proves the first process-level half of that adapter.  A visible</span>
+<span id="L16">16 trajectory prefix through `n` depends only on latent reward coordinates with</span>
+<span id="L17">17 pull index at most `n`.  It packages that dependence as a Markov prefix kernel</span>
+<span id="L18">18 and gives the exact finite stream-box/visible-prefix mixture law.  It also</span>
+<span id="L19">19 separates the compiled next-action factorization and pathwise selected-coordinate</span>
+<span id="L20">20 readout.  A count-capped restricted-measure induction proves the exact</span>
+<span id="L21">21 branch-locality contract and its unconditional branchwise product law.  A</span>
+<span id="L22">22 countable branch partition now aggregates those laws into the exact one-step</span>
+<span id="L23">23 selected-reward joint and conditional laws, both on the coupling and on its</span>
+<span id="L24">24 visible-trajectory marginal.  Native-prefix identification, selected-IID laws,</span>
+<span id="L25">25 future/no-return control, and trajectory uniqueness remain downstream.</span>
+<span id="L26">26 Consequently, no full native trajectory-law equality, stopped-reward IID</span>
+<span id="L27">27 statement, or Theorem-2 terminal is claimed here.</span>
+<span id="L28">28 -/</span>
+<span id="L29">29 </span>
+<span id="L30">30 namespace BanditRLProof</span>
+<span id="L31">31 </span>
+<span id="L32">32 open MeasureTheory ProbabilityTheory</span>
+<span id="L33">33 open scoped ProbabilityTheory</span>
+<span id="L34">34 noncomputable section</span>
+<span id="L35">35 universe u</span>
+<span id="L36">36 </span>
+<span id="L37">37 namespace UCB</span>
+<span id="L38">38 </span>
+<span id="L39">39 /-- Restricting the latent arm stream through time `n` gives the exact finite</span>
+<span id="L40">40 product of the per-round arm-vector laws. -/</span>
+<span id="L41">41 theorem armStreamMeasure_map_frestrictLe_eq_pi</span>
+<span id="L42">42     {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) :</span>
+<span id="L43">43     Measure.map (Preorder.frestrictLe n) (armStreamMeasure nu) =</span>
+<span id="L44">44       Measure.pi (fun _ : Finset.Iic n =&gt;</span>
+<span id="L45">45         Measure.infinitePi fun arm : Fin K =&gt; nu arm) := by</span>
+<span id="L46">46   simpa only [armStreamMeasure, Preorder.frestrictLe] using</span>
+<span id="L47">47     (Measure.infinitePi_map_restrict</span>
+<span id="L48">48       (μ := fun _ : Nat =&gt; Measure.infinitePi fun arm : Fin K =&gt; nu arm)</span>
+<span id="L49">49       (I := Finset.Iic n))</span>
+<span id="L50">50 </span>
+<span id="L51">51 /-- Extend a finite arm-stream box by zero rows after its endpoint. -/</span>
+<span id="L52">52 def extendArmStreamFinitePrefix {K : Nat} (n : Nat)</span>
+<span id="L53">53     (streamBox : (i : Finset.Iic n) -&gt; Fin K -&gt; Real) : ArmRewardStream K :=</span>
+<span id="L54">54   fun t =&gt; if h : t &lt;= n then</span>
+<span id="L55">55     streamBox ⟨t, Finset.mem_Iic.mpr h⟩ else fun _arm =&gt; 0</span>
+<span id="L56">56 </span>
+<span id="L57">57 theorem measurable_extendArmStreamFinitePrefix</span>
+<span id="L58">58     {K : Nat} (n : Nat) :</span>
+<span id="L59">59     Measurable (extendArmStreamFinitePrefix (K := K) n) := by</span>
+<span id="L60">60   exact measurable_pi_lambda _ (fun t =&gt; by</span>
+<span id="L61">61     by_cases ht : t &lt;= n</span>
+<span id="L62">62     · simpa [extendArmStreamFinitePrefix, ht] using</span>
+<span id="L63">63         (measurable_pi_apply</span>
+<span id="L64">64           (⟨t, Finset.mem_Iic.mpr ht⟩ : Finset.Iic n))</span>
+<span id="L65">65     · simp [extendArmStreamFinitePrefix, ht])</span>
+<span id="L66">66 </span>
+<span id="L67">67 @[simp]</span>
+<span id="L68">68 theorem extendArmStreamFinitePrefix_apply_of_le</span>
+<span id="L69">69     {K : Nat} (n t : Nat) (ht : t &lt;= n)</span>
+<span id="L70">70     (streamBox : (i : Finset.Iic n) -&gt; Fin K -&gt; Real) :</span>
+<span id="L71">71     extendArmStreamFinitePrefix n streamBox t =</span>
+<span id="L72">72       streamBox ⟨t, Finset.mem_Iic.mpr ht⟩ := by</span>
+<span id="L73">73   simp [extendArmStreamFinitePrefix, ht]</span>
+<span id="L74">74 </span>
+<span id="L75">75 /-- A finite kernel driven only by the complement of one arm-stream</span>
+<span id="L76">76 coordinate leaves that coordinate&#x27;s prescribed marginal independent of the</span>
+<span id="L77">77 kernel output.  The output kernel may be sub-Markov, as needed after branch</span>
+<span id="L78">78 restriction. -/</span>
+<span id="L79">79 theorem armStreamMeasure_map_output_coordinate_compProd_comap_without_eq_prod</span>
+<span id="L80">80     {K : Nat} {Output : Type*} [MeasurableSpace Output]</span>
+<span id="L81">81     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]</span>
+<span id="L82">82     (target : Nat × Fin K)</span>
+<span id="L83">83     (kernel : Kernel</span>
+<span id="L84">84       ({index : Nat × Fin K // index ≠ target} -&gt; Real) Output)</span>
+<span id="L85">85     [IsFiniteKernel kernel] :</span>
+<span id="L86">86     Measure.map</span>
+<span id="L87">87         (fun sample : ArmRewardStream K × Output =&gt;</span>
+<span id="L88">88           (sample.2, armStreamCoordinate target sample.1))</span>
+<span id="L89">89         (armStreamMeasure nu ⊗ₘ</span>
+<span id="L90">90           kernel.comap (armStreamWithoutCoordinate target)</span>
+<span id="L91">91             (measurable_armStreamWithoutCoordinate target)) =</span>
+<span id="L92">92       (Measure.map Prod.snd</span>
+<span id="L93">93           (armStreamMeasure nu ⊗ₘ</span>
+<span id="L94">94             kernel.comap (armStreamWithoutCoordinate target)</span>
+<span id="L95">95               (measurable_armStreamWithoutCoordinate target))).prod</span>
+<span id="L96">96         (nu target.2) := by</span>
+<span id="L97">97   have hfactor :=</span>
+<span id="L98">98     map_snd_x_compProd_comap_eq_prod_map_of_indepFun</span>
+<span id="L99">99       (armStreamMeasure nu)</span>
+<span id="L100">100       (armStreamCoordinate target) (measurable_armStreamCoordinate target)</span>
+<span id="L101">101       (armStreamWithoutCoordinate target)</span>
+<span id="L102">102         (measurable_armStreamWithoutCoordinate target)</span>
+<span id="L103">103       kernel (indepFun_armStreamMeasure_coordinate_without nu target)</span>
+<span id="L104">104   have hcoordinate :</span>
+<span id="L105">105       Measure.map (armStreamCoordinate target) (armStreamMeasure nu) =</span>
+<span id="L106">106         nu target.2 := by</span>
+<span id="L107">107     simpa [armStreamCoordinate] using</span>
+<span id="L108">108       armStreamMeasure_map_coord nu target.1 target.2</span>
+<span id="L109">109   rw [hcoordinate] at hfactor</span>
+<span id="L110">110   exact hfactor</span>
+<span id="L111">111 </span>
+<span id="L112">112 end UCB</span>
+<span id="L113">113 </span>
+<span id="L114">114 namespace Thompson</span>
+<span id="L115">115 </span>
+<span id="L116">116 /-- Fixed-stream finite-prefix/next-pair recursion for the latent arm-stream</span>
+<span id="L117">117 trajectory.  This is the trajectory-level recurrence used by the count-capped</span>
+<span id="L118">118 locality induction below. -/</span>
+<span id="L119">119 theorem latentArmStreamTrajectoryKernel_map_prefix_next_eq_compProd</span>
+<span id="L120">120     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L121">121     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L122">122     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L123">123     (stream : UCB.ArmRewardStream K) (n : Nat) :</span>
+<span id="L124">124     (latentArmStreamTrajectoryKernel algorithm env stream).map</span>
+<span id="L125">125         (fun trajectory =&gt;</span>
+<span id="L126">126           (Preorder.frestrictLe n trajectory, trajectory (n + 1))) =</span>
+<span id="L127">127       (latentArmStreamTrajectoryKernel algorithm env stream).map</span>
+<span id="L128">128           (Preorder.frestrictLe n) ⊗ₘ</span>
+<span id="L129">129         historyStepKernel algorithm</span>
+<span id="L130">130           ((latentArmStreamMeasurableHistoryEnvironment</span>
+<span id="L131">131             (Env := Env) (K := K)).at (env, stream)) n := by</span>
+<span id="L132">132   unfold latentArmStreamTrajectoryKernel</span>
+<span id="L133">133   rw [Kernel.comap_apply]</span>
+<span id="L134">134   exact</span>
+<span id="L135">135     canonicalMeasurableEnvironmentTrajectoryKernel_map_prefix_next_eq_compProd</span>
+<span id="L136">136       algorithm</span>
+<span id="L137">137       (latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K))</span>
+<span id="L138">138       (env, stream) n</span>
+<span id="L139">139 </span>
+<span id="L140">140 /-- If two latent reward streams agree away from one coordinate, then their</span>
+<span id="L141">141 feedback laws agree at every history/action pair whose next-unused coordinate</span>
+<span id="L142">142 is not the omitted one. -/</span>
+<span id="L143">143 theorem latentArmStreamFeedback_eq_of_withoutCoordinate_eq_of_selectedCoordinate_ne</span>
+<span id="L144">144     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L145">145     (env : Env) (target : Nat × Fin K)</span>
+<span id="L146">146     (stream₁ stream₂ : UCB.ArmRewardStream K) (n : Nat)</span>
+<span id="L147">147     (history : History.FinitePairHistory (Fin K) Real n) (arm : Fin K)</span>
+<span id="L148">148     (hwithout : UCB.armStreamWithoutCoordinate target stream₁ =</span>
+<span id="L149">149       UCB.armStreamWithoutCoordinate target stream₂)</span>
+<span id="L150">150     (hne : (ETC.realHistoryPullCount n history arm, arm) ≠ target) :</span>
+<span id="L151">151     ((latentArmStreamMeasurableHistoryEnvironment</span>
+<span id="L152">152         (Env := Env) (K := K)).at (env, stream₁)).feedback n (history, arm) =</span>
+<span id="L153">153       ((latentArmStreamMeasurableHistoryEnvironment</span>
+<span id="L154">154         (Env := Env) (K := K)).at (env, stream₂)).feedback n (history, arm) := by</span>
+<span id="L155">155   rw [latentArmStreamMeasurableHistoryEnvironment_at_feedback_apply,</span>
+<span id="L156">156     latentArmStreamMeasurableHistoryEnvironment_at_feedback_apply]</span>
+<span id="L157">157   have hcoordinate := congrFun hwithout</span>
+<span id="L158">158     (⟨(ETC.realHistoryPullCount n history arm, arm), hne⟩ :</span>
+<span id="L159">159       {index : Nat × Fin K // index ≠ target})</span>
+<span id="L160">160   have hreward :</span>
+<span id="L161">161       stream₁ (ETC.realHistoryPullCount n history arm) arm =</span>
+<span id="L162">162         stream₂ (ETC.realHistoryPullCount n history arm) arm := by</span>
+<span id="L163">163     simpa [UCB.armStreamWithoutCoordinate, UCB.armStreamCoordinate] using hcoordinate</span>
+<span id="L164">164   rw [hreward]</span>
+<span id="L165">165 </span>
+<span id="L166">166 /-- Before the target coordinate can be the next coordinate of its arm, the</span>
+<span id="L167">167 entire next-pair law agrees for streams with the same omitted-coordinate</span>
+<span id="L168">168 projection. -/</span>
+<span id="L169">169 theorem historyStepKernel_apply_eq_of_withoutCoordinate_eq_of_target_count_lt</span>
+<span id="L170">170     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L171">171     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L172">172     (target : Nat × Fin K) (stream₁ stream₂ : UCB.ArmRewardStream K)</span>
+<span id="L173">173     (n : Nat) (history : History.FinitePairHistory (Fin K) Real n)</span>
+<span id="L174">174     (hwithout : UCB.armStreamWithoutCoordinate target stream₁ =</span>
+<span id="L175">175       UCB.armStreamWithoutCoordinate target stream₂)</span>
+<span id="L176">176     (hcount : ETC.realHistoryPullCount n history target.2 &lt; target.1) :</span>
+<span id="L177">177     historyStepKernel algorithm</span>
+<span id="L178">178         ((latentArmStreamMeasurableHistoryEnvironment</span>
+<span id="L179">179           (Env := Env) (K := K)).at (env, stream₁)) n history =</span>
+<span id="L180">180       historyStepKernel algorithm</span>
+<span id="L181">181         ((latentArmStreamMeasurableHistoryEnvironment</span>
+<span id="L182">182           (Env := Env) (K := K)).at (env, stream₂)) n history := by</span>
+<span id="L183">183   unfold historyStepKernel</span>
+<span id="L184">184   rw [Kernel.compProd_apply_eq_compProd_sectR,</span>
+<span id="L185">185     Kernel.compProd_apply_eq_compProd_sectR]</span>
+<span id="L186">186   congr 1</span>
+<span id="L187">187   apply Kernel.ext</span>
+<span id="L188">188   intro arm</span>
+<span id="L189">189   rw [Kernel.sectR_apply, Kernel.sectR_apply]</span>
+<span id="L190">190   apply latentArmStreamFeedback_eq_of_withoutCoordinate_eq_of_selectedCoordinate_ne</span>
+<span id="L191">191     env target stream₁ stream₂ n history arm hwithout</span>
+<span id="L192">192   intro heq</span>
+<span id="L193">193   have hindex := congrArg Prod.fst heq</span>
+<span id="L194">194   have harm := congrArg Prod.snd heq</span>
+<span id="L195">195   simp only at hindex harm</span>
+<span id="L196">196   subst arm</span>
+<span id="L197">197   omega</span>
+<span id="L198">198 </span>
+<span id="L199">199 /-- Next pairs whose action avoids a designated arm. -/</span>
+<span id="L200">200 def latentArmStreamNextActionNeSet {K : Nat} (arm : Fin K) :</span>
+<span id="L201">201     Set (Fin K × Real) :=</span>
+<span id="L202">202   {candidate | candidate ≠ arm} ×ˢ Set.univ</span>
+<span id="L203">203 </span>
+<span id="L204">204 /-- Initial actions whose time-zero reward coordinate is not the omitted</span>
+<span id="L205">205 target. -/</span>
+<span id="L206">206 def latentArmStreamInitialSafeArmSet</span>
+<span id="L207">207     {K : Nat} (target : Nat × Fin K) : Set (Fin K) :=</span>
+<span id="L208">208   {arm | (0, arm) ≠ target}</span>
+<span id="L209">209 </span>
+<span id="L210">210 theorem measurableSet_latentArmStreamNextActionNeSet</span>
+<span id="L211">211     {K : Nat} (arm : Fin K) :</span>
+<span id="L212">212     MeasurableSet (latentArmStreamNextActionNeSet arm) := by</span>
+<span id="L213">213   exact (measurableSet_singleton arm).compl.prod MeasurableSet.univ</span>
+<span id="L214">214 </span>
+<span id="L215">215 /-- Even when the target pull index may already be next, the part of the</span>
+<span id="L216">216 next-pair law selecting another arm remains independent of the target</span>
+<span id="L217">217 coordinate. -/</span>
+<span id="L218">218 theorem historyStepKernel_apply_restrict_nextActionNe_eq_of_withoutCoordinate_eq</span>
+<span id="L219">219     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L220">220     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L221">221     (target : Nat × Fin K) (stream₁ stream₂ : UCB.ArmRewardStream K)</span>
+<span id="L222">222     (n : Nat) (history : History.FinitePairHistory (Fin K) Real n)</span>
+<span id="L223">223     (hwithout : UCB.armStreamWithoutCoordinate target stream₁ =</span>
+<span id="L224">224       UCB.armStreamWithoutCoordinate target stream₂) :</span>
+<span id="L225">225     (historyStepKernel algorithm</span>
+<span id="L226">226         ((latentArmStreamMeasurableHistoryEnvironment</span>
+<span id="L227">227           (Env := Env) (K := K)).at (env, stream₁)) n history).restrict</span>
+<span id="L228">228         (latentArmStreamNextActionNeSet target.2) =</span>
+<span id="L229">229       (historyStepKernel algorithm</span>
+<span id="L230">230         ((latentArmStreamMeasurableHistoryEnvironment</span>
+<span id="L231">231           (Env := Env) (K := K)).at (env, stream₂)) n history).restrict</span>
+<span id="L232">232         (latentArmStreamNextActionNeSet target.2) := by</span>
+<span id="L233">233   let actionNe : Set (Fin K) := {candidate | candidate ≠ target.2}</span>
+<span id="L234">234   have hactionNe : MeasurableSet actionNe :=</span>
+<span id="L235">235     (measurableSet_singleton target.2).compl</span>
+<span id="L236">236   unfold historyStepKernel</span>
+<span id="L237">237   rw [Kernel.compProd_apply_eq_compProd_sectR,</span>
+<span id="L238">238     Kernel.compProd_apply_eq_compProd_sectR]</span>
+<span id="L239">239   change</span>
+<span id="L240">240     ((algorithm.policy n history) ⊗ₘ</span>
+<span id="L241">241         Kernel.sectR</span>
+<span id="L242">242           (((latentArmStreamMeasurableHistoryEnvironment</span>
+<span id="L243">243             (Env := Env) (K := K)).at (env, stream₁)).feedback n) history).restrict</span>
+<span id="L244">244       (actionNe ×ˢ Set.univ) =</span>
+<span id="L245">245     ((algorithm.policy n history) ⊗ₘ</span>
+<span id="L246">246         Kernel.sectR</span>
+<span id="L247">247           (((latentArmStreamMeasurableHistoryEnvironment</span>
+<span id="L248">248             (Env := Env) (K := K)).at (env, stream₂)).feedback n) history).restrict</span>
+<span id="L249">249       (actionNe ×ˢ Set.univ)</span>
+<span id="L250">250   rw [Measure.compProd_restrict_prod _ _ hactionNe MeasurableSet.univ,</span>
+<span id="L251">251     Measure.compProd_restrict_prod _ _ hactionNe MeasurableSet.univ]</span>
+<span id="L252">252   apply Measure.compProd_congr</span>
+<span id="L253">253   filter_upwards [ae_restrict_mem hactionNe] with arm harm</span>
+<span id="L254">254   change arm ≠ target.2 at harm</span>
+<span id="L255">255   rw [Kernel.restrict_apply, Kernel.restrict_apply, Measure.restrict_univ,</span>
+<span id="L256">256     Measure.restrict_univ, Kernel.sectR_apply, Kernel.sectR_apply]</span>
+<span id="L257">257   apply latentArmStreamFeedback_eq_of_withoutCoordinate_eq_of_selectedCoordinate_ne</span>
+<span id="L258">258     env target stream₁ stream₂ n history arm hwithout</span>
+<span id="L259">259   intro heq</span>
+<span id="L260">260   have harm&#x27; := congrArg Prod.snd heq</span>
+<span id="L261">261   exact harm (by simpa using harm&#x27;)</span>
+<span id="L262">262 </span>
+<span id="L263">263 /-- The time-zero visible prefix is the initial action/feedback pair pushed</span>
+<span id="L264">264 through the singleton-history constructor. -/</span>
+<span id="L265">265 theorem latentArmStreamTrajectoryKernel_map_frestrictLe_zero</span>
+<span id="L266">266     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L267">267     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L268">268     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L269">269     (stream : UCB.ArmRewardStream K) :</span>
+<span id="L270">270     (latentArmStreamTrajectoryKernel algorithm env stream).map</span>
+<span id="L271">271         (Preorder.frestrictLe 0) =</span>
+<span id="L272">272       (algorithm.initialAction ⊗ₘ</span>
+<span id="L273">273         ((latentArmStreamMeasurableHistoryEnvironment</span>
+<span id="L274">274           (Env := Env) (K := K)).at (env, stream)).initialFeedback).map</span>
+<span id="L275">275         singletonPairHistory := by</span>
+<span id="L276">276   let environment := latentArmStreamMeasurableHistoryEnvironment</span>
+<span id="L277">277     (Env := Env) (K := K)</span>
+<span id="L278">278   have hprefix :</span>
+<span id="L279">279       (Preorder.frestrictLe 0 :</span>
+<span id="L280">280         ((t : Nat) -&gt; Fin K × Real) -&gt;</span>
+<span id="L281">281           History.FinitePairHistory (Fin K) Real 0) =</span>
+<span id="L282">282         singletonPairHistory ∘ (fun trajectory =&gt; trajectory 0) := by</span>
+<span id="L283">283     funext trajectory index</span>
+<span id="L284">284     have hindex : index = ⟨0, Finset.mem_Iic.mpr le_rfl⟩ :=</span>
+<span id="L285">285       Subsingleton.elim _ _</span>
+<span id="L286">286     subst index</span>
+<span id="L287">287     rfl</span>
+<span id="L288">288   have heval :</span>
+<span id="L289">289       Measure.map (fun trajectory : (t : Nat) -&gt; Fin K × Real =&gt; trajectory 0)</span>
+<span id="L290">290           (latentArmStreamTrajectoryKernel algorithm env stream) =</span>
+<span id="L291">291         algorithm.initialAction ⊗ₘ</span>
+<span id="L292">292           (environment.at (env, stream)).initialFeedback := by</span>
+<span id="L293">293     have hkernel := congrArg</span>
+<span id="L294">294       (fun kernel : Kernel (Env × UCB.ArmRewardStream K) (Fin K × Real) =&gt;</span>
+<span id="L295">295         kernel (env, stream))</span>
+<span id="L296">296       (canonicalMeasurableEnvironmentTrajectoryKernel_map_eval_zero</span>
+<span id="L297">297         algorithm environment)</span>
+<span id="L298">298     change</span>
+<span id="L299">299       ((canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment).map</span>
+<span id="L300">300         (fun trajectory =&gt; trajectory 0)) (env, stream) =</span>
+<span id="L301">301       (measurableEnvironmentInitialPairKernel algorithm environment)</span>
+<span id="L302">302         (env, stream) at hkernel</span>
+<span id="L303">303     rw [Kernel.map_apply _ (measurable_pi_apply 0),</span>
+<span id="L304">304       measurableEnvironmentInitialPairKernel_apply] at hkernel</span>
+<span id="L305">305     unfold latentArmStreamTrajectoryKernel</span>
+<span id="L306">306     rw [Kernel.comap_apply]</span>
+<span id="L307">307     exact hkernel</span>
+<span id="L308">308   rw [hprefix]</span>
+<span id="L309">309   change Measure.map</span>
+<span id="L310">310       (singletonPairHistory ∘</span>
+<span id="L311">311         (fun trajectory : (t : Nat) -&gt; Fin K × Real =&gt; trajectory 0))</span>
+<span id="L312">312       (latentArmStreamTrajectoryKernel algorithm env stream) = _</span>
+<span id="L313">313   rw [← Measure.map_map measurable_singletonPairHistory</span>
+<span id="L314">314     (measurable_pi_apply 0), heval]</span>
+<span id="L315">315 </span>
+<span id="L316">316 /-- Two latent streams agreeing through `n` generate the same visible</span>
+<span id="L317">317 trajectory law through `n`.  Action randomization remains inside the canonical</span>
+<span id="L318">318 trajectory kernel; the argument changes only deterministic reward fibers. -/</span>
+<span id="L319">319 theorem latentArmStreamTrajectoryKernel_map_frestrictLe_eq_of_streamPrefix_eq</span>
+<span id="L320">320     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L321">321     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L322">322     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L323">323     (stream₁ stream₂ : UCB.ArmRewardStream K) (n : Nat)</span>
+<span id="L324">324     (hstream : Preorder.frestrictLe n stream₁ =</span>
+<span id="L325">325       Preorder.frestrictLe n stream₂) :</span>
+<span id="L326">326     (latentArmStreamTrajectoryKernel algorithm env stream₁).map</span>
+<span id="L327">327         (Preorder.frestrictLe n) =</span>
+<span id="L328">328       (latentArmStreamTrajectoryKernel algorithm env stream₂).map</span>
+<span id="L329">329         (Preorder.frestrictLe n) := by</span>
+<span id="L330">330   let environment := latentArmStreamMeasurableHistoryEnvironment</span>
+<span id="L331">331     (Env := Env) (K := K)</span>
+<span id="L332">332   change</span>
+<span id="L333">333     (canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment</span>
+<span id="L334">334         (env, stream₁)).map (Preorder.frestrictLe n) =</span>
+<span id="L335">335       (canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment</span>
+<span id="L336">336         (env, stream₂)).map (Preorder.frestrictLe n)</span>
+<span id="L337">337   rw [canonicalMeasurableEnvironmentTrajectoryKernel_apply_eq_canonical,</span>
+<span id="L338">338     canonicalMeasurableEnvironmentTrajectoryKernel_apply_eq_canonical]</span>
+<span id="L339">339   apply KernelTrajectoryPrefix.trajMeasure_map_frestrictLe_congr</span>
+<span id="L340">340   · have hzero : stream₁ 0 = stream₂ 0 := by</span>
+<span id="L341">341       have h := congrFun hstream</span>
+<span id="L342">342         (⟨0, Finset.mem_Iic.mpr (Nat.zero_le n)⟩ : Finset.Iic n)</span>
+<span id="L343">343       simpa [Preorder.frestrictLe_apply] using h</span>
+<span id="L344">344     have hinitial :</span>
+<span id="L345">345         (environment.at (env, stream₁)).initialFeedback =</span>
+<span id="L346">346           (environment.at (env, stream₂)).initialFeedback := by</span>
+<span id="L347">347       ext arm event hevent</span>
+<span id="L348">348       rw [latentArmStreamMeasurableHistoryEnvironment_at_initialFeedback_apply,</span>
+<span id="L349">349         latentArmStreamMeasurableHistoryEnvironment_at_initialFeedback_apply,</span>
+<span id="L350">350         hzero]</span>
+<span id="L351">351     rw [hinitial]</span>
+<span id="L352">352   · intro k hk</span>
+<span id="L353">353     have hfeedback :</span>
+<span id="L354">354         (environment.at (env, stream₁)).feedback k =</span>
+<span id="L355">355           (environment.at (env, stream₂)).feedback k := by</span>
+<span id="L356">356       ext input event hevent</span>
+<span id="L357">357       let count := ETC.realHistoryPullCount k input.1 input.2</span>
+<span id="L358">358       have hcount_le : count &lt;= k + 1 := by</span>
+<span id="L359">359         unfold count ETC.realHistoryPullCount</span>
+<span id="L360">360         calc</span>
+<span id="L361">361           (Finset.univ.sum fun i : Finset.Iic k =&gt;</span>
+<span id="L362">362               if (input.1 i).1 = input.2 then 1 else 0) &lt;=</span>
+<span id="L363">363               Finset.univ.sum (fun _i : Finset.Iic k =&gt; 1) := by</span>
+<span id="L364">364                 apply Finset.sum_le_sum</span>
+<span id="L365">365                 intro i _hi</span>
+<span id="L366">366                 split &lt;;&gt; simp</span>
+<span id="L367">367           _ = k + 1 := by simp</span>
+<span id="L368">368       have hcount_n : count &lt;= n :=</span>
+<span id="L369">369         hcount_le.trans (Nat.succ_le_iff.mpr hk)</span>
+<span id="L370">370       have hrow := congrFun hstream</span>
+<span id="L371">371         (⟨count, Finset.mem_Iic.mpr hcount_n⟩ : Finset.Iic n)</span>
+<span id="L372">372       have hreward := congrFun hrow input.2</span>
+<span id="L373">373       have hreward&#x27; : stream₁ count input.2 = stream₂ count input.2 := by</span>
+<span id="L374">374         simpa [Preorder.frestrictLe_apply] using hreward</span>
+<span id="L375">375       rw [latentArmStreamMeasurableHistoryEnvironment_at_feedback_apply,</span>
+<span id="L376">376         latentArmStreamMeasurableHistoryEnvironment_at_feedback_apply]</span>
+<span id="L377">377       change (Measure.dirac (stream₁ count input.2)) event =</span>
+<span id="L378">378         (Measure.dirac (stream₂ count input.2)) event</span>
+<span id="L379">379       rw [hreward&#x27;]</span>
+<span id="L380">380     unfold historyStepKernel</span>
+<span id="L381">381     rw [hfeedback]</span>
+<span id="L382">382 </span>
+<span id="L383">383 /-- Finite visible-prefix kernel after replacing the infinite reward stream by</span>
+<span id="L384">384 its zero-extended finite box. -/</span>
+<span id="L385">385 noncomputable def latentArmStreamVisiblePrefixKernel</span>
+<span id="L386">386     {Env : Type u} {K : Nat} [MeasurableSpace Env] [NeZero K]</span>
+<span id="L387">387     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (n : Nat) :</span>
+<span id="L388">388     Kernel ((i : Finset.Iic n) -&gt; Fin K -&gt; Real)</span>
+<span id="L389">389       (History.FinitePairHistory (Fin K) Real n) :=</span>
+<span id="L390">390   ((latentArmStreamTrajectoryKernel algorithm env).comap</span>
+<span id="L391">391       (UCB.extendArmStreamFinitePrefix n)</span>
+<span id="L392">392       (UCB.measurable_extendArmStreamFinitePrefix n)).map</span>
+<span id="L393">393     (Preorder.frestrictLe n)</span>
+<span id="L394">394 </span>
+<span id="L395">395 instance instLatentArmStreamVisiblePrefixKernelIsMarkov</span>
+<span id="L396">396     {Env : Type u} {K : Nat} [MeasurableSpace Env] [NeZero K]</span>
+<span id="L397">397     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (n : Nat) :</span>
+<span id="L398">398     IsMarkovKernel (latentArmStreamVisiblePrefixKernel algorithm env n) := by</span>
+<span id="L399">399   unfold latentArmStreamVisiblePrefixKernel</span>
+<span id="L400">400   letI : IsMarkovKernel</span>
+<span id="L401">401       ((latentArmStreamTrajectoryKernel algorithm env).comap</span>
+<span id="L402">402         (UCB.extendArmStreamFinitePrefix n)</span>
+<span id="L403">403         (UCB.measurable_extendArmStreamFinitePrefix n)) := by</span>
+<span id="L404">404     infer_instance</span>
+<span id="L405">405   exact Kernel.IsMarkovKernel.map _ (Preorder.measurable_frestrictLe n)</span>
+<span id="L406">406 </span>
+<span id="L407">407 /-- The latent visible-prefix kernel factors exactly through the finite stream</span>
+<span id="L408">408 box through the same endpoint. -/</span>
+<span id="L409">409 theorem latentArmStreamTrajectoryKernel_map_frestrictLe_eq_prefixKernel_comap</span>
+<span id="L410">410     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L411">411     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L412">412     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (n : Nat) :</span>
+<span id="L413">413     (latentArmStreamTrajectoryKernel algorithm env).map</span>
+<span id="L414">414         (Preorder.frestrictLe n) =</span>
+<span id="L415">415       (latentArmStreamVisiblePrefixKernel algorithm env n).comap</span>
+<span id="L416">416         (Preorder.frestrictLe n) (Preorder.measurable_frestrictLe n) := by</span>
+<span id="L417">417   apply Kernel.ext</span>
+<span id="L418">418   intro stream</span>
+<span id="L419">419   rw [Kernel.map_apply _ (Preorder.measurable_frestrictLe n),</span>
+<span id="L420">420     Kernel.comap_apply]</span>
+<span id="L421">421   unfold latentArmStreamVisiblePrefixKernel</span>
+<span id="L422">422   rw [Kernel.map_apply _ (Preorder.measurable_frestrictLe n),</span>
+<span id="L423">423     Kernel.comap_apply]</span>
+<span id="L424">424   have hprefix : Preorder.frestrictLe n stream =</span>
+<span id="L425">425       Preorder.frestrictLe n</span>
+<span id="L426">426         (UCB.extendArmStreamFinitePrefix n</span>
+<span id="L427">427           (Preorder.frestrictLe n stream)) := by</span>
+<span id="L428">428     funext i</span>
+<span id="L429">429     simp [Preorder.frestrictLe_apply,</span>
+<span id="L430">430       UCB.extendArmStreamFinitePrefix_apply_of_le n i.1</span>
+<span id="L431">431         (Finset.mem_Iic.mp i.2)]</span>
+<span id="L432">432   exact latentArmStreamTrajectoryKernel_map_frestrictLe_eq_of_streamPrefix_eq</span>
+<span id="L433">433     algorithm env stream</span>
+<span id="L434">434       (UCB.extendArmStreamFinitePrefix n</span>
+<span id="L435">435         (Preorder.frestrictLe n stream)) n hprefix</span>
+<span id="L436">436 </span>
+<span id="L437">437 /-- Visible history through `n` paired with the action selected at `n + 1`. -/</span>
+<span id="L438">438 def latentArmStreamVisiblePrefixNextAction</span>
+<span id="L439">439     {K : Nat} (n : Nat) :</span>
+<span id="L440">440     ((t : Nat) -&gt; Fin K × Real) -&gt;</span>
+<span id="L441">441       History.FinitePairHistory (Fin K) Real n × Fin K :=</span>
+<span id="L442">442   fun trajectory =&gt;</span>
+<span id="L443">443     (Preorder.frestrictLe n trajectory, (trajectory (n + 1)).1)</span>
+<span id="L444">444 </span>
+<span id="L445">445 theorem measurable_latentArmStreamVisiblePrefixNextAction</span>
+<span id="L446">446     {K : Nat} (n : Nat) :</span>
+<span id="L447">447     Measurable (latentArmStreamVisiblePrefixNextAction (K := K) n) := by</span>
+<span id="L448">448   exact (Preorder.measurable_frestrictLe n).prodMk</span>
+<span id="L449">449     (measurable_fst.comp (measurable_pi_apply (n + 1)))</span>
+<span id="L450">450 </span>
+<span id="L451">451 /-- Reward observed at the shifted successor time `n + 1`. -/</span>
+<span id="L452">452 def latentArmStreamVisibleNextReward</span>
+<span id="L453">453     {K : Nat} (n : Nat) :</span>
+<span id="L454">454     ((t : Nat) -&gt; Fin K × Real) -&gt; Real :=</span>
+<span id="L455">455   fun trajectory =&gt; (trajectory (n + 1)).2</span>
+<span id="L456">456 </span>
+<span id="L457">457 theorem measurable_latentArmStreamVisibleNextReward</span>
+<span id="L458">458     {K : Nat} (n : Nat) :</span>
+<span id="L459">459     Measurable (latentArmStreamVisibleNextReward (K := K) n) := by</span>
+<span id="L460">460   exact measurable_snd.comp (measurable_pi_apply (n + 1))</span>
+<span id="L461">461 </span>
+<span id="L462">462 /-- Canonical candidate for the condition kernel on one next-coordinate</span>
+<span id="L463">463 branch, reconstructed after fixing the omitted coordinate to zero. -/</span>
+<span id="L464">464 noncomputable def latentArmStreamVisiblePrefixNextActionBranchKernel</span>
+<span id="L465">465     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L466">466     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L467">467     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L468">468     (n : Nat) (target : Nat × Fin K) :</span>
+<span id="L469">469     Kernel ({index : Nat × Fin K // index ≠ target} -&gt; Real)</span>
+<span id="L470">470       (History.FinitePairHistory (Fin K) Real n × Fin K) :=</span>
+<span id="L471">471   ((((latentArmStreamTrajectoryKernel algorithm env).map</span>
+<span id="L472">472       (latentArmStreamVisiblePrefixNextAction n)).comap</span>
+<span id="L473">473         (UCB.armStreamInsertCoordinate target 0)</span>
+<span id="L474">474         (UCB.measurable_armStreamInsertCoordinate target 0)).restrict</span>
+<span id="L475">475     (UCB.measurableSet_armStreamHistoryActionCoordinateBranch n target))</span>
+<span id="L476">476 </span>
+<span id="L477">477 instance instLatentArmStreamVisiblePrefixNextActionBranchKernelIsFinite</span>
+<span id="L478">478     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L479">479     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L480">480     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L481">481     (n : Nat) (target : Nat × Fin K) :</span>
+<span id="L482">482     IsFiniteKernel</span>
+<span id="L483">483       (latentArmStreamVisiblePrefixNextActionBranchKernel</span>
+<span id="L484">484         algorithm env n target) := by</span>
+<span id="L485">485   unfold latentArmStreamVisiblePrefixNextActionBranchKernel</span>
+<span id="L486">486   infer_instance</span>
+<span id="L487">487 </span>
+<span id="L488">488 /-- Histories through `n` that have not consumed the designated latent</span>
+<span id="L489">489 coordinate.  The inclusive history count can equal the coordinate index: that</span>
+<span id="L490">490 coordinate is used only by the next reward from the same arm. -/</span>
+<span id="L491">491 def latentArmStreamPrefixCountCap</span>
+<span id="L492">492     {K : Nat} (n : Nat) (target : Nat × Fin K) :</span>
+<span id="L493">493     Set (History.FinitePairHistory (Fin K) Real n) :=</span>
+<span id="L494">494   {history |</span>
+<span id="L495">495     ETC.realHistoryPullCount n history target.2 &lt;= target.1}</span>
+<span id="L496">496 </span>
+<span id="L497">497 theorem measurableSet_latentArmStreamPrefixCountCap</span>
+<span id="L498">498     {K : Nat} (n : Nat) (target : Nat × Fin K) :</span>
+<span id="L499">499     MeasurableSet (latentArmStreamPrefixCountCap n target) := by</span>
+<span id="L500">500   exact measurableSet_le</span>
+<span id="L501">501     (UCB.measurable_realHistoryPullCount n target.2) measurable_const</span>
+<span id="L502">502 </span>
+<span id="L503">503 /-- Pulling the time-zero count cap back through the singleton-history</span>
+<span id="L504">504 constructor leaves exactly the actions whose initial reward coordinate is not</span>
+<span id="L505">505 the omitted target. -/</span>
+<span id="L506">506 theorem singletonPairHistory_preimage_latentArmStreamPrefixCountCap_zero</span>
+<span id="L507">507     {K : Nat} (target : Nat × Fin K) :</span>
+<span id="L508">508     (@singletonPairHistory (Fin K) Real) ⁻¹&#x27;</span>
+<span id="L509">509         latentArmStreamPrefixCountCap 0 target =</span>
+<span id="L510">510       latentArmStreamInitialSafeArmSet target ×ˢ Set.univ := by</span>
+<span id="L511">511   classical</span>
+<span id="L512">512   rcases target with ⟨index, arm⟩</span>
+<span id="L513">513   ext pair</span>
+<span id="L514">514   cases index with</span>
+<span id="L515">515   | zero =&gt;</span>
+<span id="L516">516       simp [latentArmStreamPrefixCountCap,</span>
+<span id="L517">517         latentArmStreamInitialSafeArmSet,</span>
+<span id="L518">518         ETC.realHistoryPullCount, singletonPairHistory]</span>
+<span id="L519">519   | succ index =&gt;</span>
+<span id="L520">520       by_cases hpair : pair.1 = arm &lt;;&gt;</span>
+<span id="L521">521         simp [latentArmStreamPrefixCountCap,</span>
+<span id="L522">522           latentArmStreamInitialSafeArmSet,</span>
+<span id="L523">523           ETC.realHistoryPullCount, singletonPairHistory, hpair]</span>
+<span id="L524">524 </span>
+<span id="L525">525 /-- Count-cap locality at the initial pair. -/</span>
+<span id="L526">526 theorem latentArmStreamPrefixCountCapLocality_zero</span>
+<span id="L527">527     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L528">528     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L529">529     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L530">530     (target : Nat × Fin K)</span>
+<span id="L531">531     (stream₁ stream₂ : UCB.ArmRewardStream K)</span>
+<span id="L532">532     (hwithout : UCB.armStreamWithoutCoordinate target stream₁ =</span>
+<span id="L533">533       UCB.armStreamWithoutCoordinate target stream₂) :</span>
+<span id="L534">534     ((latentArmStreamTrajectoryKernel algorithm env stream₁).map</span>
+<span id="L535">535         (Preorder.frestrictLe 0)).restrict</span>
+<span id="L536">536       (latentArmStreamPrefixCountCap 0 target) =</span>
+<span id="L537">537     ((latentArmStreamTrajectoryKernel algorithm env stream₂).map</span>
+<span id="L538">538         (Preorder.frestrictLe 0)).restrict</span>
+<span id="L539">539       (latentArmStreamPrefixCountCap 0 target) := by</span>
+<span id="L540">540   rw [latentArmStreamTrajectoryKernel_map_frestrictLe_zero,</span>
+<span id="L541">541     latentArmStreamTrajectoryKernel_map_frestrictLe_zero,</span>
+<span id="L542">542     Measure.restrict_map measurable_singletonPairHistory</span>
+<span id="L543">543       (measurableSet_latentArmStreamPrefixCountCap 0 target),</span>
+<span id="L544">544     Measure.restrict_map measurable_singletonPairHistory</span>
+<span id="L545">545       (measurableSet_latentArmStreamPrefixCountCap 0 target),</span>
+<span id="L546">546     singletonPairHistory_preimage_latentArmStreamPrefixCountCap_zero]</span>
+<span id="L547">547   have hsafe : MeasurableSet (latentArmStreamInitialSafeArmSet target) := by</span>
+<span id="L548">548     exact (measurableSet_eq_fun</span>
+<span id="L549">549       (measurable_const.prodMk measurable_id) measurable_const).compl</span>
+<span id="L550">550   congr 1</span>
+<span id="L551">551   rw [Measure.compProd_restrict_prod</span>
+<span id="L552">552       algorithm.initialAction</span>
+<span id="L553">553       ((latentArmStreamMeasurableHistoryEnvironment</span>
+<span id="L554">554         (Env := Env) (K := K)).at (env, stream₁)).initialFeedback</span>
+<span id="L555">555       hsafe MeasurableSet.univ,</span>
+<span id="L556">556     Measure.compProd_restrict_prod</span>
+<span id="L557">557       algorithm.initialAction</span>
+<span id="L558">558       ((latentArmStreamMeasurableHistoryEnvironment</span>
+<span id="L559">559         (Env := Env) (K := K)).at (env, stream₂)).initialFeedback</span>
+<span id="L560">560       hsafe MeasurableSet.univ]</span>
+<span id="L561">561   apply Measure.compProd_congr</span>
+<span id="L562">562   filter_upwards [ae_restrict_mem hsafe] with arm harm</span>
+<span id="L563">563   have hne : (0, arm) ≠ target := harm</span>
+<span id="L564">564   have hcoordinate := congrFun hwithout</span>
+<span id="L565">565     (⟨(0, arm), hne⟩ : {index : Nat × Fin K // index ≠ target})</span>
+<span id="L566">566   have hreward : stream₁ 0 arm = stream₂ 0 arm := by</span>
+<span id="L567">567     simpa [UCB.armStreamWithoutCoordinate, UCB.armStreamCoordinate] using</span>
+<span id="L568">568       hcoordinate</span>
+<span id="L569">569   rw [Kernel.restrict_apply, Kernel.restrict_apply,</span>
+<span id="L570">570     Measure.restrict_univ, Measure.restrict_univ,</span>
+<span id="L571">571     latentArmStreamMeasurableHistoryEnvironment_at_initialFeedback_apply,</span>
+<span id="L572">572     latentArmStreamMeasurableHistoryEnvironment_at_initialFeedback_apply,</span>
+<span id="L573">573     hreward]</span>
+<span id="L574">574 </span>
+<span id="L575">575 /-- Strict count region used by the first rectangle in the successor cap</span>
+<span id="L576">576 decomposition. -/</span>
+<span id="L577">577 def latentArmStreamPrefixCountLt</span>
+<span id="L578">578     {K : Nat} (n : Nat) (target : Nat × Fin K) :</span>
+<span id="L579">579     Set (History.FinitePairHistory (Fin K) Real n) :=</span>
+<span id="L580">580   {history | ETC.realHistoryPullCount n history target.2 &lt; target.1}</span>
+<span id="L581">581 </span>
+<span id="L582">582 theorem measurableSet_latentArmStreamPrefixCountLt</span>
+<span id="L583">583     {K : Nat} (n : Nat) (target : Nat × Fin K) :</span>
+<span id="L584">584     MeasurableSet (latentArmStreamPrefixCountLt n target) := by</span>
+<span id="L585">585   exact measurableSet_lt</span>
+<span id="L586">586     (UCB.measurable_realHistoryPullCount n target.2) measurable_const</span>
+<span id="L587">587 </span>
+<span id="L588">588 /-- Exact count region used by the second rectangle in the successor cap</span>
+<span id="L589">589 decomposition. -/</span>
+<span id="L590">590 def latentArmStreamPrefixCountEq</span>
+<span id="L591">591     {K : Nat} (n : Nat) (target : Nat × Fin K) :</span>
+<span id="L592">592     Set (History.FinitePairHistory (Fin K) Real n) :=</span>
+<span id="L593">593   {history | ETC.realHistoryPullCount n history target.2 = target.1}</span>
+<span id="L594">594 </span>
+<span id="L595">595 theorem measurableSet_latentArmStreamPrefixCountEq</span>
+<span id="L596">596     {K : Nat} (n : Nat) (target : Nat × Fin K) :</span>
+<span id="L597">597     MeasurableSet (latentArmStreamPrefixCountEq n target) := by</span>
+<span id="L598">598   exact measurableSet_eq_fun</span>
+<span id="L599">599     (UCB.measurable_realHistoryPullCount n target.2) measurable_const</span>
+<span id="L600">600 </span>
+<span id="L601">601 /-- Extending an inclusive finite pair history increments exactly the count of</span>
+<span id="L602">602 the arm selected by the appended pair. -/</span>
+<span id="L603">603 @[simp]</span>
+<span id="L604">604 theorem realHistoryPullCount_extendPairHistorySucc</span>
+<span id="L605">605     {K : Nat} (n : Nat)</span>
+<span id="L606">606     (history : History.FinitePairHistory (Fin K) Real n)</span>
+<span id="L607">607     (next : Fin K × Real) (arm : Fin K) :</span>
+<span id="L608">608     ETC.realHistoryPullCount (n + 1)</span>
+<span id="L609">609         (History.extendPairHistorySucc history next) arm =</span>
+<span id="L610">610       ETC.realHistoryPullCount n history arm +</span>
+<span id="L611">611         if next.1 = arm then 1 else 0 := by</span>
+<span id="L612">612   classical</span>
+<span id="L613">613   let action : ActionTrace (Fin K) := fun t =&gt;</span>
+<span id="L614">614     if h : t &lt;= n then</span>
+<span id="L615">615       history ⟨t, Finset.mem_Iic.mpr h⟩ |&gt;.1</span>
+<span id="L616">616     else next.1</span>
+<span id="L617">617   let reward : RewardTrace Real := fun t =&gt;</span>
+<span id="L618">618     if h : t &lt;= n then</span>
+<span id="L619">619       history ⟨t, Finset.mem_Iic.mpr h⟩ |&gt;.2</span>
+<span id="L620">620     else next.2</span>
+<span id="L621">621   have hprefix :</span>
+<span id="L622">622       History.finitePairHistoryOfTrace action reward n = history := by</span>
+<span id="L623">623     funext i</span>
+<span id="L624">624     simp [action, reward, Finset.mem_Iic.mp i.2]</span>
+<span id="L625">625   have hsucc :</span>
+<span id="L626">626       History.finitePairHistoryOfTrace action reward (n + 1) =</span>
+<span id="L627">627         History.extendPairHistorySucc history next := by</span>
+<span id="L628">628     rw [History.finitePairHistoryOfTrace_succ, hprefix]</span>
+<span id="L629">629     congr 1</span>
+<span id="L630">630     simp [action, reward]</span>
+<span id="L631">631   calc</span>
+<span id="L632">632     ETC.realHistoryPullCount (n + 1)</span>
+<span id="L633">633         (History.extendPairHistorySucc history next) arm =</span>
+<span id="L634">634       ETC.realHistoryPullCount (n + 1)</span>
+<span id="L635">635         (History.finitePairHistoryOfTrace action reward (n + 1)) arm := by</span>
+<span id="L636">636           rw [hsucc]</span>
+<span id="L637">637     _ = pullCount action arm ((n + 1) + 1) :=</span>
+<span id="L638">638       ETC.realHistoryPullCount_finitePairHistoryOfTrace</span>
+<span id="L639">639         action reward (n + 1) arm</span>
+<span id="L640">640     _ = pullCount action arm (n + 1) +</span>
+<span id="L641">641         if action (n + 1) = arm then 1 else 0 := by</span>
+<span id="L642">642           rw [pullCount_succ]</span>
+<span id="L643">643     _ = ETC.realHistoryPullCount n history arm +</span>
+<span id="L644">644         if next.1 = arm then 1 else 0 := by</span>
+<span id="L645">645           rw [← ETC.realHistoryPullCount_finitePairHistoryOfTrace</span>
+<span id="L646">646             action reward n arm, hprefix]</span>
+<span id="L647">647           simp [action]</span>
+<span id="L648">648 </span>
+<span id="L649">649 /-- The successor prefix remains below the target count cap exactly when the</span>
+<span id="L650">650 old prefix is capped and either has strict slack or avoids the target arm. -/</span>
+<span id="L651">651 theorem mem_latentArmStreamPrefixCountCap_extendPairHistorySucc_iff</span>
+<span id="L652">652     {K : Nat} (n : Nat)</span>
+<span id="L653">653     (history : History.FinitePairHistory (Fin K) Real n)</span>
+<span id="L654">654     (next : Fin K × Real) (target : Nat × Fin K) :</span>
+<span id="L655">655     History.extendPairHistorySucc history next ∈</span>
+<span id="L656">656         latentArmStreamPrefixCountCap (n + 1) target ↔</span>
+<span id="L657">657       history ∈ latentArmStreamPrefixCountCap n target ∧</span>
+<span id="L658">658         (ETC.realHistoryPullCount n history target.2 &lt; target.1 ∨</span>
+<span id="L659">659           next.1 ≠ target.2) := by</span>
+<span id="L660">660   rw [latentArmStreamPrefixCountCap, Set.mem_setOf_eq,</span>
+<span id="L661">661     realHistoryPullCount_extendPairHistorySucc,</span>
+<span id="L662">662     latentArmStreamPrefixCountCap, Set.mem_setOf_eq]</span>
+<span id="L663">663   by_cases hnext : next.1 = target.2</span>
+<span id="L664">664   · simp [hnext]</span>
+<span id="L665">665     omega</span>
+<span id="L666">666   · simp [hnext]</span>
+<span id="L667">667 </span>
+<span id="L668">668 /-- A capped successor prefix was already capped before appending its last</span>
+<span id="L669">669 action/reward pair. -/</span>
+<span id="L670">670 theorem latentArmStreamPrefixCountCap_of_extendPairHistorySucc_mem</span>
+<span id="L671">671     {K : Nat} (n : Nat)</span>
+<span id="L672">672     (history : History.FinitePairHistory (Fin K) Real n)</span>
+<span id="L673">673     (next : Fin K × Real) (target : Nat × Fin K)</span>
+<span id="L674">674     (hcap : History.extendPairHistorySucc history next ∈</span>
+<span id="L675">675       latentArmStreamPrefixCountCap (n + 1) target) :</span>
+<span id="L676">676     history ∈ latentArmStreamPrefixCountCap n target := by</span>
+<span id="L677">677   exact</span>
+<span id="L678">678     (mem_latentArmStreamPrefixCountCap_extendPairHistorySucc_iff</span>
+<span id="L679">679       n history next target).mp hcap |&gt;.1</span>
+<span id="L680">680 </span>
+<span id="L681">681 /-- Every appended pair that remains in the successor cap reads a stream</span>
+<span id="L682">682 coordinate different from the omitted target. -/</span>
+<span id="L683">683 theorem selectedCoordinate_ne_of_extendPairHistorySucc_mem_prefixCountCap</span>
+<span id="L684">684     {K : Nat} (n : Nat)</span>
+<span id="L685">685     (history : History.FinitePairHistory (Fin K) Real n)</span>
+<span id="L686">686     (next : Fin K × Real) (target : Nat × Fin K)</span>
+<span id="L687">687     (hcap : History.extendPairHistorySucc history next ∈</span>
+<span id="L688">688       latentArmStreamPrefixCountCap (n + 1) target) :</span>
+<span id="L689">689     (ETC.realHistoryPullCount n history next.1, next.1) ≠ target := by</span>
+<span id="L690">690   intro heq</span>
+<span id="L691">691   have hnext : next.1 = target.2 := congrArg Prod.snd heq</span>
+<span id="L692">692   rcases</span>
+<span id="L693">693       (mem_latentArmStreamPrefixCountCap_extendPairHistorySucc_iff</span>
+<span id="L694">694         n history next target).mp hcap with ⟨_hcap, hstrict | havoid⟩</span>
+<span id="L695">695   · have hcountEq : ETC.realHistoryPullCount n history target.2 = target.1 := by</span>
+<span id="L696">696       simpa [hnext] using congrArg Prod.fst heq</span>
+<span id="L697">697     exact (Nat.ne_of_lt hstrict) hcountEq</span>
+<span id="L698">698   · exact havoid hnext</span>
+<span id="L699">699 </span>
+<span id="L700">700 /-- Pulling the successor count cap back through history extension gives two</span>
+<span id="L701">701 measurable rectangles: below the target count every action is safe, while at</span>
+<span id="L702">702 the target count only actions avoiding the target arm are safe. -/</span>
+<span id="L703">703 theorem latentArmStreamSuccessorCountCap_preimage</span>
+<span id="L704">704     {K : Nat} (n : Nat) (target : Nat × Fin K) :</span>
+<span id="L705">705     (fun sample : History.FinitePairHistory (Fin K) Real n × (Fin K × Real) =&gt;</span>
+<span id="L706">706       History.extendPairHistorySucc sample.1 sample.2) ⁻¹&#x27;</span>
+<span id="L707">707         latentArmStreamPrefixCountCap (n + 1) target =</span>
+<span id="L708">708       (latentArmStreamPrefixCountLt n target ×ˢ Set.univ) ∪</span>
+<span id="L709">709         (latentArmStreamPrefixCountEq n target ×ˢ</span>
+<span id="L710">710           latentArmStreamNextActionNeSet target.2) := by</span>
+<span id="L711">711   ext sample</span>
+<span id="L712">712   rw [Set.mem_preimage]</span>
+<span id="L713">713   simp only [latentArmStreamPrefixCountCap, Set.mem_setOf_eq,</span>
+<span id="L714">714     realHistoryPullCount_extendPairHistorySucc, Set.mem_union, Set.mem_prod,</span>
+<span id="L715">715     Set.mem_univ, and_true, latentArmStreamPrefixCountLt,</span>
+<span id="L716">716     latentArmStreamPrefixCountEq, latentArmStreamNextActionNeSet]</span>
+<span id="L717">717   by_cases haction : sample.2.1 = target.2</span>
+<span id="L718">718   · simp [haction]</span>
+<span id="L719">719   · simp [haction]</span>
+<span id="L720">720     omega</span>
+<span id="L721">721 </span>
+<span id="L722">722 /-- Next action/reward pairs that keep a fixed old prefix below the successor</span>
+<span id="L723">723 count cap. -/</span>
+<span id="L724">724 def latentArmStreamSuccessorCountCapSection</span>
+<span id="L725">725     {K : Nat} (n : Nat) (target : Nat × Fin K)</span>
+<span id="L726">726     (history : History.FinitePairHistory (Fin K) Real n) :</span>
+<span id="L727">727     Set (Fin K × Real) :=</span>
+<span id="L728">728   {next |</span>
+<span id="L729">729     History.extendPairHistorySucc history next ∈</span>
+<span id="L730">730       latentArmStreamPrefixCountCap (n + 1) target}</span>
+<span id="L731">731 </span>
+<span id="L732">732 theorem measurableSet_latentArmStreamSuccessorCountCapSection</span>
+<span id="L733">733     {K : Nat} (n : Nat) (target : Nat × Fin K)</span>
+<span id="L734">734     (history : History.FinitePairHistory (Fin K) Real n) :</span>
+<span id="L735">735     MeasurableSet</span>
+<span id="L736">736       (latentArmStreamSuccessorCountCapSection n target history) := by</span>
+<span id="L737">737   exact (measurableSet_latentArmStreamPrefixCountCap (n + 1) target).preimage</span>
+<span id="L738">738     (History.measurable_extendPairHistorySucc.comp</span>
+<span id="L739">739       (measurable_const.prodMk measurable_id))</span>
+<span id="L740">740 </span>
+<span id="L741">741 /-- Over a previously capped prefix, the one-step law restricted to capped</span>
+<span id="L742">742 successors depends only on the complement of the omitted stream coordinate. -/</span>
+<span id="L743">743 theorem historyStepKernel_apply_restrict_successorCountCap_eq_of_withoutCoordinate_eq</span>
+<span id="L744">744     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L745">745     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L746">746     (target : Nat × Fin K) (stream₁ stream₂ : UCB.ArmRewardStream K)</span>
+<span id="L747">747     (n : Nat) (history : History.FinitePairHistory (Fin K) Real n)</span>
+<span id="L748">748     (hwithout : UCB.armStreamWithoutCoordinate target stream₁ =</span>
+<span id="L749">749       UCB.armStreamWithoutCoordinate target stream₂)</span>
+<span id="L750">750     (hcap : history ∈ latentArmStreamPrefixCountCap n target) :</span>
+<span id="L751">751     (historyStepKernel algorithm</span>
+<span id="L752">752         ((latentArmStreamMeasurableHistoryEnvironment</span>
+<span id="L753">753           (Env := Env) (K := K)).at (env, stream₁)) n history).restrict</span>
+<span id="L754">754       (latentArmStreamSuccessorCountCapSection n target history) =</span>
+<span id="L755">755     (historyStepKernel algorithm</span>
+<span id="L756">756         ((latentArmStreamMeasurableHistoryEnvironment</span>
+<span id="L757">757           (Env := Env) (K := K)).at (env, stream₂)) n history).restrict</span>
+<span id="L758">758       (latentArmStreamSuccessorCountCapSection n target history) := by</span>
+<span id="L759">759   by_cases hstrict :</span>
+<span id="L760">760       ETC.realHistoryPullCount n history target.2 &lt; target.1</span>
+<span id="L761">761   · rw [historyStepKernel_apply_eq_of_withoutCoordinate_eq_of_target_count_lt</span>
+<span id="L762">762       algorithm env target stream₁ stream₂ n history hwithout hstrict]</span>
+<span id="L763">763   · have hsection :</span>
+<span id="L764">764         latentArmStreamSuccessorCountCapSection n target history =</span>
+<span id="L765">765           latentArmStreamNextActionNeSet target.2 := by</span>
+<span id="L766">766       ext next</span>
+<span id="L767">767       simp only [latentArmStreamSuccessorCountCapSection,</span>
+<span id="L768">768         latentArmStreamNextActionNeSet, Set.mem_setOf_eq, Set.mem_prod,</span>
+<span id="L769">769         Set.mem_univ, and_true]</span>
+<span id="L770">770       rw [mem_latentArmStreamPrefixCountCap_extendPairHistorySucc_iff]</span>
+<span id="L771">771       simp [hcap, hstrict]</span>
+<span id="L772">772     rw [hsection]</span>
+<span id="L773">773     exact</span>
+<span id="L774">774       historyStepKernel_apply_restrict_nextActionNe_eq_of_withoutCoordinate_eq</span>
+<span id="L775">775         algorithm env target stream₁ stream₂ n history hwithout</span>
+<span id="L776">776 </span>
+<span id="L777">777 /-- Successor step for count-capped locality of the fixed-stream visible</span>
+<span id="L778">778 trajectory prefix law. -/</span>
+<span id="L779">779 theorem latentArmStreamTrajectoryKernel_map_frestrictLe_restrict_countCap_succ</span>
+<span id="L780">780     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L781">781     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L782">782     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L783">783     (target : Nat × Fin K) (stream₁ stream₂ : UCB.ArmRewardStream K)</span>
+<span id="L784">784     (hwithout : UCB.armStreamWithoutCoordinate target stream₁ =</span>
+<span id="L785">785       UCB.armStreamWithoutCoordinate target stream₂)</span>
+<span id="L786">786     (n : Nat)</span>
+<span id="L787">787     (hprefix :</span>
+<span id="L788">788       ((latentArmStreamTrajectoryKernel algorithm env stream₁).map</span>
+<span id="L789">789           (Preorder.frestrictLe n)).restrict</span>
+<span id="L790">790         (latentArmStreamPrefixCountCap n target) =</span>
+<span id="L791">791       ((latentArmStreamTrajectoryKernel algorithm env stream₂).map</span>
+<span id="L792">792           (Preorder.frestrictLe n)).restrict</span>
+<span id="L793">793         (latentArmStreamPrefixCountCap n target)) :</span>
+<span id="L794">794     ((latentArmStreamTrajectoryKernel algorithm env stream₁).map</span>
+<span id="L795">795         (Preorder.frestrictLe (n + 1))).restrict</span>
+<span id="L796">796       (latentArmStreamPrefixCountCap (n + 1) target) =</span>
+<span id="L797">797     ((latentArmStreamTrajectoryKernel algorithm env stream₂).map</span>
+<span id="L798">798         (Preorder.frestrictLe (n + 1))).restrict</span>
+<span id="L799">799       (latentArmStreamPrefixCountCap (n + 1) target) := by</span>
+<span id="L800">800   let environment := latentArmStreamMeasurableHistoryEnvironment</span>
+<span id="L801">801     (Env := Env) (K := K)</span>
+<span id="L802">802   let join := fun trajectory : (t : Nat) → Fin K × Real =&gt;</span>
+<span id="L803">803     (Preorder.frestrictLe n trajectory, trajectory (n + 1))</span>
+<span id="L804">804   let successor := fun sample :</span>
+<span id="L805">805       History.FinitePairHistory (Fin K) Real n × (Fin K × Real) =&gt;</span>
+<span id="L806">806     History.extendPairHistorySucc sample.1 sample.2</span>
+<span id="L807">807   have hjoin : Measurable join :=</span>
+<span id="L808">808     (Preorder.measurable_frestrictLe n).prodMk</span>
+<span id="L809">809       (measurable_pi_apply (n + 1))</span>
+<span id="L810">810   have hsuccessor : Measurable successor := by</span>
+<span id="L811">811     exact History.measurable_extendPairHistorySucc</span>
+<span id="L812">812   have hjoint₁ :</span>
+<span id="L813">813       (latentArmStreamTrajectoryKernel algorithm env stream₁).map join =</span>
+<span id="L814">814         (latentArmStreamTrajectoryKernel algorithm env stream₁).map</span>
+<span id="L815">815             (Preorder.frestrictLe n) ⊗ₘ</span>
+<span id="L816">816           historyStepKernel algorithm (environment.at (env, stream₁)) n := by</span>
+<span id="L817">817     exact latentArmStreamTrajectoryKernel_map_prefix_next_eq_compProd</span>
+<span id="L818">818       algorithm env stream₁ n</span>
+<span id="L819">819   have hjoint₂ :</span>
+<span id="L820">820       (latentArmStreamTrajectoryKernel algorithm env stream₂).map join =</span>
+<span id="L821">821         (latentArmStreamTrajectoryKernel algorithm env stream₂).map</span>
+<span id="L822">822             (Preorder.frestrictLe n) ⊗ₘ</span>
+<span id="L823">823           historyStepKernel algorithm (environment.at (env, stream₂)) n := by</span>
+<span id="L824">824     exact latentArmStreamTrajectoryKernel_map_prefix_next_eq_compProd</span>
+<span id="L825">825       algorithm env stream₂ n</span>
+<span id="L826">826   have hpreimage :</span>
+<span id="L827">827       successor ⁻¹&#x27; latentArmStreamPrefixCountCap (n + 1) target ⊆</span>
+<span id="L828">828         latentArmStreamPrefixCountCap n target ×ˢ Set.univ := by</span>
+<span id="L829">829     intro sample hsample</span>
+<span id="L830">830     exact ⟨latentArmStreamPrefixCountCap_of_extendPairHistorySucc_mem</span>
+<span id="L831">831       n sample.1 sample.2 target hsample, Set.mem_univ _⟩</span>
+<span id="L832">832   have htransfer :=</span>
+<span id="L833">833     Measure.map_compProd_restrict_eq_of_base_restrict_eq_of_fiber_restrict_eq</span>
+<span id="L834">834       successor hsuccessor</span>
+<span id="L835">835       (measurableSet_latentArmStreamPrefixCountCap n target)</span>
+<span id="L836">836       (measurableSet_latentArmStreamPrefixCountCap (n + 1) target)</span>
+<span id="L837">837       hpreimage hprefix</span>
+<span id="L838">838       (fun history historySafe =&gt; by</span>
+<span id="L839">839         simpa [successor, latentArmStreamSuccessorCountCapSection] using</span>
+<span id="L840">840           historyStepKernel_apply_restrict_successorCountCap_eq_of_withoutCoordinate_eq</span>
+<span id="L841">841             algorithm env target stream₁ stream₂ n history hwithout historySafe)</span>
+<span id="L842">842   rw [← hjoint₁, ← hjoint₂,</span>
+<span id="L843">843     Measure.map_map hsuccessor hjoin,</span>
+<span id="L844">844     Measure.map_map hsuccessor hjoin] at htransfer</span>
+<span id="L845">845   have hencode : successor ∘ join = Preorder.frestrictLe (n + 1) := by</span>
+<span id="L846">846     funext trajectory</span>
+<span id="L847">847     funext index</span>
+<span id="L848">848     by_cases hindex : index.1 ≤ n</span>
+<span id="L849">849     · simp [successor, join, Function.comp_apply,</span>
+<span id="L850">850         History.extendPairHistorySucc, Preorder.frestrictLe_apply, hindex]</span>
+<span id="L851">851     · have hindex_succ : index.1 = n + 1 := by</span>
+<span id="L852">852         have hle : index.1 ≤ n + 1 := Finset.mem_Iic.mp index.2</span>
+<span id="L853">853         omega</span>
+<span id="L854">854       simp [successor, join, Function.comp_apply,</span>
+<span id="L855">855         History.extendPairHistorySucc, Preorder.frestrictLe_apply,</span>
+<span id="L856">856         hindex_succ]</span>
+<span id="L857">857   simpa only [hencode] using htransfer</span>
+<span id="L858">858 </span>
+<span id="L859">859 /-- Count-capped fixed-stream prefix locality under equality of all latent</span>
+<span id="L860">860 coordinates except the omitted target. -/</span>
+<span id="L861">861 theorem latentArmStreamTrajectoryKernel_map_frestrictLe_restrict_countCap_eq_of_withoutCoordinate_eq</span>
+<span id="L862">862     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L863">863     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L864">864     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L865">865     (target : Nat × Fin K) (stream₁ stream₂ : UCB.ArmRewardStream K)</span>
+<span id="L866">866     (hwithout : UCB.armStreamWithoutCoordinate target stream₁ =</span>
+<span id="L867">867       UCB.armStreamWithoutCoordinate target stream₂)</span>
+<span id="L868">868     (n : Nat) :</span>
+<span id="L869">869     ((latentArmStreamTrajectoryKernel algorithm env stream₁).map</span>
+<span id="L870">870         (Preorder.frestrictLe n)).restrict</span>
+<span id="L871">871       (latentArmStreamPrefixCountCap n target) =</span>
+<span id="L872">872     ((latentArmStreamTrajectoryKernel algorithm env stream₂).map</span>
+<span id="L873">873         (Preorder.frestrictLe n)).restrict</span>
+<span id="L874">874       (latentArmStreamPrefixCountCap n target) := by</span>
+<span id="L875">875   induction n with</span>
+<span id="L876">876   | zero =&gt;</span>
+<span id="L877">877       exact latentArmStreamPrefixCountCapLocality_zero</span>
+<span id="L878">878         algorithm env target stream₁ stream₂ hwithout</span>
+<span id="L879">879   | succ n ih =&gt;</span>
+<span id="L880">880       exact</span>
+<span id="L881">881         latentArmStreamTrajectoryKernel_map_frestrictLe_restrict_countCap_succ</span>
+<span id="L882">882           algorithm env target stream₁ stream₂ hwithout n ih</span>
+<span id="L883">883 </span>
+<span id="L884">884 /-- Exact contract for branchwise prefix/action locality.  The count-capped</span>
+<span id="L885">885 trajectory induction above proves this contract below. -/</span>
+<span id="L886">886 def LatentArmStreamVisiblePrefixNextActionBranchLocality</span>
+<span id="L887">887     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L888">888     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L889">889     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L890">890     (n : Nat) : Prop :=</span>
+<span id="L891">891   ∀ target : Nat × Fin K,</span>
+<span id="L892">892     (((latentArmStreamTrajectoryKernel algorithm env).map</span>
+<span id="L893">893         (latentArmStreamVisiblePrefixNextAction n)).restrict</span>
+<span id="L894">894       (UCB.measurableSet_armStreamHistoryActionCoordinateBranch n target)) =</span>
+<span id="L895">895     (latentArmStreamVisiblePrefixNextActionBranchKernel</span>
+<span id="L896">896         algorithm env n target).comap</span>
+<span id="L897">897       (UCB.armStreamWithoutCoordinate target)</span>
+<span id="L898">898       (UCB.measurable_armStreamWithoutCoordinate target)</span>
+<span id="L899">899 </span>
+<span id="L900">900 /-- Count-cap locality of visible prefixes implies the exact history/action</span>
+<span id="L901">901 branch-locality contract. -/</span>
+<span id="L902">902 theorem latentArmStreamVisiblePrefixNextActionBranchLocality_of_prefixCountCapLocality</span>
+<span id="L903">903     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L904">904     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L905">905     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (n : Nat)</span>
+<span id="L906">906     (hcap : ∀ (target : Nat × Fin K)</span>
+<span id="L907">907         (stream₁ stream₂ : UCB.ArmRewardStream K),</span>
+<span id="L908">908       UCB.armStreamWithoutCoordinate target stream₁ =</span>
+<span id="L909">909         UCB.armStreamWithoutCoordinate target stream₂ →</span>
+<span id="L910">910       (((latentArmStreamTrajectoryKernel algorithm env stream₁).map</span>
+<span id="L911">911           (Preorder.frestrictLe n)).restrict</span>
+<span id="L912">912         (latentArmStreamPrefixCountCap n target)) =</span>
+<span id="L913">913       (((latentArmStreamTrajectoryKernel algorithm env stream₂).map</span>
+<span id="L914">914           (Preorder.frestrictLe n)).restrict</span>
+<span id="L915">915         (latentArmStreamPrefixCountCap n target))) :</span>
+<span id="L916">916     LatentArmStreamVisiblePrefixNextActionBranchLocality</span>
+<span id="L917">917       algorithm env n := by</span>
+<span id="L918">918   intro target</span>
+<span id="L919">919   apply Kernel.ext</span>
+<span id="L920">920   intro stream</span>
+<span id="L921">921   rw [Kernel.restrict_apply, Kernel.comap_apply]</span>
+<span id="L922">922   unfold latentArmStreamVisiblePrefixNextActionBranchKernel</span>
+<span id="L923">923   rw [Kernel.restrict_apply, Kernel.comap_apply]</span>
+<span id="L924">924   rw [Kernel.map_apply _ (measurable_latentArmStreamVisiblePrefixNextAction n),</span>
+<span id="L925">925     Kernel.map_apply _ (measurable_latentArmStreamVisiblePrefixNextAction n)]</span>
+<span id="L926">926   let rebuilt := UCB.armStreamInsertCoordinate target 0</span>
+<span id="L927">927     (UCB.armStreamWithoutCoordinate target stream)</span>
+<span id="L928">928   have hleft :</span>
+<span id="L929">929       ((latentArmStreamTrajectoryKernel algorithm env stream).map</span>
+<span id="L930">930         (latentArmStreamVisiblePrefixNextAction n)) =</span>
+<span id="L931">931         ((latentArmStreamTrajectoryKernel algorithm env stream).map</span>
+<span id="L932">932           (Preorder.frestrictLe n)) ⊗ₘ algorithm.policy n := by</span>
+<span id="L933">933     unfold latentArmStreamTrajectoryKernel</span>
+<span id="L934">934     rw [Kernel.comap_apply]</span>
+<span id="L935">935     exact</span>
+<span id="L936">936       canonicalMeasurableEnvironmentTrajectoryKernel_map_history_action_eq_compProd</span>
+<span id="L937">937         algorithm</span>
+<span id="L938">938         (latentArmStreamMeasurableHistoryEnvironment</span>
+<span id="L939">939           (Env := Env) (K := K)) (env, stream) n</span>
+<span id="L940">940   have hright :</span>
+<span id="L941">941       ((latentArmStreamTrajectoryKernel algorithm env rebuilt).map</span>
+<span id="L942">942         (latentArmStreamVisiblePrefixNextAction n)) =</span>
+<span id="L943">943         ((latentArmStreamTrajectoryKernel algorithm env rebuilt).map</span>
+<span id="L944">944           (Preorder.frestrictLe n)) ⊗ₘ algorithm.policy n := by</span>
+<span id="L945">945     unfold latentArmStreamTrajectoryKernel</span>
+<span id="L946">946     rw [Kernel.comap_apply]</span>
+<span id="L947">947     exact</span>
+<span id="L948">948       canonicalMeasurableEnvironmentTrajectoryKernel_map_history_action_eq_compProd</span>
+<span id="L949">949         algorithm</span>
+<span id="L950">950         (latentArmStreamMeasurableHistoryEnvironment</span>
+<span id="L951">951           (Env := Env) (K := K)) (env, rebuilt) n</span>
+<span id="L952">952   rw [hleft, hright]</span>
+<span id="L953">953   have hbranchSubset :</span>
+<span id="L954">954       UCB.armStreamHistoryActionCoordinateBranch n target ⊆</span>
+<span id="L955">955         latentArmStreamPrefixCountCap n target ×ˢ Set.univ := by</span>
+<span id="L956">956     intro condition hcondition</span>
+<span id="L957">957     have hcoordinate :</span>
+<span id="L958">958         UCB.armStreamCoordinateOfHistoryAction n condition = target :=</span>
+<span id="L959">959       hcondition</span>
+<span id="L960">960     have hcount := congrArg Prod.fst hcoordinate</span>
+<span id="L961">961     have harm := congrArg Prod.snd hcoordinate</span>
+<span id="L962">962     have hcount&#x27; :</span>
+<span id="L963">963         ETC.realHistoryPullCount n condition.1 condition.2 = target.1 := by</span>
+<span id="L964">964       simpa [UCB.armStreamCoordinateOfHistoryAction] using hcount</span>
+<span id="L965">965     have harm&#x27; : condition.2 = target.2 := by</span>
+<span id="L966">966       simpa [UCB.armStreamCoordinateOfHistoryAction] using harm</span>
+<span id="L967">967     constructor</span>
+<span id="L968">968     · change ETC.realHistoryPullCount n condition.1 target.2 &lt;= target.1</span>
+<span id="L969">969       rw [← harm&#x27;, hcount&#x27;]</span>
+<span id="L970">970     · trivial</span>
+<span id="L971">971   apply Measure.restrict_congr_mono hbranchSubset</span>
+<span id="L972">972   rw [Measure.compProd_restrict_prod</span>
+<span id="L973">973       _ _ (measurableSet_latentArmStreamPrefixCountCap n target)</span>
+<span id="L974">974         MeasurableSet.univ,</span>
+<span id="L975">975     Measure.compProd_restrict_prod</span>
+<span id="L976">976       _ _ (measurableSet_latentArmStreamPrefixCountCap n target)</span>
+<span id="L977">977         MeasurableSet.univ]</span>
+<span id="L978">978   rw [hcap target stream rebuilt (by simp [rebuilt])]</span>
+<span id="L979">979 </span>
+<span id="L980">980 /-- Every latent arm-stream trajectory kernel satisfies branch locality: on</span>
+<span id="L981">981 the exact next-coordinate branch, the visible prefix and next action depend</span>
+<span id="L982">982 only on the complementary latent coordinates.  This does not yet identify the</span>
+<span id="L983">983 latent visible law with the native fixed-IID process. -/</span>
+<span id="L984">984 theorem latentArmStreamVisiblePrefixNextActionBranchLocality</span>
+<span id="L985">985     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L986">986     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L987">987     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (n : Nat) :</span>
+<span id="L988">988     LatentArmStreamVisiblePrefixNextActionBranchLocality</span>
+<span id="L989">989       algorithm env n := by</span>
+<span id="L990">990   apply</span>
+<span id="L991">991     latentArmStreamVisiblePrefixNextActionBranchLocality_of_prefixCountCapLocality</span>
+<span id="L992">992       algorithm env n</span>
+<span id="L993">993   intro target stream₁ stream₂ hwithout</span>
+<span id="L994">994   exact</span>
+<span id="L995">995     latentArmStreamTrajectoryKernel_map_frestrictLe_restrict_countCap_eq_of_withoutCoordinate_eq</span>
+<span id="L996">996       algorithm env target stream₁ stream₂ hwithout n</span>
+<span id="L997">997 </span>
+<span id="L998">998 /-- Once the branch-locality producer is available, coordinate independence</span>
+<span id="L999">999 immediately yields the exact branchwise condition/selected-coordinate product</span>
+<span id="L1000">1000 law.  This consumer is valid for the sub-Markov branch kernel and therefore</span>
+<span id="L1001">1001 does not misstate branch restriction as ordinary probability independence. -/</span>
+<span id="L1002">1002 theorem latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod_of_locality</span>
+<span id="L1003">1003     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L1004">1004     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L1005">1005     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L1006">1006     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]</span>
+<span id="L1007">1007     (n : Nat)</span>
+<span id="L1008">1008     (hlocal : LatentArmStreamVisiblePrefixNextActionBranchLocality</span>
+<span id="L1009">1009       algorithm env n)</span>
+<span id="L1010">1010     (target : Nat × Fin K) :</span>
+<span id="L1011">1011     let branchKernel :=</span>
+<span id="L1012">1012       ((latentArmStreamTrajectoryKernel algorithm env).map</span>
+<span id="L1013">1013         (latentArmStreamVisiblePrefixNextAction n)).restrict</span>
+<span id="L1014">1014           (UCB.measurableSet_armStreamHistoryActionCoordinateBranch n target)</span>
+<span id="L1015">1015     Measure.map</span>
+<span id="L1016">1016         (fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1017">1017             (History.FinitePairHistory (Fin K) Real n × Fin K) =&gt;</span>
+<span id="L1018">1018           (sample.2, UCB.armStreamCoordinate target sample.1))</span>
+<span id="L1019">1019         (UCB.armStreamMeasure nu ⊗ₘ branchKernel) =</span>
+<span id="L1020">1020       (Measure.map Prod.snd</span>
+<span id="L1021">1021           (UCB.armStreamMeasure nu ⊗ₘ branchKernel)).prod</span>
+<span id="L1022">1022         (nu target.2) := by</span>
+<span id="L1023">1023   dsimp only</span>
+<span id="L1024">1024   rw [hlocal target]</span>
+<span id="L1025">1025   exact</span>
+<span id="L1026">1026     UCB.armStreamMeasure_map_output_coordinate_compProd_comap_without_eq_prod</span>
+<span id="L1027">1027       nu target</span>
+<span id="L1028">1028         (latentArmStreamVisiblePrefixNextActionBranchKernel</span>
+<span id="L1029">1029           algorithm env n target)</span>
+<span id="L1030">1030 </span>
+<span id="L1031">1031 /-- Unconditional compiled branchwise product law obtained from the proved</span>
+<span id="L1032">1032 count-capped locality producer. -/</span>
+<span id="L1033">1033 theorem latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod</span>
+<span id="L1034">1034     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L1035">1035     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L1036">1036     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L1037">1037     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]</span>
+<span id="L1038">1038     (n : Nat) (target : Nat × Fin K) :</span>
+<span id="L1039">1039     let branchKernel :=</span>
+<span id="L1040">1040       ((latentArmStreamTrajectoryKernel algorithm env).map</span>
+<span id="L1041">1041         (latentArmStreamVisiblePrefixNextAction n)).restrict</span>
+<span id="L1042">1042           (UCB.measurableSet_armStreamHistoryActionCoordinateBranch n target)</span>
+<span id="L1043">1043     Measure.map</span>
+<span id="L1044">1044         (fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1045">1045             (History.FinitePairHistory (Fin K) Real n × Fin K) =&gt;</span>
+<span id="L1046">1046           (sample.2, UCB.armStreamCoordinate target sample.1))</span>
+<span id="L1047">1047         (UCB.armStreamMeasure nu ⊗ₘ branchKernel) =</span>
+<span id="L1048">1048       (Measure.map Prod.snd</span>
+<span id="L1049">1049           (UCB.armStreamMeasure nu ⊗ₘ branchKernel)).prod</span>
+<span id="L1050">1050         (nu target.2) := by</span>
+<span id="L1051">1051   exact</span>
+<span id="L1052">1052     latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod_of_locality</span>
+<span id="L1053">1053       algorithm env nu n</span>
+<span id="L1054">1054       (latentArmStreamVisiblePrefixNextActionBranchLocality algorithm env n)</span>
+<span id="L1055">1055       target</span>
+<span id="L1056">1056 </span>
+<span id="L1057">1057 /-- After the latent reward stream is mixed out, the next action still follows</span>
+<span id="L1058">1058 the algorithm&#x27;s history policy.  This isolates action randomization from the</span>
+<span id="L1059">1059 remaining selected-reward freshness obligation. -/</span>
+<span id="L1060">1060 theorem latentArmStreamTrajectoryMeasure_map_visiblePrefix_nextAction_eq_compProd</span>
+<span id="L1061">1061     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L1062">1062     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L1063">1063     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L1064">1064     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) :</span>
+<span id="L1065">1065     Measure.map</span>
+<span id="L1066">1066         (fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1067">1067             ((t : Nat) -&gt; Fin K × Real) =&gt;</span>
+<span id="L1068">1068           latentArmStreamVisiblePrefixNextAction n sample.2)</span>
+<span id="L1069">1069         (latentArmStreamTrajectoryMeasure algorithm env nu) =</span>
+<span id="L1070">1070       Measure.map</span>
+<span id="L1071">1071           (fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1072">1072               ((t : Nat) -&gt; Fin K × Real) =&gt;</span>
+<span id="L1073">1073             Preorder.frestrictLe n sample.2)</span>
+<span id="L1074">1074           (latentArmStreamTrajectoryMeasure algorithm env nu) ⊗ₘ</span>
+<span id="L1075">1075         algorithm.policy n := by</span>
+<span id="L1076">1076   unfold latentArmStreamTrajectoryMeasure</span>
+<span id="L1077">1077   apply trajectoryMixture_map_history_action_eq_compProd</span>
+<span id="L1078">1078     (UCB.armStreamMeasure nu)</span>
+<span id="L1079">1079     (latentArmStreamTrajectoryKernel algorithm env)</span>
+<span id="L1080">1080     (Preorder.frestrictLe n) (Preorder.measurable_frestrictLe n)</span>
+<span id="L1081">1081     (fun trajectory =&gt; (trajectory (n + 1)).1)</span>
+<span id="L1082">1082     (measurable_fst.comp (measurable_pi_apply (n + 1)))</span>
+<span id="L1083">1083     (algorithm.policy n)</span>
+<span id="L1084">1084   intro stream</span>
+<span id="L1085">1085   unfold latentArmStreamTrajectoryKernel</span>
+<span id="L1086">1086   rw [Kernel.comap_apply]</span>
+<span id="L1087">1087   exact</span>
+<span id="L1088">1088     canonicalMeasurableEnvironmentTrajectoryKernel_map_history_action_eq_compProd</span>
+<span id="L1089">1089       algorithm</span>
+<span id="L1090">1090       (latentArmStreamMeasurableHistoryEnvironment</span>
+<span id="L1091">1091         (Env := Env) (K := K)) (env, stream) n</span>
+<span id="L1092">1092 </span>
+<span id="L1093">1093 /-- On the coupling, the actual successor reward is the latent coordinate</span>
+<span id="L1094">1094 encoded by the visible prefix and the sampled next action.  This is pathwise</span>
+<span id="L1095">1095 support; conditional freshness still requires the branchwise product proof. -/</span>
+<span id="L1096">1096 theorem latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae</span>
+<span id="L1097">1097     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L1098">1098     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L1099">1099     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L1100">1100     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) :</span>
+<span id="L1101">1101     ∀ᵐ sample ∂latentArmStreamTrajectoryMeasure algorithm env nu,</span>
+<span id="L1102">1102       latentArmStreamVisibleNextReward n sample.2 =</span>
+<span id="L1103">1103         UCB.armStreamCoordinate</span>
+<span id="L1104">1104           (UCB.armStreamCoordinateOfHistoryAction n</span>
+<span id="L1105">1105             (latentArmStreamVisiblePrefixNextAction n sample.2)) sample.1 := by</span>
+<span id="L1106">1106   have hreward := latentArmStreamTrajectoryReward_eq_rewardFromArmStream_ae</span>
+<span id="L1107">1107     algorithm env nu</span>
+<span id="L1108">1108   filter_upwards [hreward] with sample hsample</span>
+<span id="L1109">1109   have htime := congrFun hsample (n + 1)</span>
+<span id="L1110">1110   let arm := (sample.2 (n + 1)).1</span>
+<span id="L1111">1111   have hcount := ETC.realHistoryPullCount_finitePairHistoryOfTrace</span>
+<span id="L1112">1112     (canonicalHistoryTrajectoryAction (Reward := Real) sample.2)</span>
+<span id="L1113">1113     (canonicalHistoryTrajectoryReward (Action := Fin K) sample.2) n arm</span>
+<span id="L1114">1114   change ETC.realHistoryPullCount n</span>
+<span id="L1115">1115       (Preorder.frestrictLe n sample.2) arm =</span>
+<span id="L1116">1116     pullCount (canonicalHistoryTrajectoryAction sample.2) arm (n + 1) at hcount</span>
+<span id="L1117">1117   change (sample.2 (n + 1)).2 =</span>
+<span id="L1118">1118     sample.1</span>
+<span id="L1119">1119       (pullCount (canonicalHistoryTrajectoryAction sample.2) arm (n + 1)) arm</span>
+<span id="L1120">1120       at htime</span>
+<span id="L1121">1121   change (sample.2 (n + 1)).2 =</span>
+<span id="L1122">1122     sample.1</span>
+<span id="L1123">1123       (ETC.realHistoryPullCount n (Preorder.frestrictLe n sample.2) arm) arm</span>
+<span id="L1124">1124   rw [hcount]</span>
+<span id="L1125">1125   exact htime</span>
+<span id="L1126">1126 </span>
+<span id="L1127">1127 /-- The reward coordinate selected by a visible history/action condition is a</span>
+<span id="L1128">1128 measurable function of the latent stream and that condition. -/</span>
+<span id="L1129">1129 theorem measurable_latentArmStreamSelectedCoordinate</span>
+<span id="L1130">1130     {K : Nat} (n : Nat) :</span>
+<span id="L1131">1131     Measurable (fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1132">1132         (History.FinitePairHistory (Fin K) Real n × Fin K) =&gt;</span>
+<span id="L1133">1133       UCB.armStreamCoordinate</span>
+<span id="L1134">1134         (UCB.armStreamCoordinateOfHistoryAction n sample.2) sample.1) := by</span>
+<span id="L1135">1135   let eval : UCB.ArmRewardStream K × (Nat × Fin K) -&gt; Real :=</span>
+<span id="L1136">1136     fun sample =&gt; UCB.armStreamCoordinate sample.2 sample.1</span>
+<span id="L1137">1137   have heval : Measurable eval := by</span>
+<span id="L1138">1138     apply measurable_from_prod_countable_left</span>
+<span id="L1139">1139     intro target</span>
+<span id="L1140">1140     exact UCB.measurable_armStreamCoordinate target</span>
+<span id="L1141">1141   exact heval.comp</span>
+<span id="L1142">1142     (measurable_fst.prodMk</span>
+<span id="L1143">1143       ((UCB.measurable_armStreamCoordinateOfHistoryAction n).comp</span>
+<span id="L1144">1144         measurable_snd))</span>
+<span id="L1145">1145 </span>
+<span id="L1146">1146 /-- On a fixed pull-count/arm branch, the dynamically selected latent reward</span>
+<span id="L1147">1147 coordinate has the restricted condition marginal times the selected arm law. -/</span>
+<span id="L1148">1148 theorem latentArmStreamVisiblePrefixNextAction_selectedCoordinate_branch_eq_prod</span>
+<span id="L1149">1149     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L1150">1150     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L1151">1151     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L1152">1152     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]</span>
+<span id="L1153">1153     (n : Nat) (target : Nat × Fin K) :</span>
+<span id="L1154">1154     let conditionKernel :=</span>
+<span id="L1155">1155       (latentArmStreamTrajectoryKernel algorithm env).map</span>
+<span id="L1156">1156         (latentArmStreamVisiblePrefixNextAction n)</span>
+<span id="L1157">1157     let fullMixed := UCB.armStreamMeasure nu ⊗ₘ conditionKernel</span>
+<span id="L1158">1158     let branch := UCB.armStreamHistoryActionCoordinateBranch n target</span>
+<span id="L1159">1159     let branchKernel := conditionKernel.restrict</span>
+<span id="L1160">1160       (UCB.measurableSet_armStreamHistoryActionCoordinateBranch n target)</span>
+<span id="L1161">1161     let branchMixed := UCB.armStreamMeasure nu ⊗ₘ branchKernel</span>
+<span id="L1162">1162     Measure.map</span>
+<span id="L1163">1163         (fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1164">1164             (History.FinitePairHistory (Fin K) Real n × Fin K) =&gt;</span>
+<span id="L1165">1165           (sample.2, UCB.armStreamCoordinate</span>
+<span id="L1166">1166             (UCB.armStreamCoordinateOfHistoryAction n sample.2) sample.1))</span>
+<span id="L1167">1167         branchMixed =</span>
+<span id="L1168">1168       ((Measure.map Prod.snd fullMixed).restrict branch).prod</span>
+<span id="L1169">1169         (nu target.2) := by</span>
+<span id="L1170">1170   dsimp only</span>
+<span id="L1171">1171   let conditionKernel :=</span>
+<span id="L1172">1172     (latentArmStreamTrajectoryKernel algorithm env).map</span>
+<span id="L1173">1173       (latentArmStreamVisiblePrefixNextAction n)</span>
+<span id="L1174">1174   let fullMixed := UCB.armStreamMeasure nu ⊗ₘ conditionKernel</span>
+<span id="L1175">1175   let branch := UCB.armStreamHistoryActionCoordinateBranch n target</span>
+<span id="L1176">1176   let branchKernel := conditionKernel.restrict</span>
+<span id="L1177">1177     (UCB.measurableSet_armStreamHistoryActionCoordinateBranch n target)</span>
+<span id="L1178">1178   let branchMixed := UCB.armStreamMeasure nu ⊗ₘ branchKernel</span>
+<span id="L1179">1179   let selectedPair := fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1180">1180       (History.FinitePairHistory (Fin K) Real n × Fin K) =&gt;</span>
+<span id="L1181">1181     (sample.2, UCB.armStreamCoordinate</span>
+<span id="L1182">1182       (UCB.armStreamCoordinateOfHistoryAction n sample.2) sample.1)</span>
+<span id="L1183">1183   let fixedPair := fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1184">1184       (History.FinitePairHistory (Fin K) Real n × Fin K) =&gt;</span>
+<span id="L1185">1185     (sample.2, UCB.armStreamCoordinate target sample.1)</span>
+<span id="L1186">1186   have hbranch : MeasurableSet branch :=</span>
+<span id="L1187">1187     UCB.measurableSet_armStreamHistoryActionCoordinateBranch n target</span>
+<span id="L1188">1188   have hbranchMixed :</span>
+<span id="L1189">1189       fullMixed.restrict (Set.univ ×ˢ branch) = branchMixed := by</span>
+<span id="L1190">1190     dsimp [fullMixed, branchMixed, branchKernel]</span>
+<span id="L1191">1191     rw [Measure.compProd_restrict_prod _ _ MeasurableSet.univ hbranch,</span>
+<span id="L1192">1192       Measure.restrict_univ]</span>
+<span id="L1193">1193   have hpreimage :</span>
+<span id="L1194">1194       Prod.snd ⁻¹&#x27; branch = (Set.univ ×ˢ branch :</span>
+<span id="L1195">1195         Set (UCB.ArmRewardStream K ×</span>
+<span id="L1196">1196           (History.FinitePairHistory (Fin K) Real n × Fin K))) := by</span>
+<span id="L1197">1197     ext sample</span>
+<span id="L1198">1198     simp</span>
+<span id="L1199">1199   have hbase :</span>
+<span id="L1200">1200       Measure.map Prod.snd branchMixed =</span>
+<span id="L1201">1201         (Measure.map Prod.snd fullMixed).restrict branch := by</span>
+<span id="L1202">1202     rw [Measure.restrict_map measurable_snd hbranch, hpreimage, hbranchMixed]</span>
+<span id="L1203">1203   have hpairMap :</span>
+<span id="L1204">1204       Measure.map selectedPair branchMixed =</span>
+<span id="L1205">1205         Measure.map fixedPair branchMixed := by</span>
+<span id="L1206">1206     rw [← hbranchMixed]</span>
+<span id="L1207">1207     apply Measure.map_congr</span>
+<span id="L1208">1208     filter_upwards [ae_restrict_mem (MeasurableSet.univ.prod hbranch)] with</span>
+<span id="L1209">1209       sample hsample</span>
+<span id="L1210">1210     have htarget :</span>
+<span id="L1211">1211         UCB.armStreamCoordinateOfHistoryAction n sample.2 = target := by</span>
+<span id="L1212">1212       change sample.1 ∈ Set.univ ∧</span>
+<span id="L1213">1213         UCB.armStreamCoordinateOfHistoryAction n sample.2 = target at hsample</span>
+<span id="L1214">1214       exact hsample.2</span>
+<span id="L1215">1215     simp [selectedPair, fixedPair, htarget]</span>
+<span id="L1216">1216   have hfixed :</span>
+<span id="L1217">1217       Measure.map fixedPair branchMixed =</span>
+<span id="L1218">1218         (Measure.map Prod.snd branchMixed).prod (nu target.2) := by</span>
+<span id="L1219">1219     simpa only [fixedPair, branchMixed, branchKernel, conditionKernel] using</span>
+<span id="L1220">1220       (latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod</span>
+<span id="L1221">1221         algorithm env nu n target)</span>
+<span id="L1222">1222   change Measure.map selectedPair branchMixed =</span>
+<span id="L1223">1223     ((Measure.map Prod.snd fullMixed).restrict branch).prod (nu target.2)</span>
+<span id="L1224">1224   calc</span>
+<span id="L1225">1225     _ = Measure.map fixedPair branchMixed := hpairMap</span>
+<span id="L1226">1226     _ = (Measure.map Prod.snd branchMixed).prod (nu target.2) := hfixed</span>
+<span id="L1227">1227     _ = ((Measure.map Prod.snd fullMixed).restrict branch).prod</span>
+<span id="L1228">1228           (nu target.2) := by rw [hbase]</span>
+<span id="L1229">1229 </span>
+<span id="L1230">1230 /-- Summing the countable pull-count/arm partition gives the selected-coordinate</span>
+<span id="L1231">1231 joint law under the mixed latent-stream/visible-condition measure. -/</span>
+<span id="L1232">1232 theorem latentArmStreamVisiblePrefixNextAction_selectedCoordinate_mixed_eq_compProd</span>
+<span id="L1233">1233     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L1234">1234     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L1235">1235     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L1236">1236     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]</span>
+<span id="L1237">1237     (n : Nat) :</span>
+<span id="L1238">1238     let conditionKernel :=</span>
+<span id="L1239">1239       (latentArmStreamTrajectoryKernel algorithm env).map</span>
+<span id="L1240">1240         (latentArmStreamVisiblePrefixNextAction n)</span>
+<span id="L1241">1241     let fullMixed := UCB.armStreamMeasure nu ⊗ₘ conditionKernel</span>
+<span id="L1242">1242     Measure.map</span>
+<span id="L1243">1243         (fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1244">1244             (History.FinitePairHistory (Fin K) Real n × Fin K) =&gt;</span>
+<span id="L1245">1245           (sample.2, UCB.armStreamCoordinate</span>
+<span id="L1246">1246             (UCB.armStreamCoordinateOfHistoryAction n sample.2) sample.1))</span>
+<span id="L1247">1247         fullMixed =</span>
+<span id="L1248">1248       Measure.map Prod.snd fullMixed ⊗ₘ</span>
+<span id="L1249">1249         UCB.armStreamSelectedRewardKernel n nu := by</span>
+<span id="L1250">1250   dsimp only</span>
+<span id="L1251">1251   let conditionKernel :=</span>
+<span id="L1252">1252     (latentArmStreamTrajectoryKernel algorithm env).map</span>
+<span id="L1253">1253       (latentArmStreamVisiblePrefixNextAction n)</span>
+<span id="L1254">1254   let fullMixed := UCB.armStreamMeasure nu ⊗ₘ conditionKernel</span>
+<span id="L1255">1255   let selectedPair := fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1256">1256       (History.FinitePairHistory (Fin K) Real n × Fin K) =&gt;</span>
+<span id="L1257">1257     (sample.2, UCB.armStreamCoordinate</span>
+<span id="L1258">1258       (UCB.armStreamCoordinateOfHistoryAction n sample.2) sample.1)</span>
+<span id="L1259">1259   let conditionMeasure := Measure.map Prod.snd fullMixed</span>
+<span id="L1260">1260   let selectedKernel := UCB.armStreamSelectedRewardKernel n nu</span>
+<span id="L1261">1261   have hselectedPair : Measurable selectedPair :=</span>
+<span id="L1262">1262     measurable_snd.prodMk (measurable_latentArmStreamSelectedCoordinate n)</span>
+<span id="L1263">1263   have hkernelPartition :</span>
+<span id="L1264">1264       conditionKernel = Kernel.sum fun target : Nat × Fin K =&gt;</span>
+<span id="L1265">1265         conditionKernel.restrict</span>
+<span id="L1266">1266           (UCB.measurableSet_armStreamHistoryActionCoordinateBranch</span>
+<span id="L1267">1267             n target) := by</span>
+<span id="L1268">1268     apply Kernel.ext</span>
+<span id="L1269">1269     intro stream</span>
+<span id="L1270">1270     rw [Kernel.sum_apply]</span>
+<span id="L1271">1271     exact UCB.measure_eq_sum_restrict_armStreamHistoryActionCoordinateBranch</span>
+<span id="L1272">1272       n (conditionKernel stream)</span>
+<span id="L1273">1273   have hfullPartition :</span>
+<span id="L1274">1274       fullMixed = Measure.sum fun target : Nat × Fin K =&gt;</span>
+<span id="L1275">1275         UCB.armStreamMeasure nu ⊗ₘ</span>
+<span id="L1276">1276           conditionKernel.restrict</span>
+<span id="L1277">1277             (UCB.measurableSet_armStreamHistoryActionCoordinateBranch</span>
+<span id="L1278">1278               n target) := by</span>
+<span id="L1279">1279     change UCB.armStreamMeasure nu ⊗ₘ conditionKernel = _</span>
+<span id="L1280">1280     calc</span>
+<span id="L1281">1281       UCB.armStreamMeasure nu ⊗ₘ conditionKernel =</span>
+<span id="L1282">1282           UCB.armStreamMeasure nu ⊗ₘ</span>
+<span id="L1283">1283             Kernel.sum (fun target : Nat × Fin K =&gt;</span>
+<span id="L1284">1284               conditionKernel.restrict</span>
+<span id="L1285">1285                 (UCB.measurableSet_armStreamHistoryActionCoordinateBranch</span>
+<span id="L1286">1286                   n target)) := congrArg</span>
+<span id="L1287">1287                     (fun kernel =&gt; UCB.armStreamMeasure nu ⊗ₘ kernel)</span>
+<span id="L1288">1288                     hkernelPartition</span>
+<span id="L1289">1289       _ = Measure.sum fun target : Nat × Fin K =&gt;</span>
+<span id="L1290">1290           UCB.armStreamMeasure nu ⊗ₘ</span>
+<span id="L1291">1291             conditionKernel.restrict</span>
+<span id="L1292">1292               (UCB.measurableSet_armStreamHistoryActionCoordinateBranch</span>
+<span id="L1293">1293                 n target) := Measure.compProd_sum_right</span>
+<span id="L1294">1294   have hleft :</span>
+<span id="L1295">1295       Measure.map selectedPair fullMixed =</span>
+<span id="L1296">1296         Measure.sum fun target : Nat × Fin K =&gt;</span>
+<span id="L1297">1297           (conditionMeasure.restrict</span>
+<span id="L1298">1298             (UCB.armStreamHistoryActionCoordinateBranch n target)).prod</span>
+<span id="L1299">1299               (nu target.2) := by</span>
+<span id="L1300">1300     calc</span>
+<span id="L1301">1301       Measure.map selectedPair fullMixed =</span>
+<span id="L1302">1302           Measure.map selectedPair</span>
+<span id="L1303">1303             (Measure.sum fun target : Nat × Fin K =&gt;</span>
+<span id="L1304">1304               UCB.armStreamMeasure nu ⊗ₘ</span>
+<span id="L1305">1305                 conditionKernel.restrict</span>
+<span id="L1306">1306                   (UCB.measurableSet_armStreamHistoryActionCoordinateBranch</span>
+<span id="L1307">1307                     n target)) := by rw [← hfullPartition]</span>
+<span id="L1308">1308       _ = Measure.sum fun target : Nat × Fin K =&gt;</span>
+<span id="L1309">1309           Measure.map selectedPair</span>
+<span id="L1310">1310             (UCB.armStreamMeasure nu ⊗ₘ</span>
+<span id="L1311">1311               conditionKernel.restrict</span>
+<span id="L1312">1312                 (UCB.measurableSet_armStreamHistoryActionCoordinateBranch</span>
+<span id="L1313">1313                   n target)) := by</span>
+<span id="L1314">1314             apply Measure.map_sum</span>
+<span id="L1315">1315             rw [← hfullPartition]</span>
+<span id="L1316">1316             exact hselectedPair.aemeasurable</span>
+<span id="L1317">1317       _ = Measure.sum fun target : Nat × Fin K =&gt;</span>
+<span id="L1318">1318           (conditionMeasure.restrict</span>
+<span id="L1319">1319             (UCB.armStreamHistoryActionCoordinateBranch n target)).prod</span>
+<span id="L1320">1320               (nu target.2) := by</span>
+<span id="L1321">1321             congr 1</span>
+<span id="L1322">1322             funext target</span>
+<span id="L1323">1323             simpa only [selectedPair, conditionMeasure, fullMixed,</span>
+<span id="L1324">1324               conditionKernel] using</span>
+<span id="L1325">1325               (latentArmStreamVisiblePrefixNextAction_selectedCoordinate_branch_eq_prod</span>
+<span id="L1326">1326                 algorithm env nu n target)</span>
+<span id="L1327">1327   have hconditionPartition :=</span>
+<span id="L1328">1328     UCB.measure_eq_sum_restrict_armStreamHistoryActionCoordinateBranch</span>
+<span id="L1329">1329       n conditionMeasure</span>
+<span id="L1330">1330   have hright :</span>
+<span id="L1331">1331       conditionMeasure ⊗ₘ selectedKernel =</span>
+<span id="L1332">1332         Measure.sum fun target : Nat × Fin K =&gt;</span>
+<span id="L1333">1333           (conditionMeasure.restrict</span>
+<span id="L1334">1334             (UCB.armStreamHistoryActionCoordinateBranch n target)).prod</span>
+<span id="L1335">1335               (nu target.2) := by</span>
+<span id="L1336">1336     calc</span>
+<span id="L1337">1337       conditionMeasure ⊗ₘ selectedKernel =</span>
+<span id="L1338">1338           (Measure.sum fun target : Nat × Fin K =&gt;</span>
+<span id="L1339">1339             conditionMeasure.restrict</span>
+<span id="L1340">1340               (UCB.armStreamHistoryActionCoordinateBranch n target)) ⊗ₘ</span>
+<span id="L1341">1341                 selectedKernel := by rw [← hconditionPartition]</span>
+<span id="L1342">1342       _ = Measure.sum fun target : Nat × Fin K =&gt;</span>
+<span id="L1343">1343           conditionMeasure.restrict</span>
+<span id="L1344">1344               (UCB.armStreamHistoryActionCoordinateBranch n target) ⊗ₘ</span>
+<span id="L1345">1345             selectedKernel := by rw [Measure.compProd_sum_left]</span>
+<span id="L1346">1346       _ = Measure.sum fun target : Nat × Fin K =&gt;</span>
+<span id="L1347">1347           (conditionMeasure.restrict</span>
+<span id="L1348">1348             (UCB.armStreamHistoryActionCoordinateBranch n target)).prod</span>
+<span id="L1349">1349               (nu target.2) := by</span>
+<span id="L1350">1350             congr 1</span>
+<span id="L1351">1351             funext target</span>
+<span id="L1352">1352             have hselected : Filter.EventuallyEq</span>
+<span id="L1353">1353                 (ae (conditionMeasure.restrict</span>
+<span id="L1354">1354                   (UCB.armStreamHistoryActionCoordinateBranch n target)))</span>
+<span id="L1355">1355                 selectedKernel</span>
+<span id="L1356">1356                 (Kernel.const _ (nu target.2)) := by</span>
+<span id="L1357">1357               filter_upwards [ae_restrict_mem</span>
+<span id="L1358">1358                 (UCB.measurableSet_armStreamHistoryActionCoordinateBranch</span>
+<span id="L1359">1359                   n target)] with condition hcondition</span>
+<span id="L1360">1360               have hsecond : condition.2 = target.2 := by</span>
+<span id="L1361">1361                 simpa [UCB.armStreamHistoryActionCoordinateBranch,</span>
+<span id="L1362">1362                   UCB.armStreamCoordinateOfHistoryAction] using</span>
+<span id="L1363">1363                     congrArg Prod.snd hcondition</span>
+<span id="L1364">1364               rw [Kernel.comap_apply, Kernel.const_apply, hsecond]</span>
+<span id="L1365">1365             rw [Measure.compProd_congr hselected, Measure.compProd_const]</span>
+<span id="L1366">1366   change Measure.map selectedPair fullMixed =</span>
+<span id="L1367">1367     conditionMeasure ⊗ₘ selectedKernel</span>
+<span id="L1368">1368   exact hleft.trans hright.symm</span>
+<span id="L1369">1369 </span>
+<span id="L1370">1370 /-- Transport the selected-coordinate product law from the mixed representation</span>
+<span id="L1371">1371 back to the original latent-stream trajectory coupling. -/</span>
+<span id="L1372">1372 theorem latentArmStreamVisiblePrefixNextAction_selectedCoordinate_eq_compProd</span>
+<span id="L1373">1373     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L1374">1374     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L1375">1375     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L1376">1376     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]</span>
+<span id="L1377">1377     (n : Nat) :</span>
+<span id="L1378">1378     Measure.map</span>
+<span id="L1379">1379         (fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1380">1380             ((t : Nat) -&gt; Fin K × Real) =&gt;</span>
+<span id="L1381">1381           (latentArmStreamVisiblePrefixNextAction n sample.2,</span>
+<span id="L1382">1382             UCB.armStreamCoordinate</span>
+<span id="L1383">1383               (UCB.armStreamCoordinateOfHistoryAction n</span>
+<span id="L1384">1384                 (latentArmStreamVisiblePrefixNextAction n sample.2))</span>
+<span id="L1385">1385               sample.1))</span>
+<span id="L1386">1386         (latentArmStreamTrajectoryMeasure algorithm env nu) =</span>
+<span id="L1387">1387       Measure.map</span>
+<span id="L1388">1388           (fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1389">1389               ((t : Nat) -&gt; Fin K × Real) =&gt;</span>
+<span id="L1390">1390             latentArmStreamVisiblePrefixNextAction n sample.2)</span>
+<span id="L1391">1391           (latentArmStreamTrajectoryMeasure algorithm env nu) ⊗ₘ</span>
+<span id="L1392">1392         UCB.armStreamSelectedRewardKernel n nu := by</span>
+<span id="L1393">1393   let sourceMeasure := latentArmStreamTrajectoryMeasure algorithm env nu</span>
+<span id="L1394">1394   let condition := latentArmStreamVisiblePrefixNextAction (K := K) n</span>
+<span id="L1395">1395   let conditionKernel :=</span>
+<span id="L1396">1396     (latentArmStreamTrajectoryKernel algorithm env).map condition</span>
+<span id="L1397">1397   let fullMixed := UCB.armStreamMeasure nu ⊗ₘ conditionKernel</span>
+<span id="L1398">1398   let toMixed := fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1399">1399       ((t : Nat) -&gt; Fin K × Real) =&gt; (sample.1, condition sample.2)</span>
+<span id="L1400">1400   let sourceCondition := fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1401">1401       ((t : Nat) -&gt; Fin K × Real) =&gt; condition sample.2</span>
+<span id="L1402">1402   let sourcePair := fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1403">1403       ((t : Nat) -&gt; Fin K × Real) =&gt;</span>
+<span id="L1404">1404     (condition sample.2, UCB.armStreamCoordinate</span>
+<span id="L1405">1405       (UCB.armStreamCoordinateOfHistoryAction n (condition sample.2))</span>
+<span id="L1406">1406       sample.1)</span>
+<span id="L1407">1407   let mixedPair := fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1408">1408       (History.FinitePairHistory (Fin K) Real n × Fin K) =&gt;</span>
+<span id="L1409">1409     (sample.2, UCB.armStreamCoordinate</span>
+<span id="L1410">1410       (UCB.armStreamCoordinateOfHistoryAction n sample.2) sample.1)</span>
+<span id="L1411">1411   have hcondition : Measurable condition :=</span>
+<span id="L1412">1412     measurable_latentArmStreamVisiblePrefixNextAction n</span>
+<span id="L1413">1413   have htoMixed : Measurable toMixed :=</span>
+<span id="L1414">1414     measurable_fst.prodMk (hcondition.comp measurable_snd)</span>
+<span id="L1415">1415   have hmixedPair : Measurable mixedPair :=</span>
+<span id="L1416">1416     measurable_snd.prodMk (measurable_latentArmStreamSelectedCoordinate n)</span>
+<span id="L1417">1417   have htoMixedMap : Measure.map toMixed sourceMeasure = fullMixed := by</span>
+<span id="L1418">1418     dsimp [toMixed, sourceMeasure, fullMixed, conditionKernel]</span>
+<span id="L1419">1419     rw [latentArmStreamTrajectoryMeasure]</span>
+<span id="L1420">1420     simpa only [Prod.map_apply, id_eq] using</span>
+<span id="L1421">1421       (Measure.compProd_map</span>
+<span id="L1422">1422         (μ := UCB.armStreamMeasure nu)</span>
+<span id="L1423">1423         (κ := latentArmStreamTrajectoryKernel algorithm env)</span>
+<span id="L1424">1424         hcondition).symm</span>
+<span id="L1425">1425   have hpairTransport :</span>
+<span id="L1426">1426       Measure.map sourcePair sourceMeasure =</span>
+<span id="L1427">1427         Measure.map mixedPair fullMixed := by</span>
+<span id="L1428">1428     calc</span>
+<span id="L1429">1429       Measure.map sourcePair sourceMeasure =</span>
+<span id="L1430">1430           Measure.map mixedPair (Measure.map toMixed sourceMeasure) := by</span>
+<span id="L1431">1431             rw [Measure.map_map]</span>
+<span id="L1432">1432             · rfl</span>
+<span id="L1433">1433             · exact hmixedPair</span>
+<span id="L1434">1434             · exact htoMixed</span>
+<span id="L1435">1435       _ = Measure.map mixedPair fullMixed := by rw [htoMixedMap]</span>
+<span id="L1436">1436   have hconditionMarginal :</span>
+<span id="L1437">1437       Measure.map Prod.snd fullMixed =</span>
+<span id="L1438">1438         Measure.map sourceCondition sourceMeasure := by</span>
+<span id="L1439">1439     calc</span>
+<span id="L1440">1440       Measure.map Prod.snd fullMixed =</span>
+<span id="L1441">1441           Measure.map Prod.snd (Measure.map toMixed sourceMeasure) := by</span>
+<span id="L1442">1442             rw [htoMixedMap]</span>
+<span id="L1443">1443       _ = Measure.map (Prod.snd ∘ toMixed) sourceMeasure := by</span>
+<span id="L1444">1444             rw [Measure.map_map]</span>
+<span id="L1445">1445             · exact measurable_snd</span>
+<span id="L1446">1446             · exact htoMixed</span>
+<span id="L1447">1447       _ = Measure.map sourceCondition sourceMeasure := by rfl</span>
+<span id="L1448">1448   change Measure.map sourcePair sourceMeasure =</span>
+<span id="L1449">1449     Measure.map sourceCondition sourceMeasure ⊗ₘ</span>
+<span id="L1450">1450       UCB.armStreamSelectedRewardKernel n nu</span>
+<span id="L1451">1451   calc</span>
+<span id="L1452">1452     _ = Measure.map mixedPair fullMixed := hpairTransport</span>
+<span id="L1453">1453     _ = Measure.map Prod.snd fullMixed ⊗ₘ</span>
+<span id="L1454">1454           UCB.armStreamSelectedRewardKernel n nu := by</span>
+<span id="L1455">1455         simpa only [mixedPair, fullMixed, conditionKernel, condition] using</span>
+<span id="L1456">1456           (latentArmStreamVisiblePrefixNextAction_selectedCoordinate_mixed_eq_compProd</span>
+<span id="L1457">1457             algorithm env nu n)</span>
+<span id="L1458">1458     _ = Measure.map sourceCondition sourceMeasure ⊗ₘ</span>
+<span id="L1459">1459           UCB.armStreamSelectedRewardKernel n nu := by</span>
+<span id="L1460">1460         rw [hconditionMarginal]</span>
+<span id="L1461">1461 </span>
+<span id="L1462">1462 /-- Given the visible prefix through `n` and the action at `n + 1`, the actual</span>
+<span id="L1463">1463 next reward in the latent-stream coupling has exactly the selected arm law. -/</span>
+<span id="L1464">1464 theorem latentArmStreamVisibleNextReward_joint_eq_compProd</span>
+<span id="L1465">1465     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L1466">1466     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L1467">1467     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L1468">1468     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]</span>
+<span id="L1469">1469     (n : Nat) :</span>
+<span id="L1470">1470     Measure.map</span>
+<span id="L1471">1471         (fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1472">1472             ((t : Nat) -&gt; Fin K × Real) =&gt;</span>
+<span id="L1473">1473           (latentArmStreamVisiblePrefixNextAction n sample.2,</span>
+<span id="L1474">1474             latentArmStreamVisibleNextReward n sample.2))</span>
+<span id="L1475">1475         (latentArmStreamTrajectoryMeasure algorithm env nu) =</span>
+<span id="L1476">1476       Measure.map</span>
+<span id="L1477">1477           (fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1478">1478               ((t : Nat) -&gt; Fin K × Real) =&gt;</span>
+<span id="L1479">1479             latentArmStreamVisiblePrefixNextAction n sample.2)</span>
+<span id="L1480">1480           (latentArmStreamTrajectoryMeasure algorithm env nu) ⊗ₘ</span>
+<span id="L1481">1481         UCB.armStreamSelectedRewardKernel n nu := by</span>
+<span id="L1482">1482   let condition := fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1483">1483       ((t : Nat) -&gt; Fin K × Real) =&gt;</span>
+<span id="L1484">1484     latentArmStreamVisiblePrefixNextAction n sample.2</span>
+<span id="L1485">1485   let reward := fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1486">1486       ((t : Nat) -&gt; Fin K × Real) =&gt;</span>
+<span id="L1487">1487     latentArmStreamVisibleNextReward n sample.2</span>
+<span id="L1488">1488   let selected := fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1489">1489       ((t : Nat) -&gt; Fin K × Real) =&gt;</span>
+<span id="L1490">1490     UCB.armStreamCoordinate</span>
+<span id="L1491">1491       (UCB.armStreamCoordinateOfHistoryAction n</span>
+<span id="L1492">1492         (latentArmStreamVisiblePrefixNextAction n sample.2)) sample.1</span>
+<span id="L1493">1493   have hreadout : reward =ᵐ[</span>
+<span id="L1494">1494       latentArmStreamTrajectoryMeasure algorithm env nu] selected :=</span>
+<span id="L1495">1495     latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae</span>
+<span id="L1496">1496       algorithm env nu n</span>
+<span id="L1497">1497   have hpairs :</span>
+<span id="L1498">1498       (fun sample =&gt; (condition sample, reward sample)) =ᵐ[</span>
+<span id="L1499">1499           latentArmStreamTrajectoryMeasure algorithm env nu]</span>
+<span id="L1500">1500         (fun sample =&gt; (condition sample, selected sample)) :=</span>
+<span id="L1501">1501     Filter.EventuallyEq.prodMk Filter.EventuallyEq.rfl hreadout</span>
+<span id="L1502">1502   change Measure.map (fun sample =&gt; (condition sample, reward sample))</span>
+<span id="L1503">1503       (latentArmStreamTrajectoryMeasure algorithm env nu) = _</span>
+<span id="L1504">1504   calc</span>
+<span id="L1505">1505     _ = Measure.map (fun sample =&gt; (condition sample, selected sample))</span>
+<span id="L1506">1506           (latentArmStreamTrajectoryMeasure algorithm env nu) :=</span>
+<span id="L1507">1507         Measure.map_congr hpairs</span>
+<span id="L1508">1508     _ = _ := by</span>
+<span id="L1509">1509       simpa only [condition, selected] using</span>
+<span id="L1510">1510         (latentArmStreamVisiblePrefixNextAction_selectedCoordinate_eq_compProd</span>
+<span id="L1511">1511           algorithm env nu n)</span>
+<span id="L1512">1512 </span>
+<span id="L1513">1513 /-- Conditional-law form of one-step selected-reward freshness on the full</span>
+<span id="L1514">1514 latent-stream trajectory coupling. -/</span>
+<span id="L1515">1515 theorem latentArmStreamVisibleNextReward_condDistrib_ae_eq_nu</span>
+<span id="L1516">1516     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L1517">1517     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L1518">1518     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L1519">1519     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]</span>
+<span id="L1520">1520     (n : Nat) :</span>
+<span id="L1521">1521     condDistrib</span>
+<span id="L1522">1522         (fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1523">1523             ((t : Nat) -&gt; Fin K × Real) =&gt;</span>
+<span id="L1524">1524           latentArmStreamVisibleNextReward n sample.2)</span>
+<span id="L1525">1525         (fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1526">1526             ((t : Nat) -&gt; Fin K × Real) =&gt;</span>
+<span id="L1527">1527           latentArmStreamVisiblePrefixNextAction n sample.2)</span>
+<span id="L1528">1528         (latentArmStreamTrajectoryMeasure algorithm env nu) =ᵐ[</span>
+<span id="L1529">1529       (latentArmStreamTrajectoryMeasure algorithm env nu).map</span>
+<span id="L1530">1530         (fun sample =&gt; latentArmStreamVisiblePrefixNextAction n sample.2)]</span>
+<span id="L1531">1531       UCB.armStreamSelectedRewardKernel n nu := by</span>
+<span id="L1532">1532   apply (condDistrib_ae_eq_iff_measure_eq_compProd</span>
+<span id="L1533">1533     (fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1534">1534         ((t : Nat) -&gt; Fin K × Real) =&gt;</span>
+<span id="L1535">1535       latentArmStreamVisiblePrefixNextAction n sample.2)</span>
+<span id="L1536">1536     ((measurable_latentArmStreamVisibleNextReward n).comp</span>
+<span id="L1537">1537       measurable_snd).aemeasurable</span>
+<span id="L1538">1538     (UCB.armStreamSelectedRewardKernel n nu)).mpr</span>
+<span id="L1539">1539   exact latentArmStreamVisibleNextReward_joint_eq_compProd</span>
+<span id="L1540">1540     algorithm env nu n</span>
+<span id="L1541">1541 </span>
+<span id="L1542">1542 /-- Observable-marginal form of the one-step selected-reward joint law.  This</span>
+<span id="L1543">1543 removes the latent arm stream from the theorem&#x27;s source space without claiming</span>
+<span id="L1544">1544 that the entire visible trajectory already equals the native construction. -/</span>
+<span id="L1545">1545 theorem latentArmStreamVisibleTrajectoryMeasure_nextReward_joint_eq_compProd</span>
+<span id="L1546">1546     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L1547">1547     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L1548">1548     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L1549">1549     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]</span>
+<span id="L1550">1550     (n : Nat) :</span>
+<span id="L1551">1551     let visibleMeasure :=</span>
+<span id="L1552">1552       (latentArmStreamTrajectoryMeasure algorithm env nu).map Prod.snd</span>
+<span id="L1553">1553     Measure.map</span>
+<span id="L1554">1554         (fun trajectory : (t : Nat) -&gt; Fin K × Real =&gt;</span>
+<span id="L1555">1555           (latentArmStreamVisiblePrefixNextAction n trajectory,</span>
+<span id="L1556">1556             latentArmStreamVisibleNextReward n trajectory))</span>
+<span id="L1557">1557         visibleMeasure =</span>
+<span id="L1558">1558       Measure.map (latentArmStreamVisiblePrefixNextAction n) visibleMeasure ⊗ₘ</span>
+<span id="L1559">1559         UCB.armStreamSelectedRewardKernel n nu := by</span>
+<span id="L1560">1560   dsimp only</span>
+<span id="L1561">1561   let sourceMeasure := latentArmStreamTrajectoryMeasure algorithm env nu</span>
+<span id="L1562">1562   let visibleMeasure := sourceMeasure.map Prod.snd</span>
+<span id="L1563">1563   let condition := latentArmStreamVisiblePrefixNextAction (K := K) n</span>
+<span id="L1564">1564   let reward := latentArmStreamVisibleNextReward (K := K) n</span>
+<span id="L1565">1565   have htrajectory : Measurable</span>
+<span id="L1566">1566       (fun trajectory : (t : Nat) -&gt; Fin K × Real =&gt;</span>
+<span id="L1567">1567         (condition trajectory, reward trajectory)) :=</span>
+<span id="L1568">1568     (measurable_latentArmStreamVisiblePrefixNextAction n).prod</span>
+<span id="L1569">1569       (measurable_latentArmStreamVisibleNextReward n)</span>
+<span id="L1570">1570   have hcondition : Measurable condition :=</span>
+<span id="L1571">1571     measurable_latentArmStreamVisiblePrefixNextAction n</span>
+<span id="L1572">1572   change Measure.map (fun trajectory =&gt; (condition trajectory, reward trajectory))</span>
+<span id="L1573">1573       visibleMeasure = Measure.map condition visibleMeasure ⊗ₘ _</span>
+<span id="L1574">1574   calc</span>
+<span id="L1575">1575     Measure.map (fun trajectory =&gt; (condition trajectory, reward trajectory))</span>
+<span id="L1576">1576         visibleMeasure =</span>
+<span id="L1577">1577         Measure.map</span>
+<span id="L1578">1578           (fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1579">1579               ((t : Nat) -&gt; Fin K × Real) =&gt;</span>
+<span id="L1580">1580             (condition sample.2, reward sample.2)) sourceMeasure := by</span>
+<span id="L1581">1581           dsimp [visibleMeasure]</span>
+<span id="L1582">1582           rw [Measure.map_map]</span>
+<span id="L1583">1583           · rfl</span>
+<span id="L1584">1584           · exact htrajectory</span>
+<span id="L1585">1585           · exact measurable_snd</span>
+<span id="L1586">1586     _ = Measure.map</span>
+<span id="L1587">1587           (fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1588">1588               ((t : Nat) -&gt; Fin K × Real) =&gt; condition sample.2)</span>
+<span id="L1589">1589           sourceMeasure ⊗ₘ UCB.armStreamSelectedRewardKernel n nu := by</span>
+<span id="L1590">1590           simpa only [condition, reward, sourceMeasure] using</span>
+<span id="L1591">1591             (latentArmStreamVisibleNextReward_joint_eq_compProd</span>
+<span id="L1592">1592               algorithm env nu n)</span>
+<span id="L1593">1593     _ = Measure.map condition visibleMeasure ⊗ₘ</span>
+<span id="L1594">1594           UCB.armStreamSelectedRewardKernel n nu := by</span>
+<span id="L1595">1595           congr 1</span>
+<span id="L1596">1596           dsimp [visibleMeasure]</span>
+<span id="L1597">1597           rw [Measure.map_map]</span>
+<span id="L1598">1598           · rfl</span>
+<span id="L1599">1599           · exact hcondition</span>
+<span id="L1600">1600           · exact measurable_snd</span>
+<span id="L1601">1601 </span>
+<span id="L1602">1602 /-- Conditional-law form of one-step selected-reward freshness on the visible</span>
+<span id="L1603">1603 trajectory marginal. -/</span>
+<span id="L1604">1604 theorem latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu</span>
+<span id="L1605">1605     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L1606">1606     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L1607">1607     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L1608">1608     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]</span>
+<span id="L1609">1609     (n : Nat) :</span>
+<span id="L1610">1610     let visibleMeasure :=</span>
+<span id="L1611">1611       (latentArmStreamTrajectoryMeasure algorithm env nu).map Prod.snd</span>
+<span id="L1612">1612     condDistrib</span>
+<span id="L1613">1613         (latentArmStreamVisibleNextReward n)</span>
+<span id="L1614">1614         (latentArmStreamVisiblePrefixNextAction n)</span>
+<span id="L1615">1615         visibleMeasure =ᵐ[</span>
+<span id="L1616">1616       visibleMeasure.map (latentArmStreamVisiblePrefixNextAction n)]</span>
+<span id="L1617">1617       UCB.armStreamSelectedRewardKernel n nu := by</span>
+<span id="L1618">1618   dsimp only</span>
+<span id="L1619">1619   apply (condDistrib_ae_eq_iff_measure_eq_compProd</span>
+<span id="L1620">1620     (latentArmStreamVisiblePrefixNextAction n)</span>
+<span id="L1621">1621     (measurable_latentArmStreamVisibleNextReward n).aemeasurable</span>
+<span id="L1622">1622     (UCB.armStreamSelectedRewardKernel n nu)).mpr</span>
+<span id="L1623">1623   exact latentArmStreamVisibleTrajectoryMeasure_nextReward_joint_eq_compProd</span>
+<span id="L1624">1624     algorithm env nu n</span>
+<span id="L1625">1625 </span>
+<span id="L1626">1626 /-- Exact finite mixture law for the latent stream box and the visible SGB</span>
+<span id="L1627">1627 trajectory prefix.  This is the deferred-decisions representation that the</span>
+<span id="L1628">1628 remaining native-prefix comparison must consume. -/</span>
+<span id="L1629">1629 theorem latentArmStreamTrajectoryMeasure_map_stream_visiblePrefix_eq</span>
+<span id="L1630">1630     {Env : Type u} {K : Nat} [MeasurableSpace Env]</span>
+<span id="L1631">1631     [StandardBorelSpace Env] [NeZero K]</span>
+<span id="L1632">1632     (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env)</span>
+<span id="L1633">1633     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (n : Nat) :</span>
+<span id="L1634">1634     Measure.map</span>
+<span id="L1635">1635         (fun sample : UCB.ArmRewardStream K ×</span>
+<span id="L1636">1636             ((t : Nat) -&gt; Fin K × Real) =&gt;</span>
+<span id="L1637">1637           (Preorder.frestrictLe n sample.1,</span>
+<span id="L1638">1638             Preorder.frestrictLe n sample.2))</span>
+<span id="L1639">1639         (latentArmStreamTrajectoryMeasure algorithm env nu) =</span>
+<span id="L1640">1640       Measure.pi (fun _ : Finset.Iic n =&gt;</span>
+<span id="L1641">1641           Measure.infinitePi fun arm : Fin K =&gt; nu arm) ⊗ₘ</span>
+<span id="L1642">1642         latentArmStreamVisiblePrefixKernel algorithm env n := by</span>
+<span id="L1643">1643   let streamPrefix : UCB.ArmRewardStream K -&gt;</span>
+<span id="L1644">1644       ((i : Finset.Iic n) -&gt; Fin K -&gt; Real) :=</span>
+<span id="L1645">1645     Preorder.frestrictLe n</span>
+<span id="L1646">1646   let visiblePrefix : ((t : Nat) -&gt; Fin K × Real) -&gt;</span>
+<span id="L1647">1647       History.FinitePairHistory (Fin K) Real n :=</span>
+<span id="L1648">1648     Preorder.frestrictLe n</span>
+<span id="L1649">1649   let prefixKernel := latentArmStreamVisiblePrefixKernel algorithm env n</span>
+<span id="L1650">1650   have hstreamPrefix : Measurable streamPrefix :=</span>
+<span id="L1651">1651     Preorder.measurable_frestrictLe n</span>
+<span id="L1652">1652   have hvisiblePrefix : Measurable visiblePrefix :=</span>
+<span id="L1653">1653     Preorder.measurable_frestrictLe n</span>
+<span id="L1654">1654   calc</span>
+<span id="L1655">1655     _ = ((latentArmStreamTrajectoryMeasure algorithm env nu).map</span>
+<span id="L1656">1656           (fun sample =&gt; (sample.1, visiblePrefix sample.2))).map</span>
+<span id="L1657">1657           (fun sample =&gt; (streamPrefix sample.1, sample.2)) := by</span>
+<span id="L1658">1658         rw [Measure.map_map]</span>
+<span id="L1659">1659         · rfl</span>
+<span id="L1660">1660         · exact (hstreamPrefix.comp measurable_fst).prodMk measurable_snd</span>
+<span id="L1661">1661         · exact measurable_fst.prodMk (hvisiblePrefix.comp measurable_snd)</span>
+<span id="L1662">1662     _ = (UCB.armStreamMeasure nu ⊗ₘ</span>
+<span id="L1663">1663           (latentArmStreamTrajectoryKernel algorithm env).map visiblePrefix).map</span>
+<span id="L1664">1664           (fun sample =&gt; (streamPrefix sample.1, sample.2)) := by</span>
+<span id="L1665">1665         rw [latentArmStreamTrajectoryMeasure]</span>
+<span id="L1666">1666         congr 1</span>
+<span id="L1667">1667         simpa only [Prod.map_apply, id_eq] using</span>
+<span id="L1668">1668           (Measure.compProd_map</span>
+<span id="L1669">1669             (μ := UCB.armStreamMeasure nu)</span>
+<span id="L1670">1670             (κ := latentArmStreamTrajectoryKernel algorithm env)</span>
+<span id="L1671">1671             hvisiblePrefix).symm</span>
+<span id="L1672">1672     _ = (UCB.armStreamMeasure nu ⊗ₘ</span>
+<span id="L1673">1673           prefixKernel.comap streamPrefix hstreamPrefix).map</span>
+<span id="L1674">1674           (fun sample =&gt; (streamPrefix sample.1, sample.2)) := by</span>
+<span id="L1675">1675         rw [latentArmStreamTrajectoryKernel_map_frestrictLe_eq_prefixKernel_comap]</span>
+<span id="L1676">1676     _ = (UCB.armStreamMeasure nu).map streamPrefix ⊗ₘ prefixKernel := by</span>
+<span id="L1677">1677         simpa only [streamPrefix, prefixKernel] using</span>
+<span id="L1678">1678           (map_compProd_comap_history</span>
+<span id="L1679">1679             (UCB.armStreamMeasure nu) streamPrefix hstreamPrefix prefixKernel)</span>
+<span id="L1680">1680     _ = Measure.pi (fun _ : Finset.Iic n =&gt;</span>
+<span id="L1681">1681           Measure.infinitePi fun arm : Fin K =&gt; nu arm) ⊗ₘ prefixKernel := by</span>
+<span id="L1682">1682         rw [UCB.armStreamMeasure_map_frestrictLe_eq_pi]</span>
+<span id="L1683">1683 </span>
+<span id="L1684">1684 end Thompson</span>
+<span id="L1685">1685 end</span>
+<span id="L1686">1686 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="Textbook Spine / Part IV: Lower Bounds · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Textbook Spine / Part IV: Lower Bounds · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>Textbook Spine / Part IV: Lower Bounds · BanditRLlib</title>
+  <link rel="icon" href="../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../index.html">Overview</a><a href="../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../learning/index.html">All chapters</a><a class="book-nav-link" href="../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group active" data-nav-group="textbook-spine" data-nav-group-active="true" open><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="index.html" aria-current="page">Part IV overview</a><a class="spine-nav-link" href="chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../banditrlwiki/index.html">BanditRLwiki</a><a href="../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../banditrlwiki/papers/index.html">Paper index</a><a href="../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../declarations/index.html">Lean declarations</a><a href="../implementation-map/index.html">Implementation map</a><a href="../lean-graph/index.html">Lean Graph</a><a href="../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../ide/index.html">Local Formalization Lab</a><a href="../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../community/index.html">Contribute</a><a href="../roadmap/index.html">Roadmap</a><a href="../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="spine">
+  <p class="eyebrow">Canonical textbook sequence</p>
+  <h1 class="page-title">Textbook Spine / Part IV: Lower Bounds</h1>
+  <p class="lede">A chapter-by-chapter, source-faithful formalization of finite-armed bandit lower bounds. This layer is separate from the curated ten-chapter Book Map and reports compiled, partial, planned, and blocked evidence without implying that the whole textbook is formalized.</p>
+  <div class="callout warning"><strong>Scope boundary.</strong> This is a separate chapter-by-chapter lower-bound spine. The existing ten-chapter Book Map remains a curated curriculum and is not relabeled as a completed formalization of the entire book.</div>
+</section>
+
+<section id="source">
+  <h2>Canonical source</h2>
+  <article class="source-card spine-source-card">
+    <span class="panel-kicker">Part IV — Lower Bounds for Bandits with Finitely Many Arms</span>
+    <h3>Bandit Algorithms</h3>
+    <p>Tor Lattimore and Csaba Szepesvári</p>
+    <dl>
+      <div><dt>Edition</dt><dd>Cambridge University Press 2020; author-hosted formal PDF</dd></div>
+      <div><dt>Publisher</dt><dd>Cambridge University Press, 2020</dd></div>
+      <div><dt>DOI</dt><dd><a href="https://doi.org/10.1017/9781108571401">10.1017/9781108571401</a></dd></div>
+    </dl>
+    <a class="button compact" href="https://tor-lattimore.com/downloads/book/book.pdf">Open the formal PDF <span aria-hidden="true">↗</span></a>
+  </article>
+</section>
+
+<section id="chapters">
+  <h2>Chapters 13–17</h2>
+  <p class="section-intro">Work advances in source order. A chapter can expose compiled leaves while its broader source theorem remains partial or planned.</p>
+  <div class="textbook-spine-grid">
+<a class="spine-chapter-card" href="chapter-13-basic-ideas/index.html">
+  <span class="spine-chapter-number">Chapter 13</span>
+  <span class="spine-chapter-status"><span class="status compiled">Compiled</span></span>
+  <strong>Lower Bounds: Basic Ideas</strong>
+  <span>155–159 print · 189–194 PDF</span>
+  <p>Theorem 13.1 compiles through Chapter 15 with c=1/54. Chapter 13 also compiles fixed-class minimax-optimality, the canonical iid Gaussian empirical-mean law, midpoint error events, the Chernoff companion, and both exact Mills-ratio bounds of Eq. (13.4) rescaled to the printed Eq. (13.1). The broader 1-subgaussian class with gaps in [0,1] now has a compiled fixed-horizon MOSS upper bound and constant-factor near-minimax theorem. The frozen main-text contract is complete: PR #105, authoritative-main checks, Pages deployment and live desktop/mobile acceptance pass for b38630c. Notes and Exercises remain optional and unformalized.</p>
+  <span class="spine-chapter-arrow" aria-hidden="true">→</span>
+</a>
+<a class="spine-chapter-card" href="chapter-14-information-theory/index.html">
+  <span class="spine-chapter-number">Chapter 14</span>
+  <span class="spine-chapter-status"><span class="status compiled">Compiled</span></span>
+  <strong>Foundations of Information Theory</strong>
+  <span>160–169 print · 195–206 PDF</span>
+  <p>The frozen required body is compiled: Huffman optimality, exact-real arithmetic block coding and converse, finite/partition/common-density KL, the source affinity/overlap route, and Gaussian testing. Independent review, PR #106, main run 33959196451, Pages and live desktop/mobile acceptance passed. The singleton and uniform-code qualifications below are part of the accepted boundary; optional Notes/Exercises are not claimed complete.</p>
+  <span class="spine-chapter-arrow" aria-hidden="true">→</span>
+</a>
+<a class="spine-chapter-card" href="chapter-15-minimax-lower-bounds/index.html">
+  <span class="spine-chapter-number">Chapter 15</span>
+  <span class="spine-chapter-status"><span class="status compiled">Compiled</span></span>
+  <strong>Minimax Lower Bounds</strong>
+  <span>170–176 print · 207–214 PDF</span>
+  <p>The frozen required body (§15.1–15.2) is compiled: Lemma 15.1 and Theorem 15.2 use one arbitrary randomized HistoryAlgorithm, the canonical finite-history law, exact unit-Gaussian construction and 1/27 constant, with worst-case and minimax consequences. Optional Exercise 15.7 remains partial: measurable-map KL contraction reuses Chapter 14&#x27;s trim API, and the fixed-horizon observation corollary compiles; stopped-history information and F_tau factorization remain open. Notes and other exercises are outside the required-body completion contract.</p>
+  <span class="spine-chapter-arrow" aria-hidden="true">→</span>
+</a>
+<a class="spine-chapter-card" href="chapter-16-instance-dependent/index.html">
+  <span class="spine-chapter-number">Chapter 16</span>
+  <span class="spine-chapter-status"><span class="status compiled">Compiled</span></span>
+  <strong>Instance-Dependent Lower Bounds</strong>
+  <span>177–184 print · 215–223 PDF</span>
+  <p>Definition 16.1, Theorem 16.2, Lemma 16.3, and Theorem 16.4 compile with the source quantifiers, information branches, constants, and positive-part placement.</p>
+  <span class="spine-chapter-arrow" aria-hidden="true">→</span>
+</a>
+<a class="spine-chapter-card" href="chapter-17-high-probability/index.html">
+  <span class="spine-chapter-number">Chapter 17</span>
+  <span class="spine-chapter-status"><span class="status compiled">Compiled</span></span>
+  <strong>High-Probability Lower Bounds</strong>
+  <span>185–190 print · 224–230 PDF</span>
+  <p>All Chapter 17 body endpoints pass the full Lean/Tests/harness gate, including same-policy hard-law coupling and deterministic matrix extraction; integrated into main via PR #101. Approved corrections: Claim 17.6 uses T_i ≤ n/2; Theorem 17.4 uses 0 &lt; δ ≤ 1/32 with c=1/160, C=64 and a strict CDF tail. This is corrected-chapter closure, not a proof of the unchanged printed statements or every optional exercise.</p>
+  <span class="spine-chapter-arrow" aria-hidden="true">→</span>
+</a></div>
+</section>
+
+<section id="dependencies">
+  <h2>Part IV dependency spine</h2>
+  <p>The graph is a route map, not proof evidence. Each chapter page names the declarations and missing bridges that determine its status.</p>
+  <figure class="diagram" tabindex="0" role="region" aria-label="Part IV finite-arm lower-bound dependency spine"><pre class="mermaid" aria-label="Part IV finite-arm lower-bound dependency spine">flowchart LR
+  C13[&quot;Chapter 13 · basic ideas&lt;br/&gt;required body compiled&lt;br/&gt;optional Notes/Exercises excluded&quot;]
+  C14[&quot;Chapter 14 · information theory&lt;br/&gt;required body compiled&lt;br/&gt;optional Notes/Exercises excluded&quot;]
+  C15[&quot;Chapter 15 · minimax lower bounds&lt;br/&gt;required body compiled&lt;br/&gt;optional Exercise 15.7 partial&quot;]
+  C16[&quot;Chapter 16 · instance-dependent bounds&lt;br/&gt;required body compiled&lt;br/&gt;optional Notes/Exercises excluded&quot;]
+  C17[&quot;Chapter 17 · high-probability bounds&lt;br/&gt;required body compiled with corrections&lt;br/&gt;Claim 17.6 non-strict; delta at most 1/32&quot;]
+  L13[&quot;minimax semantics&lt;br/&gt;least-explored arm&lt;br/&gt;two-environment algebra&quot;]
+  KL[&quot;relative entropy&lt;br/&gt;binary/event KL&lt;br/&gt;history change of measure&quot;]
+  MM[&quot;testing and tuning&lt;br/&gt;Gaussian minimax terminal&quot;]
+  ASY[&quot;policy consistency + d_inf&lt;br/&gt;exact finite-time and liminf terminals compiled&quot;]
+  HP[&quot;Stochastic tails and corrected adversarial terminal&lt;br/&gt;c=1/160, C=64; strict CDF tail&quot;]
+
+  L13 --&gt; C13
+  C13 --&gt; C14
+  C14 --&gt; KL
+  KL --&gt; C15
+  C15 --&gt; MM
+  MM --&gt; C16
+  C16 --&gt; ASY
+  ASY --&gt; C17
+  C17 --&gt; HP
+
+  classDef compiled fill:#dff5e7,stroke:#247249,color:#123b29
+  classDef partial fill:#fff2cc,stroke:#9a6b00,color:#563c00
+  classDef planned fill:#eef2f7,stroke:#64748b,color:#334155
+  class L13,C13,C14,C15,C16,C17,KL,MM,ASY,HP compiled
+</pre><figcaption>Part IV finite-arm lower-bound dependency spine · <a href="../diagrams/part-iv-lower-bounds.mmd">editable Mermaid source</a></figcaption><span class="diagram-scroll-hint" data-diagram-scroll-hint hidden>Swipe horizontally or use the left and right arrow keys to read the full diagram <span aria-hidden="true">↔</span></span></figure>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Textbook spine</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#spine">Textbook spine</a><a data-toc-link href="#source">Canonical source</a><a data-toc-link href="#chapters">Chapters 13–17</a><a data-toc-link href="#dependencies">Dependencies</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../static/site.js?v=20260903f"></script>
+</body>
+</html>

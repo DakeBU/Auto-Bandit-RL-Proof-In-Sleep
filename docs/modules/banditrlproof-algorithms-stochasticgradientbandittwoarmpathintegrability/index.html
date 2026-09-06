@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.StochasticGradientBanditTwoArmPathIntegrability · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.StochasticGradientBanditTwoArmPathIntegrability · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.StochasticGradientBanditTwoArmPathIntegrability · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Frontier</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>Stochastic<wbr>Gradient<wbr>Bandit<wbr>Two<wbr>Arm<wbr>Path<wbr>Integrability</h1>
+  <p class="lede">This module closes the finite-time regularity boundary needed before the conditional-distribution recurrences can be used in a tower argument.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean.html"><code>BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/frontier/index.html">10. Automation, resources, and open routes</a></dd></div>
+    <div><dt>Declarations</dt><dd>19</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-algorithms-stochasticgradientbandittwoarminitialrecurrence/index.html"><code>BanditRLProof.Algorithms.StochasticGradientBanditTwoArmInitialRecurrence</code></a>, <a href="../banditrlproof-algorithms-stochasticgradientbandittwoarmmeasurablerecurrence/index.html"><code>BanditRLProof.Algorithms.StochasticGradientBanditTwoArmMeasurableRecurrence</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-stochasticgradientbandittwoarmfixediid/index.html"><code>BanditRLProof.Algorithms.StochasticGradientBanditTwoArmFixedIID</code></a>, <a href="../banditrlproof-algorithms-stochasticgradientbandittwoarmunconditionalrecurrence/index.html"><code>BanditRLProof.Algorithms.StochasticGradientBanditTwoArmUnconditionalRecurrence</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-b25eed3ca5b1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integral_twoArmInitialPairKernel_exp_forwardIncrement_le_of_contract</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The uniform contract supplies the source-round forward base recurrence.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_twoArmInitialPairKernel_exp_forwardIncrement_le_of_contract {Env : Type v} [MeasurableSpace Env] (eta Delta : Real) (heta : <span class="num">0</span> &lt;= eta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean <span class="num">0</span> - mean <span class="num">1</span> = Delta) (env : Env) : integral (Thompson.measurableEnvironmentInitialPairKernel (historyAlgorithm (<span class="kw">fun</span> _ : Fin <span class="num">2</span> =&gt; <span class="num">0</span>) eta) environment env) (<span class="kw">fun</span> pair : Fin <span class="num">2</span> × Real =&gt; Real.exp (<span class="num">2</span> * eta * sourceIncrement (<span class="kw">fun</span> _ : Fin <span class="num">2</span> =&gt; (<span class="num">1</span> : Real) / <span class="num">2</span>) pair.<span class="num">2</span> pair.<span class="num">1</span> <span class="num">0</span>)) &lt;= <span class="num">1</span> + (eta * Delta + eta ^ <span class="num">2</span> * sourceC eta) / <span class="num">2</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean.html#L49">Source line 49</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b23232daf047">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integral_twoArmInitialPairKernel_exp_inverseIncrement_le_of_contract</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The same contract supplies the source-round inverse base recurrence.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_twoArmInitialPairKernel_exp_inverseIncrement_le_of_contract {Env : Type v} [MeasurableSpace Env] (eta Delta : Real) (heta : <span class="num">0</span> &lt;= eta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean <span class="num">0</span> - mean <span class="num">1</span> = Delta) (env : Env) : integral (Thompson.measurableEnvironmentInitialPairKernel (historyAlgorithm (<span class="kw">fun</span> _ : Fin <span class="num">2</span> =&gt; <span class="num">0</span>) eta) environment env) (<span class="kw">fun</span> pair : Fin <span class="num">2</span> × Real =&gt; Real.exp (-<span class="num">2</span> * eta * sourceIncrement (<span class="kw">fun</span> _ : Fin <span class="num">2</span> =&gt; (<span class="num">1</span> : Real) / <span class="num">2</span>) pair.<span class="num">2</span> pair.<span class="num">1</span> <span class="num">0</span>)) &lt;= <span class="num">1</span> - eta / <span class="num">2</span> * (Delta - eta * sourceC eta)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean.html#L71">Source line 71</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b139fd008706">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmTrajectoryMeasure_reward_zero_abs_le_one_ae</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The initial reward bound holds on the full prior-mixed canonical path.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmTrajectoryMeasure_reward_zero_abs_le_one_ae {Env : Type v} [MeasurableSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) : ∀ᵐ sample ∂twoArmTrajectoryMeasure prior eta environment, |(sample.<span class="num">2</span> <span class="num">0</span>).<span class="num">2</span>| &lt;= <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean.html#L95">Source line 95</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-753f62a7b0b8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmTrajectoryMeasure_reward_succ_abs_le_one_ae</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every fixed successor reward bound also holds on the full canonical path.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmTrajectoryMeasure_reward_succ_abs_le_one_ae {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) : ∀ᵐ sample ∂twoArmTrajectoryMeasure prior eta environment, |(sample.<span class="num">2</span> (n + <span class="num">1</span>)).<span class="num">2</span>| &lt;= <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean.html#L142">Source line 142</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-04780a200a2a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmTrajectoryMeasure_reward_abs_le_one_ae</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Uniform fixed-coordinate wrapper, separating coordinate zero from shifted
+successor coordinates.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmTrajectoryMeasure_reward_abs_le_one_ae {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (t : Nat) : ∀ᵐ sample ∂twoArmTrajectoryMeasure prior eta environment, |(sample.<span class="num">2</span> t).<span class="num">2</span>| &lt;= <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean.html#L197">Source line 197</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7e3dd3b140fe">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmTrajectoryMeasure_prefix_rewards_abs_le_one_ae</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">For a fixed finite prefix, all reward coordinates are simultaneously in
+the source support almost everywhere.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmTrajectoryMeasure_prefix_rewards_abs_le_one_ae {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) : ∀ᵐ sample ∂twoArmTrajectoryMeasure prior eta environment, ∀ i : Finset.Iic n, |(sample.<span class="num">2</span> i.<span class="num">1</span>).<span class="num">2</span>| &lt;= <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean.html#L217">Source line 217</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-47fd2fed8cb2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.abs_sourceIncrement_le_abs_reward_of_mem_Icc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">One Algorithm-1 coordinate update is no larger than the observed reward
+when the coordinate probability lies in `[0,1]`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> abs_sourceIncrement_le_abs_reward_of_mem_Icc {Action : Type*} [DecidableEq Action] (p : Action -&gt; Real) (reward : Real) (selected coordinate : Action) (hp_nonneg : <span class="num">0</span> &lt;= p coordinate) (hp_le_one : p coordinate &lt;= <span class="num">1</span>) : |sourceIncrement p reward selected coordinate| &lt;= |reward|</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean.html#L236">Source line 236</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ada6999c14a8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.abs_sourceIncrement_softmax_le_abs_reward</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Softmax coordinates satisfy the probability premises of the preceding
+generic update bound.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> abs_sourceIncrement_softmax_le_abs_reward {Action : Type*} [Fintype Action] [DecidableEq Action] [Nonempty Action] (theta : Action -&gt; Real) (reward : Real) (selected coordinate : Action) : |sourceIncrement (softmaxProbability theta) reward selected coordinate| &lt;= |reward|</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean.html#L252">Source line 252</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a5eb5a55fe93">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integrable_measurableTwoArmInitialPairKernel_sourceIncrement_of_contract</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The bounded fixed-mean contract discharges the initial-pair
+`Integrable sourceIncrement` premise used by Equation (5).  Only the support
+field of the contract is needed: softmax updates are measurable and have
+absolute value at most the observed reward.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_measurableTwoArmInitialPairKernel_sourceIncrement_of_contract {Env : Type v} [MeasurableSpace Env] (initialTheta : Fin <span class="num">2</span> -&gt; Real) (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (env : Env) (coordinate : Fin <span class="num">2</span>) : Integrable (<span class="kw">fun</span> pair : Fin <span class="num">2</span> × Real =&gt; sourceIncrement (softmaxProbability initialTheta) pair.<span class="num">2</span> pair.<span class="num">1</span> coordinate) (Thompson.measurableEnvironmentInitialPairKernel (historyAlgorithm initialTheta eta) environment env)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean.html#L268">Source line 268</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a963c4695acf">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integrable_measurableTwoArmHistoryStepKernel_sourceIncrement_of_contract</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The same contract discharges Equation-(5)&#x27;s source-increment
+integrability premise at every generated successor history.  No independence,
+gap, or learning-rate assumption is introduced.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_measurableTwoArmHistoryStepKernel_sourceIncrement_of_contract {Env : Type v} [MeasurableSpace Env] (initialTheta : Fin <span class="num">2</span> -&gt; Real) (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) (env : Env) (history : History.FinitePairHistory (Fin <span class="num">2</span>) Real n) (coordinate : Fin <span class="num">2</span>) : Integrable (<span class="kw">fun</span> pair : Fin <span class="num">2</span> × Real =&gt; sourceIncrement (softmaxProbability (historyParameter initialTheta eta n history)) pair.<span class="num">2</span> pair.<span class="num">1</span> coordinate) (Thompson.measurableEnvironmentHistoryStepKernel (historyAlgorithm initialTheta eta) environment n (env, history))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean.html#L312">Source line 312</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-83c38318a5d9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.abs_historyParameter_zeroInitialization_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">On a finite history supported in `[-1,1]`, every zero-initialized
+Algorithm-1 parameter coordinate grows by at most `|eta|` per consumed pair.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> abs_historyParameter_zeroInitialization_le (eta : Real) : <span class="kw">forall</span> n (history : History.FinitePairHistory (Fin <span class="num">2</span>) Real n) (coordinate : Fin <span class="num">2</span>), (<span class="kw">forall</span> i, |(history i).<span class="num">2</span>| &lt;= <span class="num">1</span>) -&gt; |historyParameter (<span class="kw">fun</span> _ : Fin <span class="num">2</span> =&gt; <span class="num">0</span>) eta n history coordinate| &lt;= ((n + <span class="num">1</span> : Nat) : Real) * |eta|</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean.html#L369">Source line 369</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-616714c62be2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmForwardTrajectorySuccessorPotential_eq_exp_historyParameter</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The forward successor potential is exactly the exponential of the next
+finite-history parameter.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmForwardTrajectorySuccessorPotential_eq_exp_historyParameter {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) (sample : Env × ((k : Nat) -&gt; Fin <span class="num">2</span> × Real)) : twoArmForwardSuccessorPotential eta (twoArmEnvironmentPrefix n sample).<span class="num">2</span> (twoArmNextPair n sample) = Real.exp (<span class="num">2</span> * historyParameter (<span class="kw">fun</span> _ : Fin <span class="num">2</span> =&gt; <span class="num">0</span>) eta (n + <span class="num">1</span>) (Preorder.frestrictLe (n + <span class="num">1</span>) sample.<span class="num">2</span>) <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean.html#L456">Source line 456</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f0fbbce595f1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmInverseTrajectorySuccessorPotential_eq_exp_historyParameter</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The inverse successor potential has the analogous next-parameter form.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmInverseTrajectorySuccessorPotential_eq_exp_historyParameter {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) (sample : Env × ((k : Nat) -&gt; Fin <span class="num">2</span> × Real)) : twoArmInverseSuccessorPotential eta (twoArmEnvironmentPrefix n sample).<span class="num">2</span> (twoArmNextPair n sample) = Real.exp (-<span class="num">2</span> * historyParameter (<span class="kw">fun</span> _ : Fin <span class="num">2</span> =&gt; <span class="num">0</span>) eta (n + <span class="num">1</span>) (Preorder.frestrictLe (n + <span class="num">1</span>) sample.<span class="num">2</span>) <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean.html#L475">Source line 475</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-15ac37a2e9aa">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integrable_twoArmForwardTrajectorySuccessorPotential</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The actual forward successor exponential is integrable on the canonical
+trajectory at every fixed successor index.  A finite prior is sufficient; no
+normalization of the prior is claimed or used.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_twoArmForwardTrajectorySuccessorPotential {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) : Integrable (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Fin <span class="num">2</span> × Real) =&gt; twoArmForwardSuccessorPotential eta (twoArmEnvironmentPrefix n sample).<span class="num">2</span> (twoArmNextPair n sample)) (twoArmTrajectoryMeasure prior eta environment)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean.html#L498">Source line 498</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-aeb2051f68b6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integrable_twoArmInverseTrajectorySuccessorPotential</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The inverse-odds successor exponential has the same deterministic
+fixed-time envelope and is integrable on the same canonical trajectory.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_twoArmInverseTrajectorySuccessorPotential {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) : Integrable (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Fin <span class="num">2</span> × Real) =&gt; twoArmInverseSuccessorPotential eta (twoArmEnvironmentPrefix n sample).<span class="num">2</span> (twoArmNextPair n sample)) (twoArmTrajectoryMeasure prior eta environment)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean.html#L543">Source line 543</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1f1a66ff0797">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmForwardTrajectorySuccessor_condExp_ae_eq_integral_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The fixed-time forward potential has the regular-conditional-distribution
+representation with respect to the environment/prefix sigma-algebra.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmForwardTrajectorySuccessor_condExp_ae_eq_integral_condDistrib {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) : (twoArmTrajectoryMeasure prior eta environment)[ <span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Fin <span class="num">2</span> × Real) =&gt; twoArmForwardSuccessorPotential eta (twoArmEnvironmentPrefix n sample).<span class="num">2</span> (twoArmNextPair n sample) | twoArmPrefixSigma (Env := Env) n] =ᵐ[ twoArmTrajectoryMeasure prior eta environment] <span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Fin <span class="num">2</span> × Real) =&gt; integral (condDistrib (twoArmNextPair n) (twoArmEnvironmentPrefix n) (twoArmTrajectoryMeasure prior eta environment) (twoArmEnvironmentPrefix n sample)) (twoArmForwardSuccessorPotential eta (twoArmEnvironmentPrefix n sample).<span class="num">2</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean.html#L593">Source line 593</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-17a007ef3836">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmInverseTrajectorySuccessor_condExp_ae_eq_integral_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The inverse potential has the same conditional-distribution
+representation.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmInverseTrajectorySuccessor_condExp_ae_eq_integral_condDistrib {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta : Real) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (n : Nat) : (twoArmTrajectoryMeasure prior eta environment)[ <span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Fin <span class="num">2</span> × Real) =&gt; twoArmInverseSuccessorPotential eta (twoArmEnvironmentPrefix n sample).<span class="num">2</span> (twoArmNextPair n sample) | twoArmPrefixSigma (Env := Env) n] =ᵐ[ twoArmTrajectoryMeasure prior eta environment] <span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Fin <span class="num">2</span> × Real) =&gt; integral (condDistrib (twoArmNextPair n) (twoArmEnvironmentPrefix n) (twoArmTrajectoryMeasure prior eta environment) (twoArmEnvironmentPrefix n sample)) (twoArmInverseSuccessorPotential eta (twoArmEnvironmentPrefix n sample).<span class="num">2</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean.html#L635">Source line 635</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8c7f1b339695">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Tower-ready forward conditional recurrence on the actual canonical path.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta Delta : Real) (heta : <span class="num">0</span> &lt;= eta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean <span class="num">0</span> - mean <span class="num">1</span> = Delta) (n : Nat) : (twoArmTrajectoryMeasure prior eta environment)[ <span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Fin <span class="num">2</span> × Real) =&gt; twoArmForwardSuccessorPotential eta (twoArmEnvironmentPrefix n sample).<span class="num">2</span> (twoArmNextPair n sample) | twoArmPrefixSigma (Env := Env) n] ≤ᵐ[ twoArmTrajectoryMeasure prior eta environment] <span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Fin <span class="num">2</span> × Real) =&gt; twoArmForwardRecurrenceBound eta Delta (twoArmEnvironmentPrefix n sample).<span class="num">2</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean.html#L676">Source line 676</a>
+      <a href="../../chapters/frontier/index.html#decl-8c7f1b339695-teaching">Open teaching explanation</a>
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-40e8045e765e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmInverseTrajectorySuccessor_condExp_le_recurrenceBound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Tower-ready inverse conditional recurrence on the same path.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmInverseTrajectorySuccessor_condExp_le_recurrenceBound {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] (prior : Measure Env) [IsFiniteMeasure prior] (eta Delta : Real) (heta : <span class="num">0</span> &lt;= eta) (environment : Thompson.MeasurableHistoryEnvironment Env (Fin <span class="num">2</span>) Real) (mean : Fin <span class="num">2</span> -&gt; Real) (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean) (hgap : mean <span class="num">0</span> - mean <span class="num">1</span> = Delta) (n : Nat) : (twoArmTrajectoryMeasure prior eta environment)[ <span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Fin <span class="num">2</span> × Real) =&gt; twoArmInverseSuccessorPotential eta (twoArmEnvironmentPrefix n sample).<span class="num">2</span> (twoArmNextPair n sample) | twoArmPrefixSigma (Env := Env) n] ≤ᵐ[ twoArmTrajectoryMeasure prior eta environment] <span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Fin <span class="num">2</span> × Real) =&gt; twoArmInverseRecurrenceBound eta Delta (twoArmEnvironmentPrefix n sample).<span class="num">2</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean.html#L706">Source line 706</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

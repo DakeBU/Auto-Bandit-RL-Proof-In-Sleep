@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="Linear and contextual bandits · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Linear and contextual bandits · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>Linear and contextual bandits · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group active" data-nav-group="research" data-nav-group-active="true" open><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">BanditRLwiki</a><a href="../../frontier/index.html">Frontier leaves</a><a href="../../papers/index.html">Paper index</a><a href="../../progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero wiki-hero" id="setting"><p class="eyebrow">BanditRLwiki setting</p><h1>Linear and contextual bandits</h1><p class="lede">Linear realizability, self-normalized confidence, finite policy classes, and dimension-dependent lower bounds.</p><p><a href="../../index.html">← All settings</a></p></section>
+<section id="signature"><h2>Comparison signature</h2><ul class="wiki-signature-list"><li><strong>Problem class.</strong> Linear stochastic or adversarial contextual bandits</li><li><strong>Feedback.</strong> Selected-action reward or loss</li><li><strong>Objective.</strong> Cumulative pseudo-regret or policy regret</li><li><strong>Parameters.</strong> Dimension d, actions A, policies N, rounds T, confidence delta</li></ul><div class="callout"><strong>Matching rule.</strong> A rate is called matched only when the upper and lower theorem contracts agree on the fields above; every remaining mismatch is named in the case.</div></section>
+<section id="setting-cases"><h2>3 cases</h2><div class="wiki-case-list">
+<details class="wiki-case-card" id="contextual-finite-policy-exp4p" data-wiki-case
+  data-family="linear-contextual"
+  data-literature="source-audit-pending"
+  data-lean="planned"
+  data-frontier="true"
+  data-search="contextual-finite-policy-exp4p finite-policy contextual bandits with exp4.p exp4.p gives high-probability policy regret for a finite expert class; the exact matching lower source still needs theorem-level audit in this wiki. linear and contextual bandits exp4.p contextual bandit finite policy class high probability source audit pending the upper theorem is indexed exactly; a compatible primary lower theorem, assumptions, and constants have not yet been frozen here. no finite-policy contextual exp4.p terminal is mapped to a local lean declaration." open>
+  <summary>
+    <span class="wiki-case-id">contextual-finite-policy-exp4p</span>
+    <span class="wiki-case-summary-copy"><strong>Finite-policy contextual bandits with Exp4.P</strong><span>Exp4.P gives high-probability policy regret for a finite expert class; the exact matching lower source still needs theorem-level audit in this Wiki.</span></span>
+    <span class="wiki-case-statuses"><span class="wiki-badge literature source-audit-pending" data-wiki-literature-status="source-audit-pending">Source audit pending</span><span class="wiki-badge lean planned" data-wiki-lean-status="planned">Planned</span></span>
+  </summary>
+  <div class="wiki-case-body">
+    <div class="wiki-case-actions"><a href="../../cases/contextual-finite-policy-exp4p/index.html">Open stable case page →</a><span><span class="wiki-badge source primary-reference-pending" data-wiki-source-status="primary-reference-pending">Primary reference pending</span></span></div>
+    <div class="wiki-tags"><span>Exp4.P</span><span>contextual bandit</span><span>finite policy class</span><span>high probability</span><span>source audit pending</span></div>
+    <dl class="wiki-signature"><div><dt>Context model</dt><dd>Adversarial contexts and rewards</dd></div><div><dt>Policy class</dt><dd>N finite experts mapping contexts to A actions</dd></div><div><dt>Regret</dt><dd>High-probability regret to the best policy</dd></div><div><dt>Target scale</dt><dd>sqrt(A T log(N/delta))</dd></div></dl>
+    <section class="wiki-comparison">
+      <div><p class="panel-kicker">Comparison judgment</p><h3>Source audit pending</h3><p>This is a source-audit queue item, not a claim that the lower bound is unknown in the literature.</p><p><strong>Known gap.</strong> The upper theorem is indexed exactly; a compatible primary lower theorem, assumptions, and constants have not yet been frozen here.</p></div>
+      <div><p class="panel-kicker">Local Lean boundary</p><h3>Planned</h3><p>No finite-policy contextual Exp4.P terminal is mapped to a local Lean declaration.</p></div>
+    </section>
+    <div class="wiki-bound-grid">
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>Exp4.P high-probability policy-regret upper bound</h3>
+  <p class="wiki-paper-title">Contextual Bandit Algorithms with Supervised Learning Guarantees</p>
+  <p class="wiki-source-meta">Alina Beygelzimer, John Langford, Lihong Li, Lev Reyzin, and Robert Schapire · 2010 · Theorem 2</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Exp4.P has high-probability regret at most six times square root A T log N over delta under the source conditions.</span><span class="math-tex" aria-hidden="true">\[R_T\le 6\sqrt{AT\log(N/\delta)}\quad\text{with probability at least }1-\delta.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Includes the source&#x27;s uniform expert and log(N/delta) at most A T conditions.</p>
+  <a href="https://arxiv.org/abs/1002.4058">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+      <article class="wiki-bound empty-bound"><p class="panel-kicker">Lower bound</p><h3>No source theorem claimed</h3><p>The source audit has not registered a compatible theorem for this side of the comparison.</p></article>
+    </div>
+    <section class="wiki-lean-evidence">
+      <div><p class="panel-kicker">Local Lean evidence</p><h3>Exact declarations</h3><ul><li>No local declaration is claimed for this target.</li></ul></div>
+      <div><p class="panel-kicker">Not yet proved here</p><h3>Missing steps</h3><ul><li>Define measurable context-to-action experts and the expert-mixture sampler.</li><li>Formalize the importance-weighted estimator and Exp4.P variance bonus.</li><li>Audit and freeze the exact compatible lower theorem before assigning near-minimax status.</li></ul></div>
+    </section>
+
+<section class="wiki-frontier-note">
+  <p class="panel-kicker">formalization frontier</p>
+  <h3>Which exact contextual lower theorem matches the displayed Exp4.P contract, and how should its policy class be represented in Lean?</h3>
+  <p>The Exp4.P upper theorem is frozen; the lower-source audit and all local formalization remain pending.</p>
+  <ul><li>Exact lower source</li><li>expert measurability</li><li>mixture action law</li><li>high-probability terminal</li><li>Named formalization leaf: EXP4P-LOWER-SOURCE-AUDIT</li><li>Named formalization leaf: EXP4P-CONTEXT-POLICY-INTERFACE</li></ul>
+</section>
+  </div>
+</details>
+<details class="wiki-case-card" id="stochastic-linear-oful" data-wiki-case
+  data-family="linear-contextual"
+  data-literature="near-minimax"
+  data-lean="partial"
+  data-frontier="true"
+  data-search="stochastic-linear-oful stochastic linear bandits: oful versus dimension-dependent lower bounds oful is near minimax up to logarithmic factors in dimension-dependent high-probability regret. linear and contextual bandits oful linear bandit self normalized elliptical potential high probability logarithmic factors, source normalization, decision-set generality, and constants separate the oful upper from the d sqrt(t) lower. the displayed upper is high probability, whereas the lower is an expected-regret minimax statement, so the comparison is only at leading polynomial scale. elliptical potential, self-normalized ridge confidence, a measurable horizon-free finite-action policy, all-time confidence, and one-policy all-horizon regret compile. full source geometry and the linear lower bound do not." open>
+  <summary>
+    <span class="wiki-case-id">stochastic-linear-oful</span>
+    <span class="wiki-case-summary-copy"><strong>Stochastic linear bandits: OFUL versus dimension-dependent lower bounds</strong><span>OFUL is near minimax up to logarithmic factors in dimension-dependent high-probability regret.</span></span>
+    <span class="wiki-case-statuses"><span class="wiki-badge literature near-minimax" data-wiki-literature-status="near-minimax">Near minimax</span><span class="wiki-badge lean partial" data-wiki-lean-status="partial">Partial local route</span></span>
+  </summary>
+  <div class="wiki-case-body">
+    <div class="wiki-case-actions"><a href="../../cases/stochastic-linear-oful/index.html">Open stable case page →</a><span><span class="wiki-badge source exact-source-theorem" data-wiki-source-status="exact-source-theorem">Exact source theorem</span></span></div>
+    <div class="wiki-tags"><span>OFUL</span><span>linear bandit</span><span>self normalized</span><span>elliptical potential</span><span>high probability</span></div>
+    <dl class="wiki-signature"><div><dt>Reward model</dt><dd>Linear mean x_t dot theta-star with conditionally sub-Gaussian noise</dd></div><div><dt>Geometry</dt><dd>Bounded actions and parameter norm in dimension d</dd></div><div><dt>Regret</dt><dd>High-probability cumulative pseudo-regret</dd></div><div><dt>Target scale</dt><dd>d sqrt(T) up to logarithmic factors</dd></div></dl>
+    <section class="wiki-comparison">
+      <div><p class="panel-kicker">Comparison judgment</p><h3>Near minimax</h3><p>The upper and lower dimension dependence agree at leading polynomial order. The local route is a finite-action scalar-ridge specialization, not the full paper theorem.</p><p><strong>Known gap.</strong> Logarithmic factors, source normalization, decision-set generality, and constants separate the OFUL upper from the d sqrt(T) lower. The displayed upper is high probability, whereas the lower is an expected-regret minimax statement, so the comparison is only at leading polynomial scale.</p></div>
+      <div><p class="panel-kicker">Local Lean boundary</p><h3>Partial local route</h3><p>Elliptical potential, self-normalized ridge confidence, a measurable horizon-free finite-action policy, all-time confidence, and one-policy all-horizon regret compile. Full source geometry and the linear lower bound do not.</p></div>
+    </section>
+    <div class="wiki-bound-grid">
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>OFUL high-probability regret upper bound</h3>
+  <p class="wiki-paper-title">Improved Algorithms for Linear Stochastic Bandits</p>
+  <p class="wiki-source-meta">Yasin Abbasi-Yadkori, Dávid Pál, and Csaba Szepesvári · 2011 · Theorem 13</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">OFUL has a high-probability dimension times square root T regret bound up to logarithmic and regularization factors.</span><span class="math-tex" aria-hidden="true">\[R_T=\widetilde O\!\left(d\sqrt{T}\right)\quad\text{with probability at least }1-\delta.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Use the exact confidence radius, determinant term, action-set, and norm assumptions in Theorem 13.</p>
+  <a href="https://arxiv.org/abs/1102.2670">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Lower bound</p>
+  <h3>Linear-bandit minimax expected-regret lower bound</h3>
+  <p class="wiki-paper-title">Stochastic Linear Optimization under Bandit Feedback</p>
+  <p class="wiki-source-meta">Varsha Dani, Thomas Hayes, and Sham Kakade · 2008 · Theorem 3</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Lower bound guarantee"><strong>Lower bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">A constructed linear decision domain forces expected regret at least one tenth d square root T.</span><span class="math-tex" aria-hidden="true">\[\inf_\pi\sup_\theta\mathbb E R_T(\pi,\theta)\ge \frac1{10}d\sqrt{T}.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>The lower theorem uses its explicit domain, dimension, and horizon range.</p>
+  <a href="https://www.learningtheory.org/colt2008/papers/80-Dani.pdf">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+    </div>
+    <section class="wiki-lean-evidence">
+      <div><p class="panel-kicker">Local Lean evidence</p><h3>Exact declarations</h3><ul><li><a href="../../../modules/banditrlproof-ofulscheduledallhorizonhighprobabilityregretrate/index.html#decl-b9038b9a0219"><code>Bandit<wbr>RL<wbr>Proof.<wbr>OFUL.<wbr>telescoping<wbr>Canonical<wbr>Standard<wbr>High<wbr>Probability<wbr>Pseudo<wbr>Regret_<wbr>nonneg_<wbr>and_<wbr>all<wbr>Horizon_<wbr>tail_<wbr>le_<wbr>explicit<wbr>Bound_<wbr>of_<wbr>linear<wbr>Subgaussian<wbr>Environment_<wbr>of_<wbr>feature<wbr>Bound_<wbr>le_<wbr>regularization</code></a></li></ul></div>
+      <div><p class="panel-kicker">Not yet proved here</p><h3>Missing steps</h3><ul><li>Audit exact correspondence with OFUL Theorem 13 constants and normalization.</li><li>Generalize beyond the current finite-action scalar-ridge interface.</li><li>Formalize a compatible Gaussian linear hard family and d sqrt(T) lower terminal.</li></ul></div>
+    </section>
+
+<section class="wiki-frontier-note">
+  <p class="panel-kicker">formalization frontier</p>
+  <h3>Can the finite-action scalar route be lifted to the exact OFUL theorem and paired with a compatible linear minimax lower construction?</h3>
+  <p>The local high-probability all-horizon consumer is strong but intentionally narrower than the source theorem.</p>
+  <ul><li>General decision set</li><li>source radius identity</li><li>hard family</li><li>upper/lower comparison terminal</li><li>Named formalization leaf: OFUL-SOURCE-THEOREM-13-IDENTITY</li><li>Named formalization leaf: LINEAR-BANDIT-MINIMAX-LOWER</li></ul>
+</section>
+  </div>
+</details>
+<details class="wiki-case-card" id="finite-action-linear-contextual" data-wiki-case
+  data-family="linear-contextual"
+  data-literature="near-minimax"
+  data-lean="planned"
+  data-frontier="true"
+  data-search="finite-action-linear-contextual finite-action linear contextual minimax rates suplinucb/vcl upper and lower theorems match the finite-action contextual rate up to iterated logarithms. linear and contextual bandits linear contextual suplinucb vcl finite actions near minimax the upper differs from the lower by iterated logarithms; theorem 2 also requires n at most 2^(d/2) and t at least d (log_2 n)^(1+epsilon). no time-varying finite-action contextual theorem is claimed locally. existing oful declarations are reusable proof infrastructure only." open>
+  <summary>
+    <span class="wiki-case-id">finite-action-linear-contextual</span>
+    <span class="wiki-case-summary-copy"><strong>Finite-action linear contextual minimax rates</strong><span>SupLinUCB/VCL upper and lower theorems match the finite-action contextual rate up to iterated logarithms.</span></span>
+    <span class="wiki-case-statuses"><span class="wiki-badge literature near-minimax" data-wiki-literature-status="near-minimax">Near minimax</span><span class="wiki-badge lean planned" data-wiki-lean-status="planned">Planned</span></span>
+  </summary>
+  <div class="wiki-case-body">
+    <div class="wiki-case-actions"><a href="../../cases/finite-action-linear-contextual/index.html">Open stable case page →</a><span><span class="wiki-badge source exact-source-theorem" data-wiki-source-status="exact-source-theorem">Exact source theorem</span></span></div>
+    <div class="wiki-tags"><span>linear contextual</span><span>SupLinUCB</span><span>VCL</span><span>finite actions</span><span>near minimax</span></div>
+    <dl class="wiki-signature"><div><dt>Context model</dt><dd>d-dimensional realizable contexts with n available actions per round</dd></div><div><dt>Reward model</dt><dd>Stochastic linear reward</dd></div><div><dt>Regret</dt><dd>Expected cumulative regret</dd></div><div><dt>Target scale</dt><dd>square root(d T log T log n), up to iterated logarithms</dd></div></dl>
+    <section class="wiki-comparison">
+      <div><p class="panel-kicker">Comparison judgment</p><h3>Near minimax</h3><p>The source gives both sides under an explicit parameter fence. Do not treat the local OFUL scaffold as a proof of this contextual finite-action result.</p><p><strong>Known gap.</strong> The upper differs from the lower by iterated logarithms; Theorem 2 also requires n at most 2^(d/2) and T at least d (log_2 n)^(1+epsilon).</p></div>
+      <div><p class="panel-kicker">Local Lean boundary</p><h3>Planned</h3><p>No time-varying finite-action contextual theorem is claimed locally. Existing OFUL declarations are reusable proof infrastructure only.</p></div>
+    </section>
+    <div class="wiki-bound-grid">
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>Finite-action linear contextual upper bound</h3>
+  <p class="wiki-paper-title">Nearly Minimax-Optimal Regret for Linearly Parameterized Bandits</p>
+  <p class="wiki-source-meta">Lihong Li, Wei Wang, and Zhihua Zhou · 2019 · Theorem 1</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">The minimax regret is at most square root d T log T log n times iterated-logarithmic factors.</span><span class="math-tex" aria-hidden="true">\[R^*(T;n,d)\le \operatorname{poly}(\log\log(nT))\,O\!\left(\sqrt{dT\log T\log n}\right).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Finite action sets and the source&#x27;s realizability, action-count, dimension, and horizon conditions.</p>
+  <a href="https://arxiv.org/abs/1904.00242">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Lower bound</p>
+  <h3>Finite-action linear contextual lower bound</h3>
+  <p class="wiki-paper-title">Nearly Minimax-Optimal Regret for Linearly Parameterized Bandits</p>
+  <p class="wiki-source-meta">Lihong Li, Wei Wang, and Zhihua Zhou · 2019 · Theorem 2</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Lower bound guarantee"><strong>Lower bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Under the theorem&#x27;s action-count and horizon fence, every algorithm has regret at the displayed finite-action contextual scale.</span><span class="math-tex" aria-hidden="true">\[R^*(T;n,d)=\Omega_\varepsilon\!\left(\sqrt{dT\log n\,\log(T/d)}\right).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>For every small epsilon greater than zero, n is at most 2^(d/2) and T is at least d (log_2 n)^(1+epsilon), together with the source&#x27;s remaining conditions.</p>
+  <a href="https://arxiv.org/abs/1904.00242">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+    </div>
+    <section class="wiki-lean-evidence">
+      <div><p class="panel-kicker">Local Lean evidence</p><h3>Exact declarations</h3><ul><li>No local declaration is claimed for this target.</li></ul></div>
+      <div><p class="panel-kicker">Not yet proved here</p><h3>Missing steps</h3><ul><li>Represent time-varying action sets and contexts measurably.</li><li>Formalize the VCL layer partition and contextual lower construction.</li><li>Retain the action-count and horizon fence in the final comparison theorem.</li></ul></div>
+    </section>
+
+<section class="wiki-frontier-note">
+  <p class="panel-kicker">formalization frontier</p>
+  <h3>Can the exact Theorems 1–2 parameter fence and VCL construction be represented in one contextual Lean history law?</h3>
+  <p>The primary upper/lower comparison is audited; all local contextual algorithm and lower-construction work remains planned.</p>
+  <ul><li>Contextual history law</li><li>VCL layers</li><li>parameter fence</li><li>lower construction</li><li>Named formalization leaf: VCL-CONTEXTUAL-HISTORY-LAW</li><li>Named formalization leaf: VCL-LAYER-PARTITION</li><li>Named formalization leaf: VCL-LOWER-CONSTRUCTION</li></ul>
+</section>
+  </div>
+</details></div></section></main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Setting</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#setting">Setting</a><a data-toc-link href="#signature">Signature</a><a data-toc-link href="#setting-cases">Cases</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

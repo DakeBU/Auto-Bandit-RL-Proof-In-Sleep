@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Finite-horizon RL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>RL.<wbr>Finite<wbr>Horizon<wbr>Adaptive<wbr>Cumulative<wbr>Exploratory<wbr>Behavior<wbr>Regret</h1>
+  <p class="lede">This module transports cumulative expected-regret certificates from deterministic recommended policies to the exploratory behavior policies actually used by the adaptive source. The explicit charge is linear in the exploration rate and quadratic in the horizon. For a fixed exploration rate, the vanishing statistical certificate therefore converges to that charge, not to zero.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean.html"><code>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/finite-horizon-rl/index.html">9. Finite-horizon reinforcement learning</a></dd></div>
+    <div><dt>Declarations</dt><dd>20</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-rl-finitehorizonadaptivecumulativeinversesqrthighprobabilityaverageconsistency/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeInverseSqrtHighProbabilityAverageConsistency</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-rl-finitehorizonadaptivecumulativedecayingexplorationbehaviorconsistency/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeDecayingExplorationBehaviorConsistency</code></a>, <a href="../banditrlproof-rl-finitehorizonadaptivestochasticrewardempiricaloptimisticrealizedbehaviorregret/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardEmpiricalOptimisticRealizedBehaviorRegret</code></a>, <a href="../banditrlproof-rl-finitehorizonadaptivestochasticrewardsampledempiricaloptimisticcum-297b24f7f88e/index.html"><code>BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticCumulativeExploratoryBehaviorRegret</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-74c99a1fd93c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.DeterministicMarkovPolicyTable.exploratoryActionPMF_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratoryActionPMF_apply {mdp : MDP State Action} (table : DeterministicMarkovPolicyTable mdp) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (stage : Fin mdp.horizon) (state : State) (action : Action) : table.exploratoryActionPMF explorationRate hexplorationRate stage state action = (explorationRate : ENNReal) * (Fintype.card Action : ENNReal)⁻¹ + ((<span class="num">1</span> - explorationRate : NNReal) : ENNReal) * <span class="kw">if</span> action = table stage state <span class="kw">then</span> <span class="num">1</span> <span class="kw">else</span> <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean.html#L30">Source line 30</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a2d1e5536464">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.DeterministicMarkovPolicyTable.integral_exploratoryActionPMF</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_exploratoryActionPMF {mdp : MDP State Action} (table : DeterministicMarkovPolicyTable mdp) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (stage : Fin mdp.horizon) (state : State) (f : Action -&gt; Real) : (∫ action, f action ∂ (table.exploratoryActionPMF explorationRate hexplorationRate stage state).toMeasure) = (explorationRate : Real) * (∑ action, f action) / (Fintype.card Action : Real) + (<span class="num">1</span> - (explorationRate : Real)) * f (table stage state)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean.html#L43">Source line 43</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f66a6eed3b8f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.DeterministicMarkovPolicyTable.selected_sub_integral_exploratoryActionPMF_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selected_sub_integral_exploratoryActionPMF_le {mdp : MDP State Action} (table : DeterministicMarkovPolicyTable mdp) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (stage : Fin mdp.horizon) (state : State) (f : Action -&gt; Real) (bound : Real) (hbound : <span class="kw">forall</span> action, |f action| &lt;= bound) : f (table stage state) - (∫ action, f action ∂ (table.exploratoryActionPMF explorationRate hexplorationRate stage state).toMeasure) &lt;= <span class="num">2</span> * (explorationRate : Real) * bound</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean.html#L99">Source line 99</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e58ea8db2867">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.bellmanQ_abs_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A bounded continuation gives a bounded one-step action value.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> bellmanQ_abs_le (mdp : MDP State Action) (rewardBound continuationBound : Real) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= rewardBound) {value : State -&gt; Real} (hvalue : <span class="kw">forall</span> state, |value state| &lt;= continuationBound) (state : State) (action : Action) : |mdp.bellmanQ value state action| &lt;= rewardBound + continuationBound</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean.html#L151">Source line 151</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ed7e9ae05a54">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.transitionValue_sub_le_const</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A pointwise continuation difference bound transports through one transition kernel.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> transitionValue_sub_le_const (mdp : MDP State Action) {left right : State -&gt; Real} {bound : Real} (hbound : <span class="kw">forall</span> state, left state - right state &lt;= bound) (state : State) (action : Action) : mdp.transitionValue left state action - mdp.transitionValue right state action &lt;= bound</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean.html#L172">Source line 172</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-873364244743">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MarkovPolicy.valueRemaining_abs_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every bounded-reward policy value is bounded by remaining horizon times the reward bound.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> valueRemaining_abs_le {mdp : MDP State Action} (policy : MarkovPolicy mdp) (rewardBound : Real) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= rewardBound) (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) (state : State) : |policy.valueRemaining remaining hremaining state| &lt;= (remaining : Real) * rewardBound</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean.html#L199">Source line 199</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cb09a77e9a95">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.DeterministicMarkovPolicyTable.toMarkovPolicy_bellman</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Bellman evaluation of a deterministic table selects exactly its table action.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> toMarkovPolicy_bellman {mdp : MDP State Action} (table : DeterministicMarkovPolicyTable mdp) (stage : Fin mdp.horizon) (value : State -&gt; Real) (state : State) : table.toMarkovPolicy.bellman stage value state = mdp.bellmanQ value state (table stage state)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean.html#L234">Source line 234</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8575f0d282e9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.DeterministicMarkovPolicyTable.exploratoryPolicy_bellman</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Bellman evaluation of the exploratory table is its explicit PMF mixture.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratoryPolicy_bellman {mdp : MDP State Action} (table : DeterministicMarkovPolicyTable mdp) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (stage : Fin mdp.horizon) (value : State -&gt; Real) (state : State) : (table.exploratoryPolicy explorationRate hexplorationRate).bellman stage value state = (explorationRate : Real) * (∑ action, mdp.bellmanQ value state action) / (Fintype.card Action : Real) + (<span class="num">1</span> - (explorationRate : Real)) * mdp.bellmanQ value state (table stage state)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean.html#L247">Source line 247</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6444e14ac0fe">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.DeterministicMarkovPolicyTable.toMarkovPolicy_valueRemaining_sub_exploratoryPolicy_valueRemaining_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exploration around a deterministic table loses at most the explicit quadratic-horizon charge.
+The charge is linear in the exploration rate and reward bound.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> toMarkovPolicy_valueRemaining_sub_exploratoryPolicy_valueRemaining_le {mdp : MDP State Action} (table : DeterministicMarkovPolicyTable mdp) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (rewardBound : Real) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= rewardBound) (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) (state : State) : table.toMarkovPolicy.valueRemaining remaining hremaining state - (table.exploratoryPolicy explorationRate hexplorationRate).valueRemaining remaining hremaining state &lt;= (explorationRate : Real) * rewardBound * (remaining : Real) * ((remaining + <span class="num">1</span> : Nat) : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean.html#L269">Source line 269</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-945a9bc13579">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.DeterministicMarkovPolicyTable.exploratoryPolicy_expectedRegret_le_toMarkovPolicy_expectedRegret_add_charge</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exploratory-behavior expected regret is bounded by table regret plus its exploration charge.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratoryPolicy_expectedRegret_le_toMarkovPolicy_expectedRegret_add_charge {mdp : MDP State Action} (table : DeterministicMarkovPolicyTable mdp) (initialState : Measure State) [IsProbabilityMeasure initialState] (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (rewardBound : Real) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= rewardBound) : (table.exploratoryPolicy explorationRate hexplorationRate).expectedRegret initialState &lt;= table.toMarkovPolicy.expectedRegret initialState + (explorationRate : Real) * rewardBound * (mdp.horizon : Real) * ((mdp.horizon + <span class="num">1</span> : Nat) : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean.html#L356">Source line 356</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6be39bff586d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.exploratoryBehaviorRegretCharge</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The per-policy price of uniform exploration over a bounded-reward horizon.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> exploratoryBehaviorRegretCharge (mdp : MDP State Action) (explorationRate : NNReal) (rewardBound : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean.html#L438">Source line 438</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f9e6c84f0c8e">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.adaptiveCumulativeEmpiricalOptimisticExploratoryBehaviorExpectedRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Sum of expected regrets of exploratory behaviors centered on cumulative recommendations.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> adaptiveCumulativeEmpiricalOptimisticExploratoryBehaviorExpectedRegret {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (trajectory : EpisodeBatchTrajectory mdp episodes) (defaultState : State) (countRadius : TransitionCountRadius) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (rounds : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean.html#L445">Source line 445</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7c162758e7bf">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.adaptiveCumulativeEmpiricalOptimisticAverageExploratoryBehaviorExpectedRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Average expected regret of those exploratory behaviors.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> adaptiveCumulativeEmpiricalOptimisticAverageExploratoryBehaviorExpectedRegret {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (trajectory : EpisodeBatchTrajectory mdp episodes) (defaultState : State) (countRadius : TransitionCountRadius) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (rounds : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean.html#L458">Source line 458</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b8bf55541f9b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.adaptiveCumulativeEmpiricalOptimisticExploratoryBehaviorExpectedRegret_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Cumulative exploratory behavior regret is bounded by recommendation regret plus one charge per round.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> adaptiveCumulativeEmpiricalOptimisticExploratoryBehaviorExpectedRegret_le {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (trajectory : EpisodeBatchTrajectory mdp episodes) (defaultState : State) (countRadius : TransitionCountRadius) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (rewardBound : Real) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= rewardBound) (rounds : Nat) : adaptiveCumulativeEmpiricalOptimisticExploratoryBehaviorExpectedRegret (initialState := initialState) trajectory defaultState countRadius explorationRate hexplorationRate rounds &lt;= adaptiveCumulativeEmpiricalOptimisticRecommendedExpectedRegret (initialState := initialState) trajectory defaultState countRadius rounds + (rounds : Real) * exploratoryBehaviorRegretCharge mdp explorationRate rewardBound</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean.html#L471">Source line 471</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c534d715855b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.adaptiveCumulativeEmpiricalOptimisticAverageExploratoryBehaviorExpectedRegret_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">For a nonempty window, averaging removes the repeated-round factor from the charge.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> adaptiveCumulativeEmpiricalOptimisticAverageExploratoryBehaviorExpectedRegret_le {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (trajectory : EpisodeBatchTrajectory mdp episodes) (defaultState : State) (countRadius : TransitionCountRadius) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (rewardBound : Real) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= rewardBound) (rounds : Nat) (hrounds : <span class="num">0</span> &lt; rounds) : adaptiveCumulativeEmpiricalOptimisticAverageExploratoryBehaviorExpectedRegret (initialState := initialState) trajectory defaultState countRadius explorationRate hexplorationRate rounds &lt;= adaptiveCumulativeEmpiricalOptimisticAverageRecommendedExpectedRegret (initialState := initialState) trajectory defaultState countRadius rounds + exploratoryBehaviorRegretCharge mdp explorationRate rewardBound</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean.html#L520">Source line 520</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4b4c4ac3da1d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.vanishingDeltaScheduledAverageExploratoryBehaviorExpectedRegretBound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite-window behavior-regret certificate adds the explicit exploration charge.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> vanishingDeltaScheduledAverageExploratoryBehaviorExpectedRegretBound (mdp : MDP State Action) (n : Nat) (visitFloor : Real) (explorationRate : NNReal) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean.html#L563">Source line 563</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4f390a621403">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveEpisodeBatchSource.vanishingDeltaScheduledAverageExploratoryBehaviorBound_tendsto_charge</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">With a fixed exploration rate, the deterministic certificate tends to its exploration charge.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> vanishingDeltaScheduledAverageExploratoryBehaviorBound_tendsto_charge (mdp : MDP State Action) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (visitFloor : Real) (hvisitFloor : <span class="num">0</span> &lt; visitFloor) (explorationRate : NNReal) : Filter.Tendsto (<span class="kw">fun</span> n =&gt; vanishingDeltaScheduledAverageExploratoryBehaviorExpectedRegretBound mdp n visitFloor explorationRate) Filter.atTop (nhds (exploratoryBehaviorRegretCharge mdp explorationRate <span class="num">1</span>))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean.html#L570">Source line 570</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a74be047ad25">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeEmpiricalOptimisticSource.exploratorySource_policyAt_succ_eq_cumulativeOptimisticExploratoryPolicy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The regret term indexed by `round` is the source&#x27;s successor behavior at coordinate
+`round + 1`; the initial behavior at coordinate zero is intentionally excluded.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_policyAt_succ_eq_cumulativeOptimisticExploratoryPolicy {mdp : MDP State Action} {initialState : Measure State} [IsProbabilityMeasure initialState] {episodes : Nat} (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (countRadius : TransitionCountRadius) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat) : (exploratorySource mdp initialState episodes initialTable defaultState countRadius explorationRate hexplorationRate).policyAt trajectory (round + <span class="num">1</span>) = ((cumulativeTransitionCountSummaryAt trajectory round) |&gt;.countRadiusOptimisticPolicyTable mdp defaultState countRadius |&gt;.exploratoryPolicy explorationRate hexplorationRate)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean.html#L594">Source line 594</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-80effa16b15e">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeEmpiricalOptimisticSource.vanishingDeltaScheduledAverageExploratoryBehaviorRegretViolationSet</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Trajectories whose average exploratory-behavior regret exceeds its charged certificate.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> vanishingDeltaScheduledAverageExploratoryBehaviorRegretViolationSet (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (defaultState : State) (n : Nat) (visitFloor : Real) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) : Set (EpisodeBatchTrajectory mdp (AdaptiveEpisodeBatchSource.vanishingDeltaScheduledEpisodes mdp n visitFloor))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean.html#L609">Source line 609</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cad808dc37a6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeEmpiricalOptimisticSource.exploratorySource_trajectoryMeasure_cumulativeInverseSqrtPathSupport_optimism_and_vanishingDeltaScheduledAverageExploratoryBehaviorExpectedRegret</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-window high-probability endpoint for successor exploratory behaviors at source coordinates
+`1` through `n + 1`; the initial-table behavior at coordinate zero is not charged here.
+The violation set is contained in the measurable count bad event; outside that event, optimism and
+the charged average behavior-regret certificate hold simultaneously.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exploratorySource_trajectoryMeasure_cumulativeInverseSqrtPathSupport_optimism_and_vanishingDeltaScheduledAverageExploratoryBehaviorExpectedRegret (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] (n : Nat) (visitFloor : Real) [StandardBorelSpace (EpisodeBatch mdp (AdaptiveEpisodeBatchSource.vanishingDeltaScheduledEpisodes mdp n visitFloor))] [StandardBorelSpace (EpisodeBatchTrajectory mdp (AdaptiveEpisodeBatchSource.vanishingDeltaScheduledEpisodes mdp n visitFloor))] (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= <span class="num">1</span>) (support : ExploratoryPathSupport mdp initialState) (hfloor : ExploratoryPathUniformVisitFloor support explorationRate visitFloor) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hvisitFloor : <span class="num">0</span> &lt; visitFloor) : <span class="kw">let</span> episodes := AdaptiveEpisodeBatchSource.vanishingDeltaScheduledEpisodes mdp n visitFloor <span class="kw">let</span> delta := AdaptiveEpisodeBatchSource.vanishingAverageConfidenceDelta n <span class="kw">let</span> countRadius := AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtCountRadius mdp (n + <span class="num">1</span>) delta visitFloor <span class="kw">let</span> source := exploratorySource mdp initialState episodes initialTable defaultState countRadius explorationRate hexplorationRate <span class="kw">let</span> violationSet := vanishingDeltaScheduledAverageExploratoryBehaviorRegretViolationSet mdp initialState defaultState n visitFloor explorationRate hexplorationRate MeasurableSet (source.adaptiveCumulativeCountBadEvent (n + <span class="num">1</span>) delta) /\ source.trajectoryMeasure (source.adaptiveCumulativeCountBadEvent (n + <span class="num">1</span>) delta) &lt;= ENNReal.ofReal delta /\ violationSet ⊆ source.adaptiveCumulativeCountBadEvent (n + <span class="num">1</span>) delta /\ source.trajectoryMeasure violationSet &lt;= ENNReal.ofReal delta /\ <span class="kw">forall</span> trajectory, trajectory ∉ source.adaptiveCumulativeCountBadEvent (n + <span class="num">1</span>) delta -&gt; (<span class="kw">forall</span> round : Fin (n + <span class="num">1</span>), <span class="kw">forall</span> state, mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;= (adaptiveCumulativeEmpiricalOptimisticPlanAt trajectory defaultState countRadius round).upperValueRemaining mdp.horizon le_rfl state) /\ adaptiveCumulativeEmpiricalOptimisticAverageExploratoryBehaviorExpectedRegret (initialState := initialState) trajectory defaultState countRadius explorationRate hexplorationRate (n + <span class="num">1</span>) &lt;= AdaptiveEpisodeBatchSource.vanishingDeltaScheduledAverageExploratoryBehaviorExpectedRegretBound mdp n visitFloor explorationRate</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeExploratoryBehaviorRegret.lean.html#L635">Source line 635</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/LowerBounds/GaussianMillsRatio.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/LowerBounds/GaussianMillsRatio.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/LowerBounds/GaussianMillsRatio.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/LowerBounds/GaussianMillsRatio.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import Mathlib.Analysis.SpecialFunctions.Sqrt</span>
+<span id="L2">2 import Mathlib.Analysis.Real.Pi.Bounds</span>
+<span id="L3">3 import Mathlib.Analysis.SpecialFunctions.ExpDeriv</span>
+<span id="L4">4 import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral</span>
+<span id="L5">5 import Mathlib.MeasureTheory.Integral.IntegralEqImproper</span>
+<span id="L6">6 import Mathlib.Probability.Distributions.Gaussian.Real</span>
+<span id="L7">7 import Mathlib.Tactic</span>
+<span id="L8">8 </span>
+<span id="L9">9 /-! Analytic comparison functions for Chapter 13 Eq. (13.4).</span>
+<span id="L10">10 Both exact improper-integral bounds compile. Probability rescaling is separate. -/</span>
+<span id="L11">11 </span>
+<span id="L12">12 namespace BanditRLProof.LowerBounds</span>
+<span id="L13">13 </span>
+<span id="L14">14 noncomputable def gaussianMillsComparison (c x : ℝ) : ℝ :=</span>
+<span id="L15">15   Real.exp (-x ^ 2) / (x + Real.sqrt (x ^ 2 + c))</span>
+<span id="L16">16 </span>
+<span id="L17">17 theorem gaussianMillsComparison_denominator_pos {c x : ℝ} (hc : 0 &lt; c) :</span>
+<span id="L18">18     0 &lt; x + Real.sqrt (x ^ 2 + c) := by</span>
+<span id="L19">19   have hp : 0 &lt; x ^ 2 + c := by positivity</span>
+<span id="L20">20   have hs := Real.sq_sqrt hp.le</span>
+<span id="L21">21   have hn := Real.sqrt_nonneg (x ^ 2 + c)</span>
+<span id="L22">22   nlinarith</span>
+<span id="L23">23 </span>
+<span id="L24">24 theorem hasDerivAt_gaussianMillsComparison {c x : ℝ} (hc : 0 &lt; c) :</span>
+<span id="L25">25     HasDerivAt (gaussianMillsComparison c)</span>
+<span id="L26">26       (-gaussianMillsComparison c x * (2 * x + 1 / Real.sqrt (x ^ 2 + c))) x := by</span>
+<span id="L27">27   have hp : 0 &lt; x ^ 2 + c := by positivity</span>
+<span id="L28">28   have hs : Real.sqrt (x ^ 2 + c) ≠ 0 := (Real.sqrt_pos.2 hp).ne&#x27;</span>
+<span id="L29">29   have hd := (gaussianMillsComparison_denominator_pos (x := x) hc).ne&#x27;</span>
+<span id="L30">30   have hsq := Real.sq_sqrt hp.le</span>
+<span id="L31">31   have h := (((hasDerivAt_id x).pow 2).neg.exp).div</span>
+<span id="L32">32     ((hasDerivAt_id x).add ((((hasDerivAt_id x).pow 2).add_const c).sqrt hp.ne&#x27;)) hd</span>
+<span id="L33">33   convert h using 1; dsimp [gaussianMillsComparison]</span>
+<span id="L34">34   field_simp</span>
+<span id="L35">35   nlinarith [hsq]</span>
+<span id="L36">36 </span>
+<span id="L37">37 theorem gaussianMillsComparison_lower_derivative_bound (x : ℝ) :</span>
+<span id="L38">38     gaussianMillsComparison 2 x * (2 * x + 1 / Real.sqrt (x ^ 2 + 2)) ≤</span>
+<span id="L39">39       Real.exp (-x ^ 2) := by</span>
+<span id="L40">40   have hp : 0 &lt; x ^ 2 + 2 := by positivity</span>
+<span id="L41">41   have hs : 0 &lt; Real.sqrt (x ^ 2 + 2) := Real.sqrt_pos.2 hp</span>
+<span id="L42">42   have hsq := Real.sq_sqrt hp.le</span>
+<span id="L43">43   have hd := gaussianMillsComparison_denominator_pos (x := x) (c := 2) (by norm_num)</span>
+<span id="L44">44   have hprod : x * Real.sqrt (x ^ 2 + 2) ≤ x ^ 2 + 1 := by</span>
+<span id="L45">45     nlinarith [sq_nonneg (x * Real.sqrt (x ^ 2 + 2) - (x ^ 2 + 1)),</span>
+<span id="L46">46       sq_nonneg (Real.sqrt (x ^ 2 + 2) - x)]</span>
+<span id="L47">47   unfold gaussianMillsComparison</span>
+<span id="L48">48   apply (div_mul_eq_mul_div _ _ _).le.trans</span>
+<span id="L49">49   rw [div_le_iff₀ hd]</span>
+<span id="L50">50   apply mul_le_mul_of_nonneg_left _ (Real.exp_pos _).le</span>
+<span id="L51">51   have hi : 1 / Real.sqrt (x ^ 2 + 2) ≤ Real.sqrt (x ^ 2 + 2) - x := by</span>
+<span id="L52">52     apply (div_le_iff₀ hs).2</span>
+<span id="L53">53     nlinarith</span>
+<span id="L54">54   linarith</span>
+<span id="L55">55 </span>
+<span id="L56">56 open Filter MeasureTheory Set</span>
+<span id="L57">57 open scoped Topology</span>
+<span id="L58">58 </span>
+<span id="L59">59 theorem gaussianMillsComparison_pos {c : ℝ} (hc : 0 &lt; c) (x : ℝ) :</span>
+<span id="L60">60     0 &lt; gaussianMillsComparison c x :=</span>
+<span id="L61">61   div_pos (Real.exp_pos _) (gaussianMillsComparison_denominator_pos hc)</span>
+<span id="L62">62 </span>
+<span id="L63">63 theorem tendsto_gaussianMillsComparison {c : ℝ} (hc : 0 &lt; c) :</span>
+<span id="L64">64     Tendsto (gaussianMillsComparison c) atTop (𝓝 0) := by</span>
+<span id="L65">65   apply squeeze_zero&#x27; (Filter.Eventually.of_forall (fun x =&gt; (gaussianMillsComparison_pos hc x).le))</span>
+<span id="L66">66     _ tendsto_inv_atTop_zero</span>
+<span id="L67">67   filter_upwards [eventually_gt_atTop (0 : ℝ)] with x hx</span>
+<span id="L68">68   unfold gaussianMillsComparison</span>
+<span id="L69">69   calc</span>
+<span id="L70">70     Real.exp (-x ^ 2) / (x + Real.sqrt (x ^ 2 + c)) ≤</span>
+<span id="L71">71         1 / (x + Real.sqrt (x ^ 2 + c)) :=</span>
+<span id="L72">72       div_le_div_of_nonneg_right (Real.exp_le_one_iff.mpr (by nlinarith [sq_nonneg x]))</span>
+<span id="L73">73         (gaussianMillsComparison_denominator_pos hc).le</span>
+<span id="L74">74     _ ≤ x⁻¹ := by</span>
+<span id="L75">75       rw [one_div]</span>
+<span id="L76">76       exact inv_anti₀ hx (le_add_of_nonneg_right (Real.sqrt_nonneg _))</span>
+<span id="L77">77 </span>
+<span id="L78">78 /-- The exact lower half of Lattimore--Szepesvari Eq. (13.4). -/</span>
+<span id="L79">79 theorem gaussianMills_lower_integral {x : ℝ} (hx : 0 ≤ x) :</span>
+<span id="L80">80     Real.exp (-x ^ 2) / (x + Real.sqrt (x ^ 2 + 2)) ≤</span>
+<span id="L81">81       ∫ t in Ioi x, Real.exp (-t ^ 2) := by</span>
+<span id="L82">82   let d : ℝ → ℝ := fun t =&gt;</span>
+<span id="L83">83     -gaussianMillsComparison 2 t * (2 * t + 1 / Real.sqrt (t ^ 2 + 2))</span>
+<span id="L84">84   have hd : ∀ t ∈ Ici x, HasDerivAt (gaussianMillsComparison 2) (d t) t := by</span>
+<span id="L85">85     intro t _</span>
+<span id="L86">86     exact hasDerivAt_gaussianMillsComparison (by norm_num)</span>
+<span id="L87">87   have hn : ∀ t ∈ Ioi x, d t ≤ 0 := by</span>
+<span id="L88">88     intro t ht</span>
+<span id="L89">89     have ht0 : 0 ≤ t := le_trans hx ht.le</span>
+<span id="L90">90     have hg := (gaussianMillsComparison_pos (c := 2) (by norm_num) t).le</span>
+<span id="L91">91     dsimp [d]</span>
+<span id="L92">92     apply mul_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr hg)</span>
+<span id="L93">93     positivity</span>
+<span id="L94">94   have hl := tendsto_gaussianMillsComparison (c := 2) (by norm_num)</span>
+<span id="L95">95   have hi := integrableOn_Ioi_deriv_of_nonpos&#x27; hd hn hl</span>
+<span id="L96">96   have he := integral_Ioi_of_hasDerivAt_of_nonpos&#x27; hd hn hl</span>
+<span id="L97">97   have hg : Integrable (fun t : ℝ =&gt; Real.exp (-t ^ 2)) := by</span>
+<span id="L98">98     simpa using integrable_exp_neg_mul_sq (b := (1 : ℝ)) (by norm_num)</span>
+<span id="L99">99   have hle : (∫ t in Ioi x, -d t) ≤ ∫ t in Ioi x, Real.exp (-t ^ 2) := by</span>
+<span id="L100">100     apply setIntegral_mono_on hi.neg hg.integrableOn measurableSet_Ioi</span>
+<span id="L101">101     intro t _</span>
+<span id="L102">102     simpa [d] using gaussianMillsComparison_lower_derivative_bound t</span>
+<span id="L103">103   rw [integral_neg, he] at hle</span>
+<span id="L104">104   simpa [gaussianMillsComparison] using hle</span>
+<span id="L105">105 </span>
+<span id="L106">106 /-- Algebraic sign test for the derivative of the upper comparison error. -/</span>
+<span id="L107">107 theorem gaussianMills_sign_iff {c x : ℝ} (hc : 1 &lt; c) (hx : 0 ≤ x) :</span>
+<span id="L108">108     0 ≤ x ^ 2 + c - 1 - x * Real.sqrt (x ^ 2 + c) ↔</span>
+<span id="L109">109       x ^ 2 * (2 - c) ≤ (c - 1) ^ 2 := by</span>
+<span id="L110">110   have hp : 0 &lt; x ^ 2 + c := by positivity</span>
+<span id="L111">111   have hs := Real.sq_sqrt hp.le</span>
+<span id="L112">112   have hxs : 0 ≤ x * Real.sqrt (x ^ 2 + c) := mul_nonneg hx (Real.sqrt_nonneg _)</span>
+<span id="L113">113   have ha : 0 &lt; x ^ 2 + c - 1 := by nlinarith [sq_nonneg x]</span>
+<span id="L114">114   have he : (x * Real.sqrt (x ^ 2 + c)) ^ 2 = x ^ 2 * (x ^ 2 + c) := by</span>
+<span id="L115">115     rw [mul_pow, hs]</span>
+<span id="L116">116   constructor</span>
+<span id="L117">117   · intro h</span>
+<span id="L118">118     have hh := mul_self_le_mul_self hxs (show x * Real.sqrt (x ^ 2 + c) ≤ x ^ 2 + c - 1 by linarith)</span>
+<span id="L119">119     nlinarith</span>
+<span id="L120">120   · intro h</span>
+<span id="L121">121     by_contra hn</span>
+<span id="L122">122     have hh := mul_self_lt_mul_self ha.le (show x ^ 2 + c - 1 &lt; x * Real.sqrt (x ^ 2 + c) by linarith)</span>
+<span id="L123">123     nlinarith</span>
+<span id="L124">124 </span>
+<span id="L125">125 /-- The sign changes at exactly one nonnegative threshold when `1&lt;c&lt;2`. -/</span>
+<span id="L126">126 theorem gaussianMills_sign_threshold {c x : ℝ} (hc : 1 &lt; c) (hc2 : c &lt; 2)</span>
+<span id="L127">127     (hx : 0 ≤ x) :</span>
+<span id="L128">128     0 ≤ x ^ 2 + c - 1 - x * Real.sqrt (x ^ 2 + c) ↔</span>
+<span id="L129">129       x ≤ (c - 1) / Real.sqrt (2 - c) := by</span>
+<span id="L130">130   rw [gaussianMills_sign_iff hc hx]</span>
+<span id="L131">131   have hs : 0 &lt; Real.sqrt (2 - c) := Real.sqrt_pos.mpr (by linarith)</span>
+<span id="L132">132   have he := Real.sq_sqrt (show 0 ≤ 2 - c by linarith)</span>
+<span id="L133">133   rw [le_div_iff₀ hs]</span>
+<span id="L134">134   have hp : 0 ≤ x * Real.sqrt (2 - c) := mul_nonneg hx hs.le</span>
+<span id="L135">135   constructor</span>
+<span id="L136">136   · intro h</span>
+<span id="L137">137     nlinarith [sq_nonneg (x * Real.sqrt (2 - c) - (c - 1)),</span>
+<span id="L138">138       show (x * Real.sqrt (2 - c)) ^ 2 = x ^ 2 * (2 - c) by rw [mul_pow, he]]</span>
+<span id="L139">139   · intro h</span>
+<span id="L140">140     have hh := mul_self_le_mul_self hp h</span>
+<span id="L141">141     nlinarith [show (x * Real.sqrt (2 - c)) ^ 2 = x ^ 2 * (2 - c) by rw [mul_pow, he]]</span>
+<span id="L142">142 </span>
+<span id="L143">143 /-- The derivative of comparison minus Gaussian tail has this explicit value. -/</span>
+<span id="L144">144 noncomputable def gaussianMillsErrorDerivative (c x : ℝ) : ℝ :=</span>
+<span id="L145">145   Real.exp (-x ^ 2) -</span>
+<span id="L146">146     gaussianMillsComparison c x * (2 * x + 1 / Real.sqrt (x ^ 2 + c))</span>
+<span id="L147">147 </span>
+<span id="L148">148 theorem gaussianMillsErrorDerivative_factor {c x : ℝ} (hc : 0 &lt; c) :</span>
+<span id="L149">149     gaussianMillsErrorDerivative c x =</span>
+<span id="L150">150       Real.exp (-x ^ 2) * (x ^ 2 + c - 1 - x * Real.sqrt (x ^ 2 + c)) /</span>
+<span id="L151">151         ((x + Real.sqrt (x ^ 2 + c)) * Real.sqrt (x ^ 2 + c)) := by</span>
+<span id="L152">152   have hp : 0 &lt; x ^ 2 + c := by positivity</span>
+<span id="L153">153   have hs := (Real.sqrt_pos.mpr hp).ne&#x27;</span>
+<span id="L154">154   have hd := (gaussianMillsComparison_denominator_pos (x := x) hc).ne&#x27;</span>
+<span id="L155">155   have he := Real.sq_sqrt hp.le</span>
+<span id="L156">156   unfold gaussianMillsErrorDerivative gaussianMillsComparison</span>
+<span id="L157">157   field_simp</span>
+<span id="L158">158   nlinarith [he]</span>
+<span id="L159">159 </span>
+<span id="L160">160 theorem gaussianMillsErrorDerivative_nonneg_iff {c x : ℝ}</span>
+<span id="L161">161     (hc : 1 &lt; c) (hc2 : c &lt; 2) (hx : 0 ≤ x) :</span>
+<span id="L162">162     0 ≤ gaussianMillsErrorDerivative c x ↔</span>
+<span id="L163">163       x ≤ (c - 1) / Real.sqrt (2 - c) := by</span>
+<span id="L164">164   have hc0 : 0 &lt; c := by linarith</span>
+<span id="L165">165   have hs : 0 &lt; Real.sqrt (x ^ 2 + c) := Real.sqrt_pos.mpr (by positivity)</span>
+<span id="L166">166   have hd := mul_pos (gaussianMillsComparison_denominator_pos (x := x) hc0) hs</span>
+<span id="L167">167   rw [gaussianMillsErrorDerivative_factor hc0]</span>
+<span id="L168">168   rw [le_div_iff₀ hd]</span>
+<span id="L169">169   simp only [zero_mul]</span>
+<span id="L170">170   rw [mul_nonneg_iff_of_pos_left (Real.exp_pos _)]</span>
+<span id="L171">171   exact gaussianMills_sign_threshold hc hc2 hx</span>
+<span id="L172">172 </span>
+<span id="L173">173 /-- Specialization to the exact upper-bound constant in source Eq. (13.4). -/</span>
+<span id="L174">174 theorem gaussianMillsErrorDerivative_source_nonneg_iff {x : ℝ} (hx : 0 ≤ x) :</span>
+<span id="L175">175     0 ≤ gaussianMillsErrorDerivative (4 / Real.pi) x ↔</span>
+<span id="L176">176       x ≤ (4 / Real.pi - 1) / Real.sqrt (2 - 4 / Real.pi) := by</span>
+<span id="L177">177   apply gaussianMillsErrorDerivative_nonneg_iff _ _ hx</span>
+<span id="L178">178   · rw [lt_div_iff₀ Real.pi_pos]</span>
+<span id="L179">179     nlinarith [Real.pi_lt_four]</span>
+<span id="L180">180   · rw [div_lt_iff₀ Real.pi_pos]</span>
+<span id="L181">181     nlinarith [Real.pi_gt_three]</span>
+<span id="L182">182 </span>
+<span id="L183">183 /-- Comparison error expressed using a finite-interval Gaussian integral. -/</span>
+<span id="L184">184 noncomputable def gaussianMillsError (c x : ℝ) : ℝ :=</span>
+<span id="L185">185   gaussianMillsComparison c x + (∫ t in (0 : ℝ)..x, Real.exp (-t ^ 2)) -</span>
+<span id="L186">186     Real.sqrt Real.pi / 2</span>
+<span id="L187">187 </span>
+<span id="L188">188 theorem hasDerivAt_gaussianMillsError {c x : ℝ} (hc : 0 &lt; c) :</span>
+<span id="L189">189     HasDerivAt (gaussianMillsError c) (gaussianMillsErrorDerivative c x) x := by</span>
+<span id="L190">190   have hcont : Continuous (fun t : ℝ =&gt; Real.exp (-t ^ 2)) := by fun_prop</span>
+<span id="L191">191   have hi := intervalIntegral.integral_hasDerivAt_right</span>
+<span id="L192">192     (hcont.intervalIntegrable (0 : ℝ) x)</span>
+<span id="L193">193     hcont.stronglyMeasurable.stronglyMeasurableAtFilter hcont.continuousAt</span>
+<span id="L194">194   convert ((hasDerivAt_gaussianMillsComparison hc).add hi).sub_const</span>
+<span id="L195">195     (Real.sqrt Real.pi / 2) using 1; dsimp [gaussianMillsError, gaussianMillsErrorDerivative]</span>
+<span id="L196">196   ring</span>
+<span id="L197">197 </span>
+<span id="L198">198 theorem gaussianMillsError_source_zero : gaussianMillsError (4 / Real.pi) 0 = 0 := by</span>
+<span id="L199">199   have hp := Real.sqrt_pos.mpr Real.pi_pos</span>
+<span id="L200">200   simp only [gaussianMillsError, gaussianMillsComparison, zero_pow (by norm_num : 2 ≠ 0),</span>
+<span id="L201">201     neg_zero, Real.exp_zero, zero_add, intervalIntegral.integral_same, add_zero]</span>
+<span id="L202">202   rw [Real.sqrt_div (by norm_num : (0 : ℝ) ≤ 4)]</span>
+<span id="L203">203   norm_num</span>
+<span id="L204">204 </span>
+<span id="L205">205 theorem tendsto_gaussianMillsError {c : ℝ} (hc : 0 &lt; c) :</span>
+<span id="L206">206     Tendsto (gaussianMillsError c) atTop (𝓝 0) := by</span>
+<span id="L207">207   have hg : Integrable (fun t : ℝ =&gt; Real.exp (-t ^ 2)) := by</span>
+<span id="L208">208     simpa using integrable_exp_neg_mul_sq (b := (1 : ℝ)) (by norm_num)</span>
+<span id="L209">209   have hi := intervalIntegral_tendsto_integral_Ioi (0 : ℝ) hg.integrableOn tendsto_id</span>
+<span id="L210">210   have hv : (∫ t in Ioi (0 : ℝ), Real.exp (-t ^ 2)) = Real.sqrt Real.pi / 2 := by</span>
+<span id="L211">211     simpa using integral_gaussian_Ioi (1 : ℝ)</span>
+<span id="L212">212   rw [hv] at hi</span>
+<span id="L213">213   have h := ((tendsto_gaussianMillsComparison hc).add hi).sub_const (Real.sqrt Real.pi / 2)</span>
+<span id="L214">214   simpa [gaussianMillsError] using h</span>
+<span id="L215">215 </span>
+<span id="L216">216 theorem gaussianMillsError_source_nonneg {x : ℝ} (hx : 0 ≤ x) :</span>
+<span id="L217">217     0 ≤ gaussianMillsError (4 / Real.pi) x := by</span>
+<span id="L218">218   let a := (4 / Real.pi - 1) / Real.sqrt (2 - 4 / Real.pi)</span>
+<span id="L219">219   have hc : 0 &lt; (4 : ℝ) / Real.pi := div_pos (by norm_num) Real.pi_pos</span>
+<span id="L220">220   have ha : 0 ≤ a := by</span>
+<span id="L221">221     dsimp [a]</span>
+<span id="L222">222     apply div_nonneg _ (Real.sqrt_nonneg _)</span>
+<span id="L223">223     have h : (1 : ℝ) &lt; 4 / Real.pi := by</span>
+<span id="L224">224       rw [lt_div_iff₀ Real.pi_pos]</span>
+<span id="L225">225       nlinarith [Real.pi_lt_four]</span>
+<span id="L226">226     linarith</span>
+<span id="L227">227   have hd := fun t =&gt; hasDerivAt_gaussianMillsError (x := t) hc</span>
+<span id="L228">228   have hcont : Continuous (gaussianMillsError (4 / Real.pi)) :=</span>
+<span id="L229">229     continuous_iff_continuousAt.mpr (fun t =&gt; (hd t).continuousAt)</span>
+<span id="L230">230   by_cases hxa : x ≤ a</span>
+<span id="L231">231   · have hm : MonotoneOn (gaussianMillsError (4 / Real.pi)) (Icc 0 a) := by</span>
+<span id="L232">232       apply monotoneOn_of_hasDerivWithinAt_nonneg (convex_Icc 0 a) hcont.continuousOn</span>
+<span id="L233">233         (fun t _ =&gt; (hd t).hasDerivWithinAt)</span>
+<span id="L234">234       intro t ht</span>
+<span id="L235">235       have ht&#x27; : t ∈ Icc 0 a := interior_subset ht</span>
+<span id="L236">236       exact (gaussianMillsErrorDerivative_source_nonneg_iff ht&#x27;.1).2 ht&#x27;.2</span>
+<span id="L237">237     have h := hm ⟨le_rfl, ha⟩ ⟨hx, hxa⟩ hx</span>
+<span id="L238">238     simpa [gaussianMillsError_source_zero] using h</span>
+<span id="L239">239   · have hm : AntitoneOn (gaussianMillsError (4 / Real.pi)) (Ici a) := by</span>
+<span id="L240">240       apply antitoneOn_of_hasDerivWithinAt_nonpos (convex_Ici a) hcont.continuousOn</span>
+<span id="L241">241         (fun t _ =&gt; (hd t).hasDerivWithinAt)</span>
+<span id="L242">242       intro t ht</span>
+<span id="L243">243       have ht&#x27; : a &lt; t := by simpa only [interior_Ici, mem_Ioi] using ht</span>
+<span id="L244">244       have ht0 : 0 ≤ t := le_trans ha ht&#x27;.le</span>
+<span id="L245">245       have hn : ¬ 0 ≤ gaussianMillsErrorDerivative (4 / Real.pi) t := by</span>
+<span id="L246">246         rw [gaussianMillsErrorDerivative_source_nonneg_iff ht0]</span>
+<span id="L247">247         exact not_le.mpr ht&#x27;</span>
+<span id="L248">248       exact (lt_of_not_ge hn).le</span>
+<span id="L249">249     apply le_of_tendsto (tendsto_gaussianMillsError hc)</span>
+<span id="L250">250     filter_upwards [eventually_ge_atTop x] with t ht</span>
+<span id="L251">251     exact hm (le_of_not_ge hxa) (le_trans (le_of_not_ge hxa) ht) ht</span>
+<span id="L252">252 </span>
+<span id="L253">253 theorem gaussian_integral_split (x : ℝ) :</span>
+<span id="L254">254     (∫ t in (0 : ℝ)..x, Real.exp (-t ^ 2)) +</span>
+<span id="L255">255       (∫ t in Ioi x, Real.exp (-t ^ 2)) = Real.sqrt Real.pi / 2 := by</span>
+<span id="L256">256   have hg : Integrable (fun t : ℝ =&gt; Real.exp (-t ^ 2)) := by</span>
+<span id="L257">257     simpa using integrable_exp_neg_mul_sq (b := (1 : ℝ)) (by norm_num)</span>
+<span id="L258">258   have hc : Continuous (fun t : ℝ =&gt; Real.exp (-t ^ 2)) := by fun_prop</span>
+<span id="L259">259   have h0 := intervalIntegral_tendsto_integral_Ioi (0 : ℝ) hg.integrableOn tendsto_id</span>
+<span id="L260">260   have hx := intervalIntegral_tendsto_integral_Ioi x hg.integrableOn tendsto_id</span>
+<span id="L261">261   have hv : (∫ t in Ioi (0 : ℝ), Real.exp (-t ^ 2)) = Real.sqrt Real.pi / 2 := by</span>
+<span id="L262">262     simpa using integral_gaussian_Ioi (1 : ℝ)</span>
+<span id="L263">263   rw [hv] at h0</span>
+<span id="L264">264   have hs := Tendsto.add (tendsto_const_nhds (x := ∫ t in (0 : ℝ)..x, Real.exp (-t ^ 2))) hx</span>
+<span id="L265">265   have he : (fun b =&gt; (∫ t in (0 : ℝ)..x, Real.exp (-t ^ 2)) +</span>
+<span id="L266">266       ∫ t in x..b, Real.exp (-t ^ 2)) =</span>
+<span id="L267">267       (fun b =&gt; ∫ t in (0 : ℝ)..b, Real.exp (-t ^ 2)) := by</span>
+<span id="L268">268     funext b</span>
+<span id="L269">269     exact intervalIntegral.integral_add_adjacent_intervals</span>
+<span id="L270">270       (hc.intervalIntegrable _ _) (hc.intervalIntegrable _ _)</span>
+<span id="L271">271   simp only [id_eq] at hs h0</span>
+<span id="L272">272   rw [he] at hs</span>
+<span id="L273">273   exact tendsto_nhds_unique hs h0</span>
+<span id="L274">274 </span>
+<span id="L275">275 /-- The exact upper half of Lattimore--Szepesvari Eq. (13.4). -/</span>
+<span id="L276">276 theorem gaussianMills_upper_integral {x : ℝ} (hx : 0 ≤ x) :</span>
+<span id="L277">277     (∫ t in Ioi x, Real.exp (-t ^ 2)) ≤</span>
+<span id="L278">278       Real.exp (-x ^ 2) / (x + Real.sqrt (x ^ 2 + 4 / Real.pi)) := by</span>
+<span id="L279">279   have hn := gaussianMillsError_source_nonneg hx</span>
+<span id="L280">280   have hs := gaussian_integral_split x</span>
+<span id="L281">281   dsimp [gaussianMillsError, gaussianMillsComparison] at hn</span>
+<span id="L282">282   linarith</span>
+<span id="L283">283 </span>
+<span id="L284">284 open ProbabilityTheory</span>
+<span id="L285">285 open scoped NNReal</span>
+<span id="L286">286 </span>
+<span id="L287">287 /-- Exact density-integral representation for a centered Gaussian tail. -/</span>
+<span id="L288">288 theorem gaussianReal_zero_tail_integral (v : ℝ≥0) (hv : 0 &lt; v) (a : ℝ) :</span>
+<span id="L289">289     (gaussianReal 0 v).real (Ici a) =</span>
+<span id="L290">290       (Real.sqrt (2 * Real.pi * (v : ℝ)))⁻¹ *</span>
+<span id="L291">291         ∫ t in Ioi a, Real.exp (-t ^ 2 / (2 * (v : ℝ))) := by</span>
+<span id="L292">292   change (gaussianReal 0 v (Ici a)).toReal = _</span>
+<span id="L293">293   rw [gaussianReal_apply_eq_integral 0 hv.ne&#x27;, ENNReal.toReal_ofReal</span>
+<span id="L294">294     (integral_nonneg (fun t =&gt; gaussianPDFReal_nonneg 0 v t))]</span>
+<span id="L295">295   simp only [gaussianPDFReal, sub_zero]</span>
+<span id="L296">296   rw [integral_const_mul, ← restrict_Ioi_eq_restrict_Ici]</span>
+<span id="L297">297 </span>
+<span id="L298">298 /-- The variance-one-half normal law is exactly the normalized source integral. -/</span>
+<span id="L299">299 theorem gaussianReal_half_tail_integral (a : ℝ) :</span>
+<span id="L300">300     (gaussianReal 0 (1 / 2 : ℝ≥0)).real (Ici a) =</span>
+<span id="L301">301       (∫ t in Ioi a, Real.exp (-t ^ 2)) / Real.sqrt Real.pi := by</span>
+<span id="L302">302   rw [gaussianReal_zero_tail_integral _ (by norm_num)]</span>
+<span id="L303">303   norm_num</span>
+<span id="L304">304   field_simp</span>
+<span id="L305">305 </span>
+<span id="L306">306 /-- Both exact Mills bounds for the normalized variance-one-half Gaussian. -/</span>
+<span id="L307">307 theorem gaussianReal_half_mills_bounds {a : ℝ} (ha : 0 ≤ a) :</span>
+<span id="L308">308     Real.exp (-a ^ 2) / (a + Real.sqrt (a ^ 2 + 2)) / Real.sqrt Real.pi ≤</span>
+<span id="L309">309         (gaussianReal 0 (1 / 2 : ℝ≥0)).real (Ici a) ∧</span>
+<span id="L310">310       (gaussianReal 0 (1 / 2 : ℝ≥0)).real (Ici a) ≤</span>
+<span id="L311">311         Real.exp (-a ^ 2) / (a + Real.sqrt (a ^ 2 + 4 / Real.pi)) / Real.sqrt Real.pi := by</span>
+<span id="L312">312   rw [gaussianReal_half_tail_integral]</span>
+<span id="L313">313   exact ⟨div_le_div_of_nonneg_right (gaussianMills_lower_integral ha) (Real.sqrt_nonneg _),</span>
+<span id="L314">314     div_le_div_of_nonneg_right (gaussianMills_upper_integral ha) (Real.sqrt_nonneg _)⟩</span>
+<span id="L315">315 </span>
+<span id="L316">316 theorem gaussianReal_zero_standardized_tail (v : ℝ≥0) (hv : 0 &lt; v) (a : ℝ) :</span>
+<span id="L317">317     (gaussianReal 0 v).real (Ici a) =</span>
+<span id="L318">318       (∫ t in Ioi (a / Real.sqrt (2 * (v : ℝ))), Real.exp (-t ^ 2)) /</span>
+<span id="L319">319         Real.sqrt Real.pi := by</span>
+<span id="L320">320   have hvR : 0 &lt; (v : ℝ) := hv</span>
+<span id="L321">321   have hs : 0 &lt; Real.sqrt (2 * (v : ℝ)) := Real.sqrt_pos.mpr (by positivity)</span>
+<span id="L322">322   have he := Real.sq_sqrt (show 0 ≤ 2 * (v : ℝ) by positivity)</span>
+<span id="L323">323   have hk : (fun t : ℝ =&gt; Real.exp (-t ^ 2 / (2 * (v : ℝ)))) =</span>
+<span id="L324">324       (fun t : ℝ =&gt; Real.exp (-((Real.sqrt (2 * (v : ℝ)))⁻¹ * t) ^ 2)) := by</span>
+<span id="L325">325     funext t</span>
+<span id="L326">326     congr 1</span>
+<span id="L327">327     field_simp</span>
+<span id="L328">328     nlinarith [he]</span>
+<span id="L329">329   rw [gaussianReal_zero_tail_integral v hv a, hk,</span>
+<span id="L330">330     integral_comp_mul_left_Ioi (fun t : ℝ =&gt; Real.exp (-t ^ 2)) a (inv_pos.mpr hs)]</span>
+<span id="L331">331   simp only [inv_inv, smul_eq_mul]</span>
+<span id="L332">332   have hf : Real.sqrt (2 * Real.pi * (v : ℝ)) =</span>
+<span id="L333">333       Real.sqrt Real.pi * Real.sqrt (2 * (v : ℝ)) := by</span>
+<span id="L334">334     rw [← Real.sqrt_mul Real.pi_pos.le]</span>
+<span id="L335">335     congr 1</span>
+<span id="L336">336     ring</span>
+<span id="L337">337   rw [hf]</span>
+<span id="L338">338   rw [show (Real.sqrt (2 * (v : ℝ)))⁻¹ * a = a / Real.sqrt (2 * (v : ℝ)) by ring]</span>
+<span id="L339">339   field_simp</span>
+<span id="L340">340 </span>
+<span id="L341">341 /-- Exact standardized Mills bounds for every positive Gaussian variance. -/</span>
+<span id="L342">342 theorem gaussianReal_zero_mills_bounds (v : ℝ≥0) (hv : 0 &lt; v)</span>
+<span id="L343">343     (a : ℝ) (ha : 0 ≤ a) :</span>
+<span id="L344">344     let z := a / Real.sqrt (2 * (v : ℝ))</span>
+<span id="L345">345     Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + 2)) / Real.sqrt Real.pi ≤</span>
+<span id="L346">346         (gaussianReal 0 v).real (Ici a) ∧</span>
+<span id="L347">347       (gaussianReal 0 v).real (Ici a) ≤</span>
+<span id="L348">348         Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + 4 / Real.pi)) / Real.sqrt Real.pi := by</span>
+<span id="L349">349   dsimp only</span>
+<span id="L350">350   rw [gaussianReal_zero_standardized_tail v hv a]</span>
+<span id="L351">351   have hz : 0 ≤ a / Real.sqrt (2 * (v : ℝ)) := div_nonneg ha (Real.sqrt_nonneg _)</span>
+<span id="L352">352   exact ⟨div_le_div_of_nonneg_right (gaussianMills_lower_integral hz) (Real.sqrt_nonneg _),</span>
+<span id="L353">353     div_le_div_of_nonneg_right (gaussianMills_upper_integral hz) (Real.sqrt_nonneg _)⟩</span>
+<span id="L354">354 </span>
+<span id="L355">355 /-- Rescale a Mills expression to the square-root denominators in Eq. (13.1). -/</span>
+<span id="L356">356 theorem gaussianMills_expression_rescale {z c q : ℝ}</span>
+<span id="L357">357     (hz : 0 ≤ z) (hc : 0 &lt; c) (hq : q = 8 * z ^ 2) :</span>
+<span id="L358">358     Real.exp (-z ^ 2) / (z + Real.sqrt (z ^ 2 + c)) / Real.sqrt Real.pi =</span>
+<span id="L359">359       Real.sqrt (8 / Real.pi) * Real.exp (-q / 8) /</span>
+<span id="L360">360         (Real.sqrt q + Real.sqrt (q + 8 * c)) := by</span>
+<span id="L361">361   subst q</span>
+<span id="L362">362   have h8 : 0 &lt; Real.sqrt (8 : ℝ) := Real.sqrt_pos.mpr (by norm_num)</span>
+<span id="L363">363   have hp := Real.sqrt_pos.mpr Real.pi_pos</span>
+<span id="L364">364   have hd := gaussianMillsComparison_denominator_pos (x := z) hc</span>
+<span id="L365">365   have hfirst : Real.sqrt (8 * z ^ 2) = Real.sqrt 8 * z := by</span>
+<span id="L366">366     rw [Real.sqrt_mul (by norm_num : (0 : ℝ) ≤ 8), Real.sqrt_sq hz]</span>
+<span id="L367">367   have hsecond : Real.sqrt (8 * z ^ 2 + 8 * c) = Real.sqrt 8 * Real.sqrt (z ^ 2 + c) := by</span>
+<span id="L368">368     rw [← Real.sqrt_mul (by norm_num : (0 : ℝ) ≤ 8)]</span>
+<span id="L369">369     congr 1</span>
+<span id="L370">370     ring</span>
+<span id="L371">371   rw [hfirst, hsecond, Real.sqrt_div (by norm_num : (0 : ℝ) ≤ 8)]</span>
+<span id="L372">372   rw [show -(8 * z ^ 2) / 8 = -z ^ 2 by ring]</span>
+<span id="L373">373   rw [← mul_add]</span>
+<span id="L374">374   field_simp</span>
+<span id="L375">375 </span>
+<span id="L376">376 end BanditRLProof.LowerBounds</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

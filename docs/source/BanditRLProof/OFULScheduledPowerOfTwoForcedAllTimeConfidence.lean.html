@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/OFULScheduledPowerOfTwoForcedAllTimeConfidence.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/OFULScheduledPowerOfTwoForcedAllTimeConfidence.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/OFULScheduledPowerOfTwoForcedAllTimeConfidence.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/OFULScheduledPowerOfTwoForcedAllTimeConfidence.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.OFULScheduledPowerOfTwoForcedPseudoRegretDecomposition</span>
+<span id="L2">2 import BanditRLProof.OFULScheduledBlockStartForcedAllTimeConfidence</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # All-time confidence for power-of-two forced telescoping OFUL</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module specializes the generic deterministic-history-selector confidence</span>
+<span id="L8">8 machinery to the horizon-independent power-of-two forced policy. Its terminal</span>
+<span id="L9">9 all-horizon pseudo-regret tail keeps the deterministic forced-action charge</span>
+<span id="L10">10 explicit; a logarithmic scalar bound for that charge is a separate downstream</span>
+<span id="L11">11 obligation.</span>
+<span id="L12">12 -/</span>
+<span id="L13">13 </span>
+<span id="L14">14 namespace BanditRLProof</span>
+<span id="L15">15 </span>
+<span id="L16">16 open MeasureTheory Real Matrix Set</span>
+<span id="L17">17 open scoped ENNReal ProbabilityTheory</span>
+<span id="L18">18 </span>
+<span id="L19">19 universe u</span>
+<span id="L20">20 </span>
+<span id="L21">21 namespace OFUL</span>
+<span id="L22">22 </span>
+<span id="L23">23 /-- Scheduled radius-width charge over nonforced successor actions. -/</span>
+<span id="L24">24 noncomputable def powerOfTwoOptimisticSuccessorRadiusWidthCharge</span>
+<span id="L25">25     {K : Nat} {Feature : Type u}</span>
+<span id="L26">26     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L27">27     (lambda : Real)</span>
+<span id="L28">28     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L29">29     (R delta S : Real)</span>
+<span id="L30">30     (horizon : Nat)</span>
+<span id="L31">31     (trajectory : Nat -&gt; Fin K × Real) : Real :=</span>
+<span id="L32">32   ((Finset.range horizon).filter</span>
+<span id="L33">33       (fun n =&gt; ¬ isPowerOfTwoForcedIndex n)).sum (fun n =&gt;</span>
+<span id="L34">34     2 *</span>
+<span id="L35">35       finiteHorizonScalarConfidenceRadius</span>
+<span id="L36">36         (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L37">37         R (allTimeTelescopingDelta delta (n + 1))</span>
+<span id="L38">38         lambda S (n + 1) trajectory *</span>
+<span id="L39">39       confidenceWidth</span>
+<span id="L40">40         (finiteHorizonScalarGram lambda</span>
+<span id="L41">41           (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L42">42           (n + 1) trajectory)</span>
+<span id="L43">43         (actionFeature</span>
+<span id="L44">44           (Thompson.canonicalHistoryTrajectoryAction trajectory (n + 1))))</span>
+<span id="L45">45 </span>
+<span id="L46">46 /--</span>
+<span id="L47">47 On the all-time confidence event, the nonforced successor pseudo-regret is</span>
+<span id="L48">48 bounded by its matching scheduled radius-width charge.</span>
+<span id="L49">49 -/</span>
+<span id="L50">50 theorem</span>
+<span id="L51">51     powerOfTwoOptimisticSuccessorPseudoRegret_le_radiusWidthCharge_ae_of_not_mem_allTimeConfidenceFailure</span>
+<span id="L52">52     {K : Nat} {Feature : Type u}</span>
+<span id="L53">53     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L54">54     (hK : 0 &lt; K)</span>
+<span id="L55">55     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L56">56     (thetaStar : Feature -&gt; Real)</span>
+<span id="L57">57     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L58">58     (R delta S : Real)</span>
+<span id="L59">59     (forcedAction : Nat -&gt; Fin K)</span>
+<span id="L60">60     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L61">61     (horizon : Nat)</span>
+<span id="L62">62     (best : Fin K) :</span>
+<span id="L63">63     ∀ᵐ trajectory ∂</span>
+<span id="L64">64         Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L65">65           (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAlgorithm</span>
+<span id="L66">66             hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L67">67           environment,</span>
+<span id="L68">68       trajectory ∉</span>
+<span id="L69">69           allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L70">70             lambda thetaStar S</span>
+<span id="L71">71             (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L72">72             canonicalHistoryTrajectoryResponse R delta -&gt;</span>
+<span id="L73">73         powerOfTwoOptimisticSuccessorPseudoRegret</span>
+<span id="L74">74             thetaStar actionFeature best horizon trajectory &lt;=</span>
+<span id="L75">75           powerOfTwoOptimisticSuccessorRadiusWidthCharge</span>
+<span id="L76">76             lambda actionFeature R delta S horizon trajectory := by</span>
+<span id="L77">77   let mu :=</span>
+<span id="L78">78     Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L79">79       (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAlgorithm</span>
+<span id="L80">80         hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L81">81       environment</span>
+<span id="L82">82   have hselectors :</span>
+<span id="L83">83       ∀ᵐ trajectory ∂mu, ∀ n,</span>
+<span id="L84">84         n &lt; horizon -&gt;</span>
+<span id="L85">85         ¬ isPowerOfTwoForcedIndex n -&gt;</span>
+<span id="L86">86         Thompson.canonicalHistoryTrajectoryAction trajectory (n + 1) =</span>
+<span id="L87">87           finiteHistoryTelescopingScalarRidgeOptimisticAction</span>
+<span id="L88">88             hK lambda actionFeature R delta S n</span>
+<span id="L89">89             (History.finitePairHistoryOfTrace</span>
+<span id="L90">90               (Thompson.canonicalHistoryTrajectoryAction trajectory)</span>
+<span id="L91">91               (Thompson.canonicalHistoryTrajectoryReward trajectory) n) := by</span>
+<span id="L92">92     rw [ae_all_iff]</span>
+<span id="L93">93     intro n</span>
+<span id="L94">94     by_cases hn : n &lt; horizon</span>
+<span id="L95">95     · by_cases hnonforced : ¬ isPowerOfTwoForcedIndex n</span>
+<span id="L96">96       · filter_upwards [</span>
+<span id="L97">97           canonicalHistoryTrajectory_action_succ_ae_eq_finiteHistoryTelescopingScalarRidgeOptimisticAction_of_not_powerOfTwoForced</span>
+<span id="L98">98             hK lambda actionFeature R delta S forcedAction environment n</span>
+<span id="L99">99             hnonforced] with trajectory htrajectory</span>
+<span id="L100">100         intro _hn _hnonforced</span>
+<span id="L101">101         simpa only [</span>
+<span id="L102">102           Thompson.canonicalHistoryTrajectoryAction,</span>
+<span id="L103">103           Thompson.canonicalHistoryTrajectoryReward] using htrajectory</span>
+<span id="L104">104       · exact Filter.Eventually.of_forall (fun _trajectory _hn hcontra =&gt;</span>
+<span id="L105">105           (hnonforced hcontra).elim)</span>
+<span id="L106">106     · exact Filter.Eventually.of_forall (fun _trajectory hcontra =&gt;</span>
+<span id="L107">107         (hn hcontra).elim)</span>
+<span id="L108">108   filter_upwards [hselectors] with trajectory hselector</span>
+<span id="L109">109   intro hgood</span>
+<span id="L110">110   unfold powerOfTwoOptimisticSuccessorPseudoRegret</span>
+<span id="L111">111     powerOfTwoOptimisticSuccessorRadiusWidthCharge</span>
+<span id="L112">112   apply Finset.sum_le_sum</span>
+<span id="L113">113   intro n hn</span>
+<span id="L114">114   have hn_range : n &lt; horizon :=</span>
+<span id="L115">115     Finset.mem_range.mp (Finset.mem_filter.mp hn).1</span>
+<span id="L116">116   have hnonforced : ¬ isPowerOfTwoForcedIndex n :=</span>
+<span id="L117">117     Finset.mem_filter.mp hn |&gt;.2</span>
+<span id="L118">118   apply</span>
+<span id="L119">119     canonicalHistoryTrajectory_action_succ_gap_le_of_eq_telescopingAction_of_not_mem_confidenceFailure</span>
+<span id="L120">120       hK lambda hlambda thetaStar actionFeature R delta S trajectory n best</span>
+<span id="L121">121       (hselector n hn_range hnonforced)</span>
+<span id="L122">122   intro hfixed</span>
+<span id="L123">123   apply hgood</span>
+<span id="L124">124   unfold allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L125">125   rw [mem_allTimeScheduledScalarRidgeConfidenceFailureSet_iff]</span>
+<span id="L126">126   exact ⟨n + 1, hfixed⟩</span>
+<span id="L127">127 </span>
+<span id="L128">128 /--</span>
+<span id="L129">129 On the confidence event, complete pseudo-regret is bounded by the initial gap,</span>
+<span id="L130">130 generated forced charge, and nonforced radius-width charge.</span>
+<span id="L131">131 -/</span>
+<span id="L132">132 theorem</span>
+<span id="L133">133     canonicalStandardHighProbabilityPseudoRegret_le_initial_add_powerOfTwoForced_add_radiusWidthCharge_ae_of_not_mem_allTimeConfidenceFailure</span>
+<span id="L134">134     {K : Nat} {Feature : Type u}</span>
+<span id="L135">135     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L136">136     (hK : 0 &lt; K)</span>
+<span id="L137">137     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L138">138     (thetaStar : Feature -&gt; Real)</span>
+<span id="L139">139     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L140">140     (R delta S : Real)</span>
+<span id="L141">141     (forcedAction : Nat -&gt; Fin K)</span>
+<span id="L142">142     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L143">143     (horizon : Nat)</span>
+<span id="L144">144     (best : Fin K) :</span>
+<span id="L145">145     ∀ᵐ trajectory ∂</span>
+<span id="L146">146         Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L147">147           (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAlgorithm</span>
+<span id="L148">148             hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L149">149           environment,</span>
+<span id="L150">150       trajectory ∉</span>
+<span id="L151">151           allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L152">152             lambda thetaStar S</span>
+<span id="L153">153             (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L154">154             canonicalHistoryTrajectoryResponse R delta -&gt;</span>
+<span id="L155">155         canonicalStandardHighProbabilityPseudoRegret</span>
+<span id="L156">156             thetaStar actionFeature best horizon trajectory &lt;=</span>
+<span id="L157">157           (linearValue thetaStar (actionFeature best) -</span>
+<span id="L158">158               linearValue thetaStar</span>
+<span id="L159">159                 (actionFeature</span>
+<span id="L160">160                   (Thompson.canonicalHistoryTrajectoryAction trajectory 0))) +</span>
+<span id="L161">161             powerOfTwoForcedSuccessorPseudoRegret</span>
+<span id="L162">162               thetaStar actionFeature best horizon trajectory +</span>
+<span id="L163">163             powerOfTwoOptimisticSuccessorRadiusWidthCharge</span>
+<span id="L164">164               lambda actionFeature R delta S horizon trajectory := by</span>
+<span id="L165">165   filter_upwards [</span>
+<span id="L166">166     powerOfTwoOptimisticSuccessorPseudoRegret_le_radiusWidthCharge_ae_of_not_mem_allTimeConfidenceFailure</span>
+<span id="L167">167       hK lambda hlambda thetaStar actionFeature R delta S forcedAction</span>
+<span id="L168">168       environment horizon best] with trajectory htrajectory</span>
+<span id="L169">169   intro hgood</span>
+<span id="L170">170   rw [</span>
+<span id="L171">171     canonicalStandardHighProbabilityPseudoRegret_eq_initial_add_powerOfTwoForced_add_optimistic</span>
+<span id="L172">172       thetaStar actionFeature best horizon trajectory]</span>
+<span id="L173">173   gcongr</span>
+<span id="L174">174   exact htrajectory hgood</span>
+<span id="L175">175 </span>
+<span id="L176">176 /--</span>
+<span id="L177">177 The confidence-event finite-horizon bound with the forced charge written</span>
+<span id="L178">178 directly in terms of the prescribed actions.</span>
+<span id="L179">179 -/</span>
+<span id="L180">180 theorem</span>
+<span id="L181">181     canonicalStandardHighProbabilityPseudoRegret_le_initial_add_powerOfTwoForcedActionCharge_add_radiusWidthCharge_ae_of_not_mem_allTimeConfidenceFailure</span>
+<span id="L182">182     {K : Nat} {Feature : Type u}</span>
+<span id="L183">183     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L184">184     (hK : 0 &lt; K)</span>
+<span id="L185">185     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L186">186     (thetaStar : Feature -&gt; Real)</span>
+<span id="L187">187     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L188">188     (R delta S : Real)</span>
+<span id="L189">189     (forcedAction : Nat -&gt; Fin K)</span>
+<span id="L190">190     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L191">191     (horizon : Nat)</span>
+<span id="L192">192     (best : Fin K) :</span>
+<span id="L193">193     ∀ᵐ trajectory ∂</span>
+<span id="L194">194         Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L195">195           (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAlgorithm</span>
+<span id="L196">196             hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L197">197           environment,</span>
+<span id="L198">198       trajectory ∉</span>
+<span id="L199">199           allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L200">200             lambda thetaStar S</span>
+<span id="L201">201             (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L202">202             canonicalHistoryTrajectoryResponse R delta -&gt;</span>
+<span id="L203">203         canonicalStandardHighProbabilityPseudoRegret</span>
+<span id="L204">204             thetaStar actionFeature best horizon trajectory &lt;=</span>
+<span id="L205">205           (linearValue thetaStar (actionFeature best) -</span>
+<span id="L206">206               linearValue thetaStar</span>
+<span id="L207">207                 (actionFeature</span>
+<span id="L208">208                   (Thompson.canonicalHistoryTrajectoryAction trajectory 0))) +</span>
+<span id="L209">209             powerOfTwoForcedActionSuccessorPseudoRegret</span>
+<span id="L210">210               thetaStar actionFeature best forcedAction horizon +</span>
+<span id="L211">211             powerOfTwoOptimisticSuccessorRadiusWidthCharge</span>
+<span id="L212">212               lambda actionFeature R delta S horizon trajectory := by</span>
+<span id="L213">213   filter_upwards [</span>
+<span id="L214">214     canonicalStandardHighProbabilityPseudoRegret_le_initial_add_powerOfTwoForced_add_radiusWidthCharge_ae_of_not_mem_allTimeConfidenceFailure</span>
+<span id="L215">215       hK lambda hlambda thetaStar actionFeature R delta S forcedAction</span>
+<span id="L216">216       environment horizon best,</span>
+<span id="L217">217     powerOfTwoForcedSuccessorPseudoRegret_ae_eq_forcedActionCharge</span>
+<span id="L218">218       hK lambda thetaStar actionFeature R delta S forcedAction</span>
+<span id="L219">219       environment horizon best] with trajectory htrajectory hforced</span>
+<span id="L220">220   intro hgood</span>
+<span id="L221">221   simpa only [hforced] using htrajectory hgood</span>
+<span id="L222">222 </span>
+<span id="L223">223 /-- The linear environment law supplies the residual law for this selector. -/</span>
+<span id="L224">224 noncomputable def</span>
+<span id="L225">225     canonicalPowerOfTwoForcedPredictableScalarRidgeResidualLaw_of_linearSubgaussianEnvironment</span>
+<span id="L226">226     {K : Nat} {Feature : Type u}</span>
+<span id="L227">227     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L228">228     (hK : 0 &lt; K)</span>
+<span id="L229">229     (lambda : Real)</span>
+<span id="L230">230     (thetaStar : Feature -&gt; Real)</span>
+<span id="L231">231     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L232">232     (R delta S : Real)</span>
+<span id="L233">233     (forcedAction : Nat -&gt; Fin K)</span>
+<span id="L234">234     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L235">235     (source : CanonicalLinearSubgaussianEnvironmentLaw</span>
+<span id="L236">236       hK thetaStar actionFeature R S environment) :</span>
+<span id="L237">237     CanonicalDeterministicHistoryPredictableScalarRidgeResidualLaw</span>
+<span id="L238">238       hK thetaStar actionFeature R S</span>
+<span id="L239">239       (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L240">240         hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L241">241       (measurable_finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L242">242         hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L243">243       environment :=</span>
+<span id="L244">244   canonicalDeterministicHistoryPredictableScalarRidgeResidualLaw_of_linearSubgaussianEnvironment</span>
+<span id="L245">245     hK thetaStar actionFeature R S</span>
+<span id="L246">246     (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L247">247       hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L248">248     (measurable_finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L249">249       hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L250">250     environment source</span>
+<span id="L251">251 </span>
+<span id="L252">252 /-- Source-level all-time confidence tail for the power-of-two policy. -/</span>
+<span id="L253">253 theorem</span>
+<span id="L254">254     measure_powerOfTwoForcedCanonicalHistoryTrajectory_allTimeConfidenceFailureSet_le</span>
+<span id="L255">255     {K : Nat} {Feature : Type u}</span>
+<span id="L256">256     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L257">257     (hK : 0 &lt; K)</span>
+<span id="L258">258     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L259">259     (thetaStar : Feature -&gt; Real)</span>
+<span id="L260">260     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L261">261     (R : Real) (hR : 0 &lt; R)</span>
+<span id="L262">262     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_one : delta &lt;= 1)</span>
+<span id="L263">263     (S : Real)</span>
+<span id="L264">264     (forcedAction : Nat -&gt; Fin K)</span>
+<span id="L265">265     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L266">266     (source : CanonicalDeterministicHistoryPredictableScalarRidgeResidualLaw</span>
+<span id="L267">267       hK thetaStar actionFeature R S</span>
+<span id="L268">268       (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L269">269         hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L270">270       (measurable_finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L271">271         hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L272">272       environment) :</span>
+<span id="L273">273     Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L274">274         (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAlgorithm</span>
+<span id="L275">275           hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L276">276         environment</span>
+<span id="L277">277         (allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L278">278           lambda thetaStar S</span>
+<span id="L279">279           (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L280">280           canonicalHistoryTrajectoryResponse R delta) &lt;=</span>
+<span id="L281">281       ENNReal.ofReal delta := by</span>
+<span id="L282">282   simpa [finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAlgorithm] using</span>
+<span id="L283">283     (measure_deterministicHistoryCanonical_allTimeTelescopingScalarRidgeConfidenceFailureSet_le</span>
+<span id="L284">284       hK lambda hlambda thetaStar actionFeature R hR</span>
+<span id="L285">285       delta hdelta hdelta_one S</span>
+<span id="L286">286       (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L287">287         hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L288">288       (measurable_finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L289">289         hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L290">290       environment source)</span>
+<span id="L291">291 </span>
+<span id="L292">292 /-- Environment-backed all-time confidence tail for the power-of-two policy. -/</span>
+<span id="L293">293 theorem</span>
+<span id="L294">294     measure_powerOfTwoForcedCanonicalHistoryTrajectory_allTimeConfidenceFailureSet_le_of_linearSubgaussianEnvironment</span>
+<span id="L295">295     {K : Nat} {Feature : Type u}</span>
+<span id="L296">296     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L297">297     (hK : 0 &lt; K)</span>
+<span id="L298">298     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L299">299     (thetaStar : Feature -&gt; Real)</span>
+<span id="L300">300     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L301">301     (R : Real) (hR : 0 &lt; R)</span>
+<span id="L302">302     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_one : delta &lt;= 1)</span>
+<span id="L303">303     (S : Real)</span>
+<span id="L304">304     (forcedAction : Nat -&gt; Fin K)</span>
+<span id="L305">305     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L306">306     (source : CanonicalLinearSubgaussianEnvironmentLaw</span>
+<span id="L307">307       hK thetaStar actionFeature R S environment) :</span>
+<span id="L308">308     Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L309">309         (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAlgorithm</span>
+<span id="L310">310           hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L311">311         environment</span>
+<span id="L312">312         (allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L313">313           lambda thetaStar S</span>
+<span id="L314">314           (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L315">315           canonicalHistoryTrajectoryResponse R delta) &lt;=</span>
+<span id="L316">316       ENNReal.ofReal delta := by</span>
+<span id="L317">317   exact</span>
+<span id="L318">318     measure_powerOfTwoForcedCanonicalHistoryTrajectory_allTimeConfidenceFailureSet_le</span>
+<span id="L319">319       hK lambda hlambda thetaStar actionFeature R hR</span>
+<span id="L320">320       delta hdelta hdelta_one S forcedAction environment</span>
+<span id="L321">321       (canonicalPowerOfTwoForcedPredictableScalarRidgeResidualLaw_of_linearSubgaussianEnvironment</span>
+<span id="L322">322         hK lambda thetaStar actionFeature R delta S</span>
+<span id="L323">323         forcedAction environment source)</span>
+<span id="L324">324 </span>
+<span id="L325">325 /-- The nonforced charge is bounded by the full pathwise width budget. -/</span>
+<span id="L326">326 theorem</span>
+<span id="L327">327     powerOfTwoOptimisticSuccessorRadiusWidthCharge_le_telescopingStandardScalarRadiusWidthBound</span>
+<span id="L328">328     {K : Nat} {Feature : Type u}</span>
+<span id="L329">329     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L330">330     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L331">331     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L332">332     (R delta S : Real) (hdelta : 0 &lt; delta) (hS : 0 &lt;= S)</span>
+<span id="L333">333     (horizon : Nat)</span>
+<span id="L334">334     (L2 : Real) (hL2 : 0 &lt;= L2)</span>
+<span id="L335">335     (hactionFeatureBound : forall action,</span>
+<span id="L336">336       dotProduct (actionFeature action) (actionFeature action) &lt;= L2)</span>
+<span id="L337">337     (hL2lambda : L2 &lt;= lambda)</span>
+<span id="L338">338     (trajectory : Nat -&gt; Fin K × Real) :</span>
+<span id="L339">339     powerOfTwoOptimisticSuccessorRadiusWidthCharge</span>
+<span id="L340">340         lambda actionFeature R delta S horizon trajectory &lt;=</span>
+<span id="L341">341       telescopingStandardScalarRadiusWidthBound</span>
+<span id="L342">342         (Feature := Feature) R delta lambda S horizon L2 := by</span>
+<span id="L343">343   unfold powerOfTwoOptimisticSuccessorRadiusWidthCharge</span>
+<span id="L344">344   calc</span>
+<span id="L345">345     ((Finset.range horizon).filter</span>
+<span id="L346">346         (fun n =&gt; ¬ isPowerOfTwoForcedIndex n)).sum</span>
+<span id="L347">347         (fun n =&gt;</span>
+<span id="L348">348           2 *</span>
+<span id="L349">349             finiteHorizonScalarConfidenceRadius</span>
+<span id="L350">350               (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L351">351               R (allTimeTelescopingDelta delta (n + 1))</span>
+<span id="L352">352               lambda S (n + 1) trajectory *</span>
+<span id="L353">353             confidenceWidth</span>
+<span id="L354">354               (finiteHorizonScalarGram lambda</span>
+<span id="L355">355                 (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L356">356                 (n + 1) trajectory)</span>
+<span id="L357">357               (actionFeature</span>
+<span id="L358">358                 (Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L359">359                   trajectory (n + 1)))) &lt;=</span>
+<span id="L360">360       (Finset.range horizon).sum</span>
+<span id="L361">361         (fun n =&gt;</span>
+<span id="L362">362           2 *</span>
+<span id="L363">363             finiteHorizonScalarConfidenceRadius</span>
+<span id="L364">364               (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L365">365               R (allTimeTelescopingDelta delta (n + 1))</span>
+<span id="L366">366               lambda S (n + 1) trajectory *</span>
+<span id="L367">367             confidenceWidth</span>
+<span id="L368">368               (finiteHorizonScalarGram lambda</span>
+<span id="L369">369                 (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L370">370                 (n + 1) trajectory)</span>
+<span id="L371">371               (actionFeature</span>
+<span id="L372">372                 (Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L373">373                   trajectory (n + 1)))) := by</span>
+<span id="L374">374         apply Finset.sum_le_sum_of_subset_of_nonneg (Finset.filter_subset _ _)</span>
+<span id="L375">375         intro n _hn _hnot</span>
+<span id="L376">376         have hradius :</span>
+<span id="L377">377             0 &lt;=</span>
+<span id="L378">378               finiteHorizonScalarConfidenceRadius</span>
+<span id="L379">379                 (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L380">380                 R (allTimeTelescopingDelta delta (n + 1))</span>
+<span id="L381">381                 lambda S (n + 1) trajectory := by</span>
+<span id="L382">382           unfold finiteHorizonScalarConfidenceRadius</span>
+<span id="L383">383             finiteHorizonConfidenceRadius</span>
+<span id="L384">384           positivity</span>
+<span id="L385">385         have hwidth :</span>
+<span id="L386">386             0 &lt;=</span>
+<span id="L387">387               confidenceWidth</span>
+<span id="L388">388                 (finiteHorizonScalarGram lambda</span>
+<span id="L389">389                   (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L390">390                   (n + 1) trajectory)</span>
+<span id="L391">391                 (actionFeature</span>
+<span id="L392">392                   (Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L393">393                     trajectory (n + 1))) :=</span>
+<span id="L394">394           Real.sqrt_nonneg _</span>
+<span id="L395">395         exact mul_nonneg (mul_nonneg (by norm_num) hradius) hwidth</span>
+<span id="L396">396     _ &lt;=</span>
+<span id="L397">397       telescopingStandardScalarRadiusWidthBound</span>
+<span id="L398">398         (Feature := Feature) R delta lambda S horizon L2 :=</span>
+<span id="L399">399       canonicalHistoryTrajectory_sum_range_succ_telescoping_radius_mul_width_le_standard_of_featureBound_le_regularization</span>
+<span id="L400">400         lambda hlambda actionFeature R delta S hdelta hS</span>
+<span id="L401">401         horizon L2 hL2 hactionFeatureBound hL2lambda trajectory</span>
+<span id="L402">402 </span>
+<span id="L403">403 /-- The fixed initial arm has the standard deterministic gap envelope. -/</span>
+<span id="L404">404 theorem powerOfTwoForcedCanonicalHistoryTrajectory_initialGap_le_ae</span>
+<span id="L405">405     {K : Nat} {Feature : Type u}</span>
+<span id="L406">406     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L407">407     (hK : 0 &lt; K)</span>
+<span id="L408">408     (lambda : Real)</span>
+<span id="L409">409     (thetaStar : Feature -&gt; Real)</span>
+<span id="L410">410     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L411">411     (R delta S : Real) (hS : 0 &lt;= S)</span>
+<span id="L412">412     (forcedAction : Nat -&gt; Fin K)</span>
+<span id="L413">413     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L414">414     (L2 : Real)</span>
+<span id="L415">415     (hactionFeatureBound : forall action,</span>
+<span id="L416">416       dotProduct (actionFeature action) (actionFeature action) &lt;= L2)</span>
+<span id="L417">417     (best : Fin K)</span>
+<span id="L418">418     (htheta : euclideanLength thetaStar &lt;= S) :</span>
+<span id="L419">419     ∀ᵐ trajectory ∂</span>
+<span id="L420">420         Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L421">421           (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAlgorithm</span>
+<span id="L422">422             hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L423">423           environment,</span>
+<span id="L424">424       linearValue thetaStar (actionFeature best) -</span>
+<span id="L425">425           linearValue thetaStar</span>
+<span id="L426">426             (actionFeature</span>
+<span id="L427">427               (Thompson.canonicalHistoryTrajectoryAction trajectory 0)) &lt;=</span>
+<span id="L428">428         standardScalarInitialGapBound S L2 := by</span>
+<span id="L429">429   filter_upwards [</span>
+<span id="L430">430     deterministicHistoryCanonical_action_zero_ae_eq_initialArm</span>
+<span id="L431">431       hK</span>
+<span id="L432">432       (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L433">433         hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L434">434       (measurable_finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAction</span>
+<span id="L435">435         hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L436">436       environment] with trajectory haction</span>
+<span id="L437">437   rw [haction]</span>
+<span id="L438">438   exact</span>
+<span id="L439">439     linearValue_sub_linearValue_le_two_mul_parameterFeatureBound</span>
+<span id="L440">440       thetaStar (actionFeature best) (actionFeature (Fin.mk 0 hK))</span>
+<span id="L441">441       S L2 hS htheta</span>
+<span id="L442">442       (hactionFeatureBound best)</span>
+<span id="L443">443       (hactionFeatureBound (Fin.mk 0 hK))</span>
+<span id="L444">444 </span>
+<span id="L445">445 /--</span>
+<span id="L446">446 On one all-time confidence event, every horizon is bounded by the deterministic</span>
+<span id="L447">447 forced charge plus the explicit telescoping OFUL rate.</span>
+<span id="L448">448 -/</span>
+<span id="L449">449 theorem</span>
+<span id="L450">450     powerOfTwoForcedCanonicalStandardHighProbabilityPseudoRegret_le_forcedActionCharge_add_explicitBound_ae</span>
+<span id="L451">451     {K : Nat} {Feature : Type u}</span>
+<span id="L452">452     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L453">453     (hK : 0 &lt; K)</span>
+<span id="L454">454     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L455">455     (thetaStar : Feature -&gt; Real)</span>
+<span id="L456">456     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L457">457     (R : Real) (hR : 0 &lt; R)</span>
+<span id="L458">458     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_one : delta &lt;= 1)</span>
+<span id="L459">459     (S : Real) (hS : 0 &lt;= S)</span>
+<span id="L460">460     (forcedAction : Nat -&gt; Fin K)</span>
+<span id="L461">461     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L462">462     (L2 : Real) (hL2 : 0 &lt;= L2)</span>
+<span id="L463">463     (hactionFeatureBound : forall action,</span>
+<span id="L464">464       dotProduct (actionFeature action) (actionFeature action) &lt;= L2)</span>
+<span id="L465">465     (hL2lambda : L2 &lt;= lambda)</span>
+<span id="L466">466     (best : Fin K)</span>
+<span id="L467">467     (htheta : euclideanLength thetaStar &lt;= S) :</span>
+<span id="L468">468     ∀ᵐ trajectory ∂</span>
+<span id="L469">469         Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L470">470           (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAlgorithm</span>
+<span id="L471">471             hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L472">472           environment,</span>
+<span id="L473">473       forall horizon,</span>
+<span id="L474">474         trajectory ∉</span>
+<span id="L475">475             allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L476">476               lambda thetaStar S</span>
+<span id="L477">477               (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L478">478               canonicalHistoryTrajectoryResponse R delta -&gt;</span>
+<span id="L479">479           canonicalStandardHighProbabilityPseudoRegret</span>
+<span id="L480">480               thetaStar actionFeature best horizon trajectory &lt;=</span>
+<span id="L481">481             powerOfTwoForcedActionSuccessorPseudoRegret</span>
+<span id="L482">482                 thetaStar actionFeature best forcedAction horizon +</span>
+<span id="L483">483               telescopingHighProbabilityPseudoRegretBound</span>
+<span id="L484">484                 (Feature := Feature) R delta lambda S horizon L2 := by</span>
+<span id="L485">485   rw [ae_all_iff]</span>
+<span id="L486">486   intro horizon</span>
+<span id="L487">487   filter_upwards [</span>
+<span id="L488">488     canonicalStandardHighProbabilityPseudoRegret_le_initial_add_powerOfTwoForcedActionCharge_add_radiusWidthCharge_ae_of_not_mem_allTimeConfidenceFailure</span>
+<span id="L489">489       hK lambda hlambda thetaStar actionFeature R delta S</span>
+<span id="L490">490       forcedAction environment horizon best,</span>
+<span id="L491">491     powerOfTwoForcedCanonicalHistoryTrajectory_initialGap_le_ae</span>
+<span id="L492">492       hK lambda thetaStar actionFeature R delta S hS</span>
+<span id="L493">493       forcedAction environment L2 hactionFeatureBound best htheta] with</span>
+<span id="L494">494     trajectory hdecomposition hinitial</span>
+<span id="L495">495   intro hgood</span>
+<span id="L496">496   have hregret := hdecomposition hgood</span>
+<span id="L497">497   have hradius :=</span>
+<span id="L498">498     powerOfTwoOptimisticSuccessorRadiusWidthCharge_le_telescopingStandardScalarRadiusWidthBound</span>
+<span id="L499">499       lambda hlambda actionFeature R delta S hdelta hS</span>
+<span id="L500">500       horizon L2 hL2 hactionFeatureBound hL2lambda trajectory</span>
+<span id="L501">501   have hbudget :=</span>
+<span id="L502">502     telescopingStandardScalarAllRoundGapBound_eq_telescopingHighProbabilityPseudoRegretBound</span>
+<span id="L503">503       (Feature := Feature)</span>
+<span id="L504">504       R hR delta hdelta hdelta_one lambda hlambda S horizon L2 hL2</span>
+<span id="L505">505   unfold telescopingStandardScalarAllRoundGapBound at hbudget</span>
+<span id="L506">506   linarith</span>
+<span id="L507">507 </span>
+<span id="L508">508 /-- All-horizon violation event for the power-of-two forced policy. -/</span>
+<span id="L509">509 noncomputable def</span>
+<span id="L510">510     powerOfTwoForcedCanonicalStandardHighProbabilityPseudoRegretAllHorizonViolationSet</span>
+<span id="L511">511     {K : Nat} {Feature : Type u}</span>
+<span id="L512">512     [Fintype Feature]</span>
+<span id="L513">513     (lambda : Real)</span>
+<span id="L514">514     (thetaStar : Feature -&gt; Real)</span>
+<span id="L515">515     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L516">516     (R delta S L2 : Real)</span>
+<span id="L517">517     (forcedAction : Nat -&gt; Fin K)</span>
+<span id="L518">518     (best : Fin K) :</span>
+<span id="L519">519     Set (Nat -&gt; Fin K × Real) :=</span>
+<span id="L520">520   {trajectory | exists horizon,</span>
+<span id="L521">521     powerOfTwoForcedActionSuccessorPseudoRegret</span>
+<span id="L522">522         thetaStar actionFeature best forcedAction horizon +</span>
+<span id="L523">523         telescopingHighProbabilityPseudoRegretBound</span>
+<span id="L524">524           (Feature := Feature) R delta lambda S horizon L2 &lt;</span>
+<span id="L525">525       canonicalStandardHighProbabilityPseudoRegret</span>
+<span id="L526">526         thetaStar actionFeature best horizon trajectory}</span>
+<span id="L527">527 </span>
+<span id="L528">528 /-- Every all-horizon violation is a confidence failure almost surely. -/</span>
+<span id="L529">529 theorem</span>
+<span id="L530">530     powerOfTwoForcedCanonicalStandardHighProbabilityPseudoRegretAllHorizonViolationSet_subset_confidenceFailure_ae</span>
+<span id="L531">531     {K : Nat} {Feature : Type u}</span>
+<span id="L532">532     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L533">533     (hK : 0 &lt; K)</span>
+<span id="L534">534     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L535">535     (thetaStar : Feature -&gt; Real)</span>
+<span id="L536">536     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L537">537     (R : Real) (hR : 0 &lt; R)</span>
+<span id="L538">538     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_one : delta &lt;= 1)</span>
+<span id="L539">539     (S : Real) (hS : 0 &lt;= S)</span>
+<span id="L540">540     (forcedAction : Nat -&gt; Fin K)</span>
+<span id="L541">541     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L542">542     (L2 : Real) (hL2 : 0 &lt;= L2)</span>
+<span id="L543">543     (hactionFeatureBound : forall action,</span>
+<span id="L544">544       dotProduct (actionFeature action) (actionFeature action) &lt;= L2)</span>
+<span id="L545">545     (hL2lambda : L2 &lt;= lambda)</span>
+<span id="L546">546     (best : Fin K)</span>
+<span id="L547">547     (htheta : euclideanLength thetaStar &lt;= S) :</span>
+<span id="L548">548     ∀ᵐ trajectory ∂</span>
+<span id="L549">549         Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L550">550           (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAlgorithm</span>
+<span id="L551">551             hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L552">552           environment,</span>
+<span id="L553">553       trajectory ∈</span>
+<span id="L554">554           powerOfTwoForcedCanonicalStandardHighProbabilityPseudoRegretAllHorizonViolationSet</span>
+<span id="L555">555             lambda thetaStar actionFeature R delta S L2 forcedAction best -&gt;</span>
+<span id="L556">556         trajectory ∈</span>
+<span id="L557">557           allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L558">558             lambda thetaStar S</span>
+<span id="L559">559             (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L560">560             canonicalHistoryTrajectoryResponse R delta := by</span>
+<span id="L561">561   filter_upwards [</span>
+<span id="L562">562     powerOfTwoForcedCanonicalStandardHighProbabilityPseudoRegret_le_forcedActionCharge_add_explicitBound_ae</span>
+<span id="L563">563       hK lambda hlambda thetaStar actionFeature R hR</span>
+<span id="L564">564       delta hdelta hdelta_one S hS forcedAction environment</span>
+<span id="L565">565       L2 hL2 hactionFeatureBound hL2lambda best htheta] with</span>
+<span id="L566">566     trajectory htrajectory</span>
+<span id="L567">567   rintro ⟨horizon, hviolation⟩</span>
+<span id="L568">568   by_contra hgood</span>
+<span id="L569">569   exact (not_lt_of_ge (htrajectory horizon hgood)) hviolation</span>
+<span id="L570">570 </span>
+<span id="L571">571 /--</span>
+<span id="L572">572 Complete all-horizon high-probability pseudo-regret theorem for the fixed</span>
+<span id="L573">573 power-of-two forced policy, with deterministic forced charge explicit.</span>
+<span id="L574">574 -/</span>
+<span id="L575">575 theorem</span>
+<span id="L576">576     powerOfTwoForcedCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_allHorizon_tail_le_explicitBound_of_linearSubgaussianEnvironment_of_featureBound_le_regularization</span>
+<span id="L577">577     {K : Nat} {Feature : Type u}</span>
+<span id="L578">578     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L579">579     (hK : 0 &lt; K)</span>
+<span id="L580">580     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L581">581     (thetaStar : Feature -&gt; Real)</span>
+<span id="L582">582     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L583">583     (R : Real) (hR : 0 &lt; R)</span>
+<span id="L584">584     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_one : delta &lt;= 1)</span>
+<span id="L585">585     (S : Real) (hS : 0 &lt;= S)</span>
+<span id="L586">586     (forcedAction : Nat -&gt; Fin K)</span>
+<span id="L587">587     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L588">588     (L2 : Real) (hL2 : 0 &lt;= L2)</span>
+<span id="L589">589     (hactionFeatureBound : forall action,</span>
+<span id="L590">590       dotProduct (actionFeature action) (actionFeature action) &lt;= L2)</span>
+<span id="L591">591     (hL2lambda : L2 &lt;= lambda)</span>
+<span id="L592">592     (best : Fin K)</span>
+<span id="L593">593     (hbest : IsOptimalLinearArm thetaStar actionFeature best)</span>
+<span id="L594">594     (source : CanonicalLinearSubgaussianEnvironmentLaw</span>
+<span id="L595">595       hK thetaStar actionFeature R S environment) :</span>
+<span id="L596">596     (forall horizon trajectory,</span>
+<span id="L597">597       0 &lt;= canonicalStandardHighProbabilityPseudoRegret</span>
+<span id="L598">598         thetaStar actionFeature best horizon trajectory) ∧</span>
+<span id="L599">599       Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L600">600           (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAlgorithm</span>
+<span id="L601">601             hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L602">602           environment</span>
+<span id="L603">603           (powerOfTwoForcedCanonicalStandardHighProbabilityPseudoRegretAllHorizonViolationSet</span>
+<span id="L604">604             lambda thetaStar actionFeature R delta S L2 forcedAction best) &lt;=</span>
+<span id="L605">605         ENNReal.ofReal delta := by</span>
+<span id="L606">606   constructor</span>
+<span id="L607">607   · intro horizon trajectory</span>
+<span id="L608">608     exact</span>
+<span id="L609">609       canonicalHistoryTrajectorySumRangeAllFixedComparatorGap_nonneg</span>
+<span id="L610">610         thetaStar actionFeature horizon best hbest trajectory</span>
+<span id="L611">611   · calc</span>
+<span id="L612">612       Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L613">613           (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAlgorithm</span>
+<span id="L614">614             hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L615">615           environment</span>
+<span id="L616">616           (powerOfTwoForcedCanonicalStandardHighProbabilityPseudoRegretAllHorizonViolationSet</span>
+<span id="L617">617             lambda thetaStar actionFeature R delta S L2 forcedAction best) &lt;=</span>
+<span id="L618">618         Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L619">619           (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAlgorithm</span>
+<span id="L620">620             hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L621">621           environment</span>
+<span id="L622">622           (allTimeTelescopingScalarRidgeConfidenceFailureSet</span>
+<span id="L623">623             lambda thetaStar S</span>
+<span id="L624">624             (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L625">625             canonicalHistoryTrajectoryResponse R delta) := by</span>
+<span id="L626">626         exact measure_mono_ae</span>
+<span id="L627">627           (powerOfTwoForcedCanonicalStandardHighProbabilityPseudoRegretAllHorizonViolationSet_subset_confidenceFailure_ae</span>
+<span id="L628">628             hK lambda hlambda thetaStar actionFeature R hR</span>
+<span id="L629">629             delta hdelta hdelta_one S hS forcedAction environment</span>
+<span id="L630">630             L2 hL2 hactionFeatureBound hL2lambda best source.theta_norm_le)</span>
+<span id="L631">631       _ &lt;= ENNReal.ofReal delta :=</span>
+<span id="L632">632         measure_powerOfTwoForcedCanonicalHistoryTrajectory_allTimeConfidenceFailureSet_le_of_linearSubgaussianEnvironment</span>
+<span id="L633">633           hK lambda hlambda thetaStar actionFeature R hR</span>
+<span id="L634">634           delta hdelta hdelta_one S forcedAction environment source</span>
+<span id="L635">635 </span>
+<span id="L636">636 end OFUL</span>
+<span id="L637">637 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

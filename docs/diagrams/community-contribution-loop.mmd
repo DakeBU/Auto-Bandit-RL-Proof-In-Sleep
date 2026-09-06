@@ -1,0 +1,9 @@
+flowchart LR
+    Proposal["Researcher proposal<br/>theorem + assumptions + source"] --> Packet["Contribution packet<br/>schema 1.1"]
+    Packet --> Middle["ABRL middle layer<br/>route and dependency review"]
+    Middle --> Lower["ABRL lower layer<br/>Lean implementation"]
+    Lower --> Compiler["Lean 4 compilation"]
+    Compiler --> Review["Statement fence + reviewer + full gate"]
+    Review -->|changes requested| Proposal
+    Review -->|accepted| Library["BanditRLlib on main"]
+    Library --> Credit["Contributor registry and release notes"]

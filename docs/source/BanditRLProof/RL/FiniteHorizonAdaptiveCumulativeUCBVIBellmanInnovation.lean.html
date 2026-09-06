@@ -1,0 +1,1144 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIBellmanInnovation.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIBellmanInnovation.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIBellmanInnovation.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIBellmanInnovation.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVILocalBellman</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Stage-resolved Bellman innovation for UCBVI-CH</span>
+<span id="L5">5 </span>
+<span id="L6">6 This file proves the within-episode martingale bound for an arbitrary fixed</span>
+<span id="L7">7 chronological table of continuation gaps in `[0,H]`.  The proof recurses</span>
+<span id="L8">8 through the actual policy trajectory kernel one transition at a time, so its</span>
+<span id="L9">9 variance budget is `H * H^2 / 4`, rather than the invalid whole-episode</span>
+<span id="L10">10 range-square budget `H^4 / 4`.</span>
+<span id="L11">11 -/</span>
+<span id="L12">12 </span>
+<span id="L13">13 open MeasureTheory</span>
+<span id="L14">14 open scoped ENNReal ProbabilityTheory BigOperators</span>
+<span id="L15">15 </span>
+<span id="L16">16 universe u v</span>
+<span id="L17">17 </span>
+<span id="L18">18 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L19">19 </span>
+<span id="L20">20 variable {State : Type u} {Action : Type v}</span>
+<span id="L21">21     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L22">22     [Fintype State] [Fintype Action]</span>
+<span id="L23">23     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L24">24     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L25">25     [Nonempty State] [Nonempty Action]</span>
+<span id="L26">26 </span>
+<span id="L27">27 namespace MDP</span>
+<span id="L28">28 </span>
+<span id="L29">29 /-- Chronological Bellman innovation for a deterministic action table.  The</span>
+<span id="L30">30 sampled action coordinate is deliberately ignored: the table chooses the</span>
+<span id="L31">31 action from the recursively reconstructed current state.  This makes the</span>
+<span id="L32">32 pathwise recursion canonical on every batch, while its law is still the exact</span>
+<span id="L33">33 generated deterministic-policy trajectory law. -/</span>
+<span id="L34">34 noncomputable def sampledCumulativeDeterministicGapInnovationFrom</span>
+<span id="L35">35     (mdp : MDP State Action) (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L36">36     (feature : Fin mdp.horizon -&gt; State -&gt; Real) :</span>
+<span id="L37">37     (remaining : Nat) -&gt; remaining &lt;= mdp.horizon -&gt; State -&gt;</span>
+<span id="L38">38       StepTrace Action State remaining -&gt; Real</span>
+<span id="L39">39   | 0, _, _, _ =&gt; 0</span>
+<span id="L40">40   | remaining + 1, hremaining, state, trace =&gt;</span>
+<span id="L41">41       let stage : Fin mdp.horizon :=</span>
+<span id="L42">42         ⟨mdp.horizon - (remaining + 1), by omega⟩</span>
+<span id="L43">43       mdp.transitionValue (feature stage) state (table stage state) -</span>
+<span id="L44">44           feature stage (trace 0).2 +</span>
+<span id="L45">45         sampledCumulativeDeterministicGapInnovationFrom mdp table feature</span>
+<span id="L46">46           remaining (by omega) (trace 0).2 (Fin.tail trace)</span>
+<span id="L47">47 </span>
+<span id="L48">48 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L49">49 theorem measurable_sampledCumulativeDeterministicGapInnovationFrom</span>
+<span id="L50">50     (mdp : MDP State Action) (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L51">51     (feature : Fin mdp.horizon -&gt; State -&gt; Real)</span>
+<span id="L52">52     (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) :</span>
+<span id="L53">53     Measurable (fun p : State × StepTrace Action State remaining =&gt;</span>
+<span id="L54">54       mdp.sampledCumulativeDeterministicGapInnovationFrom table feature</span>
+<span id="L55">55         remaining hremaining p.1 p.2) := by</span>
+<span id="L56">56   induction remaining with</span>
+<span id="L57">57   | zero =&gt; simp [sampledCumulativeDeterministicGapInnovationFrom]</span>
+<span id="L58">58   | succ remaining ih =&gt;</span>
+<span id="L59">59       let stage : Fin mdp.horizon :=</span>
+<span id="L60">60         ⟨mdp.horizon - (remaining + 1), by omega⟩</span>
+<span id="L61">61       let head : State × StepTrace Action State (remaining + 1) -&gt;</span>
+<span id="L62">62           Action × State := fun p =&gt; p.2 0</span>
+<span id="L63">63       have hhead : Measurable head :=</span>
+<span id="L64">64         (measurable_pi_apply 0).comp measurable_snd</span>
+<span id="L65">65       have htail : Measurable</span>
+<span id="L66">66           (fun p : State × StepTrace Action State (remaining + 1) =&gt;</span>
+<span id="L67">67             ((head p).2, Fin.tail p.2)) :=</span>
+<span id="L68">68         (hhead.snd.prodMk</span>
+<span id="L69">69           ((StepTrace.measurable_tail remaining).comp measurable_snd))</span>
+<span id="L70">70       have hcurrent : Measurable</span>
+<span id="L71">71           (fun p : State × StepTrace Action State (remaining + 1) =&gt;</span>
+<span id="L72">72             mdp.transitionValue (feature stage) p.1 (table stage p.1) -</span>
+<span id="L73">73               feature stage (p.2 0).2) := measurable_of_finite _</span>
+<span id="L74">74       simpa only [sampledCumulativeDeterministicGapInnovationFrom] using</span>
+<span id="L75">75         hcurrent.add ((ih (by omega)).comp htail)</span>
+<span id="L76">76 </span>
+<span id="L77">77 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L78">78 theorem actionStateKernel_deterministicGapInnovation_compensated_hasMGFUpperBoundAt</span>
+<span id="L79">79     (mdp : MDP State Action) (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L80">80     (feature : State -&gt; Real)</span>
+<span id="L81">81     (hfeature : forall nextState,</span>
+<span id="L82">82       feature nextState ∈ Set.Icc (0 : Real) mdp.horizon)</span>
+<span id="L83">83     (stage : Fin mdp.horizon) (currentState : State) (tilt : Real) :</span>
+<span id="L84">84     Concentration.HasMGFUpperBoundAt</span>
+<span id="L85">85       (fun head : Action × State =&gt;</span>
+<span id="L86">86         tilt * (mdp.transitionValue feature currentState (table stage currentState) -</span>
+<span id="L87">87           feature head.2) - tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8)</span>
+<span id="L88">88       1 0 (table.toMarkovPolicy.actionStateKernel stage currentState) := by</span>
+<span id="L89">89   let selected := table stage currentState</span>
+<span id="L90">90   let Z : Action × State -&gt; Real := fun head =&gt;</span>
+<span id="L91">91     tilt * (mdp.transitionValue feature currentState selected - feature head.2) -</span>
+<span id="L92">92       tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8</span>
+<span id="L93">93   have hmean : (∫ nextState, feature nextState</span>
+<span id="L94">94       ∂mdp.transition (currentState, selected)) =</span>
+<span id="L95">95       mdp.transitionValue feature currentState selected := rfl</span>
+<span id="L96">96   have hsub := Concentration.boundedCentered_hasSubgaussianMGF_of_mem_Icc_integral_eq</span>
+<span id="L97">97     (mdp.transition (currentState, selected))</span>
+<span id="L98">98     (measurable_of_finite feature).aemeasurable</span>
+<span id="L99">99     (Filter.Eventually.of_forall hfeature) hmean</span>
+<span id="L100">100   have hneg : ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L101">101       (fun nextState =&gt; mdp.transitionValue feature currentState selected -</span>
+<span id="L102">102         feature nextState)</span>
+<span id="L103">103       (Concentration.intervalVarianceProxy 0 (mdp.horizon : Real))</span>
+<span id="L104">104       (mdp.transition (currentState, selected)) := by</span>
+<span id="L105">105     convert hsub.neg using 1</span>
+<span id="L106">106     funext nextState</span>
+<span id="L107">107     simp</span>
+<span id="L108">108   have hproxy : (((Concentration.intervalVarianceProxy 0</span>
+<span id="L109">109       (mdp.horizon : Real) : NNReal) : Real)) =</span>
+<span id="L110">110       (mdp.horizon : Real) ^ 2 / 4 := by</span>
+<span id="L111">111     simp [Concentration.intervalVarianceProxy]</span>
+<span id="L112">112     ring</span>
+<span id="L113">113   have hmgf := hneg.mgf_le tilt</span>
+<span id="L114">114   rw [hproxy] at hmgf</span>
+<span id="L115">115   have hfixed : Concentration.HasMGFUpperBoundAt</span>
+<span id="L116">116       (fun nextState =&gt; mdp.transitionValue feature currentState selected -</span>
+<span id="L117">117         feature nextState) tilt</span>
+<span id="L118">118       (tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8)</span>
+<span id="L119">119       (mdp.transition (currentState, selected)) := by</span>
+<span id="L120">120     constructor</span>
+<span id="L121">121     · exact hneg.integrable_exp_mul</span>
+<span id="L122">122     · convert hmgf using 1 &lt;;&gt; ring</span>
+<span id="L123">123   have hcomp := hfixed.compensated</span>
+<span id="L124">124   constructor</span>
+<span id="L125">125   · intro s</span>
+<span id="L126">126     exact integrable_of_fintype _ _ (by fun_prop)</span>
+<span id="L127">127   · rw [ProbabilityTheory.mgf]</span>
+<span id="L128">128     change (∫ head, Real.exp (1 * Z head)</span>
+<span id="L129">129       ∂table.toMarkovPolicy.actionStateKernel stage currentState) &lt;= Real.exp 0</span>
+<span id="L130">130     unfold MarkovPolicy.actionStateKernel</span>
+<span id="L131">131     have hint : Integrable (fun head =&gt; Real.exp (1 * Z head))</span>
+<span id="L132">132         (((table.toMarkovPolicy.actionKernel stage).compProd mdp.transition)</span>
+<span id="L133">133           currentState) := integrable_of_fintype _ _ (by fun_prop)</span>
+<span id="L134">134     rw [ProbabilityTheory.integral_compProd hint]</span>
+<span id="L135">135     unfold DeterministicMarkovPolicyTable.toMarkovPolicy</span>
+<span id="L136">136     rw [ProbabilityTheory.Kernel.deterministic_apply]</span>
+<span id="L137">137     rw [integral_dirac&#x27;]</span>
+<span id="L138">138     · simpa [ProbabilityTheory.mgf, Z, selected] using hcomp.mgf_le</span>
+<span id="L139">139     · exact measurable_of_finite _ |&gt;.stronglyMeasurable</span>
+<span id="L140">140 </span>
+<span id="L141">141 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L142">142 /-- Stage-resolved MGF for the canonicalized deterministic trajectory. -/</span>
+<span id="L143">143 theorem trajectoryKernelRemaining_deterministicGapInnovation_compensated_hasMGFUpperBoundAt</span>
+<span id="L144">144     (mdp : MDP State Action) (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L145">145     (feature : Fin mdp.horizon -&gt; State -&gt; Real)</span>
+<span id="L146">146     (hfeature : forall stage nextState,</span>
+<span id="L147">147       feature stage nextState ∈ Set.Icc (0 : Real) mdp.horizon)</span>
+<span id="L148">148     (tilt : Real) (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon)</span>
+<span id="L149">149     (currentState : State) :</span>
+<span id="L150">150     Concentration.HasMGFUpperBoundAt</span>
+<span id="L151">151       (fun trace =&gt;</span>
+<span id="L152">152         tilt * mdp.sampledCumulativeDeterministicGapInnovationFrom table feature</span>
+<span id="L153">153             remaining hremaining currentState trace -</span>
+<span id="L154">154           (remaining : Real) * tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8)</span>
+<span id="L155">155       1 0 (table.toMarkovPolicy.trajectoryKernelRemaining remaining hremaining</span>
+<span id="L156">156         currentState) := by</span>
+<span id="L157">157   induction remaining generalizing currentState with</span>
+<span id="L158">158   | zero =&gt;</span>
+<span id="L159">159       have hzero : Concentration.HasMGFUpperBoundAt</span>
+<span id="L160">160           (fun _trace : StepTrace Action State 0 =&gt; (0 : Real)) 1 0</span>
+<span id="L161">161           (table.toMarkovPolicy.trajectoryKernelRemaining 0 hremaining currentState) := by</span>
+<span id="L162">162         constructor</span>
+<span id="L163">163         · intro s</span>
+<span id="L164">164           exact integrable_of_fintype _ _ (by fun_prop)</span>
+<span id="L165">165         · simp [ProbabilityTheory.mgf]</span>
+<span id="L166">166       simpa [sampledCumulativeDeterministicGapInnovationFrom] using hzero</span>
+<span id="L167">167   | succ remaining ih =&gt;</span>
+<span id="L168">168       let stage : Fin mdp.horizon :=</span>
+<span id="L169">169         ⟨mdp.horizon - (remaining + 1), by omega⟩</span>
+<span id="L170">170       let policy := table.toMarkovPolicy</span>
+<span id="L171">171       let tailKernel : ProbabilityTheory.Kernel</span>
+<span id="L172">172           (State × (Action × State)) (StepTrace Action State remaining) :=</span>
+<span id="L173">173         (policy.trajectoryKernelRemaining remaining (by omega)).comap</span>
+<span id="L174">174           (fun p : State × (Action × State) =&gt; p.2.2) measurable_snd.snd</span>
+<span id="L175">175       let consStep := fun p : (Action × State) × StepTrace Action State remaining =&gt;</span>
+<span id="L176">176         @Fin.cons remaining (fun _ =&gt; Action × State) p.1 p.2</span>
+<span id="L177">177       let Z : StepTrace Action State (remaining + 1) -&gt; Real := fun trace =&gt;</span>
+<span id="L178">178         tilt * mdp.sampledCumulativeDeterministicGapInnovationFrom table feature</span>
+<span id="L179">179             (remaining + 1) hremaining currentState trace -</span>
+<span id="L180">180           ((remaining + 1 : Nat) : Real) * tilt ^ 2 *</span>
+<span id="L181">181             (mdp.horizon : Real) ^ 2 / 8</span>
+<span id="L182">182       let Zhead : Action × State -&gt; Real := fun head =&gt;</span>
+<span id="L183">183         tilt * (mdp.transitionValue (feature stage) currentState</span>
+<span id="L184">184           (table stage currentState) - feature stage head.2) -</span>
+<span id="L185">185         tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8</span>
+<span id="L186">186       let Ztail : (Action × State) × StepTrace Action State remaining -&gt; Real :=</span>
+<span id="L187">187         fun p =&gt; tilt * mdp.sampledCumulativeDeterministicGapInnovationFrom</span>
+<span id="L188">188             table feature remaining (by omega) p.1.2 p.2 -</span>
+<span id="L189">189           (remaining : Real) * tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8</span>
+<span id="L190">190       have hcons : Measurable consStep := StepTrace.measurable_cons remaining</span>
+<span id="L191">191       have hZ : Measurable Z :=</span>
+<span id="L192">192         ((mdp.measurable_sampledCumulativeDeterministicGapInnovationFrom table</span>
+<span id="L193">193           feature (remaining + 1) hremaining).comp</span>
+<span id="L194">194             (measurable_const.prodMk measurable_id)).const_mul tilt |&gt;.sub</span>
+<span id="L195">195           measurable_const</span>
+<span id="L196">196       have hpair : Integrable (fun p =&gt; Real.exp (1 * Z (consStep p)))</span>
+<span id="L197">197           (((policy.actionStateKernel stage).compProd tailKernel) currentState) :=</span>
+<span id="L198">198         integrable_of_fintype _ _ (Real.measurable_exp.comp</span>
+<span id="L199">199           ((hZ.comp hcons).const_mul 1))</span>
+<span id="L200">200       have hhead := mdp.actionStateKernel_deterministicGapInnovation_compensated_hasMGFUpperBoundAt</span>
+<span id="L201">201         table (feature stage) (hfeature stage) stage currentState tilt</span>
+<span id="L202">202       have htail : forall head : Action × State,</span>
+<span id="L203">203           Concentration.HasMGFUpperBoundAt (fun tail =&gt; Ztail (head, tail)) 1 0</span>
+<span id="L204">204             (policy.trajectoryKernelRemaining remaining (by omega) head.2) := by</span>
+<span id="L205">205         intro head</span>
+<span id="L206">206         simpa [Ztail, policy] using ih (by omega) head.2</span>
+<span id="L207">207       constructor</span>
+<span id="L208">208       · intro s</span>
+<span id="L209">209         exact integrable_of_fintype _ _ (by fun_prop)</span>
+<span id="L210">210       · rw [ProbabilityTheory.mgf]</span>
+<span id="L211">211         change (∫ trace, Real.exp (1 * Z trace)</span>
+<span id="L212">212           ∂policy.trajectoryKernelRemaining (remaining + 1) hremaining</span>
+<span id="L213">213             currentState) &lt;= Real.exp 0</span>
+<span id="L214">214         rw [MarkovPolicy.trajectoryKernelRemaining]</span>
+<span id="L215">215         rw [ProbabilityTheory.Kernel.map_apply _ hcons]</span>
+<span id="L216">216         change (∫ trace, (fun trace =&gt; Real.exp (1 * Z trace)) trace</span>
+<span id="L217">217           ∂Measure.map consStep</span>
+<span id="L218">218             (((policy.actionStateKernel stage).compProd tailKernel)</span>
+<span id="L219">219               currentState)) &lt;= Real.exp 0</span>
+<span id="L220">220         have hfm : AEStronglyMeasurable (fun trace =&gt; Real.exp (1 * Z trace))</span>
+<span id="L221">221             (Measure.map consStep</span>
+<span id="L222">222               (((policy.actionStateKernel stage).compProd tailKernel)</span>
+<span id="L223">223                 currentState)) :=</span>
+<span id="L224">224           (Real.measurable_exp.comp (hZ.const_mul 1)).aestronglyMeasurable</span>
+<span id="L225">225         rw [integral_map hcons.aemeasurable hfm]</span>
+<span id="L226">226         rw [ProbabilityTheory.integral_compProd hpair]</span>
+<span id="L227">227         simp only [Real.exp_zero]</span>
+<span id="L228">228         have hinner : forall head : Action × State,</span>
+<span id="L229">229             (∫ tail, Real.exp (1 * Z (consStep (head, tail)))</span>
+<span id="L230">230               ∂tailKernel (currentState, head)) &lt;= Real.exp (Zhead head) := by</span>
+<span id="L231">231           intro head</span>
+<span id="L232">232           change (∫ tail, Real.exp (1 * Z (consStep (head, tail)))</span>
+<span id="L233">233             ∂policy.trajectoryKernelRemaining remaining (by omega) head.2) &lt;= _</span>
+<span id="L234">234           have hz : forall tail,</span>
+<span id="L235">235               Z (consStep (head, tail)) = Zhead head + Ztail (head, tail) := by</span>
+<span id="L236">236             intro tail</span>
+<span id="L237">237             simp only [Z, Zhead, Ztail, consStep,</span>
+<span id="L238">238               sampledCumulativeDeterministicGapInnovationFrom]</span>
+<span id="L239">239             simp [stage]</span>
+<span id="L240">240             push_cast</span>
+<span id="L241">241             ring</span>
+<span id="L242">242           simp_rw [hz, mul_add, Real.exp_add, one_mul, integral_const_mul]</span>
+<span id="L243">243           have htailMgf : (∫ tail, Real.exp (Ztail (head, tail))</span>
+<span id="L244">244               ∂policy.trajectoryKernelRemaining remaining (by omega) head.2) &lt;= 1 := by</span>
+<span id="L245">245             simpa [ProbabilityTheory.mgf] using (htail head).mgf_le</span>
+<span id="L246">246           simpa using mul_le_mul_of_nonneg_left htailMgf</span>
+<span id="L247">247             (Real.exp_pos (Zhead head)).le</span>
+<span id="L248">248         have hleft : Integrable (fun head =&gt;</span>
+<span id="L249">249             ∫ tail, Real.exp (1 * Z (consStep (head, tail)))</span>
+<span id="L250">250               ∂tailKernel (currentState, head))</span>
+<span id="L251">251             (policy.actionStateKernel stage currentState) :=</span>
+<span id="L252">252           integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L253">253         have hright : Integrable (fun head =&gt; Real.exp (Zhead head))</span>
+<span id="L254">254             (policy.actionStateKernel stage currentState) :=</span>
+<span id="L255">255           integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L256">256         calc</span>
+<span id="L257">257           (∫ head, ∫ tail, Real.exp (1 * Z (consStep (head, tail)))</span>
+<span id="L258">258               ∂tailKernel (currentState, head)</span>
+<span id="L259">259               ∂policy.actionStateKernel stage currentState) &lt;=</span>
+<span id="L260">260               ∫ head, Real.exp (Zhead head)</span>
+<span id="L261">261                 ∂policy.actionStateKernel stage currentState :=</span>
+<span id="L262">262             integral_mono_ae hleft hright (Filter.Eventually.of_forall hinner)</span>
+<span id="L263">263           _ &lt;= 1 := by</span>
+<span id="L264">264             simpa [ProbabilityTheory.mgf, Zhead, policy] using hhead.mgf_le</span>
+<span id="L265">265 </span>
+<span id="L266">266 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L267">267 /-- Integrating the start state preserves the canonical deterministic-table</span>
+<span id="L268">268 stage-resolved MGF. -/</span>
+<span id="L269">269 theorem trajectoryMeasure_deterministicGapInnovation_compensated_hasMGFUpperBoundAt</span>
+<span id="L270">270     (mdp : MDP State Action) (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L271">271     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L272">272     (feature : Fin mdp.horizon -&gt; State -&gt; Real)</span>
+<span id="L273">273     (hfeature : forall stage nextState,</span>
+<span id="L274">274       feature stage nextState ∈ Set.Icc (0 : Real) mdp.horizon)</span>
+<span id="L275">275     (tilt : Real) :</span>
+<span id="L276">276     Concentration.HasMGFUpperBoundAt</span>
+<span id="L277">277       (fun trajectory =&gt;</span>
+<span id="L278">278         tilt * mdp.sampledCumulativeDeterministicGapInnovationFrom table feature</span>
+<span id="L279">279             mdp.horizon le_rfl trajectory.1 trajectory.2 -</span>
+<span id="L280">280           (mdp.horizon : Real) * tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8)</span>
+<span id="L281">281       1 0 (table.toMarkovPolicy.trajectoryMeasure initialState) := by</span>
+<span id="L282">282   let policy := table.toMarkovPolicy</span>
+<span id="L283">283   let Z : State × StepTrace Action State mdp.horizon -&gt; Real := fun trajectory =&gt;</span>
+<span id="L284">284     tilt * mdp.sampledCumulativeDeterministicGapInnovationFrom table feature</span>
+<span id="L285">285         mdp.horizon le_rfl trajectory.1 trajectory.2 -</span>
+<span id="L286">286       (mdp.horizon : Real) * tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8</span>
+<span id="L287">287   have hZ : Measurable Z :=</span>
+<span id="L288">288     (mdp.measurable_sampledCumulativeDeterministicGapInnovationFrom table feature</span>
+<span id="L289">289       mdp.horizon le_rfl |&gt;.const_mul tilt).sub measurable_const</span>
+<span id="L290">290   constructor</span>
+<span id="L291">291   · intro s</span>
+<span id="L292">292     exact integrable_of_fintype _ _ (Real.measurable_exp.comp (hZ.const_mul s))</span>
+<span id="L293">293   · rw [ProbabilityTheory.mgf]</span>
+<span id="L294">294     change (∫ trajectory, Real.exp (1 * Z trajectory)</span>
+<span id="L295">295       ∂policy.trajectoryMeasure initialState) &lt;= Real.exp 0</span>
+<span id="L296">296     unfold MarkovPolicy.trajectoryMeasure</span>
+<span id="L297">297     have hint : Integrable (fun trajectory =&gt; Real.exp (1 * Z trajectory))</span>
+<span id="L298">298         (initialState.compProd</span>
+<span id="L299">299           (policy.trajectoryKernelRemaining mdp.horizon le_rfl)) :=</span>
+<span id="L300">300       integrable_of_fintype _ _ (Real.measurable_exp.comp (hZ.const_mul 1))</span>
+<span id="L301">301     rw [Measure.integral_compProd hint]</span>
+<span id="L302">302     simp only [Real.exp_zero]</span>
+<span id="L303">303     have hfiber : forall state : State,</span>
+<span id="L304">304         (∫ trace, Real.exp (1 * Z (state, trace))</span>
+<span id="L305">305           ∂policy.trajectoryKernelRemaining mdp.horizon le_rfl state) &lt;= 1 := by</span>
+<span id="L306">306       intro state</span>
+<span id="L307">307       have h :=</span>
+<span id="L308">308         mdp.trajectoryKernelRemaining_deterministicGapInnovation_compensated_hasMGFUpperBoundAt</span>
+<span id="L309">309           table feature hfeature tilt mdp.horizon le_rfl state</span>
+<span id="L310">310       simpa [ProbabilityTheory.mgf, Z, policy] using h.mgf_le</span>
+<span id="L311">311     have hleft : Integrable</span>
+<span id="L312">312         (fun state =&gt; ∫ trace, Real.exp (1 * Z (state, trace))</span>
+<span id="L313">313           ∂policy.trajectoryKernelRemaining mdp.horizon le_rfl state) initialState :=</span>
+<span id="L314">314       integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L315">315     calc</span>
+<span id="L316">316       (∫ state,</span>
+<span id="L317">317           ∫ trace, Real.exp (1 * Z (state, trace))</span>
+<span id="L318">318             ∂policy.trajectoryKernelRemaining mdp.horizon le_rfl state</span>
+<span id="L319">319           ∂initialState) &lt;= ∫ _state, (1 : Real) ∂initialState := by</span>
+<span id="L320">320             exact integral_mono_ae hleft (integrable_const 1)</span>
+<span id="L321">321               (Filter.Eventually.of_forall hfiber)</span>
+<span id="L322">322       _ = 1 := by simp</span>
+<span id="L323">323 </span>
+<span id="L324">324 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L325">325 /-- Pathwise envelope for the canonical deterministic-table innovation. -/</span>
+<span id="L326">326 theorem abs_sampledCumulativeDeterministicGapInnovationFrom_le</span>
+<span id="L327">327     (mdp : MDP State Action) (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L328">328     (feature : Fin mdp.horizon -&gt; State -&gt; Real)</span>
+<span id="L329">329     (hfeature : forall stage nextState,</span>
+<span id="L330">330       feature stage nextState ∈ Set.Icc (0 : Real) mdp.horizon) :</span>
+<span id="L331">331     forall remaining (hremaining : remaining &lt;= mdp.horizon)</span>
+<span id="L332">332       (currentState : State) (trace : StepTrace Action State remaining),</span>
+<span id="L333">333       |mdp.sampledCumulativeDeterministicGapInnovationFrom table feature</span>
+<span id="L334">334         remaining hremaining currentState trace| &lt;=</span>
+<span id="L335">335         (remaining : Real) * mdp.horizon := by</span>
+<span id="L336">336   intro remaining</span>
+<span id="L337">337   induction remaining with</span>
+<span id="L338">338   | zero =&gt; simp [sampledCumulativeDeterministicGapInnovationFrom]</span>
+<span id="L339">339   | succ remaining ih =&gt;</span>
+<span id="L340">340       intro hremaining currentState trace</span>
+<span id="L341">341       let stage : Fin mdp.horizon :=</span>
+<span id="L342">342         ⟨mdp.horizon - (remaining + 1), by omega⟩</span>
+<span id="L343">343       let selected := table stage currentState</span>
+<span id="L344">344       have hintegrable : Integrable (feature stage)</span>
+<span id="L345">345           (mdp.transition (currentState, selected)) :=</span>
+<span id="L346">346         integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L347">347       have htransitionLower :</span>
+<span id="L348">348           0 &lt;= mdp.transitionValue (feature stage) currentState selected := by</span>
+<span id="L349">349         unfold transitionValue</span>
+<span id="L350">350         exact integral_nonneg fun nextState =&gt; (hfeature stage nextState).1</span>
+<span id="L351">351       have htransitionUpper :</span>
+<span id="L352">352           mdp.transitionValue (feature stage) currentState selected &lt;=</span>
+<span id="L353">353             (mdp.horizon : Real) := by</span>
+<span id="L354">354         unfold transitionValue</span>
+<span id="L355">355         calc</span>
+<span id="L356">356           (∫ nextState, feature stage nextState</span>
+<span id="L357">357             ∂mdp.transition (currentState, selected)) &lt;=</span>
+<span id="L358">358               ∫ _nextState, (mdp.horizon : Real)</span>
+<span id="L359">359                 ∂mdp.transition (currentState, selected) :=</span>
+<span id="L360">360             integral_mono hintegrable (integrable_const _) fun nextState =&gt;</span>
+<span id="L361">361               (hfeature stage nextState).2</span>
+<span id="L362">362           _ = (mdp.horizon : Real) := by simp</span>
+<span id="L363">363       have hhead :</span>
+<span id="L364">364           |mdp.transitionValue (feature stage) currentState selected -</span>
+<span id="L365">365               feature stage (trace 0).2| &lt;= (mdp.horizon : Real) := by</span>
+<span id="L366">366         rw [abs_le]</span>
+<span id="L367">367         constructor &lt;;&gt; linarith [hfeature stage (trace 0).2 |&gt;.1,</span>
+<span id="L368">368           hfeature stage (trace 0).2 |&gt;.2]</span>
+<span id="L369">369       have htail := ih (by omega) (trace 0).2 (Fin.tail trace)</span>
+<span id="L370">370       rw [sampledCumulativeDeterministicGapInnovationFrom]</span>
+<span id="L371">371       calc</span>
+<span id="L372">372         |_ + _| &lt;=</span>
+<span id="L373">373             |mdp.transitionValue (feature stage) currentState selected -</span>
+<span id="L374">374               feature stage (trace 0).2| +</span>
+<span id="L375">375             |mdp.sampledCumulativeDeterministicGapInnovationFrom table feature</span>
+<span id="L376">376               remaining (by omega) (trace 0).2 (Fin.tail trace)| := abs_add_le _ _</span>
+<span id="L377">377         _ &lt;= (mdp.horizon : Real) +</span>
+<span id="L378">378             (remaining : Real) * mdp.horizon := add_le_add hhead htail</span>
+<span id="L379">379         _ = ((remaining + 1 : Nat) : Real) * mdp.horizon := by</span>
+<span id="L380">380           push_cast</span>
+<span id="L381">381           ring</span>
+<span id="L382">382 </span>
+<span id="L383">383 /-- Sum of chronological transition innovations for a stage-indexed bounded</span>
+<span id="L384">384 continuation table. -/</span>
+<span id="L385">385 noncomputable def sampledCumulativeTransitionGapInnovationFrom</span>
+<span id="L386">386     (mdp : MDP State Action) (policy : MarkovPolicy mdp)</span>
+<span id="L387">387     (feature : Fin mdp.horizon -&gt; State -&gt; Real) :</span>
+<span id="L388">388     (remaining : Nat) -&gt; remaining &lt;= mdp.horizon -&gt; State -&gt;</span>
+<span id="L389">389       StepTrace Action State remaining -&gt; Real</span>
+<span id="L390">390   | 0, _, _, _ =&gt; 0</span>
+<span id="L391">391   | remaining + 1, hremaining, state, trace =&gt;</span>
+<span id="L392">392       let stage : Fin mdp.horizon :=</span>
+<span id="L393">393         ⟨mdp.horizon - (remaining + 1), by omega⟩</span>
+<span id="L394">394       mdp.transitionValue (feature stage) state (trace 0).1 -</span>
+<span id="L395">395           feature stage (trace 0).2 +</span>
+<span id="L396">396         sampledCumulativeTransitionGapInnovationFrom mdp policy feature</span>
+<span id="L397">397           remaining (by omega) (trace 0).2 (Fin.tail trace)</span>
+<span id="L398">398 </span>
+<span id="L399">399 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L400">400 theorem measurable_sampledCumulativeTransitionGapInnovationFrom</span>
+<span id="L401">401     (mdp : MDP State Action) (policy : MarkovPolicy mdp)</span>
+<span id="L402">402     (feature : Fin mdp.horizon -&gt; State -&gt; Real)</span>
+<span id="L403">403     (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) :</span>
+<span id="L404">404     Measurable (fun p : State × StepTrace Action State remaining =&gt;</span>
+<span id="L405">405       mdp.sampledCumulativeTransitionGapInnovationFrom policy feature</span>
+<span id="L406">406         remaining hremaining p.1 p.2) := by</span>
+<span id="L407">407   induction remaining with</span>
+<span id="L408">408   | zero =&gt;</span>
+<span id="L409">409       simp [sampledCumulativeTransitionGapInnovationFrom]</span>
+<span id="L410">410   | succ remaining ih =&gt;</span>
+<span id="L411">411       let stage : Fin mdp.horizon :=</span>
+<span id="L412">412         ⟨mdp.horizon - (remaining + 1), by omega⟩</span>
+<span id="L413">413       let head : State × StepTrace Action State (remaining + 1) -&gt;</span>
+<span id="L414">414           Action × State := fun p =&gt; p.2 0</span>
+<span id="L415">415       have hhead : Measurable head := (measurable_pi_apply 0).comp measurable_snd</span>
+<span id="L416">416       have htail : Measurable</span>
+<span id="L417">417           (fun p : State × StepTrace Action State (remaining + 1) =&gt;</span>
+<span id="L418">418             ((head p).2, Fin.tail p.2)) :=</span>
+<span id="L419">419         hhead.snd.prodMk</span>
+<span id="L420">420           ((StepTrace.measurable_tail remaining).comp measurable_snd)</span>
+<span id="L421">421       have hcurrent : Measurable</span>
+<span id="L422">422           (fun p : State × StepTrace Action State (remaining + 1) =&gt;</span>
+<span id="L423">423             mdp.transitionValue (feature stage) p.1 (head p).1 -</span>
+<span id="L424">424               feature stage (head p).2) := by</span>
+<span id="L425">425         exact measurable_of_finite _</span>
+<span id="L426">426       simpa only [sampledCumulativeTransitionGapInnovationFrom] using</span>
+<span id="L427">427         hcurrent.add ((ih (by omega)).comp htail)</span>
+<span id="L428">428 </span>
+<span id="L429">429 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L430">430 /-- Pathwise envelope matching the sum of `remaining` centered `[0,H]`</span>
+<span id="L431">431 transition probes. -/</span>
+<span id="L432">432 theorem abs_sampledCumulativeTransitionGapInnovationFrom_le</span>
+<span id="L433">433     (mdp : MDP State Action) (policy : MarkovPolicy mdp)</span>
+<span id="L434">434     (feature : Fin mdp.horizon -&gt; State -&gt; Real)</span>
+<span id="L435">435     (hfeature : forall stage nextState,</span>
+<span id="L436">436       feature stage nextState ∈ Set.Icc (0 : Real) mdp.horizon) :</span>
+<span id="L437">437     forall remaining (hremaining : remaining &lt;= mdp.horizon)</span>
+<span id="L438">438       (currentState : State) (trace : StepTrace Action State remaining),</span>
+<span id="L439">439       |mdp.sampledCumulativeTransitionGapInnovationFrom policy feature</span>
+<span id="L440">440         remaining hremaining currentState trace| &lt;=</span>
+<span id="L441">441         (remaining : Real) * mdp.horizon := by</span>
+<span id="L442">442   intro remaining</span>
+<span id="L443">443   induction remaining with</span>
+<span id="L444">444   | zero =&gt; simp [sampledCumulativeTransitionGapInnovationFrom]</span>
+<span id="L445">445   | succ remaining ih =&gt;</span>
+<span id="L446">446       intro hremaining currentState trace</span>
+<span id="L447">447       let stage : Fin mdp.horizon :=</span>
+<span id="L448">448         ⟨mdp.horizon - (remaining + 1), by omega⟩</span>
+<span id="L449">449       let chosenAction := (trace 0).1</span>
+<span id="L450">450       have hintegrable : Integrable (feature stage)</span>
+<span id="L451">451           (mdp.transition (currentState, chosenAction)) :=</span>
+<span id="L452">452         integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L453">453       have htransitionLower :</span>
+<span id="L454">454           0 &lt;= mdp.transitionValue (feature stage) currentState chosenAction := by</span>
+<span id="L455">455         unfold transitionValue</span>
+<span id="L456">456         exact integral_nonneg fun nextState =&gt; (hfeature stage nextState).1</span>
+<span id="L457">457       have htransitionUpper :</span>
+<span id="L458">458           mdp.transitionValue (feature stage) currentState chosenAction &lt;=</span>
+<span id="L459">459             (mdp.horizon : Real) := by</span>
+<span id="L460">460         unfold transitionValue</span>
+<span id="L461">461         calc</span>
+<span id="L462">462           (∫ nextState, feature stage nextState</span>
+<span id="L463">463             ∂mdp.transition (currentState, chosenAction)) &lt;=</span>
+<span id="L464">464               ∫ _nextState, (mdp.horizon : Real)</span>
+<span id="L465">465                 ∂mdp.transition (currentState, chosenAction) :=</span>
+<span id="L466">466             integral_mono hintegrable (integrable_const _) fun nextState =&gt;</span>
+<span id="L467">467               (hfeature stage nextState).2</span>
+<span id="L468">468           _ = (mdp.horizon : Real) := by simp</span>
+<span id="L469">469       have hhead :</span>
+<span id="L470">470           |mdp.transitionValue (feature stage) currentState chosenAction -</span>
+<span id="L471">471               feature stage (trace 0).2| &lt;= (mdp.horizon : Real) := by</span>
+<span id="L472">472         rw [abs_le]</span>
+<span id="L473">473         constructor &lt;;&gt; linarith [hfeature stage (trace 0).2 |&gt;.1,</span>
+<span id="L474">474           hfeature stage (trace 0).2 |&gt;.2]</span>
+<span id="L475">475       have htail := ih (by omega) (trace 0).2 (Fin.tail trace)</span>
+<span id="L476">476       rw [sampledCumulativeTransitionGapInnovationFrom]</span>
+<span id="L477">477       calc</span>
+<span id="L478">478         |_ + _| &lt;=</span>
+<span id="L479">479             |mdp.transitionValue (feature stage) currentState chosenAction -</span>
+<span id="L480">480               feature stage (trace 0).2| +</span>
+<span id="L481">481             |mdp.sampledCumulativeTransitionGapInnovationFrom policy feature</span>
+<span id="L482">482               remaining (by omega) (trace 0).2 (Fin.tail trace)| := abs_add_le _ _</span>
+<span id="L483">483         _ &lt;= (mdp.horizon : Real) +</span>
+<span id="L484">484             (remaining : Real) * mdp.horizon := add_le_add hhead htail</span>
+<span id="L485">485         _ = ((remaining + 1 : Nat) : Real) * mdp.horizon := by</span>
+<span id="L486">486           push_cast</span>
+<span id="L487">487           ring</span>
+<span id="L488">488 </span>
+<span id="L489">489 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L490">490 /-- One policy transition has the Hoeffding compensated MGF with range `H`. -/</span>
+<span id="L491">491 theorem actionStateKernel_transitionGapInnovation_compensated_hasMGFUpperBoundAt</span>
+<span id="L492">492     (mdp : MDP State Action) (policy : MarkovPolicy mdp)</span>
+<span id="L493">493     (feature : State -&gt; Real)</span>
+<span id="L494">494     (hfeature : forall nextState,</span>
+<span id="L495">495       feature nextState ∈ Set.Icc (0 : Real) mdp.horizon)</span>
+<span id="L496">496     (stage : Fin mdp.horizon) (currentState : State) (tilt : Real) :</span>
+<span id="L497">497     Concentration.HasMGFUpperBoundAt</span>
+<span id="L498">498       (fun head : Action × State =&gt;</span>
+<span id="L499">499         tilt * (mdp.transitionValue feature currentState head.1 -</span>
+<span id="L500">500           feature head.2) -</span>
+<span id="L501">501         tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8)</span>
+<span id="L502">502       1 0 (policy.actionStateKernel stage currentState) := by</span>
+<span id="L503">503   let Z : Action × State -&gt; Real := fun head =&gt;</span>
+<span id="L504">504     tilt * (mdp.transitionValue feature currentState head.1 -</span>
+<span id="L505">505       feature head.2) - tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8</span>
+<span id="L506">506   constructor</span>
+<span id="L507">507   · intro s</span>
+<span id="L508">508     exact integrable_of_fintype _ _ (by fun_prop)</span>
+<span id="L509">509   · rw [ProbabilityTheory.mgf]</span>
+<span id="L510">510     change (∫ head, Real.exp (1 * Z head)</span>
+<span id="L511">511       ∂policy.actionStateKernel stage currentState) &lt;= Real.exp 0</span>
+<span id="L512">512     unfold MarkovPolicy.actionStateKernel</span>
+<span id="L513">513     have hint : Integrable (fun head =&gt; Real.exp (1 * Z head))</span>
+<span id="L514">514         ((policy.actionKernel stage).compProd mdp.transition currentState) :=</span>
+<span id="L515">515       integrable_of_fintype _ _ (by fun_prop)</span>
+<span id="L516">516     rw [ProbabilityTheory.integral_compProd hint]</span>
+<span id="L517">517     simp only [Real.exp_zero]</span>
+<span id="L518">518     have hinner : forall chosenAction : Action,</span>
+<span id="L519">519         (∫ nextState,</span>
+<span id="L520">520           Real.exp (Z (chosenAction, nextState))</span>
+<span id="L521">521             ∂mdp.transition (currentState, chosenAction)) &lt;= 1 := by</span>
+<span id="L522">522       intro chosenAction</span>
+<span id="L523">523       have hmean :</span>
+<span id="L524">524           (∫ nextState, feature nextState</span>
+<span id="L525">525             ∂mdp.transition (currentState, chosenAction)) =</span>
+<span id="L526">526           mdp.transitionValue feature currentState chosenAction := rfl</span>
+<span id="L527">527       have hsub :=</span>
+<span id="L528">528         Concentration.boundedCentered_hasSubgaussianMGF_of_mem_Icc_integral_eq</span>
+<span id="L529">529           (mdp.transition (currentState, chosenAction))</span>
+<span id="L530">530           (measurable_of_finite feature).aemeasurable</span>
+<span id="L531">531           (Filter.Eventually.of_forall hfeature) hmean</span>
+<span id="L532">532       have hneg : ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L533">533           (fun nextState =&gt;</span>
+<span id="L534">534             mdp.transitionValue feature currentState chosenAction -</span>
+<span id="L535">535               feature nextState)</span>
+<span id="L536">536           (Concentration.intervalVarianceProxy 0 (mdp.horizon : Real))</span>
+<span id="L537">537           (mdp.transition (currentState, chosenAction)) := by</span>
+<span id="L538">538         convert hsub.neg using 1</span>
+<span id="L539">539         funext nextState</span>
+<span id="L540">540         simp</span>
+<span id="L541">541       have hproxy :</span>
+<span id="L542">542           (((Concentration.intervalVarianceProxy 0 (mdp.horizon : Real) :</span>
+<span id="L543">543               NNReal) : Real)) = (mdp.horizon : Real) ^ 2 / 4 := by</span>
+<span id="L544">544         simp [Concentration.intervalVarianceProxy]</span>
+<span id="L545">545         ring</span>
+<span id="L546">546       have hmgf := hneg.mgf_le tilt</span>
+<span id="L547">547       rw [hproxy] at hmgf</span>
+<span id="L548">548       have hfixed : Concentration.HasMGFUpperBoundAt</span>
+<span id="L549">549           (fun nextState =&gt;</span>
+<span id="L550">550             mdp.transitionValue feature currentState chosenAction -</span>
+<span id="L551">551               feature nextState)</span>
+<span id="L552">552           tilt (tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8)</span>
+<span id="L553">553           (mdp.transition (currentState, chosenAction)) := by</span>
+<span id="L554">554         constructor</span>
+<span id="L555">555         · exact hneg.integrable_exp_mul</span>
+<span id="L556">556         · convert hmgf using 1 &lt;;&gt; ring</span>
+<span id="L557">557       have hcomp := hfixed.compensated</span>
+<span id="L558">558       simpa [ProbabilityTheory.mgf, Z] using hcomp.mgf_le</span>
+<span id="L559">559     have hleft : Integrable</span>
+<span id="L560">560         (fun chosenAction =&gt;</span>
+<span id="L561">561           ∫ nextState, Real.exp (1 * Z (chosenAction, nextState))</span>
+<span id="L562">562             ∂mdp.transition (currentState, chosenAction))</span>
+<span id="L563">563         (policy.actionKernel stage currentState) :=</span>
+<span id="L564">564       integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L565">565     calc</span>
+<span id="L566">566       (∫ chosenAction,</span>
+<span id="L567">567           ∫ nextState, Real.exp (1 * Z (chosenAction, nextState))</span>
+<span id="L568">568             ∂mdp.transition (currentState, chosenAction)</span>
+<span id="L569">569           ∂policy.actionKernel stage currentState) &lt;=</span>
+<span id="L570">570           ∫ _chosenAction, (1 : Real)</span>
+<span id="L571">571             ∂policy.actionKernel stage currentState := by</span>
+<span id="L572">572               exact integral_mono_ae hleft (integrable_const 1)</span>
+<span id="L573">573                 (Filter.Eventually.of_forall (by</span>
+<span id="L574">574                   intro chosenAction</span>
+<span id="L575">575                   simpa only [one_mul] using hinner chosenAction))</span>
+<span id="L576">576       _ = 1 := by simp</span>
+<span id="L577">577 </span>
+<span id="L578">578 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L579">579 /-- Recursive within-episode MGF.  Each of the `remaining` transitions pays</span>
+<span id="L580">580 exactly one `tilt^2 H^2 / 8` compensation. -/</span>
+<span id="L581">581 theorem trajectoryKernelRemaining_transitionGapInnovation_compensated_hasMGFUpperBoundAt</span>
+<span id="L582">582     (mdp : MDP State Action) (policy : MarkovPolicy mdp)</span>
+<span id="L583">583     (feature : Fin mdp.horizon -&gt; State -&gt; Real)</span>
+<span id="L584">584     (hfeature : forall stage nextState,</span>
+<span id="L585">585       feature stage nextState ∈ Set.Icc (0 : Real) mdp.horizon)</span>
+<span id="L586">586     (tilt : Real) (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon)</span>
+<span id="L587">587     (currentState : State) :</span>
+<span id="L588">588     Concentration.HasMGFUpperBoundAt</span>
+<span id="L589">589       (fun trace =&gt;</span>
+<span id="L590">590         tilt * mdp.sampledCumulativeTransitionGapInnovationFrom policy feature</span>
+<span id="L591">591             remaining hremaining currentState trace -</span>
+<span id="L592">592           (remaining : Real) * tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8)</span>
+<span id="L593">593       1 0 (policy.trajectoryKernelRemaining remaining hremaining currentState) := by</span>
+<span id="L594">594   induction remaining generalizing currentState with</span>
+<span id="L595">595   | zero =&gt;</span>
+<span id="L596">596       have hzero : Concentration.HasMGFUpperBoundAt</span>
+<span id="L597">597           (fun _trace : StepTrace Action State 0 =&gt; (0 : Real)) 1 0</span>
+<span id="L598">598           (policy.trajectoryKernelRemaining 0 hremaining currentState) := by</span>
+<span id="L599">599         constructor</span>
+<span id="L600">600         · intro s</span>
+<span id="L601">601           exact integrable_of_fintype _ _ (by fun_prop)</span>
+<span id="L602">602         · simp [ProbabilityTheory.mgf]</span>
+<span id="L603">603       simpa [sampledCumulativeTransitionGapInnovationFrom] using hzero</span>
+<span id="L604">604   | succ remaining ih =&gt;</span>
+<span id="L605">605       let stage : Fin mdp.horizon :=</span>
+<span id="L606">606         ⟨mdp.horizon - (remaining + 1), by omega⟩</span>
+<span id="L607">607       let tailKernel : ProbabilityTheory.Kernel</span>
+<span id="L608">608           (State × (Action × State)) (StepTrace Action State remaining) :=</span>
+<span id="L609">609         (policy.trajectoryKernelRemaining remaining (by omega)).comap</span>
+<span id="L610">610           (fun p : State × (Action × State) =&gt; p.2.2) measurable_snd.snd</span>
+<span id="L611">611       let consStep :=</span>
+<span id="L612">612         fun p : (Action × State) × StepTrace Action State remaining =&gt;</span>
+<span id="L613">613           @Fin.cons remaining (fun _ =&gt; Action × State) p.1 p.2</span>
+<span id="L614">614       let Z : StepTrace Action State (remaining + 1) -&gt; Real := fun trace =&gt;</span>
+<span id="L615">615         tilt * mdp.sampledCumulativeTransitionGapInnovationFrom policy feature</span>
+<span id="L616">616             (remaining + 1) hremaining currentState trace -</span>
+<span id="L617">617           ((remaining + 1 : Nat) : Real) * tilt ^ 2 *</span>
+<span id="L618">618             (mdp.horizon : Real) ^ 2 / 8</span>
+<span id="L619">619       let Zhead : Action × State -&gt; Real := fun head =&gt;</span>
+<span id="L620">620         tilt * (mdp.transitionValue (feature stage) currentState head.1 -</span>
+<span id="L621">621           feature stage head.2) -</span>
+<span id="L622">622         tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8</span>
+<span id="L623">623       let Ztail : (Action × State) × StepTrace Action State remaining -&gt; Real :=</span>
+<span id="L624">624         fun p =&gt;</span>
+<span id="L625">625           tilt * mdp.sampledCumulativeTransitionGapInnovationFrom policy feature</span>
+<span id="L626">626               remaining (by omega) p.1.2 p.2 -</span>
+<span id="L627">627             (remaining : Real) * tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8</span>
+<span id="L628">628       have hcons : Measurable consStep := StepTrace.measurable_cons remaining</span>
+<span id="L629">629       have hZ : Measurable Z :=</span>
+<span id="L630">630         ((mdp.measurable_sampledCumulativeTransitionGapInnovationFrom policy</span>
+<span id="L631">631           feature (remaining + 1) hremaining).comp</span>
+<span id="L632">632             (measurable_const.prodMk measurable_id)).const_mul tilt |&gt;.sub</span>
+<span id="L633">633           measurable_const</span>
+<span id="L634">634       have hpair : Integrable (fun p =&gt; Real.exp (1 * Z (consStep p)))</span>
+<span id="L635">635           (((policy.actionStateKernel stage).compProd tailKernel) currentState) :=</span>
+<span id="L636">636         integrable_of_fintype _ _ (Real.measurable_exp.comp</span>
+<span id="L637">637           ((hZ.comp hcons).const_mul 1))</span>
+<span id="L638">638       have hhead :=</span>
+<span id="L639">639         mdp.actionStateKernel_transitionGapInnovation_compensated_hasMGFUpperBoundAt</span>
+<span id="L640">640           policy (feature stage) (hfeature stage) stage currentState tilt</span>
+<span id="L641">641       have htail : forall head : Action × State,</span>
+<span id="L642">642           Concentration.HasMGFUpperBoundAt</span>
+<span id="L643">643             (fun tail =&gt; Ztail (head, tail)) 1 0</span>
+<span id="L644">644             (policy.trajectoryKernelRemaining remaining (by omega) head.2) := by</span>
+<span id="L645">645         intro head</span>
+<span id="L646">646         simpa [Ztail] using ih (by omega) head.2</span>
+<span id="L647">647       constructor</span>
+<span id="L648">648       · intro s</span>
+<span id="L649">649         exact integrable_of_fintype _ _ (by fun_prop)</span>
+<span id="L650">650       · rw [ProbabilityTheory.mgf]</span>
+<span id="L651">651         change (∫ trace, Real.exp (1 * Z trace)</span>
+<span id="L652">652           ∂policy.trajectoryKernelRemaining (remaining + 1) hremaining</span>
+<span id="L653">653             currentState) &lt;= Real.exp 0</span>
+<span id="L654">654         rw [MarkovPolicy.trajectoryKernelRemaining]</span>
+<span id="L655">655         rw [ProbabilityTheory.Kernel.map_apply _ hcons]</span>
+<span id="L656">656         change (∫ trace, (fun trace =&gt; Real.exp (1 * Z trace)) trace</span>
+<span id="L657">657           ∂Measure.map consStep</span>
+<span id="L658">658             (((policy.actionStateKernel stage).compProd tailKernel)</span>
+<span id="L659">659               currentState)) &lt;= Real.exp 0</span>
+<span id="L660">660         have hfm : AEStronglyMeasurable</span>
+<span id="L661">661             (fun trace =&gt; Real.exp (1 * Z trace))</span>
+<span id="L662">662             (Measure.map consStep</span>
+<span id="L663">663               (((policy.actionStateKernel stage).compProd tailKernel)</span>
+<span id="L664">664                 currentState)) :=</span>
+<span id="L665">665           (Real.measurable_exp.comp (hZ.const_mul 1)).aestronglyMeasurable</span>
+<span id="L666">666         rw [integral_map hcons.aemeasurable hfm]</span>
+<span id="L667">667         rw [ProbabilityTheory.integral_compProd hpair]</span>
+<span id="L668">668         simp only [Real.exp_zero]</span>
+<span id="L669">669         have hinner : forall head : Action × State,</span>
+<span id="L670">670             (∫ tail, Real.exp (1 * Z (consStep (head, tail)))</span>
+<span id="L671">671               ∂tailKernel (currentState, head)) &lt;= Real.exp (Zhead head) := by</span>
+<span id="L672">672           intro head</span>
+<span id="L673">673           have htailApply : tailKernel (currentState, head) =</span>
+<span id="L674">674               policy.trajectoryKernelRemaining remaining (by omega) head.2 := by</span>
+<span id="L675">675             rfl</span>
+<span id="L676">676           rw [htailApply]</span>
+<span id="L677">677           have hz : forall tail,</span>
+<span id="L678">678               Z (consStep (head, tail)) = Zhead head + Ztail (head, tail) := by</span>
+<span id="L679">679             intro tail</span>
+<span id="L680">680             simp only [Z, Zhead, Ztail, consStep,</span>
+<span id="L681">681               sampledCumulativeTransitionGapInnovationFrom]</span>
+<span id="L682">682             simp [stage]</span>
+<span id="L683">683             push_cast</span>
+<span id="L684">684             ring</span>
+<span id="L685">685           simp_rw [hz, mul_add, Real.exp_add, one_mul, integral_const_mul]</span>
+<span id="L686">686           have htailMgf :</span>
+<span id="L687">687               (∫ tail, Real.exp (Ztail (head, tail))</span>
+<span id="L688">688                 ∂policy.trajectoryKernelRemaining remaining (by omega) head.2) &lt;= 1 := by</span>
+<span id="L689">689             simpa [ProbabilityTheory.mgf] using (htail head).mgf_le</span>
+<span id="L690">690           simpa using</span>
+<span id="L691">691             (mul_le_mul_of_nonneg_left htailMgf (Real.exp_pos (Zhead head)).le)</span>
+<span id="L692">692         have hleft : Integrable</span>
+<span id="L693">693             (fun head =&gt;</span>
+<span id="L694">694               ∫ tail, Real.exp (1 * Z (consStep (head, tail)))</span>
+<span id="L695">695                 ∂tailKernel (currentState, head))</span>
+<span id="L696">696             (policy.actionStateKernel stage currentState) :=</span>
+<span id="L697">697           integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L698">698         have hright : Integrable (fun head =&gt; Real.exp (Zhead head))</span>
+<span id="L699">699             (policy.actionStateKernel stage currentState) :=</span>
+<span id="L700">700           integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L701">701         calc</span>
+<span id="L702">702           (∫ head,</span>
+<span id="L703">703               ∫ tail, Real.exp (1 * Z (consStep (head, tail)))</span>
+<span id="L704">704                 ∂tailKernel (currentState, head)</span>
+<span id="L705">705               ∂policy.actionStateKernel stage currentState) &lt;=</span>
+<span id="L706">706               ∫ head, Real.exp (Zhead head)</span>
+<span id="L707">707                 ∂policy.actionStateKernel stage currentState := by</span>
+<span id="L708">708                   exact integral_mono_ae hleft hright</span>
+<span id="L709">709                     (Filter.Eventually.of_forall hinner)</span>
+<span id="L710">710           _ &lt;= 1 := by</span>
+<span id="L711">711             simpa [ProbabilityTheory.mgf, Zhead] using hhead.mgf_le</span>
+<span id="L712">712 </span>
+<span id="L713">713 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L714">714 /-- Integrating the start state preserves the exact stage-resolved MGF. -/</span>
+<span id="L715">715 theorem trajectoryMeasure_transitionGapInnovation_compensated_hasMGFUpperBoundAt</span>
+<span id="L716">716     (mdp : MDP State Action) (policy : MarkovPolicy mdp)</span>
+<span id="L717">717     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L718">718     (feature : Fin mdp.horizon -&gt; State -&gt; Real)</span>
+<span id="L719">719     (hfeature : forall stage nextState,</span>
+<span id="L720">720       feature stage nextState ∈ Set.Icc (0 : Real) mdp.horizon)</span>
+<span id="L721">721     (tilt : Real) :</span>
+<span id="L722">722     Concentration.HasMGFUpperBoundAt</span>
+<span id="L723">723       (fun trajectory =&gt;</span>
+<span id="L724">724         tilt * mdp.sampledCumulativeTransitionGapInnovationFrom policy feature</span>
+<span id="L725">725             mdp.horizon le_rfl trajectory.1 trajectory.2 -</span>
+<span id="L726">726           (mdp.horizon : Real) * tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8)</span>
+<span id="L727">727       1 0 (policy.trajectoryMeasure initialState) := by</span>
+<span id="L728">728   let Z : State × StepTrace Action State mdp.horizon -&gt; Real := fun trajectory =&gt;</span>
+<span id="L729">729     tilt * mdp.sampledCumulativeTransitionGapInnovationFrom policy feature</span>
+<span id="L730">730         mdp.horizon le_rfl trajectory.1 trajectory.2 -</span>
+<span id="L731">731       (mdp.horizon : Real) * tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8</span>
+<span id="L732">732   have hZ : Measurable Z :=</span>
+<span id="L733">733     (mdp.measurable_sampledCumulativeTransitionGapInnovationFrom policy feature</span>
+<span id="L734">734       mdp.horizon le_rfl |&gt;.const_mul tilt).sub measurable_const</span>
+<span id="L735">735   constructor</span>
+<span id="L736">736   · intro s</span>
+<span id="L737">737     exact integrable_of_fintype _ _ (Real.measurable_exp.comp (hZ.const_mul s))</span>
+<span id="L738">738   · rw [ProbabilityTheory.mgf]</span>
+<span id="L739">739     change (∫ trajectory, Real.exp (1 * Z trajectory)</span>
+<span id="L740">740       ∂policy.trajectoryMeasure initialState) &lt;= Real.exp 0</span>
+<span id="L741">741     unfold MarkovPolicy.trajectoryMeasure</span>
+<span id="L742">742     have hint : Integrable (fun trajectory =&gt; Real.exp (1 * Z trajectory))</span>
+<span id="L743">743         (initialState.compProd</span>
+<span id="L744">744           (policy.trajectoryKernelRemaining mdp.horizon le_rfl)) :=</span>
+<span id="L745">745       integrable_of_fintype _ _ (Real.measurable_exp.comp (hZ.const_mul 1))</span>
+<span id="L746">746     rw [Measure.integral_compProd hint]</span>
+<span id="L747">747     simp only [Real.exp_zero]</span>
+<span id="L748">748     have hfiber : forall state : State,</span>
+<span id="L749">749         (∫ trace, Real.exp (1 * Z (state, trace))</span>
+<span id="L750">750           ∂policy.trajectoryKernelRemaining mdp.horizon le_rfl state) &lt;= 1 := by</span>
+<span id="L751">751       intro state</span>
+<span id="L752">752       have h :=</span>
+<span id="L753">753         mdp.trajectoryKernelRemaining_transitionGapInnovation_compensated_hasMGFUpperBoundAt</span>
+<span id="L754">754           policy feature hfeature tilt mdp.horizon le_rfl state</span>
+<span id="L755">755       simpa [ProbabilityTheory.mgf, Z] using h.mgf_le</span>
+<span id="L756">756     have hleft : Integrable</span>
+<span id="L757">757         (fun state =&gt; ∫ trace, Real.exp (1 * Z (state, trace))</span>
+<span id="L758">758           ∂policy.trajectoryKernelRemaining mdp.horizon le_rfl state) initialState :=</span>
+<span id="L759">759       integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L760">760     calc</span>
+<span id="L761">761       (∫ state,</span>
+<span id="L762">762           ∫ trace, Real.exp (1 * Z (state, trace))</span>
+<span id="L763">763             ∂policy.trajectoryKernelRemaining mdp.horizon le_rfl state</span>
+<span id="L764">764           ∂initialState) &lt;= ∫ _state, (1 : Real) ∂initialState := by</span>
+<span id="L765">765             exact integral_mono_ae hleft (integrable_const 1)</span>
+<span id="L766">766               (Filter.Eventually.of_forall hfiber)</span>
+<span id="L767">767       _ = 1 := by simp</span>
+<span id="L768">768 </span>
+<span id="L769">769 end MDP</span>
+<span id="L770">770 </span>
+<span id="L771">771 namespace EpisodeBatch</span>
+<span id="L772">772 </span>
+<span id="L773">773 /-- Initial state reconstructed from the first record of a one-episode batch.</span>
+<span id="L774">774 The default branch specifies the degenerate zero-horizon input only. -/</span>
+<span id="L775">775 def reconstructedInitialState</span>
+<span id="L776">776     {mdp : MDP State Action} (defaultState : State)</span>
+<span id="L777">777     (batch : EpisodeBatch mdp 1) : State :=</span>
+<span id="L778">778   if hhorizon : 0 &lt; mdp.horizon then (batch 0 ⟨0, hhorizon⟩).state</span>
+<span id="L779">779   else defaultState</span>
+<span id="L780">780 </span>
+<span id="L781">781 /-- Action/next-state trace reconstructed from the one-episode records. -/</span>
+<span id="L782">782 def reconstructedStepTrace</span>
+<span id="L783">783     {mdp : MDP State Action} (batch : EpisodeBatch mdp 1) :</span>
+<span id="L784">784     StepTrace Action State mdp.horizon :=</span>
+<span id="L785">785   fun stage =&gt; ((batch 0 stage).action, (batch 0 stage).nextState)</span>
+<span id="L786">786 </span>
+<span id="L787">787 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L788">788 theorem measurable_reconstructedInitialState</span>
+<span id="L789">789     {mdp : MDP State Action} (defaultState : State) :</span>
+<span id="L790">790     Measurable (reconstructedInitialState (mdp := mdp) defaultState) := by</span>
+<span id="L791">791   unfold reconstructedInitialState</span>
+<span id="L792">792   split_ifs</span>
+<span id="L793">793   · exact EpisodeStep.measurable_state.comp</span>
+<span id="L794">794       (measurable_pi_apply _ |&gt;.comp (measurable_pi_apply _))</span>
+<span id="L795">795   · exact measurable_const</span>
+<span id="L796">796 </span>
+<span id="L797">797 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L798">798 theorem measurable_reconstructedStepTrace</span>
+<span id="L799">799     {mdp : MDP State Action} :</span>
+<span id="L800">800     Measurable (reconstructedStepTrace (mdp := mdp)) := by</span>
+<span id="L801">801   refine measurable_pi_lambda _ fun stage =&gt; ?_</span>
+<span id="L802">802   exact</span>
+<span id="L803">803     (EpisodeStep.measurable_action.comp</span>
+<span id="L804">804       (measurable_pi_apply stage |&gt;.comp (measurable_pi_apply 0))).prodMk</span>
+<span id="L805">805     (EpisodeStep.measurable_nextState.comp</span>
+<span id="L806">806       (measurable_pi_apply stage |&gt;.comp (measurable_pi_apply 0)))</span>
+<span id="L807">807 </span>
+<span id="L808">808 /-- Canonical deterministic-table Bellman innovation read from one generated</span>
+<span id="L809">809 batch.  Recorded action fields are intentionally not used. -/</span>
+<span id="L810">810 noncomputable def cumulativeDeterministicGapInnovation</span>
+<span id="L811">811     {mdp : MDP State Action} (defaultState : State)</span>
+<span id="L812">812     (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L813">813     (feature : Fin mdp.horizon -&gt; State -&gt; Real)</span>
+<span id="L814">814     (batch : EpisodeBatch mdp 1) : Real :=</span>
+<span id="L815">815   mdp.sampledCumulativeDeterministicGapInnovationFrom table feature mdp.horizon</span>
+<span id="L816">816     le_rfl (batch.reconstructedInitialState defaultState)</span>
+<span id="L817">817     batch.reconstructedStepTrace</span>
+<span id="L818">818 </span>
+<span id="L819">819 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L820">820 theorem measurable_cumulativeDeterministicGapInnovation</span>
+<span id="L821">821     {mdp : MDP State Action} (defaultState : State)</span>
+<span id="L822">822     (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L823">823     (feature : Fin mdp.horizon -&gt; State -&gt; Real) :</span>
+<span id="L824">824     Measurable (fun batch : EpisodeBatch mdp 1 =&gt;</span>
+<span id="L825">825       batch.cumulativeDeterministicGapInnovation defaultState table feature) := by</span>
+<span id="L826">826   exact</span>
+<span id="L827">827     (mdp.measurable_sampledCumulativeDeterministicGapInnovationFrom table feature</span>
+<span id="L828">828       mdp.horizon le_rfl).comp</span>
+<span id="L829">829       ((measurable_reconstructedInitialState defaultState).prodMk</span>
+<span id="L830">830         measurable_reconstructedStepTrace)</span>
+<span id="L831">831 </span>
+<span id="L832">832 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L833">833 theorem cumulativeDeterministicGapInnovation_episodeBatchOfTrajectories</span>
+<span id="L834">834     (mdp : MDP State Action) (defaultState : State)</span>
+<span id="L835">835     (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L836">836     (feature : Fin mdp.horizon -&gt; State -&gt; Real)</span>
+<span id="L837">837     (hhorizon : 0 &lt; mdp.horizon)</span>
+<span id="L838">838     (trajectories : Fin 1 -&gt; State × StepTrace Action State mdp.horizon) :</span>
+<span id="L839">839     EpisodeBatch.cumulativeDeterministicGapInnovation defaultState table feature</span>
+<span id="L840">840         (mdp.episodeBatchOfTrajectories 1 trajectories) =</span>
+<span id="L841">841       mdp.sampledCumulativeDeterministicGapInnovationFrom table feature</span>
+<span id="L842">842         mdp.horizon le_rfl (trajectories 0).1 (trajectories 0).2 := by</span>
+<span id="L843">843   have hinitial :</span>
+<span id="L844">844       EpisodeBatch.reconstructedInitialState defaultState</span>
+<span id="L845">845           (mdp.episodeBatchOfTrajectories 1 trajectories) =</span>
+<span id="L846">846         (trajectories 0).1 := by</span>
+<span id="L847">847     simp [reconstructedInitialState, hhorizon, MDP.episodeBatchOfTrajectories,</span>
+<span id="L848">848       MDP.episodeStepOfTrajectory, MDP.trajectoryStateAt]</span>
+<span id="L849">849   have htrace :</span>
+<span id="L850">850       EpisodeBatch.reconstructedStepTrace</span>
+<span id="L851">851           (mdp.episodeBatchOfTrajectories 1 trajectories) =</span>
+<span id="L852">852         (trajectories 0).2 := by</span>
+<span id="L853">853     funext stage</span>
+<span id="L854">854     simp [reconstructedStepTrace, MDP.episodeBatchOfTrajectories,</span>
+<span id="L855">855       MDP.episodeStepOfTrajectory]</span>
+<span id="L856">856   simp [cumulativeDeterministicGapInnovation, hinitial, htrace]</span>
+<span id="L857">857 </span>
+<span id="L858">858 /-- Stage-resolved Bellman innovation read from one generated batch. -/</span>
+<span id="L859">859 noncomputable def cumulativeTransitionGapInnovation</span>
+<span id="L860">860     {mdp : MDP State Action} (defaultState : State)</span>
+<span id="L861">861     (policy : MarkovPolicy mdp)</span>
+<span id="L862">862     (feature : Fin mdp.horizon -&gt; State -&gt; Real)</span>
+<span id="L863">863     (batch : EpisodeBatch mdp 1) : Real :=</span>
+<span id="L864">864   mdp.sampledCumulativeTransitionGapInnovationFrom policy feature mdp.horizon</span>
+<span id="L865">865     le_rfl (batch.reconstructedInitialState defaultState)</span>
+<span id="L866">866     batch.reconstructedStepTrace</span>
+<span id="L867">867 </span>
+<span id="L868">868 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L869">869 theorem measurable_cumulativeTransitionGapInnovation</span>
+<span id="L870">870     {mdp : MDP State Action} (defaultState : State)</span>
+<span id="L871">871     (policy : MarkovPolicy mdp)</span>
+<span id="L872">872     (feature : Fin mdp.horizon -&gt; State -&gt; Real) :</span>
+<span id="L873">873     Measurable (fun batch : EpisodeBatch mdp 1 =&gt;</span>
+<span id="L874">874       batch.cumulativeTransitionGapInnovation defaultState policy feature) := by</span>
+<span id="L875">875   exact</span>
+<span id="L876">876     (mdp.measurable_sampledCumulativeTransitionGapInnovationFrom policy feature</span>
+<span id="L877">877       mdp.horizon le_rfl).comp</span>
+<span id="L878">878       ((measurable_reconstructedInitialState defaultState).prodMk</span>
+<span id="L879">879         measurable_reconstructedStepTrace)</span>
+<span id="L880">880 </span>
+<span id="L881">881 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L882">882 /-- Reconstruction is literal on the batch map used by the generated law. -/</span>
+<span id="L883">883 theorem cumulativeTransitionGapInnovation_episodeBatchOfTrajectories</span>
+<span id="L884">884     (mdp : MDP State Action) (defaultState : State)</span>
+<span id="L885">885     (policy : MarkovPolicy mdp)</span>
+<span id="L886">886     (feature : Fin mdp.horizon -&gt; State -&gt; Real)</span>
+<span id="L887">887     (hhorizon : 0 &lt; mdp.horizon)</span>
+<span id="L888">888     (trajectories : Fin 1 -&gt; State × StepTrace Action State mdp.horizon) :</span>
+<span id="L889">889     EpisodeBatch.cumulativeTransitionGapInnovation defaultState policy feature</span>
+<span id="L890">890         (mdp.episodeBatchOfTrajectories 1 trajectories) =</span>
+<span id="L891">891       mdp.sampledCumulativeTransitionGapInnovationFrom policy feature</span>
+<span id="L892">892         mdp.horizon le_rfl (trajectories 0).1 (trajectories 0).2 := by</span>
+<span id="L893">893   have hinitial :</span>
+<span id="L894">894       EpisodeBatch.reconstructedInitialState defaultState</span>
+<span id="L895">895           (mdp.episodeBatchOfTrajectories 1 trajectories) =</span>
+<span id="L896">896         (trajectories 0).1 := by</span>
+<span id="L897">897     simp [reconstructedInitialState, hhorizon, MDP.episodeBatchOfTrajectories,</span>
+<span id="L898">898       MDP.episodeStepOfTrajectory, MDP.trajectoryStateAt]</span>
+<span id="L899">899   have htrace :</span>
+<span id="L900">900       EpisodeBatch.reconstructedStepTrace</span>
+<span id="L901">901           (mdp.episodeBatchOfTrajectories 1 trajectories) =</span>
+<span id="L902">902         (trajectories 0).2 := by</span>
+<span id="L903">903     funext stage</span>
+<span id="L904">904     simp [reconstructedStepTrace, MDP.episodeBatchOfTrajectories,</span>
+<span id="L905">905       MDP.episodeStepOfTrajectory]</span>
+<span id="L906">906   simp [cumulativeTransitionGapInnovation, hinitial, htrace]</span>
+<span id="L907">907 </span>
+<span id="L908">908 end EpisodeBatch</span>
+<span id="L909">909 </span>
+<span id="L910">910 namespace DeterministicMarkovPolicyTable</span>
+<span id="L911">911 </span>
+<span id="L912">912 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L913">913 /-- The exact one-episode batch image retains the canonical deterministic-table</span>
+<span id="L914">914 stage-resolved MGF. -/</span>
+<span id="L915">915 theorem iidEpisodeBatchMeasure_one_cumulativeDeterministicGapInnovation_compensated_hasMGFUpperBoundAt</span>
+<span id="L916">916     {mdp : MDP State Action} (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L917">917     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L918">918     (defaultState : State) (hhorizon : 0 &lt; mdp.horizon)</span>
+<span id="L919">919     (feature : Fin mdp.horizon -&gt; State -&gt; Real)</span>
+<span id="L920">920     (hfeature : forall stage nextState,</span>
+<span id="L921">921       feature stage nextState ∈ Set.Icc (0 : Real) mdp.horizon)</span>
+<span id="L922">922     (tilt : Real) :</span>
+<span id="L923">923     Concentration.HasMGFUpperBoundAt</span>
+<span id="L924">924       (fun batch : EpisodeBatch mdp 1 =&gt;</span>
+<span id="L925">925         tilt * batch.cumulativeDeterministicGapInnovation defaultState table feature -</span>
+<span id="L926">926           (mdp.horizon : Real) * tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8)</span>
+<span id="L927">927       1 0 (table.toMarkovPolicy.iidEpisodeBatchMeasure initialState 1) := by</span>
+<span id="L928">928   let policy := table.toMarkovPolicy</span>
+<span id="L929">929   let Ztrace : State × StepTrace Action State mdp.horizon -&gt; Real :=</span>
+<span id="L930">930     fun trajectory =&gt;</span>
+<span id="L931">931       tilt * mdp.sampledCumulativeDeterministicGapInnovationFrom table feature</span>
+<span id="L932">932           mdp.horizon le_rfl trajectory.1 trajectory.2 -</span>
+<span id="L933">933         (mdp.horizon : Real) * tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8</span>
+<span id="L934">934   let Zbatch : EpisodeBatch mdp 1 -&gt; Real := fun batch =&gt;</span>
+<span id="L935">935     tilt * batch.cumulativeDeterministicGapInnovation defaultState table feature -</span>
+<span id="L936">936       (mdp.horizon : Real) * tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8</span>
+<span id="L937">937   let eval0 : (Fin 1 -&gt; State × StepTrace Action State mdp.horizon) -&gt;</span>
+<span id="L938">938       State × StepTrace Action State mdp.horizon := Function.eval 0</span>
+<span id="L939">939   let batchMap := mdp.episodeBatchOfTrajectories 1</span>
+<span id="L940">940   have htrace :=</span>
+<span id="L941">941     mdp.trajectoryMeasure_deterministicGapInnovation_compensated_hasMGFUpperBoundAt</span>
+<span id="L942">942       table initialState feature hfeature tilt</span>
+<span id="L943">943   have hfamilyMap : Concentration.HasMGFUpperBoundAt Ztrace 1 0</span>
+<span id="L944">944       ((policy.iidTrajectoryFamilyMeasure initialState 1).map eval0) := by</span>
+<span id="L945">945     rw [policy.iidTrajectoryFamilyMeasure_map_eval initialState (0 : Fin 1)]</span>
+<span id="L946">946     exact htrace</span>
+<span id="L947">947   have hfamily : Concentration.HasMGFUpperBoundAt (Ztrace ∘ eval0) 1 0</span>
+<span id="L948">948       (policy.iidTrajectoryFamilyMeasure initialState 1) :=</span>
+<span id="L949">949     Concentration.HasMGFUpperBoundAt.of_map</span>
+<span id="L950">950       (measurable_pi_apply (0 : Fin 1)).aemeasurable hfamilyMap</span>
+<span id="L951">951   have hpoint : forall trajectories : Fin 1 -&gt;</span>
+<span id="L952">952       State × StepTrace Action State mdp.horizon,</span>
+<span id="L953">953       Zbatch (batchMap trajectories) = Ztrace (eval0 trajectories) := by</span>
+<span id="L954">954     intro trajectories</span>
+<span id="L955">955     simp only [Zbatch, Ztrace, eval0, Function.eval, batchMap]</span>
+<span id="L956">956     rw [EpisodeBatch.cumulativeDeterministicGapInnovation_episodeBatchOfTrajectories</span>
+<span id="L957">957       mdp defaultState table feature hhorizon trajectories]</span>
+<span id="L958">958   have hcomposed : Concentration.HasMGFUpperBoundAt</span>
+<span id="L959">959       (Zbatch ∘ batchMap) 1 0</span>
+<span id="L960">960       (policy.iidTrajectoryFamilyMeasure initialState 1) := by</span>
+<span id="L961">961     constructor</span>
+<span id="L962">962     · intro s</span>
+<span id="L963">963       apply hfamily.integrable_exp_mul s |&gt;.congr</span>
+<span id="L964">964       exact Filter.Eventually.of_forall fun trajectories =&gt; by</span>
+<span id="L965">965         simp only [Function.comp_apply]</span>
+<span id="L966">966         rw [hpoint trajectories]</span>
+<span id="L967">967     · rw [ProbabilityTheory.mgf_congr</span>
+<span id="L968">968         (Filter.Eventually.of_forall fun trajectories =&gt; by</span>
+<span id="L969">969           simp only [Function.comp_apply]</span>
+<span id="L970">970           exact hpoint trajectories)]</span>
+<span id="L971">971       exact hfamily.mgf_le</span>
+<span id="L972">972   have hbatchMeas : Measurable batchMap :=</span>
+<span id="L973">973     mdp.measurable_episodeBatchOfTrajectories 1</span>
+<span id="L974">974   have hZbatchMeas : Measurable Zbatch :=</span>
+<span id="L975">975     (EpisodeBatch.measurable_cumulativeDeterministicGapInnovation</span>
+<span id="L976">976       defaultState table feature |&gt;.const_mul tilt).sub measurable_const</span>
+<span id="L977">977   have hid : Concentration.HasMGFUpperBoundAt id 1 0</span>
+<span id="L978">978       ((policy.iidTrajectoryFamilyMeasure initialState 1).map</span>
+<span id="L979">979         (Zbatch ∘ batchMap)) :=</span>
+<span id="L980">980     (Concentration.HasMGFUpperBoundAt.id_map_iff</span>
+<span id="L981">981       (hZbatchMeas.comp hbatchMeas).aemeasurable).2 hcomposed</span>
+<span id="L982">982   unfold MarkovPolicy.iidEpisodeBatchMeasure</span>
+<span id="L983">983   apply (Concentration.HasMGFUpperBoundAt.id_map_iff</span>
+<span id="L984">984     hZbatchMeas.aemeasurable).1</span>
+<span id="L985">985   rw [Measure.map_map hZbatchMeas hbatchMeas]</span>
+<span id="L986">986   exact hid</span>
+<span id="L987">987 </span>
+<span id="L988">988 end DeterministicMarkovPolicyTable</span>
+<span id="L989">989 </span>
+<span id="L990">990 namespace MarkovPolicy</span>
+<span id="L991">991 </span>
+<span id="L992">992 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L993">993 /-- The exact one-episode batch image retains the stage-resolved MGF. -/</span>
+<span id="L994">994 theorem iidEpisodeBatchMeasure_one_cumulativeTransitionGapInnovation_compensated_hasMGFUpperBoundAt</span>
+<span id="L995">995     {mdp : MDP State Action} (policy : MarkovPolicy mdp)</span>
+<span id="L996">996     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L997">997     (defaultState : State) (hhorizon : 0 &lt; mdp.horizon)</span>
+<span id="L998">998     (feature : Fin mdp.horizon -&gt; State -&gt; Real)</span>
+<span id="L999">999     (hfeature : forall stage nextState,</span>
+<span id="L1000">1000       feature stage nextState ∈ Set.Icc (0 : Real) mdp.horizon)</span>
+<span id="L1001">1001     (tilt : Real) :</span>
+<span id="L1002">1002     Concentration.HasMGFUpperBoundAt</span>
+<span id="L1003">1003       (fun batch : EpisodeBatch mdp 1 =&gt;</span>
+<span id="L1004">1004         tilt * batch.cumulativeTransitionGapInnovation defaultState policy feature -</span>
+<span id="L1005">1005           (mdp.horizon : Real) * tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8)</span>
+<span id="L1006">1006       1 0 (policy.iidEpisodeBatchMeasure initialState 1) := by</span>
+<span id="L1007">1007   let Ztrace : State × StepTrace Action State mdp.horizon -&gt; Real :=</span>
+<span id="L1008">1008     fun trajectory =&gt;</span>
+<span id="L1009">1009       tilt * mdp.sampledCumulativeTransitionGapInnovationFrom policy feature</span>
+<span id="L1010">1010           mdp.horizon le_rfl trajectory.1 trajectory.2 -</span>
+<span id="L1011">1011         (mdp.horizon : Real) * tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8</span>
+<span id="L1012">1012   let Zbatch : EpisodeBatch mdp 1 -&gt; Real := fun batch =&gt;</span>
+<span id="L1013">1013     tilt * batch.cumulativeTransitionGapInnovation defaultState policy feature -</span>
+<span id="L1014">1014       (mdp.horizon : Real) * tilt ^ 2 * (mdp.horizon : Real) ^ 2 / 8</span>
+<span id="L1015">1015   let eval0 : (Fin 1 -&gt; State × StepTrace Action State mdp.horizon) -&gt;</span>
+<span id="L1016">1016       State × StepTrace Action State mdp.horizon := Function.eval 0</span>
+<span id="L1017">1017   let batchMap := mdp.episodeBatchOfTrajectories 1</span>
+<span id="L1018">1018   have htrace :=</span>
+<span id="L1019">1019     mdp.trajectoryMeasure_transitionGapInnovation_compensated_hasMGFUpperBoundAt</span>
+<span id="L1020">1020       policy initialState feature hfeature tilt</span>
+<span id="L1021">1021   have hfamilyMap : Concentration.HasMGFUpperBoundAt Ztrace 1 0</span>
+<span id="L1022">1022       ((policy.iidTrajectoryFamilyMeasure initialState 1).map eval0) := by</span>
+<span id="L1023">1023     rw [policy.iidTrajectoryFamilyMeasure_map_eval initialState (0 : Fin 1)]</span>
+<span id="L1024">1024     exact htrace</span>
+<span id="L1025">1025   have hfamily : Concentration.HasMGFUpperBoundAt (Ztrace ∘ eval0) 1 0</span>
+<span id="L1026">1026       (policy.iidTrajectoryFamilyMeasure initialState 1) :=</span>
+<span id="L1027">1027     Concentration.HasMGFUpperBoundAt.of_map</span>
+<span id="L1028">1028       (measurable_pi_apply (0 : Fin 1)).aemeasurable hfamilyMap</span>
+<span id="L1029">1029   have hpoint : forall trajectories : Fin 1 -&gt;</span>
+<span id="L1030">1030       State × StepTrace Action State mdp.horizon,</span>
+<span id="L1031">1031       Zbatch (batchMap trajectories) = Ztrace (eval0 trajectories) := by</span>
+<span id="L1032">1032     intro trajectories</span>
+<span id="L1033">1033     simp only [Zbatch, Ztrace, eval0, Function.eval, batchMap]</span>
+<span id="L1034">1034     rw [EpisodeBatch.cumulativeTransitionGapInnovation_episodeBatchOfTrajectories</span>
+<span id="L1035">1035       mdp defaultState policy feature hhorizon trajectories]</span>
+<span id="L1036">1036   have hcomposed : Concentration.HasMGFUpperBoundAt</span>
+<span id="L1037">1037       (Zbatch ∘ batchMap) 1 0</span>
+<span id="L1038">1038       (policy.iidTrajectoryFamilyMeasure initialState 1) := by</span>
+<span id="L1039">1039     constructor</span>
+<span id="L1040">1040     · intro s</span>
+<span id="L1041">1041       apply hfamily.integrable_exp_mul s |&gt;.congr</span>
+<span id="L1042">1042       exact Filter.Eventually.of_forall fun trajectories =&gt; by</span>
+<span id="L1043">1043         simp only [Function.comp_apply]</span>
+<span id="L1044">1044         rw [hpoint trajectories]</span>
+<span id="L1045">1045     · rw [ProbabilityTheory.mgf_congr</span>
+<span id="L1046">1046         (Filter.Eventually.of_forall fun trajectories =&gt; by</span>
+<span id="L1047">1047           simp only [Function.comp_apply]</span>
+<span id="L1048">1048           exact hpoint trajectories)]</span>
+<span id="L1049">1049       exact hfamily.mgf_le</span>
+<span id="L1050">1050   have hbatchMeas : Measurable batchMap :=</span>
+<span id="L1051">1051     mdp.measurable_episodeBatchOfTrajectories 1</span>
+<span id="L1052">1052   have hZbatchMeas : Measurable Zbatch :=</span>
+<span id="L1053">1053     (EpisodeBatch.measurable_cumulativeTransitionGapInnovation</span>
+<span id="L1054">1054       defaultState policy feature |&gt;.const_mul tilt).sub measurable_const</span>
+<span id="L1055">1055   have hid : Concentration.HasMGFUpperBoundAt id 1 0</span>
+<span id="L1056">1056       ((policy.iidTrajectoryFamilyMeasure initialState 1).map</span>
+<span id="L1057">1057         (Zbatch ∘ batchMap)) :=</span>
+<span id="L1058">1058     (Concentration.HasMGFUpperBoundAt.id_map_iff</span>
+<span id="L1059">1059       (hZbatchMeas.comp hbatchMeas).aemeasurable).2 hcomposed</span>
+<span id="L1060">1060   unfold iidEpisodeBatchMeasure</span>
+<span id="L1061">1061   apply (Concentration.HasMGFUpperBoundAt.id_map_iff</span>
+<span id="L1062">1062     hZbatchMeas.aemeasurable).1</span>
+<span id="L1063">1063   rw [Measure.map_map hZbatchMeas hbatchMeas]</span>
+<span id="L1064">1064   exact hid</span>
+<span id="L1065">1065 </span>
+<span id="L1066">1066 end MarkovPolicy</span>
+<span id="L1067">1067 </span>
+<span id="L1068">1068 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

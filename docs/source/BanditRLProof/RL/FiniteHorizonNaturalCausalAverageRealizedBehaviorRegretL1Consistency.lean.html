@@ -1,0 +1,964 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonNaturalCausalAverageRealizedBehaviorRegretL1Consistency.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonNaturalCausalAverageRealizedBehaviorRegretL1Consistency.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonNaturalCausalAverageRealizedBehaviorRegretL1Consistency.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonNaturalCausalAverageRealizedBehaviorRegretL1Consistency.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonNaturalCausalRealizedBehaviorRegretInMeasureExplicitSchedule</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # All-prefix L1 consistency for natural causal average realized behavior regret</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module controls the exact natural process which first normalizes every</span>
+<span id="L7">7 successor batch by its own positive episode count and then weights rounds</span>
+<span id="L8">8 equally. It is not the total-episode-mass-weighted process from the earlier L1</span>
+<span id="L9">9 route. The argument exposes the cumulative normalized-return MGF, obtains a</span>
+<span id="L10">10 first-moment inverse-square-root bound, and combines it with the compiled</span>
+<span id="L11">11 logarithmic behavior expected-regret rate.</span>
+<span id="L12">12 -/</span>
+<span id="L13">13 </span>
+<span id="L14">14 open MeasureTheory ProbabilityTheory Filter Topology</span>
+<span id="L15">15 open scoped BigOperators ENNReal NNReal</span>
+<span id="L16">16 </span>
+<span id="L17">17 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L18">18 </span>
+<span id="L19">19 universe u v</span>
+<span id="L20">20 </span>
+<span id="L21">21 variable {State : Type u} {Action : Type v}</span>
+<span id="L22">22     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L23">23     [Fintype State] [Fintype Action]</span>
+<span id="L24">24     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L25">25     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L26">26     [Nonempty State] [Nonempty Action]</span>
+<span id="L27">27 </span>
+<span id="L28">28 namespace HeterogeneousAdaptiveStochasticEpisodeBatchSource</span>
+<span id="L29">29 </span>
+<span id="L30">30 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L31">31     [MeasurableSingletonClass State] [MeasurableSingletonClass Action] in</span>
+<span id="L32">32 /-- The natural normalized successor-return sum has one global sub-Gaussian MGF. -/</span>
+<span id="L33">33 theorem trajectoryMeasure_naturalCumulativeSuccessorAverageReturnDeviation_hasSubgaussianMGF</span>
+<span id="L34">34     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L35">35     [IsProbabilityMeasure initialState] {episodes : Nat -&gt; Nat}</span>
+<span id="L36">36     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L37">37     [forall n, StandardBorelSpace</span>
+<span id="L38">38       (HeterogeneousStochasticEpisodeBatchPrefix mdp episodes n)]</span>
+<span id="L39">39     [forall n, Nonempty</span>
+<span id="L40">40       (HeterogeneousStochasticEpisodeBatchPrefix mdp episodes n)]</span>
+<span id="L41">41     [forall n, StandardBorelSpace</span>
+<span id="L42">42       (StochasticEpisodeBatch mdp (episodes n))]</span>
+<span id="L43">43     [forall n, Nonempty (StochasticEpisodeBatch mdp (episodes n))]</span>
+<span id="L44">44     [StandardBorelSpace</span>
+<span id="L45">45       (HeterogeneousStochasticEpisodeBatchTrajectory mdp episodes)]</span>
+<span id="L46">46     (source : HeterogeneousAdaptiveStochasticEpisodeBatchSource</span>
+<span id="L47">47       mdp initialState episodes) [source.GlobalReturnMeasurability]</span>
+<span id="L48">48     (rounds : Nat) (rewardBound rewardVarianceProxy : NNReal)</span>
+<span id="L49">49     (hrewardBound : forall state action,</span>
+<span id="L50">50       |mdp.reward state action| &lt;= (rewardBound : Real))</span>
+<span id="L51">51     (law : source.rewardSource.UniformSubgaussianRewardLaw</span>
+<span id="L52">52       rewardVarianceProxy) :</span>
+<span id="L53">53     HasSubgaussianMGF</span>
+<span id="L54">54       (source.naturalCumulativeSuccessorAverageReturnDeviation rounds)</span>
+<span id="L55">55       (naturalCumulativeSuccessorAverageReturnVarianceProxy mdp episodes rounds</span>
+<span id="L56">56         rewardBound rewardVarianceProxy)</span>
+<span id="L57">57       source.trajectoryMeasure := by</span>
+<span id="L58">58   let F := Filtration.piLE</span>
+<span id="L59">59     (X := fun n : Nat =&gt; StochasticEpisodeBatch mdp (episodes n))</span>
+<span id="L60">60   let cY : Nat -&gt; NNReal := fun t =&gt;</span>
+<span id="L61">61     naturalSuccessorAverageReturnVarianceProxyAt mdp episodes t</span>
+<span id="L62">62       rewardBound rewardVarianceProxy</span>
+<span id="L63">63   have hadapted : StronglyAdapted F</span>
+<span id="L64">64       source.naturalSuccessorAverageReturnDeviationIncrement := by</span>
+<span id="L65">65     simpa [F] using</span>
+<span id="L66">66       source.naturalSuccessorAverageReturnDeviationIncrement_stronglyAdapted_piLE</span>
+<span id="L67">67   have hzero : HasSubgaussianMGF</span>
+<span id="L68">68       (source.naturalSuccessorAverageReturnDeviationIncrement 0) (cY 0)</span>
+<span id="L69">69       source.trajectoryMeasure := by</span>
+<span id="L70">70     change HasSubgaussianMGF (fun _ =&gt; 0) 0 source.trajectoryMeasure</span>
+<span id="L71">71     exact HasSubgaussianMGF.fun_zero</span>
+<span id="L72">72   have hsucc : forall i, i &lt; (rounds + 1) - 1 -&gt;</span>
+<span id="L73">73       HasCondSubgaussianMGF</span>
+<span id="L74">74         (F i) (F.le i)</span>
+<span id="L75">75         (source.naturalSuccessorAverageReturnDeviationIncrement (i + 1))</span>
+<span id="L76">76         (cY (i + 1)) source.trajectoryMeasure := by</span>
+<span id="L77">77     intro i _hi</span>
+<span id="L78">78     simpa [F, cY] using</span>
+<span id="L79">79       source.naturalSuccessorAverageReturnDeviationIncrement_succ_hasCondSubgaussianMGF</span>
+<span id="L80">80         i rewardBound rewardVarianceProxy hrewardBound law</span>
+<span id="L81">81   simpa [naturalCumulativeSuccessorAverageReturnVarianceProxy,</span>
+<span id="L82">82     naturalCumulativeSuccessorAverageReturnDeviation, cY] using</span>
+<span id="L83">83     (HasSubgaussianMGF.sum_of_hasCondSubgaussianMGF</span>
+<span id="L84">84       hadapted hzero (rounds + 1) hsucc)</span>
+<span id="L85">85 </span>
+<span id="L86">86 end HeterogeneousAdaptiveStochasticEpisodeBatchSource</span>
+<span id="L87">87 </span>
+<span id="L88">88 namespace AdaptiveStochasticSampledEmpiricalOptimisticSource</span>
+<span id="L89">89 </span>
+<span id="L90">90 /-- The self-consistent natural cumulative normalized-return deviation has a global MGF. -/</span>
+<span id="L91">91 theorem selfConsistentScheduledNaturalCausalCumulativeReturnDeviationProcess_hasSubgaussianMGF</span>
+<span id="L92">92     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L93">93     [IsProbabilityMeasure initialState]</span>
+<span id="L94">94     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L95">95     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L96">96     (varianceProxy : NNReal)</span>
+<span id="L97">97     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L98">98     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L99">99     (defaultState : State) (baseVisitFloor : Real)</span>
+<span id="L100">100     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L101">101     (rounds : Nat) :</span>
+<span id="L102">102     HasSubgaussianMGF</span>
+<span id="L103">103       (selfConsistentScheduledNaturalCausalCumulativeReturnDeviationProcess mdp</span>
+<span id="L104">104         initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L105">105           baseVisitFloor rounds)</span>
+<span id="L106">106       (selfConsistentScheduledNaturalCausalCumulativeReturnVarianceProxy mdp</span>
+<span id="L107">107         varianceProxy baseVisitFloor rounds)</span>
+<span id="L108">108       (selfConsistentScheduledCausalSource mdp initialState rewardSource</span>
+<span id="L109">109         initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure := by</span>
+<span id="L110">110   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L111">111     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L112">112   letI : source.GlobalReturnMeasurability := by</span>
+<span id="L113">113     dsimp [source, selfConsistentScheduledCausalSource]</span>
+<span id="L114">114     infer_instance</span>
+<span id="L115">115   have hrewardBoundNN : forall state action,</span>
+<span id="L116">116       |mdp.reward state action| &lt;= ((1 : NNReal) : Real) := by</span>
+<span id="L117">117     simpa using hrewardBound</span>
+<span id="L118">118   simpa [source, selfConsistentScheduledCausalSource,</span>
+<span id="L119">119     selfConsistentScheduledNaturalCausalCumulativeReturnDeviationProcess,</span>
+<span id="L120">120     selfConsistentScheduledNaturalCausalCumulativeReturnVarianceProxy] using</span>
+<span id="L121">121     (source.trajectoryMeasure_naturalCumulativeSuccessorAverageReturnDeviation_hasSubgaussianMGF</span>
+<span id="L122">122       rounds 1 varianceProxy hrewardBoundNN (by</span>
+<span id="L123">123         simpa [source, selfConsistentScheduledCausalSource] using law))</span>
+<span id="L124">124 </span>
+<span id="L125">125 /-- First-moment envelope for the round-normalized cumulative return deviation. -/</span>
+<span id="L126">126 noncomputable def selfConsistentScheduledNaturalCausalAverageReturnFirstMomentBound</span>
+<span id="L127">127     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L128">128     (baseVisitFloor : Real) (rounds : Nat) : Real :=</span>
+<span id="L129">129   (2 * Real.sqrt</span>
+<span id="L130">130       (selfConsistentScheduledNaturalCausalCumulativeReturnVarianceProxy mdp</span>
+<span id="L131">131         varianceProxy baseVisitFloor rounds : Real) *</span>
+<span id="L132">132       Real.exp (1 / 2 : Real)) /</span>
+<span id="L133">133     (rounds : Real)</span>
+<span id="L134">134 </span>
+<span id="L135">135 /-- Coarser inverse-square-root envelope obtained from the linear proxy bound. -/</span>
+<span id="L136">136 noncomputable def selfConsistentScheduledNaturalCausalAverageReturnInverseSqrtEnvelope</span>
+<span id="L137">137     (mdp : MDP State Action) (varianceProxy : NNReal) (rounds : Nat) : Real :=</span>
+<span id="L138">138   (2 * Real.sqrt</span>
+<span id="L139">139       (mdp.globalReturnDeviationPerEpisodeVarianceProxy 1 varianceProxy : Real) *</span>
+<span id="L140">140       Real.exp (1 / 2 : Real)) /</span>
+<span id="L141">141     Real.sqrt (rounds : Real)</span>
+<span id="L142">142 </span>
+<span id="L143">143 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L144">144     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L145">145     [Nonempty State] [Nonempty Action] in</span>
+<span id="L146">146 /-- The normalized-return first-moment envelope is nonnegative. -/</span>
+<span id="L147">147 theorem selfConsistentScheduledNaturalCausalAverageReturnFirstMomentBound_nonneg</span>
+<span id="L148">148     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L149">149     (baseVisitFloor : Real) (rounds : Nat) :</span>
+<span id="L150">150     0 &lt;= selfConsistentScheduledNaturalCausalAverageReturnFirstMomentBound</span>
+<span id="L151">151       mdp varianceProxy baseVisitFloor rounds := by</span>
+<span id="L152">152   unfold selfConsistentScheduledNaturalCausalAverageReturnFirstMomentBound</span>
+<span id="L153">153   positivity</span>
+<span id="L154">154 </span>
+<span id="L155">155 /-- The MGF controls the absolute first moment of the cumulative return deviation. -/</span>
+<span id="L156">156 theorem integral_abs_selfConsistentScheduledNaturalCausalCumulativeReturnDeviationProcess_le</span>
+<span id="L157">157     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L158">158     [IsProbabilityMeasure initialState]</span>
+<span id="L159">159     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L160">160     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L161">161     (varianceProxy : NNReal)</span>
+<span id="L162">162     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L163">163     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L164">164     (defaultState : State) (baseVisitFloor : Real)</span>
+<span id="L165">165     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L166">166     (rounds : Nat) :</span>
+<span id="L167">167     integral</span>
+<span id="L168">168         (selfConsistentScheduledCausalSource mdp initialState rewardSource</span>
+<span id="L169">169           initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure</span>
+<span id="L170">170         (fun trajectory =&gt;</span>
+<span id="L171">171           |selfConsistentScheduledNaturalCausalCumulativeReturnDeviationProcess mdp</span>
+<span id="L172">172             initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L173">173               baseVisitFloor rounds trajectory|) &lt;=</span>
+<span id="L174">174       2 * Real.sqrt</span>
+<span id="L175">175           (selfConsistentScheduledNaturalCausalCumulativeReturnVarianceProxy mdp</span>
+<span id="L176">176             varianceProxy baseVisitFloor rounds : Real) *</span>
+<span id="L177">177         Real.exp (1 / 2 : Real) := by</span>
+<span id="L178">178   exact</span>
+<span id="L179">179     Concentration.integral_abs_le_two_mul_sqrt_mul_exp_half_of_hasSubgaussianMGF</span>
+<span id="L180">180       _ _ _</span>
+<span id="L181">181       (selfConsistentScheduledNaturalCausalCumulativeReturnDeviationProcess_hasSubgaussianMGF</span>
+<span id="L182">182         mdp initialState rewardSource varianceProxy law initialTable defaultState</span>
+<span id="L183">183           baseVisitFloor hrewardBound rounds)</span>
+<span id="L184">184 </span>
+<span id="L185">185 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L186">186     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L187">187     [Nonempty State] [Nonempty Action] in</span>
+<span id="L188">188 /-- The normalized first-moment envelope is bounded by an inverse square root. -/</span>
+<span id="L189">189 theorem selfConsistentScheduledNaturalCausalAverageReturnFirstMomentBound_le_inverseSqrtEnvelope</span>
+<span id="L190">190     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L191">191     (baseVisitFloor : Real) (rounds : Nat) (hrounds : 0 &lt; rounds) :</span>
+<span id="L192">192     selfConsistentScheduledNaturalCausalAverageReturnFirstMomentBound</span>
+<span id="L193">193         mdp varianceProxy baseVisitFloor rounds &lt;=</span>
+<span id="L194">194       selfConsistentScheduledNaturalCausalAverageReturnInverseSqrtEnvelope</span>
+<span id="L195">195         mdp varianceProxy rounds := by</span>
+<span id="L196">196   let V : Real :=</span>
+<span id="L197">197     (selfConsistentScheduledNaturalCausalCumulativeReturnVarianceProxy mdp</span>
+<span id="L198">198       varianceProxy baseVisitFloor rounds : Real)</span>
+<span id="L199">199   let C : Real :=</span>
+<span id="L200">200     (mdp.globalReturnDeviationPerEpisodeVarianceProxy 1 varianceProxy : Real)</span>
+<span id="L201">201   let r : Real := (rounds : Real)</span>
+<span id="L202">202   have hr : 0 &lt; r := by</span>
+<span id="L203">203     dsimp [r]</span>
+<span id="L204">204     exact_mod_cast hrounds</span>
+<span id="L205">205   have hproxyNN :=</span>
+<span id="L206">206     selfConsistentScheduledNaturalCausalCumulativeReturnVarianceProxy_le_rounds_mul</span>
+<span id="L207">207       mdp varianceProxy baseVisitFloor rounds</span>
+<span id="L208">208   have hproxy : V &lt;= r * C := by</span>
+<span id="L209">209     exact_mod_cast hproxyNN</span>
+<span id="L210">210   have hsqrt : Real.sqrt V &lt;= Real.sqrt (r * C) :=</span>
+<span id="L211">211     Real.sqrt_le_sqrt hproxy</span>
+<span id="L212">212   rw [Real.sqrt_mul hr.le C] at hsqrt</span>
+<span id="L213">213   have hnum :</span>
+<span id="L214">214       2 * Real.sqrt V * Real.exp (1 / 2 : Real) &lt;=</span>
+<span id="L215">215         2 * (Real.sqrt r * Real.sqrt C) * Real.exp (1 / 2 : Real) := by</span>
+<span id="L216">216     gcongr</span>
+<span id="L217">217   have heq :</span>
+<span id="L218">218       (2 * (Real.sqrt r * Real.sqrt C) * Real.exp (1 / 2 : Real)) / r =</span>
+<span id="L219">219         (2 * Real.sqrt C * Real.exp (1 / 2 : Real)) / Real.sqrt r := by</span>
+<span id="L220">220     have hsqrtPos : 0 &lt; Real.sqrt r := Real.sqrt_pos.2 hr</span>
+<span id="L221">221     field_simp [ne_of_gt hr, ne_of_gt hsqrtPos]</span>
+<span id="L222">222     rw [Real.sq_sqrt hr.le]</span>
+<span id="L223">223     ring</span>
+<span id="L224">224   unfold selfConsistentScheduledNaturalCausalAverageReturnFirstMomentBound</span>
+<span id="L225">225     selfConsistentScheduledNaturalCausalAverageReturnInverseSqrtEnvelope</span>
+<span id="L226">226   change (2 * Real.sqrt V * Real.exp (1 / 2 : Real)) / r &lt;=</span>
+<span id="L227">227     (2 * Real.sqrt C * Real.exp (1 / 2 : Real)) / Real.sqrt r</span>
+<span id="L228">228   rw [← heq]</span>
+<span id="L229">229   exact div_le_div_of_nonneg_right hnum hr.le</span>
+<span id="L230">230 </span>
+<span id="L231">231 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L232">232     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L233">233     [Nonempty State] [Nonempty Action] in</span>
+<span id="L234">234 /-- The deterministic inverse-square-root return envelope tends to zero. -/</span>
+<span id="L235">235 theorem selfConsistentScheduledNaturalCausalAverageReturnInverseSqrtEnvelope_tendsto_zero</span>
+<span id="L236">236     (mdp : MDP State Action) (varianceProxy : NNReal) :</span>
+<span id="L237">237     Tendsto</span>
+<span id="L238">238       (selfConsistentScheduledNaturalCausalAverageReturnInverseSqrtEnvelope</span>
+<span id="L239">239         mdp varianceProxy) atTop (nhds 0) := by</span>
+<span id="L240">240   have hrounds : Tendsto (fun rounds : Nat =&gt; (rounds : Real)) atTop atTop :=</span>
+<span id="L241">241     tendsto_natCast_atTop_atTop</span>
+<span id="L242">242   have hsqrt : Tendsto (fun rounds : Nat =&gt; Real.sqrt (rounds : Real))</span>
+<span id="L243">243       atTop atTop := Real.tendsto_sqrt_atTop.comp hrounds</span>
+<span id="L244">244   simpa [selfConsistentScheduledNaturalCausalAverageReturnInverseSqrtEnvelope] using</span>
+<span id="L245">245     (tendsto_const_nhds.div_atTop hsqrt)</span>
+<span id="L246">246 </span>
+<span id="L247">247 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L248">248     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L249">249     [Nonempty State] [Nonempty Action] in</span>
+<span id="L250">250 /-- The exact normalized-return first-moment envelope tends to zero on all prefixes. -/</span>
+<span id="L251">251 theorem selfConsistentScheduledNaturalCausalAverageReturnFirstMomentBound_tendsto_zero</span>
+<span id="L252">252     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L253">253     (baseVisitFloor : Real) :</span>
+<span id="L254">254     Tendsto</span>
+<span id="L255">255       (selfConsistentScheduledNaturalCausalAverageReturnFirstMomentBound mdp</span>
+<span id="L256">256         varianceProxy baseVisitFloor) atTop (nhds 0) := by</span>
+<span id="L257">257   apply squeeze_zero&#x27;</span>
+<span id="L258">258   · exact Filter.Eventually.of_forall fun rounds =&gt;</span>
+<span id="L259">259       selfConsistentScheduledNaturalCausalAverageReturnFirstMomentBound_nonneg</span>
+<span id="L260">260         mdp varianceProxy baseVisitFloor rounds</span>
+<span id="L261">261   · filter_upwards [eventually_ge_atTop 1] with rounds hrounds</span>
+<span id="L262">262     exact</span>
+<span id="L263">263       selfConsistentScheduledNaturalCausalAverageReturnFirstMomentBound_le_inverseSqrtEnvelope</span>
+<span id="L264">264         mdp varianceProxy baseVisitFloor rounds (by omega)</span>
+<span id="L265">265   · exact</span>
+<span id="L266">266       selfConsistentScheduledNaturalCausalAverageReturnInverseSqrtEnvelope_tendsto_zero</span>
+<span id="L267">267         mdp varianceProxy</span>
+<span id="L268">268 </span>
+<span id="L269">269 /-- The cumulative normalized-return deviation is integrable on every prefix. -/</span>
+<span id="L270">270 theorem integrable_selfConsistentScheduledNaturalCausalCumulativeReturnDeviationProcess</span>
+<span id="L271">271     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L272">272     [IsProbabilityMeasure initialState]</span>
+<span id="L273">273     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L274">274     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L275">275     (varianceProxy : NNReal)</span>
+<span id="L276">276     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L277">277     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L278">278     (defaultState : State) (baseVisitFloor : Real)</span>
+<span id="L279">279     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L280">280     (rounds : Nat) :</span>
+<span id="L281">281     Integrable</span>
+<span id="L282">282       (selfConsistentScheduledNaturalCausalCumulativeReturnDeviationProcess mdp</span>
+<span id="L283">283         initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L284">284           baseVisitFloor rounds)</span>
+<span id="L285">285       (selfConsistentScheduledCausalSource mdp initialState rewardSource</span>
+<span id="L286">286         initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure :=</span>
+<span id="L287">287   (selfConsistentScheduledNaturalCausalCumulativeReturnDeviationProcess_hasSubgaussianMGF</span>
+<span id="L288">288     mdp initialState rewardSource varianceProxy law initialTable defaultState</span>
+<span id="L289">289       baseVisitFloor hrewardBound rounds).integrable</span>
+<span id="L290">290 </span>
+<span id="L291">291 /-- The equal-round-weighted natural average realized behavior regret is integrable. -/</span>
+<span id="L292">292 theorem integrable_selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess</span>
+<span id="L293">293     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L294">294     [IsProbabilityMeasure initialState]</span>
+<span id="L295">295     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L296">296     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L297">297     (varianceProxy : NNReal)</span>
+<span id="L298">298     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L299">299     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L300">300     (defaultState : State) (baseVisitFloor : Real)</span>
+<span id="L301">301     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L302">302     (rounds : Nat) :</span>
+<span id="L303">303     Integrable</span>
+<span id="L304">304       (selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess mdp</span>
+<span id="L305">305         initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L306">306           baseVisitFloor rounds)</span>
+<span id="L307">307       (selfConsistentScheduledCausalSource mdp initialState rewardSource</span>
+<span id="L308">308         initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure := by</span>
+<span id="L309">309   let mu := (selfConsistentScheduledCausalSource mdp initialState rewardSource</span>
+<span id="L310">310     initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure</span>
+<span id="L311">311   let expected :=</span>
+<span id="L312">312     selfConsistentScheduledNaturalCausalCumulativeBehaviorExpectedRegretProcess mdp</span>
+<span id="L313">313       initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L314">314         baseVisitFloor rounds</span>
+<span id="L315">315   let deviation :=</span>
+<span id="L316">316     selfConsistentScheduledNaturalCausalCumulativeReturnDeviationProcess mdp</span>
+<span id="L317">317       initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L318">318         baseVisitFloor rounds</span>
+<span id="L319">319   have hexpected : Integrable expected mu := by</span>
+<span id="L320">320     simpa [expected, mu] using</span>
+<span id="L321">321       integrable_selfConsistentScheduledNaturalCausalCumulativeBehaviorExpectedRegretProcess</span>
+<span id="L322">322         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L323">323           baseVisitFloor hrewardBound rounds</span>
+<span id="L324">324   have hdeviation : Integrable deviation mu := by</span>
+<span id="L325">325     simpa [deviation, mu] using</span>
+<span id="L326">326       integrable_selfConsistentScheduledNaturalCausalCumulativeReturnDeviationProcess</span>
+<span id="L327">327         mdp initialState rewardSource varianceProxy law initialTable defaultState</span>
+<span id="L328">328           baseVisitFloor hrewardBound rounds</span>
+<span id="L329">329   have hquotient : Integrable</span>
+<span id="L330">330       (fun trajectory =&gt; (expected trajectory - deviation trajectory) /</span>
+<span id="L331">331         (rounds : Real)) mu :=</span>
+<span id="L332">332     (hexpected.sub hdeviation).div_const (rounds : Real)</span>
+<span id="L333">333   exact hquotient.congr (Filter.Eventually.of_forall fun trajectory =&gt; by</span>
+<span id="L334">334     exact</span>
+<span id="L335">335       (selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess_eq_expected_sub_deviation</span>
+<span id="L336">336         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L337">337           baseVisitFloor rounds trajectory).symm)</span>
+<span id="L338">338 </span>
+<span id="L339">339 /-- Expected absolute equal-round-weighted natural average realized behavior regret. -/</span>
+<span id="L340">340 noncomputable def selfConsistentScheduledNaturalCausalExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L341">341     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L342">342     [IsProbabilityMeasure initialState]</span>
+<span id="L343">343     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L344">344     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L345">345     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L346">346     (baseVisitFloor : Real) (rounds : Nat) : Real :=</span>
+<span id="L347">347   integral</span>
+<span id="L348">348     (selfConsistentScheduledCausalSource mdp initialState rewardSource</span>
+<span id="L349">349       initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure</span>
+<span id="L350">350     (fun trajectory =&gt;</span>
+<span id="L351">351       |selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess mdp</span>
+<span id="L352">352         initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L353">353           baseVisitFloor rounds trajectory|)</span>
+<span id="L354">354 </span>
+<span id="L355">355 /-- Deterministic all-prefix L1 envelope for the exact average process. -/</span>
+<span id="L356">356 noncomputable def selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretL1Envelope</span>
+<span id="L357">357     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L358">358     (baseVisitFloor : Real) (rounds : Nat) : Real :=</span>
+<span id="L359">359   selfConsistentScheduledNaturalCausalLogarithmicAverageIntegratedBehaviorExpectedRegretRate</span>
+<span id="L360">360       mdp rounds +</span>
+<span id="L361">361     selfConsistentScheduledNaturalCausalAverageReturnFirstMomentBound mdp</span>
+<span id="L362">362       varianceProxy baseVisitFloor rounds</span>
+<span id="L363">363 </span>
+<span id="L364">364 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L365">365     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L366">366     [Nonempty State] [Nonempty Action] in</span>
+<span id="L367">367 /-- The deterministic L1 envelope is nonnegative. -/</span>
+<span id="L368">368 theorem selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretL1Envelope_nonneg</span>
+<span id="L369">369     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L370">370     (baseVisitFloor : Real) (rounds : Nat) :</span>
+<span id="L371">371     0 &lt;= selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretL1Envelope</span>
+<span id="L372">372       mdp varianceProxy baseVisitFloor rounds := by</span>
+<span id="L373">373   exact add_nonneg</span>
+<span id="L374">374     (selfConsistentScheduledNaturalCausalLogarithmicAverageIntegratedBehaviorExpectedRegretRate_nonneg</span>
+<span id="L375">375       mdp rounds)</span>
+<span id="L376">376     (selfConsistentScheduledNaturalCausalAverageReturnFirstMomentBound_nonneg</span>
+<span id="L377">377       mdp varianceProxy baseVisitFloor rounds)</span>
+<span id="L378">378 </span>
+<span id="L379">379 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L380">380     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L381">381     [Nonempty State] [Nonempty Action] in</span>
+<span id="L382">382 /-- The deterministic all-prefix L1 envelope tends to zero. -/</span>
+<span id="L383">383 theorem selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretL1Envelope_tendsto_zero</span>
+<span id="L384">384     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L385">385     (baseVisitFloor : Real) :</span>
+<span id="L386">386     Tendsto</span>
+<span id="L387">387       (selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretL1Envelope</span>
+<span id="L388">388         mdp varianceProxy baseVisitFloor) atTop (nhds 0) := by</span>
+<span id="L389">389   simpa [selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretL1Envelope]</span>
+<span id="L390">390     using</span>
+<span id="L391">391       (selfConsistentScheduledNaturalCausalLogarithmicAverageIntegratedBehaviorExpectedRegretRate_tendsto_zero</span>
+<span id="L392">392           mdp).add</span>
+<span id="L393">393         (selfConsistentScheduledNaturalCausalAverageReturnFirstMomentBound_tendsto_zero</span>
+<span id="L394">394           mdp varianceProxy baseVisitFloor)</span>
+<span id="L395">395 </span>
+<span id="L396">396 /-- Expected absolute average realized regret is nonnegative. -/</span>
+<span id="L397">397 theorem selfConsistentScheduledNaturalCausalExpectedAbsoluteAverageRealizedBehaviorRegret_nonneg</span>
+<span id="L398">398     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L399">399     [IsProbabilityMeasure initialState]</span>
+<span id="L400">400     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L401">401     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L402">402     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L403">403     (baseVisitFloor : Real) (rounds : Nat) :</span>
+<span id="L404">404     0 &lt;= selfConsistentScheduledNaturalCausalExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L405">405       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L406">406         baseVisitFloor rounds := by</span>
+<span id="L407">407   unfold selfConsistentScheduledNaturalCausalExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L408">408   exact integral_nonneg fun _ =&gt; abs_nonneg _</span>
+<span id="L409">409 </span>
+<span id="L410">410 /-- The expected absolute exact average process is bounded by the all-prefix L1 envelope. -/</span>
+<span id="L411">411 theorem selfConsistentScheduledNaturalCausalExpectedAbsoluteAverageRealizedBehaviorRegret_le_L1Envelope</span>
+<span id="L412">412     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L413">413     [IsProbabilityMeasure initialState]</span>
+<span id="L414">414     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L415">415     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L416">416     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L417">417     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L418">418     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L419">419     (defaultState : State)</span>
+<span id="L420">420     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L421">421     (baseVisitFloor : Real)</span>
+<span id="L422">422     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L423">423     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L424">424     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L425">425     (rounds : Nat) :</span>
+<span id="L426">426     selfConsistentScheduledNaturalCausalExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L427">427         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L428">428           baseVisitFloor rounds &lt;=</span>
+<span id="L429">429       selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretL1Envelope</span>
+<span id="L430">430         mdp varianceProxy baseVisitFloor rounds := by</span>
+<span id="L431">431   let mu := (selfConsistentScheduledCausalSource mdp initialState rewardSource</span>
+<span id="L432">432     initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure</span>
+<span id="L433">433   let process :=</span>
+<span id="L434">434     selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess mdp</span>
+<span id="L435">435       initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L436">436         baseVisitFloor rounds</span>
+<span id="L437">437   let expected :=</span>
+<span id="L438">438     selfConsistentScheduledNaturalCausalCumulativeBehaviorExpectedRegretProcess mdp</span>
+<span id="L439">439       initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L440">440         baseVisitFloor rounds</span>
+<span id="L441">441   let deviation :=</span>
+<span id="L442">442     selfConsistentScheduledNaturalCausalCumulativeReturnDeviationProcess mdp</span>
+<span id="L443">443       initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L444">444         baseVisitFloor rounds</span>
+<span id="L445">445   have hprocess : Integrable process mu := by</span>
+<span id="L446">446     simpa [process, mu] using</span>
+<span id="L447">447       integrable_selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess</span>
+<span id="L448">448         mdp initialState rewardSource varianceProxy law initialTable defaultState</span>
+<span id="L449">449           baseVisitFloor hrewardBound rounds</span>
+<span id="L450">450   have hexpected : Integrable expected mu := by</span>
+<span id="L451">451     simpa [expected, mu] using</span>
+<span id="L452">452       integrable_selfConsistentScheduledNaturalCausalCumulativeBehaviorExpectedRegretProcess</span>
+<span id="L453">453         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L454">454           baseVisitFloor hrewardBound rounds</span>
+<span id="L455">455   have hdeviation : Integrable deviation mu := by</span>
+<span id="L456">456     simpa [deviation, mu] using</span>
+<span id="L457">457       integrable_selfConsistentScheduledNaturalCausalCumulativeReturnDeviationProcess</span>
+<span id="L458">458         mdp initialState rewardSource varianceProxy law initialTable defaultState</span>
+<span id="L459">459           baseVisitFloor hrewardBound rounds</span>
+<span id="L460">460   have hpoint : forall trajectory,</span>
+<span id="L461">461       |process trajectory| &lt;=</span>
+<span id="L462">462         expected trajectory / (rounds : Real) +</span>
+<span id="L463">463           |deviation trajectory| / (rounds : Real) := by</span>
+<span id="L464">464     intro trajectory</span>
+<span id="L465">465     rw [show process trajectory =</span>
+<span id="L466">466         (expected trajectory - deviation trajectory) / (rounds : Real) by</span>
+<span id="L467">467       exact</span>
+<span id="L468">468         selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess_eq_expected_sub_deviation</span>
+<span id="L469">469           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L470">470             baseVisitFloor rounds trajectory]</span>
+<span id="L471">471     have hroundsAbs : |(rounds : Real)| = (rounds : Real) :=</span>
+<span id="L472">472       abs_of_nonneg (Nat.cast_nonneg rounds)</span>
+<span id="L473">473     rw [abs_div, hroundsAbs]</span>
+<span id="L474">474     have hsub : |expected trajectory - deviation trajectory| &lt;=</span>
+<span id="L475">475         expected trajectory + |deviation trajectory| := by</span>
+<span id="L476">476       calc</span>
+<span id="L477">477         |expected trajectory - deviation trajectory| &lt;=</span>
+<span id="L478">478             |expected trajectory| + |deviation trajectory| := abs_sub _ _</span>
+<span id="L479">479         _ = expected trajectory + |deviation trajectory| := by</span>
+<span id="L480">480           rw [abs_of_nonneg</span>
+<span id="L481">481             (selfConsistentScheduledNaturalCausalCumulativeBehaviorExpectedRegretProcess_nonneg</span>
+<span id="L482">482               mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L483">483                 baseVisitFloor rounds trajectory)]</span>
+<span id="L484">484     calc</span>
+<span id="L485">485       |expected trajectory - deviation trajectory| / (rounds : Real) &lt;=</span>
+<span id="L486">486           (expected trajectory + |deviation trajectory|) / (rounds : Real) :=</span>
+<span id="L487">487         div_le_div_of_nonneg_right hsub (Nat.cast_nonneg rounds)</span>
+<span id="L488">488       _ = expected trajectory / (rounds : Real) +</span>
+<span id="L489">489           |deviation trajectory| / (rounds : Real) := add_div _ _ _</span>
+<span id="L490">490   have hdom : Integrable</span>
+<span id="L491">491       (fun trajectory =&gt; expected trajectory / (rounds : Real) +</span>
+<span id="L492">492         |deviation trajectory| / (rounds : Real)) mu :=</span>
+<span id="L493">493     (hexpected.div_const (rounds : Real)).add</span>
+<span id="L494">494       (hdeviation.abs.div_const (rounds : Real))</span>
+<span id="L495">495   have hreturn :=</span>
+<span id="L496">496     integral_abs_selfConsistentScheduledNaturalCausalCumulativeReturnDeviationProcess_le</span>
+<span id="L497">497       mdp initialState rewardSource varianceProxy law initialTable defaultState</span>
+<span id="L498">498         baseVisitFloor hrewardBound rounds</span>
+<span id="L499">499   have hexpectedBound :=</span>
+<span id="L500">500     selfConsistentScheduledNaturalCausalExpectedCumulativeBehaviorRegret_le_logarithmic</span>
+<span id="L501">501       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L502">502         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L503">503           hbaseVisitFloor rounds</span>
+<span id="L504">504   change integral mu (fun trajectory =&gt; |process trajectory|) &lt;=</span>
+<span id="L505">505     selfConsistentScheduledNaturalCausalLogarithmicAverageIntegratedBehaviorExpectedRegretRate</span>
+<span id="L506">506         mdp rounds +</span>
+<span id="L507">507       selfConsistentScheduledNaturalCausalAverageReturnFirstMomentBound mdp</span>
+<span id="L508">508         varianceProxy baseVisitFloor rounds</span>
+<span id="L509">509   calc</span>
+<span id="L510">510     integral mu (fun trajectory =&gt; |process trajectory|) &lt;=</span>
+<span id="L511">511         integral mu (fun trajectory =&gt; expected trajectory / (rounds : Real) +</span>
+<span id="L512">512           |deviation trajectory| / (rounds : Real)) :=</span>
+<span id="L513">513       integral_mono hprocess.abs hdom hpoint</span>
+<span id="L514">514     _ = selfConsistentScheduledNaturalCausalExpectedCumulativeBehaviorRegret mdp</span>
+<span id="L515">515             initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L516">516               baseVisitFloor rounds / (rounds : Real) +</span>
+<span id="L517">517           integral mu (fun trajectory =&gt; |deviation trajectory|) /</span>
+<span id="L518">518             (rounds : Real) := by</span>
+<span id="L519">519       rw [integral_add (hexpected.div_const (rounds : Real))</span>
+<span id="L520">520         (hdeviation.abs.div_const (rounds : Real)), integral_div, integral_div]</span>
+<span id="L521">521       rfl</span>
+<span id="L522">522     _ &lt;= selfConsistentScheduledNaturalCausalLogarithmicCumulativeIntegratedBehaviorExpectedRegretRate</span>
+<span id="L523">523             mdp rounds / (rounds : Real) +</span>
+<span id="L524">524           (2 * Real.sqrt</span>
+<span id="L525">525               (selfConsistentScheduledNaturalCausalCumulativeReturnVarianceProxy mdp</span>
+<span id="L526">526                 varianceProxy baseVisitFloor rounds : Real) *</span>
+<span id="L527">527             Real.exp (1 / 2 : Real)) / (rounds : Real) :=</span>
+<span id="L528">528       add_le_add</span>
+<span id="L529">529         (div_le_div_of_nonneg_right hexpectedBound (Nat.cast_nonneg rounds))</span>
+<span id="L530">530         (div_le_div_of_nonneg_right hreturn (Nat.cast_nonneg rounds))</span>
+<span id="L531">531     _ = selfConsistentScheduledNaturalCausalLogarithmicAverageIntegratedBehaviorExpectedRegretRate</span>
+<span id="L532">532             mdp rounds +</span>
+<span id="L533">533           selfConsistentScheduledNaturalCausalAverageReturnFirstMomentBound mdp</span>
+<span id="L534">534             varianceProxy baseVisitFloor rounds := rfl</span>
+<span id="L535">535 </span>
+<span id="L536">536 /-- Expected absolute exact average realized behavior regret tends to zero on all prefixes. -/</span>
+<span id="L537">537 theorem selfConsistentScheduledNaturalCausalExpectedAbsoluteAverageRealizedBehaviorRegret_tendsto_zero</span>
+<span id="L538">538     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L539">539     [IsProbabilityMeasure initialState]</span>
+<span id="L540">540     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L541">541     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L542">542     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L543">543     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L544">544     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L545">545     (defaultState : State)</span>
+<span id="L546">546     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L547">547     (baseVisitFloor : Real)</span>
+<span id="L548">548     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L549">549     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L550">550     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L551">551     Tendsto</span>
+<span id="L552">552       (selfConsistentScheduledNaturalCausalExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L553">553         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L554">554           baseVisitFloor) atTop (nhds 0) := by</span>
+<span id="L555">555   apply squeeze_zero&#x27;</span>
+<span id="L556">556   · exact Filter.Eventually.of_forall fun rounds =&gt;</span>
+<span id="L557">557       selfConsistentScheduledNaturalCausalExpectedAbsoluteAverageRealizedBehaviorRegret_nonneg</span>
+<span id="L558">558         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L559">559           baseVisitFloor rounds</span>
+<span id="L560">560   · exact Filter.Eventually.of_forall fun rounds =&gt;</span>
+<span id="L561">561       selfConsistentScheduledNaturalCausalExpectedAbsoluteAverageRealizedBehaviorRegret_le_L1Envelope</span>
+<span id="L562">562         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L563">563           defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L564">564             hbaseVisitFloor rounds</span>
+<span id="L565">565   · exact</span>
+<span id="L566">566       selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretL1Envelope_tendsto_zero</span>
+<span id="L567">567         mdp varianceProxy baseVisitFloor</span>
+<span id="L568">568 </span>
+<span id="L569">569 /-- Every exact equal-round average realized-regret coordinate belongs to `L1`. -/</span>
+<span id="L570">570 theorem memLp_one_selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess</span>
+<span id="L571">571     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L572">572     [IsProbabilityMeasure initialState]</span>
+<span id="L573">573     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L574">574     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L575">575     (varianceProxy : NNReal)</span>
+<span id="L576">576     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L577">577     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L578">578     (defaultState : State) (baseVisitFloor : Real)</span>
+<span id="L579">579     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L580">580     (rounds : Nat) :</span>
+<span id="L581">581     MemLp</span>
+<span id="L582">582       (selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess mdp</span>
+<span id="L583">583         initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L584">584           baseVisitFloor rounds)</span>
+<span id="L585">585       1</span>
+<span id="L586">586       (selfConsistentScheduledCausalSource mdp initialState rewardSource</span>
+<span id="L587">587         initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure := by</span>
+<span id="L588">588   rw [memLp_one_iff_integrable]</span>
+<span id="L589">589   exact</span>
+<span id="L590">590     integrable_selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess</span>
+<span id="L591">591       mdp initialState rewardSource varianceProxy law initialTable defaultState</span>
+<span id="L592">592         baseVisitFloor hrewardBound rounds</span>
+<span id="L593">593 </span>
+<span id="L594">594 /-- At exponent one, `eLpNorm` is the lifted expected absolute exact average regret. -/</span>
+<span id="L595">595 theorem eLpNorm_one_selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess_eq</span>
+<span id="L596">596     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L597">597     [IsProbabilityMeasure initialState]</span>
+<span id="L598">598     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L599">599     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L600">600     (varianceProxy : NNReal)</span>
+<span id="L601">601     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L602">602     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L603">603     (defaultState : State) (baseVisitFloor : Real)</span>
+<span id="L604">604     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L605">605     (rounds : Nat) :</span>
+<span id="L606">606     eLpNorm</span>
+<span id="L607">607         (selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess mdp</span>
+<span id="L608">608           initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L609">609             baseVisitFloor rounds)</span>
+<span id="L610">610         1</span>
+<span id="L611">611         (selfConsistentScheduledCausalSource mdp initialState rewardSource</span>
+<span id="L612">612           initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure =</span>
+<span id="L613">613       ENNReal.ofReal</span>
+<span id="L614">614         (selfConsistentScheduledNaturalCausalExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L615">615           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L616">616             baseVisitFloor rounds) := by</span>
+<span id="L617">617   rw [MemLp.eLpNorm_eq_integral_rpow_norm one_ne_zero ENNReal.one_ne_top</span>
+<span id="L618">618     (memLp_one_selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess</span>
+<span id="L619">619       mdp initialState rewardSource varianceProxy law initialTable defaultState</span>
+<span id="L620">620         baseVisitFloor hrewardBound rounds)]</span>
+<span id="L621">621   simp [selfConsistentScheduledNaturalCausalExpectedAbsoluteAverageRealizedBehaviorRegret,</span>
+<span id="L622">622     Real.norm_eq_abs]</span>
+<span id="L623">623 </span>
+<span id="L624">624 /-- The exponent-one extended norm of the exact average process tends to zero. -/</span>
+<span id="L625">625 theorem eLpNorm_one_selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess_tendsto_zero</span>
+<span id="L626">626     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L627">627     [IsProbabilityMeasure initialState]</span>
+<span id="L628">628     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L629">629     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L630">630     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L631">631     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L632">632     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L633">633     (defaultState : State)</span>
+<span id="L634">634     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L635">635     (baseVisitFloor : Real)</span>
+<span id="L636">636     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L637">637     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L638">638     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L639">639     Tendsto</span>
+<span id="L640">640       (fun rounds =&gt; eLpNorm</span>
+<span id="L641">641         (selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess mdp</span>
+<span id="L642">642           initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L643">643             baseVisitFloor rounds)</span>
+<span id="L644">644         1</span>
+<span id="L645">645         (selfConsistentScheduledCausalSource mdp initialState rewardSource</span>
+<span id="L646">646           initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure)</span>
+<span id="L647">647       atTop (nhds 0) := by</span>
+<span id="L648">648   have hexpected :=</span>
+<span id="L649">649     selfConsistentScheduledNaturalCausalExpectedAbsoluteAverageRealizedBehaviorRegret_tendsto_zero</span>
+<span id="L650">650       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L651">651         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L652">652           hbaseVisitFloor</span>
+<span id="L653">653   have hofReal := (ENNReal.continuous_ofReal.tendsto 0).comp hexpected</span>
+<span id="L654">654   simpa only [ENNReal.ofReal_zero,</span>
+<span id="L655">655     eLpNorm_one_selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess_eq</span>
+<span id="L656">656       mdp initialState rewardSource varianceProxy law initialTable defaultState</span>
+<span id="L657">657         baseVisitFloor hrewardBound] using hofReal</span>
+<span id="L658">658 </span>
+<span id="L659">659 /-- The exponent-one norm of the difference from zero tends to zero. -/</span>
+<span id="L660">660 theorem eLpNorm_one_selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess_sub_zero_tendsto_zero</span>
+<span id="L661">661     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L662">662     [IsProbabilityMeasure initialState]</span>
+<span id="L663">663     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L664">664     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L665">665     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L666">666     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L667">667     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L668">668     (defaultState : State)</span>
+<span id="L669">669     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L670">670     (baseVisitFloor : Real)</span>
+<span id="L671">671     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L672">672     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L673">673     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L674">674     Tendsto</span>
+<span id="L675">675       (fun rounds =&gt; eLpNorm</span>
+<span id="L676">676         (selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess mdp</span>
+<span id="L677">677             initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L678">678               baseVisitFloor rounds -</span>
+<span id="L679">679           (fun _ =&gt; 0))</span>
+<span id="L680">680         1</span>
+<span id="L681">681         (selfConsistentScheduledCausalSource mdp initialState rewardSource</span>
+<span id="L682">682           initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure)</span>
+<span id="L683">683       atTop (nhds 0) := by</span>
+<span id="L684">684   have h :=</span>
+<span id="L685">685     eLpNorm_one_selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess_tendsto_zero</span>
+<span id="L686">686       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L687">687         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L688">688           hbaseVisitFloor</span>
+<span id="L689">689   convert h using 1</span>
+<span id="L690">690   funext rounds</span>
+<span id="L691">691   apply eLpNorm_congr_ae</span>
+<span id="L692">692   exact Filter.Eventually.of_forall fun trajectory =&gt; by simp</span>
+<span id="L693">693 </span>
+<span id="L694">694 /-- The exact equal-round average realized behavior regret as an `Lp Real 1` value. -/</span>
+<span id="L695">695 noncomputable def selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretLp</span>
+<span id="L696">696     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L697">697     [IsProbabilityMeasure initialState]</span>
+<span id="L698">698     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L699">699     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L700">700     (varianceProxy : NNReal)</span>
+<span id="L701">701     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L702">702     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L703">703     (defaultState : State) (baseVisitFloor : Real)</span>
+<span id="L704">704     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L705">705     (rounds : Nat) :</span>
+<span id="L706">706     Lp Real 1</span>
+<span id="L707">707       (selfConsistentScheduledCausalSource mdp initialState rewardSource</span>
+<span id="L708">708         initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure :=</span>
+<span id="L709">709   (memLp_one_selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess</span>
+<span id="L710">710     mdp initialState rewardSource varianceProxy law initialTable defaultState</span>
+<span id="L711">711       baseVisitFloor hrewardBound rounds).toLp</span>
+<span id="L712">712     (selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess mdp</span>
+<span id="L713">713       initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L714">714         baseVisitFloor rounds)</span>
+<span id="L715">715 </span>
+<span id="L716">716 /-- The named `Lp` coordinate represents the exact average process a.e. -/</span>
+<span id="L717">717 theorem selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretLp_coeFn_ae_eq</span>
+<span id="L718">718     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L719">719     [IsProbabilityMeasure initialState]</span>
+<span id="L720">720     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L721">721     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L722">722     (varianceProxy : NNReal)</span>
+<span id="L723">723     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L724">724     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L725">725     (defaultState : State) (baseVisitFloor : Real)</span>
+<span id="L726">726     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L727">727     (rounds : Nat) :</span>
+<span id="L728">728     (selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretLp mdp</span>
+<span id="L729">729         initialState rewardSource varianceProxy law initialTable defaultState</span>
+<span id="L730">730           baseVisitFloor hrewardBound rounds :</span>
+<span id="L731">731       HeterogeneousStochasticEpisodeBatchTrajectory mdp</span>
+<span id="L732">732         (fun t =&gt;</span>
+<span id="L733">733           AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L734">734             mdp varianceProxy baseVisitFloor t) -&gt; Real) =ᵐ[</span>
+<span id="L735">735       (selfConsistentScheduledCausalSource mdp initialState rewardSource</span>
+<span id="L736">736         initialTable defaultState varianceProxy baseVisitFloor).trajectoryMeasure]</span>
+<span id="L737">737       selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess mdp</span>
+<span id="L738">738         initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L739">739           baseVisitFloor rounds := by</span>
+<span id="L740">740   exact</span>
+<span id="L741">741     (memLp_one_selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess</span>
+<span id="L742">742       mdp initialState rewardSource varianceProxy law initialTable defaultState</span>
+<span id="L743">743         baseVisitFloor hrewardBound rounds).coeFn_toLp</span>
+<span id="L744">744 </span>
+<span id="L745">745 /-- The named exact average `Lp Real 1` process converges to zero. -/</span>
+<span id="L746">746 theorem selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretLp_tendsto_zero</span>
+<span id="L747">747     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L748">748     [IsProbabilityMeasure initialState]</span>
+<span id="L749">749     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L750">750     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L751">751     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L752">752     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L753">753     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L754">754     (defaultState : State)</span>
+<span id="L755">755     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L756">756     (baseVisitFloor : Real)</span>
+<span id="L757">757     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L758">758     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L759">759     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L760">760     Tendsto</span>
+<span id="L761">761       (selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretLp mdp</span>
+<span id="L762">762         initialState rewardSource varianceProxy law initialTable defaultState</span>
+<span id="L763">763           baseVisitFloor hrewardBound)</span>
+<span id="L764">764       atTop (nhds 0) := by</span>
+<span id="L765">765   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L766">766     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L767">767   let process := fun rounds =&gt;</span>
+<span id="L768">768     selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess mdp</span>
+<span id="L769">769       initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L770">770         baseVisitFloor rounds</span>
+<span id="L771">771   have hmem : forall rounds, MemLp (process rounds) 1 source.trajectoryMeasure :=</span>
+<span id="L772">772     fun rounds =&gt;</span>
+<span id="L773">773       memLp_one_selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess</span>
+<span id="L774">774         mdp initialState rewardSource varianceProxy law initialTable defaultState</span>
+<span id="L775">775           baseVisitFloor hrewardBound rounds</span>
+<span id="L776">776   have hzero : MemLp</span>
+<span id="L777">777       (fun _ : HeterogeneousStochasticEpisodeBatchTrajectory mdp</span>
+<span id="L778">778         (fun t =&gt;</span>
+<span id="L779">779           AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L780">780             mdp varianceProxy baseVisitFloor t) =&gt; (0 : Real))</span>
+<span id="L781">781       1 source.trajectoryMeasure := MemLp.zero&#x27;</span>
+<span id="L782">782   have hnorm :=</span>
+<span id="L783">783     eLpNorm_one_selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess_sub_zero_tendsto_zero</span>
+<span id="L784">784       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L785">785         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L786">786           hbaseVisitFloor</span>
+<span id="L787">787   have hLp :=</span>
+<span id="L788">788     (Lp.tendsto_Lp_iff_tendsto_eLpNorm&#x27;&#x27; process hmem (fun _ =&gt; (0 : Real))</span>
+<span id="L789">789       hzero).2 (by simpa [process, source] using hnorm)</span>
+<span id="L790">790   simpa [selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretLp,</span>
+<span id="L791">791     process, source] using hLp</span>
+<span id="L792">792 </span>
+<span id="L793">793 /-</span>
+<span id="L794">794 Terminal all-prefix L1 theorem for the exact per-batch-normalized,</span>
+<span id="L795">795 equal-round-weighted natural realized behavior-regret process.</span>
+<span id="L796">796 -/</span>
+<span id="L797">797 theorem selfConsistentScheduledCausalSource_naturalAverageRealizedBehaviorRegret_allPrefix_L1_tendsto_zero</span>
+<span id="L798">798     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L799">799     [IsProbabilityMeasure initialState]</span>
+<span id="L800">800     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L801">801     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L802">802     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L803">803     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L804">804     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L805">805     (defaultState : State)</span>
+<span id="L806">806     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L807">807     (baseVisitFloor : Real)</span>
+<span id="L808">808     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L809">809     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L810">810     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L811">811     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L812">812       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L813">813     let process :=</span>
+<span id="L814">814       selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess mdp</span>
+<span id="L815">815         initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L816">816           baseVisitFloor</span>
+<span id="L817">817     (forall rounds, Integrable (process rounds) source.trajectoryMeasure) /\</span>
+<span id="L818">818     (forall rounds, MemLp (process rounds) 1 source.trajectoryMeasure) /\</span>
+<span id="L819">819     (forall rounds,</span>
+<span id="L820">820       selfConsistentScheduledNaturalCausalExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L821">821           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L822">822             baseVisitFloor rounds &lt;=</span>
+<span id="L823">823         selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretL1Envelope</span>
+<span id="L824">824           mdp varianceProxy baseVisitFloor rounds) /\</span>
+<span id="L825">825     Tendsto</span>
+<span id="L826">826       (selfConsistentScheduledNaturalCausalExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L827">827         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L828">828           baseVisitFloor) atTop (nhds 0) /\</span>
+<span id="L829">829     (forall rounds, eLpNorm (process rounds) 1 source.trajectoryMeasure =</span>
+<span id="L830">830       ENNReal.ofReal</span>
+<span id="L831">831         (selfConsistentScheduledNaturalCausalExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L832">832           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L833">833             baseVisitFloor rounds)) /\</span>
+<span id="L834">834     Tendsto</span>
+<span id="L835">835       (fun rounds =&gt; eLpNorm (process rounds - (fun _ =&gt; 0)) 1</span>
+<span id="L836">836         source.trajectoryMeasure) atTop (nhds 0) /\</span>
+<span id="L837">837     Tendsto</span>
+<span id="L838">838       (selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretLp mdp</span>
+<span id="L839">839         initialState rewardSource varianceProxy law initialTable defaultState</span>
+<span id="L840">840           baseVisitFloor hrewardBound) atTop (nhds 0) /\</span>
+<span id="L841">841     TendstoInMeasure source.trajectoryMeasure process atTop (fun _ =&gt; 0) := by</span>
+<span id="L842">842   dsimp only</span>
+<span id="L843">843   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L844">844     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L845">845   let process :=</span>
+<span id="L846">846     selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess mdp</span>
+<span id="L847">847       initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L848">848         baseVisitFloor</span>
+<span id="L849">849   have hmem := fun rounds =&gt;</span>
+<span id="L850">850     memLp_one_selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess</span>
+<span id="L851">851       mdp initialState rewardSource varianceProxy law initialTable defaultState</span>
+<span id="L852">852         baseVisitFloor hrewardBound rounds</span>
+<span id="L853">853   have hnorm :=</span>
+<span id="L854">854     eLpNorm_one_selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess_sub_zero_tendsto_zero</span>
+<span id="L855">855       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L856">856         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L857">857           hbaseVisitFloor</span>
+<span id="L858">858   refine ⟨fun rounds =&gt;</span>
+<span id="L859">859       integrable_selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess</span>
+<span id="L860">860         mdp initialState rewardSource varianceProxy law initialTable defaultState</span>
+<span id="L861">861           baseVisitFloor hrewardBound rounds,</span>
+<span id="L862">862     hmem,</span>
+<span id="L863">863     fun rounds =&gt;</span>
+<span id="L864">864       selfConsistentScheduledNaturalCausalExpectedAbsoluteAverageRealizedBehaviorRegret_le_L1Envelope</span>
+<span id="L865">865         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L866">866           defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L867">867             hbaseVisitFloor rounds,</span>
+<span id="L868">868     selfConsistentScheduledNaturalCausalExpectedAbsoluteAverageRealizedBehaviorRegret_tendsto_zero</span>
+<span id="L869">869       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L870">870         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L871">871           hbaseVisitFloor,</span>
+<span id="L872">872     fun rounds =&gt;</span>
+<span id="L873">873       eLpNorm_one_selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess_eq</span>
+<span id="L874">874         mdp initialState rewardSource varianceProxy law initialTable defaultState</span>
+<span id="L875">875           baseVisitFloor hrewardBound rounds,</span>
+<span id="L876">876     hnorm,</span>
+<span id="L877">877     selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretLp_tendsto_zero</span>
+<span id="L878">878       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L879">879         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L880">880           hbaseVisitFloor,</span>
+<span id="L881">881     ?_⟩</span>
+<span id="L882">882   exact tendstoInMeasure_of_tendsto_eLpNorm one_ne_zero</span>
+<span id="L883">883     (fun rounds =&gt; (hmem rounds).aestronglyMeasurable)</span>
+<span id="L884">884     (by fun_prop) (by simpa [process, source] using hnorm)</span>
+<span id="L885">885 </span>
+<span id="L886">886 end AdaptiveStochasticSampledEmpiricalOptimisticSource</span>
+<span id="L887">887 </span>
+<span id="L888">888 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

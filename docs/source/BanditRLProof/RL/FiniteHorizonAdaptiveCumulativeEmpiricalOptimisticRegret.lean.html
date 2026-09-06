@@ -1,0 +1,595 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeEmpiricalOptimisticRegret.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeEmpiricalOptimisticRegret.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeEmpiricalOptimisticRegret.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeEmpiricalOptimisticRegret.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveEmpiricalOptimisticOccupancyEnvelope</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Adaptive cumulative empirical optimistic regret contract</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module changes the adaptive empirical planner from a latest-batch summary</span>
+<span id="L7">7 to the sum of every transition count in the observed finite prefix.  A</span>
+<span id="L8">8 nonnegative antitone count-radius object makes the plan&#x27;s transition radius a</span>
+<span id="L9">9 function of the cumulative state-action visit count.  The cumulative selector</span>
+<span id="L10">10 is measurable, so it also defines a concrete exploratory adaptive batch source.</span>
+<span id="L11">11 </span>
+<span id="L12">12 The route terminates at optimism and recommended-policy expected regret under</span>
+<span id="L13">13 one explicit global cumulative coordinate-confidence contract.  Producing that</span>
+<span id="L14">14 contract from adaptive cumulative count martingales remains downstream; no</span>
+<span id="L15">15 such concentration theorem is assumed to have been proved here.</span>
+<span id="L16">16 -/</span>
+<span id="L17">17 </span>
+<span id="L18">18 open MeasureTheory</span>
+<span id="L19">19 open scoped ENNReal ProbabilityTheory</span>
+<span id="L20">20 </span>
+<span id="L21">21 universe u v</span>
+<span id="L22">22 </span>
+<span id="L23">23 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L24">24 </span>
+<span id="L25">25 variable {State : Type u} {Action : Type v}</span>
+<span id="L26">26     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L27">27     [Fintype State] [Fintype Action]</span>
+<span id="L28">28     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L29">29     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L30">30     [Nonempty State] [Nonempty Action]</span>
+<span id="L31">31 </span>
+<span id="L32">32 /-- A nonnegative transition radius that can only decrease as visits accumulate. -/</span>
+<span id="L33">33 structure TransitionCountRadius where</span>
+<span id="L34">34   radius : Nat -&gt; Real</span>
+<span id="L35">35   nonneg : forall count, 0 &lt;= radius count</span>
+<span id="L36">36   antitone : Antitone radius</span>
+<span id="L37">37 </span>
+<span id="L38">38 namespace TransitionCountRadius</span>
+<span id="L39">39 </span>
+<span id="L40">40 /-- A finite linear-decay radius, useful as an executable shrinking-radius canary. -/</span>
+<span id="L41">41 def linearDecay (budget : Nat) : TransitionCountRadius where</span>
+<span id="L42">42   radius count := (budget - count : Nat)</span>
+<span id="L43">43   nonneg count := by positivity</span>
+<span id="L44">44   antitone := by</span>
+<span id="L45">45     intro left right hle</span>
+<span id="L46">46     change ((budget - right : Nat) : Real) &lt;= (budget - left : Nat)</span>
+<span id="L47">47     exact_mod_cast Nat.sub_le_sub_left hle budget</span>
+<span id="L48">48 </span>
+<span id="L49">49 end TransitionCountRadius</span>
+<span id="L50">50 </span>
+<span id="L51">51 namespace EpisodeBatchPrefix</span>
+<span id="L52">52 </span>
+<span id="L53">53 /-- Sum all transition-count coordinates in a nonempty finite batch prefix. -/</span>
+<span id="L54">54 def cumulativeTransitionCountSummary</span>
+<span id="L55">55     {mdp : MDP State Action} {episodes n : Nat}</span>
+<span id="L56">56     (history : EpisodeBatchPrefix mdp episodes n) : TransitionCountSummary mdp :=</span>
+<span id="L57">57   fun stage state action nextState =&gt;</span>
+<span id="L58">58     ∑ i : Fin (n + 1),</span>
+<span id="L59">59       (history ⟨i, Finset.mem_Iic.mpr (Nat.le_of_lt_succ i.isLt)⟩).transitionCount</span>
+<span id="L60">60         stage state action nextState</span>
+<span id="L61">61 </span>
+<span id="L62">62 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L63">63 /-- The complete cumulative transition-count summary is history measurable. -/</span>
+<span id="L64">64 theorem measurable_cumulativeTransitionCountSummary</span>
+<span id="L65">65     {mdp : MDP State Action} {episodes n : Nat} :</span>
+<span id="L66">66     Measurable</span>
+<span id="L67">67       (cumulativeTransitionCountSummary :</span>
+<span id="L68">68         EpisodeBatchPrefix mdp episodes n -&gt; TransitionCountSummary mdp) := by</span>
+<span id="L69">69   refine measurable_pi_lambda _ fun stage =&gt; ?_</span>
+<span id="L70">70   refine measurable_pi_lambda _ fun state =&gt; ?_</span>
+<span id="L71">71   refine measurable_pi_lambda _ fun action =&gt; ?_</span>
+<span id="L72">72   refine measurable_pi_lambda _ fun nextState =&gt; ?_</span>
+<span id="L73">73   change Measurable fun history : EpisodeBatchPrefix mdp episodes n =&gt;</span>
+<span id="L74">74     ∑ i : Fin (n + 1),</span>
+<span id="L75">75       (history ⟨i, Finset.mem_Iic.mpr (Nat.le_of_lt_succ i.isLt)⟩).transitionCount</span>
+<span id="L76">76         stage state action nextState</span>
+<span id="L77">77   refine Finset.measurable_sum Finset.univ fun i _hi =&gt; ?_</span>
+<span id="L78">78   let index : Finset.Iic n :=</span>
+<span id="L79">79     ⟨i, Finset.mem_Iic.mpr (Nat.le_of_lt_succ i.isLt)⟩</span>
+<span id="L80">80   have hsummary : Measurable fun history : EpisodeBatchPrefix mdp episodes n =&gt;</span>
+<span id="L81">81       (history index).transitionCountSummary :=</span>
+<span id="L82">82     EpisodeBatch.measurable_transitionCountSummary.comp</span>
+<span id="L83">83       (measurable_pi_apply index)</span>
+<span id="L84">84   have hstage := (measurable_pi_apply stage).comp hsummary</span>
+<span id="L85">85   have hstate := (measurable_pi_apply state).comp hstage</span>
+<span id="L86">86   have haction := (measurable_pi_apply action).comp hstate</span>
+<span id="L87">87   have hnextState := (measurable_pi_apply nextState).comp haction</span>
+<span id="L88">88   simpa [index, EpisodeBatch.transitionCountSummary] using hnextState</span>
+<span id="L89">89 </span>
+<span id="L90">90 omit [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L91">91     [Nonempty State] [Nonempty Action] in</span>
+<span id="L92">92 /-- Cumulative next-state counts still partition the cumulative visit count. -/</span>
+<span id="L93">93 theorem cumulativeTransitionCountSummary_visitCount</span>
+<span id="L94">94     {mdp : MDP State Action} {episodes n : Nat}</span>
+<span id="L95">95     (history : EpisodeBatchPrefix mdp episodes n)</span>
+<span id="L96">96     (stage : Fin mdp.horizon) (state : State) (action : Action) :</span>
+<span id="L97">97     history.cumulativeTransitionCountSummary.visitCount stage state action =</span>
+<span id="L98">98       ∑ i : Fin (n + 1),</span>
+<span id="L99">99         (history ⟨i, Finset.mem_Iic.mpr (Nat.le_of_lt_succ i.isLt)⟩).visitCount</span>
+<span id="L100">100           stage state action := by</span>
+<span id="L101">101   classical</span>
+<span id="L102">102   unfold TransitionCountSummary.visitCount cumulativeTransitionCountSummary</span>
+<span id="L103">103   rw [Finset.sum_comm]</span>
+<span id="L104">104   apply Finset.sum_congr rfl</span>
+<span id="L105">105   intro i _hi</span>
+<span id="L106">106   exact</span>
+<span id="L107">107     (history ⟨i, Finset.mem_Iic.mpr (Nat.le_of_lt_succ i.isLt)⟩).sum_transitionCount_eq_visitCount</span>
+<span id="L108">108       stage state action</span>
+<span id="L109">109 </span>
+<span id="L110">110 end EpisodeBatchPrefix</span>
+<span id="L111">111 </span>
+<span id="L112">112 /-- Cumulative count summary through trajectory coordinate `round`. -/</span>
+<span id="L113">113 def cumulativeTransitionCountSummaryAt</span>
+<span id="L114">114     {mdp : MDP State Action} {episodes : Nat}</span>
+<span id="L115">115     (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat) :</span>
+<span id="L116">116     TransitionCountSummary mdp :=</span>
+<span id="L117">117   EpisodeBatchPrefix.cumulativeTransitionCountSummary</span>
+<span id="L118">118     (Preorder.frestrictLe round trajectory)</span>
+<span id="L119">119 </span>
+<span id="L120">120 omit [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L121">121     [Nonempty State] [Nonempty Action] in</span>
+<span id="L122">122 /-- Extending the trajectory prefix adds exactly the new batch coordinate. -/</span>
+<span id="L123">123 theorem cumulativeTransitionCountSummaryAt_succ</span>
+<span id="L124">124     {mdp : MDP State Action} {episodes : Nat}</span>
+<span id="L125">125     (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat)</span>
+<span id="L126">126     (stage : Fin mdp.horizon) (state : State) (action : Action)</span>
+<span id="L127">127     (nextState : State) :</span>
+<span id="L128">128     cumulativeTransitionCountSummaryAt trajectory (round + 1)</span>
+<span id="L129">129         stage state action nextState =</span>
+<span id="L130">130       cumulativeTransitionCountSummaryAt trajectory round</span>
+<span id="L131">131           stage state action nextState +</span>
+<span id="L132">132         (trajectory (round + 1)).transitionCount</span>
+<span id="L133">133           stage state action nextState := by</span>
+<span id="L134">134   unfold cumulativeTransitionCountSummaryAt</span>
+<span id="L135">135     EpisodeBatchPrefix.cumulativeTransitionCountSummary</span>
+<span id="L136">136   rw [Fin.sum_univ_castSucc]</span>
+<span id="L137">137   rfl</span>
+<span id="L138">138 </span>
+<span id="L139">139 omit [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L140">140     [Nonempty State] [Nonempty Action] in</span>
+<span id="L141">141 /-- Every cumulative state-action visit count is monotone across rounds. -/</span>
+<span id="L142">142 theorem cumulativeTransitionCountSummaryAt_visitCount_le_succ</span>
+<span id="L143">143     {mdp : MDP State Action} {episodes : Nat}</span>
+<span id="L144">144     (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat)</span>
+<span id="L145">145     (stage : Fin mdp.horizon) (state : State) (action : Action) :</span>
+<span id="L146">146     (cumulativeTransitionCountSummaryAt trajectory round).visitCount</span>
+<span id="L147">147         stage state action &lt;=</span>
+<span id="L148">148       (cumulativeTransitionCountSummaryAt trajectory (round + 1)).visitCount</span>
+<span id="L149">149         stage state action := by</span>
+<span id="L150">150   unfold TransitionCountSummary.visitCount</span>
+<span id="L151">151   apply Finset.sum_le_sum</span>
+<span id="L152">152   intro nextState _hnextState</span>
+<span id="L153">153   rw [cumulativeTransitionCountSummaryAt_succ]</span>
+<span id="L154">154   omega</span>
+<span id="L155">155 </span>
+<span id="L156">156 omit [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L157">157     [Nonempty State] [Nonempty Action] in</span>
+<span id="L158">158 /-- Count-antitone radii shrink along every accumulated state-action row. -/</span>
+<span id="L159">159 theorem TransitionCountRadius.radius_cumulativeVisitCount_succ_le</span>
+<span id="L160">160     {mdp : MDP State Action} {episodes : Nat}</span>
+<span id="L161">161     (countRadius : TransitionCountRadius)</span>
+<span id="L162">162     (trajectory : EpisodeBatchTrajectory mdp episodes) (round : Nat)</span>
+<span id="L163">163     (stage : Fin mdp.horizon) (state : State) (action : Action) :</span>
+<span id="L164">164     countRadius.radius</span>
+<span id="L165">165         ((cumulativeTransitionCountSummaryAt trajectory (round + 1)).visitCount</span>
+<span id="L166">166           stage state action) &lt;=</span>
+<span id="L167">167       countRadius.radius</span>
+<span id="L168">168         ((cumulativeTransitionCountSummaryAt trajectory round).visitCount</span>
+<span id="L169">169           stage state action) :=</span>
+<span id="L170">170   countRadius.antitone</span>
+<span id="L171">171     (cumulativeTransitionCountSummaryAt_visitCount_le_succ</span>
+<span id="L172">172       trajectory round stage state action)</span>
+<span id="L173">173 </span>
+<span id="L174">174 namespace TransitionCountSummary</span>
+<span id="L175">175 </span>
+<span id="L176">176 /-- Known-reward empirical plan with a radius selected from cumulative visits. -/</span>
+<span id="L177">177 noncomputable def countRadiusOptimisticPlan</span>
+<span id="L178">178     (mdp : MDP State Action) (summary : TransitionCountSummary mdp)</span>
+<span id="L179">179     (defaultState : State) (countRadius : TransitionCountRadius) :</span>
+<span id="L180">180     mdp.EstimatedModelPlan where</span>
+<span id="L181">181   estimatedReward _stage := mdp.reward</span>
+<span id="L182">182   measurable_estimatedReward _stage := mdp.measurable_reward</span>
+<span id="L183">183   estimatedTransition stage := summary.empiricalTransitionKernel defaultState stage</span>
+<span id="L184">184   estimatedTransition_isMarkov stage :=</span>
+<span id="L185">185     summary.empiricalTransitionKernel_isMarkov defaultState stage</span>
+<span id="L186">186   rewardRadius _stage _state _action := 0</span>
+<span id="L187">187   measurable_rewardRadius _stage := measurable_const</span>
+<span id="L188">188   transitionRadius stage state action :=</span>
+<span id="L189">189     countRadius.radius (summary.visitCount stage state action)</span>
+<span id="L190">190   measurable_transitionRadius _stage := measurable_of_finite _</span>
+<span id="L191">191 </span>
+<span id="L192">192 omit [DecidableEq Action] [Nonempty State] in</span>
+<span id="L193">193 /-- Every count-radius optimistic value is controlled by the radius at zero visits. -/</span>
+<span id="L194">194 theorem countRadiusOptimisticPlan_upperValueRemaining_abs_le</span>
+<span id="L195">195     (mdp : MDP State Action) (summary : TransitionCountSummary mdp)</span>
+<span id="L196">196     (defaultState : State) (countRadius : TransitionCountRadius)</span>
+<span id="L197">197     (rewardBound : Real)</span>
+<span id="L198">198     (hrewardBound : forall state action, |mdp.reward state action| &lt;= rewardBound) :</span>
+<span id="L199">199     forall (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon)</span>
+<span id="L200">200       (state : State),</span>
+<span id="L201">201       |(summary.countRadiusOptimisticPlan mdp defaultState countRadius).upperValueRemaining</span>
+<span id="L202">202           remaining hremaining state| &lt;=</span>
+<span id="L203">203         empiricalFiniteBatchValueEnvelope</span>
+<span id="L204">204           rewardBound (countRadius.radius 0) remaining := by</span>
+<span id="L205">205   let plan := summary.countRadiusOptimisticPlan mdp defaultState countRadius</span>
+<span id="L206">206   intro remaining</span>
+<span id="L207">207   induction remaining with</span>
+<span id="L208">208   | zero =&gt;</span>
+<span id="L209">209       intro hremaining state</span>
+<span id="L210">210       simp [MDP.EstimatedModelPlan.upperValueRemaining,</span>
+<span id="L211">211         empiricalFiniteBatchValueEnvelope]</span>
+<span id="L212">212   | succ remaining ih =&gt;</span>
+<span id="L213">213       intro hremaining state</span>
+<span id="L214">214       let stage := mdp.decisionStageRemaining remaining hremaining</span>
+<span id="L215">215       let tail := plan.upperValueRemaining remaining (by omega)</span>
+<span id="L216">216       let action := plan.optimisticAction stage tail state</span>
+<span id="L217">217       have htail : forall nextState,</span>
+<span id="L218">218           |tail nextState| &lt;=</span>
+<span id="L219">219             empiricalFiniteBatchValueEnvelope</span>
+<span id="L220">220               rewardBound (countRadius.radius 0) remaining := by</span>
+<span id="L221">221         intro nextState</span>
+<span id="L222">222         exact ih (by omega) nextState</span>
+<span id="L223">223       have htransition :</span>
+<span id="L224">224           |plan.transitionValue stage tail state action| &lt;=</span>
+<span id="L225">225             empiricalFiniteBatchValueEnvelope</span>
+<span id="L226">226               rewardBound (countRadius.radius 0) remaining := by</span>
+<span id="L227">227         rw [← Real.norm_eq_abs]</span>
+<span id="L228">228         have hnorm := norm_integral_le_of_norm_le_const</span>
+<span id="L229">229           (μ := plan.estimatedTransition stage (state, action))</span>
+<span id="L230">230           (C := empiricalFiniteBatchValueEnvelope</span>
+<span id="L231">231             rewardBound (countRadius.radius 0) remaining)</span>
+<span id="L232">232           (Filter.Eventually.of_forall fun nextState =&gt; by</span>
+<span id="L233">233             rw [Real.norm_eq_abs]</span>
+<span id="L234">234             exact htail nextState)</span>
+<span id="L235">235         simpa [MDP.EstimatedModelPlan.transitionValue] using hnorm</span>
+<span id="L236">236       have hradius :</span>
+<span id="L237">237           countRadius.radius (summary.visitCount stage state action) &lt;=</span>
+<span id="L238">238             countRadius.radius 0 :=</span>
+<span id="L239">239         countRadius.antitone (Nat.zero_le _)</span>
+<span id="L240">240       rw [MDP.EstimatedModelPlan.upperValueRemaining]</span>
+<span id="L241">241       change</span>
+<span id="L242">242         |mdp.reward state action +</span>
+<span id="L243">243               plan.transitionValue stage tail state action +</span>
+<span id="L244">244             0 + countRadius.radius (summary.visitCount stage state action)| &lt;=</span>
+<span id="L245">245           empiricalFiniteBatchValueEnvelope</span>
+<span id="L246">246             rewardBound (countRadius.radius 0) (remaining + 1)</span>
+<span id="L247">247       calc</span>
+<span id="L248">248         |mdp.reward state action +</span>
+<span id="L249">249               plan.transitionValue stage tail state action +</span>
+<span id="L250">250             0 + countRadius.radius (summary.visitCount stage state action)| =</span>
+<span id="L251">251             |(mdp.reward state action +</span>
+<span id="L252">252               plan.transitionValue stage tail state action) +</span>
+<span id="L253">253                 countRadius.radius (summary.visitCount stage state action)| := by</span>
+<span id="L254">254               ring_nf</span>
+<span id="L255">255         _ &lt;= |mdp.reward state action +</span>
+<span id="L256">256               plan.transitionValue stage tail state action| +</span>
+<span id="L257">257                 |countRadius.radius</span>
+<span id="L258">258                   (summary.visitCount stage state action)| := abs_add_le _ _</span>
+<span id="L259">259         _ &lt;= (|mdp.reward state action| +</span>
+<span id="L260">260               |plan.transitionValue stage tail state action|) +</span>
+<span id="L261">261                 |countRadius.radius</span>
+<span id="L262">262                   (summary.visitCount stage state action)| := by</span>
+<span id="L263">263             have hsum := abs_add_le (mdp.reward state action)</span>
+<span id="L264">264               (plan.transitionValue stage tail state action)</span>
+<span id="L265">265             linarith</span>
+<span id="L266">266         _ &lt;= rewardBound +</span>
+<span id="L267">267               empiricalFiniteBatchValueEnvelope</span>
+<span id="L268">268                 rewardBound (countRadius.radius 0) remaining +</span>
+<span id="L269">269               countRadius.radius 0 := by</span>
+<span id="L270">270             rw [abs_of_nonneg (countRadius.nonneg _)]</span>
+<span id="L271">271             linarith [hrewardBound state action, htransition, hradius]</span>
+<span id="L272">272         _ = empiricalFiniteBatchValueEnvelope</span>
+<span id="L273">273               rewardBound (countRadius.radius 0) (remaining + 1) := by</span>
+<span id="L274">274             unfold empiricalFiniteBatchValueEnvelope</span>
+<span id="L275">275             rw [show ((remaining + 1 : Nat) : Real) =</span>
+<span id="L276">276               (remaining : Real) + 1 by norm_num]</span>
+<span id="L277">277             ring</span>
+<span id="L278">278 </span>
+<span id="L279">279 omit [DecidableEq Action] [Nonempty State] in</span>
+<span id="L280">280 /-- The cumulative count-radius plan selects exactly its chosen row radius. -/</span>
+<span id="L281">281 theorem countRadiusOptimisticPlan_selectedRadiusRemaining</span>
+<span id="L282">282     (mdp : MDP State Action) (summary : TransitionCountSummary mdp)</span>
+<span id="L283">283     (defaultState : State) (countRadius : TransitionCountRadius)</span>
+<span id="L284">284     (remaining : Nat) (hremaining : remaining + 1 &lt;= mdp.horizon)</span>
+<span id="L285">285     (state : State) :</span>
+<span id="L286">286     (summary.countRadiusOptimisticPlan mdp defaultState countRadius).selectedRadiusRemaining</span>
+<span id="L287">287         remaining hremaining state =</span>
+<span id="L288">288       countRadius.radius</span>
+<span id="L289">289         (summary.visitCount</span>
+<span id="L290">290           (mdp.decisionStageRemaining remaining hremaining) state</span>
+<span id="L291">291           ((summary.countRadiusOptimisticPlan mdp defaultState countRadius).optimisticAction</span>
+<span id="L292">292             (mdp.decisionStageRemaining remaining hremaining)</span>
+<span id="L293">293             ((summary.countRadiusOptimisticPlan mdp defaultState countRadius).upperValueRemaining</span>
+<span id="L294">294               remaining (by omega)) state)) := by</span>
+<span id="L295">295   simp [MDP.EstimatedModelPlan.selectedRadiusRemaining,</span>
+<span id="L296">296     countRadiusOptimisticPlan]</span>
+<span id="L297">297 </span>
+<span id="L298">298 /-- Deterministic optimistic table selected from a cumulative count summary. -/</span>
+<span id="L299">299 noncomputable def countRadiusOptimisticPolicyTable</span>
+<span id="L300">300     (mdp : MDP State Action) (summary : TransitionCountSummary mdp)</span>
+<span id="L301">301     (defaultState : State) (countRadius : TransitionCountRadius) :</span>
+<span id="L302">302     DeterministicMarkovPolicyTable mdp :=</span>
+<span id="L303">303   fun stage =&gt;</span>
+<span id="L304">304     (summary.countRadiusOptimisticPlan mdp defaultState countRadius).optimisticActionAt stage</span>
+<span id="L305">305 </span>
+<span id="L306">306 omit [DecidableEq Action] [Nonempty State] in</span>
+<span id="L307">307 /-- The table interpretation is the cumulative count-radius plan&#x27;s policy. -/</span>
+<span id="L308">308 theorem countRadiusOptimisticPolicyTable_toMarkovPolicy</span>
+<span id="L309">309     (mdp : MDP State Action) (summary : TransitionCountSummary mdp)</span>
+<span id="L310">310     (defaultState : State) (countRadius : TransitionCountRadius) :</span>
+<span id="L311">311     (summary.countRadiusOptimisticPolicyTable mdp defaultState countRadius).toMarkovPolicy =</span>
+<span id="L312">312       (summary.countRadiusOptimisticPlan mdp defaultState countRadius).optimisticPolicy := by</span>
+<span id="L313">313   rfl</span>
+<span id="L314">314 </span>
+<span id="L315">315 end TransitionCountSummary</span>
+<span id="L316">316 </span>
+<span id="L317">317 /-- Cumulative known-reward optimistic plan recommended after one trajectory prefix. -/</span>
+<span id="L318">318 noncomputable def adaptiveCumulativeEmpiricalOptimisticPlanAt</span>
+<span id="L319">319     {mdp : MDP State Action} {episodes : Nat}</span>
+<span id="L320">320     (trajectory : EpisodeBatchTrajectory mdp episodes)</span>
+<span id="L321">321     (defaultState : State) (countRadius : TransitionCountRadius) (round : Nat) :</span>
+<span id="L322">322     mdp.EstimatedModelPlan :=</span>
+<span id="L323">323   (cumulativeTransitionCountSummaryAt trajectory round).countRadiusOptimisticPlan</span>
+<span id="L324">324     mdp defaultState countRadius</span>
+<span id="L325">325 </span>
+<span id="L326">326 /-- Sum of expected regrets of all cumulative empirical recommendations. -/</span>
+<span id="L327">327 noncomputable def adaptiveCumulativeEmpiricalOptimisticRecommendedExpectedRegret</span>
+<span id="L328">328     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L329">329     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L330">330     (trajectory : EpisodeBatchTrajectory mdp episodes)</span>
+<span id="L331">331     (defaultState : State) (countRadius : TransitionCountRadius)</span>
+<span id="L332">332     (rounds : Nat) : Real :=</span>
+<span id="L333">333   ∑ round : Fin rounds,</span>
+<span id="L334">334     (adaptiveCumulativeEmpiricalOptimisticPlanAt</span>
+<span id="L335">335       trajectory defaultState countRadius round).optimisticPolicy.expectedRegret initialState</span>
+<span id="L336">336 </span>
+<span id="L337">337 namespace AdaptiveCumulativeEmpiricalOptimisticSource</span>
+<span id="L338">338 </span>
+<span id="L339">339 /-- Cumulative optimistic table selected from every observed batch in a prefix. -/</span>
+<span id="L340">340 noncomputable def successorTable</span>
+<span id="L341">341     {mdp : MDP State Action} {episodes : Nat} (defaultState : State)</span>
+<span id="L342">342     (countRadius : TransitionCountRadius) (n : Nat)</span>
+<span id="L343">343     (history : EpisodeBatchPrefix mdp episodes n) :</span>
+<span id="L344">344     DeterministicMarkovPolicyTable mdp :=</span>
+<span id="L345">345   history.cumulativeTransitionCountSummary.countRadiusOptimisticPolicyTable</span>
+<span id="L346">346     mdp defaultState countRadius</span>
+<span id="L347">347 </span>
+<span id="L348">348 omit [Nonempty State] in</span>
+<span id="L349">349 /-- The cumulative history-to-table selector is measurable. -/</span>
+<span id="L350">350 theorem measurable_successorTable</span>
+<span id="L351">351     {mdp : MDP State Action} {episodes : Nat} (defaultState : State)</span>
+<span id="L352">352     (countRadius : TransitionCountRadius) (n : Nat) :</span>
+<span id="L353">353     Measurable</span>
+<span id="L354">354       (successorTable (mdp := mdp) (episodes := episodes)</span>
+<span id="L355">355         defaultState countRadius n) :=</span>
+<span id="L356">356   (measurable_of_countable</span>
+<span id="L357">357       (fun summary : TransitionCountSummary mdp =&gt;</span>
+<span id="L358">358         summary.countRadiusOptimisticPolicyTable mdp defaultState countRadius)).comp</span>
+<span id="L359">359     EpisodeBatchPrefix.measurable_cumulativeTransitionCountSummary</span>
+<span id="L360">360 </span>
+<span id="L361">361 /-- Exploratory behavior source centered on cumulative empirical recommendations. -/</span>
+<span id="L362">362 noncomputable def exploratorySource</span>
+<span id="L363">363     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L364">364     [IsProbabilityMeasure initialState] (episodes : Nat)</span>
+<span id="L365">365     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L366">366     (defaultState : State) (countRadius : TransitionCountRadius)</span>
+<span id="L367">367     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1) :</span>
+<span id="L368">368     AdaptiveEpisodeBatchSource mdp initialState episodes where</span>
+<span id="L369">369   initialPolicy := initialTable.exploratoryPolicy explorationRate hexplorationRate</span>
+<span id="L370">370   successorPolicy n history :=</span>
+<span id="L371">371     (successorTable defaultState countRadius n history).exploratoryPolicy</span>
+<span id="L372">372       explorationRate hexplorationRate</span>
+<span id="L373">373   batchKernel n :=</span>
+<span id="L374">374     (DeterministicMarkovPolicyTable.exploratoryIIDEpisodeBatchKernel</span>
+<span id="L375">375       initialState episodes explorationRate hexplorationRate).comap</span>
+<span id="L376">376         (successorTable defaultState countRadius n)</span>
+<span id="L377">377         (measurable_successorTable defaultState countRadius n)</span>
+<span id="L378">378   batchKernel_isMarkov n := by</span>
+<span id="L379">379     exact ProbabilityTheory.Kernel.IsMarkovKernel.comap _</span>
+<span id="L380">380       (measurable_successorTable defaultState countRadius n)</span>
+<span id="L381">381   batchKernel_eq_iidEpisodeBatchMeasure n history := by</span>
+<span id="L382">382     rw [ProbabilityTheory.Kernel.comap_apply]</span>
+<span id="L383">383     rfl</span>
+<span id="L384">384 </span>
+<span id="L385">385 omit [Nonempty State] in</span>
+<span id="L386">386 /-- The source&#x27;s successor behavior is centered on the cumulative optimistic table. -/</span>
+<span id="L387">387 theorem exploratorySource_successorPolicy</span>
+<span id="L388">388     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L389">389     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L390">390     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L391">391     (defaultState : State) (countRadius : TransitionCountRadius)</span>
+<span id="L392">392     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L393">393     (n : Nat) (history : EpisodeBatchPrefix mdp episodes n) :</span>
+<span id="L394">394     (exploratorySource mdp initialState episodes initialTable defaultState</span>
+<span id="L395">395       countRadius explorationRate hexplorationRate).successorPolicy n history =</span>
+<span id="L396">396       (successorTable defaultState countRadius n history).exploratoryPolicy</span>
+<span id="L397">397         explorationRate hexplorationRate := by</span>
+<span id="L398">398   rfl</span>
+<span id="L399">399 </span>
+<span id="L400">400 end AdaptiveCumulativeEmpiricalOptimisticSource</span>
+<span id="L401">401 </span>
+<span id="L402">402 /--</span>
+<span id="L403">403 One global event contract for cumulative empirical plans.  The missing</span>
+<span id="L404">404 statistical producer must supply coordinate confidence for every cumulative</span>
+<span id="L405">405 prefix plan outside `badEvent`.</span>
+<span id="L406">406 -/</span>
+<span id="L407">407 structure AdaptiveCumulativeCoordinateConfidenceContract</span>
+<span id="L408">408     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L409">409     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L410">410     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L411">411     (defaultState : State) (countRadius : TransitionCountRadius)</span>
+<span id="L412">412     (rounds : Nat) (delta : Real) where</span>
+<span id="L413">413   badEvent : Set (EpisodeBatchTrajectory mdp episodes)</span>
+<span id="L414">414   measurable_badEvent : MeasurableSet badEvent</span>
+<span id="L415">415   measure_badEvent_le : source.trajectoryMeasure badEvent &lt;= ENNReal.ofReal delta</span>
+<span id="L416">416   coordinateConfidence_of_not_mem : forall trajectory, trajectory ∉ badEvent -&gt;</span>
+<span id="L417">417     forall round : Fin rounds,</span>
+<span id="L418">418       (adaptiveCumulativeEmpiricalOptimisticPlanAt</span>
+<span id="L419">419         trajectory defaultState countRadius round).CoordinateConfidence</span>
+<span id="L420">420 </span>
+<span id="L421">421 omit [Nonempty State] in</span>
+<span id="L422">422 /--</span>
+<span id="L423">423 Roundwise cumulative confidence and a selected-radius envelope imply global</span>
+<span id="L424">424 optimism and the explicit finite recommendation-regret sum.</span>
+<span id="L425">425 -/</span>
+<span id="L426">426 theorem adaptiveCumulativeCoordinateConfidence_optimism_and_recommendedExpectedRegret</span>
+<span id="L427">427     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L428">428     [IsProbabilityMeasure initialState] {episodes rounds : Nat}</span>
+<span id="L429">429     (trajectory : EpisodeBatchTrajectory mdp episodes)</span>
+<span id="L430">430     (defaultState : State) (countRadius : TransitionCountRadius)</span>
+<span id="L431">431     (radiusEnvelope : Fin rounds -&gt; Real)</span>
+<span id="L432">432     (confidence : forall round : Fin rounds,</span>
+<span id="L433">433       (adaptiveCumulativeEmpiricalOptimisticPlanAt</span>
+<span id="L434">434         trajectory defaultState countRadius round).CoordinateConfidence)</span>
+<span id="L435">435     (hradius : forall (round : Fin rounds) (remaining : Nat)</span>
+<span id="L436">436       (hremaining : remaining + 1 &lt;= mdp.horizon) (state : State),</span>
+<span id="L437">437       (adaptiveCumulativeEmpiricalOptimisticPlanAt</span>
+<span id="L438">438         trajectory defaultState countRadius round).selectedRadiusRemaining</span>
+<span id="L439">439           remaining hremaining state &lt;= radiusEnvelope round) :</span>
+<span id="L440">440     (forall round : Fin rounds, forall state,</span>
+<span id="L441">441       mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;=</span>
+<span id="L442">442         (adaptiveCumulativeEmpiricalOptimisticPlanAt</span>
+<span id="L443">443           trajectory defaultState countRadius round).upperValueRemaining</span>
+<span id="L444">444             mdp.horizon le_rfl state) /\</span>
+<span id="L445">445     adaptiveCumulativeEmpiricalOptimisticRecommendedExpectedRegret</span>
+<span id="L446">446         (initialState := initialState) trajectory defaultState countRadius rounds &lt;=</span>
+<span id="L447">447       ∑ round : Fin rounds,</span>
+<span id="L448">448         (mdp.horizon : Real) * (2 * radiusEnvelope round) := by</span>
+<span id="L449">449   constructor</span>
+<span id="L450">450   · intro round state</span>
+<span id="L451">451     exact</span>
+<span id="L452">452       ((confidence round).optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining</span>
+<span id="L453">453         initialState).1 state</span>
+<span id="L454">454   · unfold adaptiveCumulativeEmpiricalOptimisticRecommendedExpectedRegret</span>
+<span id="L455">455     apply Finset.sum_le_sum</span>
+<span id="L456">456     intro round _hround</span>
+<span id="L457">457     let plan := adaptiveCumulativeEmpiricalOptimisticPlanAt</span>
+<span id="L458">458       trajectory defaultState countRadius round</span>
+<span id="L459">459     calc</span>
+<span id="L460">460       plan.optimisticPolicy.expectedRegret initialState &lt;=</span>
+<span id="L461">461           plan.optimisticPolicy.occupancySumRemaining</span>
+<span id="L462">462             (fun remaining hremaining state =&gt;</span>
+<span id="L463">463               2 * plan.selectedRadiusRemaining remaining hremaining state)</span>
+<span id="L464">464             mdp.horizon le_rfl initialState :=</span>
+<span id="L465">465         ((confidence round).optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining</span>
+<span id="L466">466           initialState).2</span>
+<span id="L467">467       _ &lt;= plan.optimisticPolicy.occupancySumRemaining</span>
+<span id="L468">468             (fun _remaining _hremaining _state =&gt; 2 * radiusEnvelope round)</span>
+<span id="L469">469             mdp.horizon le_rfl initialState := by</span>
+<span id="L470">470         exact plan.optimisticPolicy.occupancySumRemaining_mono</span>
+<span id="L471">471           (fun remaining hremaining state =&gt;</span>
+<span id="L472">472             mul_le_mul_of_nonneg_left</span>
+<span id="L473">473               (hradius round remaining hremaining state) (by norm_num))</span>
+<span id="L474">474           mdp.horizon le_rfl initialState</span>
+<span id="L475">475       _ = (mdp.horizon : Real) * (2 * radiusEnvelope round) :=</span>
+<span id="L476">476         MarkovPolicy.occupancySumRemaining_const</span>
+<span id="L477">477           plan.optimisticPolicy (2 * radiusEnvelope round)</span>
+<span id="L478">478             mdp.horizon le_rfl initialState</span>
+<span id="L479">479 </span>
+<span id="L480">480 omit [Nonempty State] in</span>
+<span id="L481">481 /--</span>
+<span id="L482">482 Route endpoint: one measurable global cumulative-confidence event yields</span>
+<span id="L483">483 global optimism and an explicit shrinking-radius recommendation-regret bound.</span>
+<span id="L484">484 -/</span>
+<span id="L485">485 theorem AdaptiveCumulativeCoordinateConfidenceContract.trajectoryMeasure_optimism_and_explicitRecommendedExpectedRegret</span>
+<span id="L486">486     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L487">487     [IsProbabilityMeasure initialState] {episodes rounds : Nat}</span>
+<span id="L488">488     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L489">489     (defaultState : State) (countRadius : TransitionCountRadius)</span>
+<span id="L490">490     (delta : Real)</span>
+<span id="L491">491     (contract : AdaptiveCumulativeCoordinateConfidenceContract</span>
+<span id="L492">492       source defaultState countRadius rounds delta)</span>
+<span id="L493">493     (radiusEnvelope : Fin rounds -&gt; Real)</span>
+<span id="L494">494     (hradius : forall trajectory, trajectory ∉ contract.badEvent -&gt;</span>
+<span id="L495">495       forall (round : Fin rounds) (remaining : Nat)</span>
+<span id="L496">496         (hremaining : remaining + 1 &lt;= mdp.horizon) (state : State),</span>
+<span id="L497">497         (adaptiveCumulativeEmpiricalOptimisticPlanAt</span>
+<span id="L498">498           trajectory defaultState countRadius round).selectedRadiusRemaining</span>
+<span id="L499">499             remaining hremaining state &lt;= radiusEnvelope round) :</span>
+<span id="L500">500     MeasurableSet contract.badEvent /\</span>
+<span id="L501">501       source.trajectoryMeasure contract.badEvent &lt;= ENNReal.ofReal delta /\</span>
+<span id="L502">502       forall trajectory, trajectory ∉ contract.badEvent -&gt;</span>
+<span id="L503">503         (forall round : Fin rounds, forall state,</span>
+<span id="L504">504           mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;=</span>
+<span id="L505">505             (adaptiveCumulativeEmpiricalOptimisticPlanAt</span>
+<span id="L506">506               trajectory defaultState countRadius round).upperValueRemaining</span>
+<span id="L507">507                 mdp.horizon le_rfl state) /\</span>
+<span id="L508">508         adaptiveCumulativeEmpiricalOptimisticRecommendedExpectedRegret</span>
+<span id="L509">509             (initialState := initialState) trajectory defaultState countRadius rounds &lt;=</span>
+<span id="L510">510           ∑ round : Fin rounds,</span>
+<span id="L511">511             (mdp.horizon : Real) * (2 * radiusEnvelope round) := by</span>
+<span id="L512">512   exact ⟨contract.measurable_badEvent, contract.measure_badEvent_le,</span>
+<span id="L513">513     fun trajectory htrajectory =&gt;</span>
+<span id="L514">514       adaptiveCumulativeCoordinateConfidence_optimism_and_recommendedExpectedRegret</span>
+<span id="L515">515         trajectory defaultState countRadius radiusEnvelope</span>
+<span id="L516">516           (contract.coordinateConfidence_of_not_mem trajectory htrajectory)</span>
+<span id="L517">517           (hradius trajectory htrajectory)⟩</span>
+<span id="L518">518 </span>
+<span id="L519">519 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="Fixed-confidence best-arm identification · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Fixed-confidence best-arm identification · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>Fixed-confidence best-arm identification · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group active" data-nav-group="research" data-nav-group-active="true" open><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">BanditRLwiki</a><a href="../../frontier/index.html">Frontier leaves</a><a href="../../papers/index.html">Paper index</a><a href="../../progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero wiki-case-hero" id="case"><p class="eyebrow">BanditRLwiki case · fixed-confidence-best-arm-identification</p><h1>Fixed-confidence best-arm identification</h1><p class="lede">Track-and-Stop asymptotically matches the characteristic-time change-of-measure lower bound.</p><p><a href="../../settings/pure-exploration/index.html">← Pure exploration and best-arm identification</a></p></section>
+<section id="comparison"><h2>Audited comparison</h2>
+<details class="wiki-case-card" id="fixed-confidence-best-arm-identification" data-wiki-case
+  data-family="pure-exploration"
+  data-literature="asymptotic-matched"
+  data-lean="planned"
+  data-frontier="true"
+  data-search="fixed-confidence-best-arm-identification fixed-confidence best-arm identification track-and-stop asymptotically matches the characteristic-time change-of-measure lower bound. pure exploration and best-arm identification best arm identification track-and-stop delta-pac stopping time characteristic time the source&#x27;s tracking parameter alpha is in [1,e/2]; appropriate tuning approaches the characteristic-time constant. no delta-pac stopping-time characteristic-time terminal or track-and-stop algorithm is claimed locally." open>
+  <summary>
+    <span class="wiki-case-id">fixed-confidence-best-arm-identification</span>
+    <span class="wiki-case-summary-copy"><strong>Fixed-confidence best-arm identification</strong><span>Track-and-Stop asymptotically matches the characteristic-time change-of-measure lower bound.</span></span>
+    <span class="wiki-case-statuses"><span class="wiki-badge literature asymptotic-matched" data-wiki-literature-status="asymptotic-matched">Asymptotically matched</span><span class="wiki-badge lean planned" data-wiki-lean-status="planned">Planned</span></span>
+  </summary>
+  <div class="wiki-case-body">
+    <div class="wiki-case-actions"><a href="index.html">Open stable case page →</a><span><span class="wiki-badge source exact-source-theorem" data-wiki-source-status="exact-source-theorem">Exact source theorem</span></span></div>
+    <div class="wiki-tags"><span>best arm identification</span><span>Track-and-Stop</span><span>delta-PAC</span><span>stopping time</span><span>characteristic time</span></div>
+    <dl class="wiki-signature"><div><dt>Reward model</dt><dd>One-parameter exponential family with a unique best arm</dd></div><div><dt>Guarantee</dt><dd>delta-PAC best-arm recommendation</dd></div><div><dt>Cost</dt><dd>Expected stopping time as delta tends to zero</dd></div><div><dt>Target constant</dt><dd>Characteristic time T-star of the max-min information game</dd></div></dl>
+    <section class="wiki-comparison">
+      <div><p class="panel-kicker">Comparison judgment</p><h3>Asymptotically matched</h3><p>The literature has a matched asymptotic fixed-confidence answer. BanditRLlib has no characteristic-time or Track-and-Stop formalization yet.</p><p><strong>Known gap.</strong> The source&#x27;s tracking parameter alpha is in [1,e/2]; appropriate tuning approaches the characteristic-time constant.</p></div>
+      <div><p class="panel-kicker">Local Lean boundary</p><h3>Planned</h3><p>No delta-PAC stopping-time characteristic-time terminal or Track-and-Stop algorithm is claimed locally.</p></div>
+    </section>
+    <div class="wiki-bound-grid">
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>Track-and-Stop asymptotic upper bound</h3>
+  <p class="wiki-paper-title">Optimal Best Arm Identification with Fixed Confidence</p>
+  <p class="wiki-source-meta">Aurélien Garivier and Emilie Kaufmann · 2016 · Theorem 14</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Track-and-Stop&#x27;s expected sample complexity approaches alpha times the characteristic time.</span><span class="math-tex" aria-hidden="true">\[\limsup_{\delta\to0}\frac{\mathbb E_\mu\tau_\delta}{\log(1/\delta)}\le \alpha T^*(\mu).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Unique best arm, source exponential-family assumptions, and alpha in the theorem&#x27;s allowed range.</p>
+  <a href="https://proceedings.mlr.press/v49/garivier16a.html">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Lower bound</p>
+  <h3>Characteristic-time lower bound</h3>
+  <p class="wiki-paper-title">Optimal Best Arm Identification with Fixed Confidence</p>
+  <p class="wiki-source-meta">Aurélien Garivier and Emilie Kaufmann · 2016 · Theorem 1</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Lower bound guarantee"><strong>Lower bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Every delta-PAC strategy must spend at least the characteristic-time information cost.</span><span class="math-tex" aria-hidden="true">\[\mathbb E_\mu\tau_\delta\ge T^*(\mu)\,\mathrm{kl}(\delta,1-\delta),\quad T^*(\mu)^{-1}=\sup_{w\in\Sigma_A}\inf_{\lambda\in\mathrm{Alt}(\mu)}\sum_a w_a d(\mu_a,\lambda_a).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>The source&#x27;s alternative set, exponential-family divergence, and stopping/recommendation measurability.</p>
+  <a href="https://proceedings.mlr.press/v49/garivier16a.html">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+    </div>
+    <section class="wiki-lean-evidence">
+      <div><p class="panel-kicker">Local Lean evidence</p><h3>Exact declarations</h3><ul><li>No local declaration is claimed for this target.</li></ul></div>
+      <div><p class="panel-kicker">Not yet proved here</p><h3>Missing steps</h3><ul><li>Define delta-PAC recommendation and the adapted stopping rule.</li><li>Formalize the stopped change-of-measure inequality.</li><li>Build the simplex max-min characteristic time and the Track-and-Stop tracking/concentration proof.</li></ul></div>
+    </section>
+
+<section class="wiki-frontier-note">
+  <p class="panel-kicker">formalization frontier</p>
+  <h3>How should the characteristic-time max-min game and an unbounded adaptive stopping rule be represented in Lean?</h3>
+  <p>General stopping-time infrastructure exists elsewhere in BanditRLlib, but no pure-exploration semantic bridge or source theorem is mapped.</p>
+  <ul><li>Recommendation event</li><li>stopping measurability</li><li>information game</li><li>tracking rule</li><li>Named formalization leaf: BAI-DELTA-PAC</li><li>Named formalization leaf: BAI-STOPPED-CHANGE-OF-MEASURE</li><li>Named formalization leaf: BAI-CHARACTERISTIC-TIME</li><li>Named formalization leaf: TRACK-AND-STOP</li></ul>
+</section>
+  </div>
+</details></section>
+<section id="contribute"><h2>Improve this case</h2><p>Corrections should preserve the comparison signature and cite a primary theorem, theorem number, source edition, and exact gap being closed. Lean contributions should target one named missing leaf without weakening the mathematical contract.</p><a class="button" href="../../../source-access/index.html">Propose a sourced update</a></section></main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Case</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#case">Case</a><a data-toc-link href="#comparison">Comparison</a><a data-toc-link href="#contribute">Contribute</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

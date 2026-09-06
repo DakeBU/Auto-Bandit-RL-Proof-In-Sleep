@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRecurrence.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRecurrence.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRecurrence.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRecurrence.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Algorithms.StochasticGradientBanditConditionalExponentialAudit</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Two-arm stochastic-gradient-bandit one-step recurrences</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module instantiates the generated conditional Equation (8) at the two</span>
+<span id="L7">7 action-dependent coefficients used in the proof of Theorem 1 of</span>
+<span id="L8">8 Baudry--Johnson--Vary--Pike-Burke--Rebeschini (NeurIPS 2025).  It proves both</span>
+<span id="L9">9 one-step exponential recurrences over the actual generated history-step</span>
+<span id="L10">10 kernel, under the source initialization `theta = 0`.</span>
+<span id="L11">11 </span>
+<span id="L12">12 Time fence: a value</span>
+<span id="L13">13 `historyParameter (fun _ : Fin 2 =&gt; 0) eta n history` is the source parameter</span>
+<span id="L14">14 `theta_{.,n+2}` after the inclusive history through Lean time `n`.  The</span>
+<span id="L15">15 successor expressions below add the update generated by the next pair, and</span>
+<span id="L16">16 therefore represent `theta_{.,n+3}`.  They do not consume that pair twice.</span>
+<span id="L17">17 </span>
+<span id="L18">18 Probability / Equation-(8) ledger:</span>
+<span id="L19">19 </span>
+<span id="L20">20 * the one-step random object is the `(selected action, reward)` pair drawn</span>
+<span id="L21">21   from `Thompson.historyStepKernel` at the fixed generated history;</span>
+<span id="L22">22 * no independence premise is used: the reward law is already conditioned on</span>
+<span id="L23">23   both the history and selected action;</span>
+<span id="L24">24 * `hmean` fixes the two conditional reward means, and `hgap` identifies their</span>
+<span id="L25">25   difference with `Delta`;</span>
+<span id="L26">26 * `hreward` gives the exact source support contract `|reward| &lt;= 1` almost</span>
+<span id="L27">27   everywhere on each action fiber;</span>
+<span id="L28">28 * measurability and integrability of the exponential are discharged inside</span>
+<span id="L29">29   `integral_historyStepKernel_exp_actionReward_le_sourceEqEight_of_mean`;</span>
+<span id="L30">30 * `sourceC_mono` replaces the branch constants</span>
+<span id="L31">31   `sourceC (eta * p)` and `sourceC (eta * (1-p))` by the common `sourceC eta`.</span>
+<span id="L32">32 </span>
+<span id="L33">33 The final declarations are conditional one-step recurrences.  They do not</span>
+<span id="L34">34 yet provide the initial/base expectation, tower-property iteration, failure</span>
+<span id="L35">35 mass summation, or the finite-horizon regret theorem.</span>
+<span id="L36">36 -/</span>
+<span id="L37">37 </span>
+<span id="L38">38 namespace BanditRLProof</span>
+<span id="L39">39 namespace StochasticGradientBandit</span>
+<span id="L40">40 </span>
+<span id="L41">41 open MeasureTheory ProbabilityTheory</span>
+<span id="L42">42 open scoped BigOperators ProbabilityTheory</span>
+<span id="L43">43 </span>
+<span id="L44">44 noncomputable section</span>
+<span id="L45">45 </span>
+<span id="L46">46 /-- The action-dependent coefficient in the forward exponential potential.</span>
+<span id="L47">47 For source arm `1` (Lean arm `0`) it is `2 eta (1-p)`; for source arm `2`</span>
+<span id="L48">48 (Lean arm `1`) it is `-2 eta p`. -/</span>
+<span id="L49">49 def twoArmForwardQ (eta : Real) (prob : Fin 2 -&gt; Real)</span>
+<span id="L50">50     (selected : Fin 2) : Real :=</span>
+<span id="L51">51   if selected = 0 then 2 * eta * (1 - prob 0) else -(2 * eta * prob 0)</span>
+<span id="L52">52 </span>
+<span id="L53">53 /-- The coefficient for the inverse-odds exponential potential. -/</span>
+<span id="L54">54 def twoArmInverseQ (eta : Real) (prob : Fin 2 -&gt; Real)</span>
+<span id="L55">55     (selected : Fin 2) : Real :=</span>
+<span id="L56">56   -twoArmForwardQ eta prob selected</span>
+<span id="L57">57 </span>
+<span id="L58">58 /-- `q_+ reward` is exactly twice the learning-rate-scaled best-coordinate</span>
+<span id="L59">59 source update. -/</span>
+<span id="L60">60 theorem twoArmForwardQ_mul_reward_eq_sourceIncrement</span>
+<span id="L61">61     (eta reward : Real) (prob : Fin 2 -&gt; Real) (selected : Fin 2) :</span>
+<span id="L62">62     twoArmForwardQ eta prob selected * reward =</span>
+<span id="L63">63       2 * eta * sourceIncrement prob reward selected 0 := by</span>
+<span id="L64">64   fin_cases selected &lt;;&gt; simp [twoArmForwardQ, sourceIncrement] &lt;;&gt; ring</span>
+<span id="L65">65 </span>
+<span id="L66">66 /-- `q_- reward` is the negative of twice the learning-rate-scaled</span>
+<span id="L67">67 best-coordinate source update. -/</span>
+<span id="L68">68 theorem twoArmInverseQ_mul_reward_eq_sourceIncrement</span>
+<span id="L69">69     (eta reward : Real) (prob : Fin 2 -&gt; Real) (selected : Fin 2) :</span>
+<span id="L70">70     twoArmInverseQ eta prob selected * reward =</span>
+<span id="L71">71       -2 * eta * sourceIncrement prob reward selected 0 := by</span>
+<span id="L72">72   rw [twoArmInverseQ, neg_mul,</span>
+<span id="L73">73     twoArmForwardQ_mul_reward_eq_sourceIncrement]</span>
+<span id="L74">74   ring</span>
+<span id="L75">75 </span>
+<span id="L76">76 /-- The two-branch Equation-(8) remainder for the forward potential, after</span>
+<span id="L77">77 replacing both branch constants by the common source constant `C_eta`. -/</span>
+<span id="L78">78 theorem twoArmForwardEqEightRemainder_le</span>
+<span id="L79">79     (eta p meanZero meanOne Delta : Real)</span>
+<span id="L80">80     (heta : 0 &lt;= eta) (hp_nonneg : 0 &lt;= p) (hp_le_one : p &lt;= 1)</span>
+<span id="L81">81     (hgap : meanZero - meanOne = Delta) :</span>
+<span id="L82">82     p *</span>
+<span id="L83">83           ((2 * eta * (1 - p)) * meanZero +</span>
+<span id="L84">84             (2 * eta * (1 - p)) ^ 2 / 2 *</span>
+<span id="L85">85               sourceC (|2 * eta * (1 - p)| / 2)) +</span>
+<span id="L86">86         (1 - p) *</span>
+<span id="L87">87           ((-(2 * eta * p)) * meanOne +</span>
+<span id="L88">88             (-(2 * eta * p)) ^ 2 / 2 *</span>
+<span id="L89">89               sourceC (|-(2 * eta * p)| / 2)) &lt;=</span>
+<span id="L90">90       2 * p * (1 - p) * (eta * Delta + eta ^ 2 * sourceC eta) := by</span>
+<span id="L91">91   have hfail_nonneg : 0 &lt;= 1 - p := sub_nonneg.mpr hp_le_one</span>
+<span id="L92">92   have hfail_le_one : 1 - p &lt;= 1 := by linarith</span>
+<span id="L93">93   have hqZero_nonneg : 0 &lt;= 2 * eta * (1 - p) := by positivity</span>
+<span id="L94">94   have hqOneAbs_nonneg : 0 &lt;= 2 * eta * p := by positivity</span>
+<span id="L95">95   have habsZero : |2 * eta * (1 - p)| / 2 = eta * (1 - p) := by</span>
+<span id="L96">96     rw [abs_of_nonneg hqZero_nonneg]</span>
+<span id="L97">97     ring</span>
+<span id="L98">98   have habsOne : |-(2 * eta * p)| / 2 = eta * p := by</span>
+<span id="L99">99     rw [abs_neg, abs_of_nonneg hqOneAbs_nonneg]</span>
+<span id="L100">100     ring</span>
+<span id="L101">101   have hCZero : sourceC (eta * (1 - p)) &lt;= sourceC eta :=</span>
+<span id="L102">102     sourceC_mono (mul_nonneg heta hfail_nonneg)</span>
+<span id="L103">103       (mul_le_of_le_one_right heta hfail_le_one)</span>
+<span id="L104">104   have hCOne : sourceC (eta * p) &lt;= sourceC eta :=</span>
+<span id="L105">105     sourceC_mono (mul_nonneg heta hp_nonneg)</span>
+<span id="L106">106       (mul_le_of_le_one_right heta hp_le_one)</span>
+<span id="L107">107   have htailZero :</span>
+<span id="L108">108       (2 * eta * (1 - p)) ^ 2 / 2 *</span>
+<span id="L109">109           sourceC (|2 * eta * (1 - p)| / 2) &lt;=</span>
+<span id="L110">110         (2 * eta * (1 - p)) ^ 2 / 2 * sourceC eta := by</span>
+<span id="L111">111     rw [habsZero]</span>
+<span id="L112">112     exact mul_le_mul_of_nonneg_left hCZero (by positivity)</span>
+<span id="L113">113   have htailOne :</span>
+<span id="L114">114       (-(2 * eta * p)) ^ 2 / 2 *</span>
+<span id="L115">115           sourceC (|-(2 * eta * p)| / 2) &lt;=</span>
+<span id="L116">116         (-(2 * eta * p)) ^ 2 / 2 * sourceC eta := by</span>
+<span id="L117">117     rw [habsOne]</span>
+<span id="L118">118     exact mul_le_mul_of_nonneg_left hCOne (by positivity)</span>
+<span id="L119">119   have hbranchZero :</span>
+<span id="L120">120       p *</span>
+<span id="L121">121           ((2 * eta * (1 - p)) * meanZero +</span>
+<span id="L122">122             (2 * eta * (1 - p)) ^ 2 / 2 *</span>
+<span id="L123">123               sourceC (|2 * eta * (1 - p)| / 2)) &lt;=</span>
+<span id="L124">124         p *</span>
+<span id="L125">125           ((2 * eta * (1 - p)) * meanZero +</span>
+<span id="L126">126             (2 * eta * (1 - p)) ^ 2 / 2 * sourceC eta) :=</span>
+<span id="L127">127     mul_le_mul_of_nonneg_left</span>
+<span id="L128">128       (add_le_add_right htailZero _) hp_nonneg</span>
+<span id="L129">129   have hbranchOne :</span>
+<span id="L130">130       (1 - p) *</span>
+<span id="L131">131           ((-(2 * eta * p)) * meanOne +</span>
+<span id="L132">132             (-(2 * eta * p)) ^ 2 / 2 *</span>
+<span id="L133">133               sourceC (|-(2 * eta * p)| / 2)) &lt;=</span>
+<span id="L134">134         (1 - p) *</span>
+<span id="L135">135           ((-(2 * eta * p)) * meanOne +</span>
+<span id="L136">136             (-(2 * eta * p)) ^ 2 / 2 * sourceC eta) :=</span>
+<span id="L137">137     mul_le_mul_of_nonneg_left</span>
+<span id="L138">138       (add_le_add_right htailOne _) hfail_nonneg</span>
+<span id="L139">139   calc</span>
+<span id="L140">140     p *</span>
+<span id="L141">141           ((2 * eta * (1 - p)) * meanZero +</span>
+<span id="L142">142             (2 * eta * (1 - p)) ^ 2 / 2 *</span>
+<span id="L143">143               sourceC (|2 * eta * (1 - p)| / 2)) +</span>
+<span id="L144">144         (1 - p) *</span>
+<span id="L145">145           ((-(2 * eta * p)) * meanOne +</span>
+<span id="L146">146             (-(2 * eta * p)) ^ 2 / 2 *</span>
+<span id="L147">147               sourceC (|-(2 * eta * p)| / 2)) &lt;=</span>
+<span id="L148">148       p *</span>
+<span id="L149">149           ((2 * eta * (1 - p)) * meanZero +</span>
+<span id="L150">150             (2 * eta * (1 - p)) ^ 2 / 2 * sourceC eta) +</span>
+<span id="L151">151         (1 - p) *</span>
+<span id="L152">152           ((-(2 * eta * p)) * meanOne +</span>
+<span id="L153">153             (-(2 * eta * p)) ^ 2 / 2 * sourceC eta) :=</span>
+<span id="L154">154       add_le_add hbranchZero hbranchOne</span>
+<span id="L155">155     _ = 2 * p * (1 - p) *</span>
+<span id="L156">156         (eta * Delta + eta ^ 2 * sourceC eta) := by</span>
+<span id="L157">157       have hmeanZero : meanZero = Delta + meanOne := by linarith</span>
+<span id="L158">158       rw [hmeanZero]</span>
+<span id="L159">159       ring</span>
+<span id="L160">160 </span>
+<span id="L161">161 /-- The analogous Equation-(8) remainder for the inverse potential. -/</span>
+<span id="L162">162 theorem twoArmInverseEqEightRemainder_le</span>
+<span id="L163">163     (eta p meanZero meanOne Delta : Real)</span>
+<span id="L164">164     (heta : 0 &lt;= eta) (hp_nonneg : 0 &lt;= p) (hp_le_one : p &lt;= 1)</span>
+<span id="L165">165     (hgap : meanZero - meanOne = Delta) :</span>
+<span id="L166">166     p *</span>
+<span id="L167">167           ((-(2 * eta * (1 - p))) * meanZero +</span>
+<span id="L168">168             (-(2 * eta * (1 - p))) ^ 2 / 2 *</span>
+<span id="L169">169               sourceC (|-(2 * eta * (1 - p))| / 2)) +</span>
+<span id="L170">170         (1 - p) *</span>
+<span id="L171">171           ((2 * eta * p) * meanOne +</span>
+<span id="L172">172             (2 * eta * p) ^ 2 / 2 *</span>
+<span id="L173">173               sourceC (|2 * eta * p| / 2)) &lt;=</span>
+<span id="L174">174       -2 * eta * p * (1 - p) * (Delta - eta * sourceC eta) := by</span>
+<span id="L175">175   have hfail_nonneg : 0 &lt;= 1 - p := sub_nonneg.mpr hp_le_one</span>
+<span id="L176">176   have hfail_le_one : 1 - p &lt;= 1 := by linarith</span>
+<span id="L177">177   have hqZeroAbs_nonneg : 0 &lt;= 2 * eta * (1 - p) := by positivity</span>
+<span id="L178">178   have hqOne_nonneg : 0 &lt;= 2 * eta * p := by positivity</span>
+<span id="L179">179   have habsZero : |-(2 * eta * (1 - p))| / 2 = eta * (1 - p) := by</span>
+<span id="L180">180     rw [abs_neg, abs_of_nonneg hqZeroAbs_nonneg]</span>
+<span id="L181">181     ring</span>
+<span id="L182">182   have habsOne : |2 * eta * p| / 2 = eta * p := by</span>
+<span id="L183">183     rw [abs_of_nonneg hqOne_nonneg]</span>
+<span id="L184">184     ring</span>
+<span id="L185">185   have hCZero : sourceC (eta * (1 - p)) &lt;= sourceC eta :=</span>
+<span id="L186">186     sourceC_mono (mul_nonneg heta hfail_nonneg)</span>
+<span id="L187">187       (mul_le_of_le_one_right heta hfail_le_one)</span>
+<span id="L188">188   have hCOne : sourceC (eta * p) &lt;= sourceC eta :=</span>
+<span id="L189">189     sourceC_mono (mul_nonneg heta hp_nonneg)</span>
+<span id="L190">190       (mul_le_of_le_one_right heta hp_le_one)</span>
+<span id="L191">191   have htailZero :</span>
+<span id="L192">192       (-(2 * eta * (1 - p))) ^ 2 / 2 *</span>
+<span id="L193">193           sourceC (|-(2 * eta * (1 - p))| / 2) &lt;=</span>
+<span id="L194">194         (-(2 * eta * (1 - p))) ^ 2 / 2 * sourceC eta := by</span>
+<span id="L195">195     rw [habsZero]</span>
+<span id="L196">196     exact mul_le_mul_of_nonneg_left hCZero (by positivity)</span>
+<span id="L197">197   have htailOne :</span>
+<span id="L198">198       (2 * eta * p) ^ 2 / 2 * sourceC (|2 * eta * p| / 2) &lt;=</span>
+<span id="L199">199         (2 * eta * p) ^ 2 / 2 * sourceC eta := by</span>
+<span id="L200">200     rw [habsOne]</span>
+<span id="L201">201     exact mul_le_mul_of_nonneg_left hCOne (by positivity)</span>
+<span id="L202">202   have hbranchZero :</span>
+<span id="L203">203       p *</span>
+<span id="L204">204           ((-(2 * eta * (1 - p))) * meanZero +</span>
+<span id="L205">205             (-(2 * eta * (1 - p))) ^ 2 / 2 *</span>
+<span id="L206">206               sourceC (|-(2 * eta * (1 - p))| / 2)) &lt;=</span>
+<span id="L207">207         p *</span>
+<span id="L208">208           ((-(2 * eta * (1 - p))) * meanZero +</span>
+<span id="L209">209             (-(2 * eta * (1 - p))) ^ 2 / 2 * sourceC eta) :=</span>
+<span id="L210">210     mul_le_mul_of_nonneg_left</span>
+<span id="L211">211       (add_le_add_right htailZero _) hp_nonneg</span>
+<span id="L212">212   have hbranchOne :</span>
+<span id="L213">213       (1 - p) *</span>
+<span id="L214">214           ((2 * eta * p) * meanOne +</span>
+<span id="L215">215             (2 * eta * p) ^ 2 / 2 * sourceC (|2 * eta * p| / 2)) &lt;=</span>
+<span id="L216">216         (1 - p) *</span>
+<span id="L217">217           ((2 * eta * p) * meanOne +</span>
+<span id="L218">218             (2 * eta * p) ^ 2 / 2 * sourceC eta) :=</span>
+<span id="L219">219     mul_le_mul_of_nonneg_left</span>
+<span id="L220">220       (add_le_add_right htailOne _) hfail_nonneg</span>
+<span id="L221">221   calc</span>
+<span id="L222">222     p *</span>
+<span id="L223">223           ((-(2 * eta * (1 - p))) * meanZero +</span>
+<span id="L224">224             (-(2 * eta * (1 - p))) ^ 2 / 2 *</span>
+<span id="L225">225               sourceC (|-(2 * eta * (1 - p))| / 2)) +</span>
+<span id="L226">226         (1 - p) *</span>
+<span id="L227">227           ((2 * eta * p) * meanOne +</span>
+<span id="L228">228             (2 * eta * p) ^ 2 / 2 * sourceC (|2 * eta * p| / 2)) &lt;=</span>
+<span id="L229">229       p *</span>
+<span id="L230">230           ((-(2 * eta * (1 - p))) * meanZero +</span>
+<span id="L231">231             (-(2 * eta * (1 - p))) ^ 2 / 2 * sourceC eta) +</span>
+<span id="L232">232         (1 - p) *</span>
+<span id="L233">233           ((2 * eta * p) * meanOne +</span>
+<span id="L234">234             (2 * eta * p) ^ 2 / 2 * sourceC eta) :=</span>
+<span id="L235">235       add_le_add hbranchZero hbranchOne</span>
+<span id="L236">236     _ = -2 * eta * p * (1 - p) *</span>
+<span id="L237">237         (Delta - eta * sourceC eta) := by</span>
+<span id="L238">238       have hmeanZero : meanZero = Delta + meanOne := by linarith</span>
+<span id="L239">239       rw [hmeanZero]</span>
+<span id="L240">240       ring</span>
+<span id="L241">241 </span>
+<span id="L242">242 /-- Multiplicative forward one-step recurrence at a fixed generated history.</span>
+<span id="L243">243 The current parameter is source `theta_{.,n+2}` and the integrand is the</span>
+<span id="L244">244 source successor `theta_{1,n+3}`. -/</span>
+<span id="L245">245 theorem integral_twoArmHistoryStepKernel_exp_forwardSuccessor_le</span>
+<span id="L246">246     (eta Delta : Real) (heta : 0 &lt;= eta)</span>
+<span id="L247">247     (environment : Thompson.HistoryEnvironment (Fin 2) Real)</span>
+<span id="L248">248     (n : Nat) (history : History.FinitePairHistory (Fin 2) Real n)</span>
+<span id="L249">249     (mean : Fin 2 -&gt; Real)</span>
+<span id="L250">250     (hreward : forall selected,</span>
+<span id="L251">251       ∀ᵐ reward ∂environment.feedback n (history, selected),</span>
+<span id="L252">252         |reward| &lt;= 1)</span>
+<span id="L253">253     (hmean : forall selected,</span>
+<span id="L254">254       integral (environment.feedback n (history, selected)) id =</span>
+<span id="L255">255         mean selected)</span>
+<span id="L256">256     (hgap : mean 0 - mean 1 = Delta) :</span>
+<span id="L257">257     integral</span>
+<span id="L258">258         (Thompson.historyStepKernel</span>
+<span id="L259">259           (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta) environment n history)</span>
+<span id="L260">260         (fun pair : Fin 2 × Real =&gt;</span>
+<span id="L261">261           Real.exp</span>
+<span id="L262">262             (2 *</span>
+<span id="L263">263               (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history 0 +</span>
+<span id="L264">264                 eta * sourceIncrement</span>
+<span id="L265">265                   (softmaxProbability</span>
+<span id="L266">266                     (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history))</span>
+<span id="L267">267                   pair.2 pair.1 0))) &lt;=</span>
+<span id="L268">268       Real.exp</span>
+<span id="L269">269           (2 * historyParameter (fun _ : Fin 2 =&gt; 0) eta n history 0) *</span>
+<span id="L270">270         (1 + 2 *</span>
+<span id="L271">271           softmaxProbability</span>
+<span id="L272">272               (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history) 0 *</span>
+<span id="L273">273           (1 - softmaxProbability</span>
+<span id="L274">274               (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history) 0) *</span>
+<span id="L275">275           (eta * Delta + eta ^ 2 * sourceC eta)) := by</span>
+<span id="L276">276   let theta := historyParameter (fun _ : Fin 2 =&gt; 0) eta n history</span>
+<span id="L277">277   let prob := softmaxProbability theta</span>
+<span id="L278">278   let q := twoArmForwardQ eta prob</span>
+<span id="L279">279   have hp_nonneg : 0 &lt;= prob 0 := softmaxProbability_nonneg theta 0</span>
+<span id="L280">280   have hp_le_one : prob 0 &lt;= 1 := softmaxProbability_le_one theta 0</span>
+<span id="L281">281   have hEqEight :=</span>
+<span id="L282">282     integral_historyStepKernel_exp_actionReward_le_sourceEqEight_of_mean</span>
+<span id="L283">283       (fun _ : Fin 2 =&gt; 0) eta environment n history q mean hreward hmean</span>
+<span id="L284">284   have hrem :</span>
+<span id="L285">285       (∑ selected, prob selected *</span>
+<span id="L286">286         (q selected * mean selected +</span>
+<span id="L287">287           q selected ^ 2 / 2 * sourceC (|q selected| / 2))) &lt;=</span>
+<span id="L288">288         2 * prob 0 * (1 - prob 0) *</span>
+<span id="L289">289           (eta * Delta + eta ^ 2 * sourceC eta) := by</span>
+<span id="L290">290     have hprobOne : prob 1 = 1 - prob 0 := by</span>
+<span id="L291">291       simpa [prob] using softmaxProbability_one_eq_one_sub_zero theta</span>
+<span id="L292">292     simp only [Fin.sum_univ_two]</span>
+<span id="L293">293     rw [hprobOne]</span>
+<span id="L294">294     simpa [q, twoArmForwardQ] using</span>
+<span id="L295">295       twoArmForwardEqEightRemainder_le eta (prob 0)</span>
+<span id="L296">296         (mean 0) (mean 1) Delta heta hp_nonneg hp_le_one hgap</span>
+<span id="L297">297   have hbase :</span>
+<span id="L298">298       integral</span>
+<span id="L299">299           (Thompson.historyStepKernel</span>
+<span id="L300">300             (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta)</span>
+<span id="L301">301               environment n history)</span>
+<span id="L302">302           (fun pair : Fin 2 × Real =&gt; Real.exp (q pair.1 * pair.2)) &lt;=</span>
+<span id="L303">303         1 + 2 * prob 0 * (1 - prob 0) *</span>
+<span id="L304">304           (eta * Delta + eta ^ 2 * sourceC eta) := by</span>
+<span id="L305">305     have hEqEight&#x27; :</span>
+<span id="L306">306         integral</span>
+<span id="L307">307             (Thompson.historyStepKernel</span>
+<span id="L308">308               (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta)</span>
+<span id="L309">309                 environment n history)</span>
+<span id="L310">310             (fun pair : Fin 2 × Real =&gt; Real.exp (q pair.1 * pair.2)) &lt;=</span>
+<span id="L311">311           1 + ∑ selected, prob selected *</span>
+<span id="L312">312             (q selected * mean selected +</span>
+<span id="L313">313               q selected ^ 2 / 2 * sourceC (|q selected| / 2)) := by</span>
+<span id="L314">314       simpa [theta, prob] using hEqEight</span>
+<span id="L315">315     exact hEqEight&#x27;.trans (add_le_add_right hrem 1)</span>
+<span id="L316">316   have hexp :</span>
+<span id="L317">317       (fun pair : Fin 2 × Real =&gt;</span>
+<span id="L318">318           Real.exp</span>
+<span id="L319">319             (2 *</span>
+<span id="L320">320               (theta 0 + eta * sourceIncrement prob pair.2 pair.1 0))) =</span>
+<span id="L321">321         (fun pair : Fin 2 × Real =&gt;</span>
+<span id="L322">322           Real.exp (2 * theta 0) * Real.exp (q pair.1 * pair.2)) := by</span>
+<span id="L323">323     funext pair</span>
+<span id="L324">324     rw [← Real.exp_add]</span>
+<span id="L325">325     apply congrArg Real.exp</span>
+<span id="L326">326     rw [twoArmForwardQ_mul_reward_eq_sourceIncrement]</span>
+<span id="L327">327     ring</span>
+<span id="L328">328   change integral</span>
+<span id="L329">329       (Thompson.historyStepKernel</span>
+<span id="L330">330         (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta) environment n history)</span>
+<span id="L331">331       (fun pair : Fin 2 × Real =&gt;</span>
+<span id="L332">332         Real.exp</span>
+<span id="L333">333           (2 * (theta 0 + eta * sourceIncrement prob pair.2 pair.1 0))) &lt;= _</span>
+<span id="L334">334   rw [hexp, integral_const_mul]</span>
+<span id="L335">335   exact mul_le_mul_of_nonneg_left hbase (Real.exp_nonneg _)</span>
+<span id="L336">336 </span>
+<span id="L337">337 /-- Forward recurrence in the additive source form</span>
+<span id="L338">338 `E_t exp(2 theta_{1,t+1}) &lt;= exp(2 theta_{1,t})</span>
+<span id="L339">339   + 2 p_t^2 (eta Delta + eta^2 C_eta)`. -/</span>
+<span id="L340">340 theorem integral_twoArmHistoryStepKernel_exp_forwardSuccessor_le_add_success_sq</span>
+<span id="L341">341     (eta Delta : Real) (heta : 0 &lt;= eta)</span>
+<span id="L342">342     (environment : Thompson.HistoryEnvironment (Fin 2) Real)</span>
+<span id="L343">343     (n : Nat) (history : History.FinitePairHistory (Fin 2) Real n)</span>
+<span id="L344">344     (mean : Fin 2 -&gt; Real)</span>
+<span id="L345">345     (hreward : forall selected,</span>
+<span id="L346">346       ∀ᵐ reward ∂environment.feedback n (history, selected),</span>
+<span id="L347">347         |reward| &lt;= 1)</span>
+<span id="L348">348     (hmean : forall selected,</span>
+<span id="L349">349       integral (environment.feedback n (history, selected)) id =</span>
+<span id="L350">350         mean selected)</span>
+<span id="L351">351     (hgap : mean 0 - mean 1 = Delta) :</span>
+<span id="L352">352     integral</span>
+<span id="L353">353         (Thompson.historyStepKernel</span>
+<span id="L354">354           (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta) environment n history)</span>
+<span id="L355">355         (fun pair : Fin 2 × Real =&gt;</span>
+<span id="L356">356           Real.exp</span>
+<span id="L357">357             (2 *</span>
+<span id="L358">358               (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history 0 +</span>
+<span id="L359">359                 eta * sourceIncrement</span>
+<span id="L360">360                   (softmaxProbability</span>
+<span id="L361">361                     (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history))</span>
+<span id="L362">362                   pair.2 pair.1 0))) &lt;=</span>
+<span id="L363">363       Real.exp</span>
+<span id="L364">364           (2 * historyParameter (fun _ : Fin 2 =&gt; 0) eta n history 0) +</span>
+<span id="L365">365         2 *</span>
+<span id="L366">366           softmaxProbability</span>
+<span id="L367">367               (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history) 0 ^ 2 *</span>
+<span id="L368">368           (eta * Delta + eta ^ 2 * sourceC eta) := by</span>
+<span id="L369">369   let theta := historyParameter (fun _ : Fin 2 =&gt; 0) eta n history</span>
+<span id="L370">370   let p := softmaxProbability theta 0</span>
+<span id="L371">371   have hmul :=</span>
+<span id="L372">372     integral_twoArmHistoryStepKernel_exp_forwardSuccessor_le</span>
+<span id="L373">373       eta Delta heta environment n history mean hreward hmean hgap</span>
+<span id="L374">374   have hodds : Real.exp (2 * theta 0) * (1 - p) = p := by</span>
+<span id="L375">375     simpa [theta, p] using historyParameter_exp_two_mul_zero_eq_odds</span>
+<span id="L376">376       eta n history</span>
+<span id="L377">377   change _ &lt;= Real.exp (2 * theta 0) +</span>
+<span id="L378">378     2 * p ^ 2 * (eta * Delta + eta ^ 2 * sourceC eta)</span>
+<span id="L379">379   calc</span>
+<span id="L380">380     _ &lt;= Real.exp (2 * theta 0) *</span>
+<span id="L381">381         (1 + 2 * p * (1 - p) *</span>
+<span id="L382">382           (eta * Delta + eta ^ 2 * sourceC eta)) := by</span>
+<span id="L383">383       simpa [theta, p] using hmul</span>
+<span id="L384">384     _ = Real.exp (2 * theta 0) +</span>
+<span id="L385">385         2 * p * (Real.exp (2 * theta 0) * (1 - p)) *</span>
+<span id="L386">386           (eta * Delta + eta ^ 2 * sourceC eta) := by ring</span>
+<span id="L387">387     _ = Real.exp (2 * theta 0) +</span>
+<span id="L388">388         2 * p ^ 2 * (eta * Delta + eta ^ 2 * sourceC eta) := by</span>
+<span id="L389">389       rw [hodds]</span>
+<span id="L390">390       ring</span>
+<span id="L391">391 </span>
+<span id="L392">392 /-- Multiplicative inverse-potential one-step recurrence at the same time</span>
+<span id="L393">393 fence. -/</span>
+<span id="L394">394 theorem integral_twoArmHistoryStepKernel_exp_inverseSuccessor_le</span>
+<span id="L395">395     (eta Delta : Real) (heta : 0 &lt;= eta)</span>
+<span id="L396">396     (environment : Thompson.HistoryEnvironment (Fin 2) Real)</span>
+<span id="L397">397     (n : Nat) (history : History.FinitePairHistory (Fin 2) Real n)</span>
+<span id="L398">398     (mean : Fin 2 -&gt; Real)</span>
+<span id="L399">399     (hreward : forall selected,</span>
+<span id="L400">400       ∀ᵐ reward ∂environment.feedback n (history, selected),</span>
+<span id="L401">401         |reward| &lt;= 1)</span>
+<span id="L402">402     (hmean : forall selected,</span>
+<span id="L403">403       integral (environment.feedback n (history, selected)) id =</span>
+<span id="L404">404         mean selected)</span>
+<span id="L405">405     (hgap : mean 0 - mean 1 = Delta) :</span>
+<span id="L406">406     integral</span>
+<span id="L407">407         (Thompson.historyStepKernel</span>
+<span id="L408">408           (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta) environment n history)</span>
+<span id="L409">409         (fun pair : Fin 2 × Real =&gt;</span>
+<span id="L410">410           Real.exp</span>
+<span id="L411">411             (-2 *</span>
+<span id="L412">412               (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history 0 +</span>
+<span id="L413">413                 eta * sourceIncrement</span>
+<span id="L414">414                   (softmaxProbability</span>
+<span id="L415">415                     (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history))</span>
+<span id="L416">416                   pair.2 pair.1 0))) &lt;=</span>
+<span id="L417">417       Real.exp</span>
+<span id="L418">418           (-2 * historyParameter (fun _ : Fin 2 =&gt; 0) eta n history 0) *</span>
+<span id="L419">419         (1 - 2 * eta *</span>
+<span id="L420">420           softmaxProbability</span>
+<span id="L421">421               (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history) 0 *</span>
+<span id="L422">422           (1 - softmaxProbability</span>
+<span id="L423">423               (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history) 0) *</span>
+<span id="L424">424           (Delta - eta * sourceC eta)) := by</span>
+<span id="L425">425   let theta := historyParameter (fun _ : Fin 2 =&gt; 0) eta n history</span>
+<span id="L426">426   let prob := softmaxProbability theta</span>
+<span id="L427">427   let q := twoArmInverseQ eta prob</span>
+<span id="L428">428   have hp_nonneg : 0 &lt;= prob 0 := softmaxProbability_nonneg theta 0</span>
+<span id="L429">429   have hp_le_one : prob 0 &lt;= 1 := softmaxProbability_le_one theta 0</span>
+<span id="L430">430   have hEqEight :=</span>
+<span id="L431">431     integral_historyStepKernel_exp_actionReward_le_sourceEqEight_of_mean</span>
+<span id="L432">432       (fun _ : Fin 2 =&gt; 0) eta environment n history q mean hreward hmean</span>
+<span id="L433">433   have hrem :</span>
+<span id="L434">434       (∑ selected, prob selected *</span>
+<span id="L435">435         (q selected * mean selected +</span>
+<span id="L436">436           q selected ^ 2 / 2 * sourceC (|q selected| / 2))) &lt;=</span>
+<span id="L437">437         -2 * eta * prob 0 * (1 - prob 0) *</span>
+<span id="L438">438           (Delta - eta * sourceC eta) := by</span>
+<span id="L439">439     have hprobOne : prob 1 = 1 - prob 0 := by</span>
+<span id="L440">440       simpa [prob] using softmaxProbability_one_eq_one_sub_zero theta</span>
+<span id="L441">441     simp only [Fin.sum_univ_two]</span>
+<span id="L442">442     rw [hprobOne]</span>
+<span id="L443">443     simpa [q, twoArmInverseQ, twoArmForwardQ] using</span>
+<span id="L444">444       twoArmInverseEqEightRemainder_le eta (prob 0)</span>
+<span id="L445">445         (mean 0) (mean 1) Delta heta hp_nonneg hp_le_one hgap</span>
+<span id="L446">446   have hbase :</span>
+<span id="L447">447       integral</span>
+<span id="L448">448           (Thompson.historyStepKernel</span>
+<span id="L449">449             (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta)</span>
+<span id="L450">450               environment n history)</span>
+<span id="L451">451           (fun pair : Fin 2 × Real =&gt; Real.exp (q pair.1 * pair.2)) &lt;=</span>
+<span id="L452">452         1 - 2 * eta * prob 0 * (1 - prob 0) *</span>
+<span id="L453">453           (Delta - eta * sourceC eta) := by</span>
+<span id="L454">454     have hEqEight&#x27; :</span>
+<span id="L455">455         integral</span>
+<span id="L456">456             (Thompson.historyStepKernel</span>
+<span id="L457">457               (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta)</span>
+<span id="L458">458                 environment n history)</span>
+<span id="L459">459             (fun pair : Fin 2 × Real =&gt; Real.exp (q pair.1 * pair.2)) &lt;=</span>
+<span id="L460">460           1 + ∑ selected, prob selected *</span>
+<span id="L461">461             (q selected * mean selected +</span>
+<span id="L462">462               q selected ^ 2 / 2 * sourceC (|q selected| / 2)) := by</span>
+<span id="L463">463       simpa [theta, prob] using hEqEight</span>
+<span id="L464">464     have := hEqEight&#x27;.trans (add_le_add_right hrem 1)</span>
+<span id="L465">465     calc</span>
+<span id="L466">466       _ &lt;= 1 + -2 * eta * prob 0 * (1 - prob 0) *</span>
+<span id="L467">467           (Delta - eta * sourceC eta) := this</span>
+<span id="L468">468       _ = 1 - 2 * eta * prob 0 * (1 - prob 0) *</span>
+<span id="L469">469           (Delta - eta * sourceC eta) := by ring</span>
+<span id="L470">470   have hexp :</span>
+<span id="L471">471       (fun pair : Fin 2 × Real =&gt;</span>
+<span id="L472">472           Real.exp</span>
+<span id="L473">473             (-2 *</span>
+<span id="L474">474               (theta 0 + eta * sourceIncrement prob pair.2 pair.1 0))) =</span>
+<span id="L475">475         (fun pair : Fin 2 × Real =&gt;</span>
+<span id="L476">476           Real.exp (-2 * theta 0) * Real.exp (q pair.1 * pair.2)) := by</span>
+<span id="L477">477     funext pair</span>
+<span id="L478">478     rw [← Real.exp_add]</span>
+<span id="L479">479     apply congrArg Real.exp</span>
+<span id="L480">480     rw [twoArmInverseQ_mul_reward_eq_sourceIncrement]</span>
+<span id="L481">481     ring</span>
+<span id="L482">482   change integral</span>
+<span id="L483">483       (Thompson.historyStepKernel</span>
+<span id="L484">484         (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta) environment n history)</span>
+<span id="L485">485       (fun pair : Fin 2 × Real =&gt;</span>
+<span id="L486">486         Real.exp</span>
+<span id="L487">487           (-2 * (theta 0 + eta * sourceIncrement prob pair.2 pair.1 0))) &lt;= _</span>
+<span id="L488">488   rw [hexp, integral_const_mul]</span>
+<span id="L489">489   exact mul_le_mul_of_nonneg_left hbase (Real.exp_nonneg _)</span>
+<span id="L490">490 </span>
+<span id="L491">491 /-- Inverse recurrence in the source telescoping form</span>
+<span id="L492">492 `E_t exp(-2 theta_{1,t+1}) &lt;= exp(-2 theta_{1,t})</span>
+<span id="L493">493   - 2 eta (1-p_t)^2 (Delta-eta C_eta)`. -/</span>
+<span id="L494">494 theorem integral_twoArmHistoryStepKernel_exp_inverseSuccessor_le_sub_failure_sq</span>
+<span id="L495">495     (eta Delta : Real) (heta : 0 &lt;= eta)</span>
+<span id="L496">496     (environment : Thompson.HistoryEnvironment (Fin 2) Real)</span>
+<span id="L497">497     (n : Nat) (history : History.FinitePairHistory (Fin 2) Real n)</span>
+<span id="L498">498     (mean : Fin 2 -&gt; Real)</span>
+<span id="L499">499     (hreward : forall selected,</span>
+<span id="L500">500       ∀ᵐ reward ∂environment.feedback n (history, selected),</span>
+<span id="L501">501         |reward| &lt;= 1)</span>
+<span id="L502">502     (hmean : forall selected,</span>
+<span id="L503">503       integral (environment.feedback n (history, selected)) id =</span>
+<span id="L504">504         mean selected)</span>
+<span id="L505">505     (hgap : mean 0 - mean 1 = Delta) :</span>
+<span id="L506">506     integral</span>
+<span id="L507">507         (Thompson.historyStepKernel</span>
+<span id="L508">508           (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta) environment n history)</span>
+<span id="L509">509         (fun pair : Fin 2 × Real =&gt;</span>
+<span id="L510">510           Real.exp</span>
+<span id="L511">511             (-2 *</span>
+<span id="L512">512               (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history 0 +</span>
+<span id="L513">513                 eta * sourceIncrement</span>
+<span id="L514">514                   (softmaxProbability</span>
+<span id="L515">515                     (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history))</span>
+<span id="L516">516                   pair.2 pair.1 0))) &lt;=</span>
+<span id="L517">517       Real.exp</span>
+<span id="L518">518           (-2 * historyParameter (fun _ : Fin 2 =&gt; 0) eta n history 0) -</span>
+<span id="L519">519         2 * eta *</span>
+<span id="L520">520           (1 - softmaxProbability</span>
+<span id="L521">521               (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history) 0) ^ 2 *</span>
+<span id="L522">522           (Delta - eta * sourceC eta) := by</span>
+<span id="L523">523   let theta := historyParameter (fun _ : Fin 2 =&gt; 0) eta n history</span>
+<span id="L524">524   let p := softmaxProbability theta 0</span>
+<span id="L525">525   have hmul :=</span>
+<span id="L526">526     integral_twoArmHistoryStepKernel_exp_inverseSuccessor_le</span>
+<span id="L527">527       eta Delta heta environment n history mean hreward hmean hgap</span>
+<span id="L528">528   have hinverseOdds : Real.exp (-2 * theta 0) * p = 1 - p := by</span>
+<span id="L529">529     exact exp_neg_two_mul_zero_mul_softmaxProbability_zero theta</span>
+<span id="L530">530       (historyParameter_zeroInitialization_sum eta n history)</span>
+<span id="L531">531   change _ &lt;= Real.exp (-2 * theta 0) -</span>
+<span id="L532">532     2 * eta * (1 - p) ^ 2 * (Delta - eta * sourceC eta)</span>
+<span id="L533">533   calc</span>
+<span id="L534">534     _ &lt;= Real.exp (-2 * theta 0) *</span>
+<span id="L535">535         (1 - 2 * eta * p * (1 - p) *</span>
+<span id="L536">536           (Delta - eta * sourceC eta)) := by</span>
+<span id="L537">537       simpa [theta, p] using hmul</span>
+<span id="L538">538     _ = Real.exp (-2 * theta 0) -</span>
+<span id="L539">539         2 * eta * (Real.exp (-2 * theta 0) * p) * (1 - p) *</span>
+<span id="L540">540           (Delta - eta * sourceC eta) := by ring</span>
+<span id="L541">541     _ = Real.exp (-2 * theta 0) -</span>
+<span id="L542">542         2 * eta * (1 - p) ^ 2 * (Delta - eta * sourceC eta) := by</span>
+<span id="L543">543       rw [hinverseOdds]</span>
+<span id="L544">544       ring</span>
+<span id="L545">545 </span>
+<span id="L546">546 end</span>
+<span id="L547">547 </span>
+<span id="L548">548 end StochasticGradientBandit</span>
+<span id="L549">549 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

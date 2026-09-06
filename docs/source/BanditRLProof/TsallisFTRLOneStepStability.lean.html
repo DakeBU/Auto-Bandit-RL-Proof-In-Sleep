@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/TsallisFTRLOneStepStability.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/TsallisFTRLOneStepStability.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/TsallisFTRLOneStepStability.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/TsallisFTRLOneStepStability.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.TsallisFTRLRegret</span>
+<span id="L2">2 import BanditRLProof.TsallisImportanceWeightedMoment</span>
+<span id="L3">3 import Mathlib.Tactic.FieldSimp</span>
+<span id="L4">4 import Mathlib.Tactic.Linarith</span>
+<span id="L5">5 import Mathlib.Tactic.NormNum</span>
+<span id="L6">6 import Mathlib.Tactic.Ring</span>
+<span id="L7">7 </span>
+<span id="L8">8 /-!</span>
+<span id="L9">9 # Half-Tsallis FTRL one-step stability</span>
+<span id="L10">10 </span>
+<span id="L11">11 This module proves the deterministic one-step stability estimate used by the</span>
+<span id="L12">12 `alpha = 1 / 2` Tsallis-INF route.  It consumes explicit interior stationarity</span>
+<span id="L13">13 certificates for the current and importance-weighted updated distributions.</span>
+<span id="L14">14 The certificates expose exactly the KKT equation for the local objective</span>
+<span id="L15">15 `eta * &lt;p, score&gt; + negEntropyRegularizer arms (1 / 2) p`.</span>
+<span id="L16">16 </span>
+<span id="L17">17 The final theorem averages the pathwise stability term over the current finite</span>
+<span id="L18">18 simplex and bounds it by `2 * eta * sum_a sqrt (p a)`.  It does not derive the</span>
+<span id="L19">19 stationarity certificates from minimizer certificates, prove minimizer</span>
+<span id="L20">20 interiority/existence, or perform a conditional-expectation transport.</span>
+<span id="L21">21 </span>
+<span id="L22">22 This is a valid but looser route for the stability term in the local FTRL</span>
+<span id="L23">23 decomposition, not a literal port of the conjugate-potential stability bound in</span>
+<span id="L24">24 Tsallis-INF Lemmas 11/19.  Matching the paper&#x27;s half-Tsallis regularizer scaling</span>
+<span id="L25">25 uses `eta_local = eta_paper / 2` up to simplex-constant terms; the bound here is</span>
+<span id="L26">26 then `eta_paper * sum_a sqrt (p a)`, twice the comparable Lemma 11 coefficient.</span>
+<span id="L27">27 -/</span>
+<span id="L28">28 </span>
+<span id="L29">29 namespace BanditRLProof</span>
+<span id="L30">30 namespace Tsallis</span>
+<span id="L31">31 </span>
+<span id="L32">32 universe u</span>
+<span id="L33">33 </span>
+<span id="L34">34 /--</span>
+<span id="L35">35 Interior first-order stationarity for the half-Tsallis regularizer.</span>
+<span id="L36">36 </span>
+<span id="L37">37 For `alpha = 1 / 2`, the coordinate derivative of the local negative Tsallis</span>
+<span id="L38">38 entropy is `-p_a^(-1/2)`.  The common multiplier records the simplex equality</span>
+<span id="L39">39 constraint; positivity and normalization are kept as separate theorem inputs.</span>
+<span id="L40">40 -/</span>
+<span id="L41">41 def HalfTsallisInteriorStationary {Action : Type u}</span>
+<span id="L42">42     (arms : Finset Action) (eta : Real)</span>
+<span id="L43">43     (score p : Action -&gt; Real) (multiplier : Real) : Prop :=</span>
+<span id="L44">44   forall action, action ∈ arms -&gt;</span>
+<span id="L45">45     eta * score action - (p action) ^ (-(1 / 2 : Real)) = multiplier</span>
+<span id="L46">46 </span>
+<span id="L47">47 /-- Subtracting two half-Tsallis stationarity equations isolates the update. -/</span>
+<span id="L48">48 theorem halfTsallisInteriorStationary_rpow_sub_rpow_eq</span>
+<span id="L49">49     {Action : Type u}</span>
+<span id="L50">50     (arms : Finset Action) (eta : Real)</span>
+<span id="L51">51     (score increment p q : Action -&gt; Real)</span>
+<span id="L52">52     (multiplier nextMultiplier : Real)</span>
+<span id="L53">53     (hp : HalfTsallisInteriorStationary</span>
+<span id="L54">54       arms eta score p multiplier)</span>
+<span id="L55">55     (hq : HalfTsallisInteriorStationary</span>
+<span id="L56">56       arms eta (fun action =&gt; score action + increment action)</span>
+<span id="L57">57         q nextMultiplier)</span>
+<span id="L58">58     {action : Action} (haction : action ∈ arms) :</span>
+<span id="L59">59     (q action) ^ (-(1 / 2 : Real)) -</span>
+<span id="L60">60         (p action) ^ (-(1 / 2 : Real)) =</span>
+<span id="L61">61       eta * increment action - (nextMultiplier - multiplier) := by</span>
+<span id="L62">62   have hpAction := hp action haction</span>
+<span id="L63">63   have hqAction := hq action haction</span>
+<span id="L64">64   dsimp only at hqAction</span>
+<span id="L65">65   linarith</span>
+<span id="L66">66 </span>
+<span id="L67">67 /--</span>
+<span id="L68">68 Scalar half-Tsallis curvature inequality on the positive cone.</span>
+<span id="L69">69 </span>
+<span id="L70">70 This is the one-dimensional inequality that converts a negative-half-power</span>
+<span id="L71">71 gradient displacement into a displacement of probability mass.</span>
+<span id="L72">72 -/</span>
+<span id="L73">73 theorem sub_le_two_mul_rpow_three_halves_mul_neg_half_rpow_sub</span>
+<span id="L74">74     {p q : Real} (hp : 0 &lt; p) (hq : 0 &lt; q) (hqp : q &lt;= p) :</span>
+<span id="L75">75     p - q &lt;=</span>
+<span id="L76">76       2 * p ^ (3 / 2 : Real) *</span>
+<span id="L77">77         (q ^ (-(1 / 2 : Real)) - p ^ (-(1 / 2 : Real))) := by</span>
+<span id="L78">78   have hsqrtPPos : 0 &lt; Real.sqrt p := Real.sqrt_pos.2 hp</span>
+<span id="L79">79   have hsqrtQPos : 0 &lt; Real.sqrt q := Real.sqrt_pos.2 hq</span>
+<span id="L80">80   have hsqrtLe : Real.sqrt q &lt;= Real.sqrt p := Real.sqrt_le_sqrt hqp</span>
+<span id="L81">81   have hsqrtPSq : (Real.sqrt p) ^ 2 = p := Real.sq_sqrt hp.le</span>
+<span id="L82">82   have hsqrtQSq : (Real.sqrt q) ^ 2 = q := Real.sq_sqrt hq.le</span>
+<span id="L83">83   have hdiff :</span>
+<span id="L84">84       q ^ (-(1 / 2 : Real)) - p ^ (-(1 / 2 : Real)) =</span>
+<span id="L85">85         (Real.sqrt p - Real.sqrt q) /</span>
+<span id="L86">86           (Real.sqrt p * Real.sqrt q) := by</span>
+<span id="L87">87     rw [Real.rpow_neg hq.le, Real.rpow_neg hp.le]</span>
+<span id="L88">88     rw [← Real.sqrt_eq_rpow, ← Real.sqrt_eq_rpow]</span>
+<span id="L89">89     field_simp [ne_of_gt hsqrtPPos, ne_of_gt hsqrtQPos]</span>
+<span id="L90">90   have hdiffNonneg :</span>
+<span id="L91">91       0 &lt;= q ^ (-(1 / 2 : Real)) - p ^ (-(1 / 2 : Real)) := by</span>
+<span id="L92">92     rw [hdiff]</span>
+<span id="L93">93     exact div_nonneg (sub_nonneg.2 hsqrtLe)</span>
+<span id="L94">94       (mul_nonneg hsqrtPPos.le hsqrtQPos.le)</span>
+<span id="L95">95   have hfactorLe :</span>
+<span id="L96">96       Real.sqrt p * Real.sqrt q * (Real.sqrt p + Real.sqrt q) &lt;=</span>
+<span id="L97">97         2 * p ^ (3 / 2 : Real) := by</span>
+<span id="L98">98     have hsumLe :</span>
+<span id="L99">99         Real.sqrt p + Real.sqrt q &lt;=</span>
+<span id="L100">100           Real.sqrt p + Real.sqrt p := by</span>
+<span id="L101">101       linarith</span>
+<span id="L102">102     have hinner :</span>
+<span id="L103">103         Real.sqrt q * (Real.sqrt p + Real.sqrt q) &lt;=</span>
+<span id="L104">104           Real.sqrt p * (Real.sqrt p + Real.sqrt p) :=</span>
+<span id="L105">105       mul_le_mul hsqrtLe hsumLe</span>
+<span id="L106">106         (add_nonneg hsqrtPPos.le hsqrtQPos.le) hsqrtPPos.le</span>
+<span id="L107">107     have hscaled := mul_le_mul_of_nonneg_left hinner hsqrtPPos.le</span>
+<span id="L108">108     have hrpow :</span>
+<span id="L109">109         p ^ (3 / 2 : Real) = p * Real.sqrt p := by</span>
+<span id="L110">110       rw [show (3 / 2 : Real) = 1 + 1 / 2 by norm_num,</span>
+<span id="L111">111         Real.rpow_add hp, Real.rpow_one, ← Real.sqrt_eq_rpow]</span>
+<span id="L112">112     rw [hrpow]</span>
+<span id="L113">113     nlinarith</span>
+<span id="L114">114   have hfactor :</span>
+<span id="L115">115       p - q =</span>
+<span id="L116">116         (q ^ (-(1 / 2 : Real)) - p ^ (-(1 / 2 : Real))) *</span>
+<span id="L117">117           (Real.sqrt p * Real.sqrt q *</span>
+<span id="L118">118             (Real.sqrt p + Real.sqrt q)) := by</span>
+<span id="L119">119     rw [hdiff]</span>
+<span id="L120">120     field_simp [ne_of_gt hsqrtPPos, ne_of_gt hsqrtQPos]</span>
+<span id="L121">121     nlinarith</span>
+<span id="L122">122   rw [hfactor]</span>
+<span id="L123">123   simpa [mul_comm] using</span>
+<span id="L124">124     mul_le_mul_of_nonneg_left hfactorLe hdiffNonneg</span>
+<span id="L125">125 </span>
+<span id="L126">126 /--</span>
+<span id="L127">127 Pathwise half-Tsallis FTRL stability for one importance-weighted observation.</span>
+<span id="L128">128 </span>
+<span id="L129">129 The current and updated distributions are normalized and strictly positive on</span>
+<span id="L130">130 `arms`.  Their stationarity certificates force the multiplier displacement to</span>
+<span id="L131">131 lie between zero and the selected coordinate update; the scalar curvature</span>
+<span id="L132">132 lemma then controls the one-step linear-loss difference.</span>
+<span id="L133">133 -/</span>
+<span id="L134">134 theorem linearLoss_sub_next_importanceWeightedLoss_le</span>
+<span id="L135">135     {Action : Type u} [DecidableEq Action]</span>
+<span id="L136">136     (arms : Finset Action) (eta : Real)</span>
+<span id="L137">137     (score prob next loss : Action -&gt; Real) (chosen : Action)</span>
+<span id="L138">138     (multiplier nextMultiplier : Real)</span>
+<span id="L139">139     (hchosen : chosen ∈ arms) (heta : 0 &lt; eta)</span>
+<span id="L140">140     (hprobSimplex : FTRL.finiteSimplex arms prob)</span>
+<span id="L141">141     (hnextSimplex : FTRL.finiteSimplex arms next)</span>
+<span id="L142">142     (hprobPos : forall action, action ∈ arms -&gt; 0 &lt; prob action)</span>
+<span id="L143">143     (hnextPos : forall action, action ∈ arms -&gt; 0 &lt; next action)</span>
+<span id="L144">144     (hlossNonneg : forall action, action ∈ arms -&gt; 0 &lt;= loss action)</span>
+<span id="L145">145     (hprobStationary : HalfTsallisInteriorStationary</span>
+<span id="L146">146       arms eta score prob multiplier)</span>
+<span id="L147">147     (hnextStationary : HalfTsallisInteriorStationary</span>
+<span id="L148">148       arms eta</span>
+<span id="L149">149         (fun action =&gt; score action +</span>
+<span id="L150">150           Exp3.importanceWeightedLoss prob loss chosen action)</span>
+<span id="L151">151         next nextMultiplier) :</span>
+<span id="L152">152     FTRL.linearLoss arms prob</span>
+<span id="L153">153           (Exp3.importanceWeightedLoss prob loss chosen) -</span>
+<span id="L154">154         FTRL.linearLoss arms next</span>
+<span id="L155">155           (Exp3.importanceWeightedLoss prob loss chosen) &lt;=</span>
+<span id="L156">156       2 * eta *</span>
+<span id="L157">157         powerWeightedSquaredImportanceWeightedLoss</span>
+<span id="L158">158           arms (1 / 2 : Real) prob loss chosen := by</span>
+<span id="L159">159   let shift := nextMultiplier - multiplier</span>
+<span id="L160">160   let observed := loss chosen / prob chosen</span>
+<span id="L161">161   have hnegHalf : (-(1 / 2 : Real)) &lt; 0 := by norm_num</span>
+<span id="L162">162   have hprobChosen : 0 &lt; prob chosen := hprobPos chosen hchosen</span>
+<span id="L163">163   have hnextChosen : 0 &lt; next chosen := hnextPos chosen hchosen</span>
+<span id="L164">164   have hlossChosen : 0 &lt;= loss chosen := hlossNonneg chosen hchosen</span>
+<span id="L165">165   have hobservedNonneg : 0 &lt;= observed :=</span>
+<span id="L166">166     div_nonneg hlossChosen hprobChosen.le</span>
+<span id="L167">167   have hdiff : forall action, action ∈ arms -&gt;</span>
+<span id="L168">168       (next action) ^ (-(1 / 2 : Real)) -</span>
+<span id="L169">169           (prob action) ^ (-(1 / 2 : Real)) =</span>
+<span id="L170">170         eta * Exp3.importanceWeightedLoss prob loss chosen action - shift := by</span>
+<span id="L171">171     intro action haction</span>
+<span id="L172">172     exact halfTsallisInteriorStationary_rpow_sub_rpow_eq</span>
+<span id="L173">173       arms eta score</span>
+<span id="L174">174       (Exp3.importanceWeightedLoss prob loss chosen)</span>
+<span id="L175">175       prob next multiplier nextMultiplier</span>
+<span id="L176">176       hprobStationary hnextStationary haction</span>
+<span id="L177">177   have hshiftNonneg : 0 &lt;= shift := by</span>
+<span id="L178">178     by_contra hnot</span>
+<span id="L179">179     have hshiftNeg : shift &lt; 0 := lt_of_not_ge hnot</span>
+<span id="L180">180     have hsumLt : arms.sum next &lt; arms.sum prob :=</span>
+<span id="L181">181       Finset.sum_lt_sum_of_nonempty ⟨chosen, hchosen⟩ (by</span>
+<span id="L182">182         intro action haction</span>
+<span id="L183">183         have hiwNonneg :</span>
+<span id="L184">184             0 &lt;= Exp3.importanceWeightedLoss prob loss chosen action :=</span>
+<span id="L185">185           Exp3.importanceWeightedLoss_nonneg</span>
+<span id="L186">186             (hprobSimplex.1 action haction)</span>
+<span id="L187">187             (hlossNonneg action haction)</span>
+<span id="L188">188         have hpowerLt :</span>
+<span id="L189">189             (prob action) ^ (-(1 / 2 : Real)) &lt;</span>
+<span id="L190">190               (next action) ^ (-(1 / 2 : Real)) := by</span>
+<span id="L191">191           have := hdiff action haction</span>
+<span id="L192">192           nlinarith [mul_nonneg heta.le hiwNonneg]</span>
+<span id="L193">193         exact (Real.rpow_lt_rpow_iff_of_neg</span>
+<span id="L194">194           (hprobPos action haction) (hnextPos action haction)</span>
+<span id="L195">195           hnegHalf).1 hpowerLt)</span>
+<span id="L196">196     rw [hprobSimplex.2, hnextSimplex.2] at hsumLt</span>
+<span id="L197">197     exact (lt_irrefl 1 hsumLt)</span>
+<span id="L198">198   have hshiftLe : shift &lt;= eta * observed := by</span>
+<span id="L199">199     by_contra hnot</span>
+<span id="L200">200     have hselectedLtShift : eta * observed &lt; shift := lt_of_not_ge hnot</span>
+<span id="L201">201     have hsumLt : arms.sum prob &lt; arms.sum next :=</span>
+<span id="L202">202       Finset.sum_lt_sum_of_nonempty ⟨chosen, hchosen⟩ (by</span>
+<span id="L203">203         intro action haction</span>
+<span id="L204">204         have hiwLe :</span>
+<span id="L205">205             Exp3.importanceWeightedLoss prob loss chosen action &lt;= observed := by</span>
+<span id="L206">206           by_cases heq : chosen = action</span>
+<span id="L207">207           · subst action</span>
+<span id="L208">208             simp [Exp3.importanceWeightedLoss, observed]</span>
+<span id="L209">209           · simp [Exp3.importanceWeightedLoss, heq, hobservedNonneg]</span>
+<span id="L210">210         have hetaIWLt :</span>
+<span id="L211">211             eta * Exp3.importanceWeightedLoss prob loss chosen action &lt; shift :=</span>
+<span id="L212">212           (mul_le_mul_of_nonneg_left hiwLe heta.le).trans_lt hselectedLtShift</span>
+<span id="L213">213         have hpowerLt :</span>
+<span id="L214">214             (next action) ^ (-(1 / 2 : Real)) &lt;</span>
+<span id="L215">215               (prob action) ^ (-(1 / 2 : Real)) := by</span>
+<span id="L216">216           have := hdiff action haction</span>
+<span id="L217">217           linarith</span>
+<span id="L218">218         exact (Real.rpow_lt_rpow_iff_of_neg</span>
+<span id="L219">219           (hnextPos action haction) (hprobPos action haction)</span>
+<span id="L220">220           hnegHalf).1 hpowerLt)</span>
+<span id="L221">221     rw [hprobSimplex.2, hnextSimplex.2] at hsumLt</span>
+<span id="L222">222     exact (lt_irrefl 1 hsumLt)</span>
+<span id="L223">223   have hiwChosen :</span>
+<span id="L224">224       Exp3.importanceWeightedLoss prob loss chosen chosen = observed := by</span>
+<span id="L225">225     simp [Exp3.importanceWeightedLoss, observed]</span>
+<span id="L226">226   have hchosenDiff :</span>
+<span id="L227">227       (next chosen) ^ (-(1 / 2 : Real)) -</span>
+<span id="L228">228           (prob chosen) ^ (-(1 / 2 : Real)) =</span>
+<span id="L229">229         eta * observed - shift := by</span>
+<span id="L230">230     simpa [hiwChosen] using hdiff chosen hchosen</span>
+<span id="L231">231   have hchosenDiffNonneg :</span>
+<span id="L232">232       0 &lt;= (next chosen) ^ (-(1 / 2 : Real)) -</span>
+<span id="L233">233         (prob chosen) ^ (-(1 / 2 : Real)) := by</span>
+<span id="L234">234     rw [hchosenDiff]</span>
+<span id="L235">235     linarith</span>
+<span id="L236">236   have hnextLe : next chosen &lt;= prob chosen := by</span>
+<span id="L237">237     apply (Real.rpow_le_rpow_iff_of_neg</span>
+<span id="L238">238       hprobChosen hnextChosen hnegHalf).1</span>
+<span id="L239">239     linarith</span>
+<span id="L240">240   have hcurvature :=</span>
+<span id="L241">241     sub_le_two_mul_rpow_three_halves_mul_neg_half_rpow_sub</span>
+<span id="L242">242       hprobChosen hnextChosen hnextLe</span>
+<span id="L243">243   have hdiffLe :</span>
+<span id="L244">244       (next chosen) ^ (-(1 / 2 : Real)) -</span>
+<span id="L245">245           (prob chosen) ^ (-(1 / 2 : Real)) &lt;= eta * observed := by</span>
+<span id="L246">246     rw [hchosenDiff]</span>
+<span id="L247">247     linarith</span>
+<span id="L248">248   have hlinear :</span>
+<span id="L249">249       FTRL.linearLoss arms prob</span>
+<span id="L250">250             (Exp3.importanceWeightedLoss prob loss chosen) -</span>
+<span id="L251">251           FTRL.linearLoss arms next</span>
+<span id="L252">252             (Exp3.importanceWeightedLoss prob loss chosen) =</span>
+<span id="L253">253         (prob chosen - next chosen) * observed := by</span>
+<span id="L254">254     unfold FTRL.linearLoss</span>
+<span id="L255">255     rw [← Finset.sum_sub_distrib, Finset.sum_eq_single chosen]</span>
+<span id="L256">256     · simp [Exp3.importanceWeightedLoss, observed]</span>
+<span id="L257">257       ring</span>
+<span id="L258">258     · intro action haction hne</span>
+<span id="L259">259       simp [Exp3.importanceWeightedLoss, Ne.symm hne]</span>
+<span id="L260">260     · exact fun hnotmem =&gt; (hnotmem hchosen).elim</span>
+<span id="L261">261   have hscaledCurvature :</span>
+<span id="L262">262       (prob chosen - next chosen) * observed &lt;=</span>
+<span id="L263">263         (2 * (prob chosen) ^ (3 / 2 : Real) *</span>
+<span id="L264">264           ((next chosen) ^ (-(1 / 2 : Real)) -</span>
+<span id="L265">265             (prob chosen) ^ (-(1 / 2 : Real)))) * observed :=</span>
+<span id="L266">266     mul_le_mul_of_nonneg_right hcurvature hobservedNonneg</span>
+<span id="L267">267   have hscaledDiff :</span>
+<span id="L268">268       (2 * (prob chosen) ^ (3 / 2 : Real) *</span>
+<span id="L269">269           ((next chosen) ^ (-(1 / 2 : Real)) -</span>
+<span id="L270">270             (prob chosen) ^ (-(1 / 2 : Real)))) * observed &lt;=</span>
+<span id="L271">271         (2 * (prob chosen) ^ (3 / 2 : Real) *</span>
+<span id="L272">272           (eta * observed)) * observed := by</span>
+<span id="L273">273     have hcoeffNonneg :</span>
+<span id="L274">274         0 &lt;= 2 * (prob chosen) ^ (3 / 2 : Real) := by positivity</span>
+<span id="L275">275     exact mul_le_mul_of_nonneg_right</span>
+<span id="L276">276       (mul_le_mul_of_nonneg_left hdiffLe hcoeffNonneg)</span>
+<span id="L277">277       hobservedNonneg</span>
+<span id="L278">278   have hpow :</span>
+<span id="L279">279       (prob chosen) ^ (3 / 2 : Real) =</span>
+<span id="L280">280         (prob chosen) ^ (2 : Real) *</span>
+<span id="L281">281           (prob chosen) ^ (-(1 / 2 : Real)) := by</span>
+<span id="L282">282     rw [← Real.rpow_add hprobChosen]</span>
+<span id="L283">283     congr 1</span>
+<span id="L284">284     norm_num</span>
+<span id="L285">285   rw [hlinear]</span>
+<span id="L286">286   calc</span>
+<span id="L287">287     (prob chosen - next chosen) * observed &lt;=</span>
+<span id="L288">288         (2 * (prob chosen) ^ (3 / 2 : Real) *</span>
+<span id="L289">289           ((next chosen) ^ (-(1 / 2 : Real)) -</span>
+<span id="L290">290             (prob chosen) ^ (-(1 / 2 : Real)))) * observed :=</span>
+<span id="L291">291       hscaledCurvature</span>
+<span id="L292">292     _ &lt;= (2 * (prob chosen) ^ (3 / 2 : Real) *</span>
+<span id="L293">293           (eta * observed)) * observed := hscaledDiff</span>
+<span id="L294">294     _ = 2 * eta * ((loss chosen) ^ 2 *</span>
+<span id="L295">295           (prob chosen) ^ (-(1 / 2 : Real))) := by</span>
+<span id="L296">296       rw [hpow, Real.rpow_two]</span>
+<span id="L297">297       dsimp only [observed]</span>
+<span id="L298">298       field_simp [ne_of_gt hprobChosen]</span>
+<span id="L299">299     _ = 2 * eta *</span>
+<span id="L300">300           powerWeightedSquaredImportanceWeightedLoss</span>
+<span id="L301">301             arms (1 / 2 : Real) prob loss chosen := by</span>
+<span id="L302">302       rw [powerWeightedSquaredImportanceWeightedLoss_eq_selected</span>
+<span id="L303">303         arms (1 / 2 : Real) prob loss chosen hchosen hprobChosen]</span>
+<span id="L304">304 </span>
+<span id="L305">305 /--</span>
+<span id="L306">306 Sampling-law finite-sum half-Tsallis stability bound.</span>
+<span id="L307">307 </span>
+<span id="L308">308 For every possible sampled action, `next chosen` carries its own updated</span>
+<span id="L309">309 stationarity certificate.  Averaging the pathwise FTRL stability terms with</span>
+<span id="L310">310 the current simplex masses is bounded by `2 * eta` times the half-power sum.</span>
+<span id="L311">311 -/</span>
+<span id="L312">312 theorem sum_prob_mul_linearLoss_sub_next_importanceWeightedLoss_le_powerSum_half</span>
+<span id="L313">313     {Action : Type u} [DecidableEq Action]</span>
+<span id="L314">314     (arms : Finset Action) (eta : Real)</span>
+<span id="L315">315     (score prob loss : Action -&gt; Real)</span>
+<span id="L316">316     (next : Action -&gt; Action -&gt; Real)</span>
+<span id="L317">317     (multiplier : Real) (nextMultiplier : Action -&gt; Real)</span>
+<span id="L318">318     (heta : 0 &lt; eta)</span>
+<span id="L319">319     (hprobSimplex : FTRL.finiteSimplex arms prob)</span>
+<span id="L320">320     (hprobPos : forall action, action ∈ arms -&gt; 0 &lt; prob action)</span>
+<span id="L321">321     (hnextSimplex : forall chosen, chosen ∈ arms -&gt;</span>
+<span id="L322">322       FTRL.finiteSimplex arms (next chosen))</span>
+<span id="L323">323     (hnextPos : forall chosen, chosen ∈ arms -&gt;</span>
+<span id="L324">324       forall action, action ∈ arms -&gt; 0 &lt; next chosen action)</span>
+<span id="L325">325     (hloss : forall action, action ∈ arms -&gt;</span>
+<span id="L326">326       0 &lt;= loss action ∧ loss action &lt;= 1)</span>
+<span id="L327">327     (hprobStationary : HalfTsallisInteriorStationary</span>
+<span id="L328">328       arms eta score prob multiplier)</span>
+<span id="L329">329     (hnextStationary : forall chosen, chosen ∈ arms -&gt;</span>
+<span id="L330">330       HalfTsallisInteriorStationary</span>
+<span id="L331">331         arms eta</span>
+<span id="L332">332           (fun action =&gt; score action +</span>
+<span id="L333">333             Exp3.importanceWeightedLoss prob loss chosen action)</span>
+<span id="L334">334           (next chosen) (nextMultiplier chosen)) :</span>
+<span id="L335">335     arms.sum (fun chosen =&gt;</span>
+<span id="L336">336         prob chosen *</span>
+<span id="L337">337           (FTRL.linearLoss arms prob</span>
+<span id="L338">338               (Exp3.importanceWeightedLoss prob loss chosen) -</span>
+<span id="L339">339             FTRL.linearLoss arms (next chosen)</span>
+<span id="L340">340               (Exp3.importanceWeightedLoss prob loss chosen))) &lt;=</span>
+<span id="L341">341       2 * eta * powerSum arms (1 / 2 : Real) prob := by</span>
+<span id="L342">342   have hpathwise : forall chosen, chosen ∈ arms -&gt;</span>
+<span id="L343">343       FTRL.linearLoss arms prob</span>
+<span id="L344">344             (Exp3.importanceWeightedLoss prob loss chosen) -</span>
+<span id="L345">345           FTRL.linearLoss arms (next chosen)</span>
+<span id="L346">346             (Exp3.importanceWeightedLoss prob loss chosen) &lt;=</span>
+<span id="L347">347         2 * eta *</span>
+<span id="L348">348           powerWeightedSquaredImportanceWeightedLoss</span>
+<span id="L349">349             arms (1 / 2 : Real) prob loss chosen := by</span>
+<span id="L350">350     intro chosen hchosen</span>
+<span id="L351">351     exact linearLoss_sub_next_importanceWeightedLoss_le</span>
+<span id="L352">352       arms eta score prob (next chosen) loss chosen</span>
+<span id="L353">353       multiplier (nextMultiplier chosen) hchosen heta</span>
+<span id="L354">354       hprobSimplex (hnextSimplex chosen hchosen) hprobPos</span>
+<span id="L355">355       (hnextPos chosen hchosen) (fun action haction =&gt;</span>
+<span id="L356">356         (hloss action haction).1)</span>
+<span id="L357">357       hprobStationary (hnextStationary chosen hchosen)</span>
+<span id="L358">358   have hmoment :=</span>
+<span id="L359">359     sum_prob_mul_powerWeightedSquaredImportanceWeightedLoss_le_powerSum</span>
+<span id="L360">360       arms (1 / 2 : Real) prob loss hprobPos hloss</span>
+<span id="L361">361   calc</span>
+<span id="L362">362     arms.sum (fun chosen =&gt;</span>
+<span id="L363">363         prob chosen *</span>
+<span id="L364">364           (FTRL.linearLoss arms prob</span>
+<span id="L365">365               (Exp3.importanceWeightedLoss prob loss chosen) -</span>
+<span id="L366">366             FTRL.linearLoss arms (next chosen)</span>
+<span id="L367">367               (Exp3.importanceWeightedLoss prob loss chosen))) &lt;=</span>
+<span id="L368">368         arms.sum (fun chosen =&gt;</span>
+<span id="L369">369           prob chosen *</span>
+<span id="L370">370             (2 * eta *</span>
+<span id="L371">371               powerWeightedSquaredImportanceWeightedLoss</span>
+<span id="L372">372                 arms (1 / 2 : Real) prob loss chosen)) := by</span>
+<span id="L373">373       apply Finset.sum_le_sum</span>
+<span id="L374">374       intro chosen hchosen</span>
+<span id="L375">375       exact mul_le_mul_of_nonneg_left (hpathwise chosen hchosen)</span>
+<span id="L376">376         (hprobSimplex.1 chosen hchosen)</span>
+<span id="L377">377     _ = 2 * eta *</span>
+<span id="L378">378         arms.sum (fun chosen =&gt;</span>
+<span id="L379">379           prob chosen *</span>
+<span id="L380">380             powerWeightedSquaredImportanceWeightedLoss</span>
+<span id="L381">381               arms (1 / 2 : Real) prob loss chosen) := by</span>
+<span id="L382">382       rw [Finset.mul_sum]</span>
+<span id="L383">383       apply Finset.sum_congr rfl</span>
+<span id="L384">384       intro chosen _hchosen</span>
+<span id="L385">385       ring</span>
+<span id="L386">386     _ &lt;= 2 * eta * powerSum arms (1 - (1 / 2 : Real)) prob := by</span>
+<span id="L387">387       exact mul_le_mul_of_nonneg_left hmoment (mul_nonneg (by norm_num) heta.le)</span>
+<span id="L388">388     _ = 2 * eta * powerSum arms (1 / 2 : Real) prob := by norm_num</span>
+<span id="L389">389 </span>
+<span id="L390">390 end Tsallis</span>
+<span id="L391">391 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

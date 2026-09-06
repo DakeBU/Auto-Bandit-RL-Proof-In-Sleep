@@ -1,0 +1,1098 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIChargeSummation.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIChargeSummation.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIChargeSummation.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIChargeSummation.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVICounting</span>
+<span id="L2">2 import Mathlib.Analysis.Complex.ExponentialBounds</span>
+<span id="L3">3 </span>
+<span id="L4">4 set_option maxHeartbeats 1000000</span>
+<span id="L5">5 </span>
+<span id="L6">6 /-! Canonical generated-record alignment and UCBVI-CH charge summation. -/</span>
+<span id="L7">7 </span>
+<span id="L8">8 open MeasureTheory</span>
+<span id="L9">9 open scoped BigOperators</span>
+<span id="L10">10 </span>
+<span id="L11">11 universe u v</span>
+<span id="L12">12 </span>
+<span id="L13">13 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L14">14 </span>
+<span id="L15">15 variable {State : Type u} {Action : Type v}</span>
+<span id="L16">16     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L17">17     [Fintype State] [Fintype Action]</span>
+<span id="L18">18     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L19">19     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L20">20     [Nonempty State] [Nonempty Action]</span>
+<span id="L21">21 </span>
+<span id="L22">22 namespace AdaptiveCumulativeHoeffdingUCBVI</span>
+<span id="L23">23 </span>
+<span id="L24">24 /-- Aggregate visits contributed by one actual generated batch. -/</span>
+<span id="L25">25 def generatedBatchAggregateVisitIncrement</span>
+<span id="L26">26     {mdp : MDP State Action} (trajectory : EpisodeBatchTrajectory mdp 1)</span>
+<span id="L27">27     (state : State) (action : Action) (episode : Nat) : Nat :=</span>
+<span id="L28">28   (trajectory episode).transitionCountSummary.aggregateVisitCount state action</span>
+<span id="L29">29 </span>
+<span id="L30">30 theorem batchedPrefixCount_generatedBatchAggregateVisitIncrement</span>
+<span id="L31">31     {mdp : MDP State Action} (trajectory : EpisodeBatchTrajectory mdp 1)</span>
+<span id="L32">32     (state : State) (action : Action) (round : Nat) :</span>
+<span id="L33">33     batchedPrefixCount</span>
+<span id="L34">34         (generatedBatchAggregateVisitIncrement trajectory state action) (round + 1) =</span>
+<span id="L35">35       adaptiveCumulativeAggregateVisitCountAt trajectory round state action := by</span>
+<span id="L36">36   rw [adaptiveCumulativeAggregateVisitCountAt_eq_sum]</span>
+<span id="L37">37   unfold batchedPrefixCount</span>
+<span id="L38">38   rw [← Fin.sum_univ_eq_sum_range]</span>
+<span id="L39">39   simp [generatedBatchAggregateVisitIncrement,</span>
+<span id="L40">40     TransitionCountSummary.aggregateVisitCount,</span>
+<span id="L41">41     EpisodeBatch.transitionCountSummary_visitCount]</span>
+<span id="L42">42 </span>
+<span id="L43">43 theorem generatedBatchAggregateVisitIncrement_le_horizon</span>
+<span id="L44">44     {mdp : MDP State Action} (trajectory : EpisodeBatchTrajectory mdp 1)</span>
+<span id="L45">45     (state : State) (action : Action) (episode : Nat) :</span>
+<span id="L46">46     generatedBatchAggregateVisitIncrement trajectory state action episode &lt;=</span>
+<span id="L47">47       mdp.horizon :=</span>
+<span id="L48">48   (trajectory episode).aggregateVisitCount_le_horizon state action</span>
+<span id="L49">49 </span>
+<span id="L50">50 /-- Every stored state/action record is aligned with its reconstructed full</span>
+<span id="L51">51 trajectory and with the deterministic recurrent choice.  This is the exact</span>
+<span id="L52">52 portion of mapped-batch identity consumed by the regret ledger. -/</span>
+<span id="L53">53 def SuccessorBatchAligned</span>
+<span id="L54">54     (mdp : MDP State Action) (defaultState : State)</span>
+<span id="L55">55     (episodes : Nat) (delta : Real)</span>
+<span id="L56">56     (trajectory : EpisodeBatchTrajectory mdp 1) (n : Nat) : Prop :=</span>
+<span id="L57">57   let batch := trajectory (n + 1)</span>
+<span id="L58">58   let reconstructed : State × StepTrace Action State mdp.horizon :=</span>
+<span id="L59">59     (batch.reconstructedInitialState defaultState, batch.reconstructedStepTrace)</span>
+<span id="L60">60   forall stage : Fin mdp.horizon,</span>
+<span id="L61">61     (batch 0 stage).state = mdp.trajectoryStateAt reconstructed stage ∧</span>
+<span id="L62">62       (batch 0 stage).action =</span>
+<span id="L63">63         successorPolicyTable mdp defaultState episodes delta trajectory n stage</span>
+<span id="L64">64           (mdp.trajectoryStateAt reconstructed stage)</span>
+<span id="L65">65 </span>
+<span id="L66">66 /-- On an aligned successor batch, each canonical recursively selected</span>
+<span id="L67">67 state/action pair is exactly the corresponding stored empirical record. -/</span>
+<span id="L68">68 theorem successorBatchAligned_step</span>
+<span id="L69">69     {mdp : MDP State Action} {defaultState : State}</span>
+<span id="L70">70     {episodes : Nat} {delta : Real}</span>
+<span id="L71">71     {trajectory : EpisodeBatchTrajectory mdp 1} {n : Nat}</span>
+<span id="L72">72     (haligned : SuccessorBatchAligned mdp defaultState episodes delta trajectory n)</span>
+<span id="L73">73     (stage : Fin mdp.horizon) :</span>
+<span id="L74">74     let batch := trajectory (n + 1)</span>
+<span id="L75">75     let reconstructed : State × StepTrace Action State mdp.horizon :=</span>
+<span id="L76">76       (batch.reconstructedInitialState defaultState, batch.reconstructedStepTrace)</span>
+<span id="L77">77     (batch 0 stage).state = mdp.trajectoryStateAt reconstructed stage ∧</span>
+<span id="L78">78       (batch 0 stage).action =</span>
+<span id="L79">79         successorPolicyTable mdp defaultState episodes delta trajectory n stage</span>
+<span id="L80">80           (mdp.trajectoryStateAt reconstructed stage) := by</span>
+<span id="L81">81   dsimp only</span>
+<span id="L82">82   let batch := trajectory (n + 1)</span>
+<span id="L83">83   let reconstructed : State × StepTrace Action State mdp.horizon :=</span>
+<span id="L84">84     (batch.reconstructedInitialState defaultState, batch.reconstructedStepTrace)</span>
+<span id="L85">85   exact haligned stage</span>
+<span id="L86">86 </span>
+<span id="L87">87 /-- Number of stored visits to one pair is the sum of its stage indicators. -/</span>
+<span id="L88">88 theorem generatedBatchAggregateVisitIncrement_eq_indicatorSum</span>
+<span id="L89">89     {mdp : MDP State Action} (trajectory : EpisodeBatchTrajectory mdp 1)</span>
+<span id="L90">90     (state : State) (action : Action) (episode : Nat) :</span>
+<span id="L91">91     generatedBatchAggregateVisitIncrement trajectory state action episode =</span>
+<span id="L92">92       ∑ stage : Fin mdp.horizon,</span>
+<span id="L93">93         if (trajectory episode 0 stage).state = state ∧</span>
+<span id="L94">94           (trajectory episode 0 stage).action = action then 1 else 0 := by</span>
+<span id="L95">95   rw [show generatedBatchAggregateVisitIncrement trajectory state action episode =</span>
+<span id="L96">96       ∑ stage : Fin mdp.horizon,</span>
+<span id="L97">97         (trajectory episode).visitCount stage state action by</span>
+<span id="L98">98     unfold generatedBatchAggregateVisitIncrement</span>
+<span id="L99">99     unfold TransitionCountSummary.aggregateVisitCount</span>
+<span id="L100">100     apply Finset.sum_congr rfl</span>
+<span id="L101">101     intro stage _</span>
+<span id="L102">102     exact (trajectory episode).transitionCountSummary_visitCount stage state action]</span>
+<span id="L103">103   apply Finset.sum_congr rfl</span>
+<span id="L104">104   intro stage _</span>
+<span id="L105">105   unfold EpisodeBatch.visitCount</span>
+<span id="L106">106   simp only [Fin.sum_univ_one]</span>
+<span id="L107">107 </span>
+<span id="L108">108 /-- The sum of all pair increments in one one-trajectory batch is exactly H. -/</span>
+<span id="L109">109 theorem sum_generatedBatchAggregateVisitIncrement_eq_horizon</span>
+<span id="L110">110     {mdp : MDP State Action} (trajectory : EpisodeBatchTrajectory mdp 1)</span>
+<span id="L111">111     (episode : Nat) :</span>
+<span id="L112">112     ∑ state : State, ∑ action : Action,</span>
+<span id="L113">113       generatedBatchAggregateVisitIncrement trajectory state action episode =</span>
+<span id="L114">114         mdp.horizon := by</span>
+<span id="L115">115   simp_rw [generatedBatchAggregateVisitIncrement_eq_indicatorSum]</span>
+<span id="L116">116   calc</span>
+<span id="L117">117     (∑ state : State, ∑ action : Action, ∑ stage : Fin mdp.horizon,</span>
+<span id="L118">118         if (trajectory episode 0 stage).state = state ∧</span>
+<span id="L119">119           (trajectory episode 0 stage).action = action then 1 else 0) =</span>
+<span id="L120">120       ∑ state : State, ∑ stage : Fin mdp.horizon, ∑ action : Action,</span>
+<span id="L121">121         if (trajectory episode 0 stage).state = state ∧</span>
+<span id="L122">122           (trajectory episode 0 stage).action = action then 1 else 0 := by</span>
+<span id="L123">123       apply Finset.sum_congr rfl</span>
+<span id="L124">124       intro state _</span>
+<span id="L125">125       rw [Finset.sum_comm]</span>
+<span id="L126">126     _ =</span>
+<span id="L127">127       ∑ stage : Fin mdp.horizon, ∑ state : State, ∑ action : Action,</span>
+<span id="L128">128         if (trajectory episode 0 stage).state = state ∧</span>
+<span id="L129">129           (trajectory episode 0 stage).action = action then 1 else 0 := by</span>
+<span id="L130">130       rw [Finset.sum_comm]</span>
+<span id="L131">131     _ = ∑ _stage : Fin mdp.horizon, 1 := by</span>
+<span id="L132">132       apply Finset.sum_congr rfl</span>
+<span id="L133">133       intro stage _</span>
+<span id="L134">134       calc</span>
+<span id="L135">135         (∑ state : State, ∑ action : Action,</span>
+<span id="L136">136             if (trajectory episode 0 stage).state = state ∧</span>
+<span id="L137">137               (trajectory episode 0 stage).action = action then 1 else 0) =</span>
+<span id="L138">138           ∑ state : State,</span>
+<span id="L139">139             if (trajectory episode 0 stage).state = state then 1 else 0 := by</span>
+<span id="L140">140             apply Finset.sum_congr rfl</span>
+<span id="L141">141             intro state _</span>
+<span id="L142">142             by_cases hs : (trajectory episode 0 stage).state = state</span>
+<span id="L143">143             · simp [hs]</span>
+<span id="L144">144             · simp [hs]</span>
+<span id="L145">145         _ = 1 := by simp</span>
+<span id="L146">146     _ = mdp.horizon := by simp</span>
+<span id="L147">147 </span>
+<span id="L148">148 /-- The clipped UCBVI-CH charge assigned to one state-action pair in one</span>
+<span id="L149">149 episode, using the literal strict-prefix count of generated batch records. -/</span>
+<span id="L150">150 noncomputable def generatedPairLocalCharge</span>
+<span id="L151">151     (mdp : MDP State Action) (episodes : Nat) (delta : Real)</span>
+<span id="L152">152     (trajectory : EpisodeBatchTrajectory mdp 1)</span>
+<span id="L153">153     (state : State) (action : Action) (episode : Nat) : Real :=</span>
+<span id="L154">154   let count := batchedPrefixCount</span>
+<span id="L155">155     (generatedBatchAggregateVisitIncrement trajectory state action) episode</span>
+<span id="L156">156   if count = 0 then</span>
+<span id="L157">157     (mdp.horizon : Real)</span>
+<span id="L158">158   else</span>
+<span id="L159">159     min (mdp.horizon : Real)</span>
+<span id="L160">160       (9 * (mdp.horizon : Real) *</span>
+<span id="L161">161           logFactor (State := State) (Action := Action) mdp episodes delta /</span>
+<span id="L162">162             Real.sqrt count +</span>
+<span id="L163">163         66 * Fintype.card State * (mdp.horizon : Real) ^ 2 *</span>
+<span id="L164">164           logFactor (State := State) (Action := Action) mdp episodes delta /</span>
+<span id="L165">165             count)</span>
+<span id="L166">166 </span>
+<span id="L167">167 theorem generatedPairLocalCharge_nonneg</span>
+<span id="L168">168     (mdp : MDP State Action) (episodes : Nat) (delta : Real)</span>
+<span id="L169">169     (trajectory : EpisodeBatchTrajectory mdp 1)</span>
+<span id="L170">170     (state : State) (action : Action) (episode : Nat) :</span>
+<span id="L171">171     0 &lt;= generatedPairLocalCharge mdp episodes delta trajectory state action</span>
+<span id="L172">172       episode := by</span>
+<span id="L173">173   simp only [generatedPairLocalCharge]</span>
+<span id="L174">174   split_ifs</span>
+<span id="L175">175   · positivity</span>
+<span id="L176">176   · have hlog := logFactor_nonneg (State := State) (Action := Action)</span>
+<span id="L177">177       mdp episodes delta</span>
+<span id="L178">178     exact le_min (Nat.cast_nonneg _) (add_nonneg (by positivity) (by positivity))</span>
+<span id="L179">179 </span>
+<span id="L180">180 /-- Alignment converts the policy-selected local charge at a recorded stage</span>
+<span id="L181">181 to the pair charge indexed by that record&#x27;s exact state and action. -/</span>
+<span id="L182">182 theorem successorLocalCharge_eq_generatedPairLocalCharge_of_aligned</span>
+<span id="L183">183     {mdp : MDP State Action} {defaultState : State}</span>
+<span id="L184">184     {episodes : Nat} {delta : Real}</span>
+<span id="L185">185     {trajectory : EpisodeBatchTrajectory mdp 1} {n : Nat}</span>
+<span id="L186">186     (haligned : SuccessorBatchAligned mdp defaultState episodes delta trajectory n)</span>
+<span id="L187">187     (stage : Fin mdp.horizon) :</span>
+<span id="L188">188     successorLocalCharge mdp defaultState episodes delta trajectory n</span>
+<span id="L189">189         (mdp.horizon - (stage.val + 1)) (by omega)</span>
+<span id="L190">190         (trajectory (n + 1) 0 stage).state =</span>
+<span id="L191">191       generatedPairLocalCharge mdp episodes delta trajectory</span>
+<span id="L192">192         (trajectory (n + 1) 0 stage).state</span>
+<span id="L193">193         (trajectory (n + 1) 0 stage).action (n + 1) := by</span>
+<span id="L194">194   have hstep := successorBatchAligned_step haligned stage</span>
+<span id="L195">195   have hstage : mdp.decisionStageRemaining</span>
+<span id="L196">196       (mdp.horizon - (stage.val + 1)) (by omega) = stage := by</span>
+<span id="L197">197     apply Fin.ext</span>
+<span id="L198">198     simp [MDP.decisionStageRemaining]</span>
+<span id="L199">199     omega</span>
+<span id="L200">200   have haction : (trajectory (n + 1) 0 stage).action =</span>
+<span id="L201">201       successorPolicyTable mdp defaultState episodes delta trajectory n stage</span>
+<span id="L202">202         (trajectory (n + 1) 0 stage).state := by</span>
+<span id="L203">203     rw [hstep.1]</span>
+<span id="L204">204     exact hstep.2</span>
+<span id="L205">205   have hcount := batchedPrefixCount_generatedBatchAggregateVisitIncrement</span>
+<span id="L206">206     trajectory (trajectory (n + 1) 0 stage).state</span>
+<span id="L207">207       (trajectory (n + 1) 0 stage).action n</span>
+<span id="L208">208   have hcount&#x27; : batchedPrefixCount</span>
+<span id="L209">209       (generatedBatchAggregateVisitIncrement trajectory</span>
+<span id="L210">210         (trajectory (n + 1) 0 stage).state</span>
+<span id="L211">211         (trajectory (n + 1) 0 stage).action) (n + 1) =</span>
+<span id="L212">212       (adaptiveCumulativeEmpiricalModelStateAt trajectory n).1.aggregateVisitCount</span>
+<span id="L213">213         (trajectory (n + 1) 0 stage).state</span>
+<span id="L214">214         (trajectory (n + 1) 0 stage).action := by</span>
+<span id="L215">215     simpa [adaptiveCumulativeAggregateVisitCountAt] using hcount</span>
+<span id="L216">216   unfold successorLocalCharge generatedPairLocalCharge</span>
+<span id="L217">217   simp only [successorSummary]</span>
+<span id="L218">218   rw [hstage, ← haction, ← hcount&#x27;]</span>
+<span id="L219">219 </span>
+<span id="L220">220 /-- One generated episode&#x27;s unweighted local charge is exactly the sum of</span>
+<span id="L221">221 pair charges repeated by the actual state-action visit multiplicities. -/</span>
+<span id="L222">222 theorem sum_successorLocalCharge_eq_sum_pairIncrement_mul_charge_of_aligned</span>
+<span id="L223">223     {mdp : MDP State Action} {defaultState : State}</span>
+<span id="L224">224     {episodes : Nat} {delta : Real}</span>
+<span id="L225">225     {trajectory : EpisodeBatchTrajectory mdp 1} {n : Nat}</span>
+<span id="L226">226     (haligned : SuccessorBatchAligned mdp defaultState episodes delta trajectory n) :</span>
+<span id="L227">227     (∑ stage : Fin mdp.horizon,</span>
+<span id="L228">228       successorLocalCharge mdp defaultState episodes delta trajectory n</span>
+<span id="L229">229         (mdp.horizon - (stage.val + 1)) (by omega)</span>
+<span id="L230">230         (trajectory (n + 1) 0 stage).state) =</span>
+<span id="L231">231       ∑ state : State, ∑ action : Action,</span>
+<span id="L232">232         (generatedBatchAggregateVisitIncrement trajectory state action (n + 1) : Real) *</span>
+<span id="L233">233           generatedPairLocalCharge mdp episodes delta trajectory state action (n + 1) := by</span>
+<span id="L234">234   simp_rw [successorLocalCharge_eq_generatedPairLocalCharge_of_aligned haligned]</span>
+<span id="L235">235   simp_rw [generatedBatchAggregateVisitIncrement_eq_indicatorSum]</span>
+<span id="L236">236   calc</span>
+<span id="L237">237     (∑ stage : Fin mdp.horizon,</span>
+<span id="L238">238         generatedPairLocalCharge mdp episodes delta trajectory</span>
+<span id="L239">239           (trajectory (n + 1) 0 stage).state</span>
+<span id="L240">240           (trajectory (n + 1) 0 stage).action (n + 1)) =</span>
+<span id="L241">241       ∑ stage : Fin mdp.horizon, ∑ state : State, ∑ action : Action,</span>
+<span id="L242">242         (if (trajectory (n + 1) 0 stage).state = state ∧</span>
+<span id="L243">243           (trajectory (n + 1) 0 stage).action = action then 1 else 0 : Real) *</span>
+<span id="L244">244           generatedPairLocalCharge mdp episodes delta trajectory state action (n + 1) := by</span>
+<span id="L245">245         apply Finset.sum_congr rfl</span>
+<span id="L246">246         intro stage _</span>
+<span id="L247">247         symm</span>
+<span id="L248">248         rw [Finset.sum_eq_single (trajectory (n + 1) 0 stage).state]</span>
+<span id="L249">249         · rw [Finset.sum_eq_single (trajectory (n + 1) 0 stage).action]</span>
+<span id="L250">250           · simp</span>
+<span id="L251">251           · intro action _ hne</span>
+<span id="L252">252             simp [hne, Ne.symm hne]</span>
+<span id="L253">253           · simp</span>
+<span id="L254">254         · intro state _ hne</span>
+<span id="L255">255           simp [hne, Ne.symm hne]</span>
+<span id="L256">256         · simp</span>
+<span id="L257">257     _ = ∑ state : State, ∑ action : Action, ∑ stage : Fin mdp.horizon,</span>
+<span id="L258">258         (if (trajectory (n + 1) 0 stage).state = state ∧</span>
+<span id="L259">259           (trajectory (n + 1) 0 stage).action = action then 1 else 0 : Real) *</span>
+<span id="L260">260           generatedPairLocalCharge mdp episodes delta trajectory state action (n + 1) := by</span>
+<span id="L261">261       rw [Finset.sum_comm]</span>
+<span id="L262">262       apply Finset.sum_congr rfl</span>
+<span id="L263">263       intro state _</span>
+<span id="L264">264       rw [Finset.sum_comm]</span>
+<span id="L265">265     _ = _ := by</span>
+<span id="L266">266       apply Finset.sum_congr rfl</span>
+<span id="L267">267       intro state _</span>
+<span id="L268">268       apply Finset.sum_congr rfl</span>
+<span id="L269">269       intro action _</span>
+<span id="L270">270       rw [← Finset.sum_mul]</span>
+<span id="L271">271       norm_num</span>
+<span id="L272">272 </span>
+<span id="L273">273 /-- Chronological global stage corresponding to a coordinate of a remaining</span>
+<span id="L274">274 suffix. -/</span>
+<span id="L275">275 def remainingGlobalStage (mdp : MDP State Action) (remaining : Nat)</span>
+<span id="L276">276     (hremaining : remaining &lt;= mdp.horizon) (stage : Fin remaining) :</span>
+<span id="L277">277     Fin mdp.horizon :=</span>
+<span id="L278">278   ⟨mdp.horizon - remaining + stage.val, by omega⟩</span>
+<span id="L279">279 </span>
+<span id="L280">280 theorem successorLocalCharge_eq_of_remaining_eq</span>
+<span id="L281">281     (mdp : MDP State Action) (defaultState : State)</span>
+<span id="L282">282     (episodes : Nat) (delta : Real)</span>
+<span id="L283">283     (trajectory : EpisodeBatchTrajectory mdp 1) (n : Nat)</span>
+<span id="L284">284     {left right : Nat} (hleft : left + 1 &lt;= mdp.horizon)</span>
+<span id="L285">285     (hright : right + 1 &lt;= mdp.horizon) (h : left = right) (state : State) :</span>
+<span id="L286">286     successorLocalCharge mdp defaultState episodes delta trajectory n</span>
+<span id="L287">287         left hleft state =</span>
+<span id="L288">288       successorLocalCharge mdp defaultState episodes delta trajectory n</span>
+<span id="L289">289         right hright state := by</span>
+<span id="L290">290   subst right</span>
+<span id="L291">291   rfl</span>
+<span id="L292">292 </span>
+<span id="L293">293 /-- Proof-irrelevant chronological wrapper around the remaining-indexed local</span>
+<span id="L294">294 charge.  Keeping the proof argument out of finite sums avoids dependent</span>
+<span id="L295">295 rewrites in the charge telescope. -/</span>
+<span id="L296">296 noncomputable def successorStageLocalCharge</span>
+<span id="L297">297     (mdp : MDP State Action) (defaultState : State)</span>
+<span id="L298">298     (episodes : Nat) (delta : Real)</span>
+<span id="L299">299     (trajectory : EpisodeBatchTrajectory mdp 1) (n : Nat)</span>
+<span id="L300">300     (stage : Fin mdp.horizon) (state : State) : Real :=</span>
+<span id="L301">301   successorLocalCharge mdp defaultState episodes delta trajectory n</span>
+<span id="L302">302     (mdp.horizon - (stage.val + 1)) (by omega) state</span>
+<span id="L303">303 </span>
+<span id="L304">304 /-- The recursive charge is exactly its chronological finite sum. -/</span>
+<span id="L305">305 theorem successorWeightedChargeFrom_eq_sum</span>
+<span id="L306">306     (mdp : MDP State Action) (defaultState : State)</span>
+<span id="L307">307     (episodes : Nat) (delta : Real)</span>
+<span id="L308">308     (trajectory : EpisodeBatchTrajectory mdp 1) (n : Nat) :</span>
+<span id="L309">309     forall (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon)</span>
+<span id="L310">310       (state : State) (trace : StepTrace Action State remaining),</span>
+<span id="L311">311       successorWeightedChargeFrom mdp defaultState episodes delta trajectory n</span>
+<span id="L312">312           remaining hremaining state trace =</span>
+<span id="L313">313         ∑ stage : Fin remaining,</span>
+<span id="L314">314           normalizedBellmanChargeWeight mdp</span>
+<span id="L315">315               (remainingGlobalStage mdp remaining hremaining stage) *</span>
+<span id="L316">316             successorStageLocalCharge mdp defaultState episodes delta trajectory n</span>
+<span id="L317">317               (remainingGlobalStage mdp remaining hremaining stage)</span>
+<span id="L318">318               (StepTrace.stateAt state trace stage) := by</span>
+<span id="L319">319   intro remaining</span>
+<span id="L320">320   induction remaining with</span>
+<span id="L321">321   | zero =&gt;</span>
+<span id="L322">322       intro hremaining state trace</span>
+<span id="L323">323       simp [successorWeightedChargeFrom]</span>
+<span id="L324">324   | succ remaining ih =&gt;</span>
+<span id="L325">325       intro hremaining state trace</span>
+<span id="L326">326       rw [successorWeightedChargeFrom, Fin.sum_univ_succ]</span>
+<span id="L327">327       have hheadStage : remainingGlobalStage mdp (remaining + 1) hremaining 0 =</span>
+<span id="L328">328           mdp.decisionStageRemaining remaining hremaining := by</span>
+<span id="L329">329         apply Fin.ext</span>
+<span id="L330">330         change mdp.horizon - (remaining + 1) + 0 =</span>
+<span id="L331">331           mdp.horizon - (remaining + 1)</span>
+<span id="L332">332         omega</span>
+<span id="L333">333       have hheadLocal : successorLocalCharge mdp defaultState episodes delta</span>
+<span id="L334">334             trajectory n remaining hremaining state =</span>
+<span id="L335">335           successorStageLocalCharge mdp defaultState episodes delta trajectory n</span>
+<span id="L336">336             (mdp.decisionStageRemaining remaining hremaining) state := by</span>
+<span id="L337">337         unfold successorStageLocalCharge</span>
+<span id="L338">338         apply successorLocalCharge_eq_of_remaining_eq</span>
+<span id="L339">339         change remaining = mdp.horizon -</span>
+<span id="L340">340           (mdp.horizon - (remaining + 1) + 1)</span>
+<span id="L341">341         omega</span>
+<span id="L342">342       have hhead : normalizedBellmanChargeWeight mdp</span>
+<span id="L343">343               (mdp.decisionStageRemaining remaining hremaining) *</span>
+<span id="L344">344             successorLocalCharge mdp defaultState episodes delta trajectory n</span>
+<span id="L345">345               remaining hremaining state =</span>
+<span id="L346">346           normalizedBellmanChargeWeight mdp</span>
+<span id="L347">347               (remainingGlobalStage mdp (remaining + 1) hremaining 0) *</span>
+<span id="L348">348             successorStageLocalCharge mdp defaultState episodes delta trajectory n</span>
+<span id="L349">349               (remainingGlobalStage mdp (remaining + 1) hremaining 0)</span>
+<span id="L350">350               (StepTrace.stateAt state trace 0) := by</span>
+<span id="L351">351         rw [hheadStage, hheadLocal]</span>
+<span id="L352">352         rw [StepTrace.stateAt_zero_apply]</span>
+<span id="L353">353       rw [hhead]</span>
+<span id="L354">354       congr 1</span>
+<span id="L355">355       have htail : remaining &lt;= mdp.horizon := by omega</span>
+<span id="L356">356       rw [ih htail (trace 0).2 (Fin.tail trace)]</span>
+<span id="L357">357       apply Finset.sum_congr rfl</span>
+<span id="L358">358       intro stage _</span>
+<span id="L359">359       have hglobal : remainingGlobalStage mdp remaining htail stage =</span>
+<span id="L360">360           remainingGlobalStage mdp (remaining + 1) hremaining stage.succ := by</span>
+<span id="L361">361         exact Fin.ext (by</span>
+<span id="L362">362           change mdp.horizon - remaining + stage.val =</span>
+<span id="L363">363             mdp.horizon - (remaining + 1) + (stage.val + 1)</span>
+<span id="L364">364           omega)</span>
+<span id="L365">365       have hstate := StepTrace.stateAt_succ state (trace 0) (Fin.tail trace) stage</span>
+<span id="L366">366       rw [hglobal]</span>
+<span id="L367">367       exact congrArg</span>
+<span id="L368">368         (fun currentState =&gt;</span>
+<span id="L369">369           normalizedBellmanChargeWeight mdp</span>
+<span id="L370">370               (remainingGlobalStage mdp (remaining + 1) hremaining stage.succ) *</span>
+<span id="L371">371             successorStageLocalCharge mdp defaultState episodes delta trajectory n</span>
+<span id="L372">372               (remainingGlobalStage mdp (remaining + 1) hremaining stage.succ)</span>
+<span id="L373">373               currentState)</span>
+<span id="L374">374         (by simpa using hstate.symm)</span>
+<span id="L375">375 </span>
+<span id="L376">376 /-- On an aligned generated successor batch, the recursively reconstructed</span>
+<span id="L377">377 canonical charge is the chronological recorded charge sum. -/</span>
+<span id="L378">378 theorem successorCanonicalWeightedCharge_eq_successorWeightedChargeSum_of_aligned</span>
+<span id="L379">379     {mdp : MDP State Action} {defaultState : State}</span>
+<span id="L380">380     {episodes : Nat} {delta : Real}</span>
+<span id="L381">381     {trajectory : EpisodeBatchTrajectory mdp 1} {n : Nat}</span>
+<span id="L382">382     (haligned : SuccessorBatchAligned mdp defaultState episodes delta trajectory n) :</span>
+<span id="L383">383     successorCanonicalWeightedCharge mdp defaultState episodes delta trajectory n =</span>
+<span id="L384">384       successorWeightedChargeSum mdp defaultState episodes delta trajectory n := by</span>
+<span id="L385">385   rw [successorCanonicalWeightedCharge,</span>
+<span id="L386">386     successorWeightedChargeFrom_eq_sum]</span>
+<span id="L387">387   unfold successorWeightedChargeSum</span>
+<span id="L388">388   apply Finset.sum_congr rfl</span>
+<span id="L389">389   intro stage _</span>
+<span id="L390">390   simp only [remainingGlobalStage, Nat.sub_self, zero_add]</span>
+<span id="L391">391   unfold successorStageLocalCharge</span>
+<span id="L392">392   have hstate := (successorBatchAligned_step haligned stage).1</span>
+<span id="L393">393   have htraceState : StepTrace.stateAt</span>
+<span id="L394">394       ((trajectory (n + 1)).reconstructedInitialState defaultState)</span>
+<span id="L395">395       ((trajectory (n + 1)).reconstructedStepTrace) stage =</span>
+<span id="L396">396         mdp.trajectoryStateAt</span>
+<span id="L397">397           ((trajectory (n + 1)).reconstructedInitialState defaultState,</span>
+<span id="L398">398             (trajectory (n + 1)).reconstructedStepTrace) stage := by</span>
+<span id="L399">399     exact mdp.stepTrace_stateAt_eq_trajectoryStateAt</span>
+<span id="L400">400       (trajectory :=</span>
+<span id="L401">401         ((trajectory (n + 1)).reconstructedInitialState defaultState,</span>
+<span id="L402">402           (trajectory (n + 1)).reconstructedStepTrace)) stage</span>
+<span id="L403">403   rw [htraceState, ← hstate]</span>
+<span id="L404">404 </span>
+<span id="L405">405 /-- One aligned canonical successor charge is dominated by its unweighted</span>
+<span id="L406">406 state-action multiplicity sum. -/</span>
+<span id="L407">407 theorem successorCanonicalWeightedCharge_le_sum_pairIncrement_mul_charge_of_aligned</span>
+<span id="L408">408     {mdp : MDP State Action} {defaultState : State}</span>
+<span id="L409">409     {episodes : Nat} {delta : Real}</span>
+<span id="L410">410     {trajectory : EpisodeBatchTrajectory mdp 1} {n : Nat}</span>
+<span id="L411">411     (hhorizon : 0 &lt; mdp.horizon)</span>
+<span id="L412">412     (haligned : SuccessorBatchAligned mdp defaultState episodes delta trajectory n) :</span>
+<span id="L413">413     successorCanonicalWeightedCharge mdp defaultState episodes delta trajectory n &lt;=</span>
+<span id="L414">414       ∑ state : State, ∑ action : Action,</span>
+<span id="L415">415         (generatedBatchAggregateVisitIncrement trajectory state action (n + 1) : Real) *</span>
+<span id="L416">416           generatedPairLocalCharge mdp episodes delta trajectory state action (n + 1) := by</span>
+<span id="L417">417   rw [successorCanonicalWeightedCharge_eq_successorWeightedChargeSum_of_aligned</span>
+<span id="L418">418     haligned]</span>
+<span id="L419">419   calc</span>
+<span id="L420">420     successorWeightedChargeSum mdp defaultState episodes delta trajectory n &lt;=</span>
+<span id="L421">421         ∑ stage : Fin mdp.horizon,</span>
+<span id="L422">422           successorLocalCharge mdp defaultState episodes delta trajectory n</span>
+<span id="L423">423             (mdp.horizon - (stage.val + 1)) (by omega)</span>
+<span id="L424">424             (trajectory (n + 1) 0 stage).state := by</span>
+<span id="L425">425       unfold successorWeightedChargeSum</span>
+<span id="L426">426       apply Finset.sum_le_sum</span>
+<span id="L427">427       intro stage _</span>
+<span id="L428">428       exact mul_le_of_le_one_left</span>
+<span id="L429">429         (successorLocalCharge_nonneg mdp defaultState episodes delta trajectory n</span>
+<span id="L430">430           (mdp.horizon - (stage.val + 1)) (by omega)</span>
+<span id="L431">431           (trajectory (n + 1) 0 stage).state)</span>
+<span id="L432">432         (normalizedBellmanChargeWeight_mem_Icc mdp hhorizon stage).2</span>
+<span id="L433">433     _ = _ :=</span>
+<span id="L434">434       sum_successorLocalCharge_eq_sum_pairIncrement_mul_charge_of_aligned haligned</span>
+<span id="L435">435 </span>
+<span id="L436">436 /-- Total pair charge over the first `episodes` generated batches. -/</span>
+<span id="L437">437 noncomputable def totalGeneratedPairCharge</span>
+<span id="L438">438     (mdp : MDP State Action) (episodes : Nat) (delta : Real)</span>
+<span id="L439">439     (trajectory : EpisodeBatchTrajectory mdp 1) : Real :=</span>
+<span id="L440">440   ∑ state : State, ∑ action : Action,</span>
+<span id="L441">441     (Finset.range episodes).sum fun episode =&gt;</span>
+<span id="L442">442       (generatedBatchAggregateVisitIncrement trajectory state action episode : Real) *</span>
+<span id="L443">443         generatedPairLocalCharge mdp episodes delta trajectory state action episode</span>
+<span id="L444">444 </span>
+<span id="L445">445 theorem generatedPairChargeTerm_nonneg</span>
+<span id="L446">446     (mdp : MDP State Action) (episodes : Nat) (delta : Real)</span>
+<span id="L447">447     (trajectory : EpisodeBatchTrajectory mdp 1)</span>
+<span id="L448">448     (state : State) (action : Action) (episode : Nat) :</span>
+<span id="L449">449     0 &lt;= (generatedBatchAggregateVisitIncrement trajectory state action episode : Real) *</span>
+<span id="L450">450       generatedPairLocalCharge mdp episodes delta trajectory state action episode :=</span>
+<span id="L451">451   mul_nonneg (Nat.cast_nonneg _)</span>
+<span id="L452">452     (generatedPairLocalCharge_nonneg mdp episodes delta trajectory state action episode)</span>
+<span id="L453">453 </span>
+<span id="L454">454 private theorem sum_range_succ_shift_le_sum_range</span>
+<span id="L455">455     (f : Nat -&gt; Real) (rounds : Nat) (hf : forall n, 0 &lt;= f n) :</span>
+<span id="L456">456     (Finset.range (rounds - 1)).sum (fun n =&gt; f (n + 1)) &lt;=</span>
+<span id="L457">457       (Finset.range rounds).sum f := by</span>
+<span id="L458">458   cases rounds with</span>
+<span id="L459">459   | zero =&gt; simp</span>
+<span id="L460">460   | succ rounds =&gt;</span>
+<span id="L461">461       rw [Nat.add_sub_cancel]</span>
+<span id="L462">462       induction rounds with</span>
+<span id="L463">463       | zero =&gt; simp [hf]</span>
+<span id="L464">464       | succ rounds ih =&gt;</span>
+<span id="L465">465           rw [Finset.sum_range_succ, Finset.sum_range_succ]</span>
+<span id="L466">466           have hzero : 0 &lt;= f 0 := hf 0</span>
+<span id="L467">467           simpa [add_comm] using add_le_add_right ih (f (rounds + 1))</span>
+<span id="L468">468 </span>
+<span id="L469">469 /-- Summing all aligned successor episodes is dominated by the all-batch pair</span>
+<span id="L470">470 charge ledger; coordinate zero appears only on the right and is nonnegative. -/</span>
+<span id="L471">471 theorem sum_successorCanonicalWeightedCharge_le_totalGeneratedPairCharge</span>
+<span id="L472">472     {mdp : MDP State Action} {defaultState : State}</span>
+<span id="L473">473     {episodes : Nat} {delta : Real}</span>
+<span id="L474">474     {trajectory : EpisodeBatchTrajectory mdp 1}</span>
+<span id="L475">475     (hhorizon : 0 &lt; mdp.horizon)</span>
+<span id="L476">476     (haligned : forall n, n + 1 &lt; episodes -&gt;</span>
+<span id="L477">477       SuccessorBatchAligned mdp defaultState episodes delta trajectory n) :</span>
+<span id="L478">478     (Finset.range (episodes - 1)).sum (fun n =&gt;</span>
+<span id="L479">479       successorCanonicalWeightedCharge mdp defaultState episodes delta trajectory n) &lt;=</span>
+<span id="L480">480       totalGeneratedPairCharge mdp episodes delta trajectory := by</span>
+<span id="L481">481   calc</span>
+<span id="L482">482     _ &lt;= (Finset.range (episodes - 1)).sum (fun n =&gt;</span>
+<span id="L483">483         ∑ state : State, ∑ action : Action,</span>
+<span id="L484">484           (generatedBatchAggregateVisitIncrement trajectory state action (n + 1) : Real) *</span>
+<span id="L485">485             generatedPairLocalCharge mdp episodes delta trajectory state action</span>
+<span id="L486">486               (n + 1)) := by</span>
+<span id="L487">487       apply Finset.sum_le_sum</span>
+<span id="L488">488       intro n hn</span>
+<span id="L489">489       exact successorCanonicalWeightedCharge_le_sum_pairIncrement_mul_charge_of_aligned</span>
+<span id="L490">490         hhorizon (haligned n (by have := Finset.mem_range.mp hn; omega))</span>
+<span id="L491">491     _ = ∑ state : State, ∑ action : Action,</span>
+<span id="L492">492         (Finset.range (episodes - 1)).sum (fun n =&gt;</span>
+<span id="L493">493           (generatedBatchAggregateVisitIncrement trajectory state action (n + 1) : Real) *</span>
+<span id="L494">494             generatedPairLocalCharge mdp episodes delta trajectory state action</span>
+<span id="L495">495               (n + 1)) := by</span>
+<span id="L496">496       rw [Finset.sum_comm]</span>
+<span id="L497">497       apply Finset.sum_congr rfl</span>
+<span id="L498">498       intro state _</span>
+<span id="L499">499       rw [Finset.sum_comm]</span>
+<span id="L500">500     _ &lt;= totalGeneratedPairCharge mdp episodes delta trajectory := by</span>
+<span id="L501">501       unfold totalGeneratedPairCharge</span>
+<span id="L502">502       apply Finset.sum_le_sum</span>
+<span id="L503">503       intro state _</span>
+<span id="L504">504       apply Finset.sum_le_sum</span>
+<span id="L505">505       intro action _</span>
+<span id="L506">506       exact sum_range_succ_shift_le_sum_range</span>
+<span id="L507">507         (fun episode =&gt;</span>
+<span id="L508">508           (generatedBatchAggregateVisitIncrement trajectory state action episode : Real) *</span>
+<span id="L509">509             generatedPairLocalCharge mdp episodes delta trajectory state action episode)</span>
+<span id="L510">510         episodes (generatedPairChargeTerm_nonneg mdp episodes delta trajectory state action)</span>
+<span id="L511">511 </span>
+<span id="L512">512 private theorem min_add_le_add_min {cap x y : Real}</span>
+<span id="L513">513     (hx : 0 &lt;= x) : min cap (x + y) &lt;= x + min cap y := by</span>
+<span id="L514">514   by_cases hy : cap &lt;= y</span>
+<span id="L515">515   · exact (min_le_left _ _).trans (by linarith [min_eq_left hy])</span>
+<span id="L516">516   · rw [min_eq_right (le_of_not_ge hy)]</span>
+<span id="L517">517     exact min_le_right _ _</span>
+<span id="L518">518 </span>
+<span id="L519">519 /-- Natural threshold at which the clipped reciprocal correction starts its</span>
+<span id="L520">520 logarithmic telescope. -/</span>
+<span id="L521">521 noncomputable def reciprocalChargeThreshold</span>
+<span id="L522">522     (mdp : MDP State Action) (episodes : Nat) (delta : Real) : Nat :=</span>
+<span id="L523">523   Nat.ceil (66 * Fintype.card State * (mdp.horizon : Real) *</span>
+<span id="L524">524     logFactor (State := State) (Action := Action) mdp episodes delta)</span>
+<span id="L525">525 </span>
+<span id="L526">526 /-- Exact one-pair accounting before the final paper-constant simplification. -/</span>
+<span id="L527">527 theorem sum_generatedPairCharge_le_accounting</span>
+<span id="L528">528     (mdp : MDP State Action) (episodes : Nat) (delta : Real)</span>
+<span id="L529">529     (trajectory : EpisodeBatchTrajectory mdp 1)</span>
+<span id="L530">530     (state : State) (action : Action)</span>
+<span id="L531">531     (hhorizon : 0 &lt; mdp.horizon)</span>
+<span id="L532">532     (hlog : 1 &lt;= logFactor (State := State) (Action := Action)</span>
+<span id="L533">533       mdp episodes delta) :</span>
+<span id="L534">534     (Finset.range episodes).sum (fun episode =&gt;</span>
+<span id="L535">535         (generatedBatchAggregateVisitIncrement trajectory state action episode : Real) *</span>
+<span id="L536">536           generatedPairLocalCharge mdp episodes delta trajectory state action episode) &lt;=</span>
+<span id="L537">537       (mdp.horizon : Real) * (1 + mdp.horizon) +</span>
+<span id="L538">538       (9 * (mdp.horizon : Real) *</span>
+<span id="L539">539         logFactor (State := State) (Action := Action) mdp episodes delta) *</span>
+<span id="L540">540         (2 * Real.sqrt (batchedPrefixCount</span>
+<span id="L541">541             (generatedBatchAggregateVisitIncrement trajectory state action) episodes) +</span>
+<span id="L542">542           2 * mdp.horizon + 2 * mdp.horizon *</span>
+<span id="L543">543             Real.log ((max 1 (batchedPrefixCount</span>
+<span id="L544">544               (generatedBatchAggregateVisitIncrement trajectory state action)</span>
+<span id="L545">545               episodes) : Nat) : Real)) +</span>
+<span id="L546">546       (mdp.horizon : Real) *</span>
+<span id="L547">547         (reciprocalChargeThreshold (State := State) (Action := Action)</span>
+<span id="L548">548           mdp episodes delta + mdp.horizon) +</span>
+<span id="L549">549       2 * (66 * Fintype.card State * (mdp.horizon : Real) ^ 2 *</span>
+<span id="L550">550         logFactor (State := State) (Action := Action) mdp episodes delta) *</span>
+<span id="L551">551         Real.log ((max 1 (batchedPrefixCount</span>
+<span id="L552">552           (generatedBatchAggregateVisitIncrement trajectory state action)</span>
+<span id="L553">553           episodes) : Nat) : Real) := by</span>
+<span id="L554">554   let increment := generatedBatchAggregateVisitIncrement trajectory state action</span>
+<span id="L555">555   let count := batchedPrefixCount increment</span>
+<span id="L556">556   let L := logFactor (State := State) (Action := Action) mdp episodes delta</span>
+<span id="L557">557   let a : Real := 9 * (mdp.horizon : Real) * L</span>
+<span id="L558">558   let b : Real := 66 * Fintype.card State * (mdp.horizon : Real) ^ 2 * L</span>
+<span id="L559">559   let threshold := reciprocalChargeThreshold (State := State) (Action := Action)</span>
+<span id="L560">560     mdp episodes delta</span>
+<span id="L561">561   have hinc : forall episode, increment episode &lt;= mdp.horizon :=</span>
+<span id="L562">562     generatedBatchAggregateVisitIncrement_le_horizon trajectory state action</span>
+<span id="L563">563   have hH : (0 : Real) &lt;= mdp.horizon := by positivity</span>
+<span id="L564">564   have ha : 0 &lt;= a := by</span>
+<span id="L565">565     dsimp [a, L]</span>
+<span id="L566">566     positivity</span>
+<span id="L567">567   have hb : 0 &lt;= b := by</span>
+<span id="L568">568     dsimp [b, L]</span>
+<span id="L569">569     positivity</span>
+<span id="L570">570   have hpoint (episode : Nat) :</span>
+<span id="L571">571       (increment episode : Real) *</span>
+<span id="L572">572           generatedPairLocalCharge mdp episodes delta trajectory state action episode &lt;=</span>
+<span id="L573">573         if count episode = 0 then</span>
+<span id="L574">574           (increment episode : Real) * mdp.horizon</span>
+<span id="L575">575         else</span>
+<span id="L576">576           a * ((increment episode : Real) / Real.sqrt (count episode)) +</span>
+<span id="L577">577             (increment episode : Real) * min (mdp.horizon : Real)</span>
+<span id="L578">578               (b / count episode) := by</span>
+<span id="L579">579     unfold generatedPairLocalCharge</span>
+<span id="L580">580     change (increment episode : Real) *</span>
+<span id="L581">581         (if count episode = 0 then _ else _) &lt;= _</span>
+<span id="L582">582     by_cases hz : count episode = 0</span>
+<span id="L583">583     · simp [hz]</span>
+<span id="L584">584     · rw [if_neg hz, if_neg hz]</span>
+<span id="L585">585       have hsplit := min_add_le_add_min (cap := (mdp.horizon : Real))</span>
+<span id="L586">586         (x := a / Real.sqrt (count episode))</span>
+<span id="L587">587         (y := b / count episode) (by positivity)</span>
+<span id="L588">588       have hmul := mul_le_mul_of_nonneg_left hsplit</span>
+<span id="L589">589         (Nat.cast_nonneg (increment episode))</span>
+<span id="L590">590       dsimp [a, b, L, count, increment] at hmul ⊢</span>
+<span id="L591">591       convert hmul using 1 &lt;;&gt; ring</span>
+<span id="L592">592   have hsumPoint : (Finset.range episodes).sum (fun episode =&gt;</span>
+<span id="L593">593         (increment episode : Real) *</span>
+<span id="L594">594           generatedPairLocalCharge mdp episodes delta trajectory state action episode) &lt;=</span>
+<span id="L595">595       (Finset.range episodes).sum (fun episode =&gt;</span>
+<span id="L596">596         if count episode = 0 then</span>
+<span id="L597">597           (increment episode : Real) * mdp.horizon</span>
+<span id="L598">598         else</span>
+<span id="L599">599           a * ((increment episode : Real) / Real.sqrt (count episode)) +</span>
+<span id="L600">600             (increment episode : Real) * min (mdp.horizon : Real)</span>
+<span id="L601">601               (b / count episode)) :=</span>
+<span id="L602">602     Finset.sum_le_sum fun episode _ =&gt; hpoint episode</span>
+<span id="L603">603   have hsplit : (Finset.range episodes).sum (fun episode =&gt;</span>
+<span id="L604">604         if count episode = 0 then</span>
+<span id="L605">605           (increment episode : Real) * mdp.horizon</span>
+<span id="L606">606         else</span>
+<span id="L607">607           a * ((increment episode : Real) / Real.sqrt (count episode)) +</span>
+<span id="L608">608             (increment episode : Real) * min (mdp.horizon : Real)</span>
+<span id="L609">609               (b / count episode)) =</span>
+<span id="L610">610       (mdp.horizon : Real) * (Finset.range episodes).sum (fun episode =&gt;</span>
+<span id="L611">611         if count episode = 0 then (increment episode : Real) else 0) +</span>
+<span id="L612">612       a * (Finset.range episodes).sum (fun episode =&gt;</span>
+<span id="L613">613         if count episode = 0 then 0 else</span>
+<span id="L614">614           (increment episode : Real) / Real.sqrt (count episode)) +</span>
+<span id="L615">615       (Finset.range episodes).sum (fun episode =&gt;</span>
+<span id="L616">616         if count episode = 0 then 0 else</span>
+<span id="L617">617           (increment episode : Real) * min (mdp.horizon : Real)</span>
+<span id="L618">618             (b / count episode)) := by</span>
+<span id="L619">619     rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib,</span>
+<span id="L620">620       ← Finset.sum_add_distrib]</span>
+<span id="L621">621     apply Finset.sum_congr rfl</span>
+<span id="L622">622     intro episode _</span>
+<span id="L623">623     by_cases hz : count episode = 0 &lt;;&gt; simp [hz] &lt;;&gt; ring</span>
+<span id="L624">624   rw [hsplit] at hsumPoint</span>
+<span id="L625">625   have hzeroNat := sum_low_batchedIncrement_le increment mdp.horizon 1 episodes</span>
+<span id="L626">626     hinc</span>
+<span id="L627">627   have hzero : (Finset.range episodes).sum (fun episode =&gt;</span>
+<span id="L628">628       if count episode = 0 then (increment episode : Real) else 0) &lt;=</span>
+<span id="L629">629       (1 + mdp.horizon : Nat) := by</span>
+<span id="L630">630     exact_mod_cast (by simpa [count] using hzeroNat)</span>
+<span id="L631">631   have hsqrt := sum_positive_batchedInvSqrt_le increment mdp.horizon episodes</span>
+<span id="L632">632     hhorizon hinc</span>
+<span id="L633">633   have hthreshold : mdp.horizon &lt;= threshold := by</span>
+<span id="L634">634     have hreal : (mdp.horizon : Real) &lt;=</span>
+<span id="L635">635         66 * Fintype.card State * (mdp.horizon : Real) * L := by</span>
+<span id="L636">636       have hcard : (1 : Real) &lt;= Fintype.card State := by</span>
+<span id="L637">637         exact_mod_cast Fintype.card_pos</span>
+<span id="L638">638       dsimp [L]</span>
+<span id="L639">639       nlinarith</span>
+<span id="L640">640     have hcast : (mdp.horizon : Real) &lt;= (threshold : Real) := by</span>
+<span id="L641">641       dsimp [threshold, reciprocalChargeThreshold]</span>
+<span id="L642">642       exact hreal.trans (Nat.le_ceil _)</span>
+<span id="L643">643     exact_mod_cast hcast</span>
+<span id="L644">644   have hrecip := sum_positive_batchedMinReciprocal_le increment mdp.horizon</span>
+<span id="L645">645     threshold episodes (mdp.horizon : Real) b hhorizon hthreshold hinc hH hb</span>
+<span id="L646">646   have hzeroMul := mul_le_mul_of_nonneg_left hzero hH</span>
+<span id="L647">647   have hsqrtMul := mul_le_mul_of_nonneg_left hsqrt ha</span>
+<span id="L648">648   have htotal := add_le_add (add_le_add hzeroMul hsqrtMul) hrecip</span>
+<span id="L649">649   norm_num only [Nat.cast_add, Nat.cast_one] at htotal</span>
+<span id="L650">650   dsimp [count, increment, a, b, L, threshold] at hsumPoint htotal ⊢</span>
+<span id="L651">651   exact hsumPoint.trans (by simpa [add_assoc] using htotal)</span>
+<span id="L652">652 </span>
+<span id="L653">653 /-- The accounting ledger fits the explicit per-pair `18/238` budget. -/</span>
+<span id="L654">654 theorem sum_generatedPairCharge_le_explicit</span>
+<span id="L655">655     (mdp : MDP State Action) (episodes : Nat) (delta : Real)</span>
+<span id="L656">656     (trajectory : EpisodeBatchTrajectory mdp 1)</span>
+<span id="L657">657     (state : State) (action : Action)</span>
+<span id="L658">658     (hhorizon : 0 &lt; mdp.horizon)</span>
+<span id="L659">659     (hlog : 1 &lt;= logFactor (State := State) (Action := Action)</span>
+<span id="L660">660       mdp episodes delta)</span>
+<span id="L661">661     (hlogCount : Real.log ((max 1 (batchedPrefixCount</span>
+<span id="L662">662         (generatedBatchAggregateVisitIncrement trajectory state action)</span>
+<span id="L663">663         episodes) : Nat) : Real) &lt;=</span>
+<span id="L664">664       logFactor (State := State) (Action := Action) mdp episodes delta) :</span>
+<span id="L665">665     (Finset.range episodes).sum (fun episode =&gt;</span>
+<span id="L666">666         (generatedBatchAggregateVisitIncrement trajectory state action episode : Real) *</span>
+<span id="L667">667           generatedPairLocalCharge mdp episodes delta trajectory state action episode) &lt;=</span>
+<span id="L668">668       18 * (mdp.horizon : Real) *</span>
+<span id="L669">669           logFactor (State := State) (Action := Action) mdp episodes delta *</span>
+<span id="L670">670           Real.sqrt (batchedPrefixCount</span>
+<span id="L671">671             (generatedBatchAggregateVisitIncrement trajectory state action) episodes) +</span>
+<span id="L672">672         238 * Fintype.card State * (mdp.horizon : Real) ^ 2 *</span>
+<span id="L673">673           logFactor (State := State) (Action := Action) mdp episodes delta ^ 2 := by</span>
+<span id="L674">674   let H : Real := mdp.horizon</span>
+<span id="L675">675   let S : Real := Fintype.card State</span>
+<span id="L676">676   let L := logFactor (State := State) (Action := Action) mdp episodes delta</span>
+<span id="L677">677   let N := batchedPrefixCount</span>
+<span id="L678">678     (generatedBatchAggregateVisitIncrement trajectory state action) episodes</span>
+<span id="L679">679   let logN := Real.log ((max 1 N : Nat) : Real)</span>
+<span id="L680">680   let threshold := reciprocalChargeThreshold (State := State) (Action := Action)</span>
+<span id="L681">681     mdp episodes delta</span>
+<span id="L682">682   have haccount := sum_generatedPairCharge_le_accounting mdp episodes delta</span>
+<span id="L683">683     trajectory state action hhorizon hlog</span>
+<span id="L684">684   have hH : 1 &lt;= H := by</span>
+<span id="L685">685     dsimp [H]</span>
+<span id="L686">686     exact_mod_cast hhorizon</span>
+<span id="L687">687   have hS : 1 &lt;= S := by</span>
+<span id="L688">688     dsimp [S]</span>
+<span id="L689">689     exact_mod_cast Fintype.card_pos</span>
+<span id="L690">690   have hL : 1 &lt;= L := hlog</span>
+<span id="L691">691   have hlogN0 : 0 &lt;= logN := by</span>
+<span id="L692">692     dsimp [logN]</span>
+<span id="L693">693     exact Real.log_nonneg (by exact_mod_cast le_max_left 1 N)</span>
+<span id="L694">694   have hlogN : logN &lt;= L := hlogCount</span>
+<span id="L695">695   have hx : 0 &lt;= 66 * S * H * L := by positivity</span>
+<span id="L696">696   have hceil := Nat.ceil_lt_add_one hx</span>
+<span id="L697">697   have hthreshold : (threshold : Real) &lt;= 67 * S * H * L := by</span>
+<span id="L698">698     dsimp [threshold, reciprocalChargeThreshold, S, H, L]</span>
+<span id="L699">699     have hunit : (1 : Real) &lt;=</span>
+<span id="L700">700         (Fintype.card State : Real) * mdp.horizon *</span>
+<span id="L701">701           logFactor (State := State) (Action := Action) mdp episodes delta := by</span>
+<span id="L702">702       have hSH : (1 : Real) * 1 &lt;= S * H :=</span>
+<span id="L703">703         mul_le_mul hS hH (by norm_num) (le_trans zero_le_one hS)</span>
+<span id="L704">704       have hSH&#x27; : (1 : Real) &lt;= S * H := by simpa using hSH</span>
+<span id="L705">705       have hSHL : (1 : Real) * 1 &lt;= (S * H) * L :=</span>
+<span id="L706">706         mul_le_mul hSH&#x27; hL (by norm_num)</span>
+<span id="L707">707           (mul_nonneg (le_trans zero_le_one hS) (le_trans zero_le_one hH))</span>
+<span id="L708">708       simpa [S, H, L] using hSHL</span>
+<span id="L709">709     nlinarith</span>
+<span id="L710">710   have hbase : H * (1 + H) &lt;= 2 * S * H ^ 2 * L ^ 2 := by</span>
+<span id="L711">711     have hsmall : H * (1 + H) &lt;= 2 * H ^ 2 := by nlinarith</span>
+<span id="L712">712     have hLsq : 1 &lt;= L ^ 2 := by nlinarith</span>
+<span id="L713">713     have hscaleS : H ^ 2 &lt;= S * H ^ 2 := by</span>
+<span id="L714">714       have := mul_le_mul_of_nonneg_right hS (sq_nonneg H)</span>
+<span id="L715">715       nlinarith</span>
+<span id="L716">716     have hscaleL : S * H ^ 2 &lt;= S * H ^ 2 * L ^ 2 := by</span>
+<span id="L717">717       simpa using mul_le_mul_of_nonneg_left hLsq</span>
+<span id="L718">718         (mul_nonneg (le_trans zero_le_one hS) (sq_nonneg H))</span>
+<span id="L719">719     linarith</span>
+<span id="L720">720   have hsqrtCorrection :</span>
+<span id="L721">721       (9 * H * L) * (2 * H + 2 * H * logN) &lt;=</span>
+<span id="L722">722         36 * S * H ^ 2 * L ^ 2 := by</span>
+<span id="L723">723     have honeLog : 1 + logN &lt;= 2 * L := by linarith</span>
+<span id="L724">724     have hfactor : 0 &lt;= 18 * H ^ 2 * L := by positivity</span>
+<span id="L725">725     have hraw := mul_le_mul_of_nonneg_left honeLog hfactor</span>
+<span id="L726">726     have hscale : 36 * H ^ 2 * L ^ 2 &lt;= 36 * S * H ^ 2 * L ^ 2 := by</span>
+<span id="L727">727       nlinarith [mul_le_mul_of_nonneg_right hS</span>
+<span id="L728">728         (mul_nonneg (sq_nonneg H) (sq_nonneg L))]</span>
+<span id="L729">729     nlinarith</span>
+<span id="L730">730   have hreciprocal :</span>
+<span id="L731">731       H * ((threshold : Real) + H) +</span>
+<span id="L732">732           2 * (66 * S * H ^ 2 * L) * logN &lt;=</span>
+<span id="L733">733         200 * S * H ^ 2 * L ^ 2 := by</span>
+<span id="L734">734     have hHscale : H &lt;= S * H * L := by</span>
+<span id="L735">735       have hSL : (1 : Real) * 1 &lt;= S * L :=</span>
+<span id="L736">736         mul_le_mul hS hL (by norm_num) (le_trans zero_le_one hS)</span>
+<span id="L737">737       have hmul := mul_le_mul_of_nonneg_left hSL (le_trans zero_le_one hH)</span>
+<span id="L738">738       nlinarith</span>
+<span id="L739">739     have hthresholdSum : (threshold : Real) + H &lt;= 68 * S * H * L := by</span>
+<span id="L740">740       linarith</span>
+<span id="L741">741     have hfirst := mul_le_mul_of_nonneg_left hthresholdSum</span>
+<span id="L742">742       (le_trans zero_le_one hH)</span>
+<span id="L743">743     have hsecond : 2 * (66 * S * H ^ 2 * L) * logN &lt;=</span>
+<span id="L744">744         132 * S * H ^ 2 * L ^ 2 := by</span>
+<span id="L745">745       have hfactor : 0 &lt;= 132 * S * H ^ 2 * L := by positivity</span>
+<span id="L746">746       have := mul_le_mul_of_nonneg_left hlogN hfactor</span>
+<span id="L747">747       nlinarith</span>
+<span id="L748">748     nlinarith</span>
+<span id="L749">749   calc</span>
+<span id="L750">750     _ &lt;= _ := haccount</span>
+<span id="L751">751     _ &lt;= _ := by</span>
+<span id="L752">752       have hcorr := add_le_add (add_le_add hbase hsqrtCorrection) hreciprocal</span>
+<span id="L753">753       have hlead := add_le_add_left hcorr (18 * H * L * Real.sqrt N)</span>
+<span id="L754">754       dsimp [H, S, L, N, logN, threshold] at hlead ⊢</span>
+<span id="L755">755       nlinarith</span>
+<span id="L756">756 </span>
+<span id="L757">757 /-- On the positive task domain the paper logarithmic factor is at least one.</span>
+<span id="L758">758 The factor `5` in the confidence numerator is deliberately retained here: it</span>
+<span id="L759">759 is what makes the statement true uniformly for every `delta &lt;= 1`. -/</span>
+<span id="L760">760 theorem one_le_logFactor</span>
+<span id="L761">761     (mdp : MDP State Action) (episodes : Nat) (delta : Real)</span>
+<span id="L762">762     (hhorizon : 0 &lt; mdp.horizon) (hepisodes : 0 &lt; episodes)</span>
+<span id="L763">763     (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1) :</span>
+<span id="L764">764     1 &lt;= logFactor (State := State) (Action := Action)</span>
+<span id="L765">765       mdp episodes delta := by</span>
+<span id="L766">766   have hproduct :</span>
+<span id="L767">767       1 &lt;= mdp.horizon * Fintype.card State * Fintype.card Action *</span>
+<span id="L768">768         (episodes * mdp.horizon) := by</span>
+<span id="L769">769     exact Nat.one_le_iff_ne_zero.mpr (by</span>
+<span id="L770">770       simp only [ne_eq, mul_eq_zero]</span>
+<span id="L771">771       exact not_or_intro (not_or_intro (not_or_intro hhorizon.ne&#x27;</span>
+<span id="L772">772         Fintype.card_ne_zero) Fintype.card_ne_zero)</span>
+<span id="L773">773         (not_or_intro hepisodes.ne&#x27; hhorizon.ne&#x27;))</span>
+<span id="L774">774   have hnumerator :</span>
+<span id="L775">775       5 &lt;= confidenceNumerator (State := State) (Action := Action)</span>
+<span id="L776">776         mdp episodes := by</span>
+<span id="L777">777     unfold confidenceNumerator totalSteps</span>
+<span id="L778">778     simpa [Nat.mul_assoc] using Nat.mul_le_mul_left 5 hproduct</span>
+<span id="L779">779   have hnumeratorReal :</span>
+<span id="L780">780       (5 : Real) &lt;=</span>
+<span id="L781">781         (confidenceNumerator (State := State) (Action := Action)</span>
+<span id="L782">782           mdp episodes : Nat) := by</span>
+<span id="L783">783     exact_mod_cast hnumerator</span>
+<span id="L784">784   have hnumeratorNonneg :</span>
+<span id="L785">785       0 &lt;= (confidenceNumerator (State := State) (Action := Action)</span>
+<span id="L786">786         mdp episodes : Nat) := by positivity</span>
+<span id="L787">787   have hdivide :</span>
+<span id="L788">788       (confidenceNumerator (State := State) (Action := Action)</span>
+<span id="L789">789           mdp episodes : Nat) &lt;=</span>
+<span id="L790">790         (confidenceNumerator (State := State) (Action := Action)</span>
+<span id="L791">791           mdp episodes : Nat) / delta := by</span>
+<span id="L792">792     apply (le_div_iff₀ hdelta).2</span>
+<span id="L793">793     nlinarith</span>
+<span id="L794">794   rw [logFactor_eq_paper mdp episodes delta hhorizon hepisodes</span>
+<span id="L795">795     hdelta hdelta_le_one]</span>
+<span id="L796">796   rw [Real.le_log_iff_exp_le (div_pos (by positivity) hdelta)]</span>
+<span id="L797">797   exact (le_of_lt Real.exp_one_lt_three).trans</span>
+<span id="L798">798     ((show (3 : Real) &lt;= 5 by norm_num).trans</span>
+<span id="L799">799       (hnumeratorReal.trans hdivide))</span>
+<span id="L800">800 </span>
+<span id="L801">801 /-- A single state-action pair is visited at most once per stage, hence at</span>
+<span id="L802">802 most `episodes * H` times in the complete generated ledger. -/</span>
+<span id="L803">803 theorem batchedPrefixCount_generatedBatchAggregateVisitIncrement_le_totalSteps</span>
+<span id="L804">804     (mdp : MDP State Action) (episodes : Nat)</span>
+<span id="L805">805     (trajectory : EpisodeBatchTrajectory mdp 1)</span>
+<span id="L806">806     (state : State) (action : Action) :</span>
+<span id="L807">807     batchedPrefixCount</span>
+<span id="L808">808         (generatedBatchAggregateVisitIncrement trajectory state action)</span>
+<span id="L809">809         episodes &lt;= totalSteps mdp episodes := by</span>
+<span id="L810">810   unfold batchedPrefixCount totalSteps</span>
+<span id="L811">811   calc</span>
+<span id="L812">812     (Finset.range episodes).sum (fun episode =&gt;</span>
+<span id="L813">813         generatedBatchAggregateVisitIncrement trajectory state action episode) &lt;=</span>
+<span id="L814">814       (Finset.range episodes).sum (fun _ =&gt; mdp.horizon) :=</span>
+<span id="L815">815         Finset.sum_le_sum fun episode _ =&gt;</span>
+<span id="L816">816           generatedBatchAggregateVisitIncrement_le_horizon</span>
+<span id="L817">817             trajectory state action episode</span>
+<span id="L818">818     _ = episodes * mdp.horizon := by simp</span>
+<span id="L819">819 </span>
+<span id="L820">820 /-- The logarithm of every final pair count is controlled by the single paper</span>
+<span id="L821">821 logarithmic factor used by the generated policy. -/</span>
+<span id="L822">822 theorem log_max_batchedPrefixCount_le_logFactor</span>
+<span id="L823">823     (mdp : MDP State Action) (episodes : Nat) (delta : Real)</span>
+<span id="L824">824     (trajectory : EpisodeBatchTrajectory mdp 1)</span>
+<span id="L825">825     (state : State) (action : Action)</span>
+<span id="L826">826     (hhorizon : 0 &lt; mdp.horizon) (hepisodes : 0 &lt; episodes)</span>
+<span id="L827">827     (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1) :</span>
+<span id="L828">828     Real.log ((max 1 (batchedPrefixCount</span>
+<span id="L829">829         (generatedBatchAggregateVisitIncrement trajectory state action)</span>
+<span id="L830">830         episodes) : Nat) : Real) &lt;=</span>
+<span id="L831">831       logFactor (State := State) (Action := Action) mdp episodes delta := by</span>
+<span id="L832">832   let N := batchedPrefixCount</span>
+<span id="L833">833     (generatedBatchAggregateVisitIncrement trajectory state action) episodes</span>
+<span id="L834">834   let T := totalSteps mdp episodes</span>
+<span id="L835">835   have hTpos : 0 &lt; T := by</span>
+<span id="L836">836     dsimp [T, totalSteps]</span>
+<span id="L837">837     positivity</span>
+<span id="L838">838   have hN : N &lt;= T := by</span>
+<span id="L839">839     dsimp [N, T]</span>
+<span id="L840">840     exact batchedPrefixCount_generatedBatchAggregateVisitIncrement_le_totalSteps</span>
+<span id="L841">841       mdp episodes trajectory state action</span>
+<span id="L842">842   have hmax : max 1 N &lt;= T := max_le (Nat.one_le_iff_ne_zero.mpr hTpos.ne&#x27;) hN</span>
+<span id="L843">843   have hTleNumerator :</span>
+<span id="L844">844       T &lt;= confidenceNumerator (State := State) (Action := Action)</span>
+<span id="L845">845         mdp episodes := by</span>
+<span id="L846">846     have hfactor : 1 &lt;=</span>
+<span id="L847">847         5 * mdp.horizon * Fintype.card State * Fintype.card Action := by</span>
+<span id="L848">848       have hfactorPos : 0 &lt;</span>
+<span id="L849">849           5 * mdp.horizon * Fintype.card State * Fintype.card Action := by</span>
+<span id="L850">850         positivity</span>
+<span id="L851">851       omega</span>
+<span id="L852">852     calc</span>
+<span id="L853">853       T = 1 * T := by simp</span>
+<span id="L854">854       _ &lt;= (5 * mdp.horizon * Fintype.card State * Fintype.card Action) * T :=</span>
+<span id="L855">855         Nat.mul_le_mul_right T hfactor</span>
+<span id="L856">856       _ = confidenceNumerator (State := State) (Action := Action)</span>
+<span id="L857">857           mdp episodes := by</span>
+<span id="L858">858         simp [T, confidenceNumerator, totalSteps, Nat.mul_assoc]</span>
+<span id="L859">859   have hNumeratorDiv :</span>
+<span id="L860">860       (confidenceNumerator (State := State) (Action := Action)</span>
+<span id="L861">861           mdp episodes : Nat) &lt;=</span>
+<span id="L862">862         (confidenceNumerator (State := State) (Action := Action)</span>
+<span id="L863">863           mdp episodes : Nat) / delta := by</span>
+<span id="L864">864     apply (le_div_iff₀ hdelta).2</span>
+<span id="L865">865     have hnonneg :</span>
+<span id="L866">866         0 &lt;= (confidenceNumerator (State := State) (Action := Action)</span>
+<span id="L867">867           mdp episodes : Nat) := Nat.zero_le _</span>
+<span id="L868">868     nlinarith</span>
+<span id="L869">869   have hpositive : (0 : Real) &lt; (max 1 N : Nat) := by positivity</span>
+<span id="L870">870   have hargument :</span>
+<span id="L871">871       ((max 1 N : Nat) : Real) &lt;=</span>
+<span id="L872">872         (confidenceNumerator (State := State) (Action := Action)</span>
+<span id="L873">873           mdp episodes : Nat) / delta := by</span>
+<span id="L874">874     have hcast :</span>
+<span id="L875">875         ((max 1 N : Nat) : Real) &lt;=</span>
+<span id="L876">876           (confidenceNumerator (State := State) (Action := Action)</span>
+<span id="L877">877             mdp episodes : Nat) := by</span>
+<span id="L878">878       exact_mod_cast hmax.trans hTleNumerator</span>
+<span id="L879">879     exact hcast.trans hNumeratorDiv</span>
+<span id="L880">880   rw [logFactor_eq_paper mdp episodes delta hhorizon hepisodes</span>
+<span id="L881">881     hdelta hdelta_le_one]</span>
+<span id="L882">882   exact Real.strictMonoOn_log.monotoneOn hpositive</span>
+<span id="L883">883     (div_pos (by</span>
+<span id="L884">884       exact_mod_cast hTpos.trans_le hTleNumerator) hdelta) hargument</span>
+<span id="L885">885 </span>
+<span id="L886">886 /-- The aggregate count ledger is exact: summing final counts over every</span>
+<span id="L887">887 state-action pair gives the number `episodes * H` of generated transitions. -/</span>
+<span id="L888">888 theorem sum_batchedPrefixCount_generatedBatchAggregateVisitIncrement_eq_totalSteps</span>
+<span id="L889">889     (mdp : MDP State Action) (episodes : Nat)</span>
+<span id="L890">890     (trajectory : EpisodeBatchTrajectory mdp 1) :</span>
+<span id="L891">891     (∑ state : State, ∑ action : Action,</span>
+<span id="L892">892         batchedPrefixCount</span>
+<span id="L893">893           (generatedBatchAggregateVisitIncrement trajectory state action)</span>
+<span id="L894">894           episodes) = totalSteps mdp episodes := by</span>
+<span id="L895">895   unfold batchedPrefixCount totalSteps</span>
+<span id="L896">896   rw [← Fintype.sum_prod_type&#x27;]</span>
+<span id="L897">897   rw [Finset.sum_comm]</span>
+<span id="L898">898   simp_rw [Fintype.sum_prod_type]</span>
+<span id="L899">899   simp_rw [sum_generatedBatchAggregateVisitIncrement_eq_horizon trajectory]</span>
+<span id="L900">900   simp</span>
+<span id="L901">901 </span>
+<span id="L902">902 /-- Cauchy--Schwarz converts the exact visit ledger into the canonical</span>
+<span id="L903">903 `sqrt(S A K H)` exploration scale. -/</span>
+<span id="L904">904 theorem sum_sqrt_batchedPrefixCount_le</span>
+<span id="L905">905     (mdp : MDP State Action) (episodes : Nat)</span>
+<span id="L906">906     (trajectory : EpisodeBatchTrajectory mdp 1) :</span>
+<span id="L907">907     (∑ state : State, ∑ action : Action,</span>
+<span id="L908">908         Real.sqrt (batchedPrefixCount</span>
+<span id="L909">909           (generatedBatchAggregateVisitIncrement trajectory state action)</span>
+<span id="L910">910           episodes)) &lt;=</span>
+<span id="L911">911       Real.sqrt (totalSteps mdp episodes : Nat) *</span>
+<span id="L912">912         Real.sqrt ((Fintype.card State * Fintype.card Action : Nat) : Real) := by</span>
+<span id="L913">913   have hcs := Real.sum_sqrt_mul_sqrt_le</span>
+<span id="L914">914     (Finset.univ : Finset (State × Action))</span>
+<span id="L915">915     (f := fun pair =&gt;</span>
+<span id="L916">916       (batchedPrefixCount</span>
+<span id="L917">917         (generatedBatchAggregateVisitIncrement trajectory pair.1 pair.2)</span>
+<span id="L918">918         episodes : Real))</span>
+<span id="L919">919     (g := fun _ =&gt; (1 : Real))</span>
+<span id="L920">920     (fun _ =&gt; Nat.cast_nonneg _)</span>
+<span id="L921">921     (fun _ =&gt; zero_le_one)</span>
+<span id="L922">922   simp only [Real.sqrt_one, mul_one, Finset.sum_const, Finset.card_univ,</span>
+<span id="L923">923     nsmul_eq_mul, Nat.cast_ofNat, one_mul] at hcs</span>
+<span id="L924">924   have hcountProd :</span>
+<span id="L925">925       (∑ pair : State × Action,</span>
+<span id="L926">926           (batchedPrefixCount</span>
+<span id="L927">927             (generatedBatchAggregateVisitIncrement trajectory pair.1 pair.2)</span>
+<span id="L928">928             episodes : Real)) = (totalSteps mdp episodes : Nat) := by</span>
+<span id="L929">929     rw [Fintype.sum_prod_type]</span>
+<span id="L930">930     simp only [Prod.fst, Prod.snd]</span>
+<span id="L931">931     exact_mod_cast</span>
+<span id="L932">932       sum_batchedPrefixCount_generatedBatchAggregateVisitIncrement_eq_totalSteps</span>
+<span id="L933">933         mdp episodes trajectory</span>
+<span id="L934">934   rw [hcountProd] at hcs</span>
+<span id="L935">935   rw [Fintype.sum_prod_type] at hcs</span>
+<span id="L936">936   simp only [Prod.fst, Prod.snd] at hcs</span>
+<span id="L937">937   simpa [Fintype.card_prod] using hcs</span>
+<span id="L938">938 </span>
+<span id="L939">939 /-- Global deterministic charge budget for every generated batch in the</span>
+<span id="L940">940 canonical recurrent UCBVI-CH ledger.  The two square-root factors are kept</span>
+<span id="L941">941 separate here so the exact total-count identity remains visible. -/</span>
+<span id="L942">942 theorem totalGeneratedPairCharge_le_explicit</span>
+<span id="L943">943     (mdp : MDP State Action) (episodes : Nat) (delta : Real)</span>
+<span id="L944">944     (trajectory : EpisodeBatchTrajectory mdp 1)</span>
+<span id="L945">945     (hhorizon : 0 &lt; mdp.horizon) (hepisodes : 0 &lt; episodes)</span>
+<span id="L946">946     (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1) :</span>
+<span id="L947">947     totalGeneratedPairCharge mdp episodes delta trajectory &lt;=</span>
+<span id="L948">948       18 * (mdp.horizon : Real) *</span>
+<span id="L949">949           logFactor (State := State) (Action := Action) mdp episodes delta *</span>
+<span id="L950">950           (Real.sqrt (totalSteps mdp episodes : Nat) *</span>
+<span id="L951">951             Real.sqrt ((Fintype.card State * Fintype.card Action : Nat) : Real)) +</span>
+<span id="L952">952         238 * (Fintype.card State : Real) ^ 2 *</span>
+<span id="L953">953           Fintype.card Action * (mdp.horizon : Real) ^ 2 *</span>
+<span id="L954">954           logFactor (State := State) (Action := Action)</span>
+<span id="L955">955             mdp episodes delta ^ 2 := by</span>
+<span id="L956">956   let H : Real := mdp.horizon</span>
+<span id="L957">957   let S : Real := Fintype.card State</span>
+<span id="L958">958   let A : Real := Fintype.card Action</span>
+<span id="L959">959   let L := logFactor (State := State) (Action := Action) mdp episodes delta</span>
+<span id="L960">960   let N := fun state action =&gt; batchedPrefixCount</span>
+<span id="L961">961     (generatedBatchAggregateVisitIncrement trajectory state action) episodes</span>
+<span id="L962">962   have hlog : 1 &lt;= L := one_le_logFactor mdp episodes delta</span>
+<span id="L963">963     hhorizon hepisodes hdelta hdelta_le_one</span>
+<span id="L964">964   have hpair (state : State) (action : Action) :</span>
+<span id="L965">965       (Finset.range episodes).sum (fun episode =&gt;</span>
+<span id="L966">966           (generatedBatchAggregateVisitIncrement trajectory state action episode : Real) *</span>
+<span id="L967">967             generatedPairLocalCharge mdp episodes delta trajectory</span>
+<span id="L968">968               state action episode) &lt;=</span>
+<span id="L969">969         18 * H * L * Real.sqrt (N state action) +</span>
+<span id="L970">970           238 * S * H ^ 2 * L ^ 2 := by</span>
+<span id="L971">971     dsimp [H, S, L, N]</span>
+<span id="L972">972     exact sum_generatedPairCharge_le_explicit mdp episodes delta trajectory</span>
+<span id="L973">973       state action hhorizon hlog</span>
+<span id="L974">974       (log_max_batchedPrefixCount_le_logFactor mdp episodes delta trajectory</span>
+<span id="L975">975         state action hhorizon hepisodes hdelta hdelta_le_one)</span>
+<span id="L976">976   have hsum := Finset.sum_le_sum fun state (_ : state ∈ (Finset.univ : Finset State)) =&gt;</span>
+<span id="L977">977     Finset.sum_le_sum fun action (_ : action ∈ (Finset.univ : Finset Action)) =&gt;</span>
+<span id="L978">978       hpair state action</span>
+<span id="L979">979   have hsqrt := sum_sqrt_batchedPrefixCount_le mdp episodes trajectory</span>
+<span id="L980">980   have hleadNonneg : 0 &lt;= 18 * H * L := by</span>
+<span id="L981">981     dsimp [H, L]</span>
+<span id="L982">982     positivity</span>
+<span id="L983">983   have hlead := mul_le_mul_of_nonneg_left hsqrt hleadNonneg</span>
+<span id="L984">984   have hleadEq :</span>
+<span id="L985">985       (∑ state : State, ∑ action : Action,</span>
+<span id="L986">986           18 * H * L * Real.sqrt (N state action)) =</span>
+<span id="L987">987         (18 * H * L) *</span>
+<span id="L988">988           (∑ state : State, ∑ action : Action,</span>
+<span id="L989">989             Real.sqrt (N state action)) := by</span>
+<span id="L990">990     rw [Finset.mul_sum]</span>
+<span id="L991">991     apply Finset.sum_congr rfl</span>
+<span id="L992">992     intro state _</span>
+<span id="L993">993     rw [Finset.mul_sum]</span>
+<span id="L994">994   have haddEq :</span>
+<span id="L995">995       (∑ _state : State, ∑ _action : Action,</span>
+<span id="L996">996           238 * S * H ^ 2 * L ^ 2) =</span>
+<span id="L997">997         238 * S ^ 2 * A * H ^ 2 * L ^ 2 := by</span>
+<span id="L998">998     simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]</span>
+<span id="L999">999     dsimp [S, A]</span>
+<span id="L1000">1000     norm_num only [Nat.cast_mul]</span>
+<span id="L1001">1001     ring</span>
+<span id="L1002">1002   unfold totalGeneratedPairCharge</span>
+<span id="L1003">1003   calc</span>
+<span id="L1004">1004     _ &lt;= ∑ state : State, ∑ action : Action,</span>
+<span id="L1005">1005         (18 * H * L * Real.sqrt (N state action) +</span>
+<span id="L1006">1006           238 * S * H ^ 2 * L ^ 2) := hsum</span>
+<span id="L1007">1007     _ = (18 * H * L) *</span>
+<span id="L1008">1008           (∑ state : State, ∑ action : Action,</span>
+<span id="L1009">1009             Real.sqrt (N state action)) +</span>
+<span id="L1010">1010         238 * S ^ 2 * A * H ^ 2 * L ^ 2 := by</span>
+<span id="L1011">1011       simp_rw [Finset.sum_add_distrib]</span>
+<span id="L1012">1012       rw [hleadEq, haddEq]</span>
+<span id="L1013">1013     _ &lt;= (18 * H * L) *</span>
+<span id="L1014">1014           (Real.sqrt (totalSteps mdp episodes : Nat) *</span>
+<span id="L1015">1015             Real.sqrt ((Fintype.card State * Fintype.card Action : Nat) : Real)) +</span>
+<span id="L1016">1016         238 * S ^ 2 * A * H ^ 2 * L ^ 2 :=</span>
+<span id="L1017">1017       add_le_add hlead (le_refl _)</span>
+<span id="L1018">1018     _ = _ := by</span>
+<span id="L1019">1019       dsimp [H, S, A, L]</span>
+<span id="L1020">1020 </span>
+<span id="L1021">1021 end AdaptiveCumulativeHoeffdingUCBVI</span>
+<span id="L1022">1022 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

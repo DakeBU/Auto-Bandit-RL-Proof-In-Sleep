@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Exp3ImportanceWeighted.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Exp3ImportanceWeighted.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Exp3ImportanceWeighted.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Exp3ImportanceWeighted.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import Mathlib.Algebra.BigOperators.Field</span>
+<span id="L2">2 import Mathlib.Tactic.FieldSimp</span>
+<span id="L3">3 import Mathlib.Tactic.Linarith</span>
+<span id="L4">4 import BanditRLProof.Exp3HedgeRegret</span>
+<span id="L5">5 </span>
+<span id="L6">6 /-!</span>
+<span id="L7">7 # Finite-action importance-weighted loss identities</span>
+<span id="L8">8 </span>
+<span id="L9">9 This module supplies the finite-distribution algebra immediately above the</span>
+<span id="L10">10 deterministic Hedge theorem and below the probabilistic EXP3 process.  It proves</span>
+<span id="L11">11 the estimator&#x27;s armwise weighted-sum cancellation and exact mixed-square identity on</span>
+<span id="L12">12 an explicit finite action set.</span>
+<span id="L13">13 </span>
+<span id="L14">14 These statements are deterministic finite sums.  Calling them conditional</span>
+<span id="L15">15 expectation facts requires a later law-transport theorem identifying the</span>
+<span id="L16">16 conditional action law with the supplied probabilities.</span>
+<span id="L17">17 -/</span>
+<span id="L18">18 </span>
+<span id="L19">19 namespace BanditRLProof</span>
+<span id="L20">20 namespace Exp3</span>
+<span id="L21">21 </span>
+<span id="L22">22 universe u</span>
+<span id="L23">23 </span>
+<span id="L24">24 /-- Loss estimate that reveals only the loss of the sampled action. -/</span>
+<span id="L25">25 noncomputable def importanceWeightedLoss {Action : Type u}</span>
+<span id="L26">26     (prob loss : Action -&gt; Real) (chosen action : Action) : Real := by</span>
+<span id="L27">27   classical</span>
+<span id="L28">28   exact if chosen = action then loss action / prob action else 0</span>
+<span id="L29">29 </span>
+<span id="L30">30 /-- The loss mixed by `prob` after replacing losses by one sampled estimate. -/</span>
+<span id="L31">31 noncomputable def mixedImportanceWeightedLoss {Action : Type u}</span>
+<span id="L32">32     (arms : Finset Action) (prob loss : Action -&gt; Real) (chosen : Action) : Real :=</span>
+<span id="L33">33   arms.sum (fun action =&gt;</span>
+<span id="L34">34     prob action * importanceWeightedLoss prob loss chosen action)</span>
+<span id="L35">35 </span>
+<span id="L36">36 /-- An importance-weighted estimate mixed by weights that may differ from the</span>
+<span id="L37">37 sampling probabilities used in the estimator denominator. -/</span>
+<span id="L38">38 noncomputable def weightedImportanceWeightedLoss {Action : Type u}</span>
+<span id="L39">39     (arms : Finset Action) (prob weight loss : Action -&gt; Real)</span>
+<span id="L40">40     (chosen : Action) : Real :=</span>
+<span id="L41">41   arms.sum (fun action =&gt;</span>
+<span id="L42">42     weight action * importanceWeightedLoss prob loss chosen action)</span>
+<span id="L43">43 </span>
+<span id="L44">44 /-- The mixed square of one sampled importance-weighted loss vector. -/</span>
+<span id="L45">45 noncomputable def mixedSquaredImportanceWeightedLoss {Action : Type u}</span>
+<span id="L46">46     (arms : Finset Action) (prob loss : Action -&gt; Real) (chosen : Action) : Real :=</span>
+<span id="L47">47   arms.sum (fun action =&gt;</span>
+<span id="L48">48     prob action * (importanceWeightedLoss prob loss chosen action) ^ 2)</span>
+<span id="L49">49 </span>
+<span id="L50">50 theorem importanceWeightedLoss_nonneg {Action : Type u} [DecidableEq Action]</span>
+<span id="L51">51     {prob loss : Action -&gt; Real} {chosen action : Action}</span>
+<span id="L52">52     (hprob : 0 &lt;= prob action) (hloss : 0 &lt;= loss action) :</span>
+<span id="L53">53     0 &lt;= importanceWeightedLoss prob loss chosen action := by</span>
+<span id="L54">54   unfold importanceWeightedLoss</span>
+<span id="L55">55   split_ifs</span>
+<span id="L56">56   · exact div_nonneg hloss hprob</span>
+<span id="L57">57   · exact le_refl 0</span>
+<span id="L58">58 </span>
+<span id="L59">59 /-- The probability-weighted finite sum of one coordinate recovers its loss. -/</span>
+<span id="L60">60 theorem sum_prob_mul_importanceWeightedLoss_eq_loss {Action : Type u}</span>
+<span id="L61">61     [DecidableEq Action]</span>
+<span id="L62">62     (arms : Finset Action) (prob loss : Action -&gt; Real)</span>
+<span id="L63">63     (action : Action) (haction : action ∈ arms)</span>
+<span id="L64">64     (hprob : prob action ≠ 0) :</span>
+<span id="L65">65     arms.sum (fun chosen =&gt;</span>
+<span id="L66">66         prob chosen * importanceWeightedLoss prob loss chosen action) =</span>
+<span id="L67">67       loss action := by</span>
+<span id="L68">68   rw [Finset.sum_eq_single action]</span>
+<span id="L69">69   · simp [importanceWeightedLoss]</span>
+<span id="L70">70     rw [mul_comm]</span>
+<span id="L71">71     exact div_mul_cancel₀ _ hprob</span>
+<span id="L72">72   · intro chosen hchosen hne</span>
+<span id="L73">73     simp [importanceWeightedLoss, hne]</span>
+<span id="L74">74   · exact fun hnotmem =&gt; (hnotmem haction).elim</span>
+<span id="L75">75 </span>
+<span id="L76">76 /-- Pathwise cancellation: the mixed estimate is the sampled loss. -/</span>
+<span id="L77">77 theorem mixedImportanceWeightedLoss_eq_selectedLoss {Action : Type u}</span>
+<span id="L78">78     [DecidableEq Action]</span>
+<span id="L79">79     (arms : Finset Action) (prob loss : Action -&gt; Real)</span>
+<span id="L80">80     (chosen : Action) (hchosen : chosen ∈ arms)</span>
+<span id="L81">81     (hprob : prob chosen ≠ 0) :</span>
+<span id="L82">82     mixedImportanceWeightedLoss arms prob loss chosen = loss chosen := by</span>
+<span id="L83">83   unfold mixedImportanceWeightedLoss</span>
+<span id="L84">84   rw [Finset.sum_eq_single chosen]</span>
+<span id="L85">85   · simp [importanceWeightedLoss]</span>
+<span id="L86">86     rw [mul_comm]</span>
+<span id="L87">87     exact div_mul_cancel₀ _ hprob</span>
+<span id="L88">88   · intro action haction hne</span>
+<span id="L89">89     simp [importanceWeightedLoss, Ne.symm hne]</span>
+<span id="L90">90   · exact fun hnotmem =&gt; (hnotmem hchosen).elim</span>
+<span id="L91">91 </span>
+<span id="L92">92 /-- Averaging the pathwise mixed estimate recovers the true mixed loss. -/</span>
+<span id="L93">93 theorem sum_prob_mul_mixedImportanceWeightedLoss_eq_mixedLoss</span>
+<span id="L94">94     {Action : Type u} [DecidableEq Action]</span>
+<span id="L95">95     (arms : Finset Action) (prob loss : Action -&gt; Real)</span>
+<span id="L96">96     (hprob : forall action, action ∈ arms -&gt; prob action ≠ 0) :</span>
+<span id="L97">97     arms.sum (fun chosen =&gt;</span>
+<span id="L98">98         prob chosen * mixedImportanceWeightedLoss arms prob loss chosen) =</span>
+<span id="L99">99       arms.sum (fun action =&gt; prob action * loss action) := by</span>
+<span id="L100">100   apply Finset.sum_congr rfl</span>
+<span id="L101">101   intro chosen hchosen</span>
+<span id="L102">102   rw [mixedImportanceWeightedLoss_eq_selectedLoss arms prob loss chosen hchosen</span>
+<span id="L103">103     (hprob chosen hchosen)]</span>
+<span id="L104">104 </span>
+<span id="L105">105 /-- Averaging an estimator mixed by arbitrary predictable weights recovers</span>
+<span id="L106">106 the same weighted true loss. -/</span>
+<span id="L107">107 theorem sum_prob_mul_weightedImportanceWeightedLoss_eq_weightedLoss</span>
+<span id="L108">108     {Action : Type u} [DecidableEq Action]</span>
+<span id="L109">109     (arms : Finset Action) (prob weight loss : Action -&gt; Real)</span>
+<span id="L110">110     (hprob : forall action, action ∈ arms -&gt; prob action ≠ 0) :</span>
+<span id="L111">111     arms.sum (fun chosen =&gt;</span>
+<span id="L112">112         prob chosen *</span>
+<span id="L113">113           weightedImportanceWeightedLoss arms prob weight loss chosen) =</span>
+<span id="L114">114       arms.sum (fun action =&gt; weight action * loss action) := by</span>
+<span id="L115">115   unfold weightedImportanceWeightedLoss</span>
+<span id="L116">116   simp_rw [Finset.mul_sum]</span>
+<span id="L117">117   rw [Finset.sum_comm]</span>
+<span id="L118">118   apply Finset.sum_congr rfl</span>
+<span id="L119">119   intro action haction</span>
+<span id="L120">120   calc</span>
+<span id="L121">121     arms.sum (fun chosen =&gt;</span>
+<span id="L122">122         prob chosen *</span>
+<span id="L123">123           (weight action * importanceWeightedLoss prob loss chosen action)) =</span>
+<span id="L124">124         weight action * arms.sum (fun chosen =&gt;</span>
+<span id="L125">125           prob chosen * importanceWeightedLoss prob loss chosen action) := by</span>
+<span id="L126">126       rw [Finset.mul_sum]</span>
+<span id="L127">127       apply Finset.sum_congr rfl</span>
+<span id="L128">128       intro chosen _hchosen</span>
+<span id="L129">129       ring</span>
+<span id="L130">130     _ = weight action * loss action := by</span>
+<span id="L131">131       rw [sum_prob_mul_importanceWeightedLoss_eq_loss</span>
+<span id="L132">132         arms prob loss action haction (hprob action haction)]</span>
+<span id="L133">133 </span>
+<span id="L134">134 /-- Exact pathwise mixed-square formula for a sampled action. -/</span>
+<span id="L135">135 theorem mixedSquaredImportanceWeightedLoss_eq_selectedLoss_sq_div</span>
+<span id="L136">136     {Action : Type u} [DecidableEq Action]</span>
+<span id="L137">137     (arms : Finset Action) (prob loss : Action -&gt; Real)</span>
+<span id="L138">138     (chosen : Action) (hchosen : chosen ∈ arms)</span>
+<span id="L139">139     (hprob : prob chosen ≠ 0) :</span>
+<span id="L140">140     mixedSquaredImportanceWeightedLoss arms prob loss chosen =</span>
+<span id="L141">141       (loss chosen) ^ 2 / prob chosen := by</span>
+<span id="L142">142   unfold mixedSquaredImportanceWeightedLoss</span>
+<span id="L143">143   rw [Finset.sum_eq_single chosen]</span>
+<span id="L144">144   · simp [importanceWeightedLoss]</span>
+<span id="L145">145     field_simp</span>
+<span id="L146">146   · intro action haction hne</span>
+<span id="L147">147     simp [importanceWeightedLoss, Ne.symm hne]</span>
+<span id="L148">148   · exact fun hnotmem =&gt; (hnotmem hchosen).elim</span>
+<span id="L149">149 </span>
+<span id="L150">150 /-- Exact probability-weighted finite sum of the mixed estimator&#x27;s square. -/</span>
+<span id="L151">151 theorem sum_prob_mul_mixedSquaredImportanceWeightedLoss_eq_sum_loss_sq</span>
+<span id="L152">152     {Action : Type u} [DecidableEq Action]</span>
+<span id="L153">153     (arms : Finset Action) (prob loss : Action -&gt; Real)</span>
+<span id="L154">154     (hprob : forall action, action ∈ arms -&gt; prob action ≠ 0) :</span>
+<span id="L155">155     arms.sum (fun chosen =&gt;</span>
+<span id="L156">156         prob chosen *</span>
+<span id="L157">157           mixedSquaredImportanceWeightedLoss arms prob loss chosen) =</span>
+<span id="L158">158       arms.sum (fun action =&gt; (loss action) ^ 2) := by</span>
+<span id="L159">159   apply Finset.sum_congr rfl</span>
+<span id="L160">160   intro chosen hchosen</span>
+<span id="L161">161   rw [mixedSquaredImportanceWeightedLoss_eq_selectedLoss_sq_div</span>
+<span id="L162">162     arms prob loss chosen hchosen (hprob chosen hchosen)]</span>
+<span id="L163">163   exact mul_div_cancel₀ _ (hprob chosen hchosen)</span>
+<span id="L164">164 </span>
+<span id="L165">165 /-- For losses in `[0,1]`, the probability-weighted mixed square is at most the arm count. -/</span>
+<span id="L166">166 theorem sum_prob_mul_mixedSquaredImportanceWeightedLoss_le_card</span>
+<span id="L167">167     {Action : Type u} [DecidableEq Action]</span>
+<span id="L168">168     (arms : Finset Action) (prob loss : Action -&gt; Real)</span>
+<span id="L169">169     (hprob : forall action, action ∈ arms -&gt; prob action ≠ 0)</span>
+<span id="L170">170     (hloss : forall action, action ∈ arms -&gt;</span>
+<span id="L171">171       0 &lt;= loss action ∧ loss action &lt;= 1) :</span>
+<span id="L172">172     arms.sum (fun chosen =&gt;</span>
+<span id="L173">173         prob chosen *</span>
+<span id="L174">174           mixedSquaredImportanceWeightedLoss arms prob loss chosen) &lt;=</span>
+<span id="L175">175       arms.card := by</span>
+<span id="L176">176   rw [sum_prob_mul_mixedSquaredImportanceWeightedLoss_eq_sum_loss_sq</span>
+<span id="L177">177     arms prob loss hprob]</span>
+<span id="L178">178   calc</span>
+<span id="L179">179     arms.sum (fun action =&gt; (loss action) ^ 2) &lt;=</span>
+<span id="L180">180         arms.sum (fun _action =&gt; (1 : Real)) := by</span>
+<span id="L181">181       apply Finset.sum_le_sum</span>
+<span id="L182">182       intro action haction</span>
+<span id="L183">183       nlinarith [(hloss action haction).1, (hloss action haction).2]</span>
+<span id="L184">184     _ = arms.card := by simp</span>
+<span id="L185">185 </span>
+<span id="L186">186 end Exp3</span>
+<span id="L187">187 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

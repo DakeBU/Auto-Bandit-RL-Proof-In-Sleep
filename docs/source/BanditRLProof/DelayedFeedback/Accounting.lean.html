@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/DelayedFeedback/Accounting.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/DelayedFeedback/Accounting.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/DelayedFeedback/Accounting.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/DelayedFeedback/Accounting.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import Mathlib.Data.Finset.Card</span>
+<span id="L2">2 import Mathlib.Data.Finset.Lattice.Fold</span>
+<span id="L3">3 </span>
+<span id="L4">4 namespace BanditRLProof</span>
+<span id="L5">5 </span>
+<span id="L6">6 namespace DelayedFeedback</span>
+<span id="L7">7 </span>
+<span id="L8">8 /-- Source rounds whose delayed feedback is available before the action at</span>
+<span id="L9">9 round `t`.  The strict inequality matches the NeurIPS 2025 delayed-SAPO source:</span>
+<span id="L10">10 feedback generated at `s` arrives at the end of `s + delay s`, hence it can be</span>
+<span id="L11">11 used for the next action only when `s + delay s &lt; t`. -/</span>
+<span id="L12">12 def observedBefore (delay : Nat → Nat) (t : Nat) : Finset Nat :=</span>
+<span id="L13">13   (Finset.range t).filter (fun s =&gt; s + delay s &lt; t)</span>
+<span id="L14">14 </span>
+<span id="L15">15 /-- Source rounds before `t` whose feedback is not yet available when the</span>
+<span id="L16">16 action at `t` is chosen.  Future source rounds are excluded by `Finset.range</span>
+<span id="L17">17 t`. -/</span>
+<span id="L18">18 def outstandingAt (delay : Nat → Nat) (t : Nat) : Finset Nat :=</span>
+<span id="L19">19   (Finset.range t).filter (fun s =&gt; ¬ s + delay s &lt; t)</span>
+<span id="L20">20 </span>
+<span id="L21">21 /-- Available and outstanding feedback form disjoint parts of the past. -/</span>
+<span id="L22">22 theorem observedBefore_disjoint_outstandingAt (delay : Nat → Nat) (t : Nat) :</span>
+<span id="L23">23     Disjoint (observedBefore delay t) (outstandingAt delay t) := by</span>
+<span id="L24">24   rw [Finset.disjoint_left]</span>
+<span id="L25">25   intro s hsObserved hsOutstanding</span>
+<span id="L26">26   exact (Finset.mem_filter.mp hsOutstanding).2</span>
+<span id="L27">27     (Finset.mem_filter.mp hsObserved).2</span>
+<span id="L28">28 </span>
+<span id="L29">29 /-- Every source round before `t` is either available or outstanding. -/</span>
+<span id="L30">30 theorem observedBefore_union_outstandingAt (delay : Nat → Nat) (t : Nat) :</span>
+<span id="L31">31     observedBefore delay t ∪ outstandingAt delay t = Finset.range t := by</span>
+<span id="L32">32   ext s</span>
+<span id="L33">33   simp only [Finset.mem_union, observedBefore, outstandingAt,</span>
+<span id="L34">34     Finset.mem_filter, Finset.mem_range]</span>
+<span id="L35">35   constructor</span>
+<span id="L36">36   · rintro (hs | hs)</span>
+<span id="L37">37     · exact hs.1</span>
+<span id="L38">38     · exact hs.1</span>
+<span id="L39">39   · intro hs</span>
+<span id="L40">40     by_cases havailable : s + delay s &lt; t</span>
+<span id="L41">41     · exact Or.inl ⟨hs, havailable⟩</span>
+<span id="L42">42     · exact Or.inr ⟨hs, havailable⟩</span>
+<span id="L43">43 </span>
+<span id="L44">44 /-- The available and outstanding counts add up to the number of past source</span>
+<span id="L45">45 rounds. -/</span>
+<span id="L46">46 theorem card_observedBefore_add_card_outstandingAt</span>
+<span id="L47">47     (delay : Nat → Nat) (t : Nat) :</span>
+<span id="L48">48     (observedBefore delay t).card + (outstandingAt delay t).card = t := by</span>
+<span id="L49">49   rw [← Finset.card_union_of_disjoint</span>
+<span id="L50">50     (observedBefore_disjoint_outstandingAt delay t)]</span>
+<span id="L51">51   rw [observedBefore_union_outstandingAt]</span>
+<span id="L52">52   exact Finset.card_range t</span>
+<span id="L53">53 </span>
+<span id="L54">54 /-- Number of source rounds before `t` whose feedback cannot yet be used by</span>
+<span id="L55">55 the action at `t`.  This action-time surface is kept separate from the paper&#x27;s</span>
+<span id="L56">56 end-of-round `sigma(t)` until their one-based/zero-based index bridge is</span>
+<span id="L57">57 proved. -/</span>
+<span id="L58">58 def outstandingCount (delay : Nat → Nat) (t : Nat) : Nat :=</span>
+<span id="L59">59   (outstandingAt delay t).card</span>
+<span id="L60">60 </span>
+<span id="L61">61 /-- Largest action-time outstanding count through the inclusive horizon. -/</span>
+<span id="L62">62 def maxOutstandingBeforeThrough (delay : Nat → Nat) (horizon : Nat) : Nat :=</span>
+<span id="L63">63   (Finset.range (horizon + 1)).sup (outstandingCount delay)</span>
+<span id="L64">64 </span>
+<span id="L65">65 /-- An action-time outstanding count never exceeds the number of past source</span>
+<span id="L66">66 rounds. -/</span>
+<span id="L67">67 theorem outstandingCount_le_round (delay : Nat → Nat) (t : Nat) :</span>
+<span id="L68">68     outstandingCount delay t ≤ t := by</span>
+<span id="L69">69   rw [outstandingCount]</span>
+<span id="L70">70   exact (Finset.card_le_card (Finset.filter_subset _ _)).trans_eq</span>
+<span id="L71">71     (Finset.card_range t)</span>
+<span id="L72">72 </span>
+<span id="L73">73 /-- Every action-time outstanding count inside the horizon is bounded by the</span>
+<span id="L74">74 finite maximum surface. -/</span>
+<span id="L75">75 theorem outstandingCount_le_maxOutstandingBeforeThrough</span>
+<span id="L76">76     (delay : Nat → Nat) {t horizon : Nat} (ht : t ≤ horizon) :</span>
+<span id="L77">77     outstandingCount delay t ≤ maxOutstandingBeforeThrough delay horizon := by</span>
+<span id="L78">78   exact Finset.le_sup</span>
+<span id="L79">79     (s := Finset.range (horizon + 1))</span>
+<span id="L80">80     (f := outstandingCount delay)</span>
+<span id="L81">81     (Finset.mem_range.mpr (Nat.lt_succ_of_le ht))</span>
+<span id="L82">82 </span>
+<span id="L83">83 /-- Convert a one-based paper delay sequence into the zero-based source</span>
+<span id="L84">84 carrier used by `outstandingAt`: zero-based source `s` represents paper source</span>
+<span id="L85">85 round `s + 1`. -/</span>
+<span id="L86">86 def oneBasedDelayShift (delay : Nat → Nat) (s : Nat) : Nat :=</span>
+<span id="L87">87   delay (s + 1)</span>
+<span id="L88">88 </span>
+<span id="L89">89 /-- The paper&#x27;s end-of-round missing-feedback set, represented on a zero-based</span>
+<span id="L90">90 finite carrier.  An element `s` denotes paper round `s + 1`, and the predicate</span>
+<span id="L91">91 is exactly `(s + 1) + d_(s+1) &gt; t` for source rounds at most `t`. -/</span>
+<span id="L92">92 def paperMissingAtEnd (delay : Nat → Nat) (t : Nat) : Finset Nat :=</span>
+<span id="L93">93   (Finset.range t).filter (fun s =&gt; t &lt; (s + 1) + delay (s + 1))</span>
+<span id="L94">94 </span>
+<span id="L95">95 /-- The source paper&#x27;s one-based end-of-round missing set is exactly the</span>
+<span id="L96">96 action-time outstanding set after reindexing source rounds and delays.  This</span>
+<span id="L97">97 lemma is the explicit off-by-one bridge; the two surfaces are not identified</span>
+<span id="L98">98 by notation alone. -/</span>
+<span id="L99">99 theorem paperMissingAtEnd_eq_outstandingAt_oneBasedDelayShift</span>
+<span id="L100">100     (delay : Nat → Nat) (t : Nat) :</span>
+<span id="L101">101     paperMissingAtEnd delay t = outstandingAt (oneBasedDelayShift delay) t := by</span>
+<span id="L102">102   ext s</span>
+<span id="L103">103   simp only [paperMissingAtEnd, outstandingAt, oneBasedDelayShift,</span>
+<span id="L104">104     Finset.mem_filter, Finset.mem_range]</span>
+<span id="L105">105   constructor</span>
+<span id="L106">106   · rintro ⟨hs, hmissing⟩</span>
+<span id="L107">107     exact ⟨hs, by omega⟩</span>
+<span id="L108">108   · rintro ⟨hs, houtstanding⟩</span>
+<span id="L109">109     exact ⟨hs, by omega⟩</span>
+<span id="L110">110 </span>
+<span id="L111">111 /-- Paper-facing count corresponding to `sigma(t)`, with paper rounds</span>
+<span id="L112">112 `1, ..., t` represented by zero-based source indices. -/</span>
+<span id="L113">113 def paperMissingCount (delay : Nat → Nat) (t : Nat) : Nat :=</span>
+<span id="L114">114   (paperMissingAtEnd delay t).card</span>
+<span id="L115">115 </span>
+<span id="L116">116 /-- Cardinal form of the one-based/end-of-round indexing bridge. -/</span>
+<span id="L117">117 theorem paperMissingCount_eq_outstandingCount_oneBasedDelayShift</span>
+<span id="L118">118     (delay : Nat → Nat) (t : Nat) :</span>
+<span id="L119">119     paperMissingCount delay t = outstandingCount (oneBasedDelayShift delay) t := by</span>
+<span id="L120">120   rw [paperMissingCount, outstandingCount,</span>
+<span id="L121">121     paperMissingAtEnd_eq_outstandingAt_oneBasedDelayShift]</span>
+<span id="L122">122 </span>
+<span id="L123">123 /-- The paper-facing missing count at round `t` is at most `t`. -/</span>
+<span id="L124">124 theorem paperMissingCount_le_round (delay : Nat → Nat) (t : Nat) :</span>
+<span id="L125">125     paperMissingCount delay t ≤ t := by</span>
+<span id="L126">126   rw [paperMissingCount_eq_outstandingCount_oneBasedDelayShift]</span>
+<span id="L127">127   exact outstandingCount_le_round (oneBasedDelayShift delay) t</span>
+<span id="L128">128 </span>
+<span id="L129">129 /-- Finite maximum of the paper-facing missing-count surface through an</span>
+<span id="L130">130 inclusive horizon. -/</span>
+<span id="L131">131 def paperSigmaMaxThrough (delay : Nat → Nat) (horizon : Nat) : Nat :=</span>
+<span id="L132">132   (Finset.range (horizon + 1)).sup (paperMissingCount delay)</span>
+<span id="L133">133 </span>
+<span id="L134">134 /-- Each paper-facing missing count is bounded by its finite maximum through</span>
+<span id="L135">135 the declared horizon. -/</span>
+<span id="L136">136 theorem paperMissingCount_le_paperSigmaMaxThrough</span>
+<span id="L137">137     (delay : Nat → Nat) {t horizon : Nat} (ht : t ≤ horizon) :</span>
+<span id="L138">138     paperMissingCount delay t ≤ paperSigmaMaxThrough delay horizon := by</span>
+<span id="L139">139   exact Finset.le_sup</span>
+<span id="L140">140     (s := Finset.range (horizon + 1))</span>
+<span id="L141">141     (f := paperMissingCount delay)</span>
+<span id="L142">142     (Finset.mem_range.mpr (Nat.lt_succ_of_le ht))</span>
+<span id="L143">143 </span>
+<span id="L144">144 end DelayedFeedback</span>
+<span id="L145">145 </span>
+<span id="L146">146 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

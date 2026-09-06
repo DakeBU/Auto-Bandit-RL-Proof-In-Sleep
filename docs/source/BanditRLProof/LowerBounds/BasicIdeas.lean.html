@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/LowerBounds/BasicIdeas.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/LowerBounds/BasicIdeas.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/LowerBounds/BasicIdeas.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/LowerBounds/BasicIdeas.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import Mathlib.Algebra.BigOperators.Fin</span>
+<span id="L2">2 import Mathlib.Algebra.Order.BigOperators.Group.Finset</span>
+<span id="L3">3 import Mathlib.Data.ENNReal.Basic</span>
+<span id="L4">4 import Mathlib.Tactic.Linarith</span>
+<span id="L5">5 </span>
+<span id="L6">6 /-!</span>
+<span id="L7">7 # Lower bounds: basic ideas</span>
+<span id="L8">8 </span>
+<span id="L9">9 This module formalizes the semantic and deterministic interfaces developed in</span>
+<span id="L10">10 Lattimore--Szepesvári, *Bandit Algorithms* (2020), Part IV, Chapter 13.</span>
+<span id="L11">11 </span>
+<span id="L12">12 The source states its finite-arm Gaussian minimax theorem in Chapter 13 but</span>
+<span id="L13">13 defers the proof to Chapter 15. Accordingly, this module does **not** claim</span>
+<span id="L14">14 that theorem. It provides the worst-case/minimax order surface, the</span>
+<span id="L15">15 least-explored alternative-arm averaging leaf, and the conditional algebra</span>
+<span id="L16">16 behind the chapter&#x27;s two-environment heuristic. The cross-environment</span>
+<span id="L17">17 information comparison remains an explicit premise for Chapters 14--15.</span>
+<span id="L18">18 -/</span>
+<span id="L19">19 </span>
+<span id="L20">20 namespace BanditRLProof</span>
+<span id="L21">21 namespace LowerBounds</span>
+<span id="L22">22 </span>
+<span id="L23">23 open scoped BigOperators ENNReal</span>
+<span id="L24">24 </span>
+<span id="L25">25 universe u v</span>
+<span id="L26">26 </span>
+<span id="L27">27 /--</span>
+<span id="L28">28 Worst-case expected regret of one policy over an explicit environment class.</span>
+<span id="L29">29 </span>
+<span id="L30">30 The `ENNReal` codomain supplies the source-level supremum without a hidden</span>
+<span id="L31">31 boundedness hypothesis. If `environmentClass` is empty, this retains the</span>
+<span id="L32">32 standard complete-lattice value `bot`; meaningful bandit consumers should</span>
+<span id="L33">33 prove their intended class is nonempty.</span>
+<span id="L34">34 -/</span>
+<span id="L35">35 noncomputable def worstCaseExpectedRegret</span>
+<span id="L36">36     {Policy : Type u} {Environment : Type v}</span>
+<span id="L37">37     (regret : Policy -&gt; Environment -&gt; ENNReal)</span>
+<span id="L38">38     (environmentClass : Set Environment)</span>
+<span id="L39">39     (policy : Policy) : ENNReal :=</span>
+<span id="L40">40   ⨆ environment : environmentClass, regret policy environment.1</span>
+<span id="L41">41 </span>
+<span id="L42">42 /--</span>
+<span id="L43">43 Minimax expected regret over explicit policy and environment classes.</span>
+<span id="L44">44 </span>
+<span id="L45">45 The definition mirrors `inf_pi sup_nu R_n(pi,nu)`. Nonemptiness of the classes</span>
+<span id="L46">46 is intentionally a consumer-side semantic contract rather than a hidden</span>
+<span id="L47">47 assumption of the definition.</span>
+<span id="L48">48 -/</span>
+<span id="L49">49 noncomputable def minimaxExpectedRegret</span>
+<span id="L50">50     {Policy : Type u} {Environment : Type v}</span>
+<span id="L51">51     (regret : Policy -&gt; Environment -&gt; ENNReal)</span>
+<span id="L52">52     (policyClass : Set Policy)</span>
+<span id="L53">53     (environmentClass : Set Environment) : ENNReal :=</span>
+<span id="L54">54   ⨅ policy : policyClass,</span>
+<span id="L55">55     worstCaseExpectedRegret regret environmentClass policy.1</span>
+<span id="L56">56 </span>
+<span id="L57">57 /--</span>
+<span id="L58">58 A policy is minimax optimal for an explicit policy class, environment class,</span>
+<span id="L59">59 and fixed-horizon regret functional when it is admissible and its worst-case</span>
+<span id="L60">60 regret attains the minimax value.</span>
+<span id="L61">61 </span>
+<span id="L62">62 The horizon is carried by `regret`; keeping the two classes explicit records</span>
+<span id="L63">63 the source warning that minimax optimality is not a property of a policy alone.</span>
+<span id="L64">64 -/</span>
+<span id="L65">65 def IsMinimaxOptimal</span>
+<span id="L66">66     {Policy : Type u} {Environment : Type v}</span>
+<span id="L67">67     (regret : Policy -&gt; Environment -&gt; ENNReal)</span>
+<span id="L68">68     (policyClass : Set Policy) (environmentClass : Set Environment)</span>
+<span id="L69">69     (policy : Policy) : Prop :=</span>
+<span id="L70">70   policy ∈ policyClass ∧</span>
+<span id="L71">71     worstCaseExpectedRegret regret environmentClass policy =</span>
+<span id="L72">72       minimaxExpectedRegret regret policyClass environmentClass</span>
+<span id="L73">73 </span>
+<span id="L74">74 /-- A minimax-optimal policy belongs to the policy class over which the infimum is taken. -/</span>
+<span id="L75">75 theorem IsMinimaxOptimal.mem_policyClass</span>
+<span id="L76">76     {Policy : Type u} {Environment : Type v}</span>
+<span id="L77">77     {regret : Policy -&gt; Environment -&gt; ENNReal}</span>
+<span id="L78">78     {policyClass : Set Policy} {environmentClass : Set Environment}</span>
+<span id="L79">79     {policy : Policy}</span>
+<span id="L80">80     (hpolicy : IsMinimaxOptimal regret policyClass environmentClass policy) :</span>
+<span id="L81">81     policy ∈ policyClass :=</span>
+<span id="L82">82   hpolicy.1</span>
+<span id="L83">83 </span>
+<span id="L84">84 /-- A minimax-optimal policy attains the fixed-class minimax value. -/</span>
+<span id="L85">85 theorem IsMinimaxOptimal.eq_minimaxExpectedRegret</span>
+<span id="L86">86     {Policy : Type u} {Environment : Type v}</span>
+<span id="L87">87     {regret : Policy -&gt; Environment -&gt; ENNReal}</span>
+<span id="L88">88     {policyClass : Set Policy} {environmentClass : Set Environment}</span>
+<span id="L89">89     {policy : Policy}</span>
+<span id="L90">90     (hpolicy : IsMinimaxOptimal regret policyClass environmentClass policy) :</span>
+<span id="L91">91     worstCaseExpectedRegret regret environmentClass policy =</span>
+<span id="L92">92       minimaxExpectedRegret regret policyClass environmentClass :=</span>
+<span id="L93">93   hpolicy.2</span>
+<span id="L94">94 </span>
+<span id="L95">95 /-- One environment&#x27;s regret is below the worst case over any class containing it. -/</span>
+<span id="L96">96 theorem expectedRegret_le_worstCaseExpectedRegret</span>
+<span id="L97">97     {Policy : Type u} {Environment : Type v}</span>
+<span id="L98">98     (regret : Policy -&gt; Environment -&gt; ENNReal)</span>
+<span id="L99">99     (environmentClass : Set Environment)</span>
+<span id="L100">100     (policy : Policy) (environment : Environment)</span>
+<span id="L101">101     (henvironment : environment ∈ environmentClass) :</span>
+<span id="L102">102     regret policy environment ≤</span>
+<span id="L103">103       worstCaseExpectedRegret regret environmentClass policy := by</span>
+<span id="L104">104   unfold worstCaseExpectedRegret</span>
+<span id="L105">105   exact le_iSup (fun member : environmentClass =&gt; regret policy member.1)</span>
+<span id="L106">106     ⟨environment, henvironment⟩</span>
+<span id="L107">107 </span>
+<span id="L108">108 /-- The minimax value is below the worst-case value of each admissible policy. -/</span>
+<span id="L109">109 theorem minimaxExpectedRegret_le_worstCaseExpectedRegret</span>
+<span id="L110">110     {Policy : Type u} {Environment : Type v}</span>
+<span id="L111">111     (regret : Policy -&gt; Environment -&gt; ENNReal)</span>
+<span id="L112">112     (policyClass : Set Policy) (environmentClass : Set Environment)</span>
+<span id="L113">113     (policy : Policy) (hpolicy : policy ∈ policyClass) :</span>
+<span id="L114">114     minimaxExpectedRegret regret policyClass environmentClass ≤</span>
+<span id="L115">115       worstCaseExpectedRegret regret environmentClass policy := by</span>
+<span id="L116">116   unfold minimaxExpectedRegret</span>
+<span id="L117">117   exact iInf_le_of_le ⟨policy, hpolicy⟩ le_rfl</span>
+<span id="L118">118 </span>
+<span id="L119">119 /-- A uniform lower bound on every admissible policy is a minimax lower bound. -/</span>
+<span id="L120">120 theorem le_minimaxExpectedRegret</span>
+<span id="L121">121     {Policy : Type u} {Environment : Type v}</span>
+<span id="L122">122     (regret : Policy -&gt; Environment -&gt; ENNReal)</span>
+<span id="L123">123     (policyClass : Set Policy) (environmentClass : Set Environment)</span>
+<span id="L124">124     (lower : ENNReal)</span>
+<span id="L125">125     (hlower : ∀ policy : policyClass,</span>
+<span id="L126">126       lower ≤ worstCaseExpectedRegret regret environmentClass policy.1) :</span>
+<span id="L127">127     lower ≤ minimaxExpectedRegret regret policyClass environmentClass := by</span>
+<span id="L128">128   unfold minimaxExpectedRegret</span>
+<span id="L129">129   exact le_iInf hlower</span>
+<span id="L130">130 </span>
+<span id="L131">131 /--</span>
+<span id="L132">132 Finite averaging: among a nonempty family whose sum is at most `budget`, one</span>
+<span id="L133">133 coordinate is at most `budget / m`.</span>
+<span id="L134">134 </span>
+<span id="L135">135 This is a Mathlib-composed deterministic leaf. It contains no bandit law,</span>
+<span id="L136">136 expectation, measurability, or concentration assumption.</span>
+<span id="L137">137 -/</span>
+<span id="L138">138 theorem exists_alternative_le_average</span>
+<span id="L139">139     {m : Nat} (hm : 0 &lt; m)</span>
+<span id="L140">140     (alternativeExpectedPulls : Fin m -&gt; Real)</span>
+<span id="L141">141     (budget : Real)</span>
+<span id="L142">142     (hbudget : ∑ i : Fin m, alternativeExpectedPulls i ≤ budget) :</span>
+<span id="L143">143     ∃ i : Fin m,</span>
+<span id="L144">144       alternativeExpectedPulls i ≤ budget / (m : Real) := by</span>
+<span id="L145">145   haveI : Nonempty (Fin m) := Fintype.card_pos_iff.mp (by simpa using hm)</span>
+<span id="L146">146   have huniv : (Finset.univ : Finset (Fin m)).Nonempty := Finset.univ_nonempty</span>
+<span id="L147">147   have hmReal : (m : Real) ≠ 0 := Nat.cast_ne_zero.mpr hm.ne&#x27;</span>
+<span id="L148">148   have hconstant :</span>
+<span id="L149">149       (∑ _i : Fin m, budget / (m : Real)) = budget := by</span>
+<span id="L150">150     rw [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]</span>
+<span id="L151">151     exact mul_div_cancel₀ budget hmReal</span>
+<span id="L152">152   have hcompare :</span>
+<span id="L153">153       (∑ i : Fin m, alternativeExpectedPulls i) ≤</span>
+<span id="L154">154         ∑ _i : Fin m, budget / (m : Real) := by</span>
+<span id="L155">155     simpa [hconstant] using hbudget</span>
+<span id="L156">156   obtain ⟨i, _hi, hile⟩ :=</span>
+<span id="L157">157     Finset.exists_le_of_sum_le huniv hcompare</span>
+<span id="L158">158   exact ⟨i, hile⟩</span>
+<span id="L159">159 </span>
+<span id="L160">160 /--</span>
+<span id="L161">161 Removing the distinguished arm zero from an exact nonnegative pull budget</span>
+<span id="L162">162 leaves at most the full budget on the `Fin.succ` alternative arms.</span>
+<span id="L163">163 -/</span>
+<span id="L164">164 theorem alternativeExpectedPullBudget_le</span>
+<span id="L165">165     {m : Nat}</span>
+<span id="L166">166     (expectedPulls : Fin (m + 1) -&gt; Real)</span>
+<span id="L167">167     (budget : Real)</span>
+<span id="L168">168     (hnonneg : ∀ arm, 0 ≤ expectedPulls arm)</span>
+<span id="L169">169     (htotal : ∑ arm : Fin (m + 1), expectedPulls arm = budget) :</span>
+<span id="L170">170     (∑ i : Fin m, expectedPulls i.succ) ≤ budget := by</span>
+<span id="L171">171   rw [Fin.sum_univ_succ] at htotal</span>
+<span id="L172">172   nlinarith [hnonneg (0 : Fin (m + 1))]</span>
+<span id="L173">173 </span>
+<span id="L174">174 /--</span>
+<span id="L175">175 Chapter 13&#x27;s least-explored alternative arm.</span>
+<span id="L176">176 </span>
+<span id="L177">177 There are `m + 1` arms: arm zero is the base arm and `i.succ`, for `i : Fin m`,</span>
+<span id="L178">178 are the alternatives. The hypotheses are precisely the expected pull-count</span>
+<span id="L179">179 nonnegativity and total-budget identity needed by the averaging argument.</span>
+<span id="L180">180 -/</span>
+<span id="L181">181 theorem exists_leastExploredAlternative</span>
+<span id="L182">182     {m : Nat} (hm : 0 &lt; m)</span>
+<span id="L183">183     (expectedPulls : Fin (m + 1) -&gt; Real)</span>
+<span id="L184">184     (horizon : Nat)</span>
+<span id="L185">185     (hnonneg : ∀ arm, 0 ≤ expectedPulls arm)</span>
+<span id="L186">186     (htotal : ∑ arm : Fin (m + 1), expectedPulls arm = (horizon : Real)) :</span>
+<span id="L187">187     ∃ i : Fin m,</span>
+<span id="L188">188       expectedPulls i.succ ≤ (horizon : Real) / (m : Real) := by</span>
+<span id="L189">189   exact exists_alternative_le_average hm</span>
+<span id="L190">190     (fun i : Fin m =&gt; expectedPulls i.succ) (horizon : Real)</span>
+<span id="L191">191     (alternativeExpectedPullBudget_le expectedPulls (horizon : Real) hnonneg htotal)</span>
+<span id="L192">192 </span>
+<span id="L193">193 /-- The exact deterministic expression in the base-environment identity (13.2). -/</span>
+<span id="L194">194 def baseEnvironmentRegret</span>
+<span id="L195">195     (horizon : Nat) (gap baseFirstExpectedPulls : Real) : Real :=</span>
+<span id="L196">196   gap * ((horizon : Real) - baseFirstExpectedPulls)</span>
+<span id="L197">197 </span>
+<span id="L198">198 /-- The changed-environment regret lower expression on the right of (13.3). -/</span>
+<span id="L199">199 def changedEnvironmentRegretLowerBound</span>
+<span id="L200">200     (gap changedFirstExpectedPulls : Real) : Real :=</span>
+<span id="L201">201   gap * changedFirstExpectedPulls</span>
+<span id="L202">202 </span>
+<span id="L203">203 /--</span>
+<span id="L204">204 Quantitative algebraic core of the two-environment heuristic.</span>
+<span id="L205">205 </span>
+<span id="L206">206 The premise bounds the cross-environment discrepancy in the expected number</span>
+<span id="L207">207 of base-arm pulls. Chapter 13 writes these expectations as approximately</span>
+<span id="L208">208 equal; later information-theoretic chapters must supply an actual value of</span>
+<span id="L209">209 `error`. This theorem neither derives that premise nor proves Theorem 13.1.</span>
+<span id="L210">210 -/</span>
+<span id="L211">211 theorem max_base_changed_regretLowerBound_ge_half_sub_error</span>
+<span id="L212">212     (horizon : Nat)</span>
+<span id="L213">213     (gap baseFirstExpectedPulls changedFirstExpectedPulls error : Real)</span>
+<span id="L214">214     (hgap : 0 ≤ gap)</span>
+<span id="L215">215     (hpullDifference : baseFirstExpectedPulls - changedFirstExpectedPulls ≤ error) :</span>
+<span id="L216">216     gap * ((horizon : Real) - error) / 2 ≤</span>
+<span id="L217">217       max</span>
+<span id="L218">218         (baseEnvironmentRegret horizon gap baseFirstExpectedPulls)</span>
+<span id="L219">219         (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls) := by</span>
+<span id="L220">220   have hscaled := mul_le_mul_of_nonneg_left hpullDifference hgap</span>
+<span id="L221">221   have hsum :</span>
+<span id="L222">222       gap * ((horizon : Real) - error) ≤</span>
+<span id="L223">223         baseEnvironmentRegret horizon gap baseFirstExpectedPulls +</span>
+<span id="L224">224           changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls := by</span>
+<span id="L225">225     unfold baseEnvironmentRegret changedEnvironmentRegretLowerBound</span>
+<span id="L226">226     nlinarith</span>
+<span id="L227">227   have hbase := le_max_left</span>
+<span id="L228">228     (baseEnvironmentRegret horizon gap baseFirstExpectedPulls)</span>
+<span id="L229">229     (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)</span>
+<span id="L230">230   have hchanged := le_max_right</span>
+<span id="L231">231     (baseEnvironmentRegret horizon gap baseFirstExpectedPulls)</span>
+<span id="L232">232     (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls)</span>
+<span id="L233">233   nlinarith</span>
+<span id="L234">234 </span>
+<span id="L235">235 /--</span>
+<span id="L236">236 Zero-error corollary of the quantitative two-environment algebra.</span>
+<span id="L237">237 </span>
+<span id="L238">238 The premise `baseFirstExpectedPulls ≤ changedFirstExpectedPulls` specializes</span>
+<span id="L239">239 the pull discrepancy to at most zero. The quantitative predecessor is the</span>
+<span id="L240">240 intended interface for later information theorems; neither declaration is the</span>
+<span id="L241">241 Gaussian minimax lower bound.</span>
+<span id="L242">242 -/</span>
+<span id="L243">243 theorem max_base_changed_regretLowerBound_ge_half</span>
+<span id="L244">244     (horizon : Nat) (gap baseFirstExpectedPulls changedFirstExpectedPulls : Real)</span>
+<span id="L245">245     (hgap : 0 ≤ gap)</span>
+<span id="L246">246     (htransport : baseFirstExpectedPulls ≤ changedFirstExpectedPulls) :</span>
+<span id="L247">247     gap * (horizon : Real) / 2 ≤</span>
+<span id="L248">248       max</span>
+<span id="L249">249         (baseEnvironmentRegret horizon gap baseFirstExpectedPulls)</span>
+<span id="L250">250         (changedEnvironmentRegretLowerBound gap changedFirstExpectedPulls) := by</span>
+<span id="L251">251   have h := max_base_changed_regretLowerBound_ge_half_sub_error</span>
+<span id="L252">252     horizon gap baseFirstExpectedPulls changedFirstExpectedPulls 0 hgap</span>
+<span id="L253">253     (sub_nonpos.mpr htransport)</span>
+<span id="L254">254   simpa using h</span>
+<span id="L255">255 </span>
+<span id="L256">256 end LowerBounds</span>
+<span id="L257">257 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

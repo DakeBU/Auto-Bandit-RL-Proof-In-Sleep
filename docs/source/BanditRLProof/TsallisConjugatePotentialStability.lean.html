@@ -1,0 +1,798 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/TsallisConjugatePotentialStability.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/TsallisConjugatePotentialStability.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/TsallisConjugatePotentialStability.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/TsallisConjugatePotentialStability.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.TsallisRefinedImportanceWeightedMoment</span>
+<span id="L2">2 import Mathlib.Tactic.FieldSimp</span>
+<span id="L3">3 import Mathlib.Tactic.Linarith</span>
+<span id="L4">4 import Mathlib.Tactic.Ring</span>
+<span id="L5">5 </span>
+<span id="L6">6 /-!</span>
+<span id="L7">7 # Half-Tsallis conjugate-potential stability</span>
+<span id="L8">8 </span>
+<span id="L9">9 This module formalizes the deterministic potential quantity used in the</span>
+<span id="L10">10 paper-faithful refined Tsallis-INF stability route.  The local learning-rate</span>
+<span id="L11">11 normalization is half the paper normalization, so the translated Lemma 19</span>
+<span id="L12">12 coefficients are `eta` for the quadratic term and `2 * eta^2` for the positive</span>
+<span id="L13">13 cubic remainder.</span>
+<span id="L14">14 </span>
+<span id="L15">15 The constrained potential is represented by the negative regularized</span>
+<span id="L16">16 objective value at a certified simplex minimizer, plus `1 / eta`.  That final</span>
+<span id="L17">17 constant matches the paper normalization under `eta_paper = 2 * eta_local`; it</span>
+<span id="L18">18 cancels in every fixed-eta step here but must be present for future cross-eta</span>
+<span id="L19">19 telescoping.  The explicit coordinate increment is the unconstrained</span>
+<span id="L20">20 half-Tsallis conjugate upper bound.  Their connection is proved below from</span>
+<span id="L21">21 interior stationarity and simplex normalization; no measure, kernel, or</span>
+<span id="L22">22 trajectory premise is involved.</span>
+<span id="L23">23 -/</span>
+<span id="L24">24 </span>
+<span id="L25">25 namespace BanditRLProof</span>
+<span id="L26">26 namespace Tsallis</span>
+<span id="L27">27 </span>
+<span id="L28">28 universe u</span>
+<span id="L29">29 </span>
+<span id="L30">30 /--</span>
+<span id="L31">31 The paper-normalized negative regularized-objective value.  When `probability`</span>
+<span id="L32">32 is a certified minimizer and `eta &gt; 0`, this is the constrained half-Tsallis</span>
+<span id="L33">33 potential under the local-to-paper learning-rate translation.</span>
+<span id="L34">34 -/</span>
+<span id="L35">35 noncomputable def halfTsallisPotentialValue</span>
+<span id="L36">36     {Action : Type u}</span>
+<span id="L37">37     (arms : Finset Action) (eta : Real)</span>
+<span id="L38">38     (score probability : Action -&gt; Real) : Real :=</span>
+<span id="L39">39   -FTRL.regularizedObjective arms eta</span>
+<span id="L40">40       (negEntropyRegularizer arms (1 / 2 : Real)) score probability / eta +</span>
+<span id="L41">41     1 / eta</span>
+<span id="L42">42 </span>
+<span id="L43">43 /--</span>
+<span id="L44">44 The one-step candidate-potential expression before taking a sampling average.</span>
+<span id="L45">45 The low-level feasible-next bridge treats `next` only as a candidate point;</span>
+<span id="L46">46 the algorithm-facing theorems require both current and next minimizer</span>
+<span id="L47">47 certificates.</span>
+<span id="L48">48 -/</span>
+<span id="L49">49 noncomputable def halfTsallisPotentialStability</span>
+<span id="L50">50     {Action : Type u}</span>
+<span id="L51">51     (arms : Finset Action) (eta : Real)</span>
+<span id="L52">52     (score probability estimate next : Action -&gt; Real) : Real :=</span>
+<span id="L53">53   FTRL.linearLoss arms probability estimate +</span>
+<span id="L54">54     halfTsallisPotentialValue arms eta</span>
+<span id="L55">55       (fun action =&gt; score action + estimate action) next -</span>
+<span id="L56">56     halfTsallisPotentialValue arms eta score probability</span>
+<span id="L57">57 </span>
+<span id="L58">58 /--</span>
+<span id="L59">59 The coordinate increment obtained from the explicit unconstrained conjugate.</span>
+<span id="L60">60 The shift is `estimate action - baseline`.</span>
+<span id="L61">61 -/</span>
+<span id="L62">62 noncomputable def halfTsallisConjugateCoordinateIncrement</span>
+<span id="L63">63     (eta probability shift : Real) : Real :=</span>
+<span id="L64">64   probability * shift +</span>
+<span id="L65">65     Real.sqrt probability /</span>
+<span id="L66">66       (eta * (1 + eta * shift * Real.sqrt probability)) -</span>
+<span id="L67">67     Real.sqrt probability / eta</span>
+<span id="L68">68 </span>
+<span id="L69">69 /-- Finite sum of explicit conjugate coordinate increments. -/</span>
+<span id="L70">70 noncomputable def halfTsallisConjugatePotentialUpper</span>
+<span id="L71">71     {Action : Type u}</span>
+<span id="L72">72     (arms : Finset Action) (eta : Real)</span>
+<span id="L73">73     (probability estimate : Action -&gt; Real) (baseline : Real) : Real :=</span>
+<span id="L74">74   arms.sum (fun action =&gt;</span>
+<span id="L75">75     halfTsallisConjugateCoordinateIncrement eta (probability action)</span>
+<span id="L76">76       (estimate action - baseline))</span>
+<span id="L77">77 </span>
+<span id="L78">78 theorem one_add_eta_mul_shift_mul_sqrt_pos</span>
+<span id="L79">79     {eta probability shift : Real}</span>
+<span id="L80">80     (_heta : 0 &lt; eta) (hprobability : 0 &lt; probability)</span>
+<span id="L81">81     (hdomain : -1 &lt;= 2 * eta * shift * Real.sqrt probability) :</span>
+<span id="L82">82     0 &lt; 1 + eta * shift * Real.sqrt probability := by</span>
+<span id="L83">83   have hsqrt : 0 &lt; Real.sqrt probability := Real.sqrt_pos.2 hprobability</span>
+<span id="L84">84   nlinarith</span>
+<span id="L85">85 </span>
+<span id="L86">86 /-- Exact rational form of the explicit conjugate coordinate increment. -/</span>
+<span id="L87">87 theorem halfTsallisConjugateCoordinateIncrement_eq</span>
+<span id="L88">88     {eta probability shift : Real}</span>
+<span id="L89">89     (heta : 0 &lt; eta) (hprobability : 0 &lt; probability)</span>
+<span id="L90">90     (hdomain : -1 &lt;= 2 * eta * shift * Real.sqrt probability) :</span>
+<span id="L91">91     halfTsallisConjugateCoordinateIncrement eta probability shift =</span>
+<span id="L92">92       eta * Real.sqrt probability * probability * shift ^ 2 /</span>
+<span id="L93">93         (1 + eta * shift * Real.sqrt probability) := by</span>
+<span id="L94">94   let s := Real.sqrt probability</span>
+<span id="L95">95   let denominator := 1 + eta * shift * s</span>
+<span id="L96">96   have hsqrt : 0 &lt; s := by simpa [s] using Real.sqrt_pos.2 hprobability</span>
+<span id="L97">97   have hsqrt_sq : s ^ 2 = probability := by</span>
+<span id="L98">98     simpa [s] using Real.sq_sqrt hprobability.le</span>
+<span id="L99">99   have hden : 0 &lt; denominator := by</span>
+<span id="L100">100     simpa [denominator, s] using</span>
+<span id="L101">101       one_add_eta_mul_shift_mul_sqrt_pos heta hprobability hdomain</span>
+<span id="L102">102   have hetaNe : eta ≠ 0 := ne_of_gt heta</span>
+<span id="L103">103   have hdenNe : denominator ≠ 0 := ne_of_gt hden</span>
+<span id="L104">104   unfold halfTsallisConjugateCoordinateIncrement</span>
+<span id="L105">105   change probability * shift + s / (eta * denominator) - s / eta =</span>
+<span id="L106">106     eta * s * probability * shift ^ 2 / denominator</span>
+<span id="L107">107   apply (eq_div_iff hdenNe).2</span>
+<span id="L108">108   have hcancel : s / (eta * denominator) * denominator = s / eta := by</span>
+<span id="L109">109     field_simp [hetaNe, hdenNe]</span>
+<span id="L110">110   calc</span>
+<span id="L111">111     (probability * shift + s / (eta * denominator) - s / eta) *</span>
+<span id="L112">112         denominator =</span>
+<span id="L113">113       probability * shift * denominator +</span>
+<span id="L114">114         (s / (eta * denominator) * denominator) -</span>
+<span id="L115">115         (s / eta) * denominator := by ring</span>
+<span id="L116">116     _ = probability * shift * denominator + s / eta -</span>
+<span id="L117">117         (s / eta) * denominator := by rw [hcancel]</span>
+<span id="L118">118     _ = eta * s * probability * shift ^ 2 := by</span>
+<span id="L119">119       field_simp [hetaNe]</span>
+<span id="L120">120       linear_combination -eta * shift * hsqrt_sq</span>
+<span id="L121">121 </span>
+<span id="L122">122 /--</span>
+<span id="L123">123 Scalar translated Lemma 19 bound.  The positive cubic term is active only</span>
+<span id="L124">124 when the shifted estimate is negative.</span>
+<span id="L125">125 -/</span>
+<span id="L126">126 theorem halfTsallisConjugateCoordinateIncrement_le</span>
+<span id="L127">127     {eta probability shift : Real}</span>
+<span id="L128">128     (heta : 0 &lt; eta) (hprobability : 0 &lt; probability)</span>
+<span id="L129">129     (hdomain : -1 &lt;= 2 * eta * shift * Real.sqrt probability) :</span>
+<span id="L130">130     halfTsallisConjugateCoordinateIncrement eta probability shift &lt;=</span>
+<span id="L131">131       eta * Real.sqrt probability * probability * shift ^ 2 +</span>
+<span id="L132">132         2 * eta ^ 2 * probability ^ 2 * (max (-shift) 0) ^ 3 := by</span>
+<span id="L133">133   rw [halfTsallisConjugateCoordinateIncrement_eq</span>
+<span id="L134">134     heta hprobability hdomain]</span>
+<span id="L135">135   have hsqrt : 0 &lt; Real.sqrt probability := Real.sqrt_pos.2 hprobability</span>
+<span id="L136">136   have hsqrt_sq : (Real.sqrt probability) ^ 2 = probability :=</span>
+<span id="L137">137     Real.sq_sqrt hprobability.le</span>
+<span id="L138">138   have hden := one_add_eta_mul_shift_mul_sqrt_pos</span>
+<span id="L139">139     heta hprobability hdomain</span>
+<span id="L140">140   by_cases hshift : 0 &lt;= shift</span>
+<span id="L141">141   · rw [max_eq_right]</span>
+<span id="L142">142     · simp only [zero_pow (by norm_num : (3 : Nat) ≠ 0), mul_zero, add_zero]</span>
+<span id="L143">143       apply (div_le_iff₀ hden).2</span>
+<span id="L144">144       have hmain :</span>
+<span id="L145">145           0 &lt;= eta * Real.sqrt probability * probability * shift ^ 2 := by</span>
+<span id="L146">146         positivity</span>
+<span id="L147">147       have hdenOne : 1 &lt;= 1 + eta * shift * Real.sqrt probability := by</span>
+<span id="L148">148         have : 0 &lt;= eta * shift * Real.sqrt probability := by positivity</span>
+<span id="L149">149         linarith</span>
+<span id="L150">150       simpa only [mul_one] using</span>
+<span id="L151">151         (mul_le_mul_of_nonneg_left hdenOne hmain)</span>
+<span id="L152">152     · linarith</span>
+<span id="L153">153   · have hshiftNeg : shift &lt; 0 := lt_of_not_ge hshift</span>
+<span id="L154">154     rw [max_eq_left (by linarith : 0 &lt;= -shift)]</span>
+<span id="L155">155     apply (div_le_iff₀ hden).2</span>
+<span id="L156">156     have hbase :</span>
+<span id="L157">157         0 &lt;= eta * Real.sqrt probability * probability * shift ^ 2 := by</span>
+<span id="L158">158       positivity</span>
+<span id="L159">159     have hremainder :</span>
+<span id="L160">160         0 &lt;= 2 * eta ^ 2 * probability ^ 2 * (-shift) ^ 3 := by</span>
+<span id="L161">161       exact mul_nonneg</span>
+<span id="L162">162         (mul_nonneg (by positivity) (by positivity))</span>
+<span id="L163">163         (pow_nonneg (by linarith) 3)</span>
+<span id="L164">164     have hfactor :</span>
+<span id="L165">165         (eta * Real.sqrt probability * probability * shift ^ 2 +</span>
+<span id="L166">166               2 * eta ^ 2 * probability ^ 2 * (-shift) ^ 3) *</span>
+<span id="L167">167             (1 + eta * shift * Real.sqrt probability) -</span>
+<span id="L168">168           eta * Real.sqrt probability * probability * shift ^ 2 =</span>
+<span id="L169">169         eta ^ 2 * probability ^ 2 * (-shift) ^ 3 *</span>
+<span id="L170">170           (1 + 2 * eta * shift * Real.sqrt probability) := by</span>
+<span id="L171">171       linear_combination</span>
+<span id="L172">172         eta ^ 2 * probability * shift ^ 3 * hsqrt_sq</span>
+<span id="L173">173     have hfactorNonneg :</span>
+<span id="L174">174         0 &lt;= eta ^ 2 * probability ^ 2 * (-shift) ^ 3 *</span>
+<span id="L175">175           (1 + 2 * eta * shift * Real.sqrt probability) := by</span>
+<span id="L176">176       exact mul_nonneg</span>
+<span id="L177">177         (mul_nonneg</span>
+<span id="L178">178           (mul_nonneg (sq_nonneg eta) (sq_nonneg probability))</span>
+<span id="L179">179           (pow_nonneg (by linarith) 3))</span>
+<span id="L180">180         (by linarith)</span>
+<span id="L181">181     linarith</span>
+<span id="L182">182 </span>
+<span id="L183">183 /-- Coordinatewise Fenchel upper bound for a nonnegative competitor weight. -/</span>
+<span id="L184">184 theorem halfTsallis_fenchelCoordinate_le</span>
+<span id="L185">185     {eta probability competitor shift : Real}</span>
+<span id="L186">186     (heta : 0 &lt; eta) (hprobability : 0 &lt; probability)</span>
+<span id="L187">187     (hcompetitor : 0 &lt;= competitor)</span>
+<span id="L188">188     (hdomain : -1 &lt;= 2 * eta * shift * Real.sqrt probability) :</span>
+<span id="L189">189     -competitor / (eta * Real.sqrt probability) - competitor * shift +</span>
+<span id="L190">190         2 * Real.sqrt competitor / eta &lt;=</span>
+<span id="L191">191       Real.sqrt probability /</span>
+<span id="L192">192         (eta * (1 + eta * shift * Real.sqrt probability)) := by</span>
+<span id="L193">193   let s := Real.sqrt probability</span>
+<span id="L194">194   let r := Real.sqrt competitor</span>
+<span id="L195">195   let denominator := 1 + eta * shift * s</span>
+<span id="L196">196   have hs : 0 &lt; s := by simpa [s] using Real.sqrt_pos.2 hprobability</span>
+<span id="L197">197   have hrSq : r ^ 2 = competitor := by</span>
+<span id="L198">198     simpa [r] using Real.sq_sqrt hcompetitor</span>
+<span id="L199">199   have hden : 0 &lt; denominator := by</span>
+<span id="L200">200     simpa [denominator, s] using</span>
+<span id="L201">201       one_add_eta_mul_shift_mul_sqrt_pos heta hprobability hdomain</span>
+<span id="L202">202   have hetaS : 0 &lt; eta * s := mul_pos heta hs</span>
+<span id="L203">203   have hetaDen : 0 &lt; eta * denominator := mul_pos heta hden</span>
+<span id="L204">204   have hleft :</span>
+<span id="L205">205       -competitor / (eta * s) - competitor * shift + 2 * r / eta =</span>
+<span id="L206">206         (-competitor * denominator + 2 * s * r) / (eta * s) := by</span>
+<span id="L207">207     field_simp [ne_of_gt heta, ne_of_gt hs]</span>
+<span id="L208">208     ring</span>
+<span id="L209">209   have hcore :</span>
+<span id="L210">210       (-competitor * denominator + 2 * s * r) * denominator &lt;= s ^ 2 := by</span>
+<span id="L211">211     rw [← hrSq]</span>
+<span id="L212">212     nlinarith [sq_nonneg (r * denominator - s)]</span>
+<span id="L213">213   rw [hleft]</span>
+<span id="L214">214   apply (div_le_div_iff₀ hetaS hetaDen).2</span>
+<span id="L215">215   calc</span>
+<span id="L216">216     (-competitor * denominator + 2 * s * r) *</span>
+<span id="L217">217         (eta * denominator) =</span>
+<span id="L218">218       eta * ((-competitor * denominator + 2 * s * r) * denominator) := by</span>
+<span id="L219">219         ring</span>
+<span id="L220">220     _ &lt;= eta * s ^ 2 := mul_le_mul_of_nonneg_left hcore heta.le</span>
+<span id="L221">221     _ = s * (eta * s) := by ring</span>
+<span id="L222">222 </span>
+<span id="L223">223 /-- The explicit conjugate finite sum is bounded by shifted quadratic/cubic moments. -/</span>
+<span id="L224">224 theorem halfTsallisConjugatePotentialUpper_le_shiftedMoments</span>
+<span id="L225">225     {Action : Type u} [DecidableEq Action]</span>
+<span id="L226">226     (arms : Finset Action) (eta : Real)</span>
+<span id="L227">227     (probability estimate : Action -&gt; Real) (baseline : Real)</span>
+<span id="L228">228     (heta : 0 &lt; eta)</span>
+<span id="L229">229     (hprobability : forall action, action ∈ arms -&gt; 0 &lt; probability action)</span>
+<span id="L230">230     (hdomain : forall action, action ∈ arms -&gt;</span>
+<span id="L231">231       -1 &lt;= 2 * eta * (estimate action - baseline) *</span>
+<span id="L232">232         Real.sqrt (probability action)) :</span>
+<span id="L233">233     halfTsallisConjugatePotentialUpper</span>
+<span id="L234">234         arms eta probability estimate baseline &lt;=</span>
+<span id="L235">235       eta * arms.sum (fun action =&gt;</span>
+<span id="L236">236         Real.sqrt (probability action) * probability action *</span>
+<span id="L237">237           (estimate action - baseline) ^ 2) +</span>
+<span id="L238">238       2 * eta ^ 2 * arms.sum (fun action =&gt;</span>
+<span id="L239">239         probability action ^ 2 *</span>
+<span id="L240">240           (max (baseline - estimate action) 0) ^ 3) := by</span>
+<span id="L241">241   unfold halfTsallisConjugatePotentialUpper</span>
+<span id="L242">242   calc</span>
+<span id="L243">243     arms.sum (fun action =&gt;</span>
+<span id="L244">244         halfTsallisConjugateCoordinateIncrement eta (probability action)</span>
+<span id="L245">245           (estimate action - baseline)) &lt;=</span>
+<span id="L246">246       arms.sum (fun action =&gt;</span>
+<span id="L247">247         eta * Real.sqrt (probability action) * probability action *</span>
+<span id="L248">248             (estimate action - baseline) ^ 2 +</span>
+<span id="L249">249           2 * eta ^ 2 * probability action ^ 2 *</span>
+<span id="L250">250             (max (-(estimate action - baseline)) 0) ^ 3) := by</span>
+<span id="L251">251       apply Finset.sum_le_sum</span>
+<span id="L252">252       intro action haction</span>
+<span id="L253">253       exact halfTsallisConjugateCoordinateIncrement_le heta</span>
+<span id="L254">254         (hprobability action haction) (hdomain action haction)</span>
+<span id="L255">255     _ = eta * arms.sum (fun action =&gt;</span>
+<span id="L256">256           Real.sqrt (probability action) * probability action *</span>
+<span id="L257">257             (estimate action - baseline) ^ 2) +</span>
+<span id="L258">258         2 * eta ^ 2 * arms.sum (fun action =&gt;</span>
+<span id="L259">259           probability action ^ 2 *</span>
+<span id="L260">260             (max (baseline - estimate action) 0) ^ 3) := by</span>
+<span id="L261">261       rw [Finset.sum_add_distrib, Finset.mul_sum, Finset.mul_sum]</span>
+<span id="L262">262       congr 1</span>
+<span id="L263">263       · apply Finset.sum_congr rfl</span>
+<span id="L264">264         intro action _haction</span>
+<span id="L265">265         ring</span>
+<span id="L266">266       · apply Finset.sum_congr rfl</span>
+<span id="L267">267         intro action _haction</span>
+<span id="L268">268         have hshift :</span>
+<span id="L269">269             -(estimate action - baseline) = baseline - estimate action := by</span>
+<span id="L270">270           ring</span>
+<span id="L271">271         rw [hshift]</span>
+<span id="L272">272         ring</span>
+<span id="L273">273 </span>
+<span id="L274">274 /-- Ordinary importance-weighted estimates satisfy the translated conjugate domain. -/</span>
+<span id="L275">275 theorem importanceWeightedLoss_sub_selectedLoss_conjugate_domain</span>
+<span id="L276">276     {Action : Type u} [DecidableEq Action]</span>
+<span id="L277">277     (arms : Finset Action) (eta : Real)</span>
+<span id="L278">278     (probability loss : Action -&gt; Real)</span>
+<span id="L279">279     (heta : 0 &lt; eta) (heta_le : eta &lt;= 1 / 2)</span>
+<span id="L280">280     (hprobability : FTRL.finiteSimplex arms probability)</span>
+<span id="L281">281     (hprobabilityPos : forall action, action ∈ arms -&gt; 0 &lt; probability action)</span>
+<span id="L282">282     (hloss : forall action, action ∈ arms -&gt;</span>
+<span id="L283">283       0 &lt;= loss action ∧ loss action &lt;= 1)</span>
+<span id="L284">284     {chosen action : Action} (hchosen : chosen ∈ arms) (haction : action ∈ arms) :</span>
+<span id="L285">285     -1 &lt;= 2 * eta *</span>
+<span id="L286">286       (Exp3.importanceWeightedLoss probability loss chosen action - loss chosen) *</span>
+<span id="L287">287         Real.sqrt (probability action) := by</span>
+<span id="L288">288   by_cases hsame : chosen = action</span>
+<span id="L289">289   · subst action</span>
+<span id="L290">290     have hp := hprobabilityPos chosen hchosen</span>
+<span id="L291">291     have hpLe := finiteSimplex_apply_le_one hprobability hchosen</span>
+<span id="L292">292     have hl := hloss chosen hchosen</span>
+<span id="L293">293     have hlDiv : loss chosen &lt;= loss chosen / probability chosen := by</span>
+<span id="L294">294       apply (le_div_iff₀ hp).2</span>
+<span id="L295">295       calc</span>
+<span id="L296">296         loss chosen * probability chosen &lt;= loss chosen * 1 :=</span>
+<span id="L297">297           mul_le_mul_of_nonneg_left hpLe hl.1</span>
+<span id="L298">298         _ = loss chosen := by ring</span>
+<span id="L299">299     have hshift :</span>
+<span id="L300">300         0 &lt;= loss chosen / probability chosen - loss chosen := sub_nonneg.2 hlDiv</span>
+<span id="L301">301     simp only [Exp3.importanceWeightedLoss, if_true]</span>
+<span id="L302">302     have : 0 &lt;= 2 * eta *</span>
+<span id="L303">303         (loss chosen / probability chosen - loss chosen) *</span>
+<span id="L304">304           Real.sqrt (probability chosen) := by positivity</span>
+<span id="L305">305     linarith</span>
+<span id="L306">306   · have hpNonneg := hprobability.1 action haction</span>
+<span id="L307">307     have hpLe := finiteSimplex_apply_le_one hprobability haction</span>
+<span id="L308">308     have hsqrtLe : Real.sqrt (probability action) &lt;= 1 :=</span>
+<span id="L309">309       Real.sqrt_le_one.2 hpLe</span>
+<span id="L310">310     have hl := hloss chosen hchosen</span>
+<span id="L311">311     have htwoEtaNonneg : 0 &lt;= 2 * eta := by positivity</span>
+<span id="L312">312     have htwoEtaLe : 2 * eta &lt;= 1 := by nlinarith</span>
+<span id="L313">313     have hscaledLoss : 2 * eta * loss chosen &lt;= 1 := by</span>
+<span id="L314">314       calc</span>
+<span id="L315">315         2 * eta * loss chosen &lt;= 2 * eta * 1 :=</span>
+<span id="L316">316           mul_le_mul_of_nonneg_left hl.2 htwoEtaNonneg</span>
+<span id="L317">317         _ &lt;= 1 := by simpa using htwoEtaLe</span>
+<span id="L318">318     have hproduct :</span>
+<span id="L319">319         2 * eta * loss chosen * Real.sqrt (probability action) &lt;= 1 := by</span>
+<span id="L320">320       calc</span>
+<span id="L321">321         2 * eta * loss chosen * Real.sqrt (probability action) &lt;=</span>
+<span id="L322">322             2 * eta * loss chosen * 1 :=</span>
+<span id="L323">323           mul_le_mul_of_nonneg_left hsqrtLe</span>
+<span id="L324">324             (mul_nonneg htwoEtaNonneg hl.1)</span>
+<span id="L325">325         _ &lt;= 1 := by simpa using hscaledLoss</span>
+<span id="L326">326     simp [Exp3.importanceWeightedLoss, hsame]</span>
+<span id="L327">327     nlinarith</span>
+<span id="L328">328 </span>
+<span id="L329">329 theorem linearLoss_sub_linearLoss_eq_sum_sub_mul</span>
+<span id="L330">330     {Action : Type u}</span>
+<span id="L331">331     (arms : Finset Action) (p q score : Action -&gt; Real) :</span>
+<span id="L332">332     FTRL.linearLoss arms p score - FTRL.linearLoss arms q score =</span>
+<span id="L333">333       arms.sum (fun action =&gt; (p action - q action) * score action) := by</span>
+<span id="L334">334   unfold FTRL.linearLoss</span>
+<span id="L335">335   rw [← Finset.sum_sub_distrib]</span>
+<span id="L336">336   apply Finset.sum_congr rfl</span>
+<span id="L337">337   intro action _haction</span>
+<span id="L338">338   ring</span>
+<span id="L339">339 </span>
+<span id="L340">340 theorem sum_sub_mul_sub_baseline_eq_sum_sub_mul</span>
+<span id="L341">341     {Action : Type u}</span>
+<span id="L342">342     (arms : Finset Action) (p q value : Action -&gt; Real) (baseline : Real)</span>
+<span id="L343">343     (hp : arms.sum p = 1) (hq : arms.sum q = 1) :</span>
+<span id="L344">344     arms.sum (fun action =&gt;</span>
+<span id="L345">345         (p action - q action) * (value action - baseline)) =</span>
+<span id="L346">346       arms.sum (fun action =&gt; (p action - q action) * value action) := by</span>
+<span id="L347">347   simp_rw [mul_sub]</span>
+<span id="L348">348   rw [Finset.sum_sub_distrib]</span>
+<span id="L349">349   have hbaseline :</span>
+<span id="L350">350       arms.sum (fun action =&gt; (p action - q action) * baseline) = 0 := by</span>
+<span id="L351">351     calc</span>
+<span id="L352">352       arms.sum (fun action =&gt; (p action - q action) * baseline) =</span>
+<span id="L353">353           (arms.sum p - arms.sum q) * baseline := by</span>
+<span id="L354">354         simp_rw [sub_mul]</span>
+<span id="L355">355         rw [Finset.sum_sub_distrib, Finset.sum_mul, Finset.sum_mul]</span>
+<span id="L356">356       _ = 0 := by rw [hp, hq]; ring</span>
+<span id="L357">357   rw [hbaseline, sub_zero]</span>
+<span id="L358">358 </span>
+<span id="L359">359 /-- Stationarity removes the score and its common simplex multiplier. -/</span>
+<span id="L360">360 theorem linearLoss_sub_linearLoss_score_eq_sum_div_sqrt_of_stationary</span>
+<span id="L361">361     {Action : Type u} [DecidableEq Action]</span>
+<span id="L362">362     (arms : Finset Action) (eta : Real)</span>
+<span id="L363">363     (score p q : Action -&gt; Real) (multiplier : Real)</span>
+<span id="L364">364     (heta : 0 &lt; eta)</span>
+<span id="L365">365     (hp : FTRL.finiteSimplex arms p)</span>
+<span id="L366">366     (hq : FTRL.finiteSimplex arms q)</span>
+<span id="L367">367     (hpPos : forall action, action ∈ arms -&gt; 0 &lt; p action)</span>
+<span id="L368">368     (hstationary : HalfTsallisInteriorStationary</span>
+<span id="L369">369       arms eta score p multiplier) :</span>
+<span id="L370">370     FTRL.linearLoss arms p score - FTRL.linearLoss arms q score =</span>
+<span id="L371">371       arms.sum (fun action =&gt;</span>
+<span id="L372">372         (p action - q action) / (eta * Real.sqrt (p action))) := by</span>
+<span id="L373">373   rw [linearLoss_sub_linearLoss_eq_sum_sub_mul]</span>
+<span id="L374">374   have hscore : forall action, action ∈ arms -&gt;</span>
+<span id="L375">375       score action = multiplier / eta +</span>
+<span id="L376">376         1 / (eta * Real.sqrt (p action)) := by</span>
+<span id="L377">377     intro action haction</span>
+<span id="L378">378     have hpAction := hpPos action haction</span>
+<span id="L379">379     have hrpow :</span>
+<span id="L380">380         (p action) ^ (-(1 / 2 : Real)) =</span>
+<span id="L381">381           1 / Real.sqrt (p action) := by</span>
+<span id="L382">382       rw [Real.rpow_neg hpAction.le, ← Real.sqrt_eq_rpow]</span>
+<span id="L383">383       simp [one_div]</span>
+<span id="L384">384     have hstat := hstationary action haction</span>
+<span id="L385">385     rw [hrpow] at hstat</span>
+<span id="L386">386     calc</span>
+<span id="L387">387       score action = (multiplier + 1 / Real.sqrt (p action)) / eta := by</span>
+<span id="L388">388         apply (eq_div_iff (ne_of_gt heta)).2</span>
+<span id="L389">389         linarith</span>
+<span id="L390">390       _ = multiplier / eta +</span>
+<span id="L391">391           1 / (eta * Real.sqrt (p action)) := by</span>
+<span id="L392">392         field_simp [ne_of_gt heta, ne_of_gt (Real.sqrt_pos.2 hpAction)]</span>
+<span id="L393">393   rw [Finset.sum_congr rfl (fun action haction =&gt; by</span>
+<span id="L394">394     rw [hscore action haction])]</span>
+<span id="L395">395   have hsumDiff : arms.sum (fun action =&gt; p action - q action) = 0 := by</span>
+<span id="L396">396     rw [Finset.sum_sub_distrib, hp.2, hq.2]</span>
+<span id="L397">397     ring</span>
+<span id="L398">398   calc</span>
+<span id="L399">399     arms.sum (fun action =&gt;</span>
+<span id="L400">400         (p action - q action) *</span>
+<span id="L401">401           (multiplier / eta + 1 / (eta * Real.sqrt (p action)))) =</span>
+<span id="L402">402       multiplier / eta * arms.sum (fun action =&gt; p action - q action) +</span>
+<span id="L403">403         arms.sum (fun action =&gt;</span>
+<span id="L404">404           (p action - q action) / (eta * Real.sqrt (p action))) := by</span>
+<span id="L405">405       simp_rw [mul_add]</span>
+<span id="L406">406       rw [Finset.sum_add_distrib]</span>
+<span id="L407">407       congr 1</span>
+<span id="L408">408       · rw [Finset.mul_sum]</span>
+<span id="L409">409         apply Finset.sum_congr rfl</span>
+<span id="L410">410         intro action _haction</span>
+<span id="L411">411         ring</span>
+<span id="L412">412       · apply Finset.sum_congr rfl</span>
+<span id="L413">413         intro action _haction</span>
+<span id="L414">414         ring</span>
+<span id="L415">415     _ = arms.sum (fun action =&gt;</span>
+<span id="L416">416           (p action - q action) / (eta * Real.sqrt (p action))) := by</span>
+<span id="L417">417       rw [hsumDiff]</span>
+<span id="L418">418       ring</span>
+<span id="L419">419 </span>
+<span id="L420">420 /--</span>
+<span id="L421">421 The feasible-next candidate-potential expression is bounded by the explicit</span>
+<span id="L422">422 unconstrained conjugate sum.  Only the current point needs stationarity.  This</span>
+<span id="L423">423 is an algebraic bridge, not an actual constrained-potential theorem unless the</span>
+<span id="L424">424 caller separately certifies that `next` minimizes the updated objective.</span>
+<span id="L425">425 -/</span>
+<span id="L426">426 theorem halfTsallisPotentialStability_le_conjugatePotentialUpper_of_feasible</span>
+<span id="L427">427     {Action : Type u} [DecidableEq Action]</span>
+<span id="L428">428     (arms : Finset Action) (eta : Real)</span>
+<span id="L429">429     (score probability estimate next : Action -&gt; Real)</span>
+<span id="L430">430     (baseline multiplier : Real)</span>
+<span id="L431">431     (heta : 0 &lt; eta)</span>
+<span id="L432">432     (hprobability : FTRL.finiteSimplex arms probability)</span>
+<span id="L433">433     (hnext : FTRL.finiteSimplex arms next)</span>
+<span id="L434">434     (hprobabilityPos : forall action, action ∈ arms -&gt; 0 &lt; probability action)</span>
+<span id="L435">435     (hstationary : HalfTsallisInteriorStationary</span>
+<span id="L436">436       arms eta score probability multiplier)</span>
+<span id="L437">437     (hdomain : forall action, action ∈ arms -&gt;</span>
+<span id="L438">438       -1 &lt;= 2 * eta * (estimate action - baseline) *</span>
+<span id="L439">439         Real.sqrt (probability action)) :</span>
+<span id="L440">440     halfTsallisPotentialStability</span>
+<span id="L441">441         arms eta score probability estimate next &lt;=</span>
+<span id="L442">442       halfTsallisConjugatePotentialUpper</span>
+<span id="L443">443         arms eta probability estimate baseline := by</span>
+<span id="L444">444   have hetaNe : eta ≠ 0 := ne_of_gt heta</span>
+<span id="L445">445   have hlinearAdd :</span>
+<span id="L446">446       FTRL.linearLoss arms next (fun action =&gt; score action + estimate action) =</span>
+<span id="L447">447         FTRL.linearLoss arms next score +</span>
+<span id="L448">448           FTRL.linearLoss arms next estimate := by</span>
+<span id="L449">449     unfold FTRL.linearLoss</span>
+<span id="L450">450     simp_rw [mul_add]</span>
+<span id="L451">451     rw [Finset.sum_add_distrib]</span>
+<span id="L452">452   have hstability :</span>
+<span id="L453">453       halfTsallisPotentialStability arms eta score probability estimate next =</span>
+<span id="L454">454         (FTRL.linearLoss arms probability estimate -</span>
+<span id="L455">455             FTRL.linearLoss arms next estimate) +</span>
+<span id="L456">456           (FTRL.linearLoss arms probability score -</span>
+<span id="L457">457             FTRL.linearLoss arms next score) +</span>
+<span id="L458">458           2 / eta *</span>
+<span id="L459">459             (arms.sum (fun action =&gt; Real.sqrt (next action)) -</span>
+<span id="L460">460               arms.sum (fun action =&gt; Real.sqrt (probability action))) := by</span>
+<span id="L461">461     unfold halfTsallisPotentialStability halfTsallisPotentialValue</span>
+<span id="L462">462     rw [regularizedObjective_half_eq, regularizedObjective_half_eq, hlinearAdd]</span>
+<span id="L463">463     field_simp [hetaNe]</span>
+<span id="L464">464     ring</span>
+<span id="L465">465   have hscore :=</span>
+<span id="L466">466     linearLoss_sub_linearLoss_score_eq_sum_div_sqrt_of_stationary</span>
+<span id="L467">467       arms eta score probability next multiplier heta hprobability hnext</span>
+<span id="L468">468       hprobabilityPos hstationary</span>
+<span id="L469">469   have hestimate :</span>
+<span id="L470">470       FTRL.linearLoss arms probability estimate -</span>
+<span id="L471">471           FTRL.linearLoss arms next estimate =</span>
+<span id="L472">472         arms.sum (fun action =&gt;</span>
+<span id="L473">473           (probability action - next action) *</span>
+<span id="L474">474             (estimate action - baseline)) := by</span>
+<span id="L475">475     rw [linearLoss_sub_linearLoss_eq_sum_sub_mul]</span>
+<span id="L476">476     symm</span>
+<span id="L477">477     exact sum_sub_mul_sub_baseline_eq_sum_sub_mul</span>
+<span id="L478">478       arms probability next estimate baseline hprobability.2 hnext.2</span>
+<span id="L479">479   have hsqrt :</span>
+<span id="L480">480       2 / eta *</span>
+<span id="L481">481           (arms.sum (fun action =&gt; Real.sqrt (next action)) -</span>
+<span id="L482">482             arms.sum (fun action =&gt; Real.sqrt (probability action))) =</span>
+<span id="L483">483         arms.sum (fun action =&gt;</span>
+<span id="L484">484           2 / eta *</span>
+<span id="L485">485             (Real.sqrt (next action) - Real.sqrt (probability action))) := by</span>
+<span id="L486">486     rw [mul_sub, Finset.mul_sum, Finset.mul_sum,</span>
+<span id="L487">487       ← Finset.sum_sub_distrib]</span>
+<span id="L488">488     apply Finset.sum_congr rfl</span>
+<span id="L489">489     intro action _haction</span>
+<span id="L490">490     ring</span>
+<span id="L491">491   rw [hstability, hscore, hestimate, hsqrt]</span>
+<span id="L492">492   rw [← Finset.sum_add_distrib, ← Finset.sum_add_distrib]</span>
+<span id="L493">493   unfold halfTsallisConjugatePotentialUpper</span>
+<span id="L494">494   apply Finset.sum_le_sum</span>
+<span id="L495">495   intro action haction</span>
+<span id="L496">496   have hfenchel := halfTsallis_fenchelCoordinate_le</span>
+<span id="L497">497     heta (hprobabilityPos action haction) (hnext.1 action haction)</span>
+<span id="L498">498     (hdomain action haction)</span>
+<span id="L499">499   have hpAction := hprobabilityPos action haction</span>
+<span id="L500">500   have hsqrtSq : (Real.sqrt (probability action)) ^ 2 =</span>
+<span id="L501">501       probability action := Real.sq_sqrt hpAction.le</span>
+<span id="L502">502   have hprobDiv :</span>
+<span id="L503">503       probability action /</span>
+<span id="L504">504           (eta * Real.sqrt (probability action)) =</span>
+<span id="L505">505         Real.sqrt (probability action) / eta := by</span>
+<span id="L506">506     field_simp [hetaNe, ne_of_gt (Real.sqrt_pos.2 hpAction)]</span>
+<span id="L507">507     linear_combination -hsqrtSq</span>
+<span id="L508">508   calc</span>
+<span id="L509">509     (probability action - next action) * (estimate action - baseline) +</span>
+<span id="L510">510           (probability action - next action) /</span>
+<span id="L511">511             (eta * Real.sqrt (probability action)) +</span>
+<span id="L512">512         2 / eta *</span>
+<span id="L513">513           (Real.sqrt (next action) - Real.sqrt (probability action)) =</span>
+<span id="L514">514       probability action * (estimate action - baseline) -</span>
+<span id="L515">515           Real.sqrt (probability action) / eta +</span>
+<span id="L516">516         (-next action / (eta * Real.sqrt (probability action)) -</span>
+<span id="L517">517             next action * (estimate action - baseline) +</span>
+<span id="L518">518           2 * Real.sqrt (next action) / eta) := by</span>
+<span id="L519">519       rw [sub_div, hprobDiv]</span>
+<span id="L520">520       ring</span>
+<span id="L521">521     _ &lt;= probability action * (estimate action - baseline) -</span>
+<span id="L522">522           Real.sqrt (probability action) / eta +</span>
+<span id="L523">523         Real.sqrt (probability action) /</span>
+<span id="L524">524           (eta * (1 + eta * (estimate action - baseline) *</span>
+<span id="L525">525             Real.sqrt (probability action))) := by</span>
+<span id="L526">526       simpa [add_assoc, add_comm, add_left_comm] using</span>
+<span id="L527">527         (add_le_add_left hfenchel</span>
+<span id="L528">528           (probability action * (estimate action - baseline) -</span>
+<span id="L529">529             Real.sqrt (probability action) / eta))</span>
+<span id="L530">530     _ = halfTsallisConjugateCoordinateIncrement eta</span>
+<span id="L531">531           (probability action) (estimate action - baseline) := by</span>
+<span id="L532">532       unfold halfTsallisConjugateCoordinateIncrement</span>
+<span id="L533">533       ring</span>
+<span id="L534">534 </span>
+<span id="L535">535 /--</span>
+<span id="L536">536 Paper-faithful one-step conjugate-potential stability for an ordinary</span>
+<span id="L537">537 importance-weighted sampled update.</span>
+<span id="L538">538 -/</span>
+<span id="L539">539 theorem halfTsallisPotentialStability_importanceWeightedLoss_le_shiftedMoments_of_minimizers</span>
+<span id="L540">540     {Action : Type u} [DecidableEq Action]</span>
+<span id="L541">541     (arms : Finset Action) (eta : Real)</span>
+<span id="L542">542     (score probability loss next : Action -&gt; Real) (chosen : Action)</span>
+<span id="L543">543     (hchosen : chosen ∈ arms)</span>
+<span id="L544">544     (heta : 0 &lt; eta) (heta_le : eta &lt;= 1 / 2)</span>
+<span id="L545">545     (hprobabilityMin : FTRL.IsRegularizedMinimizer</span>
+<span id="L546">546       (FTRL.finiteSimplex arms) arms eta</span>
+<span id="L547">547       (negEntropyRegularizer arms (1 / 2 : Real)) score probability)</span>
+<span id="L548">548     (hnextMin : FTRL.IsRegularizedMinimizer</span>
+<span id="L549">549       (FTRL.finiteSimplex arms) arms eta</span>
+<span id="L550">550       (negEntropyRegularizer arms (1 / 2 : Real))</span>
+<span id="L551">551       (fun action =&gt; score action +</span>
+<span id="L552">552         Exp3.importanceWeightedLoss probability loss chosen action) next)</span>
+<span id="L553">553     (hloss : forall action, action ∈ arms -&gt;</span>
+<span id="L554">554       0 &lt;= loss action ∧ loss action &lt;= 1) :</span>
+<span id="L555">555     halfTsallisPotentialStability arms eta score probability</span>
+<span id="L556">556         (Exp3.importanceWeightedLoss probability loss chosen) next &lt;=</span>
+<span id="L557">557       eta * shiftedHalfPowerImportanceWeightedMoment</span>
+<span id="L558">558           arms probability loss chosen +</span>
+<span id="L559">559         2 * eta ^ 2 * shiftedPositiveCubicImportanceWeightedMoment</span>
+<span id="L560">560           arms probability loss chosen := by</span>
+<span id="L561">561   have hprobabilityPos :=</span>
+<span id="L562">562     isRegularizedMinimizer_pos arms eta score probability hprobabilityMin</span>
+<span id="L563">563   obtain ⟨multiplier, hstationary⟩ :=</span>
+<span id="L564">564     exists_halfTsallisInteriorStationary_of_isRegularizedMinimizer_auto</span>
+<span id="L565">565       arms eta score probability hprobabilityMin</span>
+<span id="L566">566   have hdomain : forall action, action ∈ arms -&gt;</span>
+<span id="L567">567       -1 &lt;= 2 * eta *</span>
+<span id="L568">568         (Exp3.importanceWeightedLoss probability loss chosen action -</span>
+<span id="L569">569           loss chosen) * Real.sqrt (probability action) := by</span>
+<span id="L570">570     intro action haction</span>
+<span id="L571">571     exact importanceWeightedLoss_sub_selectedLoss_conjugate_domain</span>
+<span id="L572">572       arms eta probability loss heta heta_le hprobabilityMin.1</span>
+<span id="L573">573       hprobabilityPos hloss hchosen haction</span>
+<span id="L574">574   have hbridge :=</span>
+<span id="L575">575     halfTsallisPotentialStability_le_conjugatePotentialUpper_of_feasible</span>
+<span id="L576">576       arms eta score probability</span>
+<span id="L577">577       (Exp3.importanceWeightedLoss probability loss chosen) next</span>
+<span id="L578">578       (loss chosen) multiplier heta hprobabilityMin.1 hnextMin.1</span>
+<span id="L579">579       hprobabilityPos hstationary hdomain</span>
+<span id="L580">580   have hupper :=</span>
+<span id="L581">581     halfTsallisConjugatePotentialUpper_le_shiftedMoments</span>
+<span id="L582">582       arms eta probability</span>
+<span id="L583">583       (Exp3.importanceWeightedLoss probability loss chosen) (loss chosen)</span>
+<span id="L584">584       heta hprobabilityPos hdomain</span>
+<span id="L585">585   calc</span>
+<span id="L586">586     halfTsallisPotentialStability arms eta score probability</span>
+<span id="L587">587         (Exp3.importanceWeightedLoss probability loss chosen) next &lt;=</span>
+<span id="L588">588       halfTsallisConjugatePotentialUpper arms eta probability</span>
+<span id="L589">589         (Exp3.importanceWeightedLoss probability loss chosen) (loss chosen) :=</span>
+<span id="L590">590       hbridge</span>
+<span id="L591">591     _ &lt;= eta * shiftedHalfPowerImportanceWeightedMoment</span>
+<span id="L592">592           arms probability loss chosen +</span>
+<span id="L593">593         2 * eta ^ 2 * shiftedPositiveCubicImportanceWeightedMoment</span>
+<span id="L594">594           arms probability loss chosen := by</span>
+<span id="L595">595       simpa [shiftedHalfPowerImportanceWeightedMoment,</span>
+<span id="L596">596         shiftedPositiveCubicImportanceWeightedMoment] using hupper</span>
+<span id="L597">597 </span>
+<span id="L598">598 /--</span>
+<span id="L599">599 Sampled-action averaged ordinary-IW conjugate-potential stability.  This is the</span>
+<span id="L600">600 deterministic finite-action form of the refined coefficient used downstream by</span>
+<span id="L601">601 the self-bounding route.</span>
+<span id="L602">602 -/</span>
+<span id="L603">603 theorem sum_prob_mul_halfTsallisPotentialStability_importanceWeightedLoss_le_refined_of_minimizers</span>
+<span id="L604">604     {Action : Type u} [DecidableEq Action]</span>
+<span id="L605">605     (arms : Finset Action) (eta : Real)</span>
+<span id="L606">606     (score probability loss : Action -&gt; Real)</span>
+<span id="L607">607     (next : Action -&gt; Action -&gt; Real)</span>
+<span id="L608">608     (heta : 0 &lt; eta) (heta_le : eta &lt;= 1 / 2)</span>
+<span id="L609">609     (hprobabilityMin : FTRL.IsRegularizedMinimizer</span>
+<span id="L610">610       (FTRL.finiteSimplex arms) arms eta</span>
+<span id="L611">611       (negEntropyRegularizer arms (1 / 2 : Real)) score probability)</span>
+<span id="L612">612     (hnextMin : forall chosen, chosen ∈ arms -&gt;</span>
+<span id="L613">613       FTRL.IsRegularizedMinimizer</span>
+<span id="L614">614         (FTRL.finiteSimplex arms) arms eta</span>
+<span id="L615">615         (negEntropyRegularizer arms (1 / 2 : Real))</span>
+<span id="L616">616         (fun action =&gt; score action +</span>
+<span id="L617">617           Exp3.importanceWeightedLoss probability loss chosen action)</span>
+<span id="L618">618         (next chosen))</span>
+<span id="L619">619     (hloss : forall action, action ∈ arms -&gt;</span>
+<span id="L620">620       0 &lt;= loss action ∧ loss action &lt;= 1) :</span>
+<span id="L621">621     arms.sum (fun chosen =&gt; probability chosen *</span>
+<span id="L622">622       halfTsallisPotentialStability arms eta score probability</span>
+<span id="L623">623         (Exp3.importanceWeightedLoss probability loss chosen) (next chosen)) &lt;=</span>
+<span id="L624">624       eta * arms.sum (fun action =&gt;</span>
+<span id="L625">625         Real.sqrt (probability action) * (1 - probability action)) +</span>
+<span id="L626">626         2 * eta ^ 2 := by</span>
+<span id="L627">627   have hprobabilityPos :=</span>
+<span id="L628">628     isRegularizedMinimizer_pos arms eta score probability hprobabilityMin</span>
+<span id="L629">629   have hquadratic :=</span>
+<span id="L630">630     sum_prob_mul_shiftedHalfPowerImportanceWeightedMoment_le</span>
+<span id="L631">631       arms probability loss hprobabilityMin.1 hprobabilityPos hloss</span>
+<span id="L632">632   have hcubic :=</span>
+<span id="L633">633     sum_prob_mul_shiftedPositiveCubicImportanceWeightedMoment_le_one</span>
+<span id="L634">634       arms probability loss hprobabilityMin.1 hprobabilityPos hloss</span>
+<span id="L635">635   calc</span>
+<span id="L636">636     arms.sum (fun chosen =&gt; probability chosen *</span>
+<span id="L637">637         halfTsallisPotentialStability arms eta score probability</span>
+<span id="L638">638           (Exp3.importanceWeightedLoss probability loss chosen)</span>
+<span id="L639">639           (next chosen)) &lt;=</span>
+<span id="L640">640       arms.sum (fun chosen =&gt; probability chosen *</span>
+<span id="L641">641         (eta * shiftedHalfPowerImportanceWeightedMoment</span>
+<span id="L642">642             arms probability loss chosen +</span>
+<span id="L643">643           2 * eta ^ 2 * shiftedPositiveCubicImportanceWeightedMoment</span>
+<span id="L644">644             arms probability loss chosen)) := by</span>
+<span id="L645">645       apply Finset.sum_le_sum</span>
+<span id="L646">646       intro chosen hchosen</span>
+<span id="L647">647       exact mul_le_mul_of_nonneg_left</span>
+<span id="L648">648         (halfTsallisPotentialStability_importanceWeightedLoss_le_shiftedMoments_of_minimizers</span>
+<span id="L649">649           arms eta score probability loss (next chosen) chosen hchosen</span>
+<span id="L650">650           heta heta_le hprobabilityMin (hnextMin chosen hchosen) hloss)</span>
+<span id="L651">651         (hprobabilityMin.1.1 chosen hchosen)</span>
+<span id="L652">652     _ = eta * arms.sum (fun chosen =&gt; probability chosen *</span>
+<span id="L653">653           shiftedHalfPowerImportanceWeightedMoment</span>
+<span id="L654">654             arms probability loss chosen) +</span>
+<span id="L655">655         2 * eta ^ 2 * arms.sum (fun chosen =&gt; probability chosen *</span>
+<span id="L656">656           shiftedPositiveCubicImportanceWeightedMoment</span>
+<span id="L657">657             arms probability loss chosen) := by</span>
+<span id="L658">658       calc</span>
+<span id="L659">659         arms.sum (fun chosen =&gt; probability chosen *</span>
+<span id="L660">660             (eta * shiftedHalfPowerImportanceWeightedMoment</span>
+<span id="L661">661                 arms probability loss chosen +</span>
+<span id="L662">662               2 * eta ^ 2 * shiftedPositiveCubicImportanceWeightedMoment</span>
+<span id="L663">663                 arms probability loss chosen)) =</span>
+<span id="L664">664           arms.sum (fun chosen =&gt;</span>
+<span id="L665">665               eta * (probability chosen *</span>
+<span id="L666">666                 shiftedHalfPowerImportanceWeightedMoment</span>
+<span id="L667">667                   arms probability loss chosen) +</span>
+<span id="L668">668             2 * eta ^ 2 * (probability chosen *</span>
+<span id="L669">669               shiftedPositiveCubicImportanceWeightedMoment</span>
+<span id="L670">670                 arms probability loss chosen)) := by</span>
+<span id="L671">671           apply Finset.sum_congr rfl</span>
+<span id="L672">672           intro chosen _hchosen</span>
+<span id="L673">673           ring</span>
+<span id="L674">674         _ = eta * arms.sum (fun chosen =&gt; probability chosen *</span>
+<span id="L675">675               shiftedHalfPowerImportanceWeightedMoment</span>
+<span id="L676">676                 arms probability loss chosen) +</span>
+<span id="L677">677             2 * eta ^ 2 * arms.sum (fun chosen =&gt; probability chosen *</span>
+<span id="L678">678               shiftedPositiveCubicImportanceWeightedMoment</span>
+<span id="L679">679                 arms probability loss chosen) := by</span>
+<span id="L680">680           rw [Finset.sum_add_distrib, Finset.mul_sum, Finset.mul_sum]</span>
+<span id="L681">681     _ &lt;= eta * arms.sum (fun action =&gt;</span>
+<span id="L682">682           Real.sqrt (probability action) * (1 - probability action)) +</span>
+<span id="L683">683         2 * eta ^ 2 * 1 := by</span>
+<span id="L684">684       exact add_le_add</span>
+<span id="L685">685         (mul_le_mul_of_nonneg_left hquadratic heta.le)</span>
+<span id="L686">686         (mul_le_mul_of_nonneg_left hcubic (by positivity))</span>
+<span id="L687">687     _ = eta * arms.sum (fun action =&gt;</span>
+<span id="L688">688           Real.sqrt (probability action) * (1 - probability action)) +</span>
+<span id="L689">689         2 * eta ^ 2 := by ring</span>
+<span id="L690">690 </span>
+<span id="L691">691 /-- Canonical-selector wrapper with all minimizer certificates discharged. -/</span>
+<span id="L692">692 theorem sum_halfTsallisMinimizer_mul_potentialStability_le_refined</span>
+<span id="L693">693     {Action : Type u} [DecidableEq Action]</span>
+<span id="L694">694     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L695">695     (eta : Real) (score loss : Action -&gt; Real)</span>
+<span id="L696">696     (heta : 0 &lt; eta) (heta_le : eta &lt;= 1 / 2)</span>
+<span id="L697">697     (hloss : forall action, action ∈ arms -&gt;</span>
+<span id="L698">698       0 &lt;= loss action ∧ loss action &lt;= 1) :</span>
+<span id="L699">699     let probability := halfTsallisMinimizer arms harms eta score</span>
+<span id="L700">700     let next := fun chosen =&gt;</span>
+<span id="L701">701       halfTsallisUpdatedMinimizer arms harms eta score loss chosen</span>
+<span id="L702">702     arms.sum (fun chosen =&gt; probability chosen *</span>
+<span id="L703">703       halfTsallisPotentialStability arms eta score probability</span>
+<span id="L704">704         (Exp3.importanceWeightedLoss probability loss chosen) (next chosen)) &lt;=</span>
+<span id="L705">705       eta * arms.sum (fun action =&gt;</span>
+<span id="L706">706         Real.sqrt (probability action) * (1 - probability action)) +</span>
+<span id="L707">707         2 * eta ^ 2 := by</span>
+<span id="L708">708   dsimp only</span>
+<span id="L709">709   exact</span>
+<span id="L710">710     sum_prob_mul_halfTsallisPotentialStability_importanceWeightedLoss_le_refined_of_minimizers</span>
+<span id="L711">711       arms eta score (halfTsallisMinimizer arms harms eta score) loss</span>
+<span id="L712">712       (fun chosen =&gt;</span>
+<span id="L713">713         halfTsallisUpdatedMinimizer arms harms eta score loss chosen)</span>
+<span id="L714">714       heta heta_le</span>
+<span id="L715">715       (halfTsallisMinimizer_isRegularizedMinimizer arms harms eta score)</span>
+<span id="L716">716       (fun chosen _hchosen =&gt;</span>
+<span id="L717">717         halfTsallisUpdatedMinimizer_isRegularizedMinimizer</span>
+<span id="L718">718           arms harms eta score loss chosen)</span>
+<span id="L719">719       hloss</span>
+<span id="L720">720 </span>
+<span id="L721">721 end Tsallis</span>
+<span id="L722">722 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

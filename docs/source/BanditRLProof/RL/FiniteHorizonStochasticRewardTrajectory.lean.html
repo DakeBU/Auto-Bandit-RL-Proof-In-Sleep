@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonStochasticRewardTrajectory.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonStochasticRewardTrajectory.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonStochasticRewardTrajectory.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonStochasticRewardTrajectory.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonStochasticRewardBellman</span>
+<span id="L2">2 import Mathlib.Probability.Kernel.Composition.IntegralCompProd</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Finite-horizon stochastic reward trajectory value identity</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module generates finite policy trajectories whose coordinates retain the</span>
+<span id="L8">8 sampled action, sampled Real reward, and next state.  Selected rewards need</span>
+<span id="L9">9 only the `L1` mean-compatibility contract from the stochastic Bellman layer.</span>
+<span id="L10">10 The cumulative sampled reward is proved integrable recursively and its</span>
+<span id="L11">11 expectation is identified with both stochastic and mean policy evaluation.</span>
+<span id="L12">12 -/</span>
+<span id="L13">13 </span>
+<span id="L14">14 open MeasureTheory</span>
+<span id="L15">15 </span>
+<span id="L16">16 universe u v</span>
+<span id="L17">17 </span>
+<span id="L18">18 namespace BanditRLProof</span>
+<span id="L19">19 namespace FiniteHorizonRL</span>
+<span id="L20">20 </span>
+<span id="L21">21 variable {State : Type u} {Action : Type v}</span>
+<span id="L22">22     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L23">23     [Fintype State] [Fintype Action]</span>
+<span id="L24">24 </span>
+<span id="L25">25 /-- A finite trace of sampled action, reward, and resulting next state. -/</span>
+<span id="L26">26 abbrev RewardStepTrace (Action : Type v) (State : Type u) (n : Nat) :=</span>
+<span id="L27">27   Fin n -&gt; Prod Action (Prod Real State)</span>
+<span id="L28">28 </span>
+<span id="L29">29 namespace RewardStepTrace</span>
+<span id="L30">30 </span>
+<span id="L31">31 omit [Fintype State] [Fintype Action] in</span>
+<span id="L32">32 /-- Prepending a sampled action-reward-state coordinate is measurable. -/</span>
+<span id="L33">33 theorem measurable_cons (n : Nat) :</span>
+<span id="L34">34     Measurable</span>
+<span id="L35">35       (fun p : Prod (Prod Action (Prod Real State))</span>
+<span id="L36">36           (RewardStepTrace Action State n) =&gt;</span>
+<span id="L37">37         @Fin.cons n (fun _ =&gt; Prod Action (Prod Real State)) p.1 p.2) := by</span>
+<span id="L38">38   apply measurable_pi_lambda</span>
+<span id="L39">39   intro i</span>
+<span id="L40">40   refine Fin.cases measurable_fst</span>
+<span id="L41">41     (fun j =&gt; (measurable_pi_apply j).comp measurable_snd) i</span>
+<span id="L42">42 </span>
+<span id="L43">43 omit [Fintype State] [Fintype Action] in</span>
+<span id="L44">44 /-- Removing the first sampled coordinate is measurable. -/</span>
+<span id="L45">45 theorem measurable_tail (n : Nat) :</span>
+<span id="L46">46     Measurable</span>
+<span id="L47">47       (fun trace : RewardStepTrace Action State (n + 1) =&gt; Fin.tail trace) := by</span>
+<span id="L48">48   apply measurable_pi_lambda</span>
+<span id="L49">49   intro i</span>
+<span id="L50">50   exact measurable_pi_apply i.succ</span>
+<span id="L51">51 </span>
+<span id="L52">52 end RewardStepTrace</span>
+<span id="L53">53 </span>
+<span id="L54">54 /-- An a.e. strongly measurable Real function on a finite type is integrable. -/</span>
+<span id="L55">55 theorem integrable_of_fintype_aestronglyMeasurable</span>
+<span id="L56">56     {Omega : Type*} [Fintype Omega] [MeasurableSpace Omega]</span>
+<span id="L57">57     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L58">58     (f : Omega -&gt; Real) (hf : AEStronglyMeasurable f mu) : Integrable f mu := by</span>
+<span id="L59">59   apply Integrable.of_bound hf</span>
+<span id="L60">60     (Finset.sum Finset.univ (fun x =&gt; |f x|))</span>
+<span id="L61">61   exact Filter.Eventually.of_forall fun x =&gt; by</span>
+<span id="L62">62     rw [Real.norm_eq_abs]</span>
+<span id="L63">63     exact Finset.single_le_sum</span>
+<span id="L64">64       (fun y _ =&gt; abs_nonneg (f y)) (Finset.mem_univ x)</span>
+<span id="L65">65 </span>
+<span id="L66">66 namespace MDP</span>
+<span id="L67">67 namespace MeanCompatibleRewardKernel</span>
+<span id="L68">68 </span>
+<span id="L69">69 variable {mdp : MDP State Action}</span>
+<span id="L70">70 </span>
+<span id="L71">71 /-- One policy action followed by its sampled reward and next state. -/</span>
+<span id="L72">72 noncomputable def actionRewardStateKernel</span>
+<span id="L73">73     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L74">74     (policy : MarkovPolicy mdp) (stage : Fin mdp.horizon) :</span>
+<span id="L75">75     ProbabilityTheory.Kernel State</span>
+<span id="L76">76       (Prod Action (Prod Real State)) :=</span>
+<span id="L77">77   ProbabilityTheory.Kernel.compProd</span>
+<span id="L78">78     (policy.actionKernel stage) source.rewardNextStateKernel</span>
+<span id="L79">79 </span>
+<span id="L80">80 instance instActionRewardStateKernelIsMarkovKernel</span>
+<span id="L81">81     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L82">82     (policy : MarkovPolicy mdp) (stage : Fin mdp.horizon) :</span>
+<span id="L83">83     ProbabilityTheory.IsMarkovKernel</span>
+<span id="L84">84       (source.actionRewardStateKernel policy stage) := by</span>
+<span id="L85">85   unfold actionRewardStateKernel</span>
+<span id="L86">86   infer_instance</span>
+<span id="L87">87 </span>
+<span id="L88">88 /--</span>
+<span id="L89">89 Kernel of the next `remaining` sampled action-reward-state coordinates.</span>
+<span id="L90">90 The first chronological stage is `mdp.horizon - remaining`.</span>
+<span id="L91">91 -/</span>
+<span id="L92">92 noncomputable def stochasticTrajectoryKernelRemaining</span>
+<span id="L93">93     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L94">94     (policy : MarkovPolicy mdp) :</span>
+<span id="L95">95     (remaining : Nat) -&gt; remaining &lt;= mdp.horizon -&gt;</span>
+<span id="L96">96       ProbabilityTheory.Kernel State</span>
+<span id="L97">97         (RewardStepTrace Action State remaining)</span>
+<span id="L98">98   | 0, _ =&gt;</span>
+<span id="L99">99       ProbabilityTheory.Kernel.deterministic</span>
+<span id="L100">100         (fun _ =&gt; fun i =&gt; Fin.elim0 i) measurable_const</span>
+<span id="L101">101   | remaining + 1, hremaining =&gt;</span>
+<span id="L102">102       let stage : Fin mdp.horizon :=</span>
+<span id="L103">103         ⟨mdp.horizon - (remaining + 1), by omega⟩</span>
+<span id="L104">104       let tailKernel : ProbabilityTheory.Kernel</span>
+<span id="L105">105           (Prod State (Prod Action (Prod Real State)))</span>
+<span id="L106">106           (RewardStepTrace Action State remaining) :=</span>
+<span id="L107">107         (source.stochasticTrajectoryKernelRemaining policy remaining (by omega)).comap</span>
+<span id="L108">108           (fun p : Prod State (Prod Action (Prod Real State)) =&gt; p.2.2.2)</span>
+<span id="L109">109           (show Measurable</span>
+<span id="L110">110               (fun p : Prod State (Prod Action (Prod Real State)) =&gt; p.2.2.2) from</span>
+<span id="L111">111             measurable_snd.snd.snd)</span>
+<span id="L112">112       ((source.actionRewardStateKernel policy stage).compProd tailKernel).map</span>
+<span id="L113">113         (fun p =&gt;</span>
+<span id="L114">114           @Fin.cons remaining (fun _ =&gt; Prod Action (Prod Real State)) p.1 p.2)</span>
+<span id="L115">115 </span>
+<span id="L116">116 instance instStochasticTrajectoryKernelRemainingIsMarkovKernel</span>
+<span id="L117">117     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L118">118     (policy : MarkovPolicy mdp)</span>
+<span id="L119">119     (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) :</span>
+<span id="L120">120     ProbabilityTheory.IsMarkovKernel</span>
+<span id="L121">121       (source.stochasticTrajectoryKernelRemaining policy remaining hremaining) := by</span>
+<span id="L122">122   induction remaining with</span>
+<span id="L123">123   | zero =&gt;</span>
+<span id="L124">124       unfold stochasticTrajectoryKernelRemaining</span>
+<span id="L125">125       infer_instance</span>
+<span id="L126">126   | succ remaining ih =&gt;</span>
+<span id="L127">127       rw [stochasticTrajectoryKernelRemaining]</span>
+<span id="L128">128       apply ProbabilityTheory.Kernel.IsMarkovKernel.map</span>
+<span id="L129">129       exact RewardStepTrace.measurable_cons remaining</span>
+<span id="L130">130 </span>
+<span id="L131">131 end MeanCompatibleRewardKernel</span>
+<span id="L132">132 </span>
+<span id="L133">133 /-- Sum of the actual sampled rewards in a reward-bearing finite trace. -/</span>
+<span id="L134">134 def sampledCumulativeRewardFrom :</span>
+<span id="L135">135     (remaining : Nat) -&gt; RewardStepTrace Action State remaining -&gt; Real</span>
+<span id="L136">136   | 0, _ =&gt; 0</span>
+<span id="L137">137   | remaining + 1, trace =&gt;</span>
+<span id="L138">138       (trace 0).2.1 + sampledCumulativeRewardFrom remaining (Fin.tail trace)</span>
+<span id="L139">139 </span>
+<span id="L140">140 omit [Fintype State] [Fintype Action] in</span>
+<span id="L141">141 /-- The sampled finite cumulative reward is measurable. -/</span>
+<span id="L142">142 theorem measurable_sampledCumulativeRewardFrom (remaining : Nat) :</span>
+<span id="L143">143     Measurable</span>
+<span id="L144">144       (sampledCumulativeRewardFrom (Action := Action) (State := State) remaining) := by</span>
+<span id="L145">145   induction remaining with</span>
+<span id="L146">146   | zero =&gt;</span>
+<span id="L147">147       simp [sampledCumulativeRewardFrom]</span>
+<span id="L148">148   | succ remaining ih =&gt;</span>
+<span id="L149">149       rw [show remaining + 1 = Nat.succ remaining by rfl]</span>
+<span id="L150">150       simp only [sampledCumulativeRewardFrom]</span>
+<span id="L151">151       exact</span>
+<span id="L152">152         (((measurable_pi_apply (0 : Fin (remaining + 1))).snd.fst).add</span>
+<span id="L153">153           (ih.comp (RewardStepTrace.measurable_tail remaining)))</span>
+<span id="L154">154 </span>
+<span id="L155">155 end MDP</span>
+<span id="L156">156 </span>
+<span id="L157">157 namespace MDP.MeanCompatibleRewardKernel</span>
+<span id="L158">158 </span>
+<span id="L159">159 variable {mdp : MDP State Action}</span>
+<span id="L160">160 </span>
+<span id="L161">161 /--</span>
+<span id="L162">162 The sampled cumulative reward is `L1` under every statewise stochastic</span>
+<span id="L163">163 trajectory law.  No boundedness or second-moment hypothesis is used.</span>
+<span id="L164">164 -/</span>
+<span id="L165">165 theorem integrable_sampledCumulativeRewardFrom_stochasticTrajectoryKernelRemaining</span>
+<span id="L166">166     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L167">167     (policy : MarkovPolicy mdp)</span>
+<span id="L168">168     (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon)</span>
+<span id="L169">169     (state : State) :</span>
+<span id="L170">170     Integrable</span>
+<span id="L171">171       (MDP.sampledCumulativeRewardFrom (Action := Action) (State := State) remaining)</span>
+<span id="L172">172       (source.stochasticTrajectoryKernelRemaining policy remaining hremaining state) := by</span>
+<span id="L173">173   induction remaining generalizing state with</span>
+<span id="L174">174   | zero =&gt;</span>
+<span id="L175">175       rw [stochasticTrajectoryKernelRemaining,</span>
+<span id="L176">176         ProbabilityTheory.Kernel.deterministic_apply]</span>
+<span id="L177">177       exact integrable_dirac&#x27;</span>
+<span id="L178">178         (MDP.measurable_sampledCumulativeRewardFrom</span>
+<span id="L179">179           (Action := Action) (State := State) 0).stronglyMeasurable</span>
+<span id="L180">180         (by simp)</span>
+<span id="L181">181   | succ remaining ih =&gt;</span>
+<span id="L182">182       let stage : Fin mdp.horizon :=</span>
+<span id="L183">183         ⟨mdp.horizon - (remaining + 1), by omega⟩</span>
+<span id="L184">184       let tailKernel : ProbabilityTheory.Kernel</span>
+<span id="L185">185           (Prod State (Prod Action (Prod Real State)))</span>
+<span id="L186">186           (RewardStepTrace Action State remaining) :=</span>
+<span id="L187">187         (source.stochasticTrajectoryKernelRemaining policy remaining (by omega)).comap</span>
+<span id="L188">188           (fun p : Prod State (Prod Action (Prod Real State)) =&gt; p.2.2.2)</span>
+<span id="L189">189           (show Measurable</span>
+<span id="L190">190               (fun p : Prod State (Prod Action (Prod Real State)) =&gt; p.2.2.2) from</span>
+<span id="L191">191             measurable_snd.snd.snd)</span>
+<span id="L192">192       let consStep :=</span>
+<span id="L193">193         fun p : Prod (Prod Action (Prod Real State))</span>
+<span id="L194">194             (RewardStepTrace Action State remaining) =&gt;</span>
+<span id="L195">195           @Fin.cons remaining (fun _ =&gt; Prod Action (Prod Real State)) p.1 p.2</span>
+<span id="L196">196       let sampledTail :=</span>
+<span id="L197">197         MDP.sampledCumulativeRewardFrom</span>
+<span id="L198">198           (Action := Action) (State := State) remaining</span>
+<span id="L199">199       let tailNorm : State -&gt; Real := fun nextState =&gt;</span>
+<span id="L200">200         integral</span>
+<span id="L201">201           (source.stochasticTrajectoryKernelRemaining policy remaining</span>
+<span id="L202">202             (by omega) nextState)</span>
+<span id="L203">203           (fun tail =&gt; ‖sampledTail tail‖)</span>
+<span id="L204">204       have hcons : Measurable consStep := RewardStepTrace.measurable_cons remaining</span>
+<span id="L205">205       have hreturn : Measurable</span>
+<span id="L206">206           (MDP.sampledCumulativeRewardFrom</span>
+<span id="L207">207             (Action := Action) (State := State) (remaining + 1)) :=</span>
+<span id="L208">208         MDP.measurable_sampledCumulativeRewardFrom (remaining + 1)</span>
+<span id="L209">209       have htailNorm : Measurable tailNorm := by</span>
+<span id="L210">210         exact</span>
+<span id="L211">211           (MDP.measurable_sampledCumulativeRewardFrom</span>
+<span id="L212">212             (Action := Action) (State := State) remaining).norm.stronglyMeasurable</span>
+<span id="L213">213             |&gt;.integral_kernel.measurable</span>
+<span id="L214">214       have hheadBound : Integrable</span>
+<span id="L215">215           (fun head : Prod Action (Prod Real State) =&gt;</span>
+<span id="L216">216             |head.2.1| + tailNorm head.2.2)</span>
+<span id="L217">217           (source.actionRewardStateKernel policy stage state) := by</span>
+<span id="L218">218         let bound := fun head : Prod Action (Prod Real State) =&gt;</span>
+<span id="L219">219           |head.2.1| + tailNorm head.2.2</span>
+<span id="L220">220         have hbound : StronglyMeasurable bound :=</span>
+<span id="L221">221           (measurable_snd.fst.abs.add (htailNorm.comp measurable_snd.snd)).stronglyMeasurable</span>
+<span id="L222">222         unfold actionRewardStateKernel</span>
+<span id="L223">223         apply (ProbabilityTheory.integrable_compProd_iff</span>
+<span id="L224">224           hbound.aestronglyMeasurable).2</span>
+<span id="L225">225         constructor</span>
+<span id="L226">226         · exact Filter.Eventually.of_forall fun action =&gt; by</span>
+<span id="L227">227             haveI : IsProbabilityMeasure</span>
+<span id="L228">228                 (source.rewardKernel.kernel (state, action)) :=</span>
+<span id="L229">229               RewardKernel.isProbabilityMeasure_apply source.rewardKernel (state, action)</span>
+<span id="L230">230             haveI : IsProbabilityMeasure (mdp.transition (state, action)) := by</span>
+<span id="L231">231               infer_instance</span>
+<span id="L232">232             rw [rewardNextStateKernel, ProbabilityTheory.Kernel.prod_apply]</span>
+<span id="L233">233             have hrewardAbs : Integrable (fun reward : Real =&gt; |reward|)</span>
+<span id="L234">234                 (source.rewardKernel.kernel (state, action)) := by</span>
+<span id="L235">235               simpa [Real.norm_eq_abs] using</span>
+<span id="L236">236                 (source.integrable_reward state action).norm</span>
+<span id="L237">237             exact</span>
+<span id="L238">238               (hrewardAbs.comp_fst (mdp.transition (state, action))).add</span>
+<span id="L239">239                 ((integrable_of_fintype (mdp.transition (state, action))</span>
+<span id="L240">240                   tailNorm htailNorm).comp_snd</span>
+<span id="L241">241                     (source.rewardKernel.kernel (state, action)))</span>
+<span id="L242">242         · have hboundAE : AEStronglyMeasurable bound</span>
+<span id="L243">243               (((policy.actionKernel stage).compProd</span>
+<span id="L244">244                 source.rewardNextStateKernel) state) :=</span>
+<span id="L245">245             hbound.aestronglyMeasurable</span>
+<span id="L246">246           exact integrable_of_fintype_aestronglyMeasurable</span>
+<span id="L247">247             (policy.actionKernel stage state)</span>
+<span id="L248">248             (fun action =&gt;</span>
+<span id="L249">249               integral (source.rewardNextStateKernel (state, action))</span>
+<span id="L250">250                 (fun rewardState =&gt; ‖bound (action, rewardState)‖))</span>
+<span id="L251">251             hboundAE.norm.integral_kernel_compProd</span>
+<span id="L252">252       rw [stochasticTrajectoryKernelRemaining]</span>
+<span id="L253">253       rw [ProbabilityTheory.Kernel.map_apply _ hcons]</span>
+<span id="L254">254       apply (integrable_map_measure hreturn.aestronglyMeasurable</span>
+<span id="L255">255         hcons.aemeasurable).2</span>
+<span id="L256">256       have hpreMeas : AEStronglyMeasurable</span>
+<span id="L257">257           (fun p =&gt;</span>
+<span id="L258">258             MDP.sampledCumulativeRewardFrom</span>
+<span id="L259">259               (Action := Action) (State := State) (remaining + 1) (consStep p))</span>
+<span id="L260">260           (((source.actionRewardStateKernel policy stage).compProd tailKernel) state) :=</span>
+<span id="L261">261         (hreturn.comp hcons).aestronglyMeasurable</span>
+<span id="L262">262       apply (ProbabilityTheory.integrable_compProd_iff hpreMeas).2</span>
+<span id="L263">263       constructor</span>
+<span id="L264">264       · exact Filter.Eventually.of_forall fun head =&gt; by</span>
+<span id="L265">265           rw [ProbabilityTheory.Kernel.comap_apply]</span>
+<span id="L266">266           change Integrable</span>
+<span id="L267">267             (fun tail =&gt; head.2.1 + sampledTail tail)</span>
+<span id="L268">268             (source.stochasticTrajectoryKernelRemaining policy remaining</span>
+<span id="L269">269               (by omega) head.2.2)</span>
+<span id="L270">270           exact (integrable_const _).add (ih (by omega) head.2.2)</span>
+<span id="L271">271       · have hinnerNormAE : AEStronglyMeasurable</span>
+<span id="L272">272             (fun head =&gt;</span>
+<span id="L273">273               integral (tailKernel (state, head))</span>
+<span id="L274">274                 (fun tail =&gt;</span>
+<span id="L275">275                   ‖MDP.sampledCumulativeRewardFrom</span>
+<span id="L276">276                     (Action := Action) (State := State) (remaining + 1)</span>
+<span id="L277">277                       (consStep (head, tail))‖))</span>
+<span id="L278">278             (source.actionRewardStateKernel policy stage state) :=</span>
+<span id="L279">279           hpreMeas.norm.integral_kernel_compProd</span>
+<span id="L280">280         refine hheadBound.mono&#x27; hinnerNormAE ?_</span>
+<span id="L281">281         exact Filter.Eventually.of_forall fun head =&gt; by</span>
+<span id="L282">282           rw [Real.norm_eq_abs,</span>
+<span id="L283">283             abs_of_nonneg (integral_nonneg fun _ =&gt; norm_nonneg _)]</span>
+<span id="L284">284           rw [ProbabilityTheory.Kernel.comap_apply]</span>
+<span id="L285">285           change</span>
+<span id="L286">286             integral</span>
+<span id="L287">287                 (source.stochasticTrajectoryKernelRemaining policy remaining</span>
+<span id="L288">288                   (by omega) head.2.2)</span>
+<span id="L289">289                 (fun tail =&gt; ‖head.2.1 + sampledTail tail‖) &lt;=</span>
+<span id="L290">290               |head.2.1| + tailNorm head.2.2</span>
+<span id="L291">291           calc</span>
+<span id="L292">292             _ &lt;= integral</span>
+<span id="L293">293                 (source.stochasticTrajectoryKernelRemaining policy remaining</span>
+<span id="L294">294                   (by omega) head.2.2)</span>
+<span id="L295">295                 (fun tail =&gt; |head.2.1| + ‖sampledTail tail‖) := by</span>
+<span id="L296">296               apply integral_mono_ae</span>
+<span id="L297">297               · exact ((integrable_const _).add</span>
+<span id="L298">298                   (ih (by omega) head.2.2)).norm</span>
+<span id="L299">299               · exact (integrable_const _).add (ih (by omega) head.2.2).norm</span>
+<span id="L300">300               · exact Filter.Eventually.of_forall fun tail =&gt; by</span>
+<span id="L301">301                   simpa [Real.norm_eq_abs] using</span>
+<span id="L302">302                     norm_add_le head.2.1 (sampledTail tail)</span>
+<span id="L303">303             _ = |head.2.1| + tailNorm head.2.2 := by</span>
+<span id="L304">304               rw [integral_add (integrable_const _)</span>
+<span id="L305">305                 (ih (by omega) head.2.2).norm]</span>
+<span id="L306">306               simp [tailNorm, sampledTail]</span>
+<span id="L307">307 </span>
+<span id="L308">308 /--</span>
+<span id="L309">309 Statewise stochastic trajectory identity: expected sampled cumulative reward</span>
+<span id="L310">310 equals the independently defined stochastic backward policy value.</span>
+<span id="L311">311 -/</span>
+<span id="L312">312 theorem integral_sampledCumulativeRewardFrom_stochasticTrajectoryKernelRemaining_eq_stochasticValueRemaining</span>
+<span id="L313">313     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L314">314     (policy : MarkovPolicy mdp)</span>
+<span id="L315">315     (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon)</span>
+<span id="L316">316     (state : State) :</span>
+<span id="L317">317     integral</span>
+<span id="L318">318         (source.stochasticTrajectoryKernelRemaining policy remaining hremaining state)</span>
+<span id="L319">319         (MDP.sampledCumulativeRewardFrom</span>
+<span id="L320">320           (Action := Action) (State := State) remaining) =</span>
+<span id="L321">321       source.stochasticValueRemaining policy remaining hremaining state := by</span>
+<span id="L322">322   induction remaining generalizing state with</span>
+<span id="L323">323   | zero =&gt;</span>
+<span id="L324">324       rw [stochasticTrajectoryKernelRemaining,</span>
+<span id="L325">325         ProbabilityTheory.Kernel.deterministic_apply]</span>
+<span id="L326">326       rw [integral_dirac&#x27;</span>
+<span id="L327">327         (MDP.sampledCumulativeRewardFrom</span>
+<span id="L328">328           (Action := Action) (State := State) 0)</span>
+<span id="L329">329         (fun i =&gt; Fin.elim0 i)]</span>
+<span id="L330">330       · rfl</span>
+<span id="L331">331       · exact (MDP.measurable_sampledCumulativeRewardFrom</span>
+<span id="L332">332           (Action := Action) (State := State) 0).stronglyMeasurable</span>
+<span id="L333">333   | succ remaining ih =&gt;</span>
+<span id="L334">334       let stage : Fin mdp.horizon :=</span>
+<span id="L335">335         ⟨mdp.horizon - (remaining + 1), by omega⟩</span>
+<span id="L336">336       let tailKernel : ProbabilityTheory.Kernel</span>
+<span id="L337">337           (Prod State (Prod Action (Prod Real State)))</span>
+<span id="L338">338           (RewardStepTrace Action State remaining) :=</span>
+<span id="L339">339         (source.stochasticTrajectoryKernelRemaining policy remaining (by omega)).comap</span>
+<span id="L340">340           (fun p : Prod State (Prod Action (Prod Real State)) =&gt; p.2.2.2)</span>
+<span id="L341">341           (show Measurable</span>
+<span id="L342">342               (fun p : Prod State (Prod Action (Prod Real State)) =&gt; p.2.2.2) from</span>
+<span id="L343">343             measurable_snd.snd.snd)</span>
+<span id="L344">344       let consStep :=</span>
+<span id="L345">345         fun p : Prod (Prod Action (Prod Real State))</span>
+<span id="L346">346             (RewardStepTrace Action State remaining) =&gt;</span>
+<span id="L347">347           @Fin.cons remaining (fun _ =&gt; Prod Action (Prod Real State)) p.1 p.2</span>
+<span id="L348">348       have hcons : Measurable consStep := RewardStepTrace.measurable_cons remaining</span>
+<span id="L349">349       have hreturn : Measurable</span>
+<span id="L350">350           (MDP.sampledCumulativeRewardFrom</span>
+<span id="L351">351             (Action := Action) (State := State) (remaining + 1)) :=</span>
+<span id="L352">352         MDP.measurable_sampledCumulativeRewardFrom (remaining + 1)</span>
+<span id="L353">353       have hmapped :=</span>
+<span id="L354">354         source.integrable_sampledCumulativeRewardFrom_stochasticTrajectoryKernelRemaining</span>
+<span id="L355">355           policy (remaining + 1) (by omega) state</span>
+<span id="L356">356       rw [stochasticTrajectoryKernelRemaining,</span>
+<span id="L357">357         ProbabilityTheory.Kernel.map_apply _ hcons] at hmapped</span>
+<span id="L358">358       have hpre : Integrable</span>
+<span id="L359">359           (fun p =&gt;</span>
+<span id="L360">360             MDP.sampledCumulativeRewardFrom</span>
+<span id="L361">361               (Action := Action) (State := State) (remaining + 1) (consStep p))</span>
+<span id="L362">362           (((source.actionRewardStateKernel policy stage).compProd tailKernel) state) :=</span>
+<span id="L363">363         (integrable_map_measure hreturn.aestronglyMeasurable</span>
+<span id="L364">364           hcons.aemeasurable).1 hmapped</span>
+<span id="L365">365       rw [stochasticTrajectoryKernelRemaining]</span>
+<span id="L366">366       rw [ProbabilityTheory.Kernel.map_apply _ hcons]</span>
+<span id="L367">367       rw [integral_map hcons.aemeasurable hreturn.aestronglyMeasurable]</span>
+<span id="L368">368       rw [ProbabilityTheory.integral_compProd hpre]</span>
+<span id="L369">369       have htailIntegral :</span>
+<span id="L370">370           (fun head : Prod Action (Prod Real State) =&gt;</span>
+<span id="L371">371               integral (tailKernel (state, head))</span>
+<span id="L372">372                 (fun tail =&gt;</span>
+<span id="L373">373                   MDP.sampledCumulativeRewardFrom</span>
+<span id="L374">374                     (Action := Action) (State := State) (remaining + 1)</span>
+<span id="L375">375                       (consStep (head, tail)))) =</span>
+<span id="L376">376             (fun head =&gt; head.2.1 +</span>
+<span id="L377">377               source.stochasticValueRemaining policy remaining</span>
+<span id="L378">378                 (by omega) head.2.2) := by</span>
+<span id="L379">379         funext head</span>
+<span id="L380">380         rw [ProbabilityTheory.Kernel.comap_apply]</span>
+<span id="L381">381         change integral</span>
+<span id="L382">382             (source.stochasticTrajectoryKernelRemaining policy remaining</span>
+<span id="L383">383               (by omega) head.2.2)</span>
+<span id="L384">384             (fun tail =&gt; head.2.1 +</span>
+<span id="L385">385               MDP.sampledCumulativeRewardFrom</span>
+<span id="L386">386                 (Action := Action) (State := State) remaining tail) = _</span>
+<span id="L387">387         rw [integral_add (integrable_const _)</span>
+<span id="L388">388           (source.integrable_sampledCumulativeRewardFrom_stochasticTrajectoryKernelRemaining</span>
+<span id="L389">389             policy remaining (by omega) head.2.2)]</span>
+<span id="L390">390         rw [ih (by omega) head.2.2]</span>
+<span id="L391">391         simp</span>
+<span id="L392">392       have hhead := hpre.integral_compProd</span>
+<span id="L393">393       rw [htailIntegral] at hhead ⊢</span>
+<span id="L394">394       unfold actionRewardStateKernel at hhead ⊢</span>
+<span id="L395">395       rw [ProbabilityTheory.integral_compProd hhead]</span>
+<span id="L396">396       rw [stochasticValueRemaining]</span>
+<span id="L397">397       rfl</span>
+<span id="L398">398 </span>
+<span id="L399">399 /-- Full reward-bearing trajectory law, including the initial state. -/</span>
+<span id="L400">400 noncomputable def stochasticTrajectoryMeasure</span>
+<span id="L401">401     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L402">402     (policy : MarkovPolicy mdp) (initialState : Measure State) :</span>
+<span id="L403">403     Measure (Prod State (RewardStepTrace Action State mdp.horizon)) :=</span>
+<span id="L404">404   initialState.compProd</span>
+<span id="L405">405     (source.stochasticTrajectoryKernelRemaining policy mdp.horizon le_rfl)</span>
+<span id="L406">406 </span>
+<span id="L407">407 instance instStochasticTrajectoryMeasureIsProbabilityMeasure</span>
+<span id="L408">408     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L409">409     (policy : MarkovPolicy mdp) (initialState : Measure State)</span>
+<span id="L410">410     [IsProbabilityMeasure initialState] :</span>
+<span id="L411">411     IsProbabilityMeasure (source.stochasticTrajectoryMeasure policy initialState) := by</span>
+<span id="L412">412   unfold stochasticTrajectoryMeasure</span>
+<span id="L413">413   infer_instance</span>
+<span id="L414">414 </span>
+<span id="L415">415 /-- Sampled cumulative reward on the full stochastic trajectory. -/</span>
+<span id="L416">416 def sampledCumulativeReward</span>
+<span id="L417">417     (trajectory : Prod State (RewardStepTrace Action State mdp.horizon)) : Real :=</span>
+<span id="L418">418   MDP.sampledCumulativeRewardFrom mdp.horizon trajectory.2</span>
+<span id="L419">419 </span>
+<span id="L420">420 /-- The full sampled cumulative reward is measurable. -/</span>
+<span id="L421">421 theorem measurable_sampledCumulativeReward :</span>
+<span id="L422">422     Measurable (sampledCumulativeReward (mdp := mdp)) :=</span>
+<span id="L423">423   (MDP.measurable_sampledCumulativeRewardFrom mdp.horizon).comp measurable_snd</span>
+<span id="L424">424 </span>
+<span id="L425">425 /-- The full sampled cumulative reward is integrable under its generated law. -/</span>
+<span id="L426">426 theorem integrable_sampledCumulativeReward_stochasticTrajectoryMeasure</span>
+<span id="L427">427     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L428">428     (policy : MarkovPolicy mdp) (initialState : Measure State)</span>
+<span id="L429">429     [IsProbabilityMeasure initialState] :</span>
+<span id="L430">430     Integrable (sampledCumulativeReward (mdp := mdp))</span>
+<span id="L431">431       (source.stochasticTrajectoryMeasure policy initialState) := by</span>
+<span id="L432">432   unfold stochasticTrajectoryMeasure</span>
+<span id="L433">433   let trajectoryKernel :=</span>
+<span id="L434">434     source.stochasticTrajectoryKernelRemaining policy mdp.horizon le_rfl</span>
+<span id="L435">435   have hfullAE : AEStronglyMeasurable</span>
+<span id="L436">436       (sampledCumulativeReward (mdp := mdp))</span>
+<span id="L437">437       (initialState.compProd trajectoryKernel) :=</span>
+<span id="L438">438     measurable_sampledCumulativeReward.aestronglyMeasurable</span>
+<span id="L439">439   apply (Measure.integrable_compProd_iff hfullAE).2</span>
+<span id="L440">440   constructor</span>
+<span id="L441">441   · exact Filter.Eventually.of_forall fun state =&gt;</span>
+<span id="L442">442       source.integrable_sampledCumulativeRewardFrom_stochasticTrajectoryKernelRemaining</span>
+<span id="L443">443         policy mdp.horizon le_rfl state</span>
+<span id="L444">444   · have hAE : AEStronglyMeasurable</span>
+<span id="L445">445         (fun state =&gt; integral (trajectoryKernel state)</span>
+<span id="L446">446           (fun trace =&gt; ‖sampledCumulativeReward (mdp := mdp) (state, trace)‖))</span>
+<span id="L447">447         initialState :=</span>
+<span id="L448">448       hfullAE.norm.integral_kernel_compProd</span>
+<span id="L449">449     exact integrable_of_fintype_aestronglyMeasurable initialState _ hAE</span>
+<span id="L450">450 </span>
+<span id="L451">451 /--</span>
+<span id="L452">452 Route endpoint: expected sampled cumulative reward equals the stochastic and</span>
+<span id="L453">453 existing mean policy values at chronological stage zero.</span>
+<span id="L454">454 -/</span>
+<span id="L455">455 theorem integral_sampledCumulativeReward_stochasticTrajectoryMeasure_eq_integral_valueAt_zero</span>
+<span id="L456">456     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L457">457     (policy : MarkovPolicy mdp) (initialState : Measure State)</span>
+<span id="L458">458     [IsProbabilityMeasure initialState] :</span>
+<span id="L459">459     integral (source.stochasticTrajectoryMeasure policy initialState)</span>
+<span id="L460">460         (sampledCumulativeReward (mdp := mdp)) =</span>
+<span id="L461">461       integral initialState</span>
+<span id="L462">462         (source.stochasticValueAt policy 0 (Nat.zero_le mdp.horizon)) ∧</span>
+<span id="L463">463     integral (source.stochasticTrajectoryMeasure policy initialState)</span>
+<span id="L464">464         (sampledCumulativeReward (mdp := mdp)) =</span>
+<span id="L465">465       integral initialState</span>
+<span id="L466">466         (policy.valueAt 0 (Nat.zero_le mdp.horizon)) := by</span>
+<span id="L467">467   have hintegrable :=</span>
+<span id="L468">468     source.integrable_sampledCumulativeReward_stochasticTrajectoryMeasure</span>
+<span id="L469">469       policy initialState</span>
+<span id="L470">470   have hstochastic :</span>
+<span id="L471">471       integral (source.stochasticTrajectoryMeasure policy initialState)</span>
+<span id="L472">472           (sampledCumulativeReward (mdp := mdp)) =</span>
+<span id="L473">473         integral initialState</span>
+<span id="L474">474           (source.stochasticValueAt policy 0 (Nat.zero_le mdp.horizon)) := by</span>
+<span id="L475">475     unfold stochasticTrajectoryMeasure</span>
+<span id="L476">476     rw [Measure.integral_compProd hintegrable]</span>
+<span id="L477">477     apply integral_congr_ae</span>
+<span id="L478">478     exact Filter.Eventually.of_forall fun state =&gt; by</span>
+<span id="L479">479       change integral</span>
+<span id="L480">480           (source.stochasticTrajectoryKernelRemaining policy mdp.horizon</span>
+<span id="L481">481             le_rfl state)</span>
+<span id="L482">482           (MDP.sampledCumulativeRewardFrom</span>
+<span id="L483">483             (Action := Action) (State := State) mdp.horizon) =</span>
+<span id="L484">484         source.stochasticValueRemaining policy mdp.horizon le_rfl state</span>
+<span id="L485">485       exact</span>
+<span id="L486">486         source.integral_sampledCumulativeRewardFrom_stochasticTrajectoryKernelRemaining_eq_stochasticValueRemaining</span>
+<span id="L487">487           policy mdp.horizon le_rfl state</span>
+<span id="L488">488   refine ⟨hstochastic, ?_⟩</span>
+<span id="L489">489   calc</span>
+<span id="L490">490     integral (source.stochasticTrajectoryMeasure policy initialState)</span>
+<span id="L491">491         (sampledCumulativeReward (mdp := mdp)) =</span>
+<span id="L492">492         integral initialState</span>
+<span id="L493">493           (source.stochasticValueAt policy 0</span>
+<span id="L494">494             (Nat.zero_le mdp.horizon)) := hstochastic</span>
+<span id="L495">495     _ = integral initialState</span>
+<span id="L496">496           (policy.valueAt 0 (Nat.zero_le mdp.horizon)) := by</span>
+<span id="L497">497       apply integral_congr_ae</span>
+<span id="L498">498       exact Filter.Eventually.of_forall fun state =&gt;</span>
+<span id="L499">499         congrFun</span>
+<span id="L500">500           (source.stochasticValueAt_eq_valueAt policy 0</span>
+<span id="L501">501             (Nat.zero_le mdp.horizon)) state</span>
+<span id="L502">502 </span>
+<span id="L503">503 end MDP.MeanCompatibleRewardKernel</span>
+<span id="L504">504 end FiniteHorizonRL</span>
+<span id="L505">505 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

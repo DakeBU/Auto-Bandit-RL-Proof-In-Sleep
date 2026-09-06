@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/PosteriorKernel.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/PosteriorKernel.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/PosteriorKernel.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/PosteriorKernel.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import Mathlib.Probability.Kernel.CondDistrib</span>
+<span id="L2">2 import Mathlib.Probability.Kernel.Posterior</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Posterior kernel surface</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module records the narrow `POSTERIOR-KERNEL` leaf: a posterior over</span>
+<span id="L8">8 environments, indexed by the observed history, is represented as a Mathlib</span>
+<span id="L9">9 Markov kernel from histories to environments.  It deliberately does not prove a</span>
+<span id="L10">10 Bayes formula, a regular-conditional-distribution existence theorem, Thompson</span>
+<span id="L11">11 probability matching, or Bayesian regret.</span>
+<span id="L12">12 -/</span>
+<span id="L13">13 </span>
+<span id="L14">14 open MeasureTheory</span>
+<span id="L15">15 open scoped ProbabilityTheory</span>
+<span id="L16">16 </span>
+<span id="L17">17 universe u v</span>
+<span id="L18">18 </span>
+<span id="L19">19 namespace BanditRLProof</span>
+<span id="L20">20 namespace PosteriorKernel</span>
+<span id="L21">21 </span>
+<span id="L22">22 /--</span>
+<span id="L23">23 A posterior distribution over environments indexed by observed histories.</span>
+<span id="L24">24 </span>
+<span id="L25">25 The underlying object is Mathlib&#x27;s `ProbabilityTheory.Kernel`; the local</span>
+<span id="L26">26 wrapper gives Thompson-sampling and Bayesian-regret leaves a stable project</span>
+<span id="L27">27 name for the regularity contract.</span>
+<span id="L28">28 -/</span>
+<span id="L29">29 structure MarkovPosteriorKernel</span>
+<span id="L30">30     (History : Type u) (Env : Type v)</span>
+<span id="L31">31     [MeasurableSpace History] [MeasurableSpace Env] where</span>
+<span id="L32">32   kernel : ProbabilityTheory.Kernel History Env</span>
+<span id="L33">33   isMarkovKernel : ProbabilityTheory.IsMarkovKernel kernel</span>
+<span id="L34">34 </span>
+<span id="L35">35 variable {History : Type u} {Env : Type v}</span>
+<span id="L36">36     [MeasurableSpace History] [MeasurableSpace Env]</span>
+<span id="L37">37 </span>
+<span id="L38">38 instance instIsMarkovKernel</span>
+<span id="L39">39     (posterior : MarkovPosteriorKernel History Env) :</span>
+<span id="L40">40     ProbabilityTheory.IsMarkovKernel posterior.kernel :=</span>
+<span id="L41">41   posterior.isMarkovKernel</span>
+<span id="L42">42 </span>
+<span id="L43">43 /-- Build the local posterior-kernel contract from an existing Mathlib kernel. -/</span>
+<span id="L44">44 def ofKernel</span>
+<span id="L45">45     (kernel : ProbabilityTheory.Kernel History Env)</span>
+<span id="L46">46     (hkernel : ProbabilityTheory.IsMarkovKernel kernel) :</span>
+<span id="L47">47     MarkovPosteriorKernel History Env where</span>
+<span id="L48">48   kernel := kernel</span>
+<span id="L49">49   isMarkovKernel := hkernel</span>
+<span id="L50">50 </span>
+<span id="L51">51 /-- Build a posterior kernel from a measurable posterior-measure selector. -/</span>
+<span id="L52">52 def ofMeasureSelector</span>
+<span id="L53">53     (posterior : History -&gt; Measure Env)</span>
+<span id="L54">54     (hposterior : Measurable posterior)</span>
+<span id="L55">55     (hprob : forall history, IsProbabilityMeasure (posterior history)) :</span>
+<span id="L56">56     MarkovPosteriorKernel History Env where</span>
+<span id="L57">57   kernel := ProbabilityTheory.Kernel.mk posterior hposterior</span>
+<span id="L58">58   isMarkovKernel := ⟨hprob⟩</span>
+<span id="L59">59 </span>
+<span id="L60">60 @[simp]</span>
+<span id="L61">61 theorem ofMeasureSelector_apply</span>
+<span id="L62">62     (posterior : History -&gt; Measure Env)</span>
+<span id="L63">63     (hposterior : Measurable posterior)</span>
+<span id="L64">64     (hprob : forall history, IsProbabilityMeasure (posterior history))</span>
+<span id="L65">65     (history : History) :</span>
+<span id="L66">66     (ofMeasureSelector posterior hposterior hprob).kernel history =</span>
+<span id="L67">67       posterior history := rfl</span>
+<span id="L68">68 </span>
+<span id="L69">69 /--</span>
+<span id="L70">70 Build a posterior kernel on a countable/discrete history space.</span>
+<span id="L71">71 </span>
+<span id="L72">72 Finite histories in the bandit development are typically countable/discrete,</span>
+<span id="L73">73 so Mathlib&#x27;s `Kernel.ofFunOfCountable` can turn any probability-valued</span>
+<span id="L74">74 posterior selector into a Markov kernel without a separate measurability proof.</span>
+<span id="L75">75 -/</span>
+<span id="L76">76 def ofCountableHistorySelector</span>
+<span id="L77">77     [Countable History] [MeasurableSingletonClass History]</span>
+<span id="L78">78     (posterior : History -&gt; Measure Env)</span>
+<span id="L79">79     (hprob : forall history, IsProbabilityMeasure (posterior history)) :</span>
+<span id="L80">80     MarkovPosteriorKernel History Env where</span>
+<span id="L81">81   kernel := ProbabilityTheory.Kernel.ofFunOfCountable posterior</span>
+<span id="L82">82   isMarkovKernel := ⟨hprob⟩</span>
+<span id="L83">83 </span>
+<span id="L84">84 @[simp]</span>
+<span id="L85">85 theorem ofCountableHistorySelector_apply</span>
+<span id="L86">86     [Countable History] [MeasurableSingletonClass History]</span>
+<span id="L87">87     (posterior : History -&gt; Measure Env)</span>
+<span id="L88">88     (hprob : forall history, IsProbabilityMeasure (posterior history))</span>
+<span id="L89">89     (history : History) :</span>
+<span id="L90">90     (ofCountableHistorySelector posterior hprob).kernel history =</span>
+<span id="L91">91       posterior history := rfl</span>
+<span id="L92">92 </span>
+<span id="L93">93 /-- The posterior kernel is measurable as a map from histories to measures. -/</span>
+<span id="L94">94 theorem measurable_kernel</span>
+<span id="L95">95     (posterior : MarkovPosteriorKernel History Env) :</span>
+<span id="L96">96     Measurable posterior.kernel :=</span>
+<span id="L97">97   posterior.kernel.measurable</span>
+<span id="L98">98 </span>
+<span id="L99">99 /-- A measurable random history selects a measurable random posterior measure. -/</span>
+<span id="L100">100 theorem measurable_apply_of_measurable_history</span>
+<span id="L101">101     {Omega : Type u} [MeasurableSpace Omega]</span>
+<span id="L102">102     (posterior : MarkovPosteriorKernel History Env)</span>
+<span id="L103">103     (history : Omega -&gt; History)</span>
+<span id="L104">104     (hhistory : Measurable history) :</span>
+<span id="L105">105     Measurable (fun omega : Omega =&gt; posterior.kernel (history omega)) :=</span>
+<span id="L106">106   posterior.kernel.measurable.comp hhistory</span>
+<span id="L107">107 </span>
+<span id="L108">108 /--</span>
+<span id="L109">109 For every measurable environment event, the posterior event probability is a</span>
+<span id="L110">110 measurable scalar function of a measurable random history.</span>
+<span id="L111">111 -/</span>
+<span id="L112">112 theorem measurable_eventProbability_of_measurable_history</span>
+<span id="L113">113     {Omega : Type u} [MeasurableSpace Omega]</span>
+<span id="L114">114     (posterior : MarkovPosteriorKernel History Env)</span>
+<span id="L115">115     (history : Omega -&gt; History)</span>
+<span id="L116">116     (hhistory : Measurable history)</span>
+<span id="L117">117     {event : Set Env}</span>
+<span id="L118">118     (hevent : MeasurableSet event) :</span>
+<span id="L119">119     Measurable</span>
+<span id="L120">120       (fun omega : Omega =&gt; posterior.kernel (history omega) event) :=</span>
+<span id="L121">121   (ProbabilityTheory.Kernel.measurable_coe posterior.kernel hevent).comp</span>
+<span id="L122">122     hhistory</span>
+<span id="L123">123 </span>
+<span id="L124">124 /-- Every measure selected by a posterior kernel is a probability measure. -/</span>
+<span id="L125">125 theorem isProbabilityMeasure_apply</span>
+<span id="L126">126     (posterior : MarkovPosteriorKernel History Env)</span>
+<span id="L127">127     (history : History) :</span>
+<span id="L128">128     IsProbabilityMeasure (posterior.kernel history) := by</span>
+<span id="L129">129   haveI : ProbabilityTheory.IsMarkovKernel posterior.kernel :=</span>
+<span id="L130">130     posterior.isMarkovKernel</span>
+<span id="L131">131   infer_instance</span>
+<span id="L132">132 </span>
+<span id="L133">133 @[simp]</span>
+<span id="L134">134 theorem apply_univ</span>
+<span id="L135">135     (posterior : MarkovPosteriorKernel History Env)</span>
+<span id="L136">136     (history : History) :</span>
+<span id="L137">137     posterior.kernel history Set.univ = 1 := by</span>
+<span id="L138">138   haveI : IsProbabilityMeasure (posterior.kernel history) :=</span>
+<span id="L139">139     isProbabilityMeasure_apply posterior history</span>
+<span id="L140">140   simp</span>
+<span id="L141">141 </span>
+<span id="L142">142 /-!</span>
+<span id="L143">143 ## Canonical Bayesian posterior</span>
+<span id="L144">144 </span>
+<span id="L145">145 Mathlib&#x27;s `ProbabilityTheory.posterior likelihood prior` is the posterior</span>
+<span id="L146">146 kernel characterized by the swapped joint-law identity.  The declarations</span>
+<span id="L147">147 below expose that object through the local posterior contract and identify it</span>
+<span id="L148">148 with `condDistrib` on any source whose environment/history pair law is the</span>
+<span id="L149">149 Bayesian composition product.</span>
+<span id="L150">150 -/</span>
+<span id="L151">151 </span>
+<span id="L152">152 /-- The Mathlib posterior of a likelihood kernel under a prior measure. -/</span>
+<span id="L153">153 noncomputable def canonicalPosterior</span>
+<span id="L154">154     [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L155">155     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L156">156     (likelihood : ProbabilityTheory.Kernel Env History)</span>
+<span id="L157">157     [ProbabilityTheory.IsMarkovKernel likelihood] :</span>
+<span id="L158">158     MarkovPosteriorKernel History Env :=</span>
+<span id="L159">159   ofKernel (ProbabilityTheory.posterior likelihood prior) inferInstance</span>
+<span id="L160">160 </span>
+<span id="L161">161 @[simp]</span>
+<span id="L162">162 theorem canonicalPosterior_kernel</span>
+<span id="L163">163     [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L164">164     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L165">165     (likelihood : ProbabilityTheory.Kernel Env History)</span>
+<span id="L166">166     [ProbabilityTheory.IsMarkovKernel likelihood] :</span>
+<span id="L167">167     (canonicalPosterior prior likelihood).kernel =</span>
+<span id="L168">168       ProbabilityTheory.posterior likelihood prior := rfl</span>
+<span id="L169">169 </span>
+<span id="L170">170 /-- The canonical joint law generated by a prior followed by a likelihood. -/</span>
+<span id="L171">171 noncomputable def canonicalJointMeasure</span>
+<span id="L172">172     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L173">173     (likelihood : ProbabilityTheory.Kernel Env History)</span>
+<span id="L174">174     [ProbabilityTheory.IsMarkovKernel likelihood] :</span>
+<span id="L175">175     Measure (Env × History) :=</span>
+<span id="L176">176   prior ⊗ₘ likelihood</span>
+<span id="L177">177 </span>
+<span id="L178">178 instance instCanonicalJointMeasureIsProbabilityMeasure</span>
+<span id="L179">179     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L180">180     (likelihood : ProbabilityTheory.Kernel Env History)</span>
+<span id="L181">181     [ProbabilityTheory.IsMarkovKernel likelihood] :</span>
+<span id="L182">182     IsProbabilityMeasure (canonicalJointMeasure prior likelihood) := by</span>
+<span id="L183">183   rw [canonicalJointMeasure]</span>
+<span id="L184">184   infer_instance</span>
+<span id="L185">185 </span>
+<span id="L186">186 /--</span>
+<span id="L187">187 Identify the canonical posterior on any source with the prescribed Bayesian</span>
+<span id="L188">188 environment/history pair law.</span>
+<span id="L189">189 </span>
+<span id="L190">190 The proof uses the defining composition-product identity for Mathlib&#x27;s</span>
+<span id="L191">191 `posterior`.  Thus the posterior conditional-law equality is produced from a</span>
+<span id="L192">192 joint-law transport, rather than assumed as a separate Bayes-law field.</span>
+<span id="L193">193 -/</span>
+<span id="L194">194 theorem canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq</span>
+<span id="L195">195     {Omega : Type*} [MeasurableSpace Omega]</span>
+<span id="L196">196     [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L197">197     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L198">198     (env : Omega -&gt; Env) (history : Omega -&gt; History)</span>
+<span id="L199">199     (henv : Measurable env) (hhistory : Measurable history)</span>
+<span id="L200">200     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L201">201     (likelihood : ProbabilityTheory.Kernel Env History)</span>
+<span id="L202">202     [ProbabilityTheory.IsMarkovKernel likelihood]</span>
+<span id="L203">203     (hpair :</span>
+<span id="L204">204       mu.map (fun omega =&gt; (env omega, history omega)) =</span>
+<span id="L205">205         canonicalJointMeasure prior likelihood) :</span>
+<span id="L206">206     (canonicalPosterior prior likelihood).kernel =ᵐ[mu.map history]</span>
+<span id="L207">207       ProbabilityTheory.condDistrib env history mu := by</span>
+<span id="L208">208   have hpairMeas : Measurable (fun omega =&gt; (env omega, history omega)) :=</span>
+<span id="L209">209     henv.prodMk hhistory</span>
+<span id="L210">210   have hhistoryLaw :</span>
+<span id="L211">211       mu.map history = likelihood ∘ₘ prior := by</span>
+<span id="L212">212     calc</span>
+<span id="L213">213       mu.map history =</span>
+<span id="L214">214           (mu.map (fun omega =&gt; (env omega, history omega))).map Prod.snd := by</span>
+<span id="L215">215             rw [Measure.map_map measurable_snd hpairMeas]</span>
+<span id="L216">216             rfl</span>
+<span id="L217">217       _ = (canonicalJointMeasure prior likelihood).map Prod.snd :=</span>
+<span id="L218">218         congrArg (fun nu : Measure (Env × History) =&gt; nu.map Prod.snd) hpair</span>
+<span id="L219">219       _ = likelihood ∘ₘ prior := by</span>
+<span id="L220">220         change (prior ⊗ₘ likelihood).snd = likelihood ∘ₘ prior</span>
+<span id="L221">221         rw [Measure.snd_compProd]</span>
+<span id="L222">222   have hswappedJoint :</span>
+<span id="L223">223       mu.map (fun omega =&gt; (history omega, env omega)) =</span>
+<span id="L224">224         mu.map history ⊗ₘ (canonicalPosterior prior likelihood).kernel := by</span>
+<span id="L225">225     calc</span>
+<span id="L226">226       mu.map (fun omega =&gt; (history omega, env omega)) =</span>
+<span id="L227">227           (mu.map (fun omega =&gt; (env omega, history omega))).map Prod.swap := by</span>
+<span id="L228">228             rw [Measure.map_map measurable_swap hpairMeas]</span>
+<span id="L229">229             rfl</span>
+<span id="L230">230       _ = (canonicalJointMeasure prior likelihood).map Prod.swap :=</span>
+<span id="L231">231         congrArg (fun nu : Measure (Env × History) =&gt; nu.map Prod.swap) hpair</span>
+<span id="L232">232       _ = (likelihood ∘ₘ prior) ⊗ₘ</span>
+<span id="L233">233           (canonicalPosterior prior likelihood).kernel := by</span>
+<span id="L234">234         exact ProbabilityTheory.compProd_posterior_eq_map_swap.symm</span>
+<span id="L235">235       _ = mu.map history ⊗ₘ</span>
+<span id="L236">236           (canonicalPosterior prior likelihood).kernel := by</span>
+<span id="L237">237         rw [hhistoryLaw]</span>
+<span id="L238">238   exact ((ProbabilityTheory.condDistrib_ae_eq_iff_measure_eq_compProd</span>
+<span id="L239">239     (μ := mu) history henv.aemeasurable</span>
+<span id="L240">240     (canonicalPosterior prior likelihood).kernel).2 hswappedJoint).symm</span>
+<span id="L241">241 </span>
+<span id="L242">242 /--</span>
+<span id="L243">243 On the canonical Bayesian product space itself, the Mathlib posterior is the</span>
+<span id="L244">244 conditional distribution of the environment coordinate given the history</span>
+<span id="L245">245 coordinate.</span>
+<span id="L246">246 -/</span>
+<span id="L247">247 theorem canonicalPosterior_kernel_ae_eq_condDistrib_fst_snd</span>
+<span id="L248">248     [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L249">249     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L250">250     (likelihood : ProbabilityTheory.Kernel Env History)</span>
+<span id="L251">251     [ProbabilityTheory.IsMarkovKernel likelihood] :</span>
+<span id="L252">252     (canonicalPosterior prior likelihood).kernel =ᵐ[</span>
+<span id="L253">253         (canonicalJointMeasure prior likelihood).map Prod.snd]</span>
+<span id="L254">254       ProbabilityTheory.condDistrib Prod.fst Prod.snd</span>
+<span id="L255">255         (canonicalJointMeasure prior likelihood) := by</span>
+<span id="L256">256   apply canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq</span>
+<span id="L257">257     (canonicalJointMeasure prior likelihood) Prod.fst Prod.snd</span>
+<span id="L258">258     measurable_fst measurable_snd prior likelihood</span>
+<span id="L259">259   simp [canonicalJointMeasure]</span>
+<span id="L260">260 </span>
+<span id="L261">261 /--</span>
+<span id="L262">262 Minimal prior/likelihood/posterior package.</span>
+<span id="L263">263 </span>
+<span id="L264">264 This records the Bayesian objects that future Thompson-sampling leaves need to</span>
+<span id="L265">265 name.  It does not assert that `posterior` satisfies Bayes&#x27; rule for `prior`</span>
+<span id="L266">266 and `likelihood`.</span>
+<span id="L267">267 -/</span>
+<span id="L268">268 structure BayesianPosteriorSurface</span>
+<span id="L269">269     (Env : Type u) (History : Type v)</span>
+<span id="L270">270     [MeasurableSpace Env] [MeasurableSpace History] where</span>
+<span id="L271">271   prior : Measure Env</span>
+<span id="L272">272   likelihood : ProbabilityTheory.Kernel Env History</span>
+<span id="L273">273   posterior : MarkovPosteriorKernel History Env</span>
+<span id="L274">274   prior_isProbability : IsProbabilityMeasure prior</span>
+<span id="L275">275   likelihood_isMarkovKernel : ProbabilityTheory.IsMarkovKernel likelihood</span>
+<span id="L276">276 </span>
+<span id="L277">277 namespace BayesianPosteriorSurface</span>
+<span id="L278">278 </span>
+<span id="L279">279 variable {Env&#x27; : Type u} {History&#x27; : Type v}</span>
+<span id="L280">280     [MeasurableSpace Env&#x27;] [MeasurableSpace History&#x27;]</span>
+<span id="L281">281 </span>
+<span id="L282">282 instance instPriorIsProbability</span>
+<span id="L283">283     (surface : BayesianPosteriorSurface Env&#x27; History&#x27;) :</span>
+<span id="L284">284     IsProbabilityMeasure surface.prior :=</span>
+<span id="L285">285   surface.prior_isProbability</span>
+<span id="L286">286 </span>
+<span id="L287">287 instance instLikelihoodIsMarkovKernel</span>
+<span id="L288">288     (surface : BayesianPosteriorSurface Env&#x27; History&#x27;) :</span>
+<span id="L289">289     ProbabilityTheory.IsMarkovKernel surface.likelihood :=</span>
+<span id="L290">290   surface.likelihood_isMarkovKernel</span>
+<span id="L291">291 </span>
+<span id="L292">292 theorem posterior_isProbabilityMeasure_apply</span>
+<span id="L293">293     (surface : BayesianPosteriorSurface Env&#x27; History&#x27;)</span>
+<span id="L294">294     (history : History&#x27;) :</span>
+<span id="L295">295     IsProbabilityMeasure (surface.posterior.kernel history) :=</span>
+<span id="L296">296   isProbabilityMeasure_apply surface.posterior history</span>
+<span id="L297">297 </span>
+<span id="L298">298 end BayesianPosteriorSurface</span>
+<span id="L299">299 </span>
+<span id="L300">300 end PosteriorKernel</span>
+<span id="L301">301 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

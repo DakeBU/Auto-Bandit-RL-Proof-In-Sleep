@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/MartingaleDifference.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/MartingaleDifference.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/MartingaleDifference.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/MartingaleDifference.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import Mathlib.Probability.Martingale.Basic</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Martingale-difference witness surface</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module exposes a small finite-prefix contract for martingale-difference</span>
+<span id="L7">7 increments.  It deliberately stays below optional stopping or final regret</span>
+<span id="L8">8 theorems: the witness records integrability, adaptedness, and succ-indexed</span>
+<span id="L9">9 conditional mean-zero facts in the shape used by the local bandit</span>
+<span id="L10">10 filtration/concentration route.</span>
+<span id="L11">11 -/</span>
+<span id="L12">12 </span>
+<span id="L13">13 namespace BanditRLProof</span>
+<span id="L14">14 namespace MartingaleDiff</span>
+<span id="L15">15 </span>
+<span id="L16">16 open MeasureTheory</span>
+<span id="L17">17 </span>
+<span id="L18">18 /--</span>
+<span id="L19">19 Global succ-indexed martingale-difference witness.</span>
+<span id="L20">20 </span>
+<span id="L21">21 This is the all-time version of `SuccMartingaleDifferencePrefix`.  It records</span>
+<span id="L22">22 the local hypotheses needed to build the Mathlib martingale of partial sums.</span>
+<span id="L23">23 -/</span>
+<span id="L24">24 structure SuccMartingaleDifference</span>
+<span id="L25">25     {Omega : Type u} [mOmega : MeasurableSpace Omega]</span>
+<span id="L26">26     (mu : Measure Omega)</span>
+<span id="L27">27     (F : Filtration Nat mOmega)</span>
+<span id="L28">28     (Y : Nat -&gt; Omega -&gt; Real) : Prop where</span>
+<span id="L29">29   stronglyAdapted : StronglyAdapted F Y</span>
+<span id="L30">30   integrable : forall t, Integrable (Y t) mu</span>
+<span id="L31">31   condExp_succ_eq_zero :</span>
+<span id="L32">32     forall i,</span>
+<span id="L33">33       Filter.EventuallyEq (ae mu)</span>
+<span id="L34">34         (condExp (F i) mu (Y (i + 1)))</span>
+<span id="L35">35         (fun _omega =&gt; (0 : Real))</span>
+<span id="L36">36 </span>
+<span id="L37">37 /--</span>
+<span id="L38">38 Finite-prefix succ-indexed martingale-difference witness.</span>
+<span id="L39">39 </span>
+<span id="L40">40 For a process `Y`, this records that the prefix up to `n` is integrable and</span>
+<span id="L41">41 adapted, and that each later increment `Y (i + 1)` has zero conditional</span>
+<span id="L42">42 expectation against filtration level `i`.  This is the local bridge between the</span>
+<span id="L43">43 compiled conditional-mean-zero leaves and later martingale or concentration</span>
+<span id="L44">44 consumers.</span>
+<span id="L45">45 -/</span>
+<span id="L46">46 structure SuccMartingaleDifferencePrefix</span>
+<span id="L47">47     {Omega : Type u} [mOmega : MeasurableSpace Omega]</span>
+<span id="L48">48     (mu : Measure Omega)</span>
+<span id="L49">49     (F : Filtration Nat mOmega)</span>
+<span id="L50">50     (Y : Nat -&gt; Omega -&gt; Real)</span>
+<span id="L51">51     (n : Nat) : Prop where</span>
+<span id="L52">52   stronglyAdapted : StronglyAdapted F Y</span>
+<span id="L53">53   integrable : forall t, t &lt; n -&gt; Integrable (Y t) mu</span>
+<span id="L54">54   condExp_succ_eq_zero :</span>
+<span id="L55">55     forall i, i + 1 &lt; n -&gt;</span>
+<span id="L56">56       Filter.EventuallyEq (ae mu)</span>
+<span id="L57">57         (condExp (F i) mu (Y (i + 1)))</span>
+<span id="L58">58         (fun _omega =&gt; (0 : Real))</span>
+<span id="L59">59 </span>
+<span id="L60">60 namespace SuccMartingaleDifference</span>
+<span id="L61">61 </span>
+<span id="L62">62 theorem toPrefix</span>
+<span id="L63">63     {Omega : Type u} [mOmega : MeasurableSpace Omega]</span>
+<span id="L64">64     {mu : Measure Omega}</span>
+<span id="L65">65     {F : Filtration Nat mOmega}</span>
+<span id="L66">66     {Y : Nat -&gt; Omega -&gt; Real}</span>
+<span id="L67">67     (h : SuccMartingaleDifference mu F Y)</span>
+<span id="L68">68     (n : Nat) :</span>
+<span id="L69">69     SuccMartingaleDifferencePrefix mu F Y n where</span>
+<span id="L70">70   stronglyAdapted := h.stronglyAdapted</span>
+<span id="L71">71   integrable := fun t _ht =&gt; h.integrable t</span>
+<span id="L72">72   condExp_succ_eq_zero := fun i _hi =&gt; h.condExp_succ_eq_zero i</span>
+<span id="L73">73 </span>
+<span id="L74">74 theorem stronglyAdapted&#x27;</span>
+<span id="L75">75     {Omega : Type u} [mOmega : MeasurableSpace Omega]</span>
+<span id="L76">76     {mu : Measure Omega}</span>
+<span id="L77">77     {F : Filtration Nat mOmega}</span>
+<span id="L78">78     {Y : Nat -&gt; Omega -&gt; Real}</span>
+<span id="L79">79     (h : SuccMartingaleDifference mu F Y) :</span>
+<span id="L80">80     StronglyAdapted F Y :=</span>
+<span id="L81">81   h.stronglyAdapted</span>
+<span id="L82">82 </span>
+<span id="L83">83 theorem integrable&#x27;</span>
+<span id="L84">84     {Omega : Type u} [mOmega : MeasurableSpace Omega]</span>
+<span id="L85">85     {mu : Measure Omega}</span>
+<span id="L86">86     {F : Filtration Nat mOmega}</span>
+<span id="L87">87     {Y : Nat -&gt; Omega -&gt; Real}</span>
+<span id="L88">88     (h : SuccMartingaleDifference mu F Y)</span>
+<span id="L89">89     (t : Nat) :</span>
+<span id="L90">90     Integrable (Y t) mu :=</span>
+<span id="L91">91   h.integrable t</span>
+<span id="L92">92 </span>
+<span id="L93">93 theorem condExp_succ_ae_eq_zero</span>
+<span id="L94">94     {Omega : Type u} [mOmega : MeasurableSpace Omega]</span>
+<span id="L95">95     {mu : Measure Omega}</span>
+<span id="L96">96     {F : Filtration Nat mOmega}</span>
+<span id="L97">97     {Y : Nat -&gt; Omega -&gt; Real}</span>
+<span id="L98">98     (h : SuccMartingaleDifference mu F Y)</span>
+<span id="L99">99     (i : Nat) :</span>
+<span id="L100">100     Filter.EventuallyEq (ae mu)</span>
+<span id="L101">101       (condExp (F i) mu (Y (i + 1)))</span>
+<span id="L102">102       (fun _omega =&gt; (0 : Real)) :=</span>
+<span id="L103">103   h.condExp_succ_eq_zero i</span>
+<span id="L104">104 </span>
+<span id="L105">105 end SuccMartingaleDifference</span>
+<span id="L106">106 </span>
+<span id="L107">107 namespace SuccMartingaleDifferencePrefix</span>
+<span id="L108">108 </span>
+<span id="L109">109 theorem stronglyAdapted&#x27;</span>
+<span id="L110">110     {Omega : Type u} [mOmega : MeasurableSpace Omega]</span>
+<span id="L111">111     {mu : Measure Omega}</span>
+<span id="L112">112     {F : Filtration Nat mOmega}</span>
+<span id="L113">113     {Y : Nat -&gt; Omega -&gt; Real}</span>
+<span id="L114">114     {n : Nat}</span>
+<span id="L115">115     (h : SuccMartingaleDifferencePrefix mu F Y n) :</span>
+<span id="L116">116     StronglyAdapted F Y :=</span>
+<span id="L117">117   h.stronglyAdapted</span>
+<span id="L118">118 </span>
+<span id="L119">119 theorem integrable_of_lt</span>
+<span id="L120">120     {Omega : Type u} [mOmega : MeasurableSpace Omega]</span>
+<span id="L121">121     {mu : Measure Omega}</span>
+<span id="L122">122     {F : Filtration Nat mOmega}</span>
+<span id="L123">123     {Y : Nat -&gt; Omega -&gt; Real}</span>
+<span id="L124">124     {n : Nat}</span>
+<span id="L125">125     (h : SuccMartingaleDifferencePrefix mu F Y n)</span>
+<span id="L126">126     {t : Nat} (ht : t &lt; n) :</span>
+<span id="L127">127     Integrable (Y t) mu :=</span>
+<span id="L128">128   h.integrable t ht</span>
+<span id="L129">129 </span>
+<span id="L130">130 theorem condExp_succ_ae_eq_zero</span>
+<span id="L131">131     {Omega : Type u} [mOmega : MeasurableSpace Omega]</span>
+<span id="L132">132     {mu : Measure Omega}</span>
+<span id="L133">133     {F : Filtration Nat mOmega}</span>
+<span id="L134">134     {Y : Nat -&gt; Omega -&gt; Real}</span>
+<span id="L135">135     {n : Nat}</span>
+<span id="L136">136     (h : SuccMartingaleDifferencePrefix mu F Y n)</span>
+<span id="L137">137     {i : Nat} (hi : i + 1 &lt; n) :</span>
+<span id="L138">138     Filter.EventuallyEq (ae mu)</span>
+<span id="L139">139       (condExp (F i) mu (Y (i + 1)))</span>
+<span id="L140">140       (fun _omega =&gt; (0 : Real)) :=</span>
+<span id="L141">141   h.condExp_succ_eq_zero i hi</span>
+<span id="L142">142 </span>
+<span id="L143">143 end SuccMartingaleDifferencePrefix</span>
+<span id="L144">144 </span>
+<span id="L145">145 /--</span>
+<span id="L146">146 Centered reward process obtained by subtracting a predictable or otherwise</span>
+<span id="L147">147 chosen baseline from a raw reward process.</span>
+<span id="L148">148 </span>
+<span id="L149">149 The baseline is allowed to be random; the martingale-difference builder below</span>
+<span id="L150">150 therefore asks directly for adaptedness, integrability, and conditional</span>
+<span id="L151">151 mean-zero of this centered process.</span>
+<span id="L152">152 -/</span>
+<span id="L153">153 def centeredRewardProcess</span>
+<span id="L154">154     {Omega : Type u}</span>
+<span id="L155">155     (reward baseline : Nat -&gt; Omega -&gt; Real) :</span>
+<span id="L156">156     Nat -&gt; Omega -&gt; Real :=</span>
+<span id="L157">157   fun t omega =&gt; reward t omega - baseline t omega</span>
+<span id="L158">158 </span>
+<span id="L159">159 /--</span>
+<span id="L160">160 Build the global succ-indexed martingale-difference witness for a centered</span>
+<span id="L161">161 reward process from the exact three local contracts used by Mathlib:</span>
+<span id="L162">162 adaptedness, integrability, and succ-indexed conditional mean zero.</span>
+<span id="L163">163 -/</span>
+<span id="L164">164 theorem succMartingaleDifference_centeredRewardProcess_of_condExp</span>
+<span id="L165">165     {Omega : Type u} [mOmega : MeasurableSpace Omega]</span>
+<span id="L166">166     (mu : Measure Omega)</span>
+<span id="L167">167     {F : Filtration Nat mOmega}</span>
+<span id="L168">168     (reward baseline : Nat -&gt; Omega -&gt; Real)</span>
+<span id="L169">169     (hadapted :</span>
+<span id="L170">170       StronglyAdapted F (centeredRewardProcess reward baseline))</span>
+<span id="L171">171     (hintegrable :</span>
+<span id="L172">172       forall t, Integrable (centeredRewardProcess reward baseline t) mu)</span>
+<span id="L173">173     (hcond :</span>
+<span id="L174">174       forall i,</span>
+<span id="L175">175         Filter.EventuallyEq (ae mu)</span>
+<span id="L176">176           (condExp (F i) mu</span>
+<span id="L177">177             (centeredRewardProcess reward baseline (i + 1)))</span>
+<span id="L178">178           (fun _omega =&gt; (0 : Real))) :</span>
+<span id="L179">179     SuccMartingaleDifference mu F</span>
+<span id="L180">180       (centeredRewardProcess reward baseline) where</span>
+<span id="L181">181   stronglyAdapted := hadapted</span>
+<span id="L182">182   integrable := hintegrable</span>
+<span id="L183">183   condExp_succ_eq_zero := hcond</span>
+<span id="L184">184 </span>
+<span id="L185">185 /--</span>
+<span id="L186">186 Finite-prefix version of</span>
+<span id="L187">187 `succMartingaleDifference_centeredRewardProcess_of_condExp`.</span>
+<span id="L188">188 -/</span>
+<span id="L189">189 theorem succMartingaleDifferencePrefix_centeredRewardProcess_of_condExp</span>
+<span id="L190">190     {Omega : Type u} [mOmega : MeasurableSpace Omega]</span>
+<span id="L191">191     (mu : Measure Omega)</span>
+<span id="L192">192     {F : Filtration Nat mOmega}</span>
+<span id="L193">193     (reward baseline : Nat -&gt; Omega -&gt; Real)</span>
+<span id="L194">194     (n : Nat)</span>
+<span id="L195">195     (hadapted :</span>
+<span id="L196">196       StronglyAdapted F (centeredRewardProcess reward baseline))</span>
+<span id="L197">197     (hintegrable :</span>
+<span id="L198">198       forall t, t &lt; n -&gt;</span>
+<span id="L199">199         Integrable (centeredRewardProcess reward baseline t) mu)</span>
+<span id="L200">200     (hcond :</span>
+<span id="L201">201       forall i, i + 1 &lt; n -&gt;</span>
+<span id="L202">202         Filter.EventuallyEq (ae mu)</span>
+<span id="L203">203           (condExp (F i) mu</span>
+<span id="L204">204             (centeredRewardProcess reward baseline (i + 1)))</span>
+<span id="L205">205           (fun _omega =&gt; (0 : Real))) :</span>
+<span id="L206">206     SuccMartingaleDifferencePrefix mu F</span>
+<span id="L207">207       (centeredRewardProcess reward baseline) n where</span>
+<span id="L208">208   stronglyAdapted := hadapted</span>
+<span id="L209">209   integrable := hintegrable</span>
+<span id="L210">210   condExp_succ_eq_zero := hcond</span>
+<span id="L211">211 </span>
+<span id="L212">212 /--</span>
+<span id="L213">213 Partial sums of a succ-indexed martingale-difference process.</span>
+<span id="L214">214 </span>
+<span id="L215">215 The sum starts at `Y 1`, so the increment from time `i` to `i + 1` is</span>
+<span id="L216">216 definitionally `Y (i + 1)`, matching Mathlib&#x27;s martingale theorem</span>
+<span id="L217">217 `martingale_of_condExp_sub_eq_zero_nat`.</span>
+<span id="L218">218 -/</span>
+<span id="L219">219 noncomputable def partialSumsSucc</span>
+<span id="L220">220     {Omega : Type u}</span>
+<span id="L221">221     (Y : Nat -&gt; Omega -&gt; Real) :</span>
+<span id="L222">222     Nat -&gt; Omega -&gt; Real :=</span>
+<span id="L223">223   fun n =&gt; (Finset.range n).sum (fun i =&gt; Y (i + 1))</span>
+<span id="L224">224 </span>
+<span id="L225">225 /--</span>
+<span id="L226">226 The partial sums of a global succ-indexed martingale-difference process form a</span>
+<span id="L227">227 Mathlib martingale.</span>
+<span id="L228">228 </span>
+<span id="L229">229 This is a thin wrapper around</span>
+<span id="L230">230 `MeasureTheory.martingale_of_condExp_sub_eq_zero_nat`.  It does not assert</span>
+<span id="L231">231 optional stopping, concentration, or final regret; it only upgrades the local</span>
+<span id="L232">232 conditional-mean-zero increment contract to Mathlib&#x27;s martingale API.</span>
+<span id="L233">233 -/</span>
+<span id="L234">234 theorem martingale_partialSumsSucc_of_succMartingaleDifference</span>
+<span id="L235">235     {Omega : Type u} [mOmega : MeasurableSpace Omega]</span>
+<span id="L236">236     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L237">237     {F : Filtration Nat mOmega}</span>
+<span id="L238">238     {Y : Nat -&gt; Omega -&gt; Real}</span>
+<span id="L239">239     (h : SuccMartingaleDifference mu F Y) :</span>
+<span id="L240">240     Martingale (partialSumsSucc Y) F mu := by</span>
+<span id="L241">241   have h_adapted : StronglyAdapted F (partialSumsSucc Y) := by</span>
+<span id="L242">242     intro n</span>
+<span id="L243">243     change StronglyMeasurable[F n]</span>
+<span id="L244">244       ((Finset.range n).sum (fun i =&gt; Y (i + 1)))</span>
+<span id="L245">245     refine (Finset.range n).stronglyMeasurable_sum fun i hi =&gt; ?_</span>
+<span id="L246">246     rw [Finset.mem_range] at hi</span>
+<span id="L247">247     exact h.stronglyAdapted.stronglyMeasurable_le (Nat.succ_le_of_lt hi)</span>
+<span id="L248">248   have h_integrable : forall n, Integrable (partialSumsSucc Y n) mu := by</span>
+<span id="L249">249     intro n</span>
+<span id="L250">250     change Integrable</span>
+<span id="L251">251       ((Finset.range n).sum (fun i =&gt; Y (i + 1))) mu</span>
+<span id="L252">252     exact</span>
+<span id="L253">253       MeasureTheory.integrable_finset_sum&#x27; (Finset.range n) fun i _hi =&gt;</span>
+<span id="L254">254         h.integrable (i + 1)</span>
+<span id="L255">255   refine</span>
+<span id="L256">256     MeasureTheory.martingale_of_condExp_sub_eq_zero_nat</span>
+<span id="L257">257       h_adapted h_integrable ?_</span>
+<span id="L258">258   intro i</span>
+<span id="L259">259   have hdiff :</span>
+<span id="L260">260       (partialSumsSucc Y (i + 1) - partialSumsSucc Y i) =</span>
+<span id="L261">261         Y (i + 1) := by</span>
+<span id="L262">262     funext omega</span>
+<span id="L263">263     simp [partialSumsSucc, Pi.sub_apply, Finset.sum_range_succ]</span>
+<span id="L264">264   simpa [hdiff] using h.condExp_succ_eq_zero i</span>
+<span id="L265">265 </span>
+<span id="L266">266 /--</span>
+<span id="L267">267 The partial sums of a global centered reward process form a Mathlib martingale</span>
+<span id="L268">268 once the centered process satisfies the martingale-difference contracts.</span>
+<span id="L269">269 -/</span>
+<span id="L270">270 theorem martingale_partialSumsSucc_centeredRewardProcess_of_condExp</span>
+<span id="L271">271     {Omega : Type u} [mOmega : MeasurableSpace Omega]</span>
+<span id="L272">272     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L273">273     {F : Filtration Nat mOmega}</span>
+<span id="L274">274     (reward baseline : Nat -&gt; Omega -&gt; Real)</span>
+<span id="L275">275     (hadapted :</span>
+<span id="L276">276       StronglyAdapted F (centeredRewardProcess reward baseline))</span>
+<span id="L277">277     (hintegrable :</span>
+<span id="L278">278       forall t, Integrable (centeredRewardProcess reward baseline t) mu)</span>
+<span id="L279">279     (hcond :</span>
+<span id="L280">280       forall i,</span>
+<span id="L281">281         Filter.EventuallyEq (ae mu)</span>
+<span id="L282">282           (condExp (F i) mu</span>
+<span id="L283">283             (centeredRewardProcess reward baseline (i + 1)))</span>
+<span id="L284">284           (fun _omega =&gt; (0 : Real))) :</span>
+<span id="L285">285     Martingale</span>
+<span id="L286">286       (partialSumsSucc (centeredRewardProcess reward baseline)) F mu := by</span>
+<span id="L287">287   exact</span>
+<span id="L288">288     martingale_partialSumsSucc_of_succMartingaleDifference mu</span>
+<span id="L289">289       (succMartingaleDifference_centeredRewardProcess_of_condExp</span>
+<span id="L290">290         mu reward baseline hadapted hintegrable hcond)</span>
+<span id="L291">291 </span>
+<span id="L292">292 end MartingaleDiff</span>
+<span id="L293">293 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

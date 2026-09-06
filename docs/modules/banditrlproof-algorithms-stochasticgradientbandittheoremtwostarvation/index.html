@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.StochasticGradientBanditTheoremTwoStarvation · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.StochasticGradientBanditTheoremTwoStarvation · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.StochasticGradientBanditTheoremTwoStarvation · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Frontier</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>Stochastic<wbr>Gradient<wbr>Bandit<wbr>Theorem<wbr>Two<wbr>Starvation</h1>
+  <p class="lede">This module isolates the deterministic consumer in Step 1 of Appendix C of Baudry--Johnson--Vary--Pike-Burke--Rebeschini (NeurIPS 2025). On the actual generated SGB action/reward trace, once exactly n optimal-arm pulls have occurred, a path with no later optimal-arm pull has exactly Delta * (T - n) sampled pseudo-regret.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html"><code>BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/frontier/index.html">10. Automation, resources, and open routes</a></dd></div>
+    <div><dt>Declarations</dt><dd>26</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-algorithms-stochasticgradientbandittwoarmtheoremone/index.html"><code>BanditRLProof.Algorithms.StochasticGradientBanditTwoArmTheoremOne</code></a>, <a href="../banditrlproof-integrabilitysums/index.html"><code>BanditRLProof.IntegrabilitySums</code></a>, <a href="../banditrlproof-leaflemmas/index.html"><code>BanditRLProof.LeafLemmas</code></a>, <a href="../banditrlproof-pullcountdecomposition/index.html"><code>BanditRLProof.PullCountDecomposition</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-stochasticgradientbandittheoremtwonthpull/index.html"><code>BanditRLProof.Algorithms.StochasticGradientBanditTheoremTwoNthPull</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-cc551c3494c2">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmGeneratedAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The action coordinate of the canonical SGB trajectory.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmGeneratedAction {Env : Type v} (sample : Env × ((k : Nat) → Fin <span class="num">2</span> × Real)) : ActionTrace (Fin <span class="num">2</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L33">Source line 33</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-666f9fa7eb21">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCount</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Number of optimal-arm (`0`) pulls in the first `horizon` generated rounds.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmOptimalPullCount {Env : Type v} (horizon : Nat) (sample : Env × ((k : Nat) → Fin <span class="num">2</span> × Real)) : Nat</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L39">Source line 39</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-08ec00c7c4ef">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmStepOneThreshold</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The source Step-1 threshold `1 / (2*T)`.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmStepOneThreshold (horizon : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L45">Source line 45</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-de2217800dda">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmStepOneTriggerEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">At a chronological prefix ending at `prefix`, the source Step-1 trigger says
+that the next optimal-arm probability is at most `1/(2*T)` and that exactly
+`n` optimal-arm pulls have occurred through that prefix.
+
+The distinction between chronological `prefix` and pull index `n` is
+intentional and source-critical.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmStepOneTriggerEvent {Env : Type v} [MeasurableSpace Env] (eta : Real) (cutoff n horizon : Nat) : Set (Env × ((k : Nat) → Fin <span class="num">2</span> × Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L56">Source line 56</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7029af20abcc">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The measurable part of the Appendix-C Step-1 starvation event: a trigger
+prefix occurs and the total number of optimal-arm pulls by `horizon` remains
+exactly `n`.  Equality of the two pull counts is the finite-trace statement
+that there is no later optimal-arm selection.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmStepOneStarvationEvent {Env : Type v} [MeasurableSpace Env] (eta : Real) (cutoff n horizon : Nat) : Set (Env × ((k : Nat) → Fin <span class="num">2</span> × Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L71">Source line 71</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5aca557f2cd4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.measurable_twoArmGeneratedAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_twoArmGeneratedAction {Env : Type v} [MeasurableSpace Env] (t : Nat) : Measurable (<span class="kw">fun</span> sample : Env × ((k : Nat) → Fin <span class="num">2</span> × Real) =&gt; twoArmGeneratedAction sample t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L79">Source line 79</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-97bc34b8147e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.measurable_twoArmOptimalPullCount</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_twoArmOptimalPullCount {Env : Type v} [MeasurableSpace Env] (horizon : Nat) : Measurable (twoArmOptimalPullCount (Env := Env) horizon)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L86">Source line 86</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d6e4bc096668">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmTerminalOptimalPullCountEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The exact terminal optimal-arm count fiber at a finite horizon.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmTerminalOptimalPullCountEvent {Env : Type v} [MeasurableSpace Env] (n horizon : Nat) : Set (Env × ((k : Nat) → Fin <span class="num">2</span> × Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L111">Source line 111</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-43dbaeb279d7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.measurableSet_twoArmTerminalOptimalPullCountEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_twoArmTerminalOptimalPullCountEvent {Env : Type v} [MeasurableSpace Env] (n horizon : Nat) : MeasurableSet (twoArmTerminalOptimalPullCountEvent (Env := Env) n horizon)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L116">Source line 116</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c04c2c01ddc8">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCountBelowEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite-horizon event that fewer than `m` optimal-arm pulls occurred.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> twoArmOptimalPullCountBelowEvent {Env : Type v} [MeasurableSpace Env] (m horizon : Nat) : Set (Env × ((k : Nat) → Fin <span class="num">2</span> × Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L124">Source line 124</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e4a394fe13b5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.measurableSet_twoArmOptimalPullCountBelowEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_twoArmOptimalPullCountBelowEvent {Env : Type v} [MeasurableSpace Env] (m horizon : Nat) : MeasurableSet (twoArmOptimalPullCountBelowEvent (Env := Env) m horizon)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L129">Source line 129</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-571af1c2029e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCountBelowEvent_eq_iUnion_terminalCount</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The below-threshold count event is the finite disjoint-by-value partition
+into its exact terminal-count fibers.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmOptimalPullCountBelowEvent_eq_iUnion_terminalCount {Env : Type v} [MeasurableSpace Env] (m horizon : Nat) : twoArmOptimalPullCountBelowEvent (Env := Env) m horizon = ⋃ n : Fin m, twoArmTerminalOptimalPullCountEvent (Env := Env) (n : Nat) horizon</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L138">Source line 138</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0e3379346085">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.measurableSet_twoArmStepOneTriggerEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_twoArmStepOneTriggerEvent {Env : Type v} [MeasurableSpace Env] (eta : Real) (cutoff n horizon : Nat) : MeasurableSet (twoArmStepOneTriggerEvent (Env := Env) eta cutoff n horizon)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L157">Source line 157</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6bab895edb69">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.measurableSet_twoArmStepOneStarvationEvent</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_twoArmStepOneStarvationEvent {Env : Type v} [MeasurableSpace Env] (eta : Real) (cutoff n horizon : Nat) : MeasurableSet (twoArmStepOneStarvationEvent (Env := Env) eta cutoff n horizon)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L175">Source line 175</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a0e30f56a4f1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.finTwo_eq_zero_or_one</code>
+    <span><span class="status compiled">Compiled</span> <span class="status source">Internal helper</span></span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">private</span> <span class="kw">theorem</span> finTwo_eq_zero_or_one (action : Fin <span class="num">2</span>) : action = <span class="num">0</span> ∨ action = <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L186">Source line 186</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7c7917d6e85a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmSampledPseudoRegret_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmSampledPseudoRegret_nonneg {Env : Type v} (Delta : Real) (hDelta : <span class="num">0</span> ≤ Delta) (horizon : Nat) (sample : Env × ((k : Nat) → Fin <span class="num">2</span> × Real)) : <span class="num">0</span> ≤ twoArmSampledPseudoRegret Delta horizon sample</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L190">Source line 190</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9125632b1fb5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmSampledPseudoRegret_eq_gap_mul_suboptimalPullCount</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The two-arm sampled pseudo-regret is exactly the gap times arm-`1` pulls.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmSampledPseudoRegret_eq_gap_mul_suboptimalPullCount {Env : Type v} (Delta : Real) (horizon : Nat) (sample : Env × ((k : Nat) → Fin <span class="num">2</span> × Real)) : twoArmSampledPseudoRegret Delta horizon sample = Delta * (pullCount (twoArmGeneratedAction sample) <span class="num">1</span> horizon : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L205">Source line 205</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8752398c56cc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCount_add_suboptimalPullCount_eq_horizon</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmOptimalPullCount_add_suboptimalPullCount_eq_horizon {Env : Type v} (horizon : Nat) (sample : Env × ((k : Nat) → Fin <span class="num">2</span> × Real)) : twoArmOptimalPullCount horizon sample + pullCount (twoArmGeneratedAction sample) <span class="num">1</span> horizon = horizon</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L228">Source line 228</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4dea7c9da852">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmSampledPseudoRegret_eq_gap_mul_horizon_sub_of_optimalPullCount_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exactly `n` optimal pulls force the exact source starvation charge.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmSampledPseudoRegret_eq_gap_mul_horizon_sub_of_optimalPullCount_eq {Env : Type v} (Delta : Real) (n horizon : Nat) (sample : Env × ((k : Nat) → Fin <span class="num">2</span> × Real)) (hcount : twoArmOptimalPullCount horizon sample = n) : twoArmSampledPseudoRegret Delta horizon sample = Delta * ((horizon - n : Nat) : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L238">Source line 238</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0412abc6249d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmTerminalOptimalPullCountEvent_sampledPseudoRegret_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">On one terminal-count fiber, sampled pseudo-regret has the exact charge
+used by the Appendix-C starvation consumer.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmTerminalOptimalPullCountEvent_sampledPseudoRegret_eq {Env : Type v} [MeasurableSpace Env] (Delta : Real) (n horizon : Nat) (sample : Env × ((k : Nat) → Fin <span class="num">2</span> × Real)) (hcount : sample ∈ twoArmTerminalOptimalPullCountEvent (Env := Env) n horizon) : twoArmSampledPseudoRegret Delta horizon sample = Delta * ((horizon - n : Nat) : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L254">Source line 254</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b9758c91a09e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.mem_twoArmStepOneStarvationEvent_of_lowProbability_noFurtherOptimalPull</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The explicit chronological no-return premise constructs membership in the
+measurable starvation event.  This is the pathwise half of Appendix-C Step 1;
+it does not assign a probability to the event.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> mem_twoArmStepOneStarvationEvent_of_lowProbability_noFurtherOptimalPull {Env : Type v} [MeasurableSpace Env] (eta : Real) (cutoff n horizon : Nat) (sample : Env × ((k : Nat) → Fin <span class="num">2</span> × Real)) (hcutoff : cutoff + <span class="num">1</span> ≤ horizon) (hlow : twoArmSuccessProbability eta cutoff sample ≤ twoArmStepOneThreshold horizon) (hcount : twoArmOptimalPullCount (cutoff + <span class="num">1</span>) sample = n) (hnoFurther : ∀ t, cutoff + <span class="num">1</span> ≤ t → t &lt; horizon → twoArmGeneratedAction sample t ≠ <span class="num">0</span>) : sample ∈ twoArmStepOneStarvationEvent (Env := Env) eta cutoff n horizon</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L271">Source line 271</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-59f053e697e2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_sampledPseudoRegret_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every path in the measurable starvation event has the exact Step-1 charge.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmStepOneStarvationEvent_sampledPseudoRegret_eq {Env : Type v} [MeasurableSpace Env] (eta Delta : Real) (cutoff n horizon : Nat) (sample : Env × ((k : Nat) → Fin <span class="num">2</span> × Real)) (hstarve : sample ∈ twoArmStepOneStarvationEvent (Env := Env) eta cutoff n horizon) : twoArmSampledPseudoRegret Delta horizon sample = Delta * ((horizon - n : Nat) : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L296">Source line 296</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-63793395030f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.integrable_twoArmSampledPseudoRegret_of_finiteMeasure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Integrability of finite-horizon sampled regret under any finite trace law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_twoArmSampledPseudoRegret_of_finiteMeasure {Env : Type v} [MeasurableSpace Env] (mu : Measure (Env × ((k : Nat) → Fin <span class="num">2</span> × Real))) [IsFiniteMeasure mu] (Delta : Real) (horizon : Nat) : Integrable (twoArmSampledPseudoRegret (Env := Env) Delta horizon) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L309">Source line 309</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-40bdca13e5f3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCountBelowEvent_charge_mul_probability_le_integral</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Fewer than `m` optimal-arm pulls at `horizon` force at least the uniform
+`Delta * (horizon - m)` sampled-pseudo-regret charge.  This is the
+finite-horizon consumer for a below-count event; it does not provide any
+positive-mass lower bound for that event.  The measure need only be finite;
+probability and expectation terminology is reserved for probability-measure
+wrappers such as the fixed-IID consumer below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmOptimalPullCountBelowEvent_charge_mul_probability_le_integral {Env : Type v} [MeasurableSpace Env] (mu : Measure (Env × ((k : Nat) → Fin <span class="num">2</span> × Real))) [IsFiniteMeasure mu] (Delta : Real) (hDelta : <span class="num">0</span> ≤ Delta) (m horizon : Nat) : Delta * ((horizon - m : Nat) : Real) * mu.real (twoArmOptimalPullCountBelowEvent (Env := Env) m horizon) ≤ integral mu (twoArmSampledPseudoRegret (Env := Env) Delta horizon)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L333">Source line 333</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-28a3ebf1d887">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmStepOneStarvationEvent_charge_mul_probability_le_integral</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Expectation-level deterministic Step-1 consumer.  It lower-bounds expected
+sampled regret by the exact starvation charge times the probability of the
+actual generated starvation event.  The missing source producer is precisely
+the separate lower bound on this event probability from the trigger event.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmStepOneStarvationEvent_charge_mul_probability_le_integral {Env : Type v} [MeasurableSpace Env] (mu : Measure (Env × ((k : Nat) → Fin <span class="num">2</span> × Real))) [IsFiniteMeasure mu] (eta Delta : Real) (hDelta : <span class="num">0</span> ≤ Delta) (cutoff n horizon : Nat) : Delta * ((horizon - n : Nat) : Real) * mu.real (twoArmStepOneStarvationEvent (Env := Env) eta cutoff n horizon) ≤ integral mu (twoArmSampledPseudoRegret (Env := Env) Delta horizon)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L396">Source line 396</a>
+
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6a5b1b3dbaab">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.StochasticGradientBandit.twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The same deterministic Step-1 consumer specialized to the canonical generated
+fixed-IID trajectory with a Dirac environment prior.  This wrapper covers the
+paper&#x27;s Rademacher/Dirac arm-law instance once that explicit arm-law adapter is
+supplied; it still does not lower-bound the starvation-event probability.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral (armLaw : Fin <span class="num">2</span> -&gt; Measure Real) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (eta Delta : Real) (hDelta : <span class="num">0</span> &lt;= Delta) (cutoff n horizon : Nat) : Delta * ((horizon - n : Nat) : Real) * (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)).real (twoArmStepOneStarvationEvent (Env := Unit) eta cutoff n horizon) &lt;= integral (twoArmTrajectoryMeasure (Measure.dirac ()) eta (twoArmFixedIIDEnvironment armLaw hprob)) (twoArmSampledPseudoRegret (Env := Unit) Delta horizon)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean.html#L451">Source line 451</a>
+      <a href="../../chapters/frontier/index.html#decl-6a5b1b3dbaab-teaching">Open teaching explanation</a>
+      <a href="../../chapters/frontier/index.html">Chapter context: Frontier</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

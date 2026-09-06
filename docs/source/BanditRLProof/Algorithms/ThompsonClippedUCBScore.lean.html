@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Algorithms/ThompsonClippedUCBScore.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Algorithms.ThompsonBayesRegretDecomposition</span>
+<span id="L2">2 import BanditRLProof.Algorithms.UCBRealHistoryIndex</span>
+<span id="L3">3 import BanditRLProof.PullCountDecomposition</span>
+<span id="L4">4 </span>
+<span id="L5">5 /-!</span>
+<span id="L6">6 # Clipped UCB score for the Thompson Bayesian-regret route</span>
+<span id="L7">7 </span>
+<span id="L8">8 This module instantiates `HistoryActionScore` with the clipped upper-confidence</span>
+<span id="L9">9 score used by the pinned LML Thompson regret proof.  The finite-history score</span>
+<span id="L10">10 is measurable and lies in `[l, u]`; those bounds discharge every score</span>
+<span id="L11">11 integrability premise in the compiled Bayesian-regret decomposition.</span>
+<span id="L12">12 -/</span>
+<span id="L13">13 </span>
+<span id="L14">14 open MeasureTheory ProbabilityTheory Finset</span>
+<span id="L15">15 </span>
+<span id="L16">16 noncomputable section</span>
+<span id="L17">17 </span>
+<span id="L18">18 namespace BanditRLProof</span>
+<span id="L19">19 namespace Thompson</span>
+<span id="L20">20 </span>
+<span id="L21">21 universe u</span>
+<span id="L22">22 </span>
+<span id="L23">23 /-- The clipped UCB score on a complete action/reward trace. -/</span>
+<span id="L24">24 def clippedUCB</span>
+<span id="L25">25     {K : Nat} (l u sigma2 delta : Real)</span>
+<span id="L26">26     (action : ActionTrace (Fin K)) (reward : RewardTrace Real)</span>
+<span id="L27">27     (arm : Fin K) (t : Nat) : Real :=</span>
+<span id="L28">28   if pullCount action arm t = 0 then u</span>
+<span id="L29">29   else</span>
+<span id="L30">30     max l (min u</span>
+<span id="L31">31       (UCB.realEmpiricalMean action reward arm t +</span>
+<span id="L32">32         Real.sqrt</span>
+<span id="L33">33           (2 * sigma2 * Real.log (1 / delta) /</span>
+<span id="L34">34             (pullCount action arm t : Real))))</span>
+<span id="L35">35 </span>
+<span id="L36">36 /-- The same clipped score on the inclusive history through time `n`. -/</span>
+<span id="L37">37 def clippedUCBHistory</span>
+<span id="L38">38     {K : Nat} (l u sigma2 delta : Real) (n : Nat)</span>
+<span id="L39">39     (history : History.FinitePairHistory (Fin K) Real n)</span>
+<span id="L40">40     (arm : Fin K) : Real :=</span>
+<span id="L41">41   if ETC.realHistoryPullCount n history arm = 0 then u</span>
+<span id="L42">42   else</span>
+<span id="L43">43     max l (min u</span>
+<span id="L44">44       (ETC.realHistoryEmpMean n history arm +</span>
+<span id="L45">45         Real.sqrt</span>
+<span id="L46">46           (2 * sigma2 * Real.log (1 / delta) /</span>
+<span id="L47">47             (ETC.realHistoryPullCount n history arm : Real))))</span>
+<span id="L48">48 </span>
+<span id="L49">49 @[simp]</span>
+<span id="L50">50 theorem clippedUCB_zero</span>
+<span id="L51">51     {K : Nat} (l u sigma2 delta : Real)</span>
+<span id="L52">52     (action : ActionTrace (Fin K)) (reward : RewardTrace Real)</span>
+<span id="L53">53     (arm : Fin K) :</span>
+<span id="L54">54     clippedUCB l u sigma2 delta action reward arm 0 = u := by</span>
+<span id="L55">55   simp [clippedUCB]</span>
+<span id="L56">56 </span>
+<span id="L57">57 theorem clippedUCB_mem_Icc</span>
+<span id="L58">58     {K : Nat} (l u sigma2 delta : Real) (hlu : l &lt;= u)</span>
+<span id="L59">59     (action : ActionTrace (Fin K)) (reward : RewardTrace Real)</span>
+<span id="L60">60     (arm : Fin K) (t : Nat) :</span>
+<span id="L61">61     clippedUCB l u sigma2 delta action reward arm t ∈ Set.Icc l u := by</span>
+<span id="L62">62   unfold clippedUCB</span>
+<span id="L63">63   split_ifs</span>
+<span id="L64">64   · exact ⟨hlu, le_rfl⟩</span>
+<span id="L65">65   · constructor &lt;;&gt; simp only [le_max_iff, max_le_iff, min_le_iff,</span>
+<span id="L66">66       le_min_iff] &lt;;&gt; grind</span>
+<span id="L67">67 </span>
+<span id="L68">68 private theorem finset_sum_sqrt_le</span>
+<span id="L69">69     {ι : Type*} (s : Finset ι) (c : ι -&gt; Real)</span>
+<span id="L70">70     (hc : forall i, 0 &lt;= c i) :</span>
+<span id="L71">71     ∑ i ∈ s, Real.sqrt (c i) &lt;=</span>
+<span id="L72">72       Real.sqrt (s.card * ∑ i ∈ s, c i) := by</span>
+<span id="L73">73   have h := Real.sum_sqrt_mul_sqrt_le s hc (fun _ =&gt; zero_le_one)</span>
+<span id="L74">74   simp only [Real.sqrt_one, mul_one, Finset.sum_const, nsmul_eq_mul] at h</span>
+<span id="L75">75   rwa [Real.sqrt_mul (by positivity), mul_comm]</span>
+<span id="L76">76 </span>
+<span id="L77">77 private theorem finset_sum_one_div_sqrt_le</span>
+<span id="L78">78     {n : Nat} (hn : 0 &lt; n) :</span>
+<span id="L79">79     ∑ k ∈ Finset.range (n + 1), 1 / Real.sqrt k &lt;=</span>
+<span id="L80">80       2 * Real.sqrt n - 1 := by</span>
+<span id="L81">81   induction n with</span>
+<span id="L82">82   | zero =&gt; simp at hn</span>
+<span id="L83">83   | succ n ih =&gt;</span>
+<span id="L84">84       rw [Finset.sum_range_succ]</span>
+<span id="L85">85       by_cases hzero : n = 0</span>
+<span id="L86">86       · rw [hzero]</span>
+<span id="L87">87         simp</span>
+<span id="L88">88         norm_num</span>
+<span id="L89">89       · have hih := ih (Nat.pos_of_ne_zero hzero)</span>
+<span id="L90">90         suffices 1 / Real.sqrt (n + 1) &lt;=</span>
+<span id="L91">91             2 * (Real.sqrt (n + 1) - Real.sqrt n) by</span>
+<span id="L92">92           norm_num [Nat.cast_add, Nat.cast_one] at *</span>
+<span id="L93">93           linarith</span>
+<span id="L94">94         field_simp</span>
+<span id="L95">95         have hsqrtSucc : Real.sqrt (n + 1) * Real.sqrt (n + 1) = n + 1 :=</span>
+<span id="L96">96           Real.mul_self_sqrt (by positivity)</span>
+<span id="L97">97         have hsqrt : Real.sqrt n * Real.sqrt n = n :=</span>
+<span id="L98">98           Real.mul_self_sqrt (by positivity)</span>
+<span id="L99">99         nlinarith</span>
+<span id="L100">100 </span>
+<span id="L101">101 /--</span>
+<span id="L102">102 Pathwise selected-action clipped-UCB excess bound from the pinned LML</span>
+<span id="L103">103 Thompson route. The only hypothesis is that every positive-count empirical</span>
+<span id="L104">104 mean is strictly below its arm mean plus the confidence width.</span>
+<span id="L105">105 -/</span>
+<span id="L106">106 theorem sum_clippedUCB_action_sub_mean_le</span>
+<span id="L107">107     {K : Nat} [NeZero K]</span>
+<span id="L108">108     (action : ActionTrace (Fin K)) (reward : RewardTrace Real)</span>
+<span id="L109">109     (mean : Fin K -&gt; Real) (l u sigma2 delta : Real)</span>
+<span id="L110">110     (hmeanMem : forall arm, mean arm ∈ Set.Icc l u) (hlu : l &lt;= u)</span>
+<span id="L111">111     (hgood : forall s, s &lt; n -&gt;</span>
+<span id="L112">112       pullCount action (action s) s ≠ 0 -&gt;</span>
+<span id="L113">113         UCB.realEmpiricalMean action reward (action s) s - mean (action s) &lt;</span>
+<span id="L114">114           Real.sqrt</span>
+<span id="L115">115             (2 * sigma2 * Real.log (1 / delta) /</span>
+<span id="L116">116               (pullCount action (action s) s : Real))) :</span>
+<span id="L117">117     ∑ s ∈ Finset.range n,</span>
+<span id="L118">118         (clippedUCB l u sigma2 delta action reward (action s) s -</span>
+<span id="L119">119           mean (action s)) &lt;=</span>
+<span id="L120">120       (u - l) * K +</span>
+<span id="L121">121         4 * Real.sqrt (2 * sigma2 * Real.log (1 / delta) * K * n) := by</span>
+<span id="L122">122   classical</span>
+<span id="L123">123   let S0 := (Finset.range n).filter</span>
+<span id="L124">124     (fun s =&gt; pullCount action (action s) s = 0)</span>
+<span id="L125">125   let S1 := (Finset.range n).filter</span>
+<span id="L126">126     (fun s =&gt; pullCount action (action s) s ≠ 0)</span>
+<span id="L127">127   have hunion : S0 ∪ S1 = Finset.range n := by</span>
+<span id="L128">128     exact Finset.filter_union_filter_not_eq _ _</span>
+<span id="L129">129   have hdisjoint : Disjoint S0 S1 :=</span>
+<span id="L130">130     Finset.disjoint_filter_filter_not _ _ _</span>
+<span id="L131">131   rw [← hunion, Finset.sum_union hdisjoint]</span>
+<span id="L132">132   gcongr</span>
+<span id="L133">133   · calc</span>
+<span id="L134">134       ∑ s ∈ S0,</span>
+<span id="L135">135           (clippedUCB l u sigma2 delta action reward (action s) s -</span>
+<span id="L136">136             mean (action s)) &lt;=</span>
+<span id="L137">137           ∑ _s ∈ S0, (u - l) := by</span>
+<span id="L138">138             apply Finset.sum_le_sum</span>
+<span id="L139">139             intro s hs</span>
+<span id="L140">140             have hscore := clippedUCB_mem_Icc</span>
+<span id="L141">141               l u sigma2 delta hlu action reward (action s) s</span>
+<span id="L142">142             have hmean := hmeanMem (action s)</span>
+<span id="L143">143             nlinarith [hscore.2, hmean.1]</span>
+<span id="L144">144       _ = ∑ s ∈ Finset.range n,</span>
+<span id="L145">145           if pullCount action (action s) s = 0 then (u - l) else 0 := by</span>
+<span id="L146">146             dsimp only [S0]</span>
+<span id="L147">147             rw [Finset.sum_filter]</span>
+<span id="L148">148       _ = ∑ arm : Fin K,</span>
+<span id="L149">149           ∑ j ∈ Finset.range (pullCount action arm n),</span>
+<span id="L150">150             if j = 0 then (u - l) else 0 := by</span>
+<span id="L151">151             exact finset_sum_comp_pullCount action n</span>
+<span id="L152">152               (fun j =&gt; if j = 0 then (u - l) else 0)</span>
+<span id="L153">153       _ &lt;= ∑ _arm : Fin K, (u - l) := by</span>
+<span id="L154">154             apply Finset.sum_le_sum</span>
+<span id="L155">155             intro arm _harm</span>
+<span id="L156">156             rw [Finset.sum_ite_eq&#x27;]</span>
+<span id="L157">157             split_ifs</span>
+<span id="L158">158             · rfl</span>
+<span id="L159">159             · exact sub_nonneg.mpr hlu</span>
+<span id="L160">160       _ = (u - l) * K := by</span>
+<span id="L161">161             rw [Fin.sum_const, nsmul_eq_mul, mul_comm]</span>
+<span id="L162">162   · calc</span>
+<span id="L163">163       ∑ s ∈ S1,</span>
+<span id="L164">164           (clippedUCB l u sigma2 delta action reward (action s) s -</span>
+<span id="L165">165             mean (action s)) &lt;=</span>
+<span id="L166">166           ∑ s ∈ S1,</span>
+<span id="L167">167             2 * Real.sqrt</span>
+<span id="L168">168               (2 * sigma2 * Real.log (1 / delta) /</span>
+<span id="L169">169                 (pullCount action (action s) s : Real)) := by</span>
+<span id="L170">170             apply Finset.sum_le_sum</span>
+<span id="L171">171             intro s hs</span>
+<span id="L172">172             have hsRange : s ∈ Finset.range n := (Finset.mem_filter.mp hs).1</span>
+<span id="L173">173             have hsCount : pullCount action (action s) s ≠ 0 :=</span>
+<span id="L174">174               (Finset.mem_filter.mp hs).2</span>
+<span id="L175">175             have hwidth : 0 &lt;= Real.sqrt</span>
+<span id="L176">176                 (2 * sigma2 * Real.log (1 / delta) /</span>
+<span id="L177">177                   (pullCount action (action s) s : Real)) :=</span>
+<span id="L178">178               Real.sqrt_nonneg _</span>
+<span id="L179">179             unfold clippedUCB</span>
+<span id="L180">180             rw [if_neg hsCount]</span>
+<span id="L181">181             have hraw := hgood s (Finset.mem_range.mp hsRange) hsCount</span>
+<span id="L182">182             have hmean := hmeanMem (action s)</span>
+<span id="L183">183             grind</span>
+<span id="L184">184       _ &lt;= ∑ s ∈ Finset.range n,</span>
+<span id="L185">185           2 * Real.sqrt</span>
+<span id="L186">186             (2 * sigma2 * Real.log (1 / delta) /</span>
+<span id="L187">187               (pullCount action (action s) s : Real)) := by</span>
+<span id="L188">188             apply Finset.sum_le_sum_of_subset_of_nonneg (Finset.filter_subset _ _)</span>
+<span id="L189">189             intro s _hs _hnot</span>
+<span id="L190">190             positivity</span>
+<span id="L191">191       _ = 2 * Real.sqrt (2 * sigma2 * Real.log (1 / delta)) *</span>
+<span id="L192">192           ∑ s ∈ Finset.range n,</span>
+<span id="L193">193             (1 / Real.sqrt (pullCount action (action s) s)) := by</span>
+<span id="L194">194             rw [Finset.mul_sum]</span>
+<span id="L195">195             apply Finset.sum_congr rfl</span>
+<span id="L196">196             intro s _hs</span>
+<span id="L197">197             rw [Real.sqrt_div&#x27; _ (by positivity)]</span>
+<span id="L198">198             ring</span>
+<span id="L199">199       _ = 2 * Real.sqrt (2 * sigma2 * Real.log (1 / delta)) *</span>
+<span id="L200">200           ∑ arm : Fin K,</span>
+<span id="L201">201             ∑ j ∈ Finset.range (pullCount action arm n),</span>
+<span id="L202">202               (1 / Real.sqrt j) := by</span>
+<span id="L203">203             congr 1</span>
+<span id="L204">204             exact finset_sum_comp_pullCount action n</span>
+<span id="L205">205               (fun j : Nat =&gt; 1 / Real.sqrt (j : Real))</span>
+<span id="L206">206       _ &lt;= 2 * Real.sqrt (2 * sigma2 * Real.log (1 / delta)) *</span>
+<span id="L207">207           (2 * ∑ arm : Fin K, Real.sqrt (pullCount action arm n)) := by</span>
+<span id="L208">208             rw [Finset.mul_sum _ _ 2]</span>
+<span id="L209">209             gcongr with arm</span>
+<span id="L210">210             by_cases hcount : pullCount action arm n = 0</span>
+<span id="L211">211             · simp [hcount]</span>
+<span id="L212">212             · have hbound := finset_sum_one_div_sqrt_le</span>
+<span id="L213">213                 (Nat.pos_of_ne_zero hcount)</span>
+<span id="L214">214               rw [Finset.sum_range_succ] at hbound</span>
+<span id="L215">215               have hnonneg : 0 &lt;=</span>
+<span id="L216">216                   1 / Real.sqrt (pullCount action arm n) := by</span>
+<span id="L217">217                 positivity</span>
+<span id="L218">218               linarith</span>
+<span id="L219">219       _ &lt;= 2 * Real.sqrt (2 * sigma2 * Real.log (1 / delta)) *</span>
+<span id="L220">220           (2 * Real.sqrt (K *</span>
+<span id="L221">221             ∑ arm : Fin K, (pullCount action arm n : Real))) := by</span>
+<span id="L222">222             gcongr</span>
+<span id="L223">223             have hsqrt := finset_sum_sqrt_le</span>
+<span id="L224">224               (Finset.univ : Finset (Fin K))</span>
+<span id="L225">225               (fun arm =&gt; (pullCount action arm n : Real))</span>
+<span id="L226">226               (fun arm =&gt; Nat.cast_nonneg _)</span>
+<span id="L227">227             simpa using hsqrt</span>
+<span id="L228">228       _ = 2 * Real.sqrt (2 * sigma2 * Real.log (1 / delta)) *</span>
+<span id="L229">229           (2 * Real.sqrt (K * n)) := by</span>
+<span id="L230">230             rw [← Nat.cast_sum, finset_sum_pullCount_eq_time action n]</span>
+<span id="L231">231       _ = 4 * Real.sqrt</span>
+<span id="L232">232           (2 * sigma2 * Real.log (1 / delta) * K * n) := by</span>
+<span id="L233">233             ring_nf</span>
+<span id="L234">234             rw [← Real.sqrt_mul&#x27; _ (by positivity)]</span>
+<span id="L235">235             ring_nf</span>
+<span id="L236">236 </span>
+<span id="L237">237 theorem clippedUCBHistory_mem_Icc</span>
+<span id="L238">238     {K : Nat} (l u sigma2 delta : Real) (hlu : l &lt;= u) (n : Nat)</span>
+<span id="L239">239     (history : History.FinitePairHistory (Fin K) Real n)</span>
+<span id="L240">240     (arm : Fin K) :</span>
+<span id="L241">241     clippedUCBHistory l u sigma2 delta n history arm ∈ Set.Icc l u := by</span>
+<span id="L242">242   unfold clippedUCBHistory</span>
+<span id="L243">243   split_ifs</span>
+<span id="L244">244   · exact ⟨hlu, le_rfl⟩</span>
+<span id="L245">245   · constructor &lt;;&gt; simp only [le_max_iff, max_le_iff, min_le_iff,</span>
+<span id="L246">246       le_min_iff] &lt;;&gt; grind</span>
+<span id="L247">247 </span>
+<span id="L248">248 /-- A fixed-arm clipped score is measurable on inclusive pair histories. -/</span>
+<span id="L249">249 theorem measurable_clippedUCBHistory</span>
+<span id="L250">250     {K : Nat} (l u sigma2 delta : Real) (n : Nat) (arm : Fin K) :</span>
+<span id="L251">251     Measurable (fun history : History.FinitePairHistory (Fin K) Real n =&gt;</span>
+<span id="L252">252       clippedUCBHistory l u sigma2 delta n history arm) := by</span>
+<span id="L253">253   let hcount : Measurable</span>
+<span id="L254">254       (fun history : History.FinitePairHistory (Fin K) Real n =&gt;</span>
+<span id="L255">255         ETC.realHistoryPullCount n history arm) :=</span>
+<span id="L256">256     UCB.measurable_realHistoryPullCount n arm</span>
+<span id="L257">257   let hcountReal : Measurable</span>
+<span id="L258">258       (fun history : History.FinitePairHistory (Fin K) Real n =&gt;</span>
+<span id="L259">259         (ETC.realHistoryPullCount n history arm : Real)) :=</span>
+<span id="L260">260     (measurable_of_countable (fun count : Nat =&gt; (count : Real))).comp hcount</span>
+<span id="L261">261   let hraw : Measurable</span>
+<span id="L262">262       (fun history : History.FinitePairHistory (Fin K) Real n =&gt;</span>
+<span id="L263">263         ETC.realHistoryEmpMean n history arm +</span>
+<span id="L264">264           Real.sqrt</span>
+<span id="L265">265             (2 * sigma2 * Real.log (1 / delta) /</span>
+<span id="L266">266               (ETC.realHistoryPullCount n history arm : Real))) :=</span>
+<span id="L267">267     (UCB.measurable_realHistoryEmpMean n arm).add</span>
+<span id="L268">268       ((measurable_const.div hcountReal).sqrt)</span>
+<span id="L269">269   exact Measurable.ite</span>
+<span id="L270">270     (measurableSet_eq_fun hcount measurable_const)</span>
+<span id="L271">271     measurable_const</span>
+<span id="L272">272     (measurable_const.max (measurable_const.min hraw))</span>
+<span id="L273">273 </span>
+<span id="L274">274 /-- Joint measurability in the visible history and candidate action. -/</span>
+<span id="L275">275 theorem measurable_uncurry_clippedUCBHistory</span>
+<span id="L276">276     {K : Nat} (l u sigma2 delta : Real) (n : Nat) :</span>
+<span id="L277">277     Measurable (fun pair :</span>
+<span id="L278">278       History.FinitePairHistory (Fin K) Real n × Fin K =&gt;</span>
+<span id="L279">279         clippedUCBHistory l u sigma2 delta n pair.1 pair.2) := by</span>
+<span id="L280">280   apply measurable_from_prod_countable_left</span>
+<span id="L281">281   intro arm</span>
+<span id="L282">282   exact measurable_clippedUCBHistory l u sigma2 delta n arm</span>
+<span id="L283">283 </span>
+<span id="L284">284 /-- `HistoryActionScore` instance for the pinned LML clipped-UCB formula. -/</span>
+<span id="L285">285 def clippedUCBHistoryScore</span>
+<span id="L286">286     {K : Nat} (l u sigma2 delta : Real) :</span>
+<span id="L287">287     HistoryActionScore (Fin K) Real where</span>
+<span id="L288">288   initial := fun _ =&gt; u</span>
+<span id="L289">289   successor := fun n history arm =&gt;</span>
+<span id="L290">290     clippedUCBHistory l u sigma2 delta n history arm</span>
+<span id="L291">291   measurable_initial := measurable_const</span>
+<span id="L292">292   measurable_successor :=</span>
+<span id="L293">293     measurable_uncurry_clippedUCBHistory l u sigma2 delta</span>
+<span id="L294">294 </span>
+<span id="L295">295 /-- Inclusive finite-history and exclusive trace versions agree at `n + 1`. -/</span>
+<span id="L296">296 theorem clippedUCBHistory_finitePairHistoryOfTrace</span>
+<span id="L297">297     {K : Nat} (l u sigma2 delta : Real)</span>
+<span id="L298">298     (action : ActionTrace (Fin K)) (reward : RewardTrace Real)</span>
+<span id="L299">299     (n : Nat) (arm : Fin K) :</span>
+<span id="L300">300     clippedUCBHistory l u sigma2 delta n</span>
+<span id="L301">301         (History.finitePairHistoryOfTrace action reward n) arm =</span>
+<span id="L302">302       clippedUCB l u sigma2 delta action reward arm (n + 1) := by</span>
+<span id="L303">303   simp only [clippedUCBHistory, clippedUCB,</span>
+<span id="L304">304     ETC.realHistoryPullCount_finitePairHistoryOfTrace,</span>
+<span id="L305">305     UCB.realHistoryEmpiricalMean_finitePairHistoryOfTrace]</span>
+<span id="L306">306 </span>
+<span id="L307">307 /-- Evaluating the history score at the selected action recovers `clippedUCB`. -/</span>
+<span id="L308">308 theorem clippedUCBHistoryScore_atTrace</span>
+<span id="L309">309     {K : Nat} (l u sigma2 delta : Real)</span>
+<span id="L310">310     (action : ActionTrace (Fin K)) (reward : RewardTrace Real) (t : Nat) :</span>
+<span id="L311">311     (clippedUCBHistoryScore l u sigma2 delta).atTrace action reward t =</span>
+<span id="L312">312       clippedUCB l u sigma2 delta action reward (action t) t := by</span>
+<span id="L313">313   cases t with</span>
+<span id="L314">314   | zero =&gt; simp [clippedUCBHistoryScore, HistoryActionScore.atTrace]</span>
+<span id="L315">315   | succ n =&gt;</span>
+<span id="L316">316       exact clippedUCBHistory_finitePairHistoryOfTrace</span>
+<span id="L317">317         l u sigma2 delta action reward n (action (n + 1))</span>
+<span id="L318">318 </span>
+<span id="L319">319 /-- Evaluating at a comparison arm recovers the same trace score. -/</span>
+<span id="L320">320 theorem clippedUCBHistoryScore_atBestTrace</span>
+<span id="L321">321     {K : Nat} (l u sigma2 delta : Real)</span>
+<span id="L322">322     (bestArm : Fin K)</span>
+<span id="L323">323     (action : ActionTrace (Fin K)) (reward : RewardTrace Real) (t : Nat) :</span>
+<span id="L324">324     (clippedUCBHistoryScore l u sigma2 delta).atBestTrace</span>
+<span id="L325">325         bestArm action reward t =</span>
+<span id="L326">326       clippedUCB l u sigma2 delta action reward bestArm t := by</span>
+<span id="L327">327   cases t with</span>
+<span id="L328">328   | zero =&gt; simp [clippedUCBHistoryScore, HistoryActionScore.atBestTrace]</span>
+<span id="L329">329   | succ n =&gt;</span>
+<span id="L330">330       exact clippedUCBHistory_finitePairHistoryOfTrace</span>
+<span id="L331">331         l u sigma2 delta action reward n bestArm</span>
+<span id="L332">332 </span>
+<span id="L333">333 /-- A measurable real function with pointwise range in `[l, u]` is integrable. -/</span>
+<span id="L334">334 theorem integrable_of_measurable_mem_Icc</span>
+<span id="L335">335     {Omega : Type u} [MeasurableSpace Omega]</span>
+<span id="L336">336     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L337">337     (f : Omega -&gt; Real) (hf : Measurable f)</span>
+<span id="L338">338     {l u : Real} (hmem : forall omega, f omega ∈ Set.Icc l u) :</span>
+<span id="L339">339     Integrable f mu := by</span>
+<span id="L340">340   refine Integrable.of_bound hf.aestronglyMeasurable (max |l| |u|) ?_</span>
+<span id="L341">341   filter_upwards with omega</span>
+<span id="L342">342   rw [Real.norm_eq_abs]</span>
+<span id="L343">343   have h := hmem omega</span>
+<span id="L344">344   rcases h with ⟨hl, hu⟩</span>
+<span id="L345">345   exact abs_le_max_abs_abs hl hu</span>
+<span id="L346">346 </span>
+<span id="L347">347 theorem integrable_trajectoryHistoryScore_clippedUCB</span>
+<span id="L348">348     {Env : Type u} {K : Nat}</span>
+<span id="L349">349     [MeasurableSpace Env]</span>
+<span id="L350">350     (mu : Measure (Env × ((n : Nat) -&gt; Fin K × Real))) [IsFiniteMeasure mu]</span>
+<span id="L351">351     (l u sigma2 delta : Real) (hlu : l &lt;= u) (t : Nat) :</span>
+<span id="L352">352     Integrable (fun sample =&gt;</span>
+<span id="L353">353       trajectoryHistoryScore</span>
+<span id="L354">354         (clippedUCBHistoryScore l u sigma2 delta) sample t) mu := by</span>
+<span id="L355">355   apply integrable_of_measurable_mem_Icc mu</span>
+<span id="L356">356   · simpa [trajectoryHistoryScore] using</span>
+<span id="L357">357       ((clippedUCBHistoryScore l u sigma2 delta).measurable_atTrace</span>
+<span id="L358">358         environmentTrajectoryAction environmentTrajectoryReward</span>
+<span id="L359">359         measurable_environmentTrajectoryAction_apply</span>
+<span id="L360">360         measurable_environmentTrajectoryReward_apply t)</span>
+<span id="L361">361   · intro sample</span>
+<span id="L362">362     rw [trajectoryHistoryScore, clippedUCBHistoryScore_atTrace]</span>
+<span id="L363">363     exact clippedUCB_mem_Icc l u sigma2 delta hlu</span>
+<span id="L364">364       (environmentTrajectoryAction sample)</span>
+<span id="L365">365       (environmentTrajectoryReward sample)</span>
+<span id="L366">366       (environmentTrajectoryAction sample t) t</span>
+<span id="L367">367 </span>
+<span id="L368">368 theorem integrable_trajectoryBestHistoryScore_clippedUCB</span>
+<span id="L369">369     {Env : Type u} {K : Nat}</span>
+<span id="L370">370     [MeasurableSpace Env]</span>
+<span id="L371">371     (mu : Measure (Env × ((n : Nat) -&gt; Fin K × Real))) [IsFiniteMeasure mu]</span>
+<span id="L372">372     (bestAction : Env -&gt; Fin K) (hbestAction : Measurable bestAction)</span>
+<span id="L373">373     (l u sigma2 delta : Real) (hlu : l &lt;= u) (t : Nat) :</span>
+<span id="L374">374     Integrable (fun sample =&gt;</span>
+<span id="L375">375       trajectoryBestHistoryScore</span>
+<span id="L376">376         (clippedUCBHistoryScore l u sigma2 delta) bestAction sample t) mu := by</span>
+<span id="L377">377   apply integrable_of_measurable_mem_Icc mu</span>
+<span id="L378">378   · simpa [trajectoryBestHistoryScore] using</span>
+<span id="L379">379       ((clippedUCBHistoryScore l u sigma2 delta).measurable_atBestTrace</span>
+<span id="L380">380         (bestAction ∘ Prod.fst) (hbestAction.comp measurable_fst)</span>
+<span id="L381">381         environmentTrajectoryAction environmentTrajectoryReward</span>
+<span id="L382">382         measurable_environmentTrajectoryAction_apply</span>
+<span id="L383">383         measurable_environmentTrajectoryReward_apply t)</span>
+<span id="L384">384   · intro sample</span>
+<span id="L385">385     rw [trajectoryBestHistoryScore, clippedUCBHistoryScore_atBestTrace]</span>
+<span id="L386">386     exact clippedUCB_mem_Icc l u sigma2 delta hlu</span>
+<span id="L387">387       (environmentTrajectoryAction sample)</span>
+<span id="L388">388       (environmentTrajectoryReward sample)</span>
+<span id="L389">389       (bestAction sample.1) t</span>
+<span id="L390">390 </span>
+<span id="L391">391 theorem integrable_trajectoryMean_bestAction</span>
+<span id="L392">392     {Env : Type u} {K : Nat}</span>
+<span id="L393">393     [MeasurableSpace Env]</span>
+<span id="L394">394     (mu : Measure (Env × ((n : Nat) -&gt; Fin K × Real))) [IsFiniteMeasure mu]</span>
+<span id="L395">395     (mean : Env -&gt; Fin K -&gt; Real)</span>
+<span id="L396">396     (hmean : Measurable (fun pair : Env × Fin K =&gt; mean pair.1 pair.2))</span>
+<span id="L397">397     (hmeanMem : forall env arm, mean env arm ∈ Set.Icc l u)</span>
+<span id="L398">398     (bestAction : Env -&gt; Fin K) (hbestAction : Measurable bestAction) :</span>
+<span id="L399">399     Integrable (fun sample : Env × ((n : Nat) -&gt; Fin K × Real) =&gt;</span>
+<span id="L400">400       mean sample.1 (bestAction sample.1)) mu := by</span>
+<span id="L401">401   apply integrable_of_measurable_mem_Icc mu</span>
+<span id="L402">402   · exact hmean.comp</span>
+<span id="L403">403       (measurable_fst.prodMk (hbestAction.comp measurable_fst))</span>
+<span id="L404">404   · intro sample</span>
+<span id="L405">405     exact hmeanMem sample.1 (bestAction sample.1)</span>
+<span id="L406">406 </span>
+<span id="L407">407 theorem integrable_trajectoryMean_action</span>
+<span id="L408">408     {Env : Type u} {K : Nat}</span>
+<span id="L409">409     [MeasurableSpace Env]</span>
+<span id="L410">410     (mu : Measure (Env × ((n : Nat) -&gt; Fin K × Real))) [IsFiniteMeasure mu]</span>
+<span id="L411">411     (mean : Env -&gt; Fin K -&gt; Real)</span>
+<span id="L412">412     (hmean : Measurable (fun pair : Env × Fin K =&gt; mean pair.1 pair.2))</span>
+<span id="L413">413     (hmeanMem : forall env arm, mean env arm ∈ Set.Icc l u)</span>
+<span id="L414">414     (t : Nat) :</span>
+<span id="L415">415     Integrable (fun sample : Env × ((n : Nat) -&gt; Fin K × Real) =&gt;</span>
+<span id="L416">416       mean sample.1 (environmentTrajectoryAction sample t)) mu := by</span>
+<span id="L417">417   apply integrable_of_measurable_mem_Icc mu</span>
+<span id="L418">418   · exact hmean.comp</span>
+<span id="L419">419       (measurable_fst.prodMk (measurable_environmentTrajectoryAction_apply t))</span>
+<span id="L420">420   · intro sample</span>
+<span id="L421">421     exact hmeanMem sample.1 (environmentTrajectoryAction sample t)</span>
+<span id="L422">422 </span>
+<span id="L423">423 /--</span>
+<span id="L424">424 Concrete clipped-UCB specialization of the actual-trajectory Thompson</span>
+<span id="L425">425 Bayesian-regret decomposition.  Range and measurability assumptions discharge</span>
+<span id="L426">426 all four integrability families from `integral_trajectoryBayesMeanRegret_eq_add_historyScore`.</span>
+<span id="L427">427 -/</span>
+<span id="L428">428 theorem integral_trajectoryBayesMeanRegret_eq_add_clippedUCB</span>
+<span id="L429">429     {Env : Type u} {K : Nat}</span>
+<span id="L430">430     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L431">431     [Nonempty (Fin K)]</span>
+<span id="L432">432     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L433">433     (environment : MeasurableHistoryEnvironment Env (Fin K) Real)</span>
+<span id="L434">434     (bestAction : Env -&gt; Fin K) (hbestAction : Measurable bestAction)</span>
+<span id="L435">435     (mean : Env -&gt; Fin K -&gt; Real)</span>
+<span id="L436">436     (hmean : Measurable (fun pair : Env × Fin K =&gt; mean pair.1 pair.2))</span>
+<span id="L437">437     (l u sigma2 delta : Real) (hlu : l &lt;= u)</span>
+<span id="L438">438     (hmeanMem : forall env arm, mean env arm ∈ Set.Icc l u)</span>
+<span id="L439">439     (horizon : Nat) :</span>
+<span id="L440">440     let algorithm :=</span>
+<span id="L441">441       uniformReferenceThompsonAlgorithm prior environment bestAction hbestAction</span>
+<span id="L442">442     let actualMeasure :=</span>
+<span id="L443">443       prior ⊗ₘ canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment</span>
+<span id="L444">444     integral actualMeasure (fun sample =&gt;</span>
+<span id="L445">445         trajectoryBayesMeanRegret mean bestAction sample horizon) =</span>
+<span id="L446">446       integral actualMeasure (fun sample =&gt;</span>
+<span id="L447">447         ∑ t ∈ range horizon,</span>
+<span id="L448">448           (mean sample.1 (bestAction sample.1) -</span>
+<span id="L449">449             clippedUCB l u sigma2 delta</span>
+<span id="L450">450               (environmentTrajectoryAction sample)</span>
+<span id="L451">451               (environmentTrajectoryReward sample)</span>
+<span id="L452">452               (bestAction sample.1) t)) +</span>
+<span id="L453">453       integral actualMeasure (fun sample =&gt;</span>
+<span id="L454">454         ∑ t ∈ range horizon,</span>
+<span id="L455">455           (clippedUCB l u sigma2 delta</span>
+<span id="L456">456               (environmentTrajectoryAction sample)</span>
+<span id="L457">457               (environmentTrajectoryReward sample)</span>
+<span id="L458">458               (environmentTrajectoryAction sample t) t -</span>
+<span id="L459">459             mean sample.1 (environmentTrajectoryAction sample t))) := by</span>
+<span id="L460">460   dsimp only</span>
+<span id="L461">461   let algorithm :=</span>
+<span id="L462">462     uniformReferenceThompsonAlgorithm prior environment bestAction hbestAction</span>
+<span id="L463">463   let actualMeasure :=</span>
+<span id="L464">464     prior ⊗ₘ canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment</span>
+<span id="L465">465   have hmeanBest : Integrable (fun sample :</span>
+<span id="L466">466       Env × ((n : Nat) -&gt; Fin K × Real) =&gt;</span>
+<span id="L467">467         mean sample.1 (bestAction sample.1)) actualMeasure :=</span>
+<span id="L468">468     integrable_trajectoryMean_bestAction actualMeasure mean hmean hmeanMem</span>
+<span id="L469">469       bestAction hbestAction</span>
+<span id="L470">470   have hmeanAction : forall t : Nat, t &lt; horizon -&gt; Integrable (fun sample :</span>
+<span id="L471">471       Env × ((n : Nat) -&gt; Fin K × Real) =&gt;</span>
+<span id="L472">472         mean sample.1 (environmentTrajectoryAction sample t)) actualMeasure :=</span>
+<span id="L473">473     fun t _ =&gt; integrable_trajectoryMean_action</span>
+<span id="L474">474       actualMeasure mean hmean hmeanMem t</span>
+<span id="L475">475   have hscoreAction : forall t : Nat, t &lt; horizon -&gt; Integrable (fun sample :</span>
+<span id="L476">476       Env × ((n : Nat) -&gt; Fin K × Real) =&gt;</span>
+<span id="L477">477         trajectoryHistoryScore</span>
+<span id="L478">478           (clippedUCBHistoryScore l u sigma2 delta) sample t) actualMeasure :=</span>
+<span id="L479">479     fun t _ =&gt; integrable_trajectoryHistoryScore_clippedUCB</span>
+<span id="L480">480       actualMeasure l u sigma2 delta hlu t</span>
+<span id="L481">481   have hscoreBest : forall t : Nat, t &lt; horizon -&gt; Integrable (fun sample :</span>
+<span id="L482">482       Env × ((n : Nat) -&gt; Fin K × Real) =&gt;</span>
+<span id="L483">483         trajectoryBestHistoryScore</span>
+<span id="L484">484           (clippedUCBHistoryScore l u sigma2 delta)</span>
+<span id="L485">485           bestAction sample t) actualMeasure :=</span>
+<span id="L486">486     fun t _ =&gt; integrable_trajectoryBestHistoryScore_clippedUCB</span>
+<span id="L487">487       actualMeasure bestAction hbestAction l u sigma2 delta hlu t</span>
+<span id="L488">488   simpa only [actualMeasure, algorithm,</span>
+<span id="L489">489     trajectoryHistoryScore, trajectoryBestHistoryScore,</span>
+<span id="L490">490     clippedUCBHistoryScore_atTrace,</span>
+<span id="L491">491     clippedUCBHistoryScore_atBestTrace] using</span>
+<span id="L492">492     (integral_trajectoryBayesMeanRegret_eq_add_historyScore</span>
+<span id="L493">493       prior environment bestAction hbestAction mean</span>
+<span id="L494">494       (clippedUCBHistoryScore l u sigma2 delta) horizon</span>
+<span id="L495">495       hmeanBest hmeanAction hscoreAction hscoreBest)</span>
+<span id="L496">496 </span>
+<span id="L497">497 end Thompson</span>
+<span id="L498">498 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

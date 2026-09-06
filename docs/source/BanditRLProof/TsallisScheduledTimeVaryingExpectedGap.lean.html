@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/TsallisScheduledTimeVaryingExpectedGap.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/TsallisScheduledTimeVaryingExpectedGap.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/TsallisScheduledTimeVaryingExpectedGap.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/TsallisScheduledTimeVaryingExpectedGap.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.TsallisScheduledConditionalMeanGap</span>
+<span id="L2">2 import BanditRLProof.TsallisFiniteArmIIDCorruptedRewardLaw</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Time-varying expected-gap laws for scheduled half-Tsallis FTRL</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module lets the conditional or independent mean loss gap vary with the</span>
+<span id="L8">8 round.  It is the law surface needed by deterministic predictable corruption</span>
+<span id="L9">9 schedules: the baseline stochastic gap remains fixed, while clipping a</span>
+<span id="L10">10 round-dependent reward shift perturbs the actual gap by a known per-round</span>
+<span id="L11">11 amount.</span>
+<span id="L12">12 -/</span>
+<span id="L13">13 </span>
+<span id="L14">14 namespace BanditRLProof</span>
+<span id="L15">15 namespace Tsallis</span>
+<span id="L16">16 </span>
+<span id="L17">17 open MeasureTheory ProbabilityTheory</span>
+<span id="L18">18 </span>
+<span id="L19">19 universe u v</span>
+<span id="L20">20 </span>
+<span id="L21">21 /-- Per-time first-moment law for probability-weighted predictable loss gaps. -/</span>
+<span id="L22">22 def HasScheduledTimeVaryingExpectedGapLaw</span>
+<span id="L23">23     {Env : Type u} {Action : Type v}</span>
+<span id="L24">24     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L25">25     (mu : Measure (Env × ((k : Nat) -&gt; Action × Real)))</span>
+<span id="L26">26     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L27">27     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L28">28     (best : Action) (gap : Nat -&gt; Action -&gt; Real) (horizon : Nat) : Prop :=</span>
+<span id="L29">29   ∀ t, t &lt;= horizon -&gt; ∀ action, action ∈ arms.erase best -&gt;</span>
+<span id="L30">30     integral mu (fun sample =&gt;</span>
+<span id="L31">31         sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L32">32             arms harms eta t sample action *</span>
+<span id="L33">33           (Exp3.predictableLossAt loss t sample action -</span>
+<span id="L34">34             Exp3.predictableLossAt loss t sample best)) =</span>
+<span id="L35">35       gap t action * sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L36">36         mu arms harms eta t action</span>
+<span id="L37">37 </span>
+<span id="L38">38 /-- Per-time conditional mean law relative to the information available</span>
+<span id="L39">39 before the scheduled action. -/</span>
+<span id="L40">40 def HasScheduledTimeVaryingConditionalMeanGapLaw</span>
+<span id="L41">41     {Env : Type u} {Action : Type v}</span>
+<span id="L42">42     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L43">43     (mu : Measure (Env × ((k : Nat) -&gt; Action × Real)))</span>
+<span id="L44">44     (arms : Finset Action) (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L45">45     (best : Action) (gap : Nat -&gt; Action -&gt; Real) (horizon : Nat) : Prop :=</span>
+<span id="L46">46   ∀ t, t &lt;= horizon -&gt; ∀ action, action ∈ arms.erase best -&gt;</span>
+<span id="L47">47     condExp</span>
+<span id="L48">48         (sampledScheduledHalfTsallisPastSigma</span>
+<span id="L49">49           (Env := Env) (Action := Action) t)</span>
+<span id="L50">50         mu</span>
+<span id="L51">51         (fun sample =&gt;</span>
+<span id="L52">52           Exp3.predictableLossAt loss t sample action -</span>
+<span id="L53">53             Exp3.predictableLossAt loss t sample best) =ᵐ[mu]</span>
+<span id="L54">54       fun _sample =&gt; gap t action</span>
+<span id="L55">55 </span>
+<span id="L56">56 /-- Per-time independence and global-mean law for predictable loss gaps. -/</span>
+<span id="L57">57 def HasScheduledTimeVaryingIndependentMeanGapLaw</span>
+<span id="L58">58     {Env : Type u} {Action : Type v}</span>
+<span id="L59">59     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L60">60     (mu : Measure (Env × ((k : Nat) -&gt; Action × Real)))</span>
+<span id="L61">61     (arms : Finset Action) (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L62">62     (best : Action) (gap : Nat -&gt; Action -&gt; Real) (horizon : Nat) : Prop :=</span>
+<span id="L63">63   ∀ t, t &lt;= horizon -&gt; ∀ action, action ∈ arms.erase best -&gt;</span>
+<span id="L64">64     let lossDiff := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L65">65       Exp3.predictableLossAt loss t sample action -</span>
+<span id="L66">66         Exp3.predictableLossAt loss t sample best</span>
+<span id="L67">67     Indep (MeasurableSpace.comap lossDiff inferInstance)</span>
+<span id="L68">68         (sampledScheduledHalfTsallisPastSigma</span>
+<span id="L69">69           (Env := Env) (Action := Action) t) mu ∧</span>
+<span id="L70">70       integral mu lossDiff = gap t action</span>
+<span id="L71">71 </span>
+<span id="L72">72 /-- Independence from the scheduled past identifies each time-varying</span>
+<span id="L73">73 conditional mean. -/</span>
+<span id="L74">74 theorem hasScheduledTimeVaryingConditionalMeanGapLaw_of_independentMeanGapLaw</span>
+<span id="L75">75     {Env : Type u} {Action : Type v}</span>
+<span id="L76">76     [mEnv : MeasurableSpace Env]</span>
+<span id="L77">77     [mAction : MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L78">78     (mu : Measure (Env × ((k : Nat) -&gt; Action × Real)))</span>
+<span id="L79">79     [IsProbabilityMeasure mu]</span>
+<span id="L80">80     (arms : Finset Action) (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L81">81     (best : Action) (gap : Nat -&gt; Action -&gt; Real) (horizon : Nat)</span>
+<span id="L82">82     (hgap : HasScheduledTimeVaryingIndependentMeanGapLaw</span>
+<span id="L83">83       mu arms loss best gap horizon) :</span>
+<span id="L84">84     HasScheduledTimeVaryingConditionalMeanGapLaw</span>
+<span id="L85">85       mu arms loss best gap horizon := by</span>
+<span id="L86">86   intro t ht action haction</span>
+<span id="L87">87   let lossDiff := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L88">88     Exp3.predictableLossAt loss t sample action -</span>
+<span id="L89">89       Exp3.predictableLossAt loss t sample best</span>
+<span id="L90">90   let mLoss : MeasurableSpace (Env × ((k : Nat) -&gt; Action × Real)) :=</span>
+<span id="L91">91     MeasurableSpace.comap lossDiff inferInstance</span>
+<span id="L92">92   let mPast : MeasurableSpace (Env × ((k : Nat) -&gt; Action × Real)) :=</span>
+<span id="L93">93     sampledScheduledHalfTsallisPastSigma</span>
+<span id="L94">94       (Env := Env) (Action := Action) t</span>
+<span id="L95">95   have hmeasLoss : @Measurable</span>
+<span id="L96">96       (Env × ((k : Nat) -&gt; Action × Real)) Real</span>
+<span id="L97">97       Prod.instMeasurableSpace inferInstance lossDiff := by</span>
+<span id="L98">98     simpa only [lossDiff] using</span>
+<span id="L99">99       (Exp3.measurable_predictableLossAt loss t action).sub</span>
+<span id="L100">100         (Exp3.measurable_predictableLossAt loss t best)</span>
+<span id="L101">101   have hleLoss : mLoss &lt;=</span>
+<span id="L102">102       (Prod.instMeasurableSpace : MeasurableSpace</span>
+<span id="L103">103         (Env × ((k : Nat) -&gt; Action × Real))) :=</span>
+<span id="L104">104     Measurable.comap_le hmeasLoss</span>
+<span id="L105">105   have hlePast : mPast &lt;=</span>
+<span id="L106">106       (Prod.instMeasurableSpace : MeasurableSpace</span>
+<span id="L107">107         (Env × ((k : Nat) -&gt; Action × Real))) := by</span>
+<span id="L108">108     exact sampledScheduledHalfTsallisPastSigma_le t</span>
+<span id="L109">109   have hstrongLoss : @StronglyMeasurable</span>
+<span id="L110">110       (Env × ((k : Nat) -&gt; Action × Real)) Real _ mLoss lossDiff :=</span>
+<span id="L111">111     (comap_measurable lossDiff).stronglyMeasurable</span>
+<span id="L112">112   rcases hgap t ht action haction with ⟨hindep, hmean⟩</span>
+<span id="L113">113   have hcond :=</span>
+<span id="L114">114     @MeasureTheory.condExp_indep_eq</span>
+<span id="L115">115       (Env × ((k : Nat) -&gt; Action × Real)) Real _ _ _</span>
+<span id="L116">116       mLoss mPast Prod.instMeasurableSpace mu lossDiff</span>
+<span id="L117">117       hleLoss hlePast inferInstance hstrongLoss hindep</span>
+<span id="L118">118   change condExp mPast mu lossDiff =ᵐ[mu] fun _sample =&gt; gap t action</span>
+<span id="L119">119   exact hcond.mono (fun _sample hsample =&gt; by rw [hsample, hmean])</span>
+<span id="L120">120 </span>
+<span id="L121">121 /-- A time-varying conditional mean law yields the corresponding weighted</span>
+<span id="L122">122 expected-gap law by pulling the scheduled probability through `condExp`. -/</span>
+<span id="L123">123 theorem hasScheduledTimeVaryingExpectedGapLaw_of_conditionalMeanGapLaw</span>
+<span id="L124">124     {Env : Type u} {Action : Type v}</span>
+<span id="L125">125     [MeasurableSpace Env]</span>
+<span id="L126">126     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L127">127     [DecidableEq Action]</span>
+<span id="L128">128     (mu : Measure (Env × ((k : Nat) -&gt; Action × Real)))</span>
+<span id="L129">129     [IsProbabilityMeasure mu]</span>
+<span id="L130">130     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L131">131     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L132">132     (best : Action) (gap : Nat -&gt; Action -&gt; Real) (horizon : Nat)</span>
+<span id="L133">133     (hgap : HasScheduledTimeVaryingConditionalMeanGapLaw</span>
+<span id="L134">134       mu arms loss best gap horizon) :</span>
+<span id="L135">135     HasScheduledTimeVaryingExpectedGapLaw</span>
+<span id="L136">136       mu arms harms eta loss best gap horizon := by</span>
+<span id="L137">137   intro t ht action hactionErase</span>
+<span id="L138">138   have haction : action ∈ arms := Finset.mem_of_mem_erase hactionErase</span>
+<span id="L139">139   let probability := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L140">140     sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L141">141       arms harms eta t sample action</span>
+<span id="L142">142   let lossDiff := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L143">143     Exp3.predictableLossAt loss t sample action -</span>
+<span id="L144">144       Exp3.predictableLossAt loss t sample best</span>
+<span id="L145">145   have hm := sampledScheduledHalfTsallisPastSigma_le</span>
+<span id="L146">146     (Env := Env) (Action := Action) t</span>
+<span id="L147">147   have hprobability : StronglyMeasurable[</span>
+<span id="L148">148       sampledScheduledHalfTsallisPastSigma</span>
+<span id="L149">149         (Env := Env) (Action := Action) t] probability :=</span>
+<span id="L150">150     (measurable_sampledScheduledHalfTsallisProbabilityAtTime_pastSigma</span>
+<span id="L151">151       arms harms eta t action haction).stronglyMeasurable</span>
+<span id="L152">152   have hlossDiff : Integrable lossDiff mu :=</span>
+<span id="L153">153     (Exp3.integrable_predictableLossAt mu loss t action).sub</span>
+<span id="L154">154       (Exp3.integrable_predictableLossAt mu loss t best)</span>
+<span id="L155">155   have hproduct : Integrable (probability * lossDiff) mu := by</span>
+<span id="L156">156     simpa only [probability, lossDiff] using</span>
+<span id="L157">157       integrable_sampledScheduledHalfTsallisProbability_mul_predictableLossDiffAt</span>
+<span id="L158">158         mu arms harms eta loss best action haction t</span>
+<span id="L159">159   have hpull :</span>
+<span id="L160">160       condExp</span>
+<span id="L161">161           (sampledScheduledHalfTsallisPastSigma</span>
+<span id="L162">162             (Env := Env) (Action := Action) t)</span>
+<span id="L163">163           mu (probability * lossDiff) =ᵐ[mu]</span>
+<span id="L164">164         probability * condExp</span>
+<span id="L165">165           (sampledScheduledHalfTsallisPastSigma</span>
+<span id="L166">166             (Env := Env) (Action := Action) t)</span>
+<span id="L167">167           mu lossDiff :=</span>
+<span id="L168">168     condExp_mul_of_stronglyMeasurable_left</span>
+<span id="L169">169       hprobability hproduct hlossDiff</span>
+<span id="L170">170   have hconditional :</span>
+<span id="L171">171       condExp</span>
+<span id="L172">172           (sampledScheduledHalfTsallisPastSigma</span>
+<span id="L173">173             (Env := Env) (Action := Action) t)</span>
+<span id="L174">174           mu lossDiff =ᵐ[mu] fun _sample =&gt; gap t action := by</span>
+<span id="L175">175     simpa only [lossDiff] using hgap t ht action hactionErase</span>
+<span id="L176">176   change integral mu (probability * lossDiff) =</span>
+<span id="L177">177     gap t action * sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L178">178       mu arms harms eta t action</span>
+<span id="L179">179   calc</span>
+<span id="L180">180     integral mu (probability * lossDiff) =</span>
+<span id="L181">181         integral mu (condExp</span>
+<span id="L182">182           (sampledScheduledHalfTsallisPastSigma</span>
+<span id="L183">183             (Env := Env) (Action := Action) t)</span>
+<span id="L184">184           mu (probability * lossDiff)) := by</span>
+<span id="L185">185       symm</span>
+<span id="L186">186       exact integral_condExp hm</span>
+<span id="L187">187     _ = integral mu (probability * condExp</span>
+<span id="L188">188         (sampledScheduledHalfTsallisPastSigma</span>
+<span id="L189">189           (Env := Env) (Action := Action) t)</span>
+<span id="L190">190         mu lossDiff) := integral_congr_ae hpull</span>
+<span id="L191">191     _ = integral mu (fun sample =&gt; probability sample * gap t action) :=</span>
+<span id="L192">192       integral_congr_ae ((Filter.EventuallyEq.refl _ probability).mul hconditional)</span>
+<span id="L193">193     _ = gap t action * integral mu probability := by</span>
+<span id="L194">194       rw [integral_mul_const]</span>
+<span id="L195">195       exact mul_comm _ _</span>
+<span id="L196">196     _ = gap t action * sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L197">197         mu arms harms eta t action := rfl</span>
+<span id="L198">198 </span>
+<span id="L199">199 /-- The independent time-varying mean contract directly feeds the weighted</span>
+<span id="L200">200 expected-gap law. -/</span>
+<span id="L201">201 theorem hasScheduledTimeVaryingExpectedGapLaw_of_independentMeanGapLaw</span>
+<span id="L202">202     {Env : Type u} {Action : Type v}</span>
+<span id="L203">203     [MeasurableSpace Env]</span>
+<span id="L204">204     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L205">205     [DecidableEq Action]</span>
+<span id="L206">206     (mu : Measure (Env × ((k : Nat) -&gt; Action × Real)))</span>
+<span id="L207">207     [IsProbabilityMeasure mu]</span>
+<span id="L208">208     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L209">209     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L210">210     (best : Action) (gap : Nat -&gt; Action -&gt; Real) (horizon : Nat)</span>
+<span id="L211">211     (hgap : HasScheduledTimeVaryingIndependentMeanGapLaw</span>
+<span id="L212">212       mu arms loss best gap horizon) :</span>
+<span id="L213">213     HasScheduledTimeVaryingExpectedGapLaw</span>
+<span id="L214">214       mu arms harms eta loss best gap horizon :=</span>
+<span id="L215">215   hasScheduledTimeVaryingExpectedGapLaw_of_conditionalMeanGapLaw</span>
+<span id="L216">216     mu arms harms eta loss best gap horizon</span>
+<span id="L217">217       (hasScheduledTimeVaryingConditionalMeanGapLaw_of_independentMeanGapLaw</span>
+<span id="L218">218         mu arms loss best gap horizon hgap)</span>
+<span id="L219">219 </span>
+<span id="L220">220 /-- A time-varying expected-gap law identifies integrated regret with the</span>
+<span id="L221">221 time-by-arm actual gap mass. -/</span>
+<span id="L222">222 theorem integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_eq_suboptimalTimeVaryingExpectedGapMass</span>
+<span id="L223">223     {Env : Type u} {Action : Type v}</span>
+<span id="L224">224     [MeasurableSpace Env]</span>
+<span id="L225">225     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L226">226     [DecidableEq Action]</span>
+<span id="L227">227     (mu : Measure (Env × ((k : Nat) -&gt; Action × Real)))</span>
+<span id="L228">228     [IsProbabilityMeasure mu]</span>
+<span id="L229">229     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L230">230     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L231">231     {best : Action} (hbest : best ∈ arms)</span>
+<span id="L232">232     (gap : Nat -&gt; Action -&gt; Real) (horizon : Nat)</span>
+<span id="L233">233     (hgapLaw : HasScheduledTimeVaryingExpectedGapLaw</span>
+<span id="L234">234       mu arms harms eta loss best gap horizon) :</span>
+<span id="L235">235     integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L236">236         arms harms eta loss (pointMass best) horizon) =</span>
+<span id="L237">237       (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L238">238         (arms.erase best).sum (fun action =&gt;</span>
+<span id="L239">239           gap t action * sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L240">240             mu arms harms eta t action)) := by</span>
+<span id="L241">241   rw [integral_congr_ae (Filter.Eventually.of_forall fun sample =&gt;</span>
+<span id="L242">242     sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_eq_weightedLossGapMass</span>
+<span id="L243">243       arms harms eta loss hbest horizon sample)]</span>
+<span id="L244">244   rw [ExpectationBochnerSums.integral_finset_sum mu</span>
+<span id="L245">245     (Finset.range (horizon + 1))]</span>
+<span id="L246">246   · apply Finset.sum_congr rfl</span>
+<span id="L247">247     intro t ht</span>
+<span id="L248">248     rw [ExpectationBochnerSums.integral_finset_sum mu (arms.erase best)]</span>
+<span id="L249">249     · apply Finset.sum_congr rfl</span>
+<span id="L250">250       intro action haction</span>
+<span id="L251">251       exact hgapLaw t (Nat.lt_succ_iff.mp (Finset.mem_range.mp ht))</span>
+<span id="L252">252         action haction</span>
+<span id="L253">253     · intro action haction</span>
+<span id="L254">254       exact</span>
+<span id="L255">255         integrable_sampledScheduledHalfTsallisProbability_mul_predictableLossDiffAt</span>
+<span id="L256">256           mu arms harms eta loss best action</span>
+<span id="L257">257             (Finset.mem_of_mem_erase haction) t</span>
+<span id="L258">258   · intro t _ht</span>
+<span id="L259">259     exact IntegrabilitySums.integrable_finset_sum mu (arms.erase best)</span>
+<span id="L260">260       (fun action sample =&gt;</span>
+<span id="L261">261         sampledScheduledHalfTsallisProbabilityAtTime</span>
+<span id="L262">262             arms harms eta t sample action *</span>
+<span id="L263">263           (Exp3.predictableLossAt loss t sample action -</span>
+<span id="L264">264             Exp3.predictableLossAt loss t sample best))</span>
+<span id="L265">265       (fun action haction =&gt;</span>
+<span id="L266">266         integrable_sampledScheduledHalfTsallisProbability_mul_predictableLossDiffAt</span>
+<span id="L267">267           mu arms harms eta loss best action</span>
+<span id="L268">268             (Finset.mem_of_mem_erase haction) t)</span>
+<span id="L269">269 </span>
+<span id="L270">270 /-- Accumulated coordinatewise deviation from fixed baseline gaps. -/</span>
+<span id="L271">271 noncomputable def scheduledTimeVaryingGapDeviationBudget</span>
+<span id="L272">272     {Action : Type*} [DecidableEq Action]</span>
+<span id="L273">273     (arms : Finset Action) (best : Action) (horizon : Nat)</span>
+<span id="L274">274     (deviation : Nat -&gt; Action -&gt; Real) : Real :=</span>
+<span id="L275">275   (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L276">276     (arms.erase best).sum (deviation t))</span>
+<span id="L277">277 </span>
+<span id="L278">278 /-- A time-varying actual-gap law within a known coordinatewise distance of</span>
+<span id="L279">279 fixed baseline gaps yields the self-bound consumed by schedule tuning. -/</span>
+<span id="L280">280 theorem integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_hasSelfBounding_of_timeVaryingPerturbedExpectedGapLaw</span>
+<span id="L281">281     {Env Action : Type*}</span>
+<span id="L282">282     [MeasurableSpace Env] [MeasurableSpace Action]</span>
+<span id="L283">283     [MeasurableSingletonClass Action] [DecidableEq Action]</span>
+<span id="L284">284     (mu : Measure (Env × ((k : Nat) -&gt; Action × Real)))</span>
+<span id="L285">285     [IsProbabilityMeasure mu]</span>
+<span id="L286">286     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L287">287     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L288">288     {best : Action} (hbest : best ∈ arms) (horizon : Nat)</span>
+<span id="L289">289     (baseGap : Action -&gt; Real) (actualGap deviation : Nat -&gt; Action -&gt; Real)</span>
+<span id="L290">290     (hactualGapLaw : HasScheduledTimeVaryingExpectedGapLaw</span>
+<span id="L291">291       mu arms harms eta loss best actualGap horizon)</span>
+<span id="L292">292     (hdeviation : ∀ t, t &lt;= horizon -&gt; ∀ action,</span>
+<span id="L293">293       action ∈ arms.erase best -&gt;</span>
+<span id="L294">294         |actualGap t action - baseGap action| &lt;= deviation t action) :</span>
+<span id="L295">295     (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L296">296         (arms.erase best).sum (fun action =&gt;</span>
+<span id="L297">297           baseGap action * sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L298">298             mu arms harms eta t action)) -</span>
+<span id="L299">299       scheduledTimeVaryingGapDeviationBudget</span>
+<span id="L300">300         arms best horizon deviation &lt;=</span>
+<span id="L301">301         integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L302">302           arms harms eta loss (pointMass best) horizon) := by</span>
+<span id="L303">303   have hregret :=</span>
+<span id="L304">304     integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_eq_suboptimalTimeVaryingExpectedGapMass</span>
+<span id="L305">305       mu arms harms eta loss hbest actualGap horizon hactualGapLaw</span>
+<span id="L306">306   have hbaseLe :</span>
+<span id="L307">307       (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L308">308           (arms.erase best).sum (fun action =&gt;</span>
+<span id="L309">309             baseGap action * sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L310">310               mu arms harms eta t action)) &lt;=</span>
+<span id="L311">311         (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L312">312           (arms.erase best).sum (fun action =&gt;</span>
+<span id="L313">313             actualGap t action *</span>
+<span id="L314">314                 sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L315">315                   mu arms harms eta t action +</span>
+<span id="L316">316               deviation t action)) := by</span>
+<span id="L317">317     apply Finset.sum_le_sum</span>
+<span id="L318">318     intro t ht</span>
+<span id="L319">319     have ht&#x27; : t &lt;= horizon :=</span>
+<span id="L320">320       Nat.lt_succ_iff.mp (Finset.mem_range.mp ht)</span>
+<span id="L321">321     apply Finset.sum_le_sum</span>
+<span id="L322">322     intro action haction</span>
+<span id="L323">323     let probability := sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L324">324       mu arms harms eta t action</span>
+<span id="L325">325     have hsimplex :=</span>
+<span id="L326">326       finiteSimplex_sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L327">327         mu arms harms eta t</span>
+<span id="L328">328     have hp0 : 0 &lt;= probability :=</span>
+<span id="L329">329       hsimplex.1 action (Finset.mem_of_mem_erase haction)</span>
+<span id="L330">330     have hp1 : probability &lt;= 1 :=</span>
+<span id="L331">331       finiteSimplex_apply_le_one hsimplex</span>
+<span id="L332">332         (Finset.mem_of_mem_erase haction)</span>
+<span id="L333">333     have habs : baseGap action - actualGap t action &lt;=</span>
+<span id="L334">334         |actualGap t action - baseGap action| := by</span>
+<span id="L335">335       rw [abs_sub_comm]</span>
+<span id="L336">336       exact le_abs_self _</span>
+<span id="L337">337     have hweighted :</span>
+<span id="L338">338         (baseGap action - actualGap t action) * probability &lt;=</span>
+<span id="L339">339           deviation t action := by</span>
+<span id="L340">340       calc</span>
+<span id="L341">341         (baseGap action - actualGap t action) * probability &lt;=</span>
+<span id="L342">342             |actualGap t action - baseGap action| * probability :=</span>
+<span id="L343">343           mul_le_mul_of_nonneg_right habs hp0</span>
+<span id="L344">344         _ &lt;= |actualGap t action - baseGap action| := by</span>
+<span id="L345">345           simpa using mul_le_of_le_one_right (abs_nonneg _) hp1</span>
+<span id="L346">346         _ &lt;= deviation t action := hdeviation t ht&#x27; action haction</span>
+<span id="L347">347     dsimp only [probability] at hweighted ⊢</span>
+<span id="L348">348     linarith</span>
+<span id="L349">349   have hsplit :</span>
+<span id="L350">350       (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L351">351           (arms.erase best).sum (fun action =&gt;</span>
+<span id="L352">352             actualGap t action *</span>
+<span id="L353">353                 sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L354">354                   mu arms harms eta t action +</span>
+<span id="L355">355               deviation t action)) =</span>
+<span id="L356">356         (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L357">357           (arms.erase best).sum (fun action =&gt;</span>
+<span id="L358">358             actualGap t action *</span>
+<span id="L359">359               sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L360">360                 mu arms harms eta t action)) +</span>
+<span id="L361">361           scheduledTimeVaryingGapDeviationBudget</span>
+<span id="L362">362             arms best horizon deviation := by</span>
+<span id="L363">363     simp only [Finset.sum_add_distrib,</span>
+<span id="L364">364       scheduledTimeVaryingGapDeviationBudget]</span>
+<span id="L365">365   rw [hsplit] at hbaseLe</span>
+<span id="L366">366   rw [hregret]</span>
+<span id="L367">367   linarith</span>
+<span id="L368">368 </span>
+<span id="L369">369 end Tsallis</span>
+<span id="L370">370 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

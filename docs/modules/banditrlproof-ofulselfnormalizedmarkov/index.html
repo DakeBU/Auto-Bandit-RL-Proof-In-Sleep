@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.OFULSelfNormalizedMarkov · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.OFULSelfNormalizedMarkov · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.OFULSelfNormalizedMarkov · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · OFUL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>OFUL<wbr>Self<wbr>Normalized<wbr>Markov</h1>
+  <p class="lede">This module consumes the evaluated Gaussian-mixture lintegral &lt;= 1 and converts it into a probability bound. It then transports the paper-facing inverse-Gram/log-determinant bad event into the Markov threshold event.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/OFULSelfNormalizedMarkov.lean.html"><code>BanditRLProof/OFULSelfNormalizedMarkov.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/oful/index.html">5. OFUL, self-normalized confidence, and stopping times</a></dd></div>
+    <div><dt>Declarations</dt><dd>12</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-ofulgaussianevaluatedmixture/index.html"><code>BanditRLProof.OFULGaussianEvaluatedMixture</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-ofulconfidenceellipsoid/index.html"><code>BanditRLProof.OFULConfidenceEllipsoid</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-ba3db7c82f00">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.constantSquaredVarianceProxy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The common conditional sub-Gaussian variance proxy `R²`.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> constantSquaredVarianceProxy (R : Real) : Nat -&gt; NNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULSelfNormalizedMarkov.lean.html#L20">Source line 20</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-aa3477770858">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.finiteHorizonFeatureGram</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The unweighted finite-horizon feature Gram `sum_{i&lt;n} x_i x_i^T`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteHorizonFeatureGram (feature : Nat -&gt; Omega -&gt; Feature -&gt; Real) (n : Nat) (omega : Omega) : Matrix Feature Feature Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULSelfNormalizedMarkov.lean.html#L24">Source line 24</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-10d0c39a5abf">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.finiteHorizonVarianceGram_constantSquared_eq_smul_featureGram</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">At common proxy `R²`, the variance Gram is `R²` times the unweighted feature
+Gram.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteHorizonVarianceGram_constantSquared_eq_smul_featureGram [Fintype Feature] (R : Real) (hR : <span class="num">0</span> &lt; R) (feature : Nat -&gt; Omega -&gt; Feature -&gt; Real) (n : Nat) (omega : Omega) : finiteHorizonVarianceGram feature (constantSquaredVarianceProxy R) n omega = R ^ <span class="num">2</span> • finiteHorizonFeatureGram feature n omega</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULSelfNormalizedMarkov.lean.html#L33">Source line 33</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-171d06aeebd4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.finiteHorizonFeatureGram_posSemidef</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The unweighted finite-horizon feature Gram is positive semidefinite.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteHorizonFeatureGram_posSemidef [Fintype Feature] (feature : Nat -&gt; Omega -&gt; Feature -&gt; Real) (n : Nat) (omega : Omega) : (finiteHorizonFeatureGram feature n omega).PosSemidef</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULSelfNormalizedMarkov.lean.html#L51">Source line 51</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-75496f73f831">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.sq_smul_posDef</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Positive scalar-square rescaling preserves positive definiteness.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sq_smul_posDef [Fintype Feature] [DecidableEq Feature] (R : Real) (hR : <span class="num">0</span> &lt; R) (V0 : Matrix Feature Feature Real) (hV0 : V0.PosDef) : (R ^ <span class="num">2</span> • V0).PosDef</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULSelfNormalizedMarkov.lean.html#L64">Source line 64</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3f6693a07b40">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.det_sq_smul_div_det_sq_smul</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A common nonzero scalar factor cancels from a determinant ratio.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> det_sq_smul_div_det_sq_smul [Fintype Feature] [DecidableEq Feature] (R : Real) (hR : <span class="num">0</span> &lt; R) (A B : Matrix Feature Feature Real) : Matrix.det (R ^ <span class="num">2</span> • A) / Matrix.det (R ^ <span class="num">2</span> • B) = Matrix.det A / Matrix.det B</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULSelfNormalizedMarkov.lean.html#L77">Source line 77</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4d2294c942ae">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.dotProduct_sq_smul_inv_mulVec</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The inverse quadratic form of a matrix scaled by `R²` is the original
+quadratic form divided by `R²`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> dotProduct_sq_smul_inv_mulVec [Fintype Feature] [DecidableEq Feature] (R : Real) (hR : <span class="num">0</span> &lt; R) (A : Matrix Feature Feature Real) (hA : A.PosDef) (score : EuclideanSpace Real Feature) : score ⬝ᵥ (R ^ <span class="num">2</span> • A)⁻¹.mulVec score = (score ⬝ᵥ A⁻¹.mulVec score) / R ^ <span class="num">2</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULSelfNormalizedMarkov.lean.html#L91">Source line 91</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e821b5287dc6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measure_inv_le_finiteHorizonDetRatioInvGramExponential_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Markov&#x27;s inequality for the evaluated finite-horizon Gaussian-mixture
+surface, with an arbitrary nonzero finite `ENNReal` confidence level.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_inv_le_finiteHorizonDetRatioInvGramExponential_le [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [Fintype Feature] [DecidableEq Feature] [Nonempty Feature] (mu : Measure Omega) [IsProbabilityMeasure mu] (V0 : Matrix Feature Feature Real) (hV0 : V0.PosDef) (F : Filtration Nat mOmega) (feature : Nat -&gt; Omega -&gt; Feature -&gt; Real) (noise : Nat -&gt; Omega -&gt; Real) (varianceProxy : Nat -&gt; NNReal) (projectionBound : EuclideanSpace Real Feature -&gt; Nat -&gt; Real) (hfeature : <span class="kw">forall</span> i j, StronglyMeasurable[F i] (<span class="kw">fun</span> omega =&gt; feature i omega j)) (hnoise : StronglyAdapted F (<span class="kw">fun</span> t omega =&gt; <span class="kw">match</span> t <span class="kw">with</span> | <span class="num">0</span> =&gt; <span class="num">0</span> | i + <span class="num">1</span> =&gt; noise i omega)) (hprojectionBound_nonneg : <span class="kw">forall</span> theta i, <span class="num">0</span> &lt;= projectionBound theta i) (hprojectionBound : <span class="kw">forall</span> theta i omega, |dotProduct (WithLp.ofLp theta) (feature i omega)| &lt;= projectionBound theta i) (n : Nat) (hsubGaussian : <span class="kw">forall</span> i, i &lt; n -&gt; HasCondSubgaussianMGF (F i) (F.le i) (noise i) (varianceProxy i) mu) (delta : ENNReal) (hdelta_zero : delta ≠ <span class="num">0</span>) (hdelta_top : delta ≠ ∞) : mu {omega | delta⁻¹ &lt;= finiteHorizonDetRatioInvGramExponential V0 feature noise varianceProxy n omega} &lt;= delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULSelfNormalizedMarkov.lean.html#L109">Source line 109</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-be7f04977380">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measure_invOfReal_le_finiteHorizonDetRatioInvGramExponential_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Real-confidence specialization of the evaluated-mixture Markov bound.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_invOfReal_le_finiteHorizonDetRatioInvGramExponential_le [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [Fintype Feature] [DecidableEq Feature] [Nonempty Feature] (mu : Measure Omega) [IsProbabilityMeasure mu] (V0 : Matrix Feature Feature Real) (hV0 : V0.PosDef) (F : Filtration Nat mOmega) (feature : Nat -&gt; Omega -&gt; Feature -&gt; Real) (noise : Nat -&gt; Omega -&gt; Real) (varianceProxy : Nat -&gt; NNReal) (projectionBound : EuclideanSpace Real Feature -&gt; Nat -&gt; Real) (hfeature : <span class="kw">forall</span> i j, StronglyMeasurable[F i] (<span class="kw">fun</span> omega =&gt; feature i omega j)) (hnoise : StronglyAdapted F (<span class="kw">fun</span> t omega =&gt; <span class="kw">match</span> t <span class="kw">with</span> | <span class="num">0</span> =&gt; <span class="num">0</span> | i + <span class="num">1</span> =&gt; noise i omega)) (hprojectionBound_nonneg : <span class="kw">forall</span> theta i, <span class="num">0</span> &lt;= projectionBound theta i) (hprojectionBound : <span class="kw">forall</span> theta i omega, |dotProduct (WithLp.ofLp theta) (feature i omega)| &lt;= projectionBound theta i) (n : Nat) (hsubGaussian : <span class="kw">forall</span> i, i &lt; n -&gt; HasCondSubgaussianMGF (F i) (F.le i) (noise i) (varianceProxy i) mu) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) : mu {omega | (ENNReal.ofReal delta)⁻¹ &lt;= finiteHorizonDetRatioInvGramExponential V0 feature noise varianceProxy n omega} &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULSelfNormalizedMarkov.lean.html#L182">Source line 182</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7b03d0ed7631">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.invOfReal_le_gaussianDetRatioExponential_of_invGramQuadratic_gt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The inverse-Gram/log-determinant bad-event inequality implies the evaluated
+Gaussian-mixture Markov threshold, pointwise.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> invOfReal_le_gaussianDetRatioExponential_of_invGramQuadratic_gt [Fintype Feature] [DecidableEq Feature] (V0 G : Matrix Feature Feature Real) (hV0 : V0.PosDef) (hG : G.PosSemidef) (score : EuclideanSpace Real Feature) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hbad : score ⬝ᵥ (V0 + G)⁻¹.mulVec score &gt; <span class="num">2</span> * Real.log (Real.sqrt (Matrix.det (V0 + G) / Matrix.det V0) / delta)) : (ENNReal.ofReal delta)⁻¹ &lt;= ENNReal.ofReal (Real.sqrt (Matrix.det V0 / Matrix.det (V0 + G)) * Real.exp (score ⬝ᵥ (V0 + G)⁻¹.mulVec score / <span class="num">2</span>))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULSelfNormalizedMarkov.lean.html#L225">Source line 225</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a072d866ef29">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measure_finiteHorizon_invGramQuadratic_gt_two_log_detRatio_div_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-horizon inverse-Gram/log-determinant bad-event probability bound for
+the variance-weighted Gram produced by the conditional-MGF route.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_finiteHorizon_invGramQuadratic_gt_two_log_detRatio_div_le [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [Fintype Feature] [DecidableEq Feature] [Nonempty Feature] (mu : Measure Omega) [IsProbabilityMeasure mu] (V0 : Matrix Feature Feature Real) (hV0 : V0.PosDef) (F : Filtration Nat mOmega) (feature : Nat -&gt; Omega -&gt; Feature -&gt; Real) (noise : Nat -&gt; Omega -&gt; Real) (varianceProxy : Nat -&gt; NNReal) (projectionBound : EuclideanSpace Real Feature -&gt; Nat -&gt; Real) (hfeature : <span class="kw">forall</span> i j, StronglyMeasurable[F i] (<span class="kw">fun</span> omega =&gt; feature i omega j)) (hnoise : StronglyAdapted F (<span class="kw">fun</span> t omega =&gt; <span class="kw">match</span> t <span class="kw">with</span> | <span class="num">0</span> =&gt; <span class="num">0</span> | i + <span class="num">1</span> =&gt; noise i omega)) (hprojectionBound_nonneg : <span class="kw">forall</span> theta i, <span class="num">0</span> &lt;= projectionBound theta i) (hprojectionBound : <span class="kw">forall</span> theta i omega, |dotProduct (WithLp.ofLp theta) (feature i omega)| &lt;= projectionBound theta i) (n : Nat) (hsubGaussian : <span class="kw">forall</span> i, i &lt; n -&gt; HasCondSubgaussianMGF (F i) (F.le i) (noise i) (varianceProxy i) mu) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) : mu {omega | (finiteHorizonNoiseScore feature noise n omega) ⬝ᵥ (V0 + finiteHorizonVarianceGram feature varianceProxy n omega)⁻¹.mulVec (finiteHorizonNoiseScore feature noise n omega) &gt; <span class="num">2</span> * Real.log (Real.sqrt (Matrix.det (V0 + finiteHorizonVarianceGram feature varianceProxy n omega) / Matrix.det V0) / delta)} &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULSelfNormalizedMarkov.lean.html#L296">Source line 296</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f0dc224ebe02">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measure_finiteHorizon_selfNormalizedQuadratic_gt_two_mul_sq_mul_log_detRatio_div_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-horizon self-normalized tail bound with the conventional common
+conditional sub-Gaussian scale `R`. The matrix in the reported norm is the
+unweighted feature Gram, while the confidence radius carries the factor `R²`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_finiteHorizon_selfNormalizedQuadratic_gt_two_mul_sq_mul_log_detRatio_div_le [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [Fintype Feature] [DecidableEq Feature] [Nonempty Feature] (mu : Measure Omega) [IsProbabilityMeasure mu] (V0 : Matrix Feature Feature Real) (hV0 : V0.PosDef) (F : Filtration Nat mOmega) (feature : Nat -&gt; Omega -&gt; Feature -&gt; Real) (noise : Nat -&gt; Omega -&gt; Real) (R : Real) (hR : <span class="num">0</span> &lt; R) (projectionBound : EuclideanSpace Real Feature -&gt; Nat -&gt; Real) (hfeature : <span class="kw">forall</span> i j, StronglyMeasurable[F i] (<span class="kw">fun</span> omega =&gt; feature i omega j)) (hnoise : StronglyAdapted F (<span class="kw">fun</span> t omega =&gt; <span class="kw">match</span> t <span class="kw">with</span> | <span class="num">0</span> =&gt; <span class="num">0</span> | i + <span class="num">1</span> =&gt; noise i omega)) (hprojectionBound_nonneg : <span class="kw">forall</span> theta i, <span class="num">0</span> &lt;= projectionBound theta i) (hprojectionBound : <span class="kw">forall</span> theta i omega, |dotProduct (WithLp.ofLp theta) (feature i omega)| &lt;= projectionBound theta i) (n : Nat) (hsubGaussian : <span class="kw">forall</span> i, i &lt; n -&gt; HasCondSubgaussianMGF (F i) (F.le i) (noise i) (constantSquaredVarianceProxy R i) mu) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) : mu {omega | (finiteHorizonNoiseScore feature noise n omega) ⬝ᵥ (V0 + finiteHorizonFeatureGram feature n omega)⁻¹.mulVec (finiteHorizonNoiseScore feature noise n omega) &gt; <span class="num">2</span> * R ^ <span class="num">2</span> * Real.log (Real.sqrt (Matrix.det (V0 + finiteHorizonFeatureGram feature n omega) / Matrix.det V0) / delta)} &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULSelfNormalizedMarkov.lean.html#L380">Source line 380</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeInverseSqrtCalibration.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeInverseSqrtCalibration.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeInverseSqrtCalibration.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeInverseSqrtCalibration.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeCountMartingaleConfidence</span>
+<span id="L2">2 import BanditRLProof.RL.FiniteHorizonExploratoryPathSupportExplicitCalibration</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Adaptive cumulative inverse-square-root calibration</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module calibrates the cumulative count-martingale confidence producer to</span>
+<span id="L8">8 a concrete count-dependent optimistic planner.  Path-support exploration gives</span>
+<span id="L9">9 every adaptive batch a common predictable visit floor.  Outside the compiled</span>
+<span id="L10">10 global count event, the accumulated realized visits exceed that predictable</span>
+<span id="L11">11 floor minus the cumulative confidence radius.</span>
+<span id="L12">12 </span>
+<span id="L13">13 The usable planner radius is `budget` at zero visits and</span>
+<span id="L14">14 `min budget (scale / sqrt(count))` after the first visit.  Separating the</span>
+<span id="L15">15 zero-count value-envelope cap from the inverse-square-root scale avoids the</span>
+<span id="L16">16 uninhabitable one-scale cover.  A deterministic roundwise two-scale calibration</span>
+<span id="L17">17 then supplies both cap and inverse-square-root covers.  The terminal remains</span>
+<span id="L18">18 about recommended-policy expected regret, not behavior or realized regret.</span>
+<span id="L19">19 -/</span>
+<span id="L20">20 </span>
+<span id="L21">21 open MeasureTheory</span>
+<span id="L22">22 open scoped ENNReal ProbabilityTheory</span>
+<span id="L23">23 </span>
+<span id="L24">24 universe u v</span>
+<span id="L25">25 </span>
+<span id="L26">26 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L27">27 </span>
+<span id="L28">28 variable {State : Type u} {Action : Type v}</span>
+<span id="L29">29     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L30">30     [Fintype State] [Fintype Action]</span>
+<span id="L31">31     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L32">32     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L33">33     [Nonempty State] [Nonempty Action]</span>
+<span id="L34">34 </span>
+<span id="L35">35 namespace TransitionCountRadius</span>
+<span id="L36">36 </span>
+<span id="L37">37 /--</span>
+<span id="L38">38 A concrete count radius: the supplied budget at zero visits and inverse-square</span>
+<span id="L39">39 root decay after the first visit.</span>
+<span id="L40">40 -/</span>
+<span id="L41">41 noncomputable def inverseSqrt (budget : Real) (hbudget : 0 &lt;= budget) :</span>
+<span id="L42">42     TransitionCountRadius where</span>
+<span id="L43">43   radius count := if count = 0 then budget else budget / Real.sqrt count</span>
+<span id="L44">44   nonneg count := by</span>
+<span id="L45">45     split_ifs</span>
+<span id="L46">46     · exact hbudget</span>
+<span id="L47">47     · exact div_nonneg hbudget (Real.sqrt_nonneg _)</span>
+<span id="L48">48   antitone := by</span>
+<span id="L49">49     intro left right hle</span>
+<span id="L50">50     by_cases hleft : left = 0</span>
+<span id="L51">51     · subst left</span>
+<span id="L52">52       by_cases hright : right = 0</span>
+<span id="L53">53       · simp [hright]</span>
+<span id="L54">54       · have hrightOne : (1 : Real) &lt;= right := by</span>
+<span id="L55">55           exact_mod_cast (Nat.one_le_iff_ne_zero.mpr hright)</span>
+<span id="L56">56         have hsqrtOne : (1 : Real) &lt;= Real.sqrt right :=</span>
+<span id="L57">57           Real.one_le_sqrt.mpr hrightOne</span>
+<span id="L58">58         simp only [if_neg hright]</span>
+<span id="L59">59         exact div_le_self hbudget hsqrtOne</span>
+<span id="L60">60     · have hright : right ≠ 0 := by omega</span>
+<span id="L61">61       have hleftPos : (0 : Real) &lt; left := by</span>
+<span id="L62">62         exact_mod_cast (Nat.pos_of_ne_zero hleft)</span>
+<span id="L63">63       have hsqrtLeftPos : 0 &lt; Real.sqrt (left : Real) :=</span>
+<span id="L64">64         Real.sqrt_pos.2 hleftPos</span>
+<span id="L65">65       have hsqrtLe : Real.sqrt (left : Real) &lt;= Real.sqrt (right : Real) :=</span>
+<span id="L66">66         Real.sqrt_le_sqrt (by exact_mod_cast hle)</span>
+<span id="L67">67       simp only [if_neg hleft, if_neg hright]</span>
+<span id="L68">68       exact div_le_div_of_nonneg_left hbudget hsqrtLeftPos hsqrtLe</span>
+<span id="L69">69 </span>
+<span id="L70">70 /-- The inverse-square-root radius exposes its supplied zero-count budget. -/</span>
+<span id="L71">71 @[simp] theorem inverseSqrt_radius_zero (budget : Real) (hbudget : 0 &lt;= budget) :</span>
+<span id="L72">72     (inverseSqrt budget hbudget).radius 0 = budget := by</span>
+<span id="L73">73   simp [inverseSqrt]</span>
+<span id="L74">74 </span>
+<span id="L75">75 /-- Positive counts use the genuine inverse-square-root branch. -/</span>
+<span id="L76">76 theorem inverseSqrt_radius_of_pos (budget : Real) (hbudget : 0 &lt;= budget)</span>
+<span id="L77">77     {count : Nat} (hcount : 0 &lt; count) :</span>
+<span id="L78">78     (inverseSqrt budget hbudget).radius count =</span>
+<span id="L79">79       budget / Real.sqrt count := by</span>
+<span id="L80">80   simp [inverseSqrt, Nat.ne_of_gt hcount]</span>
+<span id="L81">81 </span>
+<span id="L82">82 /--</span>
+<span id="L83">83 A usable capped inverse-square-root radius.  `budget` controls the zero-count</span>
+<span id="L84">84 value envelope, while `scale` controls the statistical decay after enough</span>
+<span id="L85">85 visits; the cap preserves antitonicity across the first visit.</span>
+<span id="L86">86 -/</span>
+<span id="L87">87 noncomputable def cappedInverseSqrt (budget scale : Real)</span>
+<span id="L88">88     (hbudget : 0 &lt;= budget) (hscale : 0 &lt;= scale) : TransitionCountRadius where</span>
+<span id="L89">89   radius count :=</span>
+<span id="L90">90     if count = 0 then budget else min budget (scale / Real.sqrt count)</span>
+<span id="L91">91   nonneg count := by</span>
+<span id="L92">92     split_ifs</span>
+<span id="L93">93     · exact hbudget</span>
+<span id="L94">94     · exact le_min hbudget (div_nonneg hscale (Real.sqrt_nonneg _))</span>
+<span id="L95">95   antitone := by</span>
+<span id="L96">96     intro left right hle</span>
+<span id="L97">97     by_cases hleft : left = 0</span>
+<span id="L98">98     · subst left</span>
+<span id="L99">99       by_cases hright : right = 0</span>
+<span id="L100">100       · simp [hright]</span>
+<span id="L101">101       · simp only [if_neg hright]</span>
+<span id="L102">102         exact min_le_left _ _</span>
+<span id="L103">103     · have hright : right ≠ 0 := by omega</span>
+<span id="L104">104       have hleftPos : (0 : Real) &lt; left := by</span>
+<span id="L105">105         exact_mod_cast (Nat.pos_of_ne_zero hleft)</span>
+<span id="L106">106       have hsqrtLeftPos : 0 &lt; Real.sqrt (left : Real) :=</span>
+<span id="L107">107         Real.sqrt_pos.2 hleftPos</span>
+<span id="L108">108       have hsqrtLe : Real.sqrt (left : Real) &lt;= Real.sqrt (right : Real) :=</span>
+<span id="L109">109         Real.sqrt_le_sqrt (by exact_mod_cast hle)</span>
+<span id="L110">110       simp only [if_neg hleft, if_neg hright]</span>
+<span id="L111">111       exact min_le_min_left budget</span>
+<span id="L112">112         (div_le_div_of_nonneg_left hscale hsqrtLeftPos hsqrtLe)</span>
+<span id="L113">113 </span>
+<span id="L114">114 @[simp] theorem cappedInverseSqrt_radius_zero</span>
+<span id="L115">115     (budget scale : Real) (hbudget : 0 &lt;= budget) (hscale : 0 &lt;= scale) :</span>
+<span id="L116">116     (cappedInverseSqrt budget scale hbudget hscale).radius 0 = budget := by</span>
+<span id="L117">117   simp [cappedInverseSqrt]</span>
+<span id="L118">118 </span>
+<span id="L119">119 theorem cappedInverseSqrt_radius_of_pos</span>
+<span id="L120">120     (budget scale : Real) (hbudget : 0 &lt;= budget) (hscale : 0 &lt;= scale)</span>
+<span id="L121">121     {count : Nat} (hcount : 0 &lt; count) :</span>
+<span id="L122">122     (cappedInverseSqrt budget scale hbudget hscale).radius count =</span>
+<span id="L123">123       min budget (scale / Real.sqrt count) := by</span>
+<span id="L124">124   simp [cappedInverseSqrt, Nat.ne_of_gt hcount]</span>
+<span id="L125">125 </span>
+<span id="L126">126 end TransitionCountRadius</span>
+<span id="L127">127 </span>
+<span id="L128">128 namespace AdaptiveEpisodeBatchSource</span>
+<span id="L129">129 </span>
+<span id="L130">130 /-- Predictable cumulative visit floor supplied by one path-support batch floor. -/</span>
+<span id="L131">131 def cumulativePathVisitExpectedFloor</span>
+<span id="L132">132     (episodes prefixRounds : Nat) (visitFloor : Real) : Real :=</span>
+<span id="L133">133   (prefixRounds : Real) * (episodes : Real) * visitFloor</span>
+<span id="L134">134 </span>
+<span id="L135">135 /-- Predictable visit floor after subtracting the cumulative confidence radius. -/</span>
+<span id="L136">136 noncomputable def cumulativePathVisitLowerMargin</span>
+<span id="L137">137     (mdp : MDP State Action) (episodes rounds : Nat)</span>
+<span id="L138">138     (delta visitFloor : Real) (round : Fin rounds) : Real :=</span>
+<span id="L139">139   cumulativePathVisitExpectedFloor episodes (round + 1) visitFloor -</span>
+<span id="L140">140     cumulativeCoordinateConfidenceRadius episodes (round + 1)</span>
+<span id="L141">141       (cumulativeCountLocalDelta mdp rounds delta)</span>
+<span id="L142">142 </span>
+<span id="L143">143 /-- Deterministic selected-radius envelope obtained from the lower visit margin. -/</span>
+<span id="L144">144 noncomputable def cumulativeInverseSqrtRadiusEnvelope</span>
+<span id="L145">145     (mdp : MDP State Action) (episodes rounds : Nat)</span>
+<span id="L146">146     (delta visitFloor budget scale : Real) (round : Fin rounds) : Real :=</span>
+<span id="L147">147   min budget (scale / Real.sqrt</span>
+<span id="L148">148     (cumulativePathVisitLowerMargin mdp episodes rounds delta visitFloor round))</span>
+<span id="L149">149 </span>
+<span id="L150">150 /--</span>
+<span id="L151">151 Scalar regularity needed to fit all transition-coordinate errors under the</span>
+<span id="L152">152 inverse-square-root planner radius.  It is deterministic and roundwise; path</span>
+<span id="L153">153 support and the martingale event supply the corresponding realized counts.</span>
+<span id="L154">154 -/</span>
+<span id="L155">155 structure CumulativeInverseSqrtPathCalibration</span>
+<span id="L156">156     (mdp : MDP State Action) (episodes rounds : Nat)</span>
+<span id="L157">157     (delta visitFloor rewardBound budget scale : Real) : Prop where</span>
+<span id="L158">158   visitFloor_pos : 0 &lt; visitFloor</span>
+<span id="L159">159   rewardBound_nonneg : 0 &lt;= rewardBound</span>
+<span id="L160">160   budget_nonneg : 0 &lt;= budget</span>
+<span id="L161">161   scale_nonneg : 0 &lt;= scale</span>
+<span id="L162">162   lowerMargin_pos : forall round : Fin rounds,</span>
+<span id="L163">163     0 &lt; cumulativePathVisitLowerMargin</span>
+<span id="L164">164       mdp episodes rounds delta visitFloor round</span>
+<span id="L165">165   coverBudget : forall round : Fin rounds,</span>
+<span id="L166">166     (Fintype.card State : Real) *</span>
+<span id="L167">167           (2 * cumulativeCoordinateConfidenceRadius episodes (round + 1)</span>
+<span id="L168">168             (cumulativeCountLocalDelta mdp rounds delta)) *</span>
+<span id="L169">169           ((mdp.horizon : Real) * (rewardBound + budget)) &lt;=</span>
+<span id="L170">170       budget * cumulativePathVisitLowerMargin</span>
+<span id="L171">171         mdp episodes rounds delta visitFloor round</span>
+<span id="L172">172   coverScale : forall round : Fin rounds,</span>
+<span id="L173">173     (Fintype.card State : Real) *</span>
+<span id="L174">174           (2 * cumulativeCoordinateConfidenceRadius episodes (round + 1)</span>
+<span id="L175">175             (cumulativeCountLocalDelta mdp rounds delta)) *</span>
+<span id="L176">176           ((mdp.horizon : Real) * (rewardBound + budget)) &lt;=</span>
+<span id="L177">177       scale * Real.sqrt</span>
+<span id="L178">178         (cumulativePathVisitLowerMargin</span>
+<span id="L179">179           mdp episodes rounds delta visitFloor round)</span>
+<span id="L180">180 </span>
+<span id="L181">181 end AdaptiveEpisodeBatchSource</span>
+<span id="L182">182 </span>
+<span id="L183">183 namespace AdaptiveCumulativeEmpiricalOptimisticSource</span>
+<span id="L184">184 </span>
+<span id="L185">185 omit [Nonempty State] in</span>
+<span id="L186">186 /-- Every adaptive exploratory batch retains the common path-support visit floor. -/</span>
+<span id="L187">187 theorem exploratorySource_coordinateMeanAt_visit_ge_pathFloor</span>
+<span id="L188">188     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L189">189     [IsProbabilityMeasure initialState] (episodes : Nat)</span>
+<span id="L190">190     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L191">191     (defaultState : State) (countRadius : TransitionCountRadius)</span>
+<span id="L192">192     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L193">193     (support : ExploratoryPathSupport mdp initialState) (visitFloor : Real)</span>
+<span id="L194">194     (hfloor : ExploratoryPathUniformVisitFloor support explorationRate visitFloor)</span>
+<span id="L195">195     (round : Nat) (trajectory : EpisodeBatchTrajectory mdp episodes)</span>
+<span id="L196">196     (stage : Fin mdp.horizon) (state : State) (action : Action) :</span>
+<span id="L197">197     (episodes : Real) * visitFloor &lt;=</span>
+<span id="L198">198       (exploratorySource mdp initialState episodes initialTable defaultState</span>
+<span id="L199">199         countRadius explorationRate hexplorationRate).coordinateMeanAt</span>
+<span id="L200">200           (.visit stage state action) round trajectory := by</span>
+<span id="L201">201   cases round with</span>
+<span id="L202">202   | zero =&gt;</span>
+<span id="L203">203       simpa [AdaptiveEpisodeBatchSource.coordinateMeanAt,</span>
+<span id="L204">204         exploratorySource, CountCoordinate.policyMean,</span>
+<span id="L205">205         VisitCoordinate.expectedCount] using</span>
+<span id="L206">206         (initialTable.uniformVisitFloor_expectedCount_le initialState episodes</span>
+<span id="L207">207           support explorationRate hexplorationRate visitFloor hfloor</span>
+<span id="L208">208           ({ stage := stage, state := state, action := action } : VisitCoordinate mdp))</span>
+<span id="L209">209   | succ n =&gt;</span>
+<span id="L210">210       rw [AdaptiveEpisodeBatchSource.coordinateMeanAt,</span>
+<span id="L211">211         AdaptiveEpisodeBatchSource.coordinateKernelMean_eq_policyMean]</span>
+<span id="L212">212       simpa [exploratorySource, CountCoordinate.policyMean,</span>
+<span id="L213">213         VisitCoordinate.expectedCount] using</span>
+<span id="L214">214         ((successorTable defaultState countRadius n</span>
+<span id="L215">215             (Preorder.frestrictLe n trajectory)).uniformVisitFloor_expectedCount_le</span>
+<span id="L216">216           initialState episodes support explorationRate hexplorationRate</span>
+<span id="L217">217           visitFloor hfloor</span>
+<span id="L218">218           ({ stage := stage, state := state, action := action } : VisitCoordinate mdp))</span>
+<span id="L219">219 </span>
+<span id="L220">220 omit [Nonempty State] in</span>
+<span id="L221">221 /-- The common batch floor sums to a predictable cumulative visit floor. -/</span>
+<span id="L222">222 theorem exploratorySource_cumulativeCoordinateMean_visit_ge_pathFloor</span>
+<span id="L223">223     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L224">224     [IsProbabilityMeasure initialState] (episodes : Nat)</span>
+<span id="L225">225     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L226">226     (defaultState : State) (countRadius : TransitionCountRadius)</span>
+<span id="L227">227     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L228">228     (support : ExploratoryPathSupport mdp initialState) (visitFloor : Real)</span>
+<span id="L229">229     (hfloor : ExploratoryPathUniformVisitFloor support explorationRate visitFloor)</span>
+<span id="L230">230     (prefixRounds : Nat) (trajectory : EpisodeBatchTrajectory mdp episodes)</span>
+<span id="L231">231     (stage : Fin mdp.horizon) (state : State) (action : Action) :</span>
+<span id="L232">232     AdaptiveEpisodeBatchSource.cumulativePathVisitExpectedFloor</span>
+<span id="L233">233         episodes prefixRounds visitFloor &lt;=</span>
+<span id="L234">234       (exploratorySource mdp initialState episodes initialTable defaultState</span>
+<span id="L235">235         countRadius explorationRate hexplorationRate).cumulativeCoordinateMean</span>
+<span id="L236">236           (.visit stage state action) prefixRounds trajectory := by</span>
+<span id="L237">237   unfold AdaptiveEpisodeBatchSource.cumulativePathVisitExpectedFloor</span>
+<span id="L238">238     AdaptiveEpisodeBatchSource.cumulativeCoordinateMean</span>
+<span id="L239">239   calc</span>
+<span id="L240">240     (prefixRounds : Real) * (episodes : Real) * visitFloor =</span>
+<span id="L241">241         ∑ round ∈ Finset.range prefixRounds,</span>
+<span id="L242">242           (episodes : Real) * visitFloor := by</span>
+<span id="L243">243       simp</span>
+<span id="L244">244       ring</span>
+<span id="L245">245     _ &lt;= ∑ round ∈ Finset.range prefixRounds,</span>
+<span id="L246">246           (exploratorySource mdp initialState episodes initialTable defaultState</span>
+<span id="L247">247             countRadius explorationRate hexplorationRate).coordinateMeanAt</span>
+<span id="L248">248               (.visit stage state action) round trajectory := by</span>
+<span id="L249">249       apply Finset.sum_le_sum</span>
+<span id="L250">250       intro round _hround</span>
+<span id="L251">251       exact exploratorySource_coordinateMeanAt_visit_ge_pathFloor</span>
+<span id="L252">252         mdp initialState episodes initialTable defaultState countRadius</span>
+<span id="L253">253         explorationRate hexplorationRate support visitFloor hfloor round trajectory</span>
+<span id="L254">254         stage state action</span>
+<span id="L255">255 </span>
+<span id="L256">256 /-- Outside the global count event, every cumulative visit count exceeds its lower margin. -/</span>
+<span id="L257">257 theorem exploratorySource_cumulativePathVisitLowerMargin_lt_visitCount</span>
+<span id="L258">258     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L259">259     [IsProbabilityMeasure initialState] (episodes rounds : Nat)</span>
+<span id="L260">260     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L261">261     (defaultState : State) (countRadius : TransitionCountRadius)</span>
+<span id="L262">262     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L263">263     (support : ExploratoryPathSupport mdp initialState) (visitFloor delta : Real)</span>
+<span id="L264">264     (hfloor : ExploratoryPathUniformVisitFloor support explorationRate visitFloor)</span>
+<span id="L265">265     {trajectory : EpisodeBatchTrajectory mdp episodes}</span>
+<span id="L266">266     (htrajectory : trajectory ∉</span>
+<span id="L267">267       (exploratorySource mdp initialState episodes initialTable defaultState</span>
+<span id="L268">268         countRadius explorationRate hexplorationRate).adaptiveCumulativeCountBadEvent</span>
+<span id="L269">269           rounds delta)</span>
+<span id="L270">270     (round : Fin rounds) (stage : Fin mdp.horizon)</span>
+<span id="L271">271     (state : State) (action : Action) :</span>
+<span id="L272">272     AdaptiveEpisodeBatchSource.cumulativePathVisitLowerMargin</span>
+<span id="L273">273         mdp episodes rounds delta visitFloor round &lt;</span>
+<span id="L274">274       ((cumulativeTransitionCountSummaryAt trajectory round).visitCount</span>
+<span id="L275">275         stage state action : Real) := by</span>
+<span id="L276">276   let source := exploratorySource mdp initialState episodes initialTable defaultState</span>
+<span id="L277">277     countRadius explorationRate hexplorationRate</span>
+<span id="L278">278   have hdeviation :=</span>
+<span id="L279">279     source.cumulativeCoordinateDeviation_abs_lt_of_not_mem_badEvent</span>
+<span id="L280">280       htrajectory round (.visit stage state action)</span>
+<span id="L281">281   rw [source.cumulativeCoordinateDeviation_eq_rawCount_sub_mean,</span>
+<span id="L282">282     AdaptiveEpisodeBatchSource.cumulativeCoordinateRawCount_visit] at hdeviation</span>
+<span id="L283">283   have hmean := exploratorySource_cumulativeCoordinateMean_visit_ge_pathFloor</span>
+<span id="L284">284     mdp initialState episodes initialTable defaultState countRadius</span>
+<span id="L285">285     explorationRate hexplorationRate support visitFloor hfloor (round + 1)</span>
+<span id="L286">286     trajectory stage state action</span>
+<span id="L287">287   rw [abs_lt] at hdeviation</span>
+<span id="L288">288   unfold AdaptiveEpisodeBatchSource.cumulativePathVisitLowerMargin</span>
+<span id="L289">289   dsimp only [source] at hdeviation hmean</span>
+<span id="L290">290   linarith</span>
+<span id="L291">291 </span>
+<span id="L292">292 /-- Path support and the two-scale calibration discharge the full capped inverse-sqrt cover. -/</span>
+<span id="L293">293 theorem exploratorySource_adaptiveCumulativeCountMartingaleCover_of_pathSupport_inverseSqrtCalibration</span>
+<span id="L294">294     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L295">295     [IsProbabilityMeasure initialState] (episodes rounds : Nat)</span>
+<span id="L296">296     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L297">297     (defaultState : State)</span>
+<span id="L298">298     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L299">299     (support : ExploratoryPathSupport mdp initialState) (visitFloor delta : Real)</span>
+<span id="L300">300     (hfloor : ExploratoryPathUniformVisitFloor support explorationRate visitFloor)</span>
+<span id="L301">301     (rewardBound budget scale : Real)</span>
+<span id="L302">302     (calibration : AdaptiveEpisodeBatchSource.CumulativeInverseSqrtPathCalibration</span>
+<span id="L303">303       mdp episodes rounds delta visitFloor rewardBound budget scale) :</span>
+<span id="L304">304     AdaptiveEpisodeBatchSource.AdaptiveCumulativeCountMartingaleCover</span>
+<span id="L305">305       (rounds := rounds)</span>
+<span id="L306">306       (exploratorySource mdp initialState episodes initialTable defaultState</span>
+<span id="L307">307         (TransitionCountRadius.cappedInverseSqrt budget scale</span>
+<span id="L308">308           calibration.budget_nonneg calibration.scale_nonneg)</span>
+<span id="L309">309         explorationRate hexplorationRate)</span>
+<span id="L310">310       (TransitionCountRadius.cappedInverseSqrt budget scale</span>
+<span id="L311">311         calibration.budget_nonneg calibration.scale_nonneg)</span>
+<span id="L312">312       delta rewardBound := by</span>
+<span id="L313">313   intro trajectory htrajectory round remaining hremaining state action</span>
+<span id="L314">314   let stage := mdp.decisionStageRemaining remaining hremaining</span>
+<span id="L315">315   let summary := cumulativeTransitionCountSummaryAt trajectory round</span>
+<span id="L316">316   let visits := summary.visitCount stage state action</span>
+<span id="L317">317   let margin := AdaptiveEpisodeBatchSource.cumulativePathVisitLowerMargin</span>
+<span id="L318">318     mdp episodes rounds delta visitFloor round</span>
+<span id="L319">319   let radius := AdaptiveEpisodeBatchSource.cumulativeCoordinateConfidenceRadius</span>
+<span id="L320">320     episodes (round + 1)</span>
+<span id="L321">321       (AdaptiveEpisodeBatchSource.cumulativeCountLocalDelta mdp rounds delta)</span>
+<span id="L322">322   have hmarginPos : 0 &lt; margin := calibration.lowerMargin_pos round</span>
+<span id="L323">323   have hmarginLt : margin &lt; (visits : Real) := by</span>
+<span id="L324">324     simpa [margin, visits, summary, stage] using</span>
+<span id="L325">325       exploratorySource_cumulativePathVisitLowerMargin_lt_visitCount</span>
+<span id="L326">326         mdp initialState episodes rounds initialTable defaultState</span>
+<span id="L327">327         (TransitionCountRadius.cappedInverseSqrt budget scale</span>
+<span id="L328">328           calibration.budget_nonneg calibration.scale_nonneg)</span>
+<span id="L329">329         explorationRate hexplorationRate support visitFloor delta hfloor</span>
+<span id="L330">330         htrajectory round stage state action</span>
+<span id="L331">331   have hvisitsPosReal : (0 : Real) &lt; visits := hmarginPos.trans hmarginLt</span>
+<span id="L332">332   have hvisitsPos : 0 &lt; visits := by exact_mod_cast hvisitsPosReal</span>
+<span id="L333">333   have hvisitsNe : visits ≠ 0 := Nat.ne_of_gt hvisitsPos</span>
+<span id="L334">334   have hvisitsNonneg : (0 : Real) &lt;= visits := le_of_lt hvisitsPosReal</span>
+<span id="L335">335   have hsqrtVisitsPos : 0 &lt; Real.sqrt (visits : Real) :=</span>
+<span id="L336">336     Real.sqrt_pos.2 hvisitsPosReal</span>
+<span id="L337">337   have hsqrtMarginLe : Real.sqrt margin &lt;= Real.sqrt (visits : Real) :=</span>
+<span id="L338">338     Real.sqrt_le_sqrt (le_of_lt hmarginLt)</span>
+<span id="L339">339   have hradiusNonneg : 0 &lt;= radius := by</span>
+<span id="L340">340     exact Concentration.subGaussianSumConfidenceRadius_nonneg _ _</span>
+<span id="L341">341   have hrewardBudgetNonneg : 0 &lt;= rewardBound + budget :=</span>
+<span id="L342">342     add_nonneg calibration.rewardBound_nonneg calibration.budget_nonneg</span>
+<span id="L343">343   have hremainingReal : (remaining : Real) &lt;= mdp.horizon := by</span>
+<span id="L344">344     exact_mod_cast (show remaining &lt;= mdp.horizon by omega)</span>
+<span id="L345">345   have hscaleBudget :</span>
+<span id="L346">346       (Fintype.card State : Real) * (2 * radius) *</span>
+<span id="L347">347           ((remaining : Real) * (rewardBound + budget)) &lt;=</span>
+<span id="L348">348         budget * margin := by</span>
+<span id="L349">349     calc</span>
+<span id="L350">350       (Fintype.card State : Real) * (2 * radius) *</span>
+<span id="L351">351             ((remaining : Real) * (rewardBound + budget)) &lt;=</span>
+<span id="L352">352           (Fintype.card State : Real) * (2 * radius) *</span>
+<span id="L353">353             ((mdp.horizon : Real) * (rewardBound + budget)) := by</span>
+<span id="L354">354         gcongr</span>
+<span id="L355">355       _ &lt;= budget * margin := by</span>
+<span id="L356">356         simpa [radius, margin] using calibration.coverBudget round</span>
+<span id="L357">357   have hscaleInverseSqrt :</span>
+<span id="L358">358       (Fintype.card State : Real) * (2 * radius) *</span>
+<span id="L359">359           ((remaining : Real) * (rewardBound + budget)) &lt;=</span>
+<span id="L360">360         scale * Real.sqrt margin := by</span>
+<span id="L361">361     calc</span>
+<span id="L362">362       (Fintype.card State : Real) * (2 * radius) *</span>
+<span id="L363">363             ((remaining : Real) * (rewardBound + budget)) &lt;=</span>
+<span id="L364">364           (Fintype.card State : Real) * (2 * radius) *</span>
+<span id="L365">365             ((mdp.horizon : Real) * (rewardBound + budget)) := by</span>
+<span id="L366">366         gcongr</span>
+<span id="L367">367       _ &lt;= scale * Real.sqrt margin := by</span>
+<span id="L368">368         simpa [radius, margin] using calibration.coverScale round</span>
+<span id="L369">369   have hsumEq :</span>
+<span id="L370">370       (∑ nextState,</span>
+<span id="L371">371         AdaptiveEpisodeBatchSource.adaptiveCumulativeTransitionCoordinateRadius</span>
+<span id="L372">372             trajectory round delta stage state action nextState *</span>
+<span id="L373">373           empiricalFiniteBatchValueEnvelope rewardBound</span>
+<span id="L374">374             ((TransitionCountRadius.cappedInverseSqrt budget scale</span>
+<span id="L375">375               calibration.budget_nonneg calibration.scale_nonneg).radius 0)</span>
+<span id="L376">376               remaining) =</span>
+<span id="L377">377         ((Fintype.card State : Real) * (2 * radius) *</span>
+<span id="L378">378           ((remaining : Real) * (rewardBound + budget))) / (visits : Real) := by</span>
+<span id="L379">379     simp [AdaptiveEpisodeBatchSource.adaptiveCumulativeTransitionCoordinateRadius,</span>
+<span id="L380">380       empiricalFiniteBatchValueEnvelope, stage, summary, visits, radius,</span>
+<span id="L381">381       hvisitsNe]</span>
+<span id="L382">382     ring</span>
+<span id="L383">383   have hbudgetBound :</span>
+<span id="L384">384       ((Fintype.card State : Real) * (2 * radius) *</span>
+<span id="L385">385           ((remaining : Real) * (rewardBound + budget))) / (visits : Real) &lt;=</span>
+<span id="L386">386         budget := by</span>
+<span id="L387">387     calc</span>
+<span id="L388">388       ((Fintype.card State : Real) * (2 * radius) *</span>
+<span id="L389">389           ((remaining : Real) * (rewardBound + budget))) / (visits : Real) &lt;=</span>
+<span id="L390">390           (budget * margin) / (visits : Real) :=</span>
+<span id="L391">391         div_le_div_of_nonneg_right hscaleBudget hvisitsNonneg</span>
+<span id="L392">392       _ &lt;= (budget * (visits : Real)) / (visits : Real) :=</span>
+<span id="L393">393         div_le_div_of_nonneg_right</span>
+<span id="L394">394           (mul_le_mul_of_nonneg_left (le_of_lt hmarginLt)</span>
+<span id="L395">395             calibration.budget_nonneg) hvisitsNonneg</span>
+<span id="L396">396       _ = budget := by field_simp</span>
+<span id="L397">397   have hinverseSqrtBound :</span>
+<span id="L398">398       ((Fintype.card State : Real) * (2 * radius) *</span>
+<span id="L399">399           ((remaining : Real) * (rewardBound + budget))) / (visits : Real) &lt;=</span>
+<span id="L400">400         scale / Real.sqrt (visits : Real) := by</span>
+<span id="L401">401     calc</span>
+<span id="L402">402       ((Fintype.card State : Real) * (2 * radius) *</span>
+<span id="L403">403           ((remaining : Real) * (rewardBound + budget))) / (visits : Real) &lt;=</span>
+<span id="L404">404           (scale * Real.sqrt margin) / (visits : Real) :=</span>
+<span id="L405">405         div_le_div_of_nonneg_right hscaleInverseSqrt hvisitsNonneg</span>
+<span id="L406">406       _ &lt;= (scale * Real.sqrt (visits : Real)) / (visits : Real) :=</span>
+<span id="L407">407       div_le_div_of_nonneg_right</span>
+<span id="L408">408         (mul_le_mul_of_nonneg_left hsqrtMarginLe calibration.scale_nonneg)</span>
+<span id="L409">409         hvisitsNonneg</span>
+<span id="L410">410       _ = scale / Real.sqrt (visits : Real) := by</span>
+<span id="L411">411         field_simp</span>
+<span id="L412">412         rw [Real.sq_sqrt hvisitsNonneg]</span>
+<span id="L413">413   rw [hsumEq, TransitionCountRadius.cappedInverseSqrt_radius_of_pos</span>
+<span id="L414">414     budget scale calibration.budget_nonneg calibration.scale_nonneg hvisitsPos]</span>
+<span id="L415">415   exact le_min hbudgetBound hinverseSqrtBound</span>
+<span id="L416">416 </span>
+<span id="L417">417 /-- The selected capped inverse-sqrt radius is controlled by the lower-margin envelope. -/</span>
+<span id="L418">418 theorem adaptiveCumulativeEmpiricalOptimisticPlanAt_selectedRadiusRemaining_le_inverseSqrtEnvelope</span>
+<span id="L419">419     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L420">420     [IsProbabilityMeasure initialState] (episodes rounds : Nat)</span>
+<span id="L421">421     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L422">422     (defaultState : State)</span>
+<span id="L423">423     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L424">424     (support : ExploratoryPathSupport mdp initialState) (visitFloor delta : Real)</span>
+<span id="L425">425     (hfloor : ExploratoryPathUniformVisitFloor support explorationRate visitFloor)</span>
+<span id="L426">426     (rewardBound budget scale : Real)</span>
+<span id="L427">427     (calibration : AdaptiveEpisodeBatchSource.CumulativeInverseSqrtPathCalibration</span>
+<span id="L428">428       mdp episodes rounds delta visitFloor rewardBound budget scale)</span>
+<span id="L429">429     {trajectory : EpisodeBatchTrajectory mdp episodes}</span>
+<span id="L430">430     (htrajectory : trajectory ∉</span>
+<span id="L431">431       (exploratorySource mdp initialState episodes initialTable defaultState</span>
+<span id="L432">432         (TransitionCountRadius.cappedInverseSqrt budget scale</span>
+<span id="L433">433           calibration.budget_nonneg calibration.scale_nonneg)</span>
+<span id="L434">434         explorationRate hexplorationRate).adaptiveCumulativeCountBadEvent</span>
+<span id="L435">435           rounds delta)</span>
+<span id="L436">436     (round : Fin rounds) (remaining : Nat)</span>
+<span id="L437">437     (hremaining : remaining + 1 &lt;= mdp.horizon) (state : State) :</span>
+<span id="L438">438     (adaptiveCumulativeEmpiricalOptimisticPlanAt trajectory defaultState</span>
+<span id="L439">439       (TransitionCountRadius.cappedInverseSqrt budget scale</span>
+<span id="L440">440         calibration.budget_nonneg calibration.scale_nonneg)</span>
+<span id="L441">441       round).selectedRadiusRemaining remaining hremaining state &lt;=</span>
+<span id="L442">442       AdaptiveEpisodeBatchSource.cumulativeInverseSqrtRadiusEnvelope</span>
+<span id="L443">443         mdp episodes rounds delta visitFloor budget scale round := by</span>
+<span id="L444">444   rw [adaptiveCumulativeEmpiricalOptimisticPlanAt,</span>
+<span id="L445">445     TransitionCountSummary.countRadiusOptimisticPlan_selectedRadiusRemaining]</span>
+<span id="L446">446   let stage := mdp.decisionStageRemaining remaining hremaining</span>
+<span id="L447">447   let summary := cumulativeTransitionCountSummaryAt trajectory round</span>
+<span id="L448">448   let countRadius := TransitionCountRadius.cappedInverseSqrt budget scale</span>
+<span id="L449">449     calibration.budget_nonneg calibration.scale_nonneg</span>
+<span id="L450">450   let plan := summary.countRadiusOptimisticPlan mdp defaultState countRadius</span>
+<span id="L451">451   let action := plan.optimisticAction stage</span>
+<span id="L452">452     (plan.upperValueRemaining remaining (by omega)) state</span>
+<span id="L453">453   let visits := summary.visitCount stage state action</span>
+<span id="L454">454   let margin := AdaptiveEpisodeBatchSource.cumulativePathVisitLowerMargin</span>
+<span id="L455">455     mdp episodes rounds delta visitFloor round</span>
+<span id="L456">456   have hmarginPos : 0 &lt; margin := calibration.lowerMargin_pos round</span>
+<span id="L457">457   have hmarginLt : margin &lt; (visits : Real) := by</span>
+<span id="L458">458     simpa [margin, visits, action, plan, countRadius, summary, stage] using</span>
+<span id="L459">459       exploratorySource_cumulativePathVisitLowerMargin_lt_visitCount</span>
+<span id="L460">460         mdp initialState episodes rounds initialTable defaultState countRadius</span>
+<span id="L461">461         explorationRate hexplorationRate support visitFloor delta hfloor</span>
+<span id="L462">462         htrajectory round stage state action</span>
+<span id="L463">463   have hvisitsPosReal : (0 : Real) &lt; visits := hmarginPos.trans hmarginLt</span>
+<span id="L464">464   have hvisitsPos : 0 &lt; visits := by exact_mod_cast hvisitsPosReal</span>
+<span id="L465">465   have hsqrtMarginPos : 0 &lt; Real.sqrt margin := Real.sqrt_pos.2 hmarginPos</span>
+<span id="L466">466   have hsqrtMarginLe : Real.sqrt margin &lt;= Real.sqrt (visits : Real) :=</span>
+<span id="L467">467     Real.sqrt_le_sqrt (le_of_lt hmarginLt)</span>
+<span id="L468">468   change countRadius.radius visits &lt;=</span>
+<span id="L469">469     AdaptiveEpisodeBatchSource.cumulativeInverseSqrtRadiusEnvelope</span>
+<span id="L470">470       mdp episodes rounds delta visitFloor budget scale round</span>
+<span id="L471">471   rw [TransitionCountRadius.cappedInverseSqrt_radius_of_pos</span>
+<span id="L472">472     budget scale calibration.budget_nonneg calibration.scale_nonneg hvisitsPos]</span>
+<span id="L473">473   unfold AdaptiveEpisodeBatchSource.cumulativeInverseSqrtRadiusEnvelope</span>
+<span id="L474">474   exact min_le_min_left budget</span>
+<span id="L475">475     (div_le_div_of_nonneg_left calibration.scale_nonneg</span>
+<span id="L476">476       hsqrtMarginPos hsqrtMarginLe)</span>
+<span id="L477">477 </span>
+<span id="L478">478 /--</span>
+<span id="L479">479 Concrete route endpoint: path support and capped inverse-sqrt calibration produce one</span>
+<span id="L480">480 measurable cumulative count event, optimism, and a round-indexed finite-sum bound</span>
+<span id="L481">481 for recommended-policy expected regret.</span>
+<span id="L482">482 -/</span>
+<span id="L483">483 theorem exploratorySource_trajectoryMeasure_cumulativeInverseSqrtPathSupport_optimism_and_explicitRecommendedExpectedRegret</span>
+<span id="L484">484     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L485">485     [IsProbabilityMeasure initialState] (episodes rounds : Nat)</span>
+<span id="L486">486     [StandardBorelSpace (EpisodeBatch mdp episodes)]</span>
+<span id="L487">487     [StandardBorelSpace (EpisodeBatchTrajectory mdp episodes)]</span>
+<span id="L488">488     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L489">489     (defaultState : State)</span>
+<span id="L490">490     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L491">491     (support : ExploratoryPathSupport mdp initialState) (visitFloor : Real)</span>
+<span id="L492">492     (hfloor : ExploratoryPathUniformVisitFloor support explorationRate visitFloor)</span>
+<span id="L493">493     (rewardBound budget scale : Real)</span>
+<span id="L494">494     (hrewardBound : forall state action,</span>
+<span id="L495">495       |mdp.reward state action| &lt;= rewardBound)</span>
+<span id="L496">496     (hhorizon : 0 &lt; mdp.horizon) (hrounds : 0 &lt; rounds)</span>
+<span id="L497">497     (hepisodes : 0 &lt; episodes)</span>
+<span id="L498">498     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L499">499     (calibration : AdaptiveEpisodeBatchSource.CumulativeInverseSqrtPathCalibration</span>
+<span id="L500">500       mdp episodes rounds delta visitFloor rewardBound budget scale) :</span>
+<span id="L501">501     let countRadius :=</span>
+<span id="L502">502       TransitionCountRadius.cappedInverseSqrt budget scale</span>
+<span id="L503">503         calibration.budget_nonneg calibration.scale_nonneg</span>
+<span id="L504">504     let source := exploratorySource mdp initialState episodes initialTable</span>
+<span id="L505">505       defaultState countRadius explorationRate hexplorationRate</span>
+<span id="L506">506     MeasurableSet (source.adaptiveCumulativeCountBadEvent rounds delta) /\</span>
+<span id="L507">507       source.trajectoryMeasure</span>
+<span id="L508">508           (source.adaptiveCumulativeCountBadEvent rounds delta) &lt;=</span>
+<span id="L509">509         ENNReal.ofReal delta /\</span>
+<span id="L510">510       forall trajectory,</span>
+<span id="L511">511         trajectory ∉ source.adaptiveCumulativeCountBadEvent rounds delta -&gt;</span>
+<span id="L512">512         (forall round : Fin rounds, forall state,</span>
+<span id="L513">513           mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;=</span>
+<span id="L514">514             (adaptiveCumulativeEmpiricalOptimisticPlanAt</span>
+<span id="L515">515               trajectory defaultState countRadius round).upperValueRemaining</span>
+<span id="L516">516                 mdp.horizon le_rfl state) /\</span>
+<span id="L517">517         adaptiveCumulativeEmpiricalOptimisticRecommendedExpectedRegret</span>
+<span id="L518">518             (initialState := initialState) trajectory defaultState countRadius rounds &lt;=</span>
+<span id="L519">519           ∑ round : Fin rounds,</span>
+<span id="L520">520             (mdp.horizon : Real) *</span>
+<span id="L521">521               (2 * AdaptiveEpisodeBatchSource.cumulativeInverseSqrtRadiusEnvelope</span>
+<span id="L522">522                 mdp episodes rounds delta visitFloor budget scale round) := by</span>
+<span id="L523">523   let countRadius :=</span>
+<span id="L524">524     TransitionCountRadius.cappedInverseSqrt budget scale</span>
+<span id="L525">525       calibration.budget_nonneg calibration.scale_nonneg</span>
+<span id="L526">526   have hcover : AdaptiveEpisodeBatchSource.AdaptiveCumulativeCountMartingaleCover</span>
+<span id="L527">527       (rounds := rounds)</span>
+<span id="L528">528       (exploratorySource mdp initialState episodes initialTable defaultState</span>
+<span id="L529">529         countRadius explorationRate hexplorationRate)</span>
+<span id="L530">530       countRadius delta rewardBound := by</span>
+<span id="L531">531     simpa [countRadius] using</span>
+<span id="L532">532       exploratorySource_adaptiveCumulativeCountMartingaleCover_of_pathSupport_inverseSqrtCalibration</span>
+<span id="L533">533         mdp initialState episodes rounds initialTable defaultState explorationRate</span>
+<span id="L534">534         hexplorationRate support visitFloor delta hfloor rewardBound budget scale calibration</span>
+<span id="L535">535   have hradius : forall trajectory,</span>
+<span id="L536">536       trajectory ∉</span>
+<span id="L537">537         (exploratorySource mdp initialState episodes initialTable defaultState</span>
+<span id="L538">538           countRadius explorationRate hexplorationRate).adaptiveCumulativeCountBadEvent</span>
+<span id="L539">539             rounds delta -&gt;</span>
+<span id="L540">540       forall (round : Fin rounds) (remaining : Nat)</span>
+<span id="L541">541         (hremaining : remaining + 1 &lt;= mdp.horizon) (state : State),</span>
+<span id="L542">542         (adaptiveCumulativeEmpiricalOptimisticPlanAt</span>
+<span id="L543">543           trajectory defaultState countRadius round).selectedRadiusRemaining</span>
+<span id="L544">544             remaining hremaining state &lt;=</span>
+<span id="L545">545           AdaptiveEpisodeBatchSource.cumulativeInverseSqrtRadiusEnvelope</span>
+<span id="L546">546             mdp episodes rounds delta visitFloor budget scale round := by</span>
+<span id="L547">547     intro trajectory htrajectory round remaining hremaining state</span>
+<span id="L548">548     simpa [countRadius] using</span>
+<span id="L549">549       adaptiveCumulativeEmpiricalOptimisticPlanAt_selectedRadiusRemaining_le_inverseSqrtEnvelope</span>
+<span id="L550">550         mdp initialState episodes rounds initialTable defaultState explorationRate</span>
+<span id="L551">551         hexplorationRate support visitFloor delta hfloor rewardBound budget scale calibration</span>
+<span id="L552">552         htrajectory round remaining hremaining state</span>
+<span id="L553">553   simpa [countRadius] using</span>
+<span id="L554">554     exploratorySource_trajectoryMeasure_cumulativeCountMartingale_optimism_and_explicitRecommendedExpectedRegret</span>
+<span id="L555">555       mdp initialState episodes rounds initialTable defaultState countRadius</span>
+<span id="L556">556       explorationRate hexplorationRate rewardBound hrewardBound hhorizon hrounds</span>
+<span id="L557">557       hepisodes delta hdelta hdelta_le_one hcover</span>
+<span id="L558">558       (AdaptiveEpisodeBatchSource.cumulativeInverseSqrtRadiusEnvelope</span>
+<span id="L559">559         mdp episodes rounds delta visitFloor budget scale) hradius</span>
+<span id="L560">560 </span>
+<span id="L561">561 end AdaptiveCumulativeEmpiricalOptimisticSource</span>
+<span id="L562">562 </span>
+<span id="L563">563 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

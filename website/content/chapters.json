@@ -1,0 +1,292 @@
+{
+  "chapters": [
+    {
+      "slug": "foundations",
+      "title": "1. Finite bandits, traces, and regret",
+      "short_title": "Foundations",
+      "status": "compiled",
+      "summary": "The deterministic language shared by the entire project: finite models, action and reward traces, pull counts, gaps, reward sums, pseudo-regret, and count-to-regret decompositions.",
+      "audience": "Start here if you know basic probability or machine learning but are new to this Lean library.",
+      "completion_definition": "Complete when the deterministic finite-bandit vocabulary, traces, counts, reward sums, gap facts, and regret decompositions compile through the public root and external tests. Probabilistic algorithm laws belong to downstream chapters.",
+      "completion_blockers": [
+        "No remaining blocker inside the user-approved deterministic scope; probabilistic laws are downstream obligations rather than missing Chapter 1 results."
+      ],
+      "learning_goals": [
+        "Distinguish a deterministic action trace from a probability law over generated traces.",
+        "Use pull counts as the bookkeeping interface shared by ETC, UCB, EXP3, and Tsallis routes.",
+        "Read the finite-sum identity that regroups time-indexed regret by arm."
+      ],
+      "module_globs": [
+        "BanditRLProof/Core.lean",
+        "BanditRLProof/LeafLemmas.lean",
+        "BanditRLProof/MathlibWrappers.lean",
+        "BanditRLProof/Regret*.lean",
+        "BanditRLProof/PullCount*.lean",
+        "BanditRLProof/Scalar*.lean",
+        "BanditRLProof/RealMeanRegretPullCount.lean",
+        "BanditRLProof/RealKernelRegretPullCount.lean",
+        "BanditRLProof/LowerBounds/*.lean"
+      ],
+      "open_gaps": [
+        "The deterministic identities are reusable; each probabilistic algorithm still needs its own measurable generated law and integrability contracts.",
+        "A local model-facing endpoint need not match every textbook or upstream theorem signature."
+      ]
+    },
+    {
+      "slug": "probability",
+      "title": "2. Probability, kernels, filtrations, and concentration",
+      "short_title": "Probability layer",
+      "status": "compiled",
+      "summary": "Measure-theoretic infrastructure for generated histories, conditional reward laws, martingale differences, posterior kernels, stopping times, and concentration.",
+      "audience": "Read after Foundations; familiarity with conditional expectation helps but is not required.",
+      "completion_definition": "Complete within the Book Map scope when the reusable measure, kernel, filtration, conditional-law, finite-time concentration, and finite/countable all-time confidence-budget adapters required by canonical generated ETC and ordinary-UCB routes compile with explicit regularity contracts. The telescoping all-time producer must remain on the same canonical trajectory when consumed by the fixed-policy UCB extension. Self-normalized and RL-specific confidence remain separate chapters or extensions.",
+      "completion_blockers": [
+        "No remaining blocker inside the scoped ETC/ordinary-UCB dependency surface: the finite-arm/time event feeds the horizon-indexed family, while the telescoping all-time event now feeds a horizon-free scheduled UCB policy on the same canonical trajectory through all-horizon pull counts and finite-time expected regret."
+      ],
+      "learning_goals": [
+        "See why policies and history selectors must be measurable maps.",
+        "Separate a marginal reward distribution from a history-conditioned kernel law.",
+        "Track adaptedness, integrability, finite-measure, and variance-proxy assumptions explicitly."
+      ],
+      "module_globs": [
+        "BanditRLProof/Measure*.lean",
+        "BanditRLProof/Measurable*.lean",
+        "BanditRLProof/Integrability*.lean",
+        "BanditRLProof/Independence*.lean",
+        "BanditRLProof/HistoryFiltration.lean",
+        "BanditRLProof/PolicyMeasurability.lean",
+        "BanditRLProof/RewardKernel.lean",
+        "BanditRLProof/RewardTraceLaw.lean",
+        "BanditRLProof/BoundedRewardKernelLaw.lean",
+        "BanditRLProof/FiniteArmRewardKernelLaw.lean",
+        "BanditRLProof/FiniteContextVarianceProxy.lean",
+        "BanditRLProof/Kernel*.lean",
+        "BanditRLProof/PosteriorKernel.lean",
+        "BanditRLProof/Conditional*.lean",
+        "BanditRLProof/Concentration*.lean",
+        "BanditRLProof/MartingaleDifference.lean",
+        "BanditRLProof/ProbabilityUnionBound.lean",
+        "BanditRLProof/UnboundedStoppingTime*.lean"
+      ],
+      "open_gaps": [
+        "The telescoping all-time empirical-mean producer now has an explicit same-source fixed-policy UCB consumer; the geometric producer remains confidence infrastructure rather than the logarithmic scheduled-regret route.",
+        "There is intentionally no single producer for every adaptive environment or every fixed-policy anytime algorithm.",
+        "Self-normalized and RL-specific concentration remain explicit downstream theorem routes rather than one universal wrapper."
+      ]
+    },
+    {
+      "slug": "etc",
+      "title": "3. Explore-Then-Commit",
+      "short_title": "ETC",
+      "status": "compiled",
+      "summary": "Round-robin exploration, empirical means, measurable commit choices, wrong-commit tails, and expected-regret assemblies under bounded or sub-Gaussian arm laws.",
+      "audience": "The shortest end-to-end stochastic-bandit route in the repository.",
+      "completion_definition": "Complete when a canonical measurable generated ETC law, commit and tie semantics, wrong-commit concentration, and expected-regret endpoint compile under one documented local toolchain, and every claimed upstream compatibility surface is verified exactly.",
+      "completion_blockers": [
+        "No remaining blocker inside the canonical local ETC scope: the public Book Map canary certifies the generated law, round-robin exploration, Rat first-occurrence/least-encoded tie rule, named wrong-commit concentration, and bounded/sub-Gaussian expected-regret endpoints. Pinned LML material remains theorem-card-only and outside this completion claim."
+      ],
+      "learning_goals": [
+        "Decompose regret into deterministic exploration cost and wrong-commit probability.",
+        "Follow empirical-mean concentration into a concrete Real expected-regret bound.",
+        "Distinguish compiled local endpoints from the still-partial upstream-compatible port."
+      ],
+      "module_globs": ["BanditRLProof/Algorithms/ETC*.lean"],
+      "open_gaps": [
+        "Direct LML symbol integration remains optional cross-toolchain work even though the local canonical chapter route compiles.",
+        "The website never upgrades a theorem card into a local proof certificate."
+      ]
+    },
+    {
+      "slug": "ucb",
+      "title": "4. UCB: confidence events to regret",
+      "short_title": "UCB",
+      "status": "compiled",
+      "summary": "History-based ordinary-UCB and KL-UCB scores, count thresholds, generated policies, arm streams, same-trajectory confidence, finite-arm reward kernels, and expected regret.",
+      "audience": "Read ETC first if confidence-event arguments are new to you.",
+      "completion_definition": "Complete within the ordinary-UCB Book Map scope when (i) the canonical horizon-indexed generated UCB family connects simultaneous finite-arm/time confidence to pull counts, finite-arm expected regret, and its expected-average asymptotic consumer, and (ii) one separate horizon-free scheduled policy and trajectory measure connect the telescoping all-time confidence event to a simultaneous all-horizon positive-gap pull-count theorem and a finite-time expected pseudo-regret consumer. Public imports, typed canaries, explicit initialization/positivity contracts, and a clean full gate are required. Fixed-policy expected-average consistency and upstream compatibility are separate unless proved explicitly.",
+      "completion_blockers": [
+        "No remaining blocker inside the declared ordinary-UCB scope: the horizon-indexed chain reaches expected-average convergence, and the new horizon-free scheduled policy uses the telescoping radius on its own generated history, explicitly transports sampled/generated actions on the same trajectory measure, controls all finite horizons on one good event, and supplies a finite-time expected pseudo-regret bound."
+      ],
+      "learning_goals": [
+        "Convert a suboptimal UCB selection into a confidence failure or a small-count event.",
+        "Trace conditional sub-Gaussian laws into a textbook-shaped gap-sum bound.",
+        "Read the compiled expected-average-regret convergence results without conflating them with every UCB variant."
+      ],
+      "module_globs": [
+        "BanditRLProof/Algorithms/UCB*.lean",
+        "BanditRLProof/UCB*.lean"
+      ],
+      "open_gaps": [
+        "The fixed-policy telescoping anytime confidence/count/finite-time expected-regret route is compiled. Its bound retains the explicit T times delta failure term, so fixed-delta expected-average consistency is not claimed.",
+        "The geometric all-time radius is retained as a valid confidence producer but its exponentially shrinking share is not the route to logarithmic fixed-policy UCB regret.",
+        "A distinct generated KL-UCB extension now compiles Bernoulli-KL endpoint semantics, confidence-set supremum, a horizon-free policy, same-source all-time confidence, all-horizon counts, and conservative finite-time expected pseudo-regret under AE unit support and a common interior-mean margin.",
+        "Sharp KL-Chernoff concentration, the Garivier-Cappe leading constant, KL-UCB limsup asymptotic optimality, and exact pinned-LML compatibility remain separate."
+      ]
+    },
+    {
+      "slug": "oful",
+      "title": "5. OFUL, self-normalized confidence, and stopping times",
+      "short_title": "OFUL",
+      "status": "compiled",
+      "summary": "The scoped canonical finite-action linear-bandit route compiles from elliptical potential and self-normalized ridge confidence through one horizon-free generated OFUL policy with all-horizon regret and stopping consumers, plus a separately identified horizon-indexed expected-consistency family.",
+      "audience": "Read the Probability layer and UCB chapter before this linear-bandit route.",
+      "completion_definition": "Complete in the canonical textbook scope when finite-dimensional Gram geometry, rank-one determinant and log-determinant arguments, conditional-MGF/self-normalized ridge confidence, regularization bias, measurable finite-action optimism, and a kernel-law-produced generated trajectory compile; one horizon-free telescoping policy must carry all-time confidence, all-horizon high-probability pseudo-regret, and bounded plus square-integrable stopping-time consumers, while the distinct horizon-indexed fixed-model family carries finite-horizon expectation and expected-average consistency. One public external canary must distinguish and type both families.",
+      "completion_blockers": [
+        "No remaining blocker inside this canonical scope: Tests/BookMapChaptersFiveAndSixCanary.lean gives full-conclusion typed applications for the same horizon-free telescoping policy/environment/trajectory chain through all-horizon and both stopping consumers, and separately types the horizon-indexed expected-consistency family. The items below are explicitly out-of-scope extensions."
+      ],
+      "learning_goals": [
+        "Understand the log-determinant proof of the elliptical-potential inequality.",
+        "Follow a conditional MGF source through ridge confidence and optimistic action selection.",
+        "Separate deterministic horizons, simultaneous one-policy confidence, and square-integrable stopping-time conclusions."
+      ],
+      "module_globs": ["BanditRLProof/OFUL*.lean"],
+      "open_gaps": [
+        "Contextual or time-varying action sets, dynamic linear bandits, paper-sharp/minimax constants, uniform-over-parameter guarantees, and infinite-dimensional Hilbert-space OFUL remain extensions.",
+        "Arbitrary history environments without a centered conditional-MGF producer, pathwise/almost-sure/universal optional-stopping consistency, and full primal-dual Bandits-with-Knapsacks remain outside the completed scope.",
+        "Budget-forced schedules compile under explicit contracts, but they are not labeled as a complete BwK theorem."
+      ]
+    },
+    {
+      "slug": "thompson",
+      "title": "6. Thompson sampling and Bayesian regret",
+      "short_title": "Thompson sampling",
+      "status": "compiled",
+      "summary": "The scoped stationary finite-arm Thompson route compiles from posterior kernels and probability matching on the actual recursive generated history through clipped-UCB decomposition, latent-stream confidence, and an explicit Bayesian regret terminal.",
+      "audience": "Best read after the Probability layer.",
+      "completion_definition": "Complete in the stationary canonical textbook scope when a probability prior and likelihood construct the posterior kernel, a measurable selector with the explicit pointwise IsOptimalMeanSelector contract gives posterior best-action pushforward and actual-recursive-trajectory probability matching, score transport yields Bayesian and clipped-UCB decompositions, a stationary Markov reward kernel constructs the augmented latent arm stream with a.e. generated-reward support, upper/lower confidence consumers compile, and the generated trajectory satisfies E[R_n^Bayes] <= (2K+1)(u-l)+8 sqrt(sigma^2 K n log n) under the exact optimality, measurable bounded-mean, and centered sub-Gaussian assumptions.",
+      "completion_blockers": [
+        "No remaining blocker inside this stationary canonical scope: the public canary types probability matching on the actual recursive history and concretely instantiates the final theorem with a one-arm stationary Gaussian Markov source while explicitly proving its mean-optimal selector contract. The items below remain separate extensions."
+      ],
+      "learning_goals": [
+        "Read a posterior as a kernel from histories to environments.",
+        "Transport conditional action-law equality onto the generated trajectory.",
+        "Understand why one compiled stationary theorem is not a universal posterior-sampling result."
+      ],
+      "module_globs": ["BanditRLProof/Algorithms/Thompson*.lean"],
+      "open_gaps": [
+        "Arbitrary nonstationary posterior models, contextual or linear Thompson sampling, posterior-sampling RL, and user-supplied posteriors without a law producer remain extensions.",
+        "Sharp problem-dependent or asymptotically optimal constants are not claimed by the compiled stationary terminal.",
+        "Exact LeanMachineLearning declaration/toolchain identity remains independently blocked; LML cards are retrieval evidence, not imported proof terms."
+      ]
+    },
+    {
+      "slug": "exp3",
+      "title": "7. EXP3 and adversarial concentration",
+      "short_title": "EXP3",
+      "status": "compiled",
+      "summary": "The scoped canonical generated EXP3 route compiles from exponential-weight potentials and importance-weighted conditional moments through horizon-tuned expected and best-arm high-probability endpoints, plus a distinct fixed-process all-positive-prefix realized-regret event and a sparse-loss extension.",
+      "audience": "Read Foundations first; later sections use the Probability layer heavily.",
+      "learning_goals": [
+        "Connect the one-step exponential-potential inequality to deterministic Hedge regret.",
+        "See why positive exploration makes importance-weighted estimators legal.",
+        "Track predictable variance, realized deviation, comparator regret, and sparsity failures into explicit probability events."
+      ],
+      "module_globs": ["BanditRLProof/Exp3*.lean"],
+      "completion_definition": "Complete in the canonical adversarial finite-arm scope when the exponential-potential and deterministic Hedge route, positive-support importance weighting, conditional first/second moments, measurable recursive generated trajectory, predictable-loss transport, and exploration bias compile; the same public canary must type (i) the horizon-dependent tuned expected bound, (ii) the horizon-dependent fixed-window best-supported-arm realized tail, (iii) one fixed prior/arms/loss/eta/gamma/comparator process with predictable and realized-deviation parents, exact decomposition, and an all-positive-prefix realized-regret outer-probability terminal, and (iv) the separately labelled sparse/variance-sensitive endpoint with its failure budget explicit.",
+      "completion_blockers": [
+        "No remaining blocker inside this canonical scope: Tests/BookMapChaptersSevenAndEightCanary.lean gives full-conclusion applications for the tuned expected, per-horizon best-arm, fixed-process all-prefix, and sparse terminals. The items below are explicit extensions rather than hidden chapter requirements."
+      ],
+      "open_gaps": [
+        "The tuned expected and fixed-window best-arm theorems rebuild eta, gamma, and the generated law from the queried horizon; they are not a single horizon-free policy or simultaneous anytime theorem.",
+        "The geometric all-prefix theorem instead fixes eta, gamma, prior, arms, loss, and one supported comparator; its scheduled radius is not a tuned sublinear confidence sequence or a best-arm minimum.",
+        "Ville/Doob or mixture boundaries, optional stopping, ideal EXP3.P, contextual/delayed EXP3, and one universal theorem subsuming every hypothesis regime remain extensions. The sparse theorem retains its supplied sparsity-failure probability."
+      ]
+    },
+    {
+      "slug": "tsallis",
+      "title": "8. Tsallis-FTRL, corruption, and nonstationarity",
+      "short_title": "Tsallis-FTRL",
+      "status": "compiled",
+      "summary": "The scoped canonical half-Tsallis FTRL route compiles from finite-simplex minimizers and one-step stability through a measurable scheduled generated trajectory, score alignment, expected self-bounding, and a finite-arm IID bounded reward-law logarithmic regret terminal; corruption and nonstationary routes remain labelled extensions.",
+      "audience": "This is one of the longest routes; read EXP3 and the Probability layer first.",
+      "learning_goals": [
+        "Separate deterministic FTRL stability from stochastic law transport.",
+        "Use expected action probabilities and gap self-bounds to obtain logarithmic or corruption-sensitive regret.",
+        "Follow the now-compiled generated oracle-restart law while preserving its full-information change-point assumption."
+      ],
+      "module_globs": [
+        "BanditRLProof/FTRL*.lean",
+        "BanditRLProof/Tsallis*.lean"
+      ],
+      "completion_definition": "Complete in the canonical finite-arm scope when half-Tsallis finite-simplex minimizer existence, interiority, uniqueness, and measurability; one-step importance-weighted stability; time-varying potential/penalty algebra; the measurable scheduled selector and recursive generated action law; observed score/probability alignment; initial, successor, all-times, and all-rate expected stability; expected environment-regret transport; fixed-gap self-bounding; square-root-schedule logarithmic optimization; and a concrete finite-arm IID rational reward-law producer all compile. The terminal must use the same let-bound selector, trajectory kernel, and measure, retain probability/a.e.-unit-support/exact-mean/positive-gap contracts, and admit the uncorrupted specialization by setting its explicit nonnegative corruption allowance to zero.",
+      "completion_blockers": [
+        "No remaining blocker inside this canonical scope: Tests/BookMapChaptersSevenAndEightCanary.lean checks the actual generated selector/action-law/stability chain and concretely instantiates the IID logarithmic terminal with two bounded Dirac reward laws of means 3/4 and 1/4 and a proved positive gap. The items below remain distinct research extensions."
+      ],
+      "open_gaps": [
+        "Paper-sharp or minimax-optimal Tsallis-INF constants, a complete best-of-both-worlds theorem, and high-probability or realized-regret guarantees are not claimed by the canonical expected-regret terminal.",
+        "History-adaptive corruption, drifting laws, dynamic comparators, and the population-mean oracle restart compile as separately labelled extensions; an observed-reward detector still needs random history-dependent scheduling plus delay/false-alarm concentration.",
+        "The strict Fin 2 refined-averaged-stability counterexample remains an explicit obstruction; contextual/linear Tsallis-INF and broader adaptive-learning-rate paper routes remain separate."
+      ]
+    },
+    {
+      "slug": "finite-horizon-rl",
+      "title": "9. Finite-horizon reinforcement learning",
+      "short_title": "Finite-horizon RL",
+      "status": "compiled",
+      "summary": "Finite MDPs, Bellman optimality, generated trajectories and occupancy regret, plus a canonical known-reward Hoeffding UCBVI-CH route whose recurrent planner, same-source confidence, optimism, raw cumulative episode pseudo-regret, high-probability terminal, and failure-aware expectation consumer share one adaptive generated process.",
+      "audience": "Read Foundations, Probability, UCB, and the OFUL stopping-time material first.",
+      "learning_goals": [
+        "Build finite-horizon value recursion and prove the optimal policy attains the Bellman optimum.",
+        "Rewrite expected policy regret as an occupancy-weighted Bellman gap.",
+        "Follow aggregate empirical transitions through previous-Q clipping, same-source confidence, Bellman optimism, counting and martingale terms to generated cumulative pseudo-regret."
+      ],
+      "module_globs": ["BanditRLProof/RL/*.lean"],
+      "completion_definition": "Complete in the canonical Chapter 9 scope when finite-MDP Bellman and occupancy foundations, a single generated adaptive episode process with known deterministic rewards in [0,1], same-prefix aggregate transition counts, a previous-Q clipped Hoeffding UCBVI-CH planner, same-law confidence and optimism, generated raw cumulative episode pseudo-regret, the explicit 20/250 high-probability terminal, and an integrable failure-aware expected-regret corollary all compile through the public root and a nondegenerate typed canary.",
+      "completion_blockers": [
+        "No remaining blocker inside this canonical known-reward Hoeffding scope: the recurrent source uses only strict-prefix generated data; its confidence event, policy, empirical kernel and regret share one trajectory measure; the frozen high-probability theorem and K H delta expected consumer compile; and GitHub Actions plus the Pages deployment were verified before promotion."
+      ],
+      "open_gaps": [
+        "Bernstein/variance-aware minimax UCB-VI and its paper-leading rate remain a separate second milestone.",
+        "Stochastic-reward UCBVI, adversarial or nonstationary initial-state sequences, realized sampled-return high-probability UCBVI, posterior-sampling RL, model-free Q-learning, and infinite or continuous state-action spaces remain extensions.",
+        "Natural-causal consistency and stopping-time RL results are independent extension branches; they are not consequences or aliases of the compiled raw cumulative UCBVI-CH terminal.",
+        "The joint confidence event includes singleton Bernstein coordinates and a same-generated-law optimal-tail scalar probe. It does not claim the sharp scalar bound follows from singleton envelopes alone."
+      ]
+    },
+    {
+      "slug": "frontier",
+      "title": "10. Automation, resources, and open routes",
+      "short_title": "Frontier",
+      "status": "planned",
+  "summary": "The proof harness, task vocabulary, resource stopping leaves, literature registry, partial source-frozen delayed-feedback, succinct-lower-bound, and stochastic-gradient-bandit audits, and planned BwK, preference, robust, federated, neural-bandit, and sharp KL-asymptotic work.",
+      "audience": "Read this chapter to contribute a new route or understand what is deliberately not claimed.",
+      "learning_goals": [
+        "Use the same status vocabulary for source declarations, theorem cards, tasks, and blockers.",
+        "Distinguish a stopping-time foundation from a completed resource-constrained algorithm theorem.",
+        "Move a literature target through task packets, proof obligations, compilation, and synchronized documentation."
+      ],
+  "module_globs": [
+    "BanditRLProof/Automation.lean",
+    "BanditRLProof/BudgetStoppingTime.lean",
+    "BanditRLProof/DelayedFeedback/*.lean",
+    "BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean",
+    "BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean",
+    "BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean",
+    "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean",
+    "BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean",
+    "BanditRLProof/Algorithms/StochasticGradientBanditConditionalExponentialAudit.lean",
+    "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRecurrence.lean",
+    "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmInitialRecurrence.lean",
+    "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmMeasurableRecurrence.lean",
+    "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean",
+    "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean",
+    "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean",
+    "BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean",
+    "BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean",
+    "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean",
+    "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean",
+    "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean",
+    "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean",
+    "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean",
+    "BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean",
+    "BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean",
+    "BanditRLProof/OpenProblems.lean",
+    "BanditRLProof/Literature.lean"
+  ],
+      "open_gaps": [
+    "The conservative generated KL-UCB finite-time route has named compiled declarations. The source-frozen delayed-bandit audit now compiles accounting, causal-view, new-arrival processing, probability allocation, the deterministic optimal-arm-survival core, and a causal one-round action measure. EAP/BSC state preservation, a measurable recursive trajectory, and stochastic/adversarial regret endpoints remain blocked. The source-frozen succinct-lower-bound audit compiles 54 declarations covering Definitions 3.1–3.3 and Lemmas 3.1–3.4, including the finite-Bessel strict-support route, plus an explicit global-R boundedness diagnostic; the global Lemmas 3.5–3.6 and Theorem 3.8 remain open. The stochastic-gradient-bandit audit retains the exact counted 361 = 223 + 23 + 25 + 26 + 7 + 8 + 13 + 28 + 8 audit-slice inventory through deterministic-time selected-reward freshness, terminal-count events, nth-pull-to-count bridges, and a generic low-count regret consumer. A separate ten-declaration module proves equality of the complete visible/native trajectory measures. The selected-block module now contains eight declarations for missing-pull-aware block transport, fourteen for the exact finite Appendix-C `S0/S1` event, ten for the exact disjoint all-present/missing-pull probability split, and four for missing-pull inclusion, visible-marginal probability transport, and the finite-horizon expected-regret charge. None is a selected-IID theorem or a positive-probability producer. Corollary 1 remains a direct Theorem-1 consumer, not Theorem-2 evidence. The frozen K = 2 Theorem-2 terminal remains blocked: the generated all-present phase still needs a fixed-chronological-cutoff trigger, the stopped-prefix future-cylinder law must yield conditional no-return probability at least one half, and the Rademacher/ballot probability plus asymptotic assembly remain uncompiled. The frozen terminal twoArmRademacherDirac_theoremTwo_polynomialRegret is not claimed. The Theorem-4 terminal also remains blocked because the general-K generated process, uniform buffer/survival producer, stopped-process argument, and regret assembly are absent. Full BwK/primal-dual regret, dueling, robust, federated, and neural-bandit routes remain planned or partial.",
+        "Direct LeanMachineLearning declaration identity remains blocked on a deliberate cross-toolchain migration and real upstream-symbol import; local theorem-card-shaped ETC/UCB proofs do not satisfy that gate.",
+        "The harness records completion gates but does not replace Lean elaboration or mathematical review."
+      ]
+    }
+  ]
+}

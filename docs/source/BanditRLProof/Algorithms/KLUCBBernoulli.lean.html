@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Algorithms/KLUCBBernoulli.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Algorithms/KLUCBBernoulli.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Algorithms/KLUCBBernoulli.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Algorithms/KLUCBBernoulli.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import Mathlib.Analysis.SpecialFunctions.Log.Basic</span>
+<span id="L2">2 import Mathlib.Analysis.Convex.Deriv</span>
+<span id="L3">3 import Mathlib.Analysis.SpecialFunctions.Log.Deriv</span>
+<span id="L4">4 import Mathlib.InformationTheory.KullbackLeibler.Basic</span>
+<span id="L5">5 import Mathlib.Order.ConditionallyCompleteLattice.Basic</span>
+<span id="L6">6 </span>
+<span id="L7">7 /-!</span>
+<span id="L8">8 # Bernoulli relative entropy and KL confidence indices</span>
+<span id="L9">9 </span>
+<span id="L10">10 This file owns the project-local binary relative entropy used by KL-UCB.  The</span>
+<span id="L11">11 codomain is `ENNReal`: singular Bernoulli comparisons are genuinely `top`, not</span>
+<span id="L12">12 the accidental finite value obtained from Mathlib&#x27;s totalized `Real.log 0`.</span>
+<span id="L13">13 -/</span>
+<span id="L14">14 </span>
+<span id="L15">15 namespace BanditRLProof</span>
+<span id="L16">16 namespace KLUCB</span>
+<span id="L17">17 </span>
+<span id="L18">18 open Set</span>
+<span id="L19">19 </span>
+<span id="L20">20 noncomputable section</span>
+<span id="L21">21 </span>
+<span id="L22">22 /-- The closed unit interval predicate used by every KL-UCB parameter. -/</span>
+<span id="L23">23 def IsBernoulliParameter (p : Real) : Prop := p ∈ Set.Icc (0 : Real) 1</span>
+<span id="L24">24 </span>
+<span id="L25">25 local instance (p : Real) : Decidable (IsBernoulliParameter p) :=</span>
+<span id="L26">26   Classical.propDecidable _</span>
+<span id="L27">27 </span>
+<span id="L28">28 local instance : DecidableEq Real := Classical.decEq _</span>
+<span id="L29">29 </span>
+<span id="L30">30 /-- The finite analytic Bernoulli relative-entropy expression.  It is used</span>
+<span id="L31">31 only when the second parameter is strictly between zero and one. -/</span>
+<span id="L32">32 noncomputable def bernoulliKLCore (p q : Real) : Real :=</span>
+<span id="L33">33   p * Real.log (p / q) +</span>
+<span id="L34">34     (1 - p) * Real.log ((1 - p) / (1 - q))</span>
+<span id="L35">35 </span>
+<span id="L36">36 /-- Bernoulli relative entropy with exact support/endpoint conventions.</span>
+<span id="L37">37 </span>
+<span id="L38">38 * parameters outside `[0,1]` have value `top`;</span>
+<span id="L39">39 * `d(0,0)=d(1,1)=0`;</span>
+<span id="L40">40 * `d(p,0)=top` for `p&gt;0` and `d(p,1)=top` for `p&lt;1`;</span>
+<span id="L41">41 * otherwise the ordinary finite logarithmic expression is used.</span>
+<span id="L42">42 -/</span>
+<span id="L43">43 noncomputable def bernoulliKL (p q : Real) : ENNReal :=</span>
+<span id="L44">44   if hp : IsBernoulliParameter p then</span>
+<span id="L45">45     if hq : IsBernoulliParameter q then</span>
+<span id="L46">46       if hq0 : q = 0 then</span>
+<span id="L47">47         if hp0 : p = 0 then 0 else ⊤</span>
+<span id="L48">48       else if hq1 : q = 1 then</span>
+<span id="L49">49         if hp1 : p = 1 then 0 else ⊤</span>
+<span id="L50">50       else</span>
+<span id="L51">51         ENNReal.ofReal (bernoulliKLCore p q)</span>
+<span id="L52">52     else ⊤</span>
+<span id="L53">53   else ⊤</span>
+<span id="L54">54 </span>
+<span id="L55">55 theorem bernoulliKL_nonneg (p q : Real) :</span>
+<span id="L56">56     0 &lt;= bernoulliKL p q := bot_le</span>
+<span id="L57">57 </span>
+<span id="L58">58 @[simp]</span>
+<span id="L59">59 theorem bernoulliKL_eq_top_of_not_left</span>
+<span id="L60">60     {p q : Real} (hp : ¬ IsBernoulliParameter p) :</span>
+<span id="L61">61     bernoulliKL p q = ⊤ := by</span>
+<span id="L62">62   simp [bernoulliKL, hp]</span>
+<span id="L63">63 </span>
+<span id="L64">64 @[simp]</span>
+<span id="L65">65 theorem bernoulliKL_eq_top_of_not_right</span>
+<span id="L66">66     {p q : Real} (hq : ¬ IsBernoulliParameter q) :</span>
+<span id="L67">67     bernoulliKL p q = ⊤ := by</span>
+<span id="L68">68   by_cases hp : IsBernoulliParameter p</span>
+<span id="L69">69   · simp [bernoulliKL, hp, hq]</span>
+<span id="L70">70   · simp [bernoulliKL, hp]</span>
+<span id="L71">71 </span>
+<span id="L72">72 @[simp]</span>
+<span id="L73">73 theorem bernoulliKL_zero_zero : bernoulliKL 0 0 = 0 := by</span>
+<span id="L74">74   simp [bernoulliKL, IsBernoulliParameter]</span>
+<span id="L75">75 </span>
+<span id="L76">76 @[simp]</span>
+<span id="L77">77 theorem bernoulliKL_one_one : bernoulliKL 1 1 = 0 := by</span>
+<span id="L78">78   simp [bernoulliKL, IsBernoulliParameter]</span>
+<span id="L79">79 </span>
+<span id="L80">80 @[simp]</span>
+<span id="L81">81 theorem bernoulliKL_right_zero</span>
+<span id="L82">82     {p : Real} (hp : IsBernoulliParameter p) :</span>
+<span id="L83">83     bernoulliKL p 0 = if p = 0 then 0 else ⊤ := by</span>
+<span id="L84">84   have hzero : IsBernoulliParameter (0 : Real) := ⟨le_rfl, zero_le_one⟩</span>
+<span id="L85">85   simp [bernoulliKL, hp, hzero]</span>
+<span id="L86">86 </span>
+<span id="L87">87 @[simp]</span>
+<span id="L88">88 theorem bernoulliKL_right_one</span>
+<span id="L89">89     {p : Real} (hp : IsBernoulliParameter p) :</span>
+<span id="L90">90     bernoulliKL p 1 = if p = 1 then 0 else ⊤ := by</span>
+<span id="L91">91   have hone : IsBernoulliParameter (1 : Real) := ⟨zero_le_one, le_rfl⟩</span>
+<span id="L92">92   simp [bernoulliKL, hp, hone]</span>
+<span id="L93">93 </span>
+<span id="L94">94 theorem bernoulliKL_eq_top_right_zero</span>
+<span id="L95">95     {p : Real} (hp : IsBernoulliParameter p) (hp0 : p ≠ 0) :</span>
+<span id="L96">96     bernoulliKL p 0 = ⊤ := by</span>
+<span id="L97">97   simp [bernoulliKL_right_zero hp, hp0]</span>
+<span id="L98">98 </span>
+<span id="L99">99 theorem bernoulliKL_eq_top_right_one</span>
+<span id="L100">100     {p : Real} (hp : IsBernoulliParameter p) (hp1 : p ≠ 1) :</span>
+<span id="L101">101     bernoulliKL p 1 = ⊤ := by</span>
+<span id="L102">102   simp [bernoulliKL_right_one hp, hp1]</span>
+<span id="L103">103 </span>
+<span id="L104">104 theorem bernoulliKL_zero_left_of_interior</span>
+<span id="L105">105     {q : Real} (hq0 : 0 &lt; q) (hq1 : q &lt; 1) :</span>
+<span id="L106">106     bernoulliKL 0 q =</span>
+<span id="L107">107       ENNReal.ofReal (Real.log (1 / (1 - q))) := by</span>
+<span id="L108">108   have hq : IsBernoulliParameter q := ⟨hq0.le, hq1.le⟩</span>
+<span id="L109">109   have hzero : IsBernoulliParameter (0 : Real) := ⟨le_rfl, zero_le_one⟩</span>
+<span id="L110">110   have hq0ne : q ≠ 0 := ne_of_gt hq0</span>
+<span id="L111">111   have hq1ne : q ≠ 1 := ne_of_lt hq1</span>
+<span id="L112">112   rw [show Real.log (1 / (1 - q)) = -Real.log (1 - q) by</span>
+<span id="L113">113     rw [one_div, Real.log_inv]]</span>
+<span id="L114">114   simp [bernoulliKL, hzero, hq, hq0ne, hq1ne, bernoulliKLCore]</span>
+<span id="L115">115 </span>
+<span id="L116">116 theorem bernoulliKL_one_left_of_interior</span>
+<span id="L117">117     {q : Real} (hq0 : 0 &lt; q) (hq1 : q &lt; 1) :</span>
+<span id="L118">118     bernoulliKL 1 q =</span>
+<span id="L119">119       ENNReal.ofReal (Real.log (1 / q)) := by</span>
+<span id="L120">120   have hq : IsBernoulliParameter q := ⟨hq0.le, hq1.le⟩</span>
+<span id="L121">121   have hone : IsBernoulliParameter (1 : Real) := ⟨zero_le_one, le_rfl⟩</span>
+<span id="L122">122   have hq0ne : q ≠ 0 := ne_of_gt hq0</span>
+<span id="L123">123   have hq1ne : q ≠ 1 := ne_of_lt hq1</span>
+<span id="L124">124   rw [show Real.log (1 / q) = -Real.log q by rw [one_div, Real.log_inv]]</span>
+<span id="L125">125   simp [bernoulliKL, hone, hq, hq0ne, hq1ne, bernoulliKLCore]</span>
+<span id="L126">126 </span>
+<span id="L127">127 /-- The finite Bernoulli expression vanishes on the diagonal away from the</span>
+<span id="L128">128 singular endpoints. -/</span>
+<span id="L129">129 theorem bernoulliKLCore_self</span>
+<span id="L130">130     {p : Real} (hp0 : p ≠ 0) (hp1 : p ≠ 1) :</span>
+<span id="L131">131     bernoulliKLCore p p = 0 := by</span>
+<span id="L132">132   simp [bernoulliKLCore, hp0, hp1]</span>
+<span id="L133">133 </span>
+<span id="L134">134 /-- The analytic binary KL expression is the two-atom `klFun` integral. -/</span>
+<span id="L135">135 theorem bernoulliKLCore_eq_klFun</span>
+<span id="L136">136     {p q : Real} (hq0 : q ≠ 0) (hq1 : q ≠ 1) :</span>
+<span id="L137">137     bernoulliKLCore p q =</span>
+<span id="L138">138       q * InformationTheory.klFun (p / q) +</span>
+<span id="L139">139         (1 - q) * InformationTheory.klFun ((1 - p) / (1 - q)) := by</span>
+<span id="L140">140   rw [InformationTheory.klFun_apply, InformationTheory.klFun_apply]</span>
+<span id="L141">141   unfold bernoulliKLCore</span>
+<span id="L142">142   have h1q : 1 - q ≠ 0 := sub_ne_zero.mpr (Ne.symm hq1)</span>
+<span id="L143">143   field_simp</span>
+<span id="L144">144   ring</span>
+<span id="L145">145 </span>
+<span id="L146">146 /-- Nontrivial nonnegativity of the finite logarithmic expression.  This is</span>
+<span id="L147">147 stronger than the order-theoretic nonnegativity of its `ENNReal` wrapper. -/</span>
+<span id="L148">148 theorem bernoulliKLCore_nonneg</span>
+<span id="L149">149     {p q : Real} (hp : IsBernoulliParameter p)</span>
+<span id="L150">150     (hq0 : 0 &lt; q) (hq1 : q &lt; 1) :</span>
+<span id="L151">151     0 &lt;= bernoulliKLCore p q := by</span>
+<span id="L152">152   rw [bernoulliKLCore_eq_klFun (ne_of_gt hq0) (ne_of_lt hq1)]</span>
+<span id="L153">153   have hpq : 0 &lt;= p / q := div_nonneg hp.1 hq0.le</span>
+<span id="L154">154   have hcomp : 0 &lt;= (1 - p) / (1 - q) := by</span>
+<span id="L155">155     exact div_nonneg (sub_nonneg.mpr hp.2) (sub_nonneg.mpr hq1.le)</span>
+<span id="L156">156   exact add_nonneg</span>
+<span id="L157">157     (mul_nonneg hq0.le (InformationTheory.klFun_nonneg hpq))</span>
+<span id="L158">158     (mul_nonneg (sub_nonneg.mpr hq1.le)</span>
+<span id="L159">159       (InformationTheory.klFun_nonneg hcomp))</span>
+<span id="L160">160 </span>
+<span id="L161">161 /-- Interior parameters expose the finite analytic expression without</span>
+<span id="L162">162 truncation: its real nonnegativity has already been proved. -/</span>
+<span id="L163">163 theorem bernoulliKL_eq_of_interior</span>
+<span id="L164">164     {p q : Real} (hp : IsBernoulliParameter p)</span>
+<span id="L165">165     (hq0 : 0 &lt; q) (hq1 : q &lt; 1) :</span>
+<span id="L166">166     bernoulliKL p q = ENNReal.ofReal (bernoulliKLCore p q) := by</span>
+<span id="L167">167   have hq : IsBernoulliParameter q := ⟨hq0.le, hq1.le⟩</span>
+<span id="L168">168   have hq0ne : q ≠ 0 := ne_of_gt hq0</span>
+<span id="L169">169   have hq1ne : q ≠ 1 := ne_of_lt hq1</span>
+<span id="L170">170   simp [bernoulliKL, hp, hq, hq0ne, hq1ne]</span>
+<span id="L171">171 </span>
+<span id="L172">172 /-- Algebraically expanded finite KL, convenient for differentiation in the</span>
+<span id="L173">173 second parameter. -/</span>
+<span id="L174">174 noncomputable def bernoulliKLExpanded (p q : Real) : Real :=</span>
+<span id="L175">175   p * Real.log p - p * Real.log q +</span>
+<span id="L176">176     (1 - p) * Real.log (1 - p) -</span>
+<span id="L177">177       (1 - p) * Real.log (1 - q)</span>
+<span id="L178">178 </span>
+<span id="L179">179 theorem bernoulliKLCore_eq_expanded</span>
+<span id="L180">180     {p q : Real} (hp0 : p ≠ 0) (hp1 : p ≠ 1)</span>
+<span id="L181">181     (hq0 : q ≠ 0) (hq1 : q ≠ 1) :</span>
+<span id="L182">182     bernoulliKLCore p q = bernoulliKLExpanded p q := by</span>
+<span id="L183">183   unfold bernoulliKLCore bernoulliKLExpanded</span>
+<span id="L184">184   rw [Real.log_div hp0 hq0,</span>
+<span id="L185">185     Real.log_div (sub_ne_zero.mpr (Ne.symm hp1))</span>
+<span id="L186">186       (sub_ne_zero.mpr (Ne.symm hq1))]</span>
+<span id="L187">187   ring</span>
+<span id="L188">188 </span>
+<span id="L189">189 theorem hasDerivAt_bernoulliKLExpanded_right</span>
+<span id="L190">190     (p q : Real) (hq0 : q ≠ 0) (hq1 : q ≠ 1) :</span>
+<span id="L191">191     HasDerivAt (fun r =&gt; bernoulliKLExpanded p r)</span>
+<span id="L192">192       ((q - p) / (q * (1 - q))) q := by</span>
+<span id="L193">193   unfold bernoulliKLExpanded</span>
+<span id="L194">194   have hlogq := Real.hasDerivAt_log hq0</span>
+<span id="L195">195   have h1q : 1 - q ≠ 0 := sub_ne_zero.mpr (Ne.symm hq1)</span>
+<span id="L196">196   have honeSub : HasDerivAt (fun r : Real =&gt; 1 - r) (-1) q := by</span>
+<span id="L197">197     convert (hasDerivAt_const q (1 : Real)).sub (hasDerivAt_id q) using 1 &lt;;&gt; ring</span>
+<span id="L198">198   have hlogOneSub := honeSub.log (sub_ne_zero.mpr (Ne.symm hq1))</span>
+<span id="L199">199   convert</span>
+<span id="L200">200     (((hasDerivAt_const q (p * Real.log p)).sub</span>
+<span id="L201">201         (hlogq.const_mul p)).add</span>
+<span id="L202">202       (hasDerivAt_const q ((1 - p) * Real.log (1 - p)))).sub</span>
+<span id="L203">203         (hlogOneSub.const_mul (1 - p)) using 1 &lt;;&gt;</span>
+<span id="L204">204       field_simp [hq0, h1q] &lt;;&gt; ring</span>
+<span id="L205">205 </span>
+<span id="L206">206 /-- A conservative binary Pinsker inequality.  The constant `1/2` is weaker</span>
+<span id="L207">207 than the sharp natural-log constant `2`, but is sufficient to invert every</span>
+<span id="L208">208 KL-UCB confidence set without changing the KL score itself. -/</span>
+<span id="L209">209 theorem half_sq_sub_le_bernoulliKLCore</span>
+<span id="L210">210     {p q : Real} (hp : IsBernoulliParameter p)</span>
+<span id="L211">211     (hq0 : 0 &lt; q) (hq1 : q &lt; 1) :</span>
+<span id="L212">212     (1 / 2 : Real) * (p - q) ^ 2 &lt;= bernoulliKLCore p q := by</span>
+<span id="L213">213   by_cases hp0 : p = 0</span>
+<span id="L214">214   · subst p</span>
+<span id="L215">215     simp only [zero_sub, neg_sq]</span>
+<span id="L216">216     have hlog := Real.log_le_sub_one_of_pos (sub_pos.mpr hq1)</span>
+<span id="L217">217     have hqle : (1 / 2 : Real) * q ^ 2 &lt;= q := by</span>
+<span id="L218">218       nlinarith [hq0.le, hq1.le]</span>
+<span id="L219">219     simpa [bernoulliKLCore] using hqle.trans (by linarith : q &lt;= -Real.log (1 - q))</span>
+<span id="L220">220   by_cases hp1 : p = 1</span>
+<span id="L221">221   · subst p</span>
+<span id="L222">222     have hlog := Real.log_le_sub_one_of_pos hq0</span>
+<span id="L223">223     have hcomp : 0 &lt;= 1 - q := sub_nonneg.mpr hq1.le</span>
+<span id="L224">224     have hcomple : 1 - q &lt;= 1 := by linarith</span>
+<span id="L225">225     have hsq : (1 / 2 : Real) * (1 - q) ^ 2 &lt;= 1 - q := by</span>
+<span id="L226">226       nlinarith</span>
+<span id="L227">227     simpa [bernoulliKLCore] using hsq.trans (by linarith : 1 - q &lt;= -Real.log q)</span>
+<span id="L228">228   have hp0&#x27; : 0 &lt; p := lt_of_le_of_ne hp.1 (Ne.symm hp0)</span>
+<span id="L229">229   have hp1&#x27; : p &lt; 1 := lt_of_le_of_ne hp.2 hp1</span>
+<span id="L230">230   let f : Real -&gt; Real := fun r =&gt;</span>
+<span id="L231">231     bernoulliKLExpanded p r - (1 / 2 : Real) * (p - r) ^ 2</span>
+<span id="L232">232   have hfderiv (r : Real) (hr0 : 0 &lt; r) (hr1 : r &lt; 1) :</span>
+<span id="L233">233       HasDerivAt f</span>
+<span id="L234">234         ((r - p) * (1 / (r * (1 - r)) - 1)) r := by</span>
+<span id="L235">235     have hkl := hasDerivAt_bernoulliKLExpanded_right p r</span>
+<span id="L236">236       (ne_of_gt hr0) (ne_of_lt hr1)</span>
+<span id="L237">237     have hdiff : HasDerivAt (fun x : Real =&gt; p - x) (-1) r := by</span>
+<span id="L238">238       convert (hasDerivAt_const r p).sub (hasDerivAt_id r) using 1 &lt;;&gt; ring</span>
+<span id="L239">239     have hsq : HasDerivAt</span>
+<span id="L240">240         (fun x : Real =&gt; (1 / 2 : Real) * (p - x) ^ 2) (r - p) r := by</span>
+<span id="L241">241       convert (hdiff.pow 2).const_mul (1 / 2 : Real) using 1 &lt;;&gt; ring</span>
+<span id="L242">242     convert hkl.sub hsq using 1</span>
+<span id="L243">243     field_simp [ne_of_gt hr0, sub_ne_zero.mpr (Ne.symm (ne_of_lt hr1))]</span>
+<span id="L244">244   have hcoefficient (r : Real) (hr0 : 0 &lt; r) (hr1 : r &lt; 1) :</span>
+<span id="L245">245       0 &lt;= 1 / (r * (1 - r)) - 1 := by</span>
+<span id="L246">246     have hprod : 0 &lt; r * (1 - r) := mul_pos hr0 (sub_pos.mpr hr1)</span>
+<span id="L247">247     have hprod_le : r * (1 - r) &lt;= 1 := by nlinarith [sq_nonneg r]</span>
+<span id="L248">248     have hone : (1 : Real) &lt;= 1 / (r * (1 - r)) := by</span>
+<span id="L249">249       exact (le_div_iff₀ hprod).2 (by simpa using hprod_le)</span>
+<span id="L250">250     linarith</span>
+<span id="L251">251   have hfp : f p = 0 := by</span>
+<span id="L252">252     simp [f, bernoulliKLExpanded]</span>
+<span id="L253">253   have hresult : f p &lt;= f q := by</span>
+<span id="L254">254     rcases le_total p q with hpq | hqp</span>
+<span id="L255">255     · let D : Set Real := Set.Icc p q</span>
+<span id="L256">256       have hinside (r : Real) (hr : r ∈ D) : 0 &lt; r ∧ r &lt; 1 :=</span>
+<span id="L257">257         ⟨hp0&#x27;.trans_le hr.1, hr.2.trans_lt hq1⟩</span>
+<span id="L258">258       have hcontinuous : ContinuousOn f D := by</span>
+<span id="L259">259         intro r hr</span>
+<span id="L260">260         exact (hfderiv r (hinside r hr).1 (hinside r hr).2).continuousAt.continuousWithinAt</span>
+<span id="L261">261       have hmono : MonotoneOn f D :=</span>
+<span id="L262">262         monotoneOn_of_deriv_nonneg (convex_Icc p q) hcontinuous</span>
+<span id="L263">263           (fun r hr =&gt; (hfderiv r</span>
+<span id="L264">264             (hinside r (interior_subset hr)).1</span>
+<span id="L265">265             (hinside r (interior_subset hr)).2).differentiableAt.differentiableWithinAt)</span>
+<span id="L266">266           (fun r hr =&gt; by</span>
+<span id="L267">267             rw [(hfderiv r</span>
+<span id="L268">268               (hinside r (interior_subset hr)).1</span>
+<span id="L269">269               (hinside r (interior_subset hr)).2).deriv]</span>
+<span id="L270">270             exact mul_nonneg (sub_nonneg.mpr (interior_subset hr).1)</span>
+<span id="L271">271               (hcoefficient r</span>
+<span id="L272">272                 (hinside r (interior_subset hr)).1</span>
+<span id="L273">273                 (hinside r (interior_subset hr)).2))</span>
+<span id="L274">274       exact hmono ⟨le_rfl, hpq⟩ ⟨hpq, le_rfl⟩ hpq</span>
+<span id="L275">275     · let D : Set Real := Set.Icc q p</span>
+<span id="L276">276       have hinside (r : Real) (hr : r ∈ D) : 0 &lt; r ∧ r &lt; 1 :=</span>
+<span id="L277">277         ⟨hq0.trans_le hr.1, hr.2.trans_lt hp1&#x27;⟩</span>
+<span id="L278">278       have hcontinuous : ContinuousOn f D := by</span>
+<span id="L279">279         intro r hr</span>
+<span id="L280">280         exact (hfderiv r (hinside r hr).1 (hinside r hr).2).continuousAt.continuousWithinAt</span>
+<span id="L281">281       have hanti : AntitoneOn f D :=</span>
+<span id="L282">282         antitoneOn_of_deriv_nonpos (convex_Icc q p) hcontinuous</span>
+<span id="L283">283           (fun r hr =&gt; (hfderiv r</span>
+<span id="L284">284             (hinside r (interior_subset hr)).1</span>
+<span id="L285">285             (hinside r (interior_subset hr)).2).differentiableAt.differentiableWithinAt)</span>
+<span id="L286">286           (fun r hr =&gt; by</span>
+<span id="L287">287             rw [(hfderiv r</span>
+<span id="L288">288               (hinside r (interior_subset hr)).1</span>
+<span id="L289">289               (hinside r (interior_subset hr)).2).deriv]</span>
+<span id="L290">290             exact mul_nonpos_of_nonpos_of_nonneg</span>
+<span id="L291">291               (sub_nonpos.mpr (interior_subset hr).2)</span>
+<span id="L292">292               (hcoefficient r</span>
+<span id="L293">293                 (hinside r (interior_subset hr)).1</span>
+<span id="L294">294                 (hinside r (interior_subset hr)).2))</span>
+<span id="L295">295       exact hanti ⟨le_rfl, hqp⟩ ⟨hqp, le_rfl⟩ hqp</span>
+<span id="L296">296   rw [hfp] at hresult</span>
+<span id="L297">297   have hcore := bernoulliKLCore_eq_expanded hp0 hp1</span>
+<span id="L298">298     (ne_of_gt hq0) (ne_of_lt hq1)</span>
+<span id="L299">299   simpa [f, hcore] using hresult</span>
+<span id="L300">300 </span>
+<span id="L301">301 /-- On an interior reference mean, binary KL is controlled by the squared</span>
+<span id="L302">302 deviation divided by the Bernoulli variance denominator.  This is the bridge</span>
+<span id="L303">303 from the repository&#x27;s bounded-reward empirical-mean tails to a genuine KL</span>
+<span id="L304">304 confidence event. -/</span>
+<span id="L305">305 theorem bernoulliKLCore_le_sq_div</span>
+<span id="L306">306     {p q : Real} (hp : IsBernoulliParameter p)</span>
+<span id="L307">307     (hq0 : 0 &lt; q) (hq1 : q &lt; 1) :</span>
+<span id="L308">308     bernoulliKLCore p q &lt;= (p - q) ^ 2 / (q * (1 - q)) := by</span>
+<span id="L309">309   have hqcomp : 0 &lt; 1 - q := sub_pos.mpr hq1</span>
+<span id="L310">310   by_cases hp0 : p = 0</span>
+<span id="L311">311   · subst p</span>
+<span id="L312">312     have hlog := Real.one_sub_inv_le_log_of_pos hqcomp</span>
+<span id="L313">313     have hcore : bernoulliKLCore 0 q = -Real.log (1 - q) := by</span>
+<span id="L314">314       simp [bernoulliKLCore]</span>
+<span id="L315">315     have hden : q * (1 - q) ≠ 0 := mul_ne_zero (ne_of_gt hq0) (ne_of_gt hqcomp)</span>
+<span id="L316">316     rw [hcore]</span>
+<span id="L317">317     calc</span>
+<span id="L318">318       -Real.log (1 - q) &lt;= (1 - q)⁻¹ - 1 := by linarith</span>
+<span id="L319">319       _ = (0 - q) ^ 2 / (q * (1 - q)) := by</span>
+<span id="L320">320         field_simp [hden, ne_of_gt hqcomp]</span>
+<span id="L321">321         ring</span>
+<span id="L322">322   by_cases hp1 : p = 1</span>
+<span id="L323">323   · subst p</span>
+<span id="L324">324     have hlog := Real.one_sub_inv_le_log_of_pos hq0</span>
+<span id="L325">325     have hcore : bernoulliKLCore 1 q = -Real.log q := by</span>
+<span id="L326">326       simp [bernoulliKLCore]</span>
+<span id="L327">327     have hden : q * (1 - q) ≠ 0 := mul_ne_zero (ne_of_gt hq0) (ne_of_gt hqcomp)</span>
+<span id="L328">328     rw [hcore]</span>
+<span id="L329">329     calc</span>
+<span id="L330">330       -Real.log q &lt;= q⁻¹ - 1 := by linarith</span>
+<span id="L331">331       _ = (1 - q) ^ 2 / (q * (1 - q)) := by</span>
+<span id="L332">332         field_simp [hden, ne_of_gt hq0, ne_of_gt hqcomp]</span>
+<span id="L333">333   · have hp0&#x27; : 0 &lt; p := lt_of_le_of_ne hp.1 (Ne.symm hp0)</span>
+<span id="L334">334     have hp1&#x27; : p &lt; 1 := lt_of_le_of_ne hp.2 hp1</span>
+<span id="L335">335     have hfirst := Real.log_le_sub_one_of_pos (div_pos hp0&#x27; hq0)</span>
+<span id="L336">336     have hsecond := Real.log_le_sub_one_of_pos</span>
+<span id="L337">337       (div_pos (sub_pos.mpr hp1&#x27;) hqcomp)</span>
+<span id="L338">338     have hfirstMul :</span>
+<span id="L339">339         p * Real.log (p / q) &lt;= p * (p / q - 1) :=</span>
+<span id="L340">340       mul_le_mul_of_nonneg_left hfirst hp.1</span>
+<span id="L341">341     have hsecondMul :</span>
+<span id="L342">342         (1 - p) * Real.log ((1 - p) / (1 - q)) &lt;=</span>
+<span id="L343">343           (1 - p) * ((1 - p) / (1 - q) - 1) :=</span>
+<span id="L344">344       mul_le_mul_of_nonneg_left hsecond (sub_nonneg.mpr hp.2)</span>
+<span id="L345">345     unfold bernoulliKLCore</span>
+<span id="L346">346     calc</span>
+<span id="L347">347       p * Real.log (p / q) +</span>
+<span id="L348">348           (1 - p) * Real.log ((1 - p) / (1 - q)) &lt;=</span>
+<span id="L349">349         p * (p / q - 1) +</span>
+<span id="L350">350           (1 - p) * ((1 - p) / (1 - q) - 1) :=</span>
+<span id="L351">351             add_le_add hfirstMul hsecondMul</span>
+<span id="L352">352       _ = (p - q) ^ 2 / (q * (1 - q)) := by</span>
+<span id="L353">353         field_simp [ne_of_gt hq0, ne_of_gt hqcomp]</span>
+<span id="L354">354         ring</span>
+<span id="L355">355 </span>
+<span id="L356">356 theorem ennnreal_half_sq_sub_le_bernoulliKL</span>
+<span id="L357">357     {p q : Real} (hp : IsBernoulliParameter p)</span>
+<span id="L358">358     (hq0 : 0 &lt; q) (hq1 : q &lt; 1) :</span>
+<span id="L359">359     ENNReal.ofReal ((1 / 2 : Real) * (p - q) ^ 2) &lt;= bernoulliKL p q := by</span>
+<span id="L360">360   rw [bernoulliKL_eq_of_interior hp hq0 hq1]</span>
+<span id="L361">361   exact ENNReal.ofReal_le_ofReal (half_sq_sub_le_bernoulliKLCore hp hq0 hq1)</span>
+<span id="L362">362 </span>
+<span id="L363">363 theorem bernoulliKL_le_of_sq_le</span>
+<span id="L364">364     {p q budget : Real} (hp : IsBernoulliParameter p)</span>
+<span id="L365">365     (hq0 : 0 &lt; q) (hq1 : q &lt; 1)</span>
+<span id="L366">366     (hsq : (p - q) ^ 2 / (q * (1 - q)) &lt;= budget) :</span>
+<span id="L367">367     bernoulliKL p q &lt;= ENNReal.ofReal budget := by</span>
+<span id="L368">368   rw [bernoulliKL_eq_of_interior hp hq0 hq1]</span>
+<span id="L369">369   exact ENNReal.ofReal_le_ofReal</span>
+<span id="L370">370     ((bernoulliKLCore_le_sq_div hp hq0 hq1).trans hsq)</span>
+<span id="L371">371 </span>
+<span id="L372">372 @[simp]</span>
+<span id="L373">373 theorem bernoulliKL_self</span>
+<span id="L374">374     {p : Real} (hp : IsBernoulliParameter p) :</span>
+<span id="L375">375     bernoulliKL p p = 0 := by</span>
+<span id="L376">376   by_cases hp0 : p = 0</span>
+<span id="L377">377   · subst p</span>
+<span id="L378">378     exact bernoulliKL_zero_zero</span>
+<span id="L379">379   by_cases hp1 : p = 1</span>
+<span id="L380">380   · subst p</span>
+<span id="L381">381     exact bernoulliKL_one_one</span>
+<span id="L382">382   simp [bernoulliKL, hp, hp0, hp1, bernoulliKLCore_self hp0 hp1]</span>
+<span id="L383">383 </span>
+<span id="L384">384 /-- On the nonsingular right-parameter domain the finite expression is</span>
+<span id="L385">385 continuous.  This is the local analytic regularity used by later inversion</span>
+<span id="L386">386 leaves; endpoint singularities remain in `ENNReal`. -/</span>
+<span id="L387">387 theorem continuousAt_bernoulliKLCore_right</span>
+<span id="L388">388     (p q : Real) (hq0 : q ≠ 0) (hq1 : q ≠ 1) :</span>
+<span id="L389">389     ContinuousAt (fun r =&gt; bernoulliKLCore p r) q := by</span>
+<span id="L390">390   by_cases hp0 : p = 0</span>
+<span id="L391">391   · subst p</span>
+<span id="L392">392     have hq1&#x27; : 1 - q ≠ 0 := sub_ne_zero.mpr (Ne.symm hq1)</span>
+<span id="L393">393     simp [bernoulliKLCore]</span>
+<span id="L394">394     fun_prop (disch := assumption)</span>
+<span id="L395">395   by_cases hp1 : p = 1</span>
+<span id="L396">396   · subst p</span>
+<span id="L397">397     simp [bernoulliKLCore]</span>
+<span id="L398">398     fun_prop (disch := assumption)</span>
+<span id="L399">399   · unfold bernoulliKLCore</span>
+<span id="L400">400     have hq1&#x27; : 1 - q ≠ 0 := sub_ne_zero.mpr (Ne.symm hq1)</span>
+<span id="L401">401     have hpq : p / q ≠ 0 := div_ne_zero hp0 hq0</span>
+<span id="L402">402     have hpcq : (1 - p) / (1 - q) ≠ 0 := by</span>
+<span id="L403">403       exact div_ne_zero (sub_ne_zero.mpr (Ne.symm hp1)) hq1&#x27;</span>
+<span id="L404">404     fun_prop (disch := assumption)</span>
+<span id="L405">405 </span>
+<span id="L406">406 /-- KL confidence set at one empirical mean, pull count, and exploration</span>
+<span id="L407">407 budget. -/</span>
+<span id="L408">408 def confidenceSet (empiricalMean : Real) (count : Nat) (budget : Real) :</span>
+<span id="L409">409     Set Real :=</span>
+<span id="L410">410   {q | IsBernoulliParameter q ∧</span>
+<span id="L411">411     (count : ENNReal) * bernoulliKL empiricalMean q &lt;=</span>
+<span id="L412">412       ENNReal.ofReal budget}</span>
+<span id="L413">413 </span>
+<span id="L414">414 /-- The KL-UCB index is the supremum of its confidence set. -/</span>
+<span id="L415">415 noncomputable def index</span>
+<span id="L416">416     (empiricalMean : Real) (count : Nat) (budget : Real) : Real :=</span>
+<span id="L417">417   sSup (confidenceSet empiricalMean count budget)</span>
+<span id="L418">418 </span>
+<span id="L419">419 theorem confidenceSet_bddAbove</span>
+<span id="L420">420     (empiricalMean : Real) (count : Nat) (budget : Real) :</span>
+<span id="L421">421     BddAbove (confidenceSet empiricalMean count budget) := by</span>
+<span id="L422">422   refine ⟨1, ?_⟩</span>
+<span id="L423">423   intro q hq</span>
+<span id="L424">424   exact hq.1.2</span>
+<span id="L425">425 </span>
+<span id="L426">426 theorem mem_confidenceSet_self</span>
+<span id="L427">427     {p : Real} (hp : IsBernoulliParameter p)</span>
+<span id="L428">428     (count : Nat) {budget : Real} (hbudget : 0 &lt;= budget) :</span>
+<span id="L429">429     p ∈ confidenceSet p count budget := by</span>
+<span id="L430">430   constructor</span>
+<span id="L431">431   · exact hp</span>
+<span id="L432">432   · simp [bernoulliKL_self hp, hbudget]</span>
+<span id="L433">433 </span>
+<span id="L434">434 /-- Real finite-KL arithmetic is sufficient to establish exact membership in</span>
+<span id="L435">435 the `ENNReal` confidence set. -/</span>
+<span id="L436">436 theorem mem_confidenceSet_of_natCast_mul_core_le</span>
+<span id="L437">437     {p q budget : Real} {count : Nat}</span>
+<span id="L438">438     (hp : IsBernoulliParameter p) (hq0 : 0 &lt; q) (hq1 : q &lt; 1)</span>
+<span id="L439">439     (hbudget : (count : Real) * bernoulliKLCore p q &lt;= budget) :</span>
+<span id="L440">440     q ∈ confidenceSet p count budget := by</span>
+<span id="L441">441   constructor</span>
+<span id="L442">442   · exact ⟨hq0.le, hq1.le⟩</span>
+<span id="L443">443   · rw [bernoulliKL_eq_of_interior hp hq0 hq1,</span>
+<span id="L444">444       ← ENNReal.ofReal_natCast count,</span>
+<span id="L445">445       ← ENNReal.ofReal_mul (Nat.cast_nonneg count)]</span>
+<span id="L446">446     exact ENNReal.ofReal_le_ofReal hbudget</span>
+<span id="L447">447 </span>
+<span id="L448">448 theorem natCast_mul_half_sq_sub_le_budget_of_mem</span>
+<span id="L449">449     {p q budget : Real} {count : Nat}</span>
+<span id="L450">450     (hp : IsBernoulliParameter p) (hq0 : 0 &lt; q) (hq1 : q &lt; 1)</span>
+<span id="L451">451     (hbudget : 0 &lt;= budget) (hmem : q ∈ confidenceSet p count budget) :</span>
+<span id="L452">452     (count : Real) * ((1 / 2 : Real) * (p - q) ^ 2) &lt;= budget := by</span>
+<span id="L453">453   have hfinite := hmem.2</span>
+<span id="L454">454   rw [bernoulliKL_eq_of_interior hp hq0 hq1,</span>
+<span id="L455">455     ← ENNReal.ofReal_natCast count,</span>
+<span id="L456">456     ← ENNReal.ofReal_mul (Nat.cast_nonneg count)] at hfinite</span>
+<span id="L457">457   have hreal : (count : Real) * bernoulliKLCore p q &lt;= budget :=</span>
+<span id="L458">458     (ENNReal.ofReal_le_ofReal_iff hbudget).mp hfinite</span>
+<span id="L459">459   exact (mul_le_mul_of_nonneg_left</span>
+<span id="L460">460     (half_sq_sub_le_bernoulliKLCore hp hq0 hq1)</span>
+<span id="L461">461     (Nat.cast_nonneg count)).trans hreal</span>
+<span id="L462">462 </span>
+<span id="L463">463 theorem confidenceSet_nonempty</span>
+<span id="L464">464     {p : Real} (hp : IsBernoulliParameter p)</span>
+<span id="L465">465     (count : Nat) {budget : Real} (hbudget : 0 &lt;= budget) :</span>
+<span id="L466">466     (confidenceSet p count budget).Nonempty :=</span>
+<span id="L467">467   ⟨p, mem_confidenceSet_self hp count hbudget⟩</span>
+<span id="L468">468 </span>
+<span id="L469">469 theorem index_le_one</span>
+<span id="L470">470     {p : Real} (hp : IsBernoulliParameter p)</span>
+<span id="L471">471     (count : Nat) {budget : Real} (hbudget : 0 &lt;= budget) :</span>
+<span id="L472">472     index p count budget &lt;= 1 := by</span>
+<span id="L473">473   unfold index</span>
+<span id="L474">474   exact csSup_le (confidenceSet_nonempty hp count hbudget)</span>
+<span id="L475">475     (fun _ hq =&gt; hq.1.2)</span>
+<span id="L476">476 </span>
+<span id="L477">477 theorem index_nonneg</span>
+<span id="L478">478     {p : Real} (hp : IsBernoulliParameter p)</span>
+<span id="L479">479     (count : Nat) {budget : Real} (hbudget : 0 &lt;= budget) :</span>
+<span id="L480">480     0 &lt;= index p count budget := by</span>
+<span id="L481">481   have hp_le : p &lt;= index p count budget := by</span>
+<span id="L482">482     exact le_csSup (confidenceSet_bddAbove p count budget)</span>
+<span id="L483">483       (mem_confidenceSet_self hp count hbudget)</span>
+<span id="L484">484   exact hp.1.trans hp_le</span>
+<span id="L485">485 </span>
+<span id="L486">486 theorem index_mem_Icc</span>
+<span id="L487">487     {p : Real} (hp : IsBernoulliParameter p)</span>
+<span id="L488">488     (count : Nat) {budget : Real} (hbudget : 0 &lt;= budget) :</span>
+<span id="L489">489     index p count budget ∈ Set.Icc (0 : Real) 1 :=</span>
+<span id="L490">490   ⟨index_nonneg hp count hbudget, index_le_one hp count hbudget⟩</span>
+<span id="L491">491 </span>
+<span id="L492">492 /-- Zero empirical count makes every unit-interval parameter feasible.  This</span>
+<span id="L493">493 is the explicit KL-UCB zero-count convention. -/</span>
+<span id="L494">494 theorem mem_confidenceSet_zero_iff</span>
+<span id="L495">495     (p q budget : Real) (hbudget : 0 &lt;= budget) :</span>
+<span id="L496">496     q ∈ confidenceSet p 0 budget ↔ IsBernoulliParameter q := by</span>
+<span id="L497">497   simp [confidenceSet, hbudget]</span>
+<span id="L498">498 </span>
+<span id="L499">499 theorem index_zero_count</span>
+<span id="L500">500     {p : Real} (hp : IsBernoulliParameter p)</span>
+<span id="L501">501     {budget : Real} (hbudget : 0 &lt;= budget) :</span>
+<span id="L502">502     index p 0 budget = 1 := by</span>
+<span id="L503">503   apply le_antisymm</span>
+<span id="L504">504   · exact index_le_one hp 0 hbudget</span>
+<span id="L505">505   · unfold index</span>
+<span id="L506">506     apply le_csSup (confidenceSet_bddAbove p 0 budget)</span>
+<span id="L507">507     exact (mem_confidenceSet_zero_iff p 1 budget hbudget).2</span>
+<span id="L508">508       ⟨zero_le_one, le_rfl⟩</span>
+<span id="L509">509 </span>
+<span id="L510">510 /-- Membership of the true mean implies KL optimism. -/</span>
+<span id="L511">511 theorem le_index_of_mem_confidenceSet</span>
+<span id="L512">512     {p q : Real} {count : Nat} {budget : Real}</span>
+<span id="L513">513     (hq : q ∈ confidenceSet p count budget) :</span>
+<span id="L514">514     q &lt;= index p count budget := by</span>
+<span id="L515">515   unfold index</span>
+<span id="L516">516   exact le_csSup (confidenceSet_bddAbove p count budget) hq</span>
+<span id="L517">517 </span>
+<span id="L518">518 /-- A strict lower level below the supremum has a genuine feasible witness.</span>
+<span id="L519">519 No unproved claim that the supremum itself belongs to the set is used. -/</span>
+<span id="L520">520 theorem exists_mem_confidenceSet_of_lt_index</span>
+<span id="L521">521     {p level : Real} {count : Nat} {budget : Real}</span>
+<span id="L522">522     (hp : IsBernoulliParameter p) (hbudget : 0 &lt;= budget)</span>
+<span id="L523">523     (hlevel : level &lt; index p count budget) :</span>
+<span id="L524">524     ∃ q ∈ confidenceSet p count budget, level &lt; q := by</span>
+<span id="L525">525   unfold index at hlevel</span>
+<span id="L526">526   exact (lt_csSup_iff</span>
+<span id="L527">527     (confidenceSet_bddAbove p count budget)</span>
+<span id="L528">528     (confidenceSet_nonempty hp count hbudget)).1 hlevel</span>
+<span id="L529">529 </span>
+<span id="L530">530 end</span>
+<span id="L531">531 end KLUCB</span>
+<span id="L532">532 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

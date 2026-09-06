@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/TsallisSqrtScheduleSelfBoundingRefinedTuning.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/TsallisSqrtScheduleSelfBoundingRefinedTuning.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/TsallisSqrtScheduleSelfBoundingRefinedTuning.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/TsallisSqrtScheduleSelfBoundingRefinedTuning.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.TsallisSqrtScheduleSelfBoundingRefinedScalar</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Refined square-root schedule tuning transport</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module transports the coefficient-aware scalar variables into the actual</span>
+<span id="L7">7 finite-arm square-root schedule.  In particular, it identifies the continuous</span>
+<span id="L8">8 floor threshold exactly as `2 * (T + 1) / beta`.</span>
+<span id="L9">9 -/</span>
+<span id="L10">10 </span>
+<span id="L11">11 namespace BanditRLProof</span>
+<span id="L12">12 namespace Tsallis</span>
+<span id="L13">13 </span>
+<span id="L14">14 open MeasureTheory ProbabilityTheory</span>
+<span id="L15">15 </span>
+<span id="L16">16 universe u v</span>
+<span id="L17">17 </span>
+<span id="L18">18 theorem sum_one_div_lambda_mul_eq_div</span>
+<span id="L19">19     {Action : Type u} [DecidableEq Action]</span>
+<span id="L20">20     (actions : Finset Action) (gap : Action -&gt; Real)</span>
+<span id="L21">21     (lambda : Real) (hlambda : lambda ≠ 0)</span>
+<span id="L22">22     (hgap : ∀ action ∈ actions, gap action ≠ 0) :</span>
+<span id="L23">23     actions.sum (fun action =&gt; 1 / (lambda * gap action)) =</span>
+<span id="L24">24       actions.sum (fun action =&gt; 1 / gap action) / lambda := by</span>
+<span id="L25">25   calc</span>
+<span id="L26">26     actions.sum (fun action =&gt; 1 / (lambda * gap action)) =</span>
+<span id="L27">27         actions.sum (fun action =&gt; (1 / gap action) / lambda) := by</span>
+<span id="L28">28       apply Finset.sum_congr rfl</span>
+<span id="L29">29       intro action haction</span>
+<span id="L30">30       field_simp [hlambda, hgap action haction]</span>
+<span id="L31">31     _ = actions.sum (fun action =&gt; 1 / gap action) / lambda := by</span>
+<span id="L32">32       rw [Finset.sum_div]</span>
+<span id="L33">33 </span>
+<span id="L34">34 /-- With the coefficient-aware alpha/lambda change of variables, the actual</span>
+<span id="L35">35 continuous threshold used by the generated theorem is exactly</span>
+<span id="L36">36 `2 * (horizon + 1) / beta`. -/</span>
+<span id="L37">37 theorem sampledScheduledHalfTsallisSelfBoundingThreshold_refinedLocalLambda_eq</span>
+<span id="L38">38     {Action : Type u} [DecidableEq Action]</span>
+<span id="L39">39     (arms : Finset Action) {best : Action}</span>
+<span id="L40">40     (gap : Action -&gt; Real)</span>
+<span id="L41">41     (hsuboptimal : (arms.erase best).Nonempty)</span>
+<span id="L42">42     (hgap : ∀ action ∈ arms.erase best, 0 &lt; gap action)</span>
+<span id="L43">43     (horizon : Nat) (beta : Real)</span>
+<span id="L44">44     (hbetaLower : 2 &lt;= beta)</span>
+<span id="L45">45     (hbetaUpper :</span>
+<span id="L46">46       beta &lt;=</span>
+<span id="L47">47         (2 * ((arms.erase best).card : Real) *</span>
+<span id="L48">48             (((horizon + 1 : Nat) : Real))) /</span>
+<span id="L49">49           (25 * ((arms.erase best).sum</span>
+<span id="L50">50             (fun action =&gt; 1 / gap action)) ^ 2)) :</span>
+<span id="L51">51     sampledScheduledHalfTsallisSelfBoundingThreshold arms best gap</span>
+<span id="L52">52         (refinedLocalLambda</span>
+<span id="L53">53           (2 * ((arms.erase best).card : Real) *</span>
+<span id="L54">54             (((horizon + 1 : Nat) : Real)))</span>
+<span id="L55">55           ((arms.erase best).sum (fun action =&gt; 1 / gap action)) beta) =</span>
+<span id="L56">56       (2 * (((horizon + 1 : Nat) : Real))) / beta := by</span>
+<span id="L57">57   let actions := arms.erase best</span>
+<span id="L58">58   let card : Real := actions.card</span>
+<span id="L59">59   let horizonMass : Real := ((horizon + 1 : Nat) : Real)</span>
+<span id="L60">60   let reciprocalGap := actions.sum (fun action =&gt; 1 / gap action)</span>
+<span id="L61">61   let scale := 2 * card * horizonMass</span>
+<span id="L62">62   let alpha := refinedLocalAlpha scale reciprocalGap beta</span>
+<span id="L63">63   let lambda := refinedLocalLambda scale reciprocalGap beta</span>
+<span id="L64">64   have hcard : 0 &lt; card := by</span>
+<span id="L65">65     dsimp [card, actions]</span>
+<span id="L66">66     exact_mod_cast hsuboptimal.card_pos</span>
+<span id="L67">67   have hhorizonMass : 0 &lt; horizonMass := by</span>
+<span id="L68">68     dsimp [horizonMass]</span>
+<span id="L69">69     positivity</span>
+<span id="L70">70   have hreciprocalGap : 0 &lt; reciprocalGap := by</span>
+<span id="L71">71     dsimp [reciprocalGap, actions]</span>
+<span id="L72">72     exact sum_inv_pos_of_nonempty (arms.erase best) hsuboptimal gap hgap</span>
+<span id="L73">73   have hscale : 0 &lt; scale := by</span>
+<span id="L74">74     dsimp [scale]</span>
+<span id="L75">75     positivity</span>
+<span id="L76">76   have hbetaPos : 0 &lt; beta := zero_lt_two.trans_le hbetaLower</span>
+<span id="L77">77   have hbetaUpper&#x27; : beta &lt;= scale / (25 * reciprocalGap ^ 2) := by</span>
+<span id="L78">78     simpa [scale, card, horizonMass, reciprocalGap, actions] using hbetaUpper</span>
+<span id="L79">79   have hlambda : lambda ∈ Set.Ioc (0 : Real) 1 := by</span>
+<span id="L80">80     exact refinedLocalLambda_mem_Ioc scale reciprocalGap beta</span>
+<span id="L81">81       hscale hreciprocalGap hbetaPos hbetaUpper&#x27;</span>
+<span id="L82">82   have halphaPos : 0 &lt; alpha := by</span>
+<span id="L83">83     exact refinedLocalAlpha_pos scale reciprocalGap beta</span>
+<span id="L84">84       hscale hreciprocalGap hbetaPos</span>
+<span id="L85">85   have halphaLe : alpha &lt;= 1 := by</span>
+<span id="L86">86     exact refinedLocalAlpha_le_one scale reciprocalGap beta</span>
+<span id="L87">87       hscale hreciprocalGap hbetaUpper&#x27;</span>
+<span id="L88">88   have halphaLtTwo : alpha &lt; 2 := by linarith</span>
+<span id="L89">89   have halphaSq : alpha ^ 2 = 25 * reciprocalGap ^ 2 * beta / scale := by</span>
+<span id="L90">90     exact refinedLocalAlpha_sq scale reciprocalGap beta hscale hbetaPos.le</span>
+<span id="L91">91   have hsqrtCardPos : 0 &lt; Real.sqrt card := Real.sqrt_pos.2 hcard</span>
+<span id="L92">92   have hsqrtCardSq : Real.sqrt card ^ 2 = card := Real.sq_sqrt hcard.le</span>
+<span id="L93">93   have hsum :</span>
+<span id="L94">94       actions.sum (fun action =&gt; 1 / (lambda * gap action)) =</span>
+<span id="L95">95         reciprocalGap / lambda := by</span>
+<span id="L96">96     exact sum_one_div_lambda_mul_eq_div actions gap lambda</span>
+<span id="L97">97       (ne_of_gt hlambda.1) (fun action haction =&gt; ne_of_gt (hgap action haction))</span>
+<span id="L98">98   have honeAdd : 1 + lambda = 2 / (2 - alpha) := by</span>
+<span id="L99">99     exact one_add_refinedLocalLambda_eq scale reciprocalGap beta halphaLtTwo</span>
+<span id="L100">100   have halphaRelation : 2 * lambda / (1 + lambda) = alpha := by</span>
+<span id="L101">101     exact two_mul_refinedLocalLambda_div_one_add_eq_alpha</span>
+<span id="L102">102       scale reciprocalGap beta halphaLtTwo</span>
+<span id="L103">103   have hratio : (1 + lambda) / lambda = 2 / alpha := by</span>
+<span id="L104">104     have hlambdaNe : lambda ≠ 0 := ne_of_gt hlambda.1</span>
+<span id="L105">105     have halphaNe : alpha ≠ 0 := ne_of_gt halphaPos</span>
+<span id="L106">106     have honeAddPos : 0 &lt; 1 + lambda := by linarith [hlambda.1]</span>
+<span id="L107">107     field_simp [hlambdaNe, halphaNe, ne_of_gt honeAddPos] at halphaRelation ⊢</span>
+<span id="L108">108     nlinarith</span>
+<span id="L109">109   have hinside :</span>
+<span id="L110">110       5 * (1 + lambda) * (reciprocalGap / lambda) /</span>
+<span id="L111">111           (2 * Real.sqrt card) =</span>
+<span id="L112">112         5 * reciprocalGap / (alpha * Real.sqrt card) := by</span>
+<span id="L113">113     rw [div_eq_mul_inv (reciprocalGap) lambda]</span>
+<span id="L114">114     calc</span>
+<span id="L115">115       5 * (1 + lambda) * (reciprocalGap * lambda⁻¹) /</span>
+<span id="L116">116           (2 * Real.sqrt card) =</span>
+<span id="L117">117           (5 * reciprocalGap / (2 * Real.sqrt card)) *</span>
+<span id="L118">118             ((1 + lambda) / lambda) := by ring</span>
+<span id="L119">119       _ = (5 * reciprocalGap / (2 * Real.sqrt card)) *</span>
+<span id="L120">120             (2 / alpha) := by rw [hratio]</span>
+<span id="L121">121       _ = 5 * reciprocalGap / (alpha * Real.sqrt card) := by</span>
+<span id="L122">122         field_simp [ne_of_gt halphaPos, ne_of_gt hsqrtCardPos]</span>
+<span id="L123">123   have halphaSqMul :</span>
+<span id="L124">124       alpha ^ 2 * (2 * card * horizonMass) =</span>
+<span id="L125">125         25 * reciprocalGap ^ 2 * beta := by</span>
+<span id="L126">126     have := (eq_div_iff (ne_of_gt hscale)).1 halphaSq</span>
+<span id="L127">127     simpa [scale, mul_assoc, mul_left_comm, mul_comm] using this</span>
+<span id="L128">128   have hthresholdAlgebra :</span>
+<span id="L129">129       (5 * reciprocalGap / (alpha * Real.sqrt card)) ^ 2 =</span>
+<span id="L130">130         2 * horizonMass / beta := by</span>
+<span id="L131">131     field_simp [ne_of_gt halphaPos, ne_of_gt hsqrtCardPos,</span>
+<span id="L132">132       ne_of_gt hbetaPos]</span>
+<span id="L133">133     rw [hsqrtCardSq]</span>
+<span id="L134">134     nlinarith [halphaSqMul]</span>
+<span id="L135">135   unfold sampledScheduledHalfTsallisSelfBoundingThreshold</span>
+<span id="L136">136   dsimp only</span>
+<span id="L137">137   change</span>
+<span id="L138">138     (5 * (1 + lambda) *</span>
+<span id="L139">139         actions.sum (fun action =&gt; 1 / (lambda * gap action)) /</span>
+<span id="L140">140       (2 * Real.sqrt card)) ^ 2 = 2 * horizonMass / beta</span>
+<span id="L141">141   rw [hsum, hinside]</span>
+<span id="L142">142   exact hthresholdAlgebra</span>
+<span id="L143">143 </span>
+<span id="L144">144 /-- The generated-regret scalar bound after substituting the coefficient-aware</span>
+<span id="L145">145 beta-dependent learning-rate multiplier. -/</span>
+<span id="L146">146 noncomputable def refinedLocalTunedRegretBound</span>
+<span id="L147">147     (scale horizonMass reciprocalGap corruption beta : Real) : Real :=</span>
+<span id="L148">148   let lambda := refinedLocalLambda scale reciprocalGap beta</span>
+<span id="L149">149   let amplitude := 5 * (1 + lambda)</span>
+<span id="L150">150   (1 + lambda) * ((1 + Real.log horizonMass) / 2) +</span>
+<span id="L151">151     lambda * corruption + amplitude ^ 2 * (reciprocalGap / lambda) +</span>
+<span id="L152">152     (amplitude ^ 2 / 4 * (reciprocalGap / lambda)) * Real.log beta</span>
+<span id="L153">153 </span>
+<span id="L154">154 /-- The Lambert-free explicit estimate for the local tuned scalar bound. -/</span>
+<span id="L155">155 theorem refinedLocalTunedRegretBound_le_explicit</span>
+<span id="L156">156     (scale horizonMass reciprocalGap corruption beta : Real)</span>
+<span id="L157">157     (hscale : 0 &lt; scale) (hhorizonMass : 1 &lt;= horizonMass)</span>
+<span id="L158">158     (hreciprocalGap : 0 &lt; reciprocalGap)</span>
+<span id="L159">159     (hcorruption : 0 &lt; corruption) (hbeta : 1 &lt;= beta)</span>
+<span id="L160">160     (hbetaUpper : beta &lt;= scale / (25 * reciprocalGap ^ 2))</span>
+<span id="L161">161     (hcorruptionUpper : corruption * reciprocalGap &lt;= scale)</span>
+<span id="L162">162     (hroot : refinedLocalBetaEquation</span>
+<span id="L163">163       scale reciprocalGap corruption beta = 0) :</span>
+<span id="L164">164     refinedLocalTunedRegretBound</span>
+<span id="L165">165         scale horizonMass reciprocalGap corruption beta &lt;=</span>
+<span id="L166">166       1 + Real.log horizonMass +</span>
+<span id="L167">167         10 * Real.sqrt (corruption * reciprocalGap) *</span>
+<span id="L168">168           (2 + Real.sqrt</span>
+<span id="L169">169             (Real.log (scale / (corruption * reciprocalGap)) + 1)) := by</span>
+<span id="L170">170   let alpha := refinedLocalAlpha scale reciprocalGap beta</span>
+<span id="L171">171   let lambda := refinedLocalLambda scale reciprocalGap beta</span>
+<span id="L172">172   let weight := corruption * reciprocalGap / scale * beta</span>
+<span id="L173">173   let logRadius := Real.log (scale / (corruption * reciprocalGap)) + 1</span>
+<span id="L174">174   have hbetaPos : 0 &lt; beta := zero_lt_one.trans_le hbeta</span>
+<span id="L175">175   have halphaPos : 0 &lt; alpha := by</span>
+<span id="L176">176     exact refinedLocalAlpha_pos scale reciprocalGap beta</span>
+<span id="L177">177       hscale hreciprocalGap hbetaPos</span>
+<span id="L178">178   have halphaLe : alpha &lt;= 1 := by</span>
+<span id="L179">179     exact refinedLocalAlpha_le_one scale reciprocalGap beta</span>
+<span id="L180">180       hscale hreciprocalGap hbetaUpper</span>
+<span id="L181">181   have halphaLtTwo : alpha &lt; 2 := by linarith</span>
+<span id="L182">182   have hdenomPos : 0 &lt; 2 - alpha := by linarith</span>
+<span id="L183">183   have hlambda : lambda ∈ Set.Ioc (0 : Real) 1 := by</span>
+<span id="L184">184     exact refinedLocalLambda_mem_Ioc scale reciprocalGap beta</span>
+<span id="L185">185       hscale hreciprocalGap hbetaPos hbetaUpper</span>
+<span id="L186">186   have honeAdd : 1 + lambda = 2 / (2 - alpha) := by</span>
+<span id="L187">187     exact one_add_refinedLocalLambda_eq scale reciprocalGap beta halphaLtTwo</span>
+<span id="L188">188   have hweightEq : weight = Real.log beta + 2 := by</span>
+<span id="L189">189     dsimp [weight]</span>
+<span id="L190">190     unfold refinedLocalBetaEquation at hroot</span>
+<span id="L191">191     linarith</span>
+<span id="L192">192   have hweightOne : 1 &lt;= weight := by</span>
+<span id="L193">193     have hlogBeta : 0 &lt;= Real.log beta := Real.log_nonneg hbeta</span>
+<span id="L194">194     linarith</span>
+<span id="L195">195   have hweightPos : 0 &lt; weight := zero_lt_one.trans_le hweightOne</span>
+<span id="L196">196   have hweightBounds := refinedLocalBetaWeight_bounds_of_eq_zero</span>
+<span id="L197">197     scale reciprocalGap corruption beta hscale hreciprocalGap hcorruption</span>
+<span id="L198">198       hbeta hcorruptionUpper hroot</span>
+<span id="L199">199   have hweightUpper :</span>
+<span id="L200">200       weight &lt;= (1 + Real.sqrt logRadius) ^ 2 := by</span>
+<span id="L201">201     simpa [weight, logRadius] using hweightBounds.2</span>
+<span id="L202">202   have halphaSq :</span>
+<span id="L203">203       alpha ^ 2 = 25 * reciprocalGap ^ 2 * beta / scale := by</span>
+<span id="L204">204     exact refinedLocalAlpha_sq scale reciprocalGap beta hscale hbetaPos.le</span>
+<span id="L205">205   have hcorruptionAlphaSq :</span>
+<span id="L206">206       corruption * alpha ^ 2 = 25 * reciprocalGap * weight := by</span>
+<span id="L207">207     dsimp [weight]</span>
+<span id="L208">208     rw [halphaSq]</span>
+<span id="L209">209     field_simp [ne_of_gt hscale]</span>
+<span id="L210">210   have hlogBetaEq : Real.log beta = weight - 2 := by linarith</span>
+<span id="L211">211   have hscalarEq :</span>
+<span id="L212">212       lambda * corruption +</span>
+<span id="L213">213           (5 * (1 + lambda)) ^ 2 * (reciprocalGap / lambda) +</span>
+<span id="L214">214           ((5 * (1 + lambda)) ^ 2 / 4 *</span>
+<span id="L215">215               (reciprocalGap / lambda)) * Real.log beta =</span>
+<span id="L216">216         50 * reciprocalGap * (weight + 1) /</span>
+<span id="L217">217           (alpha * (2 - alpha)) := by</span>
+<span id="L218">218     have hlambdaEq : lambda = alpha / (2 - alpha) := by rfl</span>
+<span id="L219">219     rw [honeAdd, hlambdaEq, hlogBetaEq]</span>
+<span id="L220">220     field_simp [ne_of_gt halphaPos, ne_of_gt hdenomPos]</span>
+<span id="L221">221     nlinarith [hcorruptionAlphaSq]</span>
+<span id="L222">222   have hbase :</span>
+<span id="L223">223       (1 + lambda) * ((1 + Real.log horizonMass) / 2) &lt;=</span>
+<span id="L224">224         1 + Real.log horizonMass := by</span>
+<span id="L225">225     have hlogNonneg : 0 &lt;= Real.log horizonMass :=</span>
+<span id="L226">226       Real.log_nonneg hhorizonMass</span>
+<span id="L227">227     nlinarith [hlambda.2]</span>
+<span id="L228">228   have hscalarDenom :</span>
+<span id="L229">229       50 * reciprocalGap * (weight + 1) /</span>
+<span id="L230">230           (alpha * (2 - alpha)) &lt;=</span>
+<span id="L231">231         50 * reciprocalGap * (weight + 1) / alpha := by</span>
+<span id="L232">232     have hnumerator : 0 &lt;= 50 * reciprocalGap * (weight + 1) := by positivity</span>
+<span id="L233">233     have halphaDenom : alpha &lt;= alpha * (2 - alpha) := by</span>
+<span id="L234">234       nlinarith [mul_nonneg halphaPos.le (sub_nonneg.2 halphaLe)]</span>
+<span id="L235">235     exact div_le_div_of_nonneg_left hnumerator halphaPos halphaDenom</span>
+<span id="L236">236   have hproductPos : 0 &lt; corruption * reciprocalGap :=</span>
+<span id="L237">237     mul_pos hcorruption hreciprocalGap</span>
+<span id="L238">238   have hsqrtProductPos : 0 &lt; Real.sqrt (corruption * reciprocalGap) :=</span>
+<span id="L239">239     Real.sqrt_pos.2 hproductPos</span>
+<span id="L240">240   have hsqrtWeightPos : 0 &lt; Real.sqrt weight := Real.sqrt_pos.2 hweightPos</span>
+<span id="L241">241   have hsqrtWeightOne : 1 &lt;= Real.sqrt weight :=</span>
+<span id="L242">242     Real.one_le_sqrt.mpr hweightOne</span>
+<span id="L243">243   have halphaSqrtProduct :</span>
+<span id="L244">244       alpha * Real.sqrt (corruption * reciprocalGap) =</span>
+<span id="L245">245         5 * reciprocalGap * Real.sqrt weight := by</span>
+<span id="L246">246     have hsqrtProductSq := Real.sq_sqrt hproductPos.le</span>
+<span id="L247">247     have hsqrtWeightSq := Real.sq_sqrt hweightPos.le</span>
+<span id="L248">248     have hleftNonneg :</span>
+<span id="L249">249         0 &lt;= alpha * Real.sqrt (corruption * reciprocalGap) := by positivity</span>
+<span id="L250">250     have hrightNonneg :</span>
+<span id="L251">251         0 &lt;= 5 * reciprocalGap * Real.sqrt weight := by positivity</span>
+<span id="L252">252     have hsquares :</span>
+<span id="L253">253         (alpha * Real.sqrt (corruption * reciprocalGap)) ^ 2 =</span>
+<span id="L254">254           (5 * reciprocalGap * Real.sqrt weight) ^ 2 := by</span>
+<span id="L255">255       calc</span>
+<span id="L256">256         (alpha * Real.sqrt (corruption * reciprocalGap)) ^ 2 =</span>
+<span id="L257">257             alpha ^ 2 * (corruption * reciprocalGap) := by</span>
+<span id="L258">258           rw [mul_pow, hsqrtProductSq]</span>
+<span id="L259">259         _ = (corruption * alpha ^ 2) * reciprocalGap := by ring</span>
+<span id="L260">260         _ = (25 * reciprocalGap * weight) * reciprocalGap := by</span>
+<span id="L261">261           rw [hcorruptionAlphaSq]</span>
+<span id="L262">262         _ = (5 * reciprocalGap * Real.sqrt weight) ^ 2 := by</span>
+<span id="L263">263           rw [mul_pow, mul_pow, hsqrtWeightSq]</span>
+<span id="L264">264           ring</span>
+<span id="L265">265     exact (sq_eq_sq₀ hleftNonneg hrightNonneg).1 hsquares</span>
+<span id="L266">266   have hscalarSqrtEq :</span>
+<span id="L267">267       50 * reciprocalGap * (weight + 1) / alpha =</span>
+<span id="L268">268         10 * Real.sqrt (corruption * reciprocalGap) *</span>
+<span id="L269">269           ((weight + 1) / Real.sqrt weight) := by</span>
+<span id="L270">270     apply (div_eq_iff (ne_of_gt halphaPos)).2</span>
+<span id="L271">271     calc</span>
+<span id="L272">272       50 * reciprocalGap * (weight + 1) =</span>
+<span id="L273">273           10 * (weight + 1) *</span>
+<span id="L274">274             (5 * reciprocalGap * Real.sqrt weight) /</span>
+<span id="L275">275               Real.sqrt weight := by</span>
+<span id="L276">276         field_simp [ne_of_gt hsqrtWeightPos]</span>
+<span id="L277">277         norm_num</span>
+<span id="L278">278       _ = 10 * (weight + 1) *</span>
+<span id="L279">279             (alpha * Real.sqrt (corruption * reciprocalGap)) /</span>
+<span id="L280">280               Real.sqrt weight := by rw [halphaSqrtProduct]</span>
+<span id="L281">281       _ = (10 * Real.sqrt (corruption * reciprocalGap) *</span>
+<span id="L282">282             ((weight + 1) / Real.sqrt weight)) * alpha := by</span>
+<span id="L283">283         field_simp [ne_of_gt hsqrtWeightPos]</span>
+<span id="L284">284   have hweightRatioEq :</span>
+<span id="L285">285       (weight + 1) / Real.sqrt weight =</span>
+<span id="L286">286         Real.sqrt weight + 1 / Real.sqrt weight := by</span>
+<span id="L287">287     rw [add_div]</span>
+<span id="L288">288     congr 1</span>
+<span id="L289">289     apply (div_eq_iff (ne_of_gt hsqrtWeightPos)).2</span>
+<span id="L290">290     simpa [pow_two] using (Real.sq_sqrt hweightPos.le).symm</span>
+<span id="L291">291   have hinvSqrtWeight : 1 / Real.sqrt weight &lt;= 1 := by</span>
+<span id="L292">292     exact (div_le_one hsqrtWeightPos).2 hsqrtWeightOne</span>
+<span id="L293">293   have hlogRadiusNonneg : 0 &lt;= logRadius := by</span>
+<span id="L294">294     have hproductPos&#x27; : 0 &lt; corruption * reciprocalGap := hproductPos</span>
+<span id="L295">295     have hratioOne : 1 &lt;= scale / (corruption * reciprocalGap) := by</span>
+<span id="L296">296       apply (le_div_iff₀ hproductPos&#x27;).2</span>
+<span id="L297">297       simpa using hcorruptionUpper</span>
+<span id="L298">298     have := Real.log_nonneg hratioOne</span>
+<span id="L299">299     dsimp [logRadius]</span>
+<span id="L300">300     linarith</span>
+<span id="L301">301   have hsqrtWeightUpper :</span>
+<span id="L302">302       Real.sqrt weight &lt;= 1 + Real.sqrt logRadius := by</span>
+<span id="L303">303     have hrightNonneg : 0 &lt;= 1 + Real.sqrt logRadius := by positivity</span>
+<span id="L304">304     rw [← Real.sqrt_sq hrightNonneg]</span>
+<span id="L305">305     exact Real.sqrt_le_sqrt hweightUpper</span>
+<span id="L306">306   have hratioUpper :</span>
+<span id="L307">307       (weight + 1) / Real.sqrt weight &lt;=</span>
+<span id="L308">308         2 + Real.sqrt logRadius := by</span>
+<span id="L309">309     rw [hweightRatioEq]</span>
+<span id="L310">310     linarith</span>
+<span id="L311">311   unfold refinedLocalTunedRegretBound</span>
+<span id="L312">312   dsimp only</span>
+<span id="L313">313   change</span>
+<span id="L314">314     (1 + lambda) * ((1 + Real.log horizonMass) / 2) +</span>
+<span id="L315">315         lambda * corruption +</span>
+<span id="L316">316       (5 * (1 + lambda)) ^ 2 * (reciprocalGap / lambda) +</span>
+<span id="L317">317       ((5 * (1 + lambda)) ^ 2 / 4 *</span>
+<span id="L318">318         (reciprocalGap / lambda)) * Real.log beta &lt;= _</span>
+<span id="L319">319   calc</span>
+<span id="L320">320     (1 + lambda) * ((1 + Real.log horizonMass) / 2) +</span>
+<span id="L321">321           lambda * corruption +</span>
+<span id="L322">322         (5 * (1 + lambda)) ^ 2 * (reciprocalGap / lambda) +</span>
+<span id="L323">323         ((5 * (1 + lambda)) ^ 2 / 4 *</span>
+<span id="L324">324           (reciprocalGap / lambda)) * Real.log beta =</span>
+<span id="L325">325         (1 + lambda) * ((1 + Real.log horizonMass) / 2) +</span>
+<span id="L326">326           (lambda * corruption +</span>
+<span id="L327">327             (5 * (1 + lambda)) ^ 2 * (reciprocalGap / lambda) +</span>
+<span id="L328">328             ((5 * (1 + lambda)) ^ 2 / 4 *</span>
+<span id="L329">329               (reciprocalGap / lambda)) * Real.log beta) := by ring</span>
+<span id="L330">330     _ = (1 + lambda) * ((1 + Real.log horizonMass) / 2) +</span>
+<span id="L331">331         50 * reciprocalGap * (weight + 1) /</span>
+<span id="L332">332           (alpha * (2 - alpha)) := by rw [hscalarEq]</span>
+<span id="L333">333     _ &lt;=</span>
+<span id="L334">334         1 + Real.log horizonMass +</span>
+<span id="L335">335           50 * reciprocalGap * (weight + 1) / alpha :=</span>
+<span id="L336">336       add_le_add hbase hscalarDenom</span>
+<span id="L337">337     _ = 1 + Real.log horizonMass +</span>
+<span id="L338">338           10 * Real.sqrt (corruption * reciprocalGap) *</span>
+<span id="L339">339             ((weight + 1) / Real.sqrt weight) := by rw [hscalarSqrtEq]</span>
+<span id="L340">340     _ &lt;= 1 + Real.log horizonMass +</span>
+<span id="L341">341           10 * Real.sqrt (corruption * reciprocalGap) *</span>
+<span id="L342">342             (2 + Real.sqrt logRadius) := by gcongr</span>
+<span id="L343">343     _ = _ := by rfl</span>
+<span id="L344">344 </span>
+<span id="L345">345 /-- The coefficient-aware scalar root now drives the actual generated theorem:</span>
+<span id="L346">346 it constructs the beta-dependent lambda, discharges the floor-threshold window,</span>
+<span id="L347">347 and rewrites the logarithmic tail as `log beta`. -/</span>
+<span id="L348">348 theorem exists_integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_refinedLocalTuned</span>
+<span id="L349">349     {Env : Type u} {Action : Type v}</span>
+<span id="L350">350     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L351">351     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L352">352     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L353">353     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L354">354     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L355">355     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L356">356     {best : Action} (hbest : best ∈ arms) (horizon : Nat)</span>
+<span id="L357">357     (gap : Action -&gt; Real)</span>
+<span id="L358">358     (hsuboptimal : (arms.erase best).Nonempty)</span>
+<span id="L359">359     (hgap : ∀ action ∈ arms.erase best, 0 &lt; gap action)</span>
+<span id="L360">360     (corruption : Real) (hcorruption : 0 &lt; corruption)</span>
+<span id="L361">361     (hscalarLower :</span>
+<span id="L362">362       2 &lt;=</span>
+<span id="L363">363         (2 * ((arms.erase best).card : Real) *</span>
+<span id="L364">364             (((horizon + 1 : Nat) : Real))) /</span>
+<span id="L365">365           (25 * ((arms.erase best).sum</span>
+<span id="L366">366             (fun action =&gt; 1 / gap action)) ^ 2))</span>
+<span id="L367">367     (hscalarThresholdOne :</span>
+<span id="L368">368       (2 * ((arms.erase best).card : Real) *</span>
+<span id="L369">369             (((horizon + 1 : Nat) : Real))) /</span>
+<span id="L370">370           (25 * ((arms.erase best).sum</span>
+<span id="L371">371             (fun action =&gt; 1 / gap action)) ^ 2) &lt;=</span>
+<span id="L372">372         2 * (((horizon + 1 : Nat) : Real)))</span>
+<span id="L373">373     (hcorruptionUpper :</span>
+<span id="L374">374       2 * (corruption *</span>
+<span id="L375">375         (arms.erase best).sum (fun action =&gt; 1 / gap action)) &lt;=</span>
+<span id="L376">376           2 * ((arms.erase best).card : Real) *</span>
+<span id="L377">377             (((horizon + 1 : Nat) : Real)))</span>
+<span id="L378">378     (hcorruptionLower :</span>
+<span id="L379">379       25 * ((arms.erase best).sum (fun action =&gt; 1 / gap action)) *</span>
+<span id="L380">380           (Real.log</span>
+<span id="L381">381               ((2 * ((arms.erase best).card : Real) *</span>
+<span id="L382">382                   (((horizon + 1 : Nat) : Real))) /</span>
+<span id="L383">383                 (25 * ((arms.erase best).sum</span>
+<span id="L384">384                   (fun action =&gt; 1 / gap action)) ^ 2)) + 2) &lt;=</span>
+<span id="L385">385         corruption)</span>
+<span id="L386">386     (hselfBounding :</span>
+<span id="L387">387       let selector :=</span>
+<span id="L388">388         canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L389">389           arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L390">390       let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L391">391         arms harms sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L392">392           selector.finiteHistory loss.environment</span>
+<span id="L393">393       (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L394">394           (arms.erase best).sum (fun action =&gt;</span>
+<span id="L395">395             gap action * sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L396">396               mu arms harms sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L397">397                 t action)) - corruption &lt;=</span>
+<span id="L398">398         integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L399">399           arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L400">400             (pointMass best) horizon)) :</span>
+<span id="L401">401     let selector :=</span>
+<span id="L402">402       canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L403">403         arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L404">404     let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L405">405       arms harms sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L406">406         selector.finiteHistory loss.environment</span>
+<span id="L407">407     let reciprocalGap :=</span>
+<span id="L408">408       (arms.erase best).sum (fun action =&gt; 1 / gap action)</span>
+<span id="L409">409     let horizonMass : Real := ((horizon + 1 : Nat) : Real)</span>
+<span id="L410">410     let scale := 2 * ((arms.erase best).card : Real) * horizonMass</span>
+<span id="L411">411     exists beta,</span>
+<span id="L412">412       beta ∈ Set.Icc 2 (scale / (25 * reciprocalGap ^ 2)) ∧</span>
+<span id="L413">413         refinedLocalBetaEquation scale reciprocalGap corruption beta = 0 ∧</span>
+<span id="L414">414         let weight := corruption * reciprocalGap / scale * beta</span>
+<span id="L415">415         1 &lt;= weight ∧</span>
+<span id="L416">416           weight &lt;=</span>
+<span id="L417">417             (1 + Real.sqrt</span>
+<span id="L418">418               (Real.log (scale / (corruption * reciprocalGap)) + 1)) ^ 2 ∧</span>
+<span id="L419">419         refinedLocalLambda scale reciprocalGap beta ∈ Set.Ioc (0 : Real) 1 ∧</span>
+<span id="L420">420         integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L421">421             arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L422">422               (pointMass best) horizon) &lt;=</span>
+<span id="L423">423           refinedLocalTunedRegretBound</span>
+<span id="L424">424             scale horizonMass reciprocalGap corruption beta := by</span>
+<span id="L425">425   classical</span>
+<span id="L426">426   dsimp only</span>
+<span id="L427">427   let selector :=</span>
+<span id="L428">428     canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L429">429       arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L430">430   let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L431">431     arms harms sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L432">432       selector.finiteHistory loss.environment</span>
+<span id="L433">433   let actions := arms.erase best</span>
+<span id="L434">434   let reciprocalGap := actions.sum (fun action =&gt; 1 / gap action)</span>
+<span id="L435">435   let horizonMass : Real := ((horizon + 1 : Nat) : Real)</span>
+<span id="L436">436   let scale := 2 * (actions.card : Real) * horizonMass</span>
+<span id="L437">437   have hreciprocalGap : 0 &lt; reciprocalGap := by</span>
+<span id="L438">438     dsimp [reciprocalGap, actions]</span>
+<span id="L439">439     exact sum_inv_pos_of_nonempty (arms.erase best) hsuboptimal gap hgap</span>
+<span id="L440">440   have hhorizonMass : 0 &lt; horizonMass := by</span>
+<span id="L441">441     dsimp [horizonMass]</span>
+<span id="L442">442     positivity</span>
+<span id="L443">443   have hcard : 0 &lt; (actions.card : Real) := by</span>
+<span id="L444">444     dsimp [actions]</span>
+<span id="L445">445     exact_mod_cast hsuboptimal.card_pos</span>
+<span id="L446">446   have hscale : 0 &lt; scale := by</span>
+<span id="L447">447     dsimp [scale]</span>
+<span id="L448">448     positivity</span>
+<span id="L449">449   have hscalarLower&#x27; : 2 &lt;= scale / (25 * reciprocalGap ^ 2) := by</span>
+<span id="L450">450     simpa [scale, reciprocalGap, horizonMass, actions] using hscalarLower</span>
+<span id="L451">451   have hscalarThresholdOne&#x27; :</span>
+<span id="L452">452       scale / (25 * reciprocalGap ^ 2) &lt;= 2 * horizonMass := by</span>
+<span id="L453">453     simpa [scale, reciprocalGap, horizonMass, actions] using</span>
+<span id="L454">454       hscalarThresholdOne</span>
+<span id="L455">455   have hcorruptionUpper&#x27; : 2 * (corruption * reciprocalGap) &lt;= scale := by</span>
+<span id="L456">456     simpa [scale, reciprocalGap, horizonMass, actions] using hcorruptionUpper</span>
+<span id="L457">457   have hcorruptionLower&#x27; :</span>
+<span id="L458">458       25 * reciprocalGap *</span>
+<span id="L459">459           (Real.log (scale / (25 * reciprocalGap ^ 2)) + 2) &lt;=</span>
+<span id="L460">460         corruption := by</span>
+<span id="L461">461     simpa [scale, reciprocalGap, horizonMass, actions] using hcorruptionLower</span>
+<span id="L462">462   rcases exists_refinedLocalBetaEquation_eq_zero_and_weight_bounds</span>
+<span id="L463">463       scale reciprocalGap corruption hscale hreciprocalGap hcorruption</span>
+<span id="L464">464         hscalarLower&#x27; hcorruptionUpper&#x27; hcorruptionLower&#x27; with</span>
+<span id="L465">465     ⟨beta, hbeta, hroot, hweight⟩</span>
+<span id="L466">466   let lambda := refinedLocalLambda scale reciprocalGap beta</span>
+<span id="L467">467   have hbetaPos : 0 &lt; beta := zero_lt_two.trans_le hbeta.1</span>
+<span id="L468">468   have hlambda : lambda ∈ Set.Ioc (0 : Real) 1 := by</span>
+<span id="L469">469     exact refinedLocalLambda_mem_Ioc scale reciprocalGap beta</span>
+<span id="L470">470       hscale hreciprocalGap hbetaPos hbeta.2</span>
+<span id="L471">471   have hthresholdEq :</span>
+<span id="L472">472       sampledScheduledHalfTsallisSelfBoundingThreshold arms best gap lambda =</span>
+<span id="L473">473         2 * horizonMass / beta := by</span>
+<span id="L474">474     simpa [lambda, scale, reciprocalGap, horizonMass, actions] using</span>
+<span id="L475">475       sampledScheduledHalfTsallisSelfBoundingThreshold_refinedLocalLambda_eq</span>
+<span id="L476">476         arms gap hsuboptimal hgap horizon beta hbeta.1</span>
+<span id="L477">477           (by simpa [scale, reciprocalGap, horizonMass, actions] using hbeta.2)</span>
+<span id="L478">478   have hbetaHorizon : beta &lt;= 2 * horizonMass :=</span>
+<span id="L479">479     hbeta.2.trans hscalarThresholdOne&#x27;</span>
+<span id="L480">480   have hthresholdOne :</span>
+<span id="L481">481       1 &lt;= sampledScheduledHalfTsallisSelfBoundingThreshold</span>
+<span id="L482">482         arms best gap lambda := by</span>
+<span id="L483">483     rw [hthresholdEq]</span>
+<span id="L484">484     exact (le_div_iff₀ hbetaPos).2 (by simpa using hbetaHorizon)</span>
+<span id="L485">485   have hthresholdHorizon :</span>
+<span id="L486">486       sampledScheduledHalfTsallisSelfBoundingThreshold</span>
+<span id="L487">487           arms best gap lambda &lt;= horizonMass := by</span>
+<span id="L488">488     rw [hthresholdEq]</span>
+<span id="L489">489     rw [div_le_iff₀ hbetaPos]</span>
+<span id="L490">490     have hmul := mul_le_mul_of_nonneg_left hbeta.1 hhorizonMass.le</span>
+<span id="L491">491     nlinarith</span>
+<span id="L492">492   have hsum :</span>
+<span id="L493">493       actions.sum (fun action =&gt; 1 / (lambda * gap action)) =</span>
+<span id="L494">494         reciprocalGap / lambda := by</span>
+<span id="L495">495     exact sum_one_div_lambda_mul_eq_div actions gap lambda</span>
+<span id="L496">496       (ne_of_gt hlambda.1) (fun action haction =&gt; ne_of_gt (hgap action haction))</span>
+<span id="L497">497   have hlogRatio :</span>
+<span id="L498">498       Real.log</span>
+<span id="L499">499           ((2 * horizonMass) /</span>
+<span id="L500">500             sampledScheduledHalfTsallisSelfBoundingThreshold</span>
+<span id="L501">501               arms best gap lambda) =</span>
+<span id="L502">502         Real.log beta := by</span>
+<span id="L503">503     rw [hthresholdEq]</span>
+<span id="L504">504     congr 1</span>
+<span id="L505">505     field_simp [ne_of_gt hhorizonMass, ne_of_gt hbetaPos]</span>
+<span id="L506">506   have hroute :=</span>
+<span id="L507">507     integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_sqrtSchedule_refinedSelfBoundingFloorCutoff</span>
+<span id="L508">508       prior arms harms loss hbest horizon gap hsuboptimal hgap</span>
+<span id="L509">509         corruption lambda hlambda hthresholdOne</span>
+<span id="L510">510           (by simpa [horizonMass] using hthresholdHorizon)</span>
+<span id="L511">511           (by simpa [selector, mu] using hselfBounding)</span>
+<span id="L512">512   dsimp only at hroute</span>
+<span id="L513">513   have hbound :</span>
+<span id="L514">514       integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L515">515           arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L516">516             (pointMass best) horizon) &lt;=</span>
+<span id="L517">517         refinedLocalTunedRegretBound</span>
+<span id="L518">518           scale horizonMass reciprocalGap corruption beta := by</span>
+<span id="L519">519     rw [show (arms.erase best) = actions by rfl, hsum, hlogRatio] at hroute</span>
+<span id="L520">520     simpa [refinedLocalTunedRegretBound, lambda, horizonMass,</span>
+<span id="L521">521       reciprocalGap, actions, mu, selector] using hroute</span>
+<span id="L522">522   exact ⟨beta, hbeta, hroot, hweight.1, hweight.2, hlambda, hbound⟩</span>
+<span id="L523">523 </span>
+<span id="L524">524 /-- The coefficient-aware generated route with the auxiliary root eliminated.</span>
+<span id="L525">525 The constants reflect the local floor theorem&#x27;s amplitude `5 * (1 + lambda)`;</span>
+<span id="L526">526 this is intentionally not presented as the paper&#x27;s sharper constant. -/</span>
+<span id="L527">527 theorem integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_refinedLocalExplicit</span>
+<span id="L528">528     {Env : Type u} {Action : Type v}</span>
+<span id="L529">529     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L530">530     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L531">531     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L532">532     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L533">533     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L534">534     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L535">535     {best : Action} (hbest : best ∈ arms) (horizon : Nat)</span>
+<span id="L536">536     (gap : Action -&gt; Real)</span>
+<span id="L537">537     (hsuboptimal : (arms.erase best).Nonempty)</span>
+<span id="L538">538     (hgap : ∀ action ∈ arms.erase best, 0 &lt; gap action)</span>
+<span id="L539">539     (corruption : Real) (hcorruption : 0 &lt; corruption)</span>
+<span id="L540">540     (hscalarLower :</span>
+<span id="L541">541       2 &lt;=</span>
+<span id="L542">542         (2 * ((arms.erase best).card : Real) *</span>
+<span id="L543">543             (((horizon + 1 : Nat) : Real))) /</span>
+<span id="L544">544           (25 * ((arms.erase best).sum</span>
+<span id="L545">545             (fun action =&gt; 1 / gap action)) ^ 2))</span>
+<span id="L546">546     (hscalarThresholdOne :</span>
+<span id="L547">547       (2 * ((arms.erase best).card : Real) *</span>
+<span id="L548">548             (((horizon + 1 : Nat) : Real))) /</span>
+<span id="L549">549           (25 * ((arms.erase best).sum</span>
+<span id="L550">550             (fun action =&gt; 1 / gap action)) ^ 2) &lt;=</span>
+<span id="L551">551         2 * (((horizon + 1 : Nat) : Real)))</span>
+<span id="L552">552     (hcorruptionUpper :</span>
+<span id="L553">553       2 * (corruption *</span>
+<span id="L554">554         (arms.erase best).sum (fun action =&gt; 1 / gap action)) &lt;=</span>
+<span id="L555">555           2 * ((arms.erase best).card : Real) *</span>
+<span id="L556">556             (((horizon + 1 : Nat) : Real)))</span>
+<span id="L557">557     (hcorruptionLower :</span>
+<span id="L558">558       25 * ((arms.erase best).sum (fun action =&gt; 1 / gap action)) *</span>
+<span id="L559">559           (Real.log</span>
+<span id="L560">560               ((2 * ((arms.erase best).card : Real) *</span>
+<span id="L561">561                   (((horizon + 1 : Nat) : Real))) /</span>
+<span id="L562">562                 (25 * ((arms.erase best).sum</span>
+<span id="L563">563                   (fun action =&gt; 1 / gap action)) ^ 2)) + 2) &lt;=</span>
+<span id="L564">564         corruption)</span>
+<span id="L565">565     (hselfBounding :</span>
+<span id="L566">566       let selector :=</span>
+<span id="L567">567         canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L568">568           arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L569">569       let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L570">570         arms harms sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L571">571           selector.finiteHistory loss.environment</span>
+<span id="L572">572       (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L573">573           (arms.erase best).sum (fun action =&gt;</span>
+<span id="L574">574             gap action * sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L575">575               mu arms harms sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L576">576                 t action)) - corruption &lt;=</span>
+<span id="L577">577         integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L578">578           arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L579">579             (pointMass best) horizon)) :</span>
+<span id="L580">580     let selector :=</span>
+<span id="L581">581       canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L582">582         arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L583">583     let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L584">584       arms harms sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L585">585         selector.finiteHistory loss.environment</span>
+<span id="L586">586     let reciprocalGap :=</span>
+<span id="L587">587       (arms.erase best).sum (fun action =&gt; 1 / gap action)</span>
+<span id="L588">588     let horizonMass : Real := ((horizon + 1 : Nat) : Real)</span>
+<span id="L589">589     let scale := 2 * ((arms.erase best).card : Real) * horizonMass</span>
+<span id="L590">590     integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L591">591         arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L592">592           (pointMass best) horizon) &lt;=</span>
+<span id="L593">593       1 + Real.log horizonMass +</span>
+<span id="L594">594         10 * Real.sqrt (corruption * reciprocalGap) *</span>
+<span id="L595">595           (2 + Real.sqrt</span>
+<span id="L596">596             (Real.log (scale / (corruption * reciprocalGap)) + 1)) := by</span>
+<span id="L597">597   classical</span>
+<span id="L598">598   dsimp only</span>
+<span id="L599">599   let selector :=</span>
+<span id="L600">600     canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L601">601       arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L602">602   let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L603">603     arms harms sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L604">604       selector.finiteHistory loss.environment</span>
+<span id="L605">605   let reciprocalGap :=</span>
+<span id="L606">606     (arms.erase best).sum (fun action =&gt; 1 / gap action)</span>
+<span id="L607">607   let horizonMass : Real := ((horizon + 1 : Nat) : Real)</span>
+<span id="L608">608   let scale := 2 * ((arms.erase best).card : Real) * horizonMass</span>
+<span id="L609">609   have hreciprocalGap : 0 &lt; reciprocalGap := by</span>
+<span id="L610">610     dsimp [reciprocalGap]</span>
+<span id="L611">611     exact sum_inv_pos_of_nonempty (arms.erase best) hsuboptimal gap hgap</span>
+<span id="L612">612   have hhorizonMass : 1 &lt;= horizonMass := by</span>
+<span id="L613">613     dsimp [horizonMass]</span>
+<span id="L614">614     exact_mod_cast Nat.succ_le_succ (Nat.zero_le horizon)</span>
+<span id="L615">615   have hcard : 0 &lt; ((arms.erase best).card : Real) := by</span>
+<span id="L616">616     exact_mod_cast hsuboptimal.card_pos</span>
+<span id="L617">617   have hscale : 0 &lt; scale := by</span>
+<span id="L618">618     dsimp [scale]</span>
+<span id="L619">619     positivity</span>
+<span id="L620">620   have hcorruptionUpper&#x27; :</span>
+<span id="L621">621       2 * (corruption * reciprocalGap) &lt;= scale := by</span>
+<span id="L622">622     simpa [scale, reciprocalGap, horizonMass] using hcorruptionUpper</span>
+<span id="L623">623   have hproductUpper : corruption * reciprocalGap &lt;= scale := by</span>
+<span id="L624">624     linarith</span>
+<span id="L625">625   have hroute :=</span>
+<span id="L626">626     exists_integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_refinedLocalTuned</span>
+<span id="L627">627       prior arms harms loss hbest horizon gap hsuboptimal hgap corruption</span>
+<span id="L628">628         hcorruption hscalarLower hscalarThresholdOne hcorruptionUpper</span>
+<span id="L629">629           hcorruptionLower hselfBounding</span>
+<span id="L630">630   dsimp only at hroute</span>
+<span id="L631">631   rcases hroute with</span>
+<span id="L632">632     ⟨beta, hbeta, hroot, _hweightOne, _hweightUpper, _hlambda, hbound⟩</span>
+<span id="L633">633   exact hbound.trans</span>
+<span id="L634">634     (refinedLocalTunedRegretBound_le_explicit</span>
+<span id="L635">635       scale horizonMass reciprocalGap corruption beta hscale hhorizonMass</span>
+<span id="L636">636         hreciprocalGap hcorruption (by linarith [hbeta.1]) hbeta.2</span>
+<span id="L637">637           hproductUpper hroot)</span>
+<span id="L638">638 end Tsallis</span>
+<span id="L639">639 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+flowchart LR
+  Start["New to Lean or bandit/RL proofs"] --> F["01 · Foundations"]
+  F --> P["02 · Probability layer"]
+  F --> ETC["03 · ETC"]
+  ETC --> UCB["04 · UCB"]
+  P --> UCB
+  UCB --> OFUL["05 · OFUL + stopping times"]
+  P --> TS["06 · Thompson sampling"]
+  F --> E["07 · EXP3"]
+  P --> E
+  E --> T["08 · Tsallis-FTRL"]
+  P --> T
+  P --> RL["09 · Finite-horizon RL"]
+  OFUL --> RL
+  UCB --> RL
+  RL --> Frontier["10 · Frontier + contribution workflow"]
+  T --> Frontier
+  TS --> Frontier
+
+  IDE["Research IDE: LaTeX ↔ Lean ↔ tree"] -. "use beside every chapter" .-> F
+  IDE -.-> RL

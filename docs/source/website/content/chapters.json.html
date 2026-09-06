@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="website/content/chapters.json · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="website/content/chapters.json · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>website/content/chapters.json · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>website/content/chapters.json</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 {</span>
+<span id="L2">2   &quot;chapters&quot;: [</span>
+<span id="L3">3     {</span>
+<span id="L4">4       &quot;slug&quot;: &quot;foundations&quot;,</span>
+<span id="L5">5       &quot;title&quot;: &quot;1. Finite bandits, traces, and regret&quot;,</span>
+<span id="L6">6       &quot;short_title&quot;: &quot;Foundations&quot;,</span>
+<span id="L7">7       &quot;status&quot;: &quot;compiled&quot;,</span>
+<span id="L8">8       &quot;summary&quot;: &quot;The deterministic language shared by the entire project: finite models, action and reward traces, pull counts, gaps, reward sums, pseudo-regret, and count-to-regret decompositions.&quot;,</span>
+<span id="L9">9       &quot;audience&quot;: &quot;Start here if you know basic probability or machine learning but are new to this Lean library.&quot;,</span>
+<span id="L10">10       &quot;completion_definition&quot;: &quot;Complete when the deterministic finite-bandit vocabulary, traces, counts, reward sums, gap facts, and regret decompositions compile through the public root and external tests. Probabilistic algorithm laws belong to downstream chapters.&quot;,</span>
+<span id="L11">11       &quot;completion_blockers&quot;: [</span>
+<span id="L12">12         &quot;No remaining blocker inside the user-approved deterministic scope; probabilistic laws are downstream obligations rather than missing Chapter 1 results.&quot;</span>
+<span id="L13">13       ],</span>
+<span id="L14">14       &quot;learning_goals&quot;: [</span>
+<span id="L15">15         &quot;Distinguish a deterministic action trace from a probability law over generated traces.&quot;,</span>
+<span id="L16">16         &quot;Use pull counts as the bookkeeping interface shared by ETC, UCB, EXP3, and Tsallis routes.&quot;,</span>
+<span id="L17">17         &quot;Read the finite-sum identity that regroups time-indexed regret by arm.&quot;</span>
+<span id="L18">18       ],</span>
+<span id="L19">19       &quot;module_globs&quot;: [</span>
+<span id="L20">20         &quot;BanditRLProof/Core.lean&quot;,</span>
+<span id="L21">21         &quot;BanditRLProof/LeafLemmas.lean&quot;,</span>
+<span id="L22">22         &quot;BanditRLProof/MathlibWrappers.lean&quot;,</span>
+<span id="L23">23         &quot;BanditRLProof/Regret*.lean&quot;,</span>
+<span id="L24">24         &quot;BanditRLProof/PullCount*.lean&quot;,</span>
+<span id="L25">25         &quot;BanditRLProof/Scalar*.lean&quot;,</span>
+<span id="L26">26         &quot;BanditRLProof/RealMeanRegretPullCount.lean&quot;,</span>
+<span id="L27">27         &quot;BanditRLProof/RealKernelRegretPullCount.lean&quot;,</span>
+<span id="L28">28         &quot;BanditRLProof/LowerBounds/*.lean&quot;</span>
+<span id="L29">29       ],</span>
+<span id="L30">30       &quot;open_gaps&quot;: [</span>
+<span id="L31">31         &quot;The deterministic identities are reusable; each probabilistic algorithm still needs its own measurable generated law and integrability contracts.&quot;,</span>
+<span id="L32">32         &quot;A local model-facing endpoint need not match every textbook or upstream theorem signature.&quot;</span>
+<span id="L33">33       ]</span>
+<span id="L34">34     },</span>
+<span id="L35">35     {</span>
+<span id="L36">36       &quot;slug&quot;: &quot;probability&quot;,</span>
+<span id="L37">37       &quot;title&quot;: &quot;2. Probability, kernels, filtrations, and concentration&quot;,</span>
+<span id="L38">38       &quot;short_title&quot;: &quot;Probability layer&quot;,</span>
+<span id="L39">39       &quot;status&quot;: &quot;compiled&quot;,</span>
+<span id="L40">40       &quot;summary&quot;: &quot;Measure-theoretic infrastructure for generated histories, conditional reward laws, martingale differences, posterior kernels, stopping times, and concentration.&quot;,</span>
+<span id="L41">41       &quot;audience&quot;: &quot;Read after Foundations; familiarity with conditional expectation helps but is not required.&quot;,</span>
+<span id="L42">42       &quot;completion_definition&quot;: &quot;Complete within the Book Map scope when the reusable measure, kernel, filtration, conditional-law, finite-time concentration, and finite/countable all-time confidence-budget adapters required by canonical generated ETC and ordinary-UCB routes compile with explicit regularity contracts. The telescoping all-time producer must remain on the same canonical trajectory when consumed by the fixed-policy UCB extension. Self-normalized and RL-specific confidence remain separate chapters or extensions.&quot;,</span>
+<span id="L43">43       &quot;completion_blockers&quot;: [</span>
+<span id="L44">44         &quot;No remaining blocker inside the scoped ETC/ordinary-UCB dependency surface: the finite-arm/time event feeds the horizon-indexed family, while the telescoping all-time event now feeds a horizon-free scheduled UCB policy on the same canonical trajectory through all-horizon pull counts and finite-time expected regret.&quot;</span>
+<span id="L45">45       ],</span>
+<span id="L46">46       &quot;learning_goals&quot;: [</span>
+<span id="L47">47         &quot;See why policies and history selectors must be measurable maps.&quot;,</span>
+<span id="L48">48         &quot;Separate a marginal reward distribution from a history-conditioned kernel law.&quot;,</span>
+<span id="L49">49         &quot;Track adaptedness, integrability, finite-measure, and variance-proxy assumptions explicitly.&quot;</span>
+<span id="L50">50       ],</span>
+<span id="L51">51       &quot;module_globs&quot;: [</span>
+<span id="L52">52         &quot;BanditRLProof/Measure*.lean&quot;,</span>
+<span id="L53">53         &quot;BanditRLProof/Measurable*.lean&quot;,</span>
+<span id="L54">54         &quot;BanditRLProof/Integrability*.lean&quot;,</span>
+<span id="L55">55         &quot;BanditRLProof/Independence*.lean&quot;,</span>
+<span id="L56">56         &quot;BanditRLProof/HistoryFiltration.lean&quot;,</span>
+<span id="L57">57         &quot;BanditRLProof/PolicyMeasurability.lean&quot;,</span>
+<span id="L58">58         &quot;BanditRLProof/RewardKernel.lean&quot;,</span>
+<span id="L59">59         &quot;BanditRLProof/RewardTraceLaw.lean&quot;,</span>
+<span id="L60">60         &quot;BanditRLProof/BoundedRewardKernelLaw.lean&quot;,</span>
+<span id="L61">61         &quot;BanditRLProof/FiniteArmRewardKernelLaw.lean&quot;,</span>
+<span id="L62">62         &quot;BanditRLProof/FiniteContextVarianceProxy.lean&quot;,</span>
+<span id="L63">63         &quot;BanditRLProof/Kernel*.lean&quot;,</span>
+<span id="L64">64         &quot;BanditRLProof/PosteriorKernel.lean&quot;,</span>
+<span id="L65">65         &quot;BanditRLProof/Conditional*.lean&quot;,</span>
+<span id="L66">66         &quot;BanditRLProof/Concentration*.lean&quot;,</span>
+<span id="L67">67         &quot;BanditRLProof/MartingaleDifference.lean&quot;,</span>
+<span id="L68">68         &quot;BanditRLProof/ProbabilityUnionBound.lean&quot;,</span>
+<span id="L69">69         &quot;BanditRLProof/UnboundedStoppingTime*.lean&quot;</span>
+<span id="L70">70       ],</span>
+<span id="L71">71       &quot;open_gaps&quot;: [</span>
+<span id="L72">72         &quot;The telescoping all-time empirical-mean producer now has an explicit same-source fixed-policy UCB consumer; the geometric producer remains confidence infrastructure rather than the logarithmic scheduled-regret route.&quot;,</span>
+<span id="L73">73         &quot;There is intentionally no single producer for every adaptive environment or every fixed-policy anytime algorithm.&quot;,</span>
+<span id="L74">74         &quot;Self-normalized and RL-specific concentration remain explicit downstream theorem routes rather than one universal wrapper.&quot;</span>
+<span id="L75">75       ]</span>
+<span id="L76">76     },</span>
+<span id="L77">77     {</span>
+<span id="L78">78       &quot;slug&quot;: &quot;etc&quot;,</span>
+<span id="L79">79       &quot;title&quot;: &quot;3. Explore-Then-Commit&quot;,</span>
+<span id="L80">80       &quot;short_title&quot;: &quot;ETC&quot;,</span>
+<span id="L81">81       &quot;status&quot;: &quot;compiled&quot;,</span>
+<span id="L82">82       &quot;summary&quot;: &quot;Round-robin exploration, empirical means, measurable commit choices, wrong-commit tails, and expected-regret assemblies under bounded or sub-Gaussian arm laws.&quot;,</span>
+<span id="L83">83       &quot;audience&quot;: &quot;The shortest end-to-end stochastic-bandit route in the repository.&quot;,</span>
+<span id="L84">84       &quot;completion_definition&quot;: &quot;Complete when a canonical measurable generated ETC law, commit and tie semantics, wrong-commit concentration, and expected-regret endpoint compile under one documented local toolchain, and every claimed upstream compatibility surface is verified exactly.&quot;,</span>
+<span id="L85">85       &quot;completion_blockers&quot;: [</span>
+<span id="L86">86         &quot;No remaining blocker inside the canonical local ETC scope: the public Book Map canary certifies the generated law, round-robin exploration, Rat first-occurrence/least-encoded tie rule, named wrong-commit concentration, and bounded/sub-Gaussian expected-regret endpoints. Pinned LML material remains theorem-card-only and outside this completion claim.&quot;</span>
+<span id="L87">87       ],</span>
+<span id="L88">88       &quot;learning_goals&quot;: [</span>
+<span id="L89">89         &quot;Decompose regret into deterministic exploration cost and wrong-commit probability.&quot;,</span>
+<span id="L90">90         &quot;Follow empirical-mean concentration into a concrete Real expected-regret bound.&quot;,</span>
+<span id="L91">91         &quot;Distinguish compiled local endpoints from the still-partial upstream-compatible port.&quot;</span>
+<span id="L92">92       ],</span>
+<span id="L93">93       &quot;module_globs&quot;: [&quot;BanditRLProof/Algorithms/ETC*.lean&quot;],</span>
+<span id="L94">94       &quot;open_gaps&quot;: [</span>
+<span id="L95">95         &quot;Direct LML symbol integration remains optional cross-toolchain work even though the local canonical chapter route compiles.&quot;,</span>
+<span id="L96">96         &quot;The website never upgrades a theorem card into a local proof certificate.&quot;</span>
+<span id="L97">97       ]</span>
+<span id="L98">98     },</span>
+<span id="L99">99     {</span>
+<span id="L100">100       &quot;slug&quot;: &quot;ucb&quot;,</span>
+<span id="L101">101       &quot;title&quot;: &quot;4. UCB: confidence events to regret&quot;,</span>
+<span id="L102">102       &quot;short_title&quot;: &quot;UCB&quot;,</span>
+<span id="L103">103       &quot;status&quot;: &quot;compiled&quot;,</span>
+<span id="L104">104       &quot;summary&quot;: &quot;History-based ordinary-UCB and KL-UCB scores, count thresholds, generated policies, arm streams, same-trajectory confidence, finite-arm reward kernels, and expected regret.&quot;,</span>
+<span id="L105">105       &quot;audience&quot;: &quot;Read ETC first if confidence-event arguments are new to you.&quot;,</span>
+<span id="L106">106       &quot;completion_definition&quot;: &quot;Complete within the ordinary-UCB Book Map scope when (i) the canonical horizon-indexed generated UCB family connects simultaneous finite-arm/time confidence to pull counts, finite-arm expected regret, and its expected-average asymptotic consumer, and (ii) one separate horizon-free scheduled policy and trajectory measure connect the telescoping all-time confidence event to a simultaneous all-horizon positive-gap pull-count theorem and a finite-time expected pseudo-regret consumer. Public imports, typed canaries, explicit initialization/positivity contracts, and a clean full gate are required. Fixed-policy expected-average consistency and upstream compatibility are separate unless proved explicitly.&quot;,</span>
+<span id="L107">107       &quot;completion_blockers&quot;: [</span>
+<span id="L108">108         &quot;No remaining blocker inside the declared ordinary-UCB scope: the horizon-indexed chain reaches expected-average convergence, and the new horizon-free scheduled policy uses the telescoping radius on its own generated history, explicitly transports sampled/generated actions on the same trajectory measure, controls all finite horizons on one good event, and supplies a finite-time expected pseudo-regret bound.&quot;</span>
+<span id="L109">109       ],</span>
+<span id="L110">110       &quot;learning_goals&quot;: [</span>
+<span id="L111">111         &quot;Convert a suboptimal UCB selection into a confidence failure or a small-count event.&quot;,</span>
+<span id="L112">112         &quot;Trace conditional sub-Gaussian laws into a textbook-shaped gap-sum bound.&quot;,</span>
+<span id="L113">113         &quot;Read the compiled expected-average-regret convergence results without conflating them with every UCB variant.&quot;</span>
+<span id="L114">114       ],</span>
+<span id="L115">115       &quot;module_globs&quot;: [</span>
+<span id="L116">116         &quot;BanditRLProof/Algorithms/UCB*.lean&quot;,</span>
+<span id="L117">117         &quot;BanditRLProof/UCB*.lean&quot;</span>
+<span id="L118">118       ],</span>
+<span id="L119">119       &quot;open_gaps&quot;: [</span>
+<span id="L120">120         &quot;The fixed-policy telescoping anytime confidence/count/finite-time expected-regret route is compiled. Its bound retains the explicit T times delta failure term, so fixed-delta expected-average consistency is not claimed.&quot;,</span>
+<span id="L121">121         &quot;The geometric all-time radius is retained as a valid confidence producer but its exponentially shrinking share is not the route to logarithmic fixed-policy UCB regret.&quot;,</span>
+<span id="L122">122         &quot;A distinct generated KL-UCB extension now compiles Bernoulli-KL endpoint semantics, confidence-set supremum, a horizon-free policy, same-source all-time confidence, all-horizon counts, and conservative finite-time expected pseudo-regret under AE unit support and a common interior-mean margin.&quot;,</span>
+<span id="L123">123         &quot;Sharp KL-Chernoff concentration, the Garivier-Cappe leading constant, KL-UCB limsup asymptotic optimality, and exact pinned-LML compatibility remain separate.&quot;</span>
+<span id="L124">124       ]</span>
+<span id="L125">125     },</span>
+<span id="L126">126     {</span>
+<span id="L127">127       &quot;slug&quot;: &quot;oful&quot;,</span>
+<span id="L128">128       &quot;title&quot;: &quot;5. OFUL, self-normalized confidence, and stopping times&quot;,</span>
+<span id="L129">129       &quot;short_title&quot;: &quot;OFUL&quot;,</span>
+<span id="L130">130       &quot;status&quot;: &quot;compiled&quot;,</span>
+<span id="L131">131       &quot;summary&quot;: &quot;The scoped canonical finite-action linear-bandit route compiles from elliptical potential and self-normalized ridge confidence through one horizon-free generated OFUL policy with all-horizon regret and stopping consumers, plus a separately identified horizon-indexed expected-consistency family.&quot;,</span>
+<span id="L132">132       &quot;audience&quot;: &quot;Read the Probability layer and UCB chapter before this linear-bandit route.&quot;,</span>
+<span id="L133">133       &quot;completion_definition&quot;: &quot;Complete in the canonical textbook scope when finite-dimensional Gram geometry, rank-one determinant and log-determinant arguments, conditional-MGF/self-normalized ridge confidence, regularization bias, measurable finite-action optimism, and a kernel-law-produced generated trajectory compile; one horizon-free telescoping policy must carry all-time confidence, all-horizon high-probability pseudo-regret, and bounded plus square-integrable stopping-time consumers, while the distinct horizon-indexed fixed-model family carries finite-horizon expectation and expected-average consistency. One public external canary must distinguish and type both families.&quot;,</span>
+<span id="L134">134       &quot;completion_blockers&quot;: [</span>
+<span id="L135">135         &quot;No remaining blocker inside this canonical scope: Tests/BookMapChaptersFiveAndSixCanary.lean gives full-conclusion typed applications for the same horizon-free telescoping policy/environment/trajectory chain through all-horizon and both stopping consumers, and separately types the horizon-indexed expected-consistency family. The items below are explicitly out-of-scope extensions.&quot;</span>
+<span id="L136">136       ],</span>
+<span id="L137">137       &quot;learning_goals&quot;: [</span>
+<span id="L138">138         &quot;Understand the log-determinant proof of the elliptical-potential inequality.&quot;,</span>
+<span id="L139">139         &quot;Follow a conditional MGF source through ridge confidence and optimistic action selection.&quot;,</span>
+<span id="L140">140         &quot;Separate deterministic horizons, simultaneous one-policy confidence, and square-integrable stopping-time conclusions.&quot;</span>
+<span id="L141">141       ],</span>
+<span id="L142">142       &quot;module_globs&quot;: [&quot;BanditRLProof/OFUL*.lean&quot;],</span>
+<span id="L143">143       &quot;open_gaps&quot;: [</span>
+<span id="L144">144         &quot;Contextual or time-varying action sets, dynamic linear bandits, paper-sharp/minimax constants, uniform-over-parameter guarantees, and infinite-dimensional Hilbert-space OFUL remain extensions.&quot;,</span>
+<span id="L145">145         &quot;Arbitrary history environments without a centered conditional-MGF producer, pathwise/almost-sure/universal optional-stopping consistency, and full primal-dual Bandits-with-Knapsacks remain outside the completed scope.&quot;,</span>
+<span id="L146">146         &quot;Budget-forced schedules compile under explicit contracts, but they are not labeled as a complete BwK theorem.&quot;</span>
+<span id="L147">147       ]</span>
+<span id="L148">148     },</span>
+<span id="L149">149     {</span>
+<span id="L150">150       &quot;slug&quot;: &quot;thompson&quot;,</span>
+<span id="L151">151       &quot;title&quot;: &quot;6. Thompson sampling and Bayesian regret&quot;,</span>
+<span id="L152">152       &quot;short_title&quot;: &quot;Thompson sampling&quot;,</span>
+<span id="L153">153       &quot;status&quot;: &quot;compiled&quot;,</span>
+<span id="L154">154       &quot;summary&quot;: &quot;The scoped stationary finite-arm Thompson route compiles from posterior kernels and probability matching on the actual recursive generated history through clipped-UCB decomposition, latent-stream confidence, and an explicit Bayesian regret terminal.&quot;,</span>
+<span id="L155">155       &quot;audience&quot;: &quot;Best read after the Probability layer.&quot;,</span>
+<span id="L156">156       &quot;completion_definition&quot;: &quot;Complete in the stationary canonical textbook scope when a probability prior and likelihood construct the posterior kernel, a measurable selector with the explicit pointwise IsOptimalMeanSelector contract gives posterior best-action pushforward and actual-recursive-trajectory probability matching, score transport yields Bayesian and clipped-UCB decompositions, a stationary Markov reward kernel constructs the augmented latent arm stream with a.e. generated-reward support, upper/lower confidence consumers compile, and the generated trajectory satisfies E[R_n^Bayes] &lt;= (2K+1)(u-l)+8 sqrt(sigma^2 K n log n) under the exact optimality, measurable bounded-mean, and centered sub-Gaussian assumptions.&quot;,</span>
+<span id="L157">157       &quot;completion_blockers&quot;: [</span>
+<span id="L158">158         &quot;No remaining blocker inside this stationary canonical scope: the public canary types probability matching on the actual recursive history and concretely instantiates the final theorem with a one-arm stationary Gaussian Markov source while explicitly proving its mean-optimal selector contract. The items below remain separate extensions.&quot;</span>
+<span id="L159">159       ],</span>
+<span id="L160">160       &quot;learning_goals&quot;: [</span>
+<span id="L161">161         &quot;Read a posterior as a kernel from histories to environments.&quot;,</span>
+<span id="L162">162         &quot;Transport conditional action-law equality onto the generated trajectory.&quot;,</span>
+<span id="L163">163         &quot;Understand why one compiled stationary theorem is not a universal posterior-sampling result.&quot;</span>
+<span id="L164">164       ],</span>
+<span id="L165">165       &quot;module_globs&quot;: [&quot;BanditRLProof/Algorithms/Thompson*.lean&quot;],</span>
+<span id="L166">166       &quot;open_gaps&quot;: [</span>
+<span id="L167">167         &quot;Arbitrary nonstationary posterior models, contextual or linear Thompson sampling, posterior-sampling RL, and user-supplied posteriors without a law producer remain extensions.&quot;,</span>
+<span id="L168">168         &quot;Sharp problem-dependent or asymptotically optimal constants are not claimed by the compiled stationary terminal.&quot;,</span>
+<span id="L169">169         &quot;Exact LeanMachineLearning declaration/toolchain identity remains independently blocked; LML cards are retrieval evidence, not imported proof terms.&quot;</span>
+<span id="L170">170       ]</span>
+<span id="L171">171     },</span>
+<span id="L172">172     {</span>
+<span id="L173">173       &quot;slug&quot;: &quot;exp3&quot;,</span>
+<span id="L174">174       &quot;title&quot;: &quot;7. EXP3 and adversarial concentration&quot;,</span>
+<span id="L175">175       &quot;short_title&quot;: &quot;EXP3&quot;,</span>
+<span id="L176">176       &quot;status&quot;: &quot;compiled&quot;,</span>
+<span id="L177">177       &quot;summary&quot;: &quot;The scoped canonical generated EXP3 route compiles from exponential-weight potentials and importance-weighted conditional moments through horizon-tuned expected and best-arm high-probability endpoints, plus a distinct fixed-process all-positive-prefix realized-regret event and a sparse-loss extension.&quot;,</span>
+<span id="L178">178       &quot;audience&quot;: &quot;Read Foundations first; later sections use the Probability layer heavily.&quot;,</span>
+<span id="L179">179       &quot;learning_goals&quot;: [</span>
+<span id="L180">180         &quot;Connect the one-step exponential-potential inequality to deterministic Hedge regret.&quot;,</span>
+<span id="L181">181         &quot;See why positive exploration makes importance-weighted estimators legal.&quot;,</span>
+<span id="L182">182         &quot;Track predictable variance, realized deviation, comparator regret, and sparsity failures into explicit probability events.&quot;</span>
+<span id="L183">183       ],</span>
+<span id="L184">184       &quot;module_globs&quot;: [&quot;BanditRLProof/Exp3*.lean&quot;],</span>
+<span id="L185">185       &quot;completion_definition&quot;: &quot;Complete in the canonical adversarial finite-arm scope when the exponential-potential and deterministic Hedge route, positive-support importance weighting, conditional first/second moments, measurable recursive generated trajectory, predictable-loss transport, and exploration bias compile; the same public canary must type (i) the horizon-dependent tuned expected bound, (ii) the horizon-dependent fixed-window best-supported-arm realized tail, (iii) one fixed prior/arms/loss/eta/gamma/comparator process with predictable and realized-deviation parents, exact decomposition, and an all-positive-prefix realized-regret outer-probability terminal, and (iv) the separately labelled sparse/variance-sensitive endpoint with its failure budget explicit.&quot;,</span>
+<span id="L186">186       &quot;completion_blockers&quot;: [</span>
+<span id="L187">187         &quot;No remaining blocker inside this canonical scope: Tests/BookMapChaptersSevenAndEightCanary.lean gives full-conclusion applications for the tuned expected, per-horizon best-arm, fixed-process all-prefix, and sparse terminals. The items below are explicit extensions rather than hidden chapter requirements.&quot;</span>
+<span id="L188">188       ],</span>
+<span id="L189">189       &quot;open_gaps&quot;: [</span>
+<span id="L190">190         &quot;The tuned expected and fixed-window best-arm theorems rebuild eta, gamma, and the generated law from the queried horizon; they are not a single horizon-free policy or simultaneous anytime theorem.&quot;,</span>
+<span id="L191">191         &quot;The geometric all-prefix theorem instead fixes eta, gamma, prior, arms, loss, and one supported comparator; its scheduled radius is not a tuned sublinear confidence sequence or a best-arm minimum.&quot;,</span>
+<span id="L192">192         &quot;Ville/Doob or mixture boundaries, optional stopping, ideal EXP3.P, contextual/delayed EXP3, and one universal theorem subsuming every hypothesis regime remain extensions. The sparse theorem retains its supplied sparsity-failure probability.&quot;</span>
+<span id="L193">193       ]</span>
+<span id="L194">194     },</span>
+<span id="L195">195     {</span>
+<span id="L196">196       &quot;slug&quot;: &quot;tsallis&quot;,</span>
+<span id="L197">197       &quot;title&quot;: &quot;8. Tsallis-FTRL, corruption, and nonstationarity&quot;,</span>
+<span id="L198">198       &quot;short_title&quot;: &quot;Tsallis-FTRL&quot;,</span>
+<span id="L199">199       &quot;status&quot;: &quot;compiled&quot;,</span>
+<span id="L200">200       &quot;summary&quot;: &quot;The scoped canonical half-Tsallis FTRL route compiles from finite-simplex minimizers and one-step stability through a measurable scheduled generated trajectory, score alignment, expected self-bounding, and a finite-arm IID bounded reward-law logarithmic regret terminal; corruption and nonstationary routes remain labelled extensions.&quot;,</span>
+<span id="L201">201       &quot;audience&quot;: &quot;This is one of the longest routes; read EXP3 and the Probability layer first.&quot;,</span>
+<span id="L202">202       &quot;learning_goals&quot;: [</span>
+<span id="L203">203         &quot;Separate deterministic FTRL stability from stochastic law transport.&quot;,</span>
+<span id="L204">204         &quot;Use expected action probabilities and gap self-bounds to obtain logarithmic or corruption-sensitive regret.&quot;,</span>
+<span id="L205">205         &quot;Follow the now-compiled generated oracle-restart law while preserving its full-information change-point assumption.&quot;</span>
+<span id="L206">206       ],</span>
+<span id="L207">207       &quot;module_globs&quot;: [</span>
+<span id="L208">208         &quot;BanditRLProof/FTRL*.lean&quot;,</span>
+<span id="L209">209         &quot;BanditRLProof/Tsallis*.lean&quot;</span>
+<span id="L210">210       ],</span>
+<span id="L211">211       &quot;completion_definition&quot;: &quot;Complete in the canonical finite-arm scope when half-Tsallis finite-simplex minimizer existence, interiority, uniqueness, and measurability; one-step importance-weighted stability; time-varying potential/penalty algebra; the measurable scheduled selector and recursive generated action law; observed score/probability alignment; initial, successor, all-times, and all-rate expected stability; expected environment-regret transport; fixed-gap self-bounding; square-root-schedule logarithmic optimization; and a concrete finite-arm IID rational reward-law producer all compile. The terminal must use the same let-bound selector, trajectory kernel, and measure, retain probability/a.e.-unit-support/exact-mean/positive-gap contracts, and admit the uncorrupted specialization by setting its explicit nonnegative corruption allowance to zero.&quot;,</span>
+<span id="L212">212       &quot;completion_blockers&quot;: [</span>
+<span id="L213">213         &quot;No remaining blocker inside this canonical scope: Tests/BookMapChaptersSevenAndEightCanary.lean checks the actual generated selector/action-law/stability chain and concretely instantiates the IID logarithmic terminal with two bounded Dirac reward laws of means 3/4 and 1/4 and a proved positive gap. The items below remain distinct research extensions.&quot;</span>
+<span id="L214">214       ],</span>
+<span id="L215">215       &quot;open_gaps&quot;: [</span>
+<span id="L216">216         &quot;Paper-sharp or minimax-optimal Tsallis-INF constants, a complete best-of-both-worlds theorem, and high-probability or realized-regret guarantees are not claimed by the canonical expected-regret terminal.&quot;,</span>
+<span id="L217">217         &quot;History-adaptive corruption, drifting laws, dynamic comparators, and the population-mean oracle restart compile as separately labelled extensions; an observed-reward detector still needs random history-dependent scheduling plus delay/false-alarm concentration.&quot;,</span>
+<span id="L218">218         &quot;The strict Fin 2 refined-averaged-stability counterexample remains an explicit obstruction; contextual/linear Tsallis-INF and broader adaptive-learning-rate paper routes remain separate.&quot;</span>
+<span id="L219">219       ]</span>
+<span id="L220">220     },</span>
+<span id="L221">221     {</span>
+<span id="L222">222       &quot;slug&quot;: &quot;finite-horizon-rl&quot;,</span>
+<span id="L223">223       &quot;title&quot;: &quot;9. Finite-horizon reinforcement learning&quot;,</span>
+<span id="L224">224       &quot;short_title&quot;: &quot;Finite-horizon RL&quot;,</span>
+<span id="L225">225       &quot;status&quot;: &quot;compiled&quot;,</span>
+<span id="L226">226       &quot;summary&quot;: &quot;Finite MDPs, Bellman optimality, generated trajectories and occupancy regret, plus a canonical known-reward Hoeffding UCBVI-CH route whose recurrent planner, same-source confidence, optimism, raw cumulative episode pseudo-regret, high-probability terminal, and failure-aware expectation consumer share one adaptive generated process.&quot;,</span>
+<span id="L227">227       &quot;audience&quot;: &quot;Read Foundations, Probability, UCB, and the OFUL stopping-time material first.&quot;,</span>
+<span id="L228">228       &quot;learning_goals&quot;: [</span>
+<span id="L229">229         &quot;Build finite-horizon value recursion and prove the optimal policy attains the Bellman optimum.&quot;,</span>
+<span id="L230">230         &quot;Rewrite expected policy regret as an occupancy-weighted Bellman gap.&quot;,</span>
+<span id="L231">231         &quot;Follow aggregate empirical transitions through previous-Q clipping, same-source confidence, Bellman optimism, counting and martingale terms to generated cumulative pseudo-regret.&quot;</span>
+<span id="L232">232       ],</span>
+<span id="L233">233       &quot;module_globs&quot;: [&quot;BanditRLProof/RL/*.lean&quot;],</span>
+<span id="L234">234       &quot;completion_definition&quot;: &quot;Complete in the canonical Chapter 9 scope when finite-MDP Bellman and occupancy foundations, a single generated adaptive episode process with known deterministic rewards in [0,1], same-prefix aggregate transition counts, a previous-Q clipped Hoeffding UCBVI-CH planner, same-law confidence and optimism, generated raw cumulative episode pseudo-regret, the explicit 20/250 high-probability terminal, and an integrable failure-aware expected-regret corollary all compile through the public root and a nondegenerate typed canary.&quot;,</span>
+<span id="L235">235       &quot;completion_blockers&quot;: [</span>
+<span id="L236">236         &quot;No remaining blocker inside this canonical known-reward Hoeffding scope: the recurrent source uses only strict-prefix generated data; its confidence event, policy, empirical kernel and regret share one trajectory measure; the frozen high-probability theorem and K H delta expected consumer compile; and GitHub Actions plus the Pages deployment were verified before promotion.&quot;</span>
+<span id="L237">237       ],</span>
+<span id="L238">238       &quot;open_gaps&quot;: [</span>
+<span id="L239">239         &quot;Bernstein/variance-aware minimax UCB-VI and its paper-leading rate remain a separate second milestone.&quot;,</span>
+<span id="L240">240         &quot;Stochastic-reward UCBVI, adversarial or nonstationary initial-state sequences, realized sampled-return high-probability UCBVI, posterior-sampling RL, model-free Q-learning, and infinite or continuous state-action spaces remain extensions.&quot;,</span>
+<span id="L241">241         &quot;Natural-causal consistency and stopping-time RL results are independent extension branches; they are not consequences or aliases of the compiled raw cumulative UCBVI-CH terminal.&quot;,</span>
+<span id="L242">242         &quot;The joint confidence event includes singleton Bernstein coordinates and a same-generated-law optimal-tail scalar probe. It does not claim the sharp scalar bound follows from singleton envelopes alone.&quot;</span>
+<span id="L243">243       ]</span>
+<span id="L244">244     },</span>
+<span id="L245">245     {</span>
+<span id="L246">246       &quot;slug&quot;: &quot;frontier&quot;,</span>
+<span id="L247">247       &quot;title&quot;: &quot;10. Automation, resources, and open routes&quot;,</span>
+<span id="L248">248       &quot;short_title&quot;: &quot;Frontier&quot;,</span>
+<span id="L249">249       &quot;status&quot;: &quot;planned&quot;,</span>
+<span id="L250">250   &quot;summary&quot;: &quot;The proof harness, task vocabulary, resource stopping leaves, literature registry, partial source-frozen delayed-feedback, succinct-lower-bound, and stochastic-gradient-bandit audits, and planned BwK, preference, robust, federated, neural-bandit, and sharp KL-asymptotic work.&quot;,</span>
+<span id="L251">251       &quot;audience&quot;: &quot;Read this chapter to contribute a new route or understand what is deliberately not claimed.&quot;,</span>
+<span id="L252">252       &quot;learning_goals&quot;: [</span>
+<span id="L253">253         &quot;Use the same status vocabulary for source declarations, theorem cards, tasks, and blockers.&quot;,</span>
+<span id="L254">254         &quot;Distinguish a stopping-time foundation from a completed resource-constrained algorithm theorem.&quot;,</span>
+<span id="L255">255         &quot;Move a literature target through task packets, proof obligations, compilation, and synchronized documentation.&quot;</span>
+<span id="L256">256       ],</span>
+<span id="L257">257   &quot;module_globs&quot;: [</span>
+<span id="L258">258     &quot;BanditRLProof/Automation.lean&quot;,</span>
+<span id="L259">259     &quot;BanditRLProof/BudgetStoppingTime.lean&quot;,</span>
+<span id="L260">260     &quot;BanditRLProof/DelayedFeedback/*.lean&quot;,</span>
+<span id="L261">261     &quot;BanditRLProof/LowerBounds/SuccinctGeometryAudit.lean&quot;,</span>
+<span id="L262">262     &quot;BanditRLProof/Algorithms/StochasticGradientBanditAudit.lean&quot;,</span>
+<span id="L263">263     &quot;BanditRLProof/Algorithms/StochasticGradientBanditTrajectoryAudit.lean&quot;,</span>
+<span id="L264">264     &quot;BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRate.lean&quot;,</span>
+<span id="L265">265     &quot;BanditRLProof/Algorithms/StochasticGradientBanditExponentialAudit.lean&quot;,</span>
+<span id="L266">266     &quot;BanditRLProof/Algorithms/StochasticGradientBanditConditionalExponentialAudit.lean&quot;,</span>
+<span id="L267">267     &quot;BanditRLProof/Algorithms/StochasticGradientBanditTwoArmRecurrence.lean&quot;,</span>
+<span id="L268">268     &quot;BanditRLProof/Algorithms/StochasticGradientBanditTwoArmInitialRecurrence.lean&quot;,</span>
+<span id="L269">269     &quot;BanditRLProof/Algorithms/StochasticGradientBanditTwoArmMeasurableRecurrence.lean&quot;,</span>
+<span id="L270">270     &quot;BanditRLProof/Algorithms/StochasticGradientBanditTwoArmPathIntegrability.lean&quot;,</span>
+<span id="L271">271     &quot;BanditRLProof/Algorithms/StochasticGradientBanditTwoArmUnconditionalRecurrence.lean&quot;,</span>
+<span id="L272">272     &quot;BanditRLProof/Algorithms/StochasticGradientBanditTwoArmFixedIID.lean&quot;,</span>
+<span id="L273">273     &quot;BanditRLProof/Algorithms/StochasticGradientBanditTwoArmTheoremOne.lean&quot;,</span>
+<span id="L274">274     &quot;BanditRLProof/Algorithms/StochasticGradientBanditCorollaryOne.lean&quot;,</span>
+<span id="L275">275     &quot;BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoStarvation.lean&quot;,</span>
+<span id="L276">276     &quot;BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNthPull.lean&quot;,</span>
+<span id="L277">277     &quot;BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoLatentReward.lean&quot;,</span>
+<span id="L278">278     &quot;BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativeTrajectory.lean&quot;,</span>
+<span id="L279">279     &quot;BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoNativePrefix.lean&quot;,</span>
+<span id="L280">280     &quot;BanditRLProof/Algorithms/StochasticGradientBanditTheoremTwoSelectedIID.lean&quot;,</span>
+<span id="L281">281     &quot;BanditRLProof/Algorithms/StochasticGradientBanditTheoremFourContractAudit.lean&quot;,</span>
+<span id="L282">282     &quot;BanditRLProof/OpenProblems.lean&quot;,</span>
+<span id="L283">283     &quot;BanditRLProof/Literature.lean&quot;</span>
+<span id="L284">284   ],</span>
+<span id="L285">285       &quot;open_gaps&quot;: [</span>
+<span id="L286">286     &quot;The conservative generated KL-UCB finite-time route has named compiled declarations. The source-frozen delayed-bandit audit now compiles accounting, causal-view, new-arrival processing, probability allocation, the deterministic optimal-arm-survival core, and a causal one-round action measure. EAP/BSC state preservation, a measurable recursive trajectory, and stochastic/adversarial regret endpoints remain blocked. The source-frozen succinct-lower-bound audit compiles 54 declarations covering Definitions 3.1–3.3 and Lemmas 3.1–3.4, including the finite-Bessel strict-support route, plus an explicit global-R boundedness diagnostic; the global Lemmas 3.5–3.6 and Theorem 3.8 remain open. The stochastic-gradient-bandit audit retains the exact counted 361 = 223 + 23 + 25 + 26 + 7 + 8 + 13 + 28 + 8 audit-slice inventory through deterministic-time selected-reward freshness, terminal-count events, nth-pull-to-count bridges, and a generic low-count regret consumer. A separate ten-declaration module proves equality of the complete visible/native trajectory measures. The selected-block module now contains eight declarations for missing-pull-aware block transport, fourteen for the exact finite Appendix-C `S0/S1` event, ten for the exact disjoint all-present/missing-pull probability split, and four for missing-pull inclusion, visible-marginal probability transport, and the finite-horizon expected-regret charge. None is a selected-IID theorem or a positive-probability producer. Corollary 1 remains a direct Theorem-1 consumer, not Theorem-2 evidence. The frozen K = 2 Theorem-2 terminal remains blocked: the generated all-present phase still needs a fixed-chronological-cutoff trigger, the stopped-prefix future-cylinder law must yield conditional no-return probability at least one half, and the Rademacher/ballot probability plus asymptotic assembly remain uncompiled. The frozen terminal twoArmRademacherDirac_theoremTwo_polynomialRegret is not claimed. The Theorem-4 terminal also remains blocked because the general-K generated process, uniform buffer/survival producer, stopped-process argument, and regret assembly are absent. Full BwK/primal-dual regret, dueling, robust, federated, and neural-bandit routes remain planned or partial.&quot;,</span>
+<span id="L287">287         &quot;Direct LeanMachineLearning declaration identity remains blocked on a deliberate cross-toolchain migration and real upstream-symbol import; local theorem-card-shaped ETC/UCB proofs do not satisfy that gate.&quot;,</span>
+<span id="L288">288         &quot;The harness records completion gates but does not replace Lean elaboration or mathematical review.&quot;</span>
+<span id="L289">289       ]</span>
+<span id="L290">290     }</span>
+<span id="L291">291   ]</span>
+<span id="L292">292 }</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

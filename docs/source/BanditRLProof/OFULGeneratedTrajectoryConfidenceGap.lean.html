@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/OFULGeneratedTrajectoryConfidenceGap.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/OFULGeneratedTrajectoryConfidenceGap.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/OFULGeneratedTrajectoryConfidenceGap.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/OFULGeneratedTrajectoryConfidenceGap.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.OFULConcreteHistoryRidgeSelection</span>
+<span id="L2">2 import BanditRLProof.OFULUniformTimeConfidence</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Generated-trajectory confidence and gap transport for OFUL</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module identifies the scalar-ridge state reconstructed from an inclusive</span>
+<span id="L8">8 finite pair history with the generic finite-horizon state on the underlying</span>
+<span id="L9">9 trajectory. It then transports the measurable strict-fold selector&#x27;s score</span>
+<span id="L10">10 maximality to one-step and finite successor-window optimism-gap bounds.</span>
+<span id="L11">11 -/</span>
+<span id="L12">12 </span>
+<span id="L13">13 open MeasureTheory</span>
+<span id="L14">14 open scoped ProbabilityTheory</span>
+<span id="L15">15 </span>
+<span id="L16">16 universe u</span>
+<span id="L17">17 </span>
+<span id="L18">18 namespace BanditRLProof</span>
+<span id="L19">19 namespace OFUL</span>
+<span id="L20">20 </span>
+<span id="L21">21 /--</span>
+<span id="L22">22 Any action whose optimistic score dominates a comparator satisfies the usual</span>
+<span id="L23">23 two-bonus OFUL gap bound on the confidence ellipsoid.</span>
+<span id="L24">24 -/</span>
+<span id="L25">25 theorem linearValue_sub_selected_le_two_mul_bonus_of_score_max</span>
+<span id="L26">26     {Feature Action : Type*}</span>
+<span id="L27">27     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L28">28     (V : Matrix Feature Feature Real) (hV : V.PosDef)</span>
+<span id="L29">29     (thetaHat thetaStar : Feature -&gt; Real) (beta : Real)</span>
+<span id="L30">30     (actionFeature : Action -&gt; Feature -&gt; Real)</span>
+<span id="L31">31     (selected comparator : Action)</span>
+<span id="L32">32     (hconfidence : matrixNorm V (thetaHat - thetaStar) &lt;= beta)</span>
+<span id="L33">33     (hscoreMax :</span>
+<span id="L34">34       optimisticScore thetaHat V beta (actionFeature comparator) &lt;=</span>
+<span id="L35">35         optimisticScore thetaHat V beta (actionFeature selected)) :</span>
+<span id="L36">36     linearValue thetaStar (actionFeature comparator) -</span>
+<span id="L37">37         linearValue thetaStar (actionFeature selected) &lt;=</span>
+<span id="L38">38       2 * beta * confidenceWidth V (actionFeature selected) := by</span>
+<span id="L39">39   have hoptimistic :</span>
+<span id="L40">40       linearValue thetaStar (actionFeature comparator) &lt;=</span>
+<span id="L41">41         optimisticScore thetaHat V beta (actionFeature comparator) :=</span>
+<span id="L42">42     linearValue_le_optimisticScore_of_matrixNorm_sub_le</span>
+<span id="L43">43       V hV thetaHat thetaStar beta (actionFeature comparator) hconfidence</span>
+<span id="L44">44   have hselected :</span>
+<span id="L45">45       optimisticScore thetaHat V beta (actionFeature selected) &lt;=</span>
+<span id="L46">46         linearValue thetaStar (actionFeature selected) +</span>
+<span id="L47">47           2 * beta * confidenceWidth V (actionFeature selected) :=</span>
+<span id="L48">48     optimisticScore_le_linearValue_add_two_mul_bonus_of_matrixNorm_sub_le</span>
+<span id="L49">49       V hV thetaHat thetaStar beta (actionFeature selected) hconfidence</span>
+<span id="L50">50   linarith</span>
+<span id="L51">51 </span>
+<span id="L52">52 /--</span>
+<span id="L53">53 The concrete strict-fold history selector has the OFUL one-step gap</span>
+<span id="L54">54 certificate. No identification with the nonconstructive finite argmax is used.</span>
+<span id="L55">55 -/</span>
+<span id="L56">56 theorem finiteHistoryScalarRidgeOptimisticAction_gap_le</span>
+<span id="L57">57     {K : Nat} {Feature : Type u}</span>
+<span id="L58">58     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L59">59     (hK : 0 &lt; K)</span>
+<span id="L60">60     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L61">61     (thetaStar : Feature -&gt; Real)</span>
+<span id="L62">62     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L63">63     (R delta S : Real)</span>
+<span id="L64">64     (n : Nat) (history : History.FinitePairHistory (Fin K) Real n)</span>
+<span id="L65">65     (hconfidence :</span>
+<span id="L66">66       matrixNorm</span>
+<span id="L67">67           (finiteHistoryScalarRidgeDesign lambda actionFeature n history)</span>
+<span id="L68">68           (finiteHistoryScalarRidgeEstimate lambda actionFeature n history -</span>
+<span id="L69">69             thetaStar) &lt;=</span>
+<span id="L70">70         finiteHistoryScalarRidgeRadius</span>
+<span id="L71">71           actionFeature R delta lambda S n history)</span>
+<span id="L72">72     (comparator : Fin K) :</span>
+<span id="L73">73     linearValue thetaStar (actionFeature comparator) -</span>
+<span id="L74">74         linearValue thetaStar</span>
+<span id="L75">75           (actionFeature</span>
+<span id="L76">76             (finiteHistoryScalarRidgeOptimisticAction</span>
+<span id="L77">77               hK lambda actionFeature R delta S n history)) &lt;=</span>
+<span id="L78">78       2 *</span>
+<span id="L79">79         finiteHistoryScalarRidgeRadius</span>
+<span id="L80">80           actionFeature R delta lambda S n history *</span>
+<span id="L81">81         confidenceWidth</span>
+<span id="L82">82           (finiteHistoryScalarRidgeDesign lambda actionFeature n history)</span>
+<span id="L83">83           (actionFeature</span>
+<span id="L84">84             (finiteHistoryScalarRidgeOptimisticAction</span>
+<span id="L85">85               hK lambda actionFeature R delta S n history)) := by</span>
+<span id="L86">86   have hV :</span>
+<span id="L87">87       (finiteHistoryScalarRidgeDesign</span>
+<span id="L88">88         lambda actionFeature n history).PosDef := by</span>
+<span id="L89">89     unfold finiteHistoryScalarRidgeDesign</span>
+<span id="L90">90     exact</span>
+<span id="L91">91       (scalarIdentity_posDef lambda hlambda).add_posSemidef</span>
+<span id="L92">92         (finiteHorizonFeatureGram_posSemidef</span>
+<span id="L93">93           (fun t historyValue =&gt;</span>
+<span id="L94">94             finiteHistoryObservedFeature actionFeature n historyValue t)</span>
+<span id="L95">95           (n + 1) history)</span>
+<span id="L96">96   have hscoreMax :=</span>
+<span id="L97">97     finiteHistoryScalarRidgeOptimisticAction_score_max</span>
+<span id="L98">98       hK lambda actionFeature R delta S n history comparator</span>
+<span id="L99">99   simpa only [finiteHistoryScalarRidgeOptimisticScore,</span>
+<span id="L100">100     finiteHistoryFixedActionFeature] using</span>
+<span id="L101">101     (linearValue_sub_selected_le_two_mul_bonus_of_score_max</span>
+<span id="L102">102       (finiteHistoryScalarRidgeDesign lambda actionFeature n history) hV</span>
+<span id="L103">103       (finiteHistoryScalarRidgeEstimate lambda actionFeature n history)</span>
+<span id="L104">104       thetaStar</span>
+<span id="L105">105       (finiteHistoryScalarRidgeRadius</span>
+<span id="L106">106         actionFeature R delta lambda S n history)</span>
+<span id="L107">107       actionFeature</span>
+<span id="L108">108       (finiteHistoryScalarRidgeOptimisticAction</span>
+<span id="L109">109         hK lambda actionFeature R delta S n history)</span>
+<span id="L110">110       comparator hconfidence hscoreMax)</span>
+<span id="L111">111 </span>
+<span id="L112">112 /-- Feature process obtained by projecting actions from a canonical trajectory. -/</span>
+<span id="L113">113 def canonicalHistoryTrajectoryFeature</span>
+<span id="L114">114     {K : Nat} {Feature : Type u}</span>
+<span id="L115">115     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L116">116     (t : Nat) (trajectory : (k : Nat) -&gt; Fin K × Real) :</span>
+<span id="L117">117     Feature -&gt; Real :=</span>
+<span id="L118">118   actionFeature (Thompson.canonicalHistoryTrajectoryAction trajectory t)</span>
+<span id="L119">119 </span>
+<span id="L120">120 /-- Response process obtained by projecting rewards from a canonical trajectory. -/</span>
+<span id="L121">121 def canonicalHistoryTrajectoryResponse</span>
+<span id="L122">122     {K : Nat}</span>
+<span id="L123">123     (t : Nat) (trajectory : (k : Nat) -&gt; Fin K × Real) : Real :=</span>
+<span id="L124">124   Thompson.canonicalHistoryTrajectoryReward trajectory t</span>
+<span id="L125">125 </span>
+<span id="L126">126 /-- A trace prefix exposes the original action feature at every stored index. -/</span>
+<span id="L127">127 @[simp] theorem finiteHistoryObservedFeature_finitePairHistoryOfTrace_of_le</span>
+<span id="L128">128     {K : Nat} {Feature : Type u}</span>
+<span id="L129">129     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L130">130     (action : ActionTrace (Fin K)) (reward : RewardTrace Real)</span>
+<span id="L131">131     (n t : Nat) (ht : t &lt;= n) :</span>
+<span id="L132">132     finiteHistoryObservedFeature actionFeature n</span>
+<span id="L133">133         (History.finitePairHistoryOfTrace action reward n) t =</span>
+<span id="L134">134       actionFeature (action t) := by</span>
+<span id="L135">135   simp [finiteHistoryObservedFeature, ht]</span>
+<span id="L136">136 </span>
+<span id="L137">137 /-- A trace prefix exposes the original response at every stored index. -/</span>
+<span id="L138">138 @[simp] theorem finiteHistoryObservedResponse_finitePairHistoryOfTrace_of_le</span>
+<span id="L139">139     {K : Nat}</span>
+<span id="L140">140     (action : ActionTrace (Fin K)) (reward : RewardTrace Real)</span>
+<span id="L141">141     (n t : Nat) (ht : t &lt;= n) :</span>
+<span id="L142">142     finiteHistoryObservedResponse n</span>
+<span id="L143">143         (History.finitePairHistoryOfTrace action reward n) t =</span>
+<span id="L144">144       reward t := by</span>
+<span id="L145">145   simp [finiteHistoryObservedResponse, ht]</span>
+<span id="L146">146 </span>
+<span id="L147">147 /--</span>
+<span id="L148">148 The feature Gram reconstructed from inclusive history `n` is exactly the</span>
+<span id="L149">149 trajectory feature Gram at horizon `n + 1`.</span>
+<span id="L150">150 -/</span>
+<span id="L151">151 theorem finiteHorizonFeatureGram_finitePairHistoryOfTrace_eq</span>
+<span id="L152">152     {K : Nat} {Feature : Type u}</span>
+<span id="L153">153     [Fintype Feature]</span>
+<span id="L154">154     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L155">155     (trajectory : (k : Nat) -&gt; Fin K × Real) (n : Nat) :</span>
+<span id="L156">156     finiteHorizonFeatureGram</span>
+<span id="L157">157         (fun t historyValue =&gt;</span>
+<span id="L158">158           finiteHistoryObservedFeature actionFeature n historyValue t)</span>
+<span id="L159">159         (n + 1)</span>
+<span id="L160">160         (History.finitePairHistoryOfTrace</span>
+<span id="L161">161           (Thompson.canonicalHistoryTrajectoryAction trajectory)</span>
+<span id="L162">162           (Thompson.canonicalHistoryTrajectoryReward trajectory) n) =</span>
+<span id="L163">163       finiteHorizonFeatureGram</span>
+<span id="L164">164         (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L165">165         (n + 1) trajectory := by</span>
+<span id="L166">166   ext i j</span>
+<span id="L167">167   unfold finiteHorizonFeatureGram prefixFeatureGram</span>
+<span id="L168">168   apply Finset.sum_congr rfl</span>
+<span id="L169">169   intro t ht</span>
+<span id="L170">170   have htn : t &lt;= n :=</span>
+<span id="L171">171     Nat.lt_succ_iff.mp (Finset.mem_range.mp ht)</span>
+<span id="L172">172   simp [canonicalHistoryTrajectoryFeature, htn]</span>
+<span id="L173">173 </span>
+<span id="L174">174 /--</span>
+<span id="L175">175 The response vector reconstructed from inclusive history `n` is exactly the</span>
+<span id="L176">176 trajectory response vector at horizon `n + 1`.</span>
+<span id="L177">177 -/</span>
+<span id="L178">178 theorem finiteHorizonResponseVector_finitePairHistoryOfTrace_eq</span>
+<span id="L179">179     {K : Nat} {Feature : Type u}</span>
+<span id="L180">180     [Fintype Feature]</span>
+<span id="L181">181     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L182">182     (trajectory : (k : Nat) -&gt; Fin K × Real) (n : Nat) :</span>
+<span id="L183">183     finiteHorizonResponseVector</span>
+<span id="L184">184         (fun t historyValue =&gt;</span>
+<span id="L185">185           finiteHistoryObservedFeature actionFeature n historyValue t)</span>
+<span id="L186">186         (fun t historyValue =&gt;</span>
+<span id="L187">187           finiteHistoryObservedResponse n historyValue t)</span>
+<span id="L188">188         (n + 1)</span>
+<span id="L189">189         (History.finitePairHistoryOfTrace</span>
+<span id="L190">190           (Thompson.canonicalHistoryTrajectoryAction trajectory)</span>
+<span id="L191">191           (Thompson.canonicalHistoryTrajectoryReward trajectory) n) =</span>
+<span id="L192">192       finiteHorizonResponseVector</span>
+<span id="L193">193         (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L194">194         canonicalHistoryTrajectoryResponse</span>
+<span id="L195">195         (n + 1) trajectory := by</span>
+<span id="L196">196   ext j</span>
+<span id="L197">197   unfold finiteHorizonResponseVector</span>
+<span id="L198">198   apply Finset.sum_congr rfl</span>
+<span id="L199">199   intro t ht</span>
+<span id="L200">200   have htn : t &lt;= n :=</span>
+<span id="L201">201     Nat.lt_succ_iff.mp (Finset.mem_range.mp ht)</span>
+<span id="L202">202   simp [canonicalHistoryTrajectoryFeature,</span>
+<span id="L203">203     canonicalHistoryTrajectoryResponse, htn]</span>
+<span id="L204">204 </span>
+<span id="L205">205 /-- Exact design-matrix alignment between finite history and trajectory state. -/</span>
+<span id="L206">206 theorem finiteHistoryScalarRidgeDesign_finitePairHistoryOfTrace_eq</span>
+<span id="L207">207     {K : Nat} {Feature : Type u}</span>
+<span id="L208">208     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L209">209     (lambda : Real)</span>
+<span id="L210">210     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L211">211     (trajectory : (k : Nat) -&gt; Fin K × Real) (n : Nat) :</span>
+<span id="L212">212     finiteHistoryScalarRidgeDesign lambda actionFeature n</span>
+<span id="L213">213         (History.finitePairHistoryOfTrace</span>
+<span id="L214">214           (Thompson.canonicalHistoryTrajectoryAction trajectory)</span>
+<span id="L215">215           (Thompson.canonicalHistoryTrajectoryReward trajectory) n) =</span>
+<span id="L216">216       finiteHorizonScalarGram lambda</span>
+<span id="L217">217         (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L218">218         (n + 1) trajectory := by</span>
+<span id="L219">219   unfold finiteHistoryScalarRidgeDesign finiteHorizonScalarGram</span>
+<span id="L220">220   rw [finiteHorizonFeatureGram_finitePairHistoryOfTrace_eq]</span>
+<span id="L221">221 </span>
+<span id="L222">222 /-- Exact ridge-estimate alignment between finite history and trajectory state. -/</span>
+<span id="L223">223 theorem finiteHistoryScalarRidgeEstimate_finitePairHistoryOfTrace_eq</span>
+<span id="L224">224     {K : Nat} {Feature : Type u}</span>
+<span id="L225">225     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L226">226     (lambda : Real)</span>
+<span id="L227">227     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L228">228     (trajectory : (k : Nat) -&gt; Fin K × Real) (n : Nat) :</span>
+<span id="L229">229     finiteHistoryScalarRidgeEstimate lambda actionFeature n</span>
+<span id="L230">230         (History.finitePairHistoryOfTrace</span>
+<span id="L231">231           (Thompson.canonicalHistoryTrajectoryAction trajectory)</span>
+<span id="L232">232           (Thompson.canonicalHistoryTrajectoryReward trajectory) n) =</span>
+<span id="L233">233       finiteHorizonRidgeEstimate</span>
+<span id="L234">234         (Matrix.scalar Feature lambda)</span>
+<span id="L235">235         (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L236">236         canonicalHistoryTrajectoryResponse</span>
+<span id="L237">237         (n + 1) trajectory := by</span>
+<span id="L238">238   unfold finiteHistoryScalarRidgeEstimate finiteHorizonRidgeEstimate</span>
+<span id="L239">239   rw [finiteHorizonFeatureGram_finitePairHistoryOfTrace_eq,</span>
+<span id="L240">240     finiteHorizonResponseVector_finitePairHistoryOfTrace_eq]</span>
+<span id="L241">241 </span>
+<span id="L242">242 /-- Exact confidence-radius alignment between finite history and trajectory. -/</span>
+<span id="L243">243 theorem finiteHistoryScalarRidgeRadius_finitePairHistoryOfTrace_eq</span>
+<span id="L244">244     {K : Nat} {Feature : Type u}</span>
+<span id="L245">245     [Fintype Feature] [DecidableEq Feature]</span>
+<span id="L246">246     (lambda : Real)</span>
+<span id="L247">247     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L248">248     (R delta S : Real)</span>
+<span id="L249">249     (trajectory : (k : Nat) -&gt; Fin K × Real) (n : Nat) :</span>
+<span id="L250">250     finiteHistoryScalarRidgeRadius</span>
+<span id="L251">251         actionFeature R delta lambda S n</span>
+<span id="L252">252         (History.finitePairHistoryOfTrace</span>
+<span id="L253">253           (Thompson.canonicalHistoryTrajectoryAction trajectory)</span>
+<span id="L254">254           (Thompson.canonicalHistoryTrajectoryReward trajectory) n) =</span>
+<span id="L255">255       finiteHorizonScalarConfidenceRadius</span>
+<span id="L256">256         (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L257">257         R delta lambda S (n + 1) trajectory := by</span>
+<span id="L258">258   unfold finiteHistoryScalarRidgeRadius</span>
+<span id="L259">259     finiteHorizonScalarConfidenceRadius</span>
+<span id="L260">260     finiteHorizonConfidenceRadius</span>
+<span id="L261">261     finiteHorizonConfidenceThreshold</span>
+<span id="L262">262   rw [finiteHorizonFeatureGram_finitePairHistoryOfTrace_eq]</span>
+<span id="L263">263 </span>
+<span id="L264">264 /--</span>
+<span id="L265">265 Outside the generic fixed-time confidence failure set, the actual canonical</span>
+<span id="L266">266 successor action satisfies the concrete OFUL one-step gap certificate.</span>
+<span id="L267">267 -/</span>
+<span id="L268">268 theorem</span>
+<span id="L269">269     canonicalHistoryTrajectory_action_succ_gap_le_of_not_mem_confidenceFailure</span>
+<span id="L270">270     {K : Nat} {Feature : Type u}</span>
+<span id="L271">271     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L272">272     (hK : 0 &lt; K)</span>
+<span id="L273">273     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L274">274     (thetaStar : Feature -&gt; Real)</span>
+<span id="L275">275     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L276">276     (R delta S : Real)</span>
+<span id="L277">277     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L278">278     (n : Nat) (comparator : Fin K) :</span>
+<span id="L279">279     ∀ᵐ trajectory ∂</span>
+<span id="L280">280         Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L281">281           (finiteHistoryScalarRidgeOptimisticAlgorithm</span>
+<span id="L282">282             hK lambda actionFeature R delta S)</span>
+<span id="L283">283           environment,</span>
+<span id="L284">284       trajectory ∉</span>
+<span id="L285">285           scalarRidgeConfidenceFailureAt</span>
+<span id="L286">286             lambda thetaStar S</span>
+<span id="L287">287             (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L288">288             canonicalHistoryTrajectoryResponse</span>
+<span id="L289">289             R delta (n + 1) -&gt;</span>
+<span id="L290">290         linearValue thetaStar (actionFeature comparator) -</span>
+<span id="L291">291             linearValue thetaStar</span>
+<span id="L292">292               (actionFeature</span>
+<span id="L293">293                 (Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L294">294                   trajectory (n + 1))) &lt;=</span>
+<span id="L295">295           2 *</span>
+<span id="L296">296             finiteHorizonScalarConfidenceRadius</span>
+<span id="L297">297               (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L298">298               R delta lambda S (n + 1) trajectory *</span>
+<span id="L299">299             confidenceWidth</span>
+<span id="L300">300               (finiteHorizonScalarGram lambda</span>
+<span id="L301">301                 (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L302">302                 (n + 1) trajectory)</span>
+<span id="L303">303               (actionFeature</span>
+<span id="L304">304                 (Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L305">305                   trajectory (n + 1))) := by</span>
+<span id="L306">306   filter_upwards [</span>
+<span id="L307">307     canonicalHistoryTrajectory_action_succ_ae_eq_finiteHistoryOptimisticAction</span>
+<span id="L308">308       hK</span>
+<span id="L309">309       (finiteHistoryScalarRidgeEstimate lambda actionFeature)</span>
+<span id="L310">310       (finiteHistoryScalarRidgeDesign lambda actionFeature)</span>
+<span id="L311">311       (finiteHistoryScalarRidgeRadius actionFeature R delta lambda S)</span>
+<span id="L312">312       (finiteHistoryFixedActionFeature actionFeature)</span>
+<span id="L313">313       (measurable_finiteHistoryScalarRidgeOptimisticScore</span>
+<span id="L314">314         lambda actionFeature R delta S)</span>
+<span id="L315">315       environment n] with trajectory haction</span>
+<span id="L316">316   intro hgood</span>
+<span id="L317">317   let history :=</span>
+<span id="L318">318     History.finitePairHistoryOfTrace</span>
+<span id="L319">319       (Thompson.canonicalHistoryTrajectoryAction trajectory)</span>
+<span id="L320">320       (Thompson.canonicalHistoryTrajectoryReward trajectory) n</span>
+<span id="L321">321   have hgeneric :</span>
+<span id="L322">322       matrixNorm</span>
+<span id="L323">323           (finiteHorizonScalarGram lambda</span>
+<span id="L324">324             (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L325">325             (n + 1) trajectory)</span>
+<span id="L326">326           (finiteHorizonRidgeEstimate</span>
+<span id="L327">327               (Matrix.scalar Feature lambda)</span>
+<span id="L328">328               (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L329">329               canonicalHistoryTrajectoryResponse</span>
+<span id="L330">330               (n + 1) trajectory -</span>
+<span id="L331">331             thetaStar) &lt;=</span>
+<span id="L332">332         finiteHorizonScalarConfidenceRadius</span>
+<span id="L333">333           (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L334">334           R delta lambda S (n + 1) trajectory := by</span>
+<span id="L335">335     simpa only [scalarRidgeConfidenceFailureAt,</span>
+<span id="L336">336       finiteHorizonScalarGram, Set.mem_setOf_eq, not_lt] using hgood</span>
+<span id="L337">337   have hhistory :</span>
+<span id="L338">338       matrixNorm</span>
+<span id="L339">339           (finiteHistoryScalarRidgeDesign</span>
+<span id="L340">340             lambda actionFeature n history)</span>
+<span id="L341">341           (finiteHistoryScalarRidgeEstimate</span>
+<span id="L342">342               lambda actionFeature n history -</span>
+<span id="L343">343             thetaStar) &lt;=</span>
+<span id="L344">344         finiteHistoryScalarRidgeRadius</span>
+<span id="L345">345           actionFeature R delta lambda S n history := by</span>
+<span id="L346">346     simpa only [history,</span>
+<span id="L347">347       finiteHistoryScalarRidgeDesign_finitePairHistoryOfTrace_eq,</span>
+<span id="L348">348       finiteHistoryScalarRidgeEstimate_finitePairHistoryOfTrace_eq,</span>
+<span id="L349">349       finiteHistoryScalarRidgeRadius_finitePairHistoryOfTrace_eq] using</span>
+<span id="L350">350       hgeneric</span>
+<span id="L351">351   have hgap :=</span>
+<span id="L352">352     finiteHistoryScalarRidgeOptimisticAction_gap_le</span>
+<span id="L353">353       hK lambda hlambda thetaStar actionFeature R delta S n history</span>
+<span id="L354">354       hhistory comparator</span>
+<span id="L355">355   have haction&#x27; :</span>
+<span id="L356">356       Thompson.canonicalHistoryTrajectoryAction trajectory (n + 1) =</span>
+<span id="L357">357         finiteHistoryScalarRidgeOptimisticAction</span>
+<span id="L358">358           hK lambda actionFeature R delta S n history := by</span>
+<span id="L359">359     simpa only [history, finiteHistoryScalarRidgeOptimisticAction] using</span>
+<span id="L360">360       haction</span>
+<span id="L361">361   rw [← haction&#x27;] at hgap</span>
+<span id="L362">362   simpa only [history,</span>
+<span id="L363">363     finiteHistoryScalarRidgeDesign_finitePairHistoryOfTrace_eq,</span>
+<span id="L364">364     finiteHistoryScalarRidgeRadius_finitePairHistoryOfTrace_eq] using hgap</span>
+<span id="L365">365 </span>
+<span id="L366">366 /--</span>
+<span id="L367">367 On the equal-share uniform confidence event, all canonical successor rounds</span>
+<span id="L368">368 `1, ..., horizon` satisfy the cumulative OFUL bonus bound. The fixed initial</span>
+<span id="L369">369 round `0` is not part of this sum.</span>
+<span id="L370">370 -/</span>
+<span id="L371">371 theorem</span>
+<span id="L372">372     canonicalHistoryTrajectory_sum_range_succ_gap_le_on_uniformConfidence</span>
+<span id="L373">373     {K : Nat} {Feature : Type u}</span>
+<span id="L374">374     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L375">375     (hK : 0 &lt; K)</span>
+<span id="L376">376     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L377">377     (thetaStar : Feature -&gt; Real)</span>
+<span id="L378">378     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L379">379     (R delta S : Real)</span>
+<span id="L380">380     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L381">381     (horizon : Nat) (comparator : Nat -&gt; Fin K) :</span>
+<span id="L382">382     ∀ᵐ trajectory ∂</span>
+<span id="L383">383         Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L384">384           (finiteHistoryScalarRidgeOptimisticAlgorithm</span>
+<span id="L385">385             hK lambda actionFeature R</span>
+<span id="L386">386               (delta / ((horizon + 1 : Nat) : Real)) S)</span>
+<span id="L387">387           environment,</span>
+<span id="L388">388       trajectory ∉</span>
+<span id="L389">389           finiteHorizonUniformScalarRidgeConfidenceFailureSet</span>
+<span id="L390">390             lambda thetaStar S</span>
+<span id="L391">391             (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L392">392             canonicalHistoryTrajectoryResponse</span>
+<span id="L393">393             R delta horizon -&gt;</span>
+<span id="L394">394         (Finset.range horizon).sum (fun n =&gt;</span>
+<span id="L395">395             linearValue thetaStar (actionFeature (comparator (n + 1))) -</span>
+<span id="L396">396               linearValue thetaStar</span>
+<span id="L397">397                 (actionFeature</span>
+<span id="L398">398                   (Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L399">399                     trajectory (n + 1)))) &lt;=</span>
+<span id="L400">400           (Finset.range horizon).sum (fun n =&gt;</span>
+<span id="L401">401             2 *</span>
+<span id="L402">402               finiteHorizonScalarConfidenceRadius</span>
+<span id="L403">403                 (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L404">404                 R (delta / ((horizon + 1 : Nat) : Real))</span>
+<span id="L405">405                 lambda S (n + 1) trajectory *</span>
+<span id="L406">406               confidenceWidth</span>
+<span id="L407">407                 (finiteHorizonScalarGram lambda</span>
+<span id="L408">408                   (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L409">409                   (n + 1) trajectory)</span>
+<span id="L410">410                 (actionFeature</span>
+<span id="L411">411                   (Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L412">412                     trajectory (n + 1)))) := by</span>
+<span id="L413">413   have hsteps : forall n : Nat,</span>
+<span id="L414">414       ∀ᵐ trajectory ∂</span>
+<span id="L415">415           Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L416">416             (finiteHistoryScalarRidgeOptimisticAlgorithm</span>
+<span id="L417">417               hK lambda actionFeature R</span>
+<span id="L418">418                 (delta / ((horizon + 1 : Nat) : Real)) S)</span>
+<span id="L419">419             environment,</span>
+<span id="L420">420         trajectory ∉</span>
+<span id="L421">421             scalarRidgeConfidenceFailureAt</span>
+<span id="L422">422               lambda thetaStar S</span>
+<span id="L423">423               (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L424">424               canonicalHistoryTrajectoryResponse</span>
+<span id="L425">425               R (delta / ((horizon + 1 : Nat) : Real)) (n + 1) -&gt;</span>
+<span id="L426">426           linearValue thetaStar</span>
+<span id="L427">427                 (actionFeature (comparator (n + 1))) -</span>
+<span id="L428">428               linearValue thetaStar</span>
+<span id="L429">429                 (actionFeature</span>
+<span id="L430">430                   (Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L431">431                     trajectory (n + 1))) &lt;=</span>
+<span id="L432">432             2 *</span>
+<span id="L433">433               finiteHorizonScalarConfidenceRadius</span>
+<span id="L434">434                 (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L435">435                 R (delta / ((horizon + 1 : Nat) : Real))</span>
+<span id="L436">436                 lambda S (n + 1) trajectory *</span>
+<span id="L437">437               confidenceWidth</span>
+<span id="L438">438                 (finiteHorizonScalarGram lambda</span>
+<span id="L439">439                   (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L440">440                   (n + 1) trajectory)</span>
+<span id="L441">441                 (actionFeature</span>
+<span id="L442">442                   (Thompson.canonicalHistoryTrajectoryAction</span>
+<span id="L443">443                     trajectory (n + 1))) := by</span>
+<span id="L444">444     intro n</span>
+<span id="L445">445     exact</span>
+<span id="L446">446       canonicalHistoryTrajectory_action_succ_gap_le_of_not_mem_confidenceFailure</span>
+<span id="L447">447         hK lambda hlambda thetaStar actionFeature R</span>
+<span id="L448">448         (delta / ((horizon + 1 : Nat) : Real)) S environment n</span>
+<span id="L449">449         (comparator (n + 1))</span>
+<span id="L450">450   filter_upwards [ae_all_iff.2 hsteps] with trajectory htrajectory</span>
+<span id="L451">451   intro hgood</span>
+<span id="L452">452   apply Finset.sum_le_sum</span>
+<span id="L453">453   intro n hn</span>
+<span id="L454">454   have hnlt : n &lt; horizon := Finset.mem_range.mp hn</span>
+<span id="L455">455   have hnsucc : n + 1 &lt;= horizon := Nat.succ_le_iff.mpr hnlt</span>
+<span id="L456">456   have hscheduled :</span>
+<span id="L457">457       trajectory ∉</span>
+<span id="L458">458         finiteHorizonScheduledScalarRidgeConfidenceFailureSet</span>
+<span id="L459">459           lambda thetaStar S</span>
+<span id="L460">460           (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L461">461           canonicalHistoryTrajectoryResponse R</span>
+<span id="L462">462           (fun _ =&gt; delta / ((horizon + 1 : Nat) : Real)) horizon := by</span>
+<span id="L463">463     simpa only [finiteHorizonUniformScalarRidgeConfidenceFailureSet] using</span>
+<span id="L464">464       hgood</span>
+<span id="L465">465   have hconfidence :=</span>
+<span id="L466">466     (not_mem_finiteHorizonScheduledScalarRidgeConfidenceFailureSet_iff</span>
+<span id="L467">467       lambda thetaStar S</span>
+<span id="L468">468       (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L469">469       canonicalHistoryTrajectoryResponse R</span>
+<span id="L470">470       (fun _ =&gt; delta / ((horizon + 1 : Nat) : Real))</span>
+<span id="L471">471       horizon trajectory).mp hscheduled</span>
+<span id="L472">472   have hnotAt :</span>
+<span id="L473">473       trajectory ∉</span>
+<span id="L474">474         scalarRidgeConfidenceFailureAt</span>
+<span id="L475">475           lambda thetaStar S</span>
+<span id="L476">476           (canonicalHistoryTrajectoryFeature actionFeature)</span>
+<span id="L477">477           canonicalHistoryTrajectoryResponse</span>
+<span id="L478">478           R (delta / ((horizon + 1 : Nat) : Real)) (n + 1) := by</span>
+<span id="L479">479     simpa only [scalarRidgeConfidenceFailureAt,</span>
+<span id="L480">480       Set.mem_setOf_eq, not_lt] using hconfidence (n + 1) hnsucc</span>
+<span id="L481">481   exact htrajectory n hnotAt</span>
+<span id="L482">482 </span>
+<span id="L483">483 end OFUL</span>
+<span id="L484">484 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Tsallis-FTRL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Tsallis<wbr>Finite<wbr>Arm<wbr>IID<wbr>History<wbr>Adaptive<wbr>Expected<wbr>Corrupted<wbr>Reward<wbr>Law</h1>
+  <p class="lede">Generated source map for this Lean module.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean.html"><code>BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/tsallis/index.html">8. Tsallis-FTRL, corruption, and nonstationarity</a></dd></div>
+    <div><dt>Declarations</dt><dd>18</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-tsallisfinitearmiidmeasurablehistoryarmgatedsuboptimalboostregret/index.html"><code>BanditRLProof.TsallisFiniteArmIIDMeasurableHistoryArmGatedSuboptimalBoostRegret</code></a>, <a href="../banditrlproof-tsallisscheduledreferencegapexpecteddeviationselfbounding/index.html"><code>BanditRLProof.TsallisScheduledReferenceGapExpectedDeviationSelfBounding</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-tsallisfinitearmiidhorizonhistoryadaptiveexpectedcorruptedrewardlaw/index.html"><code>BanditRLProof.TsallisFiniteArmIIDHorizonHistoryAdaptiveExpectedCorruptedRewardLaw</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-80fd877bf959">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.finiteArmIIDHistoryAdaptiveRewardShiftAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The reward shift selected from the finite observed pair history available
+before round `t`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteArmIIDHistoryAdaptiveRewardShiftAt {K : Nat} (source : FiniteArmIIDHistoryAdaptiveRewardShiftSource K) (t : Nat) (trajectory : (k : Nat) -&gt; Fin K × Real) (arm : Fin K) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean.html#L12">Source line 12</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-141613ad9b0c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.measurable_finiteArmIIDHistoryAdaptiveRewardShiftAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The realized predictable shift of a fixed arm is measurable on the full
+trajectory space.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_finiteArmIIDHistoryAdaptiveRewardShiftAt {K : Nat} (source : FiniteArmIIDHistoryAdaptiveRewardShiftSource K) (t : Nat) (arm : Fin K) : Measurable (<span class="kw">fun</span> trajectory : (k : Nat) -&gt; Fin K × Real =&gt; finiteArmIIDHistoryAdaptiveRewardShiftAt source t trajectory arm)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean.html#L21">Source line 21</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f51ba312dbbc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.abs_finiteArmIIDHistoryAdaptiveRewardShiftAt_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The realized shift retains the deterministic envelope supplied by the
+history-adaptive source.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> abs_finiteArmIIDHistoryAdaptiveRewardShiftAt_le {K : Nat} (source : FiniteArmIIDHistoryAdaptiveRewardShiftSource K) (t : Nat) (trajectory : (k : Nat) -&gt; Fin K × Real) (arm : Fin K) : |finiteArmIIDHistoryAdaptiveRewardShiftAt source t trajectory arm| &lt;= source.envelope t arm</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean.html#L38">Source line 38</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4dd78432eb5d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.abs_historyAdaptiveCorruptedPredictableLossDiff_sub_baseLossDiff_le_actualShift</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The actual/reference predictable loss-gap deviation is controlled by the
+two shifts realized on the observed history, before replacing them by their
+deterministic envelopes.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> abs_historyAdaptiveCorruptedPredictableLossDiff_sub_baseLossDiff_le_actualShift {K : Nat} (source : FiniteArmIIDHistoryAdaptiveRewardShiftSource K) (t : Nat) (sample : (Nat -&gt; (Fin K -&gt; Rat)) × ((k : Nat) -&gt; Fin K × Real)) (best arm : Fin K) : |(Exp3.predictableLossAt (finiteArmIIDHistoryAdaptiveCorruptedRewardLoss source) t sample arm - Exp3.predictableLossAt (finiteArmIIDHistoryAdaptiveCorruptedRewardLoss source) t sample best) - (Exp3.predictableLossAt (iidLossStatePredictableLossVector finiteArmIIDRewardVectorLoss measurable_finiteArmIIDRewardVectorLoss finiteArmIIDRewardVectorLoss_nonneg finiteArmIIDRewardVectorLoss_le_one) t sample arm - Exp3.predictableLossAt (iidLossStatePredictableLossVector finiteArmIIDRewardVectorLoss measurable_finiteArmIIDRewardVectorLoss finiteArmIIDRewardVectorLoss_nonneg finiteArmIIDRewardVectorLoss_le_one) t sample best)| &lt;= |finiteArmIIDHistoryAdaptiveRewardShiftAt source t sample.<span class="num">2</span> arm| + |finiteArmIIDHistoryAdaptiveRewardShiftAt source t sample.<span class="num">2</span> best|</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean.html#L52">Source line 52</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a0cd8b97b964">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integrable_sampledScheduledHalfTsallisProbability_mul_historyAdaptiveRewardShiftDeviation</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Probability-weighted realized history-adaptive deviation is integrable
+under every finite trajectory measure.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_sampledScheduledHalfTsallisProbability_mul_historyAdaptiveRewardShiftDeviation {Env : Type*} {K : Nat} [MeasurableSpace Env] (mu : Measure (Env × ((k : Nat) -&gt; Fin K × Real))) [IsFiniteMeasure mu] (arms : Finset (Fin K)) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (source : FiniteArmIIDHistoryAdaptiveRewardShiftSource K) (t : Nat) (best arm : Fin K) (harm : arm ∈ arms) : Integrable (<span class="kw">fun</span> sample =&gt; sampledScheduledHalfTsallisProbabilityAtTime arms harms eta t sample arm * (|finiteArmIIDHistoryAdaptiveRewardShiftAt source t sample.<span class="num">2</span> arm| + |finiteArmIIDHistoryAdaptiveRewardShiftAt source t sample.<span class="num">2</span> best|)) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean.html#L95">Source line 95</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6217ec446c00">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.finiteArmIIDHistoryAdaptiveExpectedRewardCorruptionBudget</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Expected corruption weighted by the generated policy&#x27;s conditional
+selection probability for each affected suboptimal arm, using the realized
+history-adaptive shifts.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteArmIIDHistoryAdaptiveExpectedRewardCorruptionBudget {K : Nat} (model : FiniteBanditModel K) (horizon : Nat) (source : FiniteArmIIDHistoryAdaptiveRewardShiftSource K) (mu : Measure ((Nat -&gt; Fin K -&gt; Rat) × ((k : Nat) -&gt; Fin K × Real))) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean.html#L158">Source line 158</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7e6d72e08833">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.finiteArmIIDHistoryAdaptiveExpectedRewardCorruptionBudget_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteArmIIDHistoryAdaptiveExpectedRewardCorruptionBudget_eq {K : Nat} (model : FiniteBanditModel K) (horizon : Nat) (source : FiniteArmIIDHistoryAdaptiveRewardShiftSource K) (mu : Measure ((Nat -&gt; Fin K -&gt; Rat) × ((k : Nat) -&gt; Fin K × Real))) : finiteArmIIDHistoryAdaptiveExpectedRewardCorruptionBudget model horizon source mu = (Finset.range (horizon + <span class="num">1</span>)).sum (<span class="kw">fun</span> t =&gt; ((Finset.univ : Finset (Fin K)).erase model.bestArm).sum (<span class="kw">fun</span> arm =&gt; integral mu (<span class="kw">fun</span> sample =&gt; sampledScheduledHalfTsallisProbabilityAtTime (Finset.univ : Finset (Fin K)) ⟨model.bestArm, Finset.mem_univ model.bestArm⟩ sampledScheduledHalfTsallisSqrtSchedule t sample arm * (|finiteArmIIDHistoryAdaptiveRewardShiftAt source t sample.<span class="num">2</span> arm| + |finiteArmIIDHistoryAdaptiveRewardShiftAt source t sample.<span class="num">2</span> model.bestArm|))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean.html#L175">Source line 175</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7fb2c909b2f3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.finiteArmIIDHistoryAdaptiveExpectedRewardCorruptionBudget_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The policy-weighted realized corruption budget is nonnegative.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteArmIIDHistoryAdaptiveExpectedRewardCorruptionBudget_nonneg {K : Nat} (model : FiniteBanditModel K) (horizon : Nat) (source : FiniteArmIIDHistoryAdaptiveRewardShiftSource K) (mu : Measure ((Nat -&gt; Fin K -&gt; Rat) × ((k : Nat) -&gt; Fin K × Real))) : <span class="num">0</span> &lt;= finiteArmIIDHistoryAdaptiveExpectedRewardCorruptionBudget model horizon source mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean.html#L196">Source line 196</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-54b1f83fc17f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.finiteArmIIDHistoryAdaptiveExpectedRewardCorruptionBudget_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The expected realized budget never exceeds the source&#x27;s deterministic
+all-round envelope budget.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteArmIIDHistoryAdaptiveExpectedRewardCorruptionBudget_le {K : Nat} (model : FiniteBanditModel K) (horizon : Nat) (source : FiniteArmIIDHistoryAdaptiveRewardShiftSource K) (mu : Measure ((Nat -&gt; Fin K -&gt; Rat) × ((k : Nat) -&gt; Fin K × Real))) [IsProbabilityMeasure mu] : finiteArmIIDHistoryAdaptiveExpectedRewardCorruptionBudget model horizon source mu &lt;= finiteArmIIDHistoryAdaptiveRewardCorruptionBudget model horizon source</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean.html#L219">Source line 219</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-70859c1acb32">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw_hasSelfBounding</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite-arm IID history-adaptive model satisfies self-bounding with the
+exact policy-weighted realized corruption budget.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_sampledScheduledHalfTsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw_hasSelfBounding {K : Nat} (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (hbound : <span class="kw">forall</span> arm, ∀ᵐ reward ∂armLaw arm, ((reward : Rat) : Real) ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; ((reward : Rat) : Real)) = ((model.mean arm : Rat) : Real)) (source : FiniteArmIIDHistoryAdaptiveRewardShiftSource K) (horizon : Nat) : letI : Nonempty (Fin K)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean.html#L287">Source line 287</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-70b7552f3c52">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLawRegret_le_log</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The square-root schedule gives logarithmic regret with the exact expected
+realized history-adaptive corruption budget.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_sampledScheduledHalfTsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLawRegret_le_log {K : Nat} (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (hbound : <span class="kw">forall</span> arm, ∀ᵐ reward ∂armLaw arm, ((reward : Rat) : Real) ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; ((reward : Rat) : Real)) = ((model.mean arm : Rat) : Real)) (source : FiniteArmIIDHistoryAdaptiveRewardShiftSource K) (hgapPos : <span class="kw">forall</span> arm, arm ≠ model.bestArm -&gt; <span class="num">0</span> &lt; ((model.gap arm : Rat) : Real)) (horizon : Nat) : letI : Nonempty (Fin K)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean.html#L418">Source line 418</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6fb120b2e919">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.finiteArmIIDHistoryAdaptiveExpectedRewardCorruptionBudgetForLaw</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The generated-law specialization of the expected realized corruption
+budget, packaged without exposing the trajectory measure to callers.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteArmIIDHistoryAdaptiveExpectedRewardCorruptionBudgetForLaw {K : Nat} (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (source : FiniteArmIIDHistoryAdaptiveRewardShiftSource K) (horizon : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean.html#L517">Source line 517</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-630c6ff7cc74">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.finiteArmIIDHistoryAdaptiveExpectedRefinedCorruptionWindow</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The coefficient-aware refined window evaluated at the generated policy&#x27;s
+expected realized history-adaptive corruption.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteArmIIDHistoryAdaptiveExpectedRefinedCorruptionWindow {K : Nat} (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (source : FiniteArmIIDHistoryAdaptiveRewardShiftSource K) (horizon : Nat) : Prop</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean.html#L538">Source line 538</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ad07d968005b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLawRegret_le_refinedLocalExplicit_of_window</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Refined local regret using the policy-weighted realized corruption budget.
+The compact window discharges the low-level scalar tuning inequalities.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_sampledScheduledHalfTsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLawRegret_le_refinedLocalExplicit_of_window {K : Nat} (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (hbound : <span class="kw">forall</span> arm, ∀ᵐ reward ∂armLaw arm, ((reward : Rat) : Real) ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; ((reward : Rat) : Real)) = ((model.mean arm : Rat) : Real)) (source : FiniteArmIIDHistoryAdaptiveRewardShiftSource K) (hsuboptimal : ((Finset.univ : Finset (Fin K)).erase model.bestArm).Nonempty) (hgapPos : <span class="kw">forall</span> arm, arm ≠ model.bestArm -&gt; <span class="num">0</span> &lt; ((model.gap arm : Rat) : Real)) (hgapLeOne : <span class="kw">forall</span> arm, arm ≠ model.bestArm -&gt; ((model.gap arm : Rat) : Real) &lt;= <span class="num">1</span>) (horizon : Nat) (hwindow : finiteArmIIDHistoryAdaptiveExpectedRefinedCorruptionWindow model armLaw source horizon) : letI : Nonempty (Fin K)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean.html#L553">Source line 553</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-746aa34a2d89">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.finiteArmIIDHistoryAdaptiveExpectedCorruptionAllRegimeBound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Total regret envelope using the refined expected-corruption expression
+when there is a suboptimal arm and the compact window holds, and the
+logarithmic expected-corruption expression otherwise.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteArmIIDHistoryAdaptiveExpectedCorruptionAllRegimeBound {K : Nat} (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (source : FiniteArmIIDHistoryAdaptiveRewardShiftSource K) (horizon : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean.html#L686">Source line 686</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3ac210987f44">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.finiteArmIIDHistoryAdaptiveExpectedCorruptionAllRegimeBound_fin_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">With one arm there is no suboptimal coordinate and the expected
+corruption all-regimes envelope reduces to the logarithmic base term.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteArmIIDHistoryAdaptiveExpectedCorruptionAllRegimeBound_fin_one (model : FiniteBanditModel <span class="num">1</span>) (armLaw : Fin <span class="num">1</span> -&gt; Measure Rat) (source : FiniteArmIIDHistoryAdaptiveRewardShiftSource <span class="num">1</span>) (horizon : Nat) : finiteArmIIDHistoryAdaptiveExpectedCorruptionAllRegimeBound model armLaw source horizon = <span class="num">1</span> + Real.log (((horizon + <span class="num">1</span> : Nat) : Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean.html#L714">Source line 714</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-21a2c2927a87">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLawRegret_le_allRegimes</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Scheduled half-Tsallis regret for every finite-arm IID history-adaptive
+reward-shift source and finite horizon, using the policy-weighted realized
+corruption budget in both automatically selected regimes.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_sampledScheduledHalfTsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLawRegret_le_allRegimes {K : Nat} (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (hbound : <span class="kw">forall</span> arm, ∀ᵐ reward ∂armLaw arm, ((reward : Rat) : Real) ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; ((reward : Rat) : Real)) = ((model.mean arm : Rat) : Real)) (source : FiniteArmIIDHistoryAdaptiveRewardShiftSource K) (hgapPos : <span class="kw">forall</span> arm, arm ≠ model.bestArm -&gt; <span class="num">0</span> &lt; ((model.gap arm : Rat) : Real)) (hgapLeOne : <span class="kw">forall</span> arm, arm ≠ model.bestArm -&gt; ((model.gap arm : Rat) : Real) &lt;= <span class="num">1</span>) (horizon : Nat) : letI : Nonempty (Fin K)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean.html#L729">Source line 729</a>
+      <a href="../../chapters/tsallis/index.html#decl-21a2c2927a87-teaching">Open teaching explanation</a>
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d7d5d386cb50">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDMeasurableHistoryArmGatedSuboptimalBoostExpectedCorruptionRewardLawRegret_le_allRegimes</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Measurable history-arm-gated suboptimal boosts inherit the all-regimes
+bound with gate-open corruption weighted by conditional selection probability,
+rather than the full deterministic boost schedule.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_sampledScheduledHalfTsallisFiniteArmIIDMeasurableHistoryArmGatedSuboptimalBoostExpectedCorruptionRewardLawRegret_le_allRegimes {K : Nat} (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (hbound : <span class="kw">forall</span> arm, ∀ᵐ reward ∂armLaw arm, ((reward : Rat) : Real) ∈ Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span>) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; ((reward : Rat) : Real)) = ((model.mean arm : Rat) : Real)) (initialGate : Set (Fin K)) (gate : (n : Nat) -&gt; Set (History.FinitePairHistory (Fin K) Real n × Fin K)) (hgate : <span class="kw">forall</span> n, MeasurableSet (gate n)) (boost : Nat -&gt; Fin K -&gt; Real) (hboost : <span class="kw">forall</span> t arm, <span class="num">0</span> &lt;= boost t arm) (hgapPos : <span class="kw">forall</span> arm, arm ≠ model.bestArm -&gt; <span class="num">0</span> &lt; ((model.gap arm : Rat) : Real)) (hgapLeOne : <span class="kw">forall</span> arm, arm ≠ model.bestArm -&gt; ((model.gap arm : Rat) : Real) &lt;= <span class="num">1</span>) (horizon : Nat) : letI : Nonempty (Fin K)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLaw.lean.html#L792">Source line 792</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

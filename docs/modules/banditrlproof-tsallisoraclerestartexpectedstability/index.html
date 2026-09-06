@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.TsallisOracleRestartExpectedStability · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.TsallisOracleRestartExpectedStability · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.TsallisOracleRestartExpectedStability · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Tsallis-FTRL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Tsallis<wbr>Oracle<wbr>Restart<wbr>Expected<wbr>Stability</h1>
+  <p class="lede">This module transports one restart-local half-Tsallis potential-stability term through the conditional action law of the single generated restart trajectory. The shifted trajectory is used only for pathwise reindexing; no fresh independent epoch law is introduced.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html"><code>BanditRLProof/TsallisOracleRestartExpectedStability.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/tsallis/index.html">8. Tsallis-FTRL, corruption, and nonstationarity</a></dd></div>
+    <div><dt>Declarations</dt><dd>26</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-tsallisoraclerestartscorealignment/index.html"><code>BanditRLProof.TsallisOracleRestartScoreAlignment</code></a>, <a href="../banditrlproof-tsallisscheduledallrateexpectedstability/index.html"><code>BanditRLProof.TsallisScheduledAllRateExpectedStability</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-tsallisoraclerestartrefinedstabilitytuning/index.html"><code>BanditRLProof.TsallisOracleRestartRefinedStabilityTuning</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-013571e21397">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.oracleRestartLocalTime</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Local time of an actual round in its restart epoch.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> oracleRestartLocalTime (schedule : OracleRestartSchedule) (t : Nat) : Nat</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L21">Source line 21</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9c5dbfa72e35">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisHistoryAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Environment and visible global prefix before actual action `n + 1`.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> sampledOracleRestartHalfTsallisHistoryAt {Env : Type u} {Action : Type v} (n : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) : Env × History.FinitePairHistory Action Real n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L26">Source line 26</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1e7c79a6ca78">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisActionAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Actual successor action after the visible global prefix through `n`.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> sampledOracleRestartHalfTsallisActionAt {Env : Type u} {Action : Type v} (n : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) : Action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L33">Source line 33</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ac033fe5d1c9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.frestrictLe_oracleRestartShiftedTrajectory_eq_localPairHistory</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Restricting a shifted trajectory to its local predecessor prefix is the
+same finite history as reindexing the corresponding global prefix.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> frestrictLe_oracleRestartShiftedTrajectory_eq_localPairHistory {Env : Type u} {Action : Type v} (start n : Nat) (hstart : start &lt;= n) (sample : Env × ((k : Nat) -&gt; Action × Real)) : Preorder.frestrictLe (n - start) (oracleRestartShiftedTrajectory start sample).<span class="num">2</span> = oracleRestartLocalPairHistory start n hstart (Preorder.frestrictLe n sample.<span class="num">2</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L40">Source line 40</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2ff373a46406">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisScoreAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Restart-local cumulative score before actual action `n + 1`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledOracleRestartHalfTsallisScoreAt {Env : Type u} {Action : Type v} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (n : Nat) : Env × History.FinitePairHistory Action Real n -&gt; Action -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L52">Source line 52</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-35c8ba016423">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisPredictableLossAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Predictable loss at actual successor time `n + 1`.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> sampledOracleRestartHalfTsallisPredictableLossAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] (loss : Exp3.PredictableLossVector Env Action) (n : Nat) : Env × History.FinitePairHistory Action Real n -&gt; Action -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L68">Source line 68</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6ecaf2fedfbb">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisUpdatedAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Same-local-rate update after actual action `n + 1`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledOracleRestartHalfTsallisUpdatedAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (loss : Exp3.PredictableLossVector Env Action) (n : Nat) : Env × History.FinitePairHistory Action Real n -&gt; Action -&gt; Action -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L76">Source line 76</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-09447ad59776">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisHistoryActionPotentialStabilityAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Restart-local predictable history/action potential-stability score.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledOracleRestartHalfTsallisHistoryActionPotentialStabilityAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (loss : Exp3.PredictableLossVector Env Action) (n : Nat) : (Env × History.FinitePairHistory Action Real n) × Action -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L97">Source line 97</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9d0373bc3ac7">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisRefinedPotentialStabilityBoundAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Refined restart-local one-round stability budget.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledOracleRestartHalfTsallisRefinedPotentialStabilityBoundAt {Env : Type u} {Action : Type v} [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (n : Nat) : Env × History.FinitePairHistory Action Real n -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L115">Source line 115</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-58b65c105a69">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisObservedPotentialStabilityAtSuccessor</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Restart-local potential stability at actual successor time `n + 1`,
+written with the stored reward before the predictable-law rewrite.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledOracleRestartHalfTsallisObservedPotentialStabilityAtSuccessor {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (n : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L128">Source line 128</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4ce5304d8ba7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisObservedPotentialStabilityAtSuccessor_eq_shifted</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The stored-reward restart-local potential term is exactly the scheduled
+potential term on the path shifted to the current epoch.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledOracleRestartHalfTsallisObservedPotentialStabilityAtSuccessor_eq_shifted {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (n : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) : sampledOracleRestartHalfTsallisObservedPotentialStabilityAtSuccessor arms harms eta schedule n sample = sampledScheduledHalfTsallisPotentialStabilityAtTime arms harms eta (oracleRestartShiftedTrajectory (schedule.start (n + <span class="num">1</span>)) sample) (oracleRestartLocalTime schedule (n + <span class="num">1</span>))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L158">Source line 158</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5b5bf087d977">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisShiftedPotentialStabilityAtSuccessor_eq_historyAction_ae</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">On the global generated restart law, the shifted stored-reward local
+stability term agrees almost surely with the predictable restart-local
+history/action score.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledOracleRestartHalfTsallisShiftedPotentialStabilityAtSuccessor_eq_historyAction_ae {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (loss : Exp3.PredictableLossVector Env Action) (n : Nat) : <span class="kw">let</span> mu := prior ⊗ₘ sampledOracleRestartHalfTsallisTrajectoryKernel arms harms eta schedule loss.environment (<span class="kw">fun</span> sample =&gt; sampledScheduledHalfTsallisPotentialStabilityAtTime arms harms eta (oracleRestartShiftedTrajectory (schedule.start (n + <span class="num">1</span>)) sample) (oracleRestartLocalTime schedule (n + <span class="num">1</span>))) =ᵐ[mu] (<span class="kw">fun</span> sample =&gt; sampledOracleRestartHalfTsallisHistoryActionPotentialStabilityAt arms harms eta schedule loss n (sampledOracleRestartHalfTsallisHistoryAt n sample, sampledOracleRestartHalfTsallisActionAt n sample))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L238">Source line 238</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-786fbae6ee33">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.measurable_sampledOracleRestartHalfTsallisScoreAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Supported coordinates of the restart-local cumulative score are
+measurable on the visible global prefix.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_sampledOracleRestartHalfTsallisScoreAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (n : Nat) (candidate : Action) (hcandidate : candidate ∈ arms) : Measurable (<span class="kw">fun</span> input : Env × History.FinitePairHistory Action Real n =&gt; sampledOracleRestartHalfTsallisScoreAt arms harms eta schedule n input candidate)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L304">Source line 304</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d0566c146e11">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.measurable_sampledOracleRestartHalfTsallisUpdatedAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Supported coordinates of the restart-local same-rate update are
+measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_sampledOracleRestartHalfTsallisUpdatedAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (loss : Exp3.PredictableLossVector Env Action) (n : Nat) (candidate : Action) (hcandidate : candidate ∈ arms) : Measurable (<span class="kw">fun</span> sample : (Env × History.FinitePairHistory Action Real n) × Action =&gt; sampledOracleRestartHalfTsallisUpdatedAt arms harms eta schedule loss n sample.<span class="num">1</span> sample.<span class="num">2</span> candidate)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L333">Source line 333</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d6ab2b2567e3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.measurable_sampledOracleRestartHalfTsallisHistoryActionPotentialStabilityAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The restart-local predictable history/action potential score is
+measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_sampledOracleRestartHalfTsallisHistoryActionPotentialStabilityAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (loss : Exp3.PredictableLossVector Env Action) (n : Nat) : Measurable (sampledOracleRestartHalfTsallisHistoryActionPotentialStabilityAt arms harms eta schedule loss n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L404">Source line 404</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ceebe40e4245">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integrable_sampledOracleRestartHalfTsallisRefinedPotentialStabilityBoundAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The refined restart-local budget is integrable under every finite visible
+history law when the local rate is positive.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_sampledOracleRestartHalfTsallisRefinedPotentialStabilityBoundAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (n : Nat) (historyMu : Measure (Env × History.FinitePairHistory Action Real n)) [IsFiniteMeasure historyMu] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (heta : <span class="num">0</span> &lt; eta (oracleRestartLocalTime schedule (n + <span class="num">1</span>))) : Integrable (sampledOracleRestartHalfTsallisRefinedPotentialStabilityBoundAt (Env := Env) arms harms eta schedule n) historyMu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L434">Source line 434</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-941df18dca0c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisProbabilityAt_isRegularizedMinimizer</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The actual restart probability is the regularized minimizer of the
+restart-local pre-action score at the local learning rate.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledOracleRestartHalfTsallisProbabilityAt_isRegularizedMinimizer {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (n : Nat) (input : Env × History.FinitePairHistory Action Real n) : FTRL.IsRegularizedMinimizer (FTRL.finiteSimplex arms) arms (eta (oracleRestartLocalTime schedule (n + <span class="num">1</span>))) (negEntropyRegularizer arms (<span class="num">1</span> / <span class="num">2</span> : Real)) (sampledOracleRestartHalfTsallisScoreAt arms harms eta schedule n input) (sampledOracleRestartHalfTsallisProbabilityAt arms harms eta schedule n input)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L460">Source line 460</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-43316e045110">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sampledOracleRestartHalfTsallisUpdatedAt_isRegularizedMinimizer</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The same-local-rate restart update is the regularized minimizer after the
+predictable ordinary-IW increment.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledOracleRestartHalfTsallisUpdatedAt_isRegularizedMinimizer {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (loss : Exp3.PredictableLossVector Env Action) (n : Nat) (input : Env × History.FinitePairHistory Action Real n) (chosen : Action) : FTRL.IsRegularizedMinimizer (FTRL.finiteSimplex arms) arms (eta (oracleRestartLocalTime schedule (n + <span class="num">1</span>))) (negEntropyRegularizer arms (<span class="num">1</span> / <span class="num">2</span> : Real)) (<span class="kw">fun</span> candidate =&gt; sampledOracleRestartHalfTsallisScoreAt arms harms eta schedule n input candidate + Exp3.importanceWeightedLoss (sampledOracleRestartHalfTsallisProbabilityAt arms harms eta schedule n input) (sampledOracleRestartHalfTsallisPredictableLossAt loss n input) chosen candidate) (sampledOracleRestartHalfTsallisUpdatedAt arms harms eta schedule loss n input chosen)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L507">Source line 507</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-519fcf1b5d6c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integrable_sampledOracleRestartHalfTsallisHistoryActionPotentialStabilityAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The restart-local predictable potential score is automatically
+integrable under its visible-history/action finite kernel.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_sampledOracleRestartHalfTsallisHistoryActionPotentialStabilityAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (loss : Exp3.PredictableLossVector Env Action) (n : Nat) (heta : <span class="num">0</span> &lt; eta (oracleRestartLocalTime schedule (n + <span class="num">1</span>))) : <span class="kw">let</span> mu := prior ⊗ₘ sampledOracleRestartHalfTsallisTrajectoryKernel arms harms eta schedule loss.environment Integrable (sampledOracleRestartHalfTsallisHistoryActionPotentialStabilityAt arms harms eta schedule loss n) (mu.map (sampledOracleRestartHalfTsallisHistoryAt n) ⊗ₘ sampledOracleRestartHalfTsallisPolicyAt (Env := Env) arms harms eta schedule n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L534">Source line 534</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-814a55233a39">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_sampledOracleRestartHalfTsallisHistoryActionPotentialStabilityAt_le_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Under the single generated restart law, the predictable restart-local
+successor stability score is integrable and has coarse expected budget one.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_sampledOracleRestartHalfTsallisHistoryActionPotentialStabilityAt_le_one {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (loss : Exp3.PredictableLossVector Env Action) (n : Nat) (heta : <span class="num">0</span> &lt; eta (oracleRestartLocalTime schedule (n + <span class="num">1</span>))) : <span class="kw">let</span> mu := prior ⊗ₘ sampledOracleRestartHalfTsallisTrajectoryKernel arms harms eta schedule loss.environment <span class="kw">let</span> term := <span class="kw">fun</span> sample =&gt; sampledOracleRestartHalfTsallisHistoryActionPotentialStabilityAt arms harms eta schedule loss n (sampledOracleRestartHalfTsallisHistoryAt n sample, sampledOracleRestartHalfTsallisActionAt n sample) Integrable term mu ∧ integral mu term &lt;= integral mu (<span class="kw">fun</span> _sample =&gt; (<span class="num">1</span> : Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L585">Source line 585</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8f526c51de54">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_sampledOracleRestartHalfTsallisShiftedPotentialStabilityAtSuccessor_le_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The actual shifted restart-local successor stability term is integrable
+and has coarse expected budget one under the single global restart law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_sampledOracleRestartHalfTsallisShiftedPotentialStabilityAtSuccessor_le_one {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (loss : Exp3.PredictableLossVector Env Action) (n : Nat) (heta : <span class="num">0</span> &lt; eta (oracleRestartLocalTime schedule (n + <span class="num">1</span>))) : <span class="kw">let</span> mu := prior ⊗ₘ sampledOracleRestartHalfTsallisTrajectoryKernel arms harms eta schedule loss.environment <span class="kw">let</span> term := <span class="kw">fun</span> sample =&gt; sampledScheduledHalfTsallisPotentialStabilityAtTime arms harms eta (oracleRestartShiftedTrajectory (schedule.start (n + <span class="num">1</span>)) sample) (oracleRestartLocalTime schedule (n + <span class="num">1</span>)) Integrable term mu ∧ integral mu term &lt;= integral mu (<span class="kw">fun</span> _sample =&gt; (<span class="num">1</span> : Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L696">Source line 696</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-933dd55a649e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_sampledOracleRestartHalfTsallisShiftedPotentialStabilityAtSuccessor_le_refined</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">At local rates at most one half, the actual shifted restart-local
+successor stability term has the refined expected conjugate-potential bound
+under the single global restart law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_sampledOracleRestartHalfTsallisShiftedPotentialStabilityAtSuccessor_le_refined {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (loss : Exp3.PredictableLossVector Env Action) (n : Nat) (heta : <span class="num">0</span> &lt; eta (oracleRestartLocalTime schedule (n + <span class="num">1</span>))) (heta_le : eta (oracleRestartLocalTime schedule (n + <span class="num">1</span>)) &lt;= <span class="num">1</span> / <span class="num">2</span>) : <span class="kw">let</span> mu := prior ⊗ₘ sampledOracleRestartHalfTsallisTrajectoryKernel arms harms eta schedule loss.environment <span class="kw">let</span> term := <span class="kw">fun</span> sample =&gt; sampledScheduledHalfTsallisPotentialStabilityAtTime arms harms eta (oracleRestartShiftedTrajectory (schedule.start (n + <span class="num">1</span>)) sample) (oracleRestartLocalTime schedule (n + <span class="num">1</span>)) <span class="kw">let</span> bound := <span class="kw">fun</span> sample =&gt; sampledOracleRestartHalfTsallisRefinedPotentialStabilityBoundAt (Env := Env) arms harms eta schedule n (sampledOracleRestartHalfTsallisHistoryAt n sample) Integrable term mu ∧ Integrable bound mu ∧ integral mu term &lt;= integral mu bound</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L753">Source line 753</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f698b49faee6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_sampledOracleRestartHalfTsallisInitialPotentialStabilityAtTime_le_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">At global time zero, the restart process has the canonical initial
+half-Tsallis action law and the usual coarse expected stability budget.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_sampledOracleRestartHalfTsallisInitialPotentialStabilityAtTime_le_one {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (heta : <span class="num">0</span> &lt; eta <span class="num">0</span>) (loss : Exp3.PredictableLossVector Env Action) : <span class="kw">let</span> mu := prior ⊗ₘ sampledOracleRestartHalfTsallisTrajectoryKernel arms harms eta schedule loss.environment Integrable (<span class="kw">fun</span> sample =&gt; sampledScheduledHalfTsallisPotentialStabilityAtTime arms harms eta (oracleRestartShiftedTrajectory <span class="num">0</span> sample) <span class="num">0</span>) mu ∧ integral mu (<span class="kw">fun</span> sample =&gt; sampledScheduledHalfTsallisPotentialStabilityAtTime arms harms eta (oracleRestartShiftedTrajectory <span class="num">0</span> sample) <span class="num">0</span>) &lt;= integral mu (<span class="kw">fun</span> _sample =&gt; (<span class="num">1</span> : Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L897">Source line 897</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-315722f80f20">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_sampledOracleRestartHalfTsallisShiftedPotentialStabilityAtTime_le_integral_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every actual restart time, including global time zero and later restart
+boundaries, has the mass-scaled coarse local stability budget under the one
+global generated law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_sampledOracleRestartHalfTsallisShiftedPotentialStabilityAtTime_le_integral_one {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (loss : Exp3.PredictableLossVector Env Action) (t : Nat) (heta : <span class="num">0</span> &lt; eta (oracleRestartLocalTime schedule t)) : <span class="kw">let</span> mu := prior ⊗ₘ sampledOracleRestartHalfTsallisTrajectoryKernel arms harms eta schedule loss.environment <span class="kw">let</span> term := <span class="kw">fun</span> sample =&gt; sampledScheduledHalfTsallisPotentialStabilityAtTime arms harms eta (oracleRestartShiftedTrajectory (schedule.start t) sample) (oracleRestartLocalTime schedule t) Integrable term mu ∧ integral mu term &lt;= integral mu (<span class="kw">fun</span> _sample =&gt; (<span class="num">1</span> : Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L1073">Source line 1073</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9f484133efa6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_sum_sampledOracleRestartHalfTsallisShiftedPotentialStabilityAtLocalPrefix_le_card</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">On a deterministic contiguous restart epoch, the complete shifted local
+stability prefix is integrable and its expectation is at most the prefix
+cardinality. The probability assumption turns the finite-measure one-round
+budget into the literal constant `1`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_sum_sampledOracleRestartHalfTsallisShiftedPotentialStabilityAtLocalPrefix_le_card {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsProbabilityMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (loss : Exp3.PredictableLossVector Env Action) (epoch localHorizon : Nat) (hstart : ∀ localTime, localTime ≤ localHorizon -&gt; schedule.start (epoch + localTime) = epoch) (heta : ∀ localTime, localTime ≤ localHorizon -&gt; <span class="num">0</span> &lt; eta localTime) : <span class="kw">let</span> mu := prior ⊗ₘ sampledOracleRestartHalfTsallisTrajectoryKernel arms harms eta schedule loss.environment <span class="kw">let</span> stabilitySum := <span class="kw">fun</span> sample =&gt; (Finset.range (localHorizon + <span class="num">1</span>)).sum (<span class="kw">fun</span> localTime =&gt; sampledScheduledHalfTsallisPotentialStabilityAtTime arms harms eta (oracleRestartShiftedTrajectory epoch sample) localTime) Integrable stabilitySum mu ∧ integral mu stabilitySum ≤ (localHorizon + <span class="num">1</span> : Nat)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L1109">Source line 1109</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5b08552da672">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_sampledOracleRestartHalfTsallisObservedScheduleEpochEstimatedRegret_pointMass_le_card_add_penalty_of_epochRounds_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A contiguous actual restart epoch inherits an expected observed
+estimated-regret certificate from the one global generated law. This coarse
+endpoint is linear in the epoch cardinality; obtaining the target square-root
+certificate still requires summing and tuning the refined one-round bounds.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_sampledOracleRestartHalfTsallisObservedScheduleEpochEstimatedRegret_pointMass_le_card_add_penalty_of_epochRounds_eq {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsProbabilityMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (schedule : OracleRestartSchedule) (loss : Exp3.PredictableLossVector Env Action) (horizon epoch localHorizon : Nat) {best : Action} (hbest : best ∈ arms) (hRounds : oracleRestartEpochRounds schedule.start horizon epoch = (Finset.range (localHorizon + <span class="num">1</span>)).image (<span class="kw">fun</span> localTime =&gt; epoch + localTime)) (heta : ∀ localTime, localTime ≤ localHorizon -&gt; <span class="num">0</span> &lt; eta localTime) (hetaMono : ∀ localTime, localTime &lt; localHorizon -&gt; eta (localTime + <span class="num">1</span>) ≤ eta localTime) : <span class="kw">let</span> mu := prior ⊗ₘ sampledOracleRestartHalfTsallisTrajectoryKernel arms harms eta schedule loss.environment <span class="kw">let</span> observed := sampledOracleRestartHalfTsallisObservedScheduleEpochEstimatedRegret (Env := Env) arms harms eta schedule (pointMass best) horizon epoch Integrable observed mu ∧ integral mu observed ≤ (localHorizon + <span class="num">1</span> : Nat) + halfTsallisPotentialMass arms (initialHalfTsallisDistribution arms harms (eta <span class="num">0</span>)) / eta localHorizon - <span class="num">1</span> / eta localHorizon</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisOracleRestartExpectedStability.lean.html#L1188">Source line 1188</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

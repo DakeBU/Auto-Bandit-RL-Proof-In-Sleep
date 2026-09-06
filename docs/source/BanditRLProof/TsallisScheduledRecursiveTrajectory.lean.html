@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/TsallisScheduledRecursiveTrajectory.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/TsallisScheduledRecursiveTrajectory.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/TsallisScheduledRecursiveTrajectory.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/TsallisScheduledRecursiveTrajectory.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.TsallisFTRLGeneratedMeasurability</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Scheduled recursive half-Tsallis trajectories</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module lifts the recursive pure half-Tsallis trajectory from a fixed</span>
+<span id="L7">7 learning rate to a deterministic schedule.  The initial action uses `eta 0`;</span>
+<span id="L8">8 after the visible prefix through round `n`, the successor policy uses</span>
+<span id="L9">9 `eta (n + 1)`.  This indexing matches the scheduled FTRL penalty route.</span>
+<span id="L10">10 </span>
+<span id="L11">11 The module constructs only the selector, score, policy, trajectory, and</span>
+<span id="L12">12 conditional action law.  It does not prove a refined stability or regret</span>
+<span id="L13">13 bound.</span>
+<span id="L14">14 -/</span>
+<span id="L15">15 </span>
+<span id="L16">16 namespace BanditRLProof</span>
+<span id="L17">17 namespace Tsallis</span>
+<span id="L18">18 </span>
+<span id="L19">19 open MeasureTheory ProbabilityTheory</span>
+<span id="L20">20 </span>
+<span id="L21">21 universe u v</span>
+<span id="L22">22 </span>
+<span id="L23">23 /-- Roundwise selector regularity for a deterministic learning-rate schedule. -/</span>
+<span id="L24">24 structure HalfTsallisScheduleFiniteHistorySelectorMeasurability</span>
+<span id="L25">25     {Action : Type u} [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L26">26     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L27">27     (eta : Nat -&gt; Real) : Prop where</span>
+<span id="L28">28   round : forall t,</span>
+<span id="L29">29     HalfTsallisFiniteHistorySelectorMeasurability arms harms (eta t)</span>
+<span id="L30">30 </span>
+<span id="L31">31 /-- The canonical selected minimizer satisfies the scheduled regularity</span>
+<span id="L32">32 contract at every round. -/</span>
+<span id="L33">33 noncomputable def canonicalHalfTsallisScheduleFiniteHistorySelectorMeasurability</span>
+<span id="L34">34     {Action : Type u} [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L35">35     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) :</span>
+<span id="L36">36     HalfTsallisScheduleFiniteHistorySelectorMeasurability arms harms eta where</span>
+<span id="L37">37   round t := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L38">38     arms harms (eta t)</span>
+<span id="L39">39 </span>
+<span id="L40">40 /-- Cumulative importance-weighted score through an inclusive history under</span>
+<span id="L41">41 the scheduled policies. -/</span>
+<span id="L42">42 noncomputable def sampledScheduledHalfTsallisHistoryScore</span>
+<span id="L43">43     {Action : Type u} [DecidableEq Action]</span>
+<span id="L44">44     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) :</span>
+<span id="L45">45     (n : Nat) -&gt; History.FinitePairHistory Action Real n -&gt; Action -&gt; Real</span>
+<span id="L46">46   | 0, history, action =&gt;</span>
+<span id="L47">47       Exp3.importanceWeightedLoss</span>
+<span id="L48">48         (initialHalfTsallisDistribution arms harms (eta 0))</span>
+<span id="L49">49         (fun _ =&gt; (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).2)</span>
+<span id="L50">50         (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 action</span>
+<span id="L51">51   | n + 1, history, action =&gt;</span>
+<span id="L52">52       let previous := Exp3.previousPairHistory history</span>
+<span id="L53">53       sampledScheduledHalfTsallisHistoryScore arms harms eta n previous action +</span>
+<span id="L54">54         Exp3.importanceWeightedLoss</span>
+<span id="L55">55           (halfTsallisMinimizer arms harms (eta (n + 1))</span>
+<span id="L56">56             (sampledScheduledHalfTsallisHistoryScore</span>
+<span id="L57">57               arms harms eta n previous))</span>
+<span id="L58">58           (fun _ =&gt; (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).2)</span>
+<span id="L59">59           (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).1 action</span>
+<span id="L60">60 </span>
+<span id="L61">61 @[simp]</span>
+<span id="L62">62 theorem sampledScheduledHalfTsallisHistoryScore_zero</span>
+<span id="L63">63     {Action : Type u} [DecidableEq Action]</span>
+<span id="L64">64     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L65">65     (history : History.FinitePairHistory Action Real 0) (action : Action) :</span>
+<span id="L66">66     sampledScheduledHalfTsallisHistoryScore arms harms eta 0 history action =</span>
+<span id="L67">67       Exp3.importanceWeightedLoss</span>
+<span id="L68">68         (initialHalfTsallisDistribution arms harms (eta 0))</span>
+<span id="L69">69         (fun _ =&gt; (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).2)</span>
+<span id="L70">70         (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1 action :=</span>
+<span id="L71">71   rfl</span>
+<span id="L72">72 </span>
+<span id="L73">73 @[simp]</span>
+<span id="L74">74 theorem sampledScheduledHalfTsallisHistoryScore_succ</span>
+<span id="L75">75     {Action : Type u} [DecidableEq Action]</span>
+<span id="L76">76     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L77">77     (n : Nat) (history : History.FinitePairHistory Action Real (n + 1))</span>
+<span id="L78">78     (action : Action) :</span>
+<span id="L79">79     sampledScheduledHalfTsallisHistoryScore arms harms eta (n + 1)</span>
+<span id="L80">80         history action =</span>
+<span id="L81">81       sampledScheduledHalfTsallisHistoryScore arms harms eta n</span>
+<span id="L82">82           (Exp3.previousPairHistory history) action +</span>
+<span id="L83">83         Exp3.importanceWeightedLoss</span>
+<span id="L84">84           (halfTsallisMinimizer arms harms (eta (n + 1))</span>
+<span id="L85">85             (sampledScheduledHalfTsallisHistoryScore arms harms eta n</span>
+<span id="L86">86               (Exp3.previousPairHistory history)))</span>
+<span id="L87">87           (fun _ =&gt; (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).2)</span>
+<span id="L88">88           (history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩).1 action :=</span>
+<span id="L89">89   rfl</span>
+<span id="L90">90 </span>
+<span id="L91">91 /-- Scheduled selector regularity makes every supported score coordinate</span>
+<span id="L92">92 measurable. -/</span>
+<span id="L93">93 theorem measurable_sampledScheduledHalfTsallisHistoryScore</span>
+<span id="L94">94     {Action : Type u}</span>
+<span id="L95">95     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L96">96     [DecidableEq Action]</span>
+<span id="L97">97     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L98">98     (selector : HalfTsallisScheduleFiniteHistorySelectorMeasurability</span>
+<span id="L99">99       arms harms eta) :</span>
+<span id="L100">100     forall n action, action ∈ arms -&gt;</span>
+<span id="L101">101       Measurable (fun history : History.FinitePairHistory Action Real n =&gt;</span>
+<span id="L102">102         sampledScheduledHalfTsallisHistoryScore</span>
+<span id="L103">103           arms harms eta n history action) := by</span>
+<span id="L104">104   intro n</span>
+<span id="L105">105   induction n with</span>
+<span id="L106">106   | zero =&gt;</span>
+<span id="L107">107       intro action _haction</span>
+<span id="L108">108       let zeroIndex : Finset.Iic 0 := ⟨0, Finset.mem_Iic.mpr le_rfl⟩</span>
+<span id="L109">109       have hchosen : Measurable</span>
+<span id="L110">110           (fun history : History.FinitePairHistory Action Real 0 =&gt;</span>
+<span id="L111">111             (history zeroIndex).1) :=</span>
+<span id="L112">112         measurable_fst.comp (measurable_pi_apply zeroIndex)</span>
+<span id="L113">113       have hloss : Measurable</span>
+<span id="L114">114           (fun history : History.FinitePairHistory Action Real 0 =&gt;</span>
+<span id="L115">115             (history zeroIndex).2) :=</span>
+<span id="L116">116         measurable_snd.comp (measurable_pi_apply zeroIndex)</span>
+<span id="L117">117       simpa [sampledScheduledHalfTsallisHistoryScore, zeroIndex] using</span>
+<span id="L118">118         (Exp3.measurable_observedImportanceWeightedLoss</span>
+<span id="L119">119           (fun _history : History.FinitePairHistory Action Real 0 =&gt;</span>
+<span id="L120">120             initialHalfTsallisDistribution arms harms (eta 0))</span>
+<span id="L121">121           (fun history =&gt; (history zeroIndex).1)</span>
+<span id="L122">122           (fun history =&gt; (history zeroIndex).2)</span>
+<span id="L123">123           action measurable_const hchosen hloss)</span>
+<span id="L124">124   | succ n ih =&gt;</span>
+<span id="L125">125       intro action haction</span>
+<span id="L126">126       let lastIndex : Finset.Iic (n + 1) :=</span>
+<span id="L127">127         ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩</span>
+<span id="L128">128       have hprevious : Measurable</span>
+<span id="L129">129           (Exp3.previousPairHistory (Action := Action) (n := n)) :=</span>
+<span id="L130">130         Exp3.measurable_previousPairHistory</span>
+<span id="L131">131       have hscore : Measurable</span>
+<span id="L132">132           (fun history : History.FinitePairHistory Action Real (n + 1) =&gt;</span>
+<span id="L133">133             sampledScheduledHalfTsallisHistoryScore arms harms eta n</span>
+<span id="L134">134               (Exp3.previousPairHistory history) action) :=</span>
+<span id="L135">135         (ih action haction).comp hprevious</span>
+<span id="L136">136       have hprob : Measurable</span>
+<span id="L137">137           (fun history : History.FinitePairHistory Action Real (n + 1) =&gt;</span>
+<span id="L138">138             halfTsallisMinimizer arms harms (eta (n + 1))</span>
+<span id="L139">139               (sampledScheduledHalfTsallisHistoryScore arms harms eta n</span>
+<span id="L140">140                 (Exp3.previousPairHistory history)) action) :=</span>
+<span id="L141">141         ((selector.round (n + 1)).measurable_selector n</span>
+<span id="L142">142           (sampledScheduledHalfTsallisHistoryScore arms harms eta n)</span>
+<span id="L143">143           (fun selected hselected =&gt; ih selected hselected)</span>
+<span id="L144">144           action haction).comp hprevious</span>
+<span id="L145">145       have hchosen : Measurable</span>
+<span id="L146">146           (fun history : History.FinitePairHistory Action Real (n + 1) =&gt;</span>
+<span id="L147">147             (history lastIndex).1) :=</span>
+<span id="L148">148         measurable_fst.comp (measurable_pi_apply lastIndex)</span>
+<span id="L149">149       have hloss : Measurable</span>
+<span id="L150">150           (fun history : History.FinitePairHistory Action Real (n + 1) =&gt;</span>
+<span id="L151">151             (history lastIndex).2) :=</span>
+<span id="L152">152         measurable_snd.comp (measurable_pi_apply lastIndex)</span>
+<span id="L153">153       have hincrement : Measurable</span>
+<span id="L154">154           (fun history : History.FinitePairHistory Action Real (n + 1) =&gt;</span>
+<span id="L155">155             Exp3.importanceWeightedLoss</span>
+<span id="L156">156               (halfTsallisMinimizer arms harms (eta (n + 1))</span>
+<span id="L157">157                 (sampledScheduledHalfTsallisHistoryScore arms harms eta n</span>
+<span id="L158">158                   (Exp3.previousPairHistory history)))</span>
+<span id="L159">159               (fun _ =&gt; (history lastIndex).2)</span>
+<span id="L160">160               (history lastIndex).1 action) :=</span>
+<span id="L161">161         Exp3.measurable_observedImportanceWeightedLoss</span>
+<span id="L162">162           (fun history =&gt;</span>
+<span id="L163">163             halfTsallisMinimizer arms harms (eta (n + 1))</span>
+<span id="L164">164               (sampledScheduledHalfTsallisHistoryScore arms harms eta n</span>
+<span id="L165">165                 (Exp3.previousPairHistory history)))</span>
+<span id="L166">166           (fun history =&gt; (history lastIndex).1)</span>
+<span id="L167">167           (fun history =&gt; (history lastIndex).2)</span>
+<span id="L168">168           action hprob hchosen hloss</span>
+<span id="L169">169       simpa [sampledScheduledHalfTsallisHistoryScore, lastIndex] using</span>
+<span id="L170">170         hscore.add hincrement</span>
+<span id="L171">171 </span>
+<span id="L172">172 /-- Scheduled successor probabilities after the visible prefix through `n`. -/</span>
+<span id="L173">173 noncomputable def sampledScheduledHalfTsallisHistoryDistribution</span>
+<span id="L174">174     {Action : Type u} [DecidableEq Action]</span>
+<span id="L175">175     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L176">176     (n : Nat) :</span>
+<span id="L177">177     History.FinitePairHistory Action Real n -&gt; Action -&gt; Real :=</span>
+<span id="L178">178   halfTsallisHistoryMinimizer arms harms (eta (n + 1))</span>
+<span id="L179">179     (sampledScheduledHalfTsallisHistoryScore arms harms eta n)</span>
+<span id="L180">180 </span>
+<span id="L181">181 /-- Measurable finite-action source for one scheduled successor policy. -/</span>
+<span id="L182">182 noncomputable def sampledScheduledHalfTsallisHistoryDistributionSource</span>
+<span id="L183">183     {Action : Type u}</span>
+<span id="L184">184     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L185">185     [DecidableEq Action]</span>
+<span id="L186">186     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L187">187     (selector : HalfTsallisScheduleFiniteHistorySelectorMeasurability</span>
+<span id="L188">188       arms harms eta) (n : Nat) :</span>
+<span id="L189">189     Exp3.MeasurableFiniteActionDistribution arms</span>
+<span id="L190">190       (sampledScheduledHalfTsallisHistoryDistribution</span>
+<span id="L191">191         arms harms eta n) :=</span>
+<span id="L192">192   measurableFiniteActionDistribution_halfTsallisHistoryMinimizer</span>
+<span id="L193">193     arms harms (eta (n + 1))</span>
+<span id="L194">194     (sampledScheduledHalfTsallisHistoryScore arms harms eta n)</span>
+<span id="L195">195     (fun action haction =&gt;</span>
+<span id="L196">196       (selector.round (n + 1)).measurable_selector n</span>
+<span id="L197">197         (sampledScheduledHalfTsallisHistoryScore arms harms eta n)</span>
+<span id="L198">198         (fun selected hselected =&gt;</span>
+<span id="L199">199           measurable_sampledScheduledHalfTsallisHistoryScore</span>
+<span id="L200">200             arms harms eta selector n selected hselected)</span>
+<span id="L201">201         action haction)</span>
+<span id="L202">202 </span>
+<span id="L203">203 /-- Stochastic finite-history algorithm generated by the scheduled recursive</span>
+<span id="L204">204 score. -/</span>
+<span id="L205">205 noncomputable def sampledScheduledHalfTsallisHistoryAlgorithm</span>
+<span id="L206">206     {Action : Type u}</span>
+<span id="L207">207     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L208">208     [DecidableEq Action]</span>
+<span id="L209">209     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L210">210     (selector : HalfTsallisScheduleFiniteHistorySelectorMeasurability</span>
+<span id="L211">211       arms harms eta) :</span>
+<span id="L212">212     Thompson.HistoryAlgorithm Action Real where</span>
+<span id="L213">213   policy n := Exp3.finiteActionKernel arms</span>
+<span id="L214">214     (sampledScheduledHalfTsallisHistoryDistribution arms harms eta n)</span>
+<span id="L215">215     (sampledScheduledHalfTsallisHistoryDistributionSource</span>
+<span id="L216">216       arms harms eta selector n)</span>
+<span id="L217">217   policy_isMarkov n := Exp3.instFiniteActionKernelIsMarkovKernel</span>
+<span id="L218">218     arms (sampledScheduledHalfTsallisHistoryDistribution arms harms eta n)</span>
+<span id="L219">219       (sampledScheduledHalfTsallisHistoryDistributionSource</span>
+<span id="L220">220         arms harms eta selector n)</span>
+<span id="L221">221   initialAction := Exp3.finiteActionMeasure arms</span>
+<span id="L222">222     (initialHalfTsallisDistribution arms harms (eta 0))</span>
+<span id="L223">223   initialAction_isProbability := Exp3.finiteActionMeasure_isProbabilityMeasure</span>
+<span id="L224">224     arms (initialHalfTsallisDistribution arms harms (eta 0))</span>
+<span id="L225">225       (finiteActionDistribution_initialHalfTsallisDistribution</span>
+<span id="L226">226         arms harms (eta 0))</span>
+<span id="L227">227 </span>
+<span id="L228">228 @[simp]</span>
+<span id="L229">229 theorem sampledScheduledHalfTsallisHistoryAlgorithm_policy</span>
+<span id="L230">230     {Action : Type u}</span>
+<span id="L231">231     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L232">232     [DecidableEq Action]</span>
+<span id="L233">233     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L234">234     (selector : HalfTsallisScheduleFiniteHistorySelectorMeasurability</span>
+<span id="L235">235       arms harms eta) (n : Nat) :</span>
+<span id="L236">236     (sampledScheduledHalfTsallisHistoryAlgorithm</span>
+<span id="L237">237       arms harms eta selector).policy n =</span>
+<span id="L238">238       Exp3.finiteActionKernel arms</span>
+<span id="L239">239         (sampledScheduledHalfTsallisHistoryDistribution arms harms eta n)</span>
+<span id="L240">240         (sampledScheduledHalfTsallisHistoryDistributionSource</span>
+<span id="L241">241           arms harms eta selector n) :=</span>
+<span id="L242">242   rfl</span>
+<span id="L243">243 </span>
+<span id="L244">244 /-- Complete environment-indexed scheduled half-Tsallis trajectory. -/</span>
+<span id="L245">245 noncomputable def sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L246">246     {Env : Type v} {Action : Type u}</span>
+<span id="L247">247     [MeasurableSpace Env]</span>
+<span id="L248">248     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L249">249     [DecidableEq Action] [Nonempty Action]</span>
+<span id="L250">250     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L251">251     (selector : HalfTsallisScheduleFiniteHistorySelectorMeasurability</span>
+<span id="L252">252       arms harms eta)</span>
+<span id="L253">253     (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) :</span>
+<span id="L254">254     Kernel Env ((n : Nat) -&gt; Action × Real) :=</span>
+<span id="L255">255   Thompson.canonicalMeasurableEnvironmentTrajectoryKernel</span>
+<span id="L256">256     (sampledScheduledHalfTsallisHistoryAlgorithm</span>
+<span id="L257">257       arms harms eta selector) environment</span>
+<span id="L258">258 </span>
+<span id="L259">259 instance instSampledScheduledHalfTsallisTrajectoryKernelIsMarkov</span>
+<span id="L260">260     {Env : Type v} {Action : Type u}</span>
+<span id="L261">261     [MeasurableSpace Env]</span>
+<span id="L262">262     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L263">263     [DecidableEq Action] [Nonempty Action]</span>
+<span id="L264">264     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L265">265     (selector : HalfTsallisScheduleFiniteHistorySelectorMeasurability</span>
+<span id="L266">266       arms harms eta)</span>
+<span id="L267">267     (environment : Thompson.MeasurableHistoryEnvironment Env Action Real) :</span>
+<span id="L268">268     IsMarkovKernel</span>
+<span id="L269">269       (sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L270">270         arms harms eta selector environment) := by</span>
+<span id="L271">271   unfold sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L272">272   infer_instance</span>
+<span id="L273">273 </span>
+<span id="L274">274 /-- The successor action has its scheduled finite-action law conditional on</span>
+<span id="L275">275 the visible pair-history prefix. -/</span>
+<span id="L276">276 theorem sampledScheduledHalfTsallisTrajectoryMeasure_condDistrib_action</span>
+<span id="L277">277     {Env : Type v} {Action : Type u}</span>
+<span id="L278">278     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L279">279     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L280">280     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L281">281     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L282">282     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L283">283     (selector : HalfTsallisScheduleFiniteHistorySelectorMeasurability</span>
+<span id="L284">284       arms harms eta)</span>
+<span id="L285">285     (environment : Thompson.MeasurableHistoryEnvironment Env Action Real)</span>
+<span id="L286">286     (n : Nat) :</span>
+<span id="L287">287     condDistrib</span>
+<span id="L288">288         (fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L289">289           (sample.2 (n + 1)).1)</span>
+<span id="L290">290         (fun sample =&gt; Preorder.frestrictLe n sample.2)</span>
+<span id="L291">291         (prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L292">292           arms harms eta selector environment) =ᵐ[</span>
+<span id="L293">293       (prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L294">294         arms harms eta selector environment).map</span>
+<span id="L295">295           (fun sample =&gt; Preorder.frestrictLe n sample.2)]</span>
+<span id="L296">296       Exp3.finiteActionKernel arms</span>
+<span id="L297">297         (sampledScheduledHalfTsallisHistoryDistribution arms harms eta n)</span>
+<span id="L298">298         (sampledScheduledHalfTsallisHistoryDistributionSource</span>
+<span id="L299">299           arms harms eta selector n) := by</span>
+<span id="L300">300   simpa [sampledScheduledHalfTsallisTrajectoryKernel,</span>
+<span id="L301">301     sampledScheduledHalfTsallisHistoryAlgorithm_policy] using</span>
+<span id="L302">302     (Thompson.canonicalMeasurableEnvironmentTrajectoryMeasure_condDistrib_action</span>
+<span id="L303">303       prior</span>
+<span id="L304">304       (sampledScheduledHalfTsallisHistoryAlgorithm</span>
+<span id="L305">305         arms harms eta selector)</span>
+<span id="L306">306       environment n)</span>
+<span id="L307">307 </span>
+<span id="L308">308 /-- The scheduled conditional law after retaining the environment in the</span>
+<span id="L309">309 visible history. -/</span>
+<span id="L310">310 theorem sampledScheduledHalfTsallisTrajectoryMeasure_condDistrib_action_given_environment</span>
+<span id="L311">311     {Env : Type v} {Action : Type u}</span>
+<span id="L312">312     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L313">313     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L314">314     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L315">315     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L316">316     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L317">317     (selector : HalfTsallisScheduleFiniteHistorySelectorMeasurability</span>
+<span id="L318">318       arms harms eta)</span>
+<span id="L319">319     (environment : Thompson.MeasurableHistoryEnvironment Env Action Real)</span>
+<span id="L320">320     (n : Nat) :</span>
+<span id="L321">321     condDistrib</span>
+<span id="L322">322         (fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L323">323           (sample.2 (n + 1)).1)</span>
+<span id="L324">324         (fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L325">325           (sample.1, Preorder.frestrictLe n sample.2))</span>
+<span id="L326">326         (prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L327">327           arms harms eta selector environment) =ᵐ[</span>
+<span id="L328">328       (prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L329">329         arms harms eta selector environment).map</span>
+<span id="L330">330           (fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L331">331             (sample.1, Preorder.frestrictLe n sample.2))]</span>
+<span id="L332">332       (Exp3.finiteActionKernel arms</span>
+<span id="L333">333         (sampledScheduledHalfTsallisHistoryDistribution arms harms eta n)</span>
+<span id="L334">334         (sampledScheduledHalfTsallisHistoryDistributionSource</span>
+<span id="L335">335           arms harms eta selector n)).comap</span>
+<span id="L336">336         (fun input : Env × History.FinitePairHistory Action Real n =&gt; input.2)</span>
+<span id="L337">337         (measurable_snd : Measurable</span>
+<span id="L338">338           (fun input : Env × History.FinitePairHistory Action Real n =&gt;</span>
+<span id="L339">339             input.2)) := by</span>
+<span id="L340">340   simpa [sampledScheduledHalfTsallisTrajectoryKernel,</span>
+<span id="L341">341     sampledScheduledHalfTsallisHistoryAlgorithm_policy] using</span>
+<span id="L342">342     (Exp3.trajectoryMixture_condDistrib_action_given_environment_history prior</span>
+<span id="L343">343       (sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L344">344         arms harms eta selector environment)</span>
+<span id="L345">345       (Preorder.frestrictLe n) (Preorder.measurable_frestrictLe n)</span>
+<span id="L346">346       (fun trajectory =&gt; (trajectory (n + 1)).1)</span>
+<span id="L347">347       (measurable_fst.comp (measurable_pi_apply (n + 1)))</span>
+<span id="L348">348       ((sampledScheduledHalfTsallisHistoryAlgorithm</span>
+<span id="L349">349         arms harms eta selector).policy n)</span>
+<span id="L350">350       (fun env =&gt;</span>
+<span id="L351">351         Thompson.canonicalMeasurableEnvironmentTrajectoryKernel_map_history_action_eq_compProd</span>
+<span id="L352">352           (sampledScheduledHalfTsallisHistoryAlgorithm</span>
+<span id="L353">353             arms harms eta selector)</span>
+<span id="L354">354           environment env n))</span>
+<span id="L355">355 </span>
+<span id="L356">356 end Tsallis</span>
+<span id="L357">357 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

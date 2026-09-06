@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.TsallisScheduledIIDMeanGap · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.TsallisScheduledIIDMeanGap · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.TsallisScheduledIIDMeanGap · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Tsallis-FTRL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Tsallis<wbr>Scheduled<wbr>IID<wbr>Mean<wbr>Gap</h1>
+  <p class="lede">This module instantiates the abstract scheduled independent-mean contract with an infinite product of loss states. The only trajectory-side input is an explicit finite-prefix kernel factorization: the visible prefix through n must depend on the loss-state stream only through its coordinates through n.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/TsallisScheduledIIDMeanGap.lean.html"><code>BanditRLProof/TsallisScheduledIIDMeanGap.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/tsallis/index.html">8. Tsallis-FTRL, corruption, and nonstationarity</a></dd></div>
+    <div><dt>Declarations</dt><dd>12</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-independencefoundation/index.html"><code>BanditRLProof.IndependenceFoundation</code></a>, <a href="../banditrlproof-kernelindependentextension/index.html"><code>BanditRLProof.KernelIndependentExtension</code></a>, <a href="../banditrlproof-kerneltrajectoryprefix/index.html"><code>BanditRLProof.KernelTrajectoryPrefix</code></a>, <a href="../banditrlproof-tsallisscheduledindependentmeangap/index.html"><code>BanditRLProof.TsallisScheduledIndependentMeanGap</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-tsallisfinitearmiidrewardlaw/index.html"><code>BanditRLProof.TsallisFiniteArmIIDRewardLaw</code></a>, <a href="../banditrlproof-tsallisschedulediidhistoryadaptive/index.html"><code>BanditRLProof.TsallisScheduledIIDHistoryAdaptive</code></a>, <a href="../banditrlproof-tsallisschedulediidtimevaryingmeangap/index.html"><code>BanditRLProof.TsallisScheduledIIDTimeVaryingMeanGap</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-0d1bc8d11aef">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.iidLossStatePredictableLossVector</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A predictable loss vector obtained by reading one fresh loss state at each
+time.  Joint measurability of `value` is the sole evaluation regularity
+contract; pointwise bounds make this a valid `[0,1]` loss process.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> iidLossStatePredictableLossVector {LossState : Type u} {Action : Type v} [MeasurableSpace LossState] [MeasurableSpace Action] (value : LossState -&gt; Action -&gt; Real) (hvalue : Measurable (<span class="kw">fun</span> input : LossState × Action =&gt; value input.<span class="num">1</span> input.<span class="num">2</span>)) (hvalue_nonneg : ∀ state action, <span class="num">0</span> &lt;= value state action) (hvalue_le_one : ∀ state action, value state action &lt;= <span class="num">1</span>) : Exp3.PredictableLossVector (Nat -&gt; LossState) Action <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledIIDMeanGap.lean.html#L25">Source line 25</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f8bbe3404bcd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.predictableLossAt_iidLossStatePredictableLossVector</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> predictableLossAt_iidLossStatePredictableLossVector {LossState : Type u} {Action : Type v} [MeasurableSpace LossState] [MeasurableSpace Action] (value : LossState -&gt; Action -&gt; Real) (hvalue : Measurable (<span class="kw">fun</span> input : LossState × Action =&gt; value input.<span class="num">1</span> input.<span class="num">2</span>)) (hvalue_nonneg : ∀ state action, <span class="num">0</span> &lt;= value state action) (hvalue_le_one : ∀ state action, value state action &lt;= <span class="num">1</span>) (t : Nat) (sample : (Nat -&gt; LossState) × ((k : Nat) -&gt; Action × Real)) (action : Action) : Exp3.predictableLossAt (iidLossStatePredictableLossVector value hvalue hvalue_nonneg hvalue_le_one) t sample action = value (sample.<span class="num">1</span> t) action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledIIDMeanGap.lean.html#L61">Source line 61</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-674eb6e4414d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.extendLossStatePrefix</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Extend a finite loss-state prefix to an infinite stream by a fixed fallback
+state after the prefix endpoint.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> extendLossStatePrefix {LossState : Type u} (fallback : LossState) (n : Nat) (statePrefix : (i : Finset.Iic n) -&gt; LossState) : Nat -&gt; LossState</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledIIDMeanGap.lean.html#L80">Source line 80</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-46be79e4b7fa">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.measurable_extendLossStatePrefix</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_extendLossStatePrefix {LossState : Type u} [MeasurableSpace LossState] (fallback : LossState) (n : Nat) : Measurable (extendLossStatePrefix fallback n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledIIDMeanGap.lean.html#L86">Source line 86</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b8ff05ea9919">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.extendLossStatePrefix_apply_of_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> extendLossStatePrefix_apply_of_le {LossState : Type u} (fallback : LossState) (n t : Nat) (ht : t &lt;= n) (statePrefix : (i : Finset.Iic n) -&gt; LossState) : extendLossStatePrefix fallback n statePrefix t = statePrefix ⟨t, Finset.mem_Iic.mpr ht⟩</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledIIDMeanGap.lean.html#L98">Source line 98</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-39f6456359fd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.sampledScheduledHalfTsallisTrajectoryKernel_map_frestrictLe_eq_of_iidLossState_prefix_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The visible scheduled trajectory prefix generated from an IID loss-state
+stream is unchanged when the stream is replaced by any other stream with the
+same finite loss-state prefix.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledScheduledHalfTsallisTrajectoryKernel_map_frestrictLe_eq_of_iidLossState_prefix_eq {LossState : Type u} {Action : Type v} [MeasurableSpace LossState] [StandardBorelSpace LossState] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (value : LossState -&gt; Action -&gt; Real) (hvalue : Measurable (<span class="kw">fun</span> input : LossState × Action =&gt; value input.<span class="num">1</span> input.<span class="num">2</span>)) (hvalue_nonneg : ∀ state action, <span class="num">0</span> &lt;= value state action) (hvalue_le_one : ∀ state action, value state action &lt;= <span class="num">1</span>) (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (selector : HalfTsallisScheduleFiniteHistorySelectorMeasurability arms harms eta) (environment₁ environment₂ : Nat -&gt; LossState) (n : Nat) (henvironment : Preorder.frestrictLe n environment₁ = Preorder.frestrictLe n environment₂) : (sampledScheduledHalfTsallisTrajectoryKernel arms harms eta selector (iidLossStatePredictableLossVector value hvalue hvalue_nonneg hvalue_le_one).environment environment₁).map (Preorder.frestrictLe n) = (sampledScheduledHalfTsallisTrajectoryKernel arms harms eta selector (iidLossStatePredictableLossVector value hvalue hvalue_nonneg hvalue_le_one).environment environment₂).map (Preorder.frestrictLe n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledIIDMeanGap.lean.html#L108">Source line 108</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-06c8a23eb5af">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.sampledScheduledHalfTsallisIIDPrefixKernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite pair-prefix kernel obtained by extending the supplied loss-state
+prefix and running the canonical scheduled trajectory.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledScheduledHalfTsallisIIDPrefixKernel {LossState : Type u} {Action : Type v} [MeasurableSpace LossState] [MeasurableSpace Action] [MeasurableSingletonClass Action] [Nonempty Action] [DecidableEq Action] (fallback : LossState) (value : LossState -&gt; Action -&gt; Real) (hvalue : Measurable (<span class="kw">fun</span> input : LossState × Action =&gt; value input.<span class="num">1</span> input.<span class="num">2</span>)) (hvalue_nonneg : ∀ state action, <span class="num">0</span> &lt;= value state action) (hvalue_le_one : ∀ state action, value state action &lt;= <span class="num">1</span>) (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (selector : HalfTsallisScheduleFiniteHistorySelectorMeasurability arms harms eta) (n : Nat) : Kernel ((i : Finset.Iic n) -&gt; LossState) (History.FinitePairHistory Action Real n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledIIDMeanGap.lean.html#L171">Source line 171</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1d7d560d059e">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.iidLossStateMeanGap</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The stationary mean loss gap induced by one coordinate law.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> iidLossStateMeanGap {LossState : Type u} {Action : Type v} [MeasurableSpace LossState] (law : Measure LossState) (value : LossState -&gt; Action -&gt; Real) (best action : Action) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledIIDMeanGap.lean.html#L225">Source line 225</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ec7f10aceeba">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Tsallis.HasScheduledIIDPrefixKernelFactorization</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact remaining trajectory-law obligation for the IID route.  At every
+scheduled successor time, the generated visible pair prefix is a Markov-kernel
+extension of the corresponding finite loss-state prefix.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> HasScheduledIIDPrefixKernelFactorization {LossState : Type u} {Action : Type v} [MeasurableSpace LossState] [MeasurableSpace Action] (trajectoryKernel : Kernel (Nat -&gt; LossState) ((k : Nat) -&gt; Action × Real)) (horizon : Nat) : Prop</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledIIDMeanGap.lean.html#L235">Source line 235</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9214c926af37">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.hasScheduledIIDPrefixKernelFactorization_sampledScheduledHalfTsallisTrajectoryKernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The canonical scheduled half-Tsallis trajectory automatically factors
+through every finite IID loss-state prefix.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> hasScheduledIIDPrefixKernelFactorization_sampledScheduledHalfTsallisTrajectoryKernel {LossState : Type u} {Action : Type v} [MeasurableSpace LossState] [StandardBorelSpace LossState] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (fallback : LossState) (value : LossState -&gt; Action -&gt; Real) (hvalue : Measurable (<span class="kw">fun</span> input : LossState × Action =&gt; value input.<span class="num">1</span> input.<span class="num">2</span>)) (hvalue_nonneg : ∀ state action, <span class="num">0</span> &lt;= value state action) (hvalue_le_one : ∀ state action, value state action &lt;= <span class="num">1</span>) (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real) (selector : HalfTsallisScheduleFiniteHistorySelectorMeasurability arms harms eta) (horizon : Nat) : HasScheduledIIDPrefixKernelFactorization (sampledScheduledHalfTsallisTrajectoryKernel arms harms eta selector (iidLossStatePredictableLossVector value hvalue hvalue_nonneg hvalue_le_one).environment) horizon</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledIIDMeanGap.lean.html#L252">Source line 252</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-13d417b353e6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.hasScheduledIndependentMeanGapLaw_of_iidLossState</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Infinite-product loss states plus finite-prefix factorization produce the
+independence and global-mean contract consumed by scheduled self-bounding.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> hasScheduledIndependentMeanGapLaw_of_iidLossState {LossState : Type u} {Action : Type v} [MeasurableSpace LossState] [StandardBorelSpace LossState] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (law : Measure LossState) [IsProbabilityMeasure law] (value : LossState -&gt; Action -&gt; Real) (hvalue : Measurable (<span class="kw">fun</span> input : LossState × Action =&gt; value input.<span class="num">1</span> input.<span class="num">2</span>)) (hvalue_nonneg : ∀ state action, <span class="num">0</span> &lt;= value state action) (hvalue_le_one : ∀ state action, value state action &lt;= <span class="num">1</span>) (arms : Finset Action) (best : Action) (horizon : Nat) (trajectoryKernel : Kernel (Nat -&gt; LossState) ((k : Nat) -&gt; Action × Real)) [IsMarkovKernel trajectoryKernel] (hfactor : HasScheduledIIDPrefixKernelFactorization trajectoryKernel horizon) : <span class="kw">let</span> prior := Measure.infinitePi (<span class="kw">fun</span> _ : Nat =&gt; law) <span class="kw">let</span> mu := prior ⊗ₘ trajectoryKernel HasScheduledIndependentMeanGapLaw mu arms (iidLossStatePredictableLossVector value hvalue hvalue_nonneg hvalue_le_one) best (iidLossStateMeanGap law value best) horizon</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledIIDMeanGap.lean.html#L324">Source line 324</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d501dca34b13">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_sqrtSchedule_log_iidLossState</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The canonical scheduled half-Tsallis trajectory reaches the explicit
+logarithmic bound for an IID loss-state environment.  Its finite-prefix
+factorization is constructed internally.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_sqrtSchedule_log_iidLossState {LossState : Type u} {Action : Type v} [MeasurableSpace LossState] [StandardBorelSpace LossState] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (law : Measure LossState) [IsProbabilityMeasure law] (value : LossState -&gt; Action -&gt; Real) (hvalue : Measurable (<span class="kw">fun</span> input : LossState × Action =&gt; value input.<span class="num">1</span> input.<span class="num">2</span>)) (hvalue_nonneg : ∀ state action, <span class="num">0</span> &lt;= value state action) (hvalue_le_one : ∀ state action, value state action &lt;= <span class="num">1</span>) (arms : Finset Action) (harms : arms.Nonempty) {best : Action} (hbest : best ∈ arms) (horizon : Nat) (hgapPos : ∀ action, action ∈ arms.erase best -&gt; <span class="num">0</span> &lt; iidLossStateMeanGap law value best action) (corruption : Real) (hcorruption : <span class="num">0</span> &lt;= corruption) : <span class="kw">let</span> prior := Measure.infinitePi (<span class="kw">fun</span> _ : Nat =&gt; law) <span class="kw">let</span> loss := iidLossStatePredictableLossVector value hvalue hvalue_nonneg hvalue_le_one <span class="kw">let</span> selector := canonicalHalfTsallisScheduleGeneratedSelectorMeasurability arms harms sampledScheduledHalfTsallisSqrtSchedule loss <span class="kw">let</span> mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel arms harms sampledScheduledHalfTsallisSqrtSchedule selector.finiteHistory loss.environment integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret arms harms sampledScheduledHalfTsallisSqrtSchedule loss (pointMass best) horizon) &lt;= (<span class="num">1</span> + Real.log (((horizon + <span class="num">1</span> : Nat) : Real))) * (<span class="num">1</span> + <span class="num">25</span> * (arms.erase best).sum (<span class="kw">fun</span> action =&gt; <span class="num">1</span> / iidLossStateMeanGap law value best action)) + corruption</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/TsallisScheduledIIDMeanGap.lean.html#L498">Source line 498</a>
+
+      <a href="../../chapters/tsallis/index.html">Chapter context: Tsallis-FTRL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.ETCRealEmpiricalMean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.ETCRealEmpiricalMean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.ETCRealEmpiricalMean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · ETC</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>ETC<wbr>Real<wbr>Empirical<wbr>Mean</h1>
+  <p class="lede">This module supplies the Real-valued empirical-mean and measurable finite argmax surface needed before transporting ETC to an arbitrary native Real environment. It stays below reward-law identification, concentration, and the final IsAlgEnvSeq regret theorem.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/ETCRealEmpiricalMean.lean.html"><code>BanditRLProof/Algorithms/ETCRealEmpiricalMean.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/etc/index.html">3. Explore-Then-Commit</a></dd></div>
+    <div><dt>Declarations</dt><dd>15</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-measurablelocalquantities/index.html"><code>BanditRLProof.MeasurableLocalQuantities</code></a>, <a href="../banditrlproof-algorithms-etcexpectedpullcount/index.html"><code>BanditRLProof.Algorithms.ETCExpectedPullCount</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-etcrealinfinitepitail/index.html"><code>BanditRLProof.Algorithms.ETCRealInfinitePiTail</code></a>, <a href="../banditrlproof-ofulmeasurablerecursiveselection/index.html"><code>BanditRLProof.OFULMeasurableRecursiveSelection</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-8105063bbe5d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.realEmpMeanAtExploration</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The exploration empirical mean formed directly from a Real reward trace.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> realEmpMeanAtExploration {K : Nat} (spec : ETC.Spec K) (baseCommitArm : Fin K) (reward : RewardTrace Real) (a : Fin K) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealEmpiricalMean.lean.html#L22">Source line 22</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3eae163be0dc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.realEmpMeanAtExploration_eq_sumRewards_div_explorationPulls</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The deterministic exploration count removes the pull-count denominator.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> realEmpMeanAtExploration_eq_sumRewards_div_explorationPulls {K : Nat} (spec : ETC.Spec K) (baseCommitArm : Fin K) (reward : RewardTrace Real) (a : Fin K) : ETC.realEmpMeanAtExploration spec baseCommitArm reward a = sumRewards (ETC.actionWithCommit spec baseCommitArm) reward a (spec.explorationPulls * K) / (spec.explorationPulls : Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealEmpiricalMean.lean.html#L30">Source line 30</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6be0555a182a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurable_realEmpMeanAtExploration</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Real exploration empirical means are measurable from measurable rewards.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_realEmpMeanAtExploration {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (spec : ETC.Spec K) (baseCommitArm a : Fin K) (reward : Omega -&gt; RewardTrace Real) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) : Measurable (<span class="kw">fun</span> omega : Omega =&gt; ETC.realEmpMeanAtExploration spec baseCommitArm (reward omega) a)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealEmpiricalMean.lean.html#L41">Source line 41</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d72eb9ba161b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.real_score_le_foldl_select</code>
+    <span><span class="status compiled">Compiled</span> <span class="status source">Internal helper</span></span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">private</span> <span class="kw">theorem</span> real_score_le_foldl_select {K : Nat} (scores : Fin K -&gt; Real) (init : Fin K) : <span class="kw">forall</span> l : List (Fin K), (<span class="kw">forall</span> a : Fin K, List.Mem a l -&gt; scores a &lt;= scores (l.foldl (<span class="kw">fun</span> best arm : Fin K =&gt; <span class="kw">if</span> scores best &lt; scores arm <span class="kw">then</span> arm <span class="kw">else</span> best) init)) /\ scores init &lt;= scores (l.foldl (<span class="kw">fun</span> best arm : Fin K =&gt; <span class="kw">if</span> scores best &lt; scores arm <span class="kw">then</span> arm <span class="kw">else</span> best) init) | [] =&gt; <span class="kw">by</span> exact And.intro (<span class="kw">by</span> intro _ ha; cases ha) (<span class="kw">by</span> simp) | arm :: rest =&gt; <span class="kw">by</span> <span class="kw">let</span> select := <span class="kw">fun</span> best arm : Fin K =&gt; <span class="kw">if</span> scores best &lt; scores arm <span class="kw">then</span> arm <span class="kw">else</span> best <span class="kw">let</span> next := select init arm have ih</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealEmpiricalMean.lean.html#L64">Source line 64</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-03798b606aae">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.realArgmaxCommit</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A deterministic finite argmax for Real-valued arm scores.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> realArgmaxCommit {K : Nat} (hK : <span class="num">0</span> &lt; K) (scores : Fin K -&gt; Real) : Fin K</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealEmpiricalMean.lean.html#L107">Source line 107</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3b24f5489610">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.realArgmaxCommit_spec</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The Real finite argmax dominates every arm score.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> realArgmaxCommit_spec {K : Nat} (hK : <span class="num">0</span> &lt; K) (scores : Fin K -&gt; Real) (a : Fin K) : scores a &lt;= scores (ETC.realArgmaxCommit hK scores)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealEmpiricalMean.lean.html#L115">Source line 115</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3fa97d4a150b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.realArgmaxCommit_const</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">On a constant score vector, the tie rule keeps the initial arm `0`.</p>
+    <pre class="lean-code"><code>@[simp] <span class="kw">theorem</span> realArgmaxCommit_const {K : Nat} (hK : <span class="num">0</span> &lt; K) (c : Real) : ETC.realArgmaxCommit hK (<span class="kw">fun</span> _a : Fin K =&gt; c) = Fin.mk <span class="num">0</span> hK</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealEmpiricalMean.lean.html#L124">Source line 124</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-279a88b5bd7b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurable_selected_real_score</code>
+    <span><span class="status compiled">Compiled</span> <span class="status source">Internal helper</span></span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">private</span> <span class="kw">theorem</span> measurable_selected_real_score {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (scores : Omega -&gt; Fin K -&gt; Real) (hscores : <span class="kw">forall</span> a : Fin K, Measurable (<span class="kw">fun</span> omega : Omega =&gt; scores omega a)) (best : Omega -&gt; Fin K) (hbest : Measurable best) : Measurable (<span class="kw">fun</span> omega : Omega =&gt; scores omega (best omega))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealEmpiricalMean.lean.html#L128">Source line 128</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-15d371ddc3db">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurable_foldl_real_select</code>
+    <span><span class="status compiled">Compiled</span> <span class="status source">Internal helper</span></span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">private</span> <span class="kw">theorem</span> measurable_foldl_real_select {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (scores : Omega -&gt; Fin K -&gt; Real) (hscores : <span class="kw">forall</span> a : Fin K, Measurable (<span class="kw">fun</span> omega : Omega =&gt; scores omega a)) (best : Omega -&gt; Fin K) (hbest : Measurable best) : <span class="kw">forall</span> l : List (Fin K), Measurable (<span class="kw">fun</span> omega : Omega =&gt; l.foldl (<span class="kw">fun</span> best arm : Fin K =&gt; <span class="kw">if</span> scores omega best &lt; scores omega arm <span class="kw">then</span> arm <span class="kw">else</span> best) (best omega)) | [] =&gt; <span class="kw">by</span> simpa using hbest | arm :: rest =&gt; <span class="kw">by</span> have hselected : Measurable (<span class="kw">fun</span> omega : Omega =&gt; scores omega (best omega))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealEmpiricalMean.lean.html#L149">Source line 149</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6e811691f839">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurable_realArgmaxCommit_of_forall_measurable</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite Real argmax is measurable when every score coordinate is.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_realArgmaxCommit_of_forall_measurable {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (hK : <span class="num">0</span> &lt; K) (scores : Omega -&gt; Fin K -&gt; Real) (hscores : <span class="kw">forall</span> a : Fin K, Measurable (<span class="kw">fun</span> omega : Omega =&gt; scores omega a)) : Measurable (<span class="kw">fun</span> omega : Omega =&gt; ETC.realArgmaxCommit hK (scores omega))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealEmpiricalMean.lean.html#L185">Source line 185</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-04ff2487b554">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.realExplorationArgmaxCommit</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Commit to the arm maximizing the native Real exploration means.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> realExplorationArgmaxCommit {K : Nat} (spec : ETC.Spec K) (baseCommitArm : Fin K) (reward : RewardTrace Real) : Fin K</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealEmpiricalMean.lean.html#L197">Source line 197</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5b1815caaf20">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.realExplorationArgmaxAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Native Real ETC trace: round-robin exploration, then Real empirical argmax.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> realExplorationArgmaxAction {K : Nat} (spec : ETC.Spec K) (baseCommitArm : Fin K) (reward : RewardTrace Real) : ActionTrace (Fin K)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealEmpiricalMean.lean.html#L204">Source line 204</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-faf3965206c5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurable_realExplorationArgmaxCommit</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The reward-dependent native Real ETC commit arm is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_realExplorationArgmaxCommit {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (spec : ETC.Spec K) (baseCommitArm : Fin K) (reward : Omega -&gt; RewardTrace Real) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) : Measurable (<span class="kw">fun</span> omega : Omega =&gt; ETC.realExplorationArgmaxCommit spec baseCommitArm (reward omega))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealEmpiricalMean.lean.html#L211">Source line 211</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0816c7009fbc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pullCount_realExplorationArgmaxAction_eq_exploration_add_remaining_mul_commit_prob</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact expected pull count for the native Real empirical-argmax ETC trace.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pullCount_realExplorationArgmaxAction_eq_exploration_add_remaining_mul_commit_prob {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (spec : ETC.Spec K) (baseCommitArm : Fin K) (reward : Omega -&gt; RewardTrace Real) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (a : Fin K) (n : Nat) (hn : K * spec.explorationPulls &lt;= n) : integral mu (<span class="kw">fun</span> omega : Omega =&gt; ((pullCount (ETC.realExplorationArgmaxAction spec baseCommitArm (reward omega)) a n : Nat) : Real)) = (spec.explorationPulls : Real) + ((n - K * spec.explorationPulls : Nat) : Real) * mu.real {omega : Omega | ETC.realExplorationArgmaxCommit spec baseCommitArm (reward omega) = a}</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealEmpiricalMean.lean.html#L226">Source line 226</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-927a8e9bd2f6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pullCount_realExplorationArgmaxAction_le_exploration_add_remaining_mul_of_commit_prob_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A commit-fiber bound immediately yields the native Real expected count bound.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pullCount_realExplorationArgmaxAction_le_exploration_add_remaining_mul_of_commit_prob_le {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (spec : ETC.Spec K) (baseCommitArm : Fin K) (reward : Omega -&gt; RewardTrace Real) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (a : Fin K) (n : Nat) (p : Real) (hn : K * spec.explorationPulls &lt;= n) (hprob : mu.real {omega : Omega | ETC.realExplorationArgmaxCommit spec baseCommitArm (reward omega) = a} &lt;= p) : integral mu (<span class="kw">fun</span> omega : Omega =&gt; ((pullCount (ETC.realExplorationArgmaxAction spec baseCommitArm (reward omega)) a n : Nat) : Real)) &lt;= (spec.explorationPulls : Real) + ((n - K * spec.explorationPulls : Nat) : Real) * p</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCRealEmpiricalMean.lean.html#L255">Source line 255</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

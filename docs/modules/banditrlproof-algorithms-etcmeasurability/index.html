@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.ETCMeasurability · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.ETCMeasurability · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.ETCMeasurability · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · ETC</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>ETC<wbr>Measurability</h1>
+  <p class="lede">This module starts the probability-facing ETC layer with event measurability. It deliberately avoids measures, probability inequalities, empirical means, filtrations, concentration, and final regret theorems.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/ETCMeasurability.lean.html"><code>BanditRLProof/Algorithms/ETCMeasurability.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/etc/index.html">3. Explore-Then-Commit</a></dd></div>
+    <div><dt>Declarations</dt><dd>19</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-core/index.html"><code>BanditRLProof.Core</code></a>, <a href="../banditrlproof-algorithms-etc/index.html"><code>BanditRLProof.Algorithms.ETC</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-etcargmaxoracle/index.html"><code>BanditRLProof.Algorithms.ETCArgmaxOracle</code></a>, <a href="../banditrlproof-algorithms-etcgeneratedhistorypolicy/index.html"><code>BanditRLProof.Algorithms.ETCGeneratedHistoryPolicy</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-57addc76fede">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurableSet_commitArm_ne_bestArm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">If the commit arm is measurable, then the event that it is not the selected
+best arm is measurable.
+
+This is the first wrong-commit event canary after the deterministic fixed-commit
+ETC layer.  It is intentionally only an event measurability fact.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_commitArm_ne_bestArm {Omega : Type u} {K : Nat} [MeasurableSpace Omega] [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)] (model : FiniteBanditModel K) (commitArm : Omega -&gt; Fin K) (hmeas_commit : Measurable commitArm) : MeasurableSet {omega : Omega | commitArm omega = model.bestArm -&gt; False}</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCMeasurability.lean.html#L31">Source line 31</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2070504e0652">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurable_empMeanVector_of_forall_measurable</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Coordinatewise empirical-mean measurability packages into measurability of the
+empirical-mean score vector.
+
+This is the `ETC-EMPMEAN-VECTOR-MEASURABILITY-BRIDGE` project-local leaf
+selected by the Extended Pro review after
+`ETC-COMMIT-ORACLE-CHOICE-MEASURABILITY-BRIDGE`. It is a direct producer for
+`measurable_commitOracle_choose_of_measurable_empMeanVector`; it does not
+construct an oracle, prove argmax correctness, add concentration, or introduce
+filtration.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_empMeanVector_of_forall_measurable {Omega : Type u} {K : Nat} [MeasurableSpace Omega] [MeasurableSpace Rat] (empMean : Omega -&gt; Fin K -&gt; Rat) (hmeas_coord : <span class="kw">forall</span> a : Fin K, Measurable (<span class="kw">fun</span> omega : Omega =&gt; empMean omega a)) : Measurable (<span class="kw">fun</span> omega : Omega =&gt; (empMean omega : Fin K -&gt; Rat))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCMeasurability.lean.html#L55">Source line 55</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-98c8a8cb05cd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurable_commitOracle_choose_of_measurable_empMeanVector</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">An abstract commit oracle has a measurable composed choice map whenever the
+empirical-mean score vector is measurable and the finite-score-vector domain is
+countable with measurable singletons.
+
+This is the compiled candidate identified by the
+`ETC-COMMIT-ORACLE-CHOICE-MEASURABILITY-ROUTE-CARD`. It discharges the direct
+`hmeas_choose` contract used by `measurableSet_commitOracle_ne_bestArm` for the
+current `Rat` score-vector surface. It does not construct a concrete argmax
+oracle, prove argmax correctness, introduce concentration, or use filtration.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_commitOracle_choose_of_measurable_empMeanVector {Omega : Type u} {K : Nat} [MeasurableSpace Omega] [MeasurableSpace (Fin K)] [MeasurableSpace (Fin K -&gt; Rat)] [MeasurableSingletonClass (Fin K -&gt; Rat)] [Countable (Fin K -&gt; Rat)] (oracle : ETC.CommitOracle K) (empMean : Omega -&gt; Fin K -&gt; Rat) (hmeas_emp : Measurable (<span class="kw">fun</span> omega : Omega =&gt; (empMean omega : Fin K -&gt; Rat))) : Measurable (<span class="kw">fun</span> omega : Omega =&gt; oracle.choose (empMean omega))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCMeasurability.lean.html#L76">Source line 76</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4bbd51b6053f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurable_commitOracle_choose_of_forall_measurable_empMean</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Coordinatewise empirical-mean measurability is enough to make an abstract
+commit oracle&#x27;s composed choice map measurable.
+
+This is the `ETC-COMMIT-ORACLE-CHOICE-MEASURABILITY-OF-COORDINATES`
+project-local leaf selected after
+`ETC-EMPMEAN-VECTOR-MEASURABILITY-BRIDGE`. It composes the Mathlib Pi-space
+empirical-mean vector bridge with the countable score-vector oracle-choice
+bridge. It does not construct a concrete oracle, prove argmax correctness,
+introduce probability, or use concentration/filtration facts.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_commitOracle_choose_of_forall_measurable_empMean {Omega : Type u} {K : Nat} [MeasurableSpace Omega] [MeasurableSpace Rat] [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K -&gt; Rat)] [Countable (Fin K -&gt; Rat)] (oracle : ETC.CommitOracle K) (empMean : Omega -&gt; Fin K -&gt; Rat) (hmeas_coord : <span class="kw">forall</span> a : Fin K, Measurable (<span class="kw">fun</span> omega : Omega =&gt; empMean omega a)) : Measurable (<span class="kw">fun</span> omega : Omega =&gt; oracle.choose (empMean omega))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCMeasurability.lean.html#L104">Source line 104</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-32182a044742">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurableSet_commitOracle_ne_bestArm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">If an abstract commit oracle&#x27;s composed choice map is measurable, then the
+event that the oracle-selected arm is not the selected best arm is measurable.
+
+This is the `ETC-COMMIT-ORACLE-WRONG-EVENT-MEASURABILITY` project-local leaf.
+It deliberately assumes measurability of the composed oracle choice directly,
+so it does not construct a concrete argmax oracle, prove oracle measurability
+from empirical means, add probability assumptions, or introduce concentration
+and filtration obligations.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_commitOracle_ne_bestArm {Omega : Type u} {K : Nat} [MeasurableSpace Omega] [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)] (model : FiniteBanditModel K) (oracle : ETC.CommitOracle K) (empMean : Omega -&gt; Fin K -&gt; Rat) (hmeas_choose : Measurable (<span class="kw">fun</span> omega : Omega =&gt; oracle.choose (empMean omega))) : MeasurableSet {omega : Omega | oracle.choose (empMean omega) = model.bestArm -&gt; False}</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCMeasurability.lean.html#L136">Source line 136</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4780de10be9c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurableSet_commitOracle_ne_bestArm_of_forall_measurable_empMean</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Coordinatewise empirical-mean measurability is enough to make the
+oracle-selected wrong-commit event measurable.
+
+This is the
+`ETC-COMMIT-ORACLE-WRONG-EVENT-MEASURABILITY-OF-COORDINATES`
+project-local leaf. It composes the coordinatewise oracle-choice measurability
+wrapper with the oracle-selected wrong-event measurability wrapper. It does
+not construct a concrete oracle, prove argmax correctness, introduce a
+probability measure, or use concentration/filtration facts.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_commitOracle_ne_bestArm_of_forall_measurable_empMean {Omega : Type u} {K : Nat} [MeasurableSpace Omega] [MeasurableSpace Rat] [MeasurableSpace (Fin K)] [MeasurableSingletonClass (Fin K)] [MeasurableSingletonClass (Fin K -&gt; Rat)] [Countable (Fin K -&gt; Rat)] (model : FiniteBanditModel K) (oracle : ETC.CommitOracle K) (empMean : Omega -&gt; Fin K -&gt; Rat) (hmeas_coord : <span class="kw">forall</span> a : Fin K, Measurable (<span class="kw">fun</span> omega : Omega =&gt; empMean omega a)) : MeasurableSet {omega : Omega | oracle.choose (empMean omega) = model.bestArm -&gt; False}</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCMeasurability.lean.html#L165">Source line 165</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f7503d04a706">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurableSet_empMean_ge_empMean</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pairwise empirical-mean comparison events are measurable when each empirical
+mean coordinate is measurable.
+
+This is an ordered-event regularity canary for the wrong-mean event.  It does
+not use measures, probability, commit-arm argmax, finite unions, concentration,
+or filtration assumptions.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_empMean_ge_empMean {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (empMean : Omega -&gt; Fin K -&gt; Rat) (hmeas_empMean : <span class="kw">forall</span> a : Fin K, Measurable (<span class="kw">fun</span> omega : Omega =&gt; empMean omega a)) (a b : Fin K) : MeasurableSet {omega : Omega | empMean omega a &gt;= empMean omega b}</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCMeasurability.lean.html#L202">Source line 202</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fedda5f3a6ee">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurableSet_exists_ne_bestArm_empMean_ge_bestArm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite existential wrong-mean event is measurable when each empirical mean
+coordinate is measurable.
+
+This packages the pairwise empirical-mean comparison canary into the exact
+finite event shape used by the wrong-commit probability bridge.  It does not
+use measures, probability, commit-arm argmax, concentration, filtration, or an
+empirical-mean construction.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurableSet_exists_ne_bestArm_empMean_ge_bestArm {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (model : FiniteBanditModel K) (empMean : Omega -&gt; Fin K -&gt; Rat) (hmeas_empMean : <span class="kw">forall</span> a : Fin K, Measurable (<span class="kw">fun</span> omega : Omega =&gt; empMean omega a)) : MeasurableSet {omega : Omega | <span class="kw">exists</span> a : Fin K, (a = model.bestArm -&gt; False) /\ empMean omega a &gt;= empMean omega model.bestArm}</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCMeasurability.lean.html#L222">Source line 222</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9f3adc20cdb1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.wrong_commit_subset_exists_empMean_ge_bestArm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The wrong-commit event is contained in the event that some non-best arm&#x27;s
+empirical mean beats or ties the selected best arm&#x27;s empirical mean, assuming
+the commit arm is an empirical-mean argmax.
+
+This is a pure event-reduction leaf: no measurability, measure, probability, or
+concentration assumptions are used.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> wrong_commit_subset_exists_empMean_ge_bestArm {Omega : Type u} {K : Nat} (model : FiniteBanditModel K) (commitArm : Omega -&gt; Fin K) (empMean : Omega -&gt; Fin K -&gt; Rat) (hcommit_argmax : <span class="kw">forall</span> omega : Omega, <span class="kw">forall</span> a : Fin K, empMean omega a &lt;= empMean omega (commitArm omega)) : Set.Subset {omega : Omega | commitArm omega = model.bestArm -&gt; False} {omega : Omega | <span class="kw">exists</span> a : Fin K, (a = model.bestArm -&gt; False) /\ empMean omega a &gt;= empMean omega model.bestArm}</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCMeasurability.lean.html#L270">Source line 270</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6828cafe5bd5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.wrong_commit_subset_exists_empMean_ge_bestArm_of_commitOracle</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A commit oracle with an explicit argmax certificate satisfies the deterministic
+wrong-commit event reduction when used as the commit-arm selector.
+
+This is the `ETC-COMMIT-ORACLE-ARGMAX-CONSUMER` project-local leaf. It consumes
+only the oracle&#x27;s abstract argmax contract and the compiled set-inclusion
+event reduction; it does not prove oracle optimality, oracle measurability,
+concentration, filtration, or final ETC regret.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> wrong_commit_subset_exists_empMean_ge_bestArm_of_commitOracle {Omega : Type u} {K : Nat} (model : FiniteBanditModel K) (oracle : ETC.CommitOracle K) (empMean : Omega -&gt; Fin K -&gt; Rat) (hchoose_argmax : <span class="kw">forall</span> scores : Fin K -&gt; Rat, <span class="kw">forall</span> a : Fin K, scores a &lt;= scores (oracle.choose scores)) : Set.Subset {omega : Omega | oracle.choose (empMean omega) = model.bestArm -&gt; False} {omega : Omega | <span class="kw">exists</span> a : Fin K, (a = model.bestArm -&gt; False) /\ empMean omega a &gt;= empMean omega model.bestArm}</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCMeasurability.lean.html#L298">Source line 298</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8bce62abbcee">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.prob_commitArm_ne_bestArm_le_wrong_mean_events_of_subset</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The measure of the wrong-commit event is bounded by the measure of the
+empirical wrong-mean event, using only the compiled set inclusion and measure
+monotonicity.
+
+This is a probability-facing wrapper leaf, but it does not require a probability
+measure, event measurability, empirical-mean measurability, concentration, or
+filtration assumptions.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> prob_commitArm_ne_bestArm_le_wrong_mean_events_of_subset {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) (model : FiniteBanditModel K) (commitArm : Omega -&gt; Fin K) (empMean : Omega -&gt; Fin K -&gt; Rat) (hcommit_argmax : <span class="kw">forall</span> omega : Omega, <span class="kw">forall</span> a : Fin K, empMean omega a &lt;= empMean omega (commitArm omega)) : mu {omega : Omega | commitArm omega = model.bestArm -&gt; False} &lt;= mu {omega : Omega | <span class="kw">exists</span> a : Fin K, (a = model.bestArm -&gt; False) /\ empMean omega a &gt;= empMean omega model.bestArm}</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCMeasurability.lean.html#L330">Source line 330</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d28c82ad1ee5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.prob_exists_ne_bestArm_empMean_ge_bestArm_le_sum</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite existential wrong-mean event is bounded by the finite sum of its
+guarded pairwise arm events.
+
+This is an outer-measure finite-union wrapper.  It intentionally does not
+require event measurability, a probability measure, empirical-mean
+measurability, commit-arm argmax, concentration, filtration, or an
+empirical-mean construction.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> prob_exists_ne_bestArm_empMean_ge_bestArm_le_sum {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) (model : FiniteBanditModel K) (empMean : Omega -&gt; Fin K -&gt; Rat) : mu {omega : Omega | <span class="kw">exists</span> a : Fin K, (a = model.bestArm -&gt; False) /\ empMean omega a &gt;= empMean omega model.bestArm} &lt;= (Finset.univ : Finset (Fin K)).sum (<span class="kw">fun</span> a : Fin K =&gt; mu {omega : Omega | (a = model.bestArm -&gt; False) /\ empMean omega a &gt;= empMean omega model.bestArm})</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCMeasurability.lean.html#L357">Source line 357</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c0d520e026a6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.prob_commitArm_ne_bestArm_le_sum_wrong_mean_events</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The wrong-commit event is bounded by the finite sum of guarded pairwise
+wrong-mean event measures.
+
+This is the terminal elementary probability assembly for the wrong-commit
+event reduction.  It composes the compiled set-inclusion measure wrapper with
+the compiled finite-union probability wrapper, without adding empirical-mean
+construction, concentration, filtration, or final regret assumptions.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> prob_commitArm_ne_bestArm_le_sum_wrong_mean_events {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) (model : FiniteBanditModel K) (commitArm : Omega -&gt; Fin K) (empMean : Omega -&gt; Fin K -&gt; Rat) (hcommit_argmax : <span class="kw">forall</span> omega : Omega, <span class="kw">forall</span> a : Fin K, empMean omega a &lt;= empMean omega (commitArm omega)) : mu {omega : Omega | commitArm omega = model.bestArm -&gt; False} &lt;= (Finset.univ : Finset (Fin K)).sum (<span class="kw">fun</span> a : Fin K =&gt; mu {omega : Omega | (a = model.bestArm -&gt; False) /\ empMean omega a &gt;= empMean omega model.bestArm})</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCMeasurability.lean.html#L398">Source line 398</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2ce5f6f6db61">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.prob_commitArm_ne_bestArm_le_sum_pairwise_tail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The wrong-commit event is bounded by a finite sum of abstract pairwise tail
+bounds.
+
+This keeps the current ETC probability layer free of concentration,
+filtration, independence, and empirical-mean construction assumptions while
+exposing the interface that future Hoeffding-style leaves can discharge.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> prob_commitArm_ne_bestArm_le_sum_pairwise_tail {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) (model : FiniteBanditModel K) (commitArm : Omega -&gt; Fin K) (empMean : Omega -&gt; Fin K -&gt; Rat) (tail : Fin K -&gt; ENNReal) (hcommit_argmax : <span class="kw">forall</span> omega : Omega, <span class="kw">forall</span> a : Fin K, empMean omega a &lt;= empMean omega (commitArm omega)) (hpair_tail : <span class="kw">forall</span> a : Fin K, (a = model.bestArm -&gt; False) -&gt; mu {omega : Omega | empMean omega a &gt;= empMean omega model.bestArm} &lt;= tail a) : mu {omega : Omega | commitArm omega = model.bestArm -&gt; False} &lt;= (Finset.univ : Finset (Fin K)).sum tail</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCMeasurability.lean.html#L427">Source line 427</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ead22e13c601">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.prob_commitOracle_ne_bestArm_le_sum_pairwise_tail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The oracle-selected wrong-commit event is bounded by a finite sum of abstract
+pairwise tail bounds.
+
+This is the `ETC-COMMIT-ORACLE-PROB-WRAPPER` project-local leaf. It
+specializes the arbitrary-commit-arm pairwise-tail consumer to
+`oracle.choose (empMean omega)` and derives the needed commit-arm argmax
+contract from the abstract oracle certificate. It does not prove oracle
+measurability, construct a concrete argmax oracle, prove concentration, add
+filtration, or instantiate final ETC regret.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> prob_commitOracle_ne_bestArm_le_sum_pairwise_tail {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) (model : FiniteBanditModel K) (oracle : ETC.CommitOracle K) (empMean : Omega -&gt; Fin K -&gt; Rat) (tail : Fin K -&gt; ENNReal) (hchoose_argmax : <span class="kw">forall</span> scores : Fin K -&gt; Rat, <span class="kw">forall</span> a : Fin K, scores a &lt;= scores (oracle.choose scores)) (hpair_tail : <span class="kw">forall</span> a : Fin K, (a = model.bestArm -&gt; False) -&gt; mu {omega : Omega | empMean omega a &gt;= empMean omega model.bestArm} &lt;= tail a) : mu {omega : Omega | oracle.choose (empMean omega) = model.bestArm -&gt; False} &lt;= (Finset.univ : Finset (Fin K)).sum tail</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCMeasurability.lean.html#L487">Source line 487</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f3ff3b489128">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.prob_commitArm_ne_bestArm_le_sum_nonbest_pairwise_tail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The wrong-commit event is bounded by a finite sum of abstract pairwise tail
+bounds with the selected best-arm summand forced to zero.
+
+This is a sharper tail-consumer wrapper than
+`prob_commitArm_ne_bestArm_le_sum_pairwise_tail`; it still avoids filtered-sum
+normalization, empirical-mean construction, and concentration assumptions.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> prob_commitArm_ne_bestArm_le_sum_nonbest_pairwise_tail {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) (model : FiniteBanditModel K) (commitArm : Omega -&gt; Fin K) (empMean : Omega -&gt; Fin K -&gt; Rat) (tail : Fin K -&gt; ENNReal) (hcommit_argmax : <span class="kw">forall</span> omega : Omega, <span class="kw">forall</span> a : Fin K, empMean omega a &lt;= empMean omega (commitArm omega)) (hpair_tail : <span class="kw">forall</span> a : Fin K, (a = model.bestArm -&gt; False) -&gt; mu {omega : Omega | empMean omega a &gt;= empMean omega model.bestArm} &lt;= tail a) : mu {omega : Omega | commitArm omega = model.bestArm -&gt; False} &lt;= (Finset.univ : Finset (Fin K)).sum (<span class="kw">fun</span> a : Fin K =&gt; <span class="kw">if</span> a = model.bestArm <span class="kw">then</span> <span class="num">0</span> <span class="kw">else</span> tail a)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCMeasurability.lean.html#L525">Source line 525</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e9198a1f8838">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.prob_commitArm_ne_bestArm_le_filtered_sum_pairwise_tail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The wrong-commit event is bounded by the filtered finite sum of abstract
+non-best pairwise tail bounds.
+
+This is a presentation-normalization wrapper around
+`prob_commitArm_ne_bestArm_le_sum_nonbest_pairwise_tail`: it replaces the
+if-zeroed `Finset.univ` sum by an explicit filtered sum over non-best arms.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> prob_commitArm_ne_bestArm_le_filtered_sum_pairwise_tail {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) (model : FiniteBanditModel K) (commitArm : Omega -&gt; Fin K) (empMean : Omega -&gt; Fin K -&gt; Rat) (tail : Fin K -&gt; ENNReal) (hcommit_argmax : <span class="kw">forall</span> omega : Omega, <span class="kw">forall</span> a : Fin K, empMean omega a &lt;= empMean omega (commitArm omega)) (hpair_tail : <span class="kw">forall</span> a : Fin K, (a = model.bestArm -&gt; False) -&gt; mu {omega : Omega | empMean omega a &gt;= empMean omega model.bestArm} &lt;= tail a) : mu {omega : Omega | commitArm omega = model.bestArm -&gt; False} &lt;= ((Finset.univ : Finset (Fin K)).filter (<span class="kw">fun</span> a : Fin K =&gt; a = model.bestArm -&gt; False)).sum tail</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCMeasurability.lean.html#L589">Source line 589</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a85976c6c12b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.prob_commitOracle_ne_bestArm_le_filtered_sum_pairwise_tail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The oracle-selected wrong-commit event is bounded by the filtered finite sum
+of abstract non-best pairwise tail bounds.
+
+This is the `ETC-COMMIT-ORACLE-FILTERED-SUM-PAIRWISE-TAIL` project-local leaf.
+It specializes the arbitrary-commit-arm filtered probability consumer to
+`oracle.choose (empMean omega)` and derives the needed commit-arm argmax
+contract from the abstract oracle certificate. It does not add oracle
+measurability, a concrete argmax oracle, concentration, filtration, or final
+ETC regret.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> prob_commitOracle_ne_bestArm_le_filtered_sum_pairwise_tail {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) (model : FiniteBanditModel K) (oracle : ETC.CommitOracle K) (empMean : Omega -&gt; Fin K -&gt; Rat) (tail : Fin K -&gt; ENNReal) (hchoose_argmax : <span class="kw">forall</span> scores : Fin K -&gt; Rat, <span class="kw">forall</span> a : Fin K, scores a &lt;= scores (oracle.choose scores)) (hpair_tail : <span class="kw">forall</span> a : Fin K, (a = model.bestArm -&gt; False) -&gt; mu {omega : Omega | empMean omega a &gt;= empMean omega model.bestArm} &lt;= tail a) : mu {omega : Omega | oracle.choose (empMean omega) = model.bestArm -&gt; False} &lt;= ((Finset.univ : Finset (Fin K)).filter (<span class="kw">fun</span> a : Fin K =&gt; a = model.bestArm -&gt; False)).sum tail</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCMeasurability.lean.html#L639">Source line 639</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f2c7819c4242">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.prob_commitOracle_ne_bestArm_le_sum_nonbest_pairwise_tail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The oracle-selected wrong-commit event is bounded by the if-zeroed finite sum
+of abstract non-best pairwise tail bounds.
+
+This is the `ETC-COMMIT-ORACLE-NONBEST-PAIRWISE-TAIL` project-local leaf. It
+specializes the arbitrary-commit-arm if-zeroed probability consumer to
+`oracle.choose (empMean omega)` and derives the needed commit-arm argmax
+contract from the abstract oracle certificate. It does not add oracle
+measurability, a concrete argmax oracle, concentration, filtration, or final
+ETC regret.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> prob_commitOracle_ne_bestArm_le_sum_nonbest_pairwise_tail {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) (model : FiniteBanditModel K) (oracle : ETC.CommitOracle K) (empMean : Omega -&gt; Fin K -&gt; Rat) (tail : Fin K -&gt; ENNReal) (hchoose_argmax : <span class="kw">forall</span> scores : Fin K -&gt; Rat, <span class="kw">forall</span> a : Fin K, scores a &lt;= scores (oracle.choose scores)) (hpair_tail : <span class="kw">forall</span> a : Fin K, (a = model.bestArm -&gt; False) -&gt; mu {omega : Omega | empMean omega a &gt;= empMean omega model.bestArm} &lt;= tail a) : mu {omega : Omega | oracle.choose (empMean omega) = model.bestArm -&gt; False} &lt;= (Finset.univ : Finset (Fin K)).sum (<span class="kw">fun</span> a : Fin K =&gt; <span class="kw">if</span> a = model.bestArm <span class="kw">then</span> <span class="num">0</span> <span class="kw">else</span> tail a)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCMeasurability.lean.html#L681">Source line 681</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

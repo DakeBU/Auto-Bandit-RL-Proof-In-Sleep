@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Exp3PredictableMoments · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Exp3PredictableMoments · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Exp3PredictableMoments · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · EXP3</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Exp3Predictable<wbr>Moments</h1>
+  <p class="lede">This file transports the fixed-environment canonical trajectory law through an environment prior. The resulting global joint law retains the latent environment in the conditioning history, which is the law surface needed to identify predictable feedback coordinates and their roundwise moments.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html"><code>BanditRLProof/Exp3PredictableMoments.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/exp3/index.html">7. EXP3 and adversarial concentration</a></dd></div>
+    <div><dt>Declarations</dt><dd>33</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-exp3predictableadversary/index.html"><code>BanditRLProof.Exp3PredictableAdversary</code></a>, <a href="../banditrlproof-expectationbochnersums/index.html"><code>BanditRLProof.ExpectationBochnerSums</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-stochasticgradientbandittrajectoryaudit/index.html"><code>BanditRLProof.Algorithms.StochasticGradientBanditTrajectoryAudit</code></a>, <a href="../banditrlproof-exp3sampledhedge/index.html"><code>BanditRLProof.Exp3SampledHedge</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-572ee45a8f9d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.trajectoryMixture_map_environment_history_output_eq_compProd</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Mixing fixed-environment trajectory laws preserves a history-dependent output
+kernel when the conditioning variable retains the environment coordinate.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> trajectoryMixture_map_environment_history_output_eq_compProd {Env : Type u} {Omega : Type v} {History : Type w} {Output : Type x} [MeasurableSpace Env] [MeasurableSpace Omega] [MeasurableSpace History] [MeasurableSpace Output] (prior : Measure Env) [IsFiniteMeasure prior] (trajectory : Kernel Env Omega) [IsMarkovKernel trajectory] (history : Omega -&gt; History) (hhistory : Measurable history) (output : Omega -&gt; Output) (houtput : Measurable output) (outputKernel : Kernel (Env × History) Output) [IsMarkovKernel outputKernel] (hlaw : <span class="kw">forall</span> env, (trajectory env).map (<span class="kw">fun</span> omega =&gt; (history omega, output omega)) = (trajectory env).map history ⊗ₘ outputKernel.comap (<span class="kw">fun</span> h =&gt; (env, h)) (measurable_const.prodMk measurable_id)) : (prior ⊗ₘ trajectory).map (<span class="kw">fun</span> sample : Env × Omega =&gt; ((sample.<span class="num">1</span>, history sample.<span class="num">2</span>), output sample.<span class="num">2</span>)) = (prior ⊗ₘ trajectory).map (<span class="kw">fun</span> sample : Env × Omega =&gt; (sample.<span class="num">1</span>, history sample.<span class="num">2</span>)) ⊗ₘ outputKernel</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L24">Source line 24</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a1954361fb83">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.canonicalMeasurableEnvironmentTrajectoryMeasure_map_environment_prefix_next_eq_compProd</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The canonical measurable trajectory, mixed over an environment prior, has the
+joint law obtained by adjoining one global measurable history-step kernel to
+the retained environment/prefix history.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> canonicalMeasurableEnvironmentTrajectoryMeasure_map_environment_prefix_next_eq_compProd {Env : Type u} {Action : Type v} {Reward : Type w} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action] [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward] (prior : Measure Env) [IsFiniteMeasure prior] (algorithm : Thompson.HistoryAlgorithm Action Reward) (environment : Thompson.MeasurableHistoryEnvironment Env Action Reward) (n : Nat) : (prior ⊗ₘ Thompson.canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment).map (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Reward) =&gt; ((sample.<span class="num">1</span>, Preorder.frestrictLe n sample.<span class="num">2</span>), sample.<span class="num">2</span> (n + <span class="num">1</span>))) = (prior ⊗ₘ Thompson.canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment).map (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Reward) =&gt; (sample.<span class="num">1</span>, Preorder.frestrictLe n sample.<span class="num">2</span>)) ⊗ₘ Thompson.measurableEnvironmentHistoryStepKernel algorithm environment n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L150">Source line 150</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-224cd32b4976">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.canonicalMeasurableEnvironmentTrajectoryMeasure_condDistrib_nextPair_given_environment_prefix</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Conditional on the latent environment and the preceding finite pair history,
+the next canonical trajectory pair follows the global measurable history-step
+kernel.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> canonicalMeasurableEnvironmentTrajectoryMeasure_condDistrib_nextPair_given_environment_prefix {Env : Type u} {Action : Type v} {Reward : Type w} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action] [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward] (prior : Measure Env) [IsFiniteMeasure prior] (algorithm : Thompson.HistoryAlgorithm Action Reward) (environment : Thompson.MeasurableHistoryEnvironment Env Action Reward) (n : Nat) : condDistrib (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Reward) =&gt; sample.<span class="num">2</span> (n + <span class="num">1</span>)) (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Reward) =&gt; (sample.<span class="num">1</span>, Preorder.frestrictLe n sample.<span class="num">2</span>)) (prior ⊗ₘ Thompson.canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment) =ᵐ[ (prior ⊗ₘ Thompson.canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment).map (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Reward) =&gt; (sample.<span class="num">1</span>, Preorder.frestrictLe n sample.<span class="num">2</span>))] Thompson.measurableEnvironmentHistoryStepKernel algorithm environment n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L190">Source line 190</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5ae91d71b1c9">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.sampledEnvironmentHistoryDistributionSource</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The sampled EXP3 distribution viewed on a retained environment/prefix history.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledEnvironmentHistoryDistributionSource {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_nonneg : <span class="num">0</span> &lt;= gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (n : Nat) : MeasurableFiniteActionDistribution arms (<span class="kw">fun</span> input : Env × History.FinitePairHistory Action Real n =&gt; sampledHistoryDistribution arms eta gamma n input.<span class="num">2</span>) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L223">Source line 223</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b26ae2c63639">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledPredictableSuccessorLossRegularity</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Predictable successor losses satisfy the regularity contract required by the
+EXP3 conditional first- and second-moment transport layer.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledPredictableSuccessorLossRegularity {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) (n : Nat) : BoundedMeasurableLossWithProbabilityFloor arms (<span class="kw">fun</span> input : Env × History.FinitePairHistory Action Real n =&gt; sampledHistoryDistribution arms eta gamma n input.<span class="num">2</span>) (<span class="kw">fun</span> input : Env × History.FinitePairHistory Action Real n =&gt; loss.successor n input.<span class="num">1</span> input.<span class="num">2</span>) (gamma / (arms.card : Real)) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L251">Source line 251</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9a948fe5f1bc">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.sampledInitialEnvironmentDistributionSource</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The time-zero sampled EXP3 distribution viewed as a constant kernel on environments.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledInitialEnvironmentDistributionSource {Env : Type u} {Action : Type v} [MeasurableSpace Env] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_nonneg : <span class="num">0</span> &lt;= gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) : MeasurableFiniteActionDistribution arms (<span class="kw">fun</span> _env : Env =&gt; initialExploredDistribution arms eta gamma) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L278">Source line 278</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-24333c616667">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledPredictableInitialLossRegularity</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Initial predictable losses satisfy the sampled EXP3 regularity contract.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledPredictableInitialLossRegularity {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) : BoundedMeasurableLossWithProbabilityFloor arms (<span class="kw">fun</span> _env : Env =&gt; initialExploredDistribution arms eta gamma) loss.initial (gamma / (arms.card : Real)) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L292">Source line 292</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-133460a1855b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.canonicalMeasurableEnvironmentTrajectoryMeasure_map_environment_eval_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Mixing the canonical trajectory through a prior preserves its global initial-pair law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> canonicalMeasurableEnvironmentTrajectoryMeasure_map_environment_eval_zero {Env : Type u} {Action : Type v} {Reward : Type w} [MeasurableSpace Env] [MeasurableSpace Action] [Nonempty Action] [MeasurableSpace Reward] [Nonempty Reward] (prior : Measure Env) [IsFiniteMeasure prior] (algorithm : Thompson.HistoryAlgorithm Action Reward) (environment : Thompson.MeasurableHistoryEnvironment Env Action Reward) : (prior ⊗ₘ Thompson.canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment).map (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Reward) =&gt; (sample.<span class="num">1</span>, sample.<span class="num">2</span> <span class="num">0</span>)) = prior ⊗ₘ Thompson.measurableEnvironmentInitialPairKernel algorithm environment</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L315">Source line 315</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-71354a44bab7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.canonicalMeasurableEnvironmentTrajectoryMeasure_map_environment_action_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The prior-mixed canonical trajectory retains the environment beside its initial action law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> canonicalMeasurableEnvironmentTrajectoryMeasure_map_environment_action_zero {Env : Type u} {Action : Type v} {Reward : Type w} [MeasurableSpace Env] [MeasurableSpace Action] [Nonempty Action] [MeasurableSpace Reward] [Nonempty Reward] (prior : Measure Env) [IsFiniteMeasure prior] (algorithm : Thompson.HistoryAlgorithm Action Reward) (environment : Thompson.MeasurableHistoryEnvironment Env Action Reward) : (prior ⊗ₘ Thompson.canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment).map (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Reward) =&gt; (sample.<span class="num">1</span>, (sample.<span class="num">2</span> <span class="num">0</span>).<span class="num">1</span>)) = prior ⊗ₘ Kernel.const Env algorithm.initialAction</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L347">Source line 347</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3d69c10570ce">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.canonicalMeasurableEnvironmentTrajectoryMeasure_condDistrib_action_zero_given_environment</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Conditional on the retained environment, the canonical initial action follows `initialAction`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> canonicalMeasurableEnvironmentTrajectoryMeasure_condDistrib_action_zero_given_environment {Env : Type u} {Action : Type v} {Reward : Type w} [MeasurableSpace Env] [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action] [MeasurableSpace Reward] [Nonempty Reward] (prior : Measure Env) [IsFiniteMeasure prior] (algorithm : Thompson.HistoryAlgorithm Action Reward) (environment : Thompson.MeasurableHistoryEnvironment Env Action Reward) : condDistrib (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Reward) =&gt; (sample.<span class="num">2</span> <span class="num">0</span>).<span class="num">1</span>) (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Reward) =&gt; sample.<span class="num">1</span>) (prior ⊗ₘ Thompson.canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment) =ᵐ[ (prior ⊗ₘ Thompson.canonicalMeasurableEnvironmentTrajectoryKernel algorithm environment).map (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Reward) =&gt; sample.<span class="num">1</span>)] Kernel.const Env algorithm.initialAction</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L389">Source line 389</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0e5092cf61ba">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.canonicalPredictableTrajectoryMeasure_reward_zero_eq_initialLoss_ae</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Under predictable deterministic feedback, the observed initial reward is the
+initial loss-vector coordinate selected by the initial action.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> canonicalPredictableTrajectoryMeasure_reward_zero_eq_initialLoss_ae {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [Nonempty Action] (prior : Measure Env) [IsFiniteMeasure prior] (algorithm : Thompson.HistoryAlgorithm Action Real) (loss : PredictableLossVector Env Action) : (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; (sample.<span class="num">2</span> <span class="num">0</span>).<span class="num">2</span>) =ᵐ[ prior ⊗ₘ Thompson.canonicalMeasurableEnvironmentTrajectoryKernel algorithm loss.environment] (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; loss.initial sample.<span class="num">1</span> (sample.<span class="num">2</span> <span class="num">0</span>).<span class="num">1</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L446">Source line 446</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-87ea522b6dfc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledPredictableObservedInitial_first_second_moment</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The time-zero sampled EXP3 estimator has the observed-scalar armwise first
+moment and exact probability-mixed estimator-square moment.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledPredictableObservedInitial_first_second_moment {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) (comparator : Action) (hcomparator : comparator ∈ arms) : <span class="kw">let</span> mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms eta gamma hgamma_pos.le hgamma_le_one loss.environment <span class="kw">let</span> prob := initialExploredDistribution arms eta gamma (integral mu (<span class="kw">fun</span> sample =&gt; importanceWeightedLoss prob (<span class="kw">fun</span> _ =&gt; (sample.<span class="num">2</span> <span class="num">0</span>).<span class="num">2</span>) (sample.<span class="num">2</span> <span class="num">0</span>).<span class="num">1</span> comparator) = integral prior (<span class="kw">fun</span> env =&gt; loss.initial env comparator)) ∧ (integral mu (<span class="kw">fun</span> sample =&gt; mixedSquaredImportanceWeightedLoss arms prob (<span class="kw">fun</span> _ =&gt; (sample.<span class="num">2</span> <span class="num">0</span>).<span class="num">2</span>) (sample.<span class="num">2</span> <span class="num">0</span>).<span class="num">1</span>) = integral prior (<span class="kw">fun</span> env =&gt; arms.sum (<span class="kw">fun</span> action =&gt; (loss.initial env action) ^ <span class="num">2</span>)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L513">Source line 513</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8a5776da9b75">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.canonicalPredictableTrajectoryMeasure_reward_eq_successorLoss_ae</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Under predictable deterministic feedback, the observed successor reward is the
+loss-vector coordinate selected by the action in the same successor pair.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> canonicalPredictableTrajectoryMeasure_reward_eq_successorLoss_ae {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action] (prior : Measure Env) [IsFiniteMeasure prior] (algorithm : Thompson.HistoryAlgorithm Action Real) (loss : PredictableLossVector Env Action) (n : Nat) : (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; (sample.<span class="num">2</span> (n + <span class="num">1</span>)).<span class="num">2</span>) =ᵐ[ prior ⊗ₘ Thompson.canonicalMeasurableEnvironmentTrajectoryKernel algorithm loss.environment] (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; loss.successor n sample.<span class="num">1</span> (Preorder.frestrictLe n sample.<span class="num">2</span>) (sample.<span class="num">2</span> (n + <span class="num">1</span>)).<span class="num">1</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L675">Source line 675</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-123b15de5709">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledPredictableTrajectoryMeasure_reward_eq_successorLoss_ae</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Concrete sampled-loss EXP3 observes exactly the selected predictable successor
+loss in every round, almost surely under the environment/trajectory mixture.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledPredictableTrajectoryMeasure_reward_eq_successorLoss_ae {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_nonneg : <span class="num">0</span> &lt;= gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) (n : Nat) : (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; (sample.<span class="num">2</span> (n + <span class="num">1</span>)).<span class="num">2</span>) =ᵐ[ prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms eta gamma hgamma_nonneg hgamma_le_one loss.environment] (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; loss.successor n sample.<span class="num">1</span> (Preorder.frestrictLe n sample.<span class="num">2</span>) (sample.<span class="num">2</span> (n + <span class="num">1</span>)).<span class="num">1</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L758">Source line 758</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3ff871358dc3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledPredictableSuccessorLoss_first_second_moment</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The concrete sampled EXP3 successor round has the armwise unbiased first moment
+and the exact probability-mixed estimator-square moment for every predictable
+loss vector with positive exploration.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledPredictableSuccessorLoss_first_second_moment {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) (n : Nat) (comparator : Action) (hcomparator : comparator ∈ arms) : <span class="kw">let</span> mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms eta gamma hgamma_pos.le hgamma_le_one loss.environment <span class="kw">let</span> history := <span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; (sample.<span class="num">1</span>, Preorder.frestrictLe n sample.<span class="num">2</span>) <span class="kw">let</span> prob := <span class="kw">fun</span> input : Env × History.FinitePairHistory Action Real n =&gt; sampledHistoryDistribution arms eta gamma n input.<span class="num">2</span> <span class="kw">let</span> roundLoss := <span class="kw">fun</span> input : Env × History.FinitePairHistory Action Real n =&gt; loss.successor n input.<span class="num">1</span> input.<span class="num">2</span> (integral mu (<span class="kw">fun</span> sample =&gt; importanceWeightedLoss (prob (history sample)) (roundLoss (history sample)) (sample.<span class="num">2</span> (n + <span class="num">1</span>)).<span class="num">1</span> comparator) = integral (mu.map history) (<span class="kw">fun</span> input =&gt; roundLoss input comparator)) ∧ (integral mu (<span class="kw">fun</span> sample =&gt; mixedSquaredImportanceWeightedLoss arms (prob (history sample)) (roundLoss (history sample)) (sample.<span class="num">2</span> (n + <span class="num">1</span>)).<span class="num">1</span>) = integral (mu.map history) (<span class="kw">fun</span> input =&gt; arms.sum (<span class="kw">fun</span> action =&gt; (roundLoss input action) ^ <span class="num">2</span>)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L787">Source line 787</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a7a60aa54938">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledPredictableObservedSuccessor_first_second_moment</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Observed-scalar form of the sampled EXP3 roundwise moment theorem.  The score
+uses only the reward coordinate stored in the generated trajectory; the right
+sides expose the full predictable loss vector required by regret analysis.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledPredictableObservedSuccessor_first_second_moment {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) (n : Nat) (comparator : Action) (hcomparator : comparator ∈ arms) : <span class="kw">let</span> mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms eta gamma hgamma_pos.le hgamma_le_one loss.environment <span class="kw">let</span> history := <span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; (sample.<span class="num">1</span>, Preorder.frestrictLe n sample.<span class="num">2</span>) <span class="kw">let</span> prob := <span class="kw">fun</span> input : Env × History.FinitePairHistory Action Real n =&gt; sampledHistoryDistribution arms eta gamma n input.<span class="num">2</span> <span class="kw">let</span> roundLoss := <span class="kw">fun</span> input : Env × History.FinitePairHistory Action Real n =&gt; loss.successor n input.<span class="num">1</span> input.<span class="num">2</span> (integral mu (<span class="kw">fun</span> sample =&gt; importanceWeightedLoss (prob (history sample)) (<span class="kw">fun</span> _ =&gt; (sample.<span class="num">2</span> (n + <span class="num">1</span>)).<span class="num">2</span>) (sample.<span class="num">2</span> (n + <span class="num">1</span>)).<span class="num">1</span> comparator) = integral (mu.map history) (<span class="kw">fun</span> input =&gt; roundLoss input comparator)) ∧ (integral mu (<span class="kw">fun</span> sample =&gt; mixedSquaredImportanceWeightedLoss arms (prob (history sample)) (<span class="kw">fun</span> _ =&gt; (sample.<span class="num">2</span> (n + <span class="num">1</span>)).<span class="num">2</span>) (sample.<span class="num">2</span> (n + <span class="num">1</span>)).<span class="num">1</span>) = integral (mu.map history) (<span class="kw">fun</span> input =&gt; arms.sum (<span class="kw">fun</span> action =&gt; (roundLoss input action) ^ <span class="num">2</span>)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L914">Source line 914</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4317ff7ffaa8">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.sampledTrajectoryProbabilityAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Sampling probabilities used by the concrete trajectory at every actual time index.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledTrajectoryProbabilityAt {Env : Type u} {Action : Type v} [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (t : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) : Action -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L1008">Source line 1008</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b328bb459b3a">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.predictableLossAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Predictable loss vector selected before the action at every actual time index.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> predictableLossAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] (loss : PredictableLossVector Env Action) (t : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) : Action -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L1018">Source line 1018</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-97f872266c7d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.observedImportanceWeightedLossAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The scalar-feedback importance-weighted coordinate used at an actual time.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> observedImportanceWeightedLossAt {Env : Type u} {Action : Type v} [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (t : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) (comparator : Action) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L1029">Source line 1029</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-35648c9e385d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.observedMixedSquaredImportanceWeightedLossAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The scalar-feedback probability-mixed estimator square used at an actual time.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> observedMixedSquaredImportanceWeightedLossAt {Env : Type u} {Action : Type v} [DecidableEq Action] (arms : Finset Action) (eta gamma : Real) (t : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L1038">Source line 1038</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-eec01506b696">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.sampledTrajectoryProbabilitySourceAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Measurable finite-action source for the sampled probability vector at any time.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> sampledTrajectoryProbabilitySourceAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_nonneg : <span class="num">0</span> &lt;= gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (t : Nat) : MeasurableFiniteActionDistribution arms (sampledTrajectoryProbabilityAt (Env := Env) arms eta gamma t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L1047">Source line 1047</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-be244618598d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledPredictableTrajectoryLossRegularityAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Predictable trajectory losses satisfy one uniform regularity interface at every time.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledPredictableTrajectoryLossRegularityAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) (t : Nat) : BoundedMeasurableLossWithProbabilityFloor arms (sampledTrajectoryProbabilityAt (Env := Env) arms eta gamma t) (predictableLossAt loss t) (gamma / (arms.card : Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L1078">Source line 1078</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0b420e6dabb6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.measurable_predictableLossAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_predictableLossAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] (loss : PredictableLossVector Env Action) (t : Nat) (action : Action) : Measurable (<span class="kw">fun</span> sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; predictableLossAt loss t sample action)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L1128">Source line 1128</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7fc5fc1eeef9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.measurable_observedImportanceWeightedLossAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_observedImportanceWeightedLossAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_nonneg : <span class="num">0</span> &lt;= gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (t : Nat) (comparator : Action) (hcomparator : comparator ∈ arms) : Measurable (observedImportanceWeightedLossAt (Env := Env) arms eta gamma t · comparator)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L1146">Source line 1146</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-acea796c77c4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.measurable_observedMixedSquaredImportanceWeightedLossAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_observedMixedSquaredImportanceWeightedLossAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_nonneg : <span class="num">0</span> &lt;= gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (t : Nat) : Measurable (observedMixedSquaredImportanceWeightedLossAt (Env := Env) arms eta gamma t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L1164">Source line 1164</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1d193fcc9708">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.integrable_predictableImportanceWeightedLossAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_predictableImportanceWeightedLossAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (mu : Measure (Env × ((k : Nat) → Action × Real))) [IsFiniteMeasure mu] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) (t : Nat) (comparator : Action) (hcomparator : comparator ∈ arms) : <span class="kw">let</span> prob := sampledTrajectoryProbabilityAt (Env := Env) arms eta gamma t <span class="kw">let</span> roundLoss := predictableLossAt loss t Integrable (<span class="kw">fun</span> sample =&gt; importanceWeightedLoss (prob sample) (roundLoss sample) (sample.<span class="num">2</span> t).<span class="num">1</span> comparator) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L1184">Source line 1184</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5d67abfe927e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.integrable_predictableMixedSquaredImportanceWeightedLossAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_predictableMixedSquaredImportanceWeightedLossAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [DecidableEq Action] (mu : Measure (Env × ((k : Nat) → Action × Real))) [IsFiniteMeasure mu] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) (t : Nat) : <span class="kw">let</span> prob := sampledTrajectoryProbabilityAt (Env := Env) arms eta gamma t <span class="kw">let</span> roundLoss := predictableLossAt loss t Integrable (<span class="kw">fun</span> sample =&gt; mixedSquaredImportanceWeightedLoss arms (prob sample) (roundLoss sample) (sample.<span class="num">2</span> t).<span class="num">1</span>) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L1217">Source line 1217</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4d71bf7770c1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.integrable_predictableLossAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_predictableLossAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] (mu : Measure (Env × ((k : Nat) → Action × Real))) [IsFiniteMeasure mu] (loss : PredictableLossVector Env Action) (t : Nat) (action : Action) : Integrable (<span class="kw">fun</span> sample =&gt; predictableLossAt loss t sample action) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L1249">Source line 1249</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ba9b55596b1d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.integrable_predictableLossSqSumAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_predictableLossSqSumAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [MeasurableSpace Action] (mu : Measure (Env × ((k : Nat) → Action × Real))) [IsFiniteMeasure mu] (arms : Finset Action) (loss : PredictableLossVector Env Action) (t : Nat) : Integrable (<span class="kw">fun</span> sample =&gt; arms.sum (<span class="kw">fun</span> action =&gt; (predictableLossAt loss t sample action) ^ <span class="num">2</span>)) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L1269">Source line 1269</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f82f04355d5a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.observedAt_eq_predictableAt_ae</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">On the generated predictable trajectory, observed scalar scores agree
+almost everywhere with their latent predictable-loss counterparts.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> observedAt_eq_predictableAt_ae {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_nonneg : <span class="num">0</span> &lt;= gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) (t : Nat) (comparator : Action) : <span class="kw">let</span> mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms eta gamma hgamma_nonneg hgamma_le_one loss.environment ((<span class="kw">fun</span> sample =&gt; observedImportanceWeightedLossAt arms eta gamma t sample comparator) =ᵐ[mu] (<span class="kw">fun</span> sample =&gt; importanceWeightedLoss (sampledTrajectoryProbabilityAt arms eta gamma t sample) (predictableLossAt loss t sample) (sample.<span class="num">2</span> t).<span class="num">1</span> comparator)) ∧ ((<span class="kw">fun</span> sample =&gt; observedMixedSquaredImportanceWeightedLossAt arms eta gamma t sample) =ᵐ[mu] (<span class="kw">fun</span> sample =&gt; mixedSquaredImportanceWeightedLoss arms (sampledTrajectoryProbabilityAt arms eta gamma t sample) (predictableLossAt loss t sample) (sample.<span class="num">2</span> t).<span class="num">1</span>))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L1297">Source line 1297</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cafdae7832d2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.integrable_observedAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The two observed score families are integrable under the generated
+predictable trajectory law at every actual time index.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrable_observedAt {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) (t : Nat) (comparator : Action) (hcomparator : comparator ∈ arms) : <span class="kw">let</span> mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms eta gamma hgamma_pos.le hgamma_le_one loss.environment Integrable (<span class="kw">fun</span> sample =&gt; observedImportanceWeightedLossAt arms eta gamma t sample comparator) mu ∧ Integrable (<span class="kw">fun</span> sample =&gt; observedMixedSquaredImportanceWeightedLossAt arms eta gamma t sample) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L1375">Source line 1375</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0ebdf8a94385">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledPredictableObservedAt_first_second_moment</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">At every actual time, including time zero, the observed armwise first
+moment and probability-mixed estimator-square moment equal the corresponding
+predictable loss-vector moments on the common full trajectory law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledPredictableObservedAt_first_second_moment {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) (t : Nat) (comparator : Action) (hcomparator : comparator ∈ arms) : <span class="kw">let</span> mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms eta gamma hgamma_pos.le hgamma_le_one loss.environment (integral mu (<span class="kw">fun</span> sample =&gt; observedImportanceWeightedLossAt arms eta gamma t sample comparator) = integral mu (<span class="kw">fun</span> sample =&gt; predictableLossAt loss t sample comparator)) ∧ (integral mu (<span class="kw">fun</span> sample =&gt; observedMixedSquaredImportanceWeightedLossAt arms eta gamma t sample) = integral mu (<span class="kw">fun</span> sample =&gt; arms.sum (<span class="kw">fun</span> action =&gt; (predictableLossAt loss t sample action) ^ <span class="num">2</span>)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L1408">Source line 1408</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6fab7b0624da">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sampledPredictableObserved_finiteHorizon_first_second_moment</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-horizon observed EXP3 first and mixed-second moments over
+`t &lt; horizon`; when the horizon is positive this range includes time zero.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sampledPredictableObserved_finiteHorizon_first_second_moment {Env : Type u} {Action : Type v} [MeasurableSpace Env] [StandardBorelSpace Env] [MeasurableSpace Action] [MeasurableSingletonClass Action] [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action] (prior : Measure Env) [IsFiniteMeasure prior] (arms : Finset Action) (harms : arms.Nonempty) (eta gamma : Real) (hgamma_pos : <span class="num">0</span> &lt; gamma) (hgamma_le_one : gamma &lt;= <span class="num">1</span>) (loss : PredictableLossVector Env Action) (horizon : Nat) (comparator : Action) (hcomparator : comparator ∈ arms) : <span class="kw">let</span> mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms eta gamma hgamma_pos.le hgamma_le_one loss.environment (integral mu (<span class="kw">fun</span> sample =&gt; (Finset.range horizon).sum (<span class="kw">fun</span> t =&gt; observedImportanceWeightedLossAt arms eta gamma t sample comparator)) = integral mu (<span class="kw">fun</span> sample =&gt; (Finset.range horizon).sum (<span class="kw">fun</span> t =&gt; predictableLossAt loss t sample comparator))) ∧ (integral mu (<span class="kw">fun</span> sample =&gt; (Finset.range horizon).sum (<span class="kw">fun</span> t =&gt; observedMixedSquaredImportanceWeightedLossAt arms eta gamma t sample)) = integral mu (<span class="kw">fun</span> sample =&gt; (Finset.range horizon).sum (<span class="kw">fun</span> t =&gt; arms.sum (<span class="kw">fun</span> action =&gt; (predictableLossAt loss t sample action) ^ <span class="num">2</span>))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3PredictableMoments.lean.html#L1553">Source line 1553</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

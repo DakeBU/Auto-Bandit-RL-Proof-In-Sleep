@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.LowerBounds.GaussianMillsRatio · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.LowerBounds.GaussianMillsRatio · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.LowerBounds.GaussianMillsRatio · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Foundations</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>Gaussian<wbr>Mills<wbr>Ratio</h1>
+  <p class="lede">Analytic comparison functions for Chapter 13 Eq. (13.4). Both exact improper-integral bounds compile. Probability rescaling is separate.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html"><code>BanditRLProof/LowerBounds/GaussianMillsRatio.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/foundations/index.html">1. Finite bandits, traces, and regret</a></dd></div>
+    <div><dt>Declarations</dt><dd>26</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><span class="empty">No project-local imports.</span></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-lowerbounds-gaussianhypothesistesting/index.html"><code>BanditRLProof.LowerBounds.GaussianHypothesisTesting</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-118e8b6ba707">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.gaussianMillsComparison</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> gaussianMillsComparison (c x : ℝ) : ℝ</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L14">Source line 14</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-01f9e53a2d82">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianMillsComparison_denominator_pos</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianMillsComparison_denominator_pos {c x : ℝ} (hc : <span class="num">0</span> &lt; c) : <span class="num">0</span> &lt; x + Real.sqrt (x ^ <span class="num">2</span> + c)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L17">Source line 17</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5d3b73b7af1f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.hasDerivAt_gaussianMillsComparison</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> hasDerivAt_gaussianMillsComparison {c x : ℝ} (hc : <span class="num">0</span> &lt; c) : HasDerivAt (gaussianMillsComparison c) (-gaussianMillsComparison c x * (<span class="num">2</span> * x + <span class="num">1</span> / Real.sqrt (x ^ <span class="num">2</span> + c))) x</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L24">Source line 24</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2429f8e43009">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianMillsComparison_lower_derivative_bound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianMillsComparison_lower_derivative_bound (x : ℝ) : gaussianMillsComparison <span class="num">2</span> x * (<span class="num">2</span> * x + <span class="num">1</span> / Real.sqrt (x ^ <span class="num">2</span> + <span class="num">2</span>)) ≤ Real.exp (-x ^ <span class="num">2</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L37">Source line 37</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-40b95070a0fc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianMillsComparison_pos</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianMillsComparison_pos {c : ℝ} (hc : <span class="num">0</span> &lt; c) (x : ℝ) : <span class="num">0</span> &lt; gaussianMillsComparison c x</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L59">Source line 59</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8b53f844e97d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.tendsto_gaussianMillsComparison</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> tendsto_gaussianMillsComparison {c : ℝ} (hc : <span class="num">0</span> &lt; c) : Tendsto (gaussianMillsComparison c) atTop (𝓝 <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L63">Source line 63</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e75b8b8803f2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianMills_lower_integral</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The exact lower half of Lattimore--Szepesvari Eq. (13.4).</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianMills_lower_integral {x : ℝ} (hx : <span class="num">0</span> ≤ x) : Real.exp (-x ^ <span class="num">2</span>) / (x + Real.sqrt (x ^ <span class="num">2</span> + <span class="num">2</span>)) ≤ ∫ t <span class="kw">in</span> Ioi x, Real.exp (-t ^ <span class="num">2</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L79">Source line 79</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bdd0650d0105">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianMills_sign_iff</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Algebraic sign test for the derivative of the upper comparison error.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianMills_sign_iff {c x : ℝ} (hc : <span class="num">1</span> &lt; c) (hx : <span class="num">0</span> ≤ x) : <span class="num">0</span> ≤ x ^ <span class="num">2</span> + c - <span class="num">1</span> - x * Real.sqrt (x ^ <span class="num">2</span> + c) ↔ x ^ <span class="num">2</span> * (<span class="num">2</span> - c) ≤ (c - <span class="num">1</span>) ^ <span class="num">2</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L107">Source line 107</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cbf9a71928a1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianMills_sign_threshold</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The sign changes at exactly one nonnegative threshold when `1&lt;c&lt;2`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianMills_sign_threshold {c x : ℝ} (hc : <span class="num">1</span> &lt; c) (hc2 : c &lt; <span class="num">2</span>) (hx : <span class="num">0</span> ≤ x) : <span class="num">0</span> ≤ x ^ <span class="num">2</span> + c - <span class="num">1</span> - x * Real.sqrt (x ^ <span class="num">2</span> + c) ↔ x ≤ (c - <span class="num">1</span>) / Real.sqrt (<span class="num">2</span> - c)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L126">Source line 126</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a5080a1b5e01">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.gaussianMillsErrorDerivative</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The derivative of comparison minus Gaussian tail has this explicit value.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> gaussianMillsErrorDerivative (c x : ℝ) : ℝ</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L144">Source line 144</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-553a22117a16">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianMillsErrorDerivative_factor</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianMillsErrorDerivative_factor {c x : ℝ} (hc : <span class="num">0</span> &lt; c) : gaussianMillsErrorDerivative c x = Real.exp (-x ^ <span class="num">2</span>) * (x ^ <span class="num">2</span> + c - <span class="num">1</span> - x * Real.sqrt (x ^ <span class="num">2</span> + c)) / ((x + Real.sqrt (x ^ <span class="num">2</span> + c)) * Real.sqrt (x ^ <span class="num">2</span> + c))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L148">Source line 148</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8fcbfe9f438c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianMillsErrorDerivative_nonneg_iff</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianMillsErrorDerivative_nonneg_iff {c x : ℝ} (hc : <span class="num">1</span> &lt; c) (hc2 : c &lt; <span class="num">2</span>) (hx : <span class="num">0</span> ≤ x) : <span class="num">0</span> ≤ gaussianMillsErrorDerivative c x ↔ x ≤ (c - <span class="num">1</span>) / Real.sqrt (<span class="num">2</span> - c)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L160">Source line 160</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3810a7c191b3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianMillsErrorDerivative_source_nonneg_iff</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Specialization to the exact upper-bound constant in source Eq. (13.4).</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianMillsErrorDerivative_source_nonneg_iff {x : ℝ} (hx : <span class="num">0</span> ≤ x) : <span class="num">0</span> ≤ gaussianMillsErrorDerivative (<span class="num">4</span> / Real.pi) x ↔ x ≤ (<span class="num">4</span> / Real.pi - <span class="num">1</span>) / Real.sqrt (<span class="num">2</span> - <span class="num">4</span> / Real.pi)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L174">Source line 174</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-58731d2aaf51">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.LowerBounds.gaussianMillsError</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Comparison error expressed using a finite-interval Gaussian integral.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> gaussianMillsError (c x : ℝ) : ℝ</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L184">Source line 184</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8f3dd0baaecd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.hasDerivAt_gaussianMillsError</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> hasDerivAt_gaussianMillsError {c x : ℝ} (hc : <span class="num">0</span> &lt; c) : HasDerivAt (gaussianMillsError c) (gaussianMillsErrorDerivative c x) x</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L188">Source line 188</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bf12b840b85b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianMillsError_source_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianMillsError_source_zero : gaussianMillsError (<span class="num">4</span> / Real.pi) <span class="num">0</span> = <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L198">Source line 198</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ba11a1ef9c8c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.tendsto_gaussianMillsError</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> tendsto_gaussianMillsError {c : ℝ} (hc : <span class="num">0</span> &lt; c) : Tendsto (gaussianMillsError c) atTop (𝓝 <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L205">Source line 205</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3b3de4f947f5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianMillsError_source_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianMillsError_source_nonneg {x : ℝ} (hx : <span class="num">0</span> ≤ x) : <span class="num">0</span> ≤ gaussianMillsError (<span class="num">4</span> / Real.pi) x</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L216">Source line 216</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-44d32ea82578">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussian_integral_split</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussian_integral_split (x : ℝ) : (∫ t <span class="kw">in</span> (<span class="num">0</span> : ℝ)..x, Real.exp (-t ^ <span class="num">2</span>)) + (∫ t <span class="kw">in</span> Ioi x, Real.exp (-t ^ <span class="num">2</span>)) = Real.sqrt Real.pi / <span class="num">2</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L253">Source line 253</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4ad0cb9da188">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianMills_upper_integral</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The exact upper half of Lattimore--Szepesvari Eq. (13.4).</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianMills_upper_integral {x : ℝ} (hx : <span class="num">0</span> ≤ x) : (∫ t <span class="kw">in</span> Ioi x, Real.exp (-t ^ <span class="num">2</span>)) ≤ Real.exp (-x ^ <span class="num">2</span>) / (x + Real.sqrt (x ^ <span class="num">2</span> + <span class="num">4</span> / Real.pi))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L276">Source line 276</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3c64ecf6f9cf">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianReal_zero_tail_integral</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact density-integral representation for a centered Gaussian tail.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianReal_zero_tail_integral (v : ℝ≥<span class="num">0</span>) (hv : <span class="num">0</span> &lt; v) (a : ℝ) : (gaussianReal <span class="num">0</span> v).real (Ici a) = (Real.sqrt (<span class="num">2</span> * Real.pi * (v : ℝ)))⁻¹ * ∫ t <span class="kw">in</span> Ioi a, Real.exp (-t ^ <span class="num">2</span> / (<span class="num">2</span> * (v : ℝ)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L288">Source line 288</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9f1e017f2992">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianReal_half_tail_integral</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The variance-one-half normal law is exactly the normalized source integral.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianReal_half_tail_integral (a : ℝ) : (gaussianReal <span class="num">0</span> (<span class="num">1</span> / <span class="num">2</span> : ℝ≥<span class="num">0</span>)).real (Ici a) = (∫ t <span class="kw">in</span> Ioi a, Real.exp (-t ^ <span class="num">2</span>)) / Real.sqrt Real.pi</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L299">Source line 299</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-927bdc7f4f02">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianReal_half_mills_bounds</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Both exact Mills bounds for the normalized variance-one-half Gaussian.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianReal_half_mills_bounds {a : ℝ} (ha : <span class="num">0</span> ≤ a) : Real.exp (-a ^ <span class="num">2</span>) / (a + Real.sqrt (a ^ <span class="num">2</span> + <span class="num">2</span>)) / Real.sqrt Real.pi ≤ (gaussianReal <span class="num">0</span> (<span class="num">1</span> / <span class="num">2</span> : ℝ≥<span class="num">0</span>)).real (Ici a) ∧ (gaussianReal <span class="num">0</span> (<span class="num">1</span> / <span class="num">2</span> : ℝ≥<span class="num">0</span>)).real (Ici a) ≤ Real.exp (-a ^ <span class="num">2</span>) / (a + Real.sqrt (a ^ <span class="num">2</span> + <span class="num">4</span> / Real.pi)) / Real.sqrt Real.pi</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L307">Source line 307</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-88ef0efaadab">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianReal_zero_standardized_tail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianReal_zero_standardized_tail (v : ℝ≥<span class="num">0</span>) (hv : <span class="num">0</span> &lt; v) (a : ℝ) : (gaussianReal <span class="num">0</span> v).real (Ici a) = (∫ t <span class="kw">in</span> Ioi (a / Real.sqrt (<span class="num">2</span> * (v : ℝ))), Real.exp (-t ^ <span class="num">2</span>)) / Real.sqrt Real.pi</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L316">Source line 316</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0bf738440e23">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianReal_zero_mills_bounds</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact standardized Mills bounds for every positive Gaussian variance.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianReal_zero_mills_bounds (v : ℝ≥<span class="num">0</span>) (hv : <span class="num">0</span> &lt; v) (a : ℝ) (ha : <span class="num">0</span> ≤ a) : <span class="kw">let</span> z := a / Real.sqrt (<span class="num">2</span> * (v : ℝ)) Real.exp (-z ^ <span class="num">2</span>) / (z + Real.sqrt (z ^ <span class="num">2</span> + <span class="num">2</span>)) / Real.sqrt Real.pi ≤ (gaussianReal <span class="num">0</span> v).real (Ici a) ∧ (gaussianReal <span class="num">0</span> v).real (Ici a) ≤ Real.exp (-z ^ <span class="num">2</span>) / (z + Real.sqrt (z ^ <span class="num">2</span> + <span class="num">4</span> / Real.pi)) / Real.sqrt Real.pi</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L342">Source line 342</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ba29faf54646">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.LowerBounds.gaussianMills_expression_rescale</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Rescale a Mills expression to the square-root denominators in Eq. (13.1).</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> gaussianMills_expression_rescale {z c q : ℝ} (hz : <span class="num">0</span> ≤ z) (hc : <span class="num">0</span> &lt; c) (hq : q = <span class="num">8</span> * z ^ <span class="num">2</span>) : Real.exp (-z ^ <span class="num">2</span>) / (z + Real.sqrt (z ^ <span class="num">2</span> + c)) / Real.sqrt Real.pi = Real.sqrt (<span class="num">8</span> / Real.pi) * Real.exp (-q / <span class="num">8</span>) / (Real.sqrt q + Real.sqrt (q + <span class="num">8</span> * c))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/LowerBounds/GaussianMillsRatio.lean.html#L356">Source line 356</a>
+
+      <a href="../../chapters/foundations/index.html">Chapter context: Foundations</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

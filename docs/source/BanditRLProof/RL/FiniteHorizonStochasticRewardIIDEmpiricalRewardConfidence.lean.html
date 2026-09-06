@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonStochasticRewardIIDEmpiricalRewardConfidence.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonStochasticRewardIIDEmpiricalRewardConfidence.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonStochasticRewardIIDEmpiricalRewardConfidence.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonStochasticRewardIIDEmpiricalRewardConfidence.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonStochasticRewardErasureLaw</span>
+<span id="L2">2 import BanditRLProof.RL.FiniteHorizonStochasticRewardInitialLawTotalReturnConcentration</span>
+<span id="L3">3 import BanditRLProof.RL.FiniteHorizonIIDAllCoordinateFiniteBatchConfidence</span>
+<span id="L4">4 </span>
+<span id="L5">5 /-!</span>
+<span id="L6">6 # IID empirical reward confidence for finite-horizon stochastic rewards</span>
+<span id="L7">7 </span>
+<span id="L8">8 This module retains the sampled reward in every generated episode record.  It</span>
+<span id="L9">9 proves that a fixed stage/state/action reward sum, centered by its stored MDP</span>
+<span id="L10">10 mean and masked by the visit event, is sub-Gaussian across iid complete</span>
+<span id="L11">11 trajectories.  The total proxy is the conservative episode-linear proxy</span>
+<span id="L12">12 `episodes * varianceProxy`; no bounded sampled-reward or exact-count claim is</span>
+<span id="L13">13 used.</span>
+<span id="L14">14 -/</span>
+<span id="L15">15 </span>
+<span id="L16">16 open MeasureTheory</span>
+<span id="L17">17 open scoped ENNReal ProbabilityTheory</span>
+<span id="L18">18 </span>
+<span id="L19">19 universe u v</span>
+<span id="L20">20 </span>
+<span id="L21">21 namespace BanditRLProof</span>
+<span id="L22">22 </span>
+<span id="L23">23 namespace Concentration</span>
+<span id="L24">24 </span>
+<span id="L25">25 /-- A uniform fiberwise sub-Gaussian proxy survives an arbitrary probability mixture. -/</span>
+<span id="L26">26 theorem hasSubgaussianMGF_compProd_of_forall</span>
+<span id="L27">27     {Index : Type u} {Omega : Type v}</span>
+<span id="L28">28     [MeasurableSpace Index] [MeasurableSpace Omega]</span>
+<span id="L29">29     (mu : Measure Index) [IsProbabilityMeasure mu]</span>
+<span id="L30">30     (kappa : ProbabilityTheory.Kernel Index Omega)</span>
+<span id="L31">31     [ProbabilityTheory.IsMarkovKernel kappa]</span>
+<span id="L32">32     (X : Index × Omega -&gt; Real) (hX : Measurable X) (c : NNReal)</span>
+<span id="L33">33     (hfiber : forall index,</span>
+<span id="L34">34       ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L35">35         (fun omega =&gt; X (index, omega)) c (kappa index)) :</span>
+<span id="L36">36     ProbabilityTheory.HasSubgaussianMGF X c (mu.compProd kappa) := by</span>
+<span id="L37">37   constructor</span>
+<span id="L38">38   · intro t</span>
+<span id="L39">39     have hfullMeas : Measurable (fun p =&gt; Real.exp (t * X p)) :=</span>
+<span id="L40">40       Real.measurable_exp.comp (measurable_const.mul hX)</span>
+<span id="L41">41     have hfullAE : AEStronglyMeasurable</span>
+<span id="L42">42         (fun p =&gt; Real.exp (t * X p)) (mu.compProd kappa) :=</span>
+<span id="L43">43       hfullMeas.aestronglyMeasurable</span>
+<span id="L44">44     apply (Measure.integrable_compProd_iff hfullAE).2</span>
+<span id="L45">45     constructor</span>
+<span id="L46">46     · exact Filter.Eventually.of_forall fun index =&gt;</span>
+<span id="L47">47         (hfiber index).integrable_exp_mul t</span>
+<span id="L48">48     · have hinnerAE : AEStronglyMeasurable</span>
+<span id="L49">49           (fun index =&gt; integral (kappa index)</span>
+<span id="L50">50             (fun omega =&gt; ‖Real.exp (t * X (index, omega))‖)) mu :=</span>
+<span id="L51">51         hfullAE.norm.integral_kernel_compProd</span>
+<span id="L52">52       refine Integrable.of_bound hinnerAE</span>
+<span id="L53">53         (Real.exp ((c : Real) * t ^ 2 / 2)) ?_</span>
+<span id="L54">54       exact Filter.Eventually.of_forall fun index =&gt; by</span>
+<span id="L55">55         have heq :</span>
+<span id="L56">56             (integral (kappa index)</span>
+<span id="L57">57                 (fun omega =&gt; ‖Real.exp (t * X (index, omega))‖)) =</span>
+<span id="L58">58               ProbabilityTheory.mgf</span>
+<span id="L59">59                 (fun omega =&gt; X (index, omega)) (kappa index) t := by</span>
+<span id="L60">60           simp [ProbabilityTheory.mgf, Real.norm_eq_abs]</span>
+<span id="L61">61         rw [Real.norm_of_nonneg (integral_nonneg fun _ =&gt; norm_nonneg _), heq]</span>
+<span id="L62">62         exact (hfiber index).mgf_le t</span>
+<span id="L63">63   · intro t</span>
+<span id="L64">64     have hfullMeas : Measurable (fun p =&gt; Real.exp (t * X p)) :=</span>
+<span id="L65">65       Real.measurable_exp.comp (measurable_const.mul hX)</span>
+<span id="L66">66     have hfullAE : AEStronglyMeasurable</span>
+<span id="L67">67         (fun p =&gt; Real.exp (t * X p)) (mu.compProd kappa) :=</span>
+<span id="L68">68       hfullMeas.aestronglyMeasurable</span>
+<span id="L69">69     have hfullInt : Integrable (fun p =&gt; Real.exp (t * X p))</span>
+<span id="L70">70         (mu.compProd kappa) := by</span>
+<span id="L71">71       apply (Measure.integrable_compProd_iff hfullAE).2</span>
+<span id="L72">72       constructor</span>
+<span id="L73">73       · exact Filter.Eventually.of_forall fun index =&gt;</span>
+<span id="L74">74           (hfiber index).integrable_exp_mul t</span>
+<span id="L75">75       · have hinnerAE : AEStronglyMeasurable</span>
+<span id="L76">76             (fun index =&gt; integral (kappa index)</span>
+<span id="L77">77               (fun omega =&gt; ‖Real.exp (t * X (index, omega))‖)) mu :=</span>
+<span id="L78">78           hfullAE.norm.integral_kernel_compProd</span>
+<span id="L79">79         refine Integrable.of_bound hinnerAE</span>
+<span id="L80">80           (Real.exp ((c : Real) * t ^ 2 / 2)) ?_</span>
+<span id="L81">81         exact Filter.Eventually.of_forall fun index =&gt; by</span>
+<span id="L82">82           have heq :</span>
+<span id="L83">83               (integral (kappa index)</span>
+<span id="L84">84                   (fun omega =&gt; ‖Real.exp (t * X (index, omega))‖)) =</span>
+<span id="L85">85                 ProbabilityTheory.mgf</span>
+<span id="L86">86                   (fun omega =&gt; X (index, omega)) (kappa index) t := by</span>
+<span id="L87">87             simp [ProbabilityTheory.mgf, Real.norm_eq_abs]</span>
+<span id="L88">88           rw [Real.norm_of_nonneg (integral_nonneg fun _ =&gt; norm_nonneg _), heq]</span>
+<span id="L89">89           exact (hfiber index).mgf_le t</span>
+<span id="L90">90     rw [ProbabilityTheory.mgf, Measure.integral_compProd hfullInt]</span>
+<span id="L91">91     have hinnerAE : AEStronglyMeasurable</span>
+<span id="L92">92         (fun index =&gt; integral (kappa index)</span>
+<span id="L93">93           (fun omega =&gt; Real.exp (t * X (index, omega)))) mu :=</span>
+<span id="L94">94       hfullAE.integral_kernel_compProd</span>
+<span id="L95">95     have hinnerInt : Integrable</span>
+<span id="L96">96         (fun index =&gt; integral (kappa index)</span>
+<span id="L97">97           (fun omega =&gt; Real.exp (t * X (index, omega)))) mu := by</span>
+<span id="L98">98       refine Integrable.of_bound hinnerAE</span>
+<span id="L99">99         (Real.exp ((c : Real) * t ^ 2 / 2)) ?_</span>
+<span id="L100">100       exact Filter.Eventually.of_forall fun index =&gt; by</span>
+<span id="L101">101         rw [Real.norm_of_nonneg (integral_nonneg fun _ =&gt; Real.exp_nonneg _)]</span>
+<span id="L102">102         exact (hfiber index).mgf_le t</span>
+<span id="L103">103     have hmono := integral_mono_ae hinnerInt (integrable_const _)</span>
+<span id="L104">104       (Filter.Eventually.of_forall fun index =&gt; (hfiber index).mgf_le t)</span>
+<span id="L105">105     simpa [ProbabilityTheory.mgf] using hmono</span>
+<span id="L106">106 </span>
+<span id="L107">107 /-- The zero random variable admits every nonnegative sub-Gaussian proxy. -/</span>
+<span id="L108">108 theorem hasSubgaussianMGF_zero_of_proxy</span>
+<span id="L109">109     {Omega : Type u} [MeasurableSpace Omega]</span>
+<span id="L110">110     (mu : Measure Omega) [IsProbabilityMeasure mu] (c : NNReal) :</span>
+<span id="L111">111     ProbabilityTheory.HasSubgaussianMGF (fun _ : Omega =&gt; 0) c mu := by</span>
+<span id="L112">112   constructor</span>
+<span id="L113">113   · intro t</span>
+<span id="L114">114     simp</span>
+<span id="L115">115   · intro t</span>
+<span id="L116">116     have hnonneg : 0 &lt;= (c : Real) * t ^ 2 / 2 := by positivity</span>
+<span id="L117">117     simpa [ProbabilityTheory.mgf] using Real.one_le_exp hnonneg</span>
+<span id="L118">118 </span>
+<span id="L119">119 end Concentration</span>
+<span id="L120">120 </span>
+<span id="L121">121 namespace FiniteHorizonRL</span>
+<span id="L122">122 </span>
+<span id="L123">123 variable {State : Type u} {Action : Type v}</span>
+<span id="L124">124     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L125">125     [Fintype State] [Fintype Action]</span>
+<span id="L126">126     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L127">127     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L128">128     [Nonempty State] [Nonempty Action]</span>
+<span id="L129">129 </span>
+<span id="L130">130 namespace RewardStepTrace</span>
+<span id="L131">131 </span>
+<span id="L132">132 /-- State immediately before a reward-bearing trajectory coordinate. -/</span>
+<span id="L133">133 def stateAt (initialState : State) {remaining : Nat}</span>
+<span id="L134">134     (trace : RewardStepTrace Action State remaining)</span>
+<span id="L135">135     (coordinate : Fin remaining) : State :=</span>
+<span id="L136">136   if hzero : coordinate.val = 0 then initialState</span>
+<span id="L137">137   else (trace ⟨coordinate.val - 1, by omega⟩).2.2</span>
+<span id="L138">138 </span>
+<span id="L139">139 omit [Fintype State] [Fintype Action] [DecidableEq State] [DecidableEq Action]</span>
+<span id="L140">140     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L141">141     [Nonempty State] [Nonempty Action] in</span>
+<span id="L142">142 /-- The pre-coordinate state is measurable as a function of the full trace. -/</span>
+<span id="L143">143 theorem measurable_stateAt (initialState : State) {remaining : Nat}</span>
+<span id="L144">144     (coordinate : Fin remaining) :</span>
+<span id="L145">145     Measurable (fun trace : RewardStepTrace Action State remaining =&gt;</span>
+<span id="L146">146       stateAt initialState trace coordinate) := by</span>
+<span id="L147">147   unfold stateAt</span>
+<span id="L148">148   split_ifs</span>
+<span id="L149">149   · exact measurable_const</span>
+<span id="L150">150   · exact measurable_snd.snd.comp (measurable_pi_apply _)</span>
+<span id="L151">151 </span>
+<span id="L152">152 omit [Fintype State] [Fintype Action] [DecidableEq State] [DecidableEq Action]</span>
+<span id="L153">153     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L154">154     [Nonempty State] [Nonempty Action] in</span>
+<span id="L155">155 @[simp]</span>
+<span id="L156">156 theorem stateAt_cons_zero (initialState : State) (remaining : Nat)</span>
+<span id="L157">157     (head : Action × (Real × State))</span>
+<span id="L158">158     (tail : RewardStepTrace Action State remaining) :</span>
+<span id="L159">159     stateAt initialState</span>
+<span id="L160">160         (@Fin.cons remaining (fun _ =&gt; Action × (Real × State)) head tail) 0 =</span>
+<span id="L161">161       initialState := by</span>
+<span id="L162">162   simp [stateAt]</span>
+<span id="L163">163 </span>
+<span id="L164">164 omit [Fintype State] [Fintype Action] [DecidableEq State] [DecidableEq Action]</span>
+<span id="L165">165     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L166">166     [Nonempty State] [Nonempty Action] in</span>
+<span id="L167">167 @[simp]</span>
+<span id="L168">168 theorem stateAt_cons_succ (initialState : State) (remaining : Nat)</span>
+<span id="L169">169     (head : Action × (Real × State))</span>
+<span id="L170">170     (tail : RewardStepTrace Action State remaining)</span>
+<span id="L171">171     (coordinate : Fin remaining) :</span>
+<span id="L172">172     stateAt initialState</span>
+<span id="L173">173         (@Fin.cons remaining (fun _ =&gt; Action × (Real × State)) head tail)</span>
+<span id="L174">174         coordinate.succ =</span>
+<span id="L175">175       stateAt head.2.2 tail coordinate := by</span>
+<span id="L176">176   unfold stateAt</span>
+<span id="L177">177   rw [dif_neg (by simp)]</span>
+<span id="L178">178   have hindex :</span>
+<span id="L179">179       (⟨coordinate.succ.val - 1, by omega⟩ : Fin (remaining + 1)) =</span>
+<span id="L180">180         coordinate.castSucc := by</span>
+<span id="L181">181     apply Fin.ext</span>
+<span id="L182">182     simp</span>
+<span id="L183">183   rw [hindex]</span>
+<span id="L184">184   by_cases hzero : coordinate.val = 0</span>
+<span id="L185">185   · let zeroCoordinate : Fin remaining := ⟨0, by omega⟩</span>
+<span id="L186">186     have hcoordinate : coordinate = zeroCoordinate := by</span>
+<span id="L187">187       apply Fin.ext</span>
+<span id="L188">188       simpa [zeroCoordinate] using hzero</span>
+<span id="L189">189     rw [hcoordinate]</span>
+<span id="L190">190     simp [zeroCoordinate]</span>
+<span id="L191">191   · rw [dif_neg hzero]</span>
+<span id="L192">192     let previous : Fin remaining := ⟨coordinate.val - 1, by omega⟩</span>
+<span id="L193">193     have hcoordinate : coordinate.castSucc = previous.succ := by</span>
+<span id="L194">194       apply Fin.ext</span>
+<span id="L195">195       simp [previous]</span>
+<span id="L196">196       omega</span>
+<span id="L197">197     rw [hcoordinate, Fin.cons_succ]</span>
+<span id="L198">198 </span>
+<span id="L199">199 omit [Fintype State] [Fintype Action] [DecidableEq State] [DecidableEq Action]</span>
+<span id="L200">200     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L201">201     [Nonempty State] [Nonempty Action] in</span>
+<span id="L202">202 /-- The pre-coordinate state is measurable when the initial state is also an input. -/</span>
+<span id="L203">203 theorem measurable_stateAt_prod {remaining : Nat} (coordinate : Fin remaining) :</span>
+<span id="L204">204     Measurable (fun p : State × RewardStepTrace Action State remaining =&gt;</span>
+<span id="L205">205       stateAt p.1 p.2 coordinate) := by</span>
+<span id="L206">206   unfold stateAt</span>
+<span id="L207">207   split_ifs</span>
+<span id="L208">208   · exact measurable_fst</span>
+<span id="L209">209   · exact measurable_snd.snd.comp</span>
+<span id="L210">210       ((measurable_pi_apply _).comp measurable_snd)</span>
+<span id="L211">211 </span>
+<span id="L212">212 end RewardStepTrace</span>
+<span id="L213">213 </span>
+<span id="L214">214 namespace MDP</span>
+<span id="L215">215 </span>
+<span id="L216">216 /-- A sampled reward centered at one target coordinate and masked by its visit event. -/</span>
+<span id="L217">217 def maskedRewardDeviationAt (mdp : MDP State Action)</span>
+<span id="L218">218     (initialState : State) {remaining : Nat}</span>
+<span id="L219">219     (trace : RewardStepTrace Action State remaining)</span>
+<span id="L220">220     (coordinate : Fin remaining) (state : State) (action : Action) : Real :=</span>
+<span id="L221">221   if RewardStepTrace.stateAt initialState trace coordinate = state /\</span>
+<span id="L222">222       (trace coordinate).1 = action then</span>
+<span id="L223">223     (trace coordinate).2.1 - mdp.reward state action</span>
+<span id="L224">224   else 0</span>
+<span id="L225">225 </span>
+<span id="L226">226 /-- A fixed visit-masked reward deviation is measurable on reward-bearing traces. -/</span>
+<span id="L227">227 theorem measurable_maskedRewardDeviationAt (mdp : MDP State Action)</span>
+<span id="L228">228     (initialState : State) {remaining : Nat} (coordinate : Fin remaining)</span>
+<span id="L229">229     (state : State) (action : Action) :</span>
+<span id="L230">230     Measurable (fun trace =&gt;</span>
+<span id="L231">231       mdp.maskedRewardDeviationAt initialState trace coordinate state action) := by</span>
+<span id="L232">232   unfold maskedRewardDeviationAt</span>
+<span id="L233">233   refine Measurable.ite ?_ ?_ measurable_const</span>
+<span id="L234">234   · exact</span>
+<span id="L235">235       ((RewardStepTrace.measurable_stateAt initialState coordinate)</span>
+<span id="L236">236         (measurableSet_singleton state)).inter</span>
+<span id="L237">237         (((measurable_fst.comp (measurable_pi_apply coordinate)))</span>
+<span id="L238">238           (measurableSet_singleton action))</span>
+<span id="L239">239   · exact (measurable_snd.fst.comp (measurable_pi_apply coordinate)).sub</span>
+<span id="L240">240       measurable_const</span>
+<span id="L241">241 </span>
+<span id="L242">242 /-- The masked deviation is measurable when the initial state is part of the input. -/</span>
+<span id="L243">243 theorem measurable_maskedRewardDeviationAt_trajectory (mdp : MDP State Action)</span>
+<span id="L244">244     {remaining : Nat} (coordinate : Fin remaining)</span>
+<span id="L245">245     (state : State) (action : Action) :</span>
+<span id="L246">246     Measurable (fun trajectory : State × RewardStepTrace Action State remaining =&gt;</span>
+<span id="L247">247       mdp.maskedRewardDeviationAt trajectory.1 trajectory.2 coordinate state action) := by</span>
+<span id="L248">248   unfold maskedRewardDeviationAt</span>
+<span id="L249">249   have hcoordinate : Measurable</span>
+<span id="L250">250       (fun trajectory : State × RewardStepTrace Action State remaining =&gt;</span>
+<span id="L251">251         trajectory.2 coordinate) :=</span>
+<span id="L252">252     (measurable_pi_apply coordinate).comp measurable_snd</span>
+<span id="L253">253   refine Measurable.ite ?_ ?_ measurable_const</span>
+<span id="L254">254   · exact</span>
+<span id="L255">255       (RewardStepTrace.measurable_stateAt_prod coordinate</span>
+<span id="L256">256         (measurableSet_singleton state)).inter</span>
+<span id="L257">257         (hcoordinate.fst (measurableSet_singleton action))</span>
+<span id="L258">258   · exact</span>
+<span id="L259">259       (hcoordinate.snd.fst.sub measurable_const)</span>
+<span id="L260">260 </span>
+<span id="L261">261 /-- One sampled reward-bearing trajectory converted to an empirical record. -/</span>
+<span id="L262">262 def sampledEpisodeStepOfStochasticTrajectory (mdp : MDP State Action)</span>
+<span id="L263">263     (trajectory : State × RewardStepTrace Action State mdp.horizon)</span>
+<span id="L264">264     (stage : Fin mdp.horizon) : EpisodeStep State Action where</span>
+<span id="L265">265   state := RewardStepTrace.stateAt trajectory.1 trajectory.2 stage</span>
+<span id="L266">266   action := (trajectory.2 stage).1</span>
+<span id="L267">267   reward := (trajectory.2 stage).2.1</span>
+<span id="L268">268   nextState := (trajectory.2 stage).2.2</span>
+<span id="L269">269 </span>
+<span id="L270">270 /-- Extracting a sampled empirical record from a stochastic trajectory is measurable. -/</span>
+<span id="L271">271 theorem measurable_sampledEpisodeStepOfStochasticTrajectory</span>
+<span id="L272">272     (mdp : MDP State Action) (stage : Fin mdp.horizon) :</span>
+<span id="L273">273     Measurable (fun trajectory =&gt;</span>
+<span id="L274">274       mdp.sampledEpisodeStepOfStochasticTrajectory trajectory stage) := by</span>
+<span id="L275">275   rw [measurable_comap_iff]</span>
+<span id="L276">276   change Measurable (fun trajectory :</span>
+<span id="L277">277       State × RewardStepTrace Action State mdp.horizon =&gt;</span>
+<span id="L278">278     (RewardStepTrace.stateAt trajectory.1 trajectory.2 stage,</span>
+<span id="L279">279       (trajectory.2 stage).1, (trajectory.2 stage).2.1,</span>
+<span id="L280">280       (trajectory.2 stage).2.2))</span>
+<span id="L281">281   have hstate : Measurable</span>
+<span id="L282">282       (fun trajectory : State × RewardStepTrace Action State mdp.horizon =&gt;</span>
+<span id="L283">283         RewardStepTrace.stateAt trajectory.1 trajectory.2 stage) :=</span>
+<span id="L284">284     RewardStepTrace.measurable_stateAt_prod stage</span>
+<span id="L285">285   have hcoordinate : Measurable</span>
+<span id="L286">286       (fun trajectory : State × RewardStepTrace Action State mdp.horizon =&gt;</span>
+<span id="L287">287         trajectory.2 stage) :=</span>
+<span id="L288">288     (measurable_pi_apply stage).comp measurable_snd</span>
+<span id="L289">289   exact hstate.prodMk</span>
+<span id="L290">290     (hcoordinate.fst.prodMk (hcoordinate.snd.fst.prodMk hcoordinate.snd.snd))</span>
+<span id="L291">291 </span>
+<span id="L292">292 /-- A finite iid family of stochastic trajectories mapped to sampled-reward records. -/</span>
+<span id="L293">293 def sampledEpisodeBatchOfStochasticTrajectories (mdp : MDP State Action)</span>
+<span id="L294">294     (episodes : Nat)</span>
+<span id="L295">295     (trajectories : Fin episodes -&gt;</span>
+<span id="L296">296       State × RewardStepTrace Action State mdp.horizon) :</span>
+<span id="L297">297     EpisodeBatch mdp episodes :=</span>
+<span id="L298">298   fun episode stage =&gt;</span>
+<span id="L299">299     mdp.sampledEpisodeStepOfStochasticTrajectory (trajectories episode) stage</span>
+<span id="L300">300 </span>
+<span id="L301">301 /-- Mapping a finite stochastic trajectory family to sampled episode records is measurable. -/</span>
+<span id="L302">302 theorem measurable_sampledEpisodeBatchOfStochasticTrajectories</span>
+<span id="L303">303     (mdp : MDP State Action) (episodes : Nat) :</span>
+<span id="L304">304     Measurable (mdp.sampledEpisodeBatchOfStochasticTrajectories episodes) := by</span>
+<span id="L305">305   apply measurable_pi_lambda</span>
+<span id="L306">306   intro episode</span>
+<span id="L307">307   apply measurable_pi_lambda</span>
+<span id="L308">308   intro stage</span>
+<span id="L309">309   exact (mdp.measurable_sampledEpisodeStepOfStochasticTrajectory stage).comp</span>
+<span id="L310">310     (measurable_pi_apply episode)</span>
+<span id="L311">311 </span>
+<span id="L312">312 end MDP</span>
+<span id="L313">313 </span>
+<span id="L314">314 namespace MDP.MeanCompatibleRewardKernel</span>
+<span id="L315">315 </span>
+<span id="L316">316 variable {mdp : MDP State Action}</span>
+<span id="L317">317 </span>
+<span id="L318">318 /-- A visit-masked one-step reward deviation retains the common reward proxy. -/</span>
+<span id="L319">319 theorem actionRewardStateKernel_maskedRewardDeviation_hasSubgaussianMGF</span>
+<span id="L320">320     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L321">321     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L322">322     (policy : MarkovPolicy mdp) (stage : Fin mdp.horizon)</span>
+<span id="L323">323     (initialState state : State) (action : Action) (varianceProxy : NNReal)</span>
+<span id="L324">324     (law : source.UniformSubgaussianRewardLaw varianceProxy) :</span>
+<span id="L325">325     ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L326">326       (fun head : Action × (Real × State) =&gt;</span>
+<span id="L327">327         if initialState = state /\ head.1 = action then</span>
+<span id="L328">328           head.2.1 - mdp.reward state action</span>
+<span id="L329">329         else 0)</span>
+<span id="L330">330       varianceProxy</span>
+<span id="L331">331       (source.actionRewardStateKernel policy stage initialState) := by</span>
+<span id="L332">332   by_cases hinitial : initialState = state</span>
+<span id="L333">333   · subst initialState</span>
+<span id="L334">334     let X : Action × (Real × State) -&gt; Real := fun head =&gt;</span>
+<span id="L335">335       if head.1 = action then head.2.1 - mdp.reward state action else 0</span>
+<span id="L336">336     let rewardNextKernel : ProbabilityTheory.Kernel Action (Real × State) :=</span>
+<span id="L337">337       ProbabilityTheory.Kernel.sectR source.rewardNextStateKernel state</span>
+<span id="L338">338     have hX : Measurable X := by</span>
+<span id="L339">339       refine Measurable.ite</span>
+<span id="L340">340         (measurable_fst (measurableSet_singleton action)) ?_ measurable_const</span>
+<span id="L341">341       exact measurable_snd.fst.sub measurable_const</span>
+<span id="L342">342     have hmix := Concentration.hasSubgaussianMGF_compProd_of_forall</span>
+<span id="L343">343       (policy.actionKernel stage state) rewardNextKernel X hX</span>
+<span id="L344">344       varianceProxy (fun candidate =&gt; by</span>
+<span id="L345">345         by_cases hcandidate : candidate = action</span>
+<span id="L346">346         · subst candidate</span>
+<span id="L347">347           have hbase := law.hasSubgaussianMGF state action</span>
+<span id="L348">348           have hlift := ProbabilityTheory.HasSubgaussianMGF.of_map</span>
+<span id="L349">349             (μ := source.rewardNextStateKernel (state, action))</span>
+<span id="L350">350             (Y := Prod.fst)</span>
+<span id="L351">351             (X := fun reward : Real =&gt; reward - mdp.reward state action)</span>
+<span id="L352">352             measurable_fst.aemeasurable (by</span>
+<span id="L353">353               rw [rewardNextStateKernel,</span>
+<span id="L354">354                 ProbabilityTheory.Kernel.prod_apply,</span>
+<span id="L355">355                 Measure.map_fst_prod, measure_univ, one_smul]</span>
+<span id="L356">356               exact hbase)</span>
+<span id="L357">357           simpa [X, rewardNextKernel, ProbabilityTheory.Kernel.sectR_apply,</span>
+<span id="L358">358             Function.comp_def] using hlift</span>
+<span id="L359">359         · simpa [X, hcandidate, rewardNextKernel,</span>
+<span id="L360">360             ProbabilityTheory.Kernel.sectR_apply] using</span>
+<span id="L361">361             (Concentration.hasSubgaussianMGF_zero_of_proxy</span>
+<span id="L362">362               (source.rewardNextStateKernel (state, candidate)) varianceProxy))</span>
+<span id="L363">363     rw [actionRewardStateKernel,</span>
+<span id="L364">364       ProbabilityTheory.Kernel.compProd_apply_eq_compProd_sectR]</span>
+<span id="L365">365     simpa [rewardNextKernel, X] using hmix</span>
+<span id="L366">366   · simpa [hinitial] using</span>
+<span id="L367">367       (Concentration.hasSubgaussianMGF_zero_of_proxy</span>
+<span id="L368">368         (source.actionRewardStateKernel policy stage initialState) varianceProxy)</span>
+<span id="L369">369 </span>
+<span id="L370">370 /-- Every coordinate of a generated reward-bearing trace has the masked reward MGF. -/</span>
+<span id="L371">371 theorem stochasticTrajectoryKernelRemaining_maskedRewardDeviationAt_hasSubgaussianMGF</span>
+<span id="L372">372     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L373">373     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L374">374     (policy : MarkovPolicy mdp)</span>
+<span id="L375">375     (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon)</span>
+<span id="L376">376     (initialState : State) (coordinate : Fin remaining)</span>
+<span id="L377">377     (state : State) (action : Action) (varianceProxy : NNReal)</span>
+<span id="L378">378     (law : source.UniformSubgaussianRewardLaw varianceProxy) :</span>
+<span id="L379">379     ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L380">380       (fun trace =&gt; mdp.maskedRewardDeviationAt initialState trace</span>
+<span id="L381">381         coordinate state action)</span>
+<span id="L382">382       varianceProxy</span>
+<span id="L383">383       (source.stochasticTrajectoryKernelRemaining policy</span>
+<span id="L384">384         remaining hremaining initialState) := by</span>
+<span id="L385">385   induction remaining generalizing initialState with</span>
+<span id="L386">386   | zero =&gt; exact Fin.elim0 coordinate</span>
+<span id="L387">387   | succ remaining ih =&gt;</span>
+<span id="L388">388       refine Fin.cases ?_ (fun tailCoordinate =&gt; ?_) coordinate</span>
+<span id="L389">389       · have hhead :=</span>
+<span id="L390">390           source.actionRewardStateKernel_maskedRewardDeviation_hasSubgaussianMGF</span>
+<span id="L391">391             policy ⟨mdp.horizon - (remaining + 1), by omega⟩</span>
+<span id="L392">392               initialState state action varianceProxy law</span>
+<span id="L393">393         rw [← source.stochasticTrajectoryKernelRemaining_map_head</span>
+<span id="L394">394           policy remaining hremaining initialState] at hhead</span>
+<span id="L395">395         have hlift := ProbabilityTheory.HasSubgaussianMGF.of_map</span>
+<span id="L396">396           (Y := RewardStepTrace.head</span>
+<span id="L397">397             (Action := Action) (State := State) remaining)</span>
+<span id="L398">398           (X := fun head : Action × (Real × State) =&gt;</span>
+<span id="L399">399             if initialState = state /\ head.1 = action then</span>
+<span id="L400">400               head.2.1 - mdp.reward state action</span>
+<span id="L401">401             else 0)</span>
+<span id="L402">402           (RewardStepTrace.measurable_head remaining).aemeasurable hhead</span>
+<span id="L403">403         simpa [MDP.maskedRewardDeviationAt, RewardStepTrace.head,</span>
+<span id="L404">404           Function.comp_def] using hlift</span>
+<span id="L405">405       · let headKernel := source.actionRewardStateKernel policy</span>
+<span id="L406">406           ⟨mdp.horizon - (remaining + 1), by omega⟩</span>
+<span id="L407">407         let tailKernelGlobal : ProbabilityTheory.Kernel</span>
+<span id="L408">408             (State × (Action × (Real × State)))</span>
+<span id="L409">409             (RewardStepTrace Action State remaining) :=</span>
+<span id="L410">410           (source.stochasticTrajectoryKernelRemaining policy remaining (by omega)).comap</span>
+<span id="L411">411             (fun p : State × (Action × (Real × State)) =&gt; p.2.2.2)</span>
+<span id="L412">412             measurable_snd.snd.snd</span>
+<span id="L413">413         let tailKernel : ProbabilityTheory.Kernel</span>
+<span id="L414">414             (Action × (Real × State))</span>
+<span id="L415">415             (RewardStepTrace Action State remaining) :=</span>
+<span id="L416">416           ProbabilityTheory.Kernel.sectR tailKernelGlobal initialState</span>
+<span id="L417">417         let X : (Action × (Real × State)) ×</span>
+<span id="L418">418             RewardStepTrace Action State remaining -&gt; Real := fun p =&gt;</span>
+<span id="L419">419           mdp.maskedRewardDeviationAt p.1.2.2 p.2 tailCoordinate state action</span>
+<span id="L420">420         have hX : Measurable X :=</span>
+<span id="L421">421           (MDP.measurable_maskedRewardDeviationAt_trajectory mdp</span>
+<span id="L422">422             tailCoordinate state action).comp</span>
+<span id="L423">423               (measurable_fst.snd.snd.prodMk measurable_snd)</span>
+<span id="L424">424         have hpair := Concentration.hasSubgaussianMGF_compProd_of_forall</span>
+<span id="L425">425           (headKernel initialState) tailKernel X hX varianceProxy</span>
+<span id="L426">426           (fun head =&gt; by</span>
+<span id="L427">427             simpa [tailKernel, tailKernelGlobal, X,</span>
+<span id="L428">428               ProbabilityTheory.Kernel.sectR_apply,</span>
+<span id="L429">429               ProbabilityTheory.Kernel.comap_apply] using</span>
+<span id="L430">430               ih (by omega) head.2.2 tailCoordinate)</span>
+<span id="L431">431         let consStep : (Action × (Real × State)) ×</span>
+<span id="L432">432             RewardStepTrace Action State remaining -&gt;</span>
+<span id="L433">433             RewardStepTrace Action State (remaining + 1) := fun p =&gt;</span>
+<span id="L434">434           @Fin.cons remaining (fun _ =&gt; Action × (Real × State)) p.1 p.2</span>
+<span id="L435">435         have hcons : Measurable consStep := RewardStepTrace.measurable_cons remaining</span>
+<span id="L436">436         have htarget := hpair.congr_identDistrib</span>
+<span id="L437">437           { aemeasurable_fst := hX.aemeasurable</span>
+<span id="L438">438             aemeasurable_snd :=</span>
+<span id="L439">439               (MDP.measurable_maskedRewardDeviationAt mdp initialState</span>
+<span id="L440">440                 tailCoordinate.succ state action).aemeasurable</span>
+<span id="L441">441             map_eq := by</span>
+<span id="L442">442               rw [Measure.map_map</span>
+<span id="L443">443                 (MDP.measurable_maskedRewardDeviationAt mdp initialState</span>
+<span id="L444">444                   tailCoordinate.succ state action) hcons]</span>
+<span id="L445">445               congr 1</span>
+<span id="L446">446               funext p</span>
+<span id="L447">447               simp [X, consStep, MDP.maskedRewardDeviationAt] }</span>
+<span id="L448">448         rw [stochasticTrajectoryKernelRemaining]</span>
+<span id="L449">449         rw [ProbabilityTheory.Kernel.map_apply _ hcons]</span>
+<span id="L450">450         rw [ProbabilityTheory.Kernel.compProd_apply_eq_compProd_sectR]</span>
+<span id="L451">451         simpa [headKernel, tailKernel, tailKernelGlobal, consStep] using htarget</span>
+<span id="L452">452 </span>
+<span id="L453">453 /-- The same fixed coordinate MGF holds after mixing over the initial-state law. -/</span>
+<span id="L454">454 theorem stochasticTrajectoryMeasure_maskedRewardDeviationAt_hasSubgaussianMGF</span>
+<span id="L455">455     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L456">456     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L457">457     (policy : MarkovPolicy mdp) (initialState : Measure State)</span>
+<span id="L458">458     [IsProbabilityMeasure initialState]</span>
+<span id="L459">459     (stage : Fin mdp.horizon) (state : State) (action : Action)</span>
+<span id="L460">460     (varianceProxy : NNReal)</span>
+<span id="L461">461     (law : source.UniformSubgaussianRewardLaw varianceProxy) :</span>
+<span id="L462">462     ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L463">463       (fun trajectory : State × RewardStepTrace Action State mdp.horizon =&gt;</span>
+<span id="L464">464         mdp.maskedRewardDeviationAt trajectory.1 trajectory.2 stage state action)</span>
+<span id="L465">465       varianceProxy</span>
+<span id="L466">466       (source.stochasticTrajectoryMeasure policy initialState) := by</span>
+<span id="L467">467   unfold stochasticTrajectoryMeasure</span>
+<span id="L468">468   apply Concentration.hasSubgaussianMGF_compProd_of_forall_fintype</span>
+<span id="L469">469     initialState</span>
+<span id="L470">470     (source.stochasticTrajectoryKernelRemaining policy mdp.horizon le_rfl)</span>
+<span id="L471">471   · exact MDP.measurable_maskedRewardDeviationAt_trajectory mdp</span>
+<span id="L472">472       stage state action</span>
+<span id="L473">473   · intro initial</span>
+<span id="L474">474     exact source.stochasticTrajectoryKernelRemaining_maskedRewardDeviationAt_hasSubgaussianMGF</span>
+<span id="L475">475       policy mdp.horizon le_rfl initial stage state action varianceProxy law</span>
+<span id="L476">476 </span>
+<span id="L477">477 /--</span>
+<span id="L478">478 One iid episode&#x27;s fixed-coordinate masked reward deviation. The receiver keeps</span>
+<span id="L479">479 this structural coordinate on the same source-indexed API as its law theorems;</span>
+<span id="L480">480 the pointwise value itself depends only on the sampled trajectory and the MDP.</span>
+<span id="L481">481 -/</span>
+<span id="L482">482 def maskedRewardDeviationAtEpisode (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L483">483     (stage : Fin mdp.horizon) (state : State) (action : Action)</span>
+<span id="L484">484     {episodes : Nat} (episode : Fin episodes)</span>
+<span id="L485">485     (trajectories : Fin episodes -&gt;</span>
+<span id="L486">486       State × RewardStepTrace Action State mdp.horizon) : Real :=</span>
+<span id="L487">487   mdp.maskedRewardDeviationAt (trajectories episode).1</span>
+<span id="L488">488     (trajectories episode).2 stage state action</span>
+<span id="L489">489 </span>
+<span id="L490">490 /-- Fixed-coordinate masked reward deviations are independent across iid episodes. -/</span>
+<span id="L491">491 theorem iIndepFun_maskedRewardDeviationAtEpisode</span>
+<span id="L492">492     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L493">493     (policy : MarkovPolicy mdp) (initialState : Measure State)</span>
+<span id="L494">494     [IsProbabilityMeasure initialState]</span>
+<span id="L495">495     (episodes : Nat) (stage : Fin mdp.horizon)</span>
+<span id="L496">496     (state : State) (action : Action) :</span>
+<span id="L497">497     ProbabilityTheory.iIndepFun</span>
+<span id="L498">498       (source.maskedRewardDeviationAtEpisode stage state action)</span>
+<span id="L499">499       (source.iidStochasticTrajectoryFamilyMeasure</span>
+<span id="L500">500         policy initialState episodes) := by</span>
+<span id="L501">501   unfold iidStochasticTrajectoryFamilyMeasure</span>
+<span id="L502">502   simpa [maskedRewardDeviationAtEpisode] using</span>
+<span id="L503">503     (ProbabilityTheory.iIndepFun_pi fun _episode : Fin episodes =&gt;</span>
+<span id="L504">504       (MDP.measurable_maskedRewardDeviationAt_trajectory mdp</span>
+<span id="L505">505         stage state action).aemeasurable)</span>
+<span id="L506">506 </span>
+<span id="L507">507 /-- Every iid episode coordinate inherits the complete-trajectory masked reward MGF. -/</span>
+<span id="L508">508 theorem maskedRewardDeviationAtEpisode_hasSubgaussianMGF</span>
+<span id="L509">509     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L510">510     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L511">511     (policy : MarkovPolicy mdp) (initialState : Measure State)</span>
+<span id="L512">512     [IsProbabilityMeasure initialState]</span>
+<span id="L513">513     (stage : Fin mdp.horizon) (state : State) (action : Action)</span>
+<span id="L514">514     (varianceProxy : NNReal)</span>
+<span id="L515">515     (law : source.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L516">516     {episodes : Nat} (episode : Fin episodes) :</span>
+<span id="L517">517     ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L518">518       (source.maskedRewardDeviationAtEpisode stage state action episode)</span>
+<span id="L519">519       varianceProxy</span>
+<span id="L520">520       (source.iidStochasticTrajectoryFamilyMeasure</span>
+<span id="L521">521         policy initialState episodes) := by</span>
+<span id="L522">522   have hbase :=</span>
+<span id="L523">523     source.stochasticTrajectoryMeasure_maskedRewardDeviationAt_hasSubgaussianMGF</span>
+<span id="L524">524       policy initialState stage state action varianceProxy law</span>
+<span id="L525">525   rw [← source.iidStochasticTrajectoryFamilyMeasure_map_eval</span>
+<span id="L526">526     policy initialState episode] at hbase</span>
+<span id="L527">527   have hlift := ProbabilityTheory.HasSubgaussianMGF.of_map</span>
+<span id="L528">528     (μ := source.iidStochasticTrajectoryFamilyMeasure</span>
+<span id="L529">529       policy initialState episodes)</span>
+<span id="L530">530     (Y := Function.eval episode)</span>
+<span id="L531">531     (X := fun trajectory : State × RewardStepTrace Action State mdp.horizon =&gt;</span>
+<span id="L532">532       mdp.maskedRewardDeviationAt trajectory.1 trajectory.2 stage state action)</span>
+<span id="L533">533     (measurable_pi_apply episode).aemeasurable hbase</span>
+<span id="L534">534   simpa [maskedRewardDeviationAtEpisode, Function.comp_def] using hlift</span>
+<span id="L535">535 </span>
+<span id="L536">536 /-- The iid fixed-coordinate reward-deviation sum has the episode-linear proxy. -/</span>
+<span id="L537">537 theorem iidStochasticTrajectoryFamilyMeasure_maskedRewardDeviation_sum_hasSubgaussianMGF</span>
+<span id="L538">538     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L539">539     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L540">540     (policy : MarkovPolicy mdp) (initialState : Measure State)</span>
+<span id="L541">541     [IsProbabilityMeasure initialState]</span>
+<span id="L542">542     (episodes : Nat) (stage : Fin mdp.horizon)</span>
+<span id="L543">543     (state : State) (action : Action) (varianceProxy : NNReal)</span>
+<span id="L544">544     (law : source.UniformSubgaussianRewardLaw varianceProxy) :</span>
+<span id="L545">545     ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L546">546       (fun trajectories =&gt; ∑ episode : Fin episodes,</span>
+<span id="L547">547         source.maskedRewardDeviationAtEpisode stage state action episode trajectories)</span>
+<span id="L548">548       ((episodes : NNReal) * varianceProxy)</span>
+<span id="L549">549       (source.iidStochasticTrajectoryFamilyMeasure</span>
+<span id="L550">550         policy initialState episodes) := by</span>
+<span id="L551">551   have hsum := ProbabilityTheory.HasSubgaussianMGF.sum_of_iIndepFun</span>
+<span id="L552">552     (source.iIndepFun_maskedRewardDeviationAtEpisode</span>
+<span id="L553">553       policy initialState episodes stage state action)</span>
+<span id="L554">554     (s := Finset.univ)</span>
+<span id="L555">555     (c := fun _episode : Fin episodes =&gt; varianceProxy)</span>
+<span id="L556">556     (fun episode _ =&gt; source.maskedRewardDeviationAtEpisode_hasSubgaussianMGF</span>
+<span id="L557">557       policy initialState stage state action varianceProxy law episode)</span>
+<span id="L558">558   simpa using hsum</span>
+<span id="L559">559 </span>
+<span id="L560">560 /-- Fixed-coordinate two-sided reward-sum tail under the iid stochastic family law. -/</span>
+<span id="L561">561 theorem iidStochasticTrajectoryFamilyMeasure_maskedRewardDeviation_sum_abs_tail_le</span>
+<span id="L562">562     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L563">563     (source : MeanCompatibleRewardKernel mdp)</span>
+<span id="L564">564     (policy : MarkovPolicy mdp) (initialState : Measure State)</span>
+<span id="L565">565     [IsProbabilityMeasure initialState]</span>
+<span id="L566">566     (episodes : Nat) (stage : Fin mdp.horizon)</span>
+<span id="L567">567     (state : State) (action : Action) (varianceProxy : NNReal)</span>
+<span id="L568">568     (law : source.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L569">569     (htotal : 0 &lt; ((((episodes : NNReal) * varianceProxy : NNReal) : Real)))</span>
+<span id="L570">570     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1) :</span>
+<span id="L571">571     (source.iidStochasticTrajectoryFamilyMeasure policy initialState episodes)</span>
+<span id="L572">572         {trajectories |</span>
+<span id="L573">573           Concentration.subGaussianSumConfidenceRadius</span>
+<span id="L574">574               ((episodes : NNReal) * varianceProxy) delta &lt;=</span>
+<span id="L575">575             |∑ episode : Fin episodes,</span>
+<span id="L576">576               source.maskedRewardDeviationAtEpisode</span>
+<span id="L577">577                 stage state action episode trajectories|} &lt;=</span>
+<span id="L578">578       ENNReal.ofReal delta := by</span>
+<span id="L579">579   simpa using</span>
+<span id="L580">580     (Concentration.subGaussian_sum_abs_tail_ennreal_delta_of_iIndepFun</span>
+<span id="L581">581       (source.iidStochasticTrajectoryFamilyMeasure</span>
+<span id="L582">582         policy initialState episodes)</span>
+<span id="L583">583       (source.iIndepFun_maskedRewardDeviationAtEpisode</span>
+<span id="L584">584         policy initialState episodes stage state action)</span>
+<span id="L585">585       (s := Finset.univ)</span>
+<span id="L586">586       (c := fun _episode : Fin episodes =&gt; varianceProxy)</span>
+<span id="L587">587       (fun episode _ =&gt; source.maskedRewardDeviationAtEpisode_hasSubgaussianMGF</span>
+<span id="L588">588         policy initialState stage state action varianceProxy law episode)</span>
+<span id="L589">589       (by simpa using htotal) delta hdelta hdelta_le_one)</span>
+<span id="L590">590 </span>
+<span id="L591">591 end MDP.MeanCompatibleRewardKernel</span>
+<span id="L592">592 </span>
+<span id="L593">593 end FiniteHorizonRL</span>
+<span id="L594">594 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

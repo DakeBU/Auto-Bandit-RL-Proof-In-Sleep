@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Exp3ImportanceWeighted · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Exp3ImportanceWeighted · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Exp3ImportanceWeighted · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · EXP3</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Exp3Importance<wbr>Weighted</h1>
+  <p class="lede">This module supplies the finite-distribution algebra immediately above the deterministic Hedge theorem and below the probabilistic EXP3 process. It proves the estimator&#x27;s armwise weighted-sum cancellation and exact mixed-square identity on an explicit finite action set.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Exp3ImportanceWeighted.lean.html"><code>BanditRLProof/Exp3ImportanceWeighted.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/exp3/index.html">7. EXP3 and adversarial concentration</a></dd></div>
+    <div><dt>Declarations</dt><dd>12</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-exp3hedgeregret/index.html"><code>BanditRLProof.Exp3HedgeRegret</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-exp3conditionalmoments/index.html"><code>BanditRLProof.Exp3ConditionalMoments</code></a>, <a href="../banditrlproof-tsallisimportanceweightedmoment/index.html"><code>BanditRLProof.TsallisImportanceWeightedMoment</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-81a40157f5e0">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.importanceWeightedLoss</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Loss estimate that reveals only the loss of the sampled action.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> importanceWeightedLoss {Action : Type u} (prob loss : Action -&gt; Real) (chosen action : Action) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ImportanceWeighted.lean.html#L25">Source line 25</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-30ed388e0860">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.mixedImportanceWeightedLoss</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The loss mixed by `prob` after replacing losses by one sampled estimate.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> mixedImportanceWeightedLoss {Action : Type u} (arms : Finset Action) (prob loss : Action -&gt; Real) (chosen : Action) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ImportanceWeighted.lean.html#L31">Source line 31</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bba12250b4f7">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.weightedImportanceWeightedLoss</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">An importance-weighted estimate mixed by weights that may differ from the
+sampling probabilities used in the estimator denominator.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> weightedImportanceWeightedLoss {Action : Type u} (arms : Finset Action) (prob weight loss : Action -&gt; Real) (chosen : Action) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ImportanceWeighted.lean.html#L38">Source line 38</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3b18dbe7d93b">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.mixedSquaredImportanceWeightedLoss</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The mixed square of one sampled importance-weighted loss vector.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> mixedSquaredImportanceWeightedLoss {Action : Type u} (arms : Finset Action) (prob loss : Action -&gt; Real) (chosen : Action) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ImportanceWeighted.lean.html#L45">Source line 45</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-aac4bcac2b4f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.importanceWeightedLoss_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> importanceWeightedLoss_nonneg {Action : Type u} [DecidableEq Action] {prob loss : Action -&gt; Real} {chosen action : Action} (hprob : <span class="num">0</span> &lt;= prob action) (hloss : <span class="num">0</span> &lt;= loss action) : <span class="num">0</span> &lt;= importanceWeightedLoss prob loss chosen action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ImportanceWeighted.lean.html#L50">Source line 50</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1804073231d4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sum_prob_mul_importanceWeightedLoss_eq_loss</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The probability-weighted finite sum of one coordinate recovers its loss.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sum_prob_mul_importanceWeightedLoss_eq_loss {Action : Type u} [DecidableEq Action] (arms : Finset Action) (prob loss : Action -&gt; Real) (action : Action) (haction : action ∈ arms) (hprob : prob action ≠ <span class="num">0</span>) : arms.sum (<span class="kw">fun</span> chosen =&gt; prob chosen * importanceWeightedLoss prob loss chosen action) = loss action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ImportanceWeighted.lean.html#L60">Source line 60</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9d33480ee9cc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.mixedImportanceWeightedLoss_eq_selectedLoss</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pathwise cancellation: the mixed estimate is the sampled loss.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> mixedImportanceWeightedLoss_eq_selectedLoss {Action : Type u} [DecidableEq Action] (arms : Finset Action) (prob loss : Action -&gt; Real) (chosen : Action) (hchosen : chosen ∈ arms) (hprob : prob chosen ≠ <span class="num">0</span>) : mixedImportanceWeightedLoss arms prob loss chosen = loss chosen</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ImportanceWeighted.lean.html#L77">Source line 77</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-215bdc5844b5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sum_prob_mul_mixedImportanceWeightedLoss_eq_mixedLoss</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Averaging the pathwise mixed estimate recovers the true mixed loss.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sum_prob_mul_mixedImportanceWeightedLoss_eq_mixedLoss {Action : Type u} [DecidableEq Action] (arms : Finset Action) (prob loss : Action -&gt; Real) (hprob : <span class="kw">forall</span> action, action ∈ arms -&gt; prob action ≠ <span class="num">0</span>) : arms.sum (<span class="kw">fun</span> chosen =&gt; prob chosen * mixedImportanceWeightedLoss arms prob loss chosen) = arms.sum (<span class="kw">fun</span> action =&gt; prob action * loss action)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ImportanceWeighted.lean.html#L93">Source line 93</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6fb73b0e4048">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sum_prob_mul_weightedImportanceWeightedLoss_eq_weightedLoss</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Averaging an estimator mixed by arbitrary predictable weights recovers
+the same weighted true loss.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sum_prob_mul_weightedImportanceWeightedLoss_eq_weightedLoss {Action : Type u} [DecidableEq Action] (arms : Finset Action) (prob weight loss : Action -&gt; Real) (hprob : <span class="kw">forall</span> action, action ∈ arms -&gt; prob action ≠ <span class="num">0</span>) : arms.sum (<span class="kw">fun</span> chosen =&gt; prob chosen * weightedImportanceWeightedLoss arms prob weight loss chosen) = arms.sum (<span class="kw">fun</span> action =&gt; weight action * loss action)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ImportanceWeighted.lean.html#L107">Source line 107</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-96ea42c57335">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.mixedSquaredImportanceWeightedLoss_eq_selectedLoss_sq_div</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact pathwise mixed-square formula for a sampled action.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> mixedSquaredImportanceWeightedLoss_eq_selectedLoss_sq_div {Action : Type u} [DecidableEq Action] (arms : Finset Action) (prob loss : Action -&gt; Real) (chosen : Action) (hchosen : chosen ∈ arms) (hprob : prob chosen ≠ <span class="num">0</span>) : mixedSquaredImportanceWeightedLoss arms prob loss chosen = (loss chosen) ^ <span class="num">2</span> / prob chosen</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ImportanceWeighted.lean.html#L135">Source line 135</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ade174aaf6c2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sum_prob_mul_mixedSquaredImportanceWeightedLoss_eq_sum_loss_sq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact probability-weighted finite sum of the mixed estimator&#x27;s square.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sum_prob_mul_mixedSquaredImportanceWeightedLoss_eq_sum_loss_sq {Action : Type u} [DecidableEq Action] (arms : Finset Action) (prob loss : Action -&gt; Real) (hprob : <span class="kw">forall</span> action, action ∈ arms -&gt; prob action ≠ <span class="num">0</span>) : arms.sum (<span class="kw">fun</span> chosen =&gt; prob chosen * mixedSquaredImportanceWeightedLoss arms prob loss chosen) = arms.sum (<span class="kw">fun</span> action =&gt; (loss action) ^ <span class="num">2</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ImportanceWeighted.lean.html#L151">Source line 151</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b5a99ad46a97">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sum_prob_mul_mixedSquaredImportanceWeightedLoss_le_card</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">For losses in `[0,1]`, the probability-weighted mixed square is at most the arm count.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sum_prob_mul_mixedSquaredImportanceWeightedLoss_le_card {Action : Type u} [DecidableEq Action] (arms : Finset Action) (prob loss : Action -&gt; Real) (hprob : <span class="kw">forall</span> action, action ∈ arms -&gt; prob action ≠ <span class="num">0</span>) (hloss : <span class="kw">forall</span> action, action ∈ arms -&gt; <span class="num">0</span> &lt;= loss action ∧ loss action &lt;= <span class="num">1</span>) : arms.sum (<span class="kw">fun</span> chosen =&gt; prob chosen * mixedSquaredImportanceWeightedLoss arms prob loss chosen) &lt;= arms.card</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3ImportanceWeighted.lean.html#L166">Source line 166</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,1153 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.ETCFiniteArmRewardLaw · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.ETCFiniteArmRewardLaw · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.ETCFiniteArmRewardLaw · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · ETC</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>ETC<wbr>Finite<wbr>Arm<wbr>Reward<wbr>Law</h1>
+  <p class="lede">This module turns bounded arm-indexed probability laws with the finite-bandit model means into the centered reward-kernel contract consumed by the canonical ETC trajectory theorem. It then exposes the resulting conditional sub-Gaussian MGF directly, without an abstract centered-law or variance-ceiling argument.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html"><code>BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/etc/index.html">3. Explore-Then-Commit</a></dd></div>
+    <div><dt>Declarations</dt><dd>51</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-algorithms-etcgeneratedhistorypolicy/index.html"><code>BanditRLProof.Algorithms.ETCGeneratedHistoryPolicy</code></a>, <a href="../banditrlproof-algorithms-etccondsubgaussianwitnesses/index.html"><code>BanditRLProof.Algorithms.ETCCondSubGaussianWitnesses</code></a>, <a href="../banditrlproof-concentrationsubgaussian/index.html"><code>BanditRLProof.ConcentrationSubGaussian</code></a>, <a href="../banditrlproof-measurableregret/index.html"><code>BanditRLProof.MeasurableRegret</code></a>, <a href="../banditrlproof-rewardtracelaw/index.html"><code>BanditRLProof.RewardTraceLaw</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-etcexactsubgaussiantail/index.html"><code>BanditRLProof.Algorithms.ETCExactSubGaussianTail</code></a>, <a href="../banditrlproof-algorithms-etcrealprefixlawtransport/index.html"><code>BanditRLProof.Algorithms.ETCRealPrefixLawTransport</code></a>, <a href="../banditrlproof-algorithms-thompsonalgorithmdensityprocess/index.html"><code>BanditRLProof.Algorithms.ThompsonAlgorithmDensityProcess</code></a>, <a href="../banditrlproof-algorithms-thompsonmeasurabletrajectory/index.html"><code>BanditRLProof.Algorithms.ThompsonMeasurableTrajectory</code></a>, <a href="../banditrlproof-algorithms-ucbarmstreamexpectedpullcount/index.html"><code>BanditRLProof.Algorithms.UCBArmStreamExpectedPullCount</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-c1b3c1933d73">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.RewardKernel.pair_map_eq_compProd_of_map_eq_of_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">An action marginal and the conditional law of its feedback determine the joint
+action/feedback law. This is the measure-level composition used by the zeroth
+step of an `IsAlgEnvSeq`-shaped process contract.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> pair_map_eq_compProd_of_map_eq_of_condDistrib {Omega Action Feedback : Type*} [MeasurableSpace Omega] [MeasurableSpace Action] [MeasurableSpace Feedback] [StandardBorelSpace Feedback] [Nonempty Feedback] (mu : Measure Omega) [IsFiniteMeasure mu] (action : Omega -&gt; Action) (feedback : Omega -&gt; Feedback) (hfeedback : Measurable feedback) (p0 : Measure Action) (feedbackKernel : ProbabilityTheory.Kernel Action Feedback) [ProbabilityTheory.IsFiniteKernel feedbackKernel] (haction : Measure.map action mu = p0) (hcond : ProbabilityTheory.condDistrib feedback action mu =ᵐ[mu.map action] feedbackKernel) : Measure.map (<span class="kw">fun</span> omega : Omega =&gt; (action omega, feedback omega)) mu = p0 ⊗ₘ feedbackKernel</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L43">Source line 43</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5945b466b328">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.RewardKernel.condDistrib_pair_ae_eq_compProd_of_split</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The successor action policy and the feedback law conditional on
+`(history, action)` combine into the conditional law of the observable
+`(action, feedback)` pair given history. The proof is the joint-law
+characterization of `condDistrib` followed by associativity of `compProd`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> condDistrib_pair_ae_eq_compProd_of_split {Omega History Action Feedback : Type*} [MeasurableSpace Omega] [MeasurableSpace History] [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action] [MeasurableSpace Feedback] [StandardBorelSpace Feedback] [Nonempty Feedback] (mu : Measure Omega) [IsFiniteMeasure mu] (history : Omega -&gt; History) (hhistory : Measurable history) (action : Omega -&gt; Action) (haction : Measurable action) (feedback : Omega -&gt; Feedback) (hfeedback : Measurable feedback) (policy : ProbabilityTheory.Kernel History Action) [ProbabilityTheory.IsMarkovKernel policy] (feedbackKernel : ProbabilityTheory.Kernel (History × Action) Feedback) [ProbabilityTheory.IsMarkovKernel feedbackKernel] (hactionCond : ProbabilityTheory.condDistrib action history mu =ᵐ[mu.map history] policy) (hfeedbackCond : ProbabilityTheory.condDistrib feedback (<span class="kw">fun</span> omega : Omega =&gt; (history omega, action omega)) mu =ᵐ[ mu.map (<span class="kw">fun</span> omega : Omega =&gt; (history omega, action omega))] feedbackKernel) : ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; (action omega, feedback omega)) history mu =ᵐ[ mu.map history] policy ⊗ₖ feedbackKernel</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L72">Source line 72</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-94a53e86f496">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.RewardKernel.condDistrib_ae_eq_const_of_comp</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A constant conditional distribution given a fine conditioning variable stays
+constant after projecting to any measurable coarser conditioning variable.
+
+The proof uses the defining joint-law identity for `condDistrib`: the fine
+joint law is a product because the kernel is constant, and mapping that product
+by `(project, id)` gives the corresponding coarse joint law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> condDistrib_ae_eq_const_of_comp {Omega Fine Coarse Target : Type*} [MeasurableSpace Omega] [MeasurableSpace Fine] [MeasurableSpace Coarse] [MeasurableSpace Target] [StandardBorelSpace Target] [Nonempty Target] (mu : Measure Omega) [IsFiniteMeasure mu] (fine : Omega -&gt; Fine) (hfine : Measurable fine) (coarse : Omega -&gt; Coarse) (target : Omega -&gt; Target) (htarget : Measurable target) (project : Fine -&gt; Coarse) (hproject : Measurable project) (hcomp : coarse = project ∘ fine) (Q : Measure Target) [IsProbabilityMeasure Q] (hcond : ProbabilityTheory.condDistrib target fine mu =ᵐ[mu.map fine] ProbabilityTheory.Kernel.const Fine Q) : ProbabilityTheory.condDistrib target coarse mu =ᵐ[mu.map coarse] ProbabilityTheory.Kernel.const Coarse Q</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L143">Source line 143</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e74632078479">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.RewardKernel.map_eq_of_condDistrib_ae_eq_const</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A constant conditional distribution determines the target marginal.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> map_eq_of_condDistrib_ae_eq_const {Omega Condition Target : Type*} [MeasurableSpace Omega] [MeasurableSpace Condition] [MeasurableSpace Target] [StandardBorelSpace Target] [Nonempty Target] (mu : Measure Omega) [IsProbabilityMeasure mu] (condition : Omega -&gt; Condition) (hcondition : Measurable condition) (target : Omega -&gt; Target) (htarget : Measurable target) (Q : Measure Target) [IsProbabilityMeasure Q] (hcond : ProbabilityTheory.condDistrib target condition mu =ᵐ[mu.map condition] ProbabilityTheory.Kernel.const Condition Q) : Measure.map target mu = Q</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L195">Source line 195</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-16ed120bb645">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.RewardKernel.condDistrib_ae_eq_const_of_ae_eq_selected</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">An action-selected conditional kernel becomes constant when the selected value
+is almost surely constant under the source process.
+
+The selector equality is pushed to the conditioning-variable law with
+`ae_map_iff`; the supplied pointwise kernel-selection identity then rewrites
+the conditional kernel almost everywhere.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> condDistrib_ae_eq_const_of_ae_eq_selected {Omega Fine Action Target : Type*} [MeasurableSpace Omega] [MeasurableSpace Fine] [MeasurableSpace Action] [MeasurableEq Action] [MeasurableSpace Target] [StandardBorelSpace Target] [Nonempty Target] (mu : Measure Omega) [IsFiniteMeasure mu] (fine : Omega -&gt; Fine) (hfine : Measurable fine) (target : Omega -&gt; Target) (selected : Fine -&gt; Action) (hselected : Measurable selected) (kernel : ProbabilityTheory.Kernel Fine Target) (actionLaw : Action -&gt; Measure Target) (selectedValue : Action) (hselectedValue : (<span class="kw">fun</span> omega : Omega =&gt; selected (fine omega)) =ᵐ[mu] <span class="kw">fun</span> _omega =&gt; selectedValue) (hkernel : <span class="kw">forall</span> value : Fine, kernel value = actionLaw (selected value)) (hcond : ProbabilityTheory.condDistrib target fine mu =ᵐ[mu.map fine] kernel) : ProbabilityTheory.condDistrib target fine mu =ᵐ[mu.map fine] ProbabilityTheory.Kernel.const Fine (actionLaw selectedValue)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L236">Source line 236</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d02576c6e14e">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.finiteArmCenteredRewardKernelLaw_of_hasSubgaussianMGF</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact model means and direct per-arm sub-Gaussian witnesses turn finite-arm
+probability laws into a context-independent centered reward-kernel law.
+
+Unlike `finiteArmBoundedCenteredRewardKernelLaw`, this constructor does not
+derive the MGF from common bounded support. The supplied proxy is shared by
+all arms, matching the concentration contract of the LML ETC theorem while
+retaining ABRL&#x27;s current `Rat` reward trace.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteArmCenteredRewardKernelLaw_of_hasSubgaussianMGF {K : Nat} {Context : Type} [MeasurableSpace Context] (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (sigma2 : NNReal) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (hsubG : <span class="kw">forall</span> arm, ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> reward : Rat =&gt; ((reward : Rat) : Real) - (((model.mean arm : Rat) : Real))) sigma2 (armLaw arm)) : RewardKernel.CenteredRewardKernelLaw (RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob) (<span class="kw">fun</span> _ arm =&gt; model.mean arm) (<span class="kw">fun</span> _ _ =&gt; sigma2) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L280">Source line 280</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d16d731a7d2f">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.finiteArmBoundedCenteredRewardKernelLaw</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Common boundedness and exact model means turn finite-arm probability laws into
+a context-independent centered reward-kernel law.
+
+The variance proxy is the common Hoeffding proxy for `[lo, hi]`. Raw reward
+integrability follows from `Integrable.of_mem_Icc`; the centered MGF is the
+Mathlib-backed bounded-variable wrapper in `ConcentrationSubGaussian`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteArmBoundedCenteredRewardKernelLaw {K : Nat} {Context : Type} [MeasurableSpace Context] (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : <span class="kw">forall</span> arm, AEMeasurable (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) (armLaw arm)) (hbound : <span class="kw">forall</span> arm, Filter.Eventually (<span class="kw">fun</span> reward : Rat =&gt; Set.Icc lo hi (((reward : Rat) : Real))) (ae (armLaw arm))) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) : RewardKernel.CenteredRewardKernelLaw (RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob) (<span class="kw">fun</span> _ arm =&gt; model.mean arm) (<span class="kw">fun</span> _ _ =&gt; Concentration.intervalVarianceProxy lo hi) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L332">Source line 332</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7e25c88c2b17">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.explorationArgmaxHistory_centeredReward_succ_hasCondSubgaussianMGF_of_boundedArmLaws</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical generated-history ETC conditional MGF from bounded finite-arm laws.
+
+Because every arm uses the same interval `[lo, hi]`, the kernel variance proxy
+is constant. The selected-history variance ceiling required by the generic
+trajectory theorem is therefore discharged by reflexivity.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> explorationArgmaxHistory_centeredReward_succ_hasCondSubgaussianMGF_of_boundedArmLaws {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (mu0 : Measure Rat) [IsProbabilityMeasure mu0] (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : <span class="kw">forall</span> arm, AEMeasurable (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) (armLaw arm)) (hbound : <span class="kw">forall</span> arm, Filter.Eventually (<span class="kw">fun</span> reward : Rat =&gt; Set.Icc lo hi (((reward : Rat) : Real))) (ae (armLaw arm))) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (i : Nat) : <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> trajMeasure := ProbabilityTheory.Kernel.trajMeasure (X := <span class="kw">fun</span> _ : Nat =&gt; Rat) mu0 stepKernel <span class="kw">let</span> reward : RewardTrace Rat -&gt; RewardTrace Rat := <span class="kw">fun</span> trajectory =&gt; trajectory <span class="kw">let</span> hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> trajectory : RewardTrace Rat =&gt; reward trajectory t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L393">Source line 393</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9a03a48ad0f4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.explorationArgmaxHistory_centeredReward_succ_hasCondSubgaussianMGF_of_armLaws</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical generated-history ETC successor conditional MGF from direct
+finite-arm sub-Gaussian laws with a common variance proxy.
+
+The theorem removes common bounded support from the canonical kernel route.
+Its remaining contracts are exact model means, a shared per-arm MGF proxy,
+and measurable history context; the reward trace is still `Rat`-valued.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> explorationArgmaxHistory_centeredReward_succ_hasCondSubgaussianMGF_of_armLaws {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (mu0 : Measure Rat) [IsProbabilityMeasure mu0] (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (sigma2 : NNReal) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (hsubG : <span class="kw">forall</span> arm, ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> reward : Rat =&gt; ((reward : Rat) : Real) - (((model.mean arm : Rat) : Real))) sigma2 (armLaw arm)) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (i : Nat) : <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> trajMeasure := ProbabilityTheory.Kernel.trajMeasure (X := <span class="kw">fun</span> _ : Nat =&gt; Rat) mu0 stepKernel <span class="kw">let</span> reward : RewardTrace Rat -&gt; RewardTrace Rat := <span class="kw">fun</span> trajectory =&gt; trajectory <span class="kw">let</span> hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> trajectory : RewardTrace Rat =&gt; reward trajectory t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L472">Source line 472</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-93b92e9b2a26">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.explorationArgmaxHistory_centeredRewardProcess_sum_tail_ennreal_of_boundedArmLaws</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical ETC Azuma-Hoeffding bound for the full centered reward sum, including
+the actual reward at time zero.
+
+The initial trajectory law is fixed to the law of `ETC.exploreArm spec 0`.
+`RewardKernel.trajMeasure_map_eval_zero` transfers its bounded centered MGF to
+the zeroth trajectory coordinate, while the generated-history kernel law gives
+the successor conditional MGF witnesses. Unlike the earlier zero-initialized
+sum-tail surface, this sum contains rewards at every index in `Finset.range n`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> explorationArgmaxHistory_centeredRewardProcess_sum_tail_ennreal_of_boundedArmLaws {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : <span class="kw">forall</span> arm, AEMeasurable (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) (armLaw arm)) (hbound : <span class="kw">forall</span> arm, Filter.Eventually (<span class="kw">fun</span> reward : Rat =&gt; Set.Icc lo hi (((reward : Rat) : Real))) (ae (armLaw arm))) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (n : Nat) {eps : Real} (heps : <span class="num">0</span> &lt;= eps) : <span class="kw">let</span> defaultAction := ETC.exploreArm spec <span class="num">0</span> <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> trajMeasure := ProbabilityTheory.Kernel.trajMeasure (X := <span class="kw">fun</span> _ : Nat =&gt; Rat) (armLaw defaultAction) stepKernel <span class="kw">let</span> reward : RewardTrace Rat -&gt; RewardTrace Rat := <span class="kw">fun</span> trajectory =&gt; trajectory <span class="kw">let</span> Y : Nat -&gt; RewardTrace Rat -&gt; Real := <span class="kw">fun</span> t trajectory =&gt; <span class="kw">match</span> t <span class="kw">with</span> | <span class="num">0</span> =&gt; (((reward trajectory <span class="num">0</span> - model.mean defaultAction : Rat) : Real)) | i + <span class="num">1</span> =&gt; (((reward trajectory (i + <span class="num">1</span>) - model.mean ((policy i).action (state i (History.finiteRewardHistoryOfTrace (reward trajectory) i))) : Rat) : Real)) <span class="kw">let</span> cY : Nat -&gt; NNReal := <span class="kw">fun</span> _ =&gt; Concentration.intervalVarianceProxy lo hi trajMeasure {trajectory | eps &lt;= (Finset.range n).sum (<span class="kw">fun</span> t =&gt; Y t trajectory)} &lt;= ENNReal.ofReal (Real.exp (-eps ^ <span class="num">2</span> / (<span class="num">2</span> * (((Finset.range n).sum cY : NNReal) : Real))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L550">Source line 550</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6da11ff37a59">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.explorationArgmaxHistory_centeredRewardCondSubGaussianWitnesses_of_boundedArmLaws</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Bounded finite-arm laws provide the reward-level conditional sub-Gaussian
+witness package used by the existing fixed-commit pairwise ETC tail route.
+
+The ambient measure is the canonical generated-history trajectory. During the
+exploration horizon its generated action prefix agrees with
+`actionWithCommit spec model.bestArm`; the corresponding shifted history
+filtrations therefore agree. This transports the canonical selected-reward
+conditional MGF to the fixed-commit witness interface without assuming
+coordinate independence.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> explorationArgmaxHistory_centeredRewardCondSubGaussianWitnesses_of_boundedArmLaws {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : <span class="kw">forall</span> arm, AEMeasurable (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) (armLaw arm)) (hbound : <span class="kw">forall</span> arm, Filter.Eventually (<span class="kw">fun</span> reward : Rat =&gt; Set.Icc lo hi (((reward : Rat) : Real))) (ae (armLaw arm))) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) : <span class="kw">let</span> defaultAction := ETC.exploreArm spec <span class="num">0</span> <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> trajMeasure := ProbabilityTheory.Kernel.trajMeasure (X := <span class="kw">fun</span> _ : Nat =&gt; Rat) (armLaw defaultAction) stepKernel <span class="kw">let</span> reward : RewardTrace Rat -&gt; RewardTrace Rat := <span class="kw">fun</span> trajectory =&gt; trajectory <span class="kw">let</span> cReward : Fin K -&gt; Nat -&gt; NNReal := <span class="kw">fun</span> _ _ =&gt; Concentration.intervalVarianceProxy lo hi <span class="kw">let</span> pairwiseProxy := ETC.centeredPairwiseRewardDiffVarianceProxy spec model model.bestArm cReward ETC.CenteredRewardCondSubGaussianWitnesses trajMeasure spec model model.bestArm reward (ETC.centeredDiffSubGaussianTail spec model pairwiseProxy)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L736">Source line 736</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3b732c8e7e5d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.explorationArgmaxHistory_centeredRewardCondSubGaussianWitnesses_of_armLaws</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Direct common-sub-Gaussian arm laws provide the reward-level conditional
+witness package used by the fixed-commit pairwise ETC tail route.
+
+The initial witness is transported from the initial arm law. Successor
+witnesses come from the generated-history kernel law and are moved to the
+fixed `actionWithCommit` filtration using exploration-prefix action equality.
+No bounded-support assumption or arm union is used.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> explorationArgmaxHistory_centeredRewardCondSubGaussianWitnesses_of_armLaws {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (sigma2 : NNReal) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (hsubG : <span class="kw">forall</span> arm, ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> reward : Rat =&gt; ((reward : Rat) : Real) - (((model.mean arm : Rat) : Real))) sigma2 (armLaw arm)) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) : <span class="kw">let</span> defaultAction := ETC.exploreArm spec <span class="num">0</span> <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> trajMeasure := ProbabilityTheory.Kernel.trajMeasure (X := <span class="kw">fun</span> _ : Nat =&gt; Rat) (armLaw defaultAction) stepKernel <span class="kw">let</span> reward : RewardTrace Rat -&gt; RewardTrace Rat := <span class="kw">fun</span> trajectory =&gt; trajectory <span class="kw">let</span> cReward : Fin K -&gt; Nat -&gt; NNReal := <span class="kw">fun</span> _ _ =&gt; sigma2 <span class="kw">let</span> pairwiseProxy := ETC.centeredPairwiseRewardDiffVarianceProxy spec model model.bestArm cReward ETC.CenteredRewardCondSubGaussianWitnesses trajMeasure spec model model.bestArm reward (ETC.centeredDiffSubGaussianTail spec model pairwiseProxy)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L905">Source line 905</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b6fb1e0668a6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.explorationArgmaxHistory_pairwiseEmpMeanTailContract_of_boundedArmLaws</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical pairwise empirical-mean tail contract for the generated-history ETC
+trajectory under bounded finite-arm reward laws.
+
+This consumes the reward-level witness above through the existing centered
+pairwise conditional sub-Gaussian adapter. The contract matches the exact
+empirical means used by `explorationArgmaxCommit`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> explorationArgmaxHistory_pairwiseEmpMeanTailContract_of_boundedArmLaws {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : <span class="kw">forall</span> arm, AEMeasurable (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) (armLaw arm)) (hbound : <span class="kw">forall</span> arm, Filter.Eventually (<span class="kw">fun</span> reward : Rat =&gt; Set.Icc lo hi (((reward : Rat) : Real))) (ae (armLaw arm))) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) : <span class="kw">let</span> defaultAction := ETC.exploreArm spec <span class="num">0</span> <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> trajMeasure := ProbabilityTheory.Kernel.trajMeasure (X := <span class="kw">fun</span> _ : Nat =&gt; Rat) (armLaw defaultAction) stepKernel <span class="kw">let</span> reward : RewardTrace Rat -&gt; RewardTrace Rat := <span class="kw">fun</span> trajectory =&gt; trajectory <span class="kw">let</span> cReward : Fin K -&gt; Nat -&gt; NNReal := <span class="kw">fun</span> _ _ =&gt; Concentration.intervalVarianceProxy lo hi <span class="kw">let</span> pairwiseProxy := ETC.centeredPairwiseRewardDiffVarianceProxy spec model model.bestArm cReward ETC.PairwiseEmpMeanTailContract trajMeasure spec model model.bestArm reward (ETC.centeredDiffSubGaussianTail spec model pairwiseProxy)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L1058">Source line 1058</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-09402bb85f86">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.explorationArgmaxHistory_pairwiseEmpMeanTailContract_of_armLaws</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical pairwise empirical-mean tail contract for generated-history ETC
+under direct common-sub-Gaussian finite-arm laws.
+
+This is the concentration endpoint of the direct-MGF leaf. It retains the
+exact empirical means and fixed-commit one-sided pairwise process used by the
+bounded route, but replaces common support by the caller&#x27;s shared `sigma2`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> explorationArgmaxHistory_pairwiseEmpMeanTailContract_of_armLaws {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (sigma2 : NNReal) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (hsubG : <span class="kw">forall</span> arm, ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> reward : Rat =&gt; ((reward : Rat) : Real) - (((model.mean arm : Rat) : Real))) sigma2 (armLaw arm)) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) : <span class="kw">let</span> defaultAction := ETC.exploreArm spec <span class="num">0</span> <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> trajMeasure := ProbabilityTheory.Kernel.trajMeasure (X := <span class="kw">fun</span> _ : Nat =&gt; Rat) (armLaw defaultAction) stepKernel <span class="kw">let</span> reward : RewardTrace Rat -&gt; RewardTrace Rat := <span class="kw">fun</span> trajectory =&gt; trajectory <span class="kw">let</span> cReward : Fin K -&gt; Nat -&gt; NNReal := <span class="kw">fun</span> _ _ =&gt; sigma2 <span class="kw">let</span> pairwiseProxy := ETC.centeredPairwiseRewardDiffVarianceProxy spec model model.bestArm cReward ETC.PairwiseEmpMeanTailContract trajMeasure spec model model.bestArm reward (ETC.centeredDiffSubGaussianTail spec model pairwiseProxy)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L1130">Source line 1130</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-07a354fbe5eb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.explorationArgmaxHistory_prob_commit_eq_arm_le_pairwiseTail_of_armLaws</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical generated-history ETC probability bound for committing to one fixed
+non-best arm under direct common-sub-Gaussian finite-arm laws.
+
+The theorem consumes the direct-MGF pairwise empirical-mean contract. It keeps
+the single concrete commit fiber and therefore introduces no arm union.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> explorationArgmaxHistory_prob_commit_eq_arm_le_pairwiseTail_of_armLaws {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (sigma2 : NNReal) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (hsubG : <span class="kw">forall</span> arm, ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> reward : Rat =&gt; ((reward : Rat) : Real) - (((model.mean arm : Rat) : Real))) sigma2 (armLaw arm)) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (a : Fin K) (hne : a = model.bestArm -&gt; False) : <span class="kw">let</span> defaultAction := ETC.exploreArm spec <span class="num">0</span> <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> trajMeasure := ProbabilityTheory.Kernel.trajMeasure (X := <span class="kw">fun</span> _ : Nat =&gt; Rat) (armLaw defaultAction) stepKernel <span class="kw">let</span> cReward : Fin K -&gt; Nat -&gt; NNReal := <span class="kw">fun</span> _ _ =&gt; sigma2 <span class="kw">let</span> pairwiseProxy := ETC.centeredPairwiseRewardDiffVarianceProxy spec model model.bestArm cReward trajMeasure {trajectory : RewardTrace Rat | ETC.explorationArgmaxCommit spec model trajectory = a} &lt;= ETC.centeredDiffSubGaussianTail spec model pairwiseProxy a</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L1198">Source line 1198</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-dcfc0e34d57c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.explorationArgmaxHistory_prob_commit_eq_arm_le_pairwiseTail_of_boundedArmLaws</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical generated-history ETC probability bound for committing to one fixed
+non-best arm under bounded finite-arm reward laws.
+
+The event is the actual concrete empirical-mean argmax fiber. Its probability
+is bounded by the matching one-sided centered pairwise tail, with no union over
+the other arms. This is the armwise probability source required by the
+gap-weighted Bochner assembly.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> explorationArgmaxHistory_prob_commit_eq_arm_le_pairwiseTail_of_boundedArmLaws {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : <span class="kw">forall</span> arm, AEMeasurable (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) (armLaw arm)) (hbound : <span class="kw">forall</span> arm, Filter.Eventually (<span class="kw">fun</span> reward : Rat =&gt; Set.Icc lo hi (((reward : Rat) : Real))) (ae (armLaw arm))) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (a : Fin K) (hne : a = model.bestArm -&gt; False) : <span class="kw">let</span> defaultAction := ETC.exploreArm spec <span class="num">0</span> <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> trajMeasure := ProbabilityTheory.Kernel.trajMeasure (X := <span class="kw">fun</span> _ : Nat =&gt; Rat) (armLaw defaultAction) stepKernel <span class="kw">let</span> cReward : Fin K -&gt; Nat -&gt; NNReal := <span class="kw">fun</span> _ _ =&gt; Concentration.intervalVarianceProxy lo hi <span class="kw">let</span> pairwiseProxy := ETC.centeredPairwiseRewardDiffVarianceProxy spec model model.bestArm cReward trajMeasure {trajectory : RewardTrace Rat | ETC.explorationArgmaxCommit spec model trajectory = a} &lt;= ETC.centeredDiffSubGaussianTail spec model pairwiseProxy a</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L1271">Source line 1271</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6f2dad93a97c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.explorationArgmaxHistory_prob_wrongCommit_le_pairwiseTailSum_of_boundedArmLaws</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical generated-history ETC wrong-commit probability bound from bounded
+finite-arm laws.
+
+The event is the actual empirical-mean argmax commit used by the generated ETC
+policy. Its probability is bounded by the finite union of the canonical
+centered pairwise sub-Gaussian tails. This is a one-horizon, one-sided,
+union-bounded result; it does not yet assemble expected regret or transport to
+an externally supplied environment law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> explorationArgmaxHistory_prob_wrongCommit_le_pairwiseTailSum_of_boundedArmLaws {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : <span class="kw">forall</span> arm, AEMeasurable (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) (armLaw arm)) (hbound : <span class="kw">forall</span> arm, Filter.Eventually (<span class="kw">fun</span> reward : Rat =&gt; Set.Icc lo hi (((reward : Rat) : Real))) (ae (armLaw arm))) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) : <span class="kw">let</span> defaultAction := ETC.exploreArm spec <span class="num">0</span> <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> trajMeasure := ProbabilityTheory.Kernel.trajMeasure (X := <span class="kw">fun</span> _ : Nat =&gt; Rat) (armLaw defaultAction) stepKernel <span class="kw">let</span> cReward : Fin K -&gt; Nat -&gt; NNReal := <span class="kw">fun</span> _ _ =&gt; Concentration.intervalVarianceProxy lo hi <span class="kw">let</span> pairwiseProxy := ETC.centeredPairwiseRewardDiffVarianceProxy spec model model.bestArm cReward trajMeasure {trajectory : RewardTrace Rat | ETC.explorationArgmaxCommit spec model trajectory = model.bestArm -&gt; False} &lt;= ((Finset.univ : Finset (Fin K)).filter (<span class="kw">fun</span> a : Fin K =&gt; a = model.bestArm -&gt; False)).sum (ETC.centeredDiffSubGaussianTail spec model pairwiseProxy)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L1348">Source line 1348</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-59aa4d91a786">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.canonicalBoundedArmWrongCommitTailBudget</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical finite-union wrong-commit tail budget for common-bounded arm laws.
+
+Every reward-level variance proxy is the common interval proxy. The pairwise
+mask retains that proxy only when the exploration trace samples the candidate
+arm or the selected best arm.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> canonicalBoundedArmWrongCommitTailBudget {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (lo hi : Real) : ENNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L1421">Source line 1421</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-26b1a34087bd">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.canonicalBoundedArmWrongCommitTailBudgetReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Real view of the canonical bounded-arm wrong-commit tail budget.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> canonicalBoundedArmWrongCommitTailBudgetReal {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (lo hi : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L1433">Source line 1433</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ca2866a42f13">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.canonicalBoundedArmMaxGapIntegralRegretBoundReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Named Real regret budget for canonical bounded-arm generated ETC.
+
+The first term pays the round-robin exploration cost. The second charges the
+remaining `r` rounds by `model.maxGap` times the canonical wrong-commit budget.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> canonicalBoundedArmMaxGapIntegralRegretBoundReal {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (r : Nat) (lo hi : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L1444">Source line 1444</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-77299867ea91">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.canonicalBoundedArmPairwiseTailReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Real view of one canonical bounded-arm centered pairwise tail.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> canonicalBoundedArmPairwiseTailReal {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (lo hi : Real) (a : Fin K) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L1457">Source line 1457</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6ac240ed2e52">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.canonicalBoundedArmPerArmIntegralRegretBoundReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Named Real regret budget for the canonical bounded-arm per-arm ETC route.
+
+The exploration term is unchanged. The suffix keeps every arm gap paired with
+that arm&#x27;s own canonical pairwise tail instead of collapsing the finite family
+to `model.maxGap` times a union probability.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> canonicalBoundedArmPerArmIntegralRegretBoundReal {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (r : Nat) (lo hi : Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L1473">Source line 1473</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-30b58acab470">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.canonicalSubGaussianArmPairwiseTailReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Real view of one canonical common-sub-Gaussian arm pairwise tail.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> canonicalSubGaussianArmPairwiseTailReal {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (sigma2 : NNReal) (a : Fin K) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L1486">Source line 1486</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e1826e4177fa">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.canonicalSubGaussianArmPerArmIntegralRegretBoundReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Named Real regret budget for the canonical common-sub-Gaussian per-arm ETC
+route over `Rat` rewards.
+
+The suffix preserves one gap-weighted direct-MGF pairwise tail per arm and
+takes no finite-arm union.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> canonicalSubGaussianArmPerArmIntegralRegretBoundReal {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (r : Nat) (sigma2 : NNReal) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L1501">Source line 1501</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e83ae394f131">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.real_measure_explorationArgmaxCommit_eq_arm_le_canonicalSubGaussianArmPairwiseTailReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Real-valued canonical probability bound for one non-best commit fiber under
+direct common-sub-Gaussian finite-arm laws.
+
+The ENNReal pairwise tail is finite because it is an `ofReal` exponential, so
+the conversion preserves the concrete event and introduces no arm union.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> real_measure_explorationArgmaxCommit_eq_arm_le_canonicalSubGaussianArmPairwiseTailReal {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (sigma2 : NNReal) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (hsubG : <span class="kw">forall</span> arm, ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> reward : Rat =&gt; ((reward : Rat) : Real) - (((model.mean arm : Rat) : Real))) sigma2 (armLaw arm)) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (a : Fin K) (hne : a = model.bestArm -&gt; False) : <span class="kw">let</span> defaultAction := ETC.exploreArm spec <span class="num">0</span> <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> trajMeasure := ProbabilityTheory.Kernel.trajMeasure (X := <span class="kw">fun</span> _ : Nat =&gt; Rat) (armLaw defaultAction) stepKernel trajMeasure.real {trajectory : RewardTrace Rat | ETC.explorationArgmaxCommit spec model trajectory = a} &lt;= ETC.canonicalSubGaussianArmPairwiseTailReal spec model sigma2 a</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L1520">Source line 1520</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-71686b289d31">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.real_measure_explorationArgmaxCommit_eq_arm_le_canonicalBoundedArmPairwiseTailReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Real-valued canonical probability bound for committing to one non-best arm.
+
+The corresponding ENNReal tail is finite because it is `ENNReal.ofReal` of a
+real exponential, so `ENNReal.toReal_mono` transports the compiled armwise
+probability theorem without changing the event or taking a union.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> real_measure_explorationArgmaxCommit_eq_arm_le_canonicalBoundedArmPairwiseTailReal {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : <span class="kw">forall</span> arm, AEMeasurable (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) (armLaw arm)) (hbound : <span class="kw">forall</span> arm, Filter.Eventually (<span class="kw">fun</span> reward : Rat =&gt; Set.Icc lo hi (((reward : Rat) : Real))) (ae (armLaw arm))) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (a : Fin K) (hne : a = model.bestArm -&gt; False) : <span class="kw">let</span> defaultAction := ETC.exploreArm spec <span class="num">0</span> <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> trajMeasure := ProbabilityTheory.Kernel.trajMeasure (X := <span class="kw">fun</span> _ : Nat =&gt; Rat) (armLaw defaultAction) stepKernel trajMeasure.real {trajectory : RewardTrace Rat | ETC.explorationArgmaxCommit spec model trajectory = a} &lt;= ETC.canonicalBoundedArmPairwiseTailReal spec model lo hi a</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L1591">Source line 1591</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-347af5d5f5af">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.real_measure_explorationArgmaxCommit_ne_bestArm_le_canonicalBoundedArmWrongCommitTailBudgetReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Real-valued canonical wrong-commit probability bound.
+
+The ENNReal finite tail sum is never infinite because each summand is an
+`ENNReal.ofReal` exponential. This wrapper converts the compiled canonical
+pairwise probability theorem with `ENNReal.toReal_mono`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> real_measure_explorationArgmaxCommit_ne_bestArm_le_canonicalBoundedArmWrongCommitTailBudgetReal {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : <span class="kw">forall</span> arm, AEMeasurable (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) (armLaw arm)) (hbound : <span class="kw">forall</span> arm, Filter.Eventually (<span class="kw">fun</span> reward : Rat =&gt; Set.Icc lo hi (((reward : Rat) : Real))) (ae (armLaw arm))) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) : <span class="kw">let</span> defaultAction := ETC.exploreArm spec <span class="num">0</span> <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> trajMeasure := ProbabilityTheory.Kernel.trajMeasure (X := <span class="kw">fun</span> _ : Nat =&gt; Rat) (armLaw defaultAction) stepKernel trajMeasure.real {trajectory : RewardTrace Rat | ETC.explorationArgmaxCommit spec model trajectory = model.bestArm -&gt; False} &lt;= ETC.canonicalBoundedArmWrongCommitTailBudgetReal spec model lo hi</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L1664">Source line 1664</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f0a108603632">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Bochner expected pseudo-regret bound for the generated finite-history ETC
+action under its canonical bounded-arm trajectory law.
+
+The measurable empirical-mean argmax supplies both wrong-event measurability
+and pseudo-regret integrability. The preceding Real probability wrapper feeds
+the generic pointwise-to-expectation ETC assembly with `model.maxGap` as the
+suffix charge. This is the canonical action-dependent kernel theorem; transport
+to an externally supplied environment law remains separate.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : <span class="kw">forall</span> arm, AEMeasurable (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) (armLaw arm)) (hbound : <span class="kw">forall</span> arm, Filter.Eventually (<span class="kw">fun</span> reward : Rat =&gt; Set.Icc lo hi (((reward : Rat) : Real))) (ae (armLaw arm))) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (r : Nat) : <span class="kw">let</span> defaultAction := ETC.exploreArm spec <span class="num">0</span> <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> trajMeasure := ProbabilityTheory.Kernel.trajMeasure (X := <span class="kw">fun</span> _ : Nat =&gt; Rat) (armLaw defaultAction) stepKernel integral trajMeasure (<span class="kw">fun</span> trajectory : RewardTrace Rat =&gt; (((pseudoRegret model (ETC.explorationArgmaxGeneratedAction spec model trajectory) (spec.explorationPulls * K + r) : Rat) : Real))) &lt;= ETC.canonicalBoundedArmMaxGapIntegralRegretBoundReal spec model r lo hi</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L1736">Source line 1736</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-16f83701976c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmPerArmIntegralRegretBoundReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical bounded-arm generated-history ETC expected-regret theorem with a
+per-arm gap-weighted suffix budget.
+
+Each non-best commit fiber uses its own canonical centered pairwise tail. The
+best-arm term vanishes by `gap_bestArm`, so no artificial tail hypothesis is
+needed there. This endpoint removes the max-gap finite-union collapse from the
+canonical bounded-Rat theorem while retaining the same exploration term.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmPerArmIntegralRegretBoundReal {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : <span class="kw">forall</span> arm, AEMeasurable (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) (armLaw arm)) (hbound : <span class="kw">forall</span> arm, Filter.Eventually (<span class="kw">fun</span> reward : Rat =&gt; Set.Icc lo hi (((reward : Rat) : Real))) (ae (armLaw arm))) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (r : Nat) : <span class="kw">let</span> defaultAction := ETC.exploreArm spec <span class="num">0</span> <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> trajMeasure := ProbabilityTheory.Kernel.trajMeasure (X := <span class="kw">fun</span> _ : Nat =&gt; Rat) (armLaw defaultAction) stepKernel integral trajMeasure (<span class="kw">fun</span> trajectory : RewardTrace Rat =&gt; (((pseudoRegret model (ETC.explorationArgmaxGeneratedAction spec model trajectory) (spec.explorationPulls * K + r) : Rat) : Real))) &lt;= ETC.canonicalBoundedArmPerArmIntegralRegretBoundReal spec model r lo hi</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L1855">Source line 1855</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1fe39cf602e2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical generated-history ETC expected-regret theorem with direct common-
+sub-Gaussian finite-arm laws and a per-arm gap-weighted suffix budget.
+
+Each non-best commit fiber is charged by its own direct-MGF pairwise tail. The
+best-arm term vanishes by `gap_bestArm`; no bounded-support assumption, max-gap
+collapse, or arm union is used. Rewards and model means remain `Rat`-valued.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (sigma2 : NNReal) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (hsubG : <span class="kw">forall</span> arm, ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> reward : Rat =&gt; ((reward : Rat) : Real) - (((model.mean arm : Rat) : Real))) sigma2 (armLaw arm)) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (r : Nat) : <span class="kw">let</span> defaultAction := ETC.exploreArm spec <span class="num">0</span> <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> trajMeasure := ProbabilityTheory.Kernel.trajMeasure (X := <span class="kw">fun</span> _ : Nat =&gt; Rat) (armLaw defaultAction) stepKernel integral trajMeasure (<span class="kw">fun</span> trajectory : RewardTrace Rat =&gt; (((pseudoRegret model (ETC.explorationArgmaxGeneratedAction spec model trajectory) (spec.explorationPulls * K + r) : Rat) : Real))) &lt;= ETC.canonicalSubGaussianArmPerArmIntegralRegretBoundReal spec model r sigma2</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L1980">Source line 1980</a>
+      <a href="../../chapters/etc/index.html#decl-1fe39cf602e2-teaching">Open teaching explanation</a>
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-895d96217413">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.explorationArgmaxPrefixRegretReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-prefix realization of the generated ETC pseudo-regret integrand.
+
+The completed trace is only an implementation device. Once the supplied
+history contains the complete exploration prefix, the value agrees with the
+original generated-history action by the factorization theorem below.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> explorationArgmaxPrefixRegretReal {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (t r : Nat) (history : History.FiniteRewardHistory Rat t) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L2104">Source line 2104</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fe1128862852">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.measurable_explorationArgmaxPrefixRegretReal</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite-prefix ETC pseudo-regret realization is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_explorationArgmaxPrefixRegretReal {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (t r : Nat) : Measurable (ETC.explorationArgmaxPrefixRegretReal spec model t r)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L2113">Source line 2113</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-630836923213">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.explorationArgmaxPrefixRegretReal_finiteRewardHistoryOfTrace</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite-prefix realization agrees with canonical ETC whenever the retained
+history covers every exploration reward coordinate.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> explorationArgmaxPrefixRegretReal_finiteRewardHistoryOfTrace {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (reward : RewardTrace Rat) (t r : Nat) (horizon_le : spec.explorationPulls * K &lt;= t + <span class="num">1</span>) : ETC.explorationArgmaxPrefixRegretReal spec model t r (History.finiteRewardHistoryOfTrace reward t) = (((pseudoRegret model (ETC.explorationArgmaxAction spec model reward) (spec.explorationPulls * K + r) : Rat) : Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L2169">Source line 2169</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-73006d385b5d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.explorationArgmaxPrefixRegretReal_finiteRewardHistoryOfTrace_generated</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Generated-history form of the finite exploration-prefix regret factorization.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> explorationArgmaxPrefixRegretReal_finiteRewardHistoryOfTrace_generated {K : Nat} (spec : ETC.Spec K) (model : FiniteBanditModel K) (reward : RewardTrace Rat) (t r : Nat) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (horizon_le : spec.explorationPulls * K &lt;= t + <span class="num">1</span>) : ETC.explorationArgmaxPrefixRegretReal spec model t r (History.finiteRewardHistoryOfTrace reward t) = (((pseudoRegret model (ETC.explorationArgmaxGeneratedAction spec model reward) (spec.explorationPulls * K + r) : Rat) : Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L2196">Source line 2196</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-677ac14e0936">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_eq_of_explorationPrefix_map_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The generated-history ETC pseudo-regret integral depends only on the finite
+exploration-prefix pushforward.
+
+This law-transport equality is independent of the reward-law or concentration
+route used later to bound either integral. It packages the measurable prefix
+factorization once for both max-gap and per-arm canonical endpoints.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pseudoRegret_explorationArgmaxGeneratedAction_eq_of_explorationPrefix_map_eq {K : Nat} (mu nu : Measure (RewardTrace Rat)) (spec : ETC.Spec K) (model : FiniteBanditModel K) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (r : Nat) (hprefix : <span class="kw">let</span> explorationLast := spec.explorationPulls * K - <span class="num">1</span> Measure.map (<span class="kw">fun</span> trajectory : RewardTrace Rat =&gt; History.finiteRewardHistoryOfTrace trajectory explorationLast) mu = Measure.map (<span class="kw">fun</span> trajectory : RewardTrace Rat =&gt; History.finiteRewardHistoryOfTrace trajectory explorationLast) nu) : integral mu (<span class="kw">fun</span> trajectory : RewardTrace Rat =&gt; (((pseudoRegret model (ETC.explorationArgmaxGeneratedAction spec model trajectory) (spec.explorationPulls * K + r) : Rat) : Real))) = integral nu (<span class="kw">fun</span> trajectory : RewardTrace Rat =&gt; (((pseudoRegret model (ETC.explorationArgmaxGeneratedAction spec model trajectory) (spec.explorationPulls * K + r) : Rat) : Real)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L2219">Source line 2219</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5f137965c1be">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_explorationPrefix_map_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">External-law ETC expected-regret theorem from exploration-prefix law equality.
+
+The external reward law need not equal the canonical Ionescu-Tulcea law on
+the full infinite trajectory. It is enough that their pushforwards to the
+`m * K` exploration rewards agree: the generated ETC action and its finite
+horizon pseudo-regret factor through exactly that prefix. This is the law
+transport surface needed by external stationary-bandit environment models.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_explorationPrefix_map_eq {K : Nat} {Context : Type} [MeasurableSpace Context] (mu : Measure (RewardTrace Rat)) [IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : <span class="kw">forall</span> arm, AEMeasurable (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) (armLaw arm)) (hbound : <span class="kw">forall</span> arm, Filter.Eventually (<span class="kw">fun</span> reward : Rat =&gt; Set.Icc lo hi (((reward : Rat) : Real))) (ae (armLaw arm))) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (r : Nat) (hprefix : <span class="kw">let</span> defaultAction := ETC.exploreArm spec <span class="num">0</span> <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> trajMeasure := ProbabilityTheory.Kernel.trajMeasure (X := <span class="kw">fun</span> _ : Nat =&gt; Rat) (armLaw defaultAction) stepKernel <span class="kw">let</span> explorationLast := spec.explorationPulls * K - <span class="num">1</span> Measure.map (<span class="kw">fun</span> trajectory : RewardTrace Rat =&gt; History.finiteRewardHistoryOfTrace trajectory explorationLast) mu = Measure.map (<span class="kw">fun</span> trajectory : RewardTrace Rat =&gt; History.finiteRewardHistoryOfTrace trajectory explorationLast) trajMeasure) : integral mu (<span class="kw">fun</span> trajectory : RewardTrace Rat =&gt; (((pseudoRegret model (ETC.explorationArgmaxGeneratedAction spec model trajectory) (spec.explorationPulls * K + r) : Rat) : Real))) &lt;= ETC.canonicalBoundedArmMaxGapIntegralRegretBoundReal spec model r lo hi</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L2301">Source line 2301</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bf7af72acabb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_explorationPrefix_map_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">External-law canonical per-arm ETC expected-regret theorem from exploration-
+prefix law equality.
+
+The external reward law only needs the same `m * K` exploration-prefix
+pushforward as the canonical generated-history trajectory. The resulting bound
+preserves each arm&#x27;s own gap-weighted pairwise tail and takes no union over
+commit arms.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_explorationPrefix_map_eq {K : Nat} {Context : Type} [MeasurableSpace Context] (mu : Measure (RewardTrace Rat)) [IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : <span class="kw">forall</span> arm, AEMeasurable (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) (armLaw arm)) (hbound : <span class="kw">forall</span> arm, Filter.Eventually (<span class="kw">fun</span> reward : Rat =&gt; Set.Icc lo hi (((reward : Rat) : Real))) (ae (armLaw arm))) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (r : Nat) (hprefix : <span class="kw">let</span> defaultAction := ETC.exploreArm spec <span class="num">0</span> <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> trajMeasure := ProbabilityTheory.Kernel.trajMeasure (X := <span class="kw">fun</span> _ : Nat =&gt; Rat) (armLaw defaultAction) stepKernel <span class="kw">let</span> explorationLast := spec.explorationPulls * K - <span class="num">1</span> Measure.map (<span class="kw">fun</span> trajectory : RewardTrace Rat =&gt; History.finiteRewardHistoryOfTrace trajectory explorationLast) mu = Measure.map (<span class="kw">fun</span> trajectory : RewardTrace Rat =&gt; History.finiteRewardHistoryOfTrace trajectory explorationLast) trajMeasure) : integral mu (<span class="kw">fun</span> trajectory : RewardTrace Rat =&gt; (((pseudoRegret model (ETC.explorationArgmaxGeneratedAction spec model trajectory) (spec.explorationPulls * K + r) : Rat) : Real))) &lt;= ETC.canonicalBoundedArmPerArmIntegralRegretBoundReal spec model r lo hi</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L2422">Source line 2422</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e12ef6dcfdc9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_explorationPrefix_map_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">External-law common-sub-Gaussian per-arm ETC expected regret from exploration-
+prefix law equality.
+
+Only the `m * K` exploration reward-prefix pushforward must match the canonical
+generated-history trajectory. The direct-MGF gap-weighted armwise budget is
+transported without a full trajectory law, suffix law, or arm union.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_explorationPrefix_map_eq {K : Nat} {Context : Type} [MeasurableSpace Context] (mu : Measure (RewardTrace Rat)) [IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (sigma2 : NNReal) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (hsubG : <span class="kw">forall</span> arm, ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> reward : Rat =&gt; ((reward : Rat) : Real) - (((model.mean arm : Rat) : Real))) sigma2 (armLaw arm)) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (r : Nat) (hprefix : <span class="kw">let</span> defaultAction := ETC.exploreArm spec <span class="num">0</span> <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> trajMeasure := ProbabilityTheory.Kernel.trajMeasure (X := <span class="kw">fun</span> _ : Nat =&gt; Rat) (armLaw defaultAction) stepKernel <span class="kw">let</span> explorationLast := spec.explorationPulls * K - <span class="num">1</span> Measure.map (<span class="kw">fun</span> trajectory : RewardTrace Rat =&gt; History.finiteRewardHistoryOfTrace trajectory explorationLast) mu = Measure.map (<span class="kw">fun</span> trajectory : RewardTrace Rat =&gt; History.finiteRewardHistoryOfTrace trajectory explorationLast) trajMeasure) : integral mu (<span class="kw">fun</span> trajectory : RewardTrace Rat =&gt; (((pseudoRegret model (ETC.explorationArgmaxGeneratedAction spec model trajectory) (spec.explorationPulls * K + r) : Rat) : Real))) &lt;= ETC.canonicalSubGaussianArmPerArmIntegralRegretBoundReal spec model r sigma2</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L2509">Source line 2509</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b6ad6691f221">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_initial_map_eq_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">External-process ETC expected regret from initial and successor conditional
+reward laws.
+
+The contract is local to the exploration prefix: coordinate measurability, the
+zeroth reward marginal, and the conditional distribution of reward `i + 1`
+given rewards through `i` for `i &lt; m * K - 1`. The generic finite-prefix law
+result identifies the required pushforward with the Ionescu-Tulcea process;
+the preceding prefix-transport theorem then supplies the regret bound.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_initial_map_eq_condDistrib {Omega : Type*} {K : Nat} {Context : Type} [MeasurableSpace Omega] [MeasurableSpace Context] (mu : Measure Omega) [IsProbabilityMeasure mu] (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : <span class="kw">forall</span> arm, AEMeasurable (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) (armLaw arm)) (hbound : <span class="kw">forall</span> arm, Filter.Eventually (<span class="kw">fun</span> reward : Rat =&gt; Set.Icc lo hi (((reward : Rat) : Real))) (ae (armLaw arm))) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (r : Nat) (hzero : Measure.map (<span class="kw">fun</span> omega : Omega =&gt; reward omega <span class="num">0</span>) mu = armLaw (ETC.exploreArm spec <span class="num">0</span>)) (hcond : <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> explorationLast := spec.explorationPulls * K - <span class="num">1</span> <span class="kw">forall</span> i : Nat, i &lt; explorationLast -&gt; ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; reward omega (i + <span class="num">1</span>)) (<span class="kw">fun</span> omega : Omega =&gt; History.finiteRewardHistoryOfTrace (reward omega) i) mu =ᵐ[ mu.map (<span class="kw">fun</span> omega : Omega =&gt; History.finiteRewardHistoryOfTrace (reward omega) i)] stepKernel i) : integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((pseudoRegret model (ETC.explorationArgmaxGeneratedAction spec model (reward omega)) (spec.explorationPulls * K + r) : Rat) : Real))) &lt;= ETC.canonicalBoundedArmMaxGapIntegralRegretBoundReal spec model r lo hi</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L2597">Source line 2597</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-89495cfa6d70">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_initial_map_eq_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">External-process canonical per-arm ETC expected regret from initial and
+successor conditional reward laws.
+
+The conditional laws are needed only through the exploration prefix. They
+identify the reward-trace prefix pushforward with the canonical trajectory;
+the per-arm prefix transport then preserves each gap-weighted pairwise tail
+without a wrong-event union.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_initial_map_eq_condDistrib {Omega : Type*} {K : Nat} {Context : Type} [MeasurableSpace Omega] [MeasurableSpace Context] (mu : Measure Omega) [IsProbabilityMeasure mu] (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : <span class="kw">forall</span> arm, AEMeasurable (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) (armLaw arm)) (hbound : <span class="kw">forall</span> arm, Filter.Eventually (<span class="kw">fun</span> reward : Rat =&gt; Set.Icc lo hi (((reward : Rat) : Real))) (ae (armLaw arm))) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (r : Nat) (hzero : Measure.map (<span class="kw">fun</span> omega : Omega =&gt; reward omega <span class="num">0</span>) mu = armLaw (ETC.exploreArm spec <span class="num">0</span>)) (hcond : <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> explorationLast := spec.explorationPulls * K - <span class="num">1</span> <span class="kw">forall</span> i : Nat, i &lt; explorationLast -&gt; ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; reward omega (i + <span class="num">1</span>)) (<span class="kw">fun</span> omega : Omega =&gt; History.finiteRewardHistoryOfTrace (reward omega) i) mu =ᵐ[ mu.map (<span class="kw">fun</span> omega : Omega =&gt; History.finiteRewardHistoryOfTrace (reward omega) i)] stepKernel i) : integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((pseudoRegret model (ETC.explorationArgmaxGeneratedAction spec model (reward omega)) (spec.explorationPulls * K + r) : Rat) : Real))) &lt;= ETC.canonicalBoundedArmPerArmIntegralRegretBoundReal spec model r lo hi</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L2722">Source line 2722</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-864abb8b8f87">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_initial_map_eq_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">External-process common-sub-Gaussian per-arm ETC expected regret from an
+initial reward marginal and successor conditional reward laws.
+
+The conditional laws are required only through exploration. They identify the
+external reward-prefix law with the canonical trajectory and then invoke the
+direct-MGF prefix transport theorem.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_initial_map_eq_condDistrib {Omega : Type*} {K : Nat} {Context : Type} [MeasurableSpace Omega] [MeasurableSpace Context] (mu : Measure Omega) [IsProbabilityMeasure mu] (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (sigma2 : NNReal) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (hsubG : <span class="kw">forall</span> arm, ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> reward : Rat =&gt; ((reward : Rat) : Real) - (((model.mean arm : Rat) : Real))) sigma2 (armLaw arm)) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (r : Nat) (hzero : Measure.map (<span class="kw">fun</span> omega : Omega =&gt; reward omega <span class="num">0</span>) mu = armLaw (ETC.exploreArm spec <span class="num">0</span>)) (hcond : <span class="kw">let</span> rewardKernel := RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob <span class="kw">let</span> policy := <span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t <span class="kw">let</span> state := <span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history <span class="kw">let</span> stepKernel := RewardKernel.historyStepKernelFamily rewardKernel policy context state hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) <span class="kw">let</span> explorationLast := spec.explorationPulls * K - <span class="num">1</span> <span class="kw">forall</span> i : Nat, i &lt; explorationLast -&gt; ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; reward omega (i + <span class="num">1</span>)) (<span class="kw">fun</span> omega : Omega =&gt; History.finiteRewardHistoryOfTrace (reward omega) i) mu =ᵐ[ mu.map (<span class="kw">fun</span> omega : Omega =&gt; History.finiteRewardHistoryOfTrace (reward omega) i)] stepKernel i) : integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((pseudoRegret model (ETC.explorationArgmaxGeneratedAction spec model (reward omega)) (spec.explorationPulls * K + r) : Rat) : Real))) &lt;= ETC.canonicalSubGaussianArmPerArmIntegralRegretBoundReal spec model r sigma2</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L2846">Source line 2846</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a4e5c758fbbd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.explorationArgmaxHistory_stepKernel_apply_eq_exploreArmLaw_of_lt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">During exploration, the generated-history ETC step kernel is exactly the law
+of the arm scheduled at time `i + 1`.
+
+The context disappears because `contextIndependentOfActionLaws` selects only
+the policy action, and the history state disappears because the exploration
+branch of the policy is deterministic.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> explorationArgmaxHistory_stepKernel_apply_eq_exploreArmLaw_of_lt {K : Nat} {Context : Type} [MeasurableSpace Context] (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context) (hcontext : <span class="kw">forall</span> n : Nat, Measurable (context n)) (i : Nat) (hi : i + <span class="num">1</span> &lt; spec.explorationPulls * K) (history : (j : Finset.Iic i) -&gt; Rat) : RewardKernel.historyStepKernelFamily (RewardKernel.contextIndependentOfActionLaws (Context := Context) armLaw hprob) (<span class="kw">fun</span> t =&gt; ETC.explorationArgmaxHistoryPolicy spec model t) context (<span class="kw">fun</span> t history =&gt; ETC.explorationArgmaxHistoryState t history) hcontext (<span class="kw">fun</span> t =&gt; ETC.measurable_explorationArgmaxHistoryState t) i history = armLaw (ETC.exploreArm spec (i + <span class="num">1</span>))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L2969">Source line 2969</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-62f771b4de1e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_initial_map_eq_explorationArm_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Practical external-process ETC expected regret from the conditional laws of
+the scheduled exploration arms.
+
+Unlike the preceding theorem, callers do not mention the local
+`historyStepKernelFamily`. They provide the initial arm law and, before the end
+of exploration, the conditional law of reward `i + 1` as the stationary law
+of `exploreArm spec (i + 1)`. The exploration step-kernel equality above turns
+that environment-facing contract into the canonical conditional-law contract.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_initial_map_eq_explorationArm_condDistrib {Omega : Type*} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : <span class="kw">forall</span> arm, AEMeasurable (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) (armLaw arm)) (hbound : <span class="kw">forall</span> arm, Filter.Eventually (<span class="kw">fun</span> reward : Rat =&gt; Set.Icc lo hi (((reward : Rat) : Real))) (ae (armLaw arm))) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (r : Nat) (hzero : Measure.map (<span class="kw">fun</span> omega : Omega =&gt; reward omega <span class="num">0</span>) mu = armLaw (ETC.exploreArm spec <span class="num">0</span>)) (hcond : <span class="kw">forall</span> i : Nat, i &lt; spec.explorationPulls * K - <span class="num">1</span> -&gt; ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; reward omega (i + <span class="num">1</span>)) (<span class="kw">fun</span> omega : Omega =&gt; History.finiteRewardHistoryOfTrace (reward omega) i) mu =ᵐ[ mu.map (<span class="kw">fun</span> omega : Omega =&gt; History.finiteRewardHistoryOfTrace (reward omega) i)] <span class="kw">fun</span> _history =&gt; armLaw (ETC.exploreArm spec (i + <span class="num">1</span>))) : integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((pseudoRegret model (ETC.explorationArgmaxGeneratedAction spec model (reward omega)) (spec.explorationPulls * K + r) : Rat) : Real))) &lt;= ETC.canonicalBoundedArmMaxGapIntegralRegretBoundReal spec model r lo hi</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L3001">Source line 3001</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d3cae6a24fce">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_initial_map_eq_explorationArm_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Practical external-process per-arm ETC expected regret from the conditional
+laws of the scheduled exploration arms.
+
+The step-kernel equality above converts the environment-facing scheduled-arm
+laws into the canonical conditional-law contract. The per-arm consumer then
+keeps the gap-weighted pairwise tails separate, without a wrong-event union.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_initial_map_eq_explorationArm_condDistrib {Omega : Type*} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : <span class="kw">forall</span> arm, AEMeasurable (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) (armLaw arm)) (hbound : <span class="kw">forall</span> arm, Filter.Eventually (<span class="kw">fun</span> reward : Rat =&gt; Set.Icc lo hi (((reward : Rat) : Real))) (ae (armLaw arm))) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (r : Nat) (hzero : Measure.map (<span class="kw">fun</span> omega : Omega =&gt; reward omega <span class="num">0</span>) mu = armLaw (ETC.exploreArm spec <span class="num">0</span>)) (hcond : <span class="kw">forall</span> i : Nat, i &lt; spec.explorationPulls * K - <span class="num">1</span> -&gt; ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; reward omega (i + <span class="num">1</span>)) (<span class="kw">fun</span> omega : Omega =&gt; History.finiteRewardHistoryOfTrace (reward omega) i) mu =ᵐ[ mu.map (<span class="kw">fun</span> omega : Omega =&gt; History.finiteRewardHistoryOfTrace (reward omega) i)] <span class="kw">fun</span> _history =&gt; armLaw (ETC.exploreArm spec (i + <span class="num">1</span>))) : integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((pseudoRegret model (ETC.explorationArgmaxGeneratedAction spec model (reward omega)) (spec.explorationPulls * K + r) : Rat) : Real))) &lt;= ETC.canonicalBoundedArmPerArmIntegralRegretBoundReal spec model r lo hi</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L3064">Source line 3064</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-543d644c8ed1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_initial_map_eq_explorationArm_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Practical external-process common-sub-Gaussian per-arm ETC expected regret
+from the conditional laws of the scheduled exploration arms.
+
+The public contract exposes no local context, policy state, reward kernel, or
+trajectory measure. It preserves the canonical direct-MGF gap-weighted armwise
+budget and requires no bounded support or arm union.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_initial_map_eq_explorationArm_condDistrib {Omega : Type*} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (sigma2 : NNReal) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (hsubG : <span class="kw">forall</span> arm, ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> reward : Rat =&gt; ((reward : Rat) : Real) - (((model.mean arm : Rat) : Real))) sigma2 (armLaw arm)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (r : Nat) (hzero : Measure.map (<span class="kw">fun</span> omega : Omega =&gt; reward omega <span class="num">0</span>) mu = armLaw (ETC.exploreArm spec <span class="num">0</span>)) (hcond : <span class="kw">forall</span> i : Nat, i &lt; spec.explorationPulls * K - <span class="num">1</span> -&gt; ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; reward omega (i + <span class="num">1</span>)) (<span class="kw">fun</span> omega : Omega =&gt; History.finiteRewardHistoryOfTrace (reward omega) i) mu =ᵐ[ mu.map (<span class="kw">fun</span> omega : Omega =&gt; History.finiteRewardHistoryOfTrace (reward omega) i)] <span class="kw">fun</span> _history =&gt; armLaw (ETC.exploreArm spec (i + <span class="num">1</span>))) : integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((pseudoRegret model (ETC.explorationArgmaxGeneratedAction spec model (reward omega)) (spec.explorationPulls * K + r) : Rat) : Real))) &lt;= ETC.canonicalSubGaussianArmPerArmIntegralRegretBoundReal spec model r sigma2</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L3127">Source line 3127</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f7d73e28f6bf">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_actionRewardHistory_explorationArm_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">External ETC expected regret from LML-shaped action/reward-history conditional
+laws during exploration.
+
+The initial reward law is supplied conditionally on the first action. Each
+successor reward has the scheduled exploration-arm law conditionally on the
+complete action/reward prefix together with the next action. Since those laws
+are constant, `RewardKernel.condDistrib_ae_eq_const_of_comp` projects them to
+the reward-only prefixes consumed by the preceding environment-facing theorem.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_actionRewardHistory_explorationArm_condDistrib {Omega : Type*} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (action : Omega -&gt; ActionTrace (Fin K)) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : <span class="kw">forall</span> arm, AEMeasurable (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) (armLaw arm)) (hbound : <span class="kw">forall</span> arm, Filter.Eventually (<span class="kw">fun</span> reward : Rat =&gt; Set.Icc lo hi (((reward : Rat) : Real))) (ae (armLaw arm))) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (r : Nat) (hzero : ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; reward omega <span class="num">0</span>) (<span class="kw">fun</span> omega : Omega =&gt; action omega <span class="num">0</span>) mu =ᵐ[ mu.map (<span class="kw">fun</span> omega : Omega =&gt; action omega <span class="num">0</span>)] ProbabilityTheory.Kernel.const (Fin K) (armLaw (ETC.exploreArm spec <span class="num">0</span>))) (hcond : <span class="kw">forall</span> i : Nat, i &lt; spec.explorationPulls * K - <span class="num">1</span> -&gt; <span class="kw">let</span> fullCondition := <span class="kw">fun</span> omega : Omega =&gt; (History.finitePairHistoryOfTrace (action omega) (reward omega) i, action omega (i + <span class="num">1</span>)) ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; reward omega (i + <span class="num">1</span>)) fullCondition mu =ᵐ[mu.map fullCondition] ProbabilityTheory.Kernel.const (History.FinitePairHistory (Fin K) Rat i × Fin K) (armLaw (ETC.exploreArm spec (i + <span class="num">1</span>)))) : integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((pseudoRegret model (ETC.explorationArgmaxGeneratedAction spec model (reward omega)) (spec.explorationPulls * K + r) : Rat) : Real))) &lt;= ETC.canonicalBoundedArmMaxGapIntegralRegretBoundReal spec model r lo hi</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L3191">Source line 3191</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ab9d1fe063f2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_actionRewardHistory_explorationArm_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">External per-arm ETC expected regret from LML-shaped action/reward-history
+conditional laws during exploration.
+
+Constant scheduled-arm laws conditioned on the complete action/reward prefix
+and next action coarsen to reward-only prefixes. The scheduled-arm per-arm
+consumer then preserves the gap-weighted armwise tails without a wrong-event
+union.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_actionRewardHistory_explorationArm_condDistrib {Omega : Type*} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (action : Omega -&gt; ActionTrace (Fin K)) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : <span class="kw">forall</span> arm, AEMeasurable (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) (armLaw arm)) (hbound : <span class="kw">forall</span> arm, Filter.Eventually (<span class="kw">fun</span> reward : Rat =&gt; Set.Icc lo hi (((reward : Rat) : Real))) (ae (armLaw arm))) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (r : Nat) (hzero : ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; reward omega <span class="num">0</span>) (<span class="kw">fun</span> omega : Omega =&gt; action omega <span class="num">0</span>) mu =ᵐ[ mu.map (<span class="kw">fun</span> omega : Omega =&gt; action omega <span class="num">0</span>)] ProbabilityTheory.Kernel.const (Fin K) (armLaw (ETC.exploreArm spec <span class="num">0</span>))) (hcond : <span class="kw">forall</span> i : Nat, i &lt; spec.explorationPulls * K - <span class="num">1</span> -&gt; <span class="kw">let</span> fullCondition := <span class="kw">fun</span> omega : Omega =&gt; (History.finitePairHistoryOfTrace (action omega) (reward omega) i, action omega (i + <span class="num">1</span>)) ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; reward omega (i + <span class="num">1</span>)) fullCondition mu =ᵐ[mu.map fullCondition] ProbabilityTheory.Kernel.const (History.FinitePairHistory (Fin K) Rat i × Fin K) (armLaw (ETC.exploreArm spec (i + <span class="num">1</span>)))) : integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((pseudoRegret model (ETC.explorationArgmaxGeneratedAction spec model (reward omega)) (spec.explorationPulls * K + r) : Rat) : Real))) &lt;= ETC.canonicalBoundedArmPerArmIntegralRegretBoundReal spec model r lo hi</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L3284">Source line 3284</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d9049cee32be">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_actionRewardHistory_explorationArm_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">External direct-MGF per-arm ETC expected regret from LML-shaped
+action/reward-history conditional laws during exploration.
+
+The initial constant conditional reward law yields the time-zero marginal.
+Each successor constant scheduled-arm law is coarsened from the complete
+action/reward prefix and next action to the reward-only prefix, then the
+external scheduled-arm direct-MGF theorem preserves the gap-weighted armwise
+budget without bounded support or an arm union.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_actionRewardHistory_explorationArm_condDistrib {Omega : Type*} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (action : Omega -&gt; ActionTrace (Fin K)) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (sigma2 : NNReal) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (hsubG : <span class="kw">forall</span> arm, ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> reward : Rat =&gt; ((reward : Rat) : Real) - (((model.mean arm : Rat) : Real))) sigma2 (armLaw arm)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (r : Nat) (hzero : ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; reward omega <span class="num">0</span>) (<span class="kw">fun</span> omega : Omega =&gt; action omega <span class="num">0</span>) mu =ᵐ[ mu.map (<span class="kw">fun</span> omega : Omega =&gt; action omega <span class="num">0</span>)] ProbabilityTheory.Kernel.const (Fin K) (armLaw (ETC.exploreArm spec <span class="num">0</span>))) (hcond : <span class="kw">forall</span> i : Nat, i &lt; spec.explorationPulls * K - <span class="num">1</span> -&gt; <span class="kw">let</span> fullCondition := <span class="kw">fun</span> omega : Omega =&gt; (History.finitePairHistoryOfTrace (action omega) (reward omega) i, action omega (i + <span class="num">1</span>)) ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; reward omega (i + <span class="num">1</span>)) fullCondition mu =ᵐ[mu.map fullCondition] ProbabilityTheory.Kernel.const (History.FinitePairHistory (Fin K) Rat i × Fin K) (armLaw (ETC.exploreArm spec (i + <span class="num">1</span>)))) : integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((pseudoRegret model (ETC.explorationArgmaxGeneratedAction spec model (reward omega)) (spec.explorationPulls * K + r) : Rat) : Real))) &lt;= ETC.canonicalSubGaussianArmPerArmIntegralRegretBoundReal spec model r sigma2</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L3378">Source line 3378</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c064f5529368">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_actionDependent_actionRewardHistory_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">External bounded ETC regret from action-dependent stationary feedback kernels
+and almost-sure exploration action identities.
+
+This is the dependency-light local analogue of the law transport exposed by
+the exact-seed LML `IsAlgEnvSeq` fields: the initial feedback kernel is indexed
+by action zero, each later kernel is indexed by the next action in the complete
+history condition, and the exploration action identities make those selectors
+almost surely equal to the scheduled round-robin arms.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmMaxGapIntegralRegretBoundReal_of_actionDependent_actionRewardHistory_condDistrib {Omega : Type*} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (action : Omega -&gt; ActionTrace (Fin K)) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : <span class="kw">forall</span> arm, AEMeasurable (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) (armLaw arm)) (hbound : <span class="kw">forall</span> arm, Filter.Eventually (<span class="kw">fun</span> reward : Rat =&gt; Set.Icc lo hi (((reward : Rat) : Real))) (ae (armLaw arm))) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (r : Nat) (hactionZero : (<span class="kw">fun</span> omega : Omega =&gt; action omega <span class="num">0</span>) =ᵐ[mu] <span class="kw">fun</span> _omega =&gt; ETC.exploreArm spec <span class="num">0</span>) (hactionExplore : <span class="kw">forall</span> i : Nat, i &lt; spec.explorationPulls * K - <span class="num">1</span> -&gt; (<span class="kw">fun</span> omega : Omega =&gt; action omega (i + <span class="num">1</span>)) =ᵐ[mu] <span class="kw">fun</span> _omega =&gt; ETC.exploreArm spec (i + <span class="num">1</span>)) (hzero : ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; reward omega <span class="num">0</span>) (<span class="kw">fun</span> omega : Omega =&gt; action omega <span class="num">0</span>) mu =ᵐ[ mu.map (<span class="kw">fun</span> omega : Omega =&gt; action omega <span class="num">0</span>)] ProbabilityTheory.Kernel.ofFunOfCountable armLaw) (hcond : <span class="kw">forall</span> i : Nat, i &lt; spec.explorationPulls * K - <span class="num">1</span> -&gt; <span class="kw">let</span> fullCondition := <span class="kw">fun</span> omega : Omega =&gt; (History.finitePairHistoryOfTrace (action omega) (reward omega) i, action omega (i + <span class="num">1</span>)) ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; reward omega (i + <span class="num">1</span>)) fullCondition mu =ᵐ[mu.map fullCondition] (RewardKernel.contextIndependentOfActionLaws (Context := History.FinitePairHistory (Fin K) Rat i) armLaw hprob).kernel) : integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((pseudoRegret model (ETC.explorationArgmaxGeneratedAction spec model (reward omega)) (spec.explorationPulls * K + r) : Rat) : Real))) &lt;= ETC.canonicalBoundedArmMaxGapIntegralRegretBoundReal spec model r lo hi</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L3471">Source line 3471</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c745119e2ebd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_actionDependent_actionRewardHistory_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">External per-arm ETC regret from action-dependent stationary feedback kernels
+and almost-sure exploration action identities.
+
+The selector transport turns each action-indexed feedback kernel into the
+constant law of the scheduled exploration arm. The full-history per-arm
+consumer then preserves the gap-weighted armwise tails without a wrong-event
+union.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalBoundedArmPerArmIntegralRegretBoundReal_of_actionDependent_actionRewardHistory_condDistrib {Omega : Type*} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (action : Omega -&gt; ActionTrace (Fin K)) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (lo hi : Real) (hmeas : <span class="kw">forall</span> arm, AEMeasurable (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) (armLaw arm)) (hbound : <span class="kw">forall</span> arm, Filter.Eventually (<span class="kw">fun</span> reward : Rat =&gt; Set.Icc lo hi (((reward : Rat) : Real))) (ae (armLaw arm))) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (r : Nat) (hactionZero : (<span class="kw">fun</span> omega : Omega =&gt; action omega <span class="num">0</span>) =ᵐ[mu] <span class="kw">fun</span> _omega =&gt; ETC.exploreArm spec <span class="num">0</span>) (hactionExplore : <span class="kw">forall</span> i : Nat, i &lt; spec.explorationPulls * K - <span class="num">1</span> -&gt; (<span class="kw">fun</span> omega : Omega =&gt; action omega (i + <span class="num">1</span>)) =ᵐ[mu] <span class="kw">fun</span> _omega =&gt; ETC.exploreArm spec (i + <span class="num">1</span>)) (hzero : ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; reward omega <span class="num">0</span>) (<span class="kw">fun</span> omega : Omega =&gt; action omega <span class="num">0</span>) mu =ᵐ[ mu.map (<span class="kw">fun</span> omega : Omega =&gt; action omega <span class="num">0</span>)] ProbabilityTheory.Kernel.ofFunOfCountable armLaw) (hcond : <span class="kw">forall</span> i : Nat, i &lt; spec.explorationPulls * K - <span class="num">1</span> -&gt; <span class="kw">let</span> fullCondition := <span class="kw">fun</span> omega : Omega =&gt; (History.finitePairHistoryOfTrace (action omega) (reward omega) i, action omega (i + <span class="num">1</span>)) ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; reward omega (i + <span class="num">1</span>)) fullCondition mu =ᵐ[mu.map fullCondition] (RewardKernel.contextIndependentOfActionLaws (Context := History.FinitePairHistory (Fin K) Rat i) armLaw hprob).kernel) : integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((pseudoRegret model (ETC.explorationArgmaxGeneratedAction spec model (reward omega)) (spec.explorationPulls * K + r) : Rat) : Real))) &lt;= ETC.canonicalBoundedArmPerArmIntegralRegretBoundReal spec model r lo hi</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L3566">Source line 3566</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ea23cc603a58">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_actionDependent_actionRewardHistory_condDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">External direct-MGF per-arm ETC regret from action-dependent stationary
+feedback kernels and almost-sure exploration action identities.
+
+The selector transport converts the raw action-indexed initial and successor
+feedback kernels into the constant laws of the scheduled exploration arms.
+The full action/reward-history direct-MGF consumer then returns the same
+gap-weighted armwise budget without bounded support or an arm union.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_real_pseudoRegret_explorationArgmaxGeneratedAction_reward_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal_of_actionDependent_actionRewardHistory_condDistrib {Omega : Type*} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (action : Omega -&gt; ActionTrace (Fin K)) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; action omega t)) (reward : Omega -&gt; RewardTrace Rat) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega : Omega =&gt; reward omega t)) (spec : ETC.Spec K) (model : FiniteBanditModel K) (armLaw : Fin K -&gt; Measure Rat) (hprob : <span class="kw">forall</span> arm, IsProbabilityMeasure (armLaw arm)) (sigma2 : NNReal) (hmean : <span class="kw">forall</span> arm, integral (armLaw arm) (<span class="kw">fun</span> reward : Rat =&gt; (((reward : Rat) : Real))) = (((model.mean arm : Rat) : Real))) (hsubG : <span class="kw">forall</span> arm, ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> reward : Rat =&gt; ((reward : Rat) : Real) - (((model.mean arm : Rat) : Real))) sigma2 (armLaw arm)) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (r : Nat) (hactionZero : (<span class="kw">fun</span> omega : Omega =&gt; action omega <span class="num">0</span>) =ᵐ[mu] <span class="kw">fun</span> _omega =&gt; ETC.exploreArm spec <span class="num">0</span>) (hactionExplore : <span class="kw">forall</span> i : Nat, i &lt; spec.explorationPulls * K - <span class="num">1</span> -&gt; (<span class="kw">fun</span> omega : Omega =&gt; action omega (i + <span class="num">1</span>)) =ᵐ[mu] <span class="kw">fun</span> _omega =&gt; ETC.exploreArm spec (i + <span class="num">1</span>)) (hzero : ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; reward omega <span class="num">0</span>) (<span class="kw">fun</span> omega : Omega =&gt; action omega <span class="num">0</span>) mu =ᵐ[ mu.map (<span class="kw">fun</span> omega : Omega =&gt; action omega <span class="num">0</span>)] ProbabilityTheory.Kernel.ofFunOfCountable armLaw) (hcond : <span class="kw">forall</span> i : Nat, i &lt; spec.explorationPulls * K - <span class="num">1</span> -&gt; <span class="kw">let</span> fullCondition := <span class="kw">fun</span> omega : Omega =&gt; (History.finitePairHistoryOfTrace (action omega) (reward omega) i, action omega (i + <span class="num">1</span>)) ProbabilityTheory.condDistrib (<span class="kw">fun</span> omega : Omega =&gt; reward omega (i + <span class="num">1</span>)) fullCondition mu =ᵐ[mu.map fullCondition] (RewardKernel.contextIndependentOfActionLaws (Context := History.FinitePairHistory (Fin K) Rat i) armLaw hprob).kernel) : integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((pseudoRegret model (ETC.explorationArgmaxGeneratedAction spec model (reward omega)) (spec.explorationPulls * K + r) : Rat) : Real))) &lt;= ETC.canonicalSubGaussianArmPerArmIntegralRegretBoundReal spec model r sigma2</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCFiniteArmRewardLaw.lean.html#L3661">Source line 3661</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

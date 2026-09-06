@@ -1,0 +1,925 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIBernsteinConfidence.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIBernsteinConfidence.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIBernsteinConfidence.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIBernsteinConfidence.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVISameSourceConfidence</span>
+<span id="L2">2 import BanditRLProof.Exp3ComparatorBernstein</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Variance-sensitive same-source transition coordinates for UCBVI-CH</span>
+<span id="L6">6 </span>
+<span id="L7">7 The Hoeffding producer records the exact generated visit compensator.  The</span>
+<span id="L8">8 UCBVI-CH analysis additionally needs the Bernoulli variance of each next-state</span>
+<span id="L9">9 coordinate.  This module proves that stronger fixed-tilt leaf from the same</span>
+<span id="L10">10 transition kernel.  It is not an independent sample model.</span>
+<span id="L11">11 -/</span>
+<span id="L12">12 </span>
+<span id="L13">13 open MeasureTheory</span>
+<span id="L14">14 open scoped ENNReal ProbabilityTheory</span>
+<span id="L15">15 </span>
+<span id="L16">16 universe u v</span>
+<span id="L17">17 </span>
+<span id="L18">18 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L19">19 </span>
+<span id="L20">20 variable {State : Type u} {Action : Type v}</span>
+<span id="L21">21     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L22">22     [Fintype State] [Fintype Action]</span>
+<span id="L23">23     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L24">24     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L25">25     [Nonempty State] [Nonempty Action]</span>
+<span id="L26">26 </span>
+<span id="L27">27 namespace MDP</span>
+<span id="L28">28 </span>
+<span id="L29">29 /-- True Bernoulli variance of one transition singleton. -/</span>
+<span id="L30">30 noncomputable def transitionCoordinateVariance</span>
+<span id="L31">31     (mdp : MDP State Action) (state : State) (action : Action)</span>
+<span id="L32">32     (nextState : State) : Real :=</span>
+<span id="L33">33   let p := (mdp.transition (state, action)).real {nextState}</span>
+<span id="L34">34   p * (1 - p)</span>
+<span id="L35">35 </span>
+<span id="L36">36 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L37">37 theorem transitionCoordinateVariance_nonneg</span>
+<span id="L38">38     (mdp : MDP State Action) (state : State) (action : Action)</span>
+<span id="L39">39     (nextState : State) :</span>
+<span id="L40">40     0 &lt;= mdp.transitionCoordinateVariance state action nextState := by</span>
+<span id="L41">41   unfold transitionCoordinateVariance</span>
+<span id="L42">42   exact mul_nonneg measureReal_nonneg (sub_nonneg.mpr measureReal_le_one)</span>
+<span id="L43">43 </span>
+<span id="L44">44 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L45">45 /-- A centered transition indicator has exact second moment `p(1-p)`. -/</span>
+<span id="L46">46 theorem integral_sq_indicator_sub_transitionMass</span>
+<span id="L47">47     (mdp : MDP State Action) (state : State) (action : Action)</span>
+<span id="L48">48     (nextState : State) :</span>
+<span id="L49">49     (∫ y, ((if y = nextState then 1 else 0) -</span>
+<span id="L50">50           (mdp.transition (state, action)).real {nextState}) ^ 2</span>
+<span id="L51">51         ∂mdp.transition (state, action)) =</span>
+<span id="L52">52       mdp.transitionCoordinateVariance state action nextState := by</span>
+<span id="L53">53   let p : Real := (mdp.transition (state, action)).real {nextState}</span>
+<span id="L54">54   let indicator : State -&gt; Real := fun y =&gt; if y = nextState then 1 else 0</span>
+<span id="L55">55   have hindicator : Measurable indicator := measurable_of_finite _</span>
+<span id="L56">56   have hindicator_eq : indicator =</span>
+<span id="L57">57       Set.indicator ({nextState} : Set State) (fun _ : State =&gt; (1 : Real)) := by</span>
+<span id="L58">58     funext y</span>
+<span id="L59">59     by_cases hy : y = nextState &lt;;&gt; simp [indicator, hy]</span>
+<span id="L60">60   have hmean : (∫ y, indicator y ∂mdp.transition (state, action)) = p := by</span>
+<span id="L61">61     rw [hindicator_eq,</span>
+<span id="L62">62       integral_indicator_const (1 : Real) (MeasurableSet.singleton nextState)]</span>
+<span id="L63">63     simp [p]</span>
+<span id="L64">64   have hsq : (∫ y, (indicator y) ^ 2 ∂mdp.transition (state, action)) = p := by</span>
+<span id="L65">65     have hpoint : (fun y =&gt; (indicator y) ^ 2) = indicator := by</span>
+<span id="L66">66       funext y</span>
+<span id="L67">67       simp [indicator]</span>
+<span id="L68">68     rw [hpoint, hmean]</span>
+<span id="L69">69   have hi : Integrable indicator (mdp.transition (state, action)) :=</span>
+<span id="L70">70     integrable_of_fintype _ _ hindicator</span>
+<span id="L71">71   have hi2 : Integrable (fun y =&gt; (indicator y) ^ 2)</span>
+<span id="L72">72       (mdp.transition (state, action)) :=</span>
+<span id="L73">73     integrable_of_fintype _ _ (hindicator.pow_const 2)</span>
+<span id="L74">74   have himem : MemLp indicator 2 (mdp.transition (state, action)) :=</span>
+<span id="L75">75     memLp_of_bounded</span>
+<span id="L76">76       (Filter.Eventually.of_forall (fun y =&gt; by</span>
+<span id="L77">77         show indicator y ∈ Set.Icc (0 : Real) 1</span>
+<span id="L78">78         simp only [indicator]</span>
+<span id="L79">79         split &lt;;&gt; norm_num))</span>
+<span id="L80">80       hindicator.aestronglyMeasurable 2</span>
+<span id="L81">81   change (∫ y, (indicator y - p) ^ 2</span>
+<span id="L82">82       ∂mdp.transition (state, action)) = _</span>
+<span id="L83">83   calc</span>
+<span id="L84">84     (∫ y, (indicator y - p) ^ 2 ∂mdp.transition (state, action)) =</span>
+<span id="L85">85         ProbabilityTheory.variance indicator (mdp.transition (state, action)) := by</span>
+<span id="L86">86       rw [ProbabilityTheory.variance_eq_integral hindicator.aemeasurable, hmean]</span>
+<span id="L87">87     _ = p - p ^ 2 := by</span>
+<span id="L88">88       rw [ProbabilityTheory.variance_eq_sub himem]</span>
+<span id="L89">89       change (∫ y, indicator y ^ 2 ∂mdp.transition (state, action)) -</span>
+<span id="L90">90           (∫ y, indicator y ∂mdp.transition (state, action)) ^ 2 = _</span>
+<span id="L91">91       rw [hsq, hmean]</span>
+<span id="L92">92     _ = mdp.transitionCoordinateVariance state action nextState := by</span>
+<span id="L93">93       simp [transitionCoordinateVariance, p]</span>
+<span id="L94">94       ring</span>
+<span id="L95">95 </span>
+<span id="L96">96 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L97">97 /-- The visited transition singleton has a variance-sensitive compensated MGF.</span>
+<span id="L98">98 The hard `|tilt| &lt;= 1` contract is the standard Bernstein small-tilt range. -/</span>
+<span id="L99">99 theorem transitionResidualHead_variance_compensated_hasMGFUpperBoundAt</span>
+<span id="L100">100     (mdp : MDP State Action) (targetState : State) (targetAction : Action)</span>
+<span id="L101">101     (targetNextState : State) (currentState : State) (chosenAction : Action)</span>
+<span id="L102">102     (tilt : Real) (htilt : |tilt| &lt;= 1) :</span>
+<span id="L103">103     Concentration.HasMGFUpperBoundAt</span>
+<span id="L104">104       (fun nextState =&gt;</span>
+<span id="L105">105         tilt * mdp.transitionResidualHead targetState targetAction targetNextState</span>
+<span id="L106">106             currentState (chosenAction, nextState) -</span>
+<span id="L107">107           tilt ^ 2 *</span>
+<span id="L108">108             mdp.transitionCoordinateVariance</span>
+<span id="L109">109               targetState targetAction targetNextState *</span>
+<span id="L110">110             mdp.transitionVisitHead targetState targetAction</span>
+<span id="L111">111               currentState (chosenAction, nextState))</span>
+<span id="L112">112       1 0 (mdp.transition (currentState, chosenAction)) := by</span>
+<span id="L113">113   by_cases hvisit : currentState = targetState ∧ chosenAction = targetAction</span>
+<span id="L114">114   · rcases hvisit with ⟨hstate, haction⟩</span>
+<span id="L115">115     subst currentState</span>
+<span id="L116">116     subst chosenAction</span>
+<span id="L117">117     let p : Real :=</span>
+<span id="L118">118       (mdp.transition (targetState, targetAction)).real {targetNextState}</span>
+<span id="L119">119     let X : State -&gt; Real := fun y =&gt;</span>
+<span id="L120">120       (if y = targetNextState then 1 else 0) - p</span>
+<span id="L121">121     have hX : Measurable X := measurable_of_finite _</span>
+<span id="L122">122     have hXabs : ∀ y, |tilt * X y| &lt;= 1 := by</span>
+<span id="L123">123       intro y</span>
+<span id="L124">124       have hp : p ∈ Set.Icc (0 : Real) 1 :=</span>
+<span id="L125">125         ⟨measureReal_nonneg, measureReal_le_one⟩</span>
+<span id="L126">126       rcases hp with ⟨hp0, hp1⟩</span>
+<span id="L127">127       have hxy : |X y| &lt;= 1 := by</span>
+<span id="L128">128         simp only [X]</span>
+<span id="L129">129         split &lt;;&gt; rw [abs_le] &lt;;&gt; constructor &lt;;&gt; linarith</span>
+<span id="L130">130       calc</span>
+<span id="L131">131         |tilt * X y| = |tilt| * |X y| := abs_mul _ _</span>
+<span id="L132">132         _ &lt;= 1 * 1 := mul_le_mul htilt hxy (abs_nonneg _) (by norm_num)</span>
+<span id="L133">133         _ = 1 := by norm_num</span>
+<span id="L134">134     have hmean : (∫ y, X y ∂mdp.transition (targetState, targetAction)) = 0 := by</span>
+<span id="L135">135       let indicator : State -&gt; Real := fun y =&gt; if y = targetNextState then 1 else 0</span>
+<span id="L136">136       have hindicator_eq : indicator =</span>
+<span id="L137">137           Set.indicator ({targetNextState} : Set State) (fun _ : State =&gt; (1 : Real)) := by</span>
+<span id="L138">138         funext y</span>
+<span id="L139">139         by_cases hy : y = targetNextState &lt;;&gt; simp [indicator, hy]</span>
+<span id="L140">140       have hi : Integrable indicator (mdp.transition (targetState, targetAction)) :=</span>
+<span id="L141">141         integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L142">142       change (∫ y, indicator y - p ∂mdp.transition (targetState, targetAction)) = 0</span>
+<span id="L143">143       rw [integral_sub hi (integrable_const _)]</span>
+<span id="L144">144       rw [hindicator_eq,</span>
+<span id="L145">145         integral_indicator_const (1 : Real) (MeasurableSet.singleton targetNextState)]</span>
+<span id="L146">146       simp [p]</span>
+<span id="L147">147     have hsecond : (∫ y, (X y) ^ 2</span>
+<span id="L148">148         ∂mdp.transition (targetState, targetAction)) =</span>
+<span id="L149">149         mdp.transitionCoordinateVariance</span>
+<span id="L150">150           targetState targetAction targetNextState := by</span>
+<span id="L151">151       simpa [X, p] using</span>
+<span id="L152">152         mdp.integral_sq_indicator_sub_transitionMass</span>
+<span id="L153">153           targetState targetAction targetNextState</span>
+<span id="L154">154     have hbase : Concentration.HasMGFUpperBoundAt X tilt</span>
+<span id="L155">155         (tilt ^ 2 * mdp.transitionCoordinateVariance</span>
+<span id="L156">156           targetState targetAction targetNextState)</span>
+<span id="L157">157         (mdp.transition (targetState, targetAction)) := by</span>
+<span id="L158">158       constructor</span>
+<span id="L159">159       · intro s</span>
+<span id="L160">160         exact integrable_of_fintype _ _ (by fun_prop)</span>
+<span id="L161">161       · rw [ProbabilityTheory.mgf]</span>
+<span id="L162">162         have hexp : ∀ y, Real.exp (tilt * X y) &lt;=</span>
+<span id="L163">163             1 + tilt * X y + (tilt * X y) ^ 2 := fun y =&gt;</span>
+<span id="L164">164           Concentration.exp_le_one_add_self_add_sq_of_abs_le_one (hXabs y)</span>
+<span id="L165">165         have hleft : Integrable (fun y =&gt; Real.exp (tilt * X y))</span>
+<span id="L166">166             (mdp.transition (targetState, targetAction)) :=</span>
+<span id="L167">167           integrable_of_fintype _ _ (by fun_prop)</span>
+<span id="L168">168         have hright : Integrable</span>
+<span id="L169">169             (fun y =&gt; 1 + tilt * X y + (tilt * X y) ^ 2)</span>
+<span id="L170">170             (mdp.transition (targetState, targetAction)) :=</span>
+<span id="L171">171           integrable_of_fintype _ _ (by fun_prop)</span>
+<span id="L172">172         calc</span>
+<span id="L173">173           (∫ y, Real.exp (tilt * X y)</span>
+<span id="L174">174               ∂mdp.transition (targetState, targetAction)) &lt;=</span>
+<span id="L175">175               ∫ y, (1 + tilt * X y + (tilt * X y) ^ 2)</span>
+<span id="L176">176                 ∂mdp.transition (targetState, targetAction) :=</span>
+<span id="L177">177             integral_mono_ae hleft hright (Filter.Eventually.of_forall hexp)</span>
+<span id="L178">178           _ = 1 + tilt ^ 2 * mdp.transitionCoordinateVariance</span>
+<span id="L179">179                 targetState targetAction targetNextState := by</span>
+<span id="L180">180             rw [integral_add, integral_add]</span>
+<span id="L181">181             · simp_rw [mul_pow]</span>
+<span id="L182">182               rw [integral_const, integral_const_mul, hmean,</span>
+<span id="L183">183                 integral_const_mul, hsecond]</span>
+<span id="L184">184               simp</span>
+<span id="L185">185             all_goals exact integrable_of_fintype _ _ (by fun_prop)</span>
+<span id="L186">186           _ &lt;= Real.exp (tilt ^ 2 * mdp.transitionCoordinateVariance</span>
+<span id="L187">187                 targetState targetAction targetNextState) := by</span>
+<span id="L188">188             simpa [add_comm] using Real.add_one_le_exp</span>
+<span id="L189">189               (tilt ^ 2 * mdp.transitionCoordinateVariance</span>
+<span id="L190">190                 targetState targetAction targetNextState)</span>
+<span id="L191">191     have hcomp := hbase.compensated</span>
+<span id="L192">192     convert hcomp using 1</span>
+<span id="L193">193     funext y</span>
+<span id="L194">194     simp [transitionResidualHead, transitionVisitHead, X, p]</span>
+<span id="L195">195   · have hzero : Concentration.HasMGFUpperBoundAt</span>
+<span id="L196">196         (fun _ : State =&gt; (0 : Real)) 1 0</span>
+<span id="L197">197         (mdp.transition (currentState, chosenAction)) := by</span>
+<span id="L198">198       constructor</span>
+<span id="L199">199       · intro s</span>
+<span id="L200">200         simpa using (integrable_const</span>
+<span id="L201">201           (mu := mdp.transition (currentState, chosenAction)) (Real.exp (s * 0)))</span>
+<span id="L202">202       · simp [ProbabilityTheory.mgf]</span>
+<span id="L203">203     convert hzero using 1</span>
+<span id="L204">204     funext y</span>
+<span id="L205">205     simp [transitionResidualHead, transitionVisitHead, hvisit]</span>
+<span id="L206">206 </span>
+<span id="L207">207 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L208">208 /-- The generated action/transition head preserves the exact coordinate</span>
+<span id="L209">209 variance compensator. -/</span>
+<span id="L210">210 theorem actionStateKernel_transitionResidualHead_variance_compensated_hasMGFUpperBoundAt</span>
+<span id="L211">211     (mdp : MDP State Action) (policy : MarkovPolicy mdp)</span>
+<span id="L212">212     (targetState : State) (targetAction : Action) (targetNextState : State)</span>
+<span id="L213">213     (currentState : State) (stage : Fin mdp.horizon) (tilt : Real)</span>
+<span id="L214">214     (htilt : |tilt| &lt;= 1) :</span>
+<span id="L215">215     Concentration.HasMGFUpperBoundAt</span>
+<span id="L216">216       (fun head : Action × State =&gt;</span>
+<span id="L217">217         tilt * mdp.transitionResidualHead targetState targetAction targetNextState</span>
+<span id="L218">218             currentState head -</span>
+<span id="L219">219           tilt ^ 2 *</span>
+<span id="L220">220             mdp.transitionCoordinateVariance targetState targetAction targetNextState *</span>
+<span id="L221">221             mdp.transitionVisitHead targetState targetAction currentState head)</span>
+<span id="L222">222       1 0 (policy.actionStateKernel stage currentState) := by</span>
+<span id="L223">223   let Z : Action × State -&gt; Real := fun head =&gt;</span>
+<span id="L224">224     tilt * mdp.transitionResidualHead targetState targetAction targetNextState</span>
+<span id="L225">225         currentState head -</span>
+<span id="L226">226       tilt ^ 2 *</span>
+<span id="L227">227         mdp.transitionCoordinateVariance targetState targetAction targetNextState *</span>
+<span id="L228">228         mdp.transitionVisitHead targetState targetAction currentState head</span>
+<span id="L229">229   have hint : Integrable (fun head =&gt; Real.exp (1 * Z head))</span>
+<span id="L230">230       (policy.actionStateKernel stage currentState) :=</span>
+<span id="L231">231     integrable_of_fintype _ _ (by fun_prop)</span>
+<span id="L232">232   constructor</span>
+<span id="L233">233   · intro s</span>
+<span id="L234">234     exact integrable_of_fintype _ _ (by fun_prop)</span>
+<span id="L235">235   · rw [ProbabilityTheory.mgf]</span>
+<span id="L236">236     change (∫ head, Real.exp (1 * Z head)</span>
+<span id="L237">237       ∂policy.actionStateKernel stage currentState) &lt;= Real.exp 0</span>
+<span id="L238">238     unfold MarkovPolicy.actionStateKernel</span>
+<span id="L239">239     rw [ProbabilityTheory.integral_compProd hint]</span>
+<span id="L240">240     simp only [Real.exp_zero]</span>
+<span id="L241">241     have hinner : ∀ chosenAction : Action,</span>
+<span id="L242">242         (∫ nextState, Real.exp (Z (chosenAction, nextState))</span>
+<span id="L243">243             ∂mdp.transition (currentState, chosenAction)) &lt;= 1 := by</span>
+<span id="L244">244       intro chosenAction</span>
+<span id="L245">245       have h := mdp.transitionResidualHead_variance_compensated_hasMGFUpperBoundAt</span>
+<span id="L246">246         targetState targetAction targetNextState currentState chosenAction tilt htilt</span>
+<span id="L247">247       simpa [ProbabilityTheory.mgf, Z] using h.mgf_le</span>
+<span id="L248">248     have hleft : Integrable</span>
+<span id="L249">249         (fun chosenAction =&gt;</span>
+<span id="L250">250           ∫ nextState, Real.exp (1 * Z (chosenAction, nextState))</span>
+<span id="L251">251             ∂mdp.transition (currentState, chosenAction))</span>
+<span id="L252">252         (policy.actionKernel stage currentState) :=</span>
+<span id="L253">253       integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L254">254     calc</span>
+<span id="L255">255       (∫ chosenAction,</span>
+<span id="L256">256           ∫ nextState, Real.exp (1 * Z (chosenAction, nextState))</span>
+<span id="L257">257             ∂mdp.transition (currentState, chosenAction)</span>
+<span id="L258">258           ∂policy.actionKernel stage currentState) &lt;=</span>
+<span id="L259">259           ∫ _chosenAction, (1 : Real)</span>
+<span id="L260">260             ∂policy.actionKernel stage currentState := by</span>
+<span id="L261">261               exact integral_mono_ae hleft (integrable_const 1)</span>
+<span id="L262">262                 (Filter.Eventually.of_forall (by</span>
+<span id="L263">263                   intro chosenAction</span>
+<span id="L264">264                   simpa only [one_mul] using hinner chosenAction))</span>
+<span id="L265">265       _ = 1 := by simp</span>
+<span id="L266">266 </span>
+<span id="L267">267 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L268">268 /-- The entire generated episode trace has the exact coordinate-variance</span>
+<span id="L269">269 compensator, with the compensating count equal to literal visits. -/</span>
+<span id="L270">270 theorem trajectoryKernelRemaining_transitionResidual_variance_compensated_hasMGFUpperBoundAt</span>
+<span id="L271">271     (mdp : MDP State Action) (policy : MarkovPolicy mdp)</span>
+<span id="L272">272     (targetState : State) (targetAction : Action) (targetNextState : State)</span>
+<span id="L273">273     (tilt : Real) (htilt : |tilt| &lt;= 1)</span>
+<span id="L274">274     (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon)</span>
+<span id="L275">275     (currentState : State) :</span>
+<span id="L276">276     Concentration.HasMGFUpperBoundAt</span>
+<span id="L277">277       (fun trace =&gt;</span>
+<span id="L278">278         tilt * mdp.transitionResidualFrom targetState targetAction targetNextState</span>
+<span id="L279">279             remaining currentState trace -</span>
+<span id="L280">280           tilt ^ 2 *</span>
+<span id="L281">281             mdp.transitionCoordinateVariance targetState targetAction targetNextState *</span>
+<span id="L282">282             mdp.transitionVisitFrom targetState targetAction</span>
+<span id="L283">283               remaining currentState trace)</span>
+<span id="L284">284       1 0 (policy.trajectoryKernelRemaining remaining hremaining currentState) := by</span>
+<span id="L285">285   induction remaining generalizing currentState with</span>
+<span id="L286">286   | zero =&gt;</span>
+<span id="L287">287       have hzero : Concentration.HasMGFUpperBoundAt</span>
+<span id="L288">288           (fun _trace : StepTrace Action State 0 =&gt; (0 : Real)) 1 0</span>
+<span id="L289">289           (policy.trajectoryKernelRemaining 0 hremaining currentState) := by</span>
+<span id="L290">290         constructor</span>
+<span id="L291">291         · intro s</span>
+<span id="L292">292           exact integrable_of_fintype _ _ (by fun_prop)</span>
+<span id="L293">293         · simp [ProbabilityTheory.mgf]</span>
+<span id="L294">294       simpa [transitionResidualFrom, transitionVisitFrom] using hzero</span>
+<span id="L295">295   | succ remaining ih =&gt;</span>
+<span id="L296">296       let stage : Fin mdp.horizon :=</span>
+<span id="L297">297         ⟨mdp.horizon - (remaining + 1), by omega⟩</span>
+<span id="L298">298       let tailKernel : ProbabilityTheory.Kernel</span>
+<span id="L299">299           (State × (Action × State)) (StepTrace Action State remaining) :=</span>
+<span id="L300">300         (policy.trajectoryKernelRemaining remaining (by omega)).comap</span>
+<span id="L301">301           (fun p : State × (Action × State) =&gt; p.2.2) measurable_snd.snd</span>
+<span id="L302">302       let consStep :=</span>
+<span id="L303">303         fun p : (Action × State) × StepTrace Action State remaining =&gt;</span>
+<span id="L304">304           @Fin.cons remaining (fun _ =&gt; Action × State) p.1 p.2</span>
+<span id="L305">305       let variance : Real :=</span>
+<span id="L306">306         mdp.transitionCoordinateVariance targetState targetAction targetNextState</span>
+<span id="L307">307       let Z : StepTrace Action State (remaining + 1) -&gt; Real := fun trace =&gt;</span>
+<span id="L308">308         tilt * mdp.transitionResidualFrom targetState targetAction targetNextState</span>
+<span id="L309">309             (remaining + 1) currentState trace -</span>
+<span id="L310">310           tilt ^ 2 * variance *</span>
+<span id="L311">311             mdp.transitionVisitFrom targetState targetAction</span>
+<span id="L312">312               (remaining + 1) currentState trace</span>
+<span id="L313">313       let Zhead : Action × State -&gt; Real := fun head =&gt;</span>
+<span id="L314">314         tilt * mdp.transitionResidualHead targetState targetAction targetNextState</span>
+<span id="L315">315             currentState head -</span>
+<span id="L316">316           tilt ^ 2 * variance *</span>
+<span id="L317">317             mdp.transitionVisitHead targetState targetAction currentState head</span>
+<span id="L318">318       let Ztail : (Action × State) × StepTrace Action State remaining -&gt; Real :=</span>
+<span id="L319">319         fun p =&gt;</span>
+<span id="L320">320           tilt * mdp.transitionResidualFrom targetState targetAction targetNextState</span>
+<span id="L321">321               remaining p.1.2 p.2 -</span>
+<span id="L322">322             tilt ^ 2 * variance *</span>
+<span id="L323">323               mdp.transitionVisitFrom targetState targetAction remaining p.1.2 p.2</span>
+<span id="L324">324       have hcons : Measurable consStep := StepTrace.measurable_cons remaining</span>
+<span id="L325">325       have hZ : Measurable Z :=</span>
+<span id="L326">326         ((mdp.measurable_transitionResidualFrom targetState targetAction</span>
+<span id="L327">327           targetNextState (remaining + 1)).comp</span>
+<span id="L328">328             (measurable_const.prodMk measurable_id)).const_mul tilt |&gt;.sub</span>
+<span id="L329">329           (((mdp.measurable_transitionVisitFrom targetState targetAction</span>
+<span id="L330">330             (remaining + 1)).comp</span>
+<span id="L331">331               (measurable_const.prodMk measurable_id)).const_mul (tilt ^ 2 * variance))</span>
+<span id="L332">332       have hpair : Integrable (fun p =&gt; Real.exp (1 * Z (consStep p)))</span>
+<span id="L333">333           (((policy.actionStateKernel stage).compProd tailKernel) currentState) :=</span>
+<span id="L334">334         integrable_of_fintype _ _ (Real.measurable_exp.comp</span>
+<span id="L335">335           ((hZ.comp hcons).const_mul 1))</span>
+<span id="L336">336       have hhead :=</span>
+<span id="L337">337         mdp.actionStateKernel_transitionResidualHead_variance_compensated_hasMGFUpperBoundAt</span>
+<span id="L338">338           policy targetState targetAction targetNextState currentState stage tilt htilt</span>
+<span id="L339">339       have htail : ∀ head : Action × State,</span>
+<span id="L340">340           Concentration.HasMGFUpperBoundAt</span>
+<span id="L341">341             (fun tail =&gt; Ztail (head, tail)) 1 0</span>
+<span id="L342">342             (policy.trajectoryKernelRemaining remaining (by omega) head.2) := by</span>
+<span id="L343">343         intro head</span>
+<span id="L344">344         simpa [Ztail, variance] using ih (by omega) head.2</span>
+<span id="L345">345       constructor</span>
+<span id="L346">346       · intro s</span>
+<span id="L347">347         exact integrable_of_fintype _ _ (by fun_prop)</span>
+<span id="L348">348       · rw [ProbabilityTheory.mgf]</span>
+<span id="L349">349         change (∫ trace, Real.exp (1 * Z trace)</span>
+<span id="L350">350           ∂policy.trajectoryKernelRemaining (remaining + 1) hremaining currentState) &lt;=</span>
+<span id="L351">351             Real.exp 0</span>
+<span id="L352">352         rw [MarkovPolicy.trajectoryKernelRemaining]</span>
+<span id="L353">353         rw [ProbabilityTheory.Kernel.map_apply _ hcons]</span>
+<span id="L354">354         change (∫ trace, (fun trace =&gt; Real.exp (1 * Z trace)) trace</span>
+<span id="L355">355           ∂Measure.map consStep</span>
+<span id="L356">356             (((policy.actionStateKernel stage).compProd tailKernel)</span>
+<span id="L357">357               currentState)) &lt;= Real.exp 0</span>
+<span id="L358">358         have hfm : AEStronglyMeasurable</span>
+<span id="L359">359             (fun trace =&gt; Real.exp (1 * Z trace))</span>
+<span id="L360">360             (Measure.map consStep</span>
+<span id="L361">361               (((policy.actionStateKernel stage).compProd tailKernel)</span>
+<span id="L362">362                 currentState)) :=</span>
+<span id="L363">363           (Real.measurable_exp.comp (hZ.const_mul 1)).aestronglyMeasurable</span>
+<span id="L364">364         rw [integral_map hcons.aemeasurable hfm]</span>
+<span id="L365">365         rw [ProbabilityTheory.integral_compProd hpair]</span>
+<span id="L366">366         simp only [Real.exp_zero]</span>
+<span id="L367">367         have hinner : ∀ head : Action × State,</span>
+<span id="L368">368             (∫ tail, Real.exp (1 * Z (consStep (head, tail)))</span>
+<span id="L369">369               ∂tailKernel (currentState, head)) &lt;= Real.exp (Zhead head) := by</span>
+<span id="L370">370           intro head</span>
+<span id="L371">371           have htailApply : tailKernel (currentState, head) =</span>
+<span id="L372">372               policy.trajectoryKernelRemaining remaining (by omega) head.2 := by</span>
+<span id="L373">373             rfl</span>
+<span id="L374">374           rw [htailApply]</span>
+<span id="L375">375           have hz : ∀ tail,</span>
+<span id="L376">376               Z (consStep (head, tail)) = Zhead head + Ztail (head, tail) := by</span>
+<span id="L377">377             intro tail</span>
+<span id="L378">378             simp [Z, Zhead, Ztail, consStep, variance, transitionResidualFrom,</span>
+<span id="L379">379               transitionVisitFrom]</span>
+<span id="L380">380             ring</span>
+<span id="L381">381           simp_rw [hz, mul_add, Real.exp_add, one_mul, integral_const_mul]</span>
+<span id="L382">382           have htailMgf :</span>
+<span id="L383">383               (∫ tail, Real.exp (Ztail (head, tail))</span>
+<span id="L384">384                 ∂policy.trajectoryKernelRemaining remaining (by omega) head.2) &lt;= 1 := by</span>
+<span id="L385">385             simpa [ProbabilityTheory.mgf] using (htail head).mgf_le</span>
+<span id="L386">386           simpa using</span>
+<span id="L387">387             (mul_le_mul_of_nonneg_left htailMgf (Real.exp_pos (Zhead head)).le)</span>
+<span id="L388">388         have hleft : Integrable</span>
+<span id="L389">389             (fun head =&gt;</span>
+<span id="L390">390               ∫ tail, Real.exp (1 * Z (consStep (head, tail)))</span>
+<span id="L391">391                 ∂tailKernel (currentState, head))</span>
+<span id="L392">392             (policy.actionStateKernel stage currentState) :=</span>
+<span id="L393">393           integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L394">394         have hright : Integrable (fun head =&gt; Real.exp (Zhead head))</span>
+<span id="L395">395             (policy.actionStateKernel stage currentState) :=</span>
+<span id="L396">396           integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L397">397         calc</span>
+<span id="L398">398           (∫ head,</span>
+<span id="L399">399               ∫ tail, Real.exp (1 * Z (consStep (head, tail)))</span>
+<span id="L400">400                 ∂tailKernel (currentState, head)</span>
+<span id="L401">401               ∂policy.actionStateKernel stage currentState) &lt;=</span>
+<span id="L402">402               ∫ head, Real.exp (Zhead head)</span>
+<span id="L403">403                 ∂policy.actionStateKernel stage currentState := by</span>
+<span id="L404">404                   exact integral_mono_ae hleft hright</span>
+<span id="L405">405                     (Filter.Eventually.of_forall hinner)</span>
+<span id="L406">406           _ &lt;= 1 := by</span>
+<span id="L407">407             simpa [ProbabilityTheory.mgf, Zhead, variance] using hhead.mgf_le</span>
+<span id="L408">408 </span>
+<span id="L409">409 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L410">410 /-- Integrating the random initial state keeps the exact coordinate-variance</span>
+<span id="L411">411 compensator on the generated trajectory measure. -/</span>
+<span id="L412">412 theorem trajectoryMeasure_transitionResidual_variance_compensated_hasMGFUpperBoundAt</span>
+<span id="L413">413     (mdp : MDP State Action) (policy : MarkovPolicy mdp)</span>
+<span id="L414">414     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L415">415     (targetState : State) (targetAction : Action) (targetNextState : State)</span>
+<span id="L416">416     (tilt : Real) (htilt : |tilt| &lt;= 1) :</span>
+<span id="L417">417     Concentration.HasMGFUpperBoundAt</span>
+<span id="L418">418       (fun trajectory =&gt;</span>
+<span id="L419">419         tilt * mdp.transitionResidualFrom targetState targetAction targetNextState</span>
+<span id="L420">420             mdp.horizon trajectory.1 trajectory.2 -</span>
+<span id="L421">421           tilt ^ 2 *</span>
+<span id="L422">422             mdp.transitionCoordinateVariance targetState targetAction targetNextState *</span>
+<span id="L423">423             mdp.transitionVisitFrom targetState targetAction</span>
+<span id="L424">424               mdp.horizon trajectory.1 trajectory.2)</span>
+<span id="L425">425       1 0 (policy.trajectoryMeasure initialState) := by</span>
+<span id="L426">426   let variance : Real :=</span>
+<span id="L427">427     mdp.transitionCoordinateVariance targetState targetAction targetNextState</span>
+<span id="L428">428   let Z : State × StepTrace Action State mdp.horizon -&gt; Real := fun trajectory =&gt;</span>
+<span id="L429">429     tilt * mdp.transitionResidualFrom targetState targetAction targetNextState</span>
+<span id="L430">430         mdp.horizon trajectory.1 trajectory.2 -</span>
+<span id="L431">431       tilt ^ 2 * variance *</span>
+<span id="L432">432         mdp.transitionVisitFrom targetState targetAction</span>
+<span id="L433">433           mdp.horizon trajectory.1 trajectory.2</span>
+<span id="L434">434   have hZ : Measurable Z :=</span>
+<span id="L435">435     ((mdp.measurable_transitionResidualFrom targetState targetAction</span>
+<span id="L436">436       targetNextState mdp.horizon).const_mul tilt).sub</span>
+<span id="L437">437       ((mdp.measurable_transitionVisitFrom targetState targetAction</span>
+<span id="L438">438         mdp.horizon).const_mul (tilt ^ 2 * variance))</span>
+<span id="L439">439   constructor</span>
+<span id="L440">440   · intro s</span>
+<span id="L441">441     exact integrable_of_fintype _ _ (Real.measurable_exp.comp (hZ.const_mul s))</span>
+<span id="L442">442   · rw [ProbabilityTheory.mgf]</span>
+<span id="L443">443     change (∫ trajectory, Real.exp (1 * Z trajectory)</span>
+<span id="L444">444       ∂policy.trajectoryMeasure initialState) &lt;= Real.exp 0</span>
+<span id="L445">445     unfold MarkovPolicy.trajectoryMeasure</span>
+<span id="L446">446     have hint : Integrable (fun trajectory =&gt; Real.exp (1 * Z trajectory))</span>
+<span id="L447">447         (initialState.compProd</span>
+<span id="L448">448           (policy.trajectoryKernelRemaining mdp.horizon le_rfl)) :=</span>
+<span id="L449">449       integrable_of_fintype _ _ (Real.measurable_exp.comp (hZ.const_mul 1))</span>
+<span id="L450">450     rw [Measure.integral_compProd hint]</span>
+<span id="L451">451     simp only [Real.exp_zero]</span>
+<span id="L452">452     have hfiber : ∀ state : State,</span>
+<span id="L453">453         (∫ trace, Real.exp (1 * Z (state, trace))</span>
+<span id="L454">454           ∂policy.trajectoryKernelRemaining mdp.horizon le_rfl state) &lt;= 1 := by</span>
+<span id="L455">455       intro state</span>
+<span id="L456">456       have h :=</span>
+<span id="L457">457         mdp.trajectoryKernelRemaining_transitionResidual_variance_compensated_hasMGFUpperBoundAt</span>
+<span id="L458">458           policy targetState targetAction targetNextState tilt htilt</span>
+<span id="L459">459           mdp.horizon le_rfl state</span>
+<span id="L460">460       simpa [ProbabilityTheory.mgf, Z, variance] using h.mgf_le</span>
+<span id="L461">461     have hleft : Integrable</span>
+<span id="L462">462         (fun state =&gt; ∫ trace, Real.exp (1 * Z (state, trace))</span>
+<span id="L463">463           ∂policy.trajectoryKernelRemaining mdp.horizon le_rfl state) initialState :=</span>
+<span id="L464">464       integrable_of_fintype _ _ (measurable_of_finite _)</span>
+<span id="L465">465     calc</span>
+<span id="L466">466       (∫ state,</span>
+<span id="L467">467           ∫ trace, Real.exp (1 * Z (state, trace))</span>
+<span id="L468">468             ∂policy.trajectoryKernelRemaining mdp.horizon le_rfl state</span>
+<span id="L469">469           ∂initialState) &lt;= ∫ _state, (1 : Real) ∂initialState := by</span>
+<span id="L470">470             exact integral_mono_ae hleft (integrable_const 1)</span>
+<span id="L471">471               (Filter.Eventually.of_forall hfiber)</span>
+<span id="L472">472       _ = 1 := by simp</span>
+<span id="L473">473 </span>
+<span id="L474">474 end MDP</span>
+<span id="L475">475 </span>
+<span id="L476">476 namespace MarkovPolicy</span>
+<span id="L477">477 </span>
+<span id="L478">478 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L479">479 /-- The exact one-episode batch image of the generated trace inherits the</span>
+<span id="L480">480 coordinate-variance MGF. -/</span>
+<span id="L481">481 theorem iidEpisodeBatchMeasure_one_aggregateTransitionResidual_variance_compensated_hasMGFUpperBoundAt</span>
+<span id="L482">482     {mdp : MDP State Action} (policy : MarkovPolicy mdp)</span>
+<span id="L483">483     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L484">484     (state : State) (action : Action) (nextState : State)</span>
+<span id="L485">485     (tilt : Real) (htilt : |tilt| &lt;= 1) :</span>
+<span id="L486">486     Concentration.HasMGFUpperBoundAt</span>
+<span id="L487">487       (fun batch : EpisodeBatch mdp 1 =&gt;</span>
+<span id="L488">488         tilt * batch.aggregateTransitionResidual state action nextState -</span>
+<span id="L489">489           tilt ^ 2 * mdp.transitionCoordinateVariance state action nextState *</span>
+<span id="L490">490             batch.aggregateVisitReal state action)</span>
+<span id="L491">491       1 0 (policy.iidEpisodeBatchMeasure initialState 1) := by</span>
+<span id="L492">492   let variance : Real := mdp.transitionCoordinateVariance state action nextState</span>
+<span id="L493">493   let Ztrace : State × StepTrace Action State mdp.horizon -&gt; Real := fun trajectory =&gt;</span>
+<span id="L494">494     tilt * mdp.transitionResidualFrom state action nextState</span>
+<span id="L495">495         mdp.horizon trajectory.1 trajectory.2 -</span>
+<span id="L496">496       tilt ^ 2 * variance *</span>
+<span id="L497">497         mdp.transitionVisitFrom state action mdp.horizon trajectory.1 trajectory.2</span>
+<span id="L498">498   let Zbatch : EpisodeBatch mdp 1 -&gt; Real := fun batch =&gt;</span>
+<span id="L499">499     tilt * batch.aggregateTransitionResidual state action nextState -</span>
+<span id="L500">500       tilt ^ 2 * variance * batch.aggregateVisitReal state action</span>
+<span id="L501">501   let eval0 : (Fin 1 -&gt; State × StepTrace Action State mdp.horizon) -&gt;</span>
+<span id="L502">502       State × StepTrace Action State mdp.horizon := Function.eval 0</span>
+<span id="L503">503   let batchMap := mdp.episodeBatchOfTrajectories 1</span>
+<span id="L504">504   have htrace :=</span>
+<span id="L505">505     mdp.trajectoryMeasure_transitionResidual_variance_compensated_hasMGFUpperBoundAt</span>
+<span id="L506">506       policy initialState state action nextState tilt htilt</span>
+<span id="L507">507   have hfamilyMap : Concentration.HasMGFUpperBoundAt Ztrace 1 0</span>
+<span id="L508">508       ((policy.iidTrajectoryFamilyMeasure initialState 1).map eval0) := by</span>
+<span id="L509">509     rw [policy.iidTrajectoryFamilyMeasure_map_eval initialState (0 : Fin 1)]</span>
+<span id="L510">510     exact htrace</span>
+<span id="L511">511   have hfamily : Concentration.HasMGFUpperBoundAt (Ztrace ∘ eval0) 1 0</span>
+<span id="L512">512       (policy.iidTrajectoryFamilyMeasure initialState 1) :=</span>
+<span id="L513">513     Concentration.HasMGFUpperBoundAt.of_map</span>
+<span id="L514">514       (measurable_pi_apply (0 : Fin 1)).aemeasurable hfamilyMap</span>
+<span id="L515">515   have hpoint : ∀ trajectories : Fin 1 -&gt;</span>
+<span id="L516">516       State × StepTrace Action State mdp.horizon,</span>
+<span id="L517">517       Zbatch (batchMap trajectories) = Ztrace (eval0 trajectories) := by</span>
+<span id="L518">518     intro trajectories</span>
+<span id="L519">519     have hresidual := mdp.transitionResidualFrom_eq_aggregateCounts</span>
+<span id="L520">520       state action nextState (trajectories 0)</span>
+<span id="L521">521     have hvisit := mdp.transitionVisitFrom_eq_aggregateVisitCount</span>
+<span id="L522">522       state action (trajectories 0)</span>
+<span id="L523">523     have hbatchEq : batchMap trajectories =</span>
+<span id="L524">524         mdp.episodeBatchOfTrajectories 1 (fun _ =&gt; trajectories 0) := by</span>
+<span id="L525">525       funext episode stage</span>
+<span id="L526">526       have hepisode : episode = (0 : Fin 1) := Subsingleton.elim _ _</span>
+<span id="L527">527       subst episode</span>
+<span id="L528">528       rfl</span>
+<span id="L529">529     change Zbatch (batchMap trajectories) = Ztrace (eval0 trajectories)</span>
+<span id="L530">530     rw [hbatchEq]</span>
+<span id="L531">531     simp only [Zbatch, Ztrace, eval0, Function.eval,</span>
+<span id="L532">532       EpisodeBatch.aggregateTransitionResidual,</span>
+<span id="L533">533       EpisodeBatch.aggregateVisitReal]</span>
+<span id="L534">534     rw [← hresidual, ← hvisit]</span>
+<span id="L535">535   have hcomposed : Concentration.HasMGFUpperBoundAt</span>
+<span id="L536">536       (Zbatch ∘ batchMap) 1 0</span>
+<span id="L537">537       (policy.iidTrajectoryFamilyMeasure initialState 1) := by</span>
+<span id="L538">538     constructor</span>
+<span id="L539">539     · intro s</span>
+<span id="L540">540       apply hfamily.integrable_exp_mul s |&gt;.congr</span>
+<span id="L541">541       exact Filter.Eventually.of_forall fun trajectories =&gt; by</span>
+<span id="L542">542         simp only [Function.comp_apply]</span>
+<span id="L543">543         rw [hpoint trajectories]</span>
+<span id="L544">544     · rw [ProbabilityTheory.mgf_congr</span>
+<span id="L545">545         (Filter.Eventually.of_forall fun trajectories =&gt; by</span>
+<span id="L546">546           simp only [Function.comp_apply]</span>
+<span id="L547">547           exact hpoint trajectories)]</span>
+<span id="L548">548       exact hfamily.mgf_le</span>
+<span id="L549">549   have hbatchMeas : Measurable batchMap :=</span>
+<span id="L550">550     mdp.measurable_episodeBatchOfTrajectories 1</span>
+<span id="L551">551   have hZbatchMeas : Measurable Zbatch :=</span>
+<span id="L552">552     (EpisodeBatch.measurable_aggregateTransitionResidual state action nextState</span>
+<span id="L553">553       |&gt;.const_mul tilt).sub</span>
+<span id="L554">554       (EpisodeBatch.measurable_aggregateVisitReal state action |&gt;.const_mul</span>
+<span id="L555">555         (tilt ^ 2 * variance))</span>
+<span id="L556">556   have hid : Concentration.HasMGFUpperBoundAt id 1 0</span>
+<span id="L557">557       ((policy.iidTrajectoryFamilyMeasure initialState 1).map</span>
+<span id="L558">558         (Zbatch ∘ batchMap)) :=</span>
+<span id="L559">559     (Concentration.HasMGFUpperBoundAt.id_map_iff</span>
+<span id="L560">560       (hZbatchMeas.comp hbatchMeas).aemeasurable).2 hcomposed</span>
+<span id="L561">561   unfold iidEpisodeBatchMeasure</span>
+<span id="L562">562   apply (Concentration.HasMGFUpperBoundAt.id_map_iff hZbatchMeas.aemeasurable).1</span>
+<span id="L563">563   rw [Measure.map_map hZbatchMeas hbatchMeas]</span>
+<span id="L564">564   exact hid</span>
+<span id="L565">565 </span>
+<span id="L566">566 end MarkovPolicy</span>
+<span id="L567">567 </span>
+<span id="L568">568 namespace AdaptiveEpisodeBatchSource</span>
+<span id="L569">569 </span>
+<span id="L570">570 /-- Every successor episode in the recurrent generated process inherits the</span>
+<span id="L571">571 same coordinate-variance compensated conditional MGF. -/</span>
+<span id="L572">572 theorem aggregateTransitionResidual_succ_variance_compensated_hasCondMGFUpperBoundAt</span>
+<span id="L573">573     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L574">574     [IsProbabilityMeasure initialState]</span>
+<span id="L575">575     [StandardBorelSpace (EpisodeBatch mdp 1)]</span>
+<span id="L576">576     [StandardBorelSpace (EpisodeBatchTrajectory mdp 1)]</span>
+<span id="L577">577     (source : AdaptiveEpisodeBatchSource mdp initialState 1)</span>
+<span id="L578">578     (state : State) (action : Action) (nextState : State)</span>
+<span id="L579">579     (n : Nat) (tilt : Real) (htilt : |tilt| &lt;= 1) :</span>
+<span id="L580">580     Concentration.HasCondMGFUpperBoundAt (mΩ := MeasurableSpace.pi)</span>
+<span id="L581">581       (batchPrefixFiltration (mdp := mdp) 1 n)</span>
+<span id="L582">582       ((batchPrefixFiltration (mdp := mdp) 1).le n)</span>
+<span id="L583">583       (fun trajectory =&gt;</span>
+<span id="L584">584         tilt * source.aggregateTransitionResidualIncrement</span>
+<span id="L585">585             state action nextState (n + 1) trajectory -</span>
+<span id="L586">586           tilt ^ 2 * mdp.transitionCoordinateVariance state action nextState *</span>
+<span id="L587">587             source.aggregateVisitIncrement state action (n + 1) trajectory)</span>
+<span id="L588">588       1 0 source.trajectoryMeasure := by</span>
+<span id="L589">589   let prefixMap : EpisodeBatchTrajectory mdp 1 -&gt; EpisodeBatchPrefix mdp 1 n :=</span>
+<span id="L590">590     Preorder.frestrictLe n</span>
+<span id="L591">591   let variance : Real := mdp.transitionCoordinateVariance state action nextState</span>
+<span id="L592">592   let Zbatch : EpisodeBatch mdp 1 -&gt; Real := fun batch =&gt;</span>
+<span id="L593">593     tilt * batch.aggregateTransitionResidual state action nextState -</span>
+<span id="L594">594       tilt ^ 2 * variance * batch.aggregateVisitReal state action</span>
+<span id="L595">595   have hZbatch : Measurable Zbatch :=</span>
+<span id="L596">596     (EpisodeBatch.measurable_aggregateTransitionResidual state action nextState</span>
+<span id="L597">597       |&gt;.const_mul tilt).sub</span>
+<span id="L598">598       (EpisodeBatch.measurable_aggregateVisitReal state action |&gt;.const_mul</span>
+<span id="L599">599         (tilt ^ 2 * variance))</span>
+<span id="L600">600   have hX : Measurable (fun trajectory : EpisodeBatchTrajectory mdp 1 =&gt;</span>
+<span id="L601">601       Zbatch (trajectory (n + 1))) :=</span>
+<span id="L602">602     hZbatch.comp (measurable_pi_apply (n + 1))</span>
+<span id="L603">603   have hkernel :=</span>
+<span id="L604">604     source.condExpKernel_map_batchStatistic_eq_batchKernel n Zbatch hZbatch</span>
+<span id="L605">605   let target : EpisodeBatchTrajectory mdp 1 -&gt; Measure Real := fun trajectory =&gt;</span>
+<span id="L606">606     ((source.batchKernel n).map Zbatch) (prefixMap trajectory)</span>
+<span id="L607">607   have htarget : Filter.Eventually</span>
+<span id="L608">608       (fun trajectory =&gt; Concentration.HasMGFUpperBoundAt id 1 0</span>
+<span id="L609">609         (target trajectory))</span>
+<span id="L610">610       (ae (source.trajectoryMeasure.trim</span>
+<span id="L611">611         ((batchPrefixFiltration (mdp := mdp) 1).le n))) := by</span>
+<span id="L612">612     exact Filter.Eventually.of_forall fun trajectory =&gt; by</span>
+<span id="L613">613       let history := prefixMap trajectory</span>
+<span id="L614">614       let policy := source.successorPolicy n history</span>
+<span id="L615">615       have hbatch :=</span>
+<span id="L616">616         policy.iidEpisodeBatchMeasure_one_aggregateTransitionResidual_variance_compensated_hasMGFUpperBoundAt</span>
+<span id="L617">617           initialState state action nextState tilt htilt</span>
+<span id="L618">618       have hbatch&#x27; : Concentration.HasMGFUpperBoundAt Zbatch 1 0</span>
+<span id="L619">619           (source.batchKernel n history) := by</span>
+<span id="L620">620         rw [source.batchKernel_eq_iidEpisodeBatchMeasure n history]</span>
+<span id="L621">621         simpa [Zbatch, variance] using hbatch</span>
+<span id="L622">622       change Concentration.HasMGFUpperBoundAt id 1 0</span>
+<span id="L623">623         (((source.batchKernel n).map Zbatch) history)</span>
+<span id="L624">624       rw [ProbabilityTheory.Kernel.map_apply _ hZbatch]</span>
+<span id="L625">625       exact (Concentration.HasMGFUpperBoundAt.id_map_iff</span>
+<span id="L626">626         hZbatch.aemeasurable).2 hbatch&#x27;</span>
+<span id="L627">627   have hintegrable : ∀ s, Integrable</span>
+<span id="L628">628       (fun trajectory : EpisodeBatchTrajectory mdp 1 =&gt;</span>
+<span id="L629">629         Real.exp (s * Zbatch (trajectory (n + 1))))</span>
+<span id="L630">630       source.trajectoryMeasure := by</span>
+<span id="L631">631     intro s</span>
+<span id="L632">632     simpa [Zbatch, variance, aggregateTransitionResidualIncrement,</span>
+<span id="L633">633       aggregateTransitionResidualPrefix, aggregateVisitIncrement,</span>
+<span id="L634">634       aggregateVisitPrefix, Preorder.frestrictLe_apply] using</span>
+<span id="L635">635       source.integrable_exp_mul_aggregateTransitionResidual_compensatedIncrement</span>
+<span id="L636">636         state action nextState (n + 1) tilt (tilt ^ 2 * variance) s</span>
+<span id="L637">637   have hcomap : Concentration.HasCondMGFUpperBoundAt</span>
+<span id="L638">638       (mΩ := MeasurableSpace.pi)</span>
+<span id="L639">639       (batchPrefixFiltration (mdp := mdp) 1 n)</span>
+<span id="L640">640       ((batchPrefixFiltration (mdp := mdp) 1).le n)</span>
+<span id="L641">641       (fun trajectory : EpisodeBatchTrajectory mdp 1 =&gt;</span>
+<span id="L642">642         Zbatch (trajectory (n + 1))) 1 0 source.trajectoryMeasure :=</span>
+<span id="L643">643     hasCondMGFUpperBoundAt_of_condExpKernel_map_eq</span>
+<span id="L644">644       source.trajectoryMeasure (batchPrefixFiltration (mdp := mdp) 1 n)</span>
+<span id="L645">645       ((batchPrefixFiltration (mdp := mdp) 1).le n)</span>
+<span id="L646">646       (fun trajectory : EpisodeBatchTrajectory mdp 1 =&gt;</span>
+<span id="L647">647         Zbatch (trajectory (n + 1))) hX 1 0 target hintegrable</span>
+<span id="L648">648       (by simpa [target, prefixMap, batchPrefixFiltration] using hkernel)</span>
+<span id="L649">649       htarget</span>
+<span id="L650">650   simpa [Zbatch, variance, aggregateTransitionResidualIncrement,</span>
+<span id="L651">651     aggregateTransitionResidualPrefix, aggregateVisitIncrement,</span>
+<span id="L652">652     aggregateVisitPrefix, Preorder.frestrictLe_apply] using hcomap</span>
+<span id="L653">653 </span>
+<span id="L654">654 /-- Coordinate zero has the same exact coordinate-variance certificate under</span>
+<span id="L655">655 the initial marginal of the generated recurrent trajectory. -/</span>
+<span id="L656">656 theorem aggregateTransitionResidual_zero_variance_compensated_hasMGFUpperBoundAt</span>
+<span id="L657">657     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L658">658     [IsProbabilityMeasure initialState]</span>
+<span id="L659">659     (source : AdaptiveEpisodeBatchSource mdp initialState 1)</span>
+<span id="L660">660     (state : State) (action : Action) (nextState : State)</span>
+<span id="L661">661     (tilt : Real) (htilt : |tilt| &lt;= 1) :</span>
+<span id="L662">662     Concentration.HasMGFUpperBoundAt</span>
+<span id="L663">663       (fun trajectory : EpisodeBatchTrajectory mdp 1 =&gt;</span>
+<span id="L664">664         tilt * source.aggregateTransitionResidualIncrement</span>
+<span id="L665">665             state action nextState 0 trajectory -</span>
+<span id="L666">666           tilt ^ 2 * mdp.transitionCoordinateVariance state action nextState *</span>
+<span id="L667">667             source.aggregateVisitIncrement state action 0 trajectory)</span>
+<span id="L668">668       1 0 source.trajectoryMeasure := by</span>
+<span id="L669">669   let variance : Real := mdp.transitionCoordinateVariance state action nextState</span>
+<span id="L670">670   let Zbatch : EpisodeBatch mdp 1 -&gt; Real := fun batch =&gt;</span>
+<span id="L671">671     tilt * batch.aggregateTransitionResidual state action nextState -</span>
+<span id="L672">672       tilt ^ 2 * variance * batch.aggregateVisitReal state action</span>
+<span id="L673">673   have hbatch : Concentration.HasMGFUpperBoundAt Zbatch 1 0</span>
+<span id="L674">674       (source.initialPolicy.iidEpisodeBatchMeasure initialState 1) := by</span>
+<span id="L675">675     simpa [Zbatch, variance] using</span>
+<span id="L676">676       source.initialPolicy.iidEpisodeBatchMeasure_one_aggregateTransitionResidual_variance_compensated_hasMGFUpperBoundAt</span>
+<span id="L677">677         initialState state action nextState tilt htilt</span>
+<span id="L678">678   rw [← source.trajectoryMeasure_map_eval_zero] at hbatch</span>
+<span id="L679">679   have hlift := Concentration.HasMGFUpperBoundAt.of_map</span>
+<span id="L680">680     (X := Zbatch)</span>
+<span id="L681">681     (Z := fun trajectory : EpisodeBatchTrajectory mdp 1 =&gt; trajectory 0)</span>
+<span id="L682">682     (measurable_pi_apply 0).aemeasurable hbatch</span>
+<span id="L683">683   simpa [Zbatch, variance, aggregateTransitionResidualIncrement,</span>
+<span id="L684">684     aggregateTransitionResidualPrefix, aggregateVisitIncrement,</span>
+<span id="L685">685     aggregateVisitPrefix, Preorder.frestrictLe_apply] using hlift</span>
+<span id="L686">686 </span>
+<span id="L687">687 /-- Fixed-tilt actual-count upper tail with the true transition-coordinate</span>
+<span id="L688">688 variance. -/</span>
+<span id="L689">689 theorem measure_aggregateTransitionResidualSum_ge_inter_visitSum_le_variance</span>
+<span id="L690">690     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L691">691     [IsProbabilityMeasure initialState]</span>
+<span id="L692">692     [StandardBorelSpace (EpisodeBatch mdp 1)]</span>
+<span id="L693">693     [StandardBorelSpace (EpisodeBatchTrajectory mdp 1)]</span>
+<span id="L694">694     (source : AdaptiveEpisodeBatchSource mdp initialState 1)</span>
+<span id="L695">695     (state : State) (action : Action) (nextState : State)</span>
+<span id="L696">696     (rounds : Nat) (tilt threshold visitBudget : Real)</span>
+<span id="L697">697     (htilt : 0 &lt; tilt) (htilt_le : tilt &lt;= 1) :</span>
+<span id="L698">698     source.trajectoryMeasure</span>
+<span id="L699">699         {trajectory |</span>
+<span id="L700">700           threshold &lt;=</span>
+<span id="L701">701               ∑ i ∈ Finset.range rounds,</span>
+<span id="L702">702                 source.aggregateTransitionResidualIncrement</span>
+<span id="L703">703                   state action nextState i trajectory ∧</span>
+<span id="L704">704             (∑ i ∈ Finset.range rounds,</span>
+<span id="L705">705                 source.aggregateVisitIncrement state action i trajectory) &lt;=</span>
+<span id="L706">706               visitBudget} &lt;=</span>
+<span id="L707">707       ENNReal.ofReal</span>
+<span id="L708">708         (Real.exp (-tilt * threshold +</span>
+<span id="L709">709           tilt ^ 2 * mdp.transitionCoordinateVariance state action nextState *</span>
+<span id="L710">710             visitBudget)) := by</span>
+<span id="L711">711   let F := batchPrefixFiltration (mdp := mdp) 1</span>
+<span id="L712">712   let variance : Real := mdp.transitionCoordinateVariance state action nextState</span>
+<span id="L713">713   let Y : Nat -&gt; EpisodeBatchTrajectory mdp 1 -&gt; Real := fun i trajectory =&gt;</span>
+<span id="L714">714     source.aggregateTransitionResidualIncrement state action nextState i trajectory</span>
+<span id="L715">715   let V : Nat -&gt; EpisodeBatchTrajectory mdp 1 -&gt; Real := fun i trajectory =&gt;</span>
+<span id="L716">716     source.aggregateVisitIncrement state action i trajectory</span>
+<span id="L717">717   let Z : Nat -&gt; EpisodeBatchTrajectory mdp 1 -&gt; Real := fun i trajectory =&gt;</span>
+<span id="L718">718     tilt * Y i trajectory - tilt ^ 2 * variance * V i trajectory</span>
+<span id="L719">719   have htiltAbs : |tilt| &lt;= 1 := by rw [abs_of_pos htilt]; exact htilt_le</span>
+<span id="L720">720   have hadapted : StronglyAdapted F Z := by</span>
+<span id="L721">721     simpa [F, Y, V, Z, variance] using</span>
+<span id="L722">722       source.aggregateTransitionResidual_compensated_stronglyAdapted_piLE</span>
+<span id="L723">723         state action nextState tilt (tilt ^ 2 * variance)</span>
+<span id="L724">724   have hzero : Concentration.HasMGFUpperBoundAt (Z 0) 1 0</span>
+<span id="L725">725       source.trajectoryMeasure := by</span>
+<span id="L726">726     simpa [Y, V, Z, variance] using</span>
+<span id="L727">727       source.aggregateTransitionResidual_zero_variance_compensated_hasMGFUpperBoundAt</span>
+<span id="L728">728         state action nextState tilt htiltAbs</span>
+<span id="L729">729   have hsucc : ∀ i, i &lt; rounds - 1 -&gt;</span>
+<span id="L730">730       Concentration.HasCondMGFUpperBoundAt</span>
+<span id="L731">731         (F i) (F.le i) (Z (i + 1)) 1 0 source.trajectoryMeasure := by</span>
+<span id="L732">732     intro i _hi</span>
+<span id="L733">733     simpa [F, Y, V, Z, variance] using</span>
+<span id="L734">734       source.aggregateTransitionResidual_succ_variance_compensated_hasCondMGFUpperBoundAt</span>
+<span id="L735">735         state action nextState i tilt htiltAbs</span>
+<span id="L736">736   simpa [Y, V, variance] using</span>
+<span id="L737">737     (Concentration.measure_sum_ge_inter_sum_le_of_compensated_hasCondMGFUpperBoundAt</span>
+<span id="L738">738       (μ := source.trajectoryMeasure) (ℱ := F) Y V rounds tilt</span>
+<span id="L739">739       (tilt ^ 2 * variance) threshold visitBudget hadapted hzero hsucc htilt.le</span>
+<span id="L740">740       (mul_nonneg (sq_nonneg tilt) (mdp.transitionCoordinateVariance_nonneg</span>
+<span id="L741">741         state action nextState)))</span>
+<span id="L742">742 </span>
+<span id="L743">743 /-- Two-sided coordinate-variance prefix tail on the same generated law. -/</span>
+<span id="L744">744 theorem measure_abs_aggregateTransitionResidualSum_ge_inter_visitSum_le_variance</span>
+<span id="L745">745     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L746">746     [IsProbabilityMeasure initialState]</span>
+<span id="L747">747     [StandardBorelSpace (EpisodeBatch mdp 1)]</span>
+<span id="L748">748     [StandardBorelSpace (EpisodeBatchTrajectory mdp 1)]</span>
+<span id="L749">749     (source : AdaptiveEpisodeBatchSource mdp initialState 1)</span>
+<span id="L750">750     (state : State) (action : Action) (nextState : State)</span>
+<span id="L751">751     (rounds : Nat) (tilt threshold visitBudget : Real)</span>
+<span id="L752">752     (htilt : 0 &lt; tilt) (htilt_le : tilt &lt;= 1) :</span>
+<span id="L753">753     source.trajectoryMeasure</span>
+<span id="L754">754         {trajectory |</span>
+<span id="L755">755           threshold &lt;=</span>
+<span id="L756">756               |∑ i ∈ Finset.range rounds,</span>
+<span id="L757">757                 source.aggregateTransitionResidualIncrement</span>
+<span id="L758">758                   state action nextState i trajectory| ∧</span>
+<span id="L759">759             (∑ i ∈ Finset.range rounds,</span>
+<span id="L760">760                 source.aggregateVisitIncrement state action i trajectory) &lt;=</span>
+<span id="L761">761               visitBudget} &lt;=</span>
+<span id="L762">762       2 * ENNReal.ofReal</span>
+<span id="L763">763         (Real.exp (-tilt * threshold +</span>
+<span id="L764">764           tilt ^ 2 * mdp.transitionCoordinateVariance state action nextState *</span>
+<span id="L765">765             visitBudget)) := by</span>
+<span id="L766">766   let variance : Real := mdp.transitionCoordinateVariance state action nextState</span>
+<span id="L767">767   let positive : Set (EpisodeBatchTrajectory mdp 1) :=</span>
+<span id="L768">768     {trajectory |</span>
+<span id="L769">769       threshold &lt;= ∑ i ∈ Finset.range rounds,</span>
+<span id="L770">770         source.aggregateTransitionResidualIncrement state action nextState i trajectory ∧</span>
+<span id="L771">771       (∑ i ∈ Finset.range rounds,</span>
+<span id="L772">772         source.aggregateVisitIncrement state action i trajectory) &lt;= visitBudget}</span>
+<span id="L773">773   let negative : Set (EpisodeBatchTrajectory mdp 1) :=</span>
+<span id="L774">774     {trajectory |</span>
+<span id="L775">775       threshold &lt;= ∑ i ∈ Finset.range rounds,</span>
+<span id="L776">776         -source.aggregateTransitionResidualIncrement state action nextState i trajectory ∧</span>
+<span id="L777">777       (∑ i ∈ Finset.range rounds,</span>
+<span id="L778">778         source.aggregateVisitIncrement state action i trajectory) &lt;= visitBudget}</span>
+<span id="L779">779   have hpos := source.measure_aggregateTransitionResidualSum_ge_inter_visitSum_le_variance</span>
+<span id="L780">780     state action nextState rounds tilt threshold visitBudget htilt htilt_le</span>
+<span id="L781">781   have hneg : source.trajectoryMeasure negative &lt;=</span>
+<span id="L782">782       ENNReal.ofReal (Real.exp (-tilt * threshold +</span>
+<span id="L783">783         tilt ^ 2 * variance * visitBudget)) := by</span>
+<span id="L784">784     let F := batchPrefixFiltration (mdp := mdp) 1</span>
+<span id="L785">785     let Y : Nat -&gt; EpisodeBatchTrajectory mdp 1 -&gt; Real := fun i trajectory =&gt;</span>
+<span id="L786">786       -source.aggregateTransitionResidualIncrement state action nextState i trajectory</span>
+<span id="L787">787     let V : Nat -&gt; EpisodeBatchTrajectory mdp 1 -&gt; Real := fun i trajectory =&gt;</span>
+<span id="L788">788       source.aggregateVisitIncrement state action i trajectory</span>
+<span id="L789">789     let Z : Nat -&gt; EpisodeBatchTrajectory mdp 1 -&gt; Real := fun i trajectory =&gt;</span>
+<span id="L790">790       tilt * Y i trajectory - tilt ^ 2 * variance * V i trajectory</span>
+<span id="L791">791     have htiltAbs : |tilt| &lt;= 1 := by rw [abs_of_pos htilt]; exact htilt_le</span>
+<span id="L792">792     have hnegTiltAbs : |-tilt| &lt;= 1 := by simpa using htiltAbs</span>
+<span id="L793">793     have hadapted : StronglyAdapted F Z := by</span>
+<span id="L794">794       have h := source.aggregateTransitionResidual_compensated_stronglyAdapted_piLE</span>
+<span id="L795">795         state action nextState (-tilt) ((-tilt) ^ 2 * variance)</span>
+<span id="L796">796       simpa [F, Y, V, Z] using h</span>
+<span id="L797">797     have hzero : Concentration.HasMGFUpperBoundAt (Z 0) 1 0</span>
+<span id="L798">798         source.trajectoryMeasure := by</span>
+<span id="L799">799       have h :=</span>
+<span id="L800">800         source.aggregateTransitionResidual_zero_variance_compensated_hasMGFUpperBoundAt</span>
+<span id="L801">801           state action nextState (-tilt) hnegTiltAbs</span>
+<span id="L802">802       simpa [Y, V, Z, variance] using h</span>
+<span id="L803">803     have hsucc : ∀ i, i &lt; rounds - 1 -&gt;</span>
+<span id="L804">804         Concentration.HasCondMGFUpperBoundAt</span>
+<span id="L805">805           (F i) (F.le i) (Z (i + 1)) 1 0 source.trajectoryMeasure := by</span>
+<span id="L806">806       intro i _hi</span>
+<span id="L807">807       have h :=</span>
+<span id="L808">808         source.aggregateTransitionResidual_succ_variance_compensated_hasCondMGFUpperBoundAt</span>
+<span id="L809">809           state action nextState i (-tilt) hnegTiltAbs</span>
+<span id="L810">810       simpa [F, Y, V, Z, variance] using h</span>
+<span id="L811">811     simpa [negative, Y, V, variance] using</span>
+<span id="L812">812       (Concentration.measure_sum_ge_inter_sum_le_of_compensated_hasCondMGFUpperBoundAt</span>
+<span id="L813">813         (μ := source.trajectoryMeasure) (ℱ := F) Y V rounds tilt</span>
+<span id="L814">814         (tilt ^ 2 * variance) threshold visitBudget hadapted hzero hsucc htilt.le</span>
+<span id="L815">815         (mul_nonneg (sq_nonneg tilt) (mdp.transitionCoordinateVariance_nonneg</span>
+<span id="L816">816           state action nextState)))</span>
+<span id="L817">817   have hsubset :</span>
+<span id="L818">818       {trajectory |</span>
+<span id="L819">819           threshold &lt;=</span>
+<span id="L820">820               |∑ i ∈ Finset.range rounds,</span>
+<span id="L821">821                 source.aggregateTransitionResidualIncrement</span>
+<span id="L822">822                   state action nextState i trajectory| ∧</span>
+<span id="L823">823             (∑ i ∈ Finset.range rounds,</span>
+<span id="L824">824                 source.aggregateVisitIncrement state action i trajectory) &lt;=</span>
+<span id="L825">825               visitBudget} ⊆ positive ∪ negative := by</span>
+<span id="L826">826     intro trajectory htrajectory</span>
+<span id="L827">827     rcases htrajectory with ⟨habs, hvis⟩</span>
+<span id="L828">828     rw [le_abs] at habs</span>
+<span id="L829">829     rcases habs with hpos&#x27; | hneg&#x27;</span>
+<span id="L830">830     · left; exact ⟨hpos&#x27;, hvis⟩</span>
+<span id="L831">831     · right</span>
+<span id="L832">832       refine ⟨?_, hvis⟩</span>
+<span id="L833">833       simpa [negative, Finset.sum_neg_distrib] using hneg&#x27;</span>
+<span id="L834">834   calc</span>
+<span id="L835">835     source.trajectoryMeasure _ &lt;= source.trajectoryMeasure (positive ∪ negative) :=</span>
+<span id="L836">836       measure_mono hsubset</span>
+<span id="L837">837     _ &lt;= source.trajectoryMeasure positive + source.trajectoryMeasure negative :=</span>
+<span id="L838">838       measure_union_le _ _</span>
+<span id="L839">839     _ &lt;= ENNReal.ofReal (Real.exp (-tilt * threshold +</span>
+<span id="L840">840           tilt ^ 2 * variance * visitBudget)) +</span>
+<span id="L841">841         ENNReal.ofReal (Real.exp (-tilt * threshold +</span>
+<span id="L842">842           tilt ^ 2 * variance * visitBudget)) :=</span>
+<span id="L843">843       add_le_add (by simpa [positive, variance] using hpos) hneg</span>
+<span id="L844">844     _ = 2 * ENNReal.ofReal (Real.exp (-tilt * threshold +</span>
+<span id="L845">845           tilt ^ 2 * variance * visitBudget)) := by ring</span>
+<span id="L846">846 </span>
+<span id="L847">847 end AdaptiveEpisodeBatchSource</span>
+<span id="L848">848 </span>
+<span id="L849">849 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

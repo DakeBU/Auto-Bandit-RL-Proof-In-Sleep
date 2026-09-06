@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/PullCountDecomposition.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/PullCountDecomposition.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/PullCountDecomposition.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/PullCountDecomposition.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import Mathlib.Data.Fintype.Basic</span>
+<span id="L2">2 import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise</span>
+<span id="L3">3 import BanditRLProof.MathlibWrappers</span>
+<span id="L4">4 </span>
+<span id="L5">5 /-!</span>
+<span id="L6">6 # Pull-count decompositions over finite action spaces</span>
+<span id="L7">7 </span>
+<span id="L8">8 This module contains deterministic count identities that consume the</span>
+<span id="L9">9 Mathlib-backed `Finset.range` wrappers.  It stays below the probability and</span>
+<span id="L10">10 algorithm-specific layers.</span>
+<span id="L11">11 -/</span>
+<span id="L12">12 </span>
+<span id="L13">13 namespace BanditRLProof</span>
+<span id="L14">14 </span>
+<span id="L15">15 section PullCountPartition</span>
+<span id="L16">16 </span>
+<span id="L17">17 variable {Action : Type u} [Fintype Action] [DecidableEq Action]</span>
+<span id="L18">18 variable (action : ActionTrace Action) (t : Nat)</span>
+<span id="L19">19 </span>
+<span id="L20">20 /--</span>
+<span id="L21">21 The pull counts over a finite action space partition the time horizon.</span>
+<span id="L22">22 </span>
+<span id="L23">23 This is the deterministic `PULLCOUNT-SUM-TIME` leaf.  It consumes the compiled</span>
+<span id="L24">24 `pullCount` Finset wrapper and Mathlib&#x27;s finite fiber-cardinality theorem.</span>
+<span id="L25">25 -/</span>
+<span id="L26">26 theorem finset_sum_pullCount_eq_time :</span>
+<span id="L27">27     (Finset.univ : Finset Action).sum</span>
+<span id="L28">28       (fun a : Action =&gt; pullCount action a t) = t := by</span>
+<span id="L29">29   calc</span>
+<span id="L30">30     (Finset.univ : Finset Action).sum</span>
+<span id="L31">31         (fun a : Action =&gt; pullCount action a t)</span>
+<span id="L32">32         = (Finset.univ : Finset Action).sum</span>
+<span id="L33">33             (fun a : Action =&gt;</span>
+<span id="L34">34               ((Finset.range t).filter (fun s : Nat =&gt; action s = a)).card) := by</span>
+<span id="L35">35           apply Finset.sum_congr rfl</span>
+<span id="L36">36           intro a _ha</span>
+<span id="L37">37           rw [pullCount_eq_finset_filter_card]</span>
+<span id="L38">38     _ = (Finset.range t).card := by</span>
+<span id="L39">39           exact (Finset.card_eq_sum_card_fiberwise</span>
+<span id="L40">40             (f := action)</span>
+<span id="L41">41             (s := Finset.range t)</span>
+<span id="L42">42             (t := (Finset.univ : Finset Action))</span>
+<span id="L43">43             (by intro _s _hs; simp)).symm</span>
+<span id="L44">44     _ = t := by</span>
+<span id="L45">45           simp</span>
+<span id="L46">46 </span>
+<span id="L47">47 /--</span>
+<span id="L48">48 Reindex a sum over action times by arm and the arm&#x27;s prior pull count.</span>
+<span id="L49">49 </span>
+<span id="L50">50 At a time `s`, the value `pullCount action (action s) s` is the zero-based</span>
+<span id="L51">51 index of that pull among occurrences of the selected arm. This is the local</span>
+<span id="L52">52 Mathlib-backed counterpart of LML&#x27;s `sum_comp_pullCount` bookkeeping lemma.</span>
+<span id="L53">53 -/</span>
+<span id="L54">54 theorem finset_sum_comp_pullCount</span>
+<span id="L55">55     {R : Type v} [AddCommMonoid R] (f : Nat -&gt; R) :</span>
+<span id="L56">56     ∑ s ∈ Finset.range t, f (pullCount action (action s) s) =</span>
+<span id="L57">57       ∑ a : Action, ∑ j ∈ Finset.range (pullCount action a t), f j := by</span>
+<span id="L58">58   induction t with</span>
+<span id="L59">59   | zero =&gt; simp</span>
+<span id="L60">60   | succ n ih =&gt;</span>
+<span id="L61">61       have hf : f (pullCount action (action n) n) =</span>
+<span id="L62">62           ∑ a : Action,</span>
+<span id="L63">63             if action n = a then f (pullCount action a n) else 0 := by</span>
+<span id="L64">64         exact (Fintype.sum_ite_eq (action n)</span>
+<span id="L65">65           (fun a =&gt; f (pullCount action a n))).symm</span>
+<span id="L66">66       simp_rw [Finset.sum_range_succ, ih, hf,</span>
+<span id="L67">67         ← Finset.sum_add_distrib, pullCount_succ]</span>
+<span id="L68">68       apply Finset.sum_congr rfl</span>
+<span id="L69">69       intro a _ha</span>
+<span id="L70">70       by_cases h : action n = a</span>
+<span id="L71">71       · simp [h, Finset.sum_range_succ]</span>
+<span id="L72">72       · simp [h]</span>
+<span id="L73">73 </span>
+<span id="L74">74 end PullCountPartition</span>
+<span id="L75">75 </span>
+<span id="L76">76 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

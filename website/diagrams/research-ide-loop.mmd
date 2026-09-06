@@ -1,0 +1,11 @@
+flowchart LR
+    Input["LaTeX or plain-English target"] --> Retrieve["Grounding retrieval<br/>BanditRLlib + Mathlib + LML"]
+    Retrieve --> Provider{"Server-side provider<br/>configured?"}
+    Provider -->|no| Draft["Draft scaffold<br/>explicitly not formalized"]
+    Provider -->|yes| Candidate["Lean statement candidate<br/>assumptions shown"]
+    Candidate --> Compile["Temporary Lean compile<br/>loopback service"]
+    Compile --> Result["Diagnostics + unresolved obligations<br/>separate semantic, Lean, proof, library status"]
+    Draft --> Result
+    Result --> Packet["Exported contribution packet<br/>no repository write"]
+    Packet --> Harness["ABRL intake and review"]
+    Harness -->|only after full gate| Library["BanditRLlib main"]

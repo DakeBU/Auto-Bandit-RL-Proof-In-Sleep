@@ -1,0 +1,962 @@
+{
+  "version": "2026-07-03",
+  "purpose": "Machine-readable theorem-route roadmap for ABRL upper, middle, lower, and reviewer agents.",
+  "rules": [
+    "Decompose aggressively: each lower target must fit one agent context window.",
+    "Specify more than the theorem: include local APIs, imports, theorem cards, and intended proof route.",
+    "Treat repeated failure as mathematical signal: audit the statement, assumptions, or counterexample before more tactic search.",
+    "Make hidden regularity reusable: integrability, measurability, continuity, nonemptiness, boundedness, positivity, summability, and adaptedness become named contracts.",
+    "Do not frequently change a proof route without a middle/reviewer note explaining the mathematical reason.",
+    "Proof weapons are inspiration only; compiled local declarations, imported Mathlib declarations, or ported upstream Lean theorem cards are proof dependencies."
+  ],
+  "status_terms": {
+    "compiled-local": "Lean declaration builds in this repository.",
+    "mathlib-route": "A Mathlib API route is identified, but the local theorem/wrapper is not complete.",
+    "theorem-card": "An external Lean theorem route is recorded, usually from LML, but not locally imported or ported.",
+    "missing-leaf": "A small theorem statement and proof/import decision are still needed.",
+    "paper-card": "A literature source guides the route but cannot be used as a Lean proof dependency.",
+    "weapon-only": "A proof idea used only by upper/middle planning."
+  },
+  "shared_spines": [
+    {
+      "id": "SPINE-FINITE-BOOKKEEPING",
+      "title": "finite actions, time prefixes, pull counts, and gaps",
+      "compiled_modules": [
+        "BanditRLProof.Core",
+        "BanditRLProof.LeafLemmas",
+        "BanditRLProof.MathlibWrappers",
+        "BanditRLProof.PullCountDecomposition",
+        "BanditRLProof.RegretDecomposition",
+        "BanditRLProof.RegretCountBounds",
+        "BanditRLProof.FiniteBanditModelInvariants"
+      ],
+      "mathlib_candidates": [
+        "finite-prefix count partition over a finite action type",
+        "filtered Finset.range count and sum wrappers",
+        "finite reindexing from time sums to arm fibers"
+      ],
+      "downstream_routes": [
+        "ROUTE-ETC-FINITE-STOCHASTIC",
+        "ROUTE-UCB1-FINITE-STOCHASTIC",
+        "ROUTE-KL-UCB",
+        "ROUTE-EXP3-ADVERSARIAL",
+        "ROUTE-TSALLIS-INF-FTRL"
+      ]
+    },
+    {
+      "id": "SPINE-MEASURE-EXPECTATION",
+      "title": "measurability, integrability, lower integrals, and Bochner expectation",
+      "compiled_modules": [
+        "BanditRLProof.MeasureFoundation",
+        "BanditRLProof.MeasurableSums",
+        "BanditRLProof.MeasurablePullCount",
+        "BanditRLProof.MeasurableRegret",
+        "BanditRLProof.ExpectationFoundation",
+        "BanditRLProof.ExpectationRegretPullCount",
+        "BanditRLProof.IntegrabilitySums"
+      ],
+      "mathlib_candidates": [
+        "finite-sum integrability adapters",
+        "indicator lower-integral wrappers",
+        "expected pull-count decomposition under explicit integrability"
+      ],
+      "downstream_routes": [
+        "ROUTE-ETC-FINITE-STOCHASTIC",
+        "ROUTE-THOMPSON-BAYES",
+        "ROUTE-BWK-RESOURCE",
+        "ROUTE-RL-UCBVI"
+      ]
+    },
+    {
+      "id": "SPINE-CONCENTRATION",
+      "title": "independence, filtrations, conditional expectation, martingales, and concentration",
+      "compiled_modules": [
+        "BanditRLProof.IndependenceFoundation",
+        "BanditRLProof.HistoryFiltration",
+        "BanditRLProof.PolicyMeasurability",
+        "BanditRLProof.MartingaleDifference",
+        "BanditRLProof.ConcentrationSubGaussian",
+        "BanditRLProof.ConcentrationVariance",
+        "BanditRLProof.ConditionalExpectationReward",
+        "BanditRLProof.ConditionalRewardLawSource"
+      ],
+      "mathlib_candidates": [
+        "conditional sub-Gaussian witness contracts",
+        "trajectory-law to condExpKernel identification",
+        "martingale-difference prefix packaging"
+      ],
+      "downstream_routes": [
+        "ROUTE-UCB1-FINITE-STOCHASTIC",
+        "ROUTE-ETC-FINITE-STOCHASTIC",
+        "ROUTE-LINEAR-OFUL",
+        "ROUTE-RL-UCBVI"
+      ]
+    },
+    {
+      "id": "SPINE-KERNEL-POSTERIOR",
+      "title": "reward kernels, posterior kernels, policy-generated traces, and finite trajectories",
+      "compiled_modules": [
+        "BanditRLProof.RewardKernel",
+        "BanditRLProof.PosteriorKernel",
+        "BanditRLProof.PolicyMeasurability",
+        "BanditRLProof.ConditionalRewardLawSource"
+      ],
+      "mathlib_candidates": [
+        "finite policy/reward trajectory map laws",
+        "posterior-over-environments kernel contracts",
+        "policy-generated trace conditioning laws"
+      ],
+      "downstream_routes": [
+        "ROUTE-THOMPSON-BAYES",
+        "ROUTE-CONTEXTUAL-EXP4-LINUCB",
+        "ROUTE-RL-UCBVI"
+      ]
+    },
+    {
+      "id": "SPINE-OPTIMIZATION",
+      "title": "finite simplex, FTRL, exponential weights, and Tsallis regularizers",
+      "compiled_modules": [
+        "BanditRLProof.Exp3Potential",
+        "BanditRLProof.FTRLOneStep",
+        "BanditRLProof.TsallisRegularizer"
+      ],
+      "mathlib_candidates": [
+        "finite-simplex convexity and minimizer existence",
+        "exp/log inequality wrappers for finite potentials",
+        "Tsallis rpow stability and penalty algebra"
+      ],
+      "downstream_routes": [
+        "ROUTE-EXP3-ADVERSARIAL",
+        "ROUTE-TSALLIS-INF-FTRL",
+        "ROUTE-BOBW-LINEAR-CONTEXTUAL"
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "id": "ROUTE-ETC-FINITE-STOCHASTIC",
+      "title": "Explore-Then-Commit finite stochastic regret",
+      "priority": "active",
+      "scenario_cards": [
+        "SCN-STOCHASTIC-FINITE"
+      ],
+      "source_cards": [
+        "TXT-LATTIMORE-SZEPESVARI-2020",
+        "LML-ETC-REGRET"
+      ],
+      "proof_weapons": [
+        "WEAPON-TAIL-INEQUALITIES"
+      ],
+      "compiled_local_core": [
+        "ETC round-robin counts",
+        "fixed-commit trace phase boundary",
+        "empirical mean measurability",
+        "argmax oracle",
+        "wrong-commit event reduction",
+        "bounded reward source contracts",
+        "infinitePi wrong-commit bound",
+        "ENNReal.ofReal lower-integral regret assembly"
+      ],
+      "next_mathlib_ready_leaves": [
+        "convert lower-integral ETC surrogate to the desired Bochner/Rat expected-regret theorem",
+        "generalize fixed actionWithCommit source to policy-generated adaptive traces",
+        "extract reusable bounded-centered reward sub-Gaussian contracts into Mathlib-shaped statements"
+      ],
+      "layers": [
+        {
+          "name": "finite bookkeeping",
+          "nodes": [
+            "pullCount",
+            "sumRewards",
+            "pseudoRegret",
+            "regret = sum gap * pullCount"
+          ]
+        },
+        {
+          "name": "ETC deterministic trace",
+          "nodes": [
+            "exploreArm modulo K",
+            "actionWithCommit phase split",
+            "exploration horizon counts",
+            "phase-split regret"
+          ]
+        },
+        {
+          "name": "stochastic event route",
+          "nodes": [
+            "empMeanAtExploration",
+            "argmax commit oracle",
+            "wrong commit subset pairwise event",
+            "finite union bound",
+            "centered-diff sub-Gaussian tail"
+          ]
+        },
+        {
+          "name": "regret assembly",
+          "nodes": [
+            "wrong event probability",
+            "suffix bad-gap penalty",
+            "lower-integral regret bound",
+            "expected-regret target"
+          ]
+        }
+      ],
+      "reviewer_gate": "Reject if the final claim is stronger than the compiled lower-integral theorem or hides boundedness/mean/integrability assumptions."
+    },
+    {
+      "id": "ROUTE-UCB1-FINITE-STOCHASTIC",
+      "title": "UCB1 logarithmic finite-arm regret",
+      "priority": "active-next",
+      "scenario_cards": [
+        "SCN-STOCHASTIC-FINITE"
+      ],
+      "source_cards": [
+        "TXT-BUBECK-CESABIANCHI-2012",
+        "TXT-LATTIMORE-SZEPESVARI-2020",
+        "PPR-AUER-CBF-2002-UCB1",
+        "LML-UCB-REGRET"
+      ],
+      "proof_weapons": [
+        "WEAPON-UCB-OPTIMISM",
+        "WEAPON-TAIL-INEQUALITIES"
+      ],
+      "compiled_local_core": [
+        "pull-count regret decomposition",
+        "expected pull-count decomposition",
+        "finite-horizon bad-event union/summability",
+        "sub-Gaussian tail wrappers"
+      ],
+      "next_mathlib_ready_leaves": [
+        "define non-placeholder UCB score with sqrt/log confidence width",
+        "prove positive count after initialization",
+        "prove UCB maximality implies suboptimal pull has a bad event or small count",
+        "prove confidence-width algebra and logarithmic count bound",
+        "assemble expected pull count and regret"
+      ],
+      "layers": [
+        {
+          "name": "index API",
+          "nodes": [
+            "initial round-robin",
+            "positive pull counts",
+            "empirical mean",
+            "sqrt/log radius",
+            "argmax UCB action"
+          ]
+        },
+        {
+          "name": "good event algebra",
+          "nodes": [
+            "upper confidence of optimal arm",
+            "lower confidence of chosen arm",
+            "gap <= 2 radius",
+            "count <= c log T / gap^2"
+          ]
+        },
+        {
+          "name": "tail and summability",
+          "nodes": [
+            "sub-Gaussian upper tail",
+            "sub-Gaussian lower tail",
+            "finite arm-time union",
+            "expected bad pulls"
+          ]
+        },
+        {
+          "name": "final theorem",
+          "nodes": [
+            "expected pull-count bound",
+            "gap-weighted regret",
+            "logarithmic regret"
+          ]
+        }
+      ],
+      "reviewer_gate": "Reject if UCB.score remains the empirical-mean placeholder or if sqrt/log positivity side conditions are hidden."
+    },
+    {
+      "id": "ROUTE-KL-UCB",
+      "title": "KL-UCB bounded stochastic bandits",
+      "priority": "planned",
+      "scenario_cards": [
+        "SCN-STOCHASTIC-FINITE"
+      ],
+      "source_cards": [
+        "PPR-GARIVIER-CAPPE-2011-KLUCB",
+        "TXT-LATTIMORE-SZEPESVARI-2020"
+      ],
+      "proof_weapons": [
+        "WEAPON-KL-CHANGE-OF-MEASURE",
+        "WEAPON-UCB-OPTIMISM"
+      ],
+      "compiled_local_core": [
+        "finite arms and regret decomposition",
+        "tail union wrappers"
+      ],
+      "next_mathlib_ready_leaves": [
+        "Bernoulli KL definition and nonnegativity",
+        "KL monotonicity/inversion for confidence sets",
+        "bounded reward KL confidence route",
+        "KL-UCB index maximality and pull-count bound"
+      ],
+      "layers": [
+        {
+          "name": "KL primitives",
+          "nodes": [
+            "Bernoulli KL",
+            "domain contracts",
+            "convexity",
+            "monotonicity"
+          ]
+        },
+        {
+          "name": "confidence inversion",
+          "nodes": [
+            "KL ball",
+            "index definition",
+            "optimism event",
+            "bad event tail"
+          ]
+        },
+        {
+          "name": "regret",
+          "nodes": [
+            "pull-count threshold",
+            "finite summability",
+            "gap-weighted regret"
+          ]
+        }
+      ],
+      "reviewer_gate": "Reject if the KL domain, absolute-continuity assumptions, or bounded-support assumptions are implicit."
+    },
+    {
+      "id": "ROUTE-THOMPSON-BAYES",
+      "title": "Thompson sampling and Bayesian regret",
+      "priority": "planned",
+      "scenario_cards": [
+        "SCN-BAYESIAN-POSTERIOR"
+      ],
+      "source_cards": [
+        "TXT-SLIVKINS-2019-2024",
+        "PPR-AGRAWAL-GOYAL-2011-TS",
+        "LML-TS-POSTERIOR-ACTION",
+        "LML-TS-BAYES-REGRET"
+      ],
+      "proof_weapons": [
+        "WEAPON-POSTERIOR-SAMPLING"
+      ],
+      "compiled_local_core": [
+        "posterior kernel surface",
+        "posterior action identity ledger",
+        "finite/countable best-action measurability",
+        "conditional expectation bridge",
+        "expected regret decomposition"
+      ],
+      "next_mathlib_ready_leaves": [
+        "Bayes prior/environment product law",
+        "posterior action-law construction or LML import",
+        "noncountable posterior best-action measurability if needed",
+        "Bayesian regret integrability contract",
+        "clipped-UCB or information-ratio bridge"
+      ],
+      "layers": [
+        {
+          "name": "posterior model",
+          "nodes": [
+            "environment parameter",
+            "prior kernel",
+            "history likelihood",
+            "posterior kernel"
+          ]
+        },
+        {
+          "name": "probability matching",
+          "nodes": [
+            "sample parameter",
+            "sample best action",
+            "action distribution",
+            "posterior best action law"
+          ]
+        },
+        {
+          "name": "Bayes regret",
+          "nodes": [
+            "conditional action identity",
+            "instantaneous regret",
+            "integrability",
+            "cumulative Bayes regret"
+          ]
+        }
+      ],
+      "reviewer_gate": "Reject if an LML theorem card is treated as locally proved before import/port."
+    },
+    {
+      "id": "ROUTE-EXP3-ADVERSARIAL",
+      "title": "EXP3 adversarial finite-arm regret",
+      "priority": "planned",
+      "scenario_cards": [
+        "SCN-ADVERSARIAL-FINITE"
+      ],
+      "source_cards": [
+        "TXT-BUBECK-CESABIANCHI-2012",
+        "PPR-AUER-CFS-2002-EXP3"
+      ],
+      "proof_weapons": [
+        "WEAPON-EXP3-POTENTIAL"
+      ],
+      "compiled_local_core": [
+        "finite exponential-weights potential",
+        "updated-potential unfolding",
+        "potential telescoping"
+      ],
+      "next_mathlib_ready_leaves": [
+        "probability simplex sampling API",
+        "importance-weighted estimator unbiasedness",
+        "exp x <= 1 + x + x^2 route under bounded losses",
+        "learning-rate optimization"
+      ],
+      "layers": [
+        {
+          "name": "weights",
+          "nodes": [
+            "nonnegative weights",
+            "probability distribution",
+            "sampled arm",
+            "importance-weighted loss"
+          ]
+        },
+        {
+          "name": "potential",
+          "nodes": [
+            "updated weights",
+            "potential increment",
+            "exp inequality",
+            "telescoping"
+          ]
+        },
+        {
+          "name": "regret",
+          "nodes": [
+            "unbiased estimator",
+            "comparator arm",
+            "eta optimization",
+            "adversarial regret"
+          ]
+        }
+      ],
+      "reviewer_gate": "Reject if estimator unbiasedness or positive sampling probability is skipped."
+    },
+    {
+      "id": "ROUTE-TSALLIS-INF-FTRL",
+      "title": "Tsallis-INF and finite-arm FTRL best-of-both-worlds",
+      "priority": "planned",
+      "scenario_cards": [
+        "SCN-BOBW-ADAPTIVE",
+        "SCN-ADVERSARIAL-FINITE",
+        "SCN-STOCHASTIC-FINITE"
+      ],
+      "source_cards": [
+        "PPR-ZIMMERT-SELDIN-2018-TSALLIS-INF",
+        "PPR-MASOUDIAN-SELDIN-2021-TSALLIS-INF",
+        "PPR-ADAPTIVE-LR-FTRL-2024"
+      ],
+      "proof_weapons": [
+        "WEAPON-TSALLIS-INF-FTRL"
+      ],
+      "compiled_local_core": [
+        "FTRL one-step inequality under explicit minimizer certificate",
+        "finite-simplex predicate",
+        "Tsallis power sum and negative entropy well-definedness"
+      ],
+      "next_mathlib_ready_leaves": [
+        "finite-simplex convexity and feasible minimizer existence",
+        "Tsallis regularizer convexity and derivative/subgradient shape",
+        "stability/penalty decomposition",
+        "self-bounding conversion",
+        "adaptive learning-rate schedule algebra"
+      ],
+      "layers": [
+        {
+          "name": "regularizer",
+          "nodes": [
+            "finite simplex",
+            "Real.rpow power sum",
+            "Tsallis entropy",
+            "negative entropy"
+          ]
+        },
+        {
+          "name": "FTRL",
+          "nodes": [
+            "regularized objective",
+            "minimizer certificate",
+            "one-step inequality",
+            "stability and penalty"
+          ]
+        },
+        {
+          "name": "best of both worlds",
+          "nodes": [
+            "importance-weighted losses",
+            "self-bounding condition",
+            "stochastic gap conversion",
+            "adversarial bound"
+          ]
+        }
+      ],
+      "reviewer_gate": "Reject if Tsallis is used as a black-box weapon instead of decomposed into simplex/rpow/FTRL leaves."
+    },
+    {
+      "id": "ROUTE-BOBW-LINEAR-CONTEXTUAL",
+      "title": "Best-of-both-worlds linear contextual bandits",
+      "priority": "watchlist",
+      "scenario_cards": [
+        "SCN-BOBW-ADAPTIVE",
+        "SCN-CONTEXTUAL",
+        "SCN-LINEAR-GLM"
+      ],
+      "source_cards": [
+        "PPR-KATO-ITO-2024-LC-TSALLIS-INF",
+        "PPR-KUROKI-RUMI-TSUCHIYA-VITALE-CESABIANCHI-2023-BOBW-LCB"
+      ],
+      "proof_weapons": [
+        "WEAPON-TSALLIS-INF-FTRL",
+        "WEAPON-SELF-NORMALIZED-OFUL"
+      ],
+      "compiled_local_core": [
+        "FTRL/Tsallis finite-action surface",
+        "policy measurability surface",
+        "finite regret decomposition"
+      ],
+      "next_mathlib_ready_leaves": [
+        "context distribution and margin condition contract",
+        "linear loss estimator",
+        "covariance/Gram matrix inverse or inverse-free route",
+        "BoBW stochastic/adversarial split"
+      ],
+      "layers": [
+        {
+          "name": "contextual model",
+          "nodes": [
+            "context space",
+            "feature map",
+            "policy class",
+            "linear loss"
+          ]
+        },
+        {
+          "name": "BoBW control",
+          "nodes": [
+            "FTRL action distribution",
+            "loss estimator",
+            "margin/gap condition",
+            "stochastic/adversarial regret"
+          ]
+        }
+      ],
+      "reviewer_gate": "Reject if the margin condition, iid contexts, or adversarial-corruption model are not explicit."
+    },
+    {
+      "id": "ROUTE-LINEAR-OFUL",
+      "title": "OFUL and LinUCB linear bandit regret",
+      "priority": "planned",
+      "scenario_cards": [
+        "SCN-LINEAR-GLM",
+        "SCN-CONTEXTUAL"
+      ],
+      "source_cards": [
+        "TXT-LATTIMORE-SZEPESVARI-2020",
+        "PPR-ABBASI-YADKORI-2011-SELF-NORMALIZED",
+        "PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB"
+      ],
+      "proof_weapons": [
+        "WEAPON-SELF-NORMALIZED-OFUL",
+        "WEAPON-UCB-OPTIMISM"
+      ],
+      "compiled_local_core": [
+        "policy measurability surface",
+        "martingale-difference prefix contracts",
+        "finite regret decomposition"
+      ],
+      "next_mathlib_ready_leaves": [
+        "finite-dimensional feature vector API",
+        "Gram matrix PSD and monotonicity",
+        "least-squares estimator and confidence ellipsoid",
+        "elliptical potential lemma",
+        "self-normalized concentration theorem card/import route"
+      ],
+      "layers": [
+        {
+          "name": "linear algebra",
+          "nodes": [
+            "feature vectors",
+            "Gram matrix",
+            "regularization",
+            "ellipsoid norm"
+          ]
+        },
+        {
+          "name": "statistics",
+          "nodes": [
+            "least squares",
+            "martingale noise",
+            "self-normalized tail",
+            "confidence set"
+          ]
+        },
+        {
+          "name": "regret",
+          "nodes": [
+            "optimistic action",
+            "instant regret <= width",
+            "elliptical potential",
+            "OFUL regret"
+          ]
+        }
+      ],
+      "reviewer_gate": "Reject if matrix invertibility/PSD/finite-dimensional assumptions are left informal."
+    },
+    {
+      "id": "ROUTE-CONTEXTUAL-EXP4-LINUCB",
+      "title": "contextual bandits: EXP4, LinUCB, and policy regret",
+      "priority": "planned",
+      "scenario_cards": [
+        "SCN-CONTEXTUAL"
+      ],
+      "source_cards": [
+        "TXT-LATTIMORE-SZEPESVARI-2020",
+        "PPR-LI-CHU-LANGFORD-SCHAPIRE-2010-LINUCB",
+        "PPR-FAT-2018-MERITOCRATIC-FAIRNESS"
+      ],
+      "proof_weapons": [
+        "WEAPON-EXP3-POTENTIAL",
+        "WEAPON-SELF-NORMALIZED-OFUL"
+      ],
+      "compiled_local_core": [
+        "policy measurability",
+        "reward kernel surface",
+        "finite trajectory kernels"
+      ],
+      "next_mathlib_ready_leaves": [
+        "context/history API",
+        "policy class regret definition",
+        "expert advice mixture over policies",
+        "offline evaluation/IPW regularity contracts"
+      ],
+      "layers": [
+        {
+          "name": "context API",
+          "nodes": [
+            "context variable",
+            "history state",
+            "measurable policy",
+            "policy-generated action"
+          ]
+        },
+        {
+          "name": "feedback",
+          "nodes": [
+            "observed reward",
+            "counterfactual reward contract",
+            "IPW estimator",
+            "policy regret"
+          ]
+        }
+      ],
+      "reviewer_gate": "Reject if counterfactual rewards or logged-policy positivity assumptions are hidden."
+    },
+    {
+      "id": "ROUTE-RL-UCBVI",
+      "title": "finite-horizon RL and UCB-VI regret",
+      "priority": "compiled-canonical",
+      "scenario_cards": [
+        "SCN-RL-MDP"
+      ],
+      "source_cards": [
+        "PPR-AZAR-OSBAND-MUNOS-2017-UCBVI",
+        "TXT-SLIVKINS-2019-2024"
+      ],
+      "proof_weapons": [
+        "WEAPON-UCB-OPTIMISM",
+        "WEAPON-TAIL-INEQUALITIES"
+      ],
+      "compiled_local_core": [
+        "reward kernel surface",
+        "policy-generated traces",
+        "finite trajectory kernel ingredients",
+        "martingale-difference contracts",
+        "finite MDP data and measurable one-step Bellman action-value surface",
+        "stage-indexed Markov policy evaluation with induced state kernels and Bellman recursion",
+        "generated finite policy trajectory and expected cumulative-reward value identity",
+        "finite-action Bellman optimality and measurable greedy-policy attainment",
+        "true state occupancy and exact expected-regret performance difference",
+        "optimistic Bellman certificate and true-occupancy bonus regret bound",
+        "estimated reward/transition confidence transport, estimated-greedy policy, and factor-two selected-radius single-episode regret bound",
+        "finite-state singleton transition-coordinate errors and recursive-tail envelopes transported into Bellman confidence and the optimistic-regret endpoint",
+        "stochastic sampled cumulative return around recursive policy value with exact reward-noise/Bellman split, additive conditional MGF proxy, and fixed-horizon two-sided tail",
+        "same-prefix aggregate generated transition numerators and visit denominators with exact row-sum and successor alignment",
+        "previous-Q clipped recurrent known-reward UCBVI-CH planner with optimistic zero count and measurable finite argmax",
+        "joint singleton-Bernstein and normalized optimal-tail confidence on the recurrent source trajectory measure",
+        "all-episode recurrent Bellman optimism and generated raw episode pseudo-regret decomposition",
+        "actual-count charge summation and generated-filtration Bellman innovation tail",
+        "frozen 20/250 high-probability UCBVI-CH terminal and integrable expectation bound plus K H delta"
+      ],
+      "next_mathlib_ready_leaves": [
+        "Bernstein or variance-aware empirical transition confidence and total-variance summation for the separate minimax milestone",
+        "stochastic-reward UCBVI confidence and changed terminal constants",
+        "realized sampled-return high-probability regret on the canonical recurrent source",
+        "posterior-sampling, model-free, or continuous-space RL extensions"
+      ],
+      "layers": [
+        {
+          "name": "MDP API",
+          "nodes": [
+            "finite states",
+            "finite actions",
+            "transition kernel",
+            "reward kernel",
+            "policy"
+          ]
+        },
+        {
+          "name": "Bellman",
+          "nodes": [
+            "value function",
+            "Q function",
+            "optimistic bonus",
+            "Bellman induction"
+          ]
+        },
+        {
+          "name": "regret",
+          "nodes": [
+            "episode trace",
+            "occupancy",
+            "martingale noise",
+            "regret telescope"
+          ]
+        }
+      ],
+      "reviewer_gate": "Canonical Hoeffding route compiled. Reject extensions that conflate policy-value pseudo-regret with realized return, reuse an independent confidence law, omit strict-prefix previous-Q recurrence, or label Bernstein/minimax complete without its own terminal."
+    },
+    {
+      "id": "ROUTE-BWK-RESOURCE",
+      "title": "bandits with knapsacks and resource constraints",
+      "priority": "planned",
+      "scenario_cards": [
+        "SCN-RESOURCE-CONSTRAINED",
+        "SCN-CONSTRAINTS"
+      ],
+      "source_cards": [
+        "PPR-BADANIDIYURU-KLEINBERG-SLIVKINS-2013-BWK",
+        "TXT-SLIVKINS-2019-2024"
+      ],
+      "proof_weapons": [
+        "WEAPON-PRIMAL-DUAL-BWK"
+      ],
+      "compiled_local_core": [
+        "budget stopping-time wrapper",
+        "finite pull-count/regret decomposition"
+      ],
+      "next_mathlib_ready_leaves": [
+        "resource consumption trace and measurability",
+        "budget feasibility invariant",
+        "primal-dual Lagrangian comparison",
+        "optional-stopping or stopped-process expectation bridge"
+      ],
+      "layers": [
+        {
+          "name": "resource model",
+          "nodes": [
+            "budget vector",
+            "consumption trace",
+            "remaining budget",
+            "stopping time"
+          ]
+        },
+        {
+          "name": "dual proof",
+          "nodes": [
+            "Lagrangian reward",
+            "dual feasibility",
+            "optimistic resource index",
+            "regret/resource bound"
+          ]
+        }
+      ],
+      "reviewer_gate": "Reject if budget exhaustion, stopped horizon, or nonnegative consumption assumptions are implicit."
+    },
+    {
+      "id": "ROUTE-PREFERENCE-DUELING",
+      "title": "dueling and preference bandits",
+      "priority": "watchlist",
+      "scenario_cards": [
+        "SCN-DUELING-PREFERENCE"
+      ],
+      "source_cards": [
+        "PPR-IJCAI-2018-DUELING-SURVEY"
+      ],
+      "proof_weapons": [
+        "WEAPON-TAIL-INEQUALITIES"
+      ],
+      "compiled_local_core": [
+        "finite actions and finite sums"
+      ],
+      "next_mathlib_ready_leaves": [
+        "pairwise preference matrix",
+        "Condorcet/Borda winner definitions",
+        "comparison feedback kernel",
+        "comparison regret decomposition"
+      ],
+      "layers": [
+        {
+          "name": "preference API",
+          "nodes": [
+            "pair action",
+            "preference probability",
+            "winner notion",
+            "comparison regret"
+          ]
+        },
+        {
+          "name": "algorithm route",
+          "nodes": [
+            "confidence on pair",
+            "candidate elimination",
+            "winner recovery",
+            "sample complexity"
+          ]
+        }
+      ],
+      "reviewer_gate": "Reject if the winner notion changes between theorem statement and proof."
+    },
+    {
+      "id": "ROUTE-ROBUST-NONSTATIONARY-DELAYED",
+      "title": "robust, corrupted, nonstationary, delayed, and batched bandits",
+      "priority": "watchlist",
+      "scenario_cards": [
+        "SCN-HEAVY-TAILED-ROBUST",
+        "SCN-NONSTATIONARY",
+        "SCN-DELAYED-BATCHED"
+      ],
+      "source_cards": [
+        "TXT-LATTIMORE-SZEPESVARI-2020",
+        "TXT-SLIVKINS-2019-2024"
+      ],
+      "proof_weapons": [
+        "WEAPON-TAIL-INEQUALITIES"
+      ],
+      "compiled_local_core": [
+        "variance concentration wrappers",
+        "finite sums and time windows",
+        "martingale/filtration surfaces",
+        "global-law oracle-restart local expected stability transport and coarse epoch certificate"
+      ],
+      "next_mathlib_ready_leaves": [
+        "windowed pull-count and reward sums",
+        "restart-local refined finite-sum and local-rate/penalty tuning under the global generated oracle-restart law, plus a law-derived schedule-epoch-cardinality bound",
+        "median-of-means/trimmed estimator contracts",
+        "delay queue and pending-feedback filtration"
+      ],
+      "layers": [
+        {
+          "name": "robust statistics",
+          "nodes": [
+            "finite moments",
+            "truncation",
+            "median-of-means",
+            "robust tail"
+          ]
+        },
+        {
+          "name": "time variation",
+          "nodes": [
+            "sliding window",
+            "variation budget",
+            "change point",
+            "dynamic regret"
+          ]
+        },
+        {
+          "name": "delays",
+          "nodes": [
+            "feedback queue",
+            "pending observations",
+            "asynchronous filtration",
+            "delayed regret"
+          ]
+        }
+      ],
+      "reviewer_gate": "Reject if stationarity or immediate feedback is accidentally assumed."
+    },
+    {
+      "id": "ROUTE-LLM-FEDERATED-NEURAL",
+      "title": "LLM, neural, recommender, and federated bandits",
+      "priority": "watchlist",
+      "scenario_cards": [
+        "SCN-LLM-REC-SYS",
+        "SCN-FEDERATED-DISTRIBUTED",
+        "SCN-CONTEXTUAL"
+      ],
+      "source_cards": [
+        "PPR-FEDERATED-NEURAL-BANDITS-2022",
+        "PPR-BOUNEFFOUF-FERAUD-2025-MAB-LLM",
+        "PPR-EMNLP-2024-LLM-PRIOR-BANDITS"
+      ],
+      "proof_weapons": [
+        "WEAPON-UCB-OPTIMISM",
+        "WEAPON-POSTERIOR-SAMPLING"
+      ],
+      "compiled_local_core": [
+        "contextual policy measurability",
+        "posterior kernel surface",
+        "finite-action regret decomposition"
+      ],
+      "next_mathlib_ready_leaves": [
+        "embedding/context contract without overformalizing neural nets",
+        "model-selection action space",
+        "client-indexed trace and communication round counts",
+        "offline-to-online prior and logged-data positivity"
+      ],
+      "layers": [
+        {
+          "name": "modern context",
+          "nodes": [
+            "embedding map",
+            "model/action set",
+            "logged policy",
+            "contextual reward"
+          ]
+        },
+        {
+          "name": "distributed route",
+          "nodes": [
+            "client traces",
+            "aggregation",
+            "heterogeneity",
+            "communication regret"
+          ]
+        }
+      ],
+      "reviewer_gate": "Reject if empirical neural performance claims are turned into formal regret claims without a mathematical model."
+    }
+  ],
+  "screen_loop": {
+    "default_cycles": 2,
+    "default_lower_count": 4,
+    "commands": [
+      "python3 tools/bandit.py route-plan ROUTE-UCB1-FINITE-STOCHASTIC",
+      "python3 tools/bandit.py unfinished --status missing-leaf",
+      "python3 tools/bandit.py sleep-run BRL-UCB-PORT-001 --cycles 2 --lower-count 4 --execute --agent-profile codex-parallel.example.json --check-each-cycle --stop-on-error",
+      "python3 tools/bandit.py memory-refresh BRL-UCB-PORT-001 --run-id latest",
+      "python3 tools/bandit.py blueprint-refresh BRL-UCB-PORT-001",
+      "python3 tools/bandit.py check"
+    ],
+    "reviewer_must_check": [
+      "same theorem target after each cycle",
+      "all hidden regularity contracts are named",
+      "local proof dependencies are compiled or imported",
+      "proof weapons are not cited as theorem dependencies",
+      "persistent failure is recorded as a statement/hypothesis audit"
+    ]
+  }
+}

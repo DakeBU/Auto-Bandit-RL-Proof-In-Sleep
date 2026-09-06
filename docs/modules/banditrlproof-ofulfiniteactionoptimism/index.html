@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.OFULFiniteActionOptimism · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.OFULFiniteActionOptimism · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.OFULFiniteActionOptimism · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · OFUL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>OFUL<wbr>Finite<wbr>Action<wbr>Optimism</h1>
+  <p class="lede">This module turns the compiled scalar-ridge confidence ellipsoid into a finite-action optimistic selector and a one-step gap certificate.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/OFULFiniteActionOptimism.lean.html"><code>BanditRLProof/OFULFiniteActionOptimism.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/oful/index.html">5. OFUL, self-normalized confidence, and stopping times</a></dd></div>
+    <div><dt>Declarations</dt><dd>16</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-ofulscalarregularizationbias/index.html"><code>BanditRLProof.OFULScalarRegularizationBias</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-ofulmeasurablerecursiveselection/index.html"><code>BanditRLProof.OFULMeasurableRecursiveSelection</code></a>, <a href="../banditrlproof-ofulselectedwidthsummation/index.html"><code>BanditRLProof.OFULSelectedWidthSummation</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-ec205485e89d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.confidenceWidth</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The inverse-Gram confidence width of one feature vector.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> confidenceWidth [Fintype Feature] [DecidableEq Feature] (V : Matrix Feature Feature Real) (x : Feature -&gt; Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULFiniteActionOptimism.lean.html#L18">Source line 18</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-497bb97424ad">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.linearValue</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Linear value of a feature vector under a parameter.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> linearValue [Fintype Feature] (theta x : Feature -&gt; Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULFiniteActionOptimism.lean.html#L24">Source line 24</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-698975e16aec">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.optimisticScore</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">OFUL upper-confidence score `thetaHat dot x + beta * ||x||_(V⁻¹)`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> optimisticScore [Fintype Feature] [DecidableEq Feature] (thetaHat : Feature -&gt; Real) (V : Matrix Feature Feature Real) (beta : Real) (x : Feature -&gt; Real) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULFiniteActionOptimism.lean.html#L30">Source line 30</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cf16f4570ae2">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.finiteActionArgmax</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A finite nonempty type admits a score-maximizing action.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteActionArgmax [Finite Action] [Nonempty Action] (score : Action -&gt; Real) : Action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULFiniteActionOptimism.lean.html#L38">Source line 38</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-50c87f7eacd5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.finiteActionArgmax_spec</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite-action argmax dominates every action score.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteActionArgmax_spec [Finite Action] [Nonempty Action] (score : Action -&gt; Real) (action : Action) : score action &lt;= score (finiteActionArgmax score)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULFiniteActionOptimism.lean.html#L44">Source line 44</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-91758f6599a8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.abs_dotProduct_le_matrixNorm_mul_confidenceWidth</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Weighted Cauchy-Schwarz: the ordinary dot product is controlled by the
+`V`-norm and inverse-`V` confidence width.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> abs_dotProduct_le_matrixNorm_mul_confidenceWidth [Fintype Feature] [DecidableEq Feature] (V : Matrix Feature Feature Real) (hV : V.PosDef) (error x : Feature -&gt; Real) : |dotProduct error x| &lt;= matrixNorm V error * confidenceWidth V x</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULFiniteActionOptimism.lean.html#L54">Source line 54</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-35775843daff">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.linearValue_le_optimisticScore_of_matrixNorm_sub_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">On a confidence ellipsoid, every true linear action value lies below its
+upper-confidence score.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> linearValue_le_optimisticScore_of_matrixNorm_sub_le [Fintype Feature] [DecidableEq Feature] (V : Matrix Feature Feature Real) (hV : V.PosDef) (thetaHat thetaStar : Feature -&gt; Real) (beta : Real) (x : Feature -&gt; Real) (hconfidence : matrixNorm V (thetaHat - thetaStar) &lt;= beta) : linearValue thetaStar x &lt;= optimisticScore thetaHat V beta x</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULFiniteActionOptimism.lean.html#L93">Source line 93</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c144611b4cbc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.optimisticScore_le_linearValue_add_two_mul_bonus_of_matrixNorm_sub_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">On the same confidence ellipsoid, every upper-confidence score is at most
+the true value plus twice its confidence bonus.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> optimisticScore_le_linearValue_add_two_mul_bonus_of_matrixNorm_sub_le [Fintype Feature] [DecidableEq Feature] (V : Matrix Feature Feature Real) (hV : V.PosDef) (thetaHat thetaStar : Feature -&gt; Real) (beta : Real) (x : Feature -&gt; Real) (hconfidence : matrixNorm V (thetaHat - thetaStar) &lt;= beta) : optimisticScore thetaHat V beta x &lt;= linearValue thetaStar x + <span class="num">2</span> * beta * confidenceWidth V x</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULFiniteActionOptimism.lean.html#L120">Source line 120</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f0fc0d397896">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.finiteActionOptimisticChoice</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The score-maximizing finite action for the OFUL upper-confidence score.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteActionOptimisticChoice [Finite Action] [Nonempty Action] [Fintype Feature] [DecidableEq Feature] (thetaHat : Feature -&gt; Real) (V : Matrix Feature Feature Real) (beta : Real) (actionFeature : Action -&gt; Feature -&gt; Real) : Action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULFiniteActionOptimism.lean.html#L145">Source line 145</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-314d27d0442b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.finiteActionOptimisticChoice_score_max</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite OFUL choice maximizes the optimistic score.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteActionOptimisticChoice_score_max [Finite Action] [Nonempty Action] [Fintype Feature] [DecidableEq Feature] (thetaHat : Feature -&gt; Real) (V : Matrix Feature Feature Real) (beta : Real) (actionFeature : Action -&gt; Feature -&gt; Real) (action : Action) : optimisticScore thetaHat V beta (actionFeature action) &lt;= optimisticScore thetaHat V beta (actionFeature (finiteActionOptimisticChoice thetaHat V beta actionFeature))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULFiniteActionOptimism.lean.html#L155">Source line 155</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-aba71e241e15">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.linearValue_sub_finiteActionOptimisticChoice_le_two_mul_bonus</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">On the confidence ellipsoid, the true value gap between any comparator and
+the finite optimistic choice is at most twice the chosen action&#x27;s bonus.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> linearValue_sub_finiteActionOptimisticChoice_le_two_mul_bonus [Finite Action] [Nonempty Action] [Fintype Feature] [DecidableEq Feature] (V : Matrix Feature Feature Real) (hV : V.PosDef) (thetaHat thetaStar : Feature -&gt; Real) (beta : Real) (actionFeature : Action -&gt; Feature -&gt; Real) (hconfidence : matrixNorm V (thetaHat - thetaStar) &lt;= beta) (action : Action) : linearValue thetaStar (actionFeature action) - linearValue thetaStar (actionFeature (finiteActionOptimisticChoice thetaHat V beta actionFeature)) &lt;= <span class="num">2</span> * beta * confidenceWidth V (actionFeature (finiteActionOptimisticChoice thetaHat V beta actionFeature))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULFiniteActionOptimism.lean.html#L174">Source line 174</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4a4db96105b0">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.finiteHorizonScalarGram</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Scalar-regularized finite-horizon Gram matrix used by OFUL selection.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteHorizonScalarGram [Fintype Feature] [DecidableEq Feature] (lambda : Real) (feature : Nat -&gt; Omega -&gt; Feature -&gt; Real) (n : Nat) (omega : Omega) : Matrix Feature Feature Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULFiniteActionOptimism.lean.html#L212">Source line 212</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-89bc35098b29">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.finiteHorizonScalarOptimisticAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-action OFUL choice using the scalar-ridge estimate and the compiled
+scalar confidence radius.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteHorizonScalarOptimisticAction [Finite Action] [Nonempty Action] [Fintype Feature] [DecidableEq Feature] (lambda : Real) (feature : Nat -&gt; Omega -&gt; Feature -&gt; Real) (response : Nat -&gt; Omega -&gt; Real) (candidateFeature : Omega -&gt; Action -&gt; Feature -&gt; Real) (R delta S : Real) (n : Nat) (omega : Omega) : Action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULFiniteActionOptimism.lean.html#L223">Source line 223</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ee6e3b6e82e7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.finiteHorizonScalarOptimisticAction_gap_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pointwise finite-horizon optimism: on the scalar confidence ellipsoid, every
+comparator&#x27;s true linear value exceeds the selected value by at most twice
+the selected confidence bonus.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteHorizonScalarOptimisticAction_gap_le [Finite Action] [Nonempty Action] [Fintype Feature] [DecidableEq Feature] (lambda : Real) (hlambda : <span class="num">0</span> &lt; lambda) (thetaStar : Feature -&gt; Real) (S : Real) (feature : Nat -&gt; Omega -&gt; Feature -&gt; Real) (response : Nat -&gt; Omega -&gt; Real) (candidateFeature : Omega -&gt; Action -&gt; Feature -&gt; Real) (R delta : Real) (n : Nat) (omega : Omega) (hconfidence : matrixNorm (finiteHorizonScalarGram lambda feature n omega) (finiteHorizonRidgeEstimate (Matrix.scalar Feature lambda) feature response n omega - thetaStar) &lt;= finiteHorizonScalarConfidenceRadius feature R delta lambda S n omega) (action : Action) : linearValue thetaStar (candidateFeature omega action) - linearValue thetaStar (candidateFeature omega (finiteHorizonScalarOptimisticAction lambda feature response candidateFeature R delta S n omega)) &lt;= <span class="num">2</span> * finiteHorizonScalarConfidenceRadius feature R delta lambda S n omega * confidenceWidth (finiteHorizonScalarGram lambda feature n omega) (candidateFeature omega (finiteHorizonScalarOptimisticAction lambda feature response candidateFeature R delta S n omega))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULFiniteActionOptimism.lean.html#L244">Source line 244</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-423f965f2241">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.finiteHorizonScalarOptimismViolationSet</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The event that some finite candidate action violates the one-step OFUL gap
+certificate.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteHorizonScalarOptimismViolationSet [Finite Action] [Nonempty Action] [Fintype Feature] [DecidableEq Feature] (lambda : Real) (thetaStar : Feature -&gt; Real) (S : Real) (feature : Nat -&gt; Omega -&gt; Feature -&gt; Real) (response : Nat -&gt; Omega -&gt; Real) (candidateFeature : Omega -&gt; Action -&gt; Feature -&gt; Real) (R delta : Real) (n : Nat) : Set Omega</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULFiniteActionOptimism.lean.html#L295">Source line 295</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b86f39b0e131">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measure_finiteHorizonScalarOptimismViolationSet_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-action OFUL optimism violation has probability at most `delta`.
+
+No measurability of the candidate features or selected action is required:
+the violation event is included pointwise in the already controlled scalar
+confidence-ellipsoid bad event.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_finiteHorizonScalarOptimismViolationSet_le [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [Finite Action] [Nonempty Action] [Fintype Feature] [DecidableEq Feature] [Nonempty Feature] (mu : Measure Omega) [IsProbabilityMeasure mu] (lambda : Real) (hlambda : <span class="num">0</span> &lt; lambda) (thetaStar : Feature -&gt; Real) (S : Real) (htheta : euclideanLength thetaStar &lt;= S) (F : Filtration Nat mOmega) (feature : Nat -&gt; Omega -&gt; Feature -&gt; Real) (response noise : Nat -&gt; Omega -&gt; Real) (candidateFeature : Omega -&gt; Action -&gt; Feature -&gt; Real) (R : Real) (hR : <span class="num">0</span> &lt; R) (projectionBound : EuclideanSpace Real Feature -&gt; Nat -&gt; Real) (hfeature : <span class="kw">forall</span> i j, StronglyMeasurable[F i] (<span class="kw">fun</span> omega =&gt; feature i omega j)) (hnoise : StronglyAdapted F (<span class="kw">fun</span> t omega =&gt; <span class="kw">match</span> t <span class="kw">with</span> | <span class="num">0</span> =&gt; <span class="num">0</span> | i + <span class="num">1</span> =&gt; noise i omega)) (hprojectionBound_nonneg : <span class="kw">forall</span> theta i, <span class="num">0</span> &lt;= projectionBound theta i) (hprojectionBound : <span class="kw">forall</span> theta i omega, |dotProduct (WithLp.ofLp theta) (feature i omega)| &lt;= projectionBound theta i) (n : Nat) (hsubGaussian : <span class="kw">forall</span> i, i &lt; n -&gt; HasCondSubgaussianMGF (F i) (F.le i) (noise i) (constantSquaredVarianceProxy R i) mu) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (hresponse : <span class="kw">forall</span> omega i, i &lt; n -&gt; response i omega = dotProduct thetaStar (feature i omega) + noise i omega) : mu (finiteHorizonScalarOptimismViolationSet lambda thetaStar S feature response candidateFeature R delta n) &lt;= ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULFiniteActionOptimism.lean.html#L325">Source line 325</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

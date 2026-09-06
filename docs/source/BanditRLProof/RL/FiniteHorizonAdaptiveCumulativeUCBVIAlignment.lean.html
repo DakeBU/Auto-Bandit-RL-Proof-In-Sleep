@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAlignment.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAlignment.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAlignment.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveCumulativeUCBVIAlignment.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveCumulativeUCBVIChargeSummation</span>
+<span id="L2">2 import BanditRLProof.RL.FiniteHorizonStageVisitFactorization</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Same-source generated-batch alignment for recurrent UCBVI-CH</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module proves, rather than assumes, that each successor batch on the</span>
+<span id="L8">8 adaptive `Kernel.trajMeasure` is the literal image of a trajectory generated</span>
+<span id="L9">9 by the deterministic recurrent policy computed from its strict prefix.</span>
+<span id="L10">10 -/</span>
+<span id="L11">11 </span>
+<span id="L12">12 open MeasureTheory</span>
+<span id="L13">13 open scoped BigOperators ENNReal ProbabilityTheory</span>
+<span id="L14">14 </span>
+<span id="L15">15 universe u v</span>
+<span id="L16">16 </span>
+<span id="L17">17 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L18">18 </span>
+<span id="L19">19 variable {State : Type u} {Action : Type v}</span>
+<span id="L20">20     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L21">21     [Fintype State] [Fintype Action]</span>
+<span id="L22">22     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L23">23     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L24">24     [Nonempty State] [Nonempty Action]</span>
+<span id="L25">25 </span>
+<span id="L26">26 namespace MDP</span>
+<span id="L27">27 </span>
+<span id="L28">28 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L29">29 theorem measurable_trajectoryStateAt</span>
+<span id="L30">30     (mdp : MDP State Action) (stage : Fin mdp.horizon) :</span>
+<span id="L31">31     Measurable (fun trajectory : State × StepTrace Action State mdp.horizon =&gt;</span>
+<span id="L32">32       mdp.trajectoryStateAt trajectory stage) := by</span>
+<span id="L33">33   unfold trajectoryStateAt</span>
+<span id="L34">34   split_ifs</span>
+<span id="L35">35   · exact measurable_fst</span>
+<span id="L36">36   · exact measurable_snd.comp</span>
+<span id="L37">37       ((measurable_pi_apply _).comp measurable_snd)</span>
+<span id="L38">38 </span>
+<span id="L39">39 end MDP</span>
+<span id="L40">40 </span>
+<span id="L41">41 namespace DeterministicMarkovPolicyTable</span>
+<span id="L42">42 </span>
+<span id="L43">43 /-- A trajectory generated by a deterministic table records exactly that</span>
+<span id="L44">44 table&#x27;s action at every chronological stage, almost surely. -/</span>
+<span id="L45">45 theorem trajectoryMeasure_action_eq_table_ae</span>
+<span id="L46">46     {mdp : MDP State Action} (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L47">47     (initialState : Measure State) [IsProbabilityMeasure initialState] :</span>
+<span id="L48">48     ∀ᵐ trajectory ∂table.toMarkovPolicy.trajectoryMeasure initialState,</span>
+<span id="L49">49       ∀ stage : Fin mdp.horizon,</span>
+<span id="L50">50         (mdp.episodeStepOfTrajectory trajectory stage).action =</span>
+<span id="L51">51           table stage (mdp.trajectoryStateAt trajectory stage) := by</span>
+<span id="L52">52   rw [ae_all_iff]</span>
+<span id="L53">53   intro stage</span>
+<span id="L54">54   rw [ae_iff]</span>
+<span id="L55">55   have hbad :</span>
+<span id="L56">56       {trajectory : State × StepTrace Action State mdp.horizon |</span>
+<span id="L57">57           ¬(mdp.episodeStepOfTrajectory trajectory stage).action =</span>
+<span id="L58">58             table stage (mdp.trajectoryStateAt trajectory stage)} =</span>
+<span id="L59">59         ⋃ state : State, ⋃ action : Action,</span>
+<span id="L60">60           if action ≠ table stage state then</span>
+<span id="L61">61             {trajectory |</span>
+<span id="L62">62               (mdp.episodeStepOfTrajectory trajectory stage).state = state ∧</span>
+<span id="L63">63                 (mdp.episodeStepOfTrajectory trajectory stage).action = action}</span>
+<span id="L64">64           else ∅ := by</span>
+<span id="L65">65     ext trajectory</span>
+<span id="L66">66     simp only [Set.mem_setOf_eq, Set.mem_iUnion, Set.mem_ite_empty_right,</span>
+<span id="L67">67       Set.mem_empty_iff_false, and_false]</span>
+<span id="L68">68     constructor</span>
+<span id="L69">69     · intro hne</span>
+<span id="L70">70       refine ⟨(mdp.episodeStepOfTrajectory trajectory stage).state,</span>
+<span id="L71">71         (mdp.episodeStepOfTrajectory trajectory stage).action, ?_⟩</span>
+<span id="L72">72       have hstate :</span>
+<span id="L73">73           mdp.trajectoryStateAt trajectory stage =</span>
+<span id="L74">74             (mdp.episodeStepOfTrajectory trajectory stage).state := by</span>
+<span id="L75">75         simp [MDP.episodeStepOfTrajectory]</span>
+<span id="L76">76       simpa [hstate] using hne</span>
+<span id="L77">77     · rintro ⟨state, action, hne, hstate, haction⟩</span>
+<span id="L78">78       have htrajectoryState : mdp.trajectoryStateAt trajectory stage = state := by</span>
+<span id="L79">79         simpa [MDP.episodeStepOfTrajectory] using hstate</span>
+<span id="L80">80       simpa [haction, htrajectoryState] using hne</span>
+<span id="L81">81   rw [hbad]</span>
+<span id="L82">82   apply measure_iUnion_null</span>
+<span id="L83">83   intro state</span>
+<span id="L84">84   apply measure_iUnion_null</span>
+<span id="L85">85   intro action</span>
+<span id="L86">86   by_cases hne : action ≠ table stage state</span>
+<span id="L87">87   · rw [if_pos hne]</span>
+<span id="L88">88     rw [table.toMarkovPolicy.trajectoryMeasure_visitEvent_eq_stateEvent_mul_action</span>
+<span id="L89">89       initialState stage state action]</span>
+<span id="L90">90     simp [DeterministicMarkovPolicyTable.toMarkovPolicy,</span>
+<span id="L91">91       ProbabilityTheory.Kernel.deterministic_apply, hne]</span>
+<span id="L92">92   · rw [if_neg hne]</span>
+<span id="L93">93     exact measure_empty</span>
+<span id="L94">94 </span>
+<span id="L95">95 end DeterministicMarkovPolicyTable</span>
+<span id="L96">96 </span>
+<span id="L97">97 namespace AdaptiveCumulativeHoeffdingUCBVI</span>
+<span id="L98">98 </span>
+<span id="L99">99 /-- Under the one-episode mapped batch law, every reconstructed state/action</span>
+<span id="L100">100 record coincides with the genuine generated trajectory and deterministic</span>
+<span id="L101">101 table. -/</span>
+<span id="L102">102 theorem iidEpisodeBatchMeasure_successorBatchAligned_ae</span>
+<span id="L103">103     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L104">104     [IsProbabilityMeasure initialState]</span>
+<span id="L105">105     (defaultState : State) (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L106">106     (hhorizon : 0 &lt; mdp.horizon) :</span>
+<span id="L107">107     ∀ᵐ batch ∂table.toMarkovPolicy.iidEpisodeBatchMeasure initialState 1,</span>
+<span id="L108">108       let reconstructed : State × StepTrace Action State mdp.horizon :=</span>
+<span id="L109">109         (batch.reconstructedInitialState defaultState,</span>
+<span id="L110">110           batch.reconstructedStepTrace)</span>
+<span id="L111">111       ∀ stage : Fin mdp.horizon,</span>
+<span id="L112">112         (batch 0 stage).state = mdp.trajectoryStateAt reconstructed stage ∧</span>
+<span id="L113">113           (batch 0 stage).action =</span>
+<span id="L114">114             table stage (mdp.trajectoryStateAt reconstructed stage) := by</span>
+<span id="L115">115   let trajectoryLaw := table.toMarkovPolicy.iidTrajectoryFamilyMeasure initialState 1</span>
+<span id="L116">116   let batchMap := mdp.episodeBatchOfTrajectories 1</span>
+<span id="L117">117   have haction :</span>
+<span id="L118">118       ∀ᵐ trajectories ∂trajectoryLaw,</span>
+<span id="L119">119         ∀ stage : Fin mdp.horizon,</span>
+<span id="L120">120           (mdp.episodeStepOfTrajectory (trajectories 0) stage).action =</span>
+<span id="L121">121             table stage</span>
+<span id="L122">122               (mdp.trajectoryStateAt (trajectories 0) stage) := by</span>
+<span id="L123">123     have hsingle := table.trajectoryMeasure_action_eq_table_ae initialState</span>
+<span id="L124">124     have heval : trajectoryLaw.map (Function.eval (0 : Fin 1)) =</span>
+<span id="L125">125         table.toMarkovPolicy.trajectoryMeasure initialState :=</span>
+<span id="L126">126       table.toMarkovPolicy.iidTrajectoryFamilyMeasure_map_eval initialState 0</span>
+<span id="L127">127     rw [← heval] at hsingle</span>
+<span id="L128">128     exact ae_of_ae_map (measurable_pi_apply (0 : Fin 1)).aemeasurable hsingle</span>
+<span id="L129">129   have hsource :</span>
+<span id="L130">130       ∀ᵐ trajectories ∂trajectoryLaw,</span>
+<span id="L131">131         let batch := batchMap trajectories</span>
+<span id="L132">132         let reconstructed : State × StepTrace Action State mdp.horizon :=</span>
+<span id="L133">133           (batch.reconstructedInitialState defaultState,</span>
+<span id="L134">134             batch.reconstructedStepTrace)</span>
+<span id="L135">135         ∀ stage : Fin mdp.horizon,</span>
+<span id="L136">136           (batch 0 stage).state = mdp.trajectoryStateAt reconstructed stage ∧</span>
+<span id="L137">137             (batch 0 stage).action =</span>
+<span id="L138">138               table stage (mdp.trajectoryStateAt reconstructed stage) := by</span>
+<span id="L139">139     filter_upwards [haction] with trajectories htrajectory</span>
+<span id="L140">140     have hinitial :</span>
+<span id="L141">141         EpisodeBatch.reconstructedInitialState defaultState</span>
+<span id="L142">142             (batchMap trajectories) = (trajectories 0).1 := by</span>
+<span id="L143">143       simp [batchMap, EpisodeBatch.reconstructedInitialState, hhorizon,</span>
+<span id="L144">144         MDP.episodeBatchOfTrajectories, MDP.episodeStepOfTrajectory,</span>
+<span id="L145">145         MDP.trajectoryStateAt]</span>
+<span id="L146">146     have htrace :</span>
+<span id="L147">147         EpisodeBatch.reconstructedStepTrace (batchMap trajectories) =</span>
+<span id="L148">148           (trajectories 0).2 := by</span>
+<span id="L149">149       funext stage</span>
+<span id="L150">150       simp [batchMap, EpisodeBatch.reconstructedStepTrace,</span>
+<span id="L151">151         MDP.episodeBatchOfTrajectories, MDP.episodeStepOfTrajectory]</span>
+<span id="L152">152     dsimp only</span>
+<span id="L153">153     intro stage</span>
+<span id="L154">154     constructor</span>
+<span id="L155">155     · simp [batchMap, hinitial, htrace, MDP.episodeBatchOfTrajectories,</span>
+<span id="L156">156         MDP.episodeStepOfTrajectory]</span>
+<span id="L157">157     · simpa [batchMap, hinitial, htrace, MDP.episodeBatchOfTrajectories,</span>
+<span id="L158">158         MDP.episodeStepOfTrajectory] using htrajectory stage</span>
+<span id="L159">159   unfold MarkovPolicy.iidEpisodeBatchMeasure</span>
+<span id="L160">160   have hreconstructed : Measurable</span>
+<span id="L161">161       (fun batch : EpisodeBatch mdp 1 =&gt;</span>
+<span id="L162">162         (batch.reconstructedInitialState defaultState,</span>
+<span id="L163">163           batch.reconstructedStepTrace)) :=</span>
+<span id="L164">164     (EpisodeBatch.measurable_reconstructedInitialState defaultState).prodMk</span>
+<span id="L165">165       EpisodeBatch.measurable_reconstructedStepTrace</span>
+<span id="L166">166   have hstage (stage : Fin mdp.horizon) : MeasurableSet</span>
+<span id="L167">167       {batch : EpisodeBatch mdp 1 |</span>
+<span id="L168">168         (batch 0 stage).state = mdp.trajectoryStateAt</span>
+<span id="L169">169               (batch.reconstructedInitialState defaultState,</span>
+<span id="L170">170                 batch.reconstructedStepTrace) stage ∧</span>
+<span id="L171">171           (batch 0 stage).action = table stage</span>
+<span id="L172">172             (mdp.trajectoryStateAt</span>
+<span id="L173">173               (batch.reconstructedInitialState defaultState,</span>
+<span id="L174">174                 batch.reconstructedStepTrace) stage)} :=</span>
+<span id="L175">175     let hstep := (measurable_pi_apply stage).comp (measurable_pi_apply (0 : Fin 1))</span>
+<span id="L176">176     let hstate := EpisodeStep.measurable_state.comp hstep</span>
+<span id="L177">177     let haction := EpisodeStep.measurable_action.comp hstep</span>
+<span id="L178">178     let htrajectoryState : Measurable</span>
+<span id="L179">179         (fun batch : EpisodeBatch mdp 1 =&gt; mdp.trajectoryStateAt</span>
+<span id="L180">180           (batch.reconstructedInitialState defaultState,</span>
+<span id="L181">181             batch.reconstructedStepTrace) stage) := by</span>
+<span id="L182">182       exact (mdp.measurable_trajectoryStateAt stage).comp hreconstructed</span>
+<span id="L183">183     (measurableSet_eq_fun hstate htrajectoryState).inter</span>
+<span id="L184">184       (measurableSet_eq_fun haction</span>
+<span id="L185">185         ((measurable_of_finite (table stage)).comp htrajectoryState))</span>
+<span id="L186">186   apply (ae_map_iff</span>
+<span id="L187">187     (μ := trajectoryLaw)</span>
+<span id="L188">188     (mdp.measurable_episodeBatchOfTrajectories 1).aemeasurable ?_).2</span>
+<span id="L189">189   · exact hsource</span>
+<span id="L190">190   · simpa only [Set.iInter_setOf] using MeasurableSet.iInter hstage</span>
+<span id="L191">191 </span>
+<span id="L192">192 /-- Every successor coordinate of the actual recurrent</span>
+<span id="L193">193 `Kernel.trajMeasure` is aligned with the deterministic table computed from</span>
+<span id="L194">194 that same trajectory&#x27;s strict prefix. -/</span>
+<span id="L195">195 theorem recurrentSource_trajectoryMeasure_successorBatchAligned_ae</span>
+<span id="L196">196     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L197">197     [IsProbabilityMeasure initialState]</span>
+<span id="L198">198     (defaultState : State) (episodes : Nat) (delta : Real)</span>
+<span id="L199">199     (hhorizon : 0 &lt; mdp.horizon) (n : Nat) :</span>
+<span id="L200">200     ∀ᵐ trajectory ∂</span>
+<span id="L201">201         (recurrentSource mdp initialState defaultState episodes delta).trajectoryMeasure,</span>
+<span id="L202">202       SuccessorBatchAligned mdp defaultState episodes delta trajectory n := by</span>
+<span id="L203">203   let source := recurrentSource mdp initialState defaultState episodes delta</span>
+<span id="L204">204   let prefixMeasure := source.trajectoryMeasure.map (Preorder.frestrictLe n)</span>
+<span id="L205">205   let pairMap : EpisodeBatchTrajectory mdp 1 →</span>
+<span id="L206">206       EpisodeBatchPrefix mdp 1 n × EpisodeBatch mdp 1 :=</span>
+<span id="L207">207     fun trajectory =&gt;</span>
+<span id="L208">208       (Preorder.frestrictLe n trajectory, trajectory (n + 1))</span>
+<span id="L209">209   have hpairMap : Measurable pairMap := by fun_prop</span>
+<span id="L210">210   let tableOfPrefix : EpisodeBatchPrefix mdp 1 n →</span>
+<span id="L211">211       DeterministicMarkovPolicyTable mdp :=</span>
+<span id="L212">212     recurrentSuccessorTable defaultState</span>
+<span id="L213">213       (scale (State := State) (Action := Action) mdp episodes delta) n</span>
+<span id="L214">214   have htable : Measurable tableOfPrefix :=</span>
+<span id="L215">215     measurable_recurrentSuccessorTable defaultState</span>
+<span id="L216">216       (scale (State := State) (Action := Action) mdp episodes delta) n</span>
+<span id="L217">217   have hmeas : MeasurableSet</span>
+<span id="L218">218       {pair : EpisodeBatchPrefix mdp 1 n × EpisodeBatch mdp 1 |</span>
+<span id="L219">219         let reconstructed : State × StepTrace Action State mdp.horizon :=</span>
+<span id="L220">220           (pair.2.reconstructedInitialState defaultState,</span>
+<span id="L221">221             pair.2.reconstructedStepTrace)</span>
+<span id="L222">222         ∀ stage : Fin mdp.horizon,</span>
+<span id="L223">223           (pair.2 0 stage).state = mdp.trajectoryStateAt reconstructed stage ∧</span>
+<span id="L224">224             (pair.2 0 stage).action =</span>
+<span id="L225">225               tableOfPrefix pair.1 stage</span>
+<span id="L226">226                 (mdp.trajectoryStateAt reconstructed stage)} := by</span>
+<span id="L227">227     have hstage (stage : Fin mdp.horizon) : MeasurableSet</span>
+<span id="L228">228         {pair : EpisodeBatchPrefix mdp 1 n × EpisodeBatch mdp 1 |</span>
+<span id="L229">229           (pair.2 0 stage).state = mdp.trajectoryStateAt</span>
+<span id="L230">230                 (pair.2.reconstructedInitialState defaultState,</span>
+<span id="L231">231                   pair.2.reconstructedStepTrace) stage ∧</span>
+<span id="L232">232             (pair.2 0 stage).action = tableOfPrefix pair.1 stage</span>
+<span id="L233">233               (mdp.trajectoryStateAt</span>
+<span id="L234">234                 (pair.2.reconstructedInitialState defaultState,</span>
+<span id="L235">235                   pair.2.reconstructedStepTrace) stage)} := by</span>
+<span id="L236">236       let hbatch0 : Measurable</span>
+<span id="L237">237           (fun pair : EpisodeBatchPrefix mdp 1 n × EpisodeBatch mdp 1 =&gt;</span>
+<span id="L238">238             pair.2 (0 : Fin 1)) :=</span>
+<span id="L239">239         (measurable_pi_apply (0 : Fin 1)).comp measurable_snd</span>
+<span id="L240">240       let hstep : Measurable</span>
+<span id="L241">241           (fun pair : EpisodeBatchPrefix mdp 1 n × EpisodeBatch mdp 1 =&gt;</span>
+<span id="L242">242             pair.2 (0 : Fin 1) stage) :=</span>
+<span id="L243">243         (measurable_pi_apply stage).comp hbatch0</span>
+<span id="L244">244       let hstate := EpisodeStep.measurable_state.comp hstep</span>
+<span id="L245">245       let haction := EpisodeStep.measurable_action.comp hstep</span>
+<span id="L246">246       let htrajectoryState : Measurable</span>
+<span id="L247">247         (fun pair : EpisodeBatchPrefix mdp 1 n × EpisodeBatch mdp 1 =&gt;</span>
+<span id="L248">248             mdp.trajectoryStateAt</span>
+<span id="L249">249               (pair.2.reconstructedInitialState defaultState,</span>
+<span id="L250">250                 pair.2.reconstructedStepTrace) stage) := by</span>
+<span id="L251">251         exact (mdp.measurable_trajectoryStateAt stage).comp</span>
+<span id="L252">252           (((EpisodeBatch.measurable_reconstructedInitialState defaultState).comp</span>
+<span id="L253">253             measurable_snd).prodMk</span>
+<span id="L254">254             (EpisodeBatch.measurable_reconstructedStepTrace.comp measurable_snd))</span>
+<span id="L255">255       have hstateEq := measurableSet_eq_fun hstate htrajectoryState</span>
+<span id="L256">256       have hactionPiece (state : State) : MeasurableSet</span>
+<span id="L257">257           {pair : EpisodeBatchPrefix mdp 1 n × EpisodeBatch mdp 1 |</span>
+<span id="L258">258             mdp.trajectoryStateAt</span>
+<span id="L259">259                 (pair.2.reconstructedInitialState defaultState,</span>
+<span id="L260">260                   pair.2.reconstructedStepTrace) stage = state ∧</span>
+<span id="L261">261               (pair.2 0 stage).action = tableOfPrefix pair.1 stage state} := by</span>
+<span id="L262">262         have htableState : Measurable</span>
+<span id="L263">263             (fun pair : EpisodeBatchPrefix mdp 1 n × EpisodeBatch mdp 1 =&gt;</span>
+<span id="L264">264               tableOfPrefix pair.1 stage state) :=</span>
+<span id="L265">265           (measurable_pi_apply state).comp</span>
+<span id="L266">266             ((measurable_pi_apply stage).comp (htable.comp measurable_fst))</span>
+<span id="L267">267         exact (measurableSet_eq_fun htrajectoryState measurable_const).inter</span>
+<span id="L268">268           (measurableSet_eq_fun haction htableState)</span>
+<span id="L269">269       have hactionEq : MeasurableSet</span>
+<span id="L270">270           {pair : EpisodeBatchPrefix mdp 1 n × EpisodeBatch mdp 1 |</span>
+<span id="L271">271             (pair.2 0 stage).action = tableOfPrefix pair.1 stage</span>
+<span id="L272">272               (mdp.trajectoryStateAt</span>
+<span id="L273">273                 (pair.2.reconstructedInitialState defaultState,</span>
+<span id="L274">274                   pair.2.reconstructedStepTrace) stage)} := by</span>
+<span id="L275">275         have hunion := MeasurableSet.iUnion hactionPiece</span>
+<span id="L276">276         convert hunion using 1</span>
+<span id="L277">277         ext pair</span>
+<span id="L278">278         simp only [Set.mem_setOf_eq, Set.mem_iUnion]</span>
+<span id="L279">279         constructor</span>
+<span id="L280">280         · intro h</span>
+<span id="L281">281           exact ⟨mdp.trajectoryStateAt</span>
+<span id="L282">282             (pair.2.reconstructedInitialState defaultState,</span>
+<span id="L283">283               pair.2.reconstructedStepTrace) stage, rfl, h⟩</span>
+<span id="L284">284         · rintro ⟨state, hstateValue, hactionValue⟩</span>
+<span id="L285">285           simpa [hstateValue] using hactionValue</span>
+<span id="L286">286       exact hstateEq.inter hactionEq</span>
+<span id="L287">287     simpa only [Set.iInter_setOf] using MeasurableSet.iInter hstage</span>
+<span id="L288">288   have hpair : ∀ᵐ pair ∂prefixMeasure ⊗ₘ source.batchKernel n,</span>
+<span id="L289">289       let reconstructed : State × StepTrace Action State mdp.horizon :=</span>
+<span id="L290">290         (pair.2.reconstructedInitialState defaultState,</span>
+<span id="L291">291           pair.2.reconstructedStepTrace)</span>
+<span id="L292">292       ∀ stage : Fin mdp.horizon,</span>
+<span id="L293">293         (pair.2 0 stage).state = mdp.trajectoryStateAt reconstructed stage ∧</span>
+<span id="L294">294           (pair.2 0 stage).action = tableOfPrefix pair.1 stage</span>
+<span id="L295">295             (mdp.trajectoryStateAt reconstructed stage) := by</span>
+<span id="L296">296     apply Measure.ae_compProd_of_ae_ae hmeas</span>
+<span id="L297">297     exact Filter.Eventually.of_forall fun history =&gt; by</span>
+<span id="L298">298       rw [source.batchKernel_eq_iidEpisodeBatchMeasure]</span>
+<span id="L299">299       exact iidEpisodeBatchMeasure_successorBatchAligned_ae</span>
+<span id="L300">300         mdp initialState defaultState (tableOfPrefix history) hhorizon</span>
+<span id="L301">301   have hpair&#x27; := hpair</span>
+<span id="L302">302   rw [source.trajectoryMeasure_prefix_compProd n] at hpair&#x27;</span>
+<span id="L303">303   have hpull := ae_of_ae_map hpairMap.aemeasurable hpair&#x27;</span>
+<span id="L304">304   simpa [pairMap, tableOfPrefix, source, SuccessorBatchAligned,</span>
+<span id="L305">305     successorPolicyTable, successorPreviousQ, successorSummary,</span>
+<span id="L306">306     recurrentSource, recurrentSuccessorTable, prefixTransitionSummaries,</span>
+<span id="L307">307     adaptiveCumulativeEmpiricalModelStateAt] using hpull</span>
+<span id="L308">308 </span>
+<span id="L309">309 /-- Countable conjunction of the same-source alignment certificates. -/</span>
+<span id="L310">310 theorem recurrentSource_trajectoryMeasure_all_successorBatchAligned_ae</span>
+<span id="L311">311     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L312">312     [IsProbabilityMeasure initialState]</span>
+<span id="L313">313     (defaultState : State) (episodes : Nat) (delta : Real)</span>
+<span id="L314">314     (hhorizon : 0 &lt; mdp.horizon) :</span>
+<span id="L315">315     ∀ᵐ trajectory ∂</span>
+<span id="L316">316         (recurrentSource mdp initialState defaultState episodes delta).trajectoryMeasure,</span>
+<span id="L317">317       ∀ n : Nat,</span>
+<span id="L318">318         SuccessorBatchAligned mdp defaultState episodes delta trajectory n := by</span>
+<span id="L319">319   rw [ae_all_iff]</span>
+<span id="L320">320   exact recurrentSource_trajectoryMeasure_successorBatchAligned_ae</span>
+<span id="L321">321     mdp initialState defaultState episodes delta hhorizon</span>
+<span id="L322">322 </span>
+<span id="L323">323 end AdaptiveCumulativeHoeffdingUCBVI</span>
+<span id="L324">324 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

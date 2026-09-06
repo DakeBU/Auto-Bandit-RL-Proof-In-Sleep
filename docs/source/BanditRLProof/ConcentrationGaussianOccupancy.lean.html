@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/ConcentrationGaussianOccupancy.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/ConcentrationGaussianOccupancy.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/ConcentrationGaussianOccupancy.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/ConcentrationGaussianOccupancy.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import Mathlib.Analysis.SpecialFunctions.Gaussian.GaussianIntegral</span>
+<span id="L2">2 import Mathlib.MeasureTheory.Integral.IntegralEqImproper</span>
+<span id="L3">3 import Mathlib.MeasureTheory.Function.JacobianOneDim</span>
+<span id="L4">4 import Mathlib.Analysis.SumIntegralComparisons</span>
+<span id="L5">5 import Mathlib.Tactic</span>
+<span id="L6">6 </span>
+<span id="L7">7 noncomputable section</span>
+<span id="L8">8 open MeasureTheory Real Set Filter</span>
+<span id="L9">9 namespace BanditRLProof.Concentration</span>
+<span id="L10">10 </span>
+<span id="L11">11 theorem integral_mul_exp_neg_mul_sq_Ioi (b : ℝ) (hb : 0 &lt; b) :</span>
+<span id="L12">12     ∫ x : ℝ in Ioi 0, x*exp (-b*x^2) = (2*b)⁻¹ := by</span>
+<span id="L13">13   have hd : ∀ x : ℝ, HasDerivAt (fun x =&gt; -(2*b)⁻¹*exp (-b*x^2))</span>
+<span id="L14">14       (x*exp (-b*x^2)) x := by</span>
+<span id="L15">15     intro x</span>
+<span id="L16">16     convert (((hasDerivAt_pow 2 x).const_mul (-b)).exp).const_mul (-(2*b)⁻¹) using 1</span>
+<span id="L17">17     field_simp</span>
+<span id="L18">18     ring</span>
+<span id="L19">19   have ht : Tendsto (fun x : ℝ =&gt; -(2*b)⁻¹*exp (-b*x^2)) atTop (nhds (-(2*b)⁻¹*0)) := by</span>
+<span id="L20">20     apply Tendsto.const_mul</span>
+<span id="L21">21     exact tendsto_exp_atBot.comp</span>
+<span id="L22">22       ((tendsto_pow_atTop two_ne_zero).const_mul_atTop_of_neg (by linarith : -b &lt; 0))</span>
+<span id="L23">23   convert integral_Ioi_of_hasDerivAt_of_tendsto&#x27; (fun x _ =&gt; hd x)</span>
+<span id="L24">24     (integrable_mul_exp_neg_mul_sq hb).integrableOn ht using 1 &lt;;&gt; simp</span>
+<span id="L25">25 </span>
+<span id="L26">26 /-- Exact transformed tail integral in source Lemma 8.2. -/</span>
+<span id="L27">27 theorem integral_transformed_occupancy_tail (a ε : ℝ) (ha : 0 &lt; a) (hε : 0 &lt; ε) :</span>
+<span id="L28">28     ∫ z : ℝ in Ioi 0, (2/ε^2)*(z+sqrt (2*a))*exp (-(1/2 : ℝ)*z^2) =</span>
+<span id="L29">29       (2/ε^2)*(1+sqrt (Real.pi*a)) := by</span>
+<span id="L30">30   have hi := (integrable_mul_exp_neg_mul_sq (by norm_num : 0 &lt; (1/2 : ℝ))).integrableOn (s := Ioi 0)</span>
+<span id="L31">31   have hj := ((integrable_exp_neg_mul_sq (by norm_num : 0 &lt; (1/2 : ℝ))).const_mul</span>
+<span id="L32">32     (sqrt (2*a))).integrableOn (s := Ioi 0)</span>
+<span id="L33">33   have heq : (fun z : ℝ =&gt; (2/ε^2)*(z+sqrt (2*a))*exp (-(1/2 : ℝ)*z^2)) =</span>
+<span id="L34">34       (fun z =&gt; (2/ε^2)*(z*exp (-(1/2 : ℝ)*z^2)+sqrt (2*a)*exp (-(1/2 : ℝ)*z^2))) := by</span>
+<span id="L35">35     funext z; ring</span>
+<span id="L36">36   rw [heq, integral_const_mul, integral_add hi hj, integral_const_mul,</span>
+<span id="L37">37     integral_mul_exp_neg_mul_sq_Ioi (1/2) (by norm_num), integral_gaussian_Ioi]</span>
+<span id="L38">38   have hs : sqrt (2*a)*sqrt (Real.pi/(1/2)) = 2*sqrt (Real.pi*a) := by</span>
+<span id="L39">39     rw [← sqrt_mul (by positivity)]</span>
+<span id="L40">40     have he : 2*a*(Real.pi/(1/2)) = (2:ℝ)^2*(Real.pi*a) := by ring</span>
+<span id="L41">41     rw [he, sqrt_mul (by positivity), sqrt_sq (by norm_num : (0:ℝ) ≤ 2)]</span>
+<span id="L42">42   norm_num only [mul_one_div, one_mul, inv_one] at *</span>
+<span id="L43">43   rw [← mul_div_assoc, hs]</span>
+<span id="L44">44   ring</span>
+<span id="L45">45 </span>
+<span id="L46">46 /-- The shifted Gaussian kernel after the algebraic square-root rewrite. -/</span>
+<span id="L47">47 def occupancyTail (a ε t : ℝ) : ℝ := exp (-(ε*sqrt t-sqrt (2*a))^2/2)</span>
+<span id="L48">48 </span>
+<span id="L49">49 theorem occupancyTail_antitoneOn (a ε : ℝ) (ha : 0 &lt; a) (hε : 0 &lt; ε) :</span>
+<span id="L50">50     AntitoneOn (occupancyTail a ε) (Ici (2*a/ε^2)) := by</span>
+<span id="L51">51   intro x hx y hy hxy</span>
+<span id="L52">52   have hu : 0 &lt; 2*a/ε^2 := by positivity</span>
+<span id="L53">53   have hx0 : 0 ≤ x := hu.le.trans hx</span>
+<span id="L54">54   have hy0 : 0 ≤ y := hx0.trans hxy</span>
+<span id="L55">55   have hsx : (ε*sqrt x)^2 = ε^2*x := by rw [mul_pow, sq_sqrt hx0]</span>
+<span id="L56">56   have hlarge : 2*a ≤ x*ε^2 := (div_le_iff₀ (sq_pos_of_pos hε)).mp hx</span>
+<span id="L57">57   have hnon : 0 ≤ ε*sqrt x-sqrt (2*a) := by</span>
+<span id="L58">58     nlinarith [sq_sqrt (by positivity : 0 ≤ 2*a), sqrt_nonneg (2*a),</span>
+<span id="L59">59       mul_nonneg hε.le (sqrt_nonneg x)]</span>
+<span id="L60">60   have hm : ε*sqrt x-sqrt (2*a) ≤ ε*sqrt y-sqrt (2*a) :=</span>
+<span id="L61">61     sub_le_sub_right (mul_le_mul_of_nonneg_left (sqrt_le_sqrt hxy) hε.le) _</span>
+<span id="L62">62   unfold occupancyTail</span>
+<span id="L63">63   apply exp_le_exp.mpr</span>
+<span id="L64">64   nlinarith</span>
+<span id="L65">65 </span>
+<span id="L66">66 def occupancySubstitution (a ε z : ℝ) : ℝ := ((z+sqrt (2*a))/ε)^2</span>
+<span id="L67">67 </span>
+<span id="L68">68 theorem occupancySubstitution_image (a ε : ℝ) (ha : 0 &lt; a) (hε : 0 &lt; ε) :</span>
+<span id="L69">69     occupancySubstitution a ε &#x27;&#x27; Ioi 0 = Ioi (2*a/ε^2) := by</span>
+<span id="L70">70   have hc : 0 &lt; sqrt (2*a) := sqrt_pos.mpr (by positivity)</span>
+<span id="L71">71   have hc2 := sq_sqrt (by positivity : 0 ≤ 2*a)</span>
+<span id="L72">72   ext t</span>
+<span id="L73">73   constructor</span>
+<span id="L74">74   · rintro ⟨z, hz, rfl⟩</span>
+<span id="L75">75     change 0 &lt; z at hz</span>
+<span id="L76">76     change 2*a/ε^2 &lt; ((z+sqrt (2*a))/ε)^2</span>
+<span id="L77">77     rw [div_pow]</span>
+<span id="L78">78     apply (div_lt_div_iff_of_pos_right (sq_pos_of_pos hε)).mpr</span>
+<span id="L79">79     nlinarith [mul_pos hz hc]</span>
+<span id="L80">80   · intro ht</span>
+<span id="L81">81     have ht0 : 0 &lt; t := (by positivity : 0 &lt; 2*a/ε^2).trans ht</span>
+<span id="L82">82     have htlarge : 2*a &lt; t*ε^2 := (div_lt_iff₀ (sq_pos_of_pos hε)).mp ht</span>
+<span id="L83">83     have hsq : (ε*sqrt t)^2 = ε^2*t := by rw [mul_pow, sq_sqrt ht0.le]</span>
+<span id="L84">84     refine ⟨ε*sqrt t-sqrt (2*a), ?_, ?_⟩</span>
+<span id="L85">85     · change 0 &lt; ε*sqrt t-sqrt (2*a)</span>
+<span id="L86">86       nlinarith [mul_pos hε (sqrt_pos.mpr ht0)]</span>
+<span id="L87">87     · unfold occupancySubstitution</span>
+<span id="L88">88       rw [sub_add_cancel, mul_div_cancel_left₀ _ hε.ne&#x27;, sq_sqrt ht0.le]</span>
+<span id="L89">89 </span>
+<span id="L90">90 theorem occupancySubstitution_injOn (a ε : ℝ) (ha : 0 &lt; a) (hε : 0 &lt; ε) :</span>
+<span id="L91">91     InjOn (occupancySubstitution a ε) (Ioi 0) := by</span>
+<span id="L92">92   intro x hx y hy he</span>
+<span id="L93">93   change 0 &lt; x at hx</span>
+<span id="L94">94   change 0 &lt; y at hy</span>
+<span id="L95">95   have hx0 : 0 &lt; (x+sqrt (2*a))/ε := by positivity</span>
+<span id="L96">96   have hy0 : 0 &lt; (y+sqrt (2*a))/ε := by positivity</span>
+<span id="L97">97   have heq : (x+sqrt (2*a))/ε = (y+sqrt (2*a))/ε := by</span>
+<span id="L98">98     unfold occupancySubstitution at he</span>
+<span id="L99">99     nlinarith</span>
+<span id="L100">100   have heq&#x27; := (div_left_inj&#x27; hε.ne&#x27;).mp heq</span>
+<span id="L101">101   linarith</span>
+<span id="L102">102 </span>
+<span id="L103">103 theorem hasDerivAt_occupancySubstitution (a ε z : ℝ) :</span>
+<span id="L104">104     HasDerivAt (occupancySubstitution a ε) ((2/ε^2)*(z+sqrt (2*a))) z := by</span>
+<span id="L105">105   convert (((hasDerivAt_id z).add_const (sqrt (2*a))).div_const ε).pow 2 using 1</span>
+<span id="L106">106   dsimp</span>
+<span id="L107">107   ring</span>
+<span id="L108">108 </span>
+<span id="L109">109 theorem integral_occupancyTail (a ε : ℝ) (ha : 0 &lt; a) (hε : 0 &lt; ε) :</span>
+<span id="L110">110     ∫ t in Ioi (2*a/ε^2), occupancyTail a ε t = (2/ε^2)*(1+sqrt (Real.pi*a)) := by</span>
+<span id="L111">111   rw [← occupancySubstitution_image a ε ha hε]</span>
+<span id="L112">112   rw [integral_image_eq_integral_abs_deriv_smul measurableSet_Ioi</span>
+<span id="L113">113     (fun z _ =&gt; (hasDerivAt_occupancySubstitution a ε z).hasDerivWithinAt)</span>
+<span id="L114">114     (occupancySubstitution_injOn a ε ha hε)]</span>
+<span id="L115">115   rw [← integral_transformed_occupancy_tail a ε ha hε]</span>
+<span id="L116">116   apply setIntegral_congr_fun measurableSet_Ioi</span>
+<span id="L117">117   intro z hz</span>
+<span id="L118">118   change 0 &lt; z at hz</span>
+<span id="L119">119   dsimp only</span>
+<span id="L120">120   have hpos : 0 ≤ (z+sqrt (2*a))/ε := by positivity</span>
+<span id="L121">121   have hd : 0 ≤ (2/ε^2)*(z+sqrt (2*a)) := by positivity</span>
+<span id="L122">122   rw [abs_of_nonneg hd, smul_eq_mul]</span>
+<span id="L123">123   unfold occupancyTail occupancySubstitution</span>
+<span id="L124">124   rw [sqrt_sq hpos, mul_div_cancel₀ _ hε.ne&#x27;, add_sub_cancel_right]</span>
+<span id="L125">125   congr 1</span>
+<span id="L126">126   ring</span>
+<span id="L127">127 </span>
+<span id="L128">128 theorem integrableOn_occupancyTail (a ε : ℝ) (ha : 0 &lt; a) (hε : 0 &lt; ε) :</span>
+<span id="L129">129     IntegrableOn (occupancyTail a ε) (Ioi (2*a/ε^2)) := by</span>
+<span id="L130">130   rw [← occupancySubstitution_image a ε ha hε,</span>
+<span id="L131">131     integrableOn_image_iff_integrableOn_abs_deriv_smul measurableSet_Ioi</span>
+<span id="L132">132       (fun z _ =&gt; (hasDerivAt_occupancySubstitution a ε z).hasDerivWithinAt)</span>
+<span id="L133">133       (occupancySubstitution_injOn a ε ha hε)]</span>
+<span id="L134">134   have hi := (integrable_mul_exp_neg_mul_sq (by norm_num : 0 &lt; (1/2 : ℝ))).integrableOn (s := Ioi 0)</span>
+<span id="L135">135   have hj := ((integrable_exp_neg_mul_sq (by norm_num : 0 &lt; (1/2 : ℝ))).const_mul</span>
+<span id="L136">136     (sqrt (2*a))).integrableOn (s := Ioi 0)</span>
+<span id="L137">137   apply ((hi.add hj).const_mul (2/ε^2)).congr</span>
+<span id="L138">138   filter_upwards [ae_restrict_mem measurableSet_Ioi] with z hz</span>
+<span id="L139">139   change 0 &lt; z at hz</span>
+<span id="L140">140   rw [abs_of_nonneg (by positivity : 0 ≤ (2/ε^2)*(z+sqrt (2*a))), smul_eq_mul]</span>
+<span id="L141">141   unfold occupancyTail occupancySubstitution</span>
+<span id="L142">142   rw [sqrt_sq (by positivity : 0 ≤ (z+sqrt (2*a))/ε),</span>
+<span id="L143">143     mul_div_cancel₀ _ hε.ne&#x27;, add_sub_cancel_right]</span>
+<span id="L144">144   have he : -(1/2 : ℝ)*z^2 = -z^2/2 := by ring</span>
+<span id="L145">145   simp only [Pi.add_apply]</span>
+<span id="L146">146   rw [he]</span>
+<span id="L147">147   ring</span>
+<span id="L148">148 </span>
+<span id="L149">149 theorem sum_occupancyTail_shift_le (a ε r : ℝ) (ha : 0 &lt; a) (hε : 0 &lt; ε)</span>
+<span id="L150">150     (hr : 2*a/ε^2 ≤ r) (N : ℕ) :</span>
+<span id="L151">151     (∑ i ∈ Finset.range N, occupancyTail a ε (r+(i+1 : ℕ))) ≤</span>
+<span id="L152">152       (2/ε^2)*(1+sqrt (Real.pi*a)) := by</span>
+<span id="L153">153   have hm : AntitoneOn (occupancyTail a ε) (Icc r (r+N)) :=</span>
+<span id="L154">154     (occupancyTail_antitoneOn a ε ha hε).mono (fun x hx =&gt; hr.trans hx.1)</span>
+<span id="L155">155   calc</span>
+<span id="L156">156     _ ≤ ∫ t in r..r+N, occupancyTail a ε t := hm.sum_le_integral</span>
+<span id="L157">157     _ = ∫ t in Ioc r (r+N), occupancyTail a ε t :=</span>
+<span id="L158">158       intervalIntegral.integral_of_le (le_add_of_nonneg_right (Nat.cast_nonneg N))</span>
+<span id="L159">159     _ ≤ ∫ t in Ioi (2*a/ε^2), occupancyTail a ε t :=</span>
+<span id="L160">160       setIntegral_mono_set (integrableOn_occupancyTail a ε ha hε)</span>
+<span id="L161">161         (Eventually.of_forall (fun t =&gt; (exp_pos _).le))</span>
+<span id="L162">162         (Eventually.of_forall (fun t ht =&gt; hr.trans_lt ht.1))</span>
+<span id="L163">163     _ = _ := integral_occupancyTail a ε ha hε</span>
+<span id="L164">164 </span>
+<span id="L165">165 /-- Integer cutoff aggregation with the exact source Lemma 8.2 constants. -/</span>
+<span id="L166">166 theorem sum_le_occupancy_bound (p : ℕ → ℝ) (a ε : ℝ) (ha : 0 &lt; a) (hε : 0 &lt; ε)</span>
+<span id="L167">167     (h1 : ∀ s, p s ≤ 1)</span>
+<span id="L168">168     (htail : ∀ s : ℕ, 2*a/ε^2 &lt; (s : ℝ) → p s ≤ occupancyTail a ε s) (n : ℕ) :</span>
+<span id="L169">169     (∑ i ∈ Finset.range n, p (i+1)) ≤ 1+(2/ε^2)*(a+sqrt (Real.pi*a)+1) := by</span>
+<span id="L170">170   let u := 2*a/ε^2</span>
+<span id="L171">171   let m : ℕ := ⌈u⌉₊</span>
+<span id="L172">172   have hu : 0 ≤ u := by dsimp [u]; positivity</span>
+<span id="L173">173   have hm : u ≤ (m : ℝ) := Nat.le_ceil u</span>
+<span id="L174">174   have hm1 : (m : ℝ) ≤ u+1 := (Nat.ceil_lt_add_one hu).le</span>
+<span id="L175">175   have hbasic (N : ℕ) : (∑ i ∈ Finset.range N, p (i+1)) ≤ (N : ℝ) := by</span>
+<span id="L176">176     calc</span>
+<span id="L177">177       _ ≤ ∑ _i ∈ Finset.range N, (1 : ℝ) := Finset.sum_le_sum (fun i _ =&gt; h1 (i+1))</span>
+<span id="L178">178       _ = _ := by simp</span>
+<span id="L179">179   have hnon : 0 ≤ (2/ε^2)*(1+sqrt (Real.pi*a)) := by positivity</span>
+<span id="L180">180   have hformula : 1+(2/ε^2)*(a+sqrt (Real.pi*a)+1) =</span>
+<span id="L181">181       2*a/ε^2+1+(2/ε^2)*(1+sqrt (Real.pi*a)) := by ring</span>
+<span id="L182">182   rw [hformula]</span>
+<span id="L183">183   by_cases hnm : n ≤ m</span>
+<span id="L184">184   · have hn := (hbasic n).trans ((Nat.cast_le.mpr hnm).trans hm1)</span>
+<span id="L185">185     dsimp [u] at hn</span>
+<span id="L186">186     nlinarith</span>
+<span id="L187">187   · have hmn : m ≤ n := by omega</span>
+<span id="L188">188     have hsplit : n = m+(n-m) := (Nat.add_sub_of_le hmn).symm</span>
+<span id="L189">189     rw [hsplit, Finset.sum_range_add]</span>
+<span id="L190">190     have ht : (∑ i ∈ Finset.range (n-m), p (m+i+1)) ≤</span>
+<span id="L191">191         (2/ε^2)*(1+sqrt (Real.pi*a)) := by</span>
+<span id="L192">192       calc</span>
+<span id="L193">193         _ ≤ ∑ i ∈ Finset.range (n-m), occupancyTail a ε ((m : ℝ)+(i+1 : ℕ)) := by</span>
+<span id="L194">194           apply Finset.sum_le_sum</span>
+<span id="L195">195           intro i hi</span>
+<span id="L196">196           have hlarge : 2*a/ε^2 &lt; ((m+i+1 : ℕ) : ℝ) := by</span>
+<span id="L197">197             push_cast</span>
+<span id="L198">198             dsimp [u] at hm</span>
+<span id="L199">199             linarith [Nat.cast_nonneg i (α := ℝ)]</span>
+<span id="L200">200           simpa [Nat.cast_add, Nat.cast_one, add_assoc] using htail (m+i+1) hlarge</span>
+<span id="L201">201         _ ≤ _ := sum_occupancyTail_shift_le a ε m ha hε hm (n-m)</span>
+<span id="L202">202     have hb := hbasic m</span>
+<span id="L203">203     dsimp [u] at hm1</span>
+<span id="L204">204     nlinarith</span>
+<span id="L205">205 </span>
+<span id="L206">206 end BanditRLProof.Concentration</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

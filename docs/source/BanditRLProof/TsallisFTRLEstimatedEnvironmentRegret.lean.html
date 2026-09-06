@@ -1,0 +1,1857 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/TsallisFTRLEstimatedEnvironmentRegret.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/TsallisFTRLEstimatedEnvironmentRegret.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/TsallisFTRLEstimatedEnvironmentRegret.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/TsallisFTRLEstimatedEnvironmentRegret.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.TsallisFTRLGeneratedMeasurability</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Estimated-to-environment regret for generated half-Tsallis FTRL</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module joins the deterministic half-Tsallis FTRL decomposition to the</span>
+<span id="L7">7 generated predictable trajectory.  Time zero is kept separate: the recursive</span>
+<span id="L8">8 history score at level `n` already contains observations through time `n`, so</span>
+<span id="L9">9 the generated successor-stability theorem covers times `1, ..., horizon`.</span>
+<span id="L10">10 -/</span>
+<span id="L11">11 </span>
+<span id="L12">12 namespace BanditRLProof</span>
+<span id="L13">13 namespace Tsallis</span>
+<span id="L14">14 </span>
+<span id="L15">15 open MeasureTheory ProbabilityTheory</span>
+<span id="L16">16 </span>
+<span id="L17">17 universe u v</span>
+<span id="L18">18 </span>
+<span id="L19">19 /-- The pure half-Tsallis sampling probability at an actual trajectory time. -/</span>
+<span id="L20">20 noncomputable def sampledHalfTsallisProbabilityAtTime</span>
+<span id="L21">21     {Env : Type u} {Action : Type v} [DecidableEq Action]</span>
+<span id="L22">22     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) :</span>
+<span id="L23">23     Nat -&gt; Env × ((k : Nat) -&gt; Action × Real) -&gt; Action -&gt; Real</span>
+<span id="L24">24   | 0, _sample =&gt; initialHalfTsallisDistribution arms harms eta</span>
+<span id="L25">25   | n + 1, sample =&gt;</span>
+<span id="L26">26       sampledHalfTsallisHistoryDistribution arms harms eta n</span>
+<span id="L27">27         (Preorder.frestrictLe n sample.2)</span>
+<span id="L28">28 </span>
+<span id="L29">29 /-- The observed-scalar importance-weighted loss vector at an actual time. -/</span>
+<span id="L30">30 noncomputable def sampledHalfTsallisObservedEstimatedLossAt</span>
+<span id="L31">31     {Env : Type u} {Action : Type v} [DecidableEq Action]</span>
+<span id="L32">32     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L33">33     (t : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) :</span>
+<span id="L34">34     Action -&gt; Real :=</span>
+<span id="L35">35   Exp3.importanceWeightedLoss</span>
+<span id="L36">36     (sampledHalfTsallisProbabilityAtTime arms harms eta t sample)</span>
+<span id="L37">37     (fun _ =&gt; (sample.2 t).2) (sample.2 t).1</span>
+<span id="L38">38 </span>
+<span id="L39">39 /-- The canonical cumulative selector generated by the observed estimator is</span>
+<span id="L40">40 the actual pure half-Tsallis probability at the same time. -/</span>
+<span id="L41">41 theorem cumulativeLoss_sampledHalfTsallisObservedEstimatedLossAt_succ</span>
+<span id="L42">42     {Env : Type u} {Action : Type v} [DecidableEq Action]</span>
+<span id="L43">43     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L44">44     (sample : Env × ((k : Nat) -&gt; Action × Real)) (n : Nat) :</span>
+<span id="L45">45     FTRL.cumulativeLoss</span>
+<span id="L46">46         (fun t =&gt; sampledHalfTsallisObservedEstimatedLossAt</span>
+<span id="L47">47           arms harms eta t sample) (n + 1) =</span>
+<span id="L48">48       sampledHalfTsallisHistoryScore arms harms eta n</span>
+<span id="L49">49         (Preorder.frestrictLe n sample.2) := by</span>
+<span id="L50">50   induction n with</span>
+<span id="L51">51   | zero =&gt;</span>
+<span id="L52">52       funext action</span>
+<span id="L53">53       simp [FTRL.cumulativeLoss_succ,</span>
+<span id="L54">54         sampledHalfTsallisObservedEstimatedLossAt,</span>
+<span id="L55">55         sampledHalfTsallisProbabilityAtTime]</span>
+<span id="L56">56   | succ n ih =&gt;</span>
+<span id="L57">57       rw [FTRL.cumulativeLoss_succ]</span>
+<span id="L58">58       funext candidate</span>
+<span id="L59">59       change</span>
+<span id="L60">60         FTRL.cumulativeLoss</span>
+<span id="L61">61               (fun t =&gt; sampledHalfTsallisObservedEstimatedLossAt</span>
+<span id="L62">62                 arms harms eta t sample) (n + 1) candidate +</span>
+<span id="L63">63             sampledHalfTsallisObservedEstimatedLossAt</span>
+<span id="L64">64               arms harms eta (n + 1) sample candidate = _</span>
+<span id="L65">65       rw [ih, sampledHalfTsallisHistoryScore_succ,</span>
+<span id="L66">66         Exp3.previousPairHistory_frestrictLe]</span>
+<span id="L67">67       rfl</span>
+<span id="L68">68 </span>
+<span id="L69">69 theorem halfTsallisCumulativeMinimizer_observedEstimatedLoss_eq_probabilityAtTime</span>
+<span id="L70">70     {Env : Type u} {Action : Type v} [DecidableEq Action]</span>
+<span id="L71">71     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L72">72     (sample : Env × ((k : Nat) -&gt; Action × Real)) (t : Nat) :</span>
+<span id="L73">73     halfTsallisCumulativeMinimizer arms harms eta</span>
+<span id="L74">74         (fun s =&gt; sampledHalfTsallisObservedEstimatedLossAt</span>
+<span id="L75">75           arms harms eta s sample) t =</span>
+<span id="L76">76       sampledHalfTsallisProbabilityAtTime arms harms eta t sample := by</span>
+<span id="L77">77   cases t with</span>
+<span id="L78">78   | zero =&gt;</span>
+<span id="L79">79       rfl</span>
+<span id="L80">80   | succ n =&gt;</span>
+<span id="L81">81       unfold halfTsallisCumulativeMinimizer</span>
+<span id="L82">82       rw [cumulativeLoss_sampledHalfTsallisObservedEstimatedLossAt_succ]</span>
+<span id="L83">83       rfl</span>
+<span id="L84">84 </span>
+<span id="L85">85 /-- The time-zero current-minus-updated stability term. -/</span>
+<span id="L86">86 noncomputable def sampledHalfTsallisInitialStability</span>
+<span id="L87">87     {Env : Type u} {Action : Type v} [DecidableEq Action]</span>
+<span id="L88">88     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L89">89     (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real :=</span>
+<span id="L90">90   let estimatedLoss := sampledHalfTsallisObservedEstimatedLossAt</span>
+<span id="L91">91     arms harms eta 0 sample</span>
+<span id="L92">92   FTRL.linearLoss arms (initialHalfTsallisDistribution arms harms eta)</span>
+<span id="L93">93       estimatedLoss -</span>
+<span id="L94">94     FTRL.linearLoss arms</span>
+<span id="L95">95       (sampledHalfTsallisHistoryDistribution arms harms eta 0</span>
+<span id="L96">96         (Preorder.frestrictLe 0 sample.2)) estimatedLoss</span>
+<span id="L97">97 </span>
+<span id="L98">98 /-- The pathwise successor stability term formed from the scalar reward stored</span>
+<span id="L99">99 in the generated trajectory. -/</span>
+<span id="L100">100 noncomputable def sampledHalfTsallisObservedSuccessorStabilityAt</span>
+<span id="L101">101     {Env : Type u} {Action : Type v} [DecidableEq Action]</span>
+<span id="L102">102     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L103">103     (n : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real :=</span>
+<span id="L104">104   let estimatedLoss := sampledHalfTsallisObservedEstimatedLossAt</span>
+<span id="L105">105     arms harms eta (n + 1) sample</span>
+<span id="L106">106   FTRL.linearLoss arms</span>
+<span id="L107">107       (sampledHalfTsallisHistoryDistribution arms harms eta n</span>
+<span id="L108">108         (Preorder.frestrictLe n sample.2)) estimatedLoss -</span>
+<span id="L109">109     FTRL.linearLoss arms</span>
+<span id="L110">110       (sampledHalfTsallisHistoryDistribution arms harms eta (n + 1)</span>
+<span id="L111">111         (Preorder.frestrictLe (n + 1) sample.2)) estimatedLoss</span>
+<span id="L112">112 </span>
+<span id="L113">113 /-- Canonical time-zero update after sampling the initial action. -/</span>
+<span id="L114">114 noncomputable def sampledHalfTsallisInitialUpdatedAt</span>
+<span id="L115">115     {Env : Type u} {Action : Type v}</span>
+<span id="L116">116     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L117">117     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L118">118     (loss : Exp3.PredictableLossVector Env Action) :</span>
+<span id="L119">119     Env -&gt; Action -&gt; Action -&gt; Real :=</span>
+<span id="L120">120   halfTsallisHistoryUpdatedMinimizer arms harms eta</span>
+<span id="L121">121     (fun _env _candidate =&gt; 0) loss.initial</span>
+<span id="L122">122 </span>
+<span id="L123">123 /-- Canonical predictable stability score for the initial action. -/</span>
+<span id="L124">124 noncomputable def sampledHalfTsallisInitialHistoryActionStability</span>
+<span id="L125">125     {Env : Type u} {Action : Type v}</span>
+<span id="L126">126     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L127">127     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L128">128     (loss : Exp3.PredictableLossVector Env Action) : Env × Action -&gt; Real :=</span>
+<span id="L129">129   importanceWeightedStabilityScore arms</span>
+<span id="L130">130     (fun _env =&gt; initialHalfTsallisDistribution arms harms eta)</span>
+<span id="L131">131     loss.initial</span>
+<span id="L132">132     (sampledHalfTsallisInitialUpdatedAt arms harms eta loss)</span>
+<span id="L133">133 </span>
+<span id="L134">134 /-- The deterministic FTRL stability sum splits into the initial term and the</span>
+<span id="L135">135 generated successor terms. -/</span>
+<span id="L136">136 theorem sum_observedEstimated_stability_eq_initial_add_successor</span>
+<span id="L137">137     {Env : Type u} {Action : Type v} [DecidableEq Action]</span>
+<span id="L138">138     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L139">139     (sample : Env × ((k : Nat) -&gt; Action × Real)) (horizon : Nat) :</span>
+<span id="L140">140     let estimatedLoss := fun t =&gt;</span>
+<span id="L141">141       sampledHalfTsallisObservedEstimatedLossAt arms harms eta t sample</span>
+<span id="L142">142     let p := halfTsallisCumulativeMinimizer arms harms eta estimatedLoss</span>
+<span id="L143">143     (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L144">144         FTRL.linearLoss arms (p t) (estimatedLoss t) -</span>
+<span id="L145">145           FTRL.linearLoss arms (p (t + 1)) (estimatedLoss t)) =</span>
+<span id="L146">146       sampledHalfTsallisInitialStability arms harms eta sample +</span>
+<span id="L147">147         (Finset.range horizon).sum (fun n =&gt;</span>
+<span id="L148">148           sampledHalfTsallisObservedSuccessorStabilityAt</span>
+<span id="L149">149             arms harms eta n sample) := by</span>
+<span id="L150">150   dsimp only</span>
+<span id="L151">151   rw [Finset.sum_range_succ&#x27;]</span>
+<span id="L152">152   conv_lhs =&gt; rw [add_comm]</span>
+<span id="L153">153   congr 1</span>
+<span id="L154">154   · simp [sampledHalfTsallisInitialStability,</span>
+<span id="L155">155       sampledHalfTsallisProbabilityAtTime,</span>
+<span id="L156">156       halfTsallisCumulativeMinimizer_observedEstimatedLoss_eq_probabilityAtTime]</span>
+<span id="L157">157   · apply Finset.sum_congr rfl</span>
+<span id="L158">158     intro n hn</span>
+<span id="L159">159     rw [halfTsallisCumulativeMinimizer_observedEstimatedLoss_eq_probabilityAtTime,</span>
+<span id="L160">160       halfTsallisCumulativeMinimizer_observedEstimatedLoss_eq_probabilityAtTime]</span>
+<span id="L161">161     simp [sampledHalfTsallisObservedSuccessorStabilityAt,</span>
+<span id="L162">162       sampledHalfTsallisProbabilityAtTime]</span>
+<span id="L163">163 </span>
+<span id="L164">164 /-- Pathwise estimated-loss regret decomposition for time zero followed by</span>
+<span id="L165">165 `horizon` generated successor rounds. -/</span>
+<span id="L166">166 theorem sampledHalfTsallis_observedEstimatedRegret_le</span>
+<span id="L167">167     {Env : Type u} {Action : Type v} [DecidableEq Action]</span>
+<span id="L168">168     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L169">169     (heta : 0 &lt; eta) (q : Action -&gt; Real)</span>
+<span id="L170">170     (hq : FTRL.finiteSimplex arms q)</span>
+<span id="L171">171     (sample : Env × ((k : Nat) -&gt; Action × Real)) (horizon : Nat) :</span>
+<span id="L172">172     (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L173">173         FTRL.linearLoss arms</span>
+<span id="L174">174             (sampledHalfTsallisProbabilityAtTime arms harms eta t sample)</span>
+<span id="L175">175             (sampledHalfTsallisObservedEstimatedLossAt</span>
+<span id="L176">176               arms harms eta t sample) -</span>
+<span id="L177">177           FTRL.linearLoss arms q</span>
+<span id="L178">178             (sampledHalfTsallisObservedEstimatedLossAt</span>
+<span id="L179">179               arms harms eta t sample)) &lt;=</span>
+<span id="L180">180       sampledHalfTsallisInitialStability arms harms eta sample +</span>
+<span id="L181">181         (Finset.range horizon).sum (fun n =&gt;</span>
+<span id="L182">182           sampledHalfTsallisObservedSuccessorStabilityAt</span>
+<span id="L183">183             arms harms eta n sample) +</span>
+<span id="L184">184         ((powerSum arms (1 / 2 : Real)</span>
+<span id="L185">185               (initialHalfTsallisDistribution arms harms eta) -</span>
+<span id="L186">186             powerSum arms (1 / 2 : Real) q) /</span>
+<span id="L187">187           (1 - (1 / 2 : Real))) / eta := by</span>
+<span id="L188">188   let estimatedLoss := fun t =&gt;</span>
+<span id="L189">189     sampledHalfTsallisObservedEstimatedLossAt arms harms eta t sample</span>
+<span id="L190">190   have hdecomp :=</span>
+<span id="L191">191     cumulativeLinearLoss_sub_comparator_le_stability_add_powerSumPenalty_half_canonical</span>
+<span id="L192">192       arms harms eta estimatedLoss q (horizon + 1) heta hq</span>
+<span id="L193">193   dsimp [estimatedLoss] at hdecomp</span>
+<span id="L194">194   rw [sum_observedEstimated_stability_eq_initial_add_successor</span>
+<span id="L195">195     arms harms eta sample horizon] at hdecomp</span>
+<span id="L196">196   simpa only</span>
+<span id="L197">197       [halfTsallisCumulativeMinimizer_observedEstimatedLoss_eq_probabilityAtTime]</span>
+<span id="L198">198     using hdecomp</span>
+<span id="L199">199 </span>
+<span id="L200">200 /-- The predictable importance-weighted loss vector at an actual trajectory</span>
+<span id="L201">201 time, using the same probability as the observed recursive update. -/</span>
+<span id="L202">202 noncomputable def sampledHalfTsallisPredictableEstimatedLossAt</span>
+<span id="L203">203     {Env : Type u} {Action : Type v}</span>
+<span id="L204">204     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L205">205     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L206">206     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L207">207     (t : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) :</span>
+<span id="L208">208     Action -&gt; Real :=</span>
+<span id="L209">209   Exp3.importanceWeightedLoss</span>
+<span id="L210">210     (sampledHalfTsallisProbabilityAtTime arms harms eta t sample)</span>
+<span id="L211">211     (Exp3.predictableLossAt loss t sample) (sample.2 t).1</span>
+<span id="L212">212 </span>
+<span id="L213">213 /-- Estimated regret against a fixed comparator distribution, including time</span>
+<span id="L214">214 zero and `horizon` successor rounds. -/</span>
+<span id="L215">215 noncomputable def sampledHalfTsallisObservedEstimatedRegret</span>
+<span id="L216">216     {Env : Type u} {Action : Type v} [DecidableEq Action]</span>
+<span id="L217">217     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L218">218     (q : Action -&gt; Real) (horizon : Nat)</span>
+<span id="L219">219     (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real :=</span>
+<span id="L220">220   (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L221">221     FTRL.linearLoss arms</span>
+<span id="L222">222         (sampledHalfTsallisProbabilityAtTime arms harms eta t sample)</span>
+<span id="L223">223         (sampledHalfTsallisObservedEstimatedLossAt</span>
+<span id="L224">224           arms harms eta t sample) -</span>
+<span id="L225">225       FTRL.linearLoss arms q</span>
+<span id="L226">226         (sampledHalfTsallisObservedEstimatedLossAt</span>
+<span id="L227">227           arms harms eta t sample))</span>
+<span id="L228">228 </span>
+<span id="L229">229 /-- Predictable environment regret for the generated pure half-Tsallis</span>
+<span id="L230">230 probabilities against a fixed comparator distribution. -/</span>
+<span id="L231">231 noncomputable def sampledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L232">232     {Env : Type u} {Action : Type v}</span>
+<span id="L233">233     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L234">234     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L235">235     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L236">236     (q : Action -&gt; Real) (horizon : Nat)</span>
+<span id="L237">237     (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real :=</span>
+<span id="L238">238   (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L239">239     FTRL.linearLoss arms</span>
+<span id="L240">240         (sampledHalfTsallisProbabilityAtTime arms harms eta t sample)</span>
+<span id="L241">241         (Exp3.predictableLossAt loss t sample) -</span>
+<span id="L242">242       FTRL.linearLoss arms q (Exp3.predictableLossAt loss t sample))</span>
+<span id="L243">243 </span>
+<span id="L244">244 /-- The same finite-horizon estimated regret after replacing stored rewards by</span>
+<span id="L245">245 their predictable loss-vector coordinates. -/</span>
+<span id="L246">246 noncomputable def sampledHalfTsallisPredictableEstimatedRegret</span>
+<span id="L247">247     {Env : Type u} {Action : Type v}</span>
+<span id="L248">248     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L249">249     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L250">250     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L251">251     (q : Action -&gt; Real) (horizon : Nat)</span>
+<span id="L252">252     (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real :=</span>
+<span id="L253">253   (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L254">254     FTRL.linearLoss arms</span>
+<span id="L255">255         (sampledHalfTsallisProbabilityAtTime arms harms eta t sample)</span>
+<span id="L256">256         (sampledHalfTsallisPredictableEstimatedLossAt</span>
+<span id="L257">257           arms harms eta loss t sample) -</span>
+<span id="L258">258       FTRL.linearLoss arms q</span>
+<span id="L259">259         (sampledHalfTsallisPredictableEstimatedLossAt</span>
+<span id="L260">260           arms harms eta loss t sample))</span>
+<span id="L261">261 </span>
+<span id="L262">262 theorem measurable_sampledHalfTsallisProbabilityAtTime</span>
+<span id="L263">263     {Env : Type u} {Action : Type v}</span>
+<span id="L264">264     [MeasurableSpace Env]</span>
+<span id="L265">265     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L266">266     [DecidableEq Action]</span>
+<span id="L267">267     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L268">268     (t : Nat) (candidate : Action) (hcandidate : candidate ∈ arms) :</span>
+<span id="L269">269     Measurable (fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L270">270       sampledHalfTsallisProbabilityAtTime</span>
+<span id="L271">271         arms harms eta t sample candidate) := by</span>
+<span id="L272">272   cases t with</span>
+<span id="L273">273   | zero =&gt; exact measurable_const</span>
+<span id="L274">274   | succ n =&gt;</span>
+<span id="L275">275       exact</span>
+<span id="L276">276         (measurable_halfTsallisMinimizer_comp</span>
+<span id="L277">277           arms harms eta</span>
+<span id="L278">278           (sampledHalfTsallisHistoryScore arms harms eta n)</span>
+<span id="L279">279           (fun selected hselected =&gt;</span>
+<span id="L280">280             measurable_sampledHalfTsallisHistoryScore</span>
+<span id="L281">281               arms harms eta</span>
+<span id="L282">282               (canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L283">283                 arms harms eta) n selected hselected)</span>
+<span id="L284">284           candidate hcandidate).comp</span>
+<span id="L285">285             ((Preorder.measurable_frestrictLe n).comp measurable_snd)</span>
+<span id="L286">286 </span>
+<span id="L287">287 theorem measurable_sampledHalfTsallisObservedEstimatedLossAt</span>
+<span id="L288">288     {Env : Type u} {Action : Type v}</span>
+<span id="L289">289     [MeasurableSpace Env]</span>
+<span id="L290">290     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L291">291     [DecidableEq Action]</span>
+<span id="L292">292     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L293">293     (t : Nat) (candidate : Action) (hcandidate : candidate ∈ arms) :</span>
+<span id="L294">294     Measurable (fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L295">295       sampledHalfTsallisObservedEstimatedLossAt</span>
+<span id="L296">296         arms harms eta t sample candidate) := by</span>
+<span id="L297">297   unfold sampledHalfTsallisObservedEstimatedLossAt Exp3.importanceWeightedLoss</span>
+<span id="L298">298   refine Measurable.ite ?_</span>
+<span id="L299">299     ((measurable_snd.comp ((measurable_pi_apply t).comp measurable_snd)).div</span>
+<span id="L300">300       (measurable_sampledHalfTsallisProbabilityAtTime</span>
+<span id="L301">301         arms harms eta t candidate hcandidate)) measurable_const</span>
+<span id="L302">302   simpa only [Set.mem_setOf_eq] using</span>
+<span id="L303">303     (measurable_fst.comp ((measurable_pi_apply t).comp measurable_snd))</span>
+<span id="L304">304       (measurableSet_singleton candidate)</span>
+<span id="L305">305 </span>
+<span id="L306">306 theorem measurable_sampledHalfTsallisPredictableEstimatedLossAt</span>
+<span id="L307">307     {Env : Type u} {Action : Type v}</span>
+<span id="L308">308     [MeasurableSpace Env]</span>
+<span id="L309">309     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L310">310     [DecidableEq Action]</span>
+<span id="L311">311     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L312">312     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L313">313     (t : Nat) (candidate : Action) (hcandidate : candidate ∈ arms) :</span>
+<span id="L314">314     Measurable (fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L315">315       sampledHalfTsallisPredictableEstimatedLossAt</span>
+<span id="L316">316         arms harms eta loss t sample candidate) := by</span>
+<span id="L317">317   unfold sampledHalfTsallisPredictableEstimatedLossAt</span>
+<span id="L318">318     Exp3.importanceWeightedLoss</span>
+<span id="L319">319   refine Measurable.ite ?_</span>
+<span id="L320">320     ((Exp3.measurable_predictableLossAt loss t candidate).div</span>
+<span id="L321">321       (measurable_sampledHalfTsallisProbabilityAtTime</span>
+<span id="L322">322         arms harms eta t candidate hcandidate)) measurable_const</span>
+<span id="L323">323   simpa only [Set.mem_setOf_eq] using</span>
+<span id="L324">324     (measurable_fst.comp ((measurable_pi_apply t).comp measurable_snd))</span>
+<span id="L325">325       (measurableSet_singleton candidate)</span>
+<span id="L326">326 </span>
+<span id="L327">327 /-- Deterministic predictable feedback identifies the observed estimator with</span>
+<span id="L328">328 the corresponding predictable estimator almost surely at every actual time. -/</span>
+<span id="L329">329 theorem sampledHalfTsallisObservedEstimatedLossAt_eq_predictable_ae</span>
+<span id="L330">330     {Env : Type u} {Action : Type v}</span>
+<span id="L331">331     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L332">332     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L333">333     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L334">334     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L335">335     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L336">336     (loss : Exp3.PredictableLossVector Env Action) (t : Nat) :</span>
+<span id="L337">337     let selector := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L338">338       arms harms eta</span>
+<span id="L339">339     let mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel</span>
+<span id="L340">340       arms harms eta selector loss.environment</span>
+<span id="L341">341     (fun sample =&gt; sampledHalfTsallisObservedEstimatedLossAt</span>
+<span id="L342">342       arms harms eta t sample) =ᵐ[mu]</span>
+<span id="L343">343       (fun sample =&gt; sampledHalfTsallisPredictableEstimatedLossAt</span>
+<span id="L344">344         arms harms eta loss t sample) := by</span>
+<span id="L345">345   dsimp only</span>
+<span id="L346">346   let selector := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L347">347     arms harms eta</span>
+<span id="L348">348   let mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel</span>
+<span id="L349">349     arms harms eta selector loss.environment</span>
+<span id="L350">350   have hreward :</span>
+<span id="L351">351       (fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L352">352         (sample.2 t).2) =ᵐ[mu]</span>
+<span id="L353">353       (fun sample =&gt; Exp3.predictableLossAt loss t sample (sample.2 t).1) := by</span>
+<span id="L354">354     cases t with</span>
+<span id="L355">355     | zero =&gt;</span>
+<span id="L356">356         simpa [mu, selector, sampledHalfTsallisTrajectoryKernel,</span>
+<span id="L357">357           Exp3.predictableLossAt] using</span>
+<span id="L358">358           (Exp3.canonicalPredictableTrajectoryMeasure_reward_zero_eq_initialLoss_ae</span>
+<span id="L359">359             prior</span>
+<span id="L360">360               (sampledHalfTsallisHistoryAlgorithm arms harms eta selector)</span>
+<span id="L361">361               loss)</span>
+<span id="L362">362     | succ n =&gt;</span>
+<span id="L363">363         simpa [mu, selector, Exp3.predictableLossAt] using</span>
+<span id="L364">364           (Exp3.canonicalPredictableTrajectoryMeasure_reward_eq_successorLoss_ae</span>
+<span id="L365">365             prior</span>
+<span id="L366">366               (sampledHalfTsallisHistoryAlgorithm arms harms eta selector)</span>
+<span id="L367">367               loss n)</span>
+<span id="L368">368   filter_upwards [hreward] with sample hsample</span>
+<span id="L369">369   funext candidate</span>
+<span id="L370">370   unfold sampledHalfTsallisObservedEstimatedLossAt</span>
+<span id="L371">371     sampledHalfTsallisPredictableEstimatedLossAt</span>
+<span id="L372">372   by_cases hchosen : (sample.2 t).1 = candidate</span>
+<span id="L373">373   · simp [Exp3.importanceWeightedLoss, hchosen, hsample]</span>
+<span id="L374">374   · simp [Exp3.importanceWeightedLoss, hchosen]</span>
+<span id="L375">375 </span>
+<span id="L376">376 theorem measurable_sampledHalfTsallisInitialUpdatedAt</span>
+<span id="L377">377     {Env : Type u} {Action : Type v}</span>
+<span id="L378">378     [MeasurableSpace Env]</span>
+<span id="L379">379     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L380">380     [DecidableEq Action]</span>
+<span id="L381">381     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L382">382     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L383">383     (candidate : Action) (hcandidate : candidate ∈ arms) :</span>
+<span id="L384">384     Measurable (fun sample : Env × Action =&gt;</span>
+<span id="L385">385       sampledHalfTsallisInitialUpdatedAt</span>
+<span id="L386">386         arms harms eta loss sample.1 sample.2 candidate) := by</span>
+<span id="L387">387   let updatedScore : (Env × Action) -&gt; Action -&gt; Real :=</span>
+<span id="L388">388     fun sample selected =&gt;</span>
+<span id="L389">389       Exp3.importanceWeightedLoss</span>
+<span id="L390">390         (initialHalfTsallisDistribution arms harms eta)</span>
+<span id="L391">391         (loss.initial sample.1) sample.2 selected</span>
+<span id="L392">392   have hupdatedScore : forall selected, selected ∈ arms -&gt;</span>
+<span id="L393">393       Measurable (fun sample =&gt; updatedScore sample selected) := by</span>
+<span id="L394">394     intro selected _hselected</span>
+<span id="L395">395     unfold updatedScore Exp3.importanceWeightedLoss</span>
+<span id="L396">396     refine Measurable.ite ?_</span>
+<span id="L397">397       ((loss.measurable_initial.comp</span>
+<span id="L398">398           (measurable_fst.prodMk measurable_const)).div measurable_const)</span>
+<span id="L399">399       measurable_const</span>
+<span id="L400">400     simpa only [Set.mem_setOf_eq] using</span>
+<span id="L401">401       measurable_snd (measurableSet_singleton selected)</span>
+<span id="L402">402   have hcanonical : Measurable (fun sample =&gt;</span>
+<span id="L403">403       halfTsallisMinimizer arms harms eta</span>
+<span id="L404">404         (updatedScore sample) candidate) :=</span>
+<span id="L405">405     measurable_halfTsallisMinimizer_comp</span>
+<span id="L406">406       arms harms eta updatedScore hupdatedScore candidate hcandidate</span>
+<span id="L407">407   simpa [sampledHalfTsallisInitialUpdatedAt,</span>
+<span id="L408">408     halfTsallisHistoryUpdatedMinimizer, halfTsallisUpdatedMinimizer,</span>
+<span id="L409">409     updatedScore] using hcanonical</span>
+<span id="L410">410 </span>
+<span id="L411">411 theorem measurable_sampledHalfTsallisInitialHistoryActionStability</span>
+<span id="L412">412     {Env : Type u} {Action : Type v}</span>
+<span id="L413">413     [MeasurableSpace Env]</span>
+<span id="L414">414     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L415">415     [DecidableEq Action]</span>
+<span id="L416">416     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L417">417     (loss : Exp3.PredictableLossVector Env Action) :</span>
+<span id="L418">418     Measurable (sampledHalfTsallisInitialHistoryActionStability</span>
+<span id="L419">419       arms harms eta loss) := by</span>
+<span id="L420">420   unfold sampledHalfTsallisInitialHistoryActionStability</span>
+<span id="L421">421   apply measurable_importanceWeightedStabilityScore</span>
+<span id="L422">422   · intro candidate _hcandidate</span>
+<span id="L423">423     exact measurable_const</span>
+<span id="L424">424   · intro candidate _hcandidate</span>
+<span id="L425">425     exact loss.measurable_initial.comp</span>
+<span id="L426">426       (measurable_id.prodMk measurable_const)</span>
+<span id="L427">427   · intro candidate hcandidate</span>
+<span id="L428">428     exact measurable_sampledHalfTsallisInitialUpdatedAt</span>
+<span id="L429">429       arms harms eta loss candidate hcandidate</span>
+<span id="L430">430 </span>
+<span id="L431">431 /-- The stored-reward initial stability term agrees almost surely with the</span>
+<span id="L432">432 canonical predictable updated-minimizer score. -/</span>
+<span id="L433">433 theorem sampledHalfTsallisInitialStability_eq_historyAction_ae</span>
+<span id="L434">434     {Env : Type u} {Action : Type v}</span>
+<span id="L435">435     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L436">436     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L437">437     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L438">438     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L439">439     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L440">440     (loss : Exp3.PredictableLossVector Env Action) :</span>
+<span id="L441">441     let selector := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L442">442       arms harms eta</span>
+<span id="L443">443     let mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel</span>
+<span id="L444">444       arms harms eta selector loss.environment</span>
+<span id="L445">445     sampledHalfTsallisInitialStability arms harms eta =ᵐ[mu]</span>
+<span id="L446">446       (fun sample =&gt; sampledHalfTsallisInitialHistoryActionStability</span>
+<span id="L447">447         arms harms eta loss (sample.1, (sample.2 0).1)) := by</span>
+<span id="L448">448   dsimp only</span>
+<span id="L449">449   let selector := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L450">450     arms harms eta</span>
+<span id="L451">451   let mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel</span>
+<span id="L452">452     arms harms eta selector loss.environment</span>
+<span id="L453">453   have hestimated :=</span>
+<span id="L454">454     sampledHalfTsallisObservedEstimatedLossAt_eq_predictable_ae</span>
+<span id="L455">455       prior arms harms eta loss 0</span>
+<span id="L456">456   dsimp only at hestimated</span>
+<span id="L457">457   filter_upwards [hestimated] with sample hestimatedSample</span>
+<span id="L458">458   have hnext :</span>
+<span id="L459">459       sampledHalfTsallisHistoryDistribution arms harms eta 0</span>
+<span id="L460">460           (Preorder.frestrictLe 0 sample.2) =</span>
+<span id="L461">461         sampledHalfTsallisInitialUpdatedAt</span>
+<span id="L462">462           arms harms eta loss sample.1 (sample.2 0).1 := by</span>
+<span id="L463">463     unfold sampledHalfTsallisHistoryDistribution</span>
+<span id="L464">464       sampledHalfTsallisInitialUpdatedAt</span>
+<span id="L465">465       halfTsallisHistoryMinimizer halfTsallisHistoryUpdatedMinimizer</span>
+<span id="L466">466       halfTsallisUpdatedMinimizer</span>
+<span id="L467">467     congr 1</span>
+<span id="L468">468     funext candidate</span>
+<span id="L469">469     rw [sampledHalfTsallisHistoryScore_zero]</span>
+<span id="L470">470     have hcandidate := congrFun hestimatedSample candidate</span>
+<span id="L471">471     simpa [sampledHalfTsallisObservedEstimatedLossAt,</span>
+<span id="L472">472       sampledHalfTsallisPredictableEstimatedLossAt,</span>
+<span id="L473">473       sampledHalfTsallisProbabilityAtTime,</span>
+<span id="L474">474       initialHalfTsallisDistribution, Exp3.predictableLossAt] using hcandidate</span>
+<span id="L475">475   unfold sampledHalfTsallisInitialStability</span>
+<span id="L476">476     sampledHalfTsallisInitialHistoryActionStability</span>
+<span id="L477">477     importanceWeightedStabilityScore</span>
+<span id="L478">478   rw [hestimatedSample, hnext]</span>
+<span id="L479">479   rfl</span>
+<span id="L480">480 </span>
+<span id="L481">481 /-- Observed and predictable successor stability agree almost surely. -/</span>
+<span id="L482">482 theorem sampledHalfTsallisObservedSuccessorStabilityAt_eq_predictable_ae</span>
+<span id="L483">483     {Env : Type u} {Action : Type v}</span>
+<span id="L484">484     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L485">485     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L486">486     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L487">487     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L488">488     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L489">489     (loss : Exp3.PredictableLossVector Env Action) (n : Nat) :</span>
+<span id="L490">490     let selector := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L491">491       arms harms eta</span>
+<span id="L492">492     let mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel</span>
+<span id="L493">493       arms harms eta selector loss.environment</span>
+<span id="L494">494     sampledHalfTsallisObservedSuccessorStabilityAt</span>
+<span id="L495">495         arms harms eta n =ᵐ[mu]</span>
+<span id="L496">496       sampledHalfTsallisSuccessorStabilityAt</span>
+<span id="L497">497         arms harms eta loss n := by</span>
+<span id="L498">498   dsimp only</span>
+<span id="L499">499   have hestimated :=</span>
+<span id="L500">500     sampledHalfTsallisObservedEstimatedLossAt_eq_predictable_ae</span>
+<span id="L501">501       prior arms harms eta loss (n + 1)</span>
+<span id="L502">502   dsimp only at hestimated</span>
+<span id="L503">503   filter_upwards [hestimated] with sample hestimatedSample</span>
+<span id="L504">504   unfold sampledHalfTsallisObservedSuccessorStabilityAt</span>
+<span id="L505">505     sampledHalfTsallisSuccessorStabilityAt</span>
+<span id="L506">506   rw [hestimatedSample]</span>
+<span id="L507">507   rfl</span>
+<span id="L508">508 </span>
+<span id="L509">509 theorem measurable_mixedImportanceWeightedLoss_of_coordinates</span>
+<span id="L510">510     {History : Type u} {Action : Type v}</span>
+<span id="L511">511     [MeasurableSpace History]</span>
+<span id="L512">512     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L513">513     [DecidableEq Action]</span>
+<span id="L514">514     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L515">515     (hprob : forall candidate, candidate ∈ arms -&gt;</span>
+<span id="L516">516       Measurable (fun history =&gt; prob history candidate))</span>
+<span id="L517">517     (hloss : forall candidate, candidate ∈ arms -&gt;</span>
+<span id="L518">518       Measurable (fun history =&gt; loss history candidate)) :</span>
+<span id="L519">519     Measurable (fun sample : History × Action =&gt;</span>
+<span id="L520">520       Exp3.mixedImportanceWeightedLoss arms</span>
+<span id="L521">521         (prob sample.1) (loss sample.1) sample.2) := by</span>
+<span id="L522">522   classical</span>
+<span id="L523">523   unfold Exp3.mixedImportanceWeightedLoss</span>
+<span id="L524">524   refine Finset.measurable_sum arms fun candidate hcandidate =&gt; ?_</span>
+<span id="L525">525   have hestimated : Measurable (fun sample : History × Action =&gt;</span>
+<span id="L526">526       Exp3.importanceWeightedLoss</span>
+<span id="L527">527         (prob sample.1) (loss sample.1) sample.2 candidate) := by</span>
+<span id="L528">528     unfold Exp3.importanceWeightedLoss</span>
+<span id="L529">529     refine Measurable.ite ?_</span>
+<span id="L530">530       (((hloss candidate hcandidate).comp measurable_fst).div</span>
+<span id="L531">531         ((hprob candidate hcandidate).comp measurable_fst)) measurable_const</span>
+<span id="L532">532     simpa only [Set.mem_setOf_eq] using</span>
+<span id="L533">533       measurable_snd (measurableSet_singleton candidate)</span>
+<span id="L534">534   exact ((hprob candidate hcandidate).comp measurable_fst).mul hestimated</span>
+<span id="L535">535 </span>
+<span id="L536">536 theorem measurable_weightedImportanceWeightedLoss_of_coordinates</span>
+<span id="L537">537     {History : Type u} {Action : Type v}</span>
+<span id="L538">538     [MeasurableSpace History]</span>
+<span id="L539">539     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L540">540     [DecidableEq Action]</span>
+<span id="L541">541     (arms : Finset Action) (prob weight loss : History -&gt; Action -&gt; Real)</span>
+<span id="L542">542     (hprob : forall candidate, candidate ∈ arms -&gt;</span>
+<span id="L543">543       Measurable (fun history =&gt; prob history candidate))</span>
+<span id="L544">544     (hweight : forall candidate, candidate ∈ arms -&gt;</span>
+<span id="L545">545       Measurable (fun history =&gt; weight history candidate))</span>
+<span id="L546">546     (hloss : forall candidate, candidate ∈ arms -&gt;</span>
+<span id="L547">547       Measurable (fun history =&gt; loss history candidate)) :</span>
+<span id="L548">548     Measurable (fun sample : History × Action =&gt;</span>
+<span id="L549">549       Exp3.weightedImportanceWeightedLoss arms</span>
+<span id="L550">550         (prob sample.1) (weight sample.1) (loss sample.1) sample.2) := by</span>
+<span id="L551">551   classical</span>
+<span id="L552">552   unfold Exp3.weightedImportanceWeightedLoss</span>
+<span id="L553">553   refine Finset.measurable_sum arms fun candidate hcandidate =&gt; ?_</span>
+<span id="L554">554   have hestimated : Measurable (fun sample : History × Action =&gt;</span>
+<span id="L555">555       Exp3.importanceWeightedLoss</span>
+<span id="L556">556         (prob sample.1) (loss sample.1) sample.2 candidate) := by</span>
+<span id="L557">557     unfold Exp3.importanceWeightedLoss</span>
+<span id="L558">558     refine Measurable.ite ?_</span>
+<span id="L559">559       (((hloss candidate hcandidate).comp measurable_fst).div</span>
+<span id="L560">560         ((hprob candidate hcandidate).comp measurable_fst)) measurable_const</span>
+<span id="L561">561     simpa only [Set.mem_setOf_eq] using</span>
+<span id="L562">562       measurable_snd (measurableSet_singleton candidate)</span>
+<span id="L563">563   exact ((hweight candidate hcandidate).comp measurable_fst).mul hestimated</span>
+<span id="L564">564 </span>
+<span id="L565">565 /-- Mixed importance-weighted loss is integrable under its finite sampling</span>
+<span id="L566">566 kernel without a uniform probability floor. -/</span>
+<span id="L567">567 theorem integrable_mixedImportanceWeightedLoss_finiteActionKernel</span>
+<span id="L568">568     {History : Type u} {Action : Type v}</span>
+<span id="L569">569     [MeasurableSpace History]</span>
+<span id="L570">570     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L571">571     [DecidableEq Action]</span>
+<span id="L572">572     (historyMu : Measure History) [IsFiniteMeasure historyMu]</span>
+<span id="L573">573     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L574">574     (source : Exp3.MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L575">575     (hprobPos : forall history candidate, candidate ∈ arms -&gt;</span>
+<span id="L576">576       0 &lt; prob history candidate)</span>
+<span id="L577">577     (hloss : forall history candidate, candidate ∈ arms -&gt;</span>
+<span id="L578">578       0 &lt;= loss history candidate ∧ loss history candidate &lt;= 1)</span>
+<span id="L579">579     (hscore : Measurable (fun sample : History × Action =&gt;</span>
+<span id="L580">580       Exp3.mixedImportanceWeightedLoss arms</span>
+<span id="L581">581         (prob sample.1) (loss sample.1) sample.2)) :</span>
+<span id="L582">582     Integrable (fun sample : History × Action =&gt;</span>
+<span id="L583">583       Exp3.mixedImportanceWeightedLoss arms</span>
+<span id="L584">584         (prob sample.1) (loss sample.1) sample.2)</span>
+<span id="L585">585       (historyMu ⊗ₘ Exp3.finiteActionKernel arms prob source) := by</span>
+<span id="L586">586   let score := fun sample : History × Action =&gt;</span>
+<span id="L587">587     Exp3.mixedImportanceWeightedLoss arms</span>
+<span id="L588">588       (prob sample.1) (loss sample.1) sample.2</span>
+<span id="L589">589   have hconditional (history : History) : Integrable</span>
+<span id="L590">590       (fun chosen =&gt; score (history, chosen))</span>
+<span id="L591">591       (Exp3.finiteActionKernel arms prob source history) := by</span>
+<span id="L592">592     rw [Exp3.finiteActionKernel_apply]</span>
+<span id="L593">593     exact integrable_finiteActionMeasure arms (prob history)</span>
+<span id="L594">594       (fun chosen =&gt; score (history, chosen))</span>
+<span id="L595">595   have hsumMeasurable : Measurable (fun history =&gt; arms.sum (fun chosen =&gt;</span>
+<span id="L596">596       prob history chosen * |score (history, chosen)|)) := by</span>
+<span id="L597">597     refine Finset.measurable_sum arms fun chosen hchosen =&gt; ?_</span>
+<span id="L598">598     exact (source.measurable_prob chosen hchosen).mul</span>
+<span id="L599">599       ((hscore.comp (measurable_id.prodMk measurable_const)).abs)</span>
+<span id="L600">600   have hsumBound (history : History) :</span>
+<span id="L601">601       arms.sum (fun chosen =&gt;</span>
+<span id="L602">602           prob history chosen * |score (history, chosen)|) &lt;= 1 := by</span>
+<span id="L603">603     have hscoreNonneg (chosen : Action) (hchosen : chosen ∈ arms) :</span>
+<span id="L604">604         0 &lt;= score (history, chosen) := by</span>
+<span id="L605">605       unfold score Exp3.mixedImportanceWeightedLoss</span>
+<span id="L606">606       exact Finset.sum_nonneg fun candidate hcandidate =&gt;</span>
+<span id="L607">607         mul_nonneg ((source.distribution history).nonneg candidate hcandidate)</span>
+<span id="L608">608           (Exp3.importanceWeightedLoss_nonneg</span>
+<span id="L609">609             ((source.distribution history).nonneg candidate hcandidate)</span>
+<span id="L610">610             (hloss history candidate hcandidate).1)</span>
+<span id="L611">611     calc</span>
+<span id="L612">612       arms.sum (fun chosen =&gt;</span>
+<span id="L613">613           prob history chosen * |score (history, chosen)|) =</span>
+<span id="L614">614           arms.sum (fun chosen =&gt; prob history chosen * score (history, chosen)) := by</span>
+<span id="L615">615             apply Finset.sum_congr rfl</span>
+<span id="L616">616             intro chosen hchosen</span>
+<span id="L617">617             rw [abs_of_nonneg (hscoreNonneg chosen hchosen)]</span>
+<span id="L618">618       _ = arms.sum (fun candidate =&gt;</span>
+<span id="L619">619           prob history candidate * loss history candidate) :=</span>
+<span id="L620">620         Exp3.sum_prob_mul_mixedImportanceWeightedLoss_eq_mixedLoss</span>
+<span id="L621">621           arms (prob history) (loss history)</span>
+<span id="L622">622             (fun candidate hcandidate =&gt;</span>
+<span id="L623">623               ne_of_gt (hprobPos history candidate hcandidate))</span>
+<span id="L624">624       _ &lt;= arms.sum (prob history) := by</span>
+<span id="L625">625         exact Finset.sum_le_sum fun candidate hcandidate =&gt;</span>
+<span id="L626">626           (mul_le_iff_le_one_right</span>
+<span id="L627">627             (hprobPos history candidate hcandidate)).2</span>
+<span id="L628">628               (hloss history candidate hcandidate).2</span>
+<span id="L629">629       _ = 1 := (source.distribution history).sum_eq_one</span>
+<span id="L630">630   have hsumIntegrable : Integrable (fun history =&gt; arms.sum (fun chosen =&gt;</span>
+<span id="L631">631       prob history chosen * |score (history, chosen)|)) historyMu := by</span>
+<span id="L632">632     refine Integrable.of_bound hsumMeasurable.aestronglyMeasurable 1 ?_</span>
+<span id="L633">633     exact Filter.Eventually.of_forall fun history =&gt; by</span>
+<span id="L634">634       rw [Real.norm_eq_abs, abs_of_nonneg]</span>
+<span id="L635">635       · exact hsumBound history</span>
+<span id="L636">636       · exact Finset.sum_nonneg fun chosen hchosen =&gt;</span>
+<span id="L637">637           mul_nonneg ((source.distribution history).nonneg chosen hchosen)</span>
+<span id="L638">638             (abs_nonneg _)</span>
+<span id="L639">639   apply (Measure.integrable_compProd_iff hscore.aestronglyMeasurable).2</span>
+<span id="L640">640   constructor</span>
+<span id="L641">641   · exact Filter.Eventually.of_forall hconditional</span>
+<span id="L642">642   · have hintegralEq :</span>
+<span id="L643">643         (fun history =&gt; integral</span>
+<span id="L644">644           (Exp3.finiteActionKernel arms prob source history)</span>
+<span id="L645">645           (fun chosen =&gt; ‖score (history, chosen)‖)) =</span>
+<span id="L646">646         (fun history =&gt; arms.sum (fun chosen =&gt;</span>
+<span id="L647">647           prob history chosen * |score (history, chosen)|)) := by</span>
+<span id="L648">648       funext history</span>
+<span id="L649">649       rw [Exp3.finiteActionKernel_apply,</span>
+<span id="L650">650         Exp3.integral_finiteActionMeasure_eq_sum arms (prob history)</span>
+<span id="L651">651           (source.distribution history)]</span>
+<span id="L652">652       simp only [Real.norm_eq_abs]</span>
+<span id="L653">653     rw [hintegralEq]</span>
+<span id="L654">654     exact hsumIntegrable</span>
+<span id="L655">655 </span>
+<span id="L656">656 /-- A fixed simplex comparator weighting of the importance-weighted loss is</span>
+<span id="L657">657 integrable under the sampling kernel, again without a uniform floor. -/</span>
+<span id="L658">658 theorem integrable_weightedImportanceWeightedLoss_finiteActionKernel</span>
+<span id="L659">659     {History : Type u} {Action : Type v}</span>
+<span id="L660">660     [MeasurableSpace History]</span>
+<span id="L661">661     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L662">662     [DecidableEq Action]</span>
+<span id="L663">663     (historyMu : Measure History) [IsFiniteMeasure historyMu]</span>
+<span id="L664">664     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L665">665     (q : Action -&gt; Real) (hq : FTRL.finiteSimplex arms q)</span>
+<span id="L666">666     (source : Exp3.MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L667">667     (hprobPos : forall history candidate, candidate ∈ arms -&gt;</span>
+<span id="L668">668       0 &lt; prob history candidate)</span>
+<span id="L669">669     (hloss : forall history candidate, candidate ∈ arms -&gt;</span>
+<span id="L670">670       0 &lt;= loss history candidate ∧ loss history candidate &lt;= 1)</span>
+<span id="L671">671     (hscore : Measurable (fun sample : History × Action =&gt;</span>
+<span id="L672">672       Exp3.weightedImportanceWeightedLoss arms</span>
+<span id="L673">673         (prob sample.1) q (loss sample.1) sample.2)) :</span>
+<span id="L674">674     Integrable (fun sample : History × Action =&gt;</span>
+<span id="L675">675       Exp3.weightedImportanceWeightedLoss arms</span>
+<span id="L676">676         (prob sample.1) q (loss sample.1) sample.2)</span>
+<span id="L677">677       (historyMu ⊗ₘ Exp3.finiteActionKernel arms prob source) := by</span>
+<span id="L678">678   let weight := fun _history : History =&gt; q</span>
+<span id="L679">679   let score := fun sample : History × Action =&gt;</span>
+<span id="L680">680     Exp3.weightedImportanceWeightedLoss arms</span>
+<span id="L681">681       (prob sample.1) q (loss sample.1) sample.2</span>
+<span id="L682">682   have hconditional (history : History) : Integrable</span>
+<span id="L683">683       (fun chosen =&gt; score (history, chosen))</span>
+<span id="L684">684       (Exp3.finiteActionKernel arms prob source history) := by</span>
+<span id="L685">685     rw [Exp3.finiteActionKernel_apply]</span>
+<span id="L686">686     exact integrable_finiteActionMeasure arms (prob history)</span>
+<span id="L687">687       (fun chosen =&gt; score (history, chosen))</span>
+<span id="L688">688   have hsumMeasurable : Measurable (fun history =&gt; arms.sum (fun chosen =&gt;</span>
+<span id="L689">689       prob history chosen * |score (history, chosen)|)) := by</span>
+<span id="L690">690     refine Finset.measurable_sum arms fun chosen hchosen =&gt; ?_</span>
+<span id="L691">691     exact (source.measurable_prob chosen hchosen).mul</span>
+<span id="L692">692       ((hscore.comp (measurable_id.prodMk measurable_const)).abs)</span>
+<span id="L693">693   have hsumBound (history : History) :</span>
+<span id="L694">694       arms.sum (fun chosen =&gt;</span>
+<span id="L695">695           prob history chosen * |score (history, chosen)|) &lt;= 1 := by</span>
+<span id="L696">696     have hscoreNonneg (chosen : Action) (hchosen : chosen ∈ arms) :</span>
+<span id="L697">697         0 &lt;= score (history, chosen) := by</span>
+<span id="L698">698       unfold score Exp3.weightedImportanceWeightedLoss</span>
+<span id="L699">699       exact Finset.sum_nonneg fun candidate hcandidate =&gt;</span>
+<span id="L700">700         mul_nonneg (hq.1 candidate hcandidate)</span>
+<span id="L701">701           (Exp3.importanceWeightedLoss_nonneg</span>
+<span id="L702">702             ((source.distribution history).nonneg candidate hcandidate)</span>
+<span id="L703">703             (hloss history candidate hcandidate).1)</span>
+<span id="L704">704     calc</span>
+<span id="L705">705       arms.sum (fun chosen =&gt;</span>
+<span id="L706">706           prob history chosen * |score (history, chosen)|) =</span>
+<span id="L707">707           arms.sum (fun chosen =&gt; prob history chosen * score (history, chosen)) := by</span>
+<span id="L708">708             apply Finset.sum_congr rfl</span>
+<span id="L709">709             intro chosen hchosen</span>
+<span id="L710">710             rw [abs_of_nonneg (hscoreNonneg chosen hchosen)]</span>
+<span id="L711">711       _ = arms.sum (fun candidate =&gt; q candidate * loss history candidate) :=</span>
+<span id="L712">712         Exp3.sum_prob_mul_weightedImportanceWeightedLoss_eq_weightedLoss</span>
+<span id="L713">713           arms (prob history) q (loss history)</span>
+<span id="L714">714             (fun candidate hcandidate =&gt;</span>
+<span id="L715">715               ne_of_gt (hprobPos history candidate hcandidate))</span>
+<span id="L716">716       _ &lt;= arms.sum q := by</span>
+<span id="L717">717         exact Finset.sum_le_sum fun candidate hcandidate =&gt;</span>
+<span id="L718">718           by</span>
+<span id="L719">719             nlinarith [hq.1 candidate hcandidate,</span>
+<span id="L720">720               (hloss history candidate hcandidate).2]</span>
+<span id="L721">721       _ = 1 := hq.2</span>
+<span id="L722">722   have hsumIntegrable : Integrable (fun history =&gt; arms.sum (fun chosen =&gt;</span>
+<span id="L723">723       prob history chosen * |score (history, chosen)|)) historyMu := by</span>
+<span id="L724">724     refine Integrable.of_bound hsumMeasurable.aestronglyMeasurable 1 ?_</span>
+<span id="L725">725     exact Filter.Eventually.of_forall fun history =&gt; by</span>
+<span id="L726">726       rw [Real.norm_eq_abs, abs_of_nonneg]</span>
+<span id="L727">727       · exact hsumBound history</span>
+<span id="L728">728       · exact Finset.sum_nonneg fun chosen hchosen =&gt;</span>
+<span id="L729">729           mul_nonneg ((source.distribution history).nonneg chosen hchosen)</span>
+<span id="L730">730             (abs_nonneg _)</span>
+<span id="L731">731   apply (Measure.integrable_compProd_iff hscore.aestronglyMeasurable).2</span>
+<span id="L732">732   constructor</span>
+<span id="L733">733   · exact Filter.Eventually.of_forall hconditional</span>
+<span id="L734">734   · have hintegralEq :</span>
+<span id="L735">735         (fun history =&gt; integral</span>
+<span id="L736">736           (Exp3.finiteActionKernel arms prob source history)</span>
+<span id="L737">737           (fun chosen =&gt; ‖score (history, chosen)‖)) =</span>
+<span id="L738">738         (fun history =&gt; arms.sum (fun chosen =&gt;</span>
+<span id="L739">739           prob history chosen * |score (history, chosen)|)) := by</span>
+<span id="L740">740       funext history</span>
+<span id="L741">741       rw [Exp3.finiteActionKernel_apply,</span>
+<span id="L742">742         Exp3.integral_finiteActionMeasure_eq_sum arms (prob history)</span>
+<span id="L743">743           (source.distribution history)]</span>
+<span id="L744">744       simp only [Real.norm_eq_abs]</span>
+<span id="L745">745     rw [hintegralEq]</span>
+<span id="L746">746     exact hsumIntegrable</span>
+<span id="L747">747 </span>
+<span id="L748">748 /-- Constant environment-indexed source for the initial half-Tsallis law. -/</span>
+<span id="L749">749 noncomputable def initialHalfTsallisEnvironmentDistributionSource</span>
+<span id="L750">750     {Env : Type u} {Action : Type v}</span>
+<span id="L751">751     [MeasurableSpace Env]</span>
+<span id="L752">752     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L753">753     [DecidableEq Action]</span>
+<span id="L754">754     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) :</span>
+<span id="L755">755     Exp3.MeasurableFiniteActionDistribution arms</span>
+<span id="L756">756       (fun _env : Env =&gt; initialHalfTsallisDistribution arms harms eta) where</span>
+<span id="L757">757   distribution _env :=</span>
+<span id="L758">758     finiteActionDistribution_initialHalfTsallisDistribution arms harms eta</span>
+<span id="L759">759   measurable_prob _candidate _hcandidate := measurable_const</span>
+<span id="L760">760 </span>
+<span id="L761">761 /-- Product-law integrability of an arbitrary score transports to the actual</span>
+<span id="L762">762 history/action composition under an identified conditional action law. -/</span>
+<span id="L763">763 theorem integrable_score_comp_history_action_of_condDistrib</span>
+<span id="L764">764     {Omega : Type u} {History : Type v} {Action : Type*}</span>
+<span id="L765">765     [MeasurableSpace Omega] [MeasurableSpace History]</span>
+<span id="L766">766     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L767">767     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L768">768     (history : Omega -&gt; History) (hhistory : Measurable history)</span>
+<span id="L769">769     (action : Omega -&gt; Action) (haction : Measurable action)</span>
+<span id="L770">770     (policy : Kernel History Action) [IsMarkovKernel policy]</span>
+<span id="L771">771     (hcond : condDistrib action history mu =ᵐ[mu.map history] policy)</span>
+<span id="L772">772     (score : History × Action -&gt; Real)</span>
+<span id="L773">773     (hIntegrable : Integrable score (mu.map history ⊗ₘ policy)) :</span>
+<span id="L774">774     Integrable (fun omega =&gt; score (history omega, action omega)) mu := by</span>
+<span id="L775">775   have hpair :</span>
+<span id="L776">776       mu.map (fun omega =&gt; (history omega, action omega)) =</span>
+<span id="L777">777         mu.map history ⊗ₘ policy :=</span>
+<span id="L778">778     (condDistrib_ae_eq_iff_measure_eq_compProd history</span>
+<span id="L779">779       haction.aemeasurable policy).mp hcond</span>
+<span id="L780">780   have hmap : Integrable score</span>
+<span id="L781">781       (mu.map (fun omega =&gt; (history omega, action omega))) := by</span>
+<span id="L782">782     rwa [hpair]</span>
+<span id="L783">783   simpa [Function.comp_def] using</span>
+<span id="L784">784     hmap.comp_measurable (hhistory.prodMk haction)</span>
+<span id="L785">785 </span>
+<span id="L786">786 theorem integrable_mixed_weightedImportanceWeightedLoss_of_condDistrib</span>
+<span id="L787">787     {Omega : Type u} {History : Type v} {Action : Type*}</span>
+<span id="L788">788     [MeasurableSpace Omega] [MeasurableSpace History]</span>
+<span id="L789">789     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L790">790     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L791">791     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L792">792     (history : Omega -&gt; History) (hhistory : Measurable history)</span>
+<span id="L793">793     (action : Omega -&gt; Action) (haction : Measurable action)</span>
+<span id="L794">794     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L795">795     (q : Action -&gt; Real) (hq : FTRL.finiteSimplex arms q)</span>
+<span id="L796">796     (source : Exp3.MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L797">797     (hcond : condDistrib action history mu =ᵐ[mu.map history]</span>
+<span id="L798">798       Exp3.finiteActionKernel arms prob source)</span>
+<span id="L799">799     (hprobPos : forall h candidate, candidate ∈ arms -&gt;</span>
+<span id="L800">800       0 &lt; prob h candidate)</span>
+<span id="L801">801     (hlossMeas : forall candidate, candidate ∈ arms -&gt;</span>
+<span id="L802">802       Measurable (fun h =&gt; loss h candidate))</span>
+<span id="L803">803     (hloss : forall h candidate, candidate ∈ arms -&gt;</span>
+<span id="L804">804       0 &lt;= loss h candidate ∧ loss h candidate &lt;= 1) :</span>
+<span id="L805">805     Integrable (fun omega =&gt;</span>
+<span id="L806">806         Exp3.mixedImportanceWeightedLoss arms</span>
+<span id="L807">807           (prob (history omega)) (loss (history omega)) (action omega)) mu ∧</span>
+<span id="L808">808       Integrable (fun omega =&gt;</span>
+<span id="L809">809         Exp3.weightedImportanceWeightedLoss arms</span>
+<span id="L810">810           (prob (history omega)) q (loss (history omega)) (action omega)) mu := by</span>
+<span id="L811">811   have hmixedMeas := measurable_mixedImportanceWeightedLoss_of_coordinates</span>
+<span id="L812">812     arms prob loss source.measurable_prob hlossMeas</span>
+<span id="L813">813   have hweightedMeas :=</span>
+<span id="L814">814     measurable_weightedImportanceWeightedLoss_of_coordinates</span>
+<span id="L815">815       arms prob (fun _history =&gt; q) loss source.measurable_prob</span>
+<span id="L816">816       (fun _candidate _hcandidate =&gt; measurable_const) hlossMeas</span>
+<span id="L817">817   have hmixedProduct :=</span>
+<span id="L818">818     integrable_mixedImportanceWeightedLoss_finiteActionKernel</span>
+<span id="L819">819       (mu.map history) arms prob loss source hprobPos hloss hmixedMeas</span>
+<span id="L820">820   have hweightedProduct :=</span>
+<span id="L821">821     integrable_weightedImportanceWeightedLoss_finiteActionKernel</span>
+<span id="L822">822       (mu.map history) arms prob loss q hq source hprobPos hloss hweightedMeas</span>
+<span id="L823">823   exact ⟨</span>
+<span id="L824">824     integrable_score_comp_history_action_of_condDistrib</span>
+<span id="L825">825       mu history hhistory action haction</span>
+<span id="L826">826       (Exp3.finiteActionKernel arms prob source) hcond _ hmixedProduct,</span>
+<span id="L827">827     integrable_score_comp_history_action_of_condDistrib</span>
+<span id="L828">828       mu history hhistory action haction</span>
+<span id="L829">829       (Exp3.finiteActionKernel arms prob source) hcond _ hweightedProduct⟩</span>
+<span id="L830">830 </span>
+<span id="L831">831 /-- Conditional first moments for a positive finite sampling law, with no</span>
+<span id="L832">832 uniform probability floor. -/</span>
+<span id="L833">833 theorem integral_mixed_weightedImportanceWeightedLoss_eq_predictable</span>
+<span id="L834">834     {Omega : Type u} {History : Type v} {Action : Type*}</span>
+<span id="L835">835     [MeasurableSpace Omega] [MeasurableSpace History]</span>
+<span id="L836">836     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L837">837     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L838">838     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L839">839     (history : Omega -&gt; History) (hhistory : Measurable history)</span>
+<span id="L840">840     (action : Omega -&gt; Action) (haction : Measurable action)</span>
+<span id="L841">841     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L842">842     (q : Action -&gt; Real) (hq : FTRL.finiteSimplex arms q)</span>
+<span id="L843">843     (source : Exp3.MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L844">844     (hcond : condDistrib action history mu =ᵐ[mu.map history]</span>
+<span id="L845">845       Exp3.finiteActionKernel arms prob source)</span>
+<span id="L846">846     (hprobPos : forall h candidate, candidate ∈ arms -&gt;</span>
+<span id="L847">847       0 &lt; prob h candidate)</span>
+<span id="L848">848     (hlossMeas : forall candidate, candidate ∈ arms -&gt;</span>
+<span id="L849">849       Measurable (fun h =&gt; loss h candidate))</span>
+<span id="L850">850     (hloss : forall h candidate, candidate ∈ arms -&gt;</span>
+<span id="L851">851       0 &lt;= loss h candidate ∧ loss h candidate &lt;= 1) :</span>
+<span id="L852">852     (integral mu (fun omega =&gt;</span>
+<span id="L853">853         Exp3.mixedImportanceWeightedLoss arms</span>
+<span id="L854">854           (prob (history omega)) (loss (history omega)) (action omega)) =</span>
+<span id="L855">855       integral mu (fun omega =&gt;</span>
+<span id="L856">856         FTRL.linearLoss arms (prob (history omega)) (loss (history omega)))) ∧</span>
+<span id="L857">857     (integral mu (fun omega =&gt;</span>
+<span id="L858">858         Exp3.weightedImportanceWeightedLoss arms</span>
+<span id="L859">859           (prob (history omega)) q (loss (history omega)) (action omega)) =</span>
+<span id="L860">860       integral mu (fun omega =&gt;</span>
+<span id="L861">861         FTRL.linearLoss arms q (loss (history omega)))) := by</span>
+<span id="L862">862   let policy := Exp3.finiteActionKernel arms prob source</span>
+<span id="L863">863   have hprobMeas : forall candidate, candidate ∈ arms -&gt;</span>
+<span id="L864">864       Measurable (fun h =&gt; prob h candidate) := source.measurable_prob</span>
+<span id="L865">865   have hmixedMeas : Measurable (fun sample : History × Action =&gt;</span>
+<span id="L866">866       Exp3.mixedImportanceWeightedLoss arms</span>
+<span id="L867">867         (prob sample.1) (loss sample.1) sample.2) :=</span>
+<span id="L868">868     measurable_mixedImportanceWeightedLoss_of_coordinates</span>
+<span id="L869">869       arms prob loss hprobMeas hlossMeas</span>
+<span id="L870">870   have hweightedMeas : Measurable (fun sample : History × Action =&gt;</span>
+<span id="L871">871       Exp3.weightedImportanceWeightedLoss arms</span>
+<span id="L872">872         (prob sample.1) q (loss sample.1) sample.2) :=</span>
+<span id="L873">873     measurable_weightedImportanceWeightedLoss_of_coordinates</span>
+<span id="L874">874       arms prob (fun _history =&gt; q) loss hprobMeas</span>
+<span id="L875">875       (fun _candidate _hcandidate =&gt; measurable_const) hlossMeas</span>
+<span id="L876">876   have hmixedIntegrable :=</span>
+<span id="L877">877     integrable_mixedImportanceWeightedLoss_finiteActionKernel</span>
+<span id="L878">878       (mu.map history) arms prob loss source hprobPos hloss hmixedMeas</span>
+<span id="L879">879   have hweightedIntegrable :=</span>
+<span id="L880">880     integrable_weightedImportanceWeightedLoss_finiteActionKernel</span>
+<span id="L881">881       (mu.map history) arms prob loss q hq source hprobPos hloss hweightedMeas</span>
+<span id="L882">882   have hpolicy : policy =ᵐ[mu.map history]</span>
+<span id="L883">883       fun h =&gt; Exp3.finiteActionMeasure arms (prob h) :=</span>
+<span id="L884">884     Exp3.finiteActionKernel_ae_eq_finiteActionMeasure</span>
+<span id="L885">885       (mu.map history) arms prob source</span>
+<span id="L886">886   have hmixed :=</span>
+<span id="L887">887     Exp3.integral_mixedImportanceWeightedLoss_eq_integral_mixedLoss_of_condDistrib</span>
+<span id="L888">888       mu history hhistory action haction arms prob loss source.distribution</span>
+<span id="L889">889       hprobPos policy hpolicy hcond hmixedMeas hmixedIntegrable</span>
+<span id="L890">890   have hweighted :=</span>
+<span id="L891">891     Exp3.integral_weightedImportanceWeightedLoss_eq_integral_weightedLoss_of_condDistrib</span>
+<span id="L892">892       mu history hhistory action haction arms prob (fun _history =&gt; q) loss</span>
+<span id="L893">893       source.distribution hprobPos policy hpolicy hcond hweightedMeas</span>
+<span id="L894">894       hweightedIntegrable</span>
+<span id="L895">895   have hmixedTrue : Measurable (fun h =&gt;</span>
+<span id="L896">896       FTRL.linearLoss arms (prob h) (loss h)) := by</span>
+<span id="L897">897     unfold FTRL.linearLoss</span>
+<span id="L898">898     exact Finset.measurable_sum arms fun candidate hcandidate =&gt;</span>
+<span id="L899">899       (hprobMeas candidate hcandidate).mul</span>
+<span id="L900">900         (hlossMeas candidate hcandidate)</span>
+<span id="L901">901   have hweightedTrue : Measurable (fun h =&gt;</span>
+<span id="L902">902       FTRL.linearLoss arms q (loss h)) := by</span>
+<span id="L903">903     unfold FTRL.linearLoss</span>
+<span id="L904">904     exact Finset.measurable_sum arms fun candidate hcandidate =&gt;</span>
+<span id="L905">905       measurable_const.mul (hlossMeas candidate hcandidate)</span>
+<span id="L906">906   constructor</span>
+<span id="L907">907   · calc</span>
+<span id="L908">908       integral mu (fun omega =&gt;</span>
+<span id="L909">909           Exp3.mixedImportanceWeightedLoss arms</span>
+<span id="L910">910             (prob (history omega)) (loss (history omega)) (action omega)) =</span>
+<span id="L911">911           integral (mu.map history) (fun h =&gt;</span>
+<span id="L912">912             arms.sum (fun candidate =&gt; prob h candidate * loss h candidate)) :=</span>
+<span id="L913">913         hmixed</span>
+<span id="L914">914       _ = integral (mu.map history) (fun h =&gt;</span>
+<span id="L915">915           FTRL.linearLoss arms (prob h) (loss h)) := by rfl</span>
+<span id="L916">916       _ = integral mu (fun omega =&gt;</span>
+<span id="L917">917           FTRL.linearLoss arms (prob (history omega)) (loss (history omega))) := by</span>
+<span id="L918">918         rw [integral_map hhistory.aemeasurable</span>
+<span id="L919">919           hmixedTrue.aestronglyMeasurable]</span>
+<span id="L920">920   · calc</span>
+<span id="L921">921       integral mu (fun omega =&gt;</span>
+<span id="L922">922           Exp3.weightedImportanceWeightedLoss arms</span>
+<span id="L923">923             (prob (history omega)) q (loss (history omega)) (action omega)) =</span>
+<span id="L924">924           integral (mu.map history) (fun h =&gt;</span>
+<span id="L925">925             arms.sum (fun candidate =&gt; q candidate * loss h candidate)) :=</span>
+<span id="L926">926         hweighted</span>
+<span id="L927">927       _ = integral (mu.map history) (fun h =&gt;</span>
+<span id="L928">928           FTRL.linearLoss arms q (loss h)) := by rfl</span>
+<span id="L929">929       _ = integral mu (fun omega =&gt;</span>
+<span id="L930">930           FTRL.linearLoss arms q (loss (history omega))) := by</span>
+<span id="L931">931         rw [integral_map hhistory.aemeasurable</span>
+<span id="L932">932           hweightedTrue.aestronglyMeasurable]</span>
+<span id="L933">933 </span>
+<span id="L934">934 /-- At every actual time, both the sampling-distribution mixed estimator and</span>
+<span id="L935">935 the fixed-comparator weighted estimator have the corresponding predictable</span>
+<span id="L936">936 first moment under the generated half-Tsallis trajectory. -/</span>
+<span id="L937">937 theorem sampledHalfTsallisPredictableEstimatedLossAt_first_moments</span>
+<span id="L938">938     {Env : Type u} {Action : Type v}</span>
+<span id="L939">939     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L940">940     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L941">941     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L942">942     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L943">943     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L944">944     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L945">945     (q : Action -&gt; Real) (hq : FTRL.finiteSimplex arms q) (t : Nat) :</span>
+<span id="L946">946     let selector := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L947">947       arms harms eta</span>
+<span id="L948">948     let mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel</span>
+<span id="L949">949       arms harms eta selector loss.environment</span>
+<span id="L950">950     (Integrable (fun sample =&gt;</span>
+<span id="L951">951         FTRL.linearLoss arms</span>
+<span id="L952">952           (sampledHalfTsallisProbabilityAtTime arms harms eta t sample)</span>
+<span id="L953">953           (sampledHalfTsallisPredictableEstimatedLossAt</span>
+<span id="L954">954             arms harms eta loss t sample)) mu ∧</span>
+<span id="L955">955       Integrable (fun sample =&gt;</span>
+<span id="L956">956         FTRL.linearLoss arms q</span>
+<span id="L957">957           (sampledHalfTsallisPredictableEstimatedLossAt</span>
+<span id="L958">958             arms harms eta loss t sample)) mu) ∧</span>
+<span id="L959">959     ((integral mu (fun sample =&gt;</span>
+<span id="L960">960         FTRL.linearLoss arms</span>
+<span id="L961">961           (sampledHalfTsallisProbabilityAtTime arms harms eta t sample)</span>
+<span id="L962">962           (sampledHalfTsallisPredictableEstimatedLossAt</span>
+<span id="L963">963             arms harms eta loss t sample)) =</span>
+<span id="L964">964       integral mu (fun sample =&gt;</span>
+<span id="L965">965         FTRL.linearLoss arms</span>
+<span id="L966">966           (sampledHalfTsallisProbabilityAtTime arms harms eta t sample)</span>
+<span id="L967">967           (Exp3.predictableLossAt loss t sample))) ∧</span>
+<span id="L968">968     (integral mu (fun sample =&gt;</span>
+<span id="L969">969         FTRL.linearLoss arms q</span>
+<span id="L970">970           (sampledHalfTsallisPredictableEstimatedLossAt</span>
+<span id="L971">971             arms harms eta loss t sample)) =</span>
+<span id="L972">972       integral mu (fun sample =&gt;</span>
+<span id="L973">973         FTRL.linearLoss arms q (Exp3.predictableLossAt loss t sample)))) := by</span>
+<span id="L974">974   dsimp only</span>
+<span id="L975">975   let selector := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L976">976     arms harms eta</span>
+<span id="L977">977   let algorithm := sampledHalfTsallisHistoryAlgorithm arms harms eta selector</span>
+<span id="L978">978   let mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel</span>
+<span id="L979">979     arms harms eta selector loss.environment</span>
+<span id="L980">980   cases t with</span>
+<span id="L981">981   | zero =&gt;</span>
+<span id="L982">982       let history := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; sample.1</span>
+<span id="L983">983       let action := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L984">984         (sample.2 0).1</span>
+<span id="L985">985       let prob := fun _env : Env =&gt;</span>
+<span id="L986">986         initialHalfTsallisDistribution arms harms eta</span>
+<span id="L987">987       let roundLoss := loss.initial</span>
+<span id="L988">988       let source := initialHalfTsallisEnvironmentDistributionSource</span>
+<span id="L989">989         (Env := Env) arms harms eta</span>
+<span id="L990">990       have hhistory : Measurable history := measurable_fst</span>
+<span id="L991">991       have haction : Measurable action :=</span>
+<span id="L992">992         measurable_fst.comp ((measurable_pi_apply 0).comp measurable_snd)</span>
+<span id="L993">993       have hkernel : Kernel.const Env algorithm.initialAction =</span>
+<span id="L994">994           Exp3.finiteActionKernel arms prob source := by</span>
+<span id="L995">995         ext env event hevent</span>
+<span id="L996">996         rw [Kernel.const_apply, Exp3.finiteActionKernel_apply]</span>
+<span id="L997">997         rfl</span>
+<span id="L998">998       have hcond : condDistrib action history mu =ᵐ[mu.map history]</span>
+<span id="L999">999           Exp3.finiteActionKernel arms prob source := by</span>
+<span id="L1000">1000         have hbase :=</span>
+<span id="L1001">1001           Exp3.canonicalMeasurableEnvironmentTrajectoryMeasure_condDistrib_action_zero_given_environment</span>
+<span id="L1002">1002             prior algorithm loss.environment</span>
+<span id="L1003">1003         rw [hkernel] at hbase</span>
+<span id="L1004">1004         simpa [mu, algorithm, history, action,</span>
+<span id="L1005">1005           sampledHalfTsallisTrajectoryKernel] using hbase</span>
+<span id="L1006">1006       have hprobPos : forall env candidate, candidate ∈ arms -&gt;</span>
+<span id="L1007">1007           0 &lt; prob env candidate := by</span>
+<span id="L1008">1008         intro env candidate hcandidate</span>
+<span id="L1009">1009         exact isRegularizedMinimizer_pos arms eta (fun _ =&gt; 0)</span>
+<span id="L1010">1010           (initialHalfTsallisDistribution arms harms eta)</span>
+<span id="L1011">1011           (halfTsallisMinimizer_isRegularizedMinimizer</span>
+<span id="L1012">1012             arms harms eta (fun _ =&gt; 0)) candidate hcandidate</span>
+<span id="L1013">1013       have hmoment :=</span>
+<span id="L1014">1014         integral_mixed_weightedImportanceWeightedLoss_eq_predictable</span>
+<span id="L1015">1015           mu history hhistory action haction arms prob roundLoss q hq source</span>
+<span id="L1016">1016           hcond hprobPos</span>
+<span id="L1017">1017           (fun candidate _hcandidate =&gt;</span>
+<span id="L1018">1018             loss.measurable_initial.comp</span>
+<span id="L1019">1019               (measurable_id.prodMk measurable_const))</span>
+<span id="L1020">1020           (fun env candidate _hcandidate =&gt;</span>
+<span id="L1021">1021             loss.initial_mem_unitInterval env candidate)</span>
+<span id="L1022">1022       have hintegrable :=</span>
+<span id="L1023">1023         integrable_mixed_weightedImportanceWeightedLoss_of_condDistrib</span>
+<span id="L1024">1024           mu history hhistory action haction arms prob roundLoss q hq source</span>
+<span id="L1025">1025           hcond hprobPos</span>
+<span id="L1026">1026           (fun candidate _hcandidate =&gt;</span>
+<span id="L1027">1027             loss.measurable_initial.comp</span>
+<span id="L1028">1028               (measurable_id.prodMk measurable_const))</span>
+<span id="L1029">1029           (fun env candidate _hcandidate =&gt;</span>
+<span id="L1030">1030             loss.initial_mem_unitInterval env candidate)</span>
+<span id="L1031">1031       constructor</span>
+<span id="L1032">1032       · simpa [history, action, prob, roundLoss,</span>
+<span id="L1033">1033           sampledHalfTsallisProbabilityAtTime,</span>
+<span id="L1034">1034           sampledHalfTsallisPredictableEstimatedLossAt,</span>
+<span id="L1035">1035           Exp3.mixedImportanceWeightedLoss,</span>
+<span id="L1036">1036           Exp3.weightedImportanceWeightedLoss, FTRL.linearLoss] using hintegrable</span>
+<span id="L1037">1037       · simpa [history, action, prob, roundLoss,</span>
+<span id="L1038">1038           sampledHalfTsallisProbabilityAtTime,</span>
+<span id="L1039">1039           sampledHalfTsallisPredictableEstimatedLossAt,</span>
+<span id="L1040">1040           Exp3.predictableLossAt, Exp3.mixedImportanceWeightedLoss,</span>
+<span id="L1041">1041           Exp3.weightedImportanceWeightedLoss, FTRL.linearLoss] using hmoment</span>
+<span id="L1042">1042   | succ n =&gt;</span>
+<span id="L1043">1043       let history := sampledHalfTsallisHistoryAt</span>
+<span id="L1044">1044         (Env := Env) (Action := Action) n</span>
+<span id="L1045">1045       let action := sampledHalfTsallisActionAt</span>
+<span id="L1046">1046         (Env := Env) (Action := Action) n</span>
+<span id="L1047">1047       let prob := sampledHalfTsallisProbabilityAt</span>
+<span id="L1048">1048         (Env := Env) arms harms eta n</span>
+<span id="L1049">1049       let roundLoss := sampledHalfTsallisPredictableLossAt loss n</span>
+<span id="L1050">1050       let source := sampledHalfTsallisEnvironmentHistoryDistributionSource</span>
+<span id="L1051">1051         (Env := Env) arms harms eta selector n</span>
+<span id="L1052">1052       have hhistory : Measurable history :=</span>
+<span id="L1053">1053         measurable_fst.prodMk</span>
+<span id="L1054">1054           ((Preorder.measurable_frestrictLe n).comp measurable_snd)</span>
+<span id="L1055">1055       have haction : Measurable action :=</span>
+<span id="L1056">1056         measurable_fst.comp ((measurable_pi_apply (n + 1)).comp measurable_snd)</span>
+<span id="L1057">1057       have hcond : condDistrib action history mu =ᵐ[mu.map history]</span>
+<span id="L1058">1058           Exp3.finiteActionKernel arms prob source := by</span>
+<span id="L1059">1059         have hbase :=</span>
+<span id="L1060">1060           sampledHalfTsallisTrajectoryMeasure_condDistrib_action_given_environment</span>
+<span id="L1061">1061             prior arms harms eta selector loss.environment n</span>
+<span id="L1062">1062         change condDistrib action history mu =ᵐ[mu.map history]</span>
+<span id="L1063">1063           sampledHalfTsallisPolicyAt (Env := Env)</span>
+<span id="L1064">1064             arms harms eta selector n at hbase</span>
+<span id="L1065">1065         rw [sampledHalfTsallisPolicyAt_eq_finiteActionKernel</span>
+<span id="L1066">1066           (Env := Env) arms harms eta selector n] at hbase</span>
+<span id="L1067">1067         simpa [mu, history, action, prob, source] using hbase</span>
+<span id="L1068">1068       have hprobPos : forall h candidate, candidate ∈ arms -&gt;</span>
+<span id="L1069">1069           0 &lt; prob h candidate := by</span>
+<span id="L1070">1070         intro h candidate hcandidate</span>
+<span id="L1071">1071         exact isRegularizedMinimizer_pos arms eta</span>
+<span id="L1072">1072           (sampledHalfTsallisScoreAt arms harms eta n h)</span>
+<span id="L1073">1073           (prob h)</span>
+<span id="L1074">1074           (halfTsallisMinimizer_isRegularizedMinimizer</span>
+<span id="L1075">1075             arms harms eta (sampledHalfTsallisScoreAt arms harms eta n h))</span>
+<span id="L1076">1076           candidate hcandidate</span>
+<span id="L1077">1077       have hmoment :=</span>
+<span id="L1078">1078         integral_mixed_weightedImportanceWeightedLoss_eq_predictable</span>
+<span id="L1079">1079           mu history hhistory action haction arms prob roundLoss q hq source</span>
+<span id="L1080">1080           hcond hprobPos</span>
+<span id="L1081">1081           (fun candidate _hcandidate =&gt;</span>
+<span id="L1082">1082             measurable_sampledHalfTsallisPredictableLossAt loss n candidate)</span>
+<span id="L1083">1083           (fun h candidate _hcandidate =&gt;</span>
+<span id="L1084">1084             loss.successor_mem_unitInterval n h.1 h.2 candidate)</span>
+<span id="L1085">1085       have hintegrable :=</span>
+<span id="L1086">1086         integrable_mixed_weightedImportanceWeightedLoss_of_condDistrib</span>
+<span id="L1087">1087           mu history hhistory action haction arms prob roundLoss q hq source</span>
+<span id="L1088">1088           hcond hprobPos</span>
+<span id="L1089">1089           (fun candidate _hcandidate =&gt;</span>
+<span id="L1090">1090             measurable_sampledHalfTsallisPredictableLossAt loss n candidate)</span>
+<span id="L1091">1091           (fun h candidate _hcandidate =&gt;</span>
+<span id="L1092">1092             loss.successor_mem_unitInterval n h.1 h.2 candidate)</span>
+<span id="L1093">1093       constructor</span>
+<span id="L1094">1094       · simpa [history, action, prob, roundLoss,</span>
+<span id="L1095">1095           sampledHalfTsallisProbabilityAtTime,</span>
+<span id="L1096">1096           sampledHalfTsallisPredictableEstimatedLossAt,</span>
+<span id="L1097">1097           Exp3.mixedImportanceWeightedLoss,</span>
+<span id="L1098">1098           Exp3.weightedImportanceWeightedLoss, FTRL.linearLoss] using hintegrable</span>
+<span id="L1099">1099       · simpa [history, action, prob, roundLoss,</span>
+<span id="L1100">1100           sampledHalfTsallisProbabilityAtTime,</span>
+<span id="L1101">1101           sampledHalfTsallisPredictableEstimatedLossAt,</span>
+<span id="L1102">1102           Exp3.predictableLossAt, Exp3.mixedImportanceWeightedLoss,</span>
+<span id="L1103">1103           Exp3.weightedImportanceWeightedLoss, FTRL.linearLoss] using hmoment</span>
+<span id="L1104">1104 </span>
+<span id="L1105">1105 theorem finiteSimplex_sampledHalfTsallisProbabilityAtTime</span>
+<span id="L1106">1106     {Env : Type u} {Action : Type v} [DecidableEq Action]</span>
+<span id="L1107">1107     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L1108">1108     (t : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) :</span>
+<span id="L1109">1109     FTRL.finiteSimplex arms</span>
+<span id="L1110">1110       (sampledHalfTsallisProbabilityAtTime arms harms eta t sample) := by</span>
+<span id="L1111">1111   cases t with</span>
+<span id="L1112">1112   | zero =&gt;</span>
+<span id="L1113">1113       exact ⟨</span>
+<span id="L1114">1114         (finiteActionDistribution_initialHalfTsallisDistribution</span>
+<span id="L1115">1115           arms harms eta).nonneg,</span>
+<span id="L1116">1116         (finiteActionDistribution_initialHalfTsallisDistribution</span>
+<span id="L1117">1117           arms harms eta).sum_eq_one⟩</span>
+<span id="L1118">1118   | succ n =&gt;</span>
+<span id="L1119">1119       exact (halfTsallisMinimizer_isRegularizedMinimizer arms harms eta</span>
+<span id="L1120">1120         (sampledHalfTsallisHistoryScore arms harms eta n</span>
+<span id="L1121">1121           (Preorder.frestrictLe n sample.2))).1</span>
+<span id="L1122">1122 </span>
+<span id="L1123">1123 /-- Current mixed predictable loss and fixed-comparator predictable loss are</span>
+<span id="L1124">1124 integrable at every actual time. -/</span>
+<span id="L1125">1125 theorem integrable_sampledHalfTsallisPredictableLinearLossAt</span>
+<span id="L1126">1126     {Env : Type u} {Action : Type v}</span>
+<span id="L1127">1127     [MeasurableSpace Env]</span>
+<span id="L1128">1128     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L1129">1129     [DecidableEq Action]</span>
+<span id="L1130">1130     (mu : Measure (Env × ((k : Nat) -&gt; Action × Real))) [IsFiniteMeasure mu]</span>
+<span id="L1131">1131     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L1132">1132     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L1133">1133     (q : Action -&gt; Real) (hq : FTRL.finiteSimplex arms q) (t : Nat) :</span>
+<span id="L1134">1134     Integrable (fun sample =&gt;</span>
+<span id="L1135">1135         FTRL.linearLoss arms</span>
+<span id="L1136">1136           (sampledHalfTsallisProbabilityAtTime arms harms eta t sample)</span>
+<span id="L1137">1137           (Exp3.predictableLossAt loss t sample)) mu ∧</span>
+<span id="L1138">1138       Integrable (fun sample =&gt;</span>
+<span id="L1139">1139         FTRL.linearLoss arms q (Exp3.predictableLossAt loss t sample)) mu := by</span>
+<span id="L1140">1140   have hprobMeas (candidate : Action) (hcandidate : candidate ∈ arms) :=</span>
+<span id="L1141">1141     measurable_sampledHalfTsallisProbabilityAtTime</span>
+<span id="L1142">1142       (Env := Env) arms harms eta t candidate hcandidate</span>
+<span id="L1143">1143   have hlossMeas (candidate : Action) :=</span>
+<span id="L1144">1144     Exp3.measurable_predictableLossAt loss t candidate</span>
+<span id="L1145">1145   have hcurrentMeas : Measurable (fun sample =&gt;</span>
+<span id="L1146">1146       FTRL.linearLoss arms</span>
+<span id="L1147">1147         (sampledHalfTsallisProbabilityAtTime arms harms eta t sample)</span>
+<span id="L1148">1148         (Exp3.predictableLossAt loss t sample)) := by</span>
+<span id="L1149">1149     unfold FTRL.linearLoss</span>
+<span id="L1150">1150     exact Finset.measurable_sum arms fun candidate hcandidate =&gt;</span>
+<span id="L1151">1151       (hprobMeas candidate hcandidate).mul (hlossMeas candidate)</span>
+<span id="L1152">1152   have hcomparatorMeas : Measurable (fun sample =&gt;</span>
+<span id="L1153">1153       FTRL.linearLoss arms q (Exp3.predictableLossAt loss t sample)) := by</span>
+<span id="L1154">1154     unfold FTRL.linearLoss</span>
+<span id="L1155">1155     exact Finset.measurable_sum arms fun candidate _hcandidate =&gt;</span>
+<span id="L1156">1156       measurable_const.mul (hlossMeas candidate)</span>
+<span id="L1157">1157   have hlossMem (sample : Env × ((k : Nat) -&gt; Action × Real))</span>
+<span id="L1158">1158       (candidate : Action) :</span>
+<span id="L1159">1159       Exp3.predictableLossAt loss t sample candidate ∈ Set.Icc (0 : Real) 1 := by</span>
+<span id="L1160">1160     cases t with</span>
+<span id="L1161">1161     | zero =&gt; exact loss.initial_mem_unitInterval sample.1 candidate</span>
+<span id="L1162">1162     | succ n =&gt;</span>
+<span id="L1163">1163         exact loss.successor_mem_unitInterval n sample.1</span>
+<span id="L1164">1164           (Preorder.frestrictLe n sample.2) candidate</span>
+<span id="L1165">1165   have hcurrentMem (sample : Env × ((k : Nat) -&gt; Action × Real)) :</span>
+<span id="L1166">1166       FTRL.linearLoss arms</span>
+<span id="L1167">1167           (sampledHalfTsallisProbabilityAtTime arms harms eta t sample)</span>
+<span id="L1168">1168           (Exp3.predictableLossAt loss t sample) ∈ Set.Icc (0 : Real) 1 := by</span>
+<span id="L1169">1169     let p := sampledHalfTsallisProbabilityAtTime arms harms eta t sample</span>
+<span id="L1170">1170     have hp := finiteSimplex_sampledHalfTsallisProbabilityAtTime</span>
+<span id="L1171">1171       arms harms eta t sample</span>
+<span id="L1172">1172     constructor</span>
+<span id="L1173">1173     · unfold FTRL.linearLoss</span>
+<span id="L1174">1174       exact Finset.sum_nonneg fun candidate hcandidate =&gt;</span>
+<span id="L1175">1175         mul_nonneg (hp.1 candidate hcandidate) (hlossMem sample candidate).1</span>
+<span id="L1176">1176     · calc</span>
+<span id="L1177">1177         FTRL.linearLoss arms p (Exp3.predictableLossAt loss t sample) &lt;=</span>
+<span id="L1178">1178             arms.sum p := by</span>
+<span id="L1179">1179           unfold FTRL.linearLoss</span>
+<span id="L1180">1180           exact Finset.sum_le_sum fun candidate hcandidate =&gt; by</span>
+<span id="L1181">1181             nlinarith [hp.1 candidate hcandidate,</span>
+<span id="L1182">1182               (hlossMem sample candidate).2]</span>
+<span id="L1183">1183         _ = 1 := hp.2</span>
+<span id="L1184">1184   have hcomparatorMem (sample : Env × ((k : Nat) -&gt; Action × Real)) :</span>
+<span id="L1185">1185       FTRL.linearLoss arms q (Exp3.predictableLossAt loss t sample) ∈</span>
+<span id="L1186">1186         Set.Icc (0 : Real) 1 := by</span>
+<span id="L1187">1187     constructor</span>
+<span id="L1188">1188     · unfold FTRL.linearLoss</span>
+<span id="L1189">1189       exact Finset.sum_nonneg fun candidate hcandidate =&gt;</span>
+<span id="L1190">1190         mul_nonneg (hq.1 candidate hcandidate) (hlossMem sample candidate).1</span>
+<span id="L1191">1191     · calc</span>
+<span id="L1192">1192         FTRL.linearLoss arms q (Exp3.predictableLossAt loss t sample) &lt;=</span>
+<span id="L1193">1193             arms.sum q := by</span>
+<span id="L1194">1194           unfold FTRL.linearLoss</span>
+<span id="L1195">1195           exact Finset.sum_le_sum fun candidate hcandidate =&gt; by</span>
+<span id="L1196">1196             nlinarith [hq.1 candidate hcandidate,</span>
+<span id="L1197">1197               (hlossMem sample candidate).2]</span>
+<span id="L1198">1198         _ = 1 := hq.2</span>
+<span id="L1199">1199   constructor</span>
+<span id="L1200">1200   · refine Integrable.of_bound hcurrentMeas.aestronglyMeasurable 1 ?_</span>
+<span id="L1201">1201     exact Filter.Eventually.of_forall fun sample =&gt; by</span>
+<span id="L1202">1202       rw [Real.norm_eq_abs, abs_of_nonneg (hcurrentMem sample).1]</span>
+<span id="L1203">1203       exact (hcurrentMem sample).2</span>
+<span id="L1204">1204   · refine Integrable.of_bound hcomparatorMeas.aestronglyMeasurable 1 ?_</span>
+<span id="L1205">1205     exact Filter.Eventually.of_forall fun sample =&gt; by</span>
+<span id="L1206">1206       rw [Real.norm_eq_abs, abs_of_nonneg (hcomparatorMem sample).1]</span>
+<span id="L1207">1207       exact (hcomparatorMem sample).2</span>
+<span id="L1208">1208 </span>
+<span id="L1209">1209 /-- Finite-horizon predictable estimated regret is integrable and has exactly</span>
+<span id="L1210">1210 the same integral as predictable environment regret. -/</span>
+<span id="L1211">1211 theorem integral_sampledHalfTsallisPredictableEstimatedRegret_eq_environmentRegret</span>
+<span id="L1212">1212     {Env : Type u} {Action : Type v}</span>
+<span id="L1213">1213     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L1214">1214     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L1215">1215     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L1216">1216     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L1217">1217     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L1218">1218     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L1219">1219     (q : Action -&gt; Real) (hq : FTRL.finiteSimplex arms q)</span>
+<span id="L1220">1220     (horizon : Nat) :</span>
+<span id="L1221">1221     let selector := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L1222">1222       arms harms eta</span>
+<span id="L1223">1223     let mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel</span>
+<span id="L1224">1224       arms harms eta selector loss.environment</span>
+<span id="L1225">1225     Integrable (sampledHalfTsallisPredictableEstimatedRegret</span>
+<span id="L1226">1226         arms harms eta loss q horizon) mu ∧</span>
+<span id="L1227">1227       Integrable (sampledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L1228">1228         arms harms eta loss q horizon) mu ∧</span>
+<span id="L1229">1229       integral mu (sampledHalfTsallisPredictableEstimatedRegret</span>
+<span id="L1230">1230         arms harms eta loss q horizon) =</span>
+<span id="L1231">1231         integral mu (sampledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L1232">1232           arms harms eta loss q horizon) := by</span>
+<span id="L1233">1233   dsimp only</span>
+<span id="L1234">1234   let selector := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L1235">1235     arms harms eta</span>
+<span id="L1236">1236   let mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel</span>
+<span id="L1237">1237     arms harms eta selector loss.environment</span>
+<span id="L1238">1238   let estimatedTerm := fun t sample =&gt;</span>
+<span id="L1239">1239     FTRL.linearLoss arms</span>
+<span id="L1240">1240         (sampledHalfTsallisProbabilityAtTime arms harms eta t sample)</span>
+<span id="L1241">1241         (sampledHalfTsallisPredictableEstimatedLossAt</span>
+<span id="L1242">1242           arms harms eta loss t sample) -</span>
+<span id="L1243">1243       FTRL.linearLoss arms q</span>
+<span id="L1244">1244         (sampledHalfTsallisPredictableEstimatedLossAt</span>
+<span id="L1245">1245           arms harms eta loss t sample)</span>
+<span id="L1246">1246   let environmentTerm := fun t sample =&gt;</span>
+<span id="L1247">1247     FTRL.linearLoss arms</span>
+<span id="L1248">1248         (sampledHalfTsallisProbabilityAtTime arms harms eta t sample)</span>
+<span id="L1249">1249         (Exp3.predictableLossAt loss t sample) -</span>
+<span id="L1250">1250       FTRL.linearLoss arms q (Exp3.predictableLossAt loss t sample)</span>
+<span id="L1251">1251   have hmoment (t : Nat) :=</span>
+<span id="L1252">1252     sampledHalfTsallisPredictableEstimatedLossAt_first_moments</span>
+<span id="L1253">1253       prior arms harms eta loss q hq t</span>
+<span id="L1254">1254   dsimp only at hmoment</span>
+<span id="L1255">1255   have hestimatedTerm (t : Nat) : Integrable (estimatedTerm t) mu :=</span>
+<span id="L1256">1256     (hmoment t).1.1.sub (hmoment t).1.2</span>
+<span id="L1257">1257   have henvironmentParts (t : Nat) :=</span>
+<span id="L1258">1258     integrable_sampledHalfTsallisPredictableLinearLossAt</span>
+<span id="L1259">1259       mu arms harms eta loss q hq t</span>
+<span id="L1260">1260   have henvironmentTerm (t : Nat) : Integrable (environmentTerm t) mu :=</span>
+<span id="L1261">1261     (henvironmentParts t).1.sub (henvironmentParts t).2</span>
+<span id="L1262">1262   have hestimatedSum : Integrable</span>
+<span id="L1263">1263       (sampledHalfTsallisPredictableEstimatedRegret</span>
+<span id="L1264">1264         arms harms eta loss q horizon) mu := by</span>
+<span id="L1265">1265     unfold sampledHalfTsallisPredictableEstimatedRegret</span>
+<span id="L1266">1266     exact IntegrabilitySums.integrable_finset_sum mu</span>
+<span id="L1267">1267       (Finset.range (horizon + 1)) estimatedTerm</span>
+<span id="L1268">1268       (fun t _ht =&gt; hestimatedTerm t)</span>
+<span id="L1269">1269   have henvironmentSum : Integrable</span>
+<span id="L1270">1270       (sampledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L1271">1271         arms harms eta loss q horizon) mu := by</span>
+<span id="L1272">1272     unfold sampledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L1273">1273     exact IntegrabilitySums.integrable_finset_sum mu</span>
+<span id="L1274">1274       (Finset.range (horizon + 1)) environmentTerm</span>
+<span id="L1275">1275       (fun t _ht =&gt; henvironmentTerm t)</span>
+<span id="L1276">1276   refine ⟨hestimatedSum, henvironmentSum, ?_⟩</span>
+<span id="L1277">1277   calc</span>
+<span id="L1278">1278     integral mu (sampledHalfTsallisPredictableEstimatedRegret</span>
+<span id="L1279">1279         arms harms eta loss q horizon) =</span>
+<span id="L1280">1280         (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L1281">1281           integral mu (estimatedTerm t)) := by</span>
+<span id="L1282">1282       unfold sampledHalfTsallisPredictableEstimatedRegret</span>
+<span id="L1283">1283       exact ExpectationBochnerSums.integral_finset_sum mu</span>
+<span id="L1284">1284         (Finset.range (horizon + 1)) estimatedTerm</span>
+<span id="L1285">1285         (fun t _ht =&gt; hestimatedTerm t)</span>
+<span id="L1286">1286     _ = (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L1287">1287           integral mu (environmentTerm t)) := by</span>
+<span id="L1288">1288       apply Finset.sum_congr rfl</span>
+<span id="L1289">1289       intro t _ht</span>
+<span id="L1290">1290       rw [integral_sub (hmoment t).1.1 (hmoment t).1.2,</span>
+<span id="L1291">1291         integral_sub (henvironmentParts t).1 (henvironmentParts t).2,</span>
+<span id="L1292">1292         (hmoment t).2.1, (hmoment t).2.2]</span>
+<span id="L1293">1293     _ = integral mu (sampledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L1294">1294         arms harms eta loss q horizon) := by</span>
+<span id="L1295">1295       symm</span>
+<span id="L1296">1296       unfold sampledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L1297">1297       exact ExpectationBochnerSums.integral_finset_sum mu</span>
+<span id="L1298">1298         (Finset.range (horizon + 1)) environmentTerm</span>
+<span id="L1299">1299         (fun t _ht =&gt; henvironmentTerm t)</span>
+<span id="L1300">1300 </span>
+<span id="L1301">1301 /-- The observed estimated-regret functional agrees almost surely with its</span>
+<span id="L1302">1302 predictable-estimator version over every finite horizon. -/</span>
+<span id="L1303">1303 theorem sampledHalfTsallisObservedEstimatedRegret_eq_predictable_ae</span>
+<span id="L1304">1304     {Env : Type u} {Action : Type v}</span>
+<span id="L1305">1305     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L1306">1306     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L1307">1307     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L1308">1308     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L1309">1309     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L1310">1310     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L1311">1311     (q : Action -&gt; Real) (horizon : Nat) :</span>
+<span id="L1312">1312     let selector := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L1313">1313       arms harms eta</span>
+<span id="L1314">1314     let mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel</span>
+<span id="L1315">1315       arms harms eta selector loss.environment</span>
+<span id="L1316">1316     sampledHalfTsallisObservedEstimatedRegret</span>
+<span id="L1317">1317         arms harms eta q horizon =ᵐ[mu]</span>
+<span id="L1318">1318       sampledHalfTsallisPredictableEstimatedRegret</span>
+<span id="L1319">1319         arms harms eta loss q horizon := by</span>
+<span id="L1320">1320   dsimp only</span>
+<span id="L1321">1321   let selector := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L1322">1322     arms harms eta</span>
+<span id="L1323">1323   let mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel</span>
+<span id="L1324">1324     arms harms eta selector loss.environment</span>
+<span id="L1325">1325   have hestimatedAll : ∀ᵐ sample ∂mu, ∀ t,</span>
+<span id="L1326">1326       sampledHalfTsallisObservedEstimatedLossAt</span>
+<span id="L1327">1327           arms harms eta t sample =</span>
+<span id="L1328">1328         sampledHalfTsallisPredictableEstimatedLossAt</span>
+<span id="L1329">1329           arms harms eta loss t sample := by</span>
+<span id="L1330">1330     rw [ae_all_iff]</span>
+<span id="L1331">1331     intro t</span>
+<span id="L1332">1332     exact sampledHalfTsallisObservedEstimatedLossAt_eq_predictable_ae</span>
+<span id="L1333">1333       prior arms harms eta loss t</span>
+<span id="L1334">1334   filter_upwards [hestimatedAll] with sample hsample</span>
+<span id="L1335">1335   unfold sampledHalfTsallisObservedEstimatedRegret</span>
+<span id="L1336">1336     sampledHalfTsallisPredictableEstimatedRegret</span>
+<span id="L1337">1337   apply Finset.sum_congr rfl</span>
+<span id="L1338">1338   intro t _ht</span>
+<span id="L1339">1339   rw [hsample t]</span>
+<span id="L1340">1340 </span>
+<span id="L1341">1341 /-- Observed importance-weighted regret is integrable and has exactly the</span>
+<span id="L1342">1342 predictable environment-regret integral. -/</span>
+<span id="L1343">1343 theorem integral_sampledHalfTsallisObservedEstimatedRegret_eq_environmentRegret</span>
+<span id="L1344">1344     {Env : Type u} {Action : Type v}</span>
+<span id="L1345">1345     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L1346">1346     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L1347">1347     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L1348">1348     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L1349">1349     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L1350">1350     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L1351">1351     (q : Action -&gt; Real) (hq : FTRL.finiteSimplex arms q)</span>
+<span id="L1352">1352     (horizon : Nat) :</span>
+<span id="L1353">1353     let selector := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L1354">1354       arms harms eta</span>
+<span id="L1355">1355     let mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel</span>
+<span id="L1356">1356       arms harms eta selector loss.environment</span>
+<span id="L1357">1357     Integrable (sampledHalfTsallisObservedEstimatedRegret</span>
+<span id="L1358">1358         arms harms eta q horizon) mu ∧</span>
+<span id="L1359">1359       Integrable (sampledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L1360">1360         arms harms eta loss q horizon) mu ∧</span>
+<span id="L1361">1361       integral mu (sampledHalfTsallisObservedEstimatedRegret</span>
+<span id="L1362">1362         arms harms eta q horizon) =</span>
+<span id="L1363">1363         integral mu (sampledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L1364">1364           arms harms eta loss q horizon) := by</span>
+<span id="L1365">1365   dsimp only</span>
+<span id="L1366">1366   let selector := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L1367">1367     arms harms eta</span>
+<span id="L1368">1368   let mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel</span>
+<span id="L1369">1369     arms harms eta selector loss.environment</span>
+<span id="L1370">1370   have hpredictable :=</span>
+<span id="L1371">1371     integral_sampledHalfTsallisPredictableEstimatedRegret_eq_environmentRegret</span>
+<span id="L1372">1372       prior arms harms eta loss q hq horizon</span>
+<span id="L1373">1373   dsimp only at hpredictable</span>
+<span id="L1374">1374   have hae :=</span>
+<span id="L1375">1375     sampledHalfTsallisObservedEstimatedRegret_eq_predictable_ae</span>
+<span id="L1376">1376       prior arms harms eta loss q horizon</span>
+<span id="L1377">1377   dsimp only at hae</span>
+<span id="L1378">1378   have hobserved : Integrable</span>
+<span id="L1379">1379       (sampledHalfTsallisObservedEstimatedRegret</span>
+<span id="L1380">1380         arms harms eta q horizon) mu :=</span>
+<span id="L1381">1381     hpredictable.1.congr hae.symm</span>
+<span id="L1382">1382   exact ⟨hobserved, hpredictable.2.1,</span>
+<span id="L1383">1383     (integral_congr_ae hae).trans hpredictable.2.2⟩</span>
+<span id="L1384">1384 </span>
+<span id="L1385">1385 /-- The time-zero observed stability has the same half-power bound as every</span>
+<span id="L1386">1386 successor round.  A probability prior keeps the constant bound unscaled. -/</span>
+<span id="L1387">1387 theorem integral_sampledHalfTsallisInitialStability_le_halfPower</span>
+<span id="L1388">1388     {Env : Type u} {Action : Type v}</span>
+<span id="L1389">1389     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L1390">1390     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L1391">1391     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L1392">1392     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L1393">1393     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L1394">1394     (eta : Real) (heta : 0 &lt; eta)</span>
+<span id="L1395">1395     (loss : Exp3.PredictableLossVector Env Action) :</span>
+<span id="L1396">1396     let selector := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L1397">1397       arms harms eta</span>
+<span id="L1398">1398     let mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel</span>
+<span id="L1399">1399       arms harms eta selector loss.environment</span>
+<span id="L1400">1400     Integrable (sampledHalfTsallisInitialStability arms harms eta) mu ∧</span>
+<span id="L1401">1401       integral mu (sampledHalfTsallisInitialStability arms harms eta) &lt;=</span>
+<span id="L1402">1402         2 * eta * powerSum arms (1 / 2 : Real)</span>
+<span id="L1403">1403           (initialHalfTsallisDistribution arms harms eta) := by</span>
+<span id="L1404">1404   dsimp only</span>
+<span id="L1405">1405   let selector := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L1406">1406     arms harms eta</span>
+<span id="L1407">1407   let algorithm := sampledHalfTsallisHistoryAlgorithm arms harms eta selector</span>
+<span id="L1408">1408   let mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel</span>
+<span id="L1409">1409     arms harms eta selector loss.environment</span>
+<span id="L1410">1410   let history := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; sample.1</span>
+<span id="L1411">1411   let action := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L1412">1412     (sample.2 0).1</span>
+<span id="L1413">1413   let prob := fun _env : Env =&gt;</span>
+<span id="L1414">1414     initialHalfTsallisDistribution arms harms eta</span>
+<span id="L1415">1415   let roundLoss := loss.initial</span>
+<span id="L1416">1416   let next := sampledHalfTsallisInitialUpdatedAt arms harms eta loss</span>
+<span id="L1417">1417   let source := initialHalfTsallisEnvironmentDistributionSource</span>
+<span id="L1418">1418     (Env := Env) arms harms eta</span>
+<span id="L1419">1419   let policy := Exp3.finiteActionKernel arms prob source</span>
+<span id="L1420">1420   have hhistory : Measurable history := measurable_fst</span>
+<span id="L1421">1421   have haction : Measurable action :=</span>
+<span id="L1422">1422     measurable_fst.comp ((measurable_pi_apply 0).comp measurable_snd)</span>
+<span id="L1423">1423   have hkernel : Kernel.const Env algorithm.initialAction = policy := by</span>
+<span id="L1424">1424     ext env event hevent</span>
+<span id="L1425">1425     rw [Kernel.const_apply, Exp3.finiteActionKernel_apply]</span>
+<span id="L1426">1426     rfl</span>
+<span id="L1427">1427   have hcond : condDistrib action history mu =ᵐ[mu.map history] policy := by</span>
+<span id="L1428">1428     have hbase :=</span>
+<span id="L1429">1429       Exp3.canonicalMeasurableEnvironmentTrajectoryMeasure_condDistrib_action_zero_given_environment</span>
+<span id="L1430">1430         prior algorithm loss.environment</span>
+<span id="L1431">1431     rw [hkernel] at hbase</span>
+<span id="L1432">1432     simpa [mu, algorithm, history, action,</span>
+<span id="L1433">1433       sampledHalfTsallisTrajectoryKernel] using hbase</span>
+<span id="L1434">1434   have hpolicy : policy =ᵐ[mu.map history]</span>
+<span id="L1435">1435       fun env =&gt; Exp3.finiteActionMeasure arms (prob env) :=</span>
+<span id="L1436">1436     Exp3.finiteActionKernel_ae_eq_finiteActionMeasure</span>
+<span id="L1437">1437       (mu.map history) arms prob source</span>
+<span id="L1438">1438   have hprobMin (env : Env) :</span>
+<span id="L1439">1439       FTRL.IsRegularizedMinimizer (FTRL.finiteSimplex arms)</span>
+<span id="L1440">1440         arms eta (negEntropyRegularizer arms (1 / 2 : Real))</span>
+<span id="L1441">1441         (fun _candidate =&gt; 0) (prob env) :=</span>
+<span id="L1442">1442     halfTsallisMinimizer_isRegularizedMinimizer</span>
+<span id="L1443">1443       arms harms eta (fun _candidate =&gt; 0)</span>
+<span id="L1444">1444   have hnextMin (env : Env) (chosen : Action) (_hchosen : chosen ∈ arms) :</span>
+<span id="L1445">1445       FTRL.IsRegularizedMinimizer (FTRL.finiteSimplex arms)</span>
+<span id="L1446">1446         arms eta (negEntropyRegularizer arms (1 / 2 : Real))</span>
+<span id="L1447">1447         (fun candidate =&gt; 0 +</span>
+<span id="L1448">1448           Exp3.importanceWeightedLoss</span>
+<span id="L1449">1449             (prob env) (roundLoss env) chosen candidate)</span>
+<span id="L1450">1450         (next env chosen) := by</span>
+<span id="L1451">1451     simpa [prob, roundLoss, next,</span>
+<span id="L1452">1452       sampledHalfTsallisInitialUpdatedAt,</span>
+<span id="L1453">1453       halfTsallisHistoryUpdatedMinimizer] using</span>
+<span id="L1454">1454       (halfTsallisUpdatedMinimizer_isRegularizedMinimizer</span>
+<span id="L1455">1455         arms harms eta (fun _candidate =&gt; 0) (loss.initial env) chosen)</span>
+<span id="L1456">1456   have hprobPos (env : Env) (candidate : Action) (hcandidate : candidate ∈ arms) :</span>
+<span id="L1457">1457       0 &lt; prob env candidate :=</span>
+<span id="L1458">1458     isRegularizedMinimizer_pos arms eta (fun _candidate =&gt; 0)</span>
+<span id="L1459">1459       (prob env) (hprobMin env) candidate hcandidate</span>
+<span id="L1460">1460   have hnextSimplex (env : Env) (chosen : Action) (hchosen : chosen ∈ arms) :</span>
+<span id="L1461">1461       FTRL.finiteSimplex arms (next env chosen) :=</span>
+<span id="L1462">1462     (hnextMin env chosen hchosen).1</span>
+<span id="L1463">1463   have hloss (env : Env) (candidate : Action) (_hcandidate : candidate ∈ arms) :</span>
+<span id="L1464">1464       0 &lt;= roundLoss env candidate ∧ roundLoss env candidate &lt;= 1 :=</span>
+<span id="L1465">1465     loss.initial_mem_unitInterval env candidate</span>
+<span id="L1466">1466   have hscore : Measurable</span>
+<span id="L1467">1467       (importanceWeightedStabilityScore arms prob roundLoss next) := by</span>
+<span id="L1468">1468     simpa [prob, roundLoss, next,</span>
+<span id="L1469">1469       sampledHalfTsallisInitialHistoryActionStability] using</span>
+<span id="L1470">1470       (measurable_sampledHalfTsallisInitialHistoryActionStability</span>
+<span id="L1471">1471         arms harms eta loss)</span>
+<span id="L1472">1472   have hscoreIntegrable : Integrable</span>
+<span id="L1473">1473       (importanceWeightedStabilityScore arms prob roundLoss next)</span>
+<span id="L1474">1474       (mu.map history ⊗ₘ policy) := by</span>
+<span id="L1475">1475     exact integrable_importanceWeightedStabilityScore_finiteActionKernel</span>
+<span id="L1476">1476       (mu.map history) arms prob roundLoss next source hprobPos</span>
+<span id="L1477">1477       hnextSimplex hloss hscore</span>
+<span id="L1478">1478   have hboundIntegrable : Integrable</span>
+<span id="L1479">1479       (halfPowerStabilityBound arms eta prob) (mu.map history) :=</span>
+<span id="L1480">1480     integrable_halfPowerStabilityBound_of_finiteSimplex</span>
+<span id="L1481">1481       (mu.map history) arms eta prob source</span>
+<span id="L1482">1482   have hcanonical :=</span>
+<span id="L1483">1483     integral_importanceWeightedStabilityScore_le_integral_halfPowerStabilityBound_of_condDistrib_of_minimizers</span>
+<span id="L1484">1484       mu history hhistory action haction arms eta</span>
+<span id="L1485">1485       (fun _env _candidate =&gt; 0) prob roundLoss next policy hpolicy hcond</span>
+<span id="L1486">1486       heta hprobMin hnextMin hloss hscore hscoreIntegrable hboundIntegrable</span>
+<span id="L1487">1487   have hobservedEq :=</span>
+<span id="L1488">1488     sampledHalfTsallisInitialStability_eq_historyAction_ae</span>
+<span id="L1489">1489       prior arms harms eta loss</span>
+<span id="L1490">1490   dsimp only at hobservedEq</span>
+<span id="L1491">1491   have hcanonicalIntegrable : Integrable (fun sample =&gt;</span>
+<span id="L1492">1492       importanceWeightedStabilityScore arms prob roundLoss next</span>
+<span id="L1493">1493         (history sample, action sample)) mu :=</span>
+<span id="L1494">1494     integrable_score_comp_history_action_of_condDistrib</span>
+<span id="L1495">1495       mu history hhistory action haction policy hcond _ hscoreIntegrable</span>
+<span id="L1496">1496   have hobservedEq&#x27; :</span>
+<span id="L1497">1497       sampledHalfTsallisInitialStability arms harms eta =ᵐ[mu]</span>
+<span id="L1498">1498         (fun sample =&gt; importanceWeightedStabilityScore</span>
+<span id="L1499">1499           arms prob roundLoss next (history sample, action sample)) := by</span>
+<span id="L1500">1500     simpa [history, action, prob, roundLoss, next,</span>
+<span id="L1501">1501       sampledHalfTsallisInitialHistoryActionStability] using hobservedEq</span>
+<span id="L1502">1502   have hobservedIntegrable : Integrable</span>
+<span id="L1503">1503       (sampledHalfTsallisInitialStability arms harms eta) mu :=</span>
+<span id="L1504">1504     hcanonicalIntegrable.congr hobservedEq&#x27;.symm</span>
+<span id="L1505">1505   haveI : IsProbabilityMeasure mu := inferInstance</span>
+<span id="L1506">1506   haveI : IsProbabilityMeasure (mu.map history) :=</span>
+<span id="L1507">1507     Measure.isProbabilityMeasure_map hhistory.aemeasurable</span>
+<span id="L1508">1508   refine ⟨hobservedIntegrable, ?_⟩</span>
+<span id="L1509">1509   calc</span>
+<span id="L1510">1510     integral mu (sampledHalfTsallisInitialStability arms harms eta) =</span>
+<span id="L1511">1511         integral mu (fun sample =&gt;</span>
+<span id="L1512">1512           importanceWeightedStabilityScore arms prob roundLoss next</span>
+<span id="L1513">1513             (history sample, action sample)) := by</span>
+<span id="L1514">1514       simpa [history, action, prob, roundLoss, next,</span>
+<span id="L1515">1515         sampledHalfTsallisInitialHistoryActionStability] using</span>
+<span id="L1516">1516         integral_congr_ae hobservedEq</span>
+<span id="L1517">1517     _ &lt;= integral (mu.map history)</span>
+<span id="L1518">1518         (halfPowerStabilityBound arms eta prob) := hcanonical</span>
+<span id="L1519">1519     _ = 2 * eta * powerSum arms (1 / 2 : Real)</span>
+<span id="L1520">1520         (initialHalfTsallisDistribution arms harms eta) := by</span>
+<span id="L1521">1521       change integral (mu.map history) (fun _env : Env =&gt;</span>
+<span id="L1522">1522         2 * eta * powerSum arms (1 / 2 : Real)</span>
+<span id="L1523">1523           (initialHalfTsallisDistribution arms harms eta)) = _</span>
+<span id="L1524">1524       rw [integral_const]</span>
+<span id="L1525">1525       simp</span>
+<span id="L1526">1526 </span>
+<span id="L1527">1527 /-- Predictable and observed successor stability are both integrable under</span>
+<span id="L1528">1528 the canonical generated half-Tsallis trajectory. -/</span>
+<span id="L1529">1529 theorem integrable_sampledHalfTsallisSuccessorStabilitiesAt_canonical</span>
+<span id="L1530">1530     {Env : Type u} {Action : Type v}</span>
+<span id="L1531">1531     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L1532">1532     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L1533">1533     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L1534">1534     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L1535">1535     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L1536">1536     (loss : Exp3.PredictableLossVector Env Action) (n : Nat) :</span>
+<span id="L1537">1537     let selector := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L1538">1538       arms harms eta</span>
+<span id="L1539">1539     let mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel</span>
+<span id="L1540">1540       arms harms eta selector loss.environment</span>
+<span id="L1541">1541     Integrable (sampledHalfTsallisSuccessorStabilityAt</span>
+<span id="L1542">1542         arms harms eta loss n) mu ∧</span>
+<span id="L1543">1543       Integrable (sampledHalfTsallisObservedSuccessorStabilityAt</span>
+<span id="L1544">1544         arms harms eta n) mu := by</span>
+<span id="L1545">1545   dsimp only</span>
+<span id="L1546">1546   let selector := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L1547">1547     arms harms eta</span>
+<span id="L1548">1548   let generatedSelector := canonicalHalfTsallisGeneratedSelectorMeasurability</span>
+<span id="L1549">1549     arms harms eta loss</span>
+<span id="L1550">1550   let mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel</span>
+<span id="L1551">1551     arms harms eta selector loss.environment</span>
+<span id="L1552">1552   let history := sampledHalfTsallisHistoryAt</span>
+<span id="L1553">1553     (Env := Env) (Action := Action) n</span>
+<span id="L1554">1554   let action := sampledHalfTsallisActionAt</span>
+<span id="L1555">1555     (Env := Env) (Action := Action) n</span>
+<span id="L1556">1556   let policy := sampledHalfTsallisPolicyAt</span>
+<span id="L1557">1557     (Env := Env) arms harms eta selector n</span>
+<span id="L1558">1558   have hhistory : Measurable history :=</span>
+<span id="L1559">1559     measurable_fst.prodMk</span>
+<span id="L1560">1560       ((Preorder.measurable_frestrictLe n).comp measurable_snd)</span>
+<span id="L1561">1561   have haction : Measurable action :=</span>
+<span id="L1562">1562     measurable_fst.comp ((measurable_pi_apply (n + 1)).comp measurable_snd)</span>
+<span id="L1563">1563   have hcond : condDistrib action history mu =ᵐ[mu.map history] policy := by</span>
+<span id="L1564">1564     simpa [mu, history, action, policy, sampledHalfTsallisPolicyAt] using</span>
+<span id="L1565">1565       (sampledHalfTsallisTrajectoryMeasure_condDistrib_action_given_environment</span>
+<span id="L1566">1566         prior arms harms eta selector loss.environment n)</span>
+<span id="L1567">1567   have hscore : Measurable</span>
+<span id="L1568">1568       (sampledHalfTsallisHistoryActionStabilityAt</span>
+<span id="L1569">1569         arms harms eta loss n) :=</span>
+<span id="L1570">1570     measurable_sampledHalfTsallisHistoryActionStabilityAt</span>
+<span id="L1571">1571       arms harms eta loss generatedSelector n</span>
+<span id="L1572">1572   have hproduct : Integrable</span>
+<span id="L1573">1573       (sampledHalfTsallisHistoryActionStabilityAt</span>
+<span id="L1574">1574         arms harms eta loss n) (mu.map history ⊗ₘ policy) := by</span>
+<span id="L1575">1575     simpa [mu, history, policy, selector] using</span>
+<span id="L1576">1576       (integrable_sampledHalfTsallisHistoryActionStabilityAt</span>
+<span id="L1577">1577         prior arms harms eta selector loss n hscore)</span>
+<span id="L1578">1578   have hcomposition : Integrable (fun sample =&gt;</span>
+<span id="L1579">1579       sampledHalfTsallisHistoryActionStabilityAt</span>
+<span id="L1580">1580         arms harms eta loss n (history sample, action sample)) mu :=</span>
+<span id="L1581">1581     integrable_importanceWeightedStabilityScore_comp_history_action_of_condDistrib</span>
+<span id="L1582">1582       mu history hhistory action haction arms</span>
+<span id="L1583">1583       (sampledHalfTsallisProbabilityAt (Env := Env) arms harms eta n)</span>
+<span id="L1584">1584       (sampledHalfTsallisPredictableLossAt loss n)</span>
+<span id="L1585">1585       (sampledHalfTsallisUpdatedAt arms harms eta loss n)</span>
+<span id="L1586">1586       policy hcond hproduct</span>
+<span id="L1587">1587   have hscoreSucc := sampledHalfTsallisScoreAt_succ_ae</span>
+<span id="L1588">1588     prior arms harms eta selector loss n</span>
+<span id="L1589">1589   dsimp only at hscoreSucc</span>
+<span id="L1590">1590   have hterm :</span>
+<span id="L1591">1591       sampledHalfTsallisSuccessorStabilityAt</span>
+<span id="L1592">1592           arms harms eta loss n =ᵐ[mu]</span>
+<span id="L1593">1593         (fun sample =&gt; sampledHalfTsallisHistoryActionStabilityAt</span>
+<span id="L1594">1594           arms harms eta loss n (history sample, action sample)) := by</span>
+<span id="L1595">1595     filter_upwards [hscoreSucc] with sample hscoreSuccSample</span>
+<span id="L1596">1596     have hnext :</span>
+<span id="L1597">1597         sampledHalfTsallisHistoryDistribution arms harms eta (n + 1)</span>
+<span id="L1598">1598             (Preorder.frestrictLe (n + 1) sample.2) =</span>
+<span id="L1599">1599           sampledHalfTsallisUpdatedAt arms harms eta loss n</span>
+<span id="L1600">1600             (sampledHalfTsallisHistoryAt n sample)</span>
+<span id="L1601">1601             (sampledHalfTsallisActionAt n sample) := by</span>
+<span id="L1602">1602       simp only [sampledHalfTsallisHistoryDistribution,</span>
+<span id="L1603">1603         sampledHalfTsallisUpdatedAt, halfTsallisHistoryMinimizer,</span>
+<span id="L1604">1604         halfTsallisHistoryUpdatedMinimizer, halfTsallisUpdatedMinimizer,</span>
+<span id="L1605">1605         sampledHalfTsallisScoreAt, sampledHalfTsallisPredictableLossAt,</span>
+<span id="L1606">1606         sampledHalfTsallisHistoryAt, sampledHalfTsallisActionAt]</span>
+<span id="L1607">1607       rw [hscoreSuccSample]</span>
+<span id="L1608">1608       rfl</span>
+<span id="L1609">1609     simp only [sampledHalfTsallisSuccessorStabilityAt,</span>
+<span id="L1610">1610       sampledHalfTsallisHistoryActionStabilityAt,</span>
+<span id="L1611">1611       importanceWeightedStabilityScore, history, action]</span>
+<span id="L1612">1612     rw [hnext]</span>
+<span id="L1613">1613   have hpredictable : Integrable (sampledHalfTsallisSuccessorStabilityAt</span>
+<span id="L1614">1614       arms harms eta loss n) mu :=</span>
+<span id="L1615">1615     hcomposition.congr hterm.symm</span>
+<span id="L1616">1616   have hobservedEq :=</span>
+<span id="L1617">1617     sampledHalfTsallisObservedSuccessorStabilityAt_eq_predictable_ae</span>
+<span id="L1618">1618       prior arms harms eta loss n</span>
+<span id="L1619">1619   dsimp only at hobservedEq</span>
+<span id="L1620">1620   exact ⟨hpredictable, hpredictable.congr hobservedEq.symm⟩</span>
+<span id="L1621">1621 </span>
+<span id="L1622">1622 /-- Complete estimated-to-environment regret theorem for the generated pure</span>
+<span id="L1623">1623 half-Tsallis policy.  The horizon contains time zero plus `horizon` successor</span>
+<span id="L1624">1624 rounds; self-bounding and learning-rate tuning remain downstream. -/</span>
+<span id="L1625">1625 theorem integral_sampledHalfTsallisPredictableEnvironmentRegret_le</span>
+<span id="L1626">1626     {Env : Type u} {Action : Type v}</span>
+<span id="L1627">1627     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L1628">1628     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L1629">1629     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L1630">1630     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L1631">1631     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L1632">1632     (eta : Real) (heta : 0 &lt; eta)</span>
+<span id="L1633">1633     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L1634">1634     (q : Action -&gt; Real) (hq : FTRL.finiteSimplex arms q)</span>
+<span id="L1635">1635     (horizon : Nat) :</span>
+<span id="L1636">1636     let selector := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L1637">1637       arms harms eta</span>
+<span id="L1638">1638     let mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel</span>
+<span id="L1639">1639       arms harms eta selector loss.environment</span>
+<span id="L1640">1640     integral mu (sampledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L1641">1641         arms harms eta loss q horizon) &lt;=</span>
+<span id="L1642">1642       2 * eta * powerSum arms (1 / 2 : Real)</span>
+<span id="L1643">1643           (initialHalfTsallisDistribution arms harms eta) +</span>
+<span id="L1644">1644         integral mu (fun sample =&gt; (Finset.range horizon).sum (fun n =&gt;</span>
+<span id="L1645">1645           sampledHalfTsallisHalfPowerBoundAt (Env := Env)</span>
+<span id="L1646">1646             arms harms eta n (sampledHalfTsallisHistoryAt n sample))) +</span>
+<span id="L1647">1647         ((powerSum arms (1 / 2 : Real)</span>
+<span id="L1648">1648               (initialHalfTsallisDistribution arms harms eta) -</span>
+<span id="L1649">1649             powerSum arms (1 / 2 : Real) q) /</span>
+<span id="L1650">1650           (1 - (1 / 2 : Real))) / eta := by</span>
+<span id="L1651">1651   dsimp only</span>
+<span id="L1652">1652   let selector := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L1653">1653     arms harms eta</span>
+<span id="L1654">1654   let mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel</span>
+<span id="L1655">1655     arms harms eta selector loss.environment</span>
+<span id="L1656">1656   let observedSuccessorSum := fun</span>
+<span id="L1657">1657       (sample : Env × ((k : Nat) -&gt; Action × Real)) =&gt;</span>
+<span id="L1658">1658     (Finset.range horizon).sum (fun n =&gt;</span>
+<span id="L1659">1659       sampledHalfTsallisObservedSuccessorStabilityAt</span>
+<span id="L1660">1660         arms harms eta n sample)</span>
+<span id="L1661">1661   let predictableSuccessorSum := fun</span>
+<span id="L1662">1662       (sample : Env × ((k : Nat) -&gt; Action × Real)) =&gt;</span>
+<span id="L1663">1663     (Finset.range horizon).sum (fun n =&gt;</span>
+<span id="L1664">1664       sampledHalfTsallisSuccessorStabilityAt</span>
+<span id="L1665">1665         arms harms eta loss n sample)</span>
+<span id="L1666">1666   let halfPowerSum := fun</span>
+<span id="L1667">1667       (sample : Env × ((k : Nat) -&gt; Action × Real)) =&gt;</span>
+<span id="L1668">1668     (Finset.range horizon).sum (fun n =&gt;</span>
+<span id="L1669">1669       sampledHalfTsallisHalfPowerBoundAt (Env := Env)</span>
+<span id="L1670">1670         arms harms eta n (sampledHalfTsallisHistoryAt n sample))</span>
+<span id="L1671">1671   let penalty :=</span>
+<span id="L1672">1672     ((powerSum arms (1 / 2 : Real)</span>
+<span id="L1673">1673           (initialHalfTsallisDistribution arms harms eta) -</span>
+<span id="L1674">1674         powerSum arms (1 / 2 : Real) q) /</span>
+<span id="L1675">1675       (1 - (1 / 2 : Real))) / eta</span>
+<span id="L1676">1676   let rhs := fun (sample : Env × ((k : Nat) -&gt; Action × Real)) =&gt;</span>
+<span id="L1677">1677     sampledHalfTsallisInitialStability arms harms eta sample +</span>
+<span id="L1678">1678       observedSuccessorSum sample + penalty</span>
+<span id="L1679">1679   haveI : IsProbabilityMeasure mu := inferInstance</span>
+<span id="L1680">1680   have hmoment :=</span>
+<span id="L1681">1681     integral_sampledHalfTsallisObservedEstimatedRegret_eq_environmentRegret</span>
+<span id="L1682">1682       prior arms harms eta loss q hq horizon</span>
+<span id="L1683">1683   dsimp only at hmoment</span>
+<span id="L1684">1684   have hinitial := integral_sampledHalfTsallisInitialStability_le_halfPower</span>
+<span id="L1685">1685     prior arms harms eta heta loss</span>
+<span id="L1686">1686   dsimp only at hinitial</span>
+<span id="L1687">1687   have hsuccessorIntegrable (n : Nat) :</span>
+<span id="L1688">1688       Integrable (sampledHalfTsallisObservedSuccessorStabilityAt</span>
+<span id="L1689">1689         arms harms eta n) mu :=</span>
+<span id="L1690">1690     (integrable_sampledHalfTsallisSuccessorStabilitiesAt_canonical</span>
+<span id="L1691">1691       prior arms harms eta loss n).2</span>
+<span id="L1692">1692   have hsuccessorSumIntegrable : Integrable observedSuccessorSum mu := by</span>
+<span id="L1693">1693     unfold observedSuccessorSum</span>
+<span id="L1694">1694     exact IntegrabilitySums.integrable_finset_sum mu (Finset.range horizon)</span>
+<span id="L1695">1695       (fun n sample =&gt; sampledHalfTsallisObservedSuccessorStabilityAt</span>
+<span id="L1696">1696         arms harms eta n sample)</span>
+<span id="L1697">1697       (fun n _hn =&gt; hsuccessorIntegrable n)</span>
+<span id="L1698">1698   have hrhsIntegrable : Integrable rhs mu := by</span>
+<span id="L1699">1699     unfold rhs</span>
+<span id="L1700">1700     exact (hinitial.1.add hsuccessorSumIntegrable).add (integrable_const _)</span>
+<span id="L1701">1701   have hpathwise : ∀ᵐ sample ∂mu,</span>
+<span id="L1702">1702       sampledHalfTsallisObservedEstimatedRegret</span>
+<span id="L1703">1703           arms harms eta q horizon sample &lt;= rhs sample := by</span>
+<span id="L1704">1704     filter_upwards [] with sample</span>
+<span id="L1705">1705     simpa [sampledHalfTsallisObservedEstimatedRegret, rhs,</span>
+<span id="L1706">1706       observedSuccessorSum, penalty] using</span>
+<span id="L1707">1707       (sampledHalfTsallis_observedEstimatedRegret_le</span>
+<span id="L1708">1708         arms harms eta heta q hq sample horizon)</span>
+<span id="L1709">1709   have hintegrated := integral_mono_ae hmoment.1 hrhsIntegrable hpathwise</span>
+<span id="L1710">1710   have hrhsIntegral : integral mu rhs =</span>
+<span id="L1711">1711       integral mu (sampledHalfTsallisInitialStability arms harms eta) +</span>
+<span id="L1712">1712         integral mu observedSuccessorSum + penalty := by</span>
+<span id="L1713">1713     unfold rhs</span>
+<span id="L1714">1714     have hinner := integral_add hinitial.1 hsuccessorSumIntegrable</span>
+<span id="L1715">1715     have hpenalty : Integrable</span>
+<span id="L1716">1716         (fun _sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; penalty) mu :=</span>
+<span id="L1717">1717       integrable_const _</span>
+<span id="L1718">1718     have houter := integral_add (hinitial.1.add hsuccessorSumIntegrable)</span>
+<span id="L1719">1719       hpenalty</span>
+<span id="L1720">1720     calc</span>
+<span id="L1721">1721       integral mu (fun sample =&gt;</span>
+<span id="L1722">1722           sampledHalfTsallisInitialStability arms harms eta sample +</span>
+<span id="L1723">1723             observedSuccessorSum sample + penalty) =</span>
+<span id="L1724">1724           integral mu (fun sample =&gt;</span>
+<span id="L1725">1725             sampledHalfTsallisInitialStability arms harms eta sample +</span>
+<span id="L1726">1726               observedSuccessorSum sample) +</span>
+<span id="L1727">1727             integral mu (fun _sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L1728">1728               penalty) := by</span>
+<span id="L1729">1729         simpa only [Pi.add_apply] using houter</span>
+<span id="L1730">1730       _ = (integral mu (sampledHalfTsallisInitialStability arms harms eta) +</span>
+<span id="L1731">1731             integral mu observedSuccessorSum) + penalty := by</span>
+<span id="L1732">1732         have hinner&#x27; : integral mu (fun sample =&gt;</span>
+<span id="L1733">1733             sampledHalfTsallisInitialStability arms harms eta sample +</span>
+<span id="L1734">1734               observedSuccessorSum sample) =</span>
+<span id="L1735">1735             integral mu (sampledHalfTsallisInitialStability arms harms eta) +</span>
+<span id="L1736">1736               integral mu observedSuccessorSum := by</span>
+<span id="L1737">1737           simpa [mu] using hinner</span>
+<span id="L1738">1738         rw [hinner&#x27;]</span>
+<span id="L1739">1739         simp</span>
+<span id="L1740">1740       _ = _ := by ring</span>
+<span id="L1741">1741   rw [hrhsIntegral] at hintegrated</span>
+<span id="L1742">1742   have hsuccessorAll : ∀ᵐ sample ∂mu, ∀ n,</span>
+<span id="L1743">1743       sampledHalfTsallisObservedSuccessorStabilityAt</span>
+<span id="L1744">1744           arms harms eta n sample =</span>
+<span id="L1745">1745         sampledHalfTsallisSuccessorStabilityAt</span>
+<span id="L1746">1746           arms harms eta loss n sample := by</span>
+<span id="L1747">1747     rw [ae_all_iff]</span>
+<span id="L1748">1748     intro n</span>
+<span id="L1749">1749     exact sampledHalfTsallisObservedSuccessorStabilityAt_eq_predictable_ae</span>
+<span id="L1750">1750       prior arms harms eta loss n</span>
+<span id="L1751">1751   have hsuccessorAE : observedSuccessorSum =ᵐ[mu]</span>
+<span id="L1752">1752       predictableSuccessorSum := by</span>
+<span id="L1753">1753     filter_upwards [hsuccessorAll] with sample hsample</span>
+<span id="L1754">1754     unfold observedSuccessorSum predictableSuccessorSum</span>
+<span id="L1755">1755     exact Finset.sum_congr rfl fun n _hn =&gt; hsample n</span>
+<span id="L1756">1756   have hsuccessorBoundBase :=</span>
+<span id="L1757">1757     integral_sum_sampledHalfTsallisSuccessorStability_le_integral_sum_halfPowerStabilityBound_canonical</span>
+<span id="L1758">1758       prior horizon arms harms eta heta loss</span>
+<span id="L1759">1759   dsimp only at hsuccessorBoundBase</span>
+<span id="L1760">1760   have hsuccessorBound : integral mu observedSuccessorSum &lt;=</span>
+<span id="L1761">1761       integral mu halfPowerSum := by</span>
+<span id="L1762">1762     calc</span>
+<span id="L1763">1763       integral mu observedSuccessorSum =</span>
+<span id="L1764">1764           integral mu predictableSuccessorSum := integral_congr_ae hsuccessorAE</span>
+<span id="L1765">1765       _ &lt;= integral mu halfPowerSum := by</span>
+<span id="L1766">1766         simpa [mu, selector, predictableSuccessorSum, halfPowerSum] using</span>
+<span id="L1767">1767           hsuccessorBoundBase</span>
+<span id="L1768">1768   calc</span>
+<span id="L1769">1769     integral mu (sampledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L1770">1770         arms harms eta loss q horizon) =</span>
+<span id="L1771">1771         integral mu (sampledHalfTsallisObservedEstimatedRegret</span>
+<span id="L1772">1772           arms harms eta q horizon) := hmoment.2.2.symm</span>
+<span id="L1773">1773     _ &lt;= integral mu (sampledHalfTsallisInitialStability arms harms eta) +</span>
+<span id="L1774">1774         integral mu observedSuccessorSum + penalty := hintegrated</span>
+<span id="L1775">1775     _ &lt;= 2 * eta * powerSum arms (1 / 2 : Real)</span>
+<span id="L1776">1776           (initialHalfTsallisDistribution arms harms eta) +</span>
+<span id="L1777">1777         integral mu halfPowerSum + penalty := by</span>
+<span id="L1778">1778       linarith [hinitial.2, hsuccessorBound]</span>
+<span id="L1779">1779 </span>
+<span id="L1780">1780 end Tsallis</span>
+<span id="L1781">1781 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

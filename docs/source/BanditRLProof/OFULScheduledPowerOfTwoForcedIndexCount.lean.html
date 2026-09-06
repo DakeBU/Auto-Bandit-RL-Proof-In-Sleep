@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/OFULScheduledPowerOfTwoForcedIndexCount.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/OFULScheduledPowerOfTwoForcedIndexCount.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/OFULScheduledPowerOfTwoForcedIndexCount.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/OFULScheduledPowerOfTwoForcedIndexCount.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import Mathlib.Data.Nat.Log</span>
+<span id="L2">2 import Mathlib.Data.Finset.Card</span>
+<span id="L3">3 </span>
+<span id="L4">4 namespace BanditRLProof</span>
+<span id="L5">5 namespace OFUL</span>
+<span id="L6">6 </span>
+<span id="L7">7 /--</span>
+<span id="L8">8 A horizon-independent forcing predicate for successor indices one below powers</span>
+<span id="L9">9 of two. The `Nat.log2` equality makes the predicate decidable without a</span>
+<span id="L10">10 classical search over exponents.</span>
+<span id="L11">11 -/</span>
+<span id="L12">12 def isPowerOfTwoForcedIndex (n : Nat) : Prop :=</span>
+<span id="L13">13   2 ^ Nat.log2 (n + 1) = n + 1</span>
+<span id="L14">14 </span>
+<span id="L15">15 instance instDecidableIsPowerOfTwoForcedIndex (n : Nat) :</span>
+<span id="L16">16     Decidable (isPowerOfTwoForcedIndex n) := by</span>
+<span id="L17">17   unfold isPowerOfTwoForcedIndex</span>
+<span id="L18">18   infer_instance</span>
+<span id="L19">19 </span>
+<span id="L20">20 /-- The computable predicate has the intended existential power-of-two semantics. -/</span>
+<span id="L21">21 theorem isPowerOfTwoForcedIndex_iff {n : Nat} :</span>
+<span id="L22">22     isPowerOfTwoForcedIndex n &lt;-&gt; exists k, n + 1 = 2 ^ k := by</span>
+<span id="L23">23   constructor</span>
+<span id="L24">24   · intro hn</span>
+<span id="L25">25     exact ⟨Nat.log2 (n + 1), hn.symm⟩</span>
+<span id="L26">26   · rintro ⟨k, hk⟩</span>
+<span id="L27">27     unfold isPowerOfTwoForcedIndex</span>
+<span id="L28">28     rw [hk, Nat.log2_eq_log_two, Nat.log_pow Nat.one_lt_two]</span>
+<span id="L29">29 </span>
+<span id="L30">30 /-- Power-of-two forced successor indices strictly below `horizon`. -/</span>
+<span id="L31">31 def powerOfTwoForcedIndexSet (horizon : Nat) : Finset Nat :=</span>
+<span id="L32">32   (Finset.range horizon).filter (fun n =&gt; isPowerOfTwoForcedIndex n)</span>
+<span id="L33">33 </span>
+<span id="L34">34 /-- Membership combines the prefix bound with the intended power-of-two equation. -/</span>
+<span id="L35">35 theorem mem_powerOfTwoForcedIndexSet_iff {horizon n : Nat} :</span>
+<span id="L36">36     n ∈ powerOfTwoForcedIndexSet horizon &lt;-&gt;</span>
+<span id="L37">37       n &lt; horizon ∧ exists k, n + 1 = 2 ^ k := by</span>
+<span id="L38">38   simp only [</span>
+<span id="L39">39     powerOfTwoForcedIndexSet,</span>
+<span id="L40">40     Finset.mem_filter,</span>
+<span id="L41">41     Finset.mem_range,</span>
+<span id="L42">42     isPowerOfTwoForcedIndex_iff]</span>
+<span id="L43">43 </span>
+<span id="L44">44 @[simp]</span>
+<span id="L45">45 theorem powerOfTwoForcedIndexSet_zero :</span>
+<span id="L46">46     powerOfTwoForcedIndexSet 0 = ∅ := by</span>
+<span id="L47">47   ext n</span>
+<span id="L48">48   simp [mem_powerOfTwoForcedIndexSet_iff]</span>
+<span id="L49">49 </span>
+<span id="L50">50 /-- Index zero is forced exactly in nonempty horizon prefixes. -/</span>
+<span id="L51">51 theorem zero_mem_powerOfTwoForcedIndexSet_iff {horizon : Nat} :</span>
+<span id="L52">52     0 ∈ powerOfTwoForcedIndexSet horizon &lt;-&gt; 0 &lt; horizon := by</span>
+<span id="L53">53   constructor</span>
+<span id="L54">54   · intro h</span>
+<span id="L55">55     exact (mem_powerOfTwoForcedIndexSet_iff.mp h).1</span>
+<span id="L56">56   · intro h</span>
+<span id="L57">57     exact mem_powerOfTwoForcedIndexSet_iff.mpr ⟨h, 0, by simp⟩</span>
+<span id="L58">58 </span>
+<span id="L59">59 /--</span>
+<span id="L60">60 There are at most `Nat.log2 horizon + 1` power-of-two forced indices below a</span>
+<span id="L61">61 horizon. Each member embeds into the image of the admissible exponent range.</span>
+<span id="L62">62 -/</span>
+<span id="L63">63 theorem card_powerOfTwoForcedIndexSet_le_log2_add_one (horizon : Nat) :</span>
+<span id="L64">64     (powerOfTwoForcedIndexSet horizon).card &lt;= Nat.log2 horizon + 1 := by</span>
+<span id="L65">65   let exponentImage :=</span>
+<span id="L66">66     (Finset.range (Nat.log2 horizon + 1)).image (fun k =&gt; 2 ^ k - 1)</span>
+<span id="L67">67   have hsubset : powerOfTwoForcedIndexSet horizon ⊆ exponentImage := by</span>
+<span id="L68">68     intro n hn</span>
+<span id="L69">69     rcases mem_powerOfTwoForcedIndexSet_iff.mp hn with ⟨hn_lt, k, hk⟩</span>
+<span id="L70">70     apply Finset.mem_image.mpr</span>
+<span id="L71">71     refine ⟨k, Finset.mem_range.mpr ?_, ?_⟩</span>
+<span id="L72">72     · apply Nat.lt_succ_iff.mpr</span>
+<span id="L73">73       apply (Nat.le_log2 (Nat.ne_of_gt (Nat.zero_lt_of_lt hn_lt))).mpr</span>
+<span id="L74">74       omega</span>
+<span id="L75">75     · omega</span>
+<span id="L76">76   calc</span>
+<span id="L77">77     (powerOfTwoForcedIndexSet horizon).card &lt;= exponentImage.card :=</span>
+<span id="L78">78       Finset.card_le_card hsubset</span>
+<span id="L79">79     _ &lt;= (Finset.range (Nat.log2 horizon + 1)).card := Finset.card_image_le</span>
+<span id="L80">80     _ = Nat.log2 horizon + 1 := Finset.card_range _</span>
+<span id="L81">81 </span>
+<span id="L82">82 end OFUL</span>
+<span id="L83">83 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

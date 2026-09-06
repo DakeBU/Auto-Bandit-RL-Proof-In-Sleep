@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/ConcentrationFixedMGF.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/ConcentrationFixedMGF.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/ConcentrationFixedMGF.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/ConcentrationFixedMGF.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import Mathlib.Probability.Moments.SubGaussian</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Fixed-tilt conditional MGF concentration</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module isolates the part of a martingale Bernstein/Freedman route that does not depend on</span>
+<span id="L7">7 the particular one-step exponential inequality.  Unlike `HasSubgaussianMGF`, the upper bound is</span>
+<span id="L8">8 required at one fixed tilt only.  Exponential integrability at every real multiple is retained</span>
+<span id="L9">9 because it is the regularity needed to compose kernel laws.</span>
+<span id="L10">10 -/</span>
+<span id="L11">11 </span>
+<span id="L12">12 open MeasureTheory ProbabilityTheory Real</span>
+<span id="L13">13 </span>
+<span id="L14">14 open scoped ENNReal NNReal ProbabilityTheory Topology</span>
+<span id="L15">15 </span>
+<span id="L16">16 namespace BanditRLProof.Concentration</span>
+<span id="L17">17 </span>
+<span id="L18">18 namespace Kernel</span>
+<span id="L19">19 </span>
+<span id="L20">20 variable {Ω Ω&#x27; : Type*} {mΩ : MeasurableSpace Ω} {mΩ&#x27; : MeasurableSpace Ω&#x27;}</span>
+<span id="L21">21   {ν : Measure Ω&#x27;} {κ : ProbabilityTheory.Kernel Ω&#x27; Ω} {X : Ω → ℝ} {t ψ : ℝ}</span>
+<span id="L22">22 </span>
+<span id="L23">23 /-- A kernel-valued MGF upper bound at one fixed tilt.  Integrability is required at every tilt</span>
+<span id="L24">24 so that successive conditional laws can be composed without adding boundedness assumptions. -/</span>
+<span id="L25">25 structure HasMGFUpperBoundAt (X : Ω → ℝ) (t ψ : ℝ)</span>
+<span id="L26">26     (κ : ProbabilityTheory.Kernel Ω&#x27; Ω) (ν : Measure Ω&#x27; := by volume_tac) : Prop where</span>
+<span id="L27">27   integrable_exp_mul : ∀ s, Integrable (fun ω ↦ exp (s * X ω)) (κ ∘ₘ ν)</span>
+<span id="L28">28   mgf_le : ∀ᵐ ω&#x27; ∂ν, ProbabilityTheory.mgf X (κ ω&#x27;) t ≤ exp ψ</span>
+<span id="L29">29 </span>
+<span id="L30">30 namespace HasMGFUpperBoundAt</span>
+<span id="L31">31 </span>
+<span id="L32">32 lemma ae_integrable_exp_mul (h : HasMGFUpperBoundAt X t ψ κ ν) (s : ℝ) :</span>
+<span id="L33">33     ∀ᵐ ω&#x27; ∂ν, Integrable (fun y ↦ exp (s * X y)) (κ ω&#x27;) :=</span>
+<span id="L34">34   Measure.ae_integrable_of_integrable_comp (h.integrable_exp_mul s)</span>
+<span id="L35">35 </span>
+<span id="L36">36 lemma ae_forall_integrable_exp_mul (h : HasMGFUpperBoundAt X t ψ κ ν) :</span>
+<span id="L37">37     ∀ᵐ ω&#x27; ∂ν, ∀ s, Integrable (fun ω ↦ exp (s * X ω)) (κ ω&#x27;) := by</span>
+<span id="L38">38   have h_int (n : ℤ) : ∀ᵐ ω&#x27; ∂ν, Integrable (fun ω ↦ exp (n * X ω)) (κ ω&#x27;) :=</span>
+<span id="L39">39     h.ae_integrable_exp_mul _</span>
+<span id="L40">40   rw [← ae_all_iff] at h_int</span>
+<span id="L41">41   filter_upwards [h_int] with ω&#x27; h_int s</span>
+<span id="L42">42   exact ProbabilityTheory.integrable_exp_mul_of_le_of_le</span>
+<span id="L43">43     (h_int _) (h_int _) (Int.floor_le s) (Int.le_ceil s)</span>
+<span id="L44">44 </span>
+<span id="L45">45 lemma congr {Y : Ω -&gt; Real} (h : HasMGFUpperBoundAt X t ψ κ ν)</span>
+<span id="L46">46     (hXY : X =ᵐ[κ ∘ₘ ν] Y) : HasMGFUpperBoundAt Y t ψ κ ν where</span>
+<span id="L47">47   integrable_exp_mul s := by</span>
+<span id="L48">48     refine (integrable_congr ?_).mpr (h.integrable_exp_mul s)</span>
+<span id="L49">49     filter_upwards [hXY] with omega homega</span>
+<span id="L50">50     rw [homega]</span>
+<span id="L51">51   mgf_le := by</span>
+<span id="L52">52     have hkernel := Measure.ae_ae_of_ae_comp hXY</span>
+<span id="L53">53     filter_upwards [h.mgf_le, hkernel] with omega hmgf heq</span>
+<span id="L54">54     rw [ProbabilityTheory.mgf_congr (Filter.EventuallyEq.symm heq)]</span>
+<span id="L55">55     exact hmgf</span>
+<span id="L56">56 </span>
+<span id="L57">57 lemma congr_iff {Y : Ω -&gt; Real} (hXY : X =ᵐ[κ ∘ₘ ν] Y) :</span>
+<span id="L58">58     HasMGFUpperBoundAt X t ψ κ ν ↔ HasMGFUpperBoundAt Y t ψ κ ν :=</span>
+<span id="L59">59   ⟨fun hX =&gt; hX.congr hXY, fun hY =&gt; hY.congr hXY.symm⟩</span>
+<span id="L60">60 </span>
+<span id="L61">61 lemma memLp_exp_mul (h : HasMGFUpperBoundAt X t ψ κ ν) (s : ℝ) (p : ℝ≥0) :</span>
+<span id="L62">62     MemLp (fun ω ↦ exp (s * X ω)) p (κ ∘ₘ ν) := by</span>
+<span id="L63">63   by_cases hp0 : p = 0</span>
+<span id="L64">64   · simpa [hp0] using (h.integrable_exp_mul s).1</span>
+<span id="L65">65   constructor</span>
+<span id="L66">66   · exact (h.integrable_exp_mul s).1</span>
+<span id="L67">67   · rw [eLpNorm_lt_top_iff_lintegral_rpow_enorm_lt_top (mod_cast hp0) (by simp)]</span>
+<span id="L68">68     simp only [ENNReal.coe_toReal]</span>
+<span id="L69">69     have h&#x27; := (h.integrable_exp_mul (p * s)).2</span>
+<span id="L70">70     rw [hasFiniteIntegral_def] at h&#x27;</span>
+<span id="L71">71     convert h&#x27; using 3 with ω</span>
+<span id="L72">72     rw [enorm_eq_ofReal (by positivity), enorm_eq_ofReal (by positivity),</span>
+<span id="L73">73       ENNReal.ofReal_rpow_of_nonneg (by positivity), ← exp_mul, mul_comm, ← mul_assoc]</span>
+<span id="L74">74     positivity</span>
+<span id="L75">75 </span>
+<span id="L76">76 @[simp]</span>
+<span id="L77">77 lemma zero_kernel : HasMGFUpperBoundAt X t ψ (0 : ProbabilityTheory.Kernel Ω&#x27; Ω) ν := by</span>
+<span id="L78">78   constructor</span>
+<span id="L79">79   · simp</span>
+<span id="L80">80   · simpa using ae_of_all ν (fun _ ↦ (Real.exp_pos ψ).le)</span>
+<span id="L81">81 </span>
+<span id="L82">82 @[simp]</span>
+<span id="L83">83 lemma zero_measure : HasMGFUpperBoundAt X t ψ κ (0 : Measure Ω&#x27;) := by</span>
+<span id="L84">84   constructor</span>
+<span id="L85">85   · simp</span>
+<span id="L86">86   · simp</span>
+<span id="L87">87 </span>
+<span id="L88">88 variable {Ω&#x27;&#x27; : Type*} {mΩ&#x27;&#x27; : MeasurableSpace Ω&#x27;&#x27;} {Y : Ω&#x27;&#x27; → ℝ} {ψY : ℝ}</span>
+<span id="L89">89 </span>
+<span id="L90">90 lemma prodMkLeft_compProd {η : ProbabilityTheory.Kernel Ω Ω&#x27;&#x27;}</span>
+<span id="L91">91     (h : HasMGFUpperBoundAt Y t ψY η (κ ∘ₘ ν)) :</span>
+<span id="L92">92     HasMGFUpperBoundAt Y t ψY (ProbabilityTheory.Kernel.prodMkLeft Ω&#x27; η) (ν ⊗ₘ κ) := by</span>
+<span id="L93">93   by_cases hν : SFinite ν</span>
+<span id="L94">94   swap; · simp [hν]</span>
+<span id="L95">95   by_cases hκ : ProbabilityTheory.IsSFiniteKernel κ</span>
+<span id="L96">96   swap; · simp [hκ]</span>
+<span id="L97">97   constructor</span>
+<span id="L98">98   · simpa using h.integrable_exp_mul</span>
+<span id="L99">99   · have h2 := h.mgf_le</span>
+<span id="L100">100     rw [← Measure.snd_compProd, Measure.snd] at h2</span>
+<span id="L101">101     exact ae_of_ae_map (by fun_prop) h2</span>
+<span id="L102">102 </span>
+<span id="L103">103 variable [SFinite ν]</span>
+<span id="L104">104 </span>
+<span id="L105">105 lemma integrable_exp_add_compProd</span>
+<span id="L106">106     {η : ProbabilityTheory.Kernel (Ω&#x27; × Ω) Ω&#x27;&#x27;}</span>
+<span id="L107">107     [ProbabilityTheory.IsZeroOrMarkovKernel η]</span>
+<span id="L108">108     (hX : HasMGFUpperBoundAt X t ψ κ ν)</span>
+<span id="L109">109     (hY : HasMGFUpperBoundAt Y t ψY η (ν ⊗ₘ κ)) (s : ℝ) :</span>
+<span id="L110">110     Integrable (fun ω ↦ exp (s * (X ω.1 + Y ω.2))) ((κ ⊗ₖ η) ∘ₘ ν) := by</span>
+<span id="L111">111   by_cases hκ : ProbabilityTheory.IsSFiniteKernel κ</span>
+<span id="L112">112   swap; · simp [hκ]</span>
+<span id="L113">113   rcases ProbabilityTheory.eq_zero_or_isMarkovKernel η with rfl | hη</span>
+<span id="L114">114   · simp</span>
+<span id="L115">115   simp_rw [mul_add, exp_add]</span>
+<span id="L116">116   refine MemLp.integrable_mul (p := 2) (q := 2) ?_ ?_</span>
+<span id="L117">117   · have h := hX.memLp_exp_mul s 2</span>
+<span id="L118">118     simp only [ENNReal.coe_ofNat] at h</span>
+<span id="L119">119     have : κ ∘ₘ ν = ((κ ⊗ₖ η) ∘ₘ ν).map Prod.fst := by</span>
+<span id="L120">120       rw [Measure.map_comp _ _ measurable_fst, ← ProbabilityTheory.Kernel.fst_eq,</span>
+<span id="L121">121         ProbabilityTheory.Kernel.fst_compProd]</span>
+<span id="L122">122     rwa [this, memLp_map_measure_iff h.1 measurable_fst.aemeasurable] at h</span>
+<span id="L123">123   · have h := hY.memLp_exp_mul s 2</span>
+<span id="L124">124     rwa [ENNReal.coe_ofNat, Measure.comp_compProd_comm, Measure.snd,</span>
+<span id="L125">125       memLp_map_measure_iff h.1 measurable_snd.aemeasurable] at h</span>
+<span id="L126">126 </span>
+<span id="L127">127 theorem add_compProd</span>
+<span id="L128">128     {η : ProbabilityTheory.Kernel (Ω&#x27; × Ω) Ω&#x27;&#x27;}</span>
+<span id="L129">129     [ProbabilityTheory.IsZeroOrMarkovKernel η]</span>
+<span id="L130">130     (hX : HasMGFUpperBoundAt X t ψ κ ν)</span>
+<span id="L131">131     (hY : HasMGFUpperBoundAt Y t ψY η (ν ⊗ₘ κ)) :</span>
+<span id="L132">132     HasMGFUpperBoundAt (fun p ↦ X p.1 + Y p.2) t (ψ + ψY) (κ ⊗ₖ η) ν := by</span>
+<span id="L133">133   by_cases hκ : ProbabilityTheory.IsSFiniteKernel κ</span>
+<span id="L134">134   swap; · simp [hκ]</span>
+<span id="L135">135   refine ⟨integrable_exp_add_compProd hX hY, ?_⟩</span>
+<span id="L136">136   filter_upwards [hX.mgf_le, hX.ae_integrable_exp_mul t,</span>
+<span id="L137">137     Measure.ae_ae_of_ae_compProd hY.mgf_le,</span>
+<span id="L138">138     Measure.ae_integrable_of_integrable_comp &lt;| integrable_exp_add_compProd hX hY t]</span>
+<span id="L139">139     with ω&#x27; hX_mgf hX_int hY_mgf h_int_mul</span>
+<span id="L140">140   calc ProbabilityTheory.mgf (fun p ↦ X p.1 + Y p.2) ((κ ⊗ₖ η) ω&#x27;) t</span>
+<span id="L141">141   _ = ∫ x, exp (t * X x) * ∫ y, exp (t * Y y) ∂(η (ω&#x27;, x)) ∂(κ ω&#x27;) := by</span>
+<span id="L142">142     simp_rw [ProbabilityTheory.mgf, mul_add, exp_add] at h_int_mul ⊢</span>
+<span id="L143">143     simp_rw [integral_compProd h_int_mul, integral_const_mul]</span>
+<span id="L144">144   _ ≤ ∫ x, exp (t * X x) * exp ψY ∂(κ ω&#x27;) := by</span>
+<span id="L145">145     refine integral_mono_of_nonneg ?_ (hX_int.mul_const _) ?_</span>
+<span id="L146">146     · exact ae_of_all _ fun _ ↦ mul_nonneg (by positivity)</span>
+<span id="L147">147         (integral_nonneg (fun _ ↦ by positivity))</span>
+<span id="L148">148     · filter_upwards [hY_mgf] with ω hY_mgf</span>
+<span id="L149">149       gcongr</span>
+<span id="L150">150       simpa [ProbabilityTheory.mgf] using hY_mgf</span>
+<span id="L151">151   _ ≤ exp (ψ + ψY) := by</span>
+<span id="L152">152     rw [integral_mul_const, exp_add]</span>
+<span id="L153">153     gcongr</span>
+<span id="L154">154     simpa [ProbabilityTheory.mgf] using hX_mgf</span>
+<span id="L155">155 </span>
+<span id="L156">156 lemma add_comp {η : ProbabilityTheory.Kernel Ω Ω&#x27;&#x27;}</span>
+<span id="L157">157     [ProbabilityTheory.IsZeroOrMarkovKernel η]</span>
+<span id="L158">158     (hX : HasMGFUpperBoundAt X t ψ κ ν)</span>
+<span id="L159">159     (hY : HasMGFUpperBoundAt Y t ψY η (κ ∘ₘ ν)) :</span>
+<span id="L160">160     HasMGFUpperBoundAt (fun p ↦ X p.1 + Y p.2) t (ψ + ψY)</span>
+<span id="L161">161       (κ ⊗ₖ ProbabilityTheory.Kernel.prodMkLeft Ω&#x27; η) ν :=</span>
+<span id="L162">162   hX.add_compProd hY.prodMkLeft_compProd</span>
+<span id="L163">163 </span>
+<span id="L164">164 end HasMGFUpperBoundAt</span>
+<span id="L165">165 </span>
+<span id="L166">166 end Kernel</span>
+<span id="L167">167 </span>
+<span id="L168">168 variable {Ω : Type*} {m mΩ : MeasurableSpace Ω} {hm : m ≤ mΩ}</span>
+<span id="L169">169   {μ : Measure Ω} {X : Ω → ℝ} {t ψ : ℝ}</span>
+<span id="L170">170 </span>
+<span id="L171">171 /-- A measure-level MGF upper bound at one fixed tilt. -/</span>
+<span id="L172">172 structure HasMGFUpperBoundAt (X : Ω → ℝ) (t ψ : ℝ)</span>
+<span id="L173">173     (μ : Measure Ω := by volume_tac) : Prop where</span>
+<span id="L174">174   integrable_exp_mul : ∀ s, Integrable (fun ω ↦ exp (s * X ω)) μ</span>
+<span id="L175">175   mgf_le : ProbabilityTheory.mgf X μ t ≤ exp ψ</span>
+<span id="L176">176 </span>
+<span id="L177">177 lemma hasMGFUpperBoundAt_iff_kernel :</span>
+<span id="L178">178     HasMGFUpperBoundAt X t ψ μ ↔</span>
+<span id="L179">179       Kernel.HasMGFUpperBoundAt X t ψ</span>
+<span id="L180">180         (ProbabilityTheory.Kernel.const Unit μ) (Measure.dirac ()) :=</span>
+<span id="L181">181   ⟨fun ⟨h1, h2⟩ ↦ ⟨by simpa, by simpa⟩,</span>
+<span id="L182">182     fun ⟨h1, h2⟩ ↦ ⟨by simpa using h1, by simpa using h2⟩⟩</span>
+<span id="L183">183 </span>
+<span id="L184">184 namespace HasMGFUpperBoundAt</span>
+<span id="L185">185 </span>
+<span id="L186">186 lemma of_map {Ω&#x27; : Type*} {mΩ&#x27; : MeasurableSpace Ω&#x27;} {μ&#x27; : Measure Ω&#x27;}</span>
+<span id="L187">187     {Z : Ω&#x27; → Ω} (hZ : AEMeasurable Z μ&#x27;)</span>
+<span id="L188">188     (h : HasMGFUpperBoundAt X t ψ (μ&#x27;.map Z)) :</span>
+<span id="L189">189     HasMGFUpperBoundAt (X ∘ Z) t ψ μ&#x27; where</span>
+<span id="L190">190   integrable_exp_mul s := by</span>
+<span id="L191">191     have h1 := h.integrable_exp_mul s</span>
+<span id="L192">192     rwa [integrable_map_measure h1.aestronglyMeasurable (by fun_prop)] at h1</span>
+<span id="L193">193   mgf_le := by</span>
+<span id="L194">194     convert h.mgf_le using 1</span>
+<span id="L195">195     rw [ProbabilityTheory.mgf_map hZ (h.integrable_exp_mul t).1]</span>
+<span id="L196">196 </span>
+<span id="L197">197 lemma id_map_iff (hX : AEMeasurable X μ) :</span>
+<span id="L198">198     HasMGFUpperBoundAt id t ψ (μ.map X) ↔ HasMGFUpperBoundAt X t ψ μ := by</span>
+<span id="L199">199   refine ⟨fun h =&gt; ?_, fun h =&gt; ⟨fun s =&gt; ?_, ?_⟩⟩</span>
+<span id="L200">200   · rw [← Function.id_comp X]</span>
+<span id="L201">201     exact .of_map hX h</span>
+<span id="L202">202   · rw [integrable_map_measure (by fun_prop) hX]</span>
+<span id="L203">203     exact h.integrable_exp_mul s</span>
+<span id="L204">204   · rw [ProbabilityTheory.mgf_id_map hX]</span>
+<span id="L205">205     exact h.mgf_le</span>
+<span id="L206">206 </span>
+<span id="L207">207 /-- Subtracting a deterministic log-MGF budget turns a fixed-tilt bound into</span>
+<span id="L208">208 a unit-tilt zero-budget bound. This is the algebraic step used to iterate</span>
+<span id="L209">209 exponential supermartingale increments. -/</span>
+<span id="L210">210 theorem compensated (h : HasMGFUpperBoundAt X t ψ μ) :</span>
+<span id="L211">211     HasMGFUpperBoundAt (fun ω =&gt; t * X ω - ψ) 1 0 μ := by</span>
+<span id="L212">212   constructor</span>
+<span id="L213">213   · intro s</span>
+<span id="L214">214     have hint := (h.integrable_exp_mul (s * t)).const_mul (Real.exp (-s * ψ))</span>
+<span id="L215">215     convert hint using 1</span>
+<span id="L216">216     funext ω</span>
+<span id="L217">217     calc</span>
+<span id="L218">218       Real.exp (s * (t * X ω - ψ)) =</span>
+<span id="L219">219           Real.exp (-s * ψ + (s * t) * X ω) := by congr 1; ring</span>
+<span id="L220">220       _ = Real.exp (-s * ψ) * Real.exp ((s * t) * X ω) := by</span>
+<span id="L221">221         rw [Real.exp_add]</span>
+<span id="L222">222   · rw [ProbabilityTheory.mgf]</span>
+<span id="L223">223     simp only [one_mul]</span>
+<span id="L224">224     simp_rw [sub_eq_add_neg, Real.exp_add]</span>
+<span id="L225">225     rw [integral_mul_const]</span>
+<span id="L226">226     calc</span>
+<span id="L227">227       (∫ ω, Real.exp (t * X ω) ∂μ) * Real.exp (-ψ) ≤</span>
+<span id="L228">228           Real.exp ψ * Real.exp (-ψ) := by</span>
+<span id="L229">229             gcongr</span>
+<span id="L230">230             simpa [ProbabilityTheory.mgf] using h.mgf_le</span>
+<span id="L231">231       _ = Real.exp 0 := by rw [← Real.exp_add]; simp</span>
+<span id="L232">232 </span>
+<span id="L233">233 end HasMGFUpperBoundAt</span>
+<span id="L234">234 </span>
+<span id="L235">235 variable [StandardBorelSpace Ω] [IsFiniteMeasure μ]</span>
+<span id="L236">236 </span>
+<span id="L237">237 variable (m) (hm) in</span>
+<span id="L238">238 /-- Conditional fixed-tilt MGF bound, expressed through Mathlib&#x27;s conditional expectation kernel. -/</span>
+<span id="L239">239 def HasCondMGFUpperBoundAt (X : Ω → ℝ) (t ψ : ℝ)</span>
+<span id="L240">240     (μ : Measure Ω := by volume_tac) [IsFiniteMeasure μ] : Prop :=</span>
+<span id="L241">241   Kernel.HasMGFUpperBoundAt X t ψ (ProbabilityTheory.condExpKernel μ m) (μ.trim hm)</span>
+<span id="L242">242 </span>
+<span id="L243">243 namespace HasMGFUpperBoundAt</span>
+<span id="L244">244 </span>
+<span id="L245">245 omit [StandardBorelSpace Ω] [IsFiniteMeasure μ] in</span>
+<span id="L246">246 lemma trim (hm : m ≤ mΩ) (hXm : Measurable[m] X) (hX : HasMGFUpperBoundAt X t ψ μ) :</span>
+<span id="L247">247     HasMGFUpperBoundAt X t ψ (μ.trim hm) where</span>
+<span id="L248">248   integrable_exp_mul s := by</span>
+<span id="L249">249     refine (hX.integrable_exp_mul s).trim hm ?_</span>
+<span id="L250">250     exact Measurable.stronglyMeasurable &lt;| by fun_prop</span>
+<span id="L251">251   mgf_le := by</span>
+<span id="L252">252     rw [ProbabilityTheory.mgf, ← integral_trim]</span>
+<span id="L253">253     · exact hX.mgf_le</span>
+<span id="L254">254     · exact Measurable.stronglyMeasurable &lt;| by fun_prop</span>
+<span id="L255">255 </span>
+<span id="L256">256 theorem add_of_hasCondMGFUpperBoundAt {Y : Ω → ℝ} {ψX ψY : ℝ}</span>
+<span id="L257">257     (hm : m ≤ mΩ) (hX : HasMGFUpperBoundAt X t ψX (μ.trim hm))</span>
+<span id="L258">258     (hY : HasCondMGFUpperBoundAt m hm Y t ψY μ) :</span>
+<span id="L259">259     HasMGFUpperBoundAt (X + Y) t (ψX + ψY) μ := by</span>
+<span id="L260">260   suffices HasMGFUpperBoundAt (fun p ↦ X p.1 + Y p.2) t (ψX + ψY)</span>
+<span id="L261">261       (@Measure.map Ω (Ω × Ω) mΩ (m.prod mΩ) (fun ω ↦ (id ω, id ω)) μ) by</span>
+<span id="L262">262     have h_eq : X + Y = (fun p ↦ X p.1 + Y p.2) ∘ (fun ω ↦ (id ω, id ω)) := rfl</span>
+<span id="L263">263     rw [h_eq]</span>
+<span id="L264">264     refine HasMGFUpperBoundAt.of_map ?_ this</span>
+<span id="L265">265     exact @Measurable.aemeasurable _ _ _ (m.prod mΩ) _ _</span>
+<span id="L266">266       ((measurable_id&#x27;&#x27; hm).prodMk measurable_id)</span>
+<span id="L267">267   rw [hasMGFUpperBoundAt_iff_kernel] at hX ⊢</span>
+<span id="L268">268   have hY&#x27; : Kernel.HasMGFUpperBoundAt Y t ψY (ProbabilityTheory.condExpKernel μ m)</span>
+<span id="L269">269       (ProbabilityTheory.Kernel.const Unit (μ.trim hm) ∘ₘ Measure.dirac ()) := by simpa</span>
+<span id="L270">270   convert hX.add_comp hY&#x27;</span>
+<span id="L271">271   ext</span>
+<span id="L272">272   rw [ProbabilityTheory.Kernel.const_apply, ← Measure.compProd,</span>
+<span id="L273">273     ProbabilityTheory.compProd_trim_condExpKernel]</span>
+<span id="L274">274 </span>
+<span id="L275">275 omit [StandardBorelSpace Ω] in</span>
+<span id="L276">276 lemma measure_ge_le_exp_add (h : HasMGFUpperBoundAt X t ψ μ) (ε : ℝ) (ht : 0 ≤ t) :</span>
+<span id="L277">277     μ.real {ω | ε ≤ X ω} ≤ exp (-t * ε + ψ) := by</span>
+<span id="L278">278   calc μ.real {ω | ε ≤ X ω}</span>
+<span id="L279">279   _ ≤ exp (-t * ε) * ProbabilityTheory.mgf X μ t :=</span>
+<span id="L280">280     ProbabilityTheory.measure_ge_le_exp_mul_mgf ε ht (h.integrable_exp_mul t)</span>
+<span id="L281">281   _ ≤ exp (-t * ε + ψ) := by</span>
+<span id="L282">282     rw [exp_add]</span>
+<span id="L283">283     gcongr</span>
+<span id="L284">284     exact h.mgf_le</span>
+<span id="L285">285 </span>
+<span id="L286">286 end HasMGFUpperBoundAt</span>
+<span id="L287">287 </span>
+<span id="L288">288 variable {Y : ℕ → Ω → ℝ} {ψY : ℕ → ℝ} {ℱ : Filtration ℕ mΩ}</span>
+<span id="L289">289 </span>
+<span id="L290">290 theorem HasMGFUpperBoundAt.sum_of_hasCondMGFUpperBoundAt [IsZeroOrProbabilityMeasure μ]</span>
+<span id="L291">291     (h_adapted : StronglyAdapted ℱ Y)</span>
+<span id="L292">292     (h0 : HasMGFUpperBoundAt (Y 0) t (ψY 0) μ) (n : ℕ)</span>
+<span id="L293">293     (h_mgf : ∀ i &lt; n - 1,</span>
+<span id="L294">294       HasCondMGFUpperBoundAt (ℱ i) (ℱ.le i) (Y (i + 1)) t (ψY (i + 1)) μ) :</span>
+<span id="L295">295     HasMGFUpperBoundAt (fun ω ↦ ∑ i ∈ Finset.range n, Y i ω) t</span>
+<span id="L296">296       (∑ i ∈ Finset.range n, ψY i) μ := by</span>
+<span id="L297">297   induction n with</span>
+<span id="L298">298   | zero =&gt;</span>
+<span id="L299">299       constructor</span>
+<span id="L300">300       · simp</span>
+<span id="L301">301       · simpa [ProbabilityTheory.mgf] using (measureReal_le_one (μ := μ))</span>
+<span id="L302">302   | succ n hn =&gt;</span>
+<span id="L303">303     induction n with</span>
+<span id="L304">304     | zero =&gt; simpa using h0</span>
+<span id="L305">305     | succ n =&gt;</span>
+<span id="L306">306       specialize hn fun i hi ↦ h_mgf i (by omega)</span>
+<span id="L307">307       simp_rw [Finset.sum_range_succ _ (n + 1)]</span>
+<span id="L308">308       refine HasMGFUpperBoundAt.add_of_hasCondMGFUpperBoundAt (ℱ.le n) ?_ (h_mgf n (by omega))</span>
+<span id="L309">309       refine HasMGFUpperBoundAt.trim (ℱ.le n) ?_ hn</span>
+<span id="L310">310       refine Finset.measurable_fun_sum (Finset.range (n + 1)) fun j hj ↦</span>
+<span id="L311">311         ((h_adapted j).mono (ℱ.mono ?_)).measurable</span>
+<span id="L312">312       simp only [Finset.mem_range] at hj</span>
+<span id="L313">313       omega</span>
+<span id="L314">314 </span>
+<span id="L315">315 /-- Fixed-tilt Chernoff bound for a strongly adapted finite sum with conditional MGF budgets. -/</span>
+<span id="L316">316 theorem measure_sum_ge_le_of_hasCondMGFUpperBoundAt [IsZeroOrProbabilityMeasure μ]</span>
+<span id="L317">317     (h_adapted : StronglyAdapted ℱ Y)</span>
+<span id="L318">318     (h0 : HasMGFUpperBoundAt (Y 0) t (ψY 0) μ) (n : ℕ)</span>
+<span id="L319">319     (h_mgf : ∀ i &lt; n - 1,</span>
+<span id="L320">320       HasCondMGFUpperBoundAt (ℱ i) (ℱ.le i) (Y (i + 1)) t (ψY (i + 1)) μ)</span>
+<span id="L321">321     (ε : ℝ) (ht : 0 ≤ t) :</span>
+<span id="L322">322     μ.real {ω | ε ≤ ∑ i ∈ Finset.range n, Y i ω}</span>
+<span id="L323">323       ≤ exp (-t * ε + ∑ i ∈ Finset.range n, ψY i) :=</span>
+<span id="L324">324   (HasMGFUpperBoundAt.sum_of_hasCondMGFUpperBoundAt h_adapted h0 n h_mgf).measure_ge_le_exp_add ε ht</span>
+<span id="L325">325 </span>
+<span id="L326">326 /--</span>
+<span id="L327">327 Fixed-tilt tail bound with a random predictable compensator retained in the</span>
+<span id="L328">328 event.  The conditional MGF hypotheses are imposed on the compensated</span>
+<span id="L329">329 increments `tilt * Y i - varianceCoeff * V i`; on the event where the</span>
+<span id="L330">330 cumulative compensator is at most `varianceBudget`, their exponential tail</span>
+<span id="L331">331 controls the uncompensated sum.</span>
+<span id="L332">332 -/</span>
+<span id="L333">333 theorem measure_sum_ge_inter_sum_le_of_compensated_hasCondMGFUpperBoundAt</span>
+<span id="L334">334     [IsZeroOrProbabilityMeasure μ]</span>
+<span id="L335">335     (Y V : ℕ → Ω → ℝ) (n : ℕ) (tilt varianceCoeff threshold varianceBudget : ℝ)</span>
+<span id="L336">336     (h_adapted : StronglyAdapted ℱ</span>
+<span id="L337">337       (fun i ω =&gt; tilt * Y i ω - varianceCoeff * V i ω))</span>
+<span id="L338">338     (h0 : HasMGFUpperBoundAt</span>
+<span id="L339">339       (fun ω =&gt; tilt * Y 0 ω - varianceCoeff * V 0 ω) 1 0 μ)</span>
+<span id="L340">340     (h_mgf : ∀ i &lt; n - 1,</span>
+<span id="L341">341       HasCondMGFUpperBoundAt (ℱ i) (ℱ.le i)</span>
+<span id="L342">342         (fun ω =&gt; tilt * Y (i + 1) ω - varianceCoeff * V (i + 1) ω)</span>
+<span id="L343">343         1 0 μ)</span>
+<span id="L344">344     (htilt : 0 ≤ tilt) (hvarianceCoeff : 0 ≤ varianceCoeff) :</span>
+<span id="L345">345     μ {ω |</span>
+<span id="L346">346         threshold ≤ ∑ i ∈ Finset.range n, Y i ω ∧</span>
+<span id="L347">347         (∑ i ∈ Finset.range n, V i ω) ≤ varianceBudget} ≤</span>
+<span id="L348">348       ENNReal.ofReal (Real.exp</span>
+<span id="L349">349         (-tilt * threshold + varianceCoeff * varianceBudget)) := by</span>
+<span id="L350">350   let Z : ℕ → Ω → ℝ := fun i ω =&gt;</span>
+<span id="L351">351     tilt * Y i ω - varianceCoeff * V i ω</span>
+<span id="L352">352   let compensatedThreshold := tilt * threshold - varianceCoeff * varianceBudget</span>
+<span id="L353">353   let targetEvent := {ω : Ω |</span>
+<span id="L354">354     compensatedThreshold ≤ ∑ i ∈ Finset.range n, Z i ω}</span>
+<span id="L355">355   let sourceEvent := {ω : Ω |</span>
+<span id="L356">356     threshold ≤ ∑ i ∈ Finset.range n, Y i ω ∧</span>
+<span id="L357">357       (∑ i ∈ Finset.range n, V i ω) ≤ varianceBudget}</span>
+<span id="L358">358   have hreal := measure_sum_ge_le_of_hasCondMGFUpperBoundAt</span>
+<span id="L359">359     (μ := μ) (ℱ := ℱ) (Y := Z) (t := 1) (ψY := fun _ =&gt; 0)</span>
+<span id="L360">360       h_adapted h0 n h_mgf compensatedThreshold (by norm_num)</span>
+<span id="L361">361   have hreal&#x27; : μ.real targetEvent ≤</span>
+<span id="L362">362       Real.exp (-tilt * threshold + varianceCoeff * varianceBudget) := by</span>
+<span id="L363">363     simpa [Z, targetEvent, compensatedThreshold, Finset.sum_sub_distrib,</span>
+<span id="L364">364       ← Finset.mul_sum, sub_eq_add_neg, add_comm] using hreal</span>
+<span id="L365">365   have htarget : μ targetEvent ≤</span>
+<span id="L366">366       ENNReal.ofReal (Real.exp</span>
+<span id="L367">367         (-tilt * threshold + varianceCoeff * varianceBudget)) := by</span>
+<span id="L368">368     rw [Measure.real] at hreal&#x27;</span>
+<span id="L369">369     exact (ENNReal.le_ofReal_iff_toReal_le</span>
+<span id="L370">370       (measure_ne_top μ targetEvent) (Real.exp_pos _).le).2 hreal&#x27;</span>
+<span id="L371">371   have hsubset : sourceEvent ⊆ targetEvent := by</span>
+<span id="L372">372     intro ω hω</span>
+<span id="L373">373     change threshold ≤ ∑ i ∈ Finset.range n, Y i ω ∧</span>
+<span id="L374">374       (∑ i ∈ Finset.range n, V i ω) ≤ varianceBudget at hω</span>
+<span id="L375">375     change compensatedThreshold ≤</span>
+<span id="L376">376       ∑ i ∈ Finset.range n, Z i ω</span>
+<span id="L377">377     have hdeviation := mul_le_mul_of_nonneg_left hω.1 htilt</span>
+<span id="L378">378     have hvariance := mul_le_mul_of_nonneg_left hω.2 hvarianceCoeff</span>
+<span id="L379">379     simp only [Z, Finset.sum_sub_distrib, ← Finset.mul_sum]</span>
+<span id="L380">380     dsimp only [compensatedThreshold]</span>
+<span id="L381">381     linarith</span>
+<span id="L382">382   change μ sourceEvent ≤ _</span>
+<span id="L383">383   exact (measure_mono hsubset).trans htarget</span>
+<span id="L384">384 </span>
+<span id="L385">385 end BanditRLProof.Concentration</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

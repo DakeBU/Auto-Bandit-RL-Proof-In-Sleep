@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Algorithms/MOSSStream.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Algorithms/MOSSStream.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Algorithms/MOSSStream.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Algorithms/MOSSStream.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Algorithms.MOSSExpectedOccupancy</span>
+<span id="L2">2 </span>
+<span id="L3">3 noncomputable section</span>
+<span id="L4">4 open Real</span>
+<span id="L5">5 namespace BanditRLProof.MOSS</span>
+<span id="L6">6 </span>
+<span id="L7">7 theorem neg_optimismDeficit_le_centeredIndex {Ω : Type*} [MeasurableSpace Ω]</span>
+<span id="L8">8     (X : ℕ → Ω → ℝ) (δ : ℝ) (n s : ℕ) (ω : Ω) (hs : 0 &lt; s) (hsn : s ≤ n) :</span>
+<span id="L9">9     -optimismDeficit X δ n ω ≤ centeredIndex X δ s ω := by</span>
+<span id="L10">10   induction n with</span>
+<span id="L11">11   | zero =&gt; omega</span>
+<span id="L12">12   | succ n ih =&gt;</span>
+<span id="L13">13       by_cases h : s ≤ n</span>
+<span id="L14">14       · have hi := ih h</span>
+<span id="L15">15         have hm : optimismDeficit X δ n ω ≤ optimismDeficit X δ (n+1) ω := le_max_left _ _</span>
+<span id="L16">16         linarith</span>
+<span id="L17">17       · have he : s = n+1 := by omega</span>
+<span id="L18">18         subst s</span>
+<span id="L19">19         have hm : -centeredIndex X δ (n+1) ω ≤ optimismDeficit X δ (n+1) ω := le_max_right _ _</span>
+<span id="L20">20         linarith</span>
+<span id="L21">21 </span>
+<span id="L22">22 theorem radius_eq_streamRadius (n k s : ℕ) (hn : 0 &lt; n) (hk : 0 &lt; k) :</span>
+<span id="L23">23     radius n k s = sqrt (4/(s : ℝ)*logPlus (1/((s : ℝ)*((k : ℝ)/(n : ℝ))))) := by</span>
+<span id="L24">24   unfold radius</span>
+<span id="L25">25   congr 3</span>
+<span id="L26">26   by_cases hs : s = 0</span>
+<span id="L27">27   · simp [hs]</span>
+<span id="L28">28   · have hnR : (n : ℝ) ≠ 0 := by positivity</span>
+<span id="L29">29     have hkR : (k : ℝ) ≠ 0 := by positivity</span>
+<span id="L30">30     have hsR : (s : ℝ) ≠ 0 := by exact_mod_cast hs</span>
+<span id="L31">31     field_simp</span>
+<span id="L32">32 </span>
+<span id="L33">33 /-- Empirical state indexed by actual arm pulls, using centered reward streams. -/</span>
+<span id="L34">34 def streamEmpirical {Ω : Type*} {k : ℕ} (mean : Fin k → ℝ)</span>
+<span id="L35">35     (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) (trace : ActionTrace (Fin k))</span>
+<span id="L36">36     (t : ℕ) (a : Fin k) : ℝ :=</span>
+<span id="L37">37   mean a + streamMean (X a) ω (pullCount trace a t)</span>
+<span id="L38">38 </span>
+<span id="L39">39 /-- Pathwise large-gap count bound from the MOSS policy equation itself.</span>
+<span id="L40">40 The law identifying centered streams with observed rewards is not assumed here. -/</span>
+<span id="L41">41 theorem pullCount_le_of_stream_policy {Ω : Type*} [MeasurableSpace Ω]</span>
+<span id="L42">42     {k : ℕ} (hk : 0 &lt; k) (n : ℕ) (hkn : k ≤ n)</span>
+<span id="L43">43     (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω)</span>
+<span id="L44">44     (trace : ActionTrace (Fin k))</span>
+<span id="L45">45     (hpolicy : ∀ t &lt; n, trace t = action hk n t (streamEmpirical mean X ω trace t)</span>
+<span id="L46">46       (fun a =&gt; pullCount trace a t))</span>
+<span id="L47">47     (best chosen : Fin k)</span>
+<span id="L48">48     (hgap : 2 * optimismDeficit (X best) ((k : ℝ)/(n : ℝ)) n ω &lt; mean best - mean chosen) :</span>
+<span id="L49">49     (pullCount trace chosen n : ℝ) ≤ 1 +</span>
+<span id="L50">50       indexExceedanceCount (streamMean (X chosen) ω) ((k : ℝ)/(n : ℝ))</span>
+<span id="L51">51         (mean best - mean chosen) n := by</span>
+<span id="L52">52   have hn : 0 &lt; n := lt_of_lt_of_le hk hkn</span>
+<span id="L53">53   have hinit : ∀ s, (hs : s &lt; k) → trace s = ⟨s, hs⟩ := by</span>
+<span id="L54">54     intro s hs</span>
+<span id="L55">55     rw [hpolicy s (lt_of_lt_of_le hs hkn), action_of_lt hk n s _ _ hs]</span>
+<span id="L56">56   apply pullCount_le_one_add_indexExceedanceCount</span>
+<span id="L57">57   intro t htn hchosen hpos</span>
+<span id="L58">58   have hkt : k ≤ t := by</span>
+<span id="L59">59     by_contra h</span>
+<span id="L60">60     have htk : t &lt; k := by omega</span>
+<span id="L61">61     have hv : chosen.val = t := by</span>
+<span id="L62">62       have he := (hinit t htk).symm.trans hchosen</span>
+<span id="L63">63       exact (congrArg Fin.val he).symm</span>
+<span id="L64">64     have hz : pullCount trace chosen t = 0 := by</span>
+<span id="L65">65       apply pullCount_eq_zero_of_forall_ne</span>
+<span id="L66">66       intro s hst heq</span>
+<span id="L67">67       have hs : s &lt; k := lt_trans hst htk</span>
+<span id="L68">68       have he := (hinit s hs).symm.trans heq</span>
+<span id="L69">69       have hv&#x27; := congrArg Fin.val he</span>
+<span id="L70">70       simp only at hv&#x27;</span>
+<span id="L71">71       omega</span>
+<span id="L72">72     omega</span>
+<span id="L73">73   have hbestpos : 0 &lt; pullCount trace best t :=</span>
+<span id="L74">74     pullCount_pos_of_eq_before trace best (lt_of_lt_of_le best.isLt hkt)</span>
+<span id="L75">75       (by simpa using hinit best.val best.isLt)</span>
+<span id="L76">76   have hbestle : pullCount trace best t ≤ n :=</span>
+<span id="L77">77     (pullCount_le_time trace best t).trans (Nat.le_of_lt htn)</span>
+<span id="L78">78   have hb := neg_optimismDeficit_le_centeredIndex (X best) ((k : ℝ)/(n : ℝ)) n</span>
+<span id="L79">79     (pullCount trace best t) ω hbestpos hbestle</span>
+<span id="L80">80   have hindex (a : Fin k) :</span>
+<span id="L81">81       index n (streamEmpirical mean X ω trace t) (fun b =&gt; pullCount trace b t) a =</span>
+<span id="L82">82         mean a + centeredIndex (X a) ((k : ℝ)/(n : ℝ)) (pullCount trace a t) ω := by</span>
+<span id="L83">83     simp only [index, streamEmpirical, streamMean, centeredIndex,</span>
+<span id="L84">84       radius_eq_streamRadius n k _ hn hk]</span>
+<span id="L85">85     ring</span>
+<span id="L86">86   have ho : mean best - optimismDeficit (X best) ((k : ℝ)/(n : ℝ)) n ω ≤</span>
+<span id="L87">87       index n (streamEmpirical mean X ω trace t) (fun b =&gt; pullCount trace b t) best := by</span>
+<span id="L88">88     rw [hindex]</span>
+<span id="L89">89     linarith</span>
+<span id="L90">90   have hsel := selected_index_gt_mean_add_half_gap hk n t mean</span>
+<span id="L91">91     (streamEmpirical mean X ω trace t) (fun b =&gt; pullCount trace b t)</span>
+<span id="L92">92     best chosen (optimismDeficit (X best) ((k : ℝ)/(n : ℝ)) n ω) hkt</span>
+<span id="L93">93     ((hpolicy t htn).symm.trans hchosen) ho hgap</span>
+<span id="L94">94   rw [hindex] at hsel</span>
+<span id="L95">95   change (mean best - mean chosen)/2 ≤ centeredIndex (X chosen) ((k : ℝ)/(n : ℝ))</span>
+<span id="L96">96     (pullCount trace chosen t) ω</span>
+<span id="L97">97   linarith</span>
+<span id="L98">98 </span>
+<span id="L99">99 /-- Concrete MOSS execution on a fixed reward table, tracking pre-pull counts. -/</span>
+<span id="L100">100 def streamCounts {Ω : Type*} {k : ℕ} (hk : 0 &lt; k) (n : ℕ)</span>
+<span id="L101">101     (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) : ℕ → Fin k → ℕ</span>
+<span id="L102">102   | 0 =&gt; fun _ =&gt; 0</span>
+<span id="L103">103   | t+1 =&gt; fun a =&gt;</span>
+<span id="L104">104       let counts := streamCounts hk n mean X ω t</span>
+<span id="L105">105       counts a + if action hk n t (fun b =&gt; mean b + streamMean (X b) ω (counts b)) counts = a</span>
+<span id="L106">106         then 1 else 0</span>
+<span id="L107">107 </span>
+<span id="L108">108 def streamTrace {Ω : Type*} {k : ℕ} (hk : 0 &lt; k) (n : ℕ)</span>
+<span id="L109">109     (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) : ActionTrace (Fin k) :=</span>
+<span id="L110">110   fun t =&gt; action hk n t</span>
+<span id="L111">111     (fun a =&gt; mean a + streamMean (X a) ω (streamCounts hk n mean X ω t a))</span>
+<span id="L112">112     (streamCounts hk n mean X ω t)</span>
+<span id="L113">113 </span>
+<span id="L114">114 theorem pullCount_streamTrace {Ω : Type*} {k : ℕ} (hk : 0 &lt; k) (n : ℕ)</span>
+<span id="L115">115     (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) (t : ℕ) (a : Fin k) :</span>
+<span id="L116">116     pullCount (streamTrace hk n mean X ω) a t = streamCounts hk n mean X ω t a := by</span>
+<span id="L117">117   induction t with</span>
+<span id="L118">118   | zero =&gt; rfl</span>
+<span id="L119">119   | succ t ih =&gt;</span>
+<span id="L120">120       simp only [pullCount_succ, ih, streamCounts, streamTrace]</span>
+<span id="L121">121       rfl</span>
+<span id="L122">122 </span>
+<span id="L123">123 theorem streamTrace_policy {Ω : Type*} {k : ℕ} (hk : 0 &lt; k) (n : ℕ)</span>
+<span id="L124">124     (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) (t : ℕ) :</span>
+<span id="L125">125     streamTrace hk n mean X ω t = action hk n t</span>
+<span id="L126">126       (streamEmpirical mean X ω (streamTrace hk n mean X ω) t)</span>
+<span id="L127">127       (fun a =&gt; pullCount (streamTrace hk n mean X ω) a t) := by</span>
+<span id="L128">128   unfold streamEmpirical</span>
+<span id="L129">129   simp only [pullCount_streamTrace]</span>
+<span id="L130">130   rfl</span>
+<span id="L131">131 </span>
+<span id="L132">132 /-- Concrete generated-trace bound: no selected-event or policy-equation oracle. -/</span>
+<span id="L133">133 theorem streamTrace_pullCount_le {Ω : Type*} [MeasurableSpace Ω]</span>
+<span id="L134">134     {k : ℕ} (hk : 0 &lt; k) (n : ℕ) (hkn : k ≤ n)</span>
+<span id="L135">135     (mean : Fin k → ℝ) (X : Fin k → ℕ → Ω → ℝ) (ω : Ω) (best chosen : Fin k)</span>
+<span id="L136">136     (hgap : 2 * optimismDeficit (X best) ((k : ℝ)/(n : ℝ)) n ω &lt; mean best - mean chosen) :</span>
+<span id="L137">137     (pullCount (streamTrace hk n mean X ω) chosen n : ℝ) ≤ 1 +</span>
+<span id="L138">138       indexExceedanceCount (streamMean (X chosen) ω) ((k : ℝ)/(n : ℝ))</span>
+<span id="L139">139         (mean best - mean chosen) n :=</span>
+<span id="L140">140   pullCount_le_of_stream_policy hk n hkn mean X ω (streamTrace hk n mean X ω)</span>
+<span id="L141">141     (fun t _ =&gt; streamTrace_policy hk n mean X ω t) best chosen hgap</span>
+<span id="L142">142 </span>
+<span id="L143">143 end BanditRLProof.MOSS</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

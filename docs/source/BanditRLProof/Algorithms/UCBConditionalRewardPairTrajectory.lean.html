@@ -1,0 +1,947 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Algorithms/UCBConditionalRewardPairTrajectory.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Algorithms/UCBConditionalRewardPairTrajectory.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Algorithms/UCBConditionalRewardPairTrajectory.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Algorithms/UCBConditionalRewardPairTrajectory.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Algorithms.UCBConditionalRewardLaw</span>
+<span id="L2">2 import BanditRLProof.Algorithms.UCBConditionalRewardLawPolicy</span>
+<span id="L3">3 import BanditRLProof.Algorithms.UCBConditionalRewardLawRegret</span>
+<span id="L4">4 import BanditRLProof.ConditionalRewardPartialTrajectoryMaskedLaw</span>
+<span id="L5">5 </span>
+<span id="L6">6 /-!</span>
+<span id="L7">7 # Canonical pair-trajectory UCB confidence consumer</span>
+<span id="L8">8 </span>
+<span id="L9">9 This module consumes the canonical action/reward trajectory simultaneous</span>
+<span id="L10">10 empirical-mean event in the random-width UCB score algebra. It proves a</span>
+<span id="L11">11 fixed finite-arm/time large-gap event bound, a positive-gap chosen-arm</span>
+<span id="L12">12 explicit-threshold tail/ENNReal expected pull-count bound, and the resulting</span>
+<span id="L13">13 finite-arm explicit-threshold and textbook positive-gap ENNReal pseudo-regret</span>
+<span id="L14">14 sums. It requires a `CenteredRewardKernelLaw`, but no caller selected-reward</span>
+<span id="L15">15 trajectory law or reward-range premise. It does not prove anytime confidence,</span>
+<span id="L16">16 an asymptotic normalization, or a Real/Bochner expectation endpoint.</span>
+<span id="L17">17 -/</span>
+<span id="L18">18 </span>
+<span id="L19">19 universe u v</span>
+<span id="L20">20 </span>
+<span id="L21">21 namespace BanditRLProof</span>
+<span id="L22">22 namespace UCB</span>
+<span id="L23">23 </span>
+<span id="L24">24 open MeasureTheory ProbabilityTheory</span>
+<span id="L25">25 </span>
+<span id="L26">26 /-</span>
+<span id="L27">27 Canonical pair-trajectory random-width UCB large-gap event bound.</span>
+<span id="L28">28 </span>
+<span id="L29">29 The score source is expressed directly with the sampled action and reward</span>
+<span id="L30">30 coordinates. The canonical history-step trajectory measure supplies the</span>
+<span id="L31">31 simultaneous confidence theorem, while the source supplies initialization and</span>
+<span id="L32">32 score maximality on its charged times.</span>
+<span id="L33">33 -/</span>
+<span id="L34">34 theorem measure_actionRewardHistoryStepKernelFamily_selectedPolicySuccessorLargeGapEvent_le_ennreal_delta_trajMeasure</span>
+<span id="L35">35     {Context : Type u} {State : Type v} {Action : Type}</span>
+<span id="L36">36     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L37">37     [MeasurableSpace Action] [StandardBorelSpace Action]</span>
+<span id="L38">38     [MeasurableSingletonClass Action] [Countable Action] [Nonempty Action]</span>
+<span id="L39">39     [DecidableEq Action]</span>
+<span id="L40">40     (mu0 : Measure (Prod Action Rat)) [IsProbabilityMeasure mu0]</span>
+<span id="L41">41     (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context Action) Rat)</span>
+<span id="L42">42     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L43">43     (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context)</span>
+<span id="L44">44     (state : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; State)</span>
+<span id="L45">45     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L46">46     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L47">47     (mean : Context -&gt; Action -&gt; Rat)</span>
+<span id="L48">48     (varianceProxy : Context -&gt; Action -&gt; NNReal)</span>
+<span id="L49">49     (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)</span>
+<span id="L50">50     (hmean : Measurable (fun pair : Prod Context Action =&gt; mean pair.1 pair.2))</span>
+<span id="L51">51     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L52">52     (armMean : Action -&gt; Rat) (sigma2 : NNReal) (T : Nat)</span>
+<span id="L53">53     (hvariance : forall i : Nat, i &lt; T - 1 -&gt;</span>
+<span id="L54">54       forall history : ((j : Finset.Iic i) -&gt; Rat),</span>
+<span id="L55">55         varianceProxy (context i history)</span>
+<span id="L56">56           ((policy i).action (state i history)) &lt;= sigma2)</span>
+<span id="L57">57     (harmMean : forall i : Nat,</span>
+<span id="L58">58       forall history : ((j : Finset.Iic i) -&gt; Rat),</span>
+<span id="L59">59         forall arm, arm ∈ arms -&gt;</span>
+<span id="L60">60           mean (context i history) arm = armMean arm)</span>
+<span id="L61">61     (hT : 0 &lt; T) (hsigma2 : 0 &lt; (((sigma2 : NNReal) : Real)))</span>
+<span id="L62">62     (delta : Real) (hdelta : 0 &lt; delta)</span>
+<span id="L63">63     (source : SelectedPolicySuccessorInitializedScoreMaxSource</span>
+<span id="L64">64       (fun trajectory : Nat -&gt; Prod Action Rat =&gt; fun t =&gt; (trajectory t).1)</span>
+<span id="L65">65       (fun trajectory : Nat -&gt; Prod Action Rat =&gt; fun t =&gt; (trajectory t).2)</span>
+<span id="L66">66       arms armMean sigma2 T delta) :</span>
+<span id="L67">67     let pairContext :</span>
+<span id="L68">68         (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod Action Rat) -&gt; Context :=</span>
+<span id="L69">69       fun i history =&gt;</span>
+<span id="L70">70         context i (History.pairHistoryRewardProjection history)</span>
+<span id="L71">71     let pairState :</span>
+<span id="L72">72         (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod Action Rat) -&gt; State :=</span>
+<span id="L73">73       fun i history =&gt;</span>
+<span id="L74">74         state i (History.pairHistoryRewardProjection history)</span>
+<span id="L75">75     let hpairContext : forall i : Nat, Measurable (pairContext i) := fun i =&gt;</span>
+<span id="L76">76       (hcontext i).comp</span>
+<span id="L77">77         (History.measurable_pairHistoryRewardProjection</span>
+<span id="L78">78           (Action := Action) (Reward := Rat) i)</span>
+<span id="L79">79     let hpairState : forall i : Nat, Measurable (pairState i) := fun i =&gt;</span>
+<span id="L80">80       (hstate i).comp</span>
+<span id="L81">81         (History.measurable_pairHistoryRewardProjection</span>
+<span id="L82">82           (Action := Action) (Reward := Rat) i)</span>
+<span id="L83">83     let stepKernel :=</span>
+<span id="L84">84       RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L85">85         pairContext pairState hpairContext hpairState</span>
+<span id="L86">86     let mu :=</span>
+<span id="L87">87       ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L88">88         (X := fun _ : Nat =&gt; Prod Action Rat) mu0 stepKernel</span>
+<span id="L89">89     mu (selectedPolicySuccessorLargeGapEvent source) &lt;= ENNReal.ofReal delta := by</span>
+<span id="L90">90   classical</span>
+<span id="L91">91   let pairContext :</span>
+<span id="L92">92       (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod Action Rat) -&gt; Context :=</span>
+<span id="L93">93     fun i history =&gt;</span>
+<span id="L94">94       context i (History.pairHistoryRewardProjection history)</span>
+<span id="L95">95   let pairState :</span>
+<span id="L96">96       (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod Action Rat) -&gt; State :=</span>
+<span id="L97">97     fun i history =&gt;</span>
+<span id="L98">98       state i (History.pairHistoryRewardProjection history)</span>
+<span id="L99">99   let hpairContext : forall i : Nat, Measurable (pairContext i) := fun i =&gt;</span>
+<span id="L100">100     (hcontext i).comp</span>
+<span id="L101">101       (History.measurable_pairHistoryRewardProjection</span>
+<span id="L102">102         (Action := Action) (Reward := Rat) i)</span>
+<span id="L103">103   let hpairState : forall i : Nat, Measurable (pairState i) := fun i =&gt;</span>
+<span id="L104">104     (hstate i).comp</span>
+<span id="L105">105       (History.measurable_pairHistoryRewardProjection</span>
+<span id="L106">106         (Action := Action) (Reward := Rat) i)</span>
+<span id="L107">107   let stepKernel :=</span>
+<span id="L108">108     RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L109">109       pairContext pairState hpairContext hpairState</span>
+<span id="L110">110   let mu :=</span>
+<span id="L111">111     ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L112">112       (X := fun _ : Nat =&gt; Prod Action Rat) mu0 stepKernel</span>
+<span id="L113">113   let bad :=</span>
+<span id="L114">114     ConditionalExpectationReward.successorArmEmpiricalMeanFiniteArmTimeBadEvent</span>
+<span id="L115">115       (fun trajectory : Nat -&gt; Prod Action Rat =&gt; fun t =&gt; (trajectory t).1)</span>
+<span id="L116">116       (fun trajectory : Nat -&gt; Prod Action Rat =&gt; fun t =&gt; (trajectory t).2)</span>
+<span id="L117">117       arms armMean sigma2 T delta</span>
+<span id="L118">118   have htail :=</span>
+<span id="L119">119     ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_finiteArmTime_abs_tail_ennreal_delta_trajMeasure</span>
+<span id="L120">120       (mu0 := mu0)</span>
+<span id="L121">121       (rewardKernel := rewardKernel)</span>
+<span id="L122">122       (policy := policy)</span>
+<span id="L123">123       (context := context)</span>
+<span id="L124">124       (state := state)</span>
+<span id="L125">125       (hcontext := hcontext)</span>
+<span id="L126">126       (hstate := hstate)</span>
+<span id="L127">127       (mean := mean)</span>
+<span id="L128">128       (varianceProxy := varianceProxy)</span>
+<span id="L129">129       (law := law)</span>
+<span id="L130">130       (hmean := hmean)</span>
+<span id="L131">131       (arms := arms) harms</span>
+<span id="L132">132       (armMean := armMean)</span>
+<span id="L133">133       (sigma2 := sigma2)</span>
+<span id="L134">134       (T := T)</span>
+<span id="L135">135       (hvariance := hvariance)</span>
+<span id="L136">136       (harmMean := harmMean)</span>
+<span id="L137">137       hT hsigma2 delta hdelta</span>
+<span id="L138">138   have htail&#x27; : mu bad &lt;= ENNReal.ofReal delta := by</span>
+<span id="L139">139     simpa [pairContext, pairState, hpairContext, hpairState, stepKernel, mu,</span>
+<span id="L140">140       bad] using htail</span>
+<span id="L141">141   have hsubset : selectedPolicySuccessorLargeGapEvent source ⊆ bad := by</span>
+<span id="L142">142     intro trajectory hlargeEvent</span>
+<span id="L143">143     rcases hlargeEvent with ⟨t, ht, hlarge⟩</span>
+<span id="L144">144     by_contra hgood</span>
+<span id="L145">145     have hgap := source.meanGap_le_two_radius_of_not_badEvent</span>
+<span id="L146">146       trajectory t ht (by simpa [bad] using hgood)</span>
+<span id="L147">147     exact (not_lt_of_ge hgap) hlarge</span>
+<span id="L148">148   have hresult :</span>
+<span id="L149">149       mu (selectedPolicySuccessorLargeGapEvent source) &lt;=</span>
+<span id="L150">150         ENNReal.ofReal delta :=</span>
+<span id="L151">151     (measure_mono hsubset).trans htail&#x27;</span>
+<span id="L152">152   simpa [pairContext, pairState, hpairContext, hpairState, stepKernel, mu]</span>
+<span id="L153">153     using hresult</span>
+<span id="L154">154 </span>
+<span id="L155">155 /-</span>
+<span id="L156">156 Concrete generated-UCB large-gap event bound on the canonical pair trajectory.</span>
+<span id="L157">157 </span>
+<span id="L158">158 The generated UCB source is defined from the reward coordinate. Its action</span>
+<span id="L159">159 trace agrees with the sampled pair action only almost everywhere; the proof</span>
+<span id="L160">160 therefore transports the full generated confidence event on that a.e. set</span>
+<span id="L161">161 before applying the sampled-coordinate simultaneous theorem.</span>
+<span id="L162">162 -/</span>
+<span id="L163">163 theorem measure_selectedPolicySuccessorLargeGapEvent_generatedUCB_le_ennreal_delta_actionRewardTrajMeasure_centeredKernel</span>
+<span id="L164">164     {Context : Type u} {K : Nat} [MeasurableSpace Context]</span>
+<span id="L165">165     (hK : 0 &lt; K)</span>
+<span id="L166">166     (mu0 : Measure (Prod (Fin K) Rat)) [IsProbabilityMeasure mu0]</span>
+<span id="L167">167     (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat)</span>
+<span id="L168">168     (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context)</span>
+<span id="L169">169     (mean : Context -&gt; Fin K -&gt; Rat)</span>
+<span id="L170">170     (varianceProxy : Context -&gt; Fin K -&gt; NNReal)</span>
+<span id="L171">171     (defaultAction best : Fin K)</span>
+<span id="L172">172     (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (T : Nat) (delta : Real)</span>
+<span id="L173">173     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L174">174     (hmean : Measurable (fun pair : Prod Context (Fin K) =&gt;</span>
+<span id="L175">175       mean pair.1 pair.2))</span>
+<span id="L176">176     (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)</span>
+<span id="L177">177     (hvariance : forall i : Nat, i &lt; T - 1 -&gt;</span>
+<span id="L178">178       forall history : ((j : Finset.Iic i) -&gt; Rat),</span>
+<span id="L179">179         varianceProxy (context i history)</span>
+<span id="L180">180             ((selectedPolicySuccessorHistoryPolicy</span>
+<span id="L181">181               hK sigma2 T delta defaultAction i).action</span>
+<span id="L182">182               (selectedPolicySuccessorHistoryState</span>
+<span id="L183">183                 hK sigma2 T delta defaultAction i history)) &lt;=</span>
+<span id="L184">184           sigma2)</span>
+<span id="L185">185     (harmMean : forall i : Nat,</span>
+<span id="L186">186       forall history : ((j : Finset.Iic i) -&gt; Rat),</span>
+<span id="L187">187         forall arm : Fin K,</span>
+<span id="L188">188           mean (context i history) arm = armMean arm)</span>
+<span id="L189">189     (hT : 0 &lt; T) (hsigma2 : 0 &lt; (((sigma2 : NNReal) : Real)))</span>
+<span id="L190">190     (hdelta : 0 &lt; delta) :</span>
+<span id="L191">191     let policy := selectedPolicySuccessorHistoryPolicy</span>
+<span id="L192">192       hK sigma2 T delta defaultAction</span>
+<span id="L193">193     let state := selectedPolicySuccessorHistoryState</span>
+<span id="L194">194       hK sigma2 T delta defaultAction</span>
+<span id="L195">195     let pairContext :</span>
+<span id="L196">196         (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod (Fin K) Rat) -&gt; Context :=</span>
+<span id="L197">197       fun i history =&gt;</span>
+<span id="L198">198         context i (History.pairHistoryRewardProjection history)</span>
+<span id="L199">199     let pairState :</span>
+<span id="L200">200         (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod (Fin K) Rat) -&gt;</span>
+<span id="L201">201           SelectedPolicySuccessorFiniteHistoryState K :=</span>
+<span id="L202">202       fun i history =&gt;</span>
+<span id="L203">203         state i (History.pairHistoryRewardProjection history)</span>
+<span id="L204">204     let hpairContext : forall i : Nat, Measurable (pairContext i) := fun i =&gt;</span>
+<span id="L205">205       (hcontext i).comp</span>
+<span id="L206">206         (History.measurable_pairHistoryRewardProjection</span>
+<span id="L207">207           (Action := Fin K) (Reward := Rat) i)</span>
+<span id="L208">208     let hpairState : forall i : Nat, Measurable (pairState i) := fun i =&gt;</span>
+<span id="L209">209       (measurable_selectedPolicySuccessorHistoryState</span>
+<span id="L210">210         hK sigma2 T delta defaultAction i).comp</span>
+<span id="L211">211         (History.measurable_pairHistoryRewardProjection</span>
+<span id="L212">212           (Action := Fin K) (Reward := Rat) i)</span>
+<span id="L213">213     let stepKernel :=</span>
+<span id="L214">214       RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L215">215         pairContext pairState hpairContext hpairState</span>
+<span id="L216">216     let mu :=</span>
+<span id="L217">217       ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L218">218         (X := fun _ : Nat =&gt; Prod (Fin K) Rat) mu0 stepKernel</span>
+<span id="L219">219     let reward : (Nat -&gt; Prod (Fin K) Rat) -&gt; RewardTrace Rat :=</span>
+<span id="L220">220       fun trajectory t =&gt; (trajectory t).2</span>
+<span id="L221">221     let source :=</span>
+<span id="L222">222       selectedPolicySuccessorGeneratedUCBInitializedScoreMaxSource</span>
+<span id="L223">223         hK reward armMean sigma2 T delta defaultAction best</span>
+<span id="L224">224     mu (selectedPolicySuccessorLargeGapEvent source) &lt;=</span>
+<span id="L225">225       ENNReal.ofReal delta := by</span>
+<span id="L226">226   classical</span>
+<span id="L227">227   letI : Nonempty (Fin K) := ⟨Fin.mk 0 hK⟩</span>
+<span id="L228">228   let policy := selectedPolicySuccessorHistoryPolicy</span>
+<span id="L229">229     hK sigma2 T delta defaultAction</span>
+<span id="L230">230   let state := selectedPolicySuccessorHistoryState</span>
+<span id="L231">231     hK sigma2 T delta defaultAction</span>
+<span id="L232">232   let pairContext :</span>
+<span id="L233">233       (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod (Fin K) Rat) -&gt; Context :=</span>
+<span id="L234">234     fun i history =&gt;</span>
+<span id="L235">235       context i (History.pairHistoryRewardProjection history)</span>
+<span id="L236">236   let pairState :</span>
+<span id="L237">237       (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod (Fin K) Rat) -&gt;</span>
+<span id="L238">238         SelectedPolicySuccessorFiniteHistoryState K :=</span>
+<span id="L239">239     fun i history =&gt;</span>
+<span id="L240">240       state i (History.pairHistoryRewardProjection history)</span>
+<span id="L241">241   let hpairContext : forall i : Nat, Measurable (pairContext i) := fun i =&gt;</span>
+<span id="L242">242     (hcontext i).comp</span>
+<span id="L243">243       (History.measurable_pairHistoryRewardProjection</span>
+<span id="L244">244         (Action := Fin K) (Reward := Rat) i)</span>
+<span id="L245">245   let hpairState : forall i : Nat, Measurable (pairState i) := fun i =&gt;</span>
+<span id="L246">246     (measurable_selectedPolicySuccessorHistoryState</span>
+<span id="L247">247       hK sigma2 T delta defaultAction i).comp</span>
+<span id="L248">248       (History.measurable_pairHistoryRewardProjection</span>
+<span id="L249">249         (Action := Fin K) (Reward := Rat) i)</span>
+<span id="L250">250   let stepKernel :=</span>
+<span id="L251">251     RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L252">252       pairContext pairState hpairContext hpairState</span>
+<span id="L253">253   let mu :=</span>
+<span id="L254">254     ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L255">255       (X := fun _ : Nat =&gt; Prod (Fin K) Rat) mu0 stepKernel</span>
+<span id="L256">256   let sampledAction : (Nat -&gt; Prod (Fin K) Rat) -&gt; ActionTrace (Fin K) :=</span>
+<span id="L257">257     fun trajectory t =&gt; (trajectory t).1</span>
+<span id="L258">258   let reward : (Nat -&gt; Prod (Fin K) Rat) -&gt; RewardTrace Rat :=</span>
+<span id="L259">259     fun trajectory t =&gt; (trajectory t).2</span>
+<span id="L260">260   let generatedAction := selectedPolicySuccessorGeneratedUCBAction</span>
+<span id="L261">261     hK sigma2 T delta defaultAction reward</span>
+<span id="L262">262   let source :=</span>
+<span id="L263">263     selectedPolicySuccessorGeneratedUCBInitializedScoreMaxSource</span>
+<span id="L264">264       hK reward armMean sigma2 T delta defaultAction best</span>
+<span id="L265">265   let sampledBad :=</span>
+<span id="L266">266     ConditionalExpectationReward.successorArmEmpiricalMeanFiniteArmTimeBadEvent</span>
+<span id="L267">267       sampledAction reward (Finset.univ : Finset (Fin K)) armMean sigma2 T delta</span>
+<span id="L268">268   let generatedBad :=</span>
+<span id="L269">269     ConditionalExpectationReward.successorArmEmpiricalMeanFiniteArmTimeBadEvent</span>
+<span id="L270">270       generatedAction reward (Finset.univ : Finset (Fin K)) armMean sigma2 T delta</span>
+<span id="L271">271   have htail :=</span>
+<span id="L272">272     ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_finiteArmTime_abs_tail_ennreal_delta_trajMeasure</span>
+<span id="L273">273       (mu0 := mu0)</span>
+<span id="L274">274       (rewardKernel := rewardKernel)</span>
+<span id="L275">275       (policy := policy)</span>
+<span id="L276">276       (context := context)</span>
+<span id="L277">277       (state := state)</span>
+<span id="L278">278       (hcontext := hcontext)</span>
+<span id="L279">279       (hstate := measurable_selectedPolicySuccessorHistoryState</span>
+<span id="L280">280         hK sigma2 T delta defaultAction)</span>
+<span id="L281">281       (mean := mean)</span>
+<span id="L282">282       (varianceProxy := varianceProxy)</span>
+<span id="L283">283       (law := law)</span>
+<span id="L284">284       (hmean := hmean)</span>
+<span id="L285">285       (arms := (Finset.univ : Finset (Fin K)))</span>
+<span id="L286">286       (by exact ⟨defaultAction, Finset.mem_univ _⟩)</span>
+<span id="L287">287       (armMean := armMean)</span>
+<span id="L288">288       (sigma2 := sigma2)</span>
+<span id="L289">289       (T := T)</span>
+<span id="L290">290       (hvariance := hvariance)</span>
+<span id="L291">291       (harmMean := by</span>
+<span id="L292">292         intro i history arm _harm</span>
+<span id="L293">293         exact harmMean i history arm)</span>
+<span id="L294">294       hT hsigma2 delta hdelta</span>
+<span id="L295">295   have htail&#x27; : mu sampledBad &lt;= ENNReal.ofReal delta := by</span>
+<span id="L296">296     simpa [policy, state, pairContext, pairState, hpairContext, hpairState,</span>
+<span id="L297">297       stepKernel, mu, sampledAction, reward, sampledBad] using htail</span>
+<span id="L298">298   have hactionEq : forall i : Nat,</span>
+<span id="L299">299       Filter.EventuallyEq (ae mu)</span>
+<span id="L300">300         (fun trajectory : Nat -&gt; Prod (Fin K) Rat =&gt;</span>
+<span id="L301">301           sampledAction trajectory (i + 1))</span>
+<span id="L302">302         (fun trajectory : Nat -&gt; Prod (Fin K) Rat =&gt;</span>
+<span id="L303">303           generatedAction trajectory (i + 1)) := by</span>
+<span id="L304">304     intro i</span>
+<span id="L305">305     have hcanonical :=</span>
+<span id="L306">306       ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_action_succ_ae_eq_policy_trajMeasure</span>
+<span id="L307">307         mu0 rewardKernel policy pairContext pairState hpairContext hpairState i</span>
+<span id="L308">308     simpa [mu, stepKernel, sampledAction, generatedAction,</span>
+<span id="L309">309       selectedPolicySuccessorGeneratedUCBAction,</span>
+<span id="L310">310       ConditionalExpectationReward.generatedActionFromRewardHistory,</span>
+<span id="L311">311       Policy.generatedActionTraceSucc, policy, state, pairState, reward,</span>
+<span id="L312">312       History.pairHistoryRewardProjection, History.finiteRewardHistoryOfTrace,</span>
+<span id="L313">313       Preorder.frestrictLe_apply] using hcanonical</span>
+<span id="L314">314   have hactionAll : ∀ᵐ trajectory ∂mu, forall i : Nat,</span>
+<span id="L315">315       sampledAction trajectory (i + 1) =</span>
+<span id="L316">316         generatedAction trajectory (i + 1) :=</span>
+<span id="L317">317     ae_all_iff.2 hactionEq</span>
+<span id="L318">318   have hgeneratedBad_to_sampledBad : ∀ᵐ trajectory ∂mu,</span>
+<span id="L319">319       trajectory ∈ generatedBad -&gt; trajectory ∈ sampledBad := by</span>
+<span id="L320">320     filter_upwards [hactionAll] with trajectory htrajectory</span>
+<span id="L321">321     intro hbad</span>
+<span id="L322">322     have hshift :</span>
+<span id="L323">323         (fun i =&gt; sampledAction trajectory (i + 1)) =</span>
+<span id="L324">324           (fun i =&gt; generatedAction trajectory (i + 1)) := by</span>
+<span id="L325">325       funext i</span>
+<span id="L326">326       exact htrajectory i</span>
+<span id="L327">327     simpa [sampledBad, generatedBad,</span>
+<span id="L328">328       ConditionalExpectationReward.successorArmEmpiricalMeanFiniteArmTimeBadEvent,</span>
+<span id="L329">329       ConditionalExpectationReward.successorArmEmpiricalMean,</span>
+<span id="L330">330       ConditionalExpectationReward.successorArmRewardSum,</span>
+<span id="L331">331       ConditionalExpectationReward.successorArmPullCount, hshift] using hbad</span>
+<span id="L332">332   have hlarge_to_generatedBad :</span>
+<span id="L333">333       selectedPolicySuccessorLargeGapEvent source ⊆ generatedBad := by</span>
+<span id="L334">334     intro trajectory hlargeEvent</span>
+<span id="L335">335     rcases hlargeEvent with ⟨t, ht, hlarge⟩</span>
+<span id="L336">336     by_contra hgood</span>
+<span id="L337">337     have hgap := source.meanGap_le_two_radius_of_not_badEvent</span>
+<span id="L338">338       trajectory t ht (by</span>
+<span id="L339">339         simpa [source, generatedAction, generatedBad] using hgood)</span>
+<span id="L340">340     exact (not_lt_of_ge hgap) hlarge</span>
+<span id="L341">341   have hsubset : ∀ᵐ trajectory ∂mu,</span>
+<span id="L342">342       trajectory ∈ selectedPolicySuccessorLargeGapEvent source -&gt;</span>
+<span id="L343">343         trajectory ∈ sampledBad := by</span>
+<span id="L344">344     filter_upwards [hgeneratedBad_to_sampledBad] with trajectory htransport</span>
+<span id="L345">345     intro hlarge</span>
+<span id="L346">346     exact htransport (hlarge_to_generatedBad hlarge)</span>
+<span id="L347">347   have hresult :</span>
+<span id="L348">348       mu (selectedPolicySuccessorLargeGapEvent source) &lt;=</span>
+<span id="L349">349         ENNReal.ofReal delta :=</span>
+<span id="L350">350     (measure_mono_ae hsubset).trans htail&#x27;</span>
+<span id="L351">351   simpa [policy, state, pairContext, pairState, hpairContext, hpairState,</span>
+<span id="L352">352     stepKernel, mu, reward, source] using hresult</span>
+<span id="L353">353 </span>
+<span id="L354">354 /-</span>
+<span id="L355">355 Concrete generated-UCB pull-count tail on the canonical pair trajectory.</span>
+<span id="L356">356 </span>
+<span id="L357">357 The preceding theorem supplies the only probabilistic premise. The existing</span>
+<span id="L358">358 generated-policy consumer discharges the random-radius inversion at the</span>
+<span id="L359">359 explicit one-more-than-ceiling threshold.</span>
+<span id="L360">360 -/</span>
+<span id="L361">361 theorem measure_successorArmPullCount_selectedPolicySuccessorGeneratedUCBAction_gt_explicitPullThreshold_le_ennreal_delta_actionRewardTrajMeasure_centeredKernel</span>
+<span id="L362">362     {Context : Type u} {K : Nat} [MeasurableSpace Context]</span>
+<span id="L363">363     (hK : 0 &lt; K)</span>
+<span id="L364">364     (mu0 : Measure (Prod (Fin K) Rat)) [IsProbabilityMeasure mu0]</span>
+<span id="L365">365     (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat)</span>
+<span id="L366">366     (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context)</span>
+<span id="L367">367     (mean : Context -&gt; Fin K -&gt; Rat)</span>
+<span id="L368">368     (varianceProxy : Context -&gt; Fin K -&gt; NNReal)</span>
+<span id="L369">369     (defaultAction best chosen : Fin K)</span>
+<span id="L370">370     (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (T : Nat) (delta : Real)</span>
+<span id="L371">371     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L372">372     (hmean : Measurable (fun pair : Prod Context (Fin K) =&gt;</span>
+<span id="L373">373       mean pair.1 pair.2))</span>
+<span id="L374">374     (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)</span>
+<span id="L375">375     (hvariance : forall i : Nat, i &lt; T - 1 -&gt;</span>
+<span id="L376">376       forall history : ((j : Finset.Iic i) -&gt; Rat),</span>
+<span id="L377">377         varianceProxy (context i history)</span>
+<span id="L378">378             ((selectedPolicySuccessorHistoryPolicy</span>
+<span id="L379">379               hK sigma2 T delta defaultAction i).action</span>
+<span id="L380">380               (selectedPolicySuccessorHistoryState</span>
+<span id="L381">381                 hK sigma2 T delta defaultAction i history)) &lt;=</span>
+<span id="L382">382           sigma2)</span>
+<span id="L383">383     (harmMean : forall i : Nat,</span>
+<span id="L384">384       forall history : ((j : Finset.Iic i) -&gt; Rat),</span>
+<span id="L385">385         forall arm : Fin K,</span>
+<span id="L386">386           mean (context i history) arm = armMean arm)</span>
+<span id="L387">387     (hT : 0 &lt; T) (hsigma2 : 0 &lt; (((sigma2 : NNReal) : Real)))</span>
+<span id="L388">388     (hdelta : 0 &lt; delta)</span>
+<span id="L389">389     (hgap : 0 &lt; meanGap (fun arm =&gt; (armMean arm : Real)) best chosen) :</span>
+<span id="L390">390     let policy := selectedPolicySuccessorHistoryPolicy</span>
+<span id="L391">391       hK sigma2 T delta defaultAction</span>
+<span id="L392">392     let state := selectedPolicySuccessorHistoryState</span>
+<span id="L393">393       hK sigma2 T delta defaultAction</span>
+<span id="L394">394     let pairContext :</span>
+<span id="L395">395         (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod (Fin K) Rat) -&gt; Context :=</span>
+<span id="L396">396       fun i history =&gt;</span>
+<span id="L397">397         context i (History.pairHistoryRewardProjection history)</span>
+<span id="L398">398     let pairState :</span>
+<span id="L399">399         (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod (Fin K) Rat) -&gt;</span>
+<span id="L400">400           SelectedPolicySuccessorFiniteHistoryState K :=</span>
+<span id="L401">401       fun i history =&gt;</span>
+<span id="L402">402         state i (History.pairHistoryRewardProjection history)</span>
+<span id="L403">403     let hpairContext : forall i : Nat, Measurable (pairContext i) := fun i =&gt;</span>
+<span id="L404">404       (hcontext i).comp</span>
+<span id="L405">405         (History.measurable_pairHistoryRewardProjection</span>
+<span id="L406">406           (Action := Fin K) (Reward := Rat) i)</span>
+<span id="L407">407     let hpairState : forall i : Nat, Measurable (pairState i) := fun i =&gt;</span>
+<span id="L408">408       (measurable_selectedPolicySuccessorHistoryState</span>
+<span id="L409">409         hK sigma2 T delta defaultAction i).comp</span>
+<span id="L410">410         (History.measurable_pairHistoryRewardProjection</span>
+<span id="L411">411           (Action := Fin K) (Reward := Rat) i)</span>
+<span id="L412">412     let stepKernel :=</span>
+<span id="L413">413       RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L414">414         pairContext pairState hpairContext hpairState</span>
+<span id="L415">415     let mu :=</span>
+<span id="L416">416       ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L417">417         (X := fun _ : Nat =&gt; Prod (Fin K) Rat) mu0 stepKernel</span>
+<span id="L418">418     let reward : (Nat -&gt; Prod (Fin K) Rat) -&gt; RewardTrace Rat :=</span>
+<span id="L419">419       fun trajectory t =&gt; (trajectory t).2</span>
+<span id="L420">420     let generatedAction := selectedPolicySuccessorGeneratedUCBAction</span>
+<span id="L421">421       hK sigma2 T delta defaultAction reward</span>
+<span id="L422">422     let gap := meanGap (fun arm =&gt; (armMean arm : Real)) best chosen</span>
+<span id="L423">423     mu {trajectory |</span>
+<span id="L424">424         selectedPolicySuccessorPullThreshold K sigma2 T delta gap &lt;</span>
+<span id="L425">425           ConditionalExpectationReward.successorArmPullCount</span>
+<span id="L426">426             (generatedAction trajectory) chosen (T + 1)} &lt;=</span>
+<span id="L427">427       ENNReal.ofReal delta := by</span>
+<span id="L428">428   classical</span>
+<span id="L429">429   let policy := selectedPolicySuccessorHistoryPolicy</span>
+<span id="L430">430     hK sigma2 T delta defaultAction</span>
+<span id="L431">431   let state := selectedPolicySuccessorHistoryState</span>
+<span id="L432">432     hK sigma2 T delta defaultAction</span>
+<span id="L433">433   let pairContext :</span>
+<span id="L434">434       (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod (Fin K) Rat) -&gt; Context :=</span>
+<span id="L435">435     fun i history =&gt;</span>
+<span id="L436">436       context i (History.pairHistoryRewardProjection history)</span>
+<span id="L437">437   let pairState :</span>
+<span id="L438">438       (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod (Fin K) Rat) -&gt;</span>
+<span id="L439">439         SelectedPolicySuccessorFiniteHistoryState K :=</span>
+<span id="L440">440     fun i history =&gt;</span>
+<span id="L441">441       state i (History.pairHistoryRewardProjection history)</span>
+<span id="L442">442   let hpairContext : forall i : Nat, Measurable (pairContext i) := fun i =&gt;</span>
+<span id="L443">443     (hcontext i).comp</span>
+<span id="L444">444       (History.measurable_pairHistoryRewardProjection</span>
+<span id="L445">445         (Action := Fin K) (Reward := Rat) i)</span>
+<span id="L446">446   let hpairState : forall i : Nat, Measurable (pairState i) := fun i =&gt;</span>
+<span id="L447">447     (measurable_selectedPolicySuccessorHistoryState</span>
+<span id="L448">448       hK sigma2 T delta defaultAction i).comp</span>
+<span id="L449">449       (History.measurable_pairHistoryRewardProjection</span>
+<span id="L450">450         (Action := Fin K) (Reward := Rat) i)</span>
+<span id="L451">451   let stepKernel :=</span>
+<span id="L452">452     RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L453">453       pairContext pairState hpairContext hpairState</span>
+<span id="L454">454   let mu :=</span>
+<span id="L455">455     ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L456">456       (X := fun _ : Nat =&gt; Prod (Fin K) Rat) mu0 stepKernel</span>
+<span id="L457">457   let reward : (Nat -&gt; Prod (Fin K) Rat) -&gt; RewardTrace Rat :=</span>
+<span id="L458">458     fun trajectory t =&gt; (trajectory t).2</span>
+<span id="L459">459   let generatedAction := selectedPolicySuccessorGeneratedUCBAction</span>
+<span id="L460">460     hK sigma2 T delta defaultAction reward</span>
+<span id="L461">461   let gap := meanGap (fun arm =&gt; (armMean arm : Real)) best chosen</span>
+<span id="L462">462   have hlarge :=</span>
+<span id="L463">463     measure_selectedPolicySuccessorLargeGapEvent_generatedUCB_le_ennreal_delta_actionRewardTrajMeasure_centeredKernel</span>
+<span id="L464">464       hK mu0 rewardKernel context mean varianceProxy defaultAction best armMean</span>
+<span id="L465">465         sigma2 T delta hcontext hmean law hvariance harmMean hT hsigma2 hdelta</span>
+<span id="L466">466   have hlarge&#x27; :</span>
+<span id="L467">467       mu (selectedPolicySuccessorLargeGapEvent</span>
+<span id="L468">468         (selectedPolicySuccessorGeneratedUCBInitializedScoreMaxSource</span>
+<span id="L469">469           hK reward armMean sigma2 T delta defaultAction best)) &lt;=</span>
+<span id="L470">470         ENNReal.ofReal delta := by</span>
+<span id="L471">471     simpa [policy, state, pairContext, pairState, hpairContext, hpairState,</span>
+<span id="L472">472       stepKernel, mu, reward] using hlarge</span>
+<span id="L473">473   have htail :=</span>
+<span id="L474">474     measure_successorArmPullCount_selectedPolicySuccessorGeneratedUCBAction_gt_explicitPullThreshold_le_of_largeGap</span>
+<span id="L475">475       hK mu reward armMean sigma2 T hT delta hdelta defaultAction best chosen</span>
+<span id="L476">476         hgap hlarge&#x27;</span>
+<span id="L477">477   simpa [generatedAction, gap] using htail</span>
+<span id="L478">478 </span>
+<span id="L479">479 /-</span>
+<span id="L480">480 Concrete generated-UCB ENNReal expected pull-count bound on the canonical pair</span>
+<span id="L481">481 trajectory. Reward-coordinate measurability is automatic from the product</span>
+<span id="L482">482 trajectory space; generated-action/count measurability and the finite-horizon</span>
+<span id="L483">483 tail integration are discharged by the existing consumer.</span>
+<span id="L484">484 -/</span>
+<span id="L485">485 theorem lintegral_successorArmPullCount_selectedPolicySuccessorGeneratedUCBAction_le_explicitPullThreshold_add_horizon_mul_delta_actionRewardTrajMeasure_centeredKernel</span>
+<span id="L486">486     {Context : Type u} {K : Nat} [MeasurableSpace Context]</span>
+<span id="L487">487     (hK : 0 &lt; K)</span>
+<span id="L488">488     (mu0 : Measure (Prod (Fin K) Rat)) [IsProbabilityMeasure mu0]</span>
+<span id="L489">489     (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat)</span>
+<span id="L490">490     (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context)</span>
+<span id="L491">491     (mean : Context -&gt; Fin K -&gt; Rat)</span>
+<span id="L492">492     (varianceProxy : Context -&gt; Fin K -&gt; NNReal)</span>
+<span id="L493">493     (defaultAction best chosen : Fin K)</span>
+<span id="L494">494     (armMean : Fin K -&gt; Rat) (sigma2 : NNReal) (T : Nat) (delta : Real)</span>
+<span id="L495">495     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L496">496     (hmean : Measurable (fun pair : Prod Context (Fin K) =&gt;</span>
+<span id="L497">497       mean pair.1 pair.2))</span>
+<span id="L498">498     (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)</span>
+<span id="L499">499     (hvariance : forall i : Nat, i &lt; T - 1 -&gt;</span>
+<span id="L500">500       forall history : ((j : Finset.Iic i) -&gt; Rat),</span>
+<span id="L501">501         varianceProxy (context i history)</span>
+<span id="L502">502             ((selectedPolicySuccessorHistoryPolicy</span>
+<span id="L503">503               hK sigma2 T delta defaultAction i).action</span>
+<span id="L504">504               (selectedPolicySuccessorHistoryState</span>
+<span id="L505">505                 hK sigma2 T delta defaultAction i history)) &lt;=</span>
+<span id="L506">506           sigma2)</span>
+<span id="L507">507     (harmMean : forall i : Nat,</span>
+<span id="L508">508       forall history : ((j : Finset.Iic i) -&gt; Rat),</span>
+<span id="L509">509         forall arm : Fin K,</span>
+<span id="L510">510           mean (context i history) arm = armMean arm)</span>
+<span id="L511">511     (hT : 0 &lt; T) (hsigma2 : 0 &lt; (((sigma2 : NNReal) : Real)))</span>
+<span id="L512">512     (hdelta : 0 &lt; delta)</span>
+<span id="L513">513     (hgap : 0 &lt; meanGap (fun arm =&gt; (armMean arm : Real)) best chosen) :</span>
+<span id="L514">514     let policy := selectedPolicySuccessorHistoryPolicy</span>
+<span id="L515">515       hK sigma2 T delta defaultAction</span>
+<span id="L516">516     let state := selectedPolicySuccessorHistoryState</span>
+<span id="L517">517       hK sigma2 T delta defaultAction</span>
+<span id="L518">518     let pairContext :</span>
+<span id="L519">519         (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod (Fin K) Rat) -&gt; Context :=</span>
+<span id="L520">520       fun i history =&gt;</span>
+<span id="L521">521         context i (History.pairHistoryRewardProjection history)</span>
+<span id="L522">522     let pairState :</span>
+<span id="L523">523         (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod (Fin K) Rat) -&gt;</span>
+<span id="L524">524           SelectedPolicySuccessorFiniteHistoryState K :=</span>
+<span id="L525">525       fun i history =&gt;</span>
+<span id="L526">526         state i (History.pairHistoryRewardProjection history)</span>
+<span id="L527">527     let hpairContext : forall i : Nat, Measurable (pairContext i) := fun i =&gt;</span>
+<span id="L528">528       (hcontext i).comp</span>
+<span id="L529">529         (History.measurable_pairHistoryRewardProjection</span>
+<span id="L530">530           (Action := Fin K) (Reward := Rat) i)</span>
+<span id="L531">531     let hpairState : forall i : Nat, Measurable (pairState i) := fun i =&gt;</span>
+<span id="L532">532       (measurable_selectedPolicySuccessorHistoryState</span>
+<span id="L533">533         hK sigma2 T delta defaultAction i).comp</span>
+<span id="L534">534         (History.measurable_pairHistoryRewardProjection</span>
+<span id="L535">535           (Action := Fin K) (Reward := Rat) i)</span>
+<span id="L536">536     let stepKernel :=</span>
+<span id="L537">537       RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L538">538         pairContext pairState hpairContext hpairState</span>
+<span id="L539">539     let mu :=</span>
+<span id="L540">540       ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L541">541         (X := fun _ : Nat =&gt; Prod (Fin K) Rat) mu0 stepKernel</span>
+<span id="L542">542     let reward : (Nat -&gt; Prod (Fin K) Rat) -&gt; RewardTrace Rat :=</span>
+<span id="L543">543       fun trajectory t =&gt; (trajectory t).2</span>
+<span id="L544">544     let generatedAction := selectedPolicySuccessorGeneratedUCBAction</span>
+<span id="L545">545       hK sigma2 T delta defaultAction reward</span>
+<span id="L546">546     let gap := meanGap (fun arm =&gt; (armMean arm : Real)) best chosen</span>
+<span id="L547">547     ∫⁻ trajectory,</span>
+<span id="L548">548         (ConditionalExpectationReward.successorArmPullCount</span>
+<span id="L549">549           (generatedAction trajectory) chosen (T + 1) : ENNReal) ∂mu &lt;=</span>
+<span id="L550">550       (selectedPolicySuccessorPullThreshold K sigma2 T delta gap : ENNReal) +</span>
+<span id="L551">551         (T : ENNReal) * ENNReal.ofReal delta := by</span>
+<span id="L552">552   classical</span>
+<span id="L553">553   let policy := selectedPolicySuccessorHistoryPolicy</span>
+<span id="L554">554     hK sigma2 T delta defaultAction</span>
+<span id="L555">555   let state := selectedPolicySuccessorHistoryState</span>
+<span id="L556">556     hK sigma2 T delta defaultAction</span>
+<span id="L557">557   let pairContext :</span>
+<span id="L558">558       (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod (Fin K) Rat) -&gt; Context :=</span>
+<span id="L559">559     fun i history =&gt;</span>
+<span id="L560">560       context i (History.pairHistoryRewardProjection history)</span>
+<span id="L561">561   let pairState :</span>
+<span id="L562">562       (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod (Fin K) Rat) -&gt;</span>
+<span id="L563">563         SelectedPolicySuccessorFiniteHistoryState K :=</span>
+<span id="L564">564     fun i history =&gt;</span>
+<span id="L565">565       state i (History.pairHistoryRewardProjection history)</span>
+<span id="L566">566   let hpairContext : forall i : Nat, Measurable (pairContext i) := fun i =&gt;</span>
+<span id="L567">567     (hcontext i).comp</span>
+<span id="L568">568       (History.measurable_pairHistoryRewardProjection</span>
+<span id="L569">569         (Action := Fin K) (Reward := Rat) i)</span>
+<span id="L570">570   let hpairState : forall i : Nat, Measurable (pairState i) := fun i =&gt;</span>
+<span id="L571">571     (measurable_selectedPolicySuccessorHistoryState</span>
+<span id="L572">572       hK sigma2 T delta defaultAction i).comp</span>
+<span id="L573">573       (History.measurable_pairHistoryRewardProjection</span>
+<span id="L574">574         (Action := Fin K) (Reward := Rat) i)</span>
+<span id="L575">575   let stepKernel :=</span>
+<span id="L576">576     RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L577">577       pairContext pairState hpairContext hpairState</span>
+<span id="L578">578   let mu :=</span>
+<span id="L579">579     ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L580">580       (X := fun _ : Nat =&gt; Prod (Fin K) Rat) mu0 stepKernel</span>
+<span id="L581">581   let reward : (Nat -&gt; Prod (Fin K) Rat) -&gt; RewardTrace Rat :=</span>
+<span id="L582">582     fun trajectory t =&gt; (trajectory t).2</span>
+<span id="L583">583   let generatedAction := selectedPolicySuccessorGeneratedUCBAction</span>
+<span id="L584">584     hK sigma2 T delta defaultAction reward</span>
+<span id="L585">585   let gap := meanGap (fun arm =&gt; (armMean arm : Real)) best chosen</span>
+<span id="L586">586   have hreward : forall t : Nat,</span>
+<span id="L587">587       Measurable (fun trajectory : Nat -&gt; Prod (Fin K) Rat =&gt;</span>
+<span id="L588">588         reward trajectory t) := by</span>
+<span id="L589">589     intro t</span>
+<span id="L590">590     exact measurable_snd.comp (measurable_pi_apply t)</span>
+<span id="L591">591   have hlarge :=</span>
+<span id="L592">592     measure_selectedPolicySuccessorLargeGapEvent_generatedUCB_le_ennreal_delta_actionRewardTrajMeasure_centeredKernel</span>
+<span id="L593">593       hK mu0 rewardKernel context mean varianceProxy defaultAction best armMean</span>
+<span id="L594">594         sigma2 T delta hcontext hmean law hvariance harmMean hT hsigma2 hdelta</span>
+<span id="L595">595   have hlarge&#x27; :</span>
+<span id="L596">596       mu (selectedPolicySuccessorLargeGapEvent</span>
+<span id="L597">597         (selectedPolicySuccessorGeneratedUCBInitializedScoreMaxSource</span>
+<span id="L598">598           hK reward armMean sigma2 T delta defaultAction best)) &lt;=</span>
+<span id="L599">599         ENNReal.ofReal delta := by</span>
+<span id="L600">600     simpa [policy, state, pairContext, pairState, hpairContext, hpairState,</span>
+<span id="L601">601       stepKernel, mu, reward] using hlarge</span>
+<span id="L602">602   have hcount :=</span>
+<span id="L603">603     lintegral_successorArmPullCount_selectedPolicySuccessorGeneratedUCBAction_le_explicitPullThreshold_add_horizon_mul_delta_of_largeGap</span>
+<span id="L604">604       hK mu reward hreward armMean sigma2 T hT delta hdelta</span>
+<span id="L605">605         defaultAction best chosen hgap hlarge&#x27;</span>
+<span id="L606">606   simpa [generatedAction, gap] using hcount</span>
+<span id="L607">607 </span>
+<span id="L608">608 /-</span>
+<span id="L609">609 Finite-arm ENNReal pseudo-regret assembly on the canonical action/reward pair</span>
+<span id="L610">610 trajectory. The generic consumer requests the preceding expected-count bound</span>
+<span id="L611">611 only for positive-gap arms; zero-gap terms vanish after weighting.</span>
+<span id="L612">612 -/</span>
+<span id="L613">613 theorem lintegral_ofReal_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_explicitThresholdSum_actionRewardTrajMeasure_centeredKernel</span>
+<span id="L614">614     {Context : Type u} {K : Nat} [MeasurableSpace Context]</span>
+<span id="L615">615     (model : FiniteBanditModel K)</span>
+<span id="L616">616     (mu0 : Measure (Prod (Fin K) Rat)) [IsProbabilityMeasure mu0]</span>
+<span id="L617">617     (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat)</span>
+<span id="L618">618     (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context)</span>
+<span id="L619">619     (mean : Context -&gt; Fin K -&gt; Rat)</span>
+<span id="L620">620     (varianceProxy : Context -&gt; Fin K -&gt; NNReal)</span>
+<span id="L621">621     (defaultAction : Fin K) (sigma2 : NNReal) (T : Nat) (delta : Real)</span>
+<span id="L622">622     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L623">623     (hmean : Measurable (fun pair : Prod Context (Fin K) =&gt;</span>
+<span id="L624">624       mean pair.1 pair.2))</span>
+<span id="L625">625     (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)</span>
+<span id="L626">626     (hvariance : forall i : Nat, i &lt; T - 1 -&gt;</span>
+<span id="L627">627       forall history : ((j : Finset.Iic i) -&gt; Rat),</span>
+<span id="L628">628         varianceProxy (context i history)</span>
+<span id="L629">629             ((selectedPolicySuccessorHistoryPolicy</span>
+<span id="L630">630               model.hK sigma2 T delta defaultAction i).action</span>
+<span id="L631">631               (selectedPolicySuccessorHistoryState</span>
+<span id="L632">632                 model.hK sigma2 T delta defaultAction i history)) &lt;=</span>
+<span id="L633">633           sigma2)</span>
+<span id="L634">634     (harmMean : forall i : Nat,</span>
+<span id="L635">635       forall history : ((j : Finset.Iic i) -&gt; Rat),</span>
+<span id="L636">636         forall arm : Fin K,</span>
+<span id="L637">637           mean (context i history) arm = model.mean arm)</span>
+<span id="L638">638     (hT : 0 &lt; T) (hsigma2 : 0 &lt; (((sigma2 : NNReal) : Real)))</span>
+<span id="L639">639     (hdelta : 0 &lt; delta) :</span>
+<span id="L640">640     let policy := selectedPolicySuccessorHistoryPolicy</span>
+<span id="L641">641       model.hK sigma2 T delta defaultAction</span>
+<span id="L642">642     let state := selectedPolicySuccessorHistoryState</span>
+<span id="L643">643       model.hK sigma2 T delta defaultAction</span>
+<span id="L644">644     let pairContext :</span>
+<span id="L645">645         (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod (Fin K) Rat) -&gt; Context :=</span>
+<span id="L646">646       fun i history =&gt;</span>
+<span id="L647">647         context i (History.pairHistoryRewardProjection history)</span>
+<span id="L648">648     let pairState :</span>
+<span id="L649">649         (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod (Fin K) Rat) -&gt;</span>
+<span id="L650">650           SelectedPolicySuccessorFiniteHistoryState K :=</span>
+<span id="L651">651       fun i history =&gt;</span>
+<span id="L652">652         state i (History.pairHistoryRewardProjection history)</span>
+<span id="L653">653     let hpairContext : forall i : Nat, Measurable (pairContext i) := fun i =&gt;</span>
+<span id="L654">654       (hcontext i).comp</span>
+<span id="L655">655         (History.measurable_pairHistoryRewardProjection</span>
+<span id="L656">656           (Action := Fin K) (Reward := Rat) i)</span>
+<span id="L657">657     let hpairState : forall i : Nat, Measurable (pairState i) := fun i =&gt;</span>
+<span id="L658">658       (measurable_selectedPolicySuccessorHistoryState</span>
+<span id="L659">659         model.hK sigma2 T delta defaultAction i).comp</span>
+<span id="L660">660         (History.measurable_pairHistoryRewardProjection</span>
+<span id="L661">661           (Action := Fin K) (Reward := Rat) i)</span>
+<span id="L662">662     let stepKernel :=</span>
+<span id="L663">663       RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L664">664         pairContext pairState hpairContext hpairState</span>
+<span id="L665">665     let mu :=</span>
+<span id="L666">666       ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L667">667         (X := fun _ : Nat =&gt; Prod (Fin K) Rat) mu0 stepKernel</span>
+<span id="L668">668     let reward : (Nat -&gt; Prod (Fin K) Rat) -&gt; RewardTrace Rat :=</span>
+<span id="L669">669       fun trajectory t =&gt; (trajectory t).2</span>
+<span id="L670">670     let action := selectedPolicySuccessorGeneratedUCBRegretAction</span>
+<span id="L671">671       model.hK sigma2 T delta defaultAction reward</span>
+<span id="L672">672     ∫⁻ trajectory,</span>
+<span id="L673">673         ENNReal.ofReal</span>
+<span id="L674">674           (((pseudoRegret model (action trajectory) T : Rat) : Real)) ∂mu &lt;=</span>
+<span id="L675">675       (Finset.univ : Finset (Fin K)).sum (fun arm =&gt;</span>
+<span id="L676">676         ENNReal.ofReal (((model.gap arm : Rat) : Real)) *</span>
+<span id="L677">677           ((selectedPolicySuccessorPullThreshold K sigma2 T delta</span>
+<span id="L678">678               (((model.gap arm : Rat) : Real)) : Nat) : ENNReal) +</span>
+<span id="L679">679             ENNReal.ofReal (((model.gap arm : Rat) : Real)) *</span>
+<span id="L680">680               ((T : ENNReal) * ENNReal.ofReal delta)) := by</span>
+<span id="L681">681   classical</span>
+<span id="L682">682   let policy := selectedPolicySuccessorHistoryPolicy</span>
+<span id="L683">683     model.hK sigma2 T delta defaultAction</span>
+<span id="L684">684   let state := selectedPolicySuccessorHistoryState</span>
+<span id="L685">685     model.hK sigma2 T delta defaultAction</span>
+<span id="L686">686   let pairContext :</span>
+<span id="L687">687       (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod (Fin K) Rat) -&gt; Context :=</span>
+<span id="L688">688     fun i history =&gt;</span>
+<span id="L689">689       context i (History.pairHistoryRewardProjection history)</span>
+<span id="L690">690   let pairState :</span>
+<span id="L691">691       (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod (Fin K) Rat) -&gt;</span>
+<span id="L692">692         SelectedPolicySuccessorFiniteHistoryState K :=</span>
+<span id="L693">693     fun i history =&gt;</span>
+<span id="L694">694       state i (History.pairHistoryRewardProjection history)</span>
+<span id="L695">695   let hpairContext : forall i : Nat, Measurable (pairContext i) := fun i =&gt;</span>
+<span id="L696">696     (hcontext i).comp</span>
+<span id="L697">697       (History.measurable_pairHistoryRewardProjection</span>
+<span id="L698">698         (Action := Fin K) (Reward := Rat) i)</span>
+<span id="L699">699   let hpairState : forall i : Nat, Measurable (pairState i) := fun i =&gt;</span>
+<span id="L700">700     (measurable_selectedPolicySuccessorHistoryState</span>
+<span id="L701">701       model.hK sigma2 T delta defaultAction i).comp</span>
+<span id="L702">702       (History.measurable_pairHistoryRewardProjection</span>
+<span id="L703">703         (Action := Fin K) (Reward := Rat) i)</span>
+<span id="L704">704   let stepKernel :=</span>
+<span id="L705">705     RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L706">706       pairContext pairState hpairContext hpairState</span>
+<span id="L707">707   let mu :=</span>
+<span id="L708">708     ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L709">709       (X := fun _ : Nat =&gt; Prod (Fin K) Rat) mu0 stepKernel</span>
+<span id="L710">710   let reward : (Nat -&gt; Prod (Fin K) Rat) -&gt; RewardTrace Rat :=</span>
+<span id="L711">711     fun trajectory t =&gt; (trajectory t).2</span>
+<span id="L712">712   let action := selectedPolicySuccessorGeneratedUCBRegretAction</span>
+<span id="L713">713     model.hK sigma2 T delta defaultAction reward</span>
+<span id="L714">714   let bound : Fin K -&gt; ENNReal := fun arm =&gt;</span>
+<span id="L715">715     (selectedPolicySuccessorPullThreshold K sigma2 T delta</span>
+<span id="L716">716         (((model.gap arm : Rat) : Real)) : ENNReal) +</span>
+<span id="L717">717       (T : ENNReal) * ENNReal.ofReal delta</span>
+<span id="L718">718   have hreward : forall t : Nat,</span>
+<span id="L719">719       Measurable (fun trajectory : Nat -&gt; Prod (Fin K) Rat =&gt;</span>
+<span id="L720">720         reward trajectory t) := by</span>
+<span id="L721">721     intro t</span>
+<span id="L722">722     exact measurable_snd.comp (measurable_pi_apply t)</span>
+<span id="L723">723   have hbase :=</span>
+<span id="L724">724     lintegral_ofReal_pseudoRegret_le_sum_gap_mul_bound_of_positiveGap_pullCount</span>
+<span id="L725">725       mu model action</span>
+<span id="L726">726       (fun t =&gt;</span>
+<span id="L727">727         measurable_selectedPolicySuccessorGeneratedUCBRegretAction</span>
+<span id="L728">728           model.hK sigma2 T delta defaultAction reward hreward t)</span>
+<span id="L729">729       T bound</span>
+<span id="L730">730   have hcount : forall arm : Fin K,</span>
+<span id="L731">731       0 &lt; (((model.gap arm : Rat) : Real)) -&gt;</span>
+<span id="L732">732         ∫⁻ trajectory,</span>
+<span id="L733">733             ((pullCount (action trajectory) arm T : Nat) : ENNReal) ∂mu &lt;=</span>
+<span id="L734">734           bound arm := by</span>
+<span id="L735">735     intro arm hgap</span>
+<span id="L736">736     have hmeanGap :</span>
+<span id="L737">737         0 &lt; meanGap (fun a =&gt; ((model.mean a : Rat) : Real))</span>
+<span id="L738">738           model.bestArm arm := by</span>
+<span id="L739">739       rwa [modelMeanGap_bestArm_eq_realGap]</span>
+<span id="L740">740     have harm :=</span>
+<span id="L741">741       lintegral_successorArmPullCount_selectedPolicySuccessorGeneratedUCBAction_le_explicitPullThreshold_add_horizon_mul_delta_actionRewardTrajMeasure_centeredKernel</span>
+<span id="L742">742         (hK := model.hK)</span>
+<span id="L743">743         (mu0 := mu0)</span>
+<span id="L744">744         (rewardKernel := rewardKernel)</span>
+<span id="L745">745         (context := context)</span>
+<span id="L746">746         (mean := mean)</span>
+<span id="L747">747         (varianceProxy := varianceProxy)</span>
+<span id="L748">748         (defaultAction := defaultAction)</span>
+<span id="L749">749         (best := model.bestArm)</span>
+<span id="L750">750         (chosen := arm)</span>
+<span id="L751">751         (armMean := model.mean)</span>
+<span id="L752">752         (sigma2 := sigma2)</span>
+<span id="L753">753         (T := T)</span>
+<span id="L754">754         (delta := delta)</span>
+<span id="L755">755         (hcontext := hcontext)</span>
+<span id="L756">756         (hmean := hmean)</span>
+<span id="L757">757         (law := law)</span>
+<span id="L758">758         (hvariance := hvariance)</span>
+<span id="L759">759         (harmMean := harmMean)</span>
+<span id="L760">760         (hT := hT)</span>
+<span id="L761">761         (hsigma2 := hsigma2)</span>
+<span id="L762">762         (hdelta := hdelta)</span>
+<span id="L763">763         (hgap := hmeanGap)</span>
+<span id="L764">764     simpa only [policy, state, pairContext, pairState, hpairContext, hpairState,</span>
+<span id="L765">765       stepKernel, mu, reward, action, bound,</span>
+<span id="L766">766       modelMeanGap_bestArm_eq_realGap,</span>
+<span id="L767">767       pullCount_selectedPolicySuccessorGeneratedUCBRegretAction_eq] using harm</span>
+<span id="L768">768   refine (hbase hcount).trans_eq ?_</span>
+<span id="L769">769   apply Finset.sum_congr rfl</span>
+<span id="L770">770   intro arm _harm</span>
+<span id="L771">771   simp only [bound, mul_add]</span>
+<span id="L772">772 </span>
+<span id="L773">773 /-</span>
+<span id="L774">774 Canonical pair-trajectory textbook gap-sum endpoint. The preceding theorem</span>
+<span id="L775">775 supplies the exact gap-weighted explicit thresholds; the compiled finite-arm</span>
+<span id="L776">776 algebra filters positive gaps and removes one gap power.</span>
+<span id="L777">777 -/</span>
+<span id="L778">778 theorem lintegral_ofReal_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_actionRewardTrajMeasure_centeredKernel</span>
+<span id="L779">779     {Context : Type u} {K : Nat} [MeasurableSpace Context]</span>
+<span id="L780">780     (model : FiniteBanditModel K)</span>
+<span id="L781">781     (mu0 : Measure (Prod (Fin K) Rat)) [IsProbabilityMeasure mu0]</span>
+<span id="L782">782     (rewardKernel : RewardKernel.MarkovRewardKernel (Prod Context (Fin K)) Rat)</span>
+<span id="L783">783     (context : (n : Nat) -&gt; ((j : Finset.Iic n) -&gt; Rat) -&gt; Context)</span>
+<span id="L784">784     (mean : Context -&gt; Fin K -&gt; Rat)</span>
+<span id="L785">785     (varianceProxy : Context -&gt; Fin K -&gt; NNReal)</span>
+<span id="L786">786     (defaultAction : Fin K) (sigma2 : NNReal) (T : Nat) (delta : Real)</span>
+<span id="L787">787     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L788">788     (hmean : Measurable (fun pair : Prod Context (Fin K) =&gt;</span>
+<span id="L789">789       mean pair.1 pair.2))</span>
+<span id="L790">790     (law : RewardKernel.CenteredRewardKernelLaw rewardKernel mean varianceProxy)</span>
+<span id="L791">791     (hvariance : forall i : Nat, i &lt; T - 1 -&gt;</span>
+<span id="L792">792       forall history : ((j : Finset.Iic i) -&gt; Rat),</span>
+<span id="L793">793         varianceProxy (context i history)</span>
+<span id="L794">794             ((selectedPolicySuccessorHistoryPolicy</span>
+<span id="L795">795               model.hK sigma2 T delta defaultAction i).action</span>
+<span id="L796">796               (selectedPolicySuccessorHistoryState</span>
+<span id="L797">797                 model.hK sigma2 T delta defaultAction i history)) &lt;=</span>
+<span id="L798">798           sigma2)</span>
+<span id="L799">799     (harmMean : forall i : Nat,</span>
+<span id="L800">800       forall history : ((j : Finset.Iic i) -&gt; Rat),</span>
+<span id="L801">801         forall arm : Fin K,</span>
+<span id="L802">802           mean (context i history) arm = model.mean arm)</span>
+<span id="L803">803     (hT : 0 &lt; T) (hsigma2 : 0 &lt; (((sigma2 : NNReal) : Real)))</span>
+<span id="L804">804     (hdelta : 0 &lt; delta) :</span>
+<span id="L805">805     let policy := selectedPolicySuccessorHistoryPolicy</span>
+<span id="L806">806       model.hK sigma2 T delta defaultAction</span>
+<span id="L807">807     let state := selectedPolicySuccessorHistoryState</span>
+<span id="L808">808       model.hK sigma2 T delta defaultAction</span>
+<span id="L809">809     let pairContext :</span>
+<span id="L810">810         (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod (Fin K) Rat) -&gt; Context :=</span>
+<span id="L811">811       fun i history =&gt;</span>
+<span id="L812">812         context i (History.pairHistoryRewardProjection history)</span>
+<span id="L813">813     let pairState :</span>
+<span id="L814">814         (i : Nat) -&gt; ((j : Finset.Iic i) -&gt; Prod (Fin K) Rat) -&gt;</span>
+<span id="L815">815           SelectedPolicySuccessorFiniteHistoryState K :=</span>
+<span id="L816">816       fun i history =&gt;</span>
+<span id="L817">817         state i (History.pairHistoryRewardProjection history)</span>
+<span id="L818">818     let hpairContext : forall i : Nat, Measurable (pairContext i) := fun i =&gt;</span>
+<span id="L819">819       (hcontext i).comp</span>
+<span id="L820">820         (History.measurable_pairHistoryRewardProjection</span>
+<span id="L821">821           (Action := Fin K) (Reward := Rat) i)</span>
+<span id="L822">822     let hpairState : forall i : Nat, Measurable (pairState i) := fun i =&gt;</span>
+<span id="L823">823       (measurable_selectedPolicySuccessorHistoryState</span>
+<span id="L824">824         model.hK sigma2 T delta defaultAction i).comp</span>
+<span id="L825">825         (History.measurable_pairHistoryRewardProjection</span>
+<span id="L826">826           (Action := Fin K) (Reward := Rat) i)</span>
+<span id="L827">827     let stepKernel :=</span>
+<span id="L828">828       RewardKernel.actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L829">829         pairContext pairState hpairContext hpairState</span>
+<span id="L830">830     let mu :=</span>
+<span id="L831">831       ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L832">832         (X := fun _ : Nat =&gt; Prod (Fin K) Rat) mu0 stepKernel</span>
+<span id="L833">833     let reward : (Nat -&gt; Prod (Fin K) Rat) -&gt; RewardTrace Rat :=</span>
+<span id="L834">834       fun trajectory t =&gt; (trajectory t).2</span>
+<span id="L835">835     let action := selectedPolicySuccessorGeneratedUCBRegretAction</span>
+<span id="L836">836       model.hK sigma2 T delta defaultAction reward</span>
+<span id="L837">837     ∫⁻ trajectory,</span>
+<span id="L838">838         ENNReal.ofReal</span>
+<span id="L839">839           (((pseudoRegret model (action trajectory) T : Rat) : Real)) ∂mu &lt;=</span>
+<span id="L840">840       ((Finset.univ : Finset (Fin K)).filter (fun arm =&gt;</span>
+<span id="L841">841         0 &lt; (((model.gap arm : Rat) : Real)))).sum (fun arm =&gt;</span>
+<span id="L842">842           ENNReal.ofReal</span>
+<span id="L843">843               (selectedPolicySuccessorTextbookGapBudget K sigma2 T delta</span>
+<span id="L844">844                 (((model.gap arm : Rat) : Real))) +</span>
+<span id="L845">845             ENNReal.ofReal (((model.gap arm : Rat) : Real)) *</span>
+<span id="L846">846               ((T : ENNReal) * ENNReal.ofReal delta)) := by</span>
+<span id="L847">847   refine</span>
+<span id="L848">848     (lintegral_ofReal_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_explicitThresholdSum_actionRewardTrajMeasure_centeredKernel</span>
+<span id="L849">849       (model := model)</span>
+<span id="L850">850       (mu0 := mu0)</span>
+<span id="L851">851       (rewardKernel := rewardKernel)</span>
+<span id="L852">852       (context := context)</span>
+<span id="L853">853       (mean := mean)</span>
+<span id="L854">854       (varianceProxy := varianceProxy)</span>
+<span id="L855">855       (defaultAction := defaultAction)</span>
+<span id="L856">856       (sigma2 := sigma2)</span>
+<span id="L857">857       (T := T)</span>
+<span id="L858">858       (delta := delta)</span>
+<span id="L859">859       (hcontext := hcontext)</span>
+<span id="L860">860       (hmean := hmean)</span>
+<span id="L861">861       (law := law)</span>
+<span id="L862">862       (hvariance := hvariance)</span>
+<span id="L863">863       (harmMean := harmMean)</span>
+<span id="L864">864       (hT := hT)</span>
+<span id="L865">865       (hsigma2 := hsigma2)</span>
+<span id="L866">866       (hdelta := hdelta)).trans ?_</span>
+<span id="L867">867   exact sum_gap_mul_explicitThreshold_add_failure_le_textbookGapSum</span>
+<span id="L868">868     model sigma2 T delta</span>
+<span id="L869">869 </span>
+<span id="L870">870 end UCB</span>
+<span id="L871">871 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

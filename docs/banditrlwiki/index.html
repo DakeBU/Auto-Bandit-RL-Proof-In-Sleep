@@ -1,0 +1,895 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLwiki · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLwiki · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLwiki · BanditRLlib</title>
+  <link rel="icon" href="../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../index.html">Overview</a><a href="../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../learning/index.html">All chapters</a><a class="book-nav-link" href="../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group active" data-nav-group="research" data-nav-group-active="true" open><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="index.html" aria-current="page">BanditRLwiki</a><a href="frontier/index.html">Frontier leaves</a><a href="papers/index.html">Paper index</a><a href="progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../declarations/index.html">Lean declarations</a><a href="../implementation-map/index.html">Implementation map</a><a href="../lean-graph/index.html">Lean Graph</a><a href="../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../ide/index.html">Local Formalization Lab</a><a href="../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../community/index.html">Contribute</a><a href="../roadmap/index.html">Roadmap</a><a href="../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell wide-page">
+      <main class="page-main" id="main-content">
+<section class="hero wiki-hero" id="overview">
+  <p class="eyebrow">Assumption-indexed research atlas</p>
+  <h1>BanditRLwiki</h1>
+  <p class="lede">Compare published upper and lower bounds only under compatible assumptions, then inspect what BanditRLlib has—and has not—compiled for the same route.</p>
+  <p><strong>Published optimality, theorem-level source audit, and local Lean compilation are separate ledgers.</strong></p>
+  <div class="hero-actions"><a class="button primary" href="frontier/index.html">Open frontier leaves</a><a class="button" href="papers/index.html">Browse paper index</a><a class="button" href="progress/index.html">Audit progress</a></div>
+  <div class="stats-grid wiki-stats">
+    <div class="stat"><span class="stat-value">7</span><span class="stat-label">assumption families</span></div>
+    <div class="stat"><span class="stat-value">13</span><span class="stat-label">comparison cases</span></div>
+    <div class="stat"><span class="stat-value">12</span><span class="stat-label">exact or faithful source audits</span></div>
+    <div class="stat"><span class="stat-value">0</span><span class="stat-label">explicit literature-open leaves</span></div>
+    <div class="stat"><span class="stat-value">2</span><span class="stat-label">active source-frozen ports outside the comparison atlas</span></div>
+  </div>
+</section>
+<section id="reading-contract">
+  <h2>Read three statuses, never one blended badge</h2>
+  <div class="wiki-status-contract">
+    <article><p class="panel-kicker">Literature</p><h3>Is the rate matched?</h3><p>Upper and lower results are compared only after fixing problem class, feedback, horizon, regret notion, probability mode, and salient parameters.</p></article>
+    <article><p class="panel-kicker">Source audit</p><h3>How precisely was it checked?</h3><p>An exact theorem audit is different from a normalized rate comparison or a primary reference that still needs theorem-level review.</p></article>
+    <article><p class="panel-kicker">Lean</p><h3>What compiles locally?</h3><p>A compiled dependency or algorithm route is not automatically the paper theorem or a minimax terminal.</p></article>
+  </div>
+  <div class="callout warning"><strong>Open does not mean missing from this list.</strong> “Literature open” appears only after an explicit source audit. “Source audit pending” and “Lean blocked” are separate states.</div>
+</section>
+<section id="settings">
+  <p class="eyebrow">Start from assumptions</p><h2>Setting atlas</h2>
+  <div class="wiki-family-grid">
+<a class="wiki-family-card" href="settings/stochastic-finite/index.html">
+  <span class="wiki-family-count">2 cases</span>
+  <h3>Finite stochastic bandits</h3>
+  <p>Expected, asymptotic, and instance-dependent regret under stationary independent arm rewards.</p>
+  <span>Open setting →</span>
+</a>
+<a class="wiki-family-card" href="settings/adversarial-bobw/index.html">
+  <span class="wiki-family-count">2 cases</span>
+  <h3>Adversarial and best-of-both-worlds bandits</h3>
+  <p>External regret for bounded adversarial losses and algorithms that adapt to stochastic structure.</p>
+  <span>Open setting →</span>
+</a>
+<a class="wiki-family-card" href="settings/linear-contextual/index.html">
+  <span class="wiki-family-count">3 cases</span>
+  <h3>Linear and contextual bandits</h3>
+  <p>Linear realizability, self-normalized confidence, finite policy classes, and dimension-dependent lower bounds.</p>
+  <span>Open setting →</span>
+</a>
+<a class="wiki-family-card" href="settings/finite-horizon-rl/index.html">
+  <span class="wiki-family-count">1 case</span>
+  <h3>Finite-horizon tabular reinforcement learning</h3>
+  <p>Episodic tabular MDP regret, Hoeffding and Bernstein bonuses, and full-range minimax behavior.</p>
+  <span>Open setting →</span>
+</a>
+<a class="wiki-family-card" href="settings/delayed-nonstationary/index.html">
+  <span class="wiki-family-count">3 cases</span>
+  <h3>Delayed and nonstationary bandits</h3>
+  <p>Delayed observations, variation budgets, switch budgets, dynamic comparators, and adaptive detection.</p>
+  <span>Open setting →</span>
+</a>
+<a class="wiki-family-card" href="settings/pure-exploration/index.html">
+  <span class="wiki-family-count">1 case</span>
+  <h3>Pure exploration and best-arm identification</h3>
+  <p>Fixed-confidence identification, characteristic time, change of measure, and stopping rules.</p>
+  <span>Open setting →</span>
+</a>
+<a class="wiki-family-card" href="settings/distributional-lower-bounds/index.html">
+  <span class="wiki-family-count">1 case</span>
+  <h3>Distributional and high-probability lower bounds</h3>
+  <p>Tail lower bounds, expected-regret tradeoffs, and source-faithful lower-bound proof spines.</p>
+  <span>Open setting →</span>
+</a></div>
+</section>
+<section id="source-ports">
+  <p class="eyebrow">Latest repository progress</p><h2>Active source ports awaiting a matched-bound case</h2>
+  <p>These audits expose real compiled progress, but they are not counted among the 13 upper/lower comparison cases until a theorem-level rate contract and a compatible comparison partner are frozen.</p>
+  <div class="wiki-source-port-grid">
+<article class="wiki-source-port-card" data-wiki-source-port id="source-port-neurips-2025-succinct-lower-bounds">
+  <div class="wiki-source-port-heading"><div><p class="panel-kicker">Source-frozen external audit</p><h3>Succinct stochastic-bandit lower-bound geometry</h3></div><span class="status partial">Partial</span></div>
+  <p class="wiki-paper-title">A Novel General Framework for Sharp Lower Bounds in Succinct Stochastic Bandits</p>
+  <p class="wiki-source-meta">Guo Zeng and Jean Honorio · 2025</p>
+  <p class="wiki-source-port-count"><strong>54</strong> named declarations compile in the current library.</p>
+  <p>Definitions 3.1–3.3, Lemmas 3.1–3.4, the finite-Bessel strict-support route, and a global-R boundedness diagnostic compile.</p>
+  <div class="callout warning"><strong>Boundary.</strong> This is a source-frozen partial port, not yet an assumption-matched upper/lower comparison case. Lemmas 3.5–3.6, Assumption 3.7, Theorem 3.8, and every regret endpoint remain uncompiled.</div>
+  <details><summary>Representative Lean declarations</summary><ul><li><a href="../modules/banditrlproof-lowerbounds-succinctgeometryaudit/index.html#decl-c19b11b37671"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>Succinct.<wbr>Succinct<wbr>Unit<wbr>System.<wbr>source<wbr>R<wbr>Set_<wbr>not_<wbr>bdd<wbr>Above_<wbr>of_<wbr>nonzero_<wbr>atom_<wbr>orthogonal</code></a></li><li><a href="../modules/banditrlproof-lowerbounds-succinctgeometryaudit/index.html#decl-5a766a24832a"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>Succinct.<wbr>Succinct<wbr>Unit<wbr>System.<wbr>Is<wbr>Succinct<wbr>Support.<wbr>source<wbr>Q_<wbr>support<wbr>Combination_<wbr>eq</code></a></li><li><a href="../modules/banditrlproof-lowerbounds-succinctgeometryaudit/index.html#decl-46a3880e28c0"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>Succinct.<wbr>Succinct<wbr>Unit<wbr>System.<wbr>succinct<wbr>Size_<wbr>ge_<wbr>strict<wbr>Size</code></a></li><li><a href="../modules/banditrlproof-lowerbounds-succinctgeometryaudit/index.html#decl-26966174c834"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>Succinct.<wbr>Succinct<wbr>Unit<wbr>System.<wbr>strictly<wbr>Succinct<wbr>Size_<wbr>unique</code></a></li></ul></details>
+  <a href="https://proceedings.neurips.cc/paper_files/paper/2025/hash/26407588dfb08e48c459c074ab6adb7d-Abstract-Conference.html">Open official proceedings source ↗</a>
+</article>
+<article class="wiki-source-port-card" data-wiki-source-port id="source-port-neurips-2025-stochastic-gradient-bandit">
+  <div class="wiki-source-port-heading"><div><p class="panel-kicker">Source-frozen external audit</p><h3>Stochastic-gradient bandit Theorem 1, Corollary 1, and blocked Theorem-2 follow-on</h3></div><span class="status partial">Partial</span></div>
+  <p class="wiki-paper-title">Does Stochastic Gradient really succeed for Bandits?</p>
+  <p class="wiki-source-meta">Dorian Baudry, Emmeran Johnson, Simon Vary, Ciara Pike-Burke, and Patrick Rebeschini · 2025</p>
+  <p class="wiki-source-port-count"><strong>361</strong> named declarations compile in the current library.</p>
+  <p>The counted SGB audit retains the exact 361 = 223 + 23 + 25 + 26 + 7 + 8 + 13 + 28 + 8 audit-slice inventory through one-step selected-reward freshness, terminal-count events, nth-pull-to-count bridges, and a generic finite-horizon low-count regret consumer. A separate ten-declaration native-law module identifies the complete visible/native trajectory law. The selected-block module now has 36 declarations: eight transport finite optimal-arm pull-time/reward blocks to a masked latent-coupling law with explicit `WithTop Nat` missing pulls, fourteen define and transport the exact finite Appendix-C `S0/S1` event, ten split the pure latent phase probability into the generated all-present event plus an explicit missing-pull event, and four map the missing branch to a low-count event, transport its probability to the generated trajectory, and charge its existing mass against expected sampled pseudo-regret. The exact Theorem-1 and Corollary-1 endpoints use generated zero-initialized two-arm fixed-IID trajectories with a Unit Dirac environment prior; the reward laws themselves remain bounded fixed-IID laws. Corollary 1 assumes T &gt;= 2, 0 &lt; Delta &lt; 1, and one fixed eta_T = sqrt(log T / T) per horizon.</p>
+  <div class="callout warning"><strong>Boundary.</strong> The audit remains partial. Corollary 1 is a direct Theorem-1 consumer, not evidence for the polynomial-regret Theorem 2. Complete visible/native law equality, missing-pull-aware selected-block transport, exact finite phase-event transport, the disjoint missing/all-present probability split, the missing-pull-to-terminal-count inclusion, and the missing-pull finite-horizon expected-regret consumer now compile. None is a selected-IID theorem or a positive-probability producer. The next unique leaf is the generated all-present Appendix-C phase trigger at a fixed chronological cutoff; the stopped-prefix future-cylinder law, conditional no-return probability &gt;= 1/2, Rademacher/binomial ballot probability, asymptotic assembly, and the frozen terminal remain blocked. Theorem 4 likewise still lacks the general-K generated process, uniform buffer/survival producer, stopped supermartingale/Doob route, and final regret assembly.</div>
+  <details><summary>Representative Lean declarations</summary><ul><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbanditaudit/index.html#decl-b8691929b8b6"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>softmax<wbr>Probability_<wbr>sum</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbanditaudit/index.html#decl-3930a668bbf0"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>expected<wbr>Source<wbr>Increment_<wbr>eq_<wbr>gap<wbr>Coordinate</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittrajectoryaudit/index.html#decl-e80cc945bf98"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>trajectory<wbr>Measure_<wbr>cond<wbr>Distrib_<wbr>next<wbr>Pair_<wbr>given_<wbr>environment_<wbr>prefix</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittrajectoryaudit/index.html#decl-70387be35574"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>integral_<wbr>measurable<wbr>Environment<wbr>History<wbr>Step<wbr>Kernel_<wbr>source<wbr>Increment_<wbr>eq_<wbr>gap<wbr>Coordinate</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittwoarmrate/index.html#decl-f538371ddba4"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>two<wbr>Arm<wbr>Probability<wbr>At_<wbr>zero_<wbr>div_<wbr>failure_<wbr>eq_<wbr>exp_<wbr>two_<wbr>mul</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbanditexponentialaudit/index.html#decl-ebab60a052ae"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>integral_<wbr>exp_<wbr>mul_<wbr>le_<wbr>source<wbr>Eq<wbr>Eight_<wbr>of_<wbr>ae_<wbr>abs_<wbr>le_<wbr>one</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbanditconditionalexponentialaudit/index.html#decl-46e9a89fd7df"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>integral_<wbr>measurable<wbr>Environment<wbr>History<wbr>Step<wbr>Kernel_<wbr>exp_<wbr>action<wbr>Reward_<wbr>le_<wbr>source<wbr>Eq<wbr>Eight_<wbr>of_<wbr>mean</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittwoarmrecurrence/index.html#decl-b48a31268137"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>integral_<wbr>two<wbr>Arm<wbr>History<wbr>Step<wbr>Kernel_<wbr>exp_<wbr>forward<wbr>Successor_<wbr>le_<wbr>add_<wbr>success_<wbr>sq</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittwoarminitialrecurrence/index.html#decl-981929470068"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>integral_<wbr>two<wbr>Arm<wbr>Initial<wbr>Pair<wbr>Kernel_<wbr>exp_<wbr>inverse<wbr>Increment_<wbr>le</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittwoarmmeasurablerecurrence/index.html#decl-687251928fbf"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>Two<wbr>Arm<wbr>Bounded<wbr>Fixed<wbr>Mean<wbr>Environment<wbr>Contract</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittwoarmmeasurablerecurrence/index.html#decl-c0c122057c1e"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>trajectory<wbr>Prefix_<wbr>cond<wbr>Distrib_<wbr>integral_<wbr>forward<wbr>Successor_<wbr>le</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittwoarmpathintegrability/index.html#decl-15ac37a2e9aa"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>integrable_<wbr>two<wbr>Arm<wbr>Forward<wbr>Trajectory<wbr>Successor<wbr>Potential</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittwoarmpathintegrability/index.html#decl-8c7f1b339695"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>two<wbr>Arm<wbr>Forward<wbr>Trajectory<wbr>Successor_<wbr>cond<wbr>Exp_<wbr>le_<wbr>recurrence<wbr>Bound</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittwoarmpathintegrability/index.html#decl-a963c4695acf"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>integrable_<wbr>measurable<wbr>Two<wbr>Arm<wbr>History<wbr>Step<wbr>Kernel_<wbr>source<wbr>Increment_<wbr>of_<wbr>contract</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittwoarmfixediid/index.html#decl-394e236b70de"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>two<wbr>Arm<wbr>Fixed<wbr>IID<wbr>Environment_<wbr>contract</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittwoarmfixediid/index.html#decl-d0eff58a8cba"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>integral_<wbr>two<wbr>Arm<wbr>Fixed<wbr>IID<wbr>History<wbr>Step<wbr>Kernel_<wbr>source<wbr>Increment_<wbr>eq_<wbr>gap<wbr>Coordinate</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittwoarmunconditionalrecurrence/index.html#decl-36e73992e2ad"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>two<wbr>Arm<wbr>Forward<wbr>Unconditional<wbr>Recurrence</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittwoarmunconditionalrecurrence/index.html#decl-7d0bd275a5d1"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>two<wbr>Arm<wbr>Inverse<wbr>Failure<wbr>Mass<wbr>Sq<wbr>Telescope</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittwoarmunconditionalrecurrence/index.html#decl-7773b5ffa203"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>two<wbr>Arm<wbr>Full<wbr>Failure<wbr>Mass<wbr>Sq<wbr>Sum_<wbr>le</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittwoarmtheoremone/index.html#decl-cc6e96d93725"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>integral_<wbr>two<wbr>Arm<wbr>Sampled<wbr>Pseudo<wbr>Regret_<wbr>eq_<wbr>generated</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittwoarmtheoremone/index.html#decl-234c90645f52"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>integral_<wbr>two<wbr>Arm<wbr>Sampled<wbr>Pseudo<wbr>Regret_<wbr>le_<wbr>source<wbr>Theorem<wbr>One</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittwoarmtheoremone/index.html#decl-0c2e512d4027"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>two<wbr>Arm<wbr>Fixed<wbr>IID<wbr>Dirac_<wbr>theorem<wbr>One</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbanditcorollaryone/index.html#decl-f135a6147c83"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>two<wbr>Arm<wbr>Fixed<wbr>IID<wbr>Dirac_<wbr>corollary<wbr>One</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittheoremtwonthpull/index.html#decl-176029d2149a"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>two<wbr>Arm<wbr>Nth<wbr>Optimal<wbr>Pull<wbr>Time_<wbr>spec</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittheoremtwonthpull/index.html#decl-3000203cf37b"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>measurable_<wbr>two<wbr>Arm<wbr>Nth<wbr>Optimal<wbr>Pull<wbr>Reward</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittheoremtwonthpull/index.html#decl-59d3691b4974"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>measurable_<wbr>two<wbr>Arm<wbr>Nth<wbr>Optimal<wbr>Pull<wbr>Success<wbr>Probability</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittheoremtwolatentreward/index.html#decl-6710267e04b8"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>two<wbr>Arm<wbr>Fixed<wbr>IID<wbr>Latent<wbr>Trajectory<wbr>Measure_<wbr>map_<wbr>optimal<wbr>Prefix_<wbr>eq_<wbr>pi</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittheoremtwolatentreward/index.html#decl-2273d9582ab2"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>two<wbr>Arm<wbr>Nth<wbr>Optimal<wbr>Pull<wbr>Reward_<wbr>eq_<wbr>latent<wbr>Coordinate_<wbr>ae</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittheoremtwonativetrajectory/index.html#decl-37e5f6abda84"><code>Bandit<wbr>RL<wbr>Proof.<wbr>UCB.<wbr>arm<wbr>Stream<wbr>Measure_<wbr>map_<wbr>frestrict<wbr>Le_<wbr>eq_<wbr>pi</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittheoremtwonativetrajectory/index.html#decl-088ec7eb059d"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Thompson.<wbr>latent<wbr>Arm<wbr>Stream<wbr>Trajectory<wbr>Kernel_<wbr>map_<wbr>frestrict<wbr>Le_<wbr>eq_<wbr>of_<wbr>stream<wbr>Prefix_<wbr>eq</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittheoremtwonativetrajectory/index.html#decl-53c811e737f8"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Thompson.<wbr>latent<wbr>Arm<wbr>Stream<wbr>Trajectory<wbr>Measure_<wbr>map_<wbr>stream_<wbr>visible<wbr>Prefix_<wbr>eq</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittheoremtwonativetrajectory/index.html#decl-ff488b617f94"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Thompson.<wbr>latent<wbr>Arm<wbr>Stream<wbr>Trajectory<wbr>Measure_<wbr>map_<wbr>visible<wbr>Prefix_<wbr>next<wbr>Action_<wbr>eq_<wbr>comp<wbr>Prod</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittheoremtwonativetrajectory/index.html#decl-80ee5b28044b"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Thompson.<wbr>latent<wbr>Arm<wbr>Stream<wbr>Visible<wbr>Next<wbr>Reward_<wbr>eq_<wbr>selected<wbr>Coordinate_<wbr>ae</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittheoremtwonativetrajectory/index.html#decl-12ad327c3f5a"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Thompson.<wbr>latent<wbr>Arm<wbr>Stream<wbr>Visible<wbr>Prefix<wbr>Next<wbr>Action_<wbr>coordinate_<wbr>branch_<wbr>eq_<wbr>prod_<wbr>of_<wbr>locality</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittheoremtwonativetrajectory/index.html#decl-d02c065ead41"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Thompson.<wbr>latent<wbr>Arm<wbr>Stream<wbr>Visible<wbr>Prefix<wbr>Next<wbr>Action_<wbr>coordinate_<wbr>branch_<wbr>eq_<wbr>prod</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittheoremtwonativetrajectory/index.html#decl-d0bb7188eafe"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Thompson.<wbr>latent<wbr>Arm<wbr>Stream<wbr>Visible<wbr>Next<wbr>Reward_<wbr>joint_<wbr>eq_<wbr>comp<wbr>Prod</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittheoremtwonativetrajectory/index.html#decl-6a972ec63060"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Thompson.<wbr>latent<wbr>Arm<wbr>Stream<wbr>Visible<wbr>Next<wbr>Reward_<wbr>cond<wbr>Distrib_<wbr>ae_<wbr>eq_<wbr>nu</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittheoremtwonativetrajectory/index.html#decl-7e477b470105"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Thompson.<wbr>latent<wbr>Arm<wbr>Stream<wbr>Visible<wbr>Trajectory<wbr>Measure_<wbr>next<wbr>Reward_<wbr>cond<wbr>Distrib_<wbr>ae_<wbr>eq_<wbr>nu</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittheoremtwonativetrajectory/index.html#decl-60e7c147ab4c"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Thompson.<wbr>real<wbr>History<wbr>Pull<wbr>Count_<wbr>extend<wbr>Pair<wbr>History<wbr>Succ</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittheoremtwostarvation/index.html#decl-40bdca13e5f3"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>two<wbr>Arm<wbr>Optimal<wbr>Pull<wbr>Count<wbr>Below<wbr>Event_<wbr>charge_<wbr>mul_<wbr>probability_<wbr>le_<wbr>integral</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittheoremtwostarvation/index.html#decl-6a5b1b3dbaab"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>two<wbr>Arm<wbr>Fixed<wbr>IID<wbr>Step<wbr>One<wbr>Starvation<wbr>Event_<wbr>charge_<wbr>mul_<wbr>probability_<wbr>le_<wbr>integral</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittheoremfourcontractaudit/index.html#decl-86405e025293"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>theorem<wbr>Four<wbr>Step<wbr>One<wbr>Margin_<wbr>pos</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittheoremfourcontractaudit/index.html#decl-8d760702a67b"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>theorem<wbr>Four<wbr>Step<wbr>Four_<wbr>survival<wbr>Mass_<wbr>pos</code></a></li><li><a href="../modules/banditrlproof-algorithms-stochasticgradientbandittheoremfourcontractaudit/index.html#decl-ac36ab0f2be5"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Stochastic<wbr>Gradient<wbr>Bandit.<wbr>theorem<wbr>Four<wbr>Finite<wbr>Transient<wbr>Mass_<wbr>le_<wbr>inv</code></a></li></ul></details>
+  <a href="https://proceedings.neurips.cc/paper_files/paper/2025/hash/a4e683f0ce6b91e7fbdae9d32642d88f-Abstract-Conference.html">Open official proceedings source ↗</a>
+</article></div>
+</section>
+<section id="cases" data-wiki>
+  <p class="eyebrow">Upper · lower · Lean</p><h2>All comparison cases</h2>
+  <div class="wiki-filter-bar">
+    <div class="filter-field grow"><label for="wiki-query">Algorithm, paper, assumption, or case</label><input id="wiki-query" data-wiki-query type="search" placeholder="e.g. KL-UCB, high probability, Chapter 16"></div>
+    <div class="filter-field"><label for="wiki-family">Family</label><select id="wiki-family" data-wiki-family><option value="">All families</option><option value="stochastic-finite">Finite stochastic bandits</option><option value="adversarial-bobw">Adversarial and best-of-both-worlds bandits</option><option value="linear-contextual">Linear and contextual bandits</option><option value="finite-horizon-rl">Finite-horizon tabular reinforcement learning</option><option value="delayed-nonstationary">Delayed and nonstationary bandits</option><option value="pure-exploration">Pure exploration and best-arm identification</option><option value="distributional-lower-bounds">Distributional and high-probability lower bounds</option></select></div>
+    <div class="filter-field"><label for="wiki-literature">Literature</label><select id="wiki-literature" data-wiki-literature><option value="">All literature states</option><option value="minimax-matched">Minimax matched</option><option value="near-minimax">Near minimax</option><option value="asymptotic-matched">Asymptotically matched</option><option value="upper-only">Upper bound only</option><option value="lower-only">Lower bound only</option><option value="closest-known">Closest known</option><option value="literature-open">Literature open</option><option value="source-audit-pending">Source audit pending</option></select></div>
+    <div class="filter-field"><label for="wiki-lean">Lean</label><select id="wiki-lean" data-wiki-lean><option value="">All Lean states</option><option value="compiled">Compiled local route</option><option value="partial">Partial local route</option><option value="stated">Statement only</option><option value="planned">Planned</option><option value="blocked">Blocked</option><option value="not-mapped">Not yet mapped</option></select></div>
+    <label class="wiki-check"><input type="checkbox" data-wiki-frontier> Frontier only</label>
+  </div>
+  <div class="wiki-filter-status"><span data-wiki-count>13 matching cases</span><span><button type="button" data-wiki-expand>Expand visible</button><button type="button" data-wiki-collapse>Collapse all</button></span></div>
+  <div class="wiki-case-list">
+<details class="wiki-case-card" id="stochastic-finite-arm-minimax" data-wiki-case
+  data-family="stochastic-finite"
+  data-literature="minimax-matched"
+  data-lean="partial"
+  data-frontier="true"
+  data-search="stochastic-finite-arm-minimax finite-arm stochastic minimax expected regret moss-type algorithms and gaussian/bernoulli hard families identify the square-root a times t minimax scale. finite stochastic bandits moss minimax expected pseudo-regret bounded rewards gaussian lower bound universal constants and the exact hard-family reward class differ across the displayed source theorems. banditrllib compiles a unit-variance gaussian lower bound with constant 1/54 and fixed-horizon moss on unit-subgaussian laws with gaps in [0,1]. the cited anytime moss theorem is not compiled.">
+  <summary>
+    <span class="wiki-case-id">stochastic-finite-arm-minimax</span>
+    <span class="wiki-case-summary-copy"><strong>Finite-arm stochastic minimax expected regret</strong><span>MOSS-type algorithms and Gaussian/Bernoulli hard families identify the square-root A times T minimax scale.</span></span>
+    <span class="wiki-case-statuses"><span class="wiki-badge literature minimax-matched" data-wiki-literature-status="minimax-matched">Minimax matched</span><span class="wiki-badge lean partial" data-wiki-lean-status="partial">Partial local route</span></span>
+  </summary>
+  <div class="wiki-case-body">
+    <div class="wiki-case-actions"><a href="cases/stochastic-finite-arm-minimax/index.html">Open stable case page →</a><span><span class="wiki-badge source faithful-restatement" data-wiki-source-status="faithful-restatement">Faithful restatement</span></span></div>
+    <div class="wiki-tags"><span>MOSS</span><span>minimax</span><span>expected pseudo-regret</span><span>bounded rewards</span><span>Gaussian lower bound</span></div>
+    <dl class="wiki-signature"><div><dt>Reward model</dt><dd>Independent stationary rewards; the literature upper uses rewards in [0,1]</dd></div><div><dt>Horizon</dt><dd>Any finite T; the cited MOSS-anytime result is horizon-free</dd></div><div><dt>Regret</dt><dd>Expected pseudo-regret</dd></div><div><dt>Target scale</dt><dd>Theta(sqrt(A T))</dd></div></dl>
+    <section class="wiki-comparison">
+      <div><p class="panel-kicker">Comparison judgment</p><h3>Minimax matched</h3><p>The literature establishes the square-root minimax order. Local Lean now supplies the unit-Gaussian lower bound and fixed-horizon Algorithm 7 on unit-subgaussian laws with gaps in [0,1]. The cited anytime theorem remains a distinct formalization target.</p><p><strong>Known gap.</strong> Universal constants and the exact hard-family reward class differ across the displayed source theorems.</p></div>
+      <div><p class="panel-kicker">Local Lean boundary</p><h3>Partial local route</h3><p>BanditRLlib compiles a unit-variance Gaussian lower bound with constant 1/54 and fixed-horizon MOSS on unit-subgaussian laws with gaps in [0,1]. The cited anytime MOSS theorem is not compiled.</p></div>
+    </section>
+    <div class="wiki-bound-grid">
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>Anytime MOSS regret</h3>
+  <p class="wiki-paper-title">Anytime optimal algorithms in stochastic multi-armed bandits</p>
+  <p class="wiki-source-meta">Rémy Degenne and Vianney Perchet · 2016 · Theorem 3 with Lemma 3</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">The anytime MOSS variant has expected regret at most 113 times square root A T plus the largest gap.</span><span class="math-tex" aria-hidden="true">\[\mathbb E R_T\le 113\sqrt{AT}+\Delta_{\max}.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Independent rewards supported in [0,1], with the source&#x27;s anytime index and initialization.</p>
+  <a href="https://proceedings.mlr.press/v48/degenne16.html">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Lower bound</p>
+  <h3>Minimax stochastic-bandit lower bound</h3>
+  <p class="wiki-paper-title">Anytime optimal algorithms in stochastic multi-armed bandits</p>
+  <p class="wiki-source-meta">Rémy Degenne and Vianney Perchet · 2016 · Lemma 3</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Lower bound guarantee"><strong>Lower bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Every policy has a stochastic instance with expected regret at least one twentieth of square root A T under the source&#x27;s parameter range.</span><span class="math-tex" aria-hidden="true">\[\inf_\pi\sup_\nu\mathbb E_\nu R_T(\pi)\ge \frac1{20}\sqrt{AT}.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Use the exact arm-count and horizon restrictions stated in the source.</p>
+  <a href="https://proceedings.mlr.press/v48/degenne16.html">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+    </div>
+    <section class="wiki-lean-evidence">
+      <div><p class="panel-kicker">Local Lean evidence</p><h3>Exact declarations</h3><ul><li><a href="../modules/banditrlproof-lowerbounds-gaussianminimax/index.html#decl-ae72137aa924"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>unit<wbr>Gaussian<wbr>Minimax<wbr>Expected<wbr>Pseudo<wbr>Regret_<wbr>ge_<wbr>one_<wbr>div_<wbr>fifty<wbr>Four_<wbr>sqrt</code></a></li></ul></div>
+      <div><p class="panel-kicker">Not yet proved here</p><h3>Missing steps</h3><ul><li>Define the anytime MOSS index and measurable generated history policy.</li><li>Prove the same-policy pull-count decomposition and bounded-reward confidence route.</li><li>Compile the matching square-root expected-regret upper terminal without conflating the Gaussian lower class with [0,1] rewards.</li></ul></div>
+    </section>
+
+<section class="wiki-frontier-note">
+  <p class="panel-kicker">formalization frontier</p>
+  <h3>Can the exact anytime MOSS source theorem be compiled on one generated bounded-reward trajectory?</h3>
+  <p>The local Gaussian lower terminal and fixed-horizon MOSS near-minimax theorem compile; the distinct anytime variant remains unformalized.</p>
+  <ul><li>Index measurability</li><li>armwise confidence</li><li>pull-count summation</li><li>expected-regret terminal</li><li>Named formalization leaf: MOSS-ANYTIME-GENERATED-UPPER</li></ul>
+</section>
+  </div>
+</details>
+<details class="wiki-case-card" id="stochastic-instance-dependent-klucb" data-wiki-case
+  data-family="stochastic-finite"
+  data-literature="asymptotic-matched"
+  data-lean="partial"
+  data-frontier="true"
+  data-search="stochastic-instance-dependent-klucb bernoulli kl-ucb instance-dependent asymptotic regret kl-ucb matches the lai–robbins information lower bound arm by arm on bernoulli bandits. finite stochastic bandits kl-ucb lai-robbins bernoulli kl instance dependent asymptotic no leading-constant gap in the bernoulli source model; the local lean route is a conservative finite-time theorem and does not reach this asymptotic constant. a measurable generated kl-ucb index, all-time confidence event, pull-count bound, and conservative finite-time expected pseudo-regret theorem compile. chapter 16 lemma 16.3 and gaussian theorem 16.4 compile, as does the asymptotic theorem 16.2 lower bound; the sharp kl-ucb upper leading constant remains separate.">
+  <summary>
+    <span class="wiki-case-id">stochastic-instance-dependent-klucb</span>
+    <span class="wiki-case-summary-copy"><strong>Bernoulli KL-UCB instance-dependent asymptotic regret</strong><span>KL-UCB matches the Lai–Robbins information lower bound arm by arm on Bernoulli bandits.</span></span>
+    <span class="wiki-case-statuses"><span class="wiki-badge literature asymptotic-matched" data-wiki-literature-status="asymptotic-matched">Asymptotically matched</span><span class="wiki-badge lean partial" data-wiki-lean-status="partial">Partial local route</span></span>
+  </summary>
+  <div class="wiki-case-body">
+    <div class="wiki-case-actions"><a href="cases/stochastic-instance-dependent-klucb/index.html">Open stable case page →</a><span><span class="wiki-badge source faithful-restatement" data-wiki-source-status="faithful-restatement">Faithful restatement</span></span></div>
+    <div class="wiki-tags"><span>KL-UCB</span><span>Lai-Robbins</span><span>Bernoulli KL</span><span>instance dependent</span><span>asymptotic</span></div>
+    <dl class="wiki-signature"><div><dt>Reward model</dt><dd>Stationary Bernoulli arms with a unique best mean</dd></div><div><dt>Policy class</dt><dd>Uniformly efficient policies for the lower bound</dd></div><div><dt>Regret</dt><dd>Expected pseudo-regret normalized by log T</dd></div><div><dt>Target constant</dt><dd>sum over suboptimal arms of Delta_a divided by kl(mu_a, mu_star)</dd></div></dl>
+    <section class="wiki-comparison">
+      <div><p class="panel-kicker">Comparison judgment</p><h3>Asymptotically matched</h3><p>The published upper and lower information constants match. Chapter 16&#x27;s asymptotic and finite-time lower bounds compile; sharp KL-Chernoff concentration for the matching upper constant remains separate.</p><p><strong>Known gap.</strong> No leading-constant gap in the Bernoulli source model; the local Lean route is a conservative finite-time theorem and does not reach this asymptotic constant.</p></div>
+      <div><p class="panel-kicker">Local Lean boundary</p><h3>Partial local route</h3><p>A measurable generated KL-UCB index, all-time confidence event, pull-count bound, and conservative finite-time expected pseudo-regret theorem compile. Chapter 16 Lemma 16.3 and Gaussian Theorem 16.4 compile, as does the asymptotic Theorem 16.2 lower bound; the sharp KL-UCB upper leading constant remains separate.</p></div>
+    </section>
+    <div class="wiki-bound-grid">
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>KL-UCB asymptotic pull-count upper bound</h3>
+  <p class="wiki-paper-title">The KL-UCB Algorithm for Bounded Stochastic Bandits and Beyond</p>
+  <p class="wiki-source-meta">Aurélien Garivier and Olivier Cappé · 2011 · Theorems 1–2 and Corollary 3</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">For every suboptimal Bernoulli arm, KL-UCB&#x27;s expected pull count has the optimal logarithmic leading constant.</span><span class="math-tex" aria-hidden="true">\[\limsup_{T\to\infty}\frac{\mathbb E N_a(T)}{\log T}\le\frac1{\mathrm{kl}(\mu_a,\mu_*)}.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Bernoulli specialization of the source&#x27;s bounded and one-parameter models.</p>
+  <a href="https://arxiv.org/abs/1102.2490">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Lower bound</p>
+  <h3>Lai–Robbins asymptotic information lower bound</h3>
+  <p class="wiki-paper-title">Asymptotically Efficient Adaptive Allocation Rules</p>
+  <p class="wiki-source-meta">Tze Leung Lai and Herbert Robbins · 1985 · Asymptotic information lower bound</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Lower bound guarantee"><strong>Lower bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Every uniformly efficient policy must sample each suboptimal arm at least logarithmically at the information-theoretic rate.</span><span class="math-tex" aria-hidden="true">\[\liminf_{T\to\infty}\frac{\mathbb E N_a(T)}{\log T}\ge\frac1{\mathrm{kl}(\mu_a,\mu_*)}.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Use the source&#x27;s regular parametric-family and efficiency assumptions; the displayed Bernoulli form is a specialization.</p>
+  <a href="https://doi.org/10.1016/0196-8858(85)90002-8">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+    </div>
+    <section class="wiki-lean-evidence">
+      <div><p class="panel-kicker">Local Lean evidence</p><h3>Exact declarations</h3><ul><li><a href="../modules/banditrlproof-algorithms-klucbbernoulli/index.html#decl-8f99f3947abe"><code>Bandit<wbr>RL<wbr>Proof.<wbr>KLUCB.<wbr>bernoulli<wbr>KL</code></a></li><li><a href="../modules/banditrlproof-algorithms-klucbgeneratedregret/index.html#decl-f0183508accc"><code>Bandit<wbr>RL<wbr>Proof.<wbr>KLUCB.<wbr>lintegral_<wbr>of<wbr>Real_<wbr>pseudo<wbr>Regret_<wbr>generated<wbr>KLUCB<wbr>Bounded_<wbr>le_<wbr>traj<wbr>Measure</code></a></li><li><a href="../modules/banditrlproof-lowerbounds-instancedependent/index.html#decl-2e1714674420"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>expected<wbr>Pull<wbr>Count_<wbr>ge_<wbr>log_<wbr>gap<wbr>Pseudo<wbr>Regret_<wbr>of_<wbr>only_<wbr>arm_<wbr>changed</code></a></li></ul></div>
+      <div><p class="panel-kicker">Not yet proved here</p><h3>Missing steps</h3><ul><li>Prove sharp KL-Chernoff confidence inversion and the Garivier–Cappé leading constant.</li><li>Use the compiled Theorem 16.2 lower bound when comparing the remaining sharp upper-bound obligations.</li></ul></div>
+    </section>
+
+<section class="wiki-frontier-note">
+  <p class="panel-kicker">formalization frontier</p>
+  <h3>Can the compiled finite-mean Lemma 16.3 be lifted through d_inf and liminf to the exact KL-UCB leading constant?</h3>
+  <p>The generated conservative KL-UCB route and exact Chapter 16 Lemma 16.3 compile; the d_inf-to-liminf bridge and Theorem 16.2 also compile.</p>
+  <ul><li>d_inf branch analysis</li><li>liminf terminal</li><li>sharp KL-UCB upper constant</li><li>Named formalization leaf: CH16-THM-16-2</li></ul>
+</section>
+  </div>
+</details>
+<details class="wiki-case-card" id="adversarial-exp3" data-wiki-case
+  data-family="adversarial-bobw"
+  data-literature="near-minimax"
+  data-lean="partial"
+  data-frontier="true"
+  data-search="adversarial-exp3 exp3 expected regret versus the adversarial minimax rate classical exp3 is near minimax but carries a square-root log a factor relative to the adversarial lower bound. adversarial and best-of-both-worlds bandits exp3 adversarial external regret expected regret near minimax exp3 has a multiplicative square-root log a gap; removing it requires a different regularizer such as inf/tsallis-inf, not a relabeling of exp3. the generated predictable exp3 process compiles an explicit 4 sqrt(a t log a) expected bound under its tuning condition, together with several separately scoped tail routes. the adversarial minimax lower terminal is not compiled.">
+  <summary>
+    <span class="wiki-case-id">adversarial-exp3</span>
+    <span class="wiki-case-summary-copy"><strong>EXP3 expected regret versus the adversarial minimax rate</strong><span>Classical EXP3 is near minimax but carries a square-root log A factor relative to the adversarial lower bound.</span></span>
+    <span class="wiki-case-statuses"><span class="wiki-badge literature near-minimax" data-wiki-literature-status="near-minimax">Near minimax</span><span class="wiki-badge lean partial" data-wiki-lean-status="partial">Partial local route</span></span>
+  </summary>
+  <div class="wiki-case-body">
+    <div class="wiki-case-actions"><a href="cases/adversarial-exp3/index.html">Open stable case page →</a><span><span class="wiki-badge source faithful-restatement" data-wiki-source-status="faithful-restatement">Faithful restatement</span></span></div>
+    <div class="wiki-tags"><span>EXP3</span><span>adversarial</span><span>external regret</span><span>expected regret</span><span>near minimax</span></div>
+    <dl class="wiki-signature"><div><dt>Loss model</dt><dd>Oblivious or predictable losses in [0,1]</dd></div><div><dt>Feedback</dt><dd>Selected-action bandit loss</dd></div><div><dt>Regret</dt><dd>Expected external regret to the best fixed action</dd></div><div><dt>Target scale</dt><dd>sqrt(A T)</dd></div></dl>
+    <section class="wiki-comparison">
+      <div><p class="panel-kicker">Comparison judgment</p><h3>Near minimax</h3><p>The source contains both the EXP3 upper route and an adversarial lower bound. The local generated expected EXP3 endpoint compiles.</p><p><strong>Known gap.</strong> EXP3 has a multiplicative square-root log A gap; removing it requires a different regularizer such as INF/Tsallis-INF, not a relabeling of EXP3.</p></div>
+      <div><p class="panel-kicker">Local Lean boundary</p><h3>Partial local route</h3><p>The generated predictable EXP3 process compiles an explicit 4 sqrt(A T log A) expected bound under its tuning condition, together with several separately scoped tail routes. The adversarial minimax lower terminal is not compiled.</p></div>
+    </section>
+    <div class="wiki-bound-grid">
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>EXP3 expected-regret upper bound</h3>
+  <p class="wiki-paper-title">The Nonstochastic Multiarmed Bandit Problem</p>
+  <p class="wiki-source-meta">Peter Auer, Nicolò Cesa-Bianchi, Yoav Freund, and Robert Schapire · 2002 · EXP3 expected-regret theorem</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">EXP3 achieves expected regret of order square root A T log A against bounded adversarial rewards.</span><span class="math-tex" aria-hidden="true">\[\mathbb E R_T=O\!\left(\sqrt{AT\log A}\right).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Finite actions and the source&#x27;s learning-rate tuning.</p>
+  <a href="https://epubs.siam.org/doi/10.1137/S0097539701398375">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Lower bound</p>
+  <h3>Adversarial minimax lower bound</h3>
+  <p class="wiki-paper-title">The Nonstochastic Multiarmed Bandit Problem</p>
+  <p class="wiki-source-meta">Peter Auer, Nicolò Cesa-Bianchi, Yoav Freund, and Robert Schapire · 2002 · Section 5 lower bound</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Lower bound guarantee"><strong>Lower bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Every bandit algorithm suffers expected regret of order at least square root A T on some adversarial loss sequence.</span><span class="math-tex" aria-hidden="true">\[\inf_\pi\sup_\ell\mathbb E R_T(\pi,\ell)=\Omega\!\left(\sqrt{AT}\right).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Finite actions under the source&#x27;s horizon range.</p>
+  <a href="https://epubs.siam.org/doi/10.1137/S0097539701398375">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+    </div>
+    <section class="wiki-lean-evidence">
+      <div><p class="panel-kicker">Local Lean evidence</p><h3>Exact declarations</h3><ul><li><a href="../modules/banditrlproof-exp3expectedregret/index.html#decl-143a57ec9c49"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Exp3.<wbr>sampled<wbr>Predictable_<wbr>expected<wbr>Regret_<wbr>le_<wbr>four_<wbr>mul_<wbr>sqrt</code></a></li></ul></div>
+      <div><p class="panel-kicker">Not yet proved here</p><h3>Missing steps</h3><ul><li>Pair the corrected high-probability lower terminal with the upper route under one exact regret contract.</li><li>Keep fixed-horizon, all-positive-prefix, and horizon-free tuning contracts distinct.</li><li>Use a minimax-optimal algorithm route if the log A factor is to be removed.</li></ul></div>
+    </section>
+
+<section class="wiki-frontier-note">
+  <p class="panel-kicker">formalization frontier</p>
+  <h3>Can the local adversarial upper route be paired with a compiled minimax lower terminal under one exact regret contract?</h3>
+  <p>The EXP3 upper compiles; corrected Chapter 17 Theorem 17.4 now passes focused compilation with δ ≤ 1/32, c=1/160 and C=64; full local gates pass.</p>
+  <ul><li>matched upper/lower regret contract; corrected Chapter 17 high-probability construction is compiled</li><li>Named formalization leaf: CH17-CLIPPED-NORMAL-LAW</li><li>Named formalization leaf: CH17-CLAIM-17-6</li><li>Named formalization leaf: CH17-CLAIM-17-7</li><li>Named formalization leaf: CH17-THM-17-4</li></ul>
+</section>
+  </div>
+</details>
+<details class="wiki-case-card" id="adversarial-stochastic-best-of-both-worlds" data-wiki-case
+  data-family="adversarial-bobw"
+  data-literature="near-minimax"
+  data-lean="partial"
+  data-frontier="true"
+  data-search="adversarial-stochastic-best-of-both-worlds tsallis-inf best of stochastic and adversarial worlds one tsallis-inf algorithm attains the adversarial square-root rate and stochastic gap-dependent logarithmic regret. adversarial and best-of-both-worlds bandits tsallis-inf best of both worlds ftrl self bounding stochastic gaps the adversarial branch is minimax-rate optimal within universal constants, while the self-bounding stochastic branch is gap-log rate optimal within constants and is not an exact lai–robbins leading-constant result. the local routes also lack identity with the paper&#x27;s single algorithm across both regimes. banditrllib compiles half-tsallis iid logarithmic, corruption, drifting-mean, and oracle-restart terminals. it does not claim that one local generated policy is definitionally the paper algorithm with both optimal source guarantees.">
+  <summary>
+    <span class="wiki-case-id">adversarial-stochastic-best-of-both-worlds</span>
+    <span class="wiki-case-summary-copy"><strong>Tsallis-INF best of stochastic and adversarial worlds</strong><span>One Tsallis-INF algorithm attains the adversarial square-root rate and stochastic gap-dependent logarithmic regret.</span></span>
+    <span class="wiki-case-statuses"><span class="wiki-badge literature near-minimax" data-wiki-literature-status="near-minimax">Near minimax</span><span class="wiki-badge lean partial" data-wiki-lean-status="partial">Partial local route</span></span>
+  </summary>
+  <div class="wiki-case-body">
+    <div class="wiki-case-actions"><a href="cases/adversarial-stochastic-best-of-both-worlds/index.html">Open stable case page →</a><span><span class="wiki-badge source faithful-restatement" data-wiki-source-status="faithful-restatement">Faithful restatement</span></span></div>
+    <div class="wiki-tags"><span>Tsallis-INF</span><span>best of both worlds</span><span>FTRL</span><span>self bounding</span><span>stochastic gaps</span></div>
+    <dl class="wiki-signature"><div><dt>Loss model</dt><dd>Bounded adversarial losses or a stochastic/self-bounding gap condition</dd></div><div><dt>Algorithm identity</dt><dd>The same Tsallis-INF estimator and scheduler across regimes</dd></div><div><dt>Regret</dt><dd>Expected pseudo-regret/external regret as stated by the source</dd></div><div><dt>Target scales</dt><dd>sqrt(A T) adversarial and sum log(T)/Delta_a stochastic</dd></div></dl>
+    <section class="wiki-comparison">
+      <div><p class="panel-kicker">Comparison judgment</p><h3>Near minimax</h3><p>The source theorem is genuinely best-of-both-worlds at the displayed rate scale. This card does not claim asymptotic instance optimality or an exact stochastic information constant; the local paper-identity and unified paired terminal remain open.</p><p><strong>Known gap.</strong> The adversarial branch is minimax-rate optimal within universal constants, while the self-bounding stochastic branch is gap-log rate optimal within constants and is not an exact Lai–Robbins leading-constant result. The local routes also lack identity with the paper&#x27;s single algorithm across both regimes.</p></div>
+      <div><p class="panel-kicker">Local Lean boundary</p><h3>Partial local route</h3><p>BanditRLlib compiles half-Tsallis IID logarithmic, corruption, drifting-mean, and oracle-restart terminals. It does not claim that one local generated policy is definitionally the paper algorithm with both optimal source guarantees.</p></div>
+    </section>
+    <div class="wiki-bound-grid">
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>Tsallis-INF best-of-both-worlds upper bounds</h3>
+  <p class="wiki-paper-title">Tsallis-INF: An Optimal Algorithm for Stochastic and Adversarial Bandits</p>
+  <p class="wiki-source-meta">Julian Zimmert and Yevgeny Seldin · 2021 · Theorem 1</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">The same Tsallis-INF construction has a minimax-order adversarial bound and a logarithmic gap-dependent stochastic bound.</span><span class="math-tex" aria-hidden="true">\[R_T\le 4\sqrt{AT}+1\quad\text{and}\quad R_T=O\!\left(\sum_{a\ne *}\frac{\log T}{\Delta_a}\right).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>The exact constants and lower-order terms depend on the importance-weighted or reduced-variance estimator variant.</p>
+  <a href="https://www.jmlr.org/papers/v22/19-753.html">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Lower bound</p>
+  <h3>Rate-optimality comparison used by the Tsallis-INF analysis</h3>
+  <p class="wiki-paper-title">Tsallis-INF: An Optimal Algorithm for Stochastic and Adversarial Bandits</p>
+  <p class="wiki-source-meta">Julian Zimmert and Yevgeny Seldin · 2021 · Lower-bound comparisons summarized with Theorem 1</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Lower bound guarantee"><strong>Lower bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">The adversarial minimax and stochastic information lower bounds supply the comparison scales used by the source.</span><span class="math-tex" aria-hidden="true">\[R_T=\Omega(\sqrt{AT})\quad\text{and}\quad \liminf\frac{R_T}{\log T}\ge \sum_{a\ne *}\frac{\Delta_a}{\mathrm{kl}(\mu_a,\mu_*)}.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>The stochastic lower constant is model dependent; do not identify a generic gap-only upper with the exact Bernoulli information constant.</p>
+  <a href="https://www.jmlr.org/papers/v22/19-753.html">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+    </div>
+    <section class="wiki-lean-evidence">
+      <div><p class="panel-kicker">Local Lean evidence</p><h3>Exact declarations</h3><ul><li><a href="../modules/banditrlproof-tsallisfinitearmiidrewardlaw/index.html#decl-7e0452498d9b"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Tsallis.<wbr>integral_<wbr>sampled<wbr>Scheduled<wbr>Half<wbr>Tsallis<wbr>Finite<wbr>Arm<wbr>IID<wbr>Reward<wbr>Law<wbr>Regret_<wbr>le_<wbr>log</code></a></li><li><a href="../modules/banditrlproof-tsallisfinitearmiidhistoryadaptiveexpectedcorruptedrewardlaw/index.html#decl-21a2c2927a87"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Tsallis.<wbr>integral_<wbr>sampled<wbr>Scheduled<wbr>Half<wbr>Tsallis<wbr>Finite<wbr>Arm<wbr>IID<wbr>History<wbr>Adaptive<wbr>Expected<wbr>Corrupted<wbr>Reward<wbr>Law<wbr>Regret_<wbr>le_<wbr>all<wbr>Regimes</code></a></li></ul></div>
+      <div><p class="panel-kicker">Not yet proved here</p><h3>Missing steps</h3><ul><li>Prove the exact estimator, regularizer, and learning-rate identity with the source algorithm.</li><li>Package the stochastic and adversarial guarantees for the same generated policy.</li><li>Audit paper-sharp constants and high-probability or realized-regret variants separately.</li></ul></div>
+    </section>
+
+<section class="wiki-frontier-note">
+  <p class="panel-kicker">formalization frontier</p>
+  <h3>Can one local generated half-Tsallis policy be shown identical to paper Tsallis-INF and carry both source guarantees?</h3>
+  <p>Several strong local endpoints compile, but they are not yet a unified source-identity theorem.</p>
+  <ul><li>Estimator identity</li><li>scheduler identity</li><li>same-policy paired theorem</li><li>constant audit</li><li>Named formalization leaf: TSALLIS-INF-PAPER-IDENTITY</li><li>Named formalization leaf: TSALLIS-INF-SAME-POLICY-BOBW</li></ul>
+</section>
+  </div>
+</details>
+<details class="wiki-case-card" id="contextual-finite-policy-exp4p" data-wiki-case
+  data-family="linear-contextual"
+  data-literature="source-audit-pending"
+  data-lean="planned"
+  data-frontier="true"
+  data-search="contextual-finite-policy-exp4p finite-policy contextual bandits with exp4.p exp4.p gives high-probability policy regret for a finite expert class; the exact matching lower source still needs theorem-level audit in this wiki. linear and contextual bandits exp4.p contextual bandit finite policy class high probability source audit pending the upper theorem is indexed exactly; a compatible primary lower theorem, assumptions, and constants have not yet been frozen here. no finite-policy contextual exp4.p terminal is mapped to a local lean declaration.">
+  <summary>
+    <span class="wiki-case-id">contextual-finite-policy-exp4p</span>
+    <span class="wiki-case-summary-copy"><strong>Finite-policy contextual bandits with Exp4.P</strong><span>Exp4.P gives high-probability policy regret for a finite expert class; the exact matching lower source still needs theorem-level audit in this Wiki.</span></span>
+    <span class="wiki-case-statuses"><span class="wiki-badge literature source-audit-pending" data-wiki-literature-status="source-audit-pending">Source audit pending</span><span class="wiki-badge lean planned" data-wiki-lean-status="planned">Planned</span></span>
+  </summary>
+  <div class="wiki-case-body">
+    <div class="wiki-case-actions"><a href="cases/contextual-finite-policy-exp4p/index.html">Open stable case page →</a><span><span class="wiki-badge source primary-reference-pending" data-wiki-source-status="primary-reference-pending">Primary reference pending</span></span></div>
+    <div class="wiki-tags"><span>Exp4.P</span><span>contextual bandit</span><span>finite policy class</span><span>high probability</span><span>source audit pending</span></div>
+    <dl class="wiki-signature"><div><dt>Context model</dt><dd>Adversarial contexts and rewards</dd></div><div><dt>Policy class</dt><dd>N finite experts mapping contexts to A actions</dd></div><div><dt>Regret</dt><dd>High-probability regret to the best policy</dd></div><div><dt>Target scale</dt><dd>sqrt(A T log(N/delta))</dd></div></dl>
+    <section class="wiki-comparison">
+      <div><p class="panel-kicker">Comparison judgment</p><h3>Source audit pending</h3><p>This is a source-audit queue item, not a claim that the lower bound is unknown in the literature.</p><p><strong>Known gap.</strong> The upper theorem is indexed exactly; a compatible primary lower theorem, assumptions, and constants have not yet been frozen here.</p></div>
+      <div><p class="panel-kicker">Local Lean boundary</p><h3>Planned</h3><p>No finite-policy contextual Exp4.P terminal is mapped to a local Lean declaration.</p></div>
+    </section>
+    <div class="wiki-bound-grid">
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>Exp4.P high-probability policy-regret upper bound</h3>
+  <p class="wiki-paper-title">Contextual Bandit Algorithms with Supervised Learning Guarantees</p>
+  <p class="wiki-source-meta">Alina Beygelzimer, John Langford, Lihong Li, Lev Reyzin, and Robert Schapire · 2010 · Theorem 2</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Exp4.P has high-probability regret at most six times square root A T log N over delta under the source conditions.</span><span class="math-tex" aria-hidden="true">\[R_T\le 6\sqrt{AT\log(N/\delta)}\quad\text{with probability at least }1-\delta.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Includes the source&#x27;s uniform expert and log(N/delta) at most A T conditions.</p>
+  <a href="https://arxiv.org/abs/1002.4058">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+      <article class="wiki-bound empty-bound"><p class="panel-kicker">Lower bound</p><h3>No source theorem claimed</h3><p>The source audit has not registered a compatible theorem for this side of the comparison.</p></article>
+    </div>
+    <section class="wiki-lean-evidence">
+      <div><p class="panel-kicker">Local Lean evidence</p><h3>Exact declarations</h3><ul><li>No local declaration is claimed for this target.</li></ul></div>
+      <div><p class="panel-kicker">Not yet proved here</p><h3>Missing steps</h3><ul><li>Define measurable context-to-action experts and the expert-mixture sampler.</li><li>Formalize the importance-weighted estimator and Exp4.P variance bonus.</li><li>Audit and freeze the exact compatible lower theorem before assigning near-minimax status.</li></ul></div>
+    </section>
+
+<section class="wiki-frontier-note">
+  <p class="panel-kicker">formalization frontier</p>
+  <h3>Which exact contextual lower theorem matches the displayed Exp4.P contract, and how should its policy class be represented in Lean?</h3>
+  <p>The Exp4.P upper theorem is frozen; the lower-source audit and all local formalization remain pending.</p>
+  <ul><li>Exact lower source</li><li>expert measurability</li><li>mixture action law</li><li>high-probability terminal</li><li>Named formalization leaf: EXP4P-LOWER-SOURCE-AUDIT</li><li>Named formalization leaf: EXP4P-CONTEXT-POLICY-INTERFACE</li></ul>
+</section>
+  </div>
+</details>
+<details class="wiki-case-card" id="stochastic-linear-oful" data-wiki-case
+  data-family="linear-contextual"
+  data-literature="near-minimax"
+  data-lean="partial"
+  data-frontier="true"
+  data-search="stochastic-linear-oful stochastic linear bandits: oful versus dimension-dependent lower bounds oful is near minimax up to logarithmic factors in dimension-dependent high-probability regret. linear and contextual bandits oful linear bandit self normalized elliptical potential high probability logarithmic factors, source normalization, decision-set generality, and constants separate the oful upper from the d sqrt(t) lower. the displayed upper is high probability, whereas the lower is an expected-regret minimax statement, so the comparison is only at leading polynomial scale. elliptical potential, self-normalized ridge confidence, a measurable horizon-free finite-action policy, all-time confidence, and one-policy all-horizon regret compile. full source geometry and the linear lower bound do not.">
+  <summary>
+    <span class="wiki-case-id">stochastic-linear-oful</span>
+    <span class="wiki-case-summary-copy"><strong>Stochastic linear bandits: OFUL versus dimension-dependent lower bounds</strong><span>OFUL is near minimax up to logarithmic factors in dimension-dependent high-probability regret.</span></span>
+    <span class="wiki-case-statuses"><span class="wiki-badge literature near-minimax" data-wiki-literature-status="near-minimax">Near minimax</span><span class="wiki-badge lean partial" data-wiki-lean-status="partial">Partial local route</span></span>
+  </summary>
+  <div class="wiki-case-body">
+    <div class="wiki-case-actions"><a href="cases/stochastic-linear-oful/index.html">Open stable case page →</a><span><span class="wiki-badge source exact-source-theorem" data-wiki-source-status="exact-source-theorem">Exact source theorem</span></span></div>
+    <div class="wiki-tags"><span>OFUL</span><span>linear bandit</span><span>self normalized</span><span>elliptical potential</span><span>high probability</span></div>
+    <dl class="wiki-signature"><div><dt>Reward model</dt><dd>Linear mean x_t dot theta-star with conditionally sub-Gaussian noise</dd></div><div><dt>Geometry</dt><dd>Bounded actions and parameter norm in dimension d</dd></div><div><dt>Regret</dt><dd>High-probability cumulative pseudo-regret</dd></div><div><dt>Target scale</dt><dd>d sqrt(T) up to logarithmic factors</dd></div></dl>
+    <section class="wiki-comparison">
+      <div><p class="panel-kicker">Comparison judgment</p><h3>Near minimax</h3><p>The upper and lower dimension dependence agree at leading polynomial order. The local route is a finite-action scalar-ridge specialization, not the full paper theorem.</p><p><strong>Known gap.</strong> Logarithmic factors, source normalization, decision-set generality, and constants separate the OFUL upper from the d sqrt(T) lower. The displayed upper is high probability, whereas the lower is an expected-regret minimax statement, so the comparison is only at leading polynomial scale.</p></div>
+      <div><p class="panel-kicker">Local Lean boundary</p><h3>Partial local route</h3><p>Elliptical potential, self-normalized ridge confidence, a measurable horizon-free finite-action policy, all-time confidence, and one-policy all-horizon regret compile. Full source geometry and the linear lower bound do not.</p></div>
+    </section>
+    <div class="wiki-bound-grid">
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>OFUL high-probability regret upper bound</h3>
+  <p class="wiki-paper-title">Improved Algorithms for Linear Stochastic Bandits</p>
+  <p class="wiki-source-meta">Yasin Abbasi-Yadkori, Dávid Pál, and Csaba Szepesvári · 2011 · Theorem 13</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">OFUL has a high-probability dimension times square root T regret bound up to logarithmic and regularization factors.</span><span class="math-tex" aria-hidden="true">\[R_T=\widetilde O\!\left(d\sqrt{T}\right)\quad\text{with probability at least }1-\delta.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Use the exact confidence radius, determinant term, action-set, and norm assumptions in Theorem 13.</p>
+  <a href="https://arxiv.org/abs/1102.2670">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Lower bound</p>
+  <h3>Linear-bandit minimax expected-regret lower bound</h3>
+  <p class="wiki-paper-title">Stochastic Linear Optimization under Bandit Feedback</p>
+  <p class="wiki-source-meta">Varsha Dani, Thomas Hayes, and Sham Kakade · 2008 · Theorem 3</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Lower bound guarantee"><strong>Lower bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">A constructed linear decision domain forces expected regret at least one tenth d square root T.</span><span class="math-tex" aria-hidden="true">\[\inf_\pi\sup_\theta\mathbb E R_T(\pi,\theta)\ge \frac1{10}d\sqrt{T}.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>The lower theorem uses its explicit domain, dimension, and horizon range.</p>
+  <a href="https://www.learningtheory.org/colt2008/papers/80-Dani.pdf">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+    </div>
+    <section class="wiki-lean-evidence">
+      <div><p class="panel-kicker">Local Lean evidence</p><h3>Exact declarations</h3><ul><li><a href="../modules/banditrlproof-ofulscheduledallhorizonhighprobabilityregretrate/index.html#decl-b9038b9a0219"><code>Bandit<wbr>RL<wbr>Proof.<wbr>OFUL.<wbr>telescoping<wbr>Canonical<wbr>Standard<wbr>High<wbr>Probability<wbr>Pseudo<wbr>Regret_<wbr>nonneg_<wbr>and_<wbr>all<wbr>Horizon_<wbr>tail_<wbr>le_<wbr>explicit<wbr>Bound_<wbr>of_<wbr>linear<wbr>Subgaussian<wbr>Environment_<wbr>of_<wbr>feature<wbr>Bound_<wbr>le_<wbr>regularization</code></a></li></ul></div>
+      <div><p class="panel-kicker">Not yet proved here</p><h3>Missing steps</h3><ul><li>Audit exact correspondence with OFUL Theorem 13 constants and normalization.</li><li>Generalize beyond the current finite-action scalar-ridge interface.</li><li>Formalize a compatible Gaussian linear hard family and d sqrt(T) lower terminal.</li></ul></div>
+    </section>
+
+<section class="wiki-frontier-note">
+  <p class="panel-kicker">formalization frontier</p>
+  <h3>Can the finite-action scalar route be lifted to the exact OFUL theorem and paired with a compatible linear minimax lower construction?</h3>
+  <p>The local high-probability all-horizon consumer is strong but intentionally narrower than the source theorem.</p>
+  <ul><li>General decision set</li><li>source radius identity</li><li>hard family</li><li>upper/lower comparison terminal</li><li>Named formalization leaf: OFUL-SOURCE-THEOREM-13-IDENTITY</li><li>Named formalization leaf: LINEAR-BANDIT-MINIMAX-LOWER</li></ul>
+</section>
+  </div>
+</details>
+<details class="wiki-case-card" id="finite-action-linear-contextual" data-wiki-case
+  data-family="linear-contextual"
+  data-literature="near-minimax"
+  data-lean="planned"
+  data-frontier="true"
+  data-search="finite-action-linear-contextual finite-action linear contextual minimax rates suplinucb/vcl upper and lower theorems match the finite-action contextual rate up to iterated logarithms. linear and contextual bandits linear contextual suplinucb vcl finite actions near minimax the upper differs from the lower by iterated logarithms; theorem 2 also requires n at most 2^(d/2) and t at least d (log_2 n)^(1+epsilon). no time-varying finite-action contextual theorem is claimed locally. existing oful declarations are reusable proof infrastructure only.">
+  <summary>
+    <span class="wiki-case-id">finite-action-linear-contextual</span>
+    <span class="wiki-case-summary-copy"><strong>Finite-action linear contextual minimax rates</strong><span>SupLinUCB/VCL upper and lower theorems match the finite-action contextual rate up to iterated logarithms.</span></span>
+    <span class="wiki-case-statuses"><span class="wiki-badge literature near-minimax" data-wiki-literature-status="near-minimax">Near minimax</span><span class="wiki-badge lean planned" data-wiki-lean-status="planned">Planned</span></span>
+  </summary>
+  <div class="wiki-case-body">
+    <div class="wiki-case-actions"><a href="cases/finite-action-linear-contextual/index.html">Open stable case page →</a><span><span class="wiki-badge source exact-source-theorem" data-wiki-source-status="exact-source-theorem">Exact source theorem</span></span></div>
+    <div class="wiki-tags"><span>linear contextual</span><span>SupLinUCB</span><span>VCL</span><span>finite actions</span><span>near minimax</span></div>
+    <dl class="wiki-signature"><div><dt>Context model</dt><dd>d-dimensional realizable contexts with n available actions per round</dd></div><div><dt>Reward model</dt><dd>Stochastic linear reward</dd></div><div><dt>Regret</dt><dd>Expected cumulative regret</dd></div><div><dt>Target scale</dt><dd>square root(d T log T log n), up to iterated logarithms</dd></div></dl>
+    <section class="wiki-comparison">
+      <div><p class="panel-kicker">Comparison judgment</p><h3>Near minimax</h3><p>The source gives both sides under an explicit parameter fence. Do not treat the local OFUL scaffold as a proof of this contextual finite-action result.</p><p><strong>Known gap.</strong> The upper differs from the lower by iterated logarithms; Theorem 2 also requires n at most 2^(d/2) and T at least d (log_2 n)^(1+epsilon).</p></div>
+      <div><p class="panel-kicker">Local Lean boundary</p><h3>Planned</h3><p>No time-varying finite-action contextual theorem is claimed locally. Existing OFUL declarations are reusable proof infrastructure only.</p></div>
+    </section>
+    <div class="wiki-bound-grid">
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>Finite-action linear contextual upper bound</h3>
+  <p class="wiki-paper-title">Nearly Minimax-Optimal Regret for Linearly Parameterized Bandits</p>
+  <p class="wiki-source-meta">Lihong Li, Wei Wang, and Zhihua Zhou · 2019 · Theorem 1</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">The minimax regret is at most square root d T log T log n times iterated-logarithmic factors.</span><span class="math-tex" aria-hidden="true">\[R^*(T;n,d)\le \operatorname{poly}(\log\log(nT))\,O\!\left(\sqrt{dT\log T\log n}\right).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Finite action sets and the source&#x27;s realizability, action-count, dimension, and horizon conditions.</p>
+  <a href="https://arxiv.org/abs/1904.00242">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Lower bound</p>
+  <h3>Finite-action linear contextual lower bound</h3>
+  <p class="wiki-paper-title">Nearly Minimax-Optimal Regret for Linearly Parameterized Bandits</p>
+  <p class="wiki-source-meta">Lihong Li, Wei Wang, and Zhihua Zhou · 2019 · Theorem 2</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Lower bound guarantee"><strong>Lower bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Under the theorem&#x27;s action-count and horizon fence, every algorithm has regret at the displayed finite-action contextual scale.</span><span class="math-tex" aria-hidden="true">\[R^*(T;n,d)=\Omega_\varepsilon\!\left(\sqrt{dT\log n\,\log(T/d)}\right).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>For every small epsilon greater than zero, n is at most 2^(d/2) and T is at least d (log_2 n)^(1+epsilon), together with the source&#x27;s remaining conditions.</p>
+  <a href="https://arxiv.org/abs/1904.00242">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+    </div>
+    <section class="wiki-lean-evidence">
+      <div><p class="panel-kicker">Local Lean evidence</p><h3>Exact declarations</h3><ul><li>No local declaration is claimed for this target.</li></ul></div>
+      <div><p class="panel-kicker">Not yet proved here</p><h3>Missing steps</h3><ul><li>Represent time-varying action sets and contexts measurably.</li><li>Formalize the VCL layer partition and contextual lower construction.</li><li>Retain the action-count and horizon fence in the final comparison theorem.</li></ul></div>
+    </section>
+
+<section class="wiki-frontier-note">
+  <p class="panel-kicker">formalization frontier</p>
+  <h3>Can the exact Theorems 1–2 parameter fence and VCL construction be represented in one contextual Lean history law?</h3>
+  <p>The primary upper/lower comparison is audited; all local contextual algorithm and lower-construction work remains planned.</p>
+  <ul><li>Contextual history law</li><li>VCL layers</li><li>parameter fence</li><li>lower construction</li><li>Named formalization leaf: VCL-CONTEXTUAL-HISTORY-LAW</li><li>Named formalization leaf: VCL-LAYER-PARTITION</li><li>Named formalization leaf: VCL-LOWER-CONSTRUCTION</li></ul>
+</section>
+  </div>
+</details>
+<details class="wiki-case-card" id="tabular-finite-horizon-rl-ucbvi" data-wiki-case
+  data-family="finite-horizon-rl"
+  data-literature="near-minimax"
+  data-lean="partial"
+  data-frontier="true"
+  data-search="tabular-finite-horizon-rl-ucbvi tabular finite-horizon rl: ucbvi and minimax leading rates ucbvi-bf has the near-minimax variance-aware leading rate; banditrllib currently compiles the known-reward hoeffding ucbvi-ch terminal. finite-horizon tabular reinforcement learning ucbvi ucbvi-ch ucbvi-bf tabular mdp bernstein minimax rl ucbvi-bf gives a high-probability upper bound whose leading large-t polynomial rate matches the expected-regret minimax lower scale up to logs and lower-order terms; these probability modes are not identical theorem contracts. a later modified mvp route addresses the full parameter range. the compiled local theorem is hoeffding, not bernstein/minimax. the canonical recurrent known-reward hoeffding ucbvi-ch 20/250 high-probability terminal and failure-aware expected consumer compile. bernstein/freedman, stochastic rewards, and a minimax lower pair do not.">
+  <summary>
+    <span class="wiki-case-id">tabular-finite-horizon-rl-ucbvi</span>
+    <span class="wiki-case-summary-copy"><strong>Tabular finite-horizon RL: UCBVI and minimax leading rates</strong><span>UCBVI-BF has the near-minimax variance-aware leading rate; BanditRLlib currently compiles the known-reward Hoeffding UCBVI-CH terminal.</span></span>
+    <span class="wiki-case-statuses"><span class="wiki-badge literature near-minimax" data-wiki-literature-status="near-minimax">Near minimax</span><span class="wiki-badge lean partial" data-wiki-lean-status="partial">Partial local route</span></span>
+  </summary>
+  <div class="wiki-case-body">
+    <div class="wiki-case-actions"><a href="cases/tabular-finite-horizon-rl-ucbvi/index.html">Open stable case page →</a><span><span class="wiki-badge source faithful-restatement" data-wiki-source-status="faithful-restatement">Faithful restatement</span></span></div>
+    <div class="wiki-tags"><span>UCBVI</span><span>UCBVI-CH</span><span>UCBVI-BF</span><span>tabular MDP</span><span>Bernstein</span><span>minimax RL</span></div>
+    <dl class="wiki-signature"><div><dt>MDP</dt><dd>Unknown episodic tabular transitions with S states, A actions, horizon H</dd></div><div><dt>Episodes</dt><dd>K episodes and total steps T=H K</dd></div><div><dt>Regret</dt><dd>High-probability cumulative episode pseudo-regret</dd></div><div><dt>Target scale</dt><dd>square root(H S A T), plus lower-order terms</dd></div></dl>
+    <section class="wiki-comparison">
+      <div><p class="panel-kicker">Comparison judgment</p><h3>Near minimax</h3><p>The literature and local status must be read separately: UCBVI-CH compiles locally, while the variance-aware source-leading theorem does not.</p><p><strong>Known gap.</strong> UCBVI-BF gives a high-probability upper bound whose leading large-T polynomial rate matches the expected-regret minimax lower scale up to logs and lower-order terms; these probability modes are not identical theorem contracts. A later modified MVP route addresses the full parameter range. The compiled local theorem is Hoeffding, not Bernstein/minimax.</p></div>
+      <div><p class="panel-kicker">Local Lean boundary</p><h3>Partial local route</h3><p>The canonical recurrent known-reward Hoeffding UCBVI-CH 20/250 high-probability terminal and failure-aware expected consumer compile. Bernstein/Freedman, stochastic rewards, and a minimax lower pair do not.</p></div>
+    </section>
+    <div class="wiki-bound-grid">
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>UCBVI high-probability regret upper bounds</h3>
+  <p class="wiki-paper-title">Minimax Regret Bounds for Reinforcement Learning</p>
+  <p class="wiki-source-meta">Mohammad Azar, Ian Osband, and Rémi Munos · 2017 · Theorems 1–2</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">The Hoeffding version has the explicit 20 and 250 bound; the Bernstein-Freedman version improves the leading horizon dependence to the near-minimax scale.</span><span class="math-tex" aria-hidden="true">\[R_K^{\mathrm{CH}}\le 20H^{3/2}L\sqrt{SAK}+250H^2S^2AL^2,\qquad R_K^{\mathrm{BF}}=\widetilde O\!\left(\sqrt{HSAT}\right).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Use the paper&#x27;s confidence logarithm L, reward model, and horizon conditions.</p>
+  <a href="https://proceedings.mlr.press/v70/azar17a.html">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>Modified MVP full-range minimax regret bound</h3>
+  <p class="wiki-paper-title">Settling the sample complexity of online reinforcement learning</p>
+  <p class="wiki-source-meta">Zihan Zhang and collaborators · 2024 · Modified MVP full-range result</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">A modified MVP analysis supplies the closest full-range upper guarantee across all episode counts.</span><span class="math-tex" aria-hidden="true">\[R_K=\widetilde O\!\left(\min\{\sqrt{SAH^3K},HK\}\right).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>This is a separate algorithmic route and must not be relabeled as UCBVI.</p>
+  <a href="https://proceedings.mlr.press/v247/zhang24a.html">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Lower bound</p>
+  <h3>Tabular episodic minimax lower-bound comparison</h3>
+  <p class="wiki-paper-title">Minimax Regret Bounds for Reinforcement Learning</p>
+  <p class="wiki-source-meta">Mohammad Azar, Ian Osband, and Rémi Munos · 2017 · Minimax lower-bound comparison</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Lower bound guarantee"><strong>Lower bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Some tabular finite-horizon MDP forces expected regret at the square-root H S A T scale in the source regime.</span><span class="math-tex" aria-hidden="true">\[\inf_\pi\sup_M\mathbb E R_T(\pi,M)=\Omega\!\left(\sqrt{HSAT}\right).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Use the source&#x27;s state, action, horizon, and total-time range.</p>
+  <a href="https://proceedings.mlr.press/v70/azar17a.html">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+    </div>
+    <section class="wiki-lean-evidence">
+      <div><p class="panel-kicker">Local Lean evidence</p><h3>Exact declarations</h3><ul><li><a href="../modules/banditrlproof-rl-finitehorizonadaptivecumulativeucbviterminal/index.html#decl-1968b6ce60d8"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Finite<wbr>Horizon<wbr>RL.<wbr>Adaptive<wbr>Cumulative<wbr>Hoeffding<wbr>UCBVI.<wbr>recurrent<wbr>Source_<wbr>trajectory<wbr>Measure_<wbr>cumulative<wbr>Episode<wbr>Pseudo<wbr>Regret_<wbr>gt_<wbr>canonical<wbr>Regret<wbr>Bound_<wbr>le</code></a></li><li><a href="../modules/banditrlproof-rl-finitehorizonadaptivecumulativeucbviexpectedregret/index.html#decl-401539f24394"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Finite<wbr>Horizon<wbr>RL.<wbr>Adaptive<wbr>Cumulative<wbr>Hoeffding<wbr>UCBVI.<wbr>integral_<wbr>cumulative<wbr>Episode<wbr>Pseudo<wbr>Regret_<wbr>recurrent<wbr>Source_<wbr>le_<wbr>canonical<wbr>Regret<wbr>Bound_<wbr>add_<wbr>failure</code></a></li></ul></div>
+      <div><p class="panel-kicker">Not yet proved here</p><h3>Missing steps</h3><ul><li>Build the conditional variance and Freedman/Bernstein bonus layer.</li><li>Compile the law-of-total-variance and recurrent value/Q recursion needed by UCBVI-BF.</li><li>Treat stochastic rewards, realized sampled-return regret, and the MVP full-range route as distinct extensions.</li></ul></div>
+    </section>
+
+<section class="wiki-frontier-note">
+  <p class="panel-kicker">formalization frontier</p>
+  <h3>Can the recurrent generated UCBVI source be upgraded from Hoeffding bonuses to the exact Bernstein/Freedman source theorem?</h3>
+  <p>The source-shaped UCBVI-CH endpoint compiles with the exact 20/250 surface; the minimax-leading UCBVI-BF route is absent.</p>
+  <ul><li>Conditional variance</li><li>Freedman concentration</li><li>variance bonus summation</li><li>source-leading terminal</li><li>Named formalization leaf: UCBVI-BF-CONDITIONAL-VARIANCE</li><li>Named formalization leaf: UCBVI-BF-TOTAL-VARIANCE</li><li>Named formalization leaf: UCBVI-BF-TERMINAL</li></ul>
+</section>
+  </div>
+</details>
+<details class="wiki-case-card" id="delayed-adversarial-bandit" data-wiki-case
+  data-family="delayed-nonstationary"
+  data-literature="near-minimax"
+  data-lean="partial"
+  data-frontier="true"
+  data-search="delayed-adversarial-bandit adversarial bandits with delayed feedback known-delay algorithms attain square-root dependence on rounds and total delay up to logs; local work currently compiles accounting and source-audit interfaces, not a regret endpoint. delayed and nonstationary bandits delayed feedback dexp3 dew delayed sapo total delay outstanding feedback logarithmic factors and the distinction between total-delay and fixed-delay contracts remain visible. observed/outstanding partition identities, causal action-time views, active allocation, a nonnegative-domain d.11 core, algorithm-5 line-10 eliminated-arm initialization, and several delayed sapo audit surfaces compile. the central generated delayed process and stochastic/adversarial regret endpoints do not.">
+  <summary>
+    <span class="wiki-case-id">delayed-adversarial-bandit</span>
+    <span class="wiki-case-summary-copy"><strong>Adversarial bandits with delayed feedback</strong><span>Known-delay algorithms attain square-root dependence on rounds and total delay up to logs; local work currently compiles accounting and source-audit interfaces, not a regret endpoint.</span></span>
+    <span class="wiki-case-statuses"><span class="wiki-badge literature near-minimax" data-wiki-literature-status="near-minimax">Near minimax</span><span class="wiki-badge lean partial" data-wiki-lean-status="partial">Partial local route</span></span>
+  </summary>
+  <div class="wiki-case-body">
+    <div class="wiki-case-actions"><a href="cases/delayed-adversarial-bandit/index.html">Open stable case page →</a><span><span class="wiki-badge source faithful-restatement" data-wiki-source-status="faithful-restatement">Faithful restatement</span></span></div>
+    <div class="wiki-tags"><span>delayed feedback</span><span>DEXP3</span><span>DEW</span><span>Delayed SAPO</span><span>total delay</span><span>outstanding feedback</span></div>
+    <dl class="wiki-signature"><div><dt>Loss model</dt><dd>Adversarial bounded losses</dd></div><div><dt>Delay model</dt><dd>Per-round delays d_t with total D, or a fixed delay d</dd></div><div><dt>Regret</dt><dd>Expected external regret</dd></div><div><dt>Target scale</dt><dd>sqrt((A T + D) log A), with fixed-delay variants</dd></div></dl>
+    <section class="wiki-comparison">
+      <div><p class="panel-kicker">Comparison judgment</p><h3>Near minimax</h3><p>The literature has strong delayed-feedback rates. Local declarations prove causal views and accounting identities but not the cited algorithm theorem.</p><p><strong>Known gap.</strong> Logarithmic factors and the distinction between total-delay and fixed-delay contracts remain visible.</p></div>
+      <div><p class="panel-kicker">Local Lean boundary</p><h3>Partial local route</h3><p>Observed/outstanding partition identities, causal action-time views, active allocation, a nonnegative-domain D.11 core, Algorithm-5 line-10 eliminated-arm initialization, and several Delayed SAPO audit surfaces compile. The central generated delayed process and stochastic/adversarial regret endpoints do not.</p></div>
+    </section>
+    <div class="wiki-bound-grid">
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>Known-delay DEXP3/DEW upper bound</h3>
+  <p class="wiki-paper-title">Nonstochastic Multiarmed Bandits with Unrestricted Delays</p>
+  <p class="wiki-source-meta">Tobias Thune, Nicolò Cesa-Bianchi, and Yevgeny Seldin · 2019 · Theorem 1 and Corollary 4</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">A delayed exponential-weights algorithm has expected regret controlled by the sum of the ordinary bandit term and total delay.</span><span class="math-tex" aria-hidden="true">\[R_T\le 2\sqrt{(eAT/2+D)\log A}\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Use the source&#x27;s known-delay or skipping contracts and parameter choice.</p>
+  <a href="https://arxiv.org/abs/1906.00670">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>Fixed-delay regret upper bound</h3>
+  <p class="wiki-paper-title">Delay and Cooperation in Nonstochastic Bandits</p>
+  <p class="wiki-source-meta">Nicolò Cesa-Bianchi, Claudio Gentile, and Yishay Mansour · 2019 · Corollary 15</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">For fixed delay d, the regret is square-root in A plus d times T, up to log A and an additive delay term.</span><span class="math-tex" aria-hidden="true">\[R_T=O\!\left(d+\sqrt{(A+d)T\log A}\right).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Fixed-delay feedback under the source&#x27;s protocol.</p>
+  <a href="https://www.jmlr.org/papers/v20/17-631.html">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Lower bound</p>
+  <h3>Fixed-delay minimax comparison</h3>
+  <p class="wiki-paper-title">Delay and Cooperation in Nonstochastic Bandits</p>
+  <p class="wiki-source-meta">Nicolò Cesa-Bianchi, Claudio Gentile, and Yishay Mansour · 2019 · Fixed-delay minimax comparison</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Lower bound guarantee"><strong>Lower bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">The fixed-delay problem has a square-root lower scale in A plus delay times T.</span><span class="math-tex" aria-hidden="true">\[R_T=\Omega\!\left(\sqrt{(A+d)T}\right).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Compare only to upper theorems with the same fixed-delay feedback contract.</p>
+  <a href="https://www.jmlr.org/papers/v20/17-631.html">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+    </div>
+    <section class="wiki-lean-evidence">
+      <div><p class="panel-kicker">Local Lean evidence</p><h3>Exact declarations</h3><ul><li><a href="../modules/banditrlproof-delayedfeedback-accounting/index.html#decl-b73229dcb4a5"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Delayed<wbr>Feedback.<wbr>card_<wbr>observed<wbr>Before_<wbr>add_<wbr>card_<wbr>outstanding<wbr>At</code></a></li><li><a href="../modules/banditrlproof-delayedfeedback-causalview/index.html#decl-55cbb54dc125"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Delayed<wbr>Feedback.<wbr>action<wbr>Time<wbr>View<wbr>At</code></a></li><li><a href="../modules/banditrlproof-delayedfeedback-activeallocation/index.html#decl-6f47f79ef279"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Delayed<wbr>Feedback.<wbr>delayed<wbr>SAPO<wbr>Probability</code></a></li><li><a href="../modules/banditrlproof-delayedfeedback-stochasticgaphalfset/index.html#decl-9e61f4924159"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Delayed<wbr>Feedback.<wbr>two_<wbr>mul_<wbr>card_<wbr>source<wbr>Stochastic<wbr>Loss<wbr>Gap_<wbr>above<wbr>Twice<wbr>Average_<wbr>le</code></a></li><li><a href="../modules/banditrlproof-delayedfeedback-eliminatedarminitialization/index.html#decl-07add3be2dc8"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Delayed<wbr>Feedback.<wbr>Delayed<wbr>SAPO<wbr>Eliminated<wbr>Arm<wbr>Initialization.<wbr>initialize<wbr>Newly<wbr>Eliminated_<wbr>spec_<wbr>of_<wbr>mem</code></a></li></ul></div>
+      <div><p class="panel-kicker">Not yet proved here</p><h3>Missing steps</h3><ul><li>Extend the line-10 initializer into the source EAP/BSC phase transitions and one recursive delayed trajectory that supports out-of-order feedback revelation.</li><li>Resolve the source width-direction audit and instantiate its snapshot hypotheses.</li><li>Prove a source-compatible stochastic or adversarial regret terminal.</li></ul></div>
+    </section>
+
+<section class="wiki-frontier-note">
+  <p class="panel-kicker">formalization frontier</p>
+  <h3>Can the delayed accounting layer be connected to one generated algorithm law and a paper-level regret terminal?</h3>
+  <p>The bookkeeping, causal-view, active-allocation, and conditional source-audit surfaces compile; no algorithm regret theorem is claimed.</p>
+  <ul><li>Out-of-order reveal law</li><li>state machine</li><li>width audit</li><li>regret terminal</li><li>Named formalization leaf: DELAYED-TRAJECTORY-LAW</li><li>Named formalization leaf: DELAYED-SAPO-D10-D12</li><li>Named formalization leaf: DELAYED-REGRET-TERMINAL</li></ul>
+</section>
+  </div>
+</details>
+<details class="wiki-case-card" id="nonstationary-variation-budget" data-wiki-case
+  data-family="delayed-nonstationary"
+  data-literature="near-minimax"
+  data-lean="partial"
+  data-frontier="true"
+  data-search="nonstationary-variation-budget variation-budget nonstationary stochastic bandits restarted exp3 is near minimax for dynamic regret under a known total-variation budget. delayed and nonstationary bandits nonstationary variation budget rexp3 dynamic regret restart rexp3 has a (log a)^(1/3) factor and assumes variation-budget tuning. a drifting-mean half-tsallis dynamic-regret envelope compiles, but it is not a formal variation-budget rexp3 theorem and does not close the minimax comparison.">
+  <summary>
+    <span class="wiki-case-id">nonstationary-variation-budget</span>
+    <span class="wiki-case-summary-copy"><strong>Variation-budget nonstationary stochastic bandits</strong><span>Restarted EXP3 is near minimax for dynamic regret under a known total-variation budget.</span></span>
+    <span class="wiki-case-statuses"><span class="wiki-badge literature near-minimax" data-wiki-literature-status="near-minimax">Near minimax</span><span class="wiki-badge lean partial" data-wiki-lean-status="partial">Partial local route</span></span>
+  </summary>
+  <div class="wiki-case-body">
+    <div class="wiki-case-actions"><a href="cases/nonstationary-variation-budget/index.html">Open stable case page →</a><span><span class="wiki-badge source exact-source-theorem" data-wiki-source-status="exact-source-theorem">Exact source theorem</span></span></div>
+    <div class="wiki-tags"><span>nonstationary</span><span>variation budget</span><span>Rexp3</span><span>dynamic regret</span><span>restart</span></div>
+    <dl class="wiki-signature"><div><dt>Reward model</dt><dd>Time-varying stochastic arm means</dd></div><div><dt>Variation</dt><dd>V_T equals the sum of roundwise maximum mean changes</dd></div><div><dt>Comparator</dt><dd>Roundwise best arm dynamic oracle</dd></div><div><dt>Target scale</dt><dd>(A V_T)^(1/3) T^(2/3)</dd></div></dl>
+    <section class="wiki-comparison">
+      <div><p class="panel-kicker">Comparison judgment</p><h3>Near minimax</h3><p>The published upper and lower exponents match. The local drifting-mean Tsallis theorem is related but is not the V_T minimax theorem.</p><p><strong>Known gap.</strong> Rexp3 has a (log A)^(1/3) factor and assumes variation-budget tuning.</p></div>
+      <div><p class="panel-kicker">Local Lean boundary</p><h3>Partial local route</h3><p>A drifting-mean half-Tsallis dynamic-regret envelope compiles, but it is not a formal variation-budget Rexp3 theorem and does not close the minimax comparison.</p></div>
+    </section>
+    <div class="wiki-bound-grid">
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>Rexp3 variation-budget upper bound</h3>
+  <p class="wiki-paper-title">Stochastic Multi-Armed-Bandit Problem with Non-stationary Rewards</p>
+  <p class="wiki-source-meta">Omar Besbes, Yonatan Gur, and Assaf Zeevi · 2014 · Theorem 2</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Rexp3 has dynamic regret of order cube root A log A times variation, multiplied by T to the two thirds.</span><span class="math-tex" aria-hidden="true">\[R_T=O\!\left((A\log A\,V_T)^{1/3}T^{2/3}\right).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>The block length uses the source&#x27;s known variation budget and parameter range.</p>
+  <a href="https://proceedings.neurips.cc/paper_files/paper/2014/hash/91ba7292e5388b90b58d0b839a7f19ec-Abstract.html">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Lower bound</p>
+  <h3>Variation-budget dynamic-regret lower bound</h3>
+  <p class="wiki-paper-title">Stochastic Multi-Armed-Bandit Problem with Non-stationary Rewards</p>
+  <p class="wiki-source-meta">Omar Besbes, Yonatan Gur, and Assaf Zeevi · 2014 · Theorem 1</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Lower bound guarantee"><strong>Lower bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Every policy incurs dynamic regret at the cube-root variation-budget scale on some admissible nonstationary environment.</span><span class="math-tex" aria-hidden="true">\[\inf_\pi\sup_{\nu:\,V_T(\nu)\le V}\mathbb E R_T(\pi,\nu)=\Omega\!\left((AV)^{1/3}T^{2/3}\right).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Use the source&#x27;s variation class and horizon/variation range.</p>
+  <a href="https://proceedings.neurips.cc/paper_files/paper/2014/hash/91ba7292e5388b90b58d0b839a7f19ec-Abstract.html">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+    </div>
+    <section class="wiki-lean-evidence">
+      <div><p class="panel-kicker">Local Lean evidence</p><h3>Exact declarations</h3><ul><li><a href="../modules/banditrlproof-tsallisfinitearmindependentdriftingmeandynamicregret/index.html#decl-995fe6ce3b52"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Tsallis.<wbr>integral_<wbr>sampled<wbr>Scheduled<wbr>Half<wbr>Tsallis<wbr>Finite<wbr>Arm<wbr>Independent<wbr>Drifting<wbr>Mean<wbr>Dynamic<wbr>Regret_<wbr>le_<wbr>all<wbr>Regimes</code></a></li></ul></div>
+      <div><p class="panel-kicker">Not yet proved here</p><h3>Missing steps</h3><ul><li>Define the formal variation budget and block restart policy.</li><li>Prove the dynamic-oracle decomposition for Rexp3.</li><li>Optimize the block length and compile the matching V_T rate.</li></ul></div>
+    </section>
+
+<section class="wiki-frontier-note">
+  <p class="panel-kicker">formalization frontier</p>
+  <h3>Can the current dynamic-regret envelope be specialized to the exact variation-budget Rexp3 theorem?</h3>
+  <p>A related drifting-mean theorem compiles, but its contract and rate are not the source minimax V_T result.</p>
+  <ul><li>Variation measure</li><li>restart construction</li><li>oracle decomposition</li><li>rate optimization</li><li>Named formalization leaf: VARIATION-BUDGET-DEFINITION</li><li>Named formalization leaf: REXP3-BLOCK-RESTART</li><li>Named formalization leaf: REXP3-DYNAMIC-REGRET</li></ul>
+</section>
+  </div>
+</details>
+<details class="wiki-case-card" id="nonstationary-best-arm-switch-budget" data-wiki-case
+  data-family="delayed-nonstationary"
+  data-literature="near-minimax"
+  data-lean="partial"
+  data-frontier="true"
+  data-search="nonstationary-best-arm-switch-budget unknown best-arm-identity switch budget armswitch is near the square-root best-arm-switch scale, while the current lean theorem assumes an oracle schedule built from all global mean changes. delayed and nonstationary bandits piecewise stationary switch budget armswitch change detection oracle restart armswitch has a polylogarithmic factor. the displayed lower is obtained from a stationary-segment hard family, so the class embedding and its k/horizon conditions remain explicit rather than being called an identical assumption contract. a generated oracle-restart half-tsallis theorem with 8 sqrt(a) sqrt(s+1) sqrt(t+1) compiles, but its s counts true global population-mean changes, not only changes in best-arm identity.">
+  <summary>
+    <span class="wiki-case-id">nonstationary-best-arm-switch-budget</span>
+    <span class="wiki-case-summary-copy"><strong>Unknown best-arm-identity switch budget</strong><span>ArmSwitch is near the square-root best-arm-switch scale, while the current Lean theorem assumes an oracle schedule built from all global mean changes.</span></span>
+    <span class="wiki-case-statuses"><span class="wiki-badge literature near-minimax" data-wiki-literature-status="near-minimax">Near minimax</span><span class="wiki-badge lean partial" data-wiki-lean-status="partial">Partial local route</span></span>
+  </summary>
+  <div class="wiki-case-body">
+    <div class="wiki-case-actions"><a href="cases/nonstationary-best-arm-switch-budget/index.html">Open stable case page →</a><span><span class="wiki-badge source faithful-restatement" data-wiki-source-status="faithful-restatement">Faithful restatement</span></span></div>
+    <div class="wiki-tags"><span>piecewise stationary</span><span>switch budget</span><span>ArmSwitch</span><span>change detection</span><span>oracle restart</span></div>
+    <dl class="wiki-signature"><div><dt>Reward model</dt><dd>Nonstationary stochastic means</dd></div><div><dt>Changes</dt><dd>The identity of the optimal arm changes at most S times, unknown to the learner</dd></div><div><dt>Comparator</dt><dd>Best arm within each stationary segment</dd></div><div><dt>Target scale</dt><dd>sqrt(A (S+1) T) up to polylogarithmic factors</dd></div></dl>
+    <section class="wiki-comparison">
+      <div><p class="panel-kicker">Comparison judgment</p><h3>Near minimax</h3><p>The upper depends on changes in best-arm identity, not changes in the full reward vector. The local oracle schedule uses every global population-mean change and is therefore only related evidence.</p><p><strong>Known gap.</strong> ArmSwitch has a polylogarithmic factor. The displayed lower is obtained from a stationary-segment hard family, so the class embedding and its K/horizon conditions remain explicit rather than being called an identical assumption contract.</p></div>
+      <div><p class="panel-kicker">Local Lean boundary</p><h3>Partial local route</h3><p>A generated oracle-restart half-Tsallis theorem with 8 sqrt(A) sqrt(S+1) sqrt(T+1) compiles, but its S counts true global population-mean changes, not only changes in best-arm identity.</p></div>
+    </section>
+    <div class="wiki-bound-grid">
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>ArmSwitch best-arm-switch upper bound</h3>
+  <p class="wiki-paper-title">A New Look at Dynamic Regret for Non-Stationary Stochastic Bandits</p>
+  <p class="wiki-source-meta">Yasin Abbasi-Yadkori, András György, and Nevena Lazić · 2023 · Theorem 1</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">ArmSwitch adapts to an unknown number of changes with square-root switch dependence up to a polylogarithmic factor.</span><span class="math-tex" aria-hidden="true">\[\mathbb E R_T\le C\sqrt{A(S+1)T}\,[\log(AT\log T)]^{3/2}.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Use the source&#x27;s piecewise-stationary model and initialization.</p>
+  <a href="https://www.jmlr.org/papers/v24/22-0387.html">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Lower bound</p>
+  <h3>Piecewise-stationary minimax lower bound</h3>
+  <p class="wiki-paper-title">A Near-Optimal Change-Detection Based Algorithm for Piecewise-Stationary Combinatorial Semi-Bandits</p>
+  <p class="wiki-source-meta">Zhou, Wang, Varshney, and Lim · 2020 · Theorem 5.1</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Lower bound guarantee"><strong>Lower bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">A piecewise-stationary hard family with N segments forces square-root N A T regret; ordinary multi-armed bandits are a special case of the source model.</span><span class="math-tex" aria-hidden="true">\[\inf_\pi\sup_\nu\mathbb E R_T(\pi,\nu)=\Omega\!\left(\sqrt{NAT}\right),\qquad N=S+1.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Use the theorem&#x27;s A at least 3 and horizon conditions. Mapping N segments to S plus one best-arm regimes is a faithful comparison step, not a verbatim identity of model classes.</p>
+  <a href="https://ojs.aaai.org/index.php/AAAI/article/view/6176">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+    </div>
+    <section class="wiki-lean-evidence">
+      <div><p class="panel-kicker">Local Lean evidence</p><h3>Exact declarations</h3><ul><li><a href="../modules/banditrlproof-tsallisoraclerestartglobalmeanswitchcount/index.html#decl-6678d5fce9a1"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Tsallis.<wbr>integral_<wbr>sampled<wbr>Oracle<wbr>Restart<wbr>Half<wbr>Tsallis<wbr>Finite<wbr>Arm<wbr>Independent<wbr>Global<wbr>Mean<wbr>Change<wbr>Dynamic<wbr>Regret_<wbr>le</code></a></li></ul></div>
+      <div><p class="panel-kicker">Not yet proved here</p><h3>Missing steps</h3><ul><li>Define a measurable observed-reward change detector and adaptive restart state.</li><li>Control detection delay and false alarms before claiming the unknown-S rate.</li><li>Bridge—or explicitly separate—the best-arm-identity switch contract from the local global-mean-change schedule.</li></ul></div>
+    </section>
+
+<section class="wiki-frontier-note">
+  <p class="panel-kicker">formalization frontier</p>
+  <h3>Can oracle global-mean restarts be replaced by an observed-reward detector under the broader best-arm-identity switch contract?</h3>
+  <p>The local theorem has the desired square-root expression only under a true global-change schedule; ArmSwitch is adaptive under a different, broader change count.</p>
+  <ul><li>Assumption bridge</li><li>detector measurability</li><li>false-alarm control</li><li>delay charge</li><li>Named formalization leaf: BEST-ARM-SWITCH-CONTRACT</li><li>Named formalization leaf: OBSERVED-CHANGE-DETECTOR</li><li>Named formalization leaf: ADAPTIVE-RESTART-REGRET</li></ul>
+</section>
+  </div>
+</details>
+<details class="wiki-case-card" id="fixed-confidence-best-arm-identification" data-wiki-case
+  data-family="pure-exploration"
+  data-literature="asymptotic-matched"
+  data-lean="planned"
+  data-frontier="true"
+  data-search="fixed-confidence-best-arm-identification fixed-confidence best-arm identification track-and-stop asymptotically matches the characteristic-time change-of-measure lower bound. pure exploration and best-arm identification best arm identification track-and-stop delta-pac stopping time characteristic time the source&#x27;s tracking parameter alpha is in [1,e/2]; appropriate tuning approaches the characteristic-time constant. no delta-pac stopping-time characteristic-time terminal or track-and-stop algorithm is claimed locally.">
+  <summary>
+    <span class="wiki-case-id">fixed-confidence-best-arm-identification</span>
+    <span class="wiki-case-summary-copy"><strong>Fixed-confidence best-arm identification</strong><span>Track-and-Stop asymptotically matches the characteristic-time change-of-measure lower bound.</span></span>
+    <span class="wiki-case-statuses"><span class="wiki-badge literature asymptotic-matched" data-wiki-literature-status="asymptotic-matched">Asymptotically matched</span><span class="wiki-badge lean planned" data-wiki-lean-status="planned">Planned</span></span>
+  </summary>
+  <div class="wiki-case-body">
+    <div class="wiki-case-actions"><a href="cases/fixed-confidence-best-arm-identification/index.html">Open stable case page →</a><span><span class="wiki-badge source exact-source-theorem" data-wiki-source-status="exact-source-theorem">Exact source theorem</span></span></div>
+    <div class="wiki-tags"><span>best arm identification</span><span>Track-and-Stop</span><span>delta-PAC</span><span>stopping time</span><span>characteristic time</span></div>
+    <dl class="wiki-signature"><div><dt>Reward model</dt><dd>One-parameter exponential family with a unique best arm</dd></div><div><dt>Guarantee</dt><dd>delta-PAC best-arm recommendation</dd></div><div><dt>Cost</dt><dd>Expected stopping time as delta tends to zero</dd></div><div><dt>Target constant</dt><dd>Characteristic time T-star of the max-min information game</dd></div></dl>
+    <section class="wiki-comparison">
+      <div><p class="panel-kicker">Comparison judgment</p><h3>Asymptotically matched</h3><p>The literature has a matched asymptotic fixed-confidence answer. BanditRLlib has no characteristic-time or Track-and-Stop formalization yet.</p><p><strong>Known gap.</strong> The source&#x27;s tracking parameter alpha is in [1,e/2]; appropriate tuning approaches the characteristic-time constant.</p></div>
+      <div><p class="panel-kicker">Local Lean boundary</p><h3>Planned</h3><p>No delta-PAC stopping-time characteristic-time terminal or Track-and-Stop algorithm is claimed locally.</p></div>
+    </section>
+    <div class="wiki-bound-grid">
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>Track-and-Stop asymptotic upper bound</h3>
+  <p class="wiki-paper-title">Optimal Best Arm Identification with Fixed Confidence</p>
+  <p class="wiki-source-meta">Aurélien Garivier and Emilie Kaufmann · 2016 · Theorem 14</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Track-and-Stop&#x27;s expected sample complexity approaches alpha times the characteristic time.</span><span class="math-tex" aria-hidden="true">\[\limsup_{\delta\to0}\frac{\mathbb E_\mu\tau_\delta}{\log(1/\delta)}\le \alpha T^*(\mu).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Unique best arm, source exponential-family assumptions, and alpha in the theorem&#x27;s allowed range.</p>
+  <a href="https://proceedings.mlr.press/v49/garivier16a.html">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Lower bound</p>
+  <h3>Characteristic-time lower bound</h3>
+  <p class="wiki-paper-title">Optimal Best Arm Identification with Fixed Confidence</p>
+  <p class="wiki-source-meta">Aurélien Garivier and Emilie Kaufmann · 2016 · Theorem 1</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Lower bound guarantee"><strong>Lower bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Every delta-PAC strategy must spend at least the characteristic-time information cost.</span><span class="math-tex" aria-hidden="true">\[\mathbb E_\mu\tau_\delta\ge T^*(\mu)\,\mathrm{kl}(\delta,1-\delta),\quad T^*(\mu)^{-1}=\sup_{w\in\Sigma_A}\inf_{\lambda\in\mathrm{Alt}(\mu)}\sum_a w_a d(\mu_a,\lambda_a).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>The source&#x27;s alternative set, exponential-family divergence, and stopping/recommendation measurability.</p>
+  <a href="https://proceedings.mlr.press/v49/garivier16a.html">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+    </div>
+    <section class="wiki-lean-evidence">
+      <div><p class="panel-kicker">Local Lean evidence</p><h3>Exact declarations</h3><ul><li>No local declaration is claimed for this target.</li></ul></div>
+      <div><p class="panel-kicker">Not yet proved here</p><h3>Missing steps</h3><ul><li>Define delta-PAC recommendation and the adapted stopping rule.</li><li>Formalize the stopped change-of-measure inequality.</li><li>Build the simplex max-min characteristic time and the Track-and-Stop tracking/concentration proof.</li></ul></div>
+    </section>
+
+<section class="wiki-frontier-note">
+  <p class="panel-kicker">formalization frontier</p>
+  <h3>How should the characteristic-time max-min game and an unbounded adaptive stopping rule be represented in Lean?</h3>
+  <p>General stopping-time infrastructure exists elsewhere in BanditRLlib, but no pure-exploration semantic bridge or source theorem is mapped.</p>
+  <ul><li>Recommendation event</li><li>stopping measurability</li><li>information game</li><li>tracking rule</li><li>Named formalization leaf: BAI-DELTA-PAC</li><li>Named formalization leaf: BAI-STOPPED-CHANGE-OF-MEASURE</li><li>Named formalization leaf: BAI-CHARACTERISTIC-TIME</li><li>Named formalization leaf: TRACK-AND-STOP</li></ul>
+</section>
+  </div>
+</details>
+<details class="wiki-case-card" id="distributional-high-probability-regret" data-wiki-case
+  data-family="distributional-lower-bounds"
+  data-literature="minimax-matched"
+  data-lean="partial"
+  data-frontier="true"
+  data-search="distributional-high-probability-regret distributional high-probability regret under an expected-regret constraint a 2026 upper theorem matches the chapter 17 logarithmic confidence tradeoff in order. theorem 17.1, corollaries 17.2–17.3, and the explicitly corrected adversarial terminal pass the full local repository gate. eqo+ remains a separate unformalized upper route. distributional and high-probability lower bounds high probability lower bound distributional regret eqo+ chapter 17 tail tradeoff the upper and lower tradeoff match in confidence and square-root order, with constants, exact reward class, and the lower theorem&#x27;s expected-regret premise remaining visible. banditrllib compiles the stochastic chapter 17 endpoints, claims 17.5–17.7, eq. (17.8), same-policy shared-noise coupling, and deterministic matrix extraction. approved corrections: claim 17.6 uses t_i ≤ n/2; theorem 17.4 uses 0 &lt; δ ≤ 1/32, c=1/160, c=64 and a strict cdf tail. the full local repository gate passes; eqo+ is not formalized.">
+  <summary>
+    <span class="wiki-case-id">distributional-high-probability-regret</span>
+    <span class="wiki-case-summary-copy"><strong>Distributional high-probability regret under an expected-regret constraint</strong><span>A 2026 upper theorem matches the Chapter 17 logarithmic confidence tradeoff in order. Theorem 17.1, Corollaries 17.2–17.3, and the explicitly corrected adversarial terminal pass the full local repository gate. EQO+ remains a separate unformalized upper route.</span></span>
+    <span class="wiki-case-statuses"><span class="wiki-badge literature minimax-matched" data-wiki-literature-status="minimax-matched">Minimax matched</span><span class="wiki-badge lean partial" data-wiki-lean-status="partial">Partial local route</span></span>
+  </summary>
+  <div class="wiki-case-body">
+    <div class="wiki-case-actions"><a href="cases/distributional-high-probability-regret/index.html">Open stable case page →</a><span><span class="wiki-badge source exact-source-theorem" data-wiki-source-status="exact-source-theorem">Exact source theorem</span></span></div>
+    <div class="wiki-tags"><span>high probability lower bound</span><span>distributional regret</span><span>EQO+</span><span>Chapter 17</span><span>tail tradeoff</span></div>
+    <dl class="wiki-signature"><div><dt>Reward model</dt><dd>Finite stochastic sub-Gaussian or unit-Gaussian arms</dd></div><div><dt>Policy premise</dt><dd>Uniform expected regret of order B sqrt((A-1) T) for the lower theorem</dd></div><div><dt>Regret</dt><dd>Tail of random pseudo-regret</dd></div><div><dt>Target scale</dt><dd>sqrt(A T) log(1/delta), capped by T</dd></div></dl>
+    <section class="wiki-comparison">
+      <div><p class="panel-kicker">Comparison judgment</p><h3>Minimax matched</h3><p>This literature frontier is closed by the 2026 EQO+ result. Chapter 17&#x27;s stochastic endpoints compile, and corrected Theorem 17.4 passes focused compilation on 0 &lt; δ ≤ 1/32 with c=1/160, C=64. Full local gates pass; this does not formalize EQO+.</p><p><strong>Known gap.</strong> The upper and lower tradeoff match in confidence and square-root order, with constants, exact reward class, and the lower theorem&#x27;s expected-regret premise remaining visible.</p></div>
+      <div><p class="panel-kicker">Local Lean boundary</p><h3>Partial local route</h3><p>BanditRLlib compiles the stochastic Chapter 17 endpoints, Claims 17.5–17.7, Eq. (17.8), same-policy shared-noise coupling, and deterministic matrix extraction. Approved corrections: Claim 17.6 uses T_i ≤ n/2; Theorem 17.4 uses 0 &lt; δ ≤ 1/32, c=1/160, C=64 and a strict CDF tail. The full local repository gate passes; EQO+ is not formalized.</p></div>
+    </section>
+    <div class="wiki-bound-grid">
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Upper bound</p>
+  <h3>EQO+ distributional-regret upper bound</h3>
+  <p class="wiki-paper-title">Unified Framework of Distributional Regret in Multi-Armed Bandits and Reinforcement Learning</p>
+  <p class="wiki-source-meta">Lee and Oh · 2026 · Theorem 4</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Upper bound guarantee"><strong>Upper bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">EQO+ simultaneously controls expected regret at the minimax scale and the distributional tail with one logarithmic confidence factor.</span><span class="math-tex" aria-hidden="true">\[R_T=O\!\left(\sigma\sqrt{AT}\log(1/\delta)\right)\quad\text{with probability at least }1-\delta,\qquad \mathbb E R_T=O(\sigma\sqrt{AT}).\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Use the source&#x27;s sub-Gaussian model and its displayed tuning c1 equals sigma square root T over A.</p>
+  <a href="https://proceedings.mlr.press/v336/lee26b.html">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+
+<article class="wiki-bound">
+  <p class="panel-kicker">Lower bound</p>
+  <h3>Chapter 17 distributional-regret lower bound</h3>
+  <p class="wiki-paper-title">Bandit Algorithms</p>
+  <p class="wiki-source-meta">Tor Lattimore and Csaba Szepesvári · 2020 · Theorem 17.1</p>
+  <div class="math-statement" data-math-statement data-scroll-label="Lower bound guarantee"><strong>Lower bound guarantee.</strong> <span class="math-fallback-note" aria-hidden="true">Formula renderer unavailable; readable fallback: </span><span class="math-fallback">Any policy with the source&#x27;s uniform expected-regret bound has a unit-Gaussian instance whose random pseudo-regret exceeds the displayed confidence-dependent threshold with probability at least delta.</span><span class="math-tex" aria-hidden="true">\[\Pr\!\left(R_T\ge\frac14\min\left\{T,\frac1B\sqrt{(A-1)T}\log\frac1{4\delta}\right\}\right)\ge\delta.\]</span><span class="overflow-hint" aria-hidden="true">Swipe to read the full formula <span>→</span></span></div>
+  <p>Preserve the exact A, T, B, delta conditions and the same randomized nonanticipating policy.</p>
+  <a href="https://tor-lattimore.com/downloads/book/book.pdf">Open primary source <span aria-hidden="true">↗</span></a>
+</article>
+    </div>
+    <section class="wiki-lean-evidence">
+      <div><p class="panel-kicker">Local Lean evidence</p><h3>Exact declarations</h3><ul><li><a href="../modules/banditrlproof-lowerbounds-highprobability/index.html#decl-4bb7c14eda2f"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>stochastic<wbr>High<wbr>Probability<wbr>Threshold</code></a></li><li><a href="../modules/banditrlproof-lowerbounds-highprobability/index.html#decl-ef466200fc8d"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>gaussian<wbr>Random<wbr>Pseudo<wbr>Regret_<wbr>ge_<wbr>theorem17_<wbr>1</code></a></li><li><a href="../modules/banditrlproof-lowerbounds-highprobability/index.html#decl-7f3bbcfa6913"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>no<wbr>Uniform<wbr>Gaussian<wbr>Random<wbr>Pseudo<wbr>Regret<wbr>Tail_<wbr>corollary17_<wbr>3</code></a></li><li><a href="../modules/banditrlproof-lowerbounds-highprobability/index.html#decl-c093fd82ca2f"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>gaussian<wbr>Random<wbr>Pseudo<wbr>Regret_<wbr>ge_<wbr>corollary17_<wbr>2</code></a></li><li><a href="../modules/banditrlproof-lowerbounds-highprobability/index.html#decl-5c2f374b84c4"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>exists_<wbr>cdf<wbr>Tail_<wbr>ge_<wbr>of_<wbr>integral_<wbr>ge</code></a></li><li><a href="../modules/banditrlproof-lowerbounds-highprobability/index.html#decl-2ddbbaa6b8b9"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>random<wbr>Regret_<wbr>ge_<wbr>quarter_<wbr>of_<wbr>clipping<wbr>Decomposition</code></a></li><li><a href="../modules/banditrlproof-lowerbounds-highprobability/index.html#decl-2baa1151442d"><code>Bandit<wbr>RL<wbr>Proof.<wbr>Lower<wbr>Bounds.<wbr>adversarial<wbr>Random<wbr>Regret_<wbr>ge_<wbr>eq17_<wbr>8</code></a></li></ul></div>
+      <div><p class="panel-kicker">Not yet proved here</p><h3>Missing steps</h3><ul><li>Map and formalize the EQO+ algorithm and Theorem 4 as a separate upper route.</li></ul></div>
+    </section>
+
+<section class="wiki-frontier-note">
+  <p class="panel-kicker">formalization frontier</p>
+  <h3>Can the compiled corrected lower terminal be paired with a formalized EQO+ upper route?</h3>
+  <p>Theorem 17.1, Corollaries 17.2–17.3, Eq. (17.8), corrected Claim 17.6, exact Claim 17.7, and corrected Theorem 17.4 pass the full local repository gate. Theorem 17.4 uses 0 &lt; δ ≤ 1/32, c=1/160, C=64. No EQO+ algorithm theorem is claimed.</p>
+  <ul><li>EQO+ source map and formalized upper terminal</li><li>Named formalization leaf: CH17-HISTORY-INFORMATION</li><li>Named formalization leaf: CH17-THEOREM-17-1</li><li>Named formalization leaf: CH17-COROLLARY-17-2</li><li>Named formalization leaf: CH17-COROLLARY-17-3</li><li>Named formalization leaf: EQOPLUS-UPPER</li></ul>
+</section>
+  </div>
+</details></div>
+</section></main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Overview</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#overview">Overview</a><a data-toc-link href="#reading-contract">Status contract</a><a data-toc-link href="#settings">Settings</a><a data-toc-link href="#source-ports">Source ports</a><a data-toc-link href="#cases">Cases</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../static/site.js?v=20260903f"></script>
+  <script src="../static/banditrlwiki.js?v=20260903f"></script>
+</body>
+</html>

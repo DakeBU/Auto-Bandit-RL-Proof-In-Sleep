@@ -1,0 +1,1317 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Algorithms/ThompsonAlgorithmDensityProcess.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Algorithms/ThompsonAlgorithmDensityProcess.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Algorithms/ThompsonAlgorithmDensityProcess.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Algorithms/ThompsonAlgorithmDensityProcess.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Algorithms.ThompsonAlgorithmDensity</span>
+<span id="L2">2 import BanditRLProof.Algorithms.ETCFiniteArmRewardLaw</span>
+<span id="L3">3 import Mathlib.Probability.Kernel.RadonNikodym</span>
+<span id="L4">4 </span>
+<span id="L5">5 /-!</span>
+<span id="L6">6 # Recursive algorithm-density transport for finite pair histories</span>
+<span id="L7">7 </span>
+<span id="L8">8 This module ports the process-facing core of LML&#x27;s algorithm-density theorem.</span>
+<span id="L9">9 Two stochastic history policies interact with the same feedback environment.</span>
+<span id="L10">10 If every actual action law is absolutely continuous with respect to the</span>
+<span id="L11">11 reference action law, the actual finite action/reward history law is the</span>
+<span id="L12">12 reference history law weighted by the recursive product of policy</span>
+<span id="L13">13 Radon-Nikodym derivatives.</span>
+<span id="L14">14 -/</span>
+<span id="L15">15 </span>
+<span id="L16">16 open MeasureTheory</span>
+<span id="L17">17 open scoped ENNReal ProbabilityTheory</span>
+<span id="L18">18 </span>
+<span id="L19">19 universe u v w x y</span>
+<span id="L20">20 </span>
+<span id="L21">21 namespace BanditRLProof</span>
+<span id="L22">22 namespace Thompson</span>
+<span id="L23">23 </span>
+<span id="L24">24 /-- A stochastic policy indexed by inclusive finite action/reward histories. -/</span>
+<span id="L25">25 structure HistoryAlgorithm</span>
+<span id="L26">26     (Action : Type u) (Reward : Type v)</span>
+<span id="L27">27     [MeasurableSpace Action] [MeasurableSpace Reward] where</span>
+<span id="L28">28   policy : (n : Nat) -&gt;</span>
+<span id="L29">29     ProbabilityTheory.Kernel (History.FinitePairHistory Action Reward n) Action</span>
+<span id="L30">30   [policy_isMarkov : forall n, ProbabilityTheory.IsMarkovKernel (policy n)]</span>
+<span id="L31">31   initialAction : Measure Action</span>
+<span id="L32">32   [initialAction_isProbability : IsProbabilityMeasure initialAction]</span>
+<span id="L33">33 </span>
+<span id="L34">34 instance instHistoryAlgorithmPolicyIsMarkovKernel</span>
+<span id="L35">35     {Action : Type u} {Reward : Type v}</span>
+<span id="L36">36     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L37">37     (algorithm : HistoryAlgorithm Action Reward) (n : Nat) :</span>
+<span id="L38">38     ProbabilityTheory.IsMarkovKernel (algorithm.policy n) :=</span>
+<span id="L39">39   algorithm.policy_isMarkov n</span>
+<span id="L40">40 </span>
+<span id="L41">41 instance instHistoryAlgorithmInitialActionIsProbability</span>
+<span id="L42">42     {Action : Type u} {Reward : Type v}</span>
+<span id="L43">43     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L44">44     (algorithm : HistoryAlgorithm Action Reward) :</span>
+<span id="L45">45     IsProbabilityMeasure algorithm.initialAction :=</span>
+<span id="L46">46   algorithm.initialAction_isProbability</span>
+<span id="L47">47 </span>
+<span id="L48">48 /-- A stochastic feedback environment shared by the compared algorithms. -/</span>
+<span id="L49">49 structure HistoryEnvironment</span>
+<span id="L50">50     (Action : Type u) (Reward : Type v)</span>
+<span id="L51">51     [MeasurableSpace Action] [MeasurableSpace Reward] where</span>
+<span id="L52">52   feedback : (n : Nat) -&gt; ProbabilityTheory.Kernel</span>
+<span id="L53">53     (History.FinitePairHistory Action Reward n × Action) Reward</span>
+<span id="L54">54   [feedback_isMarkov : forall n,</span>
+<span id="L55">55     ProbabilityTheory.IsMarkovKernel (feedback n)]</span>
+<span id="L56">56   initialFeedback : ProbabilityTheory.Kernel Action Reward</span>
+<span id="L57">57   [initialFeedback_isMarkov :</span>
+<span id="L58">58     ProbabilityTheory.IsMarkovKernel initialFeedback]</span>
+<span id="L59">59 </span>
+<span id="L60">60 instance instHistoryEnvironmentFeedbackIsMarkovKernel</span>
+<span id="L61">61     {Action : Type u} {Reward : Type v}</span>
+<span id="L62">62     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L63">63     (environment : HistoryEnvironment Action Reward) (n : Nat) :</span>
+<span id="L64">64     ProbabilityTheory.IsMarkovKernel (environment.feedback n) :=</span>
+<span id="L65">65   environment.feedback_isMarkov n</span>
+<span id="L66">66 </span>
+<span id="L67">67 instance instHistoryEnvironmentInitialFeedbackIsMarkovKernel</span>
+<span id="L68">68     {Action : Type u} {Reward : Type v}</span>
+<span id="L69">69     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L70">70     (environment : HistoryEnvironment Action Reward) :</span>
+<span id="L71">71     ProbabilityTheory.IsMarkovKernel environment.initialFeedback :=</span>
+<span id="L72">72   environment.initialFeedback_isMarkov</span>
+<span id="L73">73 </span>
+<span id="L74">74 /-- Conditional law of the next action/reward pair after a finite history. -/</span>
+<span id="L75">75 noncomputable def historyStepKernel</span>
+<span id="L76">76     {Action : Type u} {Reward : Type v}</span>
+<span id="L77">77     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L78">78     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L79">79     (environment : HistoryEnvironment Action Reward) (n : Nat) :</span>
+<span id="L80">80     ProbabilityTheory.Kernel</span>
+<span id="L81">81       (History.FinitePairHistory Action Reward n) (Action × Reward) :=</span>
+<span id="L82">82   algorithm.policy n ⊗ₖ environment.feedback n</span>
+<span id="L83">83 </span>
+<span id="L84">84 instance instHistoryStepKernelIsMarkovKernel</span>
+<span id="L85">85     {Action : Type u} {Reward : Type v}</span>
+<span id="L86">86     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L87">87     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L88">88     (environment : HistoryEnvironment Action Reward) (n : Nat) :</span>
+<span id="L89">89     ProbabilityTheory.IsMarkovKernel</span>
+<span id="L90">90       (historyStepKernel algorithm environment n) := by</span>
+<span id="L91">91   unfold historyStepKernel</span>
+<span id="L92">92   infer_instance</span>
+<span id="L93">93 </span>
+<span id="L94">94 /-- Pointwise action-law absolute continuity between two algorithms. -/</span>
+<span id="L95">95 structure HistoryAlgorithmAbsolutelyContinuous</span>
+<span id="L96">96     {Action : Type u} {Reward : Type v}</span>
+<span id="L97">97     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L98">98     (algorithm referenceAlgorithm : HistoryAlgorithm Action Reward) : Prop where</span>
+<span id="L99">99   initialAction : algorithm.initialAction ≪ referenceAlgorithm.initialAction</span>
+<span id="L100">100   policy : forall n history,</span>
+<span id="L101">101     algorithm.policy n history ≪ referenceAlgorithm.policy n history</span>
+<span id="L102">102 </span>
+<span id="L103">103 /-- The unique history at time zero containing one action/reward pair. -/</span>
+<span id="L104">104 def singletonPairHistory</span>
+<span id="L105">105     {Action : Type u} {Reward : Type v}</span>
+<span id="L106">106     (pair : Action × Reward) : History.FinitePairHistory Action Reward 0 :=</span>
+<span id="L107">107   fun _ =&gt; pair</span>
+<span id="L108">108 </span>
+<span id="L109">109 /-- Remove the last coordinate from an inclusive successor history. -/</span>
+<span id="L110">110 def pairHistoryPrefix</span>
+<span id="L111">111     {Action : Type u} {Reward : Type v} {n : Nat}</span>
+<span id="L112">112     (history : History.FinitePairHistory Action Reward (n + 1)) :</span>
+<span id="L113">113     History.FinitePairHistory Action Reward n :=</span>
+<span id="L114">114   fun i =&gt; history ⟨i.1, Finset.mem_Iic.mpr (le_trans (Finset.mem_Iic.mp i.2)</span>
+<span id="L115">115     (Nat.le_succ n))⟩</span>
+<span id="L116">116 </span>
+<span id="L117">117 /-- Last pair in an inclusive successor history. -/</span>
+<span id="L118">118 def pairHistoryLast</span>
+<span id="L119">119     {Action : Type u} {Reward : Type v} {n : Nat}</span>
+<span id="L120">120     (history : History.FinitePairHistory Action Reward (n + 1)) :</span>
+<span id="L121">121     Action × Reward :=</span>
+<span id="L122">122   history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩</span>
+<span id="L123">123 </span>
+<span id="L124">124 theorem measurable_singletonPairHistory</span>
+<span id="L125">125     {Action : Type u} {Reward : Type v}</span>
+<span id="L126">126     [MeasurableSpace Action] [MeasurableSpace Reward] :</span>
+<span id="L127">127     Measurable (@singletonPairHistory Action Reward) := by</span>
+<span id="L128">128   exact measurable_pi_lambda _ (fun _ =&gt; measurable_id)</span>
+<span id="L129">129 </span>
+<span id="L130">130 theorem measurable_pairHistoryPrefix</span>
+<span id="L131">131     {Action : Type u} {Reward : Type v} {n : Nat}</span>
+<span id="L132">132     [MeasurableSpace Action] [MeasurableSpace Reward] :</span>
+<span id="L133">133     Measurable (@pairHistoryPrefix Action Reward n) := by</span>
+<span id="L134">134   exact measurable_pi_lambda _ (fun i =&gt; measurable_pi_apply _)</span>
+<span id="L135">135 </span>
+<span id="L136">136 theorem measurable_pairHistoryLast</span>
+<span id="L137">137     {Action : Type u} {Reward : Type v} {n : Nat}</span>
+<span id="L138">138     [MeasurableSpace Action] [MeasurableSpace Reward] :</span>
+<span id="L139">139     Measurable (@pairHistoryLast Action Reward n) :=</span>
+<span id="L140">140   measurable_pi_apply _</span>
+<span id="L141">141 </span>
+<span id="L142">142 @[simp]</span>
+<span id="L143">143 theorem pairHistoryPrefix_extendPairHistorySucc</span>
+<span id="L144">144     {Action : Type u} {Reward : Type v} {n : Nat}</span>
+<span id="L145">145     (history : History.FinitePairHistory Action Reward n)</span>
+<span id="L146">146     (next : Action × Reward) :</span>
+<span id="L147">147     pairHistoryPrefix (History.extendPairHistorySucc history next) = history := by</span>
+<span id="L148">148   funext i</span>
+<span id="L149">149   exact History.extendPairHistorySucc_apply_of_le history next _</span>
+<span id="L150">150     (Finset.mem_Iic.mp i.2)</span>
+<span id="L151">151 </span>
+<span id="L152">152 @[simp]</span>
+<span id="L153">153 theorem pairHistoryLast_extendPairHistorySucc</span>
+<span id="L154">154     {Action : Type u} {Reward : Type v} {n : Nat}</span>
+<span id="L155">155     (history : History.FinitePairHistory Action Reward n)</span>
+<span id="L156">156     (next : Action × Reward) :</span>
+<span id="L157">157     pairHistoryLast (History.extendPairHistorySucc history next) = next := by</span>
+<span id="L158">158   simp [pairHistoryLast]</span>
+<span id="L159">159 </span>
+<span id="L160">160 /-- Recursive product of the initial and policy action likelihood ratios. -/</span>
+<span id="L161">161 noncomputable def historyDensity</span>
+<span id="L162">162     {Action : Type u} {Reward : Type v}</span>
+<span id="L163">163     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L164">164     [MeasurableSpace.CountablyGenerated Action]</span>
+<span id="L165">165     (algorithm referenceAlgorithm : HistoryAlgorithm Action Reward) :</span>
+<span id="L166">166     (n : Nat) -&gt; History.FinitePairHistory Action Reward n -&gt; ENNReal</span>
+<span id="L167">167   | 0, history =&gt;</span>
+<span id="L168">168       algorithm.initialAction.rnDeriv referenceAlgorithm.initialAction</span>
+<span id="L169">169         (history ⟨0, Finset.mem_Iic.mpr le_rfl⟩).1</span>
+<span id="L170">170   | n + 1, history =&gt;</span>
+<span id="L171">171       historyDensity algorithm referenceAlgorithm n (pairHistoryPrefix history) *</span>
+<span id="L172">172         (algorithm.policy n).rnDeriv (referenceAlgorithm.policy n)</span>
+<span id="L173">173           (pairHistoryPrefix history) (pairHistoryLast history).1</span>
+<span id="L174">174 </span>
+<span id="L175">175 theorem measurable_historyDensity</span>
+<span id="L176">176     {Action : Type u} {Reward : Type v}</span>
+<span id="L177">177     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L178">178     [MeasurableSpace.CountablyGenerated Action]</span>
+<span id="L179">179     (algorithm referenceAlgorithm : HistoryAlgorithm Action Reward) (n : Nat) :</span>
+<span id="L180">180     Measurable (historyDensity algorithm referenceAlgorithm n) := by</span>
+<span id="L181">181   induction n with</span>
+<span id="L182">182   | zero =&gt;</span>
+<span id="L183">183       exact (Measure.measurable_rnDeriv _ _).comp</span>
+<span id="L184">184         (measurable_fst.comp (measurable_pi_apply _))</span>
+<span id="L185">185   | succ n ih =&gt;</span>
+<span id="L186">186       exact (ih.comp measurable_pairHistoryPrefix).mul</span>
+<span id="L187">187         ((ProbabilityTheory.Kernel.measurable_rnDeriv _ _).comp</span>
+<span id="L188">188           (measurable_pairHistoryPrefix.prodMk</span>
+<span id="L189">189             (measurable_fst.comp measurable_pairHistoryLast)))</span>
+<span id="L190">190 </span>
+<span id="L191">191 /-- Mapping a weighted measure transports a density pulled back by the map. -/</span>
+<span id="L192">192 theorem map_withDensity_comp</span>
+<span id="L193">193     {Source : Type u} {Target : Type v}</span>
+<span id="L194">194     [MeasurableSpace Source] [MeasurableSpace Target]</span>
+<span id="L195">195     (mu : Measure Source) (map : Source -&gt; Target) (density : Target -&gt; ENNReal)</span>
+<span id="L196">196     (hmap : Measurable map) (hdensity : Measurable density) :</span>
+<span id="L197">197     (mu.withDensity (density ∘ map)).map map =</span>
+<span id="L198">198       (mu.map map).withDensity density := by</span>
+<span id="L199">199   ext event hevent</span>
+<span id="L200">200   rw [Measure.map_apply hmap hevent,</span>
+<span id="L201">201     MeasureTheory.withDensity_apply _ (hmap hevent),</span>
+<span id="L202">202     MeasureTheory.withDensity_apply _ hevent,</span>
+<span id="L203">203     MeasureTheory.setLIntegral_map hevent hdensity hmap]</span>
+<span id="L204">204   rfl</span>
+<span id="L205">205 </span>
+<span id="L206">206 /-- Weighting both a composition-product base and kernel multiplies densities. -/</span>
+<span id="L207">207 theorem compProd_withDensity_withDensity</span>
+<span id="L208">208     {Base : Type u} {Target : Type v}</span>
+<span id="L209">209     [MeasurableSpace Base] [MeasurableSpace Target]</span>
+<span id="L210">210     (base : Measure Base) [SFinite base]</span>
+<span id="L211">211     (kernel : ProbabilityTheory.Kernel Base Target)</span>
+<span id="L212">212     [ProbabilityTheory.IsSFiniteKernel kernel]</span>
+<span id="L213">213     (baseDensity : Base -&gt; ENNReal)</span>
+<span id="L214">214     (kernelDensity : Base -&gt; Target -&gt; ENNReal)</span>
+<span id="L215">215     (hbaseDensity : Measurable baseDensity)</span>
+<span id="L216">216     (hkernelDensity : Measurable (Function.uncurry kernelDensity))</span>
+<span id="L217">217     [ProbabilityTheory.IsSFiniteKernel (kernel.withDensity kernelDensity)] :</span>
+<span id="L218">218     base.withDensity baseDensity ⊗ₘ kernel.withDensity kernelDensity =</span>
+<span id="L219">219       (base ⊗ₘ kernel).withDensity</span>
+<span id="L220">220         (fun pair =&gt; baseDensity pair.1 * kernelDensity pair.1 pair.2) := by</span>
+<span id="L221">221   rw [Measure.compProd_withDensity hkernelDensity,</span>
+<span id="L222">222     compProd_withDensity_left base kernel baseDensity hbaseDensity]</span>
+<span id="L223">223   exact (MeasureTheory.withDensity_mul _</span>
+<span id="L224">224     (hbaseDensity.comp measurable_fst) hkernelDensity).symm</span>
+<span id="L225">225 </span>
+<span id="L226">226 set_option maxHeartbeats 800000 in</span>
+<span id="L227">227 /-- Kernel RN derivatives reconstruct a pointwise absolutely continuous kernel. -/</span>
+<span id="L228">228 theorem kernel_withDensity_rnDeriv_eq_of_absolutelyContinuous</span>
+<span id="L229">229     {Index : Type u} {Target : Type v}</span>
+<span id="L230">230     [MeasurableSpace Index] [MeasurableSpace Target]</span>
+<span id="L231">231     [MeasurableSpace.CountableOrCountablyGenerated Index Target]</span>
+<span id="L232">232     (kernel referenceKernel : ProbabilityTheory.Kernel Index Target)</span>
+<span id="L233">233     [ProbabilityTheory.IsFiniteKernel kernel]</span>
+<span id="L234">234     [ProbabilityTheory.IsFiniteKernel referenceKernel]</span>
+<span id="L235">235     (h : forall index, kernel index ≪ referenceKernel index) :</span>
+<span id="L236">236     referenceKernel.withDensity (kernel.rnDeriv referenceKernel) = kernel := by</span>
+<span id="L237">237   apply ProbabilityTheory.Kernel.ext</span>
+<span id="L238">238   intro index</span>
+<span id="L239">239   exact ProbabilityTheory.Kernel.withDensity_rnDeriv_eq (h index)</span>
+<span id="L240">240 </span>
+<span id="L241">241 set_option maxHeartbeats 800000 in</span>
+<span id="L242">242 /-- Weighting the left kernel of a kernel composition product. -/</span>
+<span id="L243">243 theorem kernel_compProd_withDensity_left</span>
+<span id="L244">244     {Index : Type u} {Middle : Type v} {Target : Type w}</span>
+<span id="L245">245     [MeasurableSpace Index] [MeasurableSpace Middle] [MeasurableSpace Target]</span>
+<span id="L246">246     (kernel : ProbabilityTheory.Kernel Index Middle)</span>
+<span id="L247">247     (nextKernel : ProbabilityTheory.Kernel (Index × Middle) Target)</span>
+<span id="L248">248     [ProbabilityTheory.IsSFiniteKernel kernel]</span>
+<span id="L249">249     [ProbabilityTheory.IsSFiniteKernel nextKernel]</span>
+<span id="L250">250     (density : Index -&gt; Middle -&gt; ENNReal)</span>
+<span id="L251">251     (hdensity : Measurable (Function.uncurry density))</span>
+<span id="L252">252     [ProbabilityTheory.IsSFiniteKernel (kernel.withDensity density)] :</span>
+<span id="L253">253     kernel.withDensity density ⊗ₖ nextKernel =</span>
+<span id="L254">254       (kernel ⊗ₖ nextKernel).withDensity</span>
+<span id="L255">255         (fun index pair =&gt; density index pair.1) := by</span>
+<span id="L256">256   apply ProbabilityTheory.Kernel.ext</span>
+<span id="L257">257   intro index</span>
+<span id="L258">258   calc</span>
+<span id="L259">259     (kernel.withDensity density ⊗ₖ nextKernel) index =</span>
+<span id="L260">260         (kernel index).withDensity (density index) ⊗ₘ</span>
+<span id="L261">261           nextKernel.sectR index := by</span>
+<span id="L262">262       rw [ProbabilityTheory.Kernel.compProd_apply_eq_compProd_sectR,</span>
+<span id="L263">263         ProbabilityTheory.Kernel.withDensity_apply _ hdensity]</span>
+<span id="L264">264     _ = (kernel index ⊗ₘ nextKernel.sectR index).withDensity</span>
+<span id="L265">265           (fun pair =&gt; density index pair.1) :=</span>
+<span id="L266">266       compProd_withDensity_left _ _ _ (by fun_prop)</span>
+<span id="L267">267     _ = ((kernel ⊗ₖ nextKernel).withDensity</span>
+<span id="L268">268           (fun index pair =&gt; density index pair.1)) index := by</span>
+<span id="L269">269       rw [← ProbabilityTheory.Kernel.compProd_apply_eq_compProd_sectR,</span>
+<span id="L270">270         ProbabilityTheory.Kernel.withDensity_apply _ (by fun_prop)]</span>
+<span id="L271">271 </span>
+<span id="L272">272 /-- The actual one-step pair kernel is a density-weighted reference kernel. -/</span>
+<span id="L273">273 theorem historyStepKernel_eq_withDensity</span>
+<span id="L274">274     {Action : Type u} {Reward : Type v}</span>
+<span id="L275">275     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L276">276     (n : Nat)</span>
+<span id="L277">277     [MeasurableSpace.CountableOrCountablyGenerated</span>
+<span id="L278">278       (History.FinitePairHistory Action Reward n) Action]</span>
+<span id="L279">279     (algorithm referenceAlgorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L280">280     (environment : HistoryEnvironment Action Reward)</span>
+<span id="L281">281     (hcontinuous :</span>
+<span id="L282">282       HistoryAlgorithmAbsolutelyContinuous algorithm referenceAlgorithm) :</span>
+<span id="L283">283     historyStepKernel algorithm environment n =</span>
+<span id="L284">284       (historyStepKernel referenceAlgorithm environment n).withDensity</span>
+<span id="L285">285         (fun history pair =&gt;</span>
+<span id="L286">286           (algorithm.policy n).rnDeriv (referenceAlgorithm.policy n)</span>
+<span id="L287">287             history pair.1) := by</span>
+<span id="L288">288   let actionDensity :=</span>
+<span id="L289">289     (algorithm.policy n).rnDeriv (referenceAlgorithm.policy n)</span>
+<span id="L290">290   have hpolicy :</span>
+<span id="L291">291       (referenceAlgorithm.policy n).withDensity actionDensity =</span>
+<span id="L292">292         algorithm.policy n :=</span>
+<span id="L293">293     kernel_withDensity_rnDeriv_eq_of_absolutelyContinuous</span>
+<span id="L294">294       (algorithm.policy n) (referenceAlgorithm.policy n)</span>
+<span id="L295">295       (hcontinuous.policy n)</span>
+<span id="L296">296   change algorithm.policy n ⊗ₖ environment.feedback n =</span>
+<span id="L297">297     (referenceAlgorithm.policy n ⊗ₖ environment.feedback n).withDensity</span>
+<span id="L298">298       (fun history pair =&gt; actionDensity history pair.1)</span>
+<span id="L299">299   calc</span>
+<span id="L300">300     algorithm.policy n ⊗ₖ environment.feedback n =</span>
+<span id="L301">301         (referenceAlgorithm.policy n).withDensity actionDensity ⊗ₖ</span>
+<span id="L302">302           environment.feedback n :=</span>
+<span id="L303">303       congrArg (fun policy =&gt; policy ⊗ₖ environment.feedback n) hpolicy.symm</span>
+<span id="L304">304     _ = _ := kernel_compProd_withDensity_left</span>
+<span id="L305">305       (referenceAlgorithm.policy n) (environment.feedback n)</span>
+<span id="L306">306       actionDensity (ProbabilityTheory.Kernel.measurable_rnDeriv _ _)</span>
+<span id="L307">307 </span>
+<span id="L308">308 /--</span>
+<span id="L309">309 Process contract using the combined initial and successor pair laws. Split</span>
+<span id="L310">310 action/feedback conditional laws are assembled into this contract below.</span>
+<span id="L311">311 -/</span>
+<span id="L312">312 structure IsHistoryAlgorithmEnvironmentSequence</span>
+<span id="L313">313     {Omega : Type w} {Action : Type u} {Reward : Type v}</span>
+<span id="L314">314     [MeasurableSpace Omega]</span>
+<span id="L315">315     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L316">316     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L317">317     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L318">318     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L319">319     (reward : Omega -&gt; RewardTrace Reward)</span>
+<span id="L320">320     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L321">321     (environment : HistoryEnvironment Action Reward) : Prop where</span>
+<span id="L322">322   measurable_action : forall n, Measurable (fun omega =&gt; action omega n)</span>
+<span id="L323">323   measurable_reward : forall n, Measurable (fun omega =&gt; reward omega n)</span>
+<span id="L324">324   initialPair_map_eq :</span>
+<span id="L325">325     mu.map (fun omega =&gt; (action omega 0, reward omega 0)) =</span>
+<span id="L326">326       algorithm.initialAction ⊗ₘ environment.initialFeedback</span>
+<span id="L327">327   step_condDistrib : forall n,</span>
+<span id="L328">328     ProbabilityTheory.condDistrib</span>
+<span id="L329">329         (fun omega =&gt; (action omega (n + 1), reward omega (n + 1)))</span>
+<span id="L330">330         (fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L331">331           (action omega) (reward omega) n) mu =ᵐ[</span>
+<span id="L332">332       mu.map (fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L333">333         (action omega) (reward omega) n)]</span>
+<span id="L334">334       historyStepKernel algorithm environment n</span>
+<span id="L335">335 </span>
+<span id="L336">336 /-- Build the pair-law process contract from LML-shaped split fields. -/</span>
+<span id="L337">337 noncomputable def isHistoryAlgorithmEnvironmentSequence_of_split</span>
+<span id="L338">338     {Omega : Type w} {Action : Type u} {Reward : Type v}</span>
+<span id="L339">339     [MeasurableSpace Omega]</span>
+<span id="L340">340     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L341">341     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L342">342     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L343">343     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L344">344     (reward : Omega -&gt; RewardTrace Reward)</span>
+<span id="L345">345     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L346">346     (environment : HistoryEnvironment Action Reward)</span>
+<span id="L347">347     (haction : forall n, Measurable (fun omega =&gt; action omega n))</span>
+<span id="L348">348     (hreward : forall n, Measurable (fun omega =&gt; reward omega n))</span>
+<span id="L349">349     (hinitialAction :</span>
+<span id="L350">350       mu.map (fun omega =&gt; action omega 0) = algorithm.initialAction)</span>
+<span id="L351">351     (hinitialFeedback :</span>
+<span id="L352">352       ProbabilityTheory.condDistrib (fun omega =&gt; reward omega 0)</span>
+<span id="L353">353           (fun omega =&gt; action omega 0) mu =ᵐ[</span>
+<span id="L354">354         mu.map (fun omega =&gt; action omega 0)] environment.initialFeedback)</span>
+<span id="L355">355     (hpolicy : forall n,</span>
+<span id="L356">356       ProbabilityTheory.condDistrib (fun omega =&gt; action omega (n + 1))</span>
+<span id="L357">357           (fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L358">358             (action omega) (reward omega) n) mu =ᵐ[</span>
+<span id="L359">359         mu.map (fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L360">360           (action omega) (reward omega) n)] algorithm.policy n)</span>
+<span id="L361">361     (hfeedback : forall n,</span>
+<span id="L362">362       ProbabilityTheory.condDistrib (fun omega =&gt; reward omega (n + 1))</span>
+<span id="L363">363           (fun omega =&gt;</span>
+<span id="L364">364             (History.finitePairHistoryOfTrace</span>
+<span id="L365">365               (action omega) (reward omega) n, action omega (n + 1))) mu =ᵐ[</span>
+<span id="L366">366         mu.map (fun omega =&gt;</span>
+<span id="L367">367           (History.finitePairHistoryOfTrace</span>
+<span id="L368">368             (action omega) (reward omega) n, action omega (n + 1)))]</span>
+<span id="L369">369         environment.feedback n) :</span>
+<span id="L370">370     IsHistoryAlgorithmEnvironmentSequence mu action reward</span>
+<span id="L371">371       algorithm environment where</span>
+<span id="L372">372   measurable_action := haction</span>
+<span id="L373">373   measurable_reward := hreward</span>
+<span id="L374">374   initialPair_map_eq :=</span>
+<span id="L375">375     RewardKernel.pair_map_eq_compProd_of_map_eq_of_condDistrib</span>
+<span id="L376">376       mu (fun omega =&gt; action omega 0) (fun omega =&gt; reward omega 0)</span>
+<span id="L377">377       (hreward 0) algorithm.initialAction environment.initialFeedback</span>
+<span id="L378">378       hinitialAction hinitialFeedback</span>
+<span id="L379">379   step_condDistrib := fun n =&gt; by</span>
+<span id="L380">380     simpa only [historyStepKernel] using</span>
+<span id="L381">381       RewardKernel.condDistrib_pair_ae_eq_compProd_of_split</span>
+<span id="L382">382         mu</span>
+<span id="L383">383         (fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L384">384           (action omega) (reward omega) n)</span>
+<span id="L385">385         (History.measurable_finitePairHistoryOfTrace</span>
+<span id="L386">386           action reward haction hreward n)</span>
+<span id="L387">387         (fun omega =&gt; action omega (n + 1)) (haction (n + 1))</span>
+<span id="L388">388         (fun omega =&gt; reward omega (n + 1)) (hreward (n + 1))</span>
+<span id="L389">389         (algorithm.policy n) (environment.feedback n)</span>
+<span id="L390">390         (hpolicy n) (hfeedback n)</span>
+<span id="L391">391 </span>
+<span id="L392">392 /--</span>
+<span id="L393">393 The process contract identifies the joint law of the current finite history and</span>
+<span id="L394">394 the next action/reward pair with the corresponding measure composition product.</span>
+<span id="L395">395 -/</span>
+<span id="L396">396 theorem nextPairJointLaw_eq_compProd</span>
+<span id="L397">397     {Omega : Type w} {Action : Type u} {Reward : Type v}</span>
+<span id="L398">398     [MeasurableSpace Omega]</span>
+<span id="L399">399     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L400">400     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L401">401     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L402">402     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L403">403     (reward : Omega -&gt; RewardTrace Reward)</span>
+<span id="L404">404     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L405">405     (environment : HistoryEnvironment Action Reward)</span>
+<span id="L406">406     (source : IsHistoryAlgorithmEnvironmentSequence mu action reward</span>
+<span id="L407">407       algorithm environment)</span>
+<span id="L408">408     (n : Nat) :</span>
+<span id="L409">409     mu.map (fun omega =&gt;</span>
+<span id="L410">410         (History.finitePairHistoryOfTrace (action omega) (reward omega) n,</span>
+<span id="L411">411           (action omega (n + 1), reward omega (n + 1)))) =</span>
+<span id="L412">412       mu.map (fun omega =&gt;</span>
+<span id="L413">413           History.finitePairHistoryOfTrace (action omega) (reward omega) n) ⊗ₘ</span>
+<span id="L414">414         historyStepKernel algorithm environment n := by</span>
+<span id="L415">415   exact</span>
+<span id="L416">416     (ProbabilityTheory.condDistrib_ae_eq_iff_measure_eq_compProd</span>
+<span id="L417">417       (fun omega =&gt;</span>
+<span id="L418">418         History.finitePairHistoryOfTrace (action omega) (reward omega) n)</span>
+<span id="L419">419       ((source.measurable_action (n + 1)).prod</span>
+<span id="L420">420         (source.measurable_reward (n + 1))).aemeasurable</span>
+<span id="L421">421       (historyStepKernel algorithm environment n)).mp</span>
+<span id="L422">422       (source.step_condDistrib n)</span>
+<span id="L423">423 </span>
+<span id="L424">424 set_option maxHeartbeats 1600000 in</span>
+<span id="L425">425 /--</span>
+<span id="L426">426 Finite-history algorithm-density transport.</span>
+<span id="L427">427 </span>
+<span id="L428">428 Two history-dependent stochastic policies use the same feedback environment.</span>
+<span id="L429">429 Pointwise absolute continuity of the actual policy with respect to the</span>
+<span id="L430">430 reference policy implies that every inclusive finite pair-history law is the</span>
+<span id="L431">431 reference law weighted by the recursive product of action likelihood ratios.</span>
+<span id="L432">432 -/</span>
+<span id="L433">433 theorem finitePairHistory_map_eq_withDensity</span>
+<span id="L434">434     {Omega : Type w} {OmegaRef : Type x}</span>
+<span id="L435">435     {Action : Type u} {Reward : Type v}</span>
+<span id="L436">436     [MeasurableSpace Omega] [MeasurableSpace OmegaRef]</span>
+<span id="L437">437     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L438">438     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L439">439     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L440">440     (muRef : Measure OmegaRef) [IsFiniteMeasure muRef]</span>
+<span id="L441">441     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L442">442     (reward : Omega -&gt; RewardTrace Reward)</span>
+<span id="L443">443     (actionRef : OmegaRef -&gt; ActionTrace Action)</span>
+<span id="L444">444     (rewardRef : OmegaRef -&gt; RewardTrace Reward)</span>
+<span id="L445">445     (algorithm referenceAlgorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L446">446     (environment : HistoryEnvironment Action Reward)</span>
+<span id="L447">447     (source : IsHistoryAlgorithmEnvironmentSequence mu action reward</span>
+<span id="L448">448       algorithm environment)</span>
+<span id="L449">449     (referenceSource : IsHistoryAlgorithmEnvironmentSequence</span>
+<span id="L450">450       muRef actionRef rewardRef referenceAlgorithm environment)</span>
+<span id="L451">451     (hcontinuous :</span>
+<span id="L452">452       HistoryAlgorithmAbsolutelyContinuous algorithm referenceAlgorithm)</span>
+<span id="L453">453     (n : Nat) :</span>
+<span id="L454">454     mu.map (fun omega =&gt;</span>
+<span id="L455">455         History.finitePairHistoryOfTrace (action omega) (reward omega) n) =</span>
+<span id="L456">456       (muRef.map (fun omega =&gt;</span>
+<span id="L457">457         History.finitePairHistoryOfTrace</span>
+<span id="L458">458           (actionRef omega) (rewardRef omega) n)).withDensity</span>
+<span id="L459">459         (historyDensity algorithm referenceAlgorithm n) := by</span>
+<span id="L460">460   induction n with</span>
+<span id="L461">461   | zero =&gt;</span>
+<span id="L462">462       let pairActual : Omega -&gt; Action × Reward :=</span>
+<span id="L463">463         fun omega =&gt; (action omega 0, reward omega 0)</span>
+<span id="L464">464       let pairRef : OmegaRef -&gt; Action × Reward :=</span>
+<span id="L465">465         fun omega =&gt; (actionRef omega 0, rewardRef omega 0)</span>
+<span id="L466">466       have hpairActual : Measurable pairActual :=</span>
+<span id="L467">467         (source.measurable_action 0).prod (source.measurable_reward 0)</span>
+<span id="L468">468       have hpairRef : Measurable pairRef :=</span>
+<span id="L469">469         (referenceSource.measurable_action 0).prod</span>
+<span id="L470">470           (referenceSource.measurable_reward 0)</span>
+<span id="L471">471       have hactualFunction :</span>
+<span id="L472">472           (fun omega =&gt;</span>
+<span id="L473">473             History.finitePairHistoryOfTrace</span>
+<span id="L474">474               (action omega) (reward omega) 0) =</span>
+<span id="L475">475             singletonPairHistory ∘ pairActual := by</span>
+<span id="L476">476         funext omega</span>
+<span id="L477">477         funext i</span>
+<span id="L478">478         have hi : i.1 = 0 :=</span>
+<span id="L479">479           Nat.eq_zero_of_le_zero (Finset.mem_Iic.mp i.2)</span>
+<span id="L480">480         simp [pairActual, singletonPairHistory,</span>
+<span id="L481">481           History.finitePairHistoryOfTrace, hi]</span>
+<span id="L482">482       have hrefFunction :</span>
+<span id="L483">483           (fun omega =&gt;</span>
+<span id="L484">484             History.finitePairHistoryOfTrace</span>
+<span id="L485">485               (actionRef omega) (rewardRef omega) 0) =</span>
+<span id="L486">486             singletonPairHistory ∘ pairRef := by</span>
+<span id="L487">487         funext omega</span>
+<span id="L488">488         funext i</span>
+<span id="L489">489         have hi : i.1 = 0 :=</span>
+<span id="L490">490           Nat.eq_zero_of_le_zero (Finset.mem_Iic.mp i.2)</span>
+<span id="L491">491         simp [pairRef, singletonPairHistory,</span>
+<span id="L492">492           History.finitePairHistoryOfTrace, hi]</span>
+<span id="L493">493       have hinitialDensity :</span>
+<span id="L494">494           algorithm.initialAction =</span>
+<span id="L495">495             referenceAlgorithm.initialAction.withDensity</span>
+<span id="L496">496               (algorithm.initialAction.rnDeriv</span>
+<span id="L497">497                 referenceAlgorithm.initialAction) :=</span>
+<span id="L498">498         (Measure.withDensity_rnDeriv_eq _ _</span>
+<span id="L499">499           hcontinuous.initialAction).symm</span>
+<span id="L500">500       have hpairDensity :</span>
+<span id="L501">501           algorithm.initialAction ⊗ₘ environment.initialFeedback =</span>
+<span id="L502">502             (referenceAlgorithm.initialAction ⊗ₘ</span>
+<span id="L503">503               environment.initialFeedback).withDensity</span>
+<span id="L504">504                 (fun pair =&gt;</span>
+<span id="L505">505                   algorithm.initialAction.rnDeriv</span>
+<span id="L506">506                     referenceAlgorithm.initialAction pair.1) := by</span>
+<span id="L507">507         calc</span>
+<span id="L508">508           algorithm.initialAction ⊗ₘ environment.initialFeedback =</span>
+<span id="L509">509               referenceAlgorithm.initialAction.withDensity</span>
+<span id="L510">510                   (algorithm.initialAction.rnDeriv</span>
+<span id="L511">511                     referenceAlgorithm.initialAction) ⊗ₘ</span>
+<span id="L512">512                 environment.initialFeedback :=</span>
+<span id="L513">513             congrArg (fun initial =&gt;</span>
+<span id="L514">514               initial ⊗ₘ environment.initialFeedback) hinitialDensity</span>
+<span id="L515">515           _ = _ := compProd_withDensity_left</span>
+<span id="L516">516             referenceAlgorithm.initialAction environment.initialFeedback</span>
+<span id="L517">517             (algorithm.initialAction.rnDeriv</span>
+<span id="L518">518               referenceAlgorithm.initialAction)</span>
+<span id="L519">519             (Measure.measurable_rnDeriv _ _)</span>
+<span id="L520">520       have hpushDensity :</span>
+<span id="L521">521           ((referenceAlgorithm.initialAction ⊗ₘ</span>
+<span id="L522">522               environment.initialFeedback).withDensity</span>
+<span id="L523">523                 (fun pair =&gt;</span>
+<span id="L524">524                   algorithm.initialAction.rnDeriv</span>
+<span id="L525">525                     referenceAlgorithm.initialAction pair.1)).map</span>
+<span id="L526">526               singletonPairHistory =</span>
+<span id="L527">527             ((referenceAlgorithm.initialAction ⊗ₘ</span>
+<span id="L528">528                 environment.initialFeedback).map</span>
+<span id="L529">529               singletonPairHistory).withDensity</span>
+<span id="L530">530                 (historyDensity algorithm referenceAlgorithm 0) := by</span>
+<span id="L531">531         simpa [Function.comp_def, historyDensity, singletonPairHistory] using</span>
+<span id="L532">532           map_withDensity_comp</span>
+<span id="L533">533             (referenceAlgorithm.initialAction ⊗ₘ</span>
+<span id="L534">534               environment.initialFeedback)</span>
+<span id="L535">535             singletonPairHistory</span>
+<span id="L536">536             (historyDensity algorithm referenceAlgorithm 0)</span>
+<span id="L537">537             measurable_singletonPairHistory</span>
+<span id="L538">538             (measurable_historyDensity algorithm referenceAlgorithm 0)</span>
+<span id="L539">539       calc</span>
+<span id="L540">540         mu.map (fun omega =&gt;</span>
+<span id="L541">541             History.finitePairHistoryOfTrace</span>
+<span id="L542">542               (action omega) (reward omega) 0) =</span>
+<span id="L543">543             (mu.map pairActual).map singletonPairHistory := by</span>
+<span id="L544">544           rw [hactualFunction]</span>
+<span id="L545">545           exact (Measure.map_map measurable_singletonPairHistory</span>
+<span id="L546">546             hpairActual).symm</span>
+<span id="L547">547         _ = (algorithm.initialAction ⊗ₘ</span>
+<span id="L548">548             environment.initialFeedback).map singletonPairHistory := by</span>
+<span id="L549">549           rw [source.initialPair_map_eq]</span>
+<span id="L550">550         _ = ((referenceAlgorithm.initialAction ⊗ₘ</span>
+<span id="L551">551               environment.initialFeedback).withDensity</span>
+<span id="L552">552             (fun pair =&gt;</span>
+<span id="L553">553               algorithm.initialAction.rnDeriv</span>
+<span id="L554">554                 referenceAlgorithm.initialAction pair.1)).map</span>
+<span id="L555">555               singletonPairHistory := by rw [hpairDensity]</span>
+<span id="L556">556         _ = ((referenceAlgorithm.initialAction ⊗ₘ</span>
+<span id="L557">557               environment.initialFeedback).map</span>
+<span id="L558">558             singletonPairHistory).withDensity</span>
+<span id="L559">559               (historyDensity algorithm referenceAlgorithm 0) :=</span>
+<span id="L560">560           hpushDensity</span>
+<span id="L561">561         _ = ((muRef.map pairRef).map</span>
+<span id="L562">562               singletonPairHistory).withDensity</span>
+<span id="L563">563                 (historyDensity algorithm referenceAlgorithm 0) := by</span>
+<span id="L564">564           rw [referenceSource.initialPair_map_eq]</span>
+<span id="L565">565         _ = (muRef.map (fun omega =&gt;</span>
+<span id="L566">566               History.finitePairHistoryOfTrace</span>
+<span id="L567">567                 (actionRef omega) (rewardRef omega) 0)).withDensity</span>
+<span id="L568">568               (historyDensity algorithm referenceAlgorithm 0) := by</span>
+<span id="L569">569           rw [hrefFunction, Measure.map_map measurable_singletonPairHistory</span>
+<span id="L570">570             hpairRef]</span>
+<span id="L571">571   | succ n ih =&gt;</span>
+<span id="L572">572       let historyActual : Omega -&gt;</span>
+<span id="L573">573           History.FinitePairHistory Action Reward n :=</span>
+<span id="L574">574         fun omega =&gt;</span>
+<span id="L575">575           History.finitePairHistoryOfTrace</span>
+<span id="L576">576             (action omega) (reward omega) n</span>
+<span id="L577">577       let historyRef : OmegaRef -&gt;</span>
+<span id="L578">578           History.FinitePairHistory Action Reward n :=</span>
+<span id="L579">579         fun omega =&gt;</span>
+<span id="L580">580           History.finitePairHistoryOfTrace</span>
+<span id="L581">581             (actionRef omega) (rewardRef omega) n</span>
+<span id="L582">582       let nextActual : Omega -&gt; Action × Reward :=</span>
+<span id="L583">583         fun omega =&gt; (action omega (n + 1), reward omega (n + 1))</span>
+<span id="L584">584       let nextRef : OmegaRef -&gt; Action × Reward :=</span>
+<span id="L585">585         fun omega =&gt; (actionRef omega (n + 1), rewardRef omega (n + 1))</span>
+<span id="L586">586       let jointActual : Omega -&gt;</span>
+<span id="L587">587           History.FinitePairHistory Action Reward n × (Action × Reward) :=</span>
+<span id="L588">588         fun omega =&gt; (historyActual omega, nextActual omega)</span>
+<span id="L589">589       let jointRef : OmegaRef -&gt;</span>
+<span id="L590">590           History.FinitePairHistory Action Reward n × (Action × Reward) :=</span>
+<span id="L591">591         fun omega =&gt; (historyRef omega, nextRef omega)</span>
+<span id="L592">592       let extend :</span>
+<span id="L593">593           History.FinitePairHistory Action Reward n × (Action × Reward) -&gt;</span>
+<span id="L594">594             History.FinitePairHistory Action Reward (n + 1) :=</span>
+<span id="L595">595         fun input =&gt; History.extendPairHistorySucc input.1 input.2</span>
+<span id="L596">596       let stepDensity :</span>
+<span id="L597">597           History.FinitePairHistory Action Reward n -&gt;</span>
+<span id="L598">598             Action × Reward -&gt; ENNReal :=</span>
+<span id="L599">599         fun history pair =&gt;</span>
+<span id="L600">600           (algorithm.policy n).rnDeriv (referenceAlgorithm.policy n)</span>
+<span id="L601">601             history pair.1</span>
+<span id="L602">602       have hhistoryActual : Measurable historyActual :=</span>
+<span id="L603">603         History.measurable_finitePairHistoryOfTrace</span>
+<span id="L604">604           action reward source.measurable_action source.measurable_reward n</span>
+<span id="L605">605       have hhistoryRef : Measurable historyRef :=</span>
+<span id="L606">606         History.measurable_finitePairHistoryOfTrace</span>
+<span id="L607">607           actionRef rewardRef referenceSource.measurable_action</span>
+<span id="L608">608             referenceSource.measurable_reward n</span>
+<span id="L609">609       have hnextActual : Measurable nextActual :=</span>
+<span id="L610">610         (source.measurable_action (n + 1)).prod</span>
+<span id="L611">611           (source.measurable_reward (n + 1))</span>
+<span id="L612">612       have hnextRef : Measurable nextRef :=</span>
+<span id="L613">613         (referenceSource.measurable_action (n + 1)).prod</span>
+<span id="L614">614           (referenceSource.measurable_reward (n + 1))</span>
+<span id="L615">615       have hjointActual : Measurable jointActual :=</span>
+<span id="L616">616         hhistoryActual.prod hnextActual</span>
+<span id="L617">617       have hjointRef : Measurable jointRef :=</span>
+<span id="L618">618         hhistoryRef.prod hnextRef</span>
+<span id="L619">619       have hextend : Measurable extend :=</span>
+<span id="L620">620         History.measurable_extendPairHistorySucc</span>
+<span id="L621">621       have hstepDensity : Measurable (Function.uncurry stepDensity) := by</span>
+<span id="L622">622         simpa [stepDensity, Function.uncurry] using</span>
+<span id="L623">623           (ProbabilityTheory.Kernel.measurable_rnDeriv</span>
+<span id="L624">624             (algorithm.policy n) (referenceAlgorithm.policy n)).comp</span>
+<span id="L625">625               (measurable_fst.prodMk</span>
+<span id="L626">626                 (measurable_fst.comp measurable_snd))</span>
+<span id="L627">627       have hstepLaw :</span>
+<span id="L628">628           historyStepKernel algorithm environment n =</span>
+<span id="L629">629             (historyStepKernel referenceAlgorithm environment n).withDensity</span>
+<span id="L630">630               stepDensity := by</span>
+<span id="L631">631         exact historyStepKernel_eq_withDensity n algorithm referenceAlgorithm</span>
+<span id="L632">632           environment hcontinuous</span>
+<span id="L633">633       letI : ProbabilityTheory.IsSFiniteKernel</span>
+<span id="L634">634           ((historyStepKernel referenceAlgorithm environment n).withDensity</span>
+<span id="L635">635             stepDensity) := by</span>
+<span id="L636">636         rw [← hstepLaw]</span>
+<span id="L637">637         infer_instance</span>
+<span id="L638">638       have hjointLaw :</span>
+<span id="L639">639           mu.map jointActual =</span>
+<span id="L640">640             (muRef.map jointRef).withDensity</span>
+<span id="L641">641               (fun pair =&gt;</span>
+<span id="L642">642                 historyDensity algorithm referenceAlgorithm n pair.1 *</span>
+<span id="L643">643                   stepDensity pair.1 pair.2) := by</span>
+<span id="L644">644         calc</span>
+<span id="L645">645           mu.map jointActual =</span>
+<span id="L646">646               mu.map historyActual ⊗ₘ</span>
+<span id="L647">647                 historyStepKernel algorithm environment n := by</span>
+<span id="L648">648             simpa [jointActual, historyActual, nextActual] using</span>
+<span id="L649">649               nextPairJointLaw_eq_compProd</span>
+<span id="L650">650                 mu action reward algorithm environment source n</span>
+<span id="L651">651           _ = (muRef.map historyRef).withDensity</span>
+<span id="L652">652                 (historyDensity algorithm referenceAlgorithm n) ⊗ₘ</span>
+<span id="L653">653               (historyStepKernel referenceAlgorithm environment n).withDensity</span>
+<span id="L654">654                 stepDensity := by rw [ih, hstepLaw]</span>
+<span id="L655">655           _ = _ := compProd_withDensity_withDensity</span>
+<span id="L656">656             (muRef.map historyRef)</span>
+<span id="L657">657             (historyStepKernel referenceAlgorithm environment n)</span>
+<span id="L658">658             (historyDensity algorithm referenceAlgorithm n)</span>
+<span id="L659">659             stepDensity</span>
+<span id="L660">660             (measurable_historyDensity algorithm referenceAlgorithm n)</span>
+<span id="L661">661             hstepDensity</span>
+<span id="L662">662           _ = (muRef.map jointRef).withDensity</span>
+<span id="L663">663                 (fun pair =&gt;</span>
+<span id="L664">664                   historyDensity algorithm referenceAlgorithm n pair.1 *</span>
+<span id="L665">665                     stepDensity pair.1 pair.2) := by</span>
+<span id="L666">666             congr 1</span>
+<span id="L667">667             simpa [jointRef, historyRef, nextRef] using</span>
+<span id="L668">668               (nextPairJointLaw_eq_compProd</span>
+<span id="L669">669                 muRef actionRef rewardRef referenceAlgorithm environment</span>
+<span id="L670">670                   referenceSource n).symm</span>
+<span id="L671">671       have hcombinedDensity :</span>
+<span id="L672">672           (fun pair =&gt;</span>
+<span id="L673">673             historyDensity algorithm referenceAlgorithm n pair.1 *</span>
+<span id="L674">674               stepDensity pair.1 pair.2) =</span>
+<span id="L675">675             historyDensity algorithm referenceAlgorithm (n + 1) ∘ extend := by</span>
+<span id="L676">676         funext pair</span>
+<span id="L677">677         simp [historyDensity, stepDensity, extend]</span>
+<span id="L678">678       have hactualSucc :</span>
+<span id="L679">679           mu.map (fun omega =&gt;</span>
+<span id="L680">680               History.finitePairHistoryOfTrace</span>
+<span id="L681">681                 (action omega) (reward omega) (n + 1)) =</span>
+<span id="L682">682             (mu.map jointActual).map extend := by</span>
+<span id="L683">683         rw [Measure.map_map hextend hjointActual]</span>
+<span id="L684">684         apply Measure.map_congr</span>
+<span id="L685">685         filter_upwards with omega</span>
+<span id="L686">686         exact (History.finitePairHistoryOfTrace_succ</span>
+<span id="L687">687           (action omega) (reward omega) n)</span>
+<span id="L688">688       have hrefSucc :</span>
+<span id="L689">689           muRef.map (fun omega =&gt;</span>
+<span id="L690">690               History.finitePairHistoryOfTrace</span>
+<span id="L691">691                 (actionRef omega) (rewardRef omega) (n + 1)) =</span>
+<span id="L692">692             (muRef.map jointRef).map extend := by</span>
+<span id="L693">693         rw [Measure.map_map hextend hjointRef]</span>
+<span id="L694">694         apply Measure.map_congr</span>
+<span id="L695">695         filter_upwards with omega</span>
+<span id="L696">696         exact (History.finitePairHistoryOfTrace_succ</span>
+<span id="L697">697           (actionRef omega) (rewardRef omega) n)</span>
+<span id="L698">698       calc</span>
+<span id="L699">699         mu.map (fun omega =&gt;</span>
+<span id="L700">700             History.finitePairHistoryOfTrace</span>
+<span id="L701">701               (action omega) (reward omega) (n + 1)) =</span>
+<span id="L702">702             (mu.map jointActual).map extend := hactualSucc</span>
+<span id="L703">703         _ = ((muRef.map jointRef).withDensity</span>
+<span id="L704">704               (fun pair =&gt;</span>
+<span id="L705">705                 historyDensity algorithm referenceAlgorithm n pair.1 *</span>
+<span id="L706">706                   stepDensity pair.1 pair.2)).map extend := by</span>
+<span id="L707">707           rw [hjointLaw]</span>
+<span id="L708">708         _ = ((muRef.map jointRef).withDensity</span>
+<span id="L709">709               (historyDensity algorithm referenceAlgorithm (n + 1) ∘</span>
+<span id="L710">710                 extend)).map extend := by rw [hcombinedDensity]</span>
+<span id="L711">711         _ = ((muRef.map jointRef).map extend).withDensity</span>
+<span id="L712">712               (historyDensity algorithm referenceAlgorithm (n + 1)) :=</span>
+<span id="L713">713           map_withDensity_comp</span>
+<span id="L714">714             (muRef.map jointRef) extend</span>
+<span id="L715">715             (historyDensity algorithm referenceAlgorithm (n + 1))</span>
+<span id="L716">716             hextend</span>
+<span id="L717">717             (measurable_historyDensity algorithm referenceAlgorithm (n + 1))</span>
+<span id="L718">718         _ = (muRef.map (fun omega =&gt;</span>
+<span id="L719">719               History.finitePairHistoryOfTrace</span>
+<span id="L720">720                 (actionRef omega) (rewardRef omega) (n + 1))).withDensity</span>
+<span id="L721">721               (historyDensity algorithm referenceAlgorithm (n + 1)) := by</span>
+<span id="L722">722           rw [hrefSucc]</span>
+<span id="L723">723 </span>
+<span id="L724">724 /--</span>
+<span id="L725">725 Environment-indexed process realization for algorithm-density transport.</span>
+<span id="L726">726 </span>
+<span id="L727">727 The regular conditional sample laws `condDistrib id env mu` and</span>
+<span id="L728">728 `condDistrib id referenceEnv referenceMu` must satisfy the actual and</span>
+<span id="L729">729 reference process contracts almost everywhere. The compared algorithms share</span>
+<span id="L730">730 the same environment-indexed feedback law.</span>
+<span id="L731">731 -/</span>
+<span id="L732">732 structure ConditionalHistoryAlgorithmDensitySource</span>
+<span id="L733">733     {Omega : Type u} {OmegaRef : Type v} {Env : Type w}</span>
+<span id="L734">734     {Action : Type x} {Reward : Type y}</span>
+<span id="L735">735     [MeasurableSpace Omega] [StandardBorelSpace Omega] [Nonempty Omega]</span>
+<span id="L736">736     [MeasurableSpace OmegaRef] [StandardBorelSpace OmegaRef]</span>
+<span id="L737">737     [Nonempty OmegaRef]</span>
+<span id="L738">738     [MeasurableSpace Env]</span>
+<span id="L739">739     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L740">740     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L741">741     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L742">742     (env : Omega -&gt; Env)</span>
+<span id="L743">743     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L744">744     (reward : Omega -&gt; RewardTrace Reward)</span>
+<span id="L745">745     (referenceMu : Measure OmegaRef) [IsFiniteMeasure referenceMu]</span>
+<span id="L746">746     (referenceEnv : OmegaRef -&gt; Env)</span>
+<span id="L747">747     (referenceAction : OmegaRef -&gt; ActionTrace Action)</span>
+<span id="L748">748     (referenceReward : OmegaRef -&gt; RewardTrace Reward)</span>
+<span id="L749">749     (algorithm referenceAlgorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L750">750     (feedbackEnvironment : Env -&gt; HistoryEnvironment Action Reward) : Prop where</span>
+<span id="L751">751   measurable_env : Measurable env</span>
+<span id="L752">752   measurable_action : forall n, Measurable (fun omega =&gt; action omega n)</span>
+<span id="L753">753   measurable_reward : forall n, Measurable (fun omega =&gt; reward omega n)</span>
+<span id="L754">754   measurable_referenceEnv : Measurable referenceEnv</span>
+<span id="L755">755   measurable_referenceAction :</span>
+<span id="L756">756     forall n, Measurable (fun omega =&gt; referenceAction omega n)</span>
+<span id="L757">757   measurable_referenceReward :</span>
+<span id="L758">758     forall n, Measurable (fun omega =&gt; referenceReward omega n)</span>
+<span id="L759">759   env_map_eq : mu.map env = referenceMu.map referenceEnv</span>
+<span id="L760">760   absolutelyContinuous :</span>
+<span id="L761">761     HistoryAlgorithmAbsolutelyContinuous algorithm referenceAlgorithm</span>
+<span id="L762">762   actual_process : ∀ᵐ environment ∂mu.map env,</span>
+<span id="L763">763     IsHistoryAlgorithmEnvironmentSequence</span>
+<span id="L764">764       (ProbabilityTheory.condDistrib id env mu environment)</span>
+<span id="L765">765       action reward algorithm (feedbackEnvironment environment)</span>
+<span id="L766">766   reference_process : ∀ᵐ environment ∂referenceMu.map referenceEnv,</span>
+<span id="L767">767     IsHistoryAlgorithmEnvironmentSequence</span>
+<span id="L768">768       (ProbabilityTheory.condDistrib id referenceEnv referenceMu environment)</span>
+<span id="L769">769       referenceAction referenceReward referenceAlgorithm</span>
+<span id="L770">770         (feedbackEnvironment environment)</span>
+<span id="L771">771 </span>
+<span id="L772">772 /--</span>
+<span id="L773">773 The environment-indexed process realization produces the conditional finite</span>
+<span id="L774">774 history density law required by the posterior-invariance source constructor.</span>
+<span id="L775">775 -/</span>
+<span id="L776">776 theorem condDistrib_finitePairHistory_eq_withDensity_of_conditionalProcessSource</span>
+<span id="L777">777     {Omega : Type u} {OmegaRef : Type v} {Env : Type w}</span>
+<span id="L778">778     {Action : Type x} {Reward : Type y}</span>
+<span id="L779">779     [MeasurableSpace Omega] [StandardBorelSpace Omega] [Nonempty Omega]</span>
+<span id="L780">780     [MeasurableSpace OmegaRef] [StandardBorelSpace OmegaRef]</span>
+<span id="L781">781     [Nonempty OmegaRef]</span>
+<span id="L782">782     [MeasurableSpace Env]</span>
+<span id="L783">783     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L784">784     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L785">785     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L786">786     (env : Omega -&gt; Env)</span>
+<span id="L787">787     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L788">788     (reward : Omega -&gt; RewardTrace Reward)</span>
+<span id="L789">789     (referenceMu : Measure OmegaRef) [IsFiniteMeasure referenceMu]</span>
+<span id="L790">790     (referenceEnv : OmegaRef -&gt; Env)</span>
+<span id="L791">791     (referenceAction : OmegaRef -&gt; ActionTrace Action)</span>
+<span id="L792">792     (referenceReward : OmegaRef -&gt; RewardTrace Reward)</span>
+<span id="L793">793     (algorithm referenceAlgorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L794">794     (feedbackEnvironment : Env -&gt; HistoryEnvironment Action Reward)</span>
+<span id="L795">795     (source : ConditionalHistoryAlgorithmDensitySource</span>
+<span id="L796">796       mu env action reward referenceMu referenceEnv referenceAction</span>
+<span id="L797">797         referenceReward algorithm referenceAlgorithm feedbackEnvironment)</span>
+<span id="L798">798     (n : Nat) :</span>
+<span id="L799">799     ProbabilityTheory.condDistrib</span>
+<span id="L800">800         (fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L801">801           (action omega) (reward omega) n) env mu =ᵐ[mu.map env]</span>
+<span id="L802">802       (ProbabilityTheory.condDistrib</span>
+<span id="L803">803         (fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L804">804           (referenceAction omega) (referenceReward omega) n)</span>
+<span id="L805">805         referenceEnv referenceMu).withDensity</span>
+<span id="L806">806           (fun _ history =&gt;</span>
+<span id="L807">807             historyDensity algorithm referenceAlgorithm n history) := by</span>
+<span id="L808">808   let actualHistory := fun omega =&gt;</span>
+<span id="L809">809     History.finitePairHistoryOfTrace (action omega) (reward omega) n</span>
+<span id="L810">810   let referenceHistory := fun omega =&gt;</span>
+<span id="L811">811     History.finitePairHistoryOfTrace</span>
+<span id="L812">812       (referenceAction omega) (referenceReward omega) n</span>
+<span id="L813">813   have hactualHistory : Measurable actualHistory :=</span>
+<span id="L814">814     History.measurable_finitePairHistoryOfTrace</span>
+<span id="L815">815       action reward source.measurable_action source.measurable_reward n</span>
+<span id="L816">816   have hreferenceHistory : Measurable referenceHistory :=</span>
+<span id="L817">817     History.measurable_finitePairHistoryOfTrace</span>
+<span id="L818">818       referenceAction referenceReward source.measurable_referenceAction</span>
+<span id="L819">819         source.measurable_referenceReward n</span>
+<span id="L820">820   have hactualMap :</span>
+<span id="L821">821       ProbabilityTheory.condDistrib actualHistory env mu =ᵐ[mu.map env]</span>
+<span id="L822">822         (ProbabilityTheory.condDistrib id env mu).map actualHistory := by</span>
+<span id="L823">823     simpa [Function.comp_def] using</span>
+<span id="L824">824       (ProbabilityTheory.condDistrib_comp</span>
+<span id="L825">825         (Y := id) env measurable_id.aemeasurable hactualHistory)</span>
+<span id="L826">826   have hreferenceMap :</span>
+<span id="L827">827       ProbabilityTheory.condDistrib referenceHistory referenceEnv referenceMu</span>
+<span id="L828">828           =ᵐ[referenceMu.map referenceEnv]</span>
+<span id="L829">829         (ProbabilityTheory.condDistrib id referenceEnv referenceMu).map</span>
+<span id="L830">830           referenceHistory := by</span>
+<span id="L831">831     simpa [Function.comp_def] using</span>
+<span id="L832">832       (ProbabilityTheory.condDistrib_comp</span>
+<span id="L833">833         (Y := id) referenceEnv measurable_id.aemeasurable hreferenceHistory)</span>
+<span id="L834">834   have hreferenceMap&#x27; :</span>
+<span id="L835">835       ProbabilityTheory.condDistrib referenceHistory referenceEnv referenceMu</span>
+<span id="L836">836           =ᵐ[mu.map env]</span>
+<span id="L837">837         (ProbabilityTheory.condDistrib id referenceEnv referenceMu).map</span>
+<span id="L838">838           referenceHistory := by</span>
+<span id="L839">839     rw [source.env_map_eq]</span>
+<span id="L840">840     exact hreferenceMap</span>
+<span id="L841">841   have hreferenceProcess :</span>
+<span id="L842">842       ∀ᵐ environment ∂mu.map env,</span>
+<span id="L843">843         IsHistoryAlgorithmEnvironmentSequence</span>
+<span id="L844">844           (ProbabilityTheory.condDistrib id referenceEnv referenceMu environment)</span>
+<span id="L845">845           referenceAction referenceReward referenceAlgorithm</span>
+<span id="L846">846             (feedbackEnvironment environment) := by</span>
+<span id="L847">847     rw [source.env_map_eq]</span>
+<span id="L848">848     exact source.reference_process</span>
+<span id="L849">849   have hdensityKernel :</span>
+<span id="L850">850       Measurable (Function.uncurry</span>
+<span id="L851">851         (fun _ : Env =&gt; historyDensity algorithm referenceAlgorithm n)) :=</span>
+<span id="L852">852     (measurable_historyDensity algorithm referenceAlgorithm n).comp</span>
+<span id="L853">853       measurable_snd</span>
+<span id="L854">854   filter_upwards [hactualMap, hreferenceMap&#x27;, source.actual_process,</span>
+<span id="L855">855     hreferenceProcess] with environment hactual hreference</span>
+<span id="L856">856       hactualProcess hreferenceProcessAt</span>
+<span id="L857">857   rw [hactual,</span>
+<span id="L858">858     ProbabilityTheory.Kernel.withDensity_apply _ hdensityKernel,</span>
+<span id="L859">859     hreference,</span>
+<span id="L860">860     ProbabilityTheory.Kernel.map_apply _ hactualHistory,</span>
+<span id="L861">861     ProbabilityTheory.Kernel.map_apply _ hreferenceHistory]</span>
+<span id="L862">862   exact finitePairHistory_map_eq_withDensity</span>
+<span id="L863">863     (ProbabilityTheory.condDistrib id env mu environment)</span>
+<span id="L864">864     (ProbabilityTheory.condDistrib id referenceEnv referenceMu environment)</span>
+<span id="L865">865     action reward referenceAction referenceReward</span>
+<span id="L866">866     algorithm referenceAlgorithm (feedbackEnvironment environment)</span>
+<span id="L867">867     hactualProcess hreferenceProcessAt source.absolutelyContinuous n</span>
+<span id="L868">868 </span>
+<span id="L869">869 /--</span>
+<span id="L870">870 Finite-prefix Thompson probability matching produced directly from the</span>
+<span id="L871">871 environment-indexed recursive process contracts.</span>
+<span id="L872">872 -/</span>
+<span id="L873">873 theorem finitePairReferencePolicySampler_condDistrib_action_ae_eq_bestAction_of_conditionalProcessSource</span>
+<span id="L874">874     {Omega : Type u} {OmegaRef : Type v} {Env : Type w}</span>
+<span id="L875">875     {Action : Type x} {Reward : Type y}</span>
+<span id="L876">876     [MeasurableSpace Omega] [StandardBorelSpace Omega] [Nonempty Omega]</span>
+<span id="L877">877     [MeasurableSpace OmegaRef] [StandardBorelSpace OmegaRef]</span>
+<span id="L878">878     [Nonempty OmegaRef]</span>
+<span id="L879">879     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L880">880     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L881">881     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L882">882     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L883">883     (env : Omega -&gt; Env)</span>
+<span id="L884">884     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L885">885     (reward : Omega -&gt; RewardTrace Reward)</span>
+<span id="L886">886     (referenceMu : Measure OmegaRef) [IsFiniteMeasure referenceMu]</span>
+<span id="L887">887     (referenceEnv : OmegaRef -&gt; Env)</span>
+<span id="L888">888     (referenceAction : OmegaRef -&gt; ActionTrace Action)</span>
+<span id="L889">889     (referenceReward : OmegaRef -&gt; RewardTrace Reward)</span>
+<span id="L890">890     (algorithm referenceAlgorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L891">891     (feedbackEnvironment : Env -&gt; HistoryEnvironment Action Reward)</span>
+<span id="L892">892     (source : ConditionalHistoryAlgorithmDensitySource</span>
+<span id="L893">893       mu env action reward referenceMu referenceEnv referenceAction</span>
+<span id="L894">894         referenceReward algorithm referenceAlgorithm feedbackEnvironment)</span>
+<span id="L895">895     (n : Nat)</span>
+<span id="L896">896     (bestAction : Env -&gt; Action) (hbestAction : Measurable bestAction) :</span>
+<span id="L897">897     let actualHistory := fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L898">898       (action omega) (reward omega) n</span>
+<span id="L899">899     let referenceHistory := fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L900">900       (referenceAction omega) (referenceReward omega) n</span>
+<span id="L901">901     let policy := referenceActionKernel referenceMu referenceEnv referenceHistory</span>
+<span id="L902">902       source.measurable_referenceEnv</span>
+<span id="L903">903       (History.measurable_finitePairHistoryOfTrace</span>
+<span id="L904">904         referenceAction referenceReward source.measurable_referenceAction</span>
+<span id="L905">905           source.measurable_referenceReward n)</span>
+<span id="L906">906       bestAction hbestAction</span>
+<span id="L907">907     let sampler := policySamplerMeasure mu actualHistory</span>
+<span id="L908">908       (History.measurable_finitePairHistoryOfTrace</span>
+<span id="L909">909         action reward source.measurable_action source.measurable_reward n) policy</span>
+<span id="L910">910     ProbabilityTheory.condDistrib policySamplerAction</span>
+<span id="L911">911         (policySamplerHistory actualHistory) sampler =ᵐ[</span>
+<span id="L912">912       sampler.map (policySamplerHistory actualHistory)]</span>
+<span id="L913">913       ProbabilityTheory.condDistrib (bestAction ∘ policySamplerEnv env)</span>
+<span id="L914">914         (policySamplerHistory actualHistory) sampler := by</span>
+<span id="L915">915   exact</span>
+<span id="L916">916     finitePairReferencePolicySampler_condDistrib_action_ae_eq_bestAction_of_condDistrib_history_withDensity</span>
+<span id="L917">917       mu env action reward source.measurable_env</span>
+<span id="L918">918       source.measurable_action source.measurable_reward</span>
+<span id="L919">919       referenceMu referenceEnv referenceAction referenceReward</span>
+<span id="L920">920       source.measurable_referenceEnv source.measurable_referenceAction</span>
+<span id="L921">921       source.measurable_referenceReward n</span>
+<span id="L922">922       (historyDensity algorithm referenceAlgorithm n)</span>
+<span id="L923">923       (measurable_historyDensity algorithm referenceAlgorithm n)</span>
+<span id="L924">924       source.env_map_eq</span>
+<span id="L925">925       (condDistrib_finitePairHistory_eq_withDensity_of_conditionalProcessSource</span>
+<span id="L926">926         mu env action reward referenceMu referenceEnv referenceAction</span>
+<span id="L927">927           referenceReward algorithm referenceAlgorithm feedbackEnvironment</span>
+<span id="L928">928           source n)</span>
+<span id="L929">929       bestAction hbestAction</span>
+<span id="L930">930 </span>
+<span id="L931">931 /--</span>
+<span id="L932">932 LML-shaped split laws for one algorithm/environment process under the regular</span>
+<span id="L933">933 conditional sample measure at almost every environment.</span>
+<span id="L934">934 -/</span>
+<span id="L935">935 structure ConditionalHistoryAlgorithmEnvironmentSplitSource</span>
+<span id="L936">936     {Omega : Type u} {Env : Type v} {Action : Type w} {Reward : Type x}</span>
+<span id="L937">937     [MeasurableSpace Omega] [StandardBorelSpace Omega] [Nonempty Omega]</span>
+<span id="L938">938     [MeasurableSpace Env]</span>
+<span id="L939">939     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L940">940     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L941">941     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L942">942     (env : Omega -&gt; Env)</span>
+<span id="L943">943     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L944">944     (reward : Omega -&gt; RewardTrace Reward)</span>
+<span id="L945">945     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L946">946     (feedbackEnvironment : Env -&gt; HistoryEnvironment Action Reward) : Prop where</span>
+<span id="L947">947   measurable_env : Measurable env</span>
+<span id="L948">948   measurable_action : forall n, Measurable (fun omega =&gt; action omega n)</span>
+<span id="L949">949   measurable_reward : forall n, Measurable (fun omega =&gt; reward omega n)</span>
+<span id="L950">950   initial_action : ∀ᵐ environment ∂mu.map env,</span>
+<span id="L951">951     (ProbabilityTheory.condDistrib id env mu environment).map</span>
+<span id="L952">952         (fun omega =&gt; action omega 0) =</span>
+<span id="L953">953       algorithm.initialAction</span>
+<span id="L954">954   initial_feedback : ∀ᵐ environment ∂mu.map env,</span>
+<span id="L955">955     ProbabilityTheory.condDistrib</span>
+<span id="L956">956         (fun omega =&gt; reward omega 0)</span>
+<span id="L957">957         (fun omega =&gt; action omega 0)</span>
+<span id="L958">958         (ProbabilityTheory.condDistrib id env mu environment) =ᵐ[</span>
+<span id="L959">959       (ProbabilityTheory.condDistrib id env mu environment).map</span>
+<span id="L960">960         (fun omega =&gt; action omega 0)]</span>
+<span id="L961">961       (feedbackEnvironment environment).initialFeedback</span>
+<span id="L962">962   policy : forall n, ∀ᵐ environment ∂mu.map env,</span>
+<span id="L963">963     ProbabilityTheory.condDistrib</span>
+<span id="L964">964         (fun omega =&gt; action omega (n + 1))</span>
+<span id="L965">965         (fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L966">966           (action omega) (reward omega) n)</span>
+<span id="L967">967         (ProbabilityTheory.condDistrib id env mu environment) =ᵐ[</span>
+<span id="L968">968       (ProbabilityTheory.condDistrib id env mu environment).map</span>
+<span id="L969">969         (fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L970">970           (action omega) (reward omega) n)]</span>
+<span id="L971">971       algorithm.policy n</span>
+<span id="L972">972   feedback : forall n, ∀ᵐ environment ∂mu.map env,</span>
+<span id="L973">973     ProbabilityTheory.condDistrib</span>
+<span id="L974">974         (fun omega =&gt; reward omega (n + 1))</span>
+<span id="L975">975         (fun omega =&gt;</span>
+<span id="L976">976           (History.finitePairHistoryOfTrace</span>
+<span id="L977">977             (action omega) (reward omega) n, action omega (n + 1)))</span>
+<span id="L978">978         (ProbabilityTheory.condDistrib id env mu environment) =ᵐ[</span>
+<span id="L979">979       (ProbabilityTheory.condDistrib id env mu environment).map</span>
+<span id="L980">980         (fun omega =&gt;</span>
+<span id="L981">981           (History.finitePairHistoryOfTrace</span>
+<span id="L982">982             (action omega) (reward omega) n, action omega (n + 1)))]</span>
+<span id="L983">983       (feedbackEnvironment environment).feedback n</span>
+<span id="L984">984 </span>
+<span id="L985">985 /--</span>
+<span id="L986">986 Actual/reference split conditional-process laws together with the common</span>
+<span id="L987">987 environment marginal and policy absolute-continuity contract.</span>
+<span id="L988">988 -/</span>
+<span id="L989">989 structure ConditionalHistoryAlgorithmDensitySplitSource</span>
+<span id="L990">990     {Omega : Type u} {OmegaRef : Type v} {Env : Type w}</span>
+<span id="L991">991     {Action : Type x} {Reward : Type y}</span>
+<span id="L992">992     [MeasurableSpace Omega] [StandardBorelSpace Omega] [Nonempty Omega]</span>
+<span id="L993">993     [MeasurableSpace OmegaRef] [StandardBorelSpace OmegaRef]</span>
+<span id="L994">994     [Nonempty OmegaRef]</span>
+<span id="L995">995     [MeasurableSpace Env]</span>
+<span id="L996">996     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L997">997     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L998">998     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L999">999     (env : Omega -&gt; Env)</span>
+<span id="L1000">1000     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L1001">1001     (reward : Omega -&gt; RewardTrace Reward)</span>
+<span id="L1002">1002     (referenceMu : Measure OmegaRef) [IsFiniteMeasure referenceMu]</span>
+<span id="L1003">1003     (referenceEnv : OmegaRef -&gt; Env)</span>
+<span id="L1004">1004     (referenceAction : OmegaRef -&gt; ActionTrace Action)</span>
+<span id="L1005">1005     (referenceReward : OmegaRef -&gt; RewardTrace Reward)</span>
+<span id="L1006">1006     (algorithm referenceAlgorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L1007">1007     (feedbackEnvironment : Env -&gt; HistoryEnvironment Action Reward) : Prop where</span>
+<span id="L1008">1008   actual : ConditionalHistoryAlgorithmEnvironmentSplitSource</span>
+<span id="L1009">1009     mu env action reward algorithm feedbackEnvironment</span>
+<span id="L1010">1010   reference : ConditionalHistoryAlgorithmEnvironmentSplitSource</span>
+<span id="L1011">1011     referenceMu referenceEnv referenceAction referenceReward referenceAlgorithm</span>
+<span id="L1012">1012       feedbackEnvironment</span>
+<span id="L1013">1013   env_map_eq : mu.map env = referenceMu.map referenceEnv</span>
+<span id="L1014">1014   absolutelyContinuous :</span>
+<span id="L1015">1015     HistoryAlgorithmAbsolutelyContinuous algorithm referenceAlgorithm</span>
+<span id="L1016">1016 </span>
+<span id="L1017">1017 /--</span>
+<span id="L1018">1018 Assemble the conditional process source from the four split law families for</span>
+<span id="L1019">1019 the actual and reference processes.</span>
+<span id="L1020">1020 -/</span>
+<span id="L1021">1021 noncomputable def conditionalHistoryAlgorithmDensitySource_of_split</span>
+<span id="L1022">1022     {Omega : Type u} {OmegaRef : Type v} {Env : Type w}</span>
+<span id="L1023">1023     {Action : Type x} {Reward : Type y}</span>
+<span id="L1024">1024     [MeasurableSpace Omega] [StandardBorelSpace Omega] [Nonempty Omega]</span>
+<span id="L1025">1025     [MeasurableSpace OmegaRef] [StandardBorelSpace OmegaRef]</span>
+<span id="L1026">1026     [Nonempty OmegaRef]</span>
+<span id="L1027">1027     [MeasurableSpace Env]</span>
+<span id="L1028">1028     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L1029">1029     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L1030">1030     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L1031">1031     (env : Omega -&gt; Env)</span>
+<span id="L1032">1032     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L1033">1033     (reward : Omega -&gt; RewardTrace Reward)</span>
+<span id="L1034">1034     (referenceMu : Measure OmegaRef) [IsFiniteMeasure referenceMu]</span>
+<span id="L1035">1035     (referenceEnv : OmegaRef -&gt; Env)</span>
+<span id="L1036">1036     (referenceAction : OmegaRef -&gt; ActionTrace Action)</span>
+<span id="L1037">1037     (referenceReward : OmegaRef -&gt; RewardTrace Reward)</span>
+<span id="L1038">1038     (algorithm referenceAlgorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L1039">1039     (feedbackEnvironment : Env -&gt; HistoryEnvironment Action Reward)</span>
+<span id="L1040">1040     (source : ConditionalHistoryAlgorithmDensitySplitSource</span>
+<span id="L1041">1041       mu env action reward referenceMu referenceEnv referenceAction</span>
+<span id="L1042">1042         referenceReward algorithm referenceAlgorithm feedbackEnvironment) :</span>
+<span id="L1043">1043     ConditionalHistoryAlgorithmDensitySource</span>
+<span id="L1044">1044       mu env action reward referenceMu referenceEnv referenceAction</span>
+<span id="L1045">1045         referenceReward algorithm referenceAlgorithm feedbackEnvironment := by</span>
+<span id="L1046">1046   have hactualPolicy : ∀ᵐ environment ∂mu.map env, forall n,</span>
+<span id="L1047">1047       ProbabilityTheory.condDistrib</span>
+<span id="L1048">1048           (fun omega =&gt; action omega (n + 1))</span>
+<span id="L1049">1049           (fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L1050">1050             (action omega) (reward omega) n)</span>
+<span id="L1051">1051           (ProbabilityTheory.condDistrib id env mu environment) =ᵐ[</span>
+<span id="L1052">1052         (ProbabilityTheory.condDistrib id env mu environment).map</span>
+<span id="L1053">1053           (fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L1054">1054             (action omega) (reward omega) n)]</span>
+<span id="L1055">1055         algorithm.policy n := by</span>
+<span id="L1056">1056     rw [ae_all_iff]</span>
+<span id="L1057">1057     exact source.actual.policy</span>
+<span id="L1058">1058   have hactualFeedback : ∀ᵐ environment ∂mu.map env, forall n,</span>
+<span id="L1059">1059       ProbabilityTheory.condDistrib</span>
+<span id="L1060">1060           (fun omega =&gt; reward omega (n + 1))</span>
+<span id="L1061">1061           (fun omega =&gt;</span>
+<span id="L1062">1062             (History.finitePairHistoryOfTrace</span>
+<span id="L1063">1063               (action omega) (reward omega) n, action omega (n + 1)))</span>
+<span id="L1064">1064           (ProbabilityTheory.condDistrib id env mu environment) =ᵐ[</span>
+<span id="L1065">1065         (ProbabilityTheory.condDistrib id env mu environment).map</span>
+<span id="L1066">1066           (fun omega =&gt;</span>
+<span id="L1067">1067             (History.finitePairHistoryOfTrace</span>
+<span id="L1068">1068               (action omega) (reward omega) n, action omega (n + 1)))]</span>
+<span id="L1069">1069         (feedbackEnvironment environment).feedback n := by</span>
+<span id="L1070">1070     rw [ae_all_iff]</span>
+<span id="L1071">1071     exact source.actual.feedback</span>
+<span id="L1072">1072   have hreferencePolicy :</span>
+<span id="L1073">1073       ∀ᵐ environment ∂referenceMu.map referenceEnv, forall n,</span>
+<span id="L1074">1074         ProbabilityTheory.condDistrib</span>
+<span id="L1075">1075             (fun omega =&gt; referenceAction omega (n + 1))</span>
+<span id="L1076">1076             (fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L1077">1077               (referenceAction omega) (referenceReward omega) n)</span>
+<span id="L1078">1078             (ProbabilityTheory.condDistrib id referenceEnv referenceMu</span>
+<span id="L1079">1079               environment) =ᵐ[</span>
+<span id="L1080">1080           (ProbabilityTheory.condDistrib id referenceEnv referenceMu</span>
+<span id="L1081">1081             environment).map</span>
+<span id="L1082">1082             (fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L1083">1083               (referenceAction omega) (referenceReward omega) n)]</span>
+<span id="L1084">1084           referenceAlgorithm.policy n := by</span>
+<span id="L1085">1085     rw [ae_all_iff]</span>
+<span id="L1086">1086     exact source.reference.policy</span>
+<span id="L1087">1087   have hreferenceFeedback :</span>
+<span id="L1088">1088       ∀ᵐ environment ∂referenceMu.map referenceEnv, forall n,</span>
+<span id="L1089">1089         ProbabilityTheory.condDistrib</span>
+<span id="L1090">1090             (fun omega =&gt; referenceReward omega (n + 1))</span>
+<span id="L1091">1091             (fun omega =&gt;</span>
+<span id="L1092">1092               (History.finitePairHistoryOfTrace</span>
+<span id="L1093">1093                 (referenceAction omega) (referenceReward omega) n,</span>
+<span id="L1094">1094                   referenceAction omega (n + 1)))</span>
+<span id="L1095">1095             (ProbabilityTheory.condDistrib id referenceEnv referenceMu</span>
+<span id="L1096">1096               environment) =ᵐ[</span>
+<span id="L1097">1097           (ProbabilityTheory.condDistrib id referenceEnv referenceMu</span>
+<span id="L1098">1098             environment).map</span>
+<span id="L1099">1099             (fun omega =&gt;</span>
+<span id="L1100">1100               (History.finitePairHistoryOfTrace</span>
+<span id="L1101">1101                 (referenceAction omega) (referenceReward omega) n,</span>
+<span id="L1102">1102                   referenceAction omega (n + 1)))]</span>
+<span id="L1103">1103           (feedbackEnvironment environment).feedback n := by</span>
+<span id="L1104">1104     rw [ae_all_iff]</span>
+<span id="L1105">1105     exact source.reference.feedback</span>
+<span id="L1106">1106   exact</span>
+<span id="L1107">1107     { measurable_env := source.actual.measurable_env</span>
+<span id="L1108">1108       measurable_action := source.actual.measurable_action</span>
+<span id="L1109">1109       measurable_reward := source.actual.measurable_reward</span>
+<span id="L1110">1110       measurable_referenceEnv := source.reference.measurable_env</span>
+<span id="L1111">1111       measurable_referenceAction := source.reference.measurable_action</span>
+<span id="L1112">1112       measurable_referenceReward := source.reference.measurable_reward</span>
+<span id="L1113">1113       env_map_eq := source.env_map_eq</span>
+<span id="L1114">1114       absolutelyContinuous := source.absolutelyContinuous</span>
+<span id="L1115">1115       actual_process := by</span>
+<span id="L1116">1116         filter_upwards [source.actual.initial_action,</span>
+<span id="L1117">1117           source.actual.initial_feedback, hactualPolicy, hactualFeedback] with</span>
+<span id="L1118">1118           environment hinitialAction hinitialFeedback hpolicy hfeedback</span>
+<span id="L1119">1119         exact isHistoryAlgorithmEnvironmentSequence_of_split</span>
+<span id="L1120">1120           (ProbabilityTheory.condDistrib id env mu environment)</span>
+<span id="L1121">1121           action reward algorithm (feedbackEnvironment environment)</span>
+<span id="L1122">1122           source.actual.measurable_action source.actual.measurable_reward</span>
+<span id="L1123">1123           hinitialAction hinitialFeedback hpolicy hfeedback</span>
+<span id="L1124">1124       reference_process := by</span>
+<span id="L1125">1125         filter_upwards [source.reference.initial_action,</span>
+<span id="L1126">1126           source.reference.initial_feedback, hreferencePolicy,</span>
+<span id="L1127">1127           hreferenceFeedback] with</span>
+<span id="L1128">1128           environment hinitialAction hinitialFeedback hpolicy hfeedback</span>
+<span id="L1129">1129         exact isHistoryAlgorithmEnvironmentSequence_of_split</span>
+<span id="L1130">1130           (ProbabilityTheory.condDistrib id referenceEnv referenceMu</span>
+<span id="L1131">1131             environment)</span>
+<span id="L1132">1132           referenceAction referenceReward referenceAlgorithm</span>
+<span id="L1133">1133           (feedbackEnvironment environment)</span>
+<span id="L1134">1134           source.reference.measurable_action source.reference.measurable_reward</span>
+<span id="L1135">1135           hinitialAction hinitialFeedback hpolicy hfeedback }</span>
+<span id="L1136">1136 </span>
+<span id="L1137">1137 /--</span>
+<span id="L1138">1138 The split conditional laws directly produce the conditional finite-history</span>
+<span id="L1139">1139 density equality.</span>
+<span id="L1140">1140 -/</span>
+<span id="L1141">1141 theorem condDistrib_finitePairHistory_eq_withDensity_of_conditionalSplitSource</span>
+<span id="L1142">1142     {Omega : Type u} {OmegaRef : Type v} {Env : Type w}</span>
+<span id="L1143">1143     {Action : Type x} {Reward : Type y}</span>
+<span id="L1144">1144     [MeasurableSpace Omega] [StandardBorelSpace Omega] [Nonempty Omega]</span>
+<span id="L1145">1145     [MeasurableSpace OmegaRef] [StandardBorelSpace OmegaRef]</span>
+<span id="L1146">1146     [Nonempty OmegaRef]</span>
+<span id="L1147">1147     [MeasurableSpace Env]</span>
+<span id="L1148">1148     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L1149">1149     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L1150">1150     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L1151">1151     (env : Omega -&gt; Env)</span>
+<span id="L1152">1152     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L1153">1153     (reward : Omega -&gt; RewardTrace Reward)</span>
+<span id="L1154">1154     (referenceMu : Measure OmegaRef) [IsFiniteMeasure referenceMu]</span>
+<span id="L1155">1155     (referenceEnv : OmegaRef -&gt; Env)</span>
+<span id="L1156">1156     (referenceAction : OmegaRef -&gt; ActionTrace Action)</span>
+<span id="L1157">1157     (referenceReward : OmegaRef -&gt; RewardTrace Reward)</span>
+<span id="L1158">1158     (algorithm referenceAlgorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L1159">1159     (feedbackEnvironment : Env -&gt; HistoryEnvironment Action Reward)</span>
+<span id="L1160">1160     (source : ConditionalHistoryAlgorithmDensitySplitSource</span>
+<span id="L1161">1161       mu env action reward referenceMu referenceEnv referenceAction</span>
+<span id="L1162">1162         referenceReward algorithm referenceAlgorithm feedbackEnvironment)</span>
+<span id="L1163">1163     (n : Nat) :</span>
+<span id="L1164">1164     ProbabilityTheory.condDistrib</span>
+<span id="L1165">1165         (fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L1166">1166           (action omega) (reward omega) n) env mu =ᵐ[mu.map env]</span>
+<span id="L1167">1167       (ProbabilityTheory.condDistrib</span>
+<span id="L1168">1168         (fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L1169">1169           (referenceAction omega) (referenceReward omega) n)</span>
+<span id="L1170">1170         referenceEnv referenceMu).withDensity</span>
+<span id="L1171">1171           (fun _ history =&gt;</span>
+<span id="L1172">1172             historyDensity algorithm referenceAlgorithm n history) := by</span>
+<span id="L1173">1173   exact</span>
+<span id="L1174">1174     condDistrib_finitePairHistory_eq_withDensity_of_conditionalProcessSource</span>
+<span id="L1175">1175       mu env action reward referenceMu referenceEnv referenceAction</span>
+<span id="L1176">1176         referenceReward algorithm referenceAlgorithm feedbackEnvironment</span>
+<span id="L1177">1177         (conditionalHistoryAlgorithmDensitySource_of_split</span>
+<span id="L1178">1178           mu env action reward referenceMu referenceEnv referenceAction</span>
+<span id="L1179">1179             referenceReward algorithm referenceAlgorithm feedbackEnvironment</span>
+<span id="L1180">1180             source)</span>
+<span id="L1181">1181         n</span>
+<span id="L1182">1182 </span>
+<span id="L1183">1183 /--</span>
+<span id="L1184">1184 Finite-prefix Thompson probability matching from the concrete four-family</span>
+<span id="L1185">1185 split conditional-law interface.</span>
+<span id="L1186">1186 -/</span>
+<span id="L1187">1187 theorem finitePairReferencePolicySampler_condDistrib_action_ae_eq_bestAction_of_conditionalSplitSource</span>
+<span id="L1188">1188     {Omega : Type u} {OmegaRef : Type v} {Env : Type w}</span>
+<span id="L1189">1189     {Action : Type x} {Reward : Type y}</span>
+<span id="L1190">1190     [MeasurableSpace Omega] [StandardBorelSpace Omega] [Nonempty Omega]</span>
+<span id="L1191">1191     [MeasurableSpace OmegaRef] [StandardBorelSpace OmegaRef]</span>
+<span id="L1192">1192     [Nonempty OmegaRef]</span>
+<span id="L1193">1193     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L1194">1194     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L1195">1195     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L1196">1196     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L1197">1197     (env : Omega -&gt; Env)</span>
+<span id="L1198">1198     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L1199">1199     (reward : Omega -&gt; RewardTrace Reward)</span>
+<span id="L1200">1200     (referenceMu : Measure OmegaRef) [IsFiniteMeasure referenceMu]</span>
+<span id="L1201">1201     (referenceEnv : OmegaRef -&gt; Env)</span>
+<span id="L1202">1202     (referenceAction : OmegaRef -&gt; ActionTrace Action)</span>
+<span id="L1203">1203     (referenceReward : OmegaRef -&gt; RewardTrace Reward)</span>
+<span id="L1204">1204     (algorithm referenceAlgorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L1205">1205     (feedbackEnvironment : Env -&gt; HistoryEnvironment Action Reward)</span>
+<span id="L1206">1206     (source : ConditionalHistoryAlgorithmDensitySplitSource</span>
+<span id="L1207">1207       mu env action reward referenceMu referenceEnv referenceAction</span>
+<span id="L1208">1208         referenceReward algorithm referenceAlgorithm feedbackEnvironment)</span>
+<span id="L1209">1209     (n : Nat)</span>
+<span id="L1210">1210     (bestAction : Env -&gt; Action) (hbestAction : Measurable bestAction) :</span>
+<span id="L1211">1211     let actualHistory := fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L1212">1212       (action omega) (reward omega) n</span>
+<span id="L1213">1213     let referenceHistory := fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L1214">1214       (referenceAction omega) (referenceReward omega) n</span>
+<span id="L1215">1215     let policy := referenceActionKernel referenceMu referenceEnv referenceHistory</span>
+<span id="L1216">1216       source.reference.measurable_env</span>
+<span id="L1217">1217       (History.measurable_finitePairHistoryOfTrace</span>
+<span id="L1218">1218         referenceAction referenceReward source.reference.measurable_action</span>
+<span id="L1219">1219           source.reference.measurable_reward n)</span>
+<span id="L1220">1220       bestAction hbestAction</span>
+<span id="L1221">1221     let sampler := policySamplerMeasure mu actualHistory</span>
+<span id="L1222">1222       (History.measurable_finitePairHistoryOfTrace</span>
+<span id="L1223">1223         action reward source.actual.measurable_action</span>
+<span id="L1224">1224           source.actual.measurable_reward n) policy</span>
+<span id="L1225">1225     ProbabilityTheory.condDistrib policySamplerAction</span>
+<span id="L1226">1226         (policySamplerHistory actualHistory) sampler =ᵐ[</span>
+<span id="L1227">1227       sampler.map (policySamplerHistory actualHistory)]</span>
+<span id="L1228">1228       ProbabilityTheory.condDistrib (bestAction ∘ policySamplerEnv env)</span>
+<span id="L1229">1229         (policySamplerHistory actualHistory) sampler := by</span>
+<span id="L1230">1230   exact</span>
+<span id="L1231">1231     finitePairReferencePolicySampler_condDistrib_action_ae_eq_bestAction_of_conditionalProcessSource</span>
+<span id="L1232">1232       mu env action reward referenceMu referenceEnv referenceAction</span>
+<span id="L1233">1233         referenceReward algorithm referenceAlgorithm feedbackEnvironment</span>
+<span id="L1234">1234         (conditionalHistoryAlgorithmDensitySource_of_split</span>
+<span id="L1235">1235           mu env action reward referenceMu referenceEnv referenceAction</span>
+<span id="L1236">1236             referenceReward algorithm referenceAlgorithm feedbackEnvironment</span>
+<span id="L1237">1237             source)</span>
+<span id="L1238">1238         n bestAction hbestAction</span>
+<span id="L1239">1239 </span>
+<span id="L1240">1240 end Thompson</span>
+<span id="L1241">1241 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

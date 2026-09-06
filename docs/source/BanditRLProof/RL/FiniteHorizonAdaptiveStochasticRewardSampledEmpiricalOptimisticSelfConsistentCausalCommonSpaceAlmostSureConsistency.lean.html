@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceAlmostSureConsistency.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceAlmostSureConsistency.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceAlmostSureConsistency.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceAlmostSureConsistency.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardSampledEmpiricalOptimisticSelfConsistentCausalCommonSpaceL1Consistency</span>
+<span id="L2">2 import Mathlib.MeasureTheory.OuterMeasure.BorelCantelli</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Natural-causal almost-sure consistency</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module upgrades the heterogeneous natural-causal realized-regret process</span>
+<span id="L8">8 from `L1` convergence to almost-sure convergence.  The proof keeps the same</span>
+<span id="L9">9 dependent trajectory measure.  It applies the first Borel-Cantelli lemma to</span>
+<span id="L10">10 the summable coordinate model events and to the mass-adapted successor-return</span>
+<span id="L11">11 events, then consumes the existing fixed-burn-in absolute-regret envelope.</span>
+<span id="L12">12 -/</span>
+<span id="L13">13 </span>
+<span id="L14">14 open Filter MeasureTheory ProbabilityTheory</span>
+<span id="L15">15 open scoped ENNReal NNReal ProbabilityTheory Topology</span>
+<span id="L16">16 </span>
+<span id="L17">17 namespace BanditRLProof</span>
+<span id="L18">18 </span>
+<span id="L19">19 /-- The stretched-exponential sequence `exp (-sqrt n)` is summable. -/</span>
+<span id="L20">20 theorem summable_exp_neg_sqrt_natCast :</span>
+<span id="L21">21     Summable (fun n : Nat =&gt; Real.exp (-Real.sqrt (n : Real))) := by</span>
+<span id="L22">22   let f : Nat -&gt; Real := fun n =&gt; Real.exp (-Real.sqrt (n : Real))</span>
+<span id="L23">23   let u : Nat -&gt; Nat := fun n =&gt; (n + 1) ^ 2</span>
+<span id="L24">24   have hf_nonneg : forall n, 0 &lt;= f n := fun n =&gt; Real.exp_nonneg _</span>
+<span id="L25">25   have hf_antitone : forall {m n : Nat}, 0 &lt; m -&gt; m &lt;= n -&gt; f n &lt;= f m := by</span>
+<span id="L26">26     intro m n _hm hmn</span>
+<span id="L27">27     apply Real.exp_monotone</span>
+<span id="L28">28     exact neg_le_neg (Real.sqrt_le_sqrt (by exact_mod_cast hmn))</span>
+<span id="L29">29   have hu_pos : forall n, 0 &lt; u n := fun n =&gt; by</span>
+<span id="L30">30     dsimp [u]</span>
+<span id="L31">31     positivity</span>
+<span id="L32">32   have hu_strict : StrictMono u := by</span>
+<span id="L33">33     intro m n hmn</span>
+<span id="L34">34     dsimp [u]</span>
+<span id="L35">35     exact pow_lt_pow_left₀ (by omega) (by omega) (by omega)</span>
+<span id="L36">36   have hu_diff : SuccDiffBounded 3 u := by</span>
+<span id="L37">37     intro n</span>
+<span id="L38">38     have hleft : (n + 2 + 1) ^ 2 = (n + 1 + 1) ^ 2 + (2 * n + 5) := by ring</span>
+<span id="L39">39     have hright : (n + 1 + 1) ^ 2 = (n + 1) ^ 2 + (2 * n + 3) := by ring</span>
+<span id="L40">40     dsimp [u]</span>
+<span id="L41">41     omega</span>
+<span id="L42">42   apply (summable_schlomilch_iff_of_nonneg hf_nonneg (@hf_antitone) hu_pos</span>
+<span id="L43">43     hu_strict (by norm_num) hu_diff).1</span>
+<span id="L44">44   have hexp : Summable (fun n : Nat =&gt; Real.exp (-n)) :=</span>
+<span id="L45">45     Real.summable_exp_neg_nat</span>
+<span id="L46">46   have hnexp : Summable (fun n : Nat =&gt; (n : Real) * Real.exp (-n)) := by</span>
+<span id="L47">47     simpa using Real.summable_pow_mul_exp_neg_nat_mul 1 one_pos</span>
+<span id="L48">48   have hbase : Summable</span>
+<span id="L49">49       (fun n : Nat =&gt; (2 * (n : Real) + 3) * Real.exp (-n)) := by</span>
+<span id="L50">50     exact ((hnexp.mul_left 2).add (hexp.mul_left 3)).congr fun n =&gt; by ring</span>
+<span id="L51">51   have hmajor : Summable</span>
+<span id="L52">52       (fun n : Nat =&gt; (2 * (n : Real) + 3) * Real.exp (-((n : Real) + 1))) := by</span>
+<span id="L53">53     exact (hbase.mul_left (Real.exp (-1))).congr fun n =&gt; by</span>
+<span id="L54">54       rw [show Real.exp (-((n : Real) + 1)) = Real.exp (-1) * Real.exp (-n) by</span>
+<span id="L55">55         rw [← Real.exp_add]</span>
+<span id="L56">56         congr 1</span>
+<span id="L57">57         ring]</span>
+<span id="L58">58       ring</span>
+<span id="L59">59   apply hmajor.congr</span>
+<span id="L60">60   intro n</span>
+<span id="L61">61   dsimp [u, f]</span>
+<span id="L62">62   rw [show (((n + 1 + 1) ^ 2 : Nat) : Real) - (((n + 1) ^ 2 : Nat) : Real) =</span>
+<span id="L63">63       2 * (n : Real) + 3 by push_cast; ring]</span>
+<span id="L64">64   rw [show Real.sqrt ((((n + 1) ^ 2 : Nat) : Real)) = (n : Real) + 1 by</span>
+<span id="L65">65     push_cast</span>
+<span id="L66">66     rw [Real.sqrt_sq_eq_abs, abs_of_nonneg]</span>
+<span id="L67">67     positivity]</span>
+<span id="L68">68 </span>
+<span id="L69">69 namespace FiniteHorizonRL</span>
+<span id="L70">70 </span>
+<span id="L71">71 universe u v</span>
+<span id="L72">72 </span>
+<span id="L73">73 variable {State : Type u} {Action : Type v}</span>
+<span id="L74">74     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L75">75     [Fintype State] [Fintype Action]</span>
+<span id="L76">76     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L77">77     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L78">78     [Nonempty State] [Nonempty Action]</span>
+<span id="L79">79 </span>
+<span id="L80">80 namespace HeterogeneousAdaptiveStochasticEpisodeBatchSource</span>
+<span id="L81">81 </span>
+<span id="L82">82 /-- Positive episode batches make successor mass dominate the round index. -/</span>
+<span id="L83">83 theorem natCast_le_successorEpisodeMass</span>
+<span id="L84">84     (episodes : Nat -&gt; Nat) (hepisodes : forall t, 0 &lt; episodes t)</span>
+<span id="L85">85     (rounds : Nat) :</span>
+<span id="L86">86     (rounds : Real) &lt;= successorEpisodeMass episodes rounds := by</span>
+<span id="L87">87   rw [successorEpisodeMass_eq_sum_range]</span>
+<span id="L88">88   calc</span>
+<span id="L89">89     (rounds : Real) = (Finset.range rounds).sum (fun _ =&gt; (1 : Real)) := by simp</span>
+<span id="L90">90     _ &lt;= (Finset.range rounds).sum (fun t =&gt; (episodes (t + 1) : Real)) := by</span>
+<span id="L91">91       apply Finset.sum_le_sum</span>
+<span id="L92">92       intro t _ht</span>
+<span id="L93">93       exact_mod_cast hepisodes (t + 1)</span>
+<span id="L94">94 </span>
+<span id="L95">95 /-- A mass-adapted `exp (-sqrt mass)` schedule is summable. -/</span>
+<span id="L96">96 theorem summable_exp_neg_sqrt_successorEpisodeMass</span>
+<span id="L97">97     (episodes : Nat -&gt; Nat) (hepisodes : forall t, 0 &lt; episodes t) :</span>
+<span id="L98">98     Summable (fun rounds =&gt;</span>
+<span id="L99">99       Real.exp (-Real.sqrt (successorEpisodeMass episodes rounds))) := by</span>
+<span id="L100">100   refine summable_exp_neg_sqrt_natCast.of_nonneg_of_le</span>
+<span id="L101">101     (fun _ =&gt; Real.exp_nonneg _) ?_</span>
+<span id="L102">102   intro rounds</span>
+<span id="L103">103   apply Real.exp_monotone</span>
+<span id="L104">104   apply neg_le_neg</span>
+<span id="L105">105   exact Real.sqrt_le_sqrt</span>
+<span id="L106">106     (natCast_le_successorEpisodeMass episodes hepisodes rounds)</span>
+<span id="L107">107 </span>
+<span id="L108">108 end HeterogeneousAdaptiveStochasticEpisodeBatchSource</span>
+<span id="L109">109 </span>
+<span id="L110">110 namespace AdaptiveStochasticSampledEmpiricalOptimisticSource</span>
+<span id="L111">111 </span>
+<span id="L112">112 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L113">113     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L114">114     [Nonempty State] [Nonempty Action] in</span>
+<span id="L115">115 /-- The natural-causal mass-adapted return failure schedule is summable. -/</span>
+<span id="L116">116 theorem summable_selfConsistentScheduledCausalVanishingReturnDelta</span>
+<span id="L117">117     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L118">118     (baseVisitFloor : Real) :</span>
+<span id="L119">119     Summable</span>
+<span id="L120">120       (selfConsistentScheduledCausalVanishingReturnDelta mdp varianceProxy</span>
+<span id="L121">121         baseVisitFloor) := by</span>
+<span id="L122">122   let episodes := fun t =&gt;</span>
+<span id="L123">123     AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L124">124       mdp varianceProxy baseVisitFloor t</span>
+<span id="L125">125   simpa [selfConsistentScheduledCausalVanishingReturnDelta, episodes] using</span>
+<span id="L126">126     HeterogeneousAdaptiveStochasticEpisodeBatchSource.summable_exp_neg_sqrt_successorEpisodeMass</span>
+<span id="L127">127       episodes (fun t =&gt;</span>
+<span id="L128">128         AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes_pos</span>
+<span id="L129">129           mdp varianceProxy baseVisitFloor t)</span>
+<span id="L130">130 </span>
+<span id="L131">131 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L132">132     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L133">133     [Nonempty State] [Nonempty Action] in</span>
+<span id="L134">134 /-- The return-failure ENNReal budget is finite. -/</span>
+<span id="L135">135 theorem tsum_selfConsistentScheduledCausalVanishingReturnFailureBudget_ne_top</span>
+<span id="L136">136     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L137">137     (baseVisitFloor : Real) :</span>
+<span id="L138">138     (∑&#x27; rounds, ENNReal.ofReal</span>
+<span id="L139">139       (selfConsistentScheduledCausalVanishingReturnDelta mdp varianceProxy</span>
+<span id="L140">140         baseVisitFloor rounds)) ≠ ∞ :=</span>
+<span id="L141">141   (summable_selfConsistentScheduledCausalVanishingReturnDelta mdp varianceProxy</span>
+<span id="L142">142     baseVisitFloor).tsum_ofReal_ne_top</span>
+<span id="L143">143 </span>
+<span id="L144">144 /-- The actual return-deviation event charged by the summable mass schedule. -/</span>
+<span id="L145">145 noncomputable def selfConsistentScheduledCausalVanishingReturnBadEvent</span>
+<span id="L146">146     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L147">147     [IsProbabilityMeasure initialState]</span>
+<span id="L148">148     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L149">149     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L150">150     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L151">151     (baseVisitFloor : Real) (rounds : Nat) :</span>
+<span id="L152">152     Set (HeterogeneousStochasticEpisodeBatchTrajectory mdp</span>
+<span id="L153">153       (fun t =&gt;</span>
+<span id="L154">154         AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L155">155           mdp varianceProxy baseVisitFloor t)) :=</span>
+<span id="L156">156   selfConsistentScheduledCausalSuccessorReturnBadEvent mdp initialState</span>
+<span id="L157">157     rewardSource initialTable defaultState varianceProxy baseVisitFloor rounds</span>
+<span id="L158">158       (selfConsistentScheduledCausalVanishingReturnDelta mdp varianceProxy</span>
+<span id="L159">159         baseVisitFloor rounds)</span>
+<span id="L160">160 </span>
+<span id="L161">161 /-- Each event in the summable return schedule is measurable. -/</span>
+<span id="L162">162 theorem measurableSet_selfConsistentScheduledCausalVanishingReturnBadEvent</span>
+<span id="L163">163     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L164">164     [IsProbabilityMeasure initialState]</span>
+<span id="L165">165     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L166">166     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L167">167     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L168">168     (baseVisitFloor : Real) (rounds : Nat) :</span>
+<span id="L169">169     MeasurableSet</span>
+<span id="L170">170       (selfConsistentScheduledCausalVanishingReturnBadEvent mdp initialState</span>
+<span id="L171">171         rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L172">172           rounds) := by</span>
+<span id="L173">173   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L174">174     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L175">175   letI : source.GlobalReturnMeasurability := by</span>
+<span id="L176">176     dsimp [source, selfConsistentScheduledCausalSource]</span>
+<span id="L177">177     infer_instance</span>
+<span id="L178">178   simpa [source, selfConsistentScheduledCausalVanishingReturnBadEvent,</span>
+<span id="L179">179     selfConsistentScheduledCausalSuccessorReturnBadEvent] using</span>
+<span id="L180">180     source.measurableSet_successorGlobalReturnDeviationBadEvent rounds 1</span>
+<span id="L181">181       varianceProxy</span>
+<span id="L182">182         (selfConsistentScheduledCausalVanishingReturnDelta mdp varianceProxy</span>
+<span id="L183">183           baseVisitFloor rounds)</span>
+<span id="L184">184 </span>
+<span id="L185">185 /-- Every return event is bounded by its mass-adapted failure share. -/</span>
+<span id="L186">186 theorem selfConsistentScheduledCausalSource_trajectoryMeasure_vanishingReturnBadEvent_le</span>
+<span id="L187">187     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L188">188     [IsProbabilityMeasure initialState]</span>
+<span id="L189">189     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L190">190     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L191">191     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L192">192     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L193">193     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L194">194     (defaultState : State) (baseVisitFloor : Real)</span>
+<span id="L195">195     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L196">196     (hhorizon : 0 &lt; mdp.horizon) (rounds : Nat) :</span>
+<span id="L197">197     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L198">198       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L199">199     source.trajectoryMeasure</span>
+<span id="L200">200         (selfConsistentScheduledCausalVanishingReturnBadEvent mdp initialState</span>
+<span id="L201">201           rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L202">202             rounds) &lt;=</span>
+<span id="L203">203       ENNReal.ofReal</span>
+<span id="L204">204         (selfConsistentScheduledCausalVanishingReturnDelta mdp varianceProxy</span>
+<span id="L205">205           baseVisitFloor rounds) := by</span>
+<span id="L206">206   dsimp only</span>
+<span id="L207">207   let episodes := fun t =&gt;</span>
+<span id="L208">208     AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L209">209       mdp varianceProxy baseVisitFloor t</span>
+<span id="L210">210   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L211">211     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L212">212   letI : source.GlobalReturnMeasurability := by</span>
+<span id="L213">213     dsimp [source, selfConsistentScheduledCausalSource]</span>
+<span id="L214">214     infer_instance</span>
+<span id="L215">215   cases rounds with</span>
+<span id="L216">216   | zero =&gt;</span>
+<span id="L217">217       have hle : source.trajectoryMeasure</span>
+<span id="L218">218           (selfConsistentScheduledCausalVanishingReturnBadEvent mdp initialState</span>
+<span id="L219">219             rewardSource initialTable defaultState varianceProxy baseVisitFloor 0) &lt;= 1 :=</span>
+<span id="L220">220         calc</span>
+<span id="L221">221           source.trajectoryMeasure</span>
+<span id="L222">222               (selfConsistentScheduledCausalVanishingReturnBadEvent mdp initialState</span>
+<span id="L223">223                 rewardSource initialTable defaultState varianceProxy baseVisitFloor 0) &lt;=</span>
+<span id="L224">224               source.trajectoryMeasure Set.univ := measure_mono (Set.subset_univ _)</span>
+<span id="L225">225           _ = 1 := measure_univ</span>
+<span id="L226">226       simpa [selfConsistentScheduledCausalVanishingReturnDelta,</span>
+<span id="L227">227         HeterogeneousAdaptiveStochasticEpisodeBatchSource.successorEpisodeMass_eq_sum_range]</span>
+<span id="L228">228         using hle</span>
+<span id="L229">229   | succ rounds =&gt;</span>
+<span id="L230">230       have hepisodes : forall t, 0 &lt; episodes t := fun t =&gt;</span>
+<span id="L231">231         AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes_pos</span>
+<span id="L232">232           mdp varianceProxy baseVisitFloor t</span>
+<span id="L233">233       have htotal : 0 &lt;</span>
+<span id="L234">234           ((HeterogeneousAdaptiveStochasticEpisodeBatchSource.cumulativeSuccessorGlobalReturnVarianceProxy</span>
+<span id="L235">235             mdp episodes (rounds + 1) 1 varianceProxy : NNReal) : Real) :=</span>
+<span id="L236">236         HeterogeneousAdaptiveStochasticEpisodeBatchSource.cumulativeSuccessorGlobalReturnVarianceProxy_pos</span>
+<span id="L237">237           mdp episodes (rounds + 1) 1 varianceProxy (by omega) hepisodes</span>
+<span id="L238">238             hhorizon hvarianceProxy</span>
+<span id="L239">239       have hrewardBoundNN : forall state action,</span>
+<span id="L240">240           |mdp.reward state action| &lt;= ((1 : NNReal) : Real) := by</span>
+<span id="L241">241         simpa using hrewardBound</span>
+<span id="L242">242       simpa [source, episodes,</span>
+<span id="L243">243         selfConsistentScheduledCausalVanishingReturnBadEvent,</span>
+<span id="L244">244         selfConsistentScheduledCausalSuccessorReturnBadEvent] using</span>
+<span id="L245">245         source.trajectoryMeasure_successorGlobalReturnDeviationBadEvent_le</span>
+<span id="L246">246           (rounds + 1) 1 varianceProxy hrewardBoundNN law htotal</span>
+<span id="L247">247           (selfConsistentScheduledCausalVanishingReturnDelta mdp varianceProxy</span>
+<span id="L248">248             baseVisitFloor (rounds + 1))</span>
+<span id="L249">249           (selfConsistentScheduledCausalVanishingReturnDelta_pos mdp</span>
+<span id="L250">250             varianceProxy baseVisitFloor (rounds + 1))</span>
+<span id="L251">251           (selfConsistentScheduledCausalVanishingReturnDelta_le_one mdp</span>
+<span id="L252">252             varianceProxy baseVisitFloor (rounds + 1))</span>
+<span id="L253">253 </span>
+<span id="L254">254 /-- The actual coordinate-model event measures have finite total mass. -/</span>
+<span id="L255">255 theorem tsum_selfConsistentScheduledCausalModelRoundBadEvent_measure_ne_top</span>
+<span id="L256">256     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L257">257     [IsProbabilityMeasure initialState]</span>
+<span id="L258">258     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L259">259     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L260">260     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L261">261     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L262">262     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L263">263     (defaultState : State) (baseVisitFloor : Real) :</span>
+<span id="L264">264     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L265">265       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L266">266     (∑&#x27; t, source.trajectoryMeasure</span>
+<span id="L267">267       (selfConsistentScheduledCausalModelRoundBadEvent mdp initialState</span>
+<span id="L268">268         rewardSource initialTable defaultState varianceProxy baseVisitFloor t)) ≠ ∞ := by</span>
+<span id="L269">269   dsimp only</span>
+<span id="L270">270   exact ne_top_of_le_ne_top</span>
+<span id="L271">271     (tsum_selfConsistentScheduledCausalCoordinateModelFailureBudget_ne_top mdp)</span>
+<span id="L272">272     (ENNReal.tsum_le_tsum fun t =&gt;</span>
+<span id="L273">273       selfConsistentScheduledCausalSource_trajectoryMeasure_modelRoundBadEvent_le</span>
+<span id="L274">274         mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L275">275           initialTable defaultState baseVisitFloor t)</span>
+<span id="L276">276 </span>
+<span id="L277">277 /-- The actual return-event measures have finite total mass. -/</span>
+<span id="L278">278 theorem tsum_selfConsistentScheduledCausalVanishingReturnBadEvent_measure_ne_top</span>
+<span id="L279">279     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L280">280     [IsProbabilityMeasure initialState]</span>
+<span id="L281">281     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L282">282     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L283">283     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L284">284     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L285">285     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L286">286     (defaultState : State) (baseVisitFloor : Real)</span>
+<span id="L287">287     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L288">288     (hhorizon : 0 &lt; mdp.horizon) :</span>
+<span id="L289">289     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L290">290       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L291">291     (∑&#x27; rounds, source.trajectoryMeasure</span>
+<span id="L292">292       (selfConsistentScheduledCausalVanishingReturnBadEvent mdp initialState</span>
+<span id="L293">293         rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L294">294           rounds)) ≠ ∞ := by</span>
+<span id="L295">295   dsimp only</span>
+<span id="L296">296   exact ne_top_of_le_ne_top</span>
+<span id="L297">297     (tsum_selfConsistentScheduledCausalVanishingReturnFailureBudget_ne_top mdp</span>
+<span id="L298">298       varianceProxy baseVisitFloor)</span>
+<span id="L299">299     (ENNReal.tsum_le_tsum fun rounds =&gt;</span>
+<span id="L300">300       selfConsistentScheduledCausalSource_trajectoryMeasure_vanishingReturnBadEvent_le</span>
+<span id="L301">301         mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L302">302           initialTable defaultState baseVisitFloor hrewardBound hhorizon rounds)</span>
+<span id="L303">303 </span>
+<span id="L304">304 /-</span>
+<span id="L305">305 First Borel-Cantelli is applied twice on the same dependent trajectory space.</span>
+<span id="L306">306 Only summability is used; no independence between rounds is introduced.</span>
+<span id="L307">307 -/</span>
+<span id="L308">308 /-- Almost every natural-causal trajectory is eventually model-good and return-good. -/</span>
+<span id="L309">309 theorem ae_eventually_not_mem_selfConsistentScheduledCausalModel_and_returnBadEvents</span>
+<span id="L310">310     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L311">311     [IsProbabilityMeasure initialState]</span>
+<span id="L312">312     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L313">313     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L314">314     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L315">315     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L316">316     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L317">317     (defaultState : State) (baseVisitFloor : Real)</span>
+<span id="L318">318     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L319">319     (hhorizon : 0 &lt; mdp.horizon) :</span>
+<span id="L320">320     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L321">321       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L322">322     ∀ᵐ trajectory ∂source.trajectoryMeasure,</span>
+<span id="L323">323       (∀ᶠ t in atTop,</span>
+<span id="L324">324         trajectory ∉ selfConsistentScheduledCausalModelRoundBadEvent mdp</span>
+<span id="L325">325           initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L326">326             baseVisitFloor t) ∧</span>
+<span id="L327">327       (∀ᶠ rounds in atTop,</span>
+<span id="L328">328         trajectory ∉ selfConsistentScheduledCausalVanishingReturnBadEvent mdp</span>
+<span id="L329">329           initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L330">330             baseVisitFloor rounds) := by</span>
+<span id="L331">331   dsimp only</span>
+<span id="L332">332   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L333">333     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L334">334   have hmodel : ∀ᵐ trajectory ∂source.trajectoryMeasure,</span>
+<span id="L335">335       ∀ᶠ t in atTop,</span>
+<span id="L336">336         trajectory ∉ selfConsistentScheduledCausalModelRoundBadEvent mdp</span>
+<span id="L337">337           initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L338">338             baseVisitFloor t :=</span>
+<span id="L339">339     ae_eventually_notMem</span>
+<span id="L340">340       (tsum_selfConsistentScheduledCausalModelRoundBadEvent_measure_ne_top</span>
+<span id="L341">341         mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L342">342           initialTable defaultState baseVisitFloor)</span>
+<span id="L343">343   have hreturn : ∀ᵐ trajectory ∂source.trajectoryMeasure,</span>
+<span id="L344">344       ∀ᶠ rounds in atTop,</span>
+<span id="L345">345         trajectory ∉ selfConsistentScheduledCausalVanishingReturnBadEvent mdp</span>
+<span id="L346">346           initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L347">347             baseVisitFloor rounds :=</span>
+<span id="L348">348     ae_eventually_notMem</span>
+<span id="L349">349       (tsum_selfConsistentScheduledCausalVanishingReturnBadEvent_measure_ne_top</span>
+<span id="L350">350         mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L351">351           initialTable defaultState baseVisitFloor hrewardBound hhorizon)</span>
+<span id="L352">352   filter_upwards [hmodel, hreturn] with trajectory htrajectoryModel htrajectoryReturn</span>
+<span id="L353">353   exact ⟨htrajectoryModel, htrajectoryReturn⟩</span>
+<span id="L354">354 </span>
+<span id="L355">355 /-- Almost every trajectory eventually obeys one fixed-burn-in regret envelope. -/</span>
+<span id="L356">356 theorem ae_eventually_abs_selfConsistentScheduledNaturalCausalRealizedRegret_le_envelope</span>
+<span id="L357">357     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L358">358     [IsProbabilityMeasure initialState]</span>
+<span id="L359">359     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L360">360     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L361">361     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L362">362     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L363">363     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L364">364     (defaultState : State)</span>
+<span id="L365">365     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L366">366     (baseVisitFloor : Real)</span>
+<span id="L367">367     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L368">368     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L369">369     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L370">370     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L371">371       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L372">372     ∀ᵐ trajectory ∂source.trajectoryMeasure,</span>
+<span id="L373">373       ∃ burnin, ∀ᶠ rounds in atTop,</span>
+<span id="L374">374         |selfConsistentScheduledNaturalCausalRealizedRegretProcess mdp</span>
+<span id="L375">375           initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L376">376             baseVisitFloor rounds trajectory| &lt;=</span>
+<span id="L377">377           selfConsistentScheduledCausalBurninRealizedRegretRateEnvelope mdp</span>
+<span id="L378">378             varianceProxy baseVisitFloor burnin rounds := by</span>
+<span id="L379">379   dsimp only</span>
+<span id="L380">380   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L381">381     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L382">382   have hgood :=</span>
+<span id="L383">383     ae_eventually_not_mem_selfConsistentScheduledCausalModel_and_returnBadEvents</span>
+<span id="L384">384       mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L385">385         initialTable defaultState baseVisitFloor hrewardBound hhorizon</span>
+<span id="L386">386   filter_upwards [hgood] with trajectory htrajectory</span>
+<span id="L387">387   obtain ⟨burnin, hmodel⟩ := eventually_atTop.1 htrajectory.1</span>
+<span id="L388">388   refine ⟨burnin, ?_⟩</span>
+<span id="L389">389   filter_upwards [eventually_ge_atTop (max burnin 1), htrajectory.2] with</span>
+<span id="L390">390     rounds hroundsLarge hreturn</span>
+<span id="L391">391   have hburnin : burnin &lt;= rounds :=</span>
+<span id="L392">392     le_trans (Nat.le_max_left burnin 1) hroundsLarge</span>
+<span id="L393">393   have hrounds : 0 &lt; rounds :=</span>
+<span id="L394">394     lt_of_lt_of_le (by omega : 0 &lt; max burnin 1) hroundsLarge</span>
+<span id="L395">395   have hnotTail : trajectory ∉</span>
+<span id="L396">396       selfConsistentScheduledCausalTailModelBadEvent mdp initialState</span>
+<span id="L397">397         rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L398">398           burnin := by</span>
+<span id="L399">399     intro htail</span>
+<span id="L400">400     rw [selfConsistentScheduledCausalTailModelBadEvent] at htail</span>
+<span id="L401">401     simp only [Set.mem_iUnion] at htail</span>
+<span id="L402">402     obtain ⟨t, ht⟩ := htail</span>
+<span id="L403">403     have htBurnin : burnin &lt;= t := by</span>
+<span id="L404">404       have htNotLt : ¬ (t : Nat) &lt; burnin := by</span>
+<span id="L405">405         simpa [Finset.mem_range] using t.property</span>
+<span id="L406">406       omega</span>
+<span id="L407">407     exact hmodel t htBurnin ht</span>
+<span id="L408">408   have hnotEvent : trajectory ∉</span>
+<span id="L409">409       selfConsistentScheduledCausalTailModelReturnBadEvent mdp initialState</span>
+<span id="L410">410         rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L411">411           burnin rounds := by</span>
+<span id="L412">412     rw [selfConsistentScheduledCausalTailModelReturnBadEvent, Set.mem_union,</span>
+<span id="L413">413       not_or]</span>
+<span id="L414">414     exact ⟨hnotTail, by</span>
+<span id="L415">415       simpa [selfConsistentScheduledCausalVanishingReturnBadEvent] using hreturn⟩</span>
+<span id="L416">416   have hterminal :=</span>
+<span id="L417">417     selfConsistentScheduledCausalSource_trajectoryMeasure_tail_optimism_and_absoluteRealizedRegret</span>
+<span id="L418">418       mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L419">419         initialTable defaultState support baseVisitFloor hbaseFloor hrewardBound</span>
+<span id="L420">420           hhorizon hbaseVisitFloor burnin rounds hburnin hrounds</span>
+<span id="L421">421   dsimp only at hterminal</span>
+<span id="L422">422   simpa [selfConsistentScheduledNaturalCausalRealizedRegretProcess, source] using</span>
+<span id="L423">423     (hterminal.2.2 trajectory hnotEvent).2</span>
+<span id="L424">424 </span>
+<span id="L425">425 /-</span>
+<span id="L426">426 Terminal route theorem.  The process remains on the original heterogeneous</span>
+<span id="L427">427 dependent trajectory measure.  Summable model and return events provide one</span>
+<span id="L428">428 trajectory-dependent finite burn-in; the deterministic envelope then vanishes.</span>
+<span id="L429">429 -/</span>
+<span id="L430">430 /-- Natural-causal realized successor-average regret converges almost surely. -/</span>
+<span id="L431">431 theorem selfConsistentScheduledCausalSource_realizedRegret_tendstoAlmostEverywhere_zero</span>
+<span id="L432">432     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L433">433     [IsProbabilityMeasure initialState]</span>
+<span id="L434">434     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L435">435     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L436">436     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L437">437     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L438">438     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L439">439     (defaultState : State)</span>
+<span id="L440">440     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L441">441     (baseVisitFloor : Real)</span>
+<span id="L442">442     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L443">443     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L444">444     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L445">445     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L446">446       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L447">447     (forall rounds,</span>
+<span id="L448">448       Measurable</span>
+<span id="L449">449         (selfConsistentScheduledNaturalCausalRealizedRegretProcess mdp</span>
+<span id="L450">450           initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L451">451             baseVisitFloor rounds)) ∧</span>
+<span id="L452">452       ∀ᵐ trajectory ∂source.trajectoryMeasure,</span>
+<span id="L453">453         Tendsto</span>
+<span id="L454">454           (fun rounds =&gt;</span>
+<span id="L455">455             selfConsistentScheduledNaturalCausalRealizedRegretProcess mdp</span>
+<span id="L456">456               initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L457">457                 baseVisitFloor rounds trajectory)</span>
+<span id="L458">458           atTop (nhds 0) := by</span>
+<span id="L459">459   dsimp only</span>
+<span id="L460">460   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L461">461     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L462">462   refine ⟨fun rounds =&gt;</span>
+<span id="L463">463     measurable_selfConsistentScheduledNaturalCausalRealizedRegretProcess mdp</span>
+<span id="L464">464       initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L465">465         baseVisitFloor rounds, ?_⟩</span>
+<span id="L466">466   have henvelope :=</span>
+<span id="L467">467     ae_eventually_abs_selfConsistentScheduledNaturalCausalRealizedRegret_le_envelope</span>
+<span id="L468">468       mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L469">469         initialTable defaultState support baseVisitFloor hbaseFloor hrewardBound</span>
+<span id="L470">470           hhorizon hbaseVisitFloor</span>
+<span id="L471">471   filter_upwards [henvelope] with trajectory htrajectory</span>
+<span id="L472">472   obtain ⟨burnin, hbound⟩ := htrajectory</span>
+<span id="L473">473   rw [Metric.tendsto_atTop]</span>
+<span id="L474">474   intro epsilon hepsilon</span>
+<span id="L475">475   have henvelopeSmall : ∀ᶠ rounds in atTop,</span>
+<span id="L476">476       selfConsistentScheduledCausalBurninRealizedRegretRateEnvelope mdp</span>
+<span id="L477">477         varianceProxy baseVisitFloor burnin rounds &lt; epsilon :=</span>
+<span id="L478">478     (tendsto_order.1</span>
+<span id="L479">479       (selfConsistentScheduledCausalBurninRealizedRegretRateEnvelope_tendsto_zero</span>
+<span id="L480">480         mdp varianceProxy baseVisitFloor burnin)).2 epsilon hepsilon</span>
+<span id="L481">481   exact eventually_atTop.1 (by</span>
+<span id="L482">482     filter_upwards [hbound, henvelopeSmall] with rounds hroundsBound hroundsSmall</span>
+<span id="L483">483     simpa [Real.dist_eq] using lt_of_le_of_lt hroundsBound hroundsSmall)</span>
+<span id="L484">484 </span>
+<span id="L485">485 /-</span>
+<span id="L486">486 The final joint certificate keeps both consequences of each eventually</span>
+<span id="L487">487 model-good coordinate.  In particular, the all-state optimism and recommended</span>
+<span id="L488">488 policy regret certificate hold on the same full-measure set as realized-regret</span>
+<span id="L489">489 convergence; no intersection of unrelated trajectory spaces is used.</span>
+<span id="L490">490 -/</span>
+<span id="L491">491 /-- Almost surely, late empirical models are optimistic while realized regret vanishes. -/</span>
+<span id="L492">492 theorem selfConsistentScheduledCausalSource_eventually_modelOptimistic_and_realizedRegret_tendstoAlmostEverywhere_zero</span>
+<span id="L493">493     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L494">494     [IsProbabilityMeasure initialState]</span>
+<span id="L495">495     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L496">496     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L497">497     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L498">498     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L499">499     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L500">500     (defaultState : State)</span>
+<span id="L501">501     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L502">502     (baseVisitFloor : Real)</span>
+<span id="L503">503     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L504">504     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L505">505     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L506">506     let episodes := fun t =&gt;</span>
+<span id="L507">507       AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L508">508         mdp varianceProxy baseVisitFloor t</span>
+<span id="L509">509     let rewardBudget := fun t =&gt;</span>
+<span id="L510">510       AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledRewardBudget</span>
+<span id="L511">511         mdp varianceProxy baseVisitFloor t</span>
+<span id="L512">512     let transitionBudget := fun t =&gt;</span>
+<span id="L513">513       AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledTransitionBudget</span>
+<span id="L514">514         mdp varianceProxy baseVisitFloor t</span>
+<span id="L515">515     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L516">516       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L517">517     (forall rounds,</span>
+<span id="L518">518       Measurable</span>
+<span id="L519">519         (selfConsistentScheduledNaturalCausalRealizedRegretProcess mdp</span>
+<span id="L520">520           initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L521">521             baseVisitFloor rounds)) ∧</span>
+<span id="L522">522       ∀ᵐ trajectory ∂source.trajectoryMeasure,</span>
+<span id="L523">523         (∀ᶠ t in atTop,</span>
+<span id="L524">524           let model := mdp.stochasticAllCoordinateEmpiricalFiniteBatchModel</span>
+<span id="L525">525               (episodes t)</span>
+<span id="L526">526               (mdp.sampledEpisodeBatchOfStochasticTrajectories</span>
+<span id="L527">527                 (episodes t) (trajectory t))</span>
+<span id="L528">528               defaultState (rewardBudget t) (transitionBudget t)</span>
+<span id="L529">529           (forall state,</span>
+<span id="L530">530               mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;=</span>
+<span id="L531">531                 model.plan.upperValueRemaining mdp.horizon le_rfl state) ∧</span>
+<span id="L532">532             model.plan.optimisticPolicy.expectedRegret initialState &lt;=</span>
+<span id="L533">533               model.plan.optimisticPolicy.occupancySumRemaining</span>
+<span id="L534">534                 (fun remaining hremaining state =&gt;</span>
+<span id="L535">535                   2 * model.plan.selectedRadiusRemaining remaining hremaining state)</span>
+<span id="L536">536                 mdp.horizon le_rfl initialState) ∧</span>
+<span id="L537">537         Tendsto</span>
+<span id="L538">538           (fun rounds =&gt;</span>
+<span id="L539">539             selfConsistentScheduledNaturalCausalRealizedRegretProcess mdp</span>
+<span id="L540">540               initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L541">541                 baseVisitFloor rounds trajectory)</span>
+<span id="L542">542           atTop (nhds 0) := by</span>
+<span id="L543">543   dsimp only</span>
+<span id="L544">544   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L545">545     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L546">546   have hregret :=</span>
+<span id="L547">547     selfConsistentScheduledCausalSource_realizedRegret_tendstoAlmostEverywhere_zero</span>
+<span id="L548">548       mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L549">549         initialTable defaultState support baseVisitFloor hbaseFloor hrewardBound</span>
+<span id="L550">550           hhorizon hbaseVisitFloor</span>
+<span id="L551">551   have hgood :=</span>
+<span id="L552">552     ae_eventually_not_mem_selfConsistentScheduledCausalModel_and_returnBadEvents</span>
+<span id="L553">553       mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L554">554         initialTable defaultState baseVisitFloor hrewardBound hhorizon</span>
+<span id="L555">555   refine ⟨hregret.1, ?_⟩</span>
+<span id="L556">556   filter_upwards [hgood, hregret.2] with trajectory htrajectory htrajectoryRegret</span>
+<span id="L557">557   refine ⟨?_, htrajectoryRegret⟩</span>
+<span id="L558">558   filter_upwards [htrajectory.1] with t ht</span>
+<span id="L559">559   exact</span>
+<span id="L560">560     selfConsistentScheduledCausalSource_coordinateConfidence_of_not_mem_modelRoundBadEvent</span>
+<span id="L561">561       mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L562">562         initialTable defaultState support baseVisitFloor hbaseFloor</span>
+<span id="L563">563           hrewardBound hhorizon hbaseVisitFloor trajectory t ht</span>
+<span id="L564">564 </span>
+<span id="L565">565 end AdaptiveStochasticSampledEmpiricalOptimisticSource</span>
+<span id="L566">566 </span>
+<span id="L567">567 end FiniteHorizonRL</span>
+<span id="L568">568 </span>
+<span id="L569">569 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

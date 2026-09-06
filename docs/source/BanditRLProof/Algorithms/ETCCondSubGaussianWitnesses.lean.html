@@ -1,0 +1,1588 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Algorithms/ETCCondSubGaussianWitnesses.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Algorithms.ETCCenteredDiffRewardSubGaussian</span>
+<span id="L2">2 import BanditRLProof.Algorithms.ETCPairwiseCenteredSubGaussianTail</span>
+<span id="L3">3 import BanditRLProof.ConcentrationSubGaussian</span>
+<span id="L4">4 import BanditRLProof.HistoryFiltration</span>
+<span id="L5">5 import Mathlib.Probability.ConditionalExpectation</span>
+<span id="L6">6 </span>
+<span id="L7">7 /-!</span>
+<span id="L8">8 # ETC conditional sub-Gaussian witness surface</span>
+<span id="L9">9 </span>
+<span id="L10">10 This module packages the conditional reward-law witnesses needed to use the</span>
+<span id="L11">11 compiled Mathlib conditional sub-Gaussian concentration wrapper on ETC centered</span>
+<span id="L12">12 reward differences.  It does not prove those witnesses from a concrete reward</span>
+<span id="L13">13 kernel or conditional expectation identity.</span>
+<span id="L14">14 -/</span>
+<span id="L15">15 </span>
+<span id="L16">16 namespace BanditRLProof</span>
+<span id="L17">17 namespace ETC</span>
+<span id="L18">18 </span>
+<span id="L19">19 /--</span>
+<span id="L20">20 Centered pairwise reward differences are measurable at time `t` with respect to</span>
+<span id="L21">21 the shifted generated history filtration.</span>
+<span id="L22">22 </span>
+<span id="L23">23 The shifted filtration contains action/reward observations with index `&lt; t+1`,</span>
+<span id="L24">24 so the reward coordinate at time `t` is available.  This proves only the</span>
+<span id="L25">25 adaptedness/measurability part of the conditional route; it does not prove any</span>
+<span id="L26">26 conditional MGF or conditional expectation identity.</span>
+<span id="L27">27 -/</span>
+<span id="L28">28 theorem measurable_centeredPairwiseRewardDiff_historyFiltrationSucc</span>
+<span id="L29">29     {Omega : Type u} {K : Nat}</span>
+<span id="L30">30     [mOmega : MeasurableSpace Omega]</span>
+<span id="L31">31     (spec : ETC.Spec K)</span>
+<span id="L32">32     (model : FiniteBanditModel K)</span>
+<span id="L33">33     (commitArm : Fin K)</span>
+<span id="L34">34     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L35">35     (hreward : forall t : Nat,</span>
+<span id="L36">36       Measurable (fun omega : Omega =&gt; reward omega t))</span>
+<span id="L37">37     (a : Fin K) (t : Nat) :</span>
+<span id="L38">38     @Measurable Omega Real</span>
+<span id="L39">39       (History.historyFiltrationSucc</span>
+<span id="L40">40         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L41">41         reward</span>
+<span id="L42">42         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L43">43         hreward t)</span>
+<span id="L44">44       inferInstance</span>
+<span id="L45">45       (fun omega =&gt;</span>
+<span id="L46">46         ETC.centeredPairwiseRewardDiff</span>
+<span id="L47">47           spec model commitArm reward a t omega) := by</span>
+<span id="L48">48   have hreward_t :</span>
+<span id="L49">49       @Measurable Omega Rat</span>
+<span id="L50">50         (History.historyFiltrationSucc</span>
+<span id="L51">51           (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L52">52           reward</span>
+<span id="L53">53           (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L54">54           hreward t)</span>
+<span id="L55">55         inferInstance</span>
+<span id="L56">56         (fun omega =&gt; reward omega t) := by</span>
+<span id="L57">57     exact</span>
+<span id="L58">58       History.measurable_reward_mem_historyFiltration_of_lt</span>
+<span id="L59">59         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L60">60         reward</span>
+<span id="L61">61         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L62">62         hreward</span>
+<span id="L63">63         (Nat.lt_succ_self t)</span>
+<span id="L64">64   let transform : Rat -&gt; Real := fun r =&gt;</span>
+<span id="L65">65     (((if ETC.actionWithCommit spec commitArm t = a then</span>
+<span id="L66">66         r - model.mean a else 0) +</span>
+<span id="L67">67       (if ETC.actionWithCommit spec commitArm t = model.bestArm then</span>
+<span id="L68">68         model.mean model.bestArm - r else 0) : Rat) : Real)</span>
+<span id="L69">69   have htransform : Measurable transform := by</span>
+<span id="L70">70     exact measurable_of_countable transform</span>
+<span id="L71">71   simpa [ETC.centeredPairwiseRewardDiff, transform] using</span>
+<span id="L72">72     htransform.comp hreward_t</span>
+<span id="L73">73 </span>
+<span id="L74">74 /--</span>
+<span id="L75">75 The fixed-commit ETC centered reward-difference process is strongly adapted to</span>
+<span id="L76">76 the shifted generated history filtration.</span>
+<span id="L77">77 </span>
+<span id="L78">78 This discharges the `StronglyAdapted` witness field for the conditional</span>
+<span id="L79">79 centered-diff package under the local discrete history model.  Conditional MGF</span>
+<span id="L80">80 witnesses remain separate assumptions.</span>
+<span id="L81">81 -/</span>
+<span id="L82">82 theorem stronglyAdapted_centeredPairwiseRewardDiff_historyFiltrationSucc</span>
+<span id="L83">83     {Omega : Type u} {K : Nat}</span>
+<span id="L84">84     [mOmega : MeasurableSpace Omega]</span>
+<span id="L85">85     (spec : ETC.Spec K)</span>
+<span id="L86">86     (model : FiniteBanditModel K)</span>
+<span id="L87">87     (commitArm : Fin K)</span>
+<span id="L88">88     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L89">89     (hreward : forall t : Nat,</span>
+<span id="L90">90       Measurable (fun omega : Omega =&gt; reward omega t))</span>
+<span id="L91">91     (a : Fin K) :</span>
+<span id="L92">92     MeasureTheory.StronglyAdapted</span>
+<span id="L93">93       (History.historyFiltrationSucc</span>
+<span id="L94">94         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L95">95         reward</span>
+<span id="L96">96         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L97">97         hreward)</span>
+<span id="L98">98       (fun t omega =&gt;</span>
+<span id="L99">99         ETC.centeredPairwiseRewardDiff</span>
+<span id="L100">100           spec model commitArm reward a t omega) := by</span>
+<span id="L101">101   intro t</span>
+<span id="L102">102   exact</span>
+<span id="L103">103     (ETC.measurable_centeredPairwiseRewardDiff_historyFiltrationSucc</span>
+<span id="L104">104       spec model commitArm reward hreward a t).stronglyMeasurable</span>
+<span id="L105">105 </span>
+<span id="L106">106 /--</span>
+<span id="L107">107 Independence-based conditional mean-zero source for one centered reward</span>
+<span id="L108">108 coordinate.</span>
+<span id="L109">109 </span>
+<span id="L110">110 If the sigma-algebra generated by the centered reward coordinate is independent</span>
+<span id="L111">111 of the conditioning sigma-algebra, and the centered reward has global integral</span>
+<span id="L112">112 zero, then its conditional expectation against that sigma-algebra is zero.  This</span>
+<span id="L113">113 is a thin ETC-shaped wrapper around Mathlib&#x27;s `condExp_indep_eq`; it does not</span>
+<span id="L114">114 derive the required independence or integral identity from a reward kernel.</span>
+<span id="L115">115 -/</span>
+<span id="L116">116 theorem centeredReward_condExp_eq_zero_of_indep</span>
+<span id="L117">117     {Omega : Type u} {K : Nat}</span>
+<span id="L118">118     [mOmega : MeasurableSpace Omega]</span>
+<span id="L119">119     (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]</span>
+<span id="L120">120     (mcond : MeasurableSpace Omega) (hm : mcond &lt;= mOmega)</span>
+<span id="L121">121     (model : FiniteBanditModel K)</span>
+<span id="L122">122     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L123">123     (b : Fin K) (t : Nat)</span>
+<span id="L124">124     (hmeas : @Measurable Omega Real mOmega inferInstance</span>
+<span id="L125">125       (fun omega : Omega =&gt;</span>
+<span id="L126">126         (((reward omega t - model.mean b : Rat) : Real))))</span>
+<span id="L127">127     (h_indep :</span>
+<span id="L128">128       ProbabilityTheory.Indep</span>
+<span id="L129">129         (MeasurableSpace.comap</span>
+<span id="L130">130           (fun omega : Omega =&gt;</span>
+<span id="L131">131             (((reward omega t - model.mean b : Rat) : Real)))</span>
+<span id="L132">132           inferInstance)</span>
+<span id="L133">133         mcond mu)</span>
+<span id="L134">134     (h_integral :</span>
+<span id="L135">135       MeasureTheory.integral mu</span>
+<span id="L136">136         (fun omega : Omega =&gt;</span>
+<span id="L137">137           (((reward omega t - model.mean b : Rat) : Real))) = 0) :</span>
+<span id="L138">138     Filter.EventuallyEq (MeasureTheory.ae mu)</span>
+<span id="L139">139       (MeasureTheory.condExp mcond mu</span>
+<span id="L140">140         (fun omega : Omega =&gt;</span>
+<span id="L141">141           (((reward omega t - model.mean b : Rat) : Real))))</span>
+<span id="L142">142       (fun _omega : Omega =&gt; (0 : Real)) := by</span>
+<span id="L143">143   let X : Omega -&gt; Real := fun omega =&gt;</span>
+<span id="L144">144     (((reward omega t - model.mean b : Rat) : Real))</span>
+<span id="L145">145   let mX : MeasurableSpace Omega := MeasurableSpace.comap X inferInstance</span>
+<span id="L146">146   have hmeasX : @Measurable Omega Real mOmega inferInstance X := by</span>
+<span id="L147">147     simpa [X] using hmeas</span>
+<span id="L148">148   have hleX : mX &lt;= mOmega := Measurable.comap_le hmeasX</span>
+<span id="L149">149   have hsmX : @MeasureTheory.StronglyMeasurable Omega Real _ mX X :=</span>
+<span id="L150">150     (comap_measurable X).stronglyMeasurable</span>
+<span id="L151">151   have hindepX : ProbabilityTheory.Indep mX mcond mu := by</span>
+<span id="L152">152     simpa [mX, X] using h_indep</span>
+<span id="L153">153   have h_intX : MeasureTheory.integral mu X = 0 := by</span>
+<span id="L154">154     simpa [X] using h_integral</span>
+<span id="L155">155   have h :=</span>
+<span id="L156">156     @MeasureTheory.condExp_indep_eq Omega Real _ _ _</span>
+<span id="L157">157       mX mcond mOmega mu X hleX hm inferInstance hsmX hindepX</span>
+<span id="L158">158   change Filter.EventuallyEq (MeasureTheory.ae mu)</span>
+<span id="L159">159     (MeasureTheory.condExp mcond mu X)</span>
+<span id="L160">160     (fun _omega : Omega =&gt; (0 : Real))</span>
+<span id="L161">161   exact h.mono (fun _omega homega =&gt; by</span>
+<span id="L162">162     rw [homega, h_intX])</span>
+<span id="L163">163 </span>
+<span id="L164">164 /--</span>
+<span id="L165">165 Shifted-history specialization of `centeredReward_condExp_eq_zero_of_indep`.</span>
+<span id="L166">166 </span>
+<span id="L167">167 This is the first compiled conditional mean-zero source for the fixed-commit</span>
+<span id="L168">168 ETC history filtration.  It still assumes the centered reward coordinate is</span>
+<span id="L169">169 independent of the shifted generated history sigma-algebra and has integral</span>
+<span id="L170">170 zero; later product-law work should discharge those two assumptions.</span>
+<span id="L171">171 -/</span>
+<span id="L172">172 theorem centeredReward_condExp_historyFiltrationSucc_eq_zero_of_indep</span>
+<span id="L173">173     {Omega : Type u} {K : Nat}</span>
+<span id="L174">174     [mOmega : MeasurableSpace Omega]</span>
+<span id="L175">175     (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]</span>
+<span id="L176">176     (spec : ETC.Spec K)</span>
+<span id="L177">177     (model : FiniteBanditModel K)</span>
+<span id="L178">178     (commitArm : Fin K)</span>
+<span id="L179">179     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L180">180     (hreward : forall t : Nat,</span>
+<span id="L181">181       @Measurable Omega Rat mOmega inferInstance</span>
+<span id="L182">182         (fun omega : Omega =&gt; reward omega t))</span>
+<span id="L183">183     (b : Fin K) (t : Nat)</span>
+<span id="L184">184     (h_indep :</span>
+<span id="L185">185       ProbabilityTheory.Indep</span>
+<span id="L186">186         (MeasurableSpace.comap</span>
+<span id="L187">187           (fun omega : Omega =&gt;</span>
+<span id="L188">188             (((reward omega t - model.mean b : Rat) : Real)))</span>
+<span id="L189">189           inferInstance)</span>
+<span id="L190">190         (History.historyFiltrationSucc</span>
+<span id="L191">191           (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L192">192           reward</span>
+<span id="L193">193           (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L194">194           hreward t)</span>
+<span id="L195">195         mu)</span>
+<span id="L196">196     (h_integral :</span>
+<span id="L197">197       MeasureTheory.integral mu</span>
+<span id="L198">198         (fun omega : Omega =&gt;</span>
+<span id="L199">199           (((reward omega t - model.mean b : Rat) : Real))) = 0) :</span>
+<span id="L200">200     Filter.EventuallyEq (MeasureTheory.ae mu)</span>
+<span id="L201">201       (MeasureTheory.condExp</span>
+<span id="L202">202         (History.historyFiltrationSucc</span>
+<span id="L203">203           (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L204">204           reward</span>
+<span id="L205">205           (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L206">206           hreward t)</span>
+<span id="L207">207         mu</span>
+<span id="L208">208         (fun omega : Omega =&gt;</span>
+<span id="L209">209           (((reward omega t - model.mean b : Rat) : Real))))</span>
+<span id="L210">210       (fun _omega : Omega =&gt; (0 : Real)) := by</span>
+<span id="L211">211   have hmeas : @Measurable Omega Real mOmega inferInstance</span>
+<span id="L212">212       (fun omega : Omega =&gt;</span>
+<span id="L213">213         (((reward omega t - model.mean b : Rat) : Real))) := by</span>
+<span id="L214">214     exact</span>
+<span id="L215">215       (measurable_of_countable</span>
+<span id="L216">216         (fun r : Rat =&gt; (((r - model.mean b : Rat) : Real)))).comp</span>
+<span id="L217">217         (hreward t)</span>
+<span id="L218">218   exact</span>
+<span id="L219">219     ETC.centeredReward_condExp_eq_zero_of_indep</span>
+<span id="L220">220       mu</span>
+<span id="L221">221       (History.historyFiltrationSucc</span>
+<span id="L222">222         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L223">223         reward</span>
+<span id="L224">224         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L225">225         hreward t)</span>
+<span id="L226">226       ((History.historyFiltrationSucc</span>
+<span id="L227">227         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L228">228         reward</span>
+<span id="L229">229         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L230">230         hreward).le t)</span>
+<span id="L231">231       model reward b t hmeas h_indep h_integral</span>
+<span id="L232">232 </span>
+<span id="L233">233 /--</span>
+<span id="L234">234 Future centered reward coordinates are independent of the reward-only past</span>
+<span id="L235">235 sigma-algebra generated by earlier coordinates, provided the reward trace</span>
+<span id="L236">236 coordinates are mutually independent.</span>
+<span id="L237">237 </span>
+<span id="L238">238 This is a product-law/history-independence bridge for the conditional</span>
+<span id="L239">239 mean-zero route.  It deliberately targets only the reward-coordinate past</span>
+<span id="L240">240 `iSup`; adding the deterministic action generators from the local history</span>
+<span id="L241">241 filtration is a separate wrapper.</span>
+<span id="L242">242 -/</span>
+<span id="L243">243 theorem indep_centeredReward_succ_pastReward_iSup_of_iIndepFun_reward</span>
+<span id="L244">244     {Omega : Type u} {K : Nat}</span>
+<span id="L245">245     [mOmega : MeasurableSpace Omega]</span>
+<span id="L246">246     (mu : MeasureTheory.Measure Omega)</span>
+<span id="L247">247     (model : FiniteBanditModel K)</span>
+<span id="L248">248     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L249">249     (hreward : forall t : Nat,</span>
+<span id="L250">250       @Measurable Omega Rat mOmega inferInstance</span>
+<span id="L251">251         (fun omega : Omega =&gt; reward omega t))</span>
+<span id="L252">252     (h_reward_indep :</span>
+<span id="L253">253       ProbabilityTheory.iIndepFun</span>
+<span id="L254">254         (fun t omega =&gt; reward omega t) mu)</span>
+<span id="L255">255     (b : Fin K) (i : Nat) :</span>
+<span id="L256">256     ProbabilityTheory.Indep</span>
+<span id="L257">257       (MeasurableSpace.comap</span>
+<span id="L258">258         (fun omega : Omega =&gt;</span>
+<span id="L259">259           (((reward omega (i + 1) - model.mean b : Rat) : Real)))</span>
+<span id="L260">260         inferInstance)</span>
+<span id="L261">261       (iSup fun j : Nat =&gt;</span>
+<span id="L262">262         iSup fun _h : j &lt;= i =&gt;</span>
+<span id="L263">263           MeasurableSpace.comap</span>
+<span id="L264">264             (fun omega : Omega =&gt; reward omega j) inferInstance)</span>
+<span id="L265">265       mu := by</span>
+<span id="L266">266   let mReward : Nat -&gt; MeasurableSpace Omega := fun j =&gt;</span>
+<span id="L267">267     MeasurableSpace.comap (fun omega : Omega =&gt; reward omega j) inferInstance</span>
+<span id="L268">268   have h_le : forall j : Nat, mReward j &lt;= mOmega := by</span>
+<span id="L269">269     intro j</span>
+<span id="L270">270     exact Measurable.comap_le (hreward j)</span>
+<span id="L271">271   have h_indep_m :</span>
+<span id="L272">272       ProbabilityTheory.iIndep mReward mu := by</span>
+<span id="L273">273     exact h_reward_indep.iIndep</span>
+<span id="L274">274   have hST : Disjoint ({i + 1} : Set Nat) {j : Nat | j &lt;= i} := by</span>
+<span id="L275">275     rw [Set.disjoint_left]</span>
+<span id="L276">276     intro j hjS hjT</span>
+<span id="L277">277     have hj : j = i + 1 := by</span>
+<span id="L278">278       simpa using hjS</span>
+<span id="L279">279     subst hj</span>
+<span id="L280">280     exact Nat.not_succ_le_self i hjT</span>
+<span id="L281">281   have h_indep_iSup :</span>
+<span id="L282">282       ProbabilityTheory.Indep</span>
+<span id="L283">283         (iSup fun j : Nat =&gt;</span>
+<span id="L284">284           iSup fun _h : j ∈ ({i + 1} : Set Nat) =&gt; mReward j)</span>
+<span id="L285">285         (iSup fun j : Nat =&gt;</span>
+<span id="L286">286           iSup fun _h : j ∈ {j : Nat | j &lt;= i} =&gt; mReward j)</span>
+<span id="L287">287         mu := by</span>
+<span id="L288">288     exact</span>
+<span id="L289">289       ProbabilityTheory.indep_iSup_of_disjoint</span>
+<span id="L290">290         (m := mReward) h_le h_indep_m hST</span>
+<span id="L291">291   have h_center_meas_reward :</span>
+<span id="L292">292       @Measurable Omega Real</span>
+<span id="L293">293         (mReward (i + 1)) inferInstance</span>
+<span id="L294">294         (fun omega : Omega =&gt;</span>
+<span id="L295">295           (((reward omega (i + 1) - model.mean b : Rat) : Real))) := by</span>
+<span id="L296">296     exact</span>
+<span id="L297">297       (measurable_of_countable</span>
+<span id="L298">298         (fun r : Rat =&gt; (((r - model.mean b : Rat) : Real)))).comp</span>
+<span id="L299">299         (comap_measurable (fun omega : Omega =&gt; reward omega (i + 1)))</span>
+<span id="L300">300   have h_center_le_reward :</span>
+<span id="L301">301       MeasurableSpace.comap</span>
+<span id="L302">302         (fun omega : Omega =&gt;</span>
+<span id="L303">303           (((reward omega (i + 1) - model.mean b : Rat) : Real)))</span>
+<span id="L304">304         inferInstance &lt;= mReward (i + 1) := by</span>
+<span id="L305">305     exact Measurable.comap_le h_center_meas_reward</span>
+<span id="L306">306   have h_reward_le_iSup :</span>
+<span id="L307">307       mReward (i + 1) &lt;=</span>
+<span id="L308">308         (iSup fun j : Nat =&gt;</span>
+<span id="L309">309           iSup fun _h : j ∈ ({i + 1} : Set Nat) =&gt; mReward j) := by</span>
+<span id="L310">310     exact</span>
+<span id="L311">311       le_iSup_of_le (i + 1)</span>
+<span id="L312">312         (le_iSup_of_le (by simp) le_rfl)</span>
+<span id="L313">313   exact</span>
+<span id="L314">314     ProbabilityTheory.indep_of_indep_of_le_left</span>
+<span id="L315">315       h_indep_iSup</span>
+<span id="L316">316       (le_trans h_center_le_reward h_reward_le_iSup)</span>
+<span id="L317">317 </span>
+<span id="L318">318 /--</span>
+<span id="L319">319 For a fixed-commit ETC action trace, the shifted generated history filtration</span>
+<span id="L320">320 is contained in the reward-only past sigma-algebra.</span>
+<span id="L321">321 </span>
+<span id="L322">322 The action generators are deterministic singleton preimages, hence either</span>
+<span id="L323">323 `univ` or `empty`; the reward generators at filtration level `i` are exactly</span>
+<span id="L324">324 coordinates `j &lt;= i`.  This is the missing deterministic-action bridge from the</span>
+<span id="L325">325 reward-only past independence leaf to the local `History.historyFiltrationSucc`.</span>
+<span id="L326">326 -/</span>
+<span id="L327">327 theorem historyFiltrationSucc_actionWithCommit_le_pastReward_iSup</span>
+<span id="L328">328     {Omega : Type u} {K : Nat}</span>
+<span id="L329">329     [mOmega : MeasurableSpace Omega]</span>
+<span id="L330">330     (spec : ETC.Spec K)</span>
+<span id="L331">331     (commitArm : Fin K)</span>
+<span id="L332">332     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L333">333     (hreward : forall t : Nat,</span>
+<span id="L334">334       @Measurable Omega Rat mOmega inferInstance</span>
+<span id="L335">335         (fun omega : Omega =&gt; reward omega t))</span>
+<span id="L336">336     (i : Nat) :</span>
+<span id="L337">337     (History.historyFiltrationSucc</span>
+<span id="L338">338       (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L339">339       reward</span>
+<span id="L340">340       (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L341">341       hreward i : MeasurableSpace Omega) &lt;=</span>
+<span id="L342">342     (iSup fun j : Nat =&gt;</span>
+<span id="L343">343       iSup fun _h : j &lt;= i =&gt;</span>
+<span id="L344">344         MeasurableSpace.comap</span>
+<span id="L345">345           (fun omega : Omega =&gt; reward omega j) inferInstance) := by</span>
+<span id="L346">346   rw [History.historyFiltrationSucc_apply, History.historyFiltration_apply]</span>
+<span id="L347">347   refine MeasurableSpace.generateFrom_le ?_</span>
+<span id="L348">348   intro s hs</span>
+<span id="L349">349   rcases hs with hs | hs</span>
+<span id="L350">350   · rcases hs with ⟨j, _hjlt, a, hs_eq⟩</span>
+<span id="L351">351     rw [hs_eq]</span>
+<span id="L352">352     by_cases hconst : ETC.actionWithCommit spec commitArm j = a</span>
+<span id="L353">353     · have hpre :</span>
+<span id="L354">354           Set.preimage</span>
+<span id="L355">355             (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm j)</span>
+<span id="L356">356             (Set.singleton a) = Set.univ := by</span>
+<span id="L357">357         ext omega</span>
+<span id="L358">358         simp only [Set.mem_preimage, Set.mem_univ]</span>
+<span id="L359">359         change ETC.actionWithCommit spec commitArm j = a &lt;-&gt; True</span>
+<span id="L360">360         constructor</span>
+<span id="L361">361         · intro _h</span>
+<span id="L362">362           trivial</span>
+<span id="L363">363         · intro _h</span>
+<span id="L364">364           exact hconst</span>
+<span id="L365">365       rw [hpre]</span>
+<span id="L366">366       exact</span>
+<span id="L367">367         (show @MeasurableSet Omega</span>
+<span id="L368">368           (iSup fun k : Nat =&gt;</span>
+<span id="L369">369             iSup fun _h : k &lt;= i =&gt;</span>
+<span id="L370">370               MeasurableSpace.comap</span>
+<span id="L371">371                 (fun omega : Omega =&gt; reward omega k) inferInstance)</span>
+<span id="L372">372           (Set.univ : Set Omega) from</span>
+<span id="L373">373           (@MeasurableSet.univ Omega</span>
+<span id="L374">374             (iSup fun k : Nat =&gt;</span>
+<span id="L375">375               iSup fun _h : k &lt;= i =&gt;</span>
+<span id="L376">376                 MeasurableSpace.comap</span>
+<span id="L377">377                   (fun omega : Omega =&gt; reward omega k) inferInstance)))</span>
+<span id="L378">378     · have hpre :</span>
+<span id="L379">379           Set.preimage</span>
+<span id="L380">380             (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm j)</span>
+<span id="L381">381             (Set.singleton a) = (∅ : Set Omega) := by</span>
+<span id="L382">382         ext omega</span>
+<span id="L383">383         simp only [Set.mem_preimage, Set.mem_empty_iff_false]</span>
+<span id="L384">384         change ETC.actionWithCommit spec commitArm j = a &lt;-&gt; False</span>
+<span id="L385">385         constructor</span>
+<span id="L386">386         · intro h</span>
+<span id="L387">387           exact hconst h</span>
+<span id="L388">388         · intro h</span>
+<span id="L389">389           exact False.elim h</span>
+<span id="L390">390       rw [hpre]</span>
+<span id="L391">391       exact</span>
+<span id="L392">392         (show @MeasurableSet Omega</span>
+<span id="L393">393           (iSup fun k : Nat =&gt;</span>
+<span id="L394">394             iSup fun _h : k &lt;= i =&gt;</span>
+<span id="L395">395               MeasurableSpace.comap</span>
+<span id="L396">396                 (fun omega : Omega =&gt; reward omega k) inferInstance)</span>
+<span id="L397">397           (∅ : Set Omega) from</span>
+<span id="L398">398           (@MeasurableSet.empty Omega</span>
+<span id="L399">399             (iSup fun k : Nat =&gt;</span>
+<span id="L400">400               iSup fun _h : k &lt;= i =&gt;</span>
+<span id="L401">401                 MeasurableSpace.comap</span>
+<span id="L402">402                   (fun omega : Omega =&gt; reward omega k) inferInstance)))</span>
+<span id="L403">403   · rcases hs with ⟨j, hjlt, r, hs_eq⟩</span>
+<span id="L404">404     rw [hs_eq]</span>
+<span id="L405">405     have hjle : j &lt;= i := Nat.le_of_lt_succ hjlt</span>
+<span id="L406">406     have hle :</span>
+<span id="L407">407         MeasurableSpace.comap</span>
+<span id="L408">408           (fun omega : Omega =&gt; reward omega j) inferInstance &lt;=</span>
+<span id="L409">409         (iSup fun k : Nat =&gt;</span>
+<span id="L410">410           iSup fun _h : k &lt;= i =&gt;</span>
+<span id="L411">411             MeasurableSpace.comap</span>
+<span id="L412">412               (fun omega : Omega =&gt; reward omega k) inferInstance) := by</span>
+<span id="L413">413       exact le_iSup_of_le j (le_iSup_of_le hjle le_rfl)</span>
+<span id="L414">414     have hmeas_comap :</span>
+<span id="L415">415         @MeasurableSet Omega</span>
+<span id="L416">416           (MeasurableSpace.comap</span>
+<span id="L417">417             (fun omega : Omega =&gt; reward omega j) inferInstance)</span>
+<span id="L418">418           (Set.preimage</span>
+<span id="L419">419             (fun omega : Omega =&gt; reward omega j) (Set.singleton r)) := by</span>
+<span id="L420">420       exact</span>
+<span id="L421">421         (comap_measurable (fun omega : Omega =&gt; reward omega j))</span>
+<span id="L422">422           (MeasurableSet.singleton r)</span>
+<span id="L423">423     exact hle _ hmeas_comap</span>
+<span id="L424">424 </span>
+<span id="L425">425 /--</span>
+<span id="L426">426 Future centered reward coordinates are independent of the full fixed-commit</span>
+<span id="L427">427 shifted history filtration when reward coordinates are mutually independent.</span>
+<span id="L428">428 </span>
+<span id="L429">429 This extends `indep_centeredReward_succ_pastReward_iSup_of_iIndepFun_reward`</span>
+<span id="L430">430 from the reward-only past to `History.historyFiltrationSucc` by the deterministic</span>
+<span id="L431">431 action-generator inclusion above.</span>
+<span id="L432">432 -/</span>
+<span id="L433">433 theorem indep_centeredReward_succ_historyFiltrationSucc_of_iIndepFun_reward</span>
+<span id="L434">434     {Omega : Type u} {K : Nat}</span>
+<span id="L435">435     [mOmega : MeasurableSpace Omega]</span>
+<span id="L436">436     (mu : MeasureTheory.Measure Omega)</span>
+<span id="L437">437     (spec : ETC.Spec K)</span>
+<span id="L438">438     (model : FiniteBanditModel K)</span>
+<span id="L439">439     (commitArm : Fin K)</span>
+<span id="L440">440     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L441">441     (hreward : forall t : Nat,</span>
+<span id="L442">442       @Measurable Omega Rat mOmega inferInstance</span>
+<span id="L443">443         (fun omega : Omega =&gt; reward omega t))</span>
+<span id="L444">444     (h_reward_indep :</span>
+<span id="L445">445       ProbabilityTheory.iIndepFun</span>
+<span id="L446">446         (fun t omega =&gt; reward omega t) mu)</span>
+<span id="L447">447     (b : Fin K) (i : Nat) :</span>
+<span id="L448">448     ProbabilityTheory.Indep</span>
+<span id="L449">449       (MeasurableSpace.comap</span>
+<span id="L450">450         (fun omega : Omega =&gt;</span>
+<span id="L451">451           (((reward omega (i + 1) - model.mean b : Rat) : Real)))</span>
+<span id="L452">452         inferInstance)</span>
+<span id="L453">453       (History.historyFiltrationSucc</span>
+<span id="L454">454         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L455">455         reward</span>
+<span id="L456">456         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L457">457         hreward i)</span>
+<span id="L458">458       mu := by</span>
+<span id="L459">459   exact</span>
+<span id="L460">460     ProbabilityTheory.indep_of_indep_of_le_right</span>
+<span id="L461">461       (ETC.indep_centeredReward_succ_pastReward_iSup_of_iIndepFun_reward</span>
+<span id="L462">462         (mOmega := mOmega)</span>
+<span id="L463">463         mu model reward hreward h_reward_indep b i)</span>
+<span id="L464">464       (ETC.historyFiltrationSucc_actionWithCommit_le_pastReward_iSup</span>
+<span id="L465">465         (mOmega := mOmega)</span>
+<span id="L466">466         spec commitArm reward hreward i)</span>
+<span id="L467">467 </span>
+<span id="L468">468 /--</span>
+<span id="L469">469 One-step conditional mean-zero wrapper for Mathlib&#x27;s conditional tail API.</span>
+<span id="L470">470 </span>
+<span id="L471">471 Mathlib asks for the summand at `i + 1` to be conditionally controlled against</span>
+<span id="L472">472 filtration level `i`.  This theorem specializes the generic independence-based</span>
+<span id="L473">473 conditional expectation wrapper to that index shape.</span>
+<span id="L474">474 -/</span>
+<span id="L475">475 theorem centeredReward_succ_condExp_historyFiltrationSucc_eq_zero_of_indep</span>
+<span id="L476">476     {Omega : Type u} {K : Nat}</span>
+<span id="L477">477     [mOmega : MeasurableSpace Omega]</span>
+<span id="L478">478     (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]</span>
+<span id="L479">479     (spec : ETC.Spec K)</span>
+<span id="L480">480     (model : FiniteBanditModel K)</span>
+<span id="L481">481     (commitArm : Fin K)</span>
+<span id="L482">482     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L483">483     (hreward : forall t : Nat,</span>
+<span id="L484">484       @Measurable Omega Rat mOmega inferInstance</span>
+<span id="L485">485         (fun omega : Omega =&gt; reward omega t))</span>
+<span id="L486">486     (b : Fin K) (i : Nat)</span>
+<span id="L487">487     (h_indep :</span>
+<span id="L488">488       ProbabilityTheory.Indep</span>
+<span id="L489">489         (MeasurableSpace.comap</span>
+<span id="L490">490           (fun omega : Omega =&gt;</span>
+<span id="L491">491             (((reward omega (i + 1) - model.mean b : Rat) : Real)))</span>
+<span id="L492">492           inferInstance)</span>
+<span id="L493">493         (History.historyFiltrationSucc</span>
+<span id="L494">494           (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L495">495           reward</span>
+<span id="L496">496           (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L497">497           hreward i)</span>
+<span id="L498">498         mu)</span>
+<span id="L499">499     (h_integral :</span>
+<span id="L500">500       MeasureTheory.integral mu</span>
+<span id="L501">501         (fun omega : Omega =&gt;</span>
+<span id="L502">502           (((reward omega (i + 1) - model.mean b : Rat) : Real))) = 0) :</span>
+<span id="L503">503     Filter.EventuallyEq (MeasureTheory.ae mu)</span>
+<span id="L504">504       (MeasureTheory.condExp</span>
+<span id="L505">505         (History.historyFiltrationSucc</span>
+<span id="L506">506           (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L507">507           reward</span>
+<span id="L508">508           (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L509">509           hreward i)</span>
+<span id="L510">510         mu</span>
+<span id="L511">511         (fun omega : Omega =&gt;</span>
+<span id="L512">512           (((reward omega (i + 1) - model.mean b : Rat) : Real))))</span>
+<span id="L513">513       (fun _omega : Omega =&gt; (0 : Real)) := by</span>
+<span id="L514">514   have hmeas : @Measurable Omega Real mOmega inferInstance</span>
+<span id="L515">515       (fun omega : Omega =&gt;</span>
+<span id="L516">516         (((reward omega (i + 1) - model.mean b : Rat) : Real))) := by</span>
+<span id="L517">517     exact</span>
+<span id="L518">518       (measurable_of_countable</span>
+<span id="L519">519         (fun r : Rat =&gt; (((r - model.mean b : Rat) : Real)))).comp</span>
+<span id="L520">520         (hreward (i + 1))</span>
+<span id="L521">521   exact</span>
+<span id="L522">522     ETC.centeredReward_condExp_eq_zero_of_indep</span>
+<span id="L523">523       mu</span>
+<span id="L524">524       (History.historyFiltrationSucc</span>
+<span id="L525">525         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L526">526         reward</span>
+<span id="L527">527         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L528">528         hreward i)</span>
+<span id="L529">529       ((History.historyFiltrationSucc</span>
+<span id="L530">530         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L531">531         reward</span>
+<span id="L532">532         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L533">533         hreward).le i)</span>
+<span id="L534">534       model reward b (i + 1) hmeas h_indep h_integral</span>
+<span id="L535">535 </span>
+<span id="L536">536 /--</span>
+<span id="L537">537 One-step conditional mean-zero source from reward-coordinate independence.</span>
+<span id="L538">538 </span>
+<span id="L539">539 This combines the full fixed-commit history independence theorem with the</span>
+<span id="L540">540 existing `condExp_indep_eq` wrapper.  It still leaves the zero-integral identity</span>
+<span id="L541">541 as an explicit side condition, supplied separately by exact-mean or bounded</span>
+<span id="L542">542 source leaves.</span>
+<span id="L543">543 -/</span>
+<span id="L544">544 theorem centeredReward_succ_condExp_historyFiltrationSucc_eq_zero_of_iIndepFun_reward</span>
+<span id="L545">545     {Omega : Type u} {K : Nat}</span>
+<span id="L546">546     [mOmega : MeasurableSpace Omega]</span>
+<span id="L547">547     (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]</span>
+<span id="L548">548     (spec : ETC.Spec K)</span>
+<span id="L549">549     (model : FiniteBanditModel K)</span>
+<span id="L550">550     (commitArm : Fin K)</span>
+<span id="L551">551     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L552">552     (hreward : forall t : Nat,</span>
+<span id="L553">553       @Measurable Omega Rat mOmega inferInstance</span>
+<span id="L554">554         (fun omega : Omega =&gt; reward omega t))</span>
+<span id="L555">555     (h_reward_indep :</span>
+<span id="L556">556       ProbabilityTheory.iIndepFun</span>
+<span id="L557">557         (fun t omega =&gt; reward omega t) mu)</span>
+<span id="L558">558     (b : Fin K) (i : Nat)</span>
+<span id="L559">559     (h_integral :</span>
+<span id="L560">560       MeasureTheory.integral mu</span>
+<span id="L561">561         (fun omega : Omega =&gt;</span>
+<span id="L562">562           (((reward omega (i + 1) - model.mean b : Rat) : Real))) = 0) :</span>
+<span id="L563">563     Filter.EventuallyEq (MeasureTheory.ae mu)</span>
+<span id="L564">564       (MeasureTheory.condExp</span>
+<span id="L565">565         (History.historyFiltrationSucc</span>
+<span id="L566">566           (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L567">567           reward</span>
+<span id="L568">568           (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L569">569           hreward i)</span>
+<span id="L570">570         mu</span>
+<span id="L571">571         (fun omega : Omega =&gt;</span>
+<span id="L572">572           (((reward omega (i + 1) - model.mean b : Rat) : Real))))</span>
+<span id="L573">573       (fun _omega : Omega =&gt; (0 : Real)) := by</span>
+<span id="L574">574   exact</span>
+<span id="L575">575     ETC.centeredReward_succ_condExp_historyFiltrationSucc_eq_zero_of_indep</span>
+<span id="L576">576       (mOmega := mOmega)</span>
+<span id="L577">577       mu spec model commitArm reward hreward b i</span>
+<span id="L578">578       (ETC.indep_centeredReward_succ_historyFiltrationSucc_of_iIndepFun_reward</span>
+<span id="L579">579         (mOmega := mOmega)</span>
+<span id="L580">580         mu spec model commitArm reward hreward h_reward_indep b i)</span>
+<span id="L581">581       h_integral</span>
+<span id="L582">582 </span>
+<span id="L583">583 /--</span>
+<span id="L584">584 Unconditional sub-Gaussianity plus independence from the conditioning</span>
+<span id="L585">585 sigma-algebra gives conditional sub-Gaussianity.</span>
+<span id="L586">586 </span>
+<span id="L587">587 This is a Mathlib-shaped source for later sampled reward-law witnesses.  It</span>
+<span id="L588">588 uses `Kernel.HasSubgaussianMGF.of_rat`: for each rational exponent the</span>
+<span id="L589">589 conditional MGF is the unconditional MGF by `condExp_indep_eq`, and Mathlib</span>
+<span id="L590">590 extends the bound to all real exponents by continuity/density.</span>
+<span id="L591">591 -/</span>
+<span id="L592">592 theorem hasCondSubgaussianMGF_of_indep_comap</span>
+<span id="L593">593     {Omega : Type u}</span>
+<span id="L594">594     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]</span>
+<span id="L595">595     (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]</span>
+<span id="L596">596     (mcond : MeasurableSpace Omega) (hm : mcond &lt;= mOmega)</span>
+<span id="L597">597     (X : Omega -&gt; Real) (c : NNReal)</span>
+<span id="L598">598     (hmeasX : @Measurable Omega Real mOmega inferInstance X)</span>
+<span id="L599">599     (h_subG : ProbabilityTheory.HasSubgaussianMGF X c mu)</span>
+<span id="L600">600     (h_indep :</span>
+<span id="L601">601       ProbabilityTheory.Indep</span>
+<span id="L602">602         (MeasurableSpace.comap X inferInstance) mcond mu) :</span>
+<span id="L603">603     ProbabilityTheory.HasCondSubgaussianMGF mcond hm X c mu := by</span>
+<span id="L604">604   have hleX :</span>
+<span id="L605">605       MeasurableSpace.comap X inferInstance &lt;= mOmega := by</span>
+<span id="L606">606     exact Measurable.comap_le hmeasX</span>
+<span id="L607">607   let k : @ProbabilityTheory.Kernel Omega Omega mcond mOmega :=</span>
+<span id="L608">608     @ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond</span>
+<span id="L609">609   have hcomp : (mu.trim hm).bind k = mu := by</span>
+<span id="L610">610     exact @ProbabilityTheory.condExpKernel_comp_trim Omega mcond mOmega _ mu _ hm</span>
+<span id="L611">611   have h_subG_comp_direct :</span>
+<span id="L612">612       @ProbabilityTheory.HasSubgaussianMGF Omega mOmega X c</span>
+<span id="L613">613         ((mu.trim hm).bind</span>
+<span id="L614">614           (@ProbabilityTheory.condExpKernel Omega mOmega _ mu _ mcond)) := by</span>
+<span id="L615">615     rw [@ProbabilityTheory.condExpKernel_comp_trim Omega mcond mOmega _ mu _ hm]</span>
+<span id="L616">616     exact h_subG</span>
+<span id="L617">617   have h_subG_comp :</span>
+<span id="L618">618       @ProbabilityTheory.HasSubgaussianMGF Omega mOmega X c ((mu.trim hm).bind k) := by</span>
+<span id="L619">619     simpa [k] using h_subG_comp_direct</span>
+<span id="L620">620   change</span>
+<span id="L621">621     @ProbabilityTheory.Kernel.HasSubgaussianMGF</span>
+<span id="L622">622       Omega Omega mOmega mcond</span>
+<span id="L623">623       X c k (mu.trim hm)</span>
+<span id="L624">624   refine</span>
+<span id="L625">625     @ProbabilityTheory.Kernel.HasSubgaussianMGF.of_rat</span>
+<span id="L626">626       Omega Omega mOmega mcond (mu.trim hm)</span>
+<span id="L627">627       k X c ?_ ?_</span>
+<span id="L628">628   · intro t</span>
+<span id="L629">629     exact h_subG_comp.integrable_exp_mul t</span>
+<span id="L630">630   · intro q</span>
+<span id="L631">631     let f : Omega -&gt; Real := fun omega =&gt; Real.exp (((q : Real) * X omega))</span>
+<span id="L632">632     let Filt : Filter Omega := MeasureTheory.ae (mu.trim hm)</span>
+<span id="L633">633     show</span>
+<span id="L634">634       Filter.Eventually</span>
+<span id="L635">635         (fun omega : Omega =&gt;</span>
+<span id="L636">636           @ProbabilityTheory.mgf Omega mOmega X (k omega) (q : Real)</span>
+<span id="L637">637             &lt;= Real.exp (((c : NNReal) : Real) * (q : Real) ^ 2 / 2))</span>
+<span id="L638">638         Filt</span>
+<span id="L639">639     have h_int_f : @MeasureTheory.Integrable Real _ _ Omega mOmega f mu := by</span>
+<span id="L640">640       simpa [f] using h_subG.integrable_exp_mul (q : Real)</span>
+<span id="L641">641     let intKernel : Omega -&gt; Real :=</span>
+<span id="L642">642       fun omega : Omega =&gt; @MeasureTheory.integral Omega Real _ _ mOmega (k omega) f</span>
+<span id="L643">643     let intMu : Real :=</span>
+<span id="L644">644       @MeasureTheory.integral Omega Real _ _ mOmega mu f</span>
+<span id="L645">645     let ce : Omega -&gt; Real :=</span>
+<span id="L646">646       @MeasureTheory.condExp Omega Real mcond mOmega _ _ _ mu f</span>
+<span id="L647">647     have hmeasX_mX :</span>
+<span id="L648">648         @Measurable Omega Real</span>
+<span id="L649">649           (MeasurableSpace.comap X inferInstance) inferInstance X := by</span>
+<span id="L650">650       exact comap_measurable X</span>
+<span id="L651">651     have hmeas_f_mX :</span>
+<span id="L652">652         @Measurable Omega Real</span>
+<span id="L653">653           (MeasurableSpace.comap X inferInstance) inferInstance f := by</span>
+<span id="L654">654       dsimp [f]</span>
+<span id="L655">655       exact (Real.measurable_exp.comp (measurable_const.mul hmeasX_mX))</span>
+<span id="L656">656     have hsm_f_mX :</span>
+<span id="L657">657         @MeasureTheory.StronglyMeasurable Omega Real _</span>
+<span id="L658">658           (MeasurableSpace.comap X inferInstance) f :=</span>
+<span id="L659">659       hmeas_f_mX.stronglyMeasurable</span>
+<span id="L660">660     have h_indep_mX :</span>
+<span id="L661">661         ProbabilityTheory.Indep</span>
+<span id="L662">662           (MeasurableSpace.comap X inferInstance) mcond mu := by</span>
+<span id="L663">663       exact h_indep</span>
+<span id="L664">664     have hcond_mu :</span>
+<span id="L665">665         Filter.EventuallyEq (MeasureTheory.ae mu)</span>
+<span id="L666">666           ce</span>
+<span id="L667">667           (fun _omega : Omega =&gt; intMu) := by</span>
+<span id="L668">668       simpa [ce, intMu] using</span>
+<span id="L669">669         (@MeasureTheory.condExp_indep_eq Omega Real _ _ _</span>
+<span id="L670">670           (MeasurableSpace.comap X inferInstance) mcond mOmega mu f</span>
+<span id="L671">671           hleX hm inferInstance</span>
+<span id="L672">672           hsm_f_mX h_indep_mX)</span>
+<span id="L673">673     have hcond_trim :</span>
+<span id="L674">674         Filter.EventuallyEq Filt</span>
+<span id="L675">675           ce</span>
+<span id="L676">676           (fun _omega : Omega =&gt; intMu) := by</span>
+<span id="L677">677       simpa [Filt, ce, intMu] using</span>
+<span id="L678">678         MeasureTheory.StronglyMeasurable.ae_eq_trim_of_stronglyMeasurable</span>
+<span id="L679">679           hm</span>
+<span id="L680">680           (@MeasureTheory.stronglyMeasurable_condExp</span>
+<span id="L681">681             Omega Real mcond mOmega mu f _ _ _)</span>
+<span id="L682">682           MeasureTheory.stronglyMeasurable_const</span>
+<span id="L683">683           hcond_mu</span>
+<span id="L684">684     have hkernel :</span>
+<span id="L685">685         Filter.EventuallyEq Filt</span>
+<span id="L686">686           ce</span>
+<span id="L687">687           intKernel := by</span>
+<span id="L688">688       simpa [Filt, ce, intKernel, k] using</span>
+<span id="L689">689         (@ProbabilityTheory.condExp_ae_eq_trim_integral_condExpKernel</span>
+<span id="L690">690           Omega Real mcond mOmega _ mu _ _ f _ _ hm h_int_f)</span>
+<span id="L691">691     have hkernel_to_mu :</span>
+<span id="L692">692         Filter.EventuallyEq Filt</span>
+<span id="L693">693           (fun omega : Omega =&gt;</span>
+<span id="L694">694             @MeasureTheory.integral Omega Real _ _ mOmega (k omega) f)</span>
+<span id="L695">695           (fun _omega : Omega =&gt; intMu) := by</span>
+<span id="L696">696       simpa [intKernel] using</span>
+<span id="L697">697         (@Filter.EventuallyEq.trans Omega Real Filt intKernel ce</span>
+<span id="L698">698           (fun _omega : Omega =&gt; intMu) hkernel.symm hcond_trim)</span>
+<span id="L699">699     refine hkernel_to_mu.mono ?_</span>
+<span id="L700">700     intro omega hcond</span>
+<span id="L701">701     calc</span>
+<span id="L702">702       @ProbabilityTheory.mgf Omega mOmega X</span>
+<span id="L703">703           (k omega) (q : Real)</span>
+<span id="L704">704           =</span>
+<span id="L705">705         @MeasureTheory.integral Omega Real _ _ mOmega</span>
+<span id="L706">706           (k omega) f := by</span>
+<span id="L707">707             simp [ProbabilityTheory.mgf, f]</span>
+<span id="L708">708       _ = intMu := hcond</span>
+<span id="L709">709       _ = @ProbabilityTheory.mgf Omega mOmega X mu (q : Real) := by</span>
+<span id="L710">710             simp [ProbabilityTheory.mgf, f, intMu]</span>
+<span id="L711">711       _ &lt;= Real.exp (((c : NNReal) : Real) * (q : Real) ^ 2 / 2) :=</span>
+<span id="L712">712             h_subG.mgf_le (q : Real)</span>
+<span id="L713">713 </span>
+<span id="L714">714 /--</span>
+<span id="L715">715 One-step conditional sub-Gaussian source from reward-coordinate independence.</span>
+<span id="L716">716 </span>
+<span id="L717">717 This is the sampled centered-reward MGF analogue of</span>
+<span id="L718">718 `centeredReward_succ_condExp_historyFiltrationSucc_eq_zero_of_iIndepFun_reward`:</span>
+<span id="L719">719 unconditional sub-Gaussianity of the future centered reward, together with</span>
+<span id="L720">720 `iIndepFun` reward coordinates, gives the conditional MGF witness against the</span>
+<span id="L721">721 fixed-commit shifted history filtration.</span>
+<span id="L722">722 -/</span>
+<span id="L723">723 theorem centeredReward_succ_hasCondSubgaussianMGF_historyFiltrationSucc_of_iIndepFun_reward</span>
+<span id="L724">724     {Omega : Type u} {K : Nat}</span>
+<span id="L725">725     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]</span>
+<span id="L726">726     (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu]</span>
+<span id="L727">727     (spec : ETC.Spec K)</span>
+<span id="L728">728     (model : FiniteBanditModel K)</span>
+<span id="L729">729     (commitArm : Fin K)</span>
+<span id="L730">730     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L731">731     (hreward : forall t : Nat,</span>
+<span id="L732">732       @Measurable Omega Rat mOmega inferInstance</span>
+<span id="L733">733         (fun omega : Omega =&gt; reward omega t))</span>
+<span id="L734">734     (h_reward_indep :</span>
+<span id="L735">735       ProbabilityTheory.iIndepFun</span>
+<span id="L736">736         (fun t omega =&gt; reward omega t) mu)</span>
+<span id="L737">737     (b : Fin K) (i : Nat) (c : NNReal)</span>
+<span id="L738">738     (h_subG :</span>
+<span id="L739">739       ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L740">740         (fun omega : Omega =&gt;</span>
+<span id="L741">741           (((reward omega (i + 1) - model.mean b : Rat) : Real)))</span>
+<span id="L742">742         c mu) :</span>
+<span id="L743">743     ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L744">744       (History.historyFiltrationSucc</span>
+<span id="L745">745         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L746">746         reward</span>
+<span id="L747">747         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L748">748         hreward i)</span>
+<span id="L749">749       ((History.historyFiltrationSucc</span>
+<span id="L750">750         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L751">751         reward</span>
+<span id="L752">752         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L753">753         hreward).le i)</span>
+<span id="L754">754       (fun omega : Omega =&gt;</span>
+<span id="L755">755         (((reward omega (i + 1) - model.mean b : Rat) : Real)))</span>
+<span id="L756">756       c mu := by</span>
+<span id="L757">757   let hist : MeasureTheory.Filtration Nat mOmega :=</span>
+<span id="L758">758     History.historyFiltrationSucc</span>
+<span id="L759">759       (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L760">760       reward</span>
+<span id="L761">761       (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L762">762       hreward</span>
+<span id="L763">763   let X : Omega -&gt; Real := fun omega =&gt;</span>
+<span id="L764">764     (((reward omega (i + 1) - model.mean b : Rat) : Real))</span>
+<span id="L765">765   have hmeasX : @Measurable Omega Real mOmega inferInstance X := by</span>
+<span id="L766">766     exact</span>
+<span id="L767">767       (measurable_of_countable</span>
+<span id="L768">768         (fun r : Rat =&gt; (((r - model.mean b : Rat) : Real)))).comp</span>
+<span id="L769">769         (hreward (i + 1))</span>
+<span id="L770">770   have h_subG_X : ProbabilityTheory.HasSubgaussianMGF X c mu := by</span>
+<span id="L771">771     simpa [X] using h_subG</span>
+<span id="L772">772   have h_indep_X :</span>
+<span id="L773">773       ProbabilityTheory.Indep</span>
+<span id="L774">774         (MeasurableSpace.comap X inferInstance) (hist i) mu := by</span>
+<span id="L775">775     simpa [hist, X] using</span>
+<span id="L776">776       (ETC.indep_centeredReward_succ_historyFiltrationSucc_of_iIndepFun_reward</span>
+<span id="L777">777         (mOmega := mOmega)</span>
+<span id="L778">778         mu spec model commitArm reward hreward h_reward_indep b i)</span>
+<span id="L779">779   change ProbabilityTheory.HasCondSubgaussianMGF (hist i) (hist.le i) X c mu</span>
+<span id="L780">780   exact</span>
+<span id="L781">781     ETC.hasCondSubgaussianMGF_of_indep_comap</span>
+<span id="L782">782       (mOmega := mOmega)</span>
+<span id="L783">783       mu (hist i) (hist.le i) X c hmeasX h_subG_X h_indep_X</span>
+<span id="L784">784 </span>
+<span id="L785">785 /--</span>
+<span id="L786">786 If the fixed ETC trace at time `t` pulls neither arm `a` nor the selected best</span>
+<span id="L787">787 arm, the centered pairwise reward-difference summand is identically zero and</span>
+<span id="L788">788 therefore has a zero-variance sub-Gaussian MGF.</span>
+<span id="L789">789 </span>
+<span id="L790">790 This is a small reward-law source for the independent/zeroth MGF side only; it</span>
+<span id="L791">791 does not cover the sampled-arm times where the reward coordinate appears.</span>
+<span id="L792">792 -/</span>
+<span id="L793">793 theorem centeredPairwiseRewardDiff_hasSubgaussianMGF_of_action_miss</span>
+<span id="L794">794     {Omega : Type u} {K : Nat}</span>
+<span id="L795">795     [MeasurableSpace Omega]</span>
+<span id="L796">796     (mu : MeasureTheory.Measure Omega)</span>
+<span id="L797">797     [MeasureTheory.IsZeroOrProbabilityMeasure mu]</span>
+<span id="L798">798     (spec : ETC.Spec K)</span>
+<span id="L799">799     (model : FiniteBanditModel K)</span>
+<span id="L800">800     (commitArm : Fin K)</span>
+<span id="L801">801     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L802">802     (a : Fin K) (t : Nat)</span>
+<span id="L803">803     (h_ne_a : ETC.actionWithCommit spec commitArm t ≠ a)</span>
+<span id="L804">804     (h_ne_best :</span>
+<span id="L805">805       ETC.actionWithCommit spec commitArm t ≠ model.bestArm) :</span>
+<span id="L806">806     ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L807">807       (fun omega =&gt;</span>
+<span id="L808">808         ETC.centeredPairwiseRewardDiff</span>
+<span id="L809">809           spec model commitArm reward a t omega)</span>
+<span id="L810">810       0 mu := by</span>
+<span id="L811">811   simp [ETC.centeredPairwiseRewardDiff, h_ne_a, h_ne_best]</span>
+<span id="L812">812 </span>
+<span id="L813">813 /--</span>
+<span id="L814">814 If the fixed ETC trace at time `t` pulls neither arm `a` nor the selected best</span>
+<span id="L815">815 arm, the centered pairwise reward-difference summand is conditionally</span>
+<span id="L816">816 sub-Gaussian with zero variance proxy with respect to any sub-sigma-algebra.</span>
+<span id="L817">817 </span>
+<span id="L818">818 This discharges only the zero summand cases of the conditional MGF field.</span>
+<span id="L819">819 -/</span>
+<span id="L820">820 theorem centeredPairwiseRewardDiff_hasCondSubgaussianMGF_of_action_miss</span>
+<span id="L821">821     {Omega : Type u} {K : Nat}</span>
+<span id="L822">822     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]</span>
+<span id="L823">823     (mu : MeasureTheory.Measure Omega)</span>
+<span id="L824">824     [MeasureTheory.IsFiniteMeasure mu]</span>
+<span id="L825">825     (m : MeasurableSpace Omega) (hm : m ≤ mOmega)</span>
+<span id="L826">826     (spec : ETC.Spec K)</span>
+<span id="L827">827     (model : FiniteBanditModel K)</span>
+<span id="L828">828     (commitArm : Fin K)</span>
+<span id="L829">829     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L830">830     (a : Fin K) (t : Nat)</span>
+<span id="L831">831     (h_ne_a : ETC.actionWithCommit spec commitArm t ≠ a)</span>
+<span id="L832">832     (h_ne_best :</span>
+<span id="L833">833       ETC.actionWithCommit spec commitArm t ≠ model.bestArm) :</span>
+<span id="L834">834     ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L835">835       m hm</span>
+<span id="L836">836       (fun omega =&gt;</span>
+<span id="L837">837         ETC.centeredPairwiseRewardDiff</span>
+<span id="L838">838           spec model commitArm reward a t omega)</span>
+<span id="L839">839       0 mu := by</span>
+<span id="L840">840   simp [ETC.centeredPairwiseRewardDiff, h_ne_a, h_ne_best]</span>
+<span id="L841">841 </span>
+<span id="L842">842 /--</span>
+<span id="L843">843 History-filtration specialization of the zero-summand conditional MGF source.</span>
+<span id="L844">844 </span>
+<span id="L845">845 For conditional concentration over the shifted generated history filtration,</span>
+<span id="L846">846 the summand at process time `t` is conditionally sub-Gaussian with zero variance</span>
+<span id="L847">847 whenever `actionWithCommit t` is neither the comparison arm nor the best arm.</span>
+<span id="L848">848 -/</span>
+<span id="L849">849 theorem centeredPairwiseRewardDiff_hasCondSubgaussianMGF_historyFiltrationSucc_of_action_miss</span>
+<span id="L850">850     {Omega : Type u} {K : Nat}</span>
+<span id="L851">851     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]</span>
+<span id="L852">852     (mu : MeasureTheory.Measure Omega)</span>
+<span id="L853">853     [MeasureTheory.IsFiniteMeasure mu]</span>
+<span id="L854">854     (spec : ETC.Spec K)</span>
+<span id="L855">855     (model : FiniteBanditModel K)</span>
+<span id="L856">856     (commitArm : Fin K)</span>
+<span id="L857">857     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L858">858     (hreward : forall t : Nat,</span>
+<span id="L859">859       Measurable (fun omega : Omega =&gt; reward omega t))</span>
+<span id="L860">860     (a : Fin K) (t : Nat)</span>
+<span id="L861">861     (h_ne_a : ETC.actionWithCommit spec commitArm t ≠ a)</span>
+<span id="L862">862     (h_ne_best :</span>
+<span id="L863">863       ETC.actionWithCommit spec commitArm t ≠ model.bestArm) :</span>
+<span id="L864">864     ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L865">865       (History.historyFiltrationSucc</span>
+<span id="L866">866         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L867">867         reward</span>
+<span id="L868">868         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L869">869         hreward t)</span>
+<span id="L870">870       ((History.historyFiltrationSucc</span>
+<span id="L871">871         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L872">872         reward</span>
+<span id="L873">873         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L874">874         hreward).le t)</span>
+<span id="L875">875       (fun omega =&gt;</span>
+<span id="L876">876         ETC.centeredPairwiseRewardDiff</span>
+<span id="L877">877           spec model commitArm reward a t omega)</span>
+<span id="L878">878       0 mu := by</span>
+<span id="L879">879   exact</span>
+<span id="L880">880     ETC.centeredPairwiseRewardDiff_hasCondSubgaussianMGF_of_action_miss</span>
+<span id="L881">881       mu</span>
+<span id="L882">882       (History.historyFiltrationSucc</span>
+<span id="L883">883         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L884">884         reward</span>
+<span id="L885">885         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L886">886         hreward t)</span>
+<span id="L887">887       ((History.historyFiltrationSucc</span>
+<span id="L888">888         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L889">889         reward</span>
+<span id="L890">890         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L891">891         hreward).le t)</span>
+<span id="L892">892       spec model commitArm reward a t h_ne_a h_ne_best</span>
+<span id="L893">893 </span>
+<span id="L894">894 /--</span>
+<span id="L895">895 Sampled comparison-arm conditional MGF transfer.</span>
+<span id="L896">896 </span>
+<span id="L897">897 When the fixed ETC trace pulls the comparison arm `a` at time `t`, the centered</span>
+<span id="L898">898 pairwise reward-difference summand is exactly the centered reward</span>
+<span id="L899">899 `reward t - mean a`, so any conditional MGF witness for that centered reward</span>
+<span id="L900">900 transfers to the pairwise summand.</span>
+<span id="L901">901 -/</span>
+<span id="L902">902 theorem centeredPairwiseRewardDiff_hasCondSubgaussianMGF_of_action_eq_arm</span>
+<span id="L903">903     {Omega : Type u} {K : Nat}</span>
+<span id="L904">904     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]</span>
+<span id="L905">905     (mu : MeasureTheory.Measure Omega)</span>
+<span id="L906">906     [MeasureTheory.IsFiniteMeasure mu]</span>
+<span id="L907">907     (m : MeasurableSpace Omega) (hm : m ≤ mOmega)</span>
+<span id="L908">908     (spec : ETC.Spec K)</span>
+<span id="L909">909     (model : FiniteBanditModel K)</span>
+<span id="L910">910     (commitArm : Fin K)</span>
+<span id="L911">911     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L912">912     (a : Fin K) (t : Nat) (c : NNReal)</span>
+<span id="L913">913     (hne : a = model.bestArm -&gt; False)</span>
+<span id="L914">914     (h_action : ETC.actionWithCommit spec commitArm t = a)</span>
+<span id="L915">915     (h_subG :</span>
+<span id="L916">916       ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L917">917         m hm</span>
+<span id="L918">918         (fun omega : Omega =&gt;</span>
+<span id="L919">919           (((reward omega t - model.mean a : Rat) : Real)))</span>
+<span id="L920">920         c mu) :</span>
+<span id="L921">921     ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L922">922       m hm</span>
+<span id="L923">923       (fun omega =&gt;</span>
+<span id="L924">924         ETC.centeredPairwiseRewardDiff</span>
+<span id="L925">925           spec model commitArm reward a t omega)</span>
+<span id="L926">926       c mu := by</span>
+<span id="L927">927   have hane : a ≠ model.bestArm := hne</span>
+<span id="L928">928   have hnot_best :</span>
+<span id="L929">929       ETC.actionWithCommit spec commitArm t ≠ model.bestArm := by</span>
+<span id="L930">930     intro hbest</span>
+<span id="L931">931     exact hne (h_action.symm.trans hbest)</span>
+<span id="L932">932   simpa [ETC.centeredPairwiseRewardDiff, h_action, hnot_best, hane] using</span>
+<span id="L933">933     h_subG</span>
+<span id="L934">934 </span>
+<span id="L935">935 /--</span>
+<span id="L936">936 Sampled best-arm conditional MGF transfer.</span>
+<span id="L937">937 </span>
+<span id="L938">938 When the fixed ETC trace pulls `model.bestArm` at time `t`, the centered</span>
+<span id="L939">939 pairwise reward-difference summand is the negative centered best-arm reward</span>
+<span id="L940">940 `mean bestArm - reward t`.  This theorem consumes that negative-direction</span>
+<span id="L941">941 conditional MGF witness explicitly.</span>
+<span id="L942">942 -/</span>
+<span id="L943">943 theorem centeredPairwiseRewardDiff_hasCondSubgaussianMGF_of_action_eq_bestArm</span>
+<span id="L944">944     {Omega : Type u} {K : Nat}</span>
+<span id="L945">945     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]</span>
+<span id="L946">946     (mu : MeasureTheory.Measure Omega)</span>
+<span id="L947">947     [MeasureTheory.IsFiniteMeasure mu]</span>
+<span id="L948">948     (m : MeasurableSpace Omega) (hm : m ≤ mOmega)</span>
+<span id="L949">949     (spec : ETC.Spec K)</span>
+<span id="L950">950     (model : FiniteBanditModel K)</span>
+<span id="L951">951     (commitArm : Fin K)</span>
+<span id="L952">952     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L953">953     (a : Fin K) (t : Nat) (c : NNReal)</span>
+<span id="L954">954     (hne : a = model.bestArm -&gt; False)</span>
+<span id="L955">955     (h_action :</span>
+<span id="L956">956       ETC.actionWithCommit spec commitArm t = model.bestArm)</span>
+<span id="L957">957     (h_subG :</span>
+<span id="L958">958       ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L959">959         m hm</span>
+<span id="L960">960         (fun omega : Omega =&gt;</span>
+<span id="L961">961           (((model.mean model.bestArm - reward omega t : Rat) : Real)))</span>
+<span id="L962">962         c mu) :</span>
+<span id="L963">963     ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L964">964       m hm</span>
+<span id="L965">965       (fun omega =&gt;</span>
+<span id="L966">966         ETC.centeredPairwiseRewardDiff</span>
+<span id="L967">967           spec model commitArm reward a t omega)</span>
+<span id="L968">968       c mu := by</span>
+<span id="L969">969   have hnot_a :</span>
+<span id="L970">970       ETC.actionWithCommit spec commitArm t ≠ a := by</span>
+<span id="L971">971     intro ha</span>
+<span id="L972">972     exact hne (ha.symm.trans h_action)</span>
+<span id="L973">973   have hbest_ne_a : model.bestArm ≠ a := by</span>
+<span id="L974">974     intro h</span>
+<span id="L975">975     exact hne h.symm</span>
+<span id="L976">976   simpa [ETC.centeredPairwiseRewardDiff, hnot_a, h_action, hbest_ne_a] using</span>
+<span id="L977">977     h_subG</span>
+<span id="L978">978 </span>
+<span id="L979">979 /--</span>
+<span id="L980">980 Shifted-history specialization of the sampled comparison-arm conditional MGF</span>
+<span id="L981">981 transfer.</span>
+<span id="L982">982 -/</span>
+<span id="L983">983 theorem centeredPairwiseRewardDiff_hasCondSubgaussianMGF_historyFiltrationSucc_of_action_eq_arm</span>
+<span id="L984">984     {Omega : Type u} {K : Nat}</span>
+<span id="L985">985     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]</span>
+<span id="L986">986     (mu : MeasureTheory.Measure Omega)</span>
+<span id="L987">987     [MeasureTheory.IsFiniteMeasure mu]</span>
+<span id="L988">988     (spec : ETC.Spec K)</span>
+<span id="L989">989     (model : FiniteBanditModel K)</span>
+<span id="L990">990     (commitArm : Fin K)</span>
+<span id="L991">991     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L992">992     (hreward : forall t : Nat,</span>
+<span id="L993">993       Measurable (fun omega : Omega =&gt; reward omega t))</span>
+<span id="L994">994     (a : Fin K) (t : Nat) (c : NNReal)</span>
+<span id="L995">995     (hne : a = model.bestArm -&gt; False)</span>
+<span id="L996">996     (h_action : ETC.actionWithCommit spec commitArm t = a)</span>
+<span id="L997">997     (h_subG :</span>
+<span id="L998">998       ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L999">999         (History.historyFiltrationSucc</span>
+<span id="L1000">1000           (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1001">1001           reward</span>
+<span id="L1002">1002           (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1003">1003           hreward t)</span>
+<span id="L1004">1004         ((History.historyFiltrationSucc</span>
+<span id="L1005">1005           (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1006">1006           reward</span>
+<span id="L1007">1007           (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1008">1008           hreward).le t)</span>
+<span id="L1009">1009         (fun omega : Omega =&gt;</span>
+<span id="L1010">1010           (((reward omega t - model.mean a : Rat) : Real)))</span>
+<span id="L1011">1011         c mu) :</span>
+<span id="L1012">1012     ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L1013">1013       (History.historyFiltrationSucc</span>
+<span id="L1014">1014         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1015">1015         reward</span>
+<span id="L1016">1016         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1017">1017         hreward t)</span>
+<span id="L1018">1018       ((History.historyFiltrationSucc</span>
+<span id="L1019">1019         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1020">1020         reward</span>
+<span id="L1021">1021         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1022">1022         hreward).le t)</span>
+<span id="L1023">1023       (fun omega =&gt;</span>
+<span id="L1024">1024         ETC.centeredPairwiseRewardDiff</span>
+<span id="L1025">1025           spec model commitArm reward a t omega)</span>
+<span id="L1026">1026       c mu := by</span>
+<span id="L1027">1027   exact</span>
+<span id="L1028">1028     ETC.centeredPairwiseRewardDiff_hasCondSubgaussianMGF_of_action_eq_arm</span>
+<span id="L1029">1029       (mOmega := mOmega) (mu := mu)</span>
+<span id="L1030">1030       (m := History.historyFiltrationSucc</span>
+<span id="L1031">1031         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1032">1032         reward</span>
+<span id="L1033">1033         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1034">1034         hreward t)</span>
+<span id="L1035">1035       (hm := (History.historyFiltrationSucc</span>
+<span id="L1036">1036         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1037">1037         reward</span>
+<span id="L1038">1038         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1039">1039         hreward).le t)</span>
+<span id="L1040">1040       spec model commitArm reward a t c hne h_action h_subG</span>
+<span id="L1041">1041 </span>
+<span id="L1042">1042 /--</span>
+<span id="L1043">1043 Shifted-history specialization of the sampled best-arm conditional MGF</span>
+<span id="L1044">1044 transfer.</span>
+<span id="L1045">1045 -/</span>
+<span id="L1046">1046 theorem centeredPairwiseRewardDiff_hasCondSubgaussianMGF_historyFiltrationSucc_of_action_eq_bestArm</span>
+<span id="L1047">1047     {Omega : Type u} {K : Nat}</span>
+<span id="L1048">1048     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]</span>
+<span id="L1049">1049     (mu : MeasureTheory.Measure Omega)</span>
+<span id="L1050">1050     [MeasureTheory.IsFiniteMeasure mu]</span>
+<span id="L1051">1051     (spec : ETC.Spec K)</span>
+<span id="L1052">1052     (model : FiniteBanditModel K)</span>
+<span id="L1053">1053     (commitArm : Fin K)</span>
+<span id="L1054">1054     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L1055">1055     (hreward : forall t : Nat,</span>
+<span id="L1056">1056       Measurable (fun omega : Omega =&gt; reward omega t))</span>
+<span id="L1057">1057     (a : Fin K) (t : Nat) (c : NNReal)</span>
+<span id="L1058">1058     (hne : a = model.bestArm -&gt; False)</span>
+<span id="L1059">1059     (h_action :</span>
+<span id="L1060">1060       ETC.actionWithCommit spec commitArm t = model.bestArm)</span>
+<span id="L1061">1061     (h_subG :</span>
+<span id="L1062">1062       ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L1063">1063         (History.historyFiltrationSucc</span>
+<span id="L1064">1064           (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1065">1065           reward</span>
+<span id="L1066">1066           (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1067">1067           hreward t)</span>
+<span id="L1068">1068         ((History.historyFiltrationSucc</span>
+<span id="L1069">1069           (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1070">1070           reward</span>
+<span id="L1071">1071           (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1072">1072           hreward).le t)</span>
+<span id="L1073">1073         (fun omega : Omega =&gt;</span>
+<span id="L1074">1074           (((model.mean model.bestArm - reward omega t : Rat) : Real)))</span>
+<span id="L1075">1075         c mu) :</span>
+<span id="L1076">1076     ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L1077">1077       (History.historyFiltrationSucc</span>
+<span id="L1078">1078         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1079">1079         reward</span>
+<span id="L1080">1080         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1081">1081         hreward t)</span>
+<span id="L1082">1082       ((History.historyFiltrationSucc</span>
+<span id="L1083">1083         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1084">1084         reward</span>
+<span id="L1085">1085         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1086">1086         hreward).le t)</span>
+<span id="L1087">1087       (fun omega =&gt;</span>
+<span id="L1088">1088         ETC.centeredPairwiseRewardDiff</span>
+<span id="L1089">1089           spec model commitArm reward a t omega)</span>
+<span id="L1090">1090       c mu := by</span>
+<span id="L1091">1091   exact</span>
+<span id="L1092">1092     ETC.centeredPairwiseRewardDiff_hasCondSubgaussianMGF_of_action_eq_bestArm</span>
+<span id="L1093">1093       (mOmega := mOmega) (mu := mu)</span>
+<span id="L1094">1094       (m := History.historyFiltrationSucc</span>
+<span id="L1095">1095         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1096">1096         reward</span>
+<span id="L1097">1097         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1098">1098         hreward t)</span>
+<span id="L1099">1099       (hm := (History.historyFiltrationSucc</span>
+<span id="L1100">1100         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1101">1101         reward</span>
+<span id="L1102">1102         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1103">1103         hreward).le t)</span>
+<span id="L1104">1104       spec model commitArm reward a t c hne h_action h_subG</span>
+<span id="L1105">1105 </span>
+<span id="L1106">1106 /--</span>
+<span id="L1107">1107 Action-case assembly for sampled centered-reward conditional MGF witnesses.</span>
+<span id="L1108">1108 </span>
+<span id="L1109">1109 This is the conditional analogue of</span>
+<span id="L1110">1110 `ETC.centeredPairwiseRewardDiff_hasSubgaussianMGF_of_centeredReward`: if the</span>
+<span id="L1111">1111 reward coordinate pulled by the fixed ETC trace has the appropriate centered</span>
+<span id="L1112">1112 conditional MGF witness, then the concrete centered pairwise reward-difference</span>
+<span id="L1113">1113 summand has the corresponding action-selected variance proxy.  The miss case is</span>
+<span id="L1114">1114 closed by the zero-summand theorem, and the best-arm case uses the sign-flipped</span>
+<span id="L1115">1115 conditional MGF witness.</span>
+<span id="L1116">1116 -/</span>
+<span id="L1117">1117 theorem centeredPairwiseRewardDiff_hasCondSubgaussianMGF_of_centeredReward</span>
+<span id="L1118">1118     {Omega : Type u} {K : Nat}</span>
+<span id="L1119">1119     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]</span>
+<span id="L1120">1120     (mu : MeasureTheory.Measure Omega)</span>
+<span id="L1121">1121     [MeasureTheory.IsFiniteMeasure mu]</span>
+<span id="L1122">1122     (m : MeasurableSpace Omega) (hm : m ≤ mOmega)</span>
+<span id="L1123">1123     (spec : ETC.Spec K)</span>
+<span id="L1124">1124     (model : FiniteBanditModel K)</span>
+<span id="L1125">1125     (commitArm : Fin K)</span>
+<span id="L1126">1126     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L1127">1127     (cReward : Fin K -&gt; Nat -&gt; NNReal)</span>
+<span id="L1128">1128     (a : Fin K) (t : Nat)</span>
+<span id="L1129">1129     (hne : a = model.bestArm -&gt; False)</span>
+<span id="L1130">1130     (h_subG :</span>
+<span id="L1131">1131       forall b : Fin K, ETC.actionWithCommit spec commitArm t = b -&gt;</span>
+<span id="L1132">1132         ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L1133">1133           m hm</span>
+<span id="L1134">1134           (fun omega : Omega =&gt;</span>
+<span id="L1135">1135             (((reward omega t - model.mean b : Rat) : Real)))</span>
+<span id="L1136">1136           (cReward b t) mu) :</span>
+<span id="L1137">1137     ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L1138">1138       m hm</span>
+<span id="L1139">1139       (fun omega =&gt;</span>
+<span id="L1140">1140         ETC.centeredPairwiseRewardDiff</span>
+<span id="L1141">1141           spec model commitArm reward a t omega)</span>
+<span id="L1142">1142       (ETC.centeredPairwiseRewardDiffVarianceProxy</span>
+<span id="L1143">1143         spec model commitArm cReward a t)</span>
+<span id="L1144">1144       mu := by</span>
+<span id="L1145">1145   classical</span>
+<span id="L1146">1146   by_cases ha : ETC.actionWithCommit spec commitArm t = a</span>
+<span id="L1147">1147   · have hnot_best :</span>
+<span id="L1148">1148         ETC.actionWithCommit spec commitArm t ≠ model.bestArm := by</span>
+<span id="L1149">1149       intro hbest</span>
+<span id="L1150">1150       exact hne (ha.symm.trans hbest)</span>
+<span id="L1151">1151     have h :=</span>
+<span id="L1152">1152       ETC.centeredPairwiseRewardDiff_hasCondSubgaussianMGF_of_action_eq_arm</span>
+<span id="L1153">1153         (mOmega := mOmega) (mu := mu) (m := m) (hm := hm)</span>
+<span id="L1154">1154         spec model commitArm reward a t (cReward a t) hne ha</span>
+<span id="L1155">1155         (h_subG a ha)</span>
+<span id="L1156">1156     simpa [ETC.centeredPairwiseRewardDiffVarianceProxy, ha, hnot_best] using h</span>
+<span id="L1157">1157   · by_cases hbest : ETC.actionWithCommit spec commitArm t = model.bestArm</span>
+<span id="L1158">1158     · have hneg :</span>
+<span id="L1159">1159           ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L1160">1160             m hm</span>
+<span id="L1161">1161             (fun omega : Omega =&gt;</span>
+<span id="L1162">1162               -(((reward omega t -</span>
+<span id="L1163">1163                 model.mean model.bestArm : Rat) : Real)))</span>
+<span id="L1164">1164             (cReward model.bestArm t) mu := by</span>
+<span id="L1165">1165         exact ProbabilityTheory.Kernel.HasSubgaussianMGF.neg</span>
+<span id="L1166">1166           (h_subG model.bestArm hbest)</span>
+<span id="L1167">1167       have hbest_subG :</span>
+<span id="L1168">1168           ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L1169">1169             m hm</span>
+<span id="L1170">1170             (fun omega : Omega =&gt;</span>
+<span id="L1171">1171               (((model.mean model.bestArm - reward omega t : Rat) : Real)))</span>
+<span id="L1172">1172             (cReward model.bestArm t) mu := by</span>
+<span id="L1173">1173         simpa [Rat.cast_sub, sub_eq_add_neg, add_comm, add_left_comm, add_assoc]</span>
+<span id="L1174">1174           using hneg</span>
+<span id="L1175">1175       have h :=</span>
+<span id="L1176">1176         ETC.centeredPairwiseRewardDiff_hasCondSubgaussianMGF_of_action_eq_bestArm</span>
+<span id="L1177">1177           (mOmega := mOmega) (mu := mu) (m := m) (hm := hm)</span>
+<span id="L1178">1178           spec model commitArm reward a t (cReward model.bestArm t)</span>
+<span id="L1179">1179           hne hbest hbest_subG</span>
+<span id="L1180">1180       have hbest_ne_a : model.bestArm ≠ a := by</span>
+<span id="L1181">1181         intro hba</span>
+<span id="L1182">1182         exact hne hba.symm</span>
+<span id="L1183">1183       simpa [ETC.centeredPairwiseRewardDiffVarianceProxy, ha, hbest, hbest_ne_a] using h</span>
+<span id="L1184">1184     · have h :=</span>
+<span id="L1185">1185         ETC.centeredPairwiseRewardDiff_hasCondSubgaussianMGF_of_action_miss</span>
+<span id="L1186">1186           (mOmega := mOmega) (mu := mu) (m := m) (hm := hm)</span>
+<span id="L1187">1187           spec model commitArm reward a t ha hbest</span>
+<span id="L1188">1188       simpa [ETC.centeredPairwiseRewardDiffVarianceProxy, ha, hbest] using h</span>
+<span id="L1189">1189 </span>
+<span id="L1190">1190 /--</span>
+<span id="L1191">1191 Shifted-history specialization of the action-case conditional MGF assembly from</span>
+<span id="L1192">1192 sampled centered-reward witnesses.</span>
+<span id="L1193">1193 -/</span>
+<span id="L1194">1194 theorem centeredPairwiseRewardDiff_hasCondSubgaussianMGF_historyFiltrationSucc_of_centeredReward</span>
+<span id="L1195">1195     {Omega : Type u} {K : Nat}</span>
+<span id="L1196">1196     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]</span>
+<span id="L1197">1197     (mu : MeasureTheory.Measure Omega)</span>
+<span id="L1198">1198     [MeasureTheory.IsFiniteMeasure mu]</span>
+<span id="L1199">1199     (spec : ETC.Spec K)</span>
+<span id="L1200">1200     (model : FiniteBanditModel K)</span>
+<span id="L1201">1201     (commitArm : Fin K)</span>
+<span id="L1202">1202     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L1203">1203     (hreward : forall t : Nat,</span>
+<span id="L1204">1204       Measurable (fun omega : Omega =&gt; reward omega t))</span>
+<span id="L1205">1205     (cReward : Fin K -&gt; Nat -&gt; NNReal)</span>
+<span id="L1206">1206     (a : Fin K) (t : Nat)</span>
+<span id="L1207">1207     (hne : a = model.bestArm -&gt; False)</span>
+<span id="L1208">1208     (h_subG :</span>
+<span id="L1209">1209       forall b : Fin K, ETC.actionWithCommit spec commitArm t = b -&gt;</span>
+<span id="L1210">1210         ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L1211">1211           (History.historyFiltrationSucc</span>
+<span id="L1212">1212             (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1213">1213             reward</span>
+<span id="L1214">1214             (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1215">1215             hreward t)</span>
+<span id="L1216">1216           ((History.historyFiltrationSucc</span>
+<span id="L1217">1217             (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1218">1218             reward</span>
+<span id="L1219">1219             (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1220">1220             hreward).le t)</span>
+<span id="L1221">1221           (fun omega : Omega =&gt;</span>
+<span id="L1222">1222             (((reward omega t - model.mean b : Rat) : Real)))</span>
+<span id="L1223">1223           (cReward b t) mu) :</span>
+<span id="L1224">1224     ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L1225">1225       (History.historyFiltrationSucc</span>
+<span id="L1226">1226         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1227">1227         reward</span>
+<span id="L1228">1228         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1229">1229         hreward t)</span>
+<span id="L1230">1230       ((History.historyFiltrationSucc</span>
+<span id="L1231">1231         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1232">1232         reward</span>
+<span id="L1233">1233         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1234">1234         hreward).le t)</span>
+<span id="L1235">1235       (fun omega =&gt;</span>
+<span id="L1236">1236         ETC.centeredPairwiseRewardDiff</span>
+<span id="L1237">1237           spec model commitArm reward a t omega)</span>
+<span id="L1238">1238       (ETC.centeredPairwiseRewardDiffVarianceProxy</span>
+<span id="L1239">1239         spec model commitArm cReward a t)</span>
+<span id="L1240">1240       mu := by</span>
+<span id="L1241">1241   exact</span>
+<span id="L1242">1242     ETC.centeredPairwiseRewardDiff_hasCondSubgaussianMGF_of_centeredReward</span>
+<span id="L1243">1243       (mOmega := mOmega) (mu := mu)</span>
+<span id="L1244">1244       (m := History.historyFiltrationSucc</span>
+<span id="L1245">1245         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1246">1246         reward</span>
+<span id="L1247">1247         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1248">1248         hreward t)</span>
+<span id="L1249">1249       (hm := (History.historyFiltrationSucc</span>
+<span id="L1250">1250         (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1251">1251         reward</span>
+<span id="L1252">1252         (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1253">1253         hreward).le t)</span>
+<span id="L1254">1254       spec model commitArm reward cReward a t hne h_subG</span>
+<span id="L1255">1255 </span>
+<span id="L1256">1256 /--</span>
+<span id="L1257">1257 Reward-level conditional sub-Gaussian source contract for the fixed-commit ETC</span>
+<span id="L1258">1258 centered-diff route.</span>
+<span id="L1259">1259 </span>
+<span id="L1260">1260 This contract is one layer closer to a concrete reward law than</span>
+<span id="L1261">1261 `CenteredDiffCondSubGaussianWitnesses`: it asks for conditional MGF witnesses for</span>
+<span id="L1262">1262 the sampled reward coordinate centered at the arm actually pulled by</span>
+<span id="L1263">1263 `actionWithCommit`, plus the zeroth unconditional witness and the final tail</span>
+<span id="L1264">1264 budget.  The constructor below turns it into the centered-diff witness package.</span>
+<span id="L1265">1265 -/</span>
+<span id="L1266">1266 structure CenteredRewardCondSubGaussianWitnesses</span>
+<span id="L1267">1267     {Omega : Type u} {K : Nat}</span>
+<span id="L1268">1268     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]</span>
+<span id="L1269">1269     (mu : MeasureTheory.Measure Omega)</span>
+<span id="L1270">1270     [MeasureTheory.IsFiniteMeasure mu]</span>
+<span id="L1271">1271     [MeasureTheory.IsZeroOrProbabilityMeasure mu]</span>
+<span id="L1272">1272     (spec : ETC.Spec K)</span>
+<span id="L1273">1273     (model : FiniteBanditModel K)</span>
+<span id="L1274">1274     (commitArm : Fin K)</span>
+<span id="L1275">1275     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L1276">1276     (tail : Fin K -&gt; ENNReal) where</span>
+<span id="L1277">1277   cReward : Fin K -&gt; Nat -&gt; NNReal</span>
+<span id="L1278">1278   hreward : forall t : Nat,</span>
+<span id="L1279">1279     Measurable (fun omega : Omega =&gt; reward omega t)</span>
+<span id="L1280">1280   subG0 :</span>
+<span id="L1281">1281     forall b : Fin K, ETC.actionWithCommit spec commitArm 0 = b -&gt;</span>
+<span id="L1282">1282       ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L1283">1283         (fun omega : Omega =&gt;</span>
+<span id="L1284">1284           (((reward omega 0 - model.mean b : Rat) : Real)))</span>
+<span id="L1285">1285         (cReward b 0) mu</span>
+<span id="L1286">1286   condSubG :</span>
+<span id="L1287">1287     forall i, i &lt; spec.explorationPulls * K - 1 -&gt;</span>
+<span id="L1288">1288       forall b : Fin K,</span>
+<span id="L1289">1289         ETC.actionWithCommit spec commitArm (i + 1) = b -&gt;</span>
+<span id="L1290">1290           ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L1291">1291             (History.historyFiltrationSucc</span>
+<span id="L1292">1292               (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1293">1293               reward</span>
+<span id="L1294">1294               (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1295">1295               hreward i)</span>
+<span id="L1296">1296             ((History.historyFiltrationSucc</span>
+<span id="L1297">1297               (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1298">1298               reward</span>
+<span id="L1299">1299               (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1300">1300               hreward).le i)</span>
+<span id="L1301">1301             (fun omega : Omega =&gt;</span>
+<span id="L1302">1302               (((reward omega (i + 1) - model.mean b : Rat) : Real)))</span>
+<span id="L1303">1303             (cReward b (i + 1)) mu</span>
+<span id="L1304">1304   tail_bound :</span>
+<span id="L1305">1305     forall a : Fin K, (a = model.bestArm -&gt; False) -&gt;</span>
+<span id="L1306">1306       ENNReal.ofReal</span>
+<span id="L1307">1307         (Real.exp</span>
+<span id="L1308">1308           (-(ETC.centeredPairwiseGapThreshold spec model a) ^ 2 /</span>
+<span id="L1309">1309             (2 *</span>
+<span id="L1310">1310               (((Finset.range (spec.explorationPulls * K)).sum</span>
+<span id="L1311">1311                 (fun t =&gt;</span>
+<span id="L1312">1312                   ETC.centeredPairwiseRewardDiffVarianceProxy</span>
+<span id="L1313">1313                     spec model commitArm cReward a t) : NNReal) : Real)))) &lt;=</span>
+<span id="L1314">1314         tail a</span>
+<span id="L1315">1315 </span>
+<span id="L1316">1316 /--</span>
+<span id="L1317">1317 Witness package for the concrete centered reward-difference conditional</span>
+<span id="L1318">1318 sub-Gaussian ETC tail route.</span>
+<span id="L1319">1319 </span>
+<span id="L1320">1320 This is a project-local conditional reward-law surface: it records the</span>
+<span id="L1321">1321 filtration, strong adaptedness, zeroth unconditional MGF witness, later</span>
+<span id="L1322">1322 conditional MGF witnesses, and tail domination needed to produce the fixed</span>
+<span id="L1323">1323 ETC pairwise empirical-mean tail contract.</span>
+<span id="L1324">1324 -/</span>
+<span id="L1325">1325 structure CenteredDiffCondSubGaussianWitnesses</span>
+<span id="L1326">1326     {Omega : Type u} {K : Nat}</span>
+<span id="L1327">1327     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]</span>
+<span id="L1328">1328     (mu : MeasureTheory.Measure Omega)</span>
+<span id="L1329">1329     [MeasureTheory.IsFiniteMeasure mu]</span>
+<span id="L1330">1330     [MeasureTheory.IsZeroOrProbabilityMeasure mu]</span>
+<span id="L1331">1331     (spec : ETC.Spec K)</span>
+<span id="L1332">1332     (model : FiniteBanditModel K)</span>
+<span id="L1333">1333     (commitArm : Fin K)</span>
+<span id="L1334">1334     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L1335">1335     (tail : Fin K -&gt; ENNReal) where</span>
+<span id="L1336">1336   c : Fin K -&gt; Nat -&gt; NNReal</span>
+<span id="L1337">1337   filtration : Fin K -&gt; MeasureTheory.Filtration Nat mOmega</span>
+<span id="L1338">1338   stronglyAdapted :</span>
+<span id="L1339">1339     forall a : Fin K, (a = model.bestArm -&gt; False) -&gt;</span>
+<span id="L1340">1340       MeasureTheory.StronglyAdapted</span>
+<span id="L1341">1341         (filtration a)</span>
+<span id="L1342">1342         (fun t omega =&gt;</span>
+<span id="L1343">1343           ETC.centeredPairwiseRewardDiff</span>
+<span id="L1344">1344             spec model commitArm reward a t omega)</span>
+<span id="L1345">1345   subG0 :</span>
+<span id="L1346">1346     forall a : Fin K, (a = model.bestArm -&gt; False) -&gt;</span>
+<span id="L1347">1347       ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L1348">1348         (fun omega =&gt;</span>
+<span id="L1349">1349           ETC.centeredPairwiseRewardDiff</span>
+<span id="L1350">1350             spec model commitArm reward a 0 omega)</span>
+<span id="L1351">1351         (c a 0) mu</span>
+<span id="L1352">1352   condSubG :</span>
+<span id="L1353">1353     forall a : Fin K, (a = model.bestArm -&gt; False) -&gt;</span>
+<span id="L1354">1354       forall i, i &lt; spec.explorationPulls * K - 1 -&gt;</span>
+<span id="L1355">1355         ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L1356">1356           ((filtration a) i) ((filtration a).le i)</span>
+<span id="L1357">1357           (fun omega =&gt;</span>
+<span id="L1358">1358             ETC.centeredPairwiseRewardDiff</span>
+<span id="L1359">1359               spec model commitArm reward a (i + 1) omega)</span>
+<span id="L1360">1360           (c a (i + 1)) mu</span>
+<span id="L1361">1361   tail_bound :</span>
+<span id="L1362">1362     forall a : Fin K, (a = model.bestArm -&gt; False) -&gt;</span>
+<span id="L1363">1363       ENNReal.ofReal</span>
+<span id="L1364">1364         (Real.exp</span>
+<span id="L1365">1365           (-(ETC.centeredPairwiseGapThreshold spec model a) ^ 2 /</span>
+<span id="L1366">1366             (2 *</span>
+<span id="L1367">1367               (((Finset.range (spec.explorationPulls * K)).sum</span>
+<span id="L1368">1368                 (fun t =&gt; c a t) : NNReal) : Real)))) &lt;= tail a</span>
+<span id="L1369">1369 </span>
+<span id="L1370">1370 /--</span>
+<span id="L1371">1371 Build the centered-diff conditional witness package from reward-level sampled</span>
+<span id="L1372">1372 conditional MGF witnesses.</span>
+<span id="L1373">1373 </span>
+<span id="L1374">1374 This bridges the remaining action-case gap between raw reward-law conditional</span>
+<span id="L1375">1375 MGF facts and the already compiled centered-diff conditional tail consumer.</span>
+<span id="L1376">1376 -/</span>
+<span id="L1377">1377 noncomputable def centeredDiffCondSubGaussianWitnesses_of_centeredRewardCondSubGaussianWitnesses</span>
+<span id="L1378">1378     {Omega : Type u} {K : Nat}</span>
+<span id="L1379">1379     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]</span>
+<span id="L1380">1380     (mu : MeasureTheory.Measure Omega)</span>
+<span id="L1381">1381     [MeasureTheory.IsFiniteMeasure mu]</span>
+<span id="L1382">1382     [MeasureTheory.IsZeroOrProbabilityMeasure mu]</span>
+<span id="L1383">1383     (spec : ETC.Spec K)</span>
+<span id="L1384">1384     (model : FiniteBanditModel K)</span>
+<span id="L1385">1385     (commitArm : Fin K)</span>
+<span id="L1386">1386     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L1387">1387     (tail : Fin K -&gt; ENNReal)</span>
+<span id="L1388">1388     (w :</span>
+<span id="L1389">1389       ETC.CenteredRewardCondSubGaussianWitnesses</span>
+<span id="L1390">1390         mu spec model commitArm reward tail) :</span>
+<span id="L1391">1391     ETC.CenteredDiffCondSubGaussianWitnesses</span>
+<span id="L1392">1392       mu spec model commitArm reward tail where</span>
+<span id="L1393">1393   c := ETC.centeredPairwiseRewardDiffVarianceProxy</span>
+<span id="L1394">1394     spec model commitArm w.cReward</span>
+<span id="L1395">1395   filtration := fun _a =&gt;</span>
+<span id="L1396">1396     History.historyFiltrationSucc</span>
+<span id="L1397">1397       (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1398">1398       reward</span>
+<span id="L1399">1399       (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1400">1400       w.hreward</span>
+<span id="L1401">1401   stronglyAdapted := by</span>
+<span id="L1402">1402     intro a _hne</span>
+<span id="L1403">1403     exact</span>
+<span id="L1404">1404       ETC.stronglyAdapted_centeredPairwiseRewardDiff_historyFiltrationSucc</span>
+<span id="L1405">1405         spec model commitArm reward w.hreward a</span>
+<span id="L1406">1406   subG0 := by</span>
+<span id="L1407">1407     intro a hne</span>
+<span id="L1408">1408     exact</span>
+<span id="L1409">1409       ETC.centeredPairwiseRewardDiff_hasSubgaussianMGF_of_centeredReward</span>
+<span id="L1410">1410         mu spec model commitArm reward w.cReward a 0 hne</span>
+<span id="L1411">1411         (fun b hb =&gt; w.subG0 b hb)</span>
+<span id="L1412">1412   condSubG := by</span>
+<span id="L1413">1413     intro a hne i hi</span>
+<span id="L1414">1414     exact</span>
+<span id="L1415">1415       ETC.centeredPairwiseRewardDiff_hasCondSubgaussianMGF_of_centeredReward</span>
+<span id="L1416">1416         (mOmega := mOmega) (mu := mu)</span>
+<span id="L1417">1417         (m := History.historyFiltrationSucc</span>
+<span id="L1418">1418           (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1419">1419           reward</span>
+<span id="L1420">1420           (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1421">1421           w.hreward i)</span>
+<span id="L1422">1422         (hm := (History.historyFiltrationSucc</span>
+<span id="L1423">1423           (fun _omega : Omega =&gt; ETC.actionWithCommit spec commitArm)</span>
+<span id="L1424">1424           reward</span>
+<span id="L1425">1425           (fun _t : Nat =&gt; measurable_const)</span>
+<span id="L1426">1426           w.hreward).le i)</span>
+<span id="L1427">1427         spec model commitArm reward w.cReward a (i + 1) hne</span>
+<span id="L1428">1428         (fun b hb =&gt; w.condSubG i hi b hb)</span>
+<span id="L1429">1429   tail_bound := by</span>
+<span id="L1430">1430     intro a hne</span>
+<span id="L1431">1431     exact w.tail_bound a hne</span>
+<span id="L1432">1432 </span>
+<span id="L1433">1433 /--</span>
+<span id="L1434">1434 Consume a centered reward-difference conditional witness package to build the</span>
+<span id="L1435">1435 fixed-commit ETC pairwise empirical-mean tail contract.</span>
+<span id="L1436">1436 </span>
+<span id="L1437">1437 This is the first compiled conditional reward-law bridge for the ETC route. It</span>
+<span id="L1438">1438 uses the generated centered-diff event inclusion plus the Mathlib-backed</span>
+<span id="L1439">1439 conditional sub-Gaussian finite-prefix wrapper, while keeping the actual</span>
+<span id="L1440">1440 conditional MGF and adaptedness facts explicit in the witness package.</span>
+<span id="L1441">1441 -/</span>
+<span id="L1442">1442 theorem pairwiseEmpMeanTailContract_of_centeredDiffCondSubGaussianWitnesses</span>
+<span id="L1443">1443     {Omega : Type u} {K : Nat}</span>
+<span id="L1444">1444     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega]</span>
+<span id="L1445">1445     (mu : MeasureTheory.Measure Omega)</span>
+<span id="L1446">1446     [MeasureTheory.IsFiniteMeasure mu]</span>
+<span id="L1447">1447     [MeasureTheory.IsZeroOrProbabilityMeasure mu]</span>
+<span id="L1448">1448     (spec : ETC.Spec K)</span>
+<span id="L1449">1449     (model : FiniteBanditModel K)</span>
+<span id="L1450">1450     (commitArm : Fin K)</span>
+<span id="L1451">1451     (reward : Omega -&gt; RewardTrace Rat)</span>
+<span id="L1452">1452     (tail : Fin K -&gt; ENNReal)</span>
+<span id="L1453">1453     (hexplorationPulls_pos : 0 &lt; spec.explorationPulls)</span>
+<span id="L1454">1454     (w :</span>
+<span id="L1455">1455       ETC.CenteredDiffCondSubGaussianWitnesses</span>
+<span id="L1456">1456         mu spec model commitArm reward tail) :</span>
+<span id="L1457">1457     ETC.PairwiseEmpMeanTailContract</span>
+<span id="L1458">1458       mu spec model commitArm reward tail := by</span>
+<span id="L1459">1459   refine ⟨?_⟩</span>
+<span id="L1460">1460   intro a hne</span>
+<span id="L1461">1461   have heps :</span>
+<span id="L1462">1462       0 &lt;= ETC.centeredPairwiseGapThreshold spec model a := by</span>
+<span id="L1463">1463     unfold ETC.centeredPairwiseGapThreshold</span>
+<span id="L1464">1464     exact</span>
+<span id="L1465">1465       (Rat.cast_nonneg (K := Real)).2</span>
+<span id="L1466">1466         (mul_nonneg</span>
+<span id="L1467">1467           (Nat.cast_nonneg spec.explorationPulls)</span>
+<span id="L1468">1468           (sub_nonneg.mpr</span>
+<span id="L1469">1469             (FiniteBanditModel.mean_le_bestArm_mean model a)))</span>
+<span id="L1470">1470   have hsubset :</span>
+<span id="L1471">1471       Set.Subset</span>
+<span id="L1472">1472         {omega : Omega |</span>
+<span id="L1473">1473           ETC.empMeanAtExploration spec commitArm (reward omega) a &gt;=</span>
+<span id="L1474">1474             ETC.empMeanAtExploration spec commitArm</span>
+<span id="L1475">1475               (reward omega) model.bestArm}</span>
+<span id="L1476">1476         {omega : Omega |</span>
+<span id="L1477">1477           ETC.centeredPairwiseGapThreshold spec model a &lt;=</span>
+<span id="L1478">1478             (Finset.range (spec.explorationPulls * K)).sum (fun t : Nat =&gt;</span>
+<span id="L1479">1479               ETC.centeredPairwiseRewardDiff</span>
+<span id="L1480">1480                 spec model commitArm reward a t omega)} :=</span>
+<span id="L1481">1481     ETC.empMeanAtExploration_ge_best_event_subset_centered_pairwise_sum_event</span>
+<span id="L1482">1482       spec model commitArm reward a hexplorationPulls_pos</span>
+<span id="L1483">1483   have htail_sum :</span>
+<span id="L1484">1484       mu {omega : Omega |</span>
+<span id="L1485">1485           ETC.centeredPairwiseGapThreshold spec model a &lt;=</span>
+<span id="L1486">1486             (Finset.range (spec.explorationPulls * K)).sum (fun t : Nat =&gt;</span>
+<span id="L1487">1487               ETC.centeredPairwiseRewardDiff</span>
+<span id="L1488">1488                 spec model commitArm reward a t omega)} &lt;=</span>
+<span id="L1489">1489         ENNReal.ofReal</span>
+<span id="L1490">1490           (Real.exp</span>
+<span id="L1491">1491             (-(ETC.centeredPairwiseGapThreshold spec model a) ^ 2 /</span>
+<span id="L1492">1492               (2 *</span>
+<span id="L1493">1493                 (((Finset.range (spec.explorationPulls * K)).sum</span>
+<span id="L1494">1494                   (fun t =&gt; w.c a t) : NNReal) : Real)))) := by</span>
+<span id="L1495">1495     exact</span>
+<span id="L1496">1496       Concentration.condSubGaussian_sum_tail_ennreal_of_stronglyAdapted</span>
+<span id="L1497">1497         (mu := mu)</span>
+<span id="L1498">1498         (Y := fun t omega =&gt;</span>
+<span id="L1499">1499           ETC.centeredPairwiseRewardDiff</span>
+<span id="L1500">1500             spec model commitArm reward a t omega)</span>
+<span id="L1501">1501         (cY := w.c a)</span>
+<span id="L1502">1502         (F := w.filtration a)</span>
+<span id="L1503">1503         (w.stronglyAdapted a hne)</span>
+<span id="L1504">1504         (w.subG0 a hne)</span>
+<span id="L1505">1505         (spec.explorationPulls * K)</span>
+<span id="L1506">1506         (w.condSubG a hne)</span>
+<span id="L1507">1507         heps</span>
+<span id="L1508">1508   exact (MeasureTheory.measure_mono hsubset).trans</span>
+<span id="L1509">1509     (htail_sum.trans (w.tail_bound a hne))</span>
+<span id="L1510">1510 </span>
+<span id="L1511">1511 end ETC</span>
+<span id="L1512">1512 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

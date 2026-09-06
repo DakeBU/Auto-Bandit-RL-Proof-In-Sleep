@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Algorithms/UCBRealStationaryMeasurePreservingSource.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Algorithms/UCBRealStationaryMeasurePreservingSource.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Algorithms/UCBRealStationaryMeasurePreservingSource.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Algorithms/UCBRealStationaryMeasurePreservingSource.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Algorithms.UCBRealStationaryFiniteArmRewardLaws</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Measure-preserving external sources for stationary UCB</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module constructs `RealStationaryUCBSequence` by pulling the canonical</span>
+<span id="L7">7 arm-stream process through a measure-preserving source map. A product-space</span>
+<span id="L8">8 specialization permits arbitrary independent nuisance randomness and closes</span>
+<span id="L9">9 the armwise-bounded expected-average consistency route without caller-supplied</span>
+<span id="L10">10 split conditional laws.</span>
+<span id="L11">11 -/</span>
+<span id="L12">12 </span>
+<span id="L13">13 namespace BanditRLProof</span>
+<span id="L14">14 </span>
+<span id="L15">15 open MeasureTheory ProbabilityTheory Filter</span>
+<span id="L16">16 open scoped Topology</span>
+<span id="L17">17 </span>
+<span id="L18">18 namespace UCB</span>
+<span id="L19">19 </span>
+<span id="L20">20 /-!</span>
+<span id="L21">21 Mathlib&#x27;s `condDistrib_map` has the required transport content, but rewriting</span>
+<span id="L22">22 its pushforward measure can expose proof-valued finite-measure instances. This</span>
+<span id="L23">23 equivalent uniqueness proof transports the conditioning and joint maps first.</span>
+<span id="L24">24 -/</span>
+<span id="L25">25 </span>
+<span id="L26">26 /-- Conditional distributions pull back through a measure-preserving map. -/</span>
+<span id="L27">27 theorem condDistrib_comp_measurePreserving</span>
+<span id="L28">28     {Alpha : Type u} {Beta : Type v} {Output : Type w}</span>
+<span id="L29">29     {Source : Type x}</span>
+<span id="L30">30     [MeasurableSpace Alpha] [MeasurableSpace Beta]</span>
+<span id="L31">31     [MeasurableSpace Output] [StandardBorelSpace Output] [Nonempty Output]</span>
+<span id="L32">32     [MeasurableSpace Source]</span>
+<span id="L33">33     (mu : Measure Source) [IsFiniteMeasure mu]</span>
+<span id="L34">34     (nu : Measure Alpha) [IsFiniteMeasure nu]</span>
+<span id="L35">35     (source : Source -&gt; Alpha) (hsource : MeasurePreserving source mu nu)</span>
+<span id="L36">36     (X : Alpha -&gt; Beta) (Y : Alpha -&gt; Output)</span>
+<span id="L37">37     (hX : Measurable X) (hY : Measurable Y) :</span>
+<span id="L38">38     condDistrib (Y ∘ source) (X ∘ source) mu =ᵐ[mu.map (X ∘ source)]</span>
+<span id="L39">39       condDistrib Y X nu := by</span>
+<span id="L40">40   apply ProbabilityTheory.condDistrib_ae_eq_of_measure_eq_compProd_of_measurable</span>
+<span id="L41">41     (hX.comp hsource.measurable) (hY.comp hsource.measurable)</span>
+<span id="L42">42   calc</span>
+<span id="L43">43     mu.map (fun omega =&gt; ((X ∘ source) omega, (Y ∘ source) omega)) =</span>
+<span id="L44">44         nu.map (fun alpha =&gt; (X alpha, Y alpha)) := by</span>
+<span id="L45">45       change mu.map ((fun alpha =&gt; (X alpha, Y alpha)) ∘ source) = _</span>
+<span id="L46">46       rw [← Measure.map_map (hX.prod hY) hsource.measurable,</span>
+<span id="L47">47         hsource.map_eq]</span>
+<span id="L48">48     _ = nu.map X ⊗ₘ condDistrib Y X nu := by</span>
+<span id="L49">49       exact (ProbabilityTheory.compProd_map_condDistrib hY.aemeasurable).symm</span>
+<span id="L50">50     _ = mu.map (X ∘ source) ⊗ₘ condDistrib Y X nu := by</span>
+<span id="L51">51       rw [← Measure.map_map hX hsource.measurable, hsource.map_eq]</span>
+<span id="L52">52 </span>
+<span id="L53">53 /-- Canonical UCB action trace composed with an external stream source. -/</span>
+<span id="L54">54 noncomputable def measurePreservingArmStreamAction</span>
+<span id="L55">55     {Omega : Type u} {K : Nat} [NeZero K]</span>
+<span id="L56">56     (hK : 0 &lt; K) (c : Real) (sigma2 : NNReal)</span>
+<span id="L57">57     (source : Omega -&gt; ArmRewardStream K) :</span>
+<span id="L58">58     Omega -&gt; ActionTrace (Fin K) :=</span>
+<span id="L59">59   fun omega =&gt; armStreamAction hK (c * (sigma2 : Real)) (source omega)</span>
+<span id="L60">60 </span>
+<span id="L61">61 /-- Canonical selected-reward trace composed with an external stream source. -/</span>
+<span id="L62">62 noncomputable def measurePreservingArmStreamReward</span>
+<span id="L63">63     {Omega : Type u} {K : Nat} [NeZero K]</span>
+<span id="L64">64     (hK : 0 &lt; K) (c : Real) (sigma2 : NNReal)</span>
+<span id="L65">65     (source : Omega -&gt; ArmRewardStream K) :</span>
+<span id="L66">66     Omega -&gt; RewardTrace Real :=</span>
+<span id="L67">67   fun omega =&gt; armStreamReward hK (c * (sigma2 : Real)) (source omega)</span>
+<span id="L68">68 </span>
+<span id="L69">69 /--</span>
+<span id="L70">70 A measure-preserving source of canonical arm streams produces every field of</span>
+<span id="L71">71 the local stationary UCB compatibility bundle on the external sample space.</span>
+<span id="L72">72 -/</span>
+<span id="L73">73 theorem realStationaryUCBSequence_comp_measurePreserving_armStream</span>
+<span id="L74">74     {Omega : Type u} {K : Nat} [NeZero K] [MeasurableSpace Omega]</span>
+<span id="L75">75     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L76">76     (hK : 0 &lt; K) (c : Real) (sigma2 : NNReal)</span>
+<span id="L77">77     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]</span>
+<span id="L78">78     (source : Omega -&gt; ArmRewardStream K)</span>
+<span id="L79">79     (hsource : MeasurePreserving source mu (armStreamMeasure nu)) :</span>
+<span id="L80">80     RealStationaryUCBSequence mu hK c sigma2 nu</span>
+<span id="L81">81       (measurePreservingArmStreamAction hK c sigma2 source)</span>
+<span id="L82">82       (measurePreservingArmStreamReward hK c sigma2 source) := by</span>
+<span id="L83">83   refine</span>
+<span id="L84">84     { measurable_action := fun t =&gt;</span>
+<span id="L85">85         (measurable_armStreamAction hK (c * (sigma2 : Real)) t).comp</span>
+<span id="L86">86           hsource.measurable</span>
+<span id="L87">87       measurable_reward := fun t =&gt;</span>
+<span id="L88">88         (measurable_armStreamReward hK (c * (sigma2 : Real)) t).comp</span>
+<span id="L89">89           hsource.measurable</span>
+<span id="L90">90       hasLaw_action_zero := ?_</span>
+<span id="L91">91       hasCondDistrib_feedback_zero := ?_</span>
+<span id="L92">92       hasCondDistrib_action := ?_</span>
+<span id="L93">93       hasCondDistrib_feedback := ?_ }</span>
+<span id="L94">94   · change Measure.map</span>
+<span id="L95">95       ((fun stream : ArmRewardStream K =&gt;</span>
+<span id="L96">96         armStreamAction hK (c * (sigma2 : Real)) stream 0) ∘ source) mu = _</span>
+<span id="L97">97     rw [← Measure.map_map</span>
+<span id="L98">98       (measurable_armStreamAction hK (c * (sigma2 : Real)) 0)</span>
+<span id="L99">99       hsource.measurable]</span>
+<span id="L100">100     rw [hsource.map_eq]</span>
+<span id="L101">101   · simpa [measurePreservingArmStreamAction,</span>
+<span id="L102">102       measurePreservingArmStreamReward, Function.comp_def] using</span>
+<span id="L103">103       (condDistrib_comp_measurePreserving mu (armStreamMeasure nu)</span>
+<span id="L104">104         source hsource</span>
+<span id="L105">105         (fun stream : ArmRewardStream K =&gt;</span>
+<span id="L106">106           armStreamAction hK (c * (sigma2 : Real)) stream 0)</span>
+<span id="L107">107         (fun stream : ArmRewardStream K =&gt;</span>
+<span id="L108">108           armStreamReward hK (c * (sigma2 : Real)) stream 0)</span>
+<span id="L109">109         (measurable_armStreamAction hK (c * (sigma2 : Real)) 0)</span>
+<span id="L110">110         (measurable_armStreamReward hK (c * (sigma2 : Real)) 0))</span>
+<span id="L111">111   · intro i</span>
+<span id="L112">112     simpa [measurePreservingArmStreamAction,</span>
+<span id="L113">113       measurePreservingArmStreamReward, Function.comp_def] using</span>
+<span id="L114">114       (condDistrib_comp_measurePreserving mu (armStreamMeasure nu)</span>
+<span id="L115">115         source hsource</span>
+<span id="L116">116         (fun stream : ArmRewardStream K =&gt;</span>
+<span id="L117">117           History.finitePairHistoryOfTrace</span>
+<span id="L118">118             (armStreamAction hK (c * (sigma2 : Real)) stream)</span>
+<span id="L119">119             (armStreamReward hK (c * (sigma2 : Real)) stream) i)</span>
+<span id="L120">120         (fun stream : ArmRewardStream K =&gt;</span>
+<span id="L121">121           armStreamAction hK (c * (sigma2 : Real)) stream (i + 1))</span>
+<span id="L122">122         (History.measurable_finitePairHistoryOfTrace</span>
+<span id="L123">123           (armStreamAction hK (c * (sigma2 : Real)))</span>
+<span id="L124">124           (armStreamReward hK (c * (sigma2 : Real)))</span>
+<span id="L125">125           (measurable_armStreamAction hK (c * (sigma2 : Real)))</span>
+<span id="L126">126           (measurable_armStreamReward hK (c * (sigma2 : Real))) i)</span>
+<span id="L127">127         (measurable_armStreamAction hK (c * (sigma2 : Real)) (i + 1)))</span>
+<span id="L128">128   · intro i</span>
+<span id="L129">129     simpa [measurePreservingArmStreamAction,</span>
+<span id="L130">130       measurePreservingArmStreamReward, Function.comp_def] using</span>
+<span id="L131">131       (condDistrib_comp_measurePreserving mu (armStreamMeasure nu)</span>
+<span id="L132">132         source hsource</span>
+<span id="L133">133         (fun stream : ArmRewardStream K =&gt;</span>
+<span id="L134">134           (History.finitePairHistoryOfTrace</span>
+<span id="L135">135               (armStreamAction hK (c * (sigma2 : Real)) stream)</span>
+<span id="L136">136               (armStreamReward hK (c * (sigma2 : Real)) stream) i,</span>
+<span id="L137">137             armStreamAction hK (c * (sigma2 : Real)) stream (i + 1)))</span>
+<span id="L138">138         (fun stream : ArmRewardStream K =&gt;</span>
+<span id="L139">139           armStreamReward hK (c * (sigma2 : Real)) stream (i + 1))</span>
+<span id="L140">140         ((History.measurable_finitePairHistoryOfTrace</span>
+<span id="L141">141             (armStreamAction hK (c * (sigma2 : Real)))</span>
+<span id="L142">142             (armStreamReward hK (c * (sigma2 : Real)))</span>
+<span id="L143">143             (measurable_armStreamAction hK (c * (sigma2 : Real)))</span>
+<span id="L144">144             (measurable_armStreamReward hK (c * (sigma2 : Real))) i).prod</span>
+<span id="L145">145           (measurable_armStreamAction hK (c * (sigma2 : Real)) (i + 1)))</span>
+<span id="L146">146         (measurable_armStreamReward hK (c * (sigma2 : Real)) (i + 1)))</span>
+<span id="L147">147 </span>
+<span id="L148">148 /-- Canonical UCB action on a stream product with auxiliary noise. -/</span>
+<span id="L149">149 noncomputable def productNoiseArmStreamAction</span>
+<span id="L150">150     {K : Nat} [NeZero K] {Aux : Type u}</span>
+<span id="L151">151     (hK : 0 &lt; K) (c : Real) (sigma2 : NNReal) :</span>
+<span id="L152">152     ArmRewardStream K × Aux -&gt; ActionTrace (Fin K) :=</span>
+<span id="L153">153   measurePreservingArmStreamAction hK c sigma2 Prod.fst</span>
+<span id="L154">154 </span>
+<span id="L155">155 /-- Canonical selected reward on a stream product with auxiliary noise. -/</span>
+<span id="L156">156 noncomputable def productNoiseArmStreamReward</span>
+<span id="L157">157     {K : Nat} [NeZero K] {Aux : Type u}</span>
+<span id="L158">158     (hK : 0 &lt; K) (c : Real) (sigma2 : NNReal) :</span>
+<span id="L159">159     ArmRewardStream K × Aux -&gt; RewardTrace Real :=</span>
+<span id="L160">160   measurePreservingArmStreamReward hK c sigma2 Prod.fst</span>
+<span id="L161">161 </span>
+<span id="L162">162 /-- Product-first projection is a concrete external stationary UCB source. -/</span>
+<span id="L163">163 theorem realStationaryUCBSequence_productNoise_armStream</span>
+<span id="L164">164     {K : Nat} [NeZero K] {Aux : Type u} [MeasurableSpace Aux]</span>
+<span id="L165">165     (hK : 0 &lt; K) (c : Real) (sigma2 : NNReal)</span>
+<span id="L166">166     (nu : Kernel (Fin K) Real) [IsMarkovKernel nu]</span>
+<span id="L167">167     (auxMu : Measure Aux) [IsProbabilityMeasure auxMu] :</span>
+<span id="L168">168     RealStationaryUCBSequence ((armStreamMeasure nu).prod auxMu)</span>
+<span id="L169">169       hK c sigma2 nu</span>
+<span id="L170">170       (productNoiseArmStreamAction hK c sigma2)</span>
+<span id="L171">171       (productNoiseArmStreamReward hK c sigma2) := by</span>
+<span id="L172">172   exact realStationaryUCBSequence_comp_measurePreserving_armStream</span>
+<span id="L173">173     ((armStreamMeasure nu).prod auxMu) hK c sigma2 nu</span>
+<span id="L174">174     Prod.fst measurePreserving_fst</span>
+<span id="L175">175 </span>
+<span id="L176">176 /-- Product law for finite Real arm streams and independent auxiliary noise. -/</span>
+<span id="L177">177 noncomputable def finiteArmProductNoiseMeasure</span>
+<span id="L178">178     {K : Nat} {Aux : Type u} [MeasurableSpace Aux]</span>
+<span id="L179">179     (armLaw : Fin K -&gt; Measure Real)</span>
+<span id="L180">180     (hprob : forall arm, IsProbabilityMeasure (armLaw arm))</span>
+<span id="L181">181     (auxMu : Measure Aux) : Measure (ArmRewardStream K × Aux) :=</span>
+<span id="L182">182   let nu := finiteArmRealRewardKernel armLaw</span>
+<span id="L183">183   letI : IsMarkovKernel nu :=</span>
+<span id="L184">184     finiteArmRealRewardKernel_isMarkov armLaw hprob</span>
+<span id="L185">185   (armStreamMeasure nu).prod auxMu</span>
+<span id="L186">186 </span>
+<span id="L187">187 /--</span>
+<span id="L188">188 Armwise-bounded laws give the canonical logarithmic expected-regret envelope</span>
+<span id="L189">189 on a product sample space carrying arbitrary independent auxiliary noise.</span>
+<span id="L190">190 -/</span>
+<span id="L191">191 theorem productNoiseArmwiseBoundedFiniteArmExpectedRegret_nonneg_and_le</span>
+<span id="L192">192     {K : Nat} [NeZero K] {Aux : Type u} [MeasurableSpace Aux]</span>
+<span id="L193">193     (hK : 0 &lt; K)</span>
+<span id="L194">194     (armLaw : Fin K -&gt; Measure Real)</span>
+<span id="L195">195     (hprob : forall arm, IsProbabilityMeasure (armLaw arm))</span>
+<span id="L196">196     (lo hi : Fin K -&gt; Real)</span>
+<span id="L197">197     (auxMu : Measure Aux) [IsProbabilityMeasure auxMu]</span>
+<span id="L198">198     (hbound : forall arm,</span>
+<span id="L199">199       Filter.Eventually</span>
+<span id="L200">200         (fun x : Real =&gt; Set.Icc (lo arm) (hi arm) x) (ae (armLaw arm)))</span>
+<span id="L201">201     (n : Nat) :</span>
+<span id="L202">202     let sigma2 := Concentration.finiteArmPositiveVarianceProxy</span>
+<span id="L203">203       (fun arm =&gt; Concentration.intervalVarianceProxy (lo arm) (hi arm))</span>
+<span id="L204">204     0 &lt;= realStationaryArmwiseBoundedFiniteArmExpectedRegret</span>
+<span id="L205">205         (finiteArmProductNoiseMeasure armLaw hprob auxMu) armLaw</span>
+<span id="L206">206         (productNoiseArmStreamAction hK 4 sigma2) n /\</span>
+<span id="L207">207       realStationaryArmwiseBoundedFiniteArmExpectedRegret</span>
+<span id="L208">208           (finiteArmProductNoiseMeasure armLaw hprob auxMu) armLaw</span>
+<span id="L209">209           (productNoiseArmStreamAction hK 4 sigma2) n &lt;=</span>
+<span id="L210">210         realStationaryArmwiseBoundedFiniteArmModelCoefficient</span>
+<span id="L211">211             armLaw hprob lo hi *</span>
+<span id="L212">212           (1 + Real.log ((n + 1 : Nat) : Real)) := by</span>
+<span id="L213">213   dsimp only</span>
+<span id="L214">214   let nu := finiteArmRealRewardKernel armLaw</span>
+<span id="L215">215   let sigma2 := Concentration.finiteArmPositiveVarianceProxy</span>
+<span id="L216">216     (fun arm =&gt; Concentration.intervalVarianceProxy (lo arm) (hi arm))</span>
+<span id="L217">217   letI : IsMarkovKernel nu :=</span>
+<span id="L218">218     finiteArmRealRewardKernel_isMarkov armLaw hprob</span>
+<span id="L219">219   change</span>
+<span id="L220">220     0 &lt;= realStationaryArmwiseBoundedFiniteArmExpectedRegret</span>
+<span id="L221">221         ((armStreamMeasure nu).prod auxMu) armLaw</span>
+<span id="L222">222         (productNoiseArmStreamAction hK 4 sigma2) n /\</span>
+<span id="L223">223       realStationaryArmwiseBoundedFiniteArmExpectedRegret</span>
+<span id="L224">224           ((armStreamMeasure nu).prod auxMu) armLaw</span>
+<span id="L225">225           (productNoiseArmStreamAction hK 4 sigma2) n &lt;=</span>
+<span id="L226">226         realStationaryArmwiseBoundedFiniteArmModelCoefficient</span>
+<span id="L227">227             armLaw hprob lo hi *</span>
+<span id="L228">228           (1 + Real.log ((n + 1 : Nat) : Real))</span>
+<span id="L229">229   exact realStationaryArmwiseBoundedFiniteArmExpectedRegret_nonneg_and_le</span>
+<span id="L230">230     ((armStreamMeasure nu).prod auxMu) hK armLaw hprob lo hi</span>
+<span id="L231">231     (productNoiseArmStreamAction hK 4 sigma2)</span>
+<span id="L232">232     (productNoiseArmStreamReward hK 4 sigma2) hbound</span>
+<span id="L233">233     (realStationaryUCBSequence_productNoise_armStream</span>
+<span id="L234">234       hK 4 sigma2 nu auxMu) n</span>
+<span id="L235">235 </span>
+<span id="L236">236 /--</span>
+<span id="L237">237 The expected regret per round of product-noise stationary UCB with armwise</span>
+<span id="L238">238 bounded finite Real reward laws tends to zero.</span>
+<span id="L239">239 -/</span>
+<span id="L240">240 theorem productNoiseArmwiseBoundedFiniteArmExpectedAverageRegret_tendsto_zero</span>
+<span id="L241">241     {K : Nat} [NeZero K] {Aux : Type u} [MeasurableSpace Aux]</span>
+<span id="L242">242     (hK : 0 &lt; K)</span>
+<span id="L243">243     (armLaw : Fin K -&gt; Measure Real)</span>
+<span id="L244">244     (hprob : forall arm, IsProbabilityMeasure (armLaw arm))</span>
+<span id="L245">245     (lo hi : Fin K -&gt; Real)</span>
+<span id="L246">246     (auxMu : Measure Aux) [IsProbabilityMeasure auxMu]</span>
+<span id="L247">247     (hbound : forall arm,</span>
+<span id="L248">248       Filter.Eventually</span>
+<span id="L249">249         (fun x : Real =&gt; Set.Icc (lo arm) (hi arm) x) (ae (armLaw arm))) :</span>
+<span id="L250">250     let sigma2 := Concentration.finiteArmPositiveVarianceProxy</span>
+<span id="L251">251       (fun arm =&gt; Concentration.intervalVarianceProxy (lo arm) (hi arm))</span>
+<span id="L252">252     Tendsto</span>
+<span id="L253">253       (realStationaryArmwiseBoundedFiniteArmExpectedAverageRegret</span>
+<span id="L254">254         (finiteArmProductNoiseMeasure armLaw hprob auxMu) armLaw</span>
+<span id="L255">255         (productNoiseArmStreamAction hK 4 sigma2))</span>
+<span id="L256">256       atTop (nhds 0) := by</span>
+<span id="L257">257   dsimp only</span>
+<span id="L258">258   let nu := finiteArmRealRewardKernel armLaw</span>
+<span id="L259">259   let sigma2 := Concentration.finiteArmPositiveVarianceProxy</span>
+<span id="L260">260     (fun arm =&gt; Concentration.intervalVarianceProxy (lo arm) (hi arm))</span>
+<span id="L261">261   letI : IsMarkovKernel nu :=</span>
+<span id="L262">262     finiteArmRealRewardKernel_isMarkov armLaw hprob</span>
+<span id="L263">263   change Tendsto</span>
+<span id="L264">264     (realStationaryArmwiseBoundedFiniteArmExpectedAverageRegret</span>
+<span id="L265">265       ((armStreamMeasure nu).prod auxMu) armLaw</span>
+<span id="L266">266       (productNoiseArmStreamAction hK 4 sigma2)) atTop (nhds 0)</span>
+<span id="L267">267   exact</span>
+<span id="L268">268     realStationaryArmwiseBoundedFiniteArmExpectedAverageRegret_tendsto_zero</span>
+<span id="L269">269       ((armStreamMeasure nu).prod auxMu) hK armLaw hprob lo hi</span>
+<span id="L270">270       (productNoiseArmStreamAction hK 4 sigma2)</span>
+<span id="L271">271       (productNoiseArmStreamReward hK 4 sigma2) hbound</span>
+<span id="L272">272       (realStationaryUCBSequence_productNoise_armStream</span>
+<span id="L273">273         hK 4 sigma2 nu auxMu)</span>
+<span id="L274">274 </span>
+<span id="L275">275 end UCB</span>
+<span id="L276">276 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

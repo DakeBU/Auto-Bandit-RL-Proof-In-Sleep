@@ -1,0 +1,1050 @@
+{
+  "schema_version": "1.0",
+  "updated": "2026-08-27",
+  "title": "BanditRLwiki",
+  "scope": "A curated, assumption-indexed atlas of upper bounds, lower bounds, optimality gaps, primary sources, and local BanditRLlib evidence. It is not an exhaustive claim about all bandit or reinforcement-learning literature.",
+  "active_source_audits": [
+    {
+      "id": "neurips-2025-succinct-lower-bounds",
+      "title": "Succinct stochastic-bandit lower-bound geometry",
+      "paper_title": "A Novel General Framework for Sharp Lower Bounds in Succinct Stochastic Bandits",
+      "authors": "Guo Zeng and Jean Honorio",
+      "year": 2025,
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/26407588dfb08e48c459c074ab6adb7d-Abstract-Conference.html",
+      "milestone_id": "NEURIPS-2025-SUCCINCT-LOWER-BOUND-GEOMETRY-AUDIT",
+      "lean_status": "partial",
+      "compiled_declaration_count": 54,
+      "scope": "Definitions 3.1–3.3, Lemmas 3.1–3.4, the finite-Bessel strict-support route, and a global-R boundedness diagnostic compile.",
+      "boundary": "This is a source-frozen partial port, not yet an assumption-matched upper/lower comparison case. Lemmas 3.5–3.6, Assumption 3.7, Theorem 3.8, and every regret endpoint remain uncompiled.",
+      "representative_declarations": [
+        "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.sourceRSet_not_bddAbove_of_nonzero_atom_orthogonal",
+        "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.IsSuccinctSupport.sourceQ_supportCombination_eq",
+        "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.succinctSize_ge_strictSize",
+        "BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.strictlySuccinctSize_unique"
+      ]
+    },
+    {
+      "id": "neurips-2025-stochastic-gradient-bandit",
+      "title": "Stochastic-gradient bandit Theorem 1, Corollary 1, and blocked Theorem-2 follow-on",
+      "paper_title": "Does Stochastic Gradient really succeed for Bandits?",
+      "authors": "Dorian Baudry, Emmeran Johnson, Simon Vary, Ciara Pike-Burke, and Patrick Rebeschini",
+      "year": 2025,
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2025/hash/a4e683f0ce6b91e7fbdae9d32642d88f-Abstract-Conference.html",
+      "milestone_id": "NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT",
+      "follow_on_milestone_id": "NEURIPS-2025-SGB-PHASE-TRANSITION-FOLLOWON",
+      "lean_status": "partial",
+      "compiled_declaration_count": 361,
+      "scope": "The counted SGB audit retains the exact 361 = 223 + 23 + 25 + 26 + 7 + 8 + 13 + 28 + 8 audit-slice inventory through one-step selected-reward freshness, terminal-count events, nth-pull-to-count bridges, and a generic finite-horizon low-count regret consumer. A separate ten-declaration native-law module identifies the complete visible/native trajectory law. The selected-block module now has 36 declarations: eight transport finite optimal-arm pull-time/reward blocks to a masked latent-coupling law with explicit `WithTop Nat` missing pulls, fourteen define and transport the exact finite Appendix-C `S0/S1` event, ten split the pure latent phase probability into the generated all-present event plus an explicit missing-pull event, and four map the missing branch to a low-count event, transport its probability to the generated trajectory, and charge its existing mass against expected sampled pseudo-regret. The exact Theorem-1 and Corollary-1 endpoints use generated zero-initialized two-arm fixed-IID trajectories with a Unit Dirac environment prior; the reward laws themselves remain bounded fixed-IID laws. Corollary 1 assumes T >= 2, 0 < Delta < 1, and one fixed eta_T = sqrt(log T / T) per horizon.",
+      "boundary": "The audit remains partial. Corollary 1 is a direct Theorem-1 consumer, not evidence for the polynomial-regret Theorem 2. Complete visible/native law equality, missing-pull-aware selected-block transport, exact finite phase-event transport, the disjoint missing/all-present probability split, the missing-pull-to-terminal-count inclusion, and the missing-pull finite-horizon expected-regret consumer now compile. None is a selected-IID theorem or a positive-probability producer. The next unique leaf is the generated all-present Appendix-C phase trigger at a fixed chronological cutoff; the stopped-prefix future-cylinder law, conditional no-return probability >= 1/2, Rademacher/binomial ballot probability, asymptotic assembly, and the frozen terminal remain blocked. Theorem 4 likewise still lacks the general-K generated process, uniform buffer/survival producer, stopped supermartingale/Doob route, and final regret assembly.",
+      "representative_declarations": [
+        "BanditRLProof.StochasticGradientBandit.softmaxProbability_sum",
+        "BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gapCoordinate",
+        "BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_nextPair_given_environment_prefix",
+        "BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_gapCoordinate",
+        "BanditRLProof.StochasticGradientBandit.twoArmProbabilityAt_zero_div_failure_eq_exp_two_mul",
+        "BanditRLProof.StochasticGradientBandit.integral_exp_mul_le_sourceEqEight_of_ae_abs_le_one",
+        "BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_exp_actionReward_le_sourceEqEight_of_mean",
+        "BanditRLProof.StochasticGradientBandit.integral_twoArmHistoryStepKernel_exp_forwardSuccessor_le_add_success_sq",
+        "BanditRLProof.StochasticGradientBandit.integral_twoArmInitialPairKernel_exp_inverseIncrement_le",
+        "BanditRLProof.StochasticGradientBandit.TwoArmBoundedFixedMeanEnvironmentContract",
+        "BanditRLProof.StochasticGradientBandit.trajectoryPrefix_condDistrib_integral_forwardSuccessor_le",
+        "BanditRLProof.StochasticGradientBandit.integrable_twoArmForwardTrajectorySuccessorPotential",
+        "BanditRLProof.StochasticGradientBandit.twoArmForwardTrajectorySuccessor_condExp_le_recurrenceBound",
+        "BanditRLProof.StochasticGradientBandit.integrable_measurableTwoArmHistoryStepKernel_sourceIncrement_of_contract",
+        "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDEnvironment_contract",
+        "BanditRLProof.StochasticGradientBandit.integral_twoArmFixedIIDHistoryStepKernel_sourceIncrement_eq_gapCoordinate",
+        "BanditRLProof.StochasticGradientBandit.twoArmForwardUnconditionalRecurrence",
+        "BanditRLProof.StochasticGradientBandit.twoArmInverseFailureMassSqTelescope",
+        "BanditRLProof.StochasticGradientBandit.twoArmFullFailureMassSqSum_le",
+        "BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_eq_generated",
+        "BanditRLProof.StochasticGradientBandit.integral_twoArmSampledPseudoRegret_le_sourceTheoremOne",
+        "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_theoremOne",
+        "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_corollaryOne",
+        "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullTime_spec",
+        "BanditRLProof.StochasticGradientBandit.measurable_twoArmNthOptimalPullReward",
+        "BanditRLProof.StochasticGradientBandit.measurable_twoArmNthOptimalPullSuccessProbability",
+        "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDLatentTrajectoryMeasure_map_optimalPrefix_eq_pi",
+        "BanditRLProof.StochasticGradientBandit.twoArmNthOptimalPullReward_eq_latentCoordinate_ae",
+        "BanditRLProof.UCB.armStreamMeasure_map_frestrictLe_eq_pi",
+        "BanditRLProof.Thompson.latentArmStreamTrajectoryKernel_map_frestrictLe_eq_of_streamPrefix_eq",
+        "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure_map_stream_visiblePrefix_eq",
+        "BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure_map_visiblePrefix_nextAction_eq_compProd",
+        "BanditRLProof.Thompson.latentArmStreamVisibleNextReward_eq_selectedCoordinate_ae",
+        "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod_of_locality",
+        "BanditRLProof.Thompson.latentArmStreamVisiblePrefixNextAction_coordinate_branch_eq_prod",
+        "BanditRLProof.Thompson.latentArmStreamVisibleNextReward_joint_eq_compProd",
+        "BanditRLProof.Thompson.latentArmStreamVisibleNextReward_condDistrib_ae_eq_nu",
+        "BanditRLProof.Thompson.latentArmStreamVisibleTrajectoryMeasure_nextReward_condDistrib_ae_eq_nu",
+        "BanditRLProof.Thompson.realHistoryPullCount_extendPairHistorySucc",
+        "BanditRLProof.StochasticGradientBandit.twoArmOptimalPullCountBelowEvent_charge_mul_probability_le_integral",
+        "BanditRLProof.StochasticGradientBandit.twoArmFixedIIDStepOneStarvationEvent_charge_mul_probability_le_integral",
+        "BanditRLProof.StochasticGradientBandit.theoremFourStepOneMargin_pos",
+        "BanditRLProof.StochasticGradientBandit.theoremFourStepFour_survivalMass_pos",
+        "BanditRLProof.StochasticGradientBandit.theoremFourFiniteTransientMass_le_inv"
+      ]
+    }
+  ],
+  "families": [
+    {
+      "id": "stochastic-finite",
+      "title": "Finite stochastic bandits",
+      "summary": "Expected, asymptotic, and instance-dependent regret under stationary independent arm rewards.",
+      "comparison_signature": [
+        {"label": "Problem class", "value": "Finite-armed stationary stochastic bandits"},
+        {"label": "Feedback", "value": "Bandit feedback from the selected arm"},
+        {"label": "Objective", "value": "Expected pseudo-regret unless a case says otherwise"},
+        {"label": "Parameters", "value": "A arms, T rounds, gaps Delta, confidence delta when present"}
+      ]
+    },
+    {
+      "id": "adversarial-bobw",
+      "title": "Adversarial and best-of-both-worlds bandits",
+      "summary": "External regret for bounded adversarial losses and algorithms that adapt to stochastic structure.",
+      "comparison_signature": [
+        {"label": "Problem class", "value": "Finite action adversarial or self-bounding loss sequences"},
+        {"label": "Feedback", "value": "Bandit loss feedback"},
+        {"label": "Objective", "value": "Expected or high-probability external regret"},
+        {"label": "Parameters", "value": "A actions, T rounds, optional gaps Delta"}
+      ]
+    },
+    {
+      "id": "linear-contextual",
+      "title": "Linear and contextual bandits",
+      "summary": "Linear realizability, self-normalized confidence, finite policy classes, and dimension-dependent lower bounds.",
+      "comparison_signature": [
+        {"label": "Problem class", "value": "Linear stochastic or adversarial contextual bandits"},
+        {"label": "Feedback", "value": "Selected-action reward or loss"},
+        {"label": "Objective", "value": "Cumulative pseudo-regret or policy regret"},
+        {"label": "Parameters", "value": "Dimension d, actions A, policies N, rounds T, confidence delta"}
+      ]
+    },
+    {
+      "id": "finite-horizon-rl",
+      "title": "Finite-horizon tabular reinforcement learning",
+      "summary": "Episodic tabular MDP regret, Hoeffding and Bernstein bonuses, and full-range minimax behavior.",
+      "comparison_signature": [
+        {"label": "Problem class", "value": "Unknown episodic tabular MDP"},
+        {"label": "Feedback", "value": "Generated state, action, reward, and next-state trajectories"},
+        {"label": "Objective", "value": "High-probability cumulative episode pseudo-regret"},
+        {"label": "Parameters", "value": "S states, A actions, horizon H, episodes K, total steps T=HK"}
+      ]
+    },
+    {
+      "id": "delayed-nonstationary",
+      "title": "Delayed and nonstationary bandits",
+      "summary": "Delayed observations, variation budgets, switch budgets, dynamic comparators, and adaptive detection.",
+      "comparison_signature": [
+        {"label": "Problem class", "value": "Delayed adversarial or time-varying stochastic bandits"},
+        {"label": "Feedback", "value": "Delayed selected-action feedback"},
+        {"label": "Objective", "value": "External or dynamic regret"},
+        {"label": "Parameters", "value": "Total delay D, variation V_T, switches S, actions A, rounds T"}
+      ]
+    },
+    {
+      "id": "pure-exploration",
+      "title": "Pure exploration and best-arm identification",
+      "summary": "Fixed-confidence identification, characteristic time, change of measure, and stopping rules.",
+      "comparison_signature": [
+        {"label": "Problem class", "value": "Unique-best-arm one-parameter exponential-family bandits"},
+        {"label": "Feedback", "value": "Adaptive arm samples"},
+        {"label": "Objective", "value": "delta-PAC identification with minimal expected stopping time"},
+        {"label": "Parameters", "value": "Arm laws, alternatives, confidence delta, characteristic time T-star"}
+      ]
+    },
+    {
+      "id": "distributional-lower-bounds",
+      "title": "Distributional and high-probability lower bounds",
+      "summary": "Tail lower bounds, expected-regret tradeoffs, and source-faithful lower-bound proof spines.",
+      "comparison_signature": [
+        {"label": "Problem class", "value": "Finite stochastic or adversarial bandits"},
+        {"label": "Feedback", "value": "One common randomized nonanticipating policy"},
+        {"label": "Objective", "value": "Tail probability of random pseudo-regret or random regret"},
+        {"label": "Parameters", "value": "A arms, T rounds, confidence delta, expected-regret scale B"}
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "id": "stochastic-finite-arm-minimax",
+      "family": "stochastic-finite",
+      "title": "Finite-arm stochastic minimax expected regret",
+      "summary": "MOSS-type algorithms and Gaussian/Bernoulli hard families identify the square-root A times T minimax scale.",
+      "tags": ["MOSS", "minimax", "expected pseudo-regret", "bounded rewards", "Gaussian lower bound"],
+      "signature": {
+        "Reward model": "Independent stationary rewards; the literature upper uses rewards in [0,1]",
+        "Horizon": "Any finite T; the cited MOSS-anytime result is horizon-free",
+        "Regret": "Expected pseudo-regret",
+        "Target scale": "Theta(sqrt(A T))"
+      },
+      "source_status": "faithful-restatement",
+      "comparison": {
+        "status": "minimax-matched",
+        "gap": "Universal constants and the exact hard-family reward class differ across the displayed source theorems.",
+        "note": "The literature establishes the square-root minimax order. Local Lean now supplies the unit-Gaussian lower bound and fixed-horizon Algorithm 7 on unit-subgaussian laws with gaps in [0,1]. The cited anytime theorem remains a distinct formalization target."
+      },
+      "upper": [
+        {
+          "paper_title": "Anytime optimal algorithms in stochastic multi-armed bandits",
+          "result_title": "Anytime MOSS regret",
+          "authors": "Rémy Degenne and Vianney Perchet",
+          "year": 2016,
+          "url": "https://proceedings.mlr.press/v48/degenne16.html",
+          "theorem": "Theorem 3 with Lemma 3",
+          "math": "\\mathbb E R_T\\le 113\\sqrt{AT}+\\Delta_{\\max}.",
+          "plain": "The anytime MOSS variant has expected regret at most 113 times square root A T plus the largest gap.",
+          "scope": "Independent rewards supported in [0,1], with the source's anytime index and initialization."
+        }
+      ],
+      "lower": [
+        {
+          "paper_title": "Anytime optimal algorithms in stochastic multi-armed bandits",
+          "result_title": "Minimax stochastic-bandit lower bound",
+          "authors": "Rémy Degenne and Vianney Perchet",
+          "year": 2016,
+          "url": "https://proceedings.mlr.press/v48/degenne16.html",
+          "theorem": "Lemma 3",
+          "math": "\\inf_\\pi\\sup_\\nu\\mathbb E_\\nu R_T(\\pi)\\ge \\frac1{20}\\sqrt{AT}.",
+          "plain": "Every policy has a stochastic instance with expected regret at least one twentieth of square root A T under the source's parameter range.",
+          "scope": "Use the exact arm-count and horizon restrictions stated in the source."
+        }
+      ],
+      "lean": {
+        "status": "partial",
+        "scope": "BanditRLlib compiles a unit-variance Gaussian lower bound with constant 1/54 and fixed-horizon MOSS on unit-subgaussian laws with gaps in [0,1]. The cited anytime MOSS theorem is not compiled.",
+        "declarations": [
+          "BanditRLProof.LowerBounds.unitGaussianMinimaxExpectedPseudoRegret_ge_one_div_fiftyFour_sqrt"
+        ],
+        "milestones": [
+          "TEXTBOOK-PART-IV-THEOREM-13-1-GAUSSIAN-MINIMAX"
+        ],
+        "missing": [
+          "Define the anytime MOSS index and measurable generated history policy.",
+          "Prove the same-policy pull-count decomposition and bounded-reward confidence route.",
+          "Compile the matching square-root expected-regret upper terminal without conflating the Gaussian lower class with [0,1] rewards."
+        ]
+      },
+      "frontier": {
+        "literature_open": false,
+        "formalization_open": true,
+        "question": "Can the exact anytime MOSS source theorem be compiled on one generated bounded-reward trajectory?",
+        "closest": "The local Gaussian lower terminal and fixed-horizon MOSS near-minimax theorem compile; the distinct anytime variant remains unformalized.",
+        "leaf_ids": ["MOSS-ANYTIME-GENERATED-UPPER"],
+        "missing": ["Index measurability", "armwise confidence", "pull-count summation", "expected-regret terminal"]
+      }
+    },
+    {
+      "id": "stochastic-instance-dependent-klucb",
+      "family": "stochastic-finite",
+      "title": "Bernoulli KL-UCB instance-dependent asymptotic regret",
+      "summary": "KL-UCB matches the Lai–Robbins information lower bound arm by arm on Bernoulli bandits.",
+      "tags": ["KL-UCB", "Lai-Robbins", "Bernoulli KL", "instance dependent", "asymptotic"],
+      "signature": {
+        "Reward model": "Stationary Bernoulli arms with a unique best mean",
+        "Policy class": "Uniformly efficient policies for the lower bound",
+        "Regret": "Expected pseudo-regret normalized by log T",
+        "Target constant": "sum over suboptimal arms of Delta_a divided by kl(mu_a, mu_star)"
+      },
+      "source_status": "faithful-restatement",
+      "comparison": {
+        "status": "asymptotic-matched",
+        "gap": "No leading-constant gap in the Bernoulli source model; the local Lean route is a conservative finite-time theorem and does not reach this asymptotic constant.",
+        "note": "The published upper and lower information constants match. Chapter 16's asymptotic and finite-time lower bounds compile; sharp KL-Chernoff concentration for the matching upper constant remains separate."
+      },
+      "upper": [
+        {
+          "paper_title": "The KL-UCB Algorithm for Bounded Stochastic Bandits and Beyond",
+          "result_title": "KL-UCB asymptotic pull-count upper bound",
+          "authors": "Aurélien Garivier and Olivier Cappé",
+          "year": 2011,
+          "url": "https://arxiv.org/abs/1102.2490",
+          "theorem": "Theorems 1–2 and Corollary 3",
+          "math": "\\limsup_{T\\to\\infty}\\frac{\\mathbb E N_a(T)}{\\log T}\\le\\frac1{\\mathrm{kl}(\\mu_a,\\mu_*)}.",
+          "plain": "For every suboptimal Bernoulli arm, KL-UCB's expected pull count has the optimal logarithmic leading constant.",
+          "scope": "Bernoulli specialization of the source's bounded and one-parameter models."
+        }
+      ],
+      "lower": [
+        {
+          "paper_title": "Asymptotically Efficient Adaptive Allocation Rules",
+          "result_title": "Lai–Robbins asymptotic information lower bound",
+          "authors": "Tze Leung Lai and Herbert Robbins",
+          "year": 1985,
+          "url": "https://doi.org/10.1016/0196-8858(85)90002-8",
+          "theorem": "Asymptotic information lower bound",
+          "math": "\\liminf_{T\\to\\infty}\\frac{\\mathbb E N_a(T)}{\\log T}\\ge\\frac1{\\mathrm{kl}(\\mu_a,\\mu_*)}.",
+          "plain": "Every uniformly efficient policy must sample each suboptimal arm at least logarithmically at the information-theoretic rate.",
+          "scope": "Use the source's regular parametric-family and efficiency assumptions; the displayed Bernoulli form is a specialization."
+        }
+      ],
+      "lean": {
+        "status": "partial",
+        "scope": "A measurable generated KL-UCB index, all-time confidence event, pull-count bound, and conservative finite-time expected pseudo-regret theorem compile. Chapter 16 Lemma 16.3 and Gaussian Theorem 16.4 compile, as does the asymptotic Theorem 16.2 lower bound; the sharp KL-UCB upper leading constant remains separate.",
+        "declarations": [
+          "BanditRLProof.KLUCB.bernoulliKL",
+          "BanditRLProof.KLUCB.lintegral_ofReal_pseudoRegret_generatedKLUCBBounded_le_trajMeasure",
+          "BanditRLProof.LowerBounds.expectedPullCount_ge_log_gapPseudoRegret_of_only_arm_changed"
+        ],
+        "milestones": [
+          "KL-UCB-BOUNDED-GENERATED-REGRET",
+          "TEXTBOOK-PART-IV-CH16-EVENT-REGRET-PRODUCERS",
+          "TEXTBOOK-PART-IV-CH16-SOURCE-TERMINALS"
+        ],
+        "missing": [
+          "Prove sharp KL-Chernoff confidence inversion and the Garivier–Cappé leading constant.",
+          "Use the compiled Theorem 16.2 lower bound when comparing the remaining sharp upper-bound obligations."
+        ]
+      },
+      "frontier": {
+        "literature_open": false,
+        "formalization_open": true,
+        "question": "Can the compiled finite-mean Lemma 16.3 be lifted through d_inf and liminf to the exact KL-UCB leading constant?",
+        "closest": "The generated conservative KL-UCB route and exact Chapter 16 Lemma 16.3 compile; the d_inf-to-liminf bridge and Theorem 16.2 also compile.",
+        "leaf_ids": ["CH16-THM-16-2"],
+        "missing": ["d_inf branch analysis", "liminf terminal", "sharp KL-UCB upper constant"]
+      }
+    },
+    {
+      "id": "adversarial-exp3",
+      "family": "adversarial-bobw",
+      "title": "EXP3 expected regret versus the adversarial minimax rate",
+      "summary": "Classical EXP3 is near minimax but carries a square-root log A factor relative to the adversarial lower bound.",
+      "tags": ["EXP3", "adversarial", "external regret", "expected regret", "near minimax"],
+      "signature": {
+        "Loss model": "Oblivious or predictable losses in [0,1]",
+        "Feedback": "Selected-action bandit loss",
+        "Regret": "Expected external regret to the best fixed action",
+        "Target scale": "sqrt(A T)"
+      },
+      "source_status": "faithful-restatement",
+      "comparison": {
+        "status": "near-minimax",
+        "gap": "EXP3 has a multiplicative square-root log A gap; removing it requires a different regularizer such as INF/Tsallis-INF, not a relabeling of EXP3.",
+        "note": "The source contains both the EXP3 upper route and an adversarial lower bound. The local generated expected EXP3 endpoint compiles."
+      },
+      "upper": [
+        {
+          "paper_title": "The Nonstochastic Multiarmed Bandit Problem",
+          "result_title": "EXP3 expected-regret upper bound",
+          "authors": "Peter Auer, Nicolò Cesa-Bianchi, Yoav Freund, and Robert Schapire",
+          "year": 2002,
+          "url": "https://epubs.siam.org/doi/10.1137/S0097539701398375",
+          "theorem": "EXP3 expected-regret theorem",
+          "math": "\\mathbb E R_T=O\\!\\left(\\sqrt{AT\\log A}\\right).",
+          "plain": "EXP3 achieves expected regret of order square root A T log A against bounded adversarial rewards.",
+          "scope": "Finite actions and the source's learning-rate tuning."
+        }
+      ],
+      "lower": [
+        {
+          "paper_title": "The Nonstochastic Multiarmed Bandit Problem",
+          "result_title": "Adversarial minimax lower bound",
+          "authors": "Peter Auer, Nicolò Cesa-Bianchi, Yoav Freund, and Robert Schapire",
+          "year": 2002,
+          "url": "https://epubs.siam.org/doi/10.1137/S0097539701398375",
+          "theorem": "Section 5 lower bound",
+          "math": "\\inf_\\pi\\sup_\\ell\\mathbb E R_T(\\pi,\\ell)=\\Omega\\!\\left(\\sqrt{AT}\\right).",
+          "plain": "Every bandit algorithm suffers expected regret of order at least square root A T on some adversarial loss sequence.",
+          "scope": "Finite actions under the source's horizon range."
+        }
+      ],
+      "lean": {
+        "status": "partial",
+        "scope": "The generated predictable EXP3 process compiles an explicit 4 sqrt(A T log A) expected bound under its tuning condition, together with several separately scoped tail routes. The adversarial minimax lower terminal is not compiled.",
+        "declarations": [
+          "BanditRLProof.Exp3.sampledPredictable_expectedRegret_le_four_mul_sqrt"
+        ],
+        "milestones": ["EXP3-EXPECTED-REGRET", "TEXTBOOK-PART-IV-CH17-SOURCE-TERMINALS"],
+        "missing": [
+          "Pair the corrected high-probability lower terminal with the upper route under one exact regret contract.",
+          "Keep fixed-horizon, all-positive-prefix, and horizon-free tuning contracts distinct.",
+          "Use a minimax-optimal algorithm route if the log A factor is to be removed."
+        ]
+      },
+      "frontier": {
+        "literature_open": false,
+        "formalization_open": true,
+        "question": "Can the local adversarial upper route be paired with a compiled minimax lower terminal under one exact regret contract?",
+        "closest": "The EXP3 upper compiles; corrected Chapter 17 Theorem 17.4 now passes focused compilation with δ ≤ 1/32, c=1/160 and C=64; full local gates pass.",
+        "leaf_ids": ["CH17-CLIPPED-NORMAL-LAW", "CH17-CLAIM-17-6", "CH17-CLAIM-17-7", "CH17-THM-17-4"],
+        "missing": ["matched upper/lower regret contract; corrected Chapter 17 high-probability construction is compiled"]
+      }
+    },
+    {
+      "id": "adversarial-stochastic-best-of-both-worlds",
+      "family": "adversarial-bobw",
+      "title": "Tsallis-INF best of stochastic and adversarial worlds",
+      "summary": "One Tsallis-INF algorithm attains the adversarial square-root rate and stochastic gap-dependent logarithmic regret.",
+      "tags": ["Tsallis-INF", "best of both worlds", "FTRL", "self bounding", "stochastic gaps"],
+      "signature": {
+        "Loss model": "Bounded adversarial losses or a stochastic/self-bounding gap condition",
+        "Algorithm identity": "The same Tsallis-INF estimator and scheduler across regimes",
+        "Regret": "Expected pseudo-regret/external regret as stated by the source",
+        "Target scales": "sqrt(A T) adversarial and sum log(T)/Delta_a stochastic"
+      },
+      "source_status": "faithful-restatement",
+      "comparison": {
+        "status": "near-minimax",
+        "gap": "The adversarial branch is minimax-rate optimal within universal constants, while the self-bounding stochastic branch is gap-log rate optimal within constants and is not an exact Lai–Robbins leading-constant result. The local routes also lack identity with the paper's single algorithm across both regimes.",
+        "note": "The source theorem is genuinely best-of-both-worlds at the displayed rate scale. This card does not claim asymptotic instance optimality or an exact stochastic information constant; the local paper-identity and unified paired terminal remain open."
+      },
+      "upper": [
+        {
+          "paper_title": "Tsallis-INF: An Optimal Algorithm for Stochastic and Adversarial Bandits",
+          "result_title": "Tsallis-INF best-of-both-worlds upper bounds",
+          "authors": "Julian Zimmert and Yevgeny Seldin",
+          "year": 2021,
+          "url": "https://www.jmlr.org/papers/v22/19-753.html",
+          "theorem": "Theorem 1",
+          "math": "R_T\\le 4\\sqrt{AT}+1\\quad\\text{and}\\quad R_T=O\\!\\left(\\sum_{a\\ne *}\\frac{\\log T}{\\Delta_a}\\right).",
+          "plain": "The same Tsallis-INF construction has a minimax-order adversarial bound and a logarithmic gap-dependent stochastic bound.",
+          "scope": "The exact constants and lower-order terms depend on the importance-weighted or reduced-variance estimator variant."
+        }
+      ],
+      "lower": [
+        {
+          "paper_title": "Tsallis-INF: An Optimal Algorithm for Stochastic and Adversarial Bandits",
+          "result_title": "Rate-optimality comparison used by the Tsallis-INF analysis",
+          "authors": "Julian Zimmert and Yevgeny Seldin",
+          "year": 2021,
+          "url": "https://www.jmlr.org/papers/v22/19-753.html",
+          "theorem": "Lower-bound comparisons summarized with Theorem 1",
+          "math": "R_T=\\Omega(\\sqrt{AT})\\quad\\text{and}\\quad \\liminf\\frac{R_T}{\\log T}\\ge \\sum_{a\\ne *}\\frac{\\Delta_a}{\\mathrm{kl}(\\mu_a,\\mu_*)}.",
+          "plain": "The adversarial minimax and stochastic information lower bounds supply the comparison scales used by the source.",
+          "scope": "The stochastic lower constant is model dependent; do not identify a generic gap-only upper with the exact Bernoulli information constant."
+        }
+      ],
+      "lean": {
+        "status": "partial",
+        "scope": "BanditRLlib compiles half-Tsallis IID logarithmic, corruption, drifting-mean, and oracle-restart terminals. It does not claim that one local generated policy is definitionally the paper algorithm with both optimal source guarantees.",
+        "declarations": [
+          "BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDRewardLawRegret_le_log",
+          "BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDHistoryAdaptiveExpectedCorruptedRewardLawRegret_le_allRegimes"
+        ],
+        "milestones": ["TSALLIS-IID-LOG", "TSALLIS-HISTORY-ADAPTIVE-CORRUPTION"],
+        "missing": [
+          "Prove the exact estimator, regularizer, and learning-rate identity with the source algorithm.",
+          "Package the stochastic and adversarial guarantees for the same generated policy.",
+          "Audit paper-sharp constants and high-probability or realized-regret variants separately."
+        ]
+      },
+      "frontier": {
+        "literature_open": false,
+        "formalization_open": true,
+        "question": "Can one local generated half-Tsallis policy be shown identical to paper Tsallis-INF and carry both source guarantees?",
+        "closest": "Several strong local endpoints compile, but they are not yet a unified source-identity theorem.",
+        "leaf_ids": ["TSALLIS-INF-PAPER-IDENTITY", "TSALLIS-INF-SAME-POLICY-BOBW"],
+        "missing": ["Estimator identity", "scheduler identity", "same-policy paired theorem", "constant audit"]
+      }
+    },
+    {
+      "id": "contextual-finite-policy-exp4p",
+      "family": "linear-contextual",
+      "title": "Finite-policy contextual bandits with Exp4.P",
+      "summary": "Exp4.P gives high-probability policy regret for a finite expert class; the exact matching lower source still needs theorem-level audit in this Wiki.",
+      "tags": ["Exp4.P", "contextual bandit", "finite policy class", "high probability", "source audit pending"],
+      "signature": {
+        "Context model": "Adversarial contexts and rewards",
+        "Policy class": "N finite experts mapping contexts to A actions",
+        "Regret": "High-probability regret to the best policy",
+        "Target scale": "sqrt(A T log(N/delta))"
+      },
+      "source_status": "primary-reference-pending",
+      "comparison": {
+        "status": "source-audit-pending",
+        "gap": "The upper theorem is indexed exactly; a compatible primary lower theorem, assumptions, and constants have not yet been frozen here.",
+        "note": "This is a source-audit queue item, not a claim that the lower bound is unknown in the literature."
+      },
+      "upper": [
+        {
+          "paper_title": "Contextual Bandit Algorithms with Supervised Learning Guarantees",
+          "result_title": "Exp4.P high-probability policy-regret upper bound",
+          "authors": "Alina Beygelzimer, John Langford, Lihong Li, Lev Reyzin, and Robert Schapire",
+          "year": 2010,
+          "url": "https://arxiv.org/abs/1002.4058",
+          "theorem": "Theorem 2",
+          "math": "R_T\\le 6\\sqrt{AT\\log(N/\\delta)}\\quad\\text{with probability at least }1-\\delta.",
+          "plain": "Exp4.P has high-probability regret at most six times square root A T log N over delta under the source conditions.",
+          "scope": "Includes the source's uniform expert and log(N/delta) at most A T conditions."
+        }
+      ],
+      "lower": [],
+      "lean": {
+        "status": "planned",
+        "scope": "No finite-policy contextual Exp4.P terminal is mapped to a local Lean declaration.",
+        "declarations": [],
+        "milestones": [],
+        "missing": [
+          "Define measurable context-to-action experts and the expert-mixture sampler.",
+          "Formalize the importance-weighted estimator and Exp4.P variance bonus.",
+          "Audit and freeze the exact compatible lower theorem before assigning near-minimax status."
+        ]
+      },
+      "frontier": {
+        "literature_open": false,
+        "formalization_open": true,
+        "question": "Which exact contextual lower theorem matches the displayed Exp4.P contract, and how should its policy class be represented in Lean?",
+        "closest": "The Exp4.P upper theorem is frozen; the lower-source audit and all local formalization remain pending.",
+        "leaf_ids": ["EXP4P-LOWER-SOURCE-AUDIT", "EXP4P-CONTEXT-POLICY-INTERFACE"],
+        "missing": ["Exact lower source", "expert measurability", "mixture action law", "high-probability terminal"]
+      }
+    },
+    {
+      "id": "stochastic-linear-oful",
+      "family": "linear-contextual",
+      "title": "Stochastic linear bandits: OFUL versus dimension-dependent lower bounds",
+      "summary": "OFUL is near minimax up to logarithmic factors in dimension-dependent high-probability regret.",
+      "tags": ["OFUL", "linear bandit", "self normalized", "elliptical potential", "high probability"],
+      "signature": {
+        "Reward model": "Linear mean x_t dot theta-star with conditionally sub-Gaussian noise",
+        "Geometry": "Bounded actions and parameter norm in dimension d",
+        "Regret": "High-probability cumulative pseudo-regret",
+        "Target scale": "d sqrt(T) up to logarithmic factors"
+      },
+      "source_status": "exact-source-theorem",
+      "comparison": {
+        "status": "near-minimax",
+        "gap": "Logarithmic factors, source normalization, decision-set generality, and constants separate the OFUL upper from the d sqrt(T) lower. The displayed upper is high probability, whereas the lower is an expected-regret minimax statement, so the comparison is only at leading polynomial scale.",
+        "note": "The upper and lower dimension dependence agree at leading polynomial order. The local route is a finite-action scalar-ridge specialization, not the full paper theorem."
+      },
+      "upper": [
+        {
+          "paper_title": "Improved Algorithms for Linear Stochastic Bandits",
+          "result_title": "OFUL high-probability regret upper bound",
+          "authors": "Yasin Abbasi-Yadkori, Dávid Pál, and Csaba Szepesvári",
+          "year": 2011,
+          "url": "https://arxiv.org/abs/1102.2670",
+          "theorem": "Theorem 13",
+          "math": "R_T=\\widetilde O\\!\\left(d\\sqrt{T}\\right)\\quad\\text{with probability at least }1-\\delta.",
+          "plain": "OFUL has a high-probability dimension times square root T regret bound up to logarithmic and regularization factors.",
+          "scope": "Use the exact confidence radius, determinant term, action-set, and norm assumptions in Theorem 13."
+        }
+      ],
+      "lower": [
+        {
+          "paper_title": "Stochastic Linear Optimization under Bandit Feedback",
+          "result_title": "Linear-bandit minimax expected-regret lower bound",
+          "authors": "Varsha Dani, Thomas Hayes, and Sham Kakade",
+          "year": 2008,
+          "url": "https://www.learningtheory.org/colt2008/papers/80-Dani.pdf",
+          "theorem": "Theorem 3",
+          "math": "\\inf_\\pi\\sup_\\theta\\mathbb E R_T(\\pi,\\theta)\\ge \\frac1{10}d\\sqrt{T}.",
+          "plain": "A constructed linear decision domain forces expected regret at least one tenth d square root T.",
+          "scope": "The lower theorem uses its explicit domain, dimension, and horizon range."
+        }
+      ],
+      "lean": {
+        "status": "partial",
+        "scope": "Elliptical potential, self-normalized ridge confidence, a measurable horizon-free finite-action policy, all-time confidence, and one-policy all-horizon regret compile. Full source geometry and the linear lower bound do not.",
+        "declarations": [
+          "BanditRLProof.OFUL.telescopingCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_allHorizon_tail_le_explicitBound_of_linearSubgaussianEnvironment_of_featureBound_le_regularization"
+        ],
+        "milestones": ["OFUL-ALL-HORIZON-HIGH-PROBABILITY-REGRET"],
+        "missing": [
+          "Audit exact correspondence with OFUL Theorem 13 constants and normalization.",
+          "Generalize beyond the current finite-action scalar-ridge interface.",
+          "Formalize a compatible Gaussian linear hard family and d sqrt(T) lower terminal."
+        ]
+      },
+      "frontier": {
+        "literature_open": false,
+        "formalization_open": true,
+        "question": "Can the finite-action scalar route be lifted to the exact OFUL theorem and paired with a compatible linear minimax lower construction?",
+        "closest": "The local high-probability all-horizon consumer is strong but intentionally narrower than the source theorem.",
+        "leaf_ids": ["OFUL-SOURCE-THEOREM-13-IDENTITY", "LINEAR-BANDIT-MINIMAX-LOWER"],
+        "missing": ["General decision set", "source radius identity", "hard family", "upper/lower comparison terminal"]
+      }
+    },
+    {
+      "id": "finite-action-linear-contextual",
+      "family": "linear-contextual",
+      "title": "Finite-action linear contextual minimax rates",
+      "summary": "SupLinUCB/VCL upper and lower theorems match the finite-action contextual rate up to iterated logarithms.",
+      "tags": ["linear contextual", "SupLinUCB", "VCL", "finite actions", "near minimax"],
+      "signature": {
+        "Context model": "d-dimensional realizable contexts with n available actions per round",
+        "Reward model": "Stochastic linear reward",
+        "Regret": "Expected cumulative regret",
+        "Target scale": "square root(d T log T log n), up to iterated logarithms"
+      },
+      "source_status": "exact-source-theorem",
+      "comparison": {
+        "status": "near-minimax",
+        "gap": "The upper differs from the lower by iterated logarithms; Theorem 2 also requires n at most 2^(d/2) and T at least d (log_2 n)^(1+epsilon).",
+        "note": "The source gives both sides under an explicit parameter fence. Do not treat the local OFUL scaffold as a proof of this contextual finite-action result."
+      },
+      "upper": [
+        {
+          "paper_title": "Nearly Minimax-Optimal Regret for Linearly Parameterized Bandits",
+          "result_title": "Finite-action linear contextual upper bound",
+          "authors": "Lihong Li, Wei Wang, and Zhihua Zhou",
+          "year": 2019,
+          "url": "https://arxiv.org/abs/1904.00242",
+          "theorem": "Theorem 1",
+          "math": "R^*(T;n,d)\\le \\operatorname{poly}(\\log\\log(nT))\\,O\\!\\left(\\sqrt{dT\\log T\\log n}\\right).",
+          "plain": "The minimax regret is at most square root d T log T log n times iterated-logarithmic factors.",
+          "scope": "Finite action sets and the source's realizability, action-count, dimension, and horizon conditions."
+        }
+      ],
+      "lower": [
+        {
+          "paper_title": "Nearly Minimax-Optimal Regret for Linearly Parameterized Bandits",
+          "result_title": "Finite-action linear contextual lower bound",
+          "authors": "Lihong Li, Wei Wang, and Zhihua Zhou",
+          "year": 2019,
+          "url": "https://arxiv.org/abs/1904.00242",
+          "theorem": "Theorem 2",
+          "math": "R^*(T;n,d)=\\Omega_\\varepsilon\\!\\left(\\sqrt{dT\\log n\\,\\log(T/d)}\\right).",
+          "plain": "Under the theorem's action-count and horizon fence, every algorithm has regret at the displayed finite-action contextual scale.",
+          "scope": "For every small epsilon greater than zero, n is at most 2^(d/2) and T is at least d (log_2 n)^(1+epsilon), together with the source's remaining conditions."
+        }
+      ],
+      "lean": {
+        "status": "planned",
+        "scope": "No time-varying finite-action contextual theorem is claimed locally. Existing OFUL declarations are reusable proof infrastructure only.",
+        "declarations": [],
+        "milestones": [],
+        "missing": [
+          "Represent time-varying action sets and contexts measurably.",
+          "Formalize the VCL layer partition and contextual lower construction.",
+          "Retain the action-count and horizon fence in the final comparison theorem."
+        ]
+      },
+      "frontier": {
+        "literature_open": false,
+        "formalization_open": true,
+        "question": "Can the exact Theorems 1–2 parameter fence and VCL construction be represented in one contextual Lean history law?",
+        "closest": "The primary upper/lower comparison is audited; all local contextual algorithm and lower-construction work remains planned.",
+        "leaf_ids": ["VCL-CONTEXTUAL-HISTORY-LAW", "VCL-LAYER-PARTITION", "VCL-LOWER-CONSTRUCTION"],
+        "missing": ["Contextual history law", "VCL layers", "parameter fence", "lower construction"]
+      }
+    },
+    {
+      "id": "tabular-finite-horizon-rl-ucbvi",
+      "family": "finite-horizon-rl",
+      "title": "Tabular finite-horizon RL: UCBVI and minimax leading rates",
+      "summary": "UCBVI-BF has the near-minimax variance-aware leading rate; BanditRLlib currently compiles the known-reward Hoeffding UCBVI-CH terminal.",
+      "tags": ["UCBVI", "UCBVI-CH", "UCBVI-BF", "tabular MDP", "Bernstein", "minimax RL"],
+      "signature": {
+        "MDP": "Unknown episodic tabular transitions with S states, A actions, horizon H",
+        "Episodes": "K episodes and total steps T=H K",
+        "Regret": "High-probability cumulative episode pseudo-regret",
+        "Target scale": "square root(H S A T), plus lower-order terms"
+      },
+      "source_status": "faithful-restatement",
+      "comparison": {
+        "status": "near-minimax",
+        "gap": "UCBVI-BF gives a high-probability upper bound whose leading large-T polynomial rate matches the expected-regret minimax lower scale up to logs and lower-order terms; these probability modes are not identical theorem contracts. A later modified MVP route addresses the full parameter range. The compiled local theorem is Hoeffding, not Bernstein/minimax.",
+        "note": "The literature and local status must be read separately: UCBVI-CH compiles locally, while the variance-aware source-leading theorem does not."
+      },
+      "upper": [
+        {
+          "paper_title": "Minimax Regret Bounds for Reinforcement Learning",
+          "result_title": "UCBVI high-probability regret upper bounds",
+          "authors": "Mohammad Azar, Ian Osband, and Rémi Munos",
+          "year": 2017,
+          "url": "https://proceedings.mlr.press/v70/azar17a.html",
+          "theorem": "Theorems 1–2",
+          "math": "R_K^{\\mathrm{CH}}\\le 20H^{3/2}L\\sqrt{SAK}+250H^2S^2AL^2,\\qquad R_K^{\\mathrm{BF}}=\\widetilde O\\!\\left(\\sqrt{HSAT}\\right).",
+          "plain": "The Hoeffding version has the explicit 20 and 250 bound; the Bernstein-Freedman version improves the leading horizon dependence to the near-minimax scale.",
+          "scope": "Use the paper's confidence logarithm L, reward model, and horizon conditions."
+        },
+        {
+          "paper_title": "Settling the sample complexity of online reinforcement learning",
+          "result_title": "Modified MVP full-range minimax regret bound",
+          "authors": "Zihan Zhang and collaborators",
+          "year": 2024,
+          "url": "https://proceedings.mlr.press/v247/zhang24a.html",
+          "theorem": "Modified MVP full-range result",
+          "math": "R_K=\\widetilde O\\!\\left(\\min\\{\\sqrt{SAH^3K},HK\\}\\right).",
+          "plain": "A modified MVP analysis supplies the closest full-range upper guarantee across all episode counts.",
+          "scope": "This is a separate algorithmic route and must not be relabeled as UCBVI."
+        }
+      ],
+      "lower": [
+        {
+          "paper_title": "Minimax Regret Bounds for Reinforcement Learning",
+          "result_title": "Tabular episodic minimax lower-bound comparison",
+          "authors": "Mohammad Azar, Ian Osband, and Rémi Munos",
+          "year": 2017,
+          "url": "https://proceedings.mlr.press/v70/azar17a.html",
+          "theorem": "Minimax lower-bound comparison",
+          "math": "\\inf_\\pi\\sup_M\\mathbb E R_T(\\pi,M)=\\Omega\\!\\left(\\sqrt{HSAT}\\right).",
+          "plain": "Some tabular finite-horizon MDP forces expected regret at the square-root H S A T scale in the source regime.",
+          "scope": "Use the source's state, action, horizon, and total-time range."
+        }
+      ],
+      "lean": {
+        "status": "partial",
+        "scope": "The canonical recurrent known-reward Hoeffding UCBVI-CH 20/250 high-probability terminal and failure-aware expected consumer compile. Bernstein/Freedman, stochastic rewards, and a minimax lower pair do not.",
+        "declarations": [
+          "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_cumulativeEpisodePseudoRegret_gt_canonicalRegretBound_le",
+          "BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.integral_cumulativeEpisodePseudoRegret_recurrentSource_le_canonicalRegretBound_add_failure"
+        ],
+        "milestones": ["RL-UCBVI-HOEFFDING-CANONICAL-TERMINALS"],
+        "missing": [
+          "Build the conditional variance and Freedman/Bernstein bonus layer.",
+          "Compile the law-of-total-variance and recurrent value/Q recursion needed by UCBVI-BF.",
+          "Treat stochastic rewards, realized sampled-return regret, and the MVP full-range route as distinct extensions."
+        ]
+      },
+      "frontier": {
+        "literature_open": false,
+        "formalization_open": true,
+        "question": "Can the recurrent generated UCBVI source be upgraded from Hoeffding bonuses to the exact Bernstein/Freedman source theorem?",
+        "closest": "The source-shaped UCBVI-CH endpoint compiles with the exact 20/250 surface; the minimax-leading UCBVI-BF route is absent.",
+        "leaf_ids": ["UCBVI-BF-CONDITIONAL-VARIANCE", "UCBVI-BF-TOTAL-VARIANCE", "UCBVI-BF-TERMINAL"],
+        "missing": ["Conditional variance", "Freedman concentration", "variance bonus summation", "source-leading terminal"]
+      }
+    },
+    {
+      "id": "delayed-adversarial-bandit",
+      "family": "delayed-nonstationary",
+      "title": "Adversarial bandits with delayed feedback",
+      "summary": "Known-delay algorithms attain square-root dependence on rounds and total delay up to logs; local work currently compiles accounting and source-audit interfaces, not a regret endpoint.",
+      "tags": ["delayed feedback", "DEXP3", "DEW", "Delayed SAPO", "total delay", "outstanding feedback"],
+      "signature": {
+        "Loss model": "Adversarial bounded losses",
+        "Delay model": "Per-round delays d_t with total D, or a fixed delay d",
+        "Regret": "Expected external regret",
+        "Target scale": "sqrt((A T + D) log A), with fixed-delay variants"
+      },
+      "source_status": "faithful-restatement",
+      "comparison": {
+        "status": "near-minimax",
+        "gap": "Logarithmic factors and the distinction between total-delay and fixed-delay contracts remain visible.",
+        "note": "The literature has strong delayed-feedback rates. Local declarations prove causal views and accounting identities but not the cited algorithm theorem."
+      },
+      "upper": [
+        {
+          "paper_title": "Nonstochastic Multiarmed Bandits with Unrestricted Delays",
+          "result_title": "Known-delay DEXP3/DEW upper bound",
+          "authors": "Tobias Thune, Nicolò Cesa-Bianchi, and Yevgeny Seldin",
+          "year": 2019,
+          "url": "https://arxiv.org/abs/1906.00670",
+          "theorem": "Theorem 1 and Corollary 4",
+          "math": "R_T\\le 2\\sqrt{(eAT/2+D)\\log A}",
+          "plain": "A delayed exponential-weights algorithm has expected regret controlled by the sum of the ordinary bandit term and total delay.",
+          "scope": "Use the source's known-delay or skipping contracts and parameter choice."
+        },
+        {
+          "paper_title": "Delay and Cooperation in Nonstochastic Bandits",
+          "result_title": "Fixed-delay regret upper bound",
+          "authors": "Nicolò Cesa-Bianchi, Claudio Gentile, and Yishay Mansour",
+          "year": 2019,
+          "url": "https://www.jmlr.org/papers/v20/17-631.html",
+          "theorem": "Corollary 15",
+          "math": "R_T=O\\!\\left(d+\\sqrt{(A+d)T\\log A}\\right).",
+          "plain": "For fixed delay d, the regret is square-root in A plus d times T, up to log A and an additive delay term.",
+          "scope": "Fixed-delay feedback under the source's protocol."
+        }
+      ],
+      "lower": [
+        {
+          "paper_title": "Delay and Cooperation in Nonstochastic Bandits",
+          "result_title": "Fixed-delay minimax comparison",
+          "authors": "Nicolò Cesa-Bianchi, Claudio Gentile, and Yishay Mansour",
+          "year": 2019,
+          "url": "https://www.jmlr.org/papers/v20/17-631.html",
+          "theorem": "Fixed-delay minimax comparison",
+          "math": "R_T=\\Omega\\!\\left(\\sqrt{(A+d)T}\\right).",
+          "plain": "The fixed-delay problem has a square-root lower scale in A plus delay times T.",
+          "scope": "Compare only to upper theorems with the same fixed-delay feedback contract."
+        }
+      ],
+      "lean": {
+        "status": "partial",
+        "scope": "Observed/outstanding partition identities, causal action-time views, active allocation, a nonnegative-domain D.11 core, Algorithm-5 line-10 eliminated-arm initialization, and several Delayed SAPO audit surfaces compile. The central generated delayed process and stochastic/adversarial regret endpoints do not.",
+        "declarations": [
+          "BanditRLProof.DelayedFeedback.card_observedBefore_add_card_outstandingAt",
+          "BanditRLProof.DelayedFeedback.actionTimeViewAt",
+          "BanditRLProof.DelayedFeedback.delayedSAPOProbability",
+          "BanditRLProof.DelayedFeedback.two_mul_card_sourceStochasticLossGap_aboveTwiceAverage_le",
+          "BanditRLProof.DelayedFeedback.DelayedSAPOEliminatedArmInitialization.initializeNewlyEliminated_spec_of_mem"
+        ],
+        "milestones": ["DELAYED-FEEDBACK-SOURCE-ACCOUNTING", "DELAYED-FEEDBACK-CAUSAL-PROCESSING", "DELAYED-SAPO-D10-D12-GAP-ORDERING-AUDIT", "DELAYED-SAPO-D11-NONNEGATIVE-GAP-HALF-SET", "DELAYED-SAPO-LINE10-ELIMINATED-ARM-INITIALIZATION"],
+        "missing": [
+          "Extend the line-10 initializer into the source EAP/BSC phase transitions and one recursive delayed trajectory that supports out-of-order feedback revelation.",
+          "Resolve the source width-direction audit and instantiate its snapshot hypotheses.",
+          "Prove a source-compatible stochastic or adversarial regret terminal."
+        ]
+      },
+      "frontier": {
+        "literature_open": false,
+        "formalization_open": true,
+        "question": "Can the delayed accounting layer be connected to one generated algorithm law and a paper-level regret terminal?",
+        "closest": "The bookkeeping, causal-view, active-allocation, and conditional source-audit surfaces compile; no algorithm regret theorem is claimed.",
+        "leaf_ids": ["DELAYED-TRAJECTORY-LAW", "DELAYED-SAPO-D10-D12", "DELAYED-REGRET-TERMINAL"],
+        "missing": ["Out-of-order reveal law", "state machine", "width audit", "regret terminal"]
+      }
+    },
+    {
+      "id": "nonstationary-variation-budget",
+      "family": "delayed-nonstationary",
+      "title": "Variation-budget nonstationary stochastic bandits",
+      "summary": "Restarted EXP3 is near minimax for dynamic regret under a known total-variation budget.",
+      "tags": ["nonstationary", "variation budget", "Rexp3", "dynamic regret", "restart"],
+      "signature": {
+        "Reward model": "Time-varying stochastic arm means",
+        "Variation": "V_T equals the sum of roundwise maximum mean changes",
+        "Comparator": "Roundwise best arm dynamic oracle",
+        "Target scale": "(A V_T)^(1/3) T^(2/3)"
+      },
+      "source_status": "exact-source-theorem",
+      "comparison": {
+        "status": "near-minimax",
+        "gap": "Rexp3 has a (log A)^(1/3) factor and assumes variation-budget tuning.",
+        "note": "The published upper and lower exponents match. The local drifting-mean Tsallis theorem is related but is not the V_T minimax theorem."
+      },
+      "upper": [
+        {
+          "paper_title": "Stochastic Multi-Armed-Bandit Problem with Non-stationary Rewards",
+          "result_title": "Rexp3 variation-budget upper bound",
+          "authors": "Omar Besbes, Yonatan Gur, and Assaf Zeevi",
+          "year": 2014,
+          "url": "https://proceedings.neurips.cc/paper_files/paper/2014/hash/91ba7292e5388b90b58d0b839a7f19ec-Abstract.html",
+          "theorem": "Theorem 2",
+          "math": "R_T=O\\!\\left((A\\log A\\,V_T)^{1/3}T^{2/3}\\right).",
+          "plain": "Rexp3 has dynamic regret of order cube root A log A times variation, multiplied by T to the two thirds.",
+          "scope": "The block length uses the source's known variation budget and parameter range."
+        }
+      ],
+      "lower": [
+        {
+          "paper_title": "Stochastic Multi-Armed-Bandit Problem with Non-stationary Rewards",
+          "result_title": "Variation-budget dynamic-regret lower bound",
+          "authors": "Omar Besbes, Yonatan Gur, and Assaf Zeevi",
+          "year": 2014,
+          "url": "https://proceedings.neurips.cc/paper_files/paper/2014/hash/91ba7292e5388b90b58d0b839a7f19ec-Abstract.html",
+          "theorem": "Theorem 1",
+          "math": "\\inf_\\pi\\sup_{\\nu:\\,V_T(\\nu)\\le V}\\mathbb E R_T(\\pi,\\nu)=\\Omega\\!\\left((AV)^{1/3}T^{2/3}\\right).",
+          "plain": "Every policy incurs dynamic regret at the cube-root variation-budget scale on some admissible nonstationary environment.",
+          "scope": "Use the source's variation class and horizon/variation range."
+        }
+      ],
+      "lean": {
+        "status": "partial",
+        "scope": "A drifting-mean half-Tsallis dynamic-regret envelope compiles, but it is not a formal variation-budget Rexp3 theorem and does not close the minimax comparison.",
+        "declarations": [
+          "BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIndependentDriftingMeanDynamicRegret_le_allRegimes"
+        ],
+        "milestones": ["TSALLIS-DYNAMIC-REGRET"],
+        "missing": [
+          "Define the formal variation budget and block restart policy.",
+          "Prove the dynamic-oracle decomposition for Rexp3.",
+          "Optimize the block length and compile the matching V_T rate."
+        ]
+      },
+      "frontier": {
+        "literature_open": false,
+        "formalization_open": true,
+        "question": "Can the current dynamic-regret envelope be specialized to the exact variation-budget Rexp3 theorem?",
+        "closest": "A related drifting-mean theorem compiles, but its contract and rate are not the source minimax V_T result.",
+        "leaf_ids": ["VARIATION-BUDGET-DEFINITION", "REXP3-BLOCK-RESTART", "REXP3-DYNAMIC-REGRET"],
+        "missing": ["Variation measure", "restart construction", "oracle decomposition", "rate optimization"]
+      }
+    },
+    {
+      "id": "nonstationary-best-arm-switch-budget",
+      "family": "delayed-nonstationary",
+      "title": "Unknown best-arm-identity switch budget",
+      "summary": "ArmSwitch is near the square-root best-arm-switch scale, while the current Lean theorem assumes an oracle schedule built from all global mean changes.",
+      "tags": ["piecewise stationary", "switch budget", "ArmSwitch", "change detection", "oracle restart"],
+      "signature": {
+        "Reward model": "Nonstationary stochastic means",
+        "Changes": "The identity of the optimal arm changes at most S times, unknown to the learner",
+        "Comparator": "Best arm within each stationary segment",
+        "Target scale": "sqrt(A (S+1) T) up to polylogarithmic factors"
+      },
+      "source_status": "faithful-restatement",
+      "comparison": {
+        "status": "near-minimax",
+        "gap": "ArmSwitch has a polylogarithmic factor. The displayed lower is obtained from a stationary-segment hard family, so the class embedding and its K/horizon conditions remain explicit rather than being called an identical assumption contract.",
+        "note": "The upper depends on changes in best-arm identity, not changes in the full reward vector. The local oracle schedule uses every global population-mean change and is therefore only related evidence."
+      },
+      "upper": [
+        {
+          "paper_title": "A New Look at Dynamic Regret for Non-Stationary Stochastic Bandits",
+          "result_title": "ArmSwitch best-arm-switch upper bound",
+          "authors": "Yasin Abbasi-Yadkori, András György, and Nevena Lazić",
+          "year": 2023,
+          "url": "https://www.jmlr.org/papers/v24/22-0387.html",
+          "theorem": "Theorem 1",
+          "math": "\\mathbb E R_T\\le C\\sqrt{A(S+1)T}\\,[\\log(AT\\log T)]^{3/2}.",
+          "plain": "ArmSwitch adapts to an unknown number of changes with square-root switch dependence up to a polylogarithmic factor.",
+          "scope": "Use the source's piecewise-stationary model and initialization."
+        }
+      ],
+      "lower": [
+        {
+          "paper_title": "A Near-Optimal Change-Detection Based Algorithm for Piecewise-Stationary Combinatorial Semi-Bandits",
+          "result_title": "Piecewise-stationary minimax lower bound",
+          "authors": "Zhou, Wang, Varshney, and Lim",
+          "year": 2020,
+          "url": "https://ojs.aaai.org/index.php/AAAI/article/view/6176",
+          "theorem": "Theorem 5.1",
+          "math": "\\inf_\\pi\\sup_\\nu\\mathbb E R_T(\\pi,\\nu)=\\Omega\\!\\left(\\sqrt{NAT}\\right),\\qquad N=S+1.",
+          "plain": "A piecewise-stationary hard family with N segments forces square-root N A T regret; ordinary multi-armed bandits are a special case of the source model.",
+          "scope": "Use the theorem's A at least 3 and horizon conditions. Mapping N segments to S plus one best-arm regimes is a faithful comparison step, not a verbatim identity of model classes."
+        }
+      ],
+      "lean": {
+        "status": "partial",
+        "scope": "A generated oracle-restart half-Tsallis theorem with 8 sqrt(A) sqrt(S+1) sqrt(T+1) compiles, but its S counts true global population-mean changes, not only changes in best-arm identity.",
+        "declarations": [
+          "BanditRLProof.Tsallis.integral_sampledOracleRestartHalfTsallisFiniteArmIndependentGlobalMeanChangeDynamicRegret_le"
+        ],
+        "milestones": ["TSALLIS-ORACLE-RESTART-GENERATED"],
+        "missing": [
+          "Define a measurable observed-reward change detector and adaptive restart state.",
+          "Control detection delay and false alarms before claiming the unknown-S rate.",
+          "Bridge—or explicitly separate—the best-arm-identity switch contract from the local global-mean-change schedule."
+        ]
+      },
+      "frontier": {
+        "literature_open": false,
+        "formalization_open": true,
+        "question": "Can oracle global-mean restarts be replaced by an observed-reward detector under the broader best-arm-identity switch contract?",
+        "closest": "The local theorem has the desired square-root expression only under a true global-change schedule; ArmSwitch is adaptive under a different, broader change count.",
+        "leaf_ids": ["BEST-ARM-SWITCH-CONTRACT", "OBSERVED-CHANGE-DETECTOR", "ADAPTIVE-RESTART-REGRET"],
+        "missing": ["Assumption bridge", "detector measurability", "false-alarm control", "delay charge"]
+      }
+    },
+    {
+      "id": "fixed-confidence-best-arm-identification",
+      "family": "pure-exploration",
+      "title": "Fixed-confidence best-arm identification",
+      "summary": "Track-and-Stop asymptotically matches the characteristic-time change-of-measure lower bound.",
+      "tags": ["best arm identification", "Track-and-Stop", "delta-PAC", "stopping time", "characteristic time"],
+      "signature": {
+        "Reward model": "One-parameter exponential family with a unique best arm",
+        "Guarantee": "delta-PAC best-arm recommendation",
+        "Cost": "Expected stopping time as delta tends to zero",
+        "Target constant": "Characteristic time T-star of the max-min information game"
+      },
+      "source_status": "exact-source-theorem",
+      "comparison": {
+        "status": "asymptotic-matched",
+        "gap": "The source's tracking parameter alpha is in [1,e/2]; appropriate tuning approaches the characteristic-time constant.",
+        "note": "The literature has a matched asymptotic fixed-confidence answer. BanditRLlib has no characteristic-time or Track-and-Stop formalization yet."
+      },
+      "upper": [
+        {
+          "paper_title": "Optimal Best Arm Identification with Fixed Confidence",
+          "result_title": "Track-and-Stop asymptotic upper bound",
+          "authors": "Aurélien Garivier and Emilie Kaufmann",
+          "year": 2016,
+          "url": "https://proceedings.mlr.press/v49/garivier16a.html",
+          "theorem": "Theorem 14",
+          "math": "\\limsup_{\\delta\\to0}\\frac{\\mathbb E_\\mu\\tau_\\delta}{\\log(1/\\delta)}\\le \\alpha T^*(\\mu).",
+          "plain": "Track-and-Stop's expected sample complexity approaches alpha times the characteristic time.",
+          "scope": "Unique best arm, source exponential-family assumptions, and alpha in the theorem's allowed range."
+        }
+      ],
+      "lower": [
+        {
+          "paper_title": "Optimal Best Arm Identification with Fixed Confidence",
+          "result_title": "Characteristic-time lower bound",
+          "authors": "Aurélien Garivier and Emilie Kaufmann",
+          "year": 2016,
+          "url": "https://proceedings.mlr.press/v49/garivier16a.html",
+          "theorem": "Theorem 1",
+          "math": "\\mathbb E_\\mu\\tau_\\delta\\ge T^*(\\mu)\\,\\mathrm{kl}(\\delta,1-\\delta),\\quad T^*(\\mu)^{-1}=\\sup_{w\\in\\Sigma_A}\\inf_{\\lambda\\in\\mathrm{Alt}(\\mu)}\\sum_a w_a d(\\mu_a,\\lambda_a).",
+          "plain": "Every delta-PAC strategy must spend at least the characteristic-time information cost.",
+          "scope": "The source's alternative set, exponential-family divergence, and stopping/recommendation measurability."
+        }
+      ],
+      "lean": {
+        "status": "planned",
+        "scope": "No delta-PAC stopping-time characteristic-time terminal or Track-and-Stop algorithm is claimed locally.",
+        "declarations": [],
+        "milestones": [],
+        "missing": [
+          "Define delta-PAC recommendation and the adapted stopping rule.",
+          "Formalize the stopped change-of-measure inequality.",
+          "Build the simplex max-min characteristic time and the Track-and-Stop tracking/concentration proof."
+        ]
+      },
+      "frontier": {
+        "literature_open": false,
+        "formalization_open": true,
+        "question": "How should the characteristic-time max-min game and an unbounded adaptive stopping rule be represented in Lean?",
+        "closest": "General stopping-time infrastructure exists elsewhere in BanditRLlib, but no pure-exploration semantic bridge or source theorem is mapped.",
+        "leaf_ids": ["BAI-DELTA-PAC", "BAI-STOPPED-CHANGE-OF-MEASURE", "BAI-CHARACTERISTIC-TIME", "TRACK-AND-STOP"],
+        "missing": ["Recommendation event", "stopping measurability", "information game", "tracking rule"]
+      }
+    },
+    {
+      "id": "distributional-high-probability-regret",
+      "family": "distributional-lower-bounds",
+      "title": "Distributional high-probability regret under an expected-regret constraint",
+      "summary": "A 2026 upper theorem matches the Chapter 17 logarithmic confidence tradeoff in order. Theorem 17.1, Corollaries 17.2–17.3, and the explicitly corrected adversarial terminal pass the full local repository gate. EQO+ remains a separate unformalized upper route.",
+      "tags": ["high probability lower bound", "distributional regret", "EQO+", "Chapter 17", "tail tradeoff"],
+      "signature": {
+        "Reward model": "Finite stochastic sub-Gaussian or unit-Gaussian arms",
+        "Policy premise": "Uniform expected regret of order B sqrt((A-1) T) for the lower theorem",
+        "Regret": "Tail of random pseudo-regret",
+        "Target scale": "sqrt(A T) log(1/delta), capped by T"
+      },
+      "source_status": "exact-source-theorem",
+      "comparison": {
+        "status": "minimax-matched",
+        "gap": "The upper and lower tradeoff match in confidence and square-root order, with constants, exact reward class, and the lower theorem's expected-regret premise remaining visible.",
+        "note": "This literature frontier is closed by the 2026 EQO+ result. Chapter 17's stochastic endpoints compile, and corrected Theorem 17.4 passes focused compilation on 0 < δ ≤ 1/32 with c=1/160, C=64. Full local gates pass; this does not formalize EQO+."
+      },
+      "upper": [
+        {
+          "paper_title": "Unified Framework of Distributional Regret in Multi-Armed Bandits and Reinforcement Learning",
+          "result_title": "EQO+ distributional-regret upper bound",
+          "authors": "Lee and Oh",
+          "year": 2026,
+          "url": "https://proceedings.mlr.press/v336/lee26b.html",
+          "theorem": "Theorem 4",
+          "math": "R_T=O\\!\\left(\\sigma\\sqrt{AT}\\log(1/\\delta)\\right)\\quad\\text{with probability at least }1-\\delta,\\qquad \\mathbb E R_T=O(\\sigma\\sqrt{AT}).",
+          "plain": "EQO+ simultaneously controls expected regret at the minimax scale and the distributional tail with one logarithmic confidence factor.",
+          "scope": "Use the source's sub-Gaussian model and its displayed tuning c1 equals sigma square root T over A."
+        }
+      ],
+      "lower": [
+        {
+          "paper_title": "Bandit Algorithms",
+          "result_title": "Chapter 17 distributional-regret lower bound",
+          "authors": "Tor Lattimore and Csaba Szepesvári",
+          "year": 2020,
+          "url": "https://tor-lattimore.com/downloads/book/book.pdf",
+          "theorem": "Theorem 17.1",
+          "math": "\\Pr\\!\\left(R_T\\ge\\frac14\\min\\left\\{T,\\frac1B\\sqrt{(A-1)T}\\log\\frac1{4\\delta}\\right\\}\\right)\\ge\\delta.",
+          "plain": "Any policy with the source's uniform expected-regret bound has a unit-Gaussian instance whose random pseudo-regret exceeds the displayed confidence-dependent threshold with probability at least delta.",
+          "scope": "Preserve the exact A, T, B, delta conditions and the same randomized nonanticipating policy."
+        }
+      ],
+      "lean": {
+        "status": "partial",
+        "scope": "BanditRLlib compiles the stochastic Chapter 17 endpoints, Claims 17.5–17.7, Eq. (17.8), same-policy shared-noise coupling, and deterministic matrix extraction. Approved corrections: Claim 17.6 uses T_i ≤ n/2; Theorem 17.4 uses 0 < δ ≤ 1/32, c=1/160, C=64 and a strict CDF tail. The full local repository gate passes; EQO+ is not formalized.",
+        "declarations": [
+          "BanditRLProof.LowerBounds.stochasticHighProbabilityThreshold",
+          "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_theorem17_1",
+          "BanditRLProof.LowerBounds.noUniformGaussianRandomPseudoRegretTail_corollary17_3",
+          "BanditRLProof.LowerBounds.gaussianRandomPseudoRegret_ge_corollary17_2",
+          "BanditRLProof.LowerBounds.exists_cdfTail_ge_of_integral_ge",
+          "BanditRLProof.LowerBounds.randomRegret_ge_quarter_of_clippingDecomposition",
+          "BanditRLProof.LowerBounds.adversarialRandomRegret_ge_eq17_8"
+        ],
+        "milestones": [
+          "TEXTBOOK-PART-IV-CH17-FIRST-MOMENT-AND-TAIL-DEPENDENCY-SLICE",
+          "TEXTBOOK-PART-IV-CH17-SOURCE-TERMINALS"
+        ],
+        "missing": [
+          "Map and formalize the EQO+ algorithm and Theorem 4 as a separate upper route."
+        ]
+      },
+      "frontier": {
+        "literature_open": false,
+        "formalization_open": true,
+        "question": "Can the compiled corrected lower terminal be paired with a formalized EQO+ upper route?",
+        "closest": "Theorem 17.1, Corollaries 17.2–17.3, Eq. (17.8), corrected Claim 17.6, exact Claim 17.7, and corrected Theorem 17.4 pass the full local repository gate. Theorem 17.4 uses 0 < δ ≤ 1/32, c=1/160, C=64. No EQO+ algorithm theorem is claimed.",
+        "leaf_ids": ["CH17-HISTORY-INFORMATION", "CH17-THEOREM-17-1", "CH17-COROLLARY-17-2", "CH17-COROLLARY-17-3", "EQOPLUS-UPPER"],
+        "missing": ["EQO+ source map and formalized upper terminal"]
+      }
+    }
+  ]
+}

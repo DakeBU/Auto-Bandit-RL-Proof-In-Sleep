@@ -1,0 +1,1297 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="website/content/readings.json · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="website/content/readings.json · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>website/content/readings.json · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>website/content/readings.json</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 {</span>
+<span id="L2">2   &quot;edition_note&quot;: &quot;Visible page numbers refer to the numbered pages of the free online edition of Lattimore and Szepesvári&#x27;s Bandit Algorithms. Source buttons use the PDF viewer&#x27;s physical page index, which includes front matter and can therefore be larger. The authors also note that the online and print editions have different pagination. Algorithm and theorem text on this site is independently restated; use the source link for the original wording and complete assumptions.&quot;,</span>
+<span id="L3">3   &quot;readings&quot;: [</span>
+<span id="L4">4     {</span>
+<span id="L5">5       &quot;slug&quot;: &quot;foundations&quot;,</span>
+<span id="L6">6       &quot;teaching_route&quot;: [</span>
+<span id="L7">7         &quot;BanditRLProof.FiniteBanditModel&quot;,</span>
+<span id="L8">8         &quot;BanditRLProof.pullCount&quot;,</span>
+<span id="L9">9         &quot;BanditRLProof.pseudoRegret_eq_finset_sum_gap_mul_pullCount&quot;</span>
+<span id="L10">10       ],</span>
+<span id="L11">11       &quot;primary&quot;: {</span>
+<span id="L12">12         &quot;title&quot;: &quot;Bandit Algorithms&quot;,</span>
+<span id="L13">13         &quot;authors&quot;: &quot;Tor Lattimore and Csaba Szepesvári&quot;,</span>
+<span id="L14">14         &quot;edition&quot;: &quot;free online edition&quot;,</span>
+<span id="L15">15         &quot;sections&quot;: &quot;Ch. 1 and Ch. 4, especially §4.5&quot;,</span>
+<span id="L16">16         &quot;pages&quot;: &quot;online pp. 8–16 and 56–69; regret decomposition pp. 62–63&quot;,</span>
+<span id="L17">17         &quot;pdf_page&quot;: 17,</span>
+<span id="L18">18         &quot;url&quot;: &quot;https://tor-lattimore.com/downloads/book/book.pdf&quot;</span>
+<span id="L19">19       },</span>
+<span id="L20">20       &quot;companion&quot;: {</span>
+<span id="L21">21         &quot;title&quot;: &quot;Bandit Algorithms — Part IV, Chapters 14–17&quot;,</span>
+<span id="L22">22         &quot;authors&quot;: &quot;Tor Lattimore and Csaba Szepesvári&quot;,</span>
+<span id="L23">23         &quot;presentation&quot;: &quot;advanced&quot;,</span>
+<span id="L24">24         &quot;sections&quot;: &quot;§14.1 coding and entropy, §14.2 Theorems 14.1–14.2, Exercise 14.10, §15.1 Lemma 15.1, §15.2 Theorem 15.2, §16.1 Definition 16.1 and Theorem 16.2, §16.2 Lemma 16.3 and Theorem 16.4, §17.1 Theorem 17.1 and Corollaries 17.2–17.3, and §17.2 Theorem 17.4 and Claims 17.5–17.7&quot;,</span>
+<span id="L25">25         &quot;pages&quot;: &quot;CUP §14.1 starts p. 160, §14.2 starts p. 162, §14.5 starts p. 167, §15.1–15.2 span pp. 170–173, §16.1–16.2 span pp. 177–180, and §17.1–17.2 span pp. 186–190; author-online pp. 186–191, 195–196, 198–201, 207–210, and 216–220; physical PDF pp. 195–200, 204–205, 207–210, 216–219, and 225–229&quot;,</span>
+<span id="L26">26         &quot;pdf_page&quot;: 195,</span>
+<span id="L27">27         &quot;url&quot;: &quot;https://tor-lattimore.com/downloads/book/book.pdf&quot;</span>
+<span id="L28">28       },</span>
+<span id="L29">29       &quot;notation&quot;: [</span>
+<span id="L30">30         {&quot;term&quot;: &quot;A_t&quot;, &quot;meaning&quot;: &quot;the arm or action selected at round t&quot;},</span>
+<span id="L31">31         {&quot;term&quot;: &quot;N_a(n)&quot;, &quot;meaning&quot;: &quot;how many times arm a was pulled before horizon n&quot;},</span>
+<span id="L32">32         {&quot;term&quot;: &quot;Δ_a&quot;, &quot;meaning&quot;: &quot;the mean-reward gap between an optimal arm and arm a&quot;}</span>
+<span id="L33">33       ],</span>
+<span id="L34">34       &quot;algorithm&quot;: {</span>
+<span id="L35">35         &quot;title&quot;: &quot;From an action trace to a gap sum&quot;,</span>
+<span id="L36">36         &quot;kind&quot;: &quot;bookkeeping flow&quot;,</span>
+<span id="L37">37         &quot;steps&quot;: [</span>
+<span id="L38">38           {&quot;title&quot;: &quot;Record the trace&quot;, &quot;detail&quot;: &quot;Write the selected arm A_t at every round t.&quot;},</span>
+<span id="L39">39           {&quot;title&quot;: &quot;Count each arm&quot;, &quot;detail&quot;: &quot;N_a(T) counts how often arm a appears before horizon T.&quot;},</span>
+<span id="L40">40           {&quot;title&quot;: &quot;Attach its gap&quot;, &quot;detail&quot;: &quot;Every occurrence of arm a contributes the same model gap Δ_a.&quot;},</span>
+<span id="L41">41           {&quot;title&quot;: &quot;Regroup the sum&quot;, &quot;detail&quot;: &quot;Replace the sum over time by one gap-times-count term per arm.&quot;}</span>
+<span id="L42">42         ]</span>
+<span id="L43">43       },</span>
+<span id="L44">44       &quot;worked_example&quot;: {</span>
+<span id="L45">45         &quot;title&quot;: &quot;Regroup one six-round action trace by arm&quot;,</span>
+<span id="L46">46         &quot;intro&quot;: &quot;Take three arms with means 0.7, 0.5, and 0.6. Arm 1 is optimal. A short deterministic trace is enough to see the regret decomposition before any probability enters.&quot;,</span>
+<span id="L47">47         &quot;steps&quot;: [</span>
+<span id="L48">48           {</span>
+<span id="L49">49             &quot;title&quot;: &quot;Write the chronological actions&quot;,</span>
+<span id="L50">50             &quot;detail&quot;: &quot;The order records what happened, but the pathwise pseudo-regret only needs how often each gap was paid.&quot;,</span>
+<span id="L51">51             &quot;math&quot;: &quot;(A_1,\\ldots,A_6)=(1,3,2,3,3,1).&quot;,</span>
+<span id="L52">52             &quot;fallback&quot;: &quot;Across six rounds the selected arms are 1, 3, 2, 3, 3, and 1.&quot;</span>
+<span id="L53">53           },</span>
+<span id="L54">54           {</span>
+<span id="L55">55             &quot;title&quot;: &quot;Count each arm and compute its gap&quot;,</span>
+<span id="L56">56             &quot;detail&quot;: &quot;Arm 1 is optimal, arm 2 is worse by 0.2, and arm 3 is worse by 0.1.&quot;,</span>
+<span id="L57">57             &quot;math&quot;: &quot;(N_1,N_2,N_3)=(2,1,3),\\qquad (\\Delta_1,\\Delta_2,\\Delta_3)=(0,0.2,0.1).&quot;,</span>
+<span id="L58">58             &quot;fallback&quot;: &quot;The pull counts are 2, 1, and 3, while the corresponding gaps are 0, 0.2, and 0.1.&quot;</span>
+<span id="L59">59           },</span>
+<span id="L60">60           {</span>
+<span id="L61">61             &quot;title&quot;: &quot;Regroup time into gap times count&quot;,</span>
+<span id="L62">62             &quot;detail&quot;: &quot;The two optimal-arm pulls cost zero; the single arm-2 pull and three arm-3 pulls contribute the entire value.&quot;,</span>
+<span id="L63">63             &quot;math&quot;: &quot;\\bar R_6=2\\cdot0+1\\cdot0.2+3\\cdot0.1=0.5.&quot;,</span>
+<span id="L64">64             &quot;fallback&quot;: &quot;The pathwise pseudo-regret is two times zero plus one times 0.2 plus three times 0.1, which equals 0.5.&quot;</span>
+<span id="L65">65           }</span>
+<span id="L66">66         ],</span>
+<span id="L67">67         &quot;takeaway&quot;: &quot;The identity is deterministic bookkeeping: once an algorithm proof controls every suboptimal pull count, multiplying by gaps and summing gives pseudo-regret.&quot;,</span>
+<span id="L68">68         &quot;boundary&quot;: &quot;This trace is an arithmetic illustration, not sampled data or an expected-regret experiment. The exact Lean theorem below uses rational model gaps and finite action traces.&quot;</span>
+<span id="L69">69       },</span>
+<span id="L70">70       &quot;source_theorem&quot;: {</span>
+<span id="L71">71         &quot;label&quot;: &quot;Lemma 4.5 (regret decomposition)&quot;,</span>
+<span id="L72">72         &quot;pages&quot;: &quot;online pp. 62–63&quot;,</span>
+<span id="L73">73         &quot;pdf_page&quot;: 71,</span>
+<span id="L74">74         &quot;url&quot;: &quot;https://tor-lattimore.com/downloads/book/book.pdf&quot;,</span>
+<span id="L75">75         &quot;math&quot;: &quot;R_n=\\sum_{a=1}^{k}\\Delta_a\\,\\mathbb E[T_a(n)].&quot;,</span>
+<span id="L76">76         &quot;fallback&quot;: &quot;Expected regret is the sum, over arms, of each gap times that arm&#x27;s expected pull count.&quot;,</span>
+<span id="L77">77         &quot;plain&quot;: &quot;The standard stochastic-bandit decomposition converts control of suboptimal pull counts into expected regret.&quot;,</span>
+<span id="L78">78         &quot;relationship&quot;: &quot;BanditRLlib first proves the pathwise finite-trace identity. Algorithm chapters then integrate that bookkeeping identity under their own generated trajectory laws.&quot;,</span>
+<span id="L79">79         &quot;contract&quot;: {</span>
+<span id="L80">80           &quot;model&quot;: &quot;Any stochastic bandit environment with a finite or countable action set, together with any policy and horizon n.&quot;,</span>
+<span id="L81">81           &quot;assumptions&quot;: &quot;Arm means, action gaps, regret, and expected pull counts are defined; no concentration or algorithm-specific assumption is used.&quot;,</span>
+<span id="L82">82           &quot;parameters&quot;: &quot;Horizon n, action gaps Δ_a, and pull counts T_a(n).&quot;,</span>
+<span id="L83">83           &quot;regret&quot;: &quot;The textbook frequentist expected regret R_n.&quot;,</span>
+<span id="L84">84           &quot;guarantee&quot;: &quot;An exact identity: regret equals the sum over actions of gap times expected pull count.&quot;</span>
+<span id="L85">85         }</span>
+<span id="L86">86       }</span>
+<span id="L87">87     },</span>
+<span id="L88">88     {</span>
+<span id="L89">89       &quot;slug&quot;: &quot;probability&quot;,</span>
+<span id="L90">90       &quot;teaching_route&quot;: [</span>
+<span id="L91">91         &quot;BanditRLProof.Policy.MeasurablePolicy&quot;,</span>
+<span id="L92">92         &quot;BanditRLProof.ConditionalExpectationReward.historyStepKernelFamily_centeredReward_succ_hasCondSubgaussianMGF_trajMeasure&quot;,</span>
+<span id="L93">93         &quot;BanditRLProof.Concentration.measure_iUnion_iUnion_fintype_le_delta_of_geometricConfidenceShare&quot;,</span>
+<span id="L94">94         &quot;BanditRLProof.ConditionalExpectationReward.actionRewardHistoryStepKernelFamily_successorArmEmpiricalMean_simultaneous_fintype_geometricAllTime_abs_tail_ennreal_delta_trajMeasure&quot;</span>
+<span id="L95">95       ],</span>
+<span id="L96">96       &quot;primary&quot;: {</span>
+<span id="L97">97         &quot;title&quot;: &quot;Bandit Algorithms&quot;,</span>
+<span id="L98">98         &quot;authors&quot;: &quot;Tor Lattimore and Csaba Szepesvári&quot;,</span>
+<span id="L99">99         &quot;edition&quot;: &quot;free online edition&quot;,</span>
+<span id="L100">100         &quot;sections&quot;: &quot;Ch. 2, Ch. 3, and Ch. 5&quot;,</span>
+<span id="L101">101         &quot;pages&quot;: &quot;online pp. 18–42, 46–54, and 74–81&quot;,</span>
+<span id="L102">102         &quot;pdf_page&quot;: 27,</span>
+<span id="L103">103         &quot;url&quot;: &quot;https://tor-lattimore.com/downloads/book/book.pdf&quot;</span>
+<span id="L104">104       },</span>
+<span id="L105">105       &quot;notation&quot;: [</span>
+<span id="L106">106         {&quot;term&quot;: &quot;𝓕_t&quot;, &quot;meaning&quot;: &quot;the sigma-algebra generated by the history observed through time t&quot;},</span>
+<span id="L107">107         {&quot;term&quot;: &quot;E[X | 𝓕_t]&quot;, &quot;meaning&quot;: &quot;conditional expectation given the information currently available&quot;},</span>
+<span id="L108">108         {&quot;term&quot;: &quot;δ&quot;, &quot;meaning&quot;: &quot;the total probability budget assigned to confidence failures&quot;}</span>
+<span id="L109">109       ],</span>
+<span id="L110">110       &quot;algorithm&quot;: {</span>
+<span id="L111">111         &quot;title&quot;: &quot;A reusable confidence-event route&quot;,</span>
+<span id="L112">112         &quot;kind&quot;: &quot;proof flow&quot;,</span>
+<span id="L113">113         &quot;steps&quot;: [</span>
+<span id="L114">114           {&quot;title&quot;: &quot;Model conditional noise&quot;, &quot;detail&quot;: &quot;State a conditional MGF or bounded-reward assumption on the generated history.&quot;},</span>
+<span id="L115">115           {&quot;title&quot;: &quot;Derive one tail bound&quot;, &quot;detail&quot;: &quot;Convert the MGF bound into a deviation probability at a fixed index.&quot;},</span>
+<span id="L116">116           {&quot;title&quot;: &quot;Allocate confidence&quot;, &quot;detail&quot;: &quot;Assign a finite, geometric, or telescoping share δ_i to every arm and time.&quot;},</span>
+<span id="L117">117           {&quot;title&quot;: &quot;Join the events&quot;, &quot;detail&quot;: &quot;Use a union bound to obtain one good event consumed by an algorithm proof.&quot;}</span>
+<span id="L118">118         ]</span>
+<span id="L119">119       },</span>
+<span id="L120">120       &quot;worked_example&quot;: {</span>
+<span id="L121">121         &quot;title&quot;: &quot;Spend one confidence budget across six events&quot;,</span>
+<span id="L122">122         &quot;intro&quot;: &quot;Suppose two arms are inspected at three checkpoints and the total allowed failure probability is delta = 0.05. The union-bound step is visible without hiding the accounting inside an algorithm.&quot;,</span>
+<span id="L123">123         &quot;steps&quot;: [</span>
+<span id="L124">124           {</span>
+<span id="L125">125             &quot;title&quot;: &quot;Name the six bad events&quot;,</span>
+<span id="L126">126             &quot;detail&quot;: &quot;Each event says that one arm&#x27;s empirical estimate misses its confidence radius at one checkpoint.&quot;,</span>
+<span id="L127">127             &quot;math&quot;: &quot;E_{a,j}=\\{\\lvert\\widehat\\mu_{a,j}-\\mu_a\\rvert&gt;r_{a,j}\\},\\qquad a\\in\\{1,2\\},\\ j\\in\\{1,2,3\\}.&quot;,</span>
+<span id="L128">128             &quot;fallback&quot;: &quot;There is one deviation event for each of two arms at each of three checkpoints, for six events in total.&quot;</span>
+<span id="L129">129           },</span>
+<span id="L130">130           {</span>
+<span id="L131">131             &quot;title&quot;: &quot;Give every event an explicit share&quot;,</span>
+<span id="L132">132             &quot;detail&quot;: &quot;An equal schedule assigns delta divided by six to each fixed-index tail bound.&quot;,</span>
+<span id="L133">133             &quot;math&quot;: &quot;\\delta_{a,j}=\\frac{0.05}{6}=\\frac1{120},\\qquad \\Pr(E_{a,j})\\le\\frac1{120}.&quot;,</span>
+<span id="L134">134             &quot;fallback&quot;: &quot;Each event receives failure budget one over 120, and its fixed-index tail probability is bounded by that share.&quot;</span>
+<span id="L135">135           },</span>
+<span id="L136">136           {</span>
+<span id="L137">137             &quot;title&quot;: &quot;Join the events once&quot;,</span>
+<span id="L138">138             &quot;detail&quot;: &quot;No independence is needed for the union bound; adding the six shares preserves the declared total budget.&quot;,</span>
+<span id="L139">139             &quot;math&quot;: &quot;\\Pr\\!\\left(\\bigcup_{a=1}^{2}\\bigcup_{j=1}^{3}E_{a,j}\\right)\\le\\sum_{a,j}\\Pr(E_{a,j})\\le6\\cdot\\frac1{120}=0.05.&quot;,</span>
+<span id="L140">140             &quot;fallback&quot;: &quot;The chance that any of the six deviations occurs is at most the sum of their probabilities, which is 0.05.&quot;</span>
+<span id="L141">141           }</span>
+<span id="L142">142         ],</span>
+<span id="L143">143         &quot;takeaway&quot;: &quot;A simultaneous good event is a budgeted collection of fixed-index facts. Finite, geometric, and telescoping schedules differ in how they distribute delta, not in the final union-bound logic.&quot;,</span>
+<span id="L144">144         &quot;boundary&quot;: &quot;The event probabilities are illustrative inputs to the union bound. The compiled concentration declarations below specify the MGF, measurability, filtration, and index assumptions that justify each tail estimate.&quot;</span>
+<span id="L145">145       },</span>
+<span id="L146">146       &quot;source_theorem&quot;: {</span>
+<span id="L147">147         &quot;label&quot;: &quot;Corollary 5.5 (sub-Gaussian tail)&quot;,</span>
+<span id="L148">148         &quot;pages&quot;: &quot;online pp. 77–78&quot;,</span>
+<span id="L149">149         &quot;pdf_page&quot;: 86,</span>
+<span id="L150">150         &quot;url&quot;: &quot;https://tor-lattimore.com/downloads/book/book.pdf&quot;,</span>
+<span id="L151">151         &quot;math&quot;: &quot;\\Pr(X\\ge\\varepsilon)\\le\\exp\\!\\left(-\\frac{\\varepsilon^2}{2\\sigma^2}\\right)\\quad\\text{for a zero-mean }\\sigma^2\\text{-sub-Gaussian }X.&quot;,</span>
+<span id="L152">152         &quot;fallback&quot;: &quot;A centered sub-Gaussian variable has an exponentially small upper-tail probability.&quot;,</span>
+<span id="L153">153         &quot;plain&quot;: &quot;The fixed-index tail estimate is the mathematical atom from which finite and all-time confidence schedules are assembled.&quot;,</span>
+<span id="L154">154         &quot;relationship&quot;: &quot;The local library adds measure, kernel, filtration, conditional-law, finite-index, and countable-all-time adapters needed by generated bandit trajectories.&quot;,</span>
+<span id="L155">155         &quot;contract&quot;: {</span>
+<span id="L156">156           &quot;model&quot;: &quot;A real-valued random variable X on a probability space.&quot;,</span>
+<span id="L157">157           &quot;assumptions&quot;: &quot;X is centered and σ-sub-Gaussian in the moment-generating-function sense; the deviation ε is nonnegative.&quot;,</span>
+<span id="L158">158           &quot;parameters&quot;: &quot;Sub-Gaussian scale σ and deviation threshold ε.&quot;,</span>
+<span id="L159">159           &quot;regret&quot;: &quot;Not a regret theorem; this is a one-sided concentration primitive consumed by later regret proofs.&quot;,</span>
+<span id="L160">160           &quot;guarantee&quot;: &quot;The upper-tail probability is at most exp(-ε²/(2σ²)).&quot;</span>
+<span id="L161">161         }</span>
+<span id="L162">162       }</span>
+<span id="L163">163     },</span>
+<span id="L164">164     {</span>
+<span id="L165">165       &quot;slug&quot;: &quot;etc&quot;,</span>
+<span id="L166">166       &quot;teaching_route&quot;: [</span>
+<span id="L167">167         &quot;BanditRLProof.ETC.argmaxCommitOracle_encode_le_of_score_le&quot;,</span>
+<span id="L168">168         &quot;BanditRLProof.ETC.integral_real_pseudoRegret_explorationArgmaxGeneratedAction_le_canonicalSubGaussianArmPerArmIntegralRegretBoundReal&quot;</span>
+<span id="L169">169       ],</span>
+<span id="L170">170       &quot;primary&quot;: {</span>
+<span id="L171">171         &quot;title&quot;: &quot;Bandit Algorithms&quot;,</span>
+<span id="L172">172         &quot;authors&quot;: &quot;Tor Lattimore and Csaba Szepesvári&quot;,</span>
+<span id="L173">173         &quot;edition&quot;: &quot;free online edition&quot;,</span>
+<span id="L174">174         &quot;sections&quot;: &quot;Ch. 6&quot;,</span>
+<span id="L175">175         &quot;pages&quot;: &quot;online pp. 91–96&quot;,</span>
+<span id="L176">176         &quot;pdf_page&quot;: 100,</span>
+<span id="L177">177         &quot;url&quot;: &quot;https://tor-lattimore.com/downloads/book/book.pdf&quot;</span>
+<span id="L178">178       },</span>
+<span id="L179">179       &quot;notation&quot;: [</span>
+<span id="L180">180         {&quot;term&quot;: &quot;m&quot;, &quot;meaning&quot;: &quot;the number of exploration pulls allocated to each arm&quot;},</span>
+<span id="L181">181         {&quot;term&quot;: &quot;μ̂_a&quot;, &quot;meaning&quot;: &quot;the empirical mean reward observed from arm a&quot;},</span>
+<span id="L182">182         {&quot;term&quot;: &quot;Δ_a&quot;, &quot;meaning&quot;: &quot;the regret paid each time suboptimal arm a is selected&quot;}</span>
+<span id="L183">183       ],</span>
+<span id="L184">184       &quot;algorithm&quot;: {</span>
+<span id="L185">185         &quot;title&quot;: &quot;Explore-Then-Commit&quot;,</span>
+<span id="L186">186         &quot;kind&quot;: &quot;algorithm&quot;,</span>
+<span id="L187">187         &quot;steps&quot;: [</span>
+<span id="L188">188           {&quot;title&quot;: &quot;Explore&quot;, &quot;detail&quot;: &quot;Pull every arm m times, usually in round-robin order.&quot;},</span>
+<span id="L189">189           {&quot;title&quot;: &quot;Estimate&quot;, &quot;detail&quot;: &quot;Compute each arm&#x27;s empirical mean from its exploration samples.&quot;},</span>
+<span id="L190">190           {&quot;title&quot;: &quot;Commit&quot;, &quot;detail&quot;: &quot;Choose an empirical maximizer using a documented tie rule.&quot;},</span>
+<span id="L191">191           {&quot;title&quot;: &quot;Exploit&quot;, &quot;detail&quot;: &quot;Pull that chosen arm for every remaining round.&quot;}</span>
+<span id="L192">192         ],</span>
+<span id="L193">193         &quot;pseudocode&quot;: {</span>
+<span id="L194">194           &quot;title&quot;: &quot;Textbook Explore-Then-Commit&quot;,</span>
+<span id="L195">195           &quot;intro&quot;: &quot;This version makes the exploration budget, commit time, empirical means, and tie convention explicit before the regret theorem is read.&quot;,</span>
+<span id="L196">196           &quot;formula_label&quot;: &quot;Empirical winner after exploration&quot;,</span>
+<span id="L197">197           &quot;math&quot;: &quot;\\widehat\\mu_a=\\frac1m\\sum_{s=1}^{m}X_{a,s},\\qquad \\widehat a=\\min\\operatorname*{arg\\,max}_{a\\in[k]}\\widehat\\mu_a.&quot;,</span>
+<span id="L198">198           &quot;fallback&quot;: &quot;Average the first m samples of each arm and commit to the least-encoded arm with the largest empirical mean.&quot;,</span>
+<span id="L199">199           &quot;lines&quot;: [</span>
+<span id="L200">200             &quot;input: k arms, horizon n, exploration count m with 1 ≤ m ≤ n/k&quot;,</span>
+<span id="L201">201             &quot;for s = 1,…,m: for a = 1,…,k: pull arm a and record X_{a,s}&quot;,</span>
+<span id="L202">202             &quot;compute μ̂_a = (1/m) sum_s X_{a,s} for every arm a&quot;,</span>
+<span id="L203">203             &quot;set a_hat to the least-encoded empirical-mean maximizer&quot;,</span>
+<span id="L204">204             &quot;for every remaining round: pull a_hat and record its reward&quot;</span>
+<span id="L205">205           ],</span>
+<span id="L206">206           &quot;relationship&quot;: &quot;The textbook permits any fixed empirical-mean tie rule. BanditRLlib&#x27;s canonical generated ETC route fixes round-robin exploration and an explicit first-occurrence/least-encoded commit rule, then proves measurability and expected regret under its bounded or sub-Gaussian arm-law contracts.&quot;</span>
+<span id="L207">207         }</span>
+<span id="L208">208       },</span>
+<span id="L209">209       &quot;worked_example&quot;: {</span>
+<span id="L210">210         &quot;title&quot;: &quot;Follow one two-arm explore–then–commit run&quot;,</span>
+<span id="L211">211         &quot;intro&quot;: &quot;Take two arms, horizon n = 12, and m = 3 exploration pulls per arm. The six exploration rewards below are deliberately small enough to compute by hand.&quot;,</span>
+<span id="L212">212         &quot;steps&quot;: [</span>
+<span id="L213">213           {</span>
+<span id="L214">214             &quot;title&quot;: &quot;Explore both arms equally&quot;,</span>
+<span id="L215">215             &quot;detail&quot;: &quot;Round-robin exploration gives each arm three observations before any commitment is made.&quot;,</span>
+<span id="L216">216             &quot;math&quot;: &quot;X_{1,1:3}=(1,0,1),\\qquad X_{2,1:3}=(0,1,0).&quot;,</span>
+<span id="L217">217             &quot;fallback&quot;: &quot;Arm 1 produces rewards 1, 0, 1; arm 2 produces rewards 0, 1, 0 during exploration.&quot;</span>
+<span id="L218">218           },</span>
+<span id="L219">219           {</span>
+<span id="L220">220             &quot;title&quot;: &quot;Compare the empirical means&quot;,</span>
+<span id="L221">221             &quot;detail&quot;: &quot;Arm 1 has the larger empirical mean, so the documented least-encoded tie rule is not needed in this run.&quot;,</span>
+<span id="L222">222             &quot;math&quot;: &quot;\\widehat\\mu_1=\\frac23,\\qquad \\widehat\\mu_2=\\frac13,\\qquad \\widehat a=1.&quot;,</span>
+<span id="L223">223             &quot;fallback&quot;: &quot;The empirical means are two thirds for arm 1 and one third for arm 2, so the committed arm is arm 1.&quot;</span>
+<span id="L224">224           },</span>
+<span id="L225">225           {</span>
+<span id="L226">226             &quot;title&quot;: &quot;Commit for the remaining rounds&quot;,</span>
+<span id="L227">227             &quot;detail&quot;: &quot;After six exploration pulls, the policy uses arm 1 for the final six rounds. If the true means are 0.6 and 0.4, the exploration of arm 2 has already paid three gap units; a wrong commit would instead repeat that gap throughout exploitation.&quot;,</span>
+<span id="L228">228             &quot;math&quot;: &quot;n-km=6,\\qquad \\Delta_2=0.2,\\qquad m\\Delta_2=0.6.&quot;,</span>
+<span id="L229">229             &quot;fallback&quot;: &quot;Six rounds remain; with a gap of 0.2, the three exploratory pulls of arm 2 contribute expected pseudo-regret 0.6.&quot;</span>
+<span id="L230">230           }</span>
+<span id="L231">231         ],</span>
+<span id="L232">232         &quot;takeaway&quot;: &quot;ETC makes one irreversible decision. Increasing m raises the certain exploration cost but makes the empirical winner more reliable, which is exactly the two-term tradeoff in the theorem card.&quot;,</span>
+<span id="L233">233         &quot;boundary&quot;: &quot;The displayed rewards are one illustrative history, not a simulation result. The regret sentence uses hypothetical true means only to explain gap accounting; the source theorem and exact Lean declarations below control the probabilistic assumptions.&quot;</span>
+<span id="L234">234       },</span>
+<span id="L235">235       &quot;source_theorem&quot;: {</span>
+<span id="L236">236         &quot;label&quot;: &quot;Theorem 6.1 (ETC regret bound)&quot;,</span>
+<span id="L237">237         &quot;pages&quot;: &quot;online pp. 92–93&quot;,</span>
+<span id="L238">238         &quot;pdf_page&quot;: 101,</span>
+<span id="L239">239         &quot;url&quot;: &quot;https://tor-lattimore.com/downloads/book/book.pdf&quot;,</span>
+<span id="L240">240         &quot;math&quot;: &quot;R_n\\le m\\sum_i\\Delta_i+(n-mk)\\sum_i\\Delta_i\\exp\\!\\left(-\\frac{m\\Delta_i^2}{4}\\right).&quot;,</span>
+<span id="L241">241         &quot;fallback&quot;: &quot;ETC regret is bounded by the exploration cost plus the remaining horizon times exponentially small wrong-commit probabilities.&quot;,</span>
+<span id="L242">242         &quot;plain&quot;: &quot;The theorem exposes the central ETC tradeoff: more exploration costs regret now but reduces the probability of committing to a wrong arm.&quot;,</span>
+<span id="L243">243         &quot;relationship&quot;: &quot;The local canonical route constructs a measurable generated ETC law and states explicit tie semantics before deriving bounded and sub-Gaussian expected-regret endpoints.&quot;,</span>
+<span id="L244">244         &quot;contract&quot;: {</span>
+<span id="L245">245           &quot;model&quot;: &quot;A finite k-armed stochastic bandit whose centered arm rewards are 1-sub-Gaussian.&quot;,</span>
+<span id="L246">246           &quot;assumptions&quot;: &quot;The exploration length satisfies 1 ≤ m ≤ n/k; each arm is explored m times and empirical-mean ties are broken by a fixed rule.&quot;,</span>
+<span id="L247">247           &quot;parameters&quot;: &quot;Horizon n, arm count k, exploration count m, and gaps Δ_i.&quot;,</span>
+<span id="L248">248           &quot;regret&quot;: &quot;Expected frequentist regret R_n of Explore-Then-Commit.&quot;,</span>
+<span id="L249">249           &quot;guarantee&quot;: &quot;Exploration cost plus the remaining horizon weighted by exponentially small wrong-commit probabilities.&quot;</span>
+<span id="L250">250         }</span>
+<span id="L251">251       }</span>
+<span id="L252">252     },</span>
+<span id="L253">253     {</span>
+<span id="L254">254       &quot;slug&quot;: &quot;ucb&quot;,</span>
+<span id="L255">255       &quot;teaching_route&quot;: [</span>
+<span id="L256">256         &quot;BanditRLProof.UCB.integral_real_pseudoRegret_selectedPolicySuccessorGeneratedUCBRegretAction_le_textbookGapSum_finiteArmSubgaussianLaws_without_proxy_positivity&quot;,</span>
+<span id="L257">257         &quot;BanditRLProof.UCB.selectedPolicySuccessorFiniteArmSubgaussianExpectedAveragePseudoRegret_tendsto_zero&quot;</span>
+<span id="L258">258       ],</span>
+<span id="L259">259       &quot;primary&quot;: {</span>
+<span id="L260">260         &quot;title&quot;: &quot;Bandit Algorithms&quot;,</span>
+<span id="L261">261         &quot;authors&quot;: &quot;Tor Lattimore and Csaba Szepesvári&quot;,</span>
+<span id="L262">262         &quot;edition&quot;: &quot;free online edition&quot;,</span>
+<span id="L263">263         &quot;sections&quot;: &quot;Ch. 7; KL-UCB extension in Ch. 10&quot;,</span>
+<span id="L264">264         &quot;pages&quot;: &quot;online pp. 102–111; KL-UCB pp. 133–141&quot;,</span>
+<span id="L265">265         &quot;pdf_page&quot;: 111,</span>
+<span id="L266">266         &quot;url&quot;: &quot;https://tor-lattimore.com/downloads/book/book.pdf&quot;</span>
+<span id="L267">267       },</span>
+<span id="L268">268       &quot;notation&quot;: [</span>
+<span id="L269">269         {&quot;term&quot;: &quot;N_a(t)&quot;, &quot;meaning&quot;: &quot;the number of samples collected from arm a before round t&quot;},</span>
+<span id="L270">270         {&quot;term&quot;: &quot;μ̂_a(t)&quot;, &quot;meaning&quot;: &quot;arm a&#x27;s empirical mean after those samples&quot;},</span>
+<span id="L271">271         {&quot;term&quot;: &quot;U_a(t)&quot;, &quot;meaning&quot;: &quot;the empirical mean plus a confidence bonus; UCB selects a maximal score&quot;}</span>
+<span id="L272">272       ],</span>
+<span id="L273">273       &quot;algorithm&quot;: {</span>
+<span id="L274">274         &quot;title&quot;: &quot;Upper Confidence Bound policy&quot;,</span>
+<span id="L275">275         &quot;kind&quot;: &quot;algorithm&quot;,</span>
+<span id="L276">276         &quot;steps&quot;: [</span>
+<span id="L277">277           {&quot;title&quot;: &quot;Initialize&quot;, &quot;detail&quot;: &quot;Pull every arm so that each empirical mean and count is defined.&quot;},</span>
+<span id="L278">278           {&quot;title&quot;: &quot;Score every arm&quot;, &quot;detail&quot;: &quot;Add a confidence bonus to the arm&#x27;s empirical mean; less data means a wider bonus.&quot;},</span>
+<span id="L279">279           {&quot;title&quot;: &quot;Choose optimistically&quot;, &quot;detail&quot;: &quot;Pull an arm with maximal upper-confidence score.&quot;},</span>
+<span id="L280">280           {&quot;title&quot;: &quot;Update and repeat&quot;, &quot;detail&quot;: &quot;Update that arm&#x27;s count and empirical mean, then recompute scores next round.&quot;},</span>
+<span id="L281">281           {&quot;title&quot;: &quot;Read the proof&quot;, &quot;detail&quot;: &quot;On the good event, choosing a suboptimal arm forces its count to still be small; sum gap times count to obtain regret.&quot;}</span>
+<span id="L282">282         ],</span>
+<span id="L283">283         &quot;pseudocode&quot;: {</span>
+<span id="L284">284           &quot;title&quot;: &quot;Textbook Algorithm 3: UCB(δ)&quot;,</span>
+<span id="L285">285           &quot;intro&quot;: &quot;This compact form fixes the horizon convention, confidence index, maximizing rule, and update order used in the textbook route.&quot;,</span>
+<span id="L286">286           &quot;formula_label&quot;: &quot;UCB score after initialization&quot;,</span>
+<span id="L287">287           &quot;math&quot;: &quot;U_a(t)=\\widehat\\mu_a(t-1)+\\sqrt{\\frac{2\\log(1/\\delta)}{N_a(t-1)}},\\qquad A_t=\\min\\operatorname*{arg\\,max}_{a\\in[k]}U_a(t).&quot;,</span>
+<span id="L288">288           &quot;fallback&quot;: &quot;At round t, score arm a by its empirical mean before t plus square root of 2 log(1/delta) divided by its previous pull count; choose the least-encoded maximizing arm.&quot;,</span>
+<span id="L289">289           &quot;lines&quot;: [</span>
+<span id="L290">290             &quot;input: k arms, horizon n, confidence δ = 1/n²&quot;,</span>
+<span id="L291">291             &quot;for t = 1,…,k: pull arm t; observe X_t; update N_t and μ̂_t&quot;,</span>
+<span id="L292">292             &quot;for t = k+1,…,n:&quot;,</span>
+<span id="L293">293             &quot;    compute every U_a(t) from rewards observed before round t&quot;,</span>
+<span id="L294">294             &quot;    choose the least-encoded arm in argmax_a U_a(t)&quot;,</span>
+<span id="L295">295             &quot;    observe its reward; update only that arm&#x27;s count and empirical mean&quot;</span>
+<span id="L296">296           ],</span>
+<span id="L297">297           &quot;relationship&quot;: &quot;The textbook also describes an unpulled arm as having infinite index; the explicit round-robin prefix realizes the same initialization requirement. BanditRLlib&#x27;s canonical generated route uses round-robin initialization and a least-encoded maximizer, but its native score is parameterized as √(2c log(t+1)/N_a(t)); the source theorem card and exact Lean declarations remain authoritative for constants and indexing.&quot;</span>
+<span id="L298">298         }</span>
+<span id="L299">299       },</span>
+<span id="L300">300       &quot;proof_bridge&quot;: {</span>
+<span id="L301">301         &quot;title&quot;: &quot;Why an optimistic choice becomes a regret bound&quot;,</span>
+<span id="L302">302         &quot;summary&quot;: &quot;The source proof and the local Lean route use the same four conceptual joints. Read this bridge before comparing constants or implementation details.&quot;,</span>
+<span id="L303">303         &quot;steps&quot;: [</span>
+<span id="L304">304           {</span>
+<span id="L305">305             &quot;title&quot;: &quot;Control every empirical mean&quot;,</span>
+<span id="L306">306             &quot;detail&quot;: &quot;Work on a confidence event where each empirical mean stays within its declared radius of the true arm mean.&quot;,</span>
+<span id="L307">307             &quot;math&quot;: &quot;|\\widehat\\mu_a(t)-\\mu_a|\\le r_a(t).&quot;,</span>
+<span id="L308">308             &quot;fallback&quot;: &quot;For every relevant arm and round, the empirical mean error is at most its confidence radius.&quot;</span>
+<span id="L309">309           },</span>
+<span id="L310">310           {</span>
+<span id="L311">311             &quot;title&quot;: &quot;Use optimism at the selected arm&quot;,</span>
+<span id="L312">312             &quot;detail&quot;: &quot;If a suboptimal arm is chosen on that event, its upper-confidence score must still compete with the optimal arm&#x27;s mean.&quot;,</span>
+<span id="L313">313             &quot;math&quot;: &quot;A_t=a\\ne a^\\star\\Longrightarrow \\Delta_a\\le 2r_a(t).&quot;,</span>
+<span id="L314">314             &quot;fallback&quot;: &quot;Selecting a suboptimal arm on the confidence event forces its gap to be no larger than twice its current radius.&quot;</span>
+<span id="L315">315           },</span>
+<span id="L316">316           {</span>
+<span id="L317">317             &quot;title&quot;: &quot;Turn the radius into a count threshold&quot;,</span>
+<span id="L318">318             &quot;detail&quot;: &quot;Because the radius shrinks with the number of samples, the preceding inequality can hold only while the arm has been pulled comparatively few times.&quot;,</span>
+<span id="L319">319             &quot;math&quot;: &quot;N_a(T)\\lesssim \\frac{\\log(T/\\delta_a)}{\\Delta_a^2}.&quot;,</span>
+<span id="L320">320             &quot;fallback&quot;: &quot;The pull count of a suboptimal arm is controlled by a logarithmic term divided by the squared arm gap.&quot;</span>
+<span id="L321">321           },</span>
+<span id="L322">322           {</span>
+<span id="L323">323             &quot;title&quot;: &quot;Charge every pull by its gap&quot;,</span>
+<span id="L324">324             &quot;detail&quot;: &quot;Apply the pathwise gap-sum identity, then account explicitly for the confidence-event failure probability under the generated trajectory law.&quot;,</span>
+<span id="L325">325             &quot;math&quot;: &quot;\\mathbb E\\bar R_T\\le\\sum_{a:\\Delta_a&gt;0}\\Delta_a\\bigl(B_a(T)+T\\delta_a\\bigr).&quot;,</span>
+<span id="L326">326             &quot;fallback&quot;: &quot;Expected pseudo-regret is at most the sum of each positive gap times its pull-count bound plus its explicit failure-event charge.&quot;</span>
+<span id="L327">327           }</span>
+<span id="L328">328         ],</span>
+<span id="L329">329         &quot;boundary&quot;: &quot;This is a reading aid for the shared proof shape. The source theorem card and exact Lean statement below remain authoritative for the model, constants, horizon convention, and confidence schedule.&quot;</span>
+<span id="L330">330       },</span>
+<span id="L331">331       &quot;worked_example&quot;: {</span>
+<span id="L332">332         &quot;title&quot;: &quot;Why UCB may deliberately choose the arm with the lower empirical mean&quot;,</span>
+<span id="L333">333         &quot;intro&quot;: &quot;Take a two-arm UCB(δ) decision near the end of a horizon n = 20, so δ = 1/n² = 1/400. Before round 20, arm 1 has been sampled 15 times and arm 2 only 4 times.&quot;,</span>
+<span id="L334">334         &quot;steps&quot;: [</span>
+<span id="L335">335           {</span>
+<span id="L336">336             &quot;title&quot;: &quot;Start from the observed history&quot;,</span>
+<span id="L337">337             &quot;detail&quot;: &quot;Arm 1 currently looks better, but arm 2 is much less explored.&quot;,</span>
+<span id="L338">338             &quot;math&quot;: &quot;N_1=15,\\quad \\widehat\\mu_1=0.60,\\qquad N_2=4,\\quad \\widehat\\mu_2=0.30.&quot;,</span>
+<span id="L339">339             &quot;fallback&quot;: &quot;Arm 1 has count 15 and empirical mean 0.60; arm 2 has count 4 and empirical mean 0.30.&quot;</span>
+<span id="L340">340           },</span>
+<span id="L341">341           {</span>
+<span id="L342">342             &quot;title&quot;: &quot;Add uncertainty, not just reward&quot;,</span>
+<span id="L343">343             &quot;detail&quot;: &quot;With 2 log(400) approximately 11.98, the under-sampled arm receives the wider confidence bonus.&quot;,</span>
+<span id="L344">344             &quot;math&quot;: &quot;U_1\\approx0.60+\\sqrt{11.98/15}=1.49,\\qquad U_2\\approx0.30+\\sqrt{11.98/4}=2.03.&quot;,</span>
+<span id="L345">345             &quot;fallback&quot;: &quot;The two upper-confidence scores are approximately 1.49 for arm 1 and 2.03 for arm 2.&quot;</span>
+<span id="L346">346           },</span>
+<span id="L347">347           {</span>
+<span id="L348">348             &quot;title&quot;: &quot;Choose optimism and shrink it with data&quot;,</span>
+<span id="L349">349             &quot;detail&quot;: &quot;UCB selects arm 2 even though its empirical mean is lower. Each additional pull increases N₂, narrows its bonus, and makes persistent suboptimal selection harder to justify.&quot;,</span>
+<span id="L350">350             &quot;math&quot;: &quot;A_{20}=2\\quad\\text{because}\\quad U_2&gt;U_1;\\qquad \\sqrt{2\\log(1/\\delta)/N_2}\\downarrow\\text{ as }N_2\\uparrow.&quot;,</span>
+<span id="L351">351             &quot;fallback&quot;: &quot;At round 20 the policy chooses arm 2 because its upper-confidence score is larger; its bonus decreases as its sample count increases.&quot;</span>
+<span id="L352">352           }</span>
+<span id="L353">353         ],</span>
+<span id="L354">354         &quot;takeaway&quot;: &quot;UCB is not greedily choosing the largest empirical mean. It chooses the largest plausible mean, so uncertainty creates exploration and the count-dependent radius eventually limits repeated pulls of a genuinely suboptimal arm.&quot;,</span>
+<span id="L355">355         &quot;boundary&quot;: &quot;The numbers illustrate one UCB(δ) decision; they are not a simulated regret result or a new Lean theorem. The source card and compiled declarations below control the exact assumptions and constants.&quot;</span>
+<span id="L356">356       },</span>
+<span id="L357">357       &quot;source_theorem&quot;: {</span>
+<span id="L358">358         &quot;label&quot;: &quot;Theorem 7.2 (finite-time UCB regret)&quot;,</span>
+<span id="L359">359         &quot;pages&quot;: &quot;online p. 108&quot;,</span>
+<span id="L360">360         &quot;pdf_page&quot;: 117,</span>
+<span id="L361">361         &quot;url&quot;: &quot;https://tor-lattimore.com/downloads/book/book.pdf&quot;,</span>
+<span id="L362">362         &quot;math&quot;: &quot;R_n\\le 8\\sqrt{nk\\log n}+3\\sum_{i=1}^{k}\\Delta_i.&quot;,</span>
+<span id="L363">363         &quot;fallback&quot;: &quot;The textbook UCB policy has a finite-time regret bound with a leading square-root term in horizon, arm count, and log horizon.&quot;,</span>
+<span id="L364">364         &quot;plain&quot;: &quot;Confidence validity implies a suboptimal arm can be selected only while its sample count is small enough to keep its bonus competitive.&quot;,</span>
+<span id="L365">365         &quot;relationship&quot;: &quot;BanditRLlib&#x27;s ordinary-UCB route uses an explicit generated trajectory and confidence schedule. Its exact hypotheses, constants, gap-sum form, and Tδ failure term are therefore not presented as a line-for-line formalization of Theorem 7.2; KL-UCB remains a separate extension.&quot;,</span>
+<span id="L366">366         &quot;contract&quot;: {</span>
+<span id="L367">367           &quot;model&quot;: &quot;A finite stochastic k-armed bandit in the textbook&#x27;s 1-sub-Gaussian environment class.&quot;,</span>
+<span id="L368">368           &quot;assumptions&quot;: &quot;Each arm has a fixed mean and 1-sub-Gaussian noise; the chapter&#x27;s canonical independent reward-table model supplies the samples used by the proof.&quot;,</span>
+<span id="L369">369           &quot;parameters&quot;: &quot;Algorithm 3, UCB(δ), at horizon n with δ = 1/n²; an unpulled arm has infinite index, otherwise the index is its empirical mean plus √(2 log(1/δ) / count).&quot;,</span>
+<span id="L370">370           &quot;regret&quot;: &quot;The textbook expected regret Rₙ over n rounds.&quot;,</span>
+<span id="L371">371           &quot;guarantee&quot;: &quot;A worst-case finite-time upper bound 8√(nk log n) plus three times the sum of arm gaps.&quot;</span>
+<span id="L372">372         }</span>
+<span id="L373">373       }</span>
+<span id="L374">374     },</span>
+<span id="L375">375     {</span>
+<span id="L376">376       &quot;slug&quot;: &quot;oful&quot;,</span>
+<span id="L377">377       &quot;teaching_route&quot;: [</span>
+<span id="L378">378         &quot;BanditRLProof.OFUL.sum_range_min_prefix_update_le_two_trace_average_log&quot;,</span>
+<span id="L379">379         &quot;BanditRLProof.OFUL.measure_finiteHorizonRidgeEstimate_error_matrixNorm_gt_confidenceRadius_le&quot;,</span>
+<span id="L380">380         &quot;BanditRLProof.OFUL.finiteHistoryTelescopingScalarRidgeOptimisticAlgorithm&quot;,</span>
+<span id="L381">381         &quot;BanditRLProof.OFUL.telescopingCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_allHorizon_tail_le_explicitBound_of_linearSubgaussianEnvironment_of_featureBound_le_regularization&quot;</span>
+<span id="L382">382       ],</span>
+<span id="L383">383       &quot;primary&quot;: {</span>
+<span id="L384">384         &quot;title&quot;: &quot;Bandit Algorithms&quot;,</span>
+<span id="L385">385         &quot;authors&quot;: &quot;Tor Lattimore and Csaba Szepesvári&quot;,</span>
+<span id="L386">386         &quot;edition&quot;: &quot;free online edition&quot;,</span>
+<span id="L387">387         &quot;sections&quot;: &quot;Ch. 19–20; stopping times in §3.3&quot;,</span>
+<span id="L388">388         &quot;pages&quot;: &quot;online pp. 238–262; stopping-time basics pp. 50–54&quot;,</span>
+<span id="L389">389         &quot;pdf_page&quot;: 247,</span>
+<span id="L390">390         &quot;url&quot;: &quot;https://tor-lattimore.com/downloads/book/book.pdf&quot;</span>
+<span id="L391">391       },</span>
+<span id="L392">392       &quot;companion&quot;: {</span>
+<span id="L393">393         &quot;title&quot;: &quot;Improved Algorithms for Linear Stochastic Bandits&quot;,</span>
+<span id="L394">394         &quot;authors&quot;: &quot;Yasin Abbasi-Yadkori, Dávid Pál, and Csaba Szepesvári&quot;,</span>
+<span id="L395">395         &quot;sections&quot;: &quot;OFUL algorithm and Theorem 3&quot;,</span>
+<span id="L396">396         &quot;pages&quot;: &quot;paper pp. 3–5&quot;,</span>
+<span id="L397">397         &quot;pdf_page&quot;: 3,</span>
+<span id="L398">398         &quot;url&quot;: &quot;https://proceedings.neurips.cc/paper/2011/file/e1d5be1c7f2f456670de3d53c7b54f4a-Paper.pdf&quot;</span>
+<span id="L399">399       },</span>
+<span id="L400">400       &quot;notation&quot;: [</span>
+<span id="L401">401         {&quot;term&quot;: &quot;V_t&quot;, &quot;meaning&quot;: &quot;the regularized feature Gram matrix that records explored directions&quot;},</span>
+<span id="L402">402         {&quot;term&quot;: &quot;θ̂_t&quot;, &quot;meaning&quot;: &quot;the ridge least-squares estimate of the unknown reward parameter&quot;},</span>
+<span id="L403">403         {&quot;term&quot;: &quot;β_t&quot;, &quot;meaning&quot;: &quot;the confidence radius multiplying the inverse-Gram feature norm&quot;}</span>
+<span id="L404">404       ],</span>
+<span id="L405">405       &quot;algorithm&quot;: {</span>
+<span id="L406">406         &quot;title&quot;: &quot;OFUL confidence-ellipsoid loop&quot;,</span>
+<span id="L407">407         &quot;kind&quot;: &quot;algorithm&quot;,</span>
+<span id="L408">408         &quot;steps&quot;: [</span>
+<span id="L409">409           {&quot;title&quot;: &quot;Update geometry&quot;, &quot;detail&quot;: &quot;Accumulate the regularized feature Gram matrix from past actions.&quot;},</span>
+<span id="L410">410           {&quot;title&quot;: &quot;Estimate&quot;, &quot;detail&quot;: &quot;Compute the ridge least-squares parameter estimate.&quot;},</span>
+<span id="L411">411           {&quot;title&quot;: &quot;Build confidence&quot;, &quot;detail&quot;: &quot;Place plausible parameters in an ellipsoid around the estimate.&quot;},</span>
+<span id="L412">412           {&quot;title&quot;: &quot;Act optimistically&quot;, &quot;detail&quot;: &quot;Choose the action and plausible parameter pair with the largest predicted reward.&quot;},</span>
+<span id="L413">413           {&quot;title&quot;: &quot;Charge widths&quot;, &quot;detail&quot;: &quot;Bound regret by confidence widths and use the elliptical-potential sum.&quot;}</span>
+<span id="L414">414         ],</span>
+<span id="L415">415         &quot;pseudocode&quot;: {</span>
+<span id="L416">416           &quot;title&quot;: &quot;OFUL optimistic ridge loop&quot;,</span>
+<span id="L417">417           &quot;intro&quot;: &quot;The compact loop separates the state carried between rounds from the confidence maximization performed at the current round.&quot;,</span>
+<span id="L418">418           &quot;formula_label&quot;: &quot;Ridge estimate and optimistic score&quot;,</span>
+<span id="L419">419           &quot;math&quot;: &quot;V_t=\\lambda I+\\sum_{s&lt;t}x_sx_s^\\top,\\quad \\widehat\\theta_t=V_t^{-1}\\sum_{s&lt;t}x_sy_s,\\quad x_t\\in\\operatorname*{arg\\,max}_{x\\in\\mathcal D_t}\\left(\\langle\\widehat\\theta_t,x\\rangle+\\beta_t\\lVert x\\rVert_{V_t^{-1}}\\right).&quot;,</span>
+<span id="L420">420           &quot;fallback&quot;: &quot;Form the regularized Gram matrix and ridge estimate, then choose the feasible action with the largest estimated reward plus its confidence width.&quot;,</span>
+<span id="L421">421           &quot;lines&quot;: [</span>
+<span id="L422">422             &quot;input: regularization λ &gt; 0, confidence δ, feasible action sets D_t&quot;,</span>
+<span id="L423">423             &quot;initialize V_1 = λ I and b_1 = 0&quot;,</span>
+<span id="L424">424             &quot;for t = 1,…,n:&quot;,</span>
+<span id="L425">425             &quot;    set θ̂_t = V_t^{-1} b_t and compute confidence radius β_t&quot;,</span>
+<span id="L426">426             &quot;    choose a documented maximizer of &lt;θ̂_t,x&gt; + β_t ||x||_{V_t^{-1}}&quot;,</span>
+<span id="L427">427             &quot;    observe y_t; update V_{t+1} = V_t + x_t x_t^T and b_{t+1} = b_t + x_t y_t&quot;</span>
+<span id="L428">428           ],</span>
+<span id="L429">429           &quot;relationship&quot;: &quot;The source algorithm permits time-varying feasible sets. BanditRLlib&#x27;s canonical route is a finite-action measurable construction with explicit confidence, all-horizon, expectation, and stopping-time interfaces; the exact Lean statements determine the feature, regularity, and scheduling contracts.&quot;</span>
+<span id="L430">430         }</span>
+<span id="L431">431       },</span>
+<span id="L432">432       &quot;worked_example&quot;: {</span>
+<span id="L433">433         &quot;title&quot;: &quot;Why an unexplored direction can beat a better estimate&quot;,</span>
+<span id="L434">434         &quot;intro&quot;: &quot;Use two-dimensional features with actions e₁ and e₂, regularization λ = 1, and confidence radius β₂ = 0.5. After one modest reward from e₁, OFUL compares estimated reward and directional uncertainty.&quot;,</span>
+<span id="L435">435         &quot;steps&quot;: [</span>
+<span id="L436">436           {</span>
+<span id="L437">437             &quot;title&quot;: &quot;Record one observed direction&quot;,</span>
+<span id="L438">438             &quot;detail&quot;: &quot;The first action is e₁ and its reward is 0.2, so only the first coordinate enters the data vector.&quot;,</span>
+<span id="L439">439             &quot;math&quot;: &quot;x_1=e_1,\\qquad y_1=0.2,\\qquad b_2=x_1y_1=(0.2,0)^\\top.&quot;,</span>
+<span id="L440">440             &quot;fallback&quot;: &quot;The policy observes reward 0.2 after choosing the first basis vector, so the data vector is (0.2, 0).&quot;</span>
+<span id="L441">441           },</span>
+<span id="L442">442           {</span>
+<span id="L443">443             &quot;title&quot;: &quot;See uncertainty in the Gram geometry&quot;,</span>
+<span id="L444">444             &quot;detail&quot;: &quot;The observed direction receives an extra rank-one update; the untouched direction retains the larger inverse-Gram width.&quot;,</span>
+<span id="L445">445             &quot;math&quot;: &quot;V_2=I+e_1e_1^\\top=\\operatorname{diag}(2,1),\\quad \\widehat\\theta_2=V_2^{-1}b_2=(0.1,0)^\\top,\\quad \\lVert e_1\\rVert_{V_2^{-1}}=\\frac1{\\sqrt2}&lt;\\lVert e_2\\rVert_{V_2^{-1}}=1.&quot;,</span>
+<span id="L446">446             &quot;fallback&quot;: &quot;The Gram matrix is diagonal with entries 2 and 1; the estimate is (0.1, 0), and the unexplored second direction has the wider confidence norm.&quot;</span>
+<span id="L447">447           },</span>
+<span id="L448">448           {</span>
+<span id="L449">449             &quot;title&quot;: &quot;Let optimism choose information&quot;,</span>
+<span id="L450">450             &quot;detail&quot;: &quot;The small estimated advantage of e₁ is outweighed by e₂&#x27;s wider confidence interval, so the optimistic score explores e₂.&quot;,</span>
+<span id="L451">451             &quot;math&quot;: &quot;U_2(e_1)=0.1+\\frac{0.5}{\\sqrt2}\\approx0.454,\\qquad U_2(e_2)=0+0.5=0.5,\\qquad x_2=e_2.&quot;,</span>
+<span id="L452">452             &quot;fallback&quot;: &quot;The optimistic scores are about 0.454 for the first direction and 0.5 for the unexplored second direction, so OFUL chooses the second direction.&quot;</span>
+<span id="L453">453           }</span>
+<span id="L454">454         ],</span>
+<span id="L455">455         &quot;takeaway&quot;: &quot;OFUL explores directions, not named arms in isolation. The same inverse-Gram norm that makes e₂ attractive here is later summed by the elliptical-potential argument.&quot;,</span>
+<span id="L456">456         &quot;boundary&quot;: &quot;This two-dimensional calculation illustrates one optimistic score comparison. It is not a trajectory benchmark and does not instantiate every boundedness, measurability, or confidence-radius hypothesis in the compiled theorem.&quot;</span>
+<span id="L457">457       },</span>
+<span id="L458">458       &quot;proof_bridge&quot;: {</span>
+<span id="L459">459         &quot;title&quot;: &quot;How confidence geometry pays for linear-bandit regret&quot;,</span>
+<span id="L460">460         &quot;summary&quot;: &quot;OFUL replaces one confidence interval per arm by one ellipsoid for the unknown parameter. The same inverse-Gram norm measures both uncertainty and the cost charged to the trajectory.&quot;,</span>
+<span id="L461">461         &quot;steps&quot;: [</span>
+<span id="L462">462           {</span>
+<span id="L463">463             &quot;title&quot;: &quot;Put the parameter in an ellipsoid&quot;,</span>
+<span id="L464">464             &quot;detail&quot;: &quot;A self-normalized concentration result bounds the ridge-estimation error in the geometry accumulated from earlier features.&quot;,</span>
+<span id="L465">465             &quot;math&quot;: &quot;\\lVert\\widehat\\theta_t-\\theta_\\star\\rVert_{V_t}\\le\\beta_t.&quot;,</span>
+<span id="L466">466             &quot;fallback&quot;: &quot;The true parameter lies within beta t of the ridge estimate in the Gram-matrix norm.&quot;</span>
+<span id="L467">467           },</span>
+<span id="L468">468           {</span>
+<span id="L469">469             &quot;title&quot;: &quot;Convert optimism into one width&quot;,</span>
+<span id="L470">470             &quot;detail&quot;: &quot;Maximizing over the confidence set makes the instantaneous regret no larger than a constant multiple of the selected feature&#x27;s inverse-Gram width.&quot;,</span>
+<span id="L471">471             &quot;math&quot;: &quot;r_t\\le 2\\beta_t\\lVert x_t\\rVert_{V_t^{-1}}.&quot;,</span>
+<span id="L472">472             &quot;fallback&quot;: &quot;One-step regret is controlled by twice the confidence radius times the selected feature&#x27;s inverse-Gram norm.&quot;</span>
+<span id="L473">473           },</span>
+<span id="L474">474           {</span>
+<span id="L475">475             &quot;title&quot;: &quot;Sum widths through determinant growth&quot;,</span>
+<span id="L476">476             &quot;detail&quot;: &quot;The elliptical-potential lemma says that repeatedly visiting a direction increases the Gram determinant and prevents that direction from remaining wide forever.&quot;,</span>
+<span id="L477">477             &quot;math&quot;: &quot;\\sum_{t=1}^{n}\\min\\{1,\\lVert x_t\\rVert_{V_t^{-1}}^2\\}\\le 2\\log\\frac{\\det V_{n+1}}{\\det V_1}.&quot;,</span>
+<span id="L478">478             &quot;fallback&quot;: &quot;The sum of clipped squared confidence widths is at most twice the logarithmic growth of the Gram determinant.&quot;</span>
+<span id="L479">479           },</span>
+<span id="L480">480           {</span>
+<span id="L481">481             &quot;title&quot;: &quot;Finish with Cauchy-Schwarz&quot;,</span>
+<span id="L482">482             &quot;detail&quot;: &quot;Combining the confidence radius with the potential bound yields the familiar dimension-times-square-root-horizon scale, with the source assumptions determining the logarithms and constants.&quot;,</span>
+<span id="L483">483             &quot;math&quot;: &quot;R_n\\lesssim\\beta_n\\sqrt{n\\log\\frac{\\det V_{n+1}}{\\det V_1}}=\\widetilde O(d\\sqrt n).&quot;,</span>
+<span id="L484">484             &quot;fallback&quot;: &quot;Cumulative regret is controlled by the final confidence radius times the square root of horizon and determinant growth, giving dimension times square-root horizon up to logs.&quot;</span>
+<span id="L485">485           }</span>
+<span id="L486">486         ],</span>
+<span id="L487">487         &quot;boundary&quot;: &quot;This bridge identifies the source proof joints and their local counterparts; it is not a claim that the finite-action Lean route reproduces every OFUL variant or the paper&#x27;s sharp constants verbatim.&quot;</span>
+<span id="L488">488       },</span>
+<span id="L489">489       &quot;source_theorem&quot;: {</span>
+<span id="L490">490         &quot;label&quot;: &quot;Abbasi-Yadkori–Pál–Szepesvári, Theorem 3&quot;,</span>
+<span id="L491">491         &quot;pages&quot;: &quot;paper pp. 4–5&quot;,</span>
+<span id="L492">492         &quot;pdf_page&quot;: 5,</span>
+<span id="L493">493         &quot;url&quot;: &quot;https://proceedings.neurips.cc/paper/2011/file/e1d5be1c7f2f456670de3d53c7b54f4a-Paper.pdf&quot;,</span>
+<span id="L494">494         &quot;math&quot;: &quot;R_n=\\widetilde O\\!\\left(d\\sqrt n\\right)\\quad\\text{under the theorem&#x27;s bounded-feature and sub-Gaussian assumptions}.&quot;,</span>
+<span id="L495">495         &quot;fallback&quot;: &quot;OFUL achieves dimension times square-root-horizon regret, up to logarithmic factors, under the paper&#x27;s stated assumptions.&quot;,</span>
+<span id="L496">496         &quot;plain&quot;: &quot;The paper combines a self-normalized confidence ellipsoid with optimism and an elliptical-potential argument.&quot;,</span>
+<span id="L497">497         &quot;relationship&quot;: &quot;The local finite-action scalar route compiles the confidence, optimistic policy, all-time, expected-consistency, and stopping-time interfaces under its own explicit contracts; consult the exact Lean statements for the narrower model.&quot;,</span>
+<span id="L498">498         &quot;contract&quot;: {</span>
+<span id="L499">499           &quot;model&quot;: &quot;A d-dimensional stochastic linear bandit with round-dependent feasible action sets and linear conditional mean rewards.&quot;,</span>
+<span id="L500">500           &quot;assumptions&quot;: &quot;The paper&#x27;s preceding bounded-parameter, bounded-feature, conditionally sub-Gaussian noise, and regularization conditions hold; Theorem 3 also assumes every feasible mean reward lies in [-1,1].&quot;,</span>
+<span id="L501">501           &quot;parameters&quot;: &quot;Dimension d, horizon n, feature and parameter bounds, noise scale, regularization λ, and confidence δ.&quot;,</span>
+<span id="L502">502           &quot;regret&quot;: &quot;High-probability cumulative pseudo-regret of the OFUL policy.&quot;,</span>
+<span id="L503">503           &quot;guarantee&quot;: &quot;An explicit confidence-dependent bound of order d√n up to logarithmic factors.&quot;</span>
+<span id="L504">504         }</span>
+<span id="L505">505       }</span>
+<span id="L506">506     },</span>
+<span id="L507">507     {</span>
+<span id="L508">508       &quot;slug&quot;: &quot;thompson&quot;,</span>
+<span id="L509">509       &quot;teaching_route&quot;: [</span>
+<span id="L510">510         &quot;BanditRLProof.PosteriorKernel.canonicalPosterior_kernel_ae_eq_condDistrib_of_pair_map_eq&quot;,</span>
+<span id="L511">511         &quot;BanditRLProof.Thompson.uniformReferenceThompsonAlgorithm_trajectory_condDistrib_action_ae_eq_bestAction&quot;,</span>
+<span id="L512">512         &quot;BanditRLProof.Thompson.integral_trajectoryBayesMeanRegret_eq_add_clippedUCB&quot;,</span>
+<span id="L513">513         &quot;BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le&quot;</span>
+<span id="L514">514       ],</span>
+<span id="L515">515       &quot;primary&quot;: {</span>
+<span id="L516">516         &quot;title&quot;: &quot;Bandit Algorithms&quot;,</span>
+<span id="L517">517         &quot;authors&quot;: &quot;Tor Lattimore and Csaba Szepesvári&quot;,</span>
+<span id="L518">518         &quot;edition&quot;: &quot;free online edition&quot;,</span>
+<span id="L519">519         &quot;sections&quot;: &quot;Ch. 34 and Ch. 36&quot;,</span>
+<span id="L520">520         &quot;pages&quot;: &quot;online pp. 421–436 and 460–475&quot;,</span>
+<span id="L521">521         &quot;pdf_page&quot;: 430,</span>
+<span id="L522">522         &quot;url&quot;: &quot;https://tor-lattimore.com/downloads/book/book.pdf&quot;</span>
+<span id="L523">523       },</span>
+<span id="L524">524       &quot;notation&quot;: [</span>
+<span id="L525">525         {&quot;term&quot;: &quot;Π_t&quot;, &quot;meaning&quot;: &quot;the posterior distribution after observing the history through round t&quot;},</span>
+<span id="L526">526         {&quot;term&quot;: &quot;θ̃_t&quot;, &quot;meaning&quot;: &quot;a parameter sample drawn from that posterior&quot;},</span>
+<span id="L527">527         {&quot;term&quot;: &quot;A_t&quot;, &quot;meaning&quot;: &quot;an arm optimal for the sampled parameter, with ties handled explicitly&quot;}</span>
+<span id="L528">528       ],</span>
+<span id="L529">529       &quot;algorithm&quot;: {</span>
+<span id="L530">530         &quot;title&quot;: &quot;Thompson sampling&quot;,</span>
+<span id="L531">531         &quot;kind&quot;: &quot;algorithm&quot;,</span>
+<span id="L532">532         &quot;steps&quot;: [</span>
+<span id="L533">533           {&quot;title&quot;: &quot;Condition&quot;, &quot;detail&quot;: &quot;Form the posterior distribution of the unknown environment given observed history.&quot;},</span>
+<span id="L534">534           {&quot;title&quot;: &quot;Sample a model&quot;, &quot;detail&quot;: &quot;Draw one plausible environment from that posterior.&quot;},</span>
+<span id="L535">535           {&quot;title&quot;: &quot;Optimize the sample&quot;, &quot;detail&quot;: &quot;Choose an arm that is best in the sampled environment.&quot;},</span>
+<span id="L536">536           {&quot;title&quot;: &quot;Observe and update&quot;, &quot;detail&quot;: &quot;Record the reward and condition the posterior on the enlarged history.&quot;}</span>
+<span id="L537">537         ],</span>
+<span id="L538">538         &quot;pseudocode&quot;: {</span>
+<span id="L539">539           &quot;title&quot;: &quot;Posterior-sampling loop&quot;,</span>
+<span id="L540">540           &quot;intro&quot;: &quot;This form makes probability matching visible: sample one environment from the current posterior, then act optimally for that sampled environment.&quot;,</span>
+<span id="L541">541           &quot;formula_label&quot;: &quot;Posterior sample and selected arm&quot;,</span>
+<span id="L542">542           &quot;math&quot;: &quot;\\widetilde\\theta_t\\sim\\Pi_t(\\cdot\\mid H_{t-1}),\\qquad A_t=\\min\\operatorname*{arg\\,max}_{a\\in[k]}\\mu_a(\\widetilde\\theta_t).&quot;,</span>
+<span id="L543">543           &quot;fallback&quot;: &quot;Sample a latent environment from the posterior given the previous history, then choose the least-encoded arm with maximal mean in that sampled environment.&quot;,</span>
+<span id="L544">544           &quot;lines&quot;: [</span>
+<span id="L545">545             &quot;input: prior Q, likelihood/reward kernel, horizon n, fixed optimal-arm tie rule&quot;,</span>
+<span id="L546">546             &quot;initialize posterior Π_1 = Q&quot;,</span>
+<span id="L547">547             &quot;for t = 1,…,n:&quot;,</span>
+<span id="L548">548             &quot;    sample θ̃_t from Π_t given the visible history H_{t-1}&quot;,</span>
+<span id="L549">549             &quot;    choose A_t as the documented mean-optimal arm for θ̃_t&quot;,</span>
+<span id="L550">550             &quot;    observe reward X_t and update Π_{t+1} by conditioning on (A_t,X_t)&quot;</span>
+<span id="L551">551           ],</span>
+<span id="L552">552           &quot;relationship&quot;: &quot;BanditRLlib constructs a canonical posterior kernel and a recursive stationary latent-arm-stream trajectory. Its selector carries an explicit pointwise mean-optimality contract, and its compiled endpoint is Bayesian rather than a universal frequentist theorem for every Thompson variant.&quot;</span>
+<span id="L553">553         }</span>
+<span id="L554">554       },</span>
+<span id="L555">555       &quot;worked_example&quot;: {</span>
+<span id="L556">556         &quot;title&quot;: &quot;Read one Thompson decision as probability matching&quot;,</span>
+<span id="L557">557         &quot;intro&quot;: &quot;After the current history, suppose the posterior says arm 1 is optimal with probability 0.7 and arm 2 with probability 0.3. Thompson sampling turns that uncertainty directly into its next-action law.&quot;,</span>
+<span id="L558">558         &quot;steps&quot;: [</span>
+<span id="L559">559           {</span>
+<span id="L560">560             &quot;title&quot;: &quot;Start from posterior uncertainty&quot;,</span>
+<span id="L561">561             &quot;detail&quot;: &quot;The probabilities describe uncertainty about the true optimal arm under the Bayesian model, not empirical-mean scores.&quot;,</span>
+<span id="L562">562             &quot;math&quot;: &quot;\\Pr(A^\\star=1\\mid H_{t-1})=0.7,\\qquad \\Pr(A^\\star=2\\mid H_{t-1})=0.3.&quot;,</span>
+<span id="L563">563             &quot;fallback&quot;: &quot;Given the previous history, the posterior probability that arm 1 is optimal is 0.7 and that arm 2 is optimal is 0.3.&quot;</span>
+<span id="L564">564           },</span>
+<span id="L565">565           {</span>
+<span id="L566">566             &quot;title&quot;: &quot;Sample a plausible environment&quot;,</span>
+<span id="L567">567             &quot;detail&quot;: &quot;If this posterior draw makes arm 2 optimal, the documented selector chooses arm 2 even though arm 1 is more likely to be truly optimal.&quot;,</span>
+<span id="L568">568             &quot;math&quot;: &quot;\\widetilde\\theta_t\\sim\\Pi_t,\\qquad \\operatorname*{arg\\,max}_a\\mu_a(\\widetilde\\theta_t)=2\\Longrightarrow A_t=2.&quot;,</span>
+<span id="L569">569             &quot;fallback&quot;: &quot;A sampled environment is drawn from the posterior; in this illustrative draw arm 2 is best, so arm 2 is selected.&quot;</span>
+<span id="L570">570           },</span>
+<span id="L571">571           {</span>
+<span id="L572">572             &quot;title&quot;: &quot;Recover the action probabilities&quot;,</span>
+<span id="L573">573             &quot;detail&quot;: &quot;Across posterior draws, applying the same optimal-arm rule reproduces the posterior law of the true optimal arm.&quot;,</span>
+<span id="L574">574             &quot;math&quot;: &quot;\\Pr(A_t=1\\mid H_{t-1})=0.7,\\qquad \\Pr(A_t=2\\mid H_{t-1})=0.3.&quot;,</span>
+<span id="L575">575             &quot;fallback&quot;: &quot;Conditioned on the history, Thompson sampling chooses arms 1 and 2 with probabilities 0.7 and 0.3.&quot;</span>
+<span id="L576">576           }</span>
+<span id="L577">577         ],</span>
+<span id="L578">578         &quot;takeaway&quot;: &quot;Thompson sampling explores because posterior uncertainty remains: a 30 percent chance that arm 2 is optimal becomes a 30 percent chance of sampling it.&quot;,</span>
+<span id="L579">579         &quot;boundary&quot;: &quot;The numbers specify one hypothetical posterior state and do not perform a Bayesian update. The exact compiled route below constructs the posterior kernel and proves probability matching under its stated latent-environment and tie-breaking contracts.&quot;</span>
+<span id="L580">580       },</span>
+<span id="L581">581       &quot;proof_bridge&quot;: {</span>
+<span id="L582">582         &quot;title&quot;: &quot;Why posterior sampling can be analyzed through probability matching&quot;,</span>
+<span id="L583">583         &quot;summary&quot;: &quot;The analysis uses the fact that the action selected from a posterior sample and the truly optimal action have the same conditional distribution given the visible history.&quot;,</span>
+<span id="L584">584         &quot;steps&quot;: [</span>
+<span id="L585">585           {</span>
+<span id="L586">586             &quot;title&quot;: &quot;Condition on the observed history&quot;,</span>
+<span id="L587">587             &quot;detail&quot;: &quot;Given the current history, both the unknown environment and the fresh posterior sample are distributed according to the same posterior kernel.&quot;,</span>
+<span id="L588">588             &quot;math&quot;: &quot;\\mathcal L(\\widetilde\\theta_t\\mid H_{t-1})=\\mathcal L(\\theta_\\star\\mid H_{t-1})=\\Pi_t.&quot;,</span>
+<span id="L589">589             &quot;fallback&quot;: &quot;Conditionally on the previous history, the sampled and true latent environments share the current posterior law.&quot;</span>
+<span id="L590">590           },</span>
+<span id="L591">591           {</span>
+<span id="L592">592             &quot;title&quot;: &quot;Match the optimal-action law&quot;,</span>
+<span id="L593">593             &quot;detail&quot;: &quot;Applying the same documented optimal-arm selector to those two latent environments gives equal conditional laws for the chosen arm and the optimal arm.&quot;,</span>
+<span id="L594">594             &quot;math&quot;: &quot;\\mathbb P(A_t=a\\mid H_{t-1})=\\mathbb P(A^\\star=a\\mid H_{t-1}).&quot;,</span>
+<span id="L595">595             &quot;fallback&quot;: &quot;For each arm, its conditional chance of being selected equals its conditional chance of being optimal.&quot;</span>
+<span id="L596">596           },</span>
+<span id="L597">597           {</span>
+<span id="L598">598             &quot;title&quot;: &quot;Rewrite Bayesian regret&quot;,</span>
+<span id="L599">599             &quot;detail&quot;: &quot;Probability matching permits a clipped upper-confidence decomposition in which uncertainty and failure terms are separated before expectations are summed.&quot;,</span>
+<span id="L600">600             &quot;math&quot;: &quot;\\mathbb E_t[\\mu(A^\\star)-\\mu(A_t)]\\le\\mathbb E_t[U_t(A_t)-\\mu(A_t)]+\\mathbb E_t[\\mu(A^\\star)-U_t(A^\\star)].&quot;,</span>
+<span id="L601">601             &quot;fallback&quot;: &quot;Conditional Bayesian regret is bounded by an uncertainty term for the selected arm plus an upper-confidence failure term for the optimal arm.&quot;</span>
+<span id="L602">602           },</span>
+<span id="L603">603           {</span>
+<span id="L604">604             &quot;title&quot;: &quot;Sum uncertainty under the model contract&quot;,</span>
+<span id="L605">605             &quot;detail&quot;: &quot;The bounded-reward, variance, and posterior assumptions then control the accumulated widths and failure charge, producing the source theorem&#x27;s Bayesian rate.&quot;,</span>
+<span id="L606">606             &quot;math&quot;: &quot;BR_n\\le C\\sqrt{kn\\log n}.&quot;,</span>
+<span id="L607">607             &quot;fallback&quot;: &quot;Under the stated Bayesian finite-arm assumptions, the accumulated terms yield a constant times square root of k n log n.&quot;</span>
+<span id="L608">608           }</span>
+<span id="L609">609         ],</span>
+<span id="L610">610         &quot;boundary&quot;: &quot;This is a conceptual map of the Bayesian route. The exact compiled terminal has its own boundedness and variance terms and does not establish a frequentist guarantee for arbitrary Thompson-sampling implementations.&quot;</span>
+<span id="L611">611       },</span>
+<span id="L612">612       &quot;source_theorem&quot;: {</span>
+<span id="L613">613         &quot;label&quot;: &quot;Theorem 36.1 (Bayesian regret of Thompson sampling)&quot;,</span>
+<span id="L614">614         &quot;pages&quot;: &quot;online p. 461 (Chapter 36, §36.1)&quot;,</span>
+<span id="L615">615         &quot;pdf_page&quot;: 470,</span>
+<span id="L616">616         &quot;url&quot;: &quot;https://tor-lattimore.com/downloads/book/book.pdf&quot;,</span>
+<span id="L617">617         &quot;math&quot;: &quot;BR_n\\le C\\sqrt{kn\\log n}\\quad\\text{for the theorem&#x27;s Bayesian finite-armed model and universal }C.&quot;,</span>
+<span id="L618">618         &quot;fallback&quot;: &quot;In the stated Bayesian finite-armed setting, Thompson sampling has square-root-horizon Bayesian regret up to a logarithmic factor.&quot;,</span>
+<span id="L619">619         &quot;plain&quot;: &quot;Probability matching turns posterior uncertainty about the best arm into an exploration policy.&quot;,</span>
+<span id="L620">620         &quot;relationship&quot;: &quot;BanditRLlib constructs a canonical posterior/kernel and generated stationary latent-arm-stream process. Its compiled terminal has explicit bounded-reward and variance terms and is not a blanket frequentist guarantee for all Thompson variants.&quot;,</span>
+<span id="L621">621         &quot;contract&quot;: {</span>
+<span id="L622">622           &quot;model&quot;: &quot;A k-armed Bayesian bandit environment with prior Q and arm laws indexed by the latent environment.&quot;,</span>
+<span id="L623">623           &quot;assumptions&quot;: &quot;For every environment and arm, the centered reward law is 1-sub-Gaussian and its mean lies in [0,1]; optimal-arm ties use the algorithm&#x27;s fixed rule.&quot;,</span>
+<span id="L624">624           &quot;parameters&quot;: &quot;Prior Q, arm count k, and horizon n.&quot;,</span>
+<span id="L625">625           &quot;regret&quot;: &quot;Bayesian regret BR_n, averaged over the prior, observations, and policy randomization.&quot;,</span>
+<span id="L626">626           &quot;guarantee&quot;: &quot;BR_n is at most C√(kn log n) for a universal constant C.&quot;</span>
+<span id="L627">627         }</span>
+<span id="L628">628       }</span>
+<span id="L629">629     },</span>
+<span id="L630">630     {</span>
+<span id="L631">631       &quot;slug&quot;: &quot;exp3&quot;,</span>
+<span id="L632">632       &quot;teaching_route&quot;: [</span>
+<span id="L633">633         &quot;BanditRLProof.Exp3.hedge_regret_le_log_card_div_add_eta_mul_mixedSquaredLoss_of_nonneg&quot;,</span>
+<span id="L634">634         &quot;BanditRLProof.Exp3.sampledPredictable_expectedRegret_le_four_mul_sqrt&quot;,</span>
+<span id="L635">635         &quot;BanditRLProof.Exp3.sampledPredictable_allHorizonBernsteinSquareBestArmRealizedRegret_tail&quot;,</span>
+<span id="L636">636         &quot;BanditRLProof.Exp3.measure_sampledRealizedRegretGeometricAllTimeFailureSet_le&quot;</span>
+<span id="L637">637       ],</span>
+<span id="L638">638       &quot;primary&quot;: {</span>
+<span id="L639">639         &quot;title&quot;: &quot;Bandit Algorithms&quot;,</span>
+<span id="L640">640         &quot;authors&quot;: &quot;Tor Lattimore and Csaba Szepesvári&quot;,</span>
+<span id="L641">641         &quot;edition&quot;: &quot;free online edition&quot;,</span>
+<span id="L642">642         &quot;sections&quot;: &quot;Ch. 11–12&quot;,</span>
+<span id="L643">643         &quot;pages&quot;: &quot;online pp. 148–172&quot;,</span>
+<span id="L644">644         &quot;pdf_page&quot;: 157,</span>
+<span id="L645">645         &quot;url&quot;: &quot;https://tor-lattimore.com/downloads/book/book.pdf&quot;</span>
+<span id="L646">646       },</span>
+<span id="L647">647       &quot;notation&quot;: [</span>
+<span id="L648">648         {&quot;term&quot;: &quot;p_t(a)&quot;, &quot;meaning&quot;: &quot;the probability of selecting arm a at round t&quot;},</span>
+<span id="L649">649         {&quot;term&quot;: &quot;ℓ̂_t(a)&quot;, &quot;meaning&quot;: &quot;the importance-weighted loss estimate formed from bandit feedback&quot;},</span>
+<span id="L650">650         {&quot;term&quot;: &quot;η&quot;, &quot;meaning&quot;: &quot;the learning rate controlling how aggressively exponential weights move&quot;}</span>
+<span id="L651">651       ],</span>
+<span id="L652">652       &quot;algorithm&quot;: {</span>
+<span id="L653">653         &quot;title&quot;: &quot;EXP3 with importance-weighted losses&quot;,</span>
+<span id="L654">654         &quot;kind&quot;: &quot;algorithm&quot;,</span>
+<span id="L655">655         &quot;steps&quot;: [</span>
+<span id="L656">656           {&quot;title&quot;: &quot;Turn weights into probabilities&quot;, &quot;detail&quot;: &quot;Normalize positive arm weights into the current sampling law.&quot;},</span>
+<span id="L657">657           {&quot;title&quot;: &quot;Sample an arm&quot;, &quot;detail&quot;: &quot;Draw the current action from that probability vector.&quot;},</span>
+<span id="L658">658           {&quot;title&quot;: &quot;Estimate all losses&quot;, &quot;detail&quot;: &quot;Use the observed loss divided by its sampling probability for the selected arm; use zero for the others.&quot;},</span>
+<span id="L659">659           {&quot;title&quot;: &quot;Update exponentially&quot;, &quot;detail&quot;: &quot;Downweight arms according to their estimated cumulative losses.&quot;},</span>
+<span id="L660">660           {&quot;title&quot;: &quot;Separate guarantees&quot;, &quot;detail&quot;: &quot;Expected, fixed-horizon tail, all-time, and sparse-loss results use distinct concentration interfaces.&quot;}</span>
+<span id="L661">661         ],</span>
+<span id="L662">662         &quot;pseudocode&quot;: {</span>
+<span id="L663">663           &quot;title&quot;: &quot;EXP3 importance-weighted update&quot;,</span>
+<span id="L664">664           &quot;intro&quot;: &quot;The loop names the sampling law, the one-coordinate unbiased loss estimate, and the exponential update used by the potential argument.&quot;,</span>
+<span id="L665">665           &quot;formula_label&quot;: &quot;Sampling, estimation, and weight update&quot;,</span>
+<span id="L666">666           &quot;math&quot;: &quot;p_t(a)=\\frac{w_t(a)}{\\sum_b w_t(b)},\\qquad \\widehat\\ell_t(a)=\\frac{\\ell_t(A_t)\\mathbf 1\\{A_t=a\\}}{p_t(a)},\\qquad w_{t+1}(a)=w_t(a)e^{-\\eta\\widehat\\ell_t(a)}.&quot;,</span>
+<span id="L667">667           &quot;fallback&quot;: &quot;Normalize positive weights, sample an arm, divide the observed loss by that arm&#x27;s probability, and exponentially downweight each arm by its estimated loss.&quot;,</span>
+<span id="L668">668           &quot;lines&quot;: [</span>
+<span id="L669">669             &quot;input: k arms, horizon n, learning rate η; initialize w_1(a) = 1&quot;,</span>
+<span id="L670">670             &quot;for t = 1,…,n:&quot;,</span>
+<span id="L671">671             &quot;    normalize weights into the sampling law p_t&quot;,</span>
+<span id="L672">672             &quot;    sample A_t ~ p_t and observe only loss ℓ_t(A_t)&quot;,</span>
+<span id="L673">673             &quot;    set ℓ̂_t(a) = ℓ_t(A_t) 1{A_t=a} / p_t(a) for every arm&quot;,</span>
+<span id="L674">674             &quot;    update w_{t+1}(a) = w_t(a) exp(-η ℓ̂_t(a))&quot;</span>
+<span id="L675">675           ],</span>
+<span id="L676">676           &quot;relationship&quot;: &quot;The displayed equations are the textbook core. BanditRLlib&#x27;s generated predictable route makes positive support and any exploration mixture explicit, and its expected, fixed-window, all-prefix, realized, and sparse-loss guarantees remain separate theorems with separate confidence contracts.&quot;</span>
+<span id="L677">677         }</span>
+<span id="L678">678       },</span>
+<span id="L679">679       &quot;worked_example&quot;: {</span>
+<span id="L680">680         &quot;title&quot;: &quot;One EXP3 update from a single observed loss&quot;,</span>
+<span id="L681">681         &quot;intro&quot;: &quot;Start with two equal weights, learning rate η = 0.25, and suppose the sampled second arm incurs loss 0.8. The update shows why dividing by the sampling probability is both necessary and noisy.&quot;,</span>
+<span id="L682">682         &quot;steps&quot;: [</span>
+<span id="L683">683           {</span>
+<span id="L684">684             &quot;title&quot;: &quot;Sample from equal weights&quot;,</span>
+<span id="L685">685             &quot;detail&quot;: &quot;Both arms initially have the same probability; this particular history samples arm 2.&quot;,</span>
+<span id="L686">686             &quot;math&quot;: &quot;w_1=(1,1),\\qquad p_1=\\left(\\frac12,\\frac12\\right),\\qquad A_1=2,\\quad \\ell_1(A_1)=0.8.&quot;,</span>
+<span id="L687">687             &quot;fallback&quot;: &quot;Both initial weights are one, both probabilities are one half, and arm 2 is sampled with observed loss 0.8.&quot;</span>
+<span id="L688">688           },</span>
+<span id="L689">689           {</span>
+<span id="L690">690             &quot;title&quot;: &quot;Reconstruct an unbiased loss coordinate&quot;,</span>
+<span id="L691">691             &quot;detail&quot;: &quot;Only arm 2 is observed. Dividing by its probability produces a larger estimate whose conditional expectation equals the hidden loss coordinate.&quot;,</span>
+<span id="L692">692             &quot;math&quot;: &quot;\\widehat\\ell_1(1)=0,\\qquad \\widehat\\ell_1(2)=\\frac{0.8}{1/2}=1.6.&quot;,</span>
+<span id="L693">693             &quot;fallback&quot;: &quot;The estimated loss is zero for arm 1 and 1.6 for arm 2 because the observed 0.8 is divided by probability one half.&quot;</span>
+<span id="L694">694           },</span>
+<span id="L695">695           {</span>
+<span id="L696">696             &quot;title&quot;: &quot;Downweight the observed loss&quot;,</span>
+<span id="L697">697             &quot;detail&quot;: &quot;The exponential update lowers arm 2&#x27;s weight, so arm 1 becomes more likely at the next round without assigning arm 2 zero probability.&quot;,</span>
+<span id="L698">698             &quot;math&quot;: &quot;w_2=(1,e^{-0.4})\\approx(1,0.6703),\\qquad p_2(1)=\\frac1{1+e^{-0.4}}\\approx0.599.&quot;,</span>
+<span id="L699">699             &quot;fallback&quot;: &quot;The next weights are approximately 1 and 0.6703, so arm 1 receives probability about 0.599.&quot;</span>
+<span id="L700">700           }</span>
+<span id="L701">701         ],</span>
+<span id="L702">702         &quot;takeaway&quot;: &quot;Importance weighting repairs the missing feedback in expectation, while its enlarged squared magnitude creates the variance term that the EXP3 proof must pay for.&quot;,</span>
+<span id="L703">703         &quot;boundary&quot;: &quot;This is one deterministic arithmetic trace conditional on a sampled action. It is not an adversarial-regret experiment and does not merge the expected, fixed-window, all-prefix, or realized-regret theorem contracts.&quot;</span>
+<span id="L704">704       },</span>
+<span id="L705">705       &quot;proof_bridge&quot;: {</span>
+<span id="L706">706         &quot;title&quot;: &quot;How one bandit observation becomes an adversarial regret guarantee&quot;,</span>
+<span id="L707">707         &quot;summary&quot;: &quot;EXP3 couples an unbiased importance-weighted estimator with the exponential-weights potential. The proof must pay explicitly for the estimator&#x27;s second moment.&quot;,</span>
+<span id="L708">708         &quot;steps&quot;: [</span>
+<span id="L709">709           {</span>
+<span id="L710">710             &quot;title&quot;: &quot;Recover every coordinate in expectation&quot;,</span>
+<span id="L711">711             &quot;detail&quot;: &quot;Although only the selected loss is observed, positive sampling probability makes the importance-weighted estimate conditionally unbiased.&quot;,</span>
+<span id="L712">712             &quot;math&quot;: &quot;\\mathbb E_t[\\widehat\\ell_t(a)]=\\ell_t(a).&quot;,</span>
+<span id="L713">713             &quot;fallback&quot;: &quot;Given the past, the importance-weighted estimated loss of each arm has expectation equal to that arm&#x27;s actual loss.&quot;</span>
+<span id="L714">714           },</span>
+<span id="L715">715           {</span>
+<span id="L716">716             &quot;title&quot;: &quot;Compare exponential potentials&quot;,</span>
+<span id="L717">717             &quot;detail&quot;: &quot;The log change of total weight compares the algorithm&#x27;s estimated loss with any fixed arm, leaving a learning-rate times second-moment penalty.&quot;,</span>
+<span id="L718">718             &quot;math&quot;: &quot;\\sum_t\\langle p_t,\\widehat\\ell_t\\rangle-\\sum_t\\widehat\\ell_t(a)\\le\\frac{\\log k}{\\eta}+\\frac{\\eta}{2}\\sum_t\\langle p_t,\\widehat\\ell_t^2\\rangle.&quot;,</span>
+<span id="L719">719             &quot;fallback&quot;: &quot;Estimated regret is at most log k over eta plus eta over two times the accumulated estimated-loss second moment.&quot;</span>
+<span id="L720">720           },</span>
+<span id="L721">721           {</span>
+<span id="L722">722             &quot;title&quot;: &quot;Pay for bandit noise&quot;,</span>
+<span id="L723">723             &quot;detail&quot;: &quot;Importance weighting inflates individual observations, but averaging under the sampling law bounds the conditional second-moment contribution by the number of arms.&quot;,</span>
+<span id="L724">724             &quot;math&quot;: &quot;\\mathbb E_t\\langle p_t,\\widehat\\ell_t^2\\rangle\\le k.&quot;,</span>
+<span id="L725">725             &quot;fallback&quot;: &quot;The conditional expected weighted squared estimate is at most the number of arms.&quot;</span>
+<span id="L726">726           },</span>
+<span id="L727">727           {</span>
+<span id="L728">728             &quot;title&quot;: &quot;Balance the two costs&quot;,</span>
+<span id="L729">729             &quot;detail&quot;: &quot;Choosing the learning rate so that the initial-complexity and variance terms match yields the square-root expected-regret rate.&quot;,</span>
+<span id="L730">730             &quot;math&quot;: &quot;\\eta=\\sqrt{\\frac{2\\log k}{nk}}\\quad\\Longrightarrow\\quad R_n\\le\\sqrt{2nk\\log k}.&quot;,</span>
+<span id="L731">731             &quot;fallback&quot;: &quot;With the balanced learning rate, expected regret is at most the square root of two n k log k.&quot;</span>
+<span id="L732">732           }</span>
+<span id="L733">733         ],</span>
+<span id="L734">734         &quot;boundary&quot;: &quot;The bridge follows the textbook expected-regret argument. BanditRLlib&#x27;s fixed-window, all-prefix, realized, and sparse-loss extensions have additional hypotheses and are intentionally not collapsed into this one card.&quot;</span>
+<span id="L735">735       },</span>
+<span id="L736">736       &quot;source_theorem&quot;: {</span>
+<span id="L737">737         &quot;label&quot;: &quot;Theorem 11.2 (EXP3 expected regret)&quot;,</span>
+<span id="L738">738         &quot;pages&quot;: &quot;online p. 156&quot;,</span>
+<span id="L739">739         &quot;pdf_page&quot;: 165,</span>
+<span id="L740">740         &quot;url&quot;: &quot;https://tor-lattimore.com/downloads/book/book.pdf&quot;,</span>
+<span id="L741">741         &quot;math&quot;: &quot;\\eta=\\sqrt{\\frac{2\\log k}{nk}}\\quad\\Longrightarrow\\quad R_n\\le\\sqrt{2nk\\log k}.&quot;,</span>
+<span id="L742">742         &quot;fallback&quot;: &quot;With the textbook learning rate, EXP3 has expected adversarial regret at most the square root of two times horizon, arm count, and log arm count.&quot;,</span>
+<span id="L743">743         &quot;plain&quot;: &quot;Importance weighting makes the bandit observation unbiased, while exponential weights controls the resulting estimated-loss regret.&quot;,</span>
+<span id="L744">744         &quot;relationship&quot;: &quot;The local generated predictable process uses its own tuning constants and also compiles separate fixed-horizon, all-time, realized-regret, and sparse-loss extensions.&quot;,</span>
+<span id="L745">745         &quot;contract&quot;: {</span>
+<span id="L746">746           &quot;model&quot;: &quot;An adversarial k-armed bandit with a fixed reward table x in [0,1]^(n×k).&quot;,</span>
+<span id="L747">747           &quot;assumptions&quot;: &quot;The policy is the textbook EXP3 construction and compares with the best fixed arm in hindsight.&quot;,</span>
+<span id="L748">748           &quot;parameters&quot;: &quot;Horizon n, arm count k, and learning rate η = √(2 log k/(nk)).&quot;,</span>
+<span id="L749">749           &quot;regret&quot;: &quot;Expected adversarial pseudo-regret R_n against the best fixed arm.&quot;,</span>
+<span id="L750">750           &quot;guarantee&quot;: &quot;R_n ≤ √(2nk log k).&quot;</span>
+<span id="L751">751         }</span>
+<span id="L752">752       }</span>
+<span id="L753">753     },</span>
+<span id="L754">754     {</span>
+<span id="L755">755       &quot;slug&quot;: &quot;tsallis&quot;,</span>
+<span id="L756">756       &quot;teaching_route&quot;: [</span>
+<span id="L757">757         &quot;BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_allRateBound&quot;,</span>
+<span id="L758">758         &quot;BanditRLProof.Tsallis.integral_sampledScheduledHalfTsallisFiniteArmIIDRewardLawRegret_le_log&quot;</span>
+<span id="L759">759       ],</span>
+<span id="L760">760       &quot;primary&quot;: {</span>
+<span id="L761">761         &quot;title&quot;: &quot;Bandit Algorithms&quot;,</span>
+<span id="L762">762         &quot;authors&quot;: &quot;Tor Lattimore and Csaba Szepesvári&quot;,</span>
+<span id="L763">763         &quot;edition&quot;: &quot;free online edition&quot;,</span>
+<span id="L764">764         &quot;sections&quot;: &quot;Ch. 28 (FTRL and mirror-descent foundation)&quot;,</span>
+<span id="L765">765         &quot;pages&quot;: &quot;online pp. 327–344&quot;,</span>
+<span id="L766">766         &quot;pdf_page&quot;: 336,</span>
+<span id="L767">767         &quot;url&quot;: &quot;https://tor-lattimore.com/downloads/book/book.pdf&quot;</span>
+<span id="L768">768       },</span>
+<span id="L769">769       &quot;companion&quot;: {</span>
+<span id="L770">770         &quot;title&quot;: &quot;Tsallis-INF: An Optimal Algorithm for Stochastic and Adversarial Bandits&quot;,</span>
+<span id="L771">771         &quot;authors&quot;: &quot;Julian Zimmert and Yevgeny Seldin&quot;,</span>
+<span id="L772">772         &quot;sections&quot;: &quot;Algorithm 1 and Theorem 1&quot;,</span>
+<span id="L773">773         &quot;pages&quot;: &quot;paper pp. 7–13&quot;,</span>
+<span id="L774">774         &quot;pdf_page&quot;: 7,</span>
+<span id="L775">775         &quot;url&quot;: &quot;https://jmlr.csail.mit.edu/papers/volume22/19-753/19-753.pdf&quot;</span>
+<span id="L776">776       },</span>
+<span id="L777">777       &quot;notation&quot;: [</span>
+<span id="L778">778         {&quot;term&quot;: &quot;Psi(p)&quot;, &quot;meaning&quot;: &quot;the half-Tsallis regularizer applied to an action distribution&quot;},</span>
+<span id="L779">779         {&quot;term&quot;: &quot;η_t&quot;, &quot;meaning&quot;: &quot;the round-dependent learning-rate schedule&quot;},</span>
+<span id="L780">780         {&quot;term&quot;: &quot;stability&quot;, &quot;meaning&quot;: &quot;the one-step cost of changing the FTRL decision under estimated losses&quot;}</span>
+<span id="L781">781       ],</span>
+<span id="L782">782       &quot;algorithm&quot;: {</span>
+<span id="L783">783         &quot;title&quot;: &quot;Half-Tsallis FTRL update&quot;,</span>
+<span id="L784">784         &quot;kind&quot;: &quot;algorithm&quot;,</span>
+<span id="L785">785         &quot;steps&quot;: [</span>
+<span id="L786">786           {&quot;title&quot;: &quot;Estimate bandit losses&quot;, &quot;detail&quot;: &quot;Construct an importance-weighted or reduced-variance estimate from the selected arm.&quot;},</span>
+<span id="L787">787           {&quot;title&quot;: &quot;Accumulate the estimate&quot;, &quot;detail&quot;: &quot;Add the new estimate to the running loss vector.&quot;},</span>
+<span id="L788">788           {&quot;title&quot;: &quot;Regularize with half-Tsallis entropy&quot;, &quot;detail&quot;: &quot;Choose the next distribution by minimizing estimated loss plus the scheduled Tsallis potential.&quot;},</span>
+<span id="L789">789           {&quot;title&quot;: &quot;Sample and adapt&quot;, &quot;detail&quot;: &quot;Draw the next arm and update the learning-rate schedule; specialized theorems then add self-bounding, corruption, drift, or restart assumptions.&quot;}</span>
+<span id="L790">790         ],</span>
+<span id="L791">791         &quot;pseudocode&quot;: {</span>
+<span id="L792">792           &quot;title&quot;: &quot;Half-Tsallis FTRL / Tsallis-INF core&quot;,</span>
+<span id="L793">793           &quot;intro&quot;: &quot;This compact route shows where the regularizer, loss estimator, and round-dependent learning rate meet; estimator-specific corrections remain explicit.&quot;,</span>
+<span id="L794">794           &quot;formula_label&quot;: &quot;Regularized decision and bandit estimate&quot;,</span>
+<span id="L795">795           &quot;math&quot;: &quot;p_t\\in\\operatorname*{arg\\,min}_{p\\in\\Delta_K}\\left\\{\\langle\\widehat L_{t-1},p\\rangle+\\Psi_t(p)\\right\\},\\qquad \\widehat\\ell_t(a)=\\frac{\\ell_t(A_t)\\mathbf 1\\{A_t=a\\}}{p_t(a)}.&quot;,</span>
+<span id="L796">796           &quot;fallback&quot;: &quot;Choose the simplex distribution minimizing cumulative estimated loss plus the scheduled half-Tsallis regularizer, then form the stated bandit loss estimate from the sampled arm.&quot;,</span>
+<span id="L797">797           &quot;lines&quot;: [</span>
+<span id="L798">798             &quot;input: K arms, half-Tsallis regularizer Ψ_t, schedule η_t, estimator variant&quot;,</span>
+<span id="L799">799             &quot;initialize cumulative estimated loss L̂_0 = 0&quot;,</span>
+<span id="L800">800             &quot;for t = 1,…,T:&quot;,</span>
+<span id="L801">801             &quot;    choose p_t by the regularized FTRL minimization over the simplex&quot;,</span>
+<span id="L802">802             &quot;    sample A_t ~ p_t; observe the selected loss and form the declared estimator ℓ̂_t&quot;,</span>
+<span id="L803">803             &quot;    set L̂_t = L̂_{t-1} + ℓ̂_t and advance the learning-rate schedule&quot;</span>
+<span id="L804">804           ],</span>
+<span id="L805">805           &quot;relationship&quot;: &quot;The source paper distinguishes importance-weighted and reduced-variance estimators. BanditRLlib compiles a scheduled half-Tsallis route plus IID, corrupted, drifting, and oracle-restart consumers; these source-aligned local theorems do not claim every paper-sharp regime verbatim.&quot;</span>
+<span id="L806">806         }</span>
+<span id="L807">807       },</span>
+<span id="L808">808       &quot;worked_example&quot;: {</span>
+<span id="L809">809         &quot;title&quot;: &quot;See estimator noise and gap credit in one round&quot;,</span>
+<span id="L810">810         &quot;intro&quot;: &quot;At one two-arm round, suppose the FTRL distribution is p = (0.25, 0.75), arm 1 is sampled, and its observed loss is 0.5. The arithmetic exposes the two quantities that the regularizer must reconcile.&quot;,</span>
+<span id="L811">811         &quot;steps&quot;: [</span>
+<span id="L812">812           {</span>
+<span id="L813">813             &quot;title&quot;: &quot;Importance-weight the observed coordinate&quot;,</span>
+<span id="L814">814             &quot;detail&quot;: &quot;Only arm 1 is observed, so its loss is divided by the probability with which it was sampled.&quot;,</span>
+<span id="L815">815             &quot;math&quot;: &quot;A_t=1,\\quad \\ell_t(A_t)=0.5,\\qquad \\widehat\\ell_t=(0.5/0.25,0)=(2,0).&quot;,</span>
+<span id="L816">816             &quot;fallback&quot;: &quot;Arm 1 is sampled with probability 0.25 and loss 0.5, producing estimated loss vector (2, 0).&quot;</span>
+<span id="L817">817           },</span>
+<span id="L818">818           {</span>
+<span id="L819">819             &quot;title&quot;: &quot;Notice the rare-arm variance cost&quot;,</span>
+<span id="L820">820             &quot;detail&quot;: &quot;A small sampling probability makes the realized estimate large; its conditional second moment carries the inverse-probability geometry.&quot;,</span>
+<span id="L821">821             &quot;math&quot;: &quot;\\mathbb E_t[\\widehat\\ell_t(1)^2]=\\frac{0.5^2}{0.25}=1.&quot;,</span>
+<span id="L822">822             &quot;fallback&quot;: &quot;The conditional second moment of arm 1&#x27;s importance-weighted estimate is 0.25 divided by 0.25, which equals 1.&quot;</span>
+<span id="L823">823           },</span>
+<span id="L824">824           {</span>
+<span id="L825">825             &quot;title&quot;: &quot;Compare the stochastic gap credit&quot;,</span>
+<span id="L826">826             &quot;detail&quot;: &quot;If arm 2 is optimal and arm 1 has mean-loss gap 0.2, the same probability mass contributes a smaller but structured self-bounding term.&quot;,</span>
+<span id="L827">827             &quot;math&quot;: &quot;\\Delta_1p_t(1)=0.2\\cdot0.25=0.05.&quot;,</span>
+<span id="L828">828             &quot;fallback&quot;: &quot;With gap 0.2, sampling arm 1 with probability 0.25 contributes instantaneous expected gap cost 0.05.&quot;</span>
+<span id="L829">829           }</span>
+<span id="L830">830         ],</span>
+<span id="L831">831         &quot;takeaway&quot;: &quot;The estimator creates an inverse-probability noise charge, while stochastic gaps price suboptimal probability mass. Half-Tsallis curvature is useful because its stability geometry can connect these two scales.&quot;,</span>
+<span id="L832">832         &quot;boundary&quot;: &quot;This is a one-round calculation, not a derivation of Tsallis-INF or a compiled general curvature-noise-gap calculus. The theorem cards below remain authoritative for schedules, estimators, constants, and regimes.&quot;</span>
+<span id="L833">833       },</span>
+<span id="L834">834       &quot;proof_bridge&quot;: {</span>
+<span id="L835">835         &quot;title&quot;: &quot;Where curvature, estimator noise, and stochastic gaps meet&quot;,</span>
+<span id="L836">836         &quot;summary&quot;: &quot;Tsallis-INF is useful as a reading lens because its guarantee is assembled from three interacting ingredients rather than from the regularizer alone.&quot;,</span>
+<span id="L837">837         &quot;steps&quot;: [</span>
+<span id="L838">838           {</span>
+<span id="L839">839             &quot;title&quot;: &quot;Let curvature control stability&quot;,</span>
+<span id="L840">840             &quot;detail&quot;: &quot;Schematically, the FTRL regularizer determines how much the chosen distribution can move when one more estimated loss vector is added.&quot;,</span>
+<span id="L841">841             &quot;math&quot;: &quot;\\operatorname{stab}_t\\lesssim\\left\\langle\\widehat\\ell_t,(\\nabla^2\\Psi_t)^{-1}\\widehat\\ell_t\\right\\rangle.&quot;,</span>
+<span id="L842">842             &quot;fallback&quot;: &quot;One-step FTRL stability is controlled by the regularizer&#x27;s local inverse curvature.&quot;</span>
+<span id="L843">843           },</span>
+<span id="L844">844           {</span>
+<span id="L845">845             &quot;title&quot;: &quot;Match curvature to bandit noise&quot;,</span>
+<span id="L846">846             &quot;detail&quot;: &quot;The estimator contributes probability-dependent variance, so the useful curvature is the one that absorbs the same rare-arm geometry.&quot;,</span>
+<span id="L847">847             &quot;math&quot;: &quot;\\mathbb E_t[\\widehat\\ell_t(a)^2]\\asymp\\frac{\\ell_t(a)^2}{p_t(a)}.&quot;,</span>
+<span id="L848">848             &quot;fallback&quot;: &quot;The estimated loss second moment grows like the squared loss divided by the arm&#x27;s sampling probability.&quot;</span>
+<span id="L849">849           },</span>
+<span id="L850">850           {</span>
+<span id="L851">851             &quot;title&quot;: &quot;Add stochastic self-bounding when available&quot;,</span>
+<span id="L852">852             &quot;detail&quot;: &quot;In an IID gap model, expected regret also lower-bounds the probability mass assigned to suboptimal arms; this can repay part of the stability cost.&quot;,</span>
+<span id="L853">853             &quot;math&quot;: &quot;Reg_T=\\sum_{t=1}^{T}\\sum_{a\\ne a^\\star}\\Delta_a\\,\\mathbb E[p_t(a)].&quot;,</span>
+<span id="L854">854             &quot;fallback&quot;: &quot;Stochastic regret equals the sum over rounds and suboptimal arms of gap times expected sampling probability.&quot;</span>
+<span id="L855">855           },</span>
+<span id="L856">856           {</span>
+<span id="L857">857             &quot;title&quot;: &quot;Choose the regime-specific consumer&quot;,</span>
+<span id="L858">858             &quot;detail&quot;: &quot;The adversarial analysis keeps the stability charge, while stochastic, corrupted, drifting, and restart results add distinct assumptions to sharpen or reorganize it.&quot;,</span>
+<span id="L859">859             &quot;math&quot;: &quot;\\begin{gathered}\\mathcal C+\\mathcal V-\\mathcal G\\Longrightarrow Reg_T\\text{ bound},\\\\ \\mathcal C=\\text{curvature},\\quad\\mathcal V=\\text{noise},\\quad\\mathcal G=\\text{gap credit}.\\end{gathered}&quot;,</span>
+<span id="L860">860             &quot;fallback&quot;: &quot;Curvature, estimator noise, and a stated self-bounding or drift contract combine only within a particular regret theorem.&quot;</span>
+<span id="L861">861           }</span>
+<span id="L862">862         ],</span>
+<span id="L863">863         &quot;boundary&quot;: &quot;This motif is a teaching organization of existing proof routes, not a compiled general curvature-noise-gap calculus. The source theorem cards and each Lean declaration remain authoritative for which coupling has actually been proved.&quot;</span>
+<span id="L864">864       },</span>
+<span id="L865">865       &quot;source_theorem&quot;: {</span>
+<span id="L866">866         &quot;label&quot;: &quot;Zimmert–Seldin, Theorem 1 (adversarial regime)&quot;,</span>
+<span id="L867">867         &quot;pages&quot;: &quot;paper p. 9&quot;,</span>
+<span id="L868">868         &quot;pdf_page&quot;: 9,</span>
+<span id="L869">869         &quot;url&quot;: &quot;https://jmlr.csail.mit.edu/papers/volume22/19-753/19-753.pdf&quot;,</span>
+<span id="L870">870         &quot;math&quot;: &quot;Reg_T\\le4\\sqrt{KT}+1\\quad\\text{(importance weighting)},\\qquad Reg_T\\le2\\sqrt{KT}+10K\\log T+16\\quad\\text{(reduced variance)}.&quot;,</span>
+<span id="L871">871         &quot;fallback&quot;: &quot;The source theorem gives explicit adversarial square-root regret bounds for importance-weighted and reduced-variance Tsallis-INF variants.&quot;,</span>
+<span id="L872">872         &quot;plain&quot;: &quot;The half-Tsallis regularizer is designed to retain adversarial robustness while adapting sharply to stochastic self-bounding structure.&quot;,</span>
+<span id="L873">873         &quot;relationship&quot;: &quot;BanditRLlib proves a scheduled half-Tsallis route and several IID, corrupted, drifting, and oracle-restart consumers. These are source-aligned local theorems, not a claim that every sharp paper regime has been reproduced verbatim.&quot;,</span>
+<span id="L874">874         &quot;contract&quot;: {</span>
+<span id="L875">875           &quot;model&quot;: &quot;Any adversarial K-armed bandit problem in the paper&#x27;s loss-based protocol.&quot;,</span>
+<span id="L876">876           &quot;assumptions&quot;: &quot;Tsallis-INF uses α = 1/2, symmetric regularization, and either the importance-weighted or reduced-variance estimator specified in the paper.&quot;,</span>
+<span id="L877">877           &quot;parameters&quot;: &quot;Horizon T, arm count K, and schedule η_t = 2/√t for IW or 4/√t for RV.&quot;,</span>
+<span id="L878">878           &quot;regret&quot;: &quot;Adversarial pseudo-regret Reg_T.&quot;,</span>
+<span id="L879">879           &quot;guarantee&quot;: &quot;The IW route gives 4√(KT)+1; the RV route gives 2√(KT)+10K log T+16.&quot;</span>
+<span id="L880">880         }</span>
+<span id="L881">881       }</span>
+<span id="L882">882     },</span>
+<span id="L883">883     {</span>
+<span id="L884">884       &quot;slug&quot;: &quot;finite-horizon-rl&quot;,</span>
+<span id="L885">885       &quot;teaching_route&quot;: [</span>
+<span id="L886">886         &quot;BanditRLProof.FiniteHorizonRL.MDP&quot;,</span>
+<span id="L887">887         &quot;BanditRLProof.FiniteHorizonRL.MarkovPolicy.expectedRegret_eq_occupancyGapRemaining&quot;,</span>
+<span id="L888">888         &quot;BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.AdaptiveEpisodeBatchSource.recurrentQTableOfTrajectory_dominatesOptimal&quot;,</span>
+<span id="L889">889         &quot;BanditRLProof.FiniteHorizonRL.AdaptiveCumulativeHoeffdingUCBVI.recurrentSource_trajectoryMeasure_cumulativeEpisodePseudoRegret_gt_canonicalRegretBound_le&quot;</span>
+<span id="L890">890       ],</span>
+<span id="L891">891       &quot;primary&quot;: {</span>
+<span id="L892">892         &quot;title&quot;: &quot;Bandit Algorithms&quot;,</span>
+<span id="L893">893         &quot;authors&quot;: &quot;Tor Lattimore and Csaba Szepesvári&quot;,</span>
+<span id="L894">894         &quot;edition&quot;: &quot;free online edition&quot;,</span>
+<span id="L895">895         &quot;sections&quot;: &quot;Ch. 38&quot;,</span>
+<span id="L896">896         &quot;pages&quot;: &quot;online pp. 512–538&quot;,</span>
+<span id="L897">897         &quot;pdf_page&quot;: 521,</span>
+<span id="L898">898         &quot;url&quot;: &quot;https://tor-lattimore.com/downloads/book/book.pdf&quot;</span>
+<span id="L899">899       },</span>
+<span id="L900">900       &quot;companion&quot;: {</span>
+<span id="L901">901         &quot;title&quot;: &quot;Minimax Regret Bounds for Reinforcement Learning&quot;,</span>
+<span id="L902">902         &quot;authors&quot;: &quot;Mohammad Gheshlaghi Azar, Ian Osband, and Rémi Munos&quot;,</span>
+<span id="L903">903         &quot;sections&quot;: &quot;Algorithms 1–2 and Theorem 1 (UCBVI-CH)&quot;,</span>
+<span id="L904">904         &quot;pages&quot;: &quot;paper pp. 3–4&quot;,</span>
+<span id="L905">905         &quot;pdf_page&quot;: 3,</span>
+<span id="L906">906         &quot;url&quot;: &quot;https://proceedings.mlr.press/v70/azar17a/azar17a.pdf&quot;</span>
+<span id="L907">907       },</span>
+<span id="L908">908       &quot;notation&quot;: [</span>
+<span id="L909">909         {&quot;term&quot;: &quot;H, S, A&quot;, &quot;meaning&quot;: &quot;the horizon, number of states, and number of actions&quot;},</span>
+<span id="L910">910         {&quot;term&quot;: &quot;Q_h(s,a)&quot;, &quot;meaning&quot;: &quot;the stage-h action value used by backward planning&quot;},</span>
+<span id="L911">911         {&quot;term&quot;: &quot;N_k(h,s,a)&quot;, &quot;meaning&quot;: &quot;the number of earlier episodes visiting state-action pair (s,a) at stage h&quot;}</span>
+<span id="L912">912       ],</span>
+<span id="L913">913       &quot;algorithm&quot;: {</span>
+<span id="L914">914         &quot;title&quot;: &quot;Known-reward Hoeffding UCBVI-CH&quot;,</span>
+<span id="L915">915         &quot;kind&quot;: &quot;algorithm&quot;,</span>
+<span id="L916">916         &quot;steps&quot;: [</span>
+<span id="L917">917           {&quot;title&quot;: &quot;Count strict prefixes&quot;, &quot;detail&quot;: &quot;Before episode k, aggregate visits and next-state transitions from episodes strictly earlier than k.&quot;},</span>
+<span id="L918">918           {&quot;title&quot;: &quot;Estimate transitions&quot;, &quot;detail&quot;: &quot;Normalize transition counts at each state-action pair, with an explicit zero-count convention.&quot;},</span>
+<span id="L919">919           {&quot;title&quot;: &quot;Plan backward optimistically&quot;, &quot;detail&quot;: &quot;Add a Hoeffding bonus, clip against the horizon and previous Q table, and run backward dynamic programming.&quot;},</span>
+<span id="L920">920           {&quot;title&quot;: &quot;Execute the greedy policy&quot;, &quot;detail&quot;: &quot;Generate the next episode with the measurable greedy policy from that recurrent table.&quot;},</span>
+<span id="L921">921           {&quot;title&quot;: &quot;Assemble regret&quot;, &quot;detail&quot;: &quot;Combine confidence and optimism with charge, Bellman-innovation, and low-count bounds on the same process.&quot;}</span>
+<span id="L922">922         ],</span>
+<span id="L923">923         &quot;pseudocode&quot;: {</span>
+<span id="L924">924           &quot;title&quot;: &quot;Known-reward UCBVI-CH episode loop&quot;,</span>
+<span id="L925">925           &quot;intro&quot;: &quot;The episode-level pseudocode fixes strict-prefix counts, backward stage order, previous-Q clipping, the greedy policy, and the generated-trajectory update.&quot;,</span>
+<span id="L926">926           &quot;formula_label&quot;: &quot;Optimistic backward update&quot;,</span>
+<span id="L927">927           &quot;math&quot;: &quot;Q_{k,h}(s,a)=\\min\\left\\{H-h+1,\\,Q_{k-1,h}(s,a),\\,r_h(s,a)+\\widehat P_kV_{k,h+1}(s,a)+b_{k,h}(s,a)\\right\\},\\quad V_{k,h}(s)=\\max_a Q_{k,h}(s,a).&quot;,</span>
+<span id="L928">928           &quot;fallback&quot;: &quot;At each stage of episode k, clip the reward plus empirical next value plus bonus by the remaining horizon and the previous Q table, then take the maximum over actions.&quot;,</span>
+<span id="L929">929           &quot;lines&quot;: [</span>
+<span id="L930">930             &quot;input: finite MDP, known rewards, horizon H, episodes K, confidence δ&quot;,</span>
+<span id="L931">931             &quot;initialize optimistic Q_{0,h}; keep zero-count transition and tie rules explicit&quot;,</span>
+<span id="L932">932             &quot;for episode k = 1,…,K: aggregate visits/transitions from episodes &lt; k&quot;,</span>
+<span id="L933">933             &quot;    set V_{k,H+1} = 0; for h = H,…,1 compute every clipped Q_{k,h}(s,a)&quot;,</span>
+<span id="L934">934             &quot;    set π_{k,h}(s) to the documented maximizer of Q_{k,h}(s,·)&quot;,</span>
+<span id="L935">935             &quot;    execute π_k for one episode; append states and actions to the recurrent history&quot;</span>
+<span id="L936">936           ],</span>
+<span id="L937">937           &quot;relationship&quot;: &quot;The source paper contains both CH and Bernstein variants. BanditRLlib&#x27;s compiled canonical endpoint is the known-deterministic-reward Hoeffding UCBVI-CH route on one recurrent generated process, with strict-prefix counts, a documented tie rule, the frozen 20/250 bound, and a separate expected consumer.&quot;</span>
+<span id="L938">938         }</span>
+<span id="L939">939       },</span>
+<span id="L940">940       &quot;worked_example&quot;: {</span>
+<span id="L941">941         &quot;title&quot;: &quot;One optimistic Bellman backup in a tiny MDP&quot;,</span>
+<span id="L942">942         &quot;intro&quot;: &quot;Consider stage h = 1 of a two-stage episode at state s. Two actions have empirical next-stage values 0.5 and 0.2; the second action has been visited only once, so its Hoeffding bonus is much larger.&quot;,</span>
+<span id="L943">943         &quot;steps&quot;: [</span>
+<span id="L944">944           {</span>
+<span id="L945">945             &quot;title&quot;: &quot;Read only earlier episodes&quot;,</span>
+<span id="L946">946             &quot;detail&quot;: &quot;Strict-prefix counting prevents the current episode from leaking into its own policy. The rarely visited action carries less transition evidence.&quot;,</span>
+<span id="L947">947             &quot;math&quot;: &quot;N_k(1,s,a_{\\mathrm{safe}})=10,\\qquad N_k(1,s,a_{\\mathrm{new}})=1.&quot;,</span>
+<span id="L948">948             &quot;fallback&quot;: &quot;Before episode k, the safe action has ten visits and the new action has one visit at this state and stage.&quot;</span>
+<span id="L949">949           },</span>
+<span id="L950">950           {</span>
+<span id="L951">951             &quot;title&quot;: &quot;Add the transition bonuses&quot;,</span>
+<span id="L952">952             &quot;detail&quot;: &quot;With zero immediate reward and nonbinding clips, the optimistic backup can prefer the uncertain action even though its empirical next value is lower.&quot;,</span>
+<span id="L953">953             &quot;math&quot;: &quot;Q_k(s,a_{\\mathrm{safe}})=0.5+0.1=0.6,\\qquad Q_k(s,a_{\\mathrm{new}})=0.2+0.6=0.8.&quot;,</span>
+<span id="L954">954             &quot;fallback&quot;: &quot;The safe action&#x27;s optimistic value is 0.6, while the under-sampled action&#x27;s optimistic value is 0.8.&quot;</span>
+<span id="L955">955           },</span>
+<span id="L956">956           {</span>
+<span id="L957">957             &quot;title&quot;: &quot;Execute, then narrow the next episode&quot;,</span>
+<span id="L958">958             &quot;detail&quot;: &quot;The greedy policy tries the new action. If later data leave its empirical value near 0.2 while its bonus falls to 0.2, its score drops below the safe action&#x27;s 0.6.&quot;,</span>
+<span id="L959">959             &quot;math&quot;: &quot;\\pi_{k,1}(s)=a_{\\mathrm{new}},\\qquad 0.2+0.2=0.4&lt;0.6.&quot;,</span>
+<span id="L960">960             &quot;fallback&quot;: &quot;Episode k chooses the new action; after its bonus falls to 0.2, its illustrative score becomes 0.4 and no longer beats 0.6.&quot;</span>
+<span id="L961">961           }</span>
+<span id="L962">962         ],</span>
+<span id="L963">963         &quot;takeaway&quot;: &quot;UCBVI performs UCB inside backward dynamic programming. Counts control local transition uncertainty, while the proof must propagate optimism and charge those bonuses along the same generated episodic trajectory.&quot;,</span>
+<span id="L964">964         &quot;boundary&quot;: &quot;The values and bonuses are illustrative and keep clipping inactive for readability. They are not a simulation, do not specify a full transition kernel, and do not claim the Bernstein or unknown-reward variants.&quot;</span>
+<span id="L965">965       },</span>
+<span id="L966">966       &quot;proof_bridge&quot;: {</span>
+<span id="L967">967         &quot;title&quot;: &quot;How local transition confidence becomes episodic regret&quot;,</span>
+<span id="L968">968         &quot;summary&quot;: &quot;UCBVI repeats the optimism pattern inside dynamic programming. Concentration is local to state-action-stage counts, while the final regret statement is global across a generated sequence of episodes.&quot;,</span>
+<span id="L969">969         &quot;steps&quot;: [</span>
+<span id="L970">970           {</span>
+<span id="L971">971             &quot;title&quot;: &quot;Control empirical transitions&quot;,</span>
+<span id="L972">972             &quot;detail&quot;: &quot;For every visited state-action-stage tuple, a confidence event bounds the error of applying the empirical transition kernel to a bounded next-value function.&quot;,</span>
+<span id="L973">973             &quot;math&quot;: &quot;|(\\widehat P_k-P)V_{k,h+1}(s,a)|\\le b_{k,h}(s,a).&quot;,</span>
+<span id="L974">974             &quot;fallback&quot;: &quot;The empirical-transition prediction error for the next value is no larger than its exploration bonus.&quot;</span>
+<span id="L975">975           },</span>
+<span id="L976">976           {</span>
+<span id="L977">977             &quot;title&quot;: &quot;Propagate optimism backward&quot;,</span>
+<span id="L978">978             &quot;detail&quot;: &quot;Backward induction shows that adding the bonus and clipping at the remaining horizon keeps the recurrent Q table above the optimal value on the good event.&quot;,</span>
+<span id="L979">979             &quot;math&quot;: &quot;Q_{k,h}(s,a)\\ge Q_h^\\star(s,a)\\quad\\text{on the confidence event}.&quot;,</span>
+<span id="L980">980             &quot;fallback&quot;: &quot;On the confidence event, the optimistic episode-k Q value dominates the optimal Q value at every stage.&quot;</span>
+<span id="L981">981           },</span>
+<span id="L982">982           {</span>
+<span id="L983">983             &quot;title&quot;: &quot;Decompose one episode&quot;,</span>
+<span id="L984">984             &quot;detail&quot;: &quot;Optimism turns policy-value regret into a sum of bonuses, transition-estimation errors, and a martingale innovation along the executed trajectory.&quot;,</span>
+<span id="L985">985             &quot;math&quot;: &quot;V_1^\\star-V_1^{\\pi_k}\\le\\sum_{h=1}^{H}(\\text{bonus}_{k,h}+\\text{transition error}_{k,h}+\\text{innovation}_{k,h}).&quot;,</span>
+<span id="L986">986             &quot;fallback&quot;: &quot;The regret of one episode is bounded by the sum of its confidence bonuses, transition errors, and martingale innovations.&quot;</span>
+<span id="L987">987           },</span>
+<span id="L988">988           {</span>
+<span id="L989">989             &quot;title&quot;: &quot;Charge visits on the same process&quot;,</span>
+<span id="L990">990             &quot;detail&quot;: &quot;Strict-prefix counts control how often large bonuses occur; concentration controls the innovation sum, producing the frozen high-probability CH bound.&quot;,</span>
+<span id="L991">991             &quot;math&quot;: &quot;Regret(K)\\le20H^{3/2}L\\sqrt{SAK}+250H^2S^2AL^2.&quot;,</span>
+<span id="L992">992             &quot;fallback&quot;: &quot;The cumulative regret is bounded by the explicit 20 times square-root term plus the 250 times lower-order term.&quot;</span>
+<span id="L993">993           }</span>
+<span id="L994">994         ],</span>
+<span id="L995">995         &quot;boundary&quot;: &quot;This bridge is for the known-reward Hoeffding UCBVI-CH route. It does not silently import the Bernstein variant, unknown-reward extensions, or a different trajectory process.&quot;</span>
+<span id="L996">996       },</span>
+<span id="L997">997       &quot;source_theorem&quot;: {</span>
+<span id="L998">998         &quot;label&quot;: &quot;Azar–Osband–Munos, Theorem 1 (UCBVI-CH)&quot;,</span>
+<span id="L999">999         &quot;pages&quot;: &quot;paper p. 4&quot;,</span>
+<span id="L1000">1000         &quot;pdf_page&quot;: 4,</span>
+<span id="L1001">1001         &quot;url&quot;: &quot;https://proceedings.mlr.press/v70/azar17a/azar17a.pdf&quot;,</span>
+<span id="L1002">1002         &quot;math&quot;: &quot;Regret(K)\\le20H^{3/2}L\\sqrt{SAK}+250H^2S^2AL^2,\\qquad L=\\log\\!\\left(\\frac{5HSAT}{\\delta}\\right),&quot;,</span>
+<span id="L1003">1003         &quot;fallback&quot;: &quot;With high probability, UCBVI-CH regret is bounded by a 20-times square-root leading term plus the explicit 250-times lower-order term.&quot;,</span>
+<span id="L1004">1004         &quot;plain&quot;: &quot;The UCBVI-CH analysis couples empirical-transition concentration, backward optimism, cumulative bonuses, and a martingale innovation term.&quot;,</span>
+<span id="L1005">1005         &quot;relationship&quot;: &quot;The compiled local endpoint is deliberately narrow: finite horizon, known deterministic rewards, the same recurrent generated process, strict-prefix counts, policy-value pseudo-regret, the frozen 20/250 high-probability bound, and an expected consumer with an additional KHδ failure term.&quot;,</span>
+<span id="L1006">1006         &quot;contract&quot;: {</span>
+<span id="L1007">1007           &quot;model&quot;: &quot;An episodic finite MDP with S states, A actions, horizon H, K episodes, and total time T = KH.&quot;,</span>
+<span id="L1008">1008           &quot;assumptions&quot;: &quot;State and action sets are finite; rewards are known, deterministic, and in [0,1]; transitions are stationary and unknown; the paper&#x27;s MDP regularity assumption holds.&quot;,</span>
+<span id="L1009">1009           &quot;parameters&quot;: &quot;S, A, H, K, confidence δ, and L = log(5HSAT/δ).&quot;,</span>
+<span id="L1010">1010           &quot;regret&quot;: &quot;Cumulative policy-value regret across the first K episodes.&quot;,</span>
+<span id="L1011">1011           &quot;guarantee&quot;: &quot;With probability at least 1-δ, regret is bounded by the displayed 20/250 UCBVI-CH expression.&quot;</span>
+<span id="L1012">1012         }</span>
+<span id="L1013">1013       }</span>
+<span id="L1014">1014     },</span>
+<span id="L1015">1015     {</span>
+<span id="L1016">1016       &quot;slug&quot;: &quot;frontier&quot;,</span>
+<span id="L1017">1017       &quot;teaching_route&quot;: [</span>
+<span id="L1018">1018         &quot;BanditRLProof.HarnessTask&quot;,</span>
+<span id="L1019">1019         &quot;BanditRLProof.LowerBounds.Succinct.SuccinctUnitSystem.succinctSize_ge_strictSize&quot;,</span>
+<span id="L1020">1020         &quot;BanditRLProof.StochasticGradientBandit.twoArmFixedIIDDirac_theoremOne&quot;,</span>
+<span id="L1021">1021         &quot;BanditRLProof.StochasticGradientBandit.theoremFourStepFour_survivalMass_pos&quot;</span>
+<span id="L1022">1022       ],</span>
+<span id="L1023">1023       &quot;primary&quot;: {</span>
+<span id="L1024">1024         &quot;title&quot;: &quot;Bandit Algorithms&quot;,</span>
+<span id="L1025">1025         &quot;authors&quot;: &quot;Tor Lattimore and Csaba Szepesvári&quot;,</span>
+<span id="L1026">1026         &quot;edition&quot;: &quot;free online edition&quot;,</span>
+<span id="L1027">1027         &quot;sections&quot;: &quot;Parts VII–VIII as a background index&quot;,</span>
+<span id="L1028">1028         &quot;pages&quot;: &quot;online pp. 358–538&quot;,</span>
+<span id="L1029">1029         &quot;pdf_page&quot;: 367,</span>
+<span id="L1030">1030         &quot;url&quot;: &quot;https://tor-lattimore.com/downloads/book/book.pdf&quot;</span>
+<span id="L1031">1031       },</span>
+<span id="L1032">1032       &quot;companion&quot;: {</span>
+<span id="L1033">1033         &quot;title&quot;: &quot;A Novel General Framework for Sharp Lower Bounds in Succinct Stochastic Bandits&quot;,</span>
+<span id="L1034">1034         &quot;authors&quot;: &quot;Guo Zeng and Jean Honorio&quot;,</span>
+<span id="L1035">1035         &quot;sections&quot;: &quot;Section 3.1; Theorem 3.8 context in Section 3.2&quot;,</span>
+<span id="L1036">1036         &quot;pages&quot;: &quot;physical PDF pp. 4–5 and 11–12&quot;,</span>
+<span id="L1037">1037         &quot;pdf_page&quot;: 4,</span>
+<span id="L1038">1038         &quot;url&quot;: &quot;https://proceedings.neurips.cc/paper_files/paper/2025/file/26407588dfb08e48c459c074ab6adb7d-Paper-Conference.pdf&quot;</span>
+<span id="L1039">1039       },</span>
+<span id="L1040">1040       &quot;companions&quot;: [</span>
+<span id="L1041">1041         {</span>
+<span id="L1042">1042           &quot;title&quot;: &quot;Does Stochastic Gradient really succeed for Bandits?&quot;,</span>
+<span id="L1043">1043           &quot;authors&quot;: &quot;Dorian Baudry, Emmeran Johnson, Simon Vary, Ciara Pike-Burke, and Patrick Rebeschini&quot;,</span>
+<span id="L1044">1044           &quot;sections&quot;: &quot;Section 1.2, Algorithm 1, Theorem 1, Corollary 1, Theorem 2, Equations (3)–(11), Appendix A.1, Appendix C, Theorem 4, and Appendix E Steps 1–4&quot;,</span>
+<span id="L1045">1045           &quot;pages&quot;: &quot;physical PDF pp. 2–6, 22, 31–40, and 47–49&quot;,</span>
+<span id="L1046">1046           &quot;pdf_page&quot;: 2,</span>
+<span id="L1047">1047           &quot;url&quot;: &quot;https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf&quot;</span>
+<span id="L1048">1048         }</span>
+<span id="L1049">1049       ],</span>
+<span id="L1050">1050       &quot;notation&quot;: [</span>
+<span id="L1051">1051         {&quot;term&quot;: &quot;support set&quot;, &quot;meaning&quot;: &quot;the small family of library lemmas used by one proof route&quot;},</span>
+<span id="L1052">1052         {&quot;term&quot;: &quot;proof DAG&quot;, &quot;meaning&quot;: &quot;the dependency graph obtained after merging repeated proof subroutes&quot;},</span>
+<span id="L1053">1053         {&quot;term&quot;: &quot;status ledger&quot;, &quot;meaning&quot;: &quot;independent records for source fidelity, local Lean compilation, and the still-open terminal&quot;}</span>
+<span id="L1054">1054       ],</span>
+<span id="L1055">1055       &quot;algorithm&quot;: {</span>
+<span id="L1056">1056         &quot;title&quot;: &quot;Stochastic Gradient Bandit (Algorithm 1)&quot;,</span>
+<span id="L1057">1057         &quot;kind&quot;: &quot;source algorithm&quot;,</span>
+<span id="L1058">1058         &quot;steps&quot;: [</span>
+<span id="L1059">1059           {&quot;title&quot;: &quot;Initialize θ&quot;, &quot;detail&quot;: &quot;Set θₖ,₁ = 0; the initial action law is uniform.&quot;},</span>
+<span id="L1060">1060           {&quot;title&quot;: &quot;Softmax law&quot;, &quot;detail&quot;: &quot;Set pₖ,ₜ proportional to exp(θₖ,ₜ) over the finite arms.&quot;},</span>
+<span id="L1061">1061           {&quot;title&quot;: &quot;Sample reward&quot;, &quot;detail&quot;: &quot;Draw Aₜ from pₜ and observe the selected arm&#x27;s reward rₜ.&quot;},</span>
+<span id="L1062">1062           {&quot;title&quot;: &quot;Update θ&quot;, &quot;detail&quot;: &quot;Add η rₜ(1{Aₜ = k} − pₖ,ₜ) to every coordinate.&quot;},</span>
+<span id="L1063">1063           {&quot;title&quot;: &quot;Split regret&quot;, &quot;detail&quot;: &quot;Expected gap increments plus failure mass yield the finite-horizon bound.&quot;}</span>
+<span id="L1064">1064         ],</span>
+<span id="L1065">1065         &quot;pseudocode&quot;: {</span>
+<span id="L1066">1066           &quot;title&quot;: &quot;Source Algorithm 1: stochastic-gradient bandit&quot;,</span>
+<span id="L1067">1067           &quot;intro&quot;: &quot;The source-frozen loop makes the zero initialization, softmax action law, selected reward, and simultaneous coordinate update explicit.&quot;,</span>
+<span id="L1068">1068           &quot;formula_label&quot;: &quot;Softmax probability and parameter update&quot;,</span>
+<span id="L1069">1069           &quot;math&quot;: &quot;p_{k,t}=\\frac{e^{\\theta_{k,t}}}{\\sum_j e^{\\theta_{j,t}}},\\qquad \\theta_{k,t+1}=\\theta_{k,t}+\\eta r_t\\left(\\mathbf 1\\{A_t=k\\}-p_{k,t}\\right).&quot;,</span>
+<span id="L1070">1070           &quot;fallback&quot;: &quot;Sample from the softmax of theta, observe the selected reward, and add eta times reward times selected-indicator minus probability to every arm coordinate.&quot;,</span>
+<span id="L1071">1071           &quot;lines&quot;: [</span>
+<span id="L1072">1072             &quot;input: K arms, constant learning rate η, horizon T; set θ_{k,1} = 0&quot;,</span>
+<span id="L1073">1073             &quot;for t = 1,…,T:&quot;,</span>
+<span id="L1074">1074             &quot;    compute p_{k,t} = exp(θ_{k,t}) / sum_j exp(θ_{j,t})&quot;,</span>
+<span id="L1075">1075             &quot;    sample A_t from p_t and observe reward r_t from the selected arm&quot;,</span>
+<span id="L1076">1076             &quot;    for every k: θ_{k,t+1} = θ_{k,t} + η r_t (1{A_t=k} - p_{k,t})&quot;</span>
+<span id="L1077">1077           ],</span>
+<span id="L1078">1078           &quot;relationship&quot;: &quot;BanditRLlib compiles the source Theorem-1 endpoint for its bounded two-arm fixed-IID trajectory and a direct Corollary-1 consumer. Theorem 2&#x27;s phase trigger/no-return/ballot assembly and Theorems 3–4 remain open; this pseudocode does not promote those terminals.&quot;</span>
+<span id="L1079">1079         }</span>
+<span id="L1080">1080       },</span>
+<span id="L1081">1081       &quot;worked_example&quot;: {</span>
+<span id="L1082">1082         &quot;title&quot;: &quot;Follow one theorem route without promoting an open terminal&quot;,</span>
+<span id="L1083">1083         &quot;intro&quot;: &quot;The SGB Theorem-2 audit is a useful example of how the Frontier page separates a paper target, compiled infrastructure, and the first genuinely missing mathematical bridge.&quot;,</span>
+<span id="L1084">1084         &quot;steps&quot;: [</span>
+<span id="L1085">1085           {</span>
+<span id="L1086">1086             &quot;title&quot;: &quot;Freeze the source target&quot;,</span>
+<span id="L1087">1087             &quot;detail&quot;: &quot;The theorem concerns the supercritical two-arm regime and a polynomial regret lower bound, so a finite-horizon helper cannot replace the endpoint.&quot;,</span>
+<span id="L1088">1088             &quot;math&quot;: &quot;\\eta&gt;\\lambda_\\Delta\\quad\\Longrightarrow\\quad R_T^{\\mathrm{SGB}}=\\widetilde\\Omega\\!\\left(T^{1-(1+\\varepsilon)\\lambda_\\Delta/\\eta}\\right).&quot;,</span>
+<span id="L1089">1089             &quot;fallback&quot;: &quot;Above the critical learning rate, the source target is a polynomial regret lower bound up to logarithmic factors.&quot;</span>
+<span id="L1090">1090           },</span>
+<span id="L1091">1091           {</span>
+<span id="L1092">1092             &quot;title&quot;: &quot;Keep the compiled bridge at its real scope&quot;,</span>
+<span id="L1093">1093             &quot;detail&quot;: &quot;Current Lean layers can transport a missing-pull phase into a terminal low-count event and charge any mass that already exists against finite-horizon expected pseudo-regret.&quot;,</span>
+<span id="L1094">1094             &quot;math&quot;: &quot;E_{\\mathrm{missing}}\\subseteq\\{N_{a^\\star}(T)&lt;m\\},\\qquad \\Delta(T-m)\\Pr(E_{\\mathrm{missing}})\\le\\mathbb E[\\bar R_T].&quot;,</span>
+<span id="L1095">1095             &quot;fallback&quot;: &quot;A missing-pull event implies a low terminal optimal-arm count, and any probability mass of that event yields a finite-horizon regret charge.&quot;</span>
+<span id="L1096">1096           },</span>
+<span id="L1097">1097           {</span>
+<span id="L1098">1098             &quot;title&quot;: &quot;Name what is still absent&quot;,</span>
+<span id="L1099">1099             &quot;detail&quot;: &quot;The current route does not prove that the missing branch has positive mass, nor the all-present fixed-cutoff trigger, future no-return law, ballot probability, or asymptotic assembly.&quot;,</span>
+<span id="L1100">1100             &quot;math&quot;: &quot;\\Pr(E_{\\mathrm{missing}})&gt;0\\quad\\text{is not a compiled consequence of the current route.}&quot;,</span>
+<span id="L1101">1101             &quot;fallback&quot;: &quot;Positive missing-event probability is not proved by the current compiled route.&quot;</span>
+<span id="L1102">1102           }</span>
+<span id="L1103">1103         ],</span>
+<span id="L1104">1104         &quot;takeaway&quot;: &quot;A growing proof graph is scientific progress only when it closes a named interface without changing the target. Here the graph has advanced, but the source Theorem-2 terminal remains blocked.&quot;,</span>
+<span id="L1105">1105         &quot;boundary&quot;: &quot;The middle inequality is a teaching-level summary of the compiled finite-horizon charge and omits its exact indexing and nonnegativity hypotheses. Use the linked Lean declarations and source-contract cards for the authoritative statement.&quot;</span>
+<span id="L1106">1106       },</span>
+<span id="L1107">1107       &quot;source_theorem&quot;: {</span>
+<span id="L1108">1108         &quot;label&quot;: &quot;Definitions 3.1–3.3 and Lemmas 3.1–3.4 (succinct-support geometry)&quot;,</span>
+<span id="L1109">1109         &quot;local_status&quot;: {</span>
+<span id="L1110">1110           &quot;status&quot;: &quot;partial&quot;,</span>
+<span id="L1111">1111           &quot;label&quot;: &quot;Partial source port&quot;,</span>
+<span id="L1112">1112           &quot;boundary&quot;: &quot;54 local declarations compile, but the global source theorem and regret endpoints do not.&quot;</span>
+<span id="L1113">1113         },</span>
+<span id="L1114">1114         &quot;pages&quot;: &quot;physical PDF pp. 4–5&quot;,</span>
+<span id="L1115">1115         &quot;pdf_page&quot;: 4,</span>
+<span id="L1116">1116         &quot;url&quot;: &quot;https://proceedings.neurips.cc/paper_files/paper/2025/file/26407588dfb08e48c459c074ab6adb7d-Paper-Conference.pdf&quot;,</span>
+<span id="L1117">1117         &quot;math&quot;: &quot;\\(Q(\\sum_i a_i E_i)=\\max_i |a_i|,\\qquad R(\\sum_i a_i E_i)=\\sum_i |a_i|,\\qquad X\\text{ s-succinct and strictly z-succinct}\\Rightarrow z\\le s.\\)&quot;,</span>
+<span id="L1118">1118         &quot;fallback&quot;: &quot;On a succinct support, Q is the largest absolute coefficient and R is the sum of the absolute coefficients. For the same vector, a strict succinct representation uses no more atoms than any succinct representation.&quot;,</span>
+<span id="L1119">1119         &quot;plain&quot;: &quot;The source defines its atom set, succinct-support correlation contract, Q/R pair, and finite succinct representations. Its first four lemmas identify the coefficient norms and prove strict representation-size minimality and uniqueness for a fixed vector.&quot;,</span>
+<span id="L1120">1120         &quot;relationship&quot;: &quot;BanditRLlib compiles 54 declarations for Definitions 3.1–3.3 and Lemmas 3.1–3.4, including a finite-Bessel proof of strict representation-size minimality for the same vector, and separately diagnoses a global R boundedness obligation. The global Lemmas 3.5–3.6, Assumption 3.7, Theorem 3.8, and every regret endpoint remain outside the compiled slice.&quot;,</span>
+<span id="L1121">1121         &quot;contract&quot;: {</span>
+<span id="L1122">1122           &quot;model&quot;: &quot;A finite atom system and vectors admitting the source&#x27;s succinct or strictly succinct finite representations.&quot;,</span>
+<span id="L1123">1123           &quot;assumptions&quot;: &quot;The representation, correlation, normalization, and strict-separation conditions in Definitions 3.1–3.3 hold for the compared vector.&quot;,</span>
+<span id="L1124">1124           &quot;parameters&quot;: &quot;Atoms E_i, coefficients a_i, succinct size s, and strict succinct size z.&quot;,</span>
+<span id="L1125">1125           &quot;regret&quot;: &quot;Not a regret terminal; this is the geometric support layer used by the later lower-bound argument.&quot;,</span>
+<span id="L1126">1126           &quot;guarantee&quot;: &quot;Q and R reduce to coefficient max and l1 norms on the stated support, and strict representation size satisfies z ≤ s.&quot;</span>
+<span id="L1127">1127         }</span>
+<span id="L1128">1128       },</span>
+<span id="L1129">1129       &quot;source_theorems&quot;: [</span>
+<span id="L1130">1130         {</span>
+<span id="L1131">1131           &quot;label&quot;: &quot;Theorem 1 (two-arm SGB regret upper bound)&quot;,</span>
+<span id="L1132">1132           &quot;local_status&quot;: {</span>
+<span id="L1133">1133             &quot;status&quot;: &quot;compiled&quot;,</span>
+<span id="L1134">1134             &quot;label&quot;: &quot;Compiled local terminal&quot;,</span>
+<span id="L1135">1135             &quot;boundary&quot;: &quot;The exact bounded two-arm fixed-IID theorem endpoint compiles under its recorded contract.&quot;</span>
+<span id="L1136">1136           },</span>
+<span id="L1137">1137           &quot;pages&quot;: &quot;physical PDF pp. 3–4&quot;,</span>
+<span id="L1138">1138           &quot;pdf_page&quot;: 3,</span>
+<span id="L1139">1139           &quot;url&quot;: &quot;https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf&quot;,</span>
+<span id="L1140">1140           &quot;math&quot;: &quot;\\(R_T^{\\mathrm{SGB}}\\le \\frac{\\log(1+4\\eta\\Delta T)}{2\\eta}+\\frac{\\Delta}{2\\eta(\\Delta-\\eta C_\\eta)},\\qquad C_\\eta=2\\sum_{n=0}^{\\infty}\\frac{(2\\eta)^n}{(n+2)!}\\le e^{2\\eta},\\quad \\eta C_\\eta&lt;\\Delta.\\)&quot;,</span>
+<span id="L1141">1141           &quot;fallback&quot;: &quot;For a two-arm bounded-reward instance, Theorem 1 gives an explicit logarithmic-in-horizon regret term plus a finite failure-regret term whenever the learning rate satisfies η Cη &lt; Δ.&quot;,</span>
+<span id="L1142">1142           &quot;plain&quot;: &quot;The source theorem combines a forward-potential logarithmic bound with a telescoping control of squared failure probability for the same fixed-IID two-arm SGB trajectory.&quot;,</span>
+<span id="L1143">1143           &quot;relationship&quot;: &quot;BanditRLlib compiles this exact Theorem-1 endpoint for the actual sampled pseudo-regret of bounded two-arm fixed-IID laws, specialized through a Unit Dirac environment prior. A separate eight-declaration Appendix-E gate checks finite scalar contracts used in Theorem 4, but does not prove that theorem. The Theorem-1 contract keeps 0 &lt; Delta &lt; 1, eta &gt; 0, eta C_eta &lt; Delta, exact arm means, and T = tailHorizon + 1 explicit. A later 23-declaration Corollary-1 companion compiles as a direct consumer; it is not evidence for Theorem 2.&quot;,</span>
+<span id="L1144">1144           &quot;contract&quot;: {</span>
+<span id="L1145">1145             &quot;model&quot;: &quot;The source&#x27;s zero-initialized, constant-learning-rate stochastic-gradient bandit on a bounded fixed-IID two-arm instance.&quot;,</span>
+<span id="L1146">1146             &quot;assumptions&quot;: &quot;The gap satisfies 0 &lt; Δ &lt; 1, η &gt; 0, and ηC_η &lt; Δ; the two reward laws have the source&#x27;s fixed means and bounded support.&quot;,</span>
+<span id="L1147">1147             &quot;parameters&quot;: &quot;Horizon T, gap Δ, learning rate η, and the analytic constant C_η.&quot;,</span>
+<span id="L1148">1148             &quot;regret&quot;: &quot;Expected pseudo-regret of the actual sampled SGB actions.&quot;,</span>
+<span id="L1149">1149             &quot;guarantee&quot;: &quot;The explicit logarithmic term plus finite failure-regret term displayed above.&quot;</span>
+<span id="L1150">1150           }</span>
+<span id="L1151">1151         },</span>
+<span id="L1152">1152         {</span>
+<span id="L1153">1153           &quot;label&quot;: &quot;Corollary 1 (horizon-indexed two-arm SGB rate)&quot;,</span>
+<span id="L1154">1154           &quot;local_status&quot;: {</span>
+<span id="L1155">1155             &quot;status&quot;: &quot;compiled&quot;,</span>
+<span id="L1156">1156             &quot;label&quot;: &quot;Compiled local terminal&quot;,</span>
+<span id="L1157">1157             &quot;boundary&quot;: &quot;A direct horizon-indexed consumer of the compiled Theorem-1 route compiles.&quot;</span>
+<span id="L1158">1158           },</span>
+<span id="L1159">1159           &quot;pages&quot;: &quot;physical PDF p. 5&quot;,</span>
+<span id="L1160">1160           &quot;pdf_page&quot;: 5,</span>
+<span id="L1161">1161           &quot;url&quot;: &quot;https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf&quot;,</span>
+<span id="L1162">1162           &quot;math&quot;: &quot;\\(\\eta_T=\\sqrt{\\log T/T}\\quad\\Longrightarrow\\quad R_T^{\\mathrm{SGB}}=O(\\sqrt{T\\log T}).\\)&quot;,</span>
+<span id="L1163">1163           &quot;fallback&quot;: &quot;For every source horizon T, choose one fixed learning rate equal to the square root of log T divided by T; the resulting two-arm regret is at most a constant times the square root of T log T.&quot;,</span>
+<span id="L1164">1164           &quot;plain&quot;: &quot;Corollary 1 balances the already proved small-learning-rate Theorem-1 branch against the pathwise Delta-times-T bound. It describes a horizon-indexed family of fixed-rate policies, not one policy whose rate changes during a run.&quot;,</span>
+<span id="L1165">1165           &quot;relationship&quot;: &quot;Twenty-three new declarations compile an explicit finite companion on the generated zero-initialized two-arm fixed-IID trajectory with a Unit Dirac environment prior. For T &gt;= 2 and 0 &lt; Delta &lt; 1, twoArmFixedIIDDirac_corollaryOne bounds expected sampled pseudo-regret by (2 + 1/log 2 + 2 exp 2) sqrt(T log T). The arm reward laws remain bounded fixed-IID laws; the Dirac measure is the prior on the singleton environment, not a claim that rewards are Dirac or Rademacher. This is a direct Theorem-1 consumer and is not independent Theorem-2 evidence.&quot;,</span>
+<span id="L1166">1166           &quot;contract&quot;: {</span>
+<span id="L1167">1167             &quot;model&quot;: &quot;The same bounded fixed-IID two-arm SGB family as Theorem 1, indexed by the target horizon.&quot;,</span>
+<span id="L1168">1168             &quot;assumptions&quot;: &quot;Use the Theorem-1 instance assumptions and choose one constant learning rate η_T for each horizon T.&quot;,</span>
+<span id="L1169">1169             &quot;parameters&quot;: &quot;Horizon T and η_T = √(log T/T).&quot;,</span>
+<span id="L1170">1170             &quot;regret&quot;: &quot;Expected sampled-action pseudo-regret for the horizon-indexed policy family.&quot;,</span>
+<span id="L1171">1171             &quot;guarantee&quot;: &quot;Regret is O(√(T log T)); this is not one anytime policy with a changing within-run rate.&quot;</span>
+<span id="L1172">1172           }</span>
+<span id="L1173">1173         },</span>
+<span id="L1174">1174         {</span>
+<span id="L1175">1175           &quot;label&quot;: &quot;Theorem 2 (two-arm SGB phase transition)&quot;,</span>
+<span id="L1176">1176           &quot;local_status&quot;: {</span>
+<span id="L1177">1177             &quot;status&quot;: &quot;blocked&quot;,</span>
+<span id="L1178">1178             &quot;label&quot;: &quot;Terminal blocked&quot;,</span>
+<span id="L1179">1179             &quot;boundary&quot;: &quot;Compiled prerequisite layers exist; the fixed-cutoff trigger, no-return law, ballot assembly, and theorem endpoint remain open.&quot;</span>
+<span id="L1180">1180           },</span>
+<span id="L1181">1181           &quot;pages&quot;: &quot;physical PDF p. 6; Appendix C pp. 31–40&quot;,</span>
+<span id="L1182">1182           &quot;pdf_page&quot;: 6,</span>
+<span id="L1183">1183           &quot;url&quot;: &quot;https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf&quot;,</span>
+<span id="L1184">1184           &quot;math&quot;: &quot;\\(\\lambda_\\Delta=\\tfrac12\\log\\!\\frac{1+\\Delta}{1-\\Delta},\\quad \\eta&gt;\\lambda_\\Delta\\quad\\Longrightarrow\\quad R_T^{\\mathrm{SGB}}=\\widetilde{\\Omega}\\!\\left(T^{1-(1+\\varepsilon)\\lambda_\\Delta/\\eta}\\right)\\ \\text{for every }\\varepsilon&gt;0.\\)&quot;,</span>
+<span id="L1185">1185           &quot;fallback&quot;: &quot;Above the two-arm critical learning rate, Theorem 2 gives a polynomial-in-horizon regret lower bound up to logarithmic factors, with the exponent reduced by an arbitrary positive epsilon.&quot;,</span>
+<span id="L1186">1186           &quot;plain&quot;: &quot;Appendix C reindexes the generated process by optimal-arm pull count, constructs a low-probability phase for that arm, and turns a no-return event into a long starvation interval and polynomial regret.&quot;,</span>
+<span id="L1187">1187           &quot;relationship&quot;: &quot;The exact K = 2 target remains blocked. Twenty-five declarations compile deterministic source-shaped fixed-cutoff and terminal-count consumers, including a generic finite-horizon low-count regret charge; separate compiled layers provide chronological nth-pull semantics, latent fixed-arm products and readout, deferred-decisions prefix factorization, action/readout interfaces, count-capped branch locality, and exact deterministic-time next-reward freshness. A ten-declaration module identifies every inclusive finite prefix and proves equality of the complete visible/native trajectory measures. The selected-block module has eight declarations for missing-pull-aware block transport, fourteen for the exact finite Appendix-C `S0/S1` event, ten for an exact disjoint probability split between the generated all-present phase and an explicit missing-pull phase, and four that send the missing branch into a measurable terminal-count-below event, transport its mass to the generated trajectory, and charge that existing mass against finite-horizon expected sampled pseudo-regret. This is not a product or selected-IID theorem and supplies no positive missing-branch probability. Pull-ordered or stopped selected-reward IID remains uncompiled. The next unique leaf is the generated all-present Appendix-C phase trigger at a fixed chronological cutoff; the stopped-prefix future-cylinder law needed to prove conditional no-return probability at least one half, Rademacher/binomial ballot probability, asymptotic assembly, and the frozen Theorem-2 terminal remain uncompiled.&quot;,</span>
+<span id="L1188">1188           &quot;contract&quot;: {</span>
+<span id="L1189">1189             &quot;model&quot;: &quot;The source&#x27;s zero-initialized constant-rate SGB on its specified fixed-IID two-arm phase-transition instance.&quot;,</span>
+<span id="L1190">1190             &quot;assumptions&quot;: &quot;The gap satisfies 0 &lt; Δ &lt; 1, η exceeds λ_Δ, and ε is any positive slack in the asymptotic exponent.&quot;,</span>
+<span id="L1191">1191             &quot;parameters&quot;: &quot;Horizon T, gap Δ, rate η, threshold λ_Δ, and ε &gt; 0.&quot;,</span>
+<span id="L1192">1192             &quot;regret&quot;: &quot;Expected pseudo-regret of the sampled SGB trajectory.&quot;,</span>
+<span id="L1193">1193             &quot;guarantee&quot;: &quot;A polynomial lower bound up to logarithmic factors with exponent 1-(1+ε)λ_Δ/η.&quot;</span>
+<span id="L1194">1194           }</span>
+<span id="L1195">1195         },</span>
+<span id="L1196">1196         {</span>
+<span id="L1197">1197           &quot;label&quot;: &quot;Theorem 4 / Appendix E source-contract window&quot;,</span>
+<span id="L1198">1198           &quot;local_status&quot;: {</span>
+<span id="L1199">1199             &quot;status&quot;: &quot;blocked&quot;,</span>
+<span id="L1200">1200             &quot;label&quot;: &quot;Terminal blocked&quot;,</span>
+<span id="L1201">1201             &quot;boundary&quot;: &quot;A finite contract gate compiles, but the generated general-K process and Theorem-4 endpoint remain open.&quot;</span>
+<span id="L1202">1202           },</span>
+<span id="L1203">1203           &quot;pages&quot;: &quot;physical PDF pp. 47–49&quot;,</span>
+<span id="L1204">1204           &quot;pdf_page&quot;: 47,</span>
+<span id="L1205">1205           &quot;url&quot;: &quot;https://proceedings.neurips.cc/paper_files/paper/2025/file/a4e683f0ce6b91e7fbdae9d32642d88f-Paper-Conference.pdf&quot;,</span>
+<span id="L1206">1206           &quot;math&quot;: &quot;\\[\\begin{gathered}\\eta C_\\eta &lt; \\frac{2\\Delta}{K+2},\\\\ 2\\Delta-\\eta C_\\eta(K+2)&gt;0,\\\\ 0&lt;p&#x27;,\\quad c&lt;\\tfrac12,\\\\ P(B)\\ge p&#x27;,\\\\ P(B\\cap S)\\ge(1-2c)P(B),\\\\ P(B\\cap S)\\le P(S),\\\\ \\Longrightarrow P(S)\\ge p&#x27;(1-2c)&gt;0.\\end{gathered}\\]&quot;,</span>
+<span id="L1207">1207           &quot;fallback&quot;: &quot;The printed tuning yields a positive drift margin. For positive p-prime and c below one half, explicit buffer and conditional-survival premises make the finite survival mass at least the positive quantity p-prime times one minus two c.&quot;,</span>
+<span id="L1208">1208           &quot;plain&quot;: &quot;This is the finite contract consumed by the Appendix-E transient-phase argument, not the statement of Theorem 4 itself.&quot;,</span>
+<span id="L1209">1209           &quot;relationship&quot;: &quot;Eight Lean declarations compile the positive margin, audited finite event composition, and finite geometric phase envelope. They expose an unresolved Step-4 conditioning/direction mismatch while leaving the general-K generated process, uniform buffer/survival producer, stopped supermartingale/Doob route, and Theorem 4 uncompiled.&quot;,</span>
+<span id="L1210">1210           &quot;contract&quot;: {</span>
+<span id="L1211">1211             &quot;model&quot;: &quot;Finite buffer and survival events inside the source&#x27;s general-K Appendix-E transient-phase route.&quot;,</span>
+<span id="L1212">1212             &quot;assumptions&quot;: &quot;The displayed positive drift, buffer-mass, survival, and event-inclusion inequalities hold with 0 &lt; p&#x27; and c &lt; 1/2.&quot;,</span>
+<span id="L1213">1213             &quot;parameters&quot;: &quot;Arm count K, gap Δ, learning rate η, C_η, buffer mass p&#x27;, and loss fraction c.&quot;,</span>
+<span id="L1214">1214             &quot;regret&quot;: &quot;Not the Theorem-4 regret terminal; this is a finite event-probability contract used by that proof.&quot;,</span>
+<span id="L1215">1215             &quot;guarantee&quot;: &quot;The survival event has positive mass at least p&#x27;(1-2c).&quot;</span>
+<span id="L1216">1216           }</span>
+<span id="L1217">1217         }</span>
+<span id="L1218">1218       ]</span>
+<span id="L1219">1219     }</span>
+<span id="L1220">1220   ]</span>
+<span id="L1221">1221 }</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

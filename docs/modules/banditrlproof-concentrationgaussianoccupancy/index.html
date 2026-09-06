@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.ConcentrationGaussianOccupancy · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.ConcentrationGaussianOccupancy · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.ConcentrationGaussianOccupancy · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Probability layer</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Concentration<wbr>Gaussian<wbr>Occupancy</h1>
+  <p class="lede">Generated source map for this Lean module.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/ConcentrationGaussianOccupancy.lean.html"><code>BanditRLProof/ConcentrationGaussianOccupancy.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/probability/index.html">2. Probability, kernels, filtrations, and concentration</a></dd></div>
+    <div><dt>Declarations</dt><dd>12</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><span class="empty">No project-local imports.</span></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-concentrationcappedoccupancy/index.html"><code>BanditRLProof.ConcentrationCappedOccupancy</code></a>, <a href="../banditrlproof-concentrationindexoccupancy/index.html"><code>BanditRLProof.ConcentrationIndexOccupancy</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-4fffea825fe9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Concentration.integral_mul_exp_neg_mul_sq_Ioi</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_mul_exp_neg_mul_sq_Ioi (b : ℝ) (hb : <span class="num">0</span> &lt; b) : ∫ x : ℝ <span class="kw">in</span> Ioi <span class="num">0</span>, x*exp (-b*x^<span class="num">2</span>) = (<span class="num">2</span>*b)⁻¹</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/ConcentrationGaussianOccupancy.lean.html#L11">Source line 11</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-52585d99c029">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Concentration.integral_transformed_occupancy_tail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exact transformed tail integral in source Lemma 8.2.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_transformed_occupancy_tail (a ε : ℝ) (ha : <span class="num">0</span> &lt; a) (hε : <span class="num">0</span> &lt; ε) : ∫ z : ℝ <span class="kw">in</span> Ioi <span class="num">0</span>, (<span class="num">2</span>/ε^<span class="num">2</span>)*(z+sqrt (<span class="num">2</span>*a))*exp (-(<span class="num">1</span>/<span class="num">2</span> : ℝ)*z^<span class="num">2</span>) = (<span class="num">2</span>/ε^<span class="num">2</span>)*(<span class="num">1</span>+sqrt (Real.pi*a))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/ConcentrationGaussianOccupancy.lean.html#L27">Source line 27</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-10e6d3b96a57">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Concentration.occupancyTail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The shifted Gaussian kernel after the algebraic square-root rewrite.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> occupancyTail (a ε t : ℝ) : ℝ</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/ConcentrationGaussianOccupancy.lean.html#L47">Source line 47</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ebd8467764e6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Concentration.occupancyTail_antitoneOn</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> occupancyTail_antitoneOn (a ε : ℝ) (ha : <span class="num">0</span> &lt; a) (hε : <span class="num">0</span> &lt; ε) : AntitoneOn (occupancyTail a ε) (Ici (<span class="num">2</span>*a/ε^<span class="num">2</span>))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/ConcentrationGaussianOccupancy.lean.html#L49">Source line 49</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5ed5c490eefd">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Concentration.occupancySubstitution</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> occupancySubstitution (a ε z : ℝ) : ℝ</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/ConcentrationGaussianOccupancy.lean.html#L66">Source line 66</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7f0354ab69ba">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Concentration.occupancySubstitution_image</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> occupancySubstitution_image (a ε : ℝ) (ha : <span class="num">0</span> &lt; a) (hε : <span class="num">0</span> &lt; ε) : occupancySubstitution a ε &#x27;&#x27; Ioi <span class="num">0</span> = Ioi (<span class="num">2</span>*a/ε^<span class="num">2</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/ConcentrationGaussianOccupancy.lean.html#L68">Source line 68</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7acaf212f32e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Concentration.occupancySubstitution_injOn</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> occupancySubstitution_injOn (a ε : ℝ) (ha : <span class="num">0</span> &lt; a) (hε : <span class="num">0</span> &lt; ε) : InjOn (occupancySubstitution a ε) (Ioi <span class="num">0</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/ConcentrationGaussianOccupancy.lean.html#L90">Source line 90</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c1765c8803f8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Concentration.hasDerivAt_occupancySubstitution</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> hasDerivAt_occupancySubstitution (a ε z : ℝ) : HasDerivAt (occupancySubstitution a ε) ((<span class="num">2</span>/ε^<span class="num">2</span>)*(z+sqrt (<span class="num">2</span>*a))) z</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/ConcentrationGaussianOccupancy.lean.html#L103">Source line 103</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b6915282930b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Concentration.integral_occupancyTail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integral_occupancyTail (a ε : ℝ) (ha : <span class="num">0</span> &lt; a) (hε : <span class="num">0</span> &lt; ε) : ∫ t <span class="kw">in</span> Ioi (<span class="num">2</span>*a/ε^<span class="num">2</span>), occupancyTail a ε t = (<span class="num">2</span>/ε^<span class="num">2</span>)*(<span class="num">1</span>+sqrt (Real.pi*a))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/ConcentrationGaussianOccupancy.lean.html#L109">Source line 109</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-70fe5c982645">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Concentration.integrableOn_occupancyTail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> integrableOn_occupancyTail (a ε : ℝ) (ha : <span class="num">0</span> &lt; a) (hε : <span class="num">0</span> &lt; ε) : IntegrableOn (occupancyTail a ε) (Ioi (<span class="num">2</span>*a/ε^<span class="num">2</span>))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/ConcentrationGaussianOccupancy.lean.html#L128">Source line 128</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f6d61677a65f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Concentration.sum_occupancyTail_shift_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sum_occupancyTail_shift_le (a ε r : ℝ) (ha : <span class="num">0</span> &lt; a) (hε : <span class="num">0</span> &lt; ε) (hr : <span class="num">2</span>*a/ε^<span class="num">2</span> ≤ r) (N : ℕ) : (∑ i ∈ Finset.range N, occupancyTail a ε (r+(i+<span class="num">1</span> : ℕ))) ≤ (<span class="num">2</span>/ε^<span class="num">2</span>)*(<span class="num">1</span>+sqrt (Real.pi*a))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/ConcentrationGaussianOccupancy.lean.html#L149">Source line 149</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c796dd885dd1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Concentration.sum_le_occupancy_bound</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Integer cutoff aggregation with the exact source Lemma 8.2 constants.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sum_le_occupancy_bound (p : ℕ → ℝ) (a ε : ℝ) (ha : <span class="num">0</span> &lt; a) (hε : <span class="num">0</span> &lt; ε) (h1 : ∀ s, p s ≤ <span class="num">1</span>) (htail : ∀ s : ℕ, <span class="num">2</span>*a/ε^<span class="num">2</span> &lt; (s : ℝ) → p s ≤ occupancyTail a ε s) (n : ℕ) : (∑ i ∈ Finset.range n, p (i+<span class="num">1</span>)) ≤ <span class="num">1</span>+(<span class="num">2</span>/ε^<span class="num">2</span>)*(a+sqrt (Real.pi*a)+<span class="num">1</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/ConcentrationGaussianOccupancy.lean.html#L166">Source line 166</a>
+
+      <a href="../../chapters/probability/index.html">Chapter context: Probability layer</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

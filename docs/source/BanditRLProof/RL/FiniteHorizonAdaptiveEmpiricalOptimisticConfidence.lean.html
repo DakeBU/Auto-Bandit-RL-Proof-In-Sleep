@@ -1,0 +1,836 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveEmpiricalOptimisticConfidence.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveEmpiricalOptimisticConfidence.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveEmpiricalOptimisticConfidence.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveEmpiricalOptimisticConfidence.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveEmpiricalOptimisticSource</span>
+<span id="L2">2 import Mathlib.Probability.Distributions.Uniform</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Adaptive empirical optimistic all-coordinate confidence</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module calibrates a latest-batch empirical-transition source whose behavior</span>
+<span id="L8">8 policy uniformly explores around the latest optimistic deterministic table.</span>
+<span id="L9">9 For every policy that generates a batch, a local contract records genuine</span>
+<span id="L10">10 expected-visit margins and a finite-state coordinate-radius cover for the fixed</span>
+<span id="L11">11 transition bonus.  Outside the existing adaptive simultaneous-count event,</span>
+<span id="L12">12 those contracts produce coordinate confidence for every known-reward empirical</span>
+<span id="L13">13 plan.</span>
+<span id="L14">14 </span>
+<span id="L15">15 The compiled one-episode expected-regret inequalities are summed over the</span>
+<span id="L16">16 optimistic policies recommended by the generated batches.  Behavior-policy</span>
+<span id="L17">17 exploration and recommendation regret are deliberately distinct.  This remains</span>
+<span id="L18">18 a latest-batch, known-reward result with assumed state-action reachability and</span>
+<span id="L19">19 bonus calibration; it is not behavior-policy regret, realized online regret,</span>
+<span id="L20">20 or complete UCB-VI.</span>
+<span id="L21">21 -/</span>
+<span id="L22">22 </span>
+<span id="L23">23 open MeasureTheory</span>
+<span id="L24">24 open scoped ENNReal ProbabilityTheory</span>
+<span id="L25">25 </span>
+<span id="L26">26 universe u v</span>
+<span id="L27">27 </span>
+<span id="L28">28 namespace BanditRLProof</span>
+<span id="L29">29 namespace FiniteHorizonRL</span>
+<span id="L30">30 </span>
+<span id="L31">31 variable {State : Type u} {Action : Type v}</span>
+<span id="L32">32     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L33">33     [Fintype State] [Fintype Action]</span>
+<span id="L34">34     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L35">35     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L36">36     [Nonempty State] [Nonempty Action]</span>
+<span id="L37">37 </span>
+<span id="L38">38 namespace EpisodeBatch</span>
+<span id="L39">39 </span>
+<span id="L40">40 omit [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L41">41     [Nonempty State] [Nonempty Action] in</span>
+<span id="L42">42 /-- Compressing a batch preserves every visit count. -/</span>
+<span id="L43">43 theorem transitionCountSummary_visitCount</span>
+<span id="L44">44     {mdp : MDP State Action} {episodes : Nat}</span>
+<span id="L45">45     (batch : EpisodeBatch mdp episodes) (stage : Fin mdp.horizon)</span>
+<span id="L46">46     (state : State) (action : Action) :</span>
+<span id="L47">47     batch.transitionCountSummary.visitCount stage state action =</span>
+<span id="L48">48       batch.visitCount stage state action := by</span>
+<span id="L49">49   simpa [transitionCountSummary, TransitionCountSummary.visitCount] using</span>
+<span id="L50">50     batch.sum_transitionCount_eq_visitCount stage state action</span>
+<span id="L51">51 </span>
+<span id="L52">52 omit [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L53">53     [Nonempty State] [Nonempty Action] in</span>
+<span id="L54">54 /-- The summary-normalized PMF is exactly the raw batch empirical PMF. -/</span>
+<span id="L55">55 theorem transitionCountSummary_empiricalTransitionPMF</span>
+<span id="L56">56     {mdp : MDP State Action} {episodes : Nat}</span>
+<span id="L57">57     (batch : EpisodeBatch mdp episodes) (defaultState : State)</span>
+<span id="L58">58     (stage : Fin mdp.horizon) (state : State) (action : Action) :</span>
+<span id="L59">59     batch.transitionCountSummary.empiricalTransitionPMF</span>
+<span id="L60">60         defaultState stage state action =</span>
+<span id="L61">61       batch.empiricalTransitionPMF defaultState stage state action := by</span>
+<span id="L62">62   have hvisit :</span>
+<span id="L63">63       batch.transitionCountSummary.visitCount stage state action =</span>
+<span id="L64">64         batch.visitCount stage state action :=</span>
+<span id="L65">65     batch.transitionCountSummary_visitCount stage state action</span>
+<span id="L66">66   by_cases hzero :</span>
+<span id="L67">67       batch.transitionCountSummary.visitCount stage state action = 0</span>
+<span id="L68">68   · have hzero&#x27; : batch.visitCount stage state action = 0 := by</span>
+<span id="L69">69       rwa [hvisit] at hzero</span>
+<span id="L70">70     simp [TransitionCountSummary.empiricalTransitionPMF,</span>
+<span id="L71">71       EpisodeBatch.empiricalTransitionPMF, hzero, hzero&#x27;]</span>
+<span id="L72">72   · have hzero&#x27; : batch.visitCount stage state action ≠ 0 := by</span>
+<span id="L73">73       simpa [hvisit] using hzero</span>
+<span id="L74">74     rw [TransitionCountSummary.empiricalTransitionPMF,</span>
+<span id="L75">75       EpisodeBatch.empiricalTransitionPMF]</span>
+<span id="L76">76     simp only [dif_neg hzero, dif_neg hzero&#x27;]</span>
+<span id="L77">77     congr 1</span>
+<span id="L78">78     funext nextState</span>
+<span id="L79">79     simp [EpisodeBatch.transitionCountSummary, hvisit]</span>
+<span id="L80">80 </span>
+<span id="L81">81 omit [Nonempty State] [Nonempty Action] in</span>
+<span id="L82">82 /-- The summary kernel singleton mass is the named raw empirical mass. -/</span>
+<span id="L83">83 theorem transitionCountSummary_empiricalTransitionKernel_real_singleton</span>
+<span id="L84">84     {mdp : MDP State Action} {episodes : Nat}</span>
+<span id="L85">85     (batch : EpisodeBatch mdp episodes) (defaultState : State)</span>
+<span id="L86">86     (stage : Fin mdp.horizon) (state : State) (action : Action)</span>
+<span id="L87">87     (nextState : State) :</span>
+<span id="L88">88     (batch.transitionCountSummary.empiricalTransitionKernel defaultState stage</span>
+<span id="L89">89         (state, action)).real {nextState} =</span>
+<span id="L90">90       batch.empiricalTransitionMass defaultState stage state action nextState := by</span>
+<span id="L91">91   change</span>
+<span id="L92">92     ((batch.transitionCountSummary.empiricalTransitionPMF</span>
+<span id="L93">93         defaultState stage state action).toMeasure).real {nextState} = _</span>
+<span id="L94">94   rw [batch.transitionCountSummary_empiricalTransitionPMF]</span>
+<span id="L95">95   simpa [EpisodeBatch.empiricalTransitionKernel_apply] using</span>
+<span id="L96">96     batch.empiricalTransitionKernel_real_singleton</span>
+<span id="L97">97       defaultState stage state action nextState</span>
+<span id="L98">98 </span>
+<span id="L99">99 end EpisodeBatch</span>
+<span id="L100">100 </span>
+<span id="L101">101 namespace TransitionCountSummary</span>
+<span id="L102">102 </span>
+<span id="L103">103 omit [DecidableEq Action] [Nonempty State] in</span>
+<span id="L104">104 /--</span>
+<span id="L105">105 The known-reward empirical plan has the same explicit linear value envelope as</span>
+<span id="L106">106 the raw empirical model when the fixed transition bonus is nonnegative.</span>
+<span id="L107">107 -/</span>
+<span id="L108">108 theorem optimisticPlan_upperValueRemaining_abs_le</span>
+<span id="L109">109     (mdp : MDP State Action) (summary : TransitionCountSummary mdp)</span>
+<span id="L110">110     (defaultState : State) (rewardBound transitionBonus : Real)</span>
+<span id="L111">111     (hrewardBound : forall state action,</span>
+<span id="L112">112       |mdp.reward state action| &lt;= rewardBound)</span>
+<span id="L113">113     (htransitionBonus_nonneg : 0 &lt;= transitionBonus) :</span>
+<span id="L114">114     forall (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon)</span>
+<span id="L115">115       (state : State),</span>
+<span id="L116">116       |(summary.optimisticPlan mdp defaultState transitionBonus).upperValueRemaining</span>
+<span id="L117">117           remaining hremaining state| &lt;=</span>
+<span id="L118">118         empiricalFiniteBatchValueEnvelope rewardBound transitionBonus remaining := by</span>
+<span id="L119">119   let plan := summary.optimisticPlan mdp defaultState transitionBonus</span>
+<span id="L120">120   intro remaining</span>
+<span id="L121">121   induction remaining with</span>
+<span id="L122">122   | zero =&gt;</span>
+<span id="L123">123       intro hremaining state</span>
+<span id="L124">124       simp [MDP.EstimatedModelPlan.upperValueRemaining,</span>
+<span id="L125">125         empiricalFiniteBatchValueEnvelope]</span>
+<span id="L126">126   | succ remaining ih =&gt;</span>
+<span id="L127">127       intro hremaining state</span>
+<span id="L128">128       let stage := mdp.decisionStageRemaining remaining hremaining</span>
+<span id="L129">129       let tail := plan.upperValueRemaining remaining (by omega)</span>
+<span id="L130">130       let action := plan.optimisticAction stage tail state</span>
+<span id="L131">131       have htail : forall nextState,</span>
+<span id="L132">132           |tail nextState| &lt;=</span>
+<span id="L133">133             empiricalFiniteBatchValueEnvelope</span>
+<span id="L134">134               rewardBound transitionBonus remaining := by</span>
+<span id="L135">135         intro nextState</span>
+<span id="L136">136         exact ih (by omega) nextState</span>
+<span id="L137">137       have htransition :</span>
+<span id="L138">138           |plan.transitionValue stage tail state action| &lt;=</span>
+<span id="L139">139             empiricalFiniteBatchValueEnvelope</span>
+<span id="L140">140               rewardBound transitionBonus remaining := by</span>
+<span id="L141">141         rw [← Real.norm_eq_abs]</span>
+<span id="L142">142         have hnorm := norm_integral_le_of_norm_le_const</span>
+<span id="L143">143           (μ := plan.estimatedTransition stage (state, action))</span>
+<span id="L144">144           (C := empiricalFiniteBatchValueEnvelope</span>
+<span id="L145">145             rewardBound transitionBonus remaining)</span>
+<span id="L146">146           (Filter.Eventually.of_forall fun nextState =&gt; by</span>
+<span id="L147">147             rw [Real.norm_eq_abs]</span>
+<span id="L148">148             exact htail nextState)</span>
+<span id="L149">149         simpa [MDP.EstimatedModelPlan.transitionValue] using hnorm</span>
+<span id="L150">150       rw [MDP.EstimatedModelPlan.upperValueRemaining]</span>
+<span id="L151">151       change</span>
+<span id="L152">152         |mdp.reward state action +</span>
+<span id="L153">153               plan.transitionValue stage tail state action +</span>
+<span id="L154">154             0 + transitionBonus| &lt;=</span>
+<span id="L155">155           empiricalFiniteBatchValueEnvelope</span>
+<span id="L156">156             rewardBound transitionBonus (remaining + 1)</span>
+<span id="L157">157       calc</span>
+<span id="L158">158         |mdp.reward state action +</span>
+<span id="L159">159               plan.transitionValue stage tail state action +</span>
+<span id="L160">160             0 + transitionBonus| =</span>
+<span id="L161">161             |(mdp.reward state action +</span>
+<span id="L162">162               plan.transitionValue stage tail state action) +</span>
+<span id="L163">163                 transitionBonus| := by ring_nf</span>
+<span id="L164">164         _ &lt;= |mdp.reward state action +</span>
+<span id="L165">165               plan.transitionValue stage tail state action| +</span>
+<span id="L166">166                 |transitionBonus| := abs_add_le _ _</span>
+<span id="L167">167         _ &lt;= (|mdp.reward state action| +</span>
+<span id="L168">168               |plan.transitionValue stage tail state action|) +</span>
+<span id="L169">169                 |transitionBonus| := by</span>
+<span id="L170">170             have hsum := abs_add_le (mdp.reward state action)</span>
+<span id="L171">171               (plan.transitionValue stage tail state action)</span>
+<span id="L172">172             linarith</span>
+<span id="L173">173         _ &lt;= rewardBound +</span>
+<span id="L174">174               empiricalFiniteBatchValueEnvelope</span>
+<span id="L175">175                 rewardBound transitionBonus remaining +</span>
+<span id="L176">176               transitionBonus := by</span>
+<span id="L177">177             rw [abs_of_nonneg htransitionBonus_nonneg]</span>
+<span id="L178">178             linarith [hrewardBound state action, htransition]</span>
+<span id="L179">179         _ = empiricalFiniteBatchValueEnvelope</span>
+<span id="L180">180               rewardBound transitionBonus (remaining + 1) := by</span>
+<span id="L181">181             unfold empiricalFiniteBatchValueEnvelope</span>
+<span id="L182">182             rw [show ((remaining + 1 : Nat) : Real) =</span>
+<span id="L183">183               (remaining : Real) + 1 by norm_num]</span>
+<span id="L184">184             ring</span>
+<span id="L185">185 </span>
+<span id="L186">186 end TransitionCountSummary</span>
+<span id="L187">187 </span>
+<span id="L188">188 namespace MarkovPolicy</span>
+<span id="L189">189 </span>
+<span id="L190">190 /--</span>
+<span id="L191">191 Policy-local statistical calibration needed to make the fixed transition</span>
+<span id="L192">192 bonus cover all finite-state empirical transition-coordinate errors.</span>
+<span id="L193">193 -/</span>
+<span id="L194">194 structure EmpiricalOptimisticCalibration</span>
+<span id="L195">195     {mdp : MDP State Action} (policy : MarkovPolicy mdp)</span>
+<span id="L196">196     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L197">197     (episodes : Nat) (delta rewardBound transitionBonus : Real) : Prop where</span>
+<span id="L198">198   margin : forall coordinate : VisitCoordinate mdp,</span>
+<span id="L199">199     simultaneousCountConfidenceRadius mdp episodes delta &lt;</span>
+<span id="L200">200       coordinate.expectedCount policy initialState episodes</span>
+<span id="L201">201   cover : forall (remaining : Nat)</span>
+<span id="L202">202       (hremaining : remaining + 1 &lt;= mdp.horizon)</span>
+<span id="L203">203       (state : State) (action : Action),</span>
+<span id="L204">204     (∑ nextState,</span>
+<span id="L205">205         policy.expectedCountTransitionCoordinateRadius</span>
+<span id="L206">206             initialState episodes delta</span>
+<span id="L207">207             (mdp.decisionStageRemaining remaining hremaining)</span>
+<span id="L208">208             state action nextState *</span>
+<span id="L209">209           empiricalFiniteBatchValueEnvelope</span>
+<span id="L210">210             rewardBound transitionBonus remaining) &lt;=</span>
+<span id="L211">211       transitionBonus</span>
+<span id="L212">212 </span>
+<span id="L213">213 /--</span>
+<span id="L214">214 One good generated batch and one calibration contract produce coordinate</span>
+<span id="L215">215 confidence for the exact known-reward empirical plan used by the source.</span>
+<span id="L216">216 -/</span>
+<span id="L217">217 noncomputable def empiricalOptimisticPlanCoordinateConfidence_of_not_mem</span>
+<span id="L218">218     {mdp : MDP State Action} (policy : MarkovPolicy mdp)</span>
+<span id="L219">219     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L220">220     {episodes : Nat} {delta : Real} (batch : EpisodeBatch mdp episodes)</span>
+<span id="L221">221     (hbatch : batch ∉</span>
+<span id="L222">222       policy.simultaneousCountBadEvent initialState episodes delta)</span>
+<span id="L223">223     (defaultState : State) (rewardBound transitionBonus : Real)</span>
+<span id="L224">224     (hrewardBound : forall state action,</span>
+<span id="L225">225       |mdp.reward state action| &lt;= rewardBound)</span>
+<span id="L226">226     (htransitionBonus_nonneg : 0 &lt;= transitionBonus)</span>
+<span id="L227">227     (calibration : policy.EmpiricalOptimisticCalibration initialState episodes</span>
+<span id="L228">228       delta rewardBound transitionBonus) :</span>
+<span id="L229">229     (batch.transitionCountSummary.optimisticPlan</span>
+<span id="L230">230       mdp defaultState transitionBonus).CoordinateConfidence where</span>
+<span id="L231">231   transitionCoordinateRadius :=</span>
+<span id="L232">232     policy.expectedCountTransitionCoordinateRadius</span>
+<span id="L233">233       initialState episodes delta</span>
+<span id="L234">234   valueEnvelope :=</span>
+<span id="L235">235     empiricalFiniteBatchValueEnvelope rewardBound transitionBonus</span>
+<span id="L236">236   rewardError_le_radius := by</span>
+<span id="L237">237     intro stage state action</span>
+<span id="L238">238     simp [TransitionCountSummary.optimisticPlan]</span>
+<span id="L239">239   transitionCoordinateError_le_radius := by</span>
+<span id="L240">240     intro remaining hremaining state action nextState</span>
+<span id="L241">241     change</span>
+<span id="L242">242       |(batch.transitionCountSummary.empiricalTransitionKernel defaultState</span>
+<span id="L243">243             (mdp.decisionStageRemaining remaining hremaining)</span>
+<span id="L244">244             (state, action)).real {nextState} -</span>
+<span id="L245">245           (mdp.transition (state, action)).real {nextState}| &lt;=</span>
+<span id="L246">246         policy.expectedCountTransitionCoordinateRadius</span>
+<span id="L247">247           initialState episodes delta</span>
+<span id="L248">248           (mdp.decisionStageRemaining remaining hremaining)</span>
+<span id="L249">249           state action nextState</span>
+<span id="L250">250     rw [EpisodeBatch.transitionCountSummary_empiricalTransitionKernel_real_singleton]</span>
+<span id="L251">251     let coordinate : VisitCoordinate mdp :=</span>
+<span id="L252">252       { stage := mdp.decisionStageRemaining remaining hremaining</span>
+<span id="L253">253         state := state</span>
+<span id="L254">254         action := action }</span>
+<span id="L255">255     simpa [coordinate] using</span>
+<span id="L256">256       policy.empiricalTransitionMass_abs_sub_transition_le_expectedCountRadius_of_not_mem</span>
+<span id="L257">257         initialState batch hbatch defaultState coordinate</span>
+<span id="L258">258           (calibration.margin coordinate) nextState</span>
+<span id="L259">259   upperValue_abs_le_envelope := by</span>
+<span id="L260">260     intro remaining hremaining state</span>
+<span id="L261">261     exact batch.transitionCountSummary.optimisticPlan_upperValueRemaining_abs_le</span>
+<span id="L262">262       mdp defaultState rewardBound transitionBonus hrewardBound</span>
+<span id="L263">263         htransitionBonus_nonneg remaining (by omega) state</span>
+<span id="L264">264   transitionRadius_cover := by</span>
+<span id="L265">265     intro remaining hremaining state action</span>
+<span id="L266">266     simpa [TransitionCountSummary.optimisticPlan] using</span>
+<span id="L267">267       calibration.cover remaining hremaining state action</span>
+<span id="L268">268 </span>
+<span id="L269">269 end MarkovPolicy</span>
+<span id="L270">270 </span>
+<span id="L271">271 namespace DeterministicMarkovPolicyTable</span>
+<span id="L272">272 </span>
+<span id="L273">273 /--</span>
+<span id="L274">274 Action law that explores uniformly with the supplied probability and otherwise</span>
+<span id="L275">275 uses the deterministic optimistic table action.</span>
+<span id="L276">276 -/</span>
+<span id="L277">277 noncomputable def exploratoryActionPMF</span>
+<span id="L278">278     {mdp : MDP State Action} (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L279">279     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L280">280     (stage : Fin mdp.horizon) (state : State) : PMF Action :=</span>
+<span id="L281">281   (PMF.bernoulli explorationRate hexplorationRate).bind fun explore =&gt;</span>
+<span id="L282">282     if explore then PMF.uniformOfFintype Action else PMF.pure (table stage state)</span>
+<span id="L283">283 </span>
+<span id="L284">284 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L285">285     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L286">286     [Nonempty State] in</span>
+<span id="L287">287 /-- Every action receives at least its uniform-exploration mass. -/</span>
+<span id="L288">288 theorem explorationRate_mul_inv_card_le_exploratoryActionPMF</span>
+<span id="L289">289     {mdp : MDP State Action} (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L290">290     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L291">291     (stage : Fin mdp.horizon) (state : State) (action : Action) :</span>
+<span id="L292">292     (explorationRate : ENNReal) * (Fintype.card Action : ENNReal)⁻¹ &lt;=</span>
+<span id="L293">293       table.exploratoryActionPMF explorationRate hexplorationRate</span>
+<span id="L294">294         stage state action := by</span>
+<span id="L295">295   rw [exploratoryActionPMF, PMF.bind_apply]</span>
+<span id="L296">296   rw [tsum_fintype, Fintype.sum_bool]</span>
+<span id="L297">297   simp only [PMF.bernoulli_apply, Bool.cond_false, Bool.cond_true,</span>
+<span id="L298">298     if_true, PMF.uniformOfFintype_apply]</span>
+<span id="L299">299   exact le_add_of_nonneg_right (by positivity)</span>
+<span id="L300">300 </span>
+<span id="L301">301 /-- Markov behavior policy obtained by uniformly exploring around one table. -/</span>
+<span id="L302">302 noncomputable def exploratoryPolicy</span>
+<span id="L303">303     {mdp : MDP State Action} (table : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L304">304     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1) :</span>
+<span id="L305">305     MarkovPolicy mdp where</span>
+<span id="L306">306   actionKernel stage := ProbabilityTheory.Kernel.ofFunOfCountable fun state =&gt;</span>
+<span id="L307">307     (table.exploratoryActionPMF explorationRate hexplorationRate</span>
+<span id="L308">308       stage state).toMeasure</span>
+<span id="L309">309   actionKernel_isMarkov _stage := by</span>
+<span id="L310">310     refine ⟨fun state =&gt; ?_⟩</span>
+<span id="L311">311     change IsProbabilityMeasure</span>
+<span id="L312">312       ((table.exploratoryActionPMF explorationRate hexplorationRate</span>
+<span id="L313">313         _stage state).toMeasure)</span>
+<span id="L314">314     infer_instance</span>
+<span id="L315">315 </span>
+<span id="L316">316 /-- Iid generated episode-batch kernel indexed by exploratory table policies. -/</span>
+<span id="L317">317 noncomputable def exploratoryIIDEpisodeBatchKernel</span>
+<span id="L318">318     {mdp : MDP State Action} (initialState : Measure State)</span>
+<span id="L319">319     [IsProbabilityMeasure initialState] (episodes : Nat)</span>
+<span id="L320">320     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1) :</span>
+<span id="L321">321     ProbabilityTheory.Kernel (DeterministicMarkovPolicyTable mdp)</span>
+<span id="L322">322       (EpisodeBatch mdp episodes) :=</span>
+<span id="L323">323   ProbabilityTheory.Kernel.ofFunOfCountable fun table =&gt;</span>
+<span id="L324">324     (table.exploratoryPolicy explorationRate hexplorationRate).iidEpisodeBatchMeasure</span>
+<span id="L325">325       initialState episodes</span>
+<span id="L326">326 </span>
+<span id="L327">327 omit [DecidableEq State] [DecidableEq Action] [Nonempty State] in</span>
+<span id="L328">328 @[simp]</span>
+<span id="L329">329 theorem exploratoryIIDEpisodeBatchKernel_apply</span>
+<span id="L330">330     {mdp : MDP State Action} (initialState : Measure State)</span>
+<span id="L331">331     [IsProbabilityMeasure initialState] (episodes : Nat)</span>
+<span id="L332">332     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L333">333     (table : DeterministicMarkovPolicyTable mdp) :</span>
+<span id="L334">334     exploratoryIIDEpisodeBatchKernel initialState episodes explorationRate</span>
+<span id="L335">335         hexplorationRate table =</span>
+<span id="L336">336       (table.exploratoryPolicy explorationRate hexplorationRate).iidEpisodeBatchMeasure</span>
+<span id="L337">337         initialState episodes :=</span>
+<span id="L338">338   rfl</span>
+<span id="L339">339 </span>
+<span id="L340">340 instance instExploratoryIIDEpisodeBatchKernelIsMarkov</span>
+<span id="L341">341     {mdp : MDP State Action} (initialState : Measure State)</span>
+<span id="L342">342     [IsProbabilityMeasure initialState] (episodes : Nat)</span>
+<span id="L343">343     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1) :</span>
+<span id="L344">344     ProbabilityTheory.IsMarkovKernel</span>
+<span id="L345">345       (exploratoryIIDEpisodeBatchKernel (mdp := mdp) initialState episodes</span>
+<span id="L346">346         explorationRate hexplorationRate) where</span>
+<span id="L347">347   isProbabilityMeasure table := by</span>
+<span id="L348">348     rw [exploratoryIIDEpisodeBatchKernel_apply]</span>
+<span id="L349">349     infer_instance</span>
+<span id="L350">350 </span>
+<span id="L351">351 end DeterministicMarkovPolicyTable</span>
+<span id="L352">352 </span>
+<span id="L353">353 /-- The known-reward empirical plan selected from one batch coordinate. -/</span>
+<span id="L354">354 noncomputable def adaptiveEmpiricalOptimisticPlanAt</span>
+<span id="L355">355     {mdp : MDP State Action} {episodes : Nat}</span>
+<span id="L356">356     (trajectory : EpisodeBatchTrajectory mdp episodes)</span>
+<span id="L357">357     (defaultState : State) (transitionBonus : Real) (round : Nat) :</span>
+<span id="L358">358     mdp.EstimatedModelPlan :=</span>
+<span id="L359">359   (trajectory round).transitionCountSummary.optimisticPlan</span>
+<span id="L360">360     mdp defaultState transitionBonus</span>
+<span id="L361">361 </span>
+<span id="L362">362 /-- Sum of expected regrets of the optimistic policies recommended by each batch. -/</span>
+<span id="L363">363 noncomputable def adaptiveEmpiricalOptimisticRecommendedExpectedRegret</span>
+<span id="L364">364     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L365">365     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L366">366     (trajectory : EpisodeBatchTrajectory mdp episodes)</span>
+<span id="L367">367     (defaultState : State) (transitionBonus : Real) (rounds : Nat) : Real :=</span>
+<span id="L368">368   ∑ round : Fin rounds,</span>
+<span id="L369">369     (adaptiveEmpiricalOptimisticPlanAt</span>
+<span id="L370">370       (mdp := mdp) (episodes := episodes)</span>
+<span id="L371">371       trajectory defaultState transitionBonus round).optimisticPolicy.expectedRegret</span>
+<span id="L372">372         initialState</span>
+<span id="L373">373 </span>
+<span id="L374">374 /-- Sum of the confidence-produced occupancy radius bounds after each batch. -/</span>
+<span id="L375">375 noncomputable def adaptiveEmpiricalOptimisticOccupancyRadiusSum</span>
+<span id="L376">376     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L377">377     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L378">378     (trajectory : EpisodeBatchTrajectory mdp episodes)</span>
+<span id="L379">379     (defaultState : State) (transitionBonus : Real) (rounds : Nat) : Real :=</span>
+<span id="L380">380   ∑ round : Fin rounds,</span>
+<span id="L381">381     let plan := adaptiveEmpiricalOptimisticPlanAt</span>
+<span id="L382">382       (mdp := mdp) (episodes := episodes)</span>
+<span id="L383">383       trajectory defaultState transitionBonus round</span>
+<span id="L384">384     plan.optimisticPolicy.occupancySumRemaining</span>
+<span id="L385">385       (fun remaining hremaining state =&gt;</span>
+<span id="L386">386         2 * plan.selectedRadiusRemaining remaining hremaining state)</span>
+<span id="L387">387       mdp.horizon le_rfl initialState</span>
+<span id="L388">388 </span>
+<span id="L389">389 namespace AdaptiveEmpiricalOptimisticSource</span>
+<span id="L390">390 </span>
+<span id="L391">391 /--</span>
+<span id="L392">392 Concrete behavior source with uniform action exploration around every</span>
+<span id="L393">393 latest-batch optimistic table.</span>
+<span id="L394">394 -/</span>
+<span id="L395">395 noncomputable def exploratorySource</span>
+<span id="L396">396     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L397">397     [IsProbabilityMeasure initialState] (episodes : Nat)</span>
+<span id="L398">398     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L399">399     (defaultState : State) (transitionBonus : Real)</span>
+<span id="L400">400     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1) :</span>
+<span id="L401">401     AdaptiveEpisodeBatchSource mdp initialState episodes where</span>
+<span id="L402">402   initialPolicy :=</span>
+<span id="L403">403     initialTable.exploratoryPolicy explorationRate hexplorationRate</span>
+<span id="L404">404   successorPolicy n history :=</span>
+<span id="L405">405     (successorTable defaultState transitionBonus n history).exploratoryPolicy</span>
+<span id="L406">406       explorationRate hexplorationRate</span>
+<span id="L407">407   batchKernel n :=</span>
+<span id="L408">408     (DeterministicMarkovPolicyTable.exploratoryIIDEpisodeBatchKernel</span>
+<span id="L409">409       initialState episodes explorationRate hexplorationRate).comap</span>
+<span id="L410">410         (successorTable defaultState transitionBonus n)</span>
+<span id="L411">411         (measurable_successorTable defaultState transitionBonus n)</span>
+<span id="L412">412   batchKernel_isMarkov n := by</span>
+<span id="L413">413     exact ProbabilityTheory.Kernel.IsMarkovKernel.comap _</span>
+<span id="L414">414       (measurable_successorTable defaultState transitionBonus n)</span>
+<span id="L415">415   batchKernel_eq_iidEpisodeBatchMeasure n history := by</span>
+<span id="L416">416     rw [ProbabilityTheory.Kernel.comap_apply]</span>
+<span id="L417">417     rfl</span>
+<span id="L418">418 </span>
+<span id="L419">419 omit [Nonempty State] in</span>
+<span id="L420">420 /-- The exploratory successor behavior is centered on the latest optimistic table. -/</span>
+<span id="L421">421 theorem exploratorySource_successorPolicy</span>
+<span id="L422">422     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L423">423     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L424">424     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L425">425     (defaultState : State) (transitionBonus : Real)</span>
+<span id="L426">426     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L427">427     (n : Nat) (history : EpisodeBatchPrefix mdp episodes n) :</span>
+<span id="L428">428     (exploratorySource mdp initialState episodes initialTable defaultState</span>
+<span id="L429">429       transitionBonus explorationRate hexplorationRate).successorPolicy n history =</span>
+<span id="L430">430       (successorTable defaultState transitionBonus n history).exploratoryPolicy</span>
+<span id="L431">431         explorationRate hexplorationRate := by</span>
+<span id="L432">432   rfl</span>
+<span id="L433">433 </span>
+<span id="L434">434 omit [Nonempty State] in</span>
+<span id="L435">435 /-- Measurability of finite-table-selected exploratory count events. -/</span>
+<span id="L436">436 theorem measurableSet_selectedExploratorySimultaneousCountBadEvent</span>
+<span id="L437">437     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L438">438     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L439">439     {History : Type*} [MeasurableSpace History]</span>
+<span id="L440">440     (selector : History -&gt; DeterministicMarkovPolicyTable mdp)</span>
+<span id="L441">441     (hselector : Measurable selector)</span>
+<span id="L442">442     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L443">443     (delta : Real) :</span>
+<span id="L444">444     MeasurableSet</span>
+<span id="L445">445       {pair : History × EpisodeBatch mdp episodes |</span>
+<span id="L446">446         pair.2 ∈</span>
+<span id="L447">447           ((selector pair.1).exploratoryPolicy explorationRate</span>
+<span id="L448">448             hexplorationRate).simultaneousCountBadEvent</span>
+<span id="L449">449               initialState episodes delta} := by</span>
+<span id="L450">450   rw [show</span>
+<span id="L451">451       {pair : History × EpisodeBatch mdp episodes |</span>
+<span id="L452">452           pair.2 ∈</span>
+<span id="L453">453             ((selector pair.1).exploratoryPolicy explorationRate</span>
+<span id="L454">454               hexplorationRate).simultaneousCountBadEvent</span>
+<span id="L455">455                 initialState episodes delta} =</span>
+<span id="L456">456         ⋃ table : DeterministicMarkovPolicyTable mdp,</span>
+<span id="L457">457           (selector ⁻¹&#x27; {table}) ×ˢ</span>
+<span id="L458">458             (MarkovPolicy.simultaneousCountBadEvent</span>
+<span id="L459">459               (table.exploratoryPolicy explorationRate hexplorationRate)</span>
+<span id="L460">460               initialState episodes delta) by</span>
+<span id="L461">461     ext pair</span>
+<span id="L462">462     simp]</span>
+<span id="L463">463   exact MeasurableSet.iUnion fun table =&gt;</span>
+<span id="L464">464     (hselector (measurableSet_singleton table)).prod</span>
+<span id="L465">465       (MarkovPolicy.measurableSet_simultaneousCountBadEvent</span>
+<span id="L466">466         (table.exploratoryPolicy explorationRate hexplorationRate)</span>
+<span id="L467">467         initialState episodes delta)</span>
+<span id="L468">468 </span>
+<span id="L469">469 omit [Nonempty State] in</span>
+<span id="L470">470 /-- Every selected successor event of the exploratory source is measurable. -/</span>
+<span id="L471">471 theorem exploratorySource_measurableSet_successorSimultaneousCountBadEvent</span>
+<span id="L472">472     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L473">473     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L474">474     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L475">475     (defaultState : State) (transitionBonus : Real)</span>
+<span id="L476">476     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L477">477     (rounds : Nat) (delta : Real) (n : Nat) :</span>
+<span id="L478">478     MeasurableSet</span>
+<span id="L479">479       (AdaptiveEpisodeBatchSource.successorSimultaneousCountBadEvent</span>
+<span id="L480">480         (exploratorySource mdp initialState episodes initialTable defaultState</span>
+<span id="L481">481           transitionBonus explorationRate hexplorationRate)</span>
+<span id="L482">482         rounds delta n) := by</span>
+<span id="L483">483   change MeasurableSet</span>
+<span id="L484">484     {pair : EpisodeBatchPrefix mdp episodes n × EpisodeBatch mdp episodes |</span>
+<span id="L485">485       pair.2 ∈</span>
+<span id="L486">486         ((successorTable defaultState transitionBonus n pair.1).exploratoryPolicy</span>
+<span id="L487">487           explorationRate hexplorationRate).simultaneousCountBadEvent</span>
+<span id="L488">488             initialState episodes (multiBatchLocalDelta rounds delta)}</span>
+<span id="L489">489   exact measurableSet_selectedExploratorySimultaneousCountBadEvent</span>
+<span id="L490">490     (successorTable defaultState transitionBonus n)</span>
+<span id="L491">491     (measurable_successorTable defaultState transitionBonus n)</span>
+<span id="L492">492     explorationRate hexplorationRate (multiBatchLocalDelta rounds delta)</span>
+<span id="L493">493 </span>
+<span id="L494">494 omit [Nonempty State] in</span>
+<span id="L495">495 /-- The exploratory behavior source inherits the adaptive global count event. -/</span>
+<span id="L496">496 theorem exploratorySource_trajectoryMeasure_adaptiveSimultaneousCountConfidence</span>
+<span id="L497">497     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L498">498     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L499">499     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L500">500     (defaultState : State) (transitionBonus : Real)</span>
+<span id="L501">501     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L502">502     (rounds : Nat) (hrounds : 0 &lt; rounds) (hepisodes : 0 &lt; episodes)</span>
+<span id="L503">503     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1) :</span>
+<span id="L504">504     let behaviorSource := exploratorySource mdp initialState episodes</span>
+<span id="L505">505       initialTable defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L506">506     MeasurableSet</span>
+<span id="L507">507         (behaviorSource.adaptiveSimultaneousCountBadEvent rounds delta) ∧</span>
+<span id="L508">508       behaviorSource.trajectoryMeasure</span>
+<span id="L509">509           (behaviorSource.adaptiveSimultaneousCountBadEvent rounds delta) &lt;=</span>
+<span id="L510">510         ENNReal.ofReal delta ∧</span>
+<span id="L511">511       forall trajectory,</span>
+<span id="L512">512         trajectory ∉ behaviorSource.adaptiveSimultaneousCountBadEvent rounds delta -&gt;</span>
+<span id="L513">513         forall round : Fin rounds, forall coordinate : CountCoordinate mdp,</span>
+<span id="L514">514           |coordinate.deviation (behaviorSource.policyAt trajectory round)</span>
+<span id="L515">515               initialState (trajectory round)| &lt;</span>
+<span id="L516">516             simultaneousCountConfidenceRadius mdp episodes</span>
+<span id="L517">517               (multiBatchLocalDelta rounds delta) := by</span>
+<span id="L518">518   dsimp only</span>
+<span id="L519">519   exact</span>
+<span id="L520">520     AdaptiveEpisodeBatchSource.trajectoryMeasure_adaptiveSimultaneousCountConfidence</span>
+<span id="L521">521       (exploratorySource mdp initialState episodes initialTable defaultState</span>
+<span id="L522">522         transitionBonus explorationRate hexplorationRate)</span>
+<span id="L523">523       rounds hrounds hepisodes delta hdelta hdelta_le_one</span>
+<span id="L524">524       (fun n _hn =&gt;</span>
+<span id="L525">525         exploratorySource_measurableSet_successorSimultaneousCountBadEvent</span>
+<span id="L526">526           initialTable defaultState transitionBonus explorationRate</span>
+<span id="L527">527             hexplorationRate rounds delta n)</span>
+<span id="L528">528 </span>
+<span id="L529">529 omit [Nonempty State] in</span>
+<span id="L530">530 /-- The plan from batch `n` is exactly the source policy used at `n + 1`. -/</span>
+<span id="L531">531 theorem source_policyAt_succ_eq_adaptiveEmpiricalOptimisticPlanAt</span>
+<span id="L532">532     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L533">533     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L534">534     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L535">535     (defaultState : State) (transitionBonus : Real)</span>
+<span id="L536">536     (trajectory : EpisodeBatchTrajectory mdp episodes) (n : Nat) :</span>
+<span id="L537">537     let concreteSource :=</span>
+<span id="L538">538       source mdp initialState episodes initialTable defaultState transitionBonus</span>
+<span id="L539">539     concreteSource.policyAt trajectory (n + 1) =</span>
+<span id="L540">540       (adaptiveEmpiricalOptimisticPlanAt</span>
+<span id="L541">541         (mdp := mdp) (episodes := episodes)</span>
+<span id="L542">542         trajectory defaultState transitionBonus n).optimisticPolicy := by</span>
+<span id="L543">543   dsimp only</span>
+<span id="L544">544   change</span>
+<span id="L545">545     (source mdp initialState episodes initialTable defaultState transitionBonus).successorPolicy</span>
+<span id="L546">546         n (Preorder.frestrictLe n trajectory) = _</span>
+<span id="L547">547   simpa [adaptiveEmpiricalOptimisticPlanAt, latestBatch] using</span>
+<span id="L548">548     source_successorPolicy_eq_optimisticPolicy</span>
+<span id="L549">549       (initialState := initialState) initialTable defaultState transitionBonus n</span>
+<span id="L550">550         (Preorder.frestrictLe n trajectory)</span>
+<span id="L551">551 </span>
+<span id="L552">552 omit [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L553">553     [Nonempty State] [Nonempty Action] in</span>
+<span id="L554">554 /-- Outside the adaptive union, every batch avoids its selected local event. -/</span>
+<span id="L555">555 theorem policyAt_batch_not_mem_simultaneousCountBadEvent</span>
+<span id="L556">556     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L557">557     [IsProbabilityMeasure initialState] {episodes rounds : Nat}</span>
+<span id="L558">558     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L559">559     {delta : Real} (trajectory : EpisodeBatchTrajectory mdp episodes)</span>
+<span id="L560">560     (htrajectory : trajectory ∉</span>
+<span id="L561">561       source.adaptiveSimultaneousCountBadEvent rounds delta)</span>
+<span id="L562">562     (round : Fin rounds) :</span>
+<span id="L563">563     trajectory round ∉</span>
+<span id="L564">564       (source.policyAt trajectory round).simultaneousCountBadEvent</span>
+<span id="L565">565         initialState episodes (multiBatchLocalDelta rounds delta) := by</span>
+<span id="L566">566   have hround : trajectory ∉</span>
+<span id="L567">567       AdaptiveEpisodeBatchSource.roundBadEvent</span>
+<span id="L568">568         (source.initialSimultaneousCountBadEvent rounds delta)</span>
+<span id="L569">569         (source.successorSimultaneousCountBadEvent rounds delta)</span>
+<span id="L570">570         round := by</span>
+<span id="L571">571     intro hmem</span>
+<span id="L572">572     apply htrajectory</span>
+<span id="L573">573     exact Set.mem_iUnion_of_mem round hmem</span>
+<span id="L574">574   cases round with</span>
+<span id="L575">575   | mk value hvalue =&gt;</span>
+<span id="L576">576       cases value with</span>
+<span id="L577">577       | zero =&gt;</span>
+<span id="L578">578           simpa [AdaptiveEpisodeBatchSource.roundBadEvent,</span>
+<span id="L579">579             AdaptiveEpisodeBatchSource.initialBadEvent,</span>
+<span id="L580">580             AdaptiveEpisodeBatchSource.policyAt,</span>
+<span id="L581">581             AdaptiveEpisodeBatchSource.initialSimultaneousCountBadEvent] using hround</span>
+<span id="L582">582       | succ n =&gt;</span>
+<span id="L583">583           simpa [AdaptiveEpisodeBatchSource.roundBadEvent,</span>
+<span id="L584">584             AdaptiveEpisodeBatchSource.successorBadEvent,</span>
+<span id="L585">585             AdaptiveEpisodeBatchSource.policyAt,</span>
+<span id="L586">586             AdaptiveEpisodeBatchSource.successorSimultaneousCountBadEvent] using hround</span>
+<span id="L587">587 </span>
+<span id="L588">588 /-- Calibration contract selected by the data-generating policy at each round. -/</span>
+<span id="L589">589 def SourceCalibration</span>
+<span id="L590">590     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L591">591     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L592">592     (source : AdaptiveEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L593">593     (rounds : Nat) (delta rewardBound transitionBonus : Real) : Prop :=</span>
+<span id="L594">594   source.initialPolicy.EmpiricalOptimisticCalibration initialState episodes</span>
+<span id="L595">595       (multiBatchLocalDelta rounds delta) rewardBound transitionBonus /\</span>
+<span id="L596">596     forall n, n + 1 &lt; rounds -&gt;</span>
+<span id="L597">597       forall history : EpisodeBatchPrefix mdp episodes n,</span>
+<span id="L598">598         (source.successorPolicy n history).EmpiricalOptimisticCalibration</span>
+<span id="L599">599           initialState episodes (multiBatchLocalDelta rounds delta)</span>
+<span id="L600">600             rewardBound transitionBonus</span>
+<span id="L601">601 </span>
+<span id="L602">602 /-- Every observed batch plan has coordinate confidence outside the global event. -/</span>
+<span id="L603">603 noncomputable def exploratorySource_coordinateConfidenceAt_of_not_mem</span>
+<span id="L604">604     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L605">605     [IsProbabilityMeasure initialState] {episodes rounds : Nat}</span>
+<span id="L606">606     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L607">607     (defaultState : State) (rewardBound transitionBonus delta : Real)</span>
+<span id="L608">608     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L609">609     (hrewardBound : forall state action,</span>
+<span id="L610">610       |mdp.reward state action| &lt;= rewardBound)</span>
+<span id="L611">611     (htransitionBonus_nonneg : 0 &lt;= transitionBonus)</span>
+<span id="L612">612     (calibration :</span>
+<span id="L613">613       let behaviorSource := exploratorySource mdp initialState episodes initialTable</span>
+<span id="L614">614         defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L615">615       SourceCalibration behaviorSource rounds delta rewardBound transitionBonus)</span>
+<span id="L616">616     (trajectory : EpisodeBatchTrajectory mdp episodes)</span>
+<span id="L617">617     (htrajectory : trajectory ∉</span>
+<span id="L618">618       (exploratorySource mdp initialState episodes initialTable defaultState</span>
+<span id="L619">619         transitionBonus explorationRate hexplorationRate).adaptiveSimultaneousCountBadEvent</span>
+<span id="L620">620         rounds delta)</span>
+<span id="L621">621     (round : Fin rounds) :</span>
+<span id="L622">622     (adaptiveEmpiricalOptimisticPlanAt</span>
+<span id="L623">623       (mdp := mdp) (episodes := episodes)</span>
+<span id="L624">624       trajectory defaultState transitionBonus round).CoordinateConfidence := by</span>
+<span id="L625">625   let behaviorSource := exploratorySource mdp initialState episodes initialTable</span>
+<span id="L626">626     defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L627">627   have hbatch := policyAt_batch_not_mem_simultaneousCountBadEvent</span>
+<span id="L628">628     behaviorSource trajectory htrajectory round</span>
+<span id="L629">629   cases round with</span>
+<span id="L630">630   | mk value hvalue =&gt;</span>
+<span id="L631">631       cases value with</span>
+<span id="L632">632       | zero =&gt;</span>
+<span id="L633">633           exact</span>
+<span id="L634">634             MarkovPolicy.empiricalOptimisticPlanCoordinateConfidence_of_not_mem</span>
+<span id="L635">635               behaviorSource.initialPolicy initialState (trajectory 0) hbatch</span>
+<span id="L636">636                 defaultState rewardBound transitionBonus hrewardBound</span>
+<span id="L637">637                   htransitionBonus_nonneg calibration.1</span>
+<span id="L638">638       | succ n =&gt;</span>
+<span id="L639">639           exact</span>
+<span id="L640">640             MarkovPolicy.empiricalOptimisticPlanCoordinateConfidence_of_not_mem</span>
+<span id="L641">641               (behaviorSource.successorPolicy n</span>
+<span id="L642">642                 (Preorder.frestrictLe n trajectory))</span>
+<span id="L643">643                 initialState (trajectory (n + 1)) hbatch defaultState rewardBound</span>
+<span id="L644">644                   transitionBonus hrewardBound htransitionBonus_nonneg</span>
+<span id="L645">645                     (calibration.2 n hvalue (Preorder.frestrictLe n trajectory))</span>
+<span id="L646">646 </span>
+<span id="L647">647 omit [Nonempty State] in</span>
+<span id="L648">648 /--</span>
+<span id="L649">649 Outside the one adaptive event, every batch plan is optimistic and the finite</span>
+<span id="L650">650 sum of recommended optimistic-policy expected regrets is radius-controlled.</span>
+<span id="L651">651 -/</span>
+<span id="L652">652 theorem exploratorySource_optimism_and_recommendedExpectedRegret_of_not_mem</span>
+<span id="L653">653     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L654">654     [IsProbabilityMeasure initialState] {episodes rounds : Nat}</span>
+<span id="L655">655     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L656">656     (defaultState : State) (rewardBound transitionBonus delta : Real)</span>
+<span id="L657">657     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L658">658     (hrewardBound : forall state action,</span>
+<span id="L659">659       |mdp.reward state action| &lt;= rewardBound)</span>
+<span id="L660">660     (htransitionBonus_nonneg : 0 &lt;= transitionBonus)</span>
+<span id="L661">661     (calibration :</span>
+<span id="L662">662       let behaviorSource := exploratorySource mdp initialState episodes initialTable</span>
+<span id="L663">663         defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L664">664       SourceCalibration behaviorSource rounds delta rewardBound transitionBonus)</span>
+<span id="L665">665     (trajectory : EpisodeBatchTrajectory mdp episodes)</span>
+<span id="L666">666     (htrajectory : trajectory ∉</span>
+<span id="L667">667       (exploratorySource mdp initialState episodes initialTable defaultState</span>
+<span id="L668">668         transitionBonus explorationRate hexplorationRate).adaptiveSimultaneousCountBadEvent</span>
+<span id="L669">669         rounds delta) :</span>
+<span id="L670">670     (forall round : Fin rounds, forall state,</span>
+<span id="L671">671       mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;=</span>
+<span id="L672">672         (adaptiveEmpiricalOptimisticPlanAt</span>
+<span id="L673">673           (mdp := mdp) (episodes := episodes)</span>
+<span id="L674">674           trajectory defaultState transitionBonus round).upperValueRemaining</span>
+<span id="L675">675             mdp.horizon le_rfl state) /\</span>
+<span id="L676">676     adaptiveEmpiricalOptimisticRecommendedExpectedRegret</span>
+<span id="L677">677         (mdp := mdp) (initialState := initialState) (episodes := episodes)</span>
+<span id="L678">678         trajectory defaultState transitionBonus rounds &lt;=</span>
+<span id="L679">679       adaptiveEmpiricalOptimisticOccupancyRadiusSum</span>
+<span id="L680">680         (mdp := mdp) (initialState := initialState) (episodes := episodes)</span>
+<span id="L681">681         trajectory defaultState transitionBonus rounds := by</span>
+<span id="L682">682   have hconfidence : forall round : Fin rounds,</span>
+<span id="L683">683       (adaptiveEmpiricalOptimisticPlanAt</span>
+<span id="L684">684         (mdp := mdp) (episodes := episodes)</span>
+<span id="L685">685         trajectory defaultState transitionBonus round).CoordinateConfidence :=</span>
+<span id="L686">686     fun round =&gt; exploratorySource_coordinateConfidenceAt_of_not_mem</span>
+<span id="L687">687       (mdp := mdp) (initialState := initialState) (episodes := episodes)</span>
+<span id="L688">688       (rounds := rounds)</span>
+<span id="L689">689       initialTable defaultState rewardBound transitionBonus delta</span>
+<span id="L690">690         explorationRate hexplorationRate hrewardBound htransitionBonus_nonneg calibration</span>
+<span id="L691">691           trajectory htrajectory round</span>
+<span id="L692">692   constructor</span>
+<span id="L693">693   · intro round state</span>
+<span id="L694">694     exact</span>
+<span id="L695">695       ((hconfidence round).optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining</span>
+<span id="L696">696         initialState).1 state</span>
+<span id="L697">697   · unfold adaptiveEmpiricalOptimisticRecommendedExpectedRegret</span>
+<span id="L698">698       adaptiveEmpiricalOptimisticOccupancyRadiusSum</span>
+<span id="L699">699     apply Finset.sum_le_sum</span>
+<span id="L700">700     intro round _hround</span>
+<span id="L701">701     exact</span>
+<span id="L702">702       ((hconfidence round).optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining</span>
+<span id="L703">703         initialState).2</span>
+<span id="L704">704 </span>
+<span id="L705">705 omit [Nonempty State] in</span>
+<span id="L706">706 /--</span>
+<span id="L707">707 Route endpoint: calibrated all-coordinate confidence, global optimism, and a</span>
+<span id="L708">708 finite recommended-policy expected-regret sum under one global delta event.</span>
+<span id="L709">709 -/</span>
+<span id="L710">710 theorem exploratorySource_trajectoryMeasure_allCoordinateConfidence_optimism_and_recommendedExpectedRegret</span>
+<span id="L711">711     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L712">712     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L713">713     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L714">714     (defaultState : State) (rewardBound transitionBonus : Real)</span>
+<span id="L715">715     (explorationRate : NNReal) (hexplorationRate : explorationRate &lt;= 1)</span>
+<span id="L716">716     (hrewardBound : forall state action,</span>
+<span id="L717">717       |mdp.reward state action| &lt;= rewardBound)</span>
+<span id="L718">718     (htransitionBonus_nonneg : 0 &lt;= transitionBonus)</span>
+<span id="L719">719     (rounds : Nat) (hrounds : 0 &lt; rounds)</span>
+<span id="L720">720     (hepisodes : 0 &lt; episodes) (delta : Real) (hdelta : 0 &lt; delta)</span>
+<span id="L721">721     (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L722">722     (calibration :</span>
+<span id="L723">723       let behaviorSource := exploratorySource mdp initialState episodes initialTable</span>
+<span id="L724">724         defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L725">725       SourceCalibration behaviorSource rounds delta rewardBound transitionBonus) :</span>
+<span id="L726">726     let behaviorSource := exploratorySource mdp initialState episodes initialTable</span>
+<span id="L727">727       defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L728">728     let bad := behaviorSource.adaptiveSimultaneousCountBadEvent rounds delta</span>
+<span id="L729">729     MeasurableSet bad /\</span>
+<span id="L730">730       behaviorSource.trajectoryMeasure bad &lt;= ENNReal.ofReal delta /\</span>
+<span id="L731">731       forall trajectory, trajectory ∉ bad -&gt;</span>
+<span id="L732">732         (forall round : Fin rounds, forall state,</span>
+<span id="L733">733           mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;=</span>
+<span id="L734">734             (adaptiveEmpiricalOptimisticPlanAt</span>
+<span id="L735">735               (mdp := mdp) (episodes := episodes)</span>
+<span id="L736">736               trajectory defaultState transitionBonus round).upperValueRemaining</span>
+<span id="L737">737                 mdp.horizon le_rfl state) /\</span>
+<span id="L738">738         adaptiveEmpiricalOptimisticRecommendedExpectedRegret</span>
+<span id="L739">739             (mdp := mdp) (initialState := initialState) (episodes := episodes)</span>
+<span id="L740">740             trajectory defaultState transitionBonus rounds &lt;=</span>
+<span id="L741">741           adaptiveEmpiricalOptimisticOccupancyRadiusSum</span>
+<span id="L742">742             (mdp := mdp) (initialState := initialState) (episodes := episodes)</span>
+<span id="L743">743             trajectory defaultState transitionBonus rounds := by</span>
+<span id="L744">744   dsimp only</span>
+<span id="L745">745   obtain ⟨hmeasurable, htail, _hcounts⟩ :=</span>
+<span id="L746">746     exploratorySource_trajectoryMeasure_adaptiveSimultaneousCountConfidence</span>
+<span id="L747">747       (mdp := mdp) (initialState := initialState) (episodes := episodes)</span>
+<span id="L748">748       initialTable defaultState transitionBonus explorationRate hexplorationRate</span>
+<span id="L749">749         rounds hrounds hepisodes delta hdelta hdelta_le_one</span>
+<span id="L750">750   exact ⟨hmeasurable, htail, fun trajectory htrajectory =&gt;</span>
+<span id="L751">751     exploratorySource_optimism_and_recommendedExpectedRegret_of_not_mem</span>
+<span id="L752">752       (mdp := mdp) (initialState := initialState) (episodes := episodes)</span>
+<span id="L753">753       (rounds := rounds)</span>
+<span id="L754">754       initialTable defaultState rewardBound transitionBonus delta</span>
+<span id="L755">755         explorationRate hexplorationRate hrewardBound htransitionBonus_nonneg calibration</span>
+<span id="L756">756           trajectory htrajectory⟩</span>
+<span id="L757">757 </span>
+<span id="L758">758 end AdaptiveEmpiricalOptimisticSource</span>
+<span id="L759">759 end FiniteHorizonRL</span>
+<span id="L760">760 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

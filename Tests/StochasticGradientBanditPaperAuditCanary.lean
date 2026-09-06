@@ -1,0 +1,95 @@
+import BanditRLProof.Algorithms.StochasticGradientBanditExponentialAudit
+
+open scoped BigOperators
+
+#check BanditRLProof.StochasticGradientBandit.softmaxDenominator
+#check BanditRLProof.StochasticGradientBandit.softmaxProbability
+#check BanditRLProof.StochasticGradientBandit.softmaxProbability_sum
+#check BanditRLProof.StochasticGradientBandit.softmaxProbability_le_one
+#check BanditRLProof.StochasticGradientBandit.sourceIncrement
+#check BanditRLProof.StochasticGradientBandit.sum_sourceIncrement
+#check BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gradientCoordinate
+#check BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gapCoordinate
+#check BanditRLProof.StochasticGradientBandit.instantaneousGap_ge_minGap_mul_failureMass
+#check BanditRLProof.StochasticGradientBandit.bestParameterIncrementSum_ge
+#check BanditRLProof.StochasticGradientBandit.sourceRegretDecomposition_le
+#check BanditRLProof.StochasticGradientBandit.historyParameter
+#check BanditRLProof.StochasticGradientBandit.historyParameter_succ
+#check BanditRLProof.StochasticGradientBandit.measurable_historyParameter
+#check BanditRLProof.StochasticGradientBandit.historySoftmaxDistributionSource
+#check BanditRLProof.StochasticGradientBandit.historyAlgorithm
+#check BanditRLProof.StochasticGradientBandit.trajectoryKernel
+#check BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_action_zero_given_environment
+#check BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_action
+#check BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_nextPair_given_environment_prefix
+#check BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentInitialPairKernel_sourceIncrement_eq_expectedSourceIncrement
+#check BanditRLProof.StochasticGradientBandit.integral_historyStepKernel_sourceIncrement_eq_expectedSourceIncrement
+#check BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_gapCoordinate
+#check BanditRLProof.StochasticGradientBandit.historyParameter_sum_eq_initial
+#check BanditRLProof.StochasticGradientBandit.historyParameter_zeroInitialization_sum
+#check BanditRLProof.StochasticGradientBandit.twoArmParameterAt
+#check BanditRLProof.StochasticGradientBandit.twoArmProbabilityAt
+#check BanditRLProof.StochasticGradientBandit.twoArmParameterAt_sum_eq_zero
+#check BanditRLProof.StochasticGradientBandit.twoArmParameterAt_one_eq_neg_zero
+#check BanditRLProof.StochasticGradientBandit.twoArmProbabilityAt_zero
+#check BanditRLProof.StochasticGradientBandit.softmaxProbability_one_eq_one_sub_zero
+#check BanditRLProof.StochasticGradientBandit.softmaxProbability_zero_div_one
+#check BanditRLProof.StochasticGradientBandit.softmaxProbability_zero_div_one_sub_zero_eq_exp_two_mul
+#check BanditRLProof.StochasticGradientBandit.exp_two_mul_zero_mul_one_sub_softmaxProbability_zero
+#check BanditRLProof.StochasticGradientBandit.exp_neg_two_mul_zero_mul_softmaxProbability_zero
+#check BanditRLProof.StochasticGradientBandit.twoArmProbabilityAt_exp_two_mul_failure_eq_success
+#check BanditRLProof.StochasticGradientBandit.twoArmProbabilityAt_zero_div_failure_eq_exp_two_mul
+#check BanditRLProof.StochasticGradientBandit.historyParameter_exp_two_mul_zero_eq_odds
+#check BanditRLProof.StochasticGradientBandit.sourceC
+#check BanditRLProof.StochasticGradientBandit.sourceC_terms_summable
+#check BanditRLProof.StochasticGradientBandit.sourceC_mono
+#check BanditRLProof.StochasticGradientBandit.sourceC_le_exp_two_mul
+#check BanditRLProof.StochasticGradientBandit.exp_mul_le_sourceEqEight
+#check BanditRLProof.StochasticGradientBandit.integral_exp_mul_le_sourceEqEight_of_ae_abs_le_one
+
+-- Source-time fence: time zero is the untouched source initialization, while
+-- time one has consumed exactly trace pair zero.
+example (eta : Real) (trace : Nat -> Fin 2 × Real) :
+    BanditRLProof.StochasticGradientBandit.twoArmParameterAt eta trace 0 0 = 0 :=
+  rfl
+
+example :
+    BanditRLProof.StochasticGradientBandit.twoArmParameterAt 1
+        (fun _ => ((0 : Fin 2), 1)) 1 0 = 1 / 2 := by
+  norm_num [BanditRLProof.StochasticGradientBandit.twoArmParameterAt,
+    BanditRLProof.StochasticGradientBandit.historyParameter,
+    BanditRLProof.StochasticGradientBandit.sourceIncrement,
+    BanditRLProof.StochasticGradientBandit.softmaxProbability,
+    BanditRLProof.StochasticGradientBandit.softmaxDenominator,
+    Fin.sum_univ_two]
+
+example :
+    BanditRLProof.StochasticGradientBandit.twoArmParameterAt 1
+        (fun _ => ((0 : Fin 2), 1)) 1 1 = -(1 / 2) := by
+  norm_num [BanditRLProof.StochasticGradientBandit.twoArmParameterAt,
+    BanditRLProof.StochasticGradientBandit.historyParameter,
+    BanditRLProof.StochasticGradientBandit.sourceIncrement,
+    BanditRLProof.StochasticGradientBandit.softmaxProbability,
+    BanditRLProof.StochasticGradientBandit.softmaxDenominator,
+    Fin.sum_univ_two]
+
+#print axioms BanditRLProof.StochasticGradientBandit.softmaxProbability_sum
+#print axioms BanditRLProof.StochasticGradientBandit.expectedSourceIncrement_eq_gapCoordinate
+#print axioms BanditRLProof.StochasticGradientBandit.bestParameterIncrementSum_ge
+#print axioms BanditRLProof.StochasticGradientBandit.sourceRegretDecomposition_le
+#print axioms BanditRLProof.StochasticGradientBandit.measurable_historyParameter
+#print axioms BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentInitialPairKernel_sourceIncrement_eq_expectedSourceIncrement
+#print axioms BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_action
+#print axioms BanditRLProof.StochasticGradientBandit.trajectoryMeasure_condDistrib_nextPair_given_environment_prefix
+#print axioms BanditRLProof.StochasticGradientBandit.integral_measurableEnvironmentHistoryStepKernel_sourceIncrement_eq_gapCoordinate
+#print axioms BanditRLProof.StochasticGradientBandit.historyParameter_sum_eq_initial
+#print axioms BanditRLProof.StochasticGradientBandit.twoArmParameterAt_sum_eq_zero
+#print axioms BanditRLProof.StochasticGradientBandit.twoArmProbabilityAt_zero
+#print axioms BanditRLProof.StochasticGradientBandit.softmaxProbability_zero_div_one
+#print axioms BanditRLProof.StochasticGradientBandit.twoArmProbabilityAt_zero_div_failure_eq_exp_two_mul
+#print axioms BanditRLProof.StochasticGradientBandit.twoArmProbabilityAt_exp_two_mul_failure_eq_success
+#print axioms BanditRLProof.StochasticGradientBandit.sourceC_terms_summable
+#print axioms BanditRLProof.StochasticGradientBandit.sourceC_mono
+#print axioms BanditRLProof.StochasticGradientBandit.sourceC_le_exp_two_mul
+#print axioms BanditRLProof.StochasticGradientBandit.exp_mul_le_sourceEqEight
+#print axioms BanditRLProof.StochasticGradientBandit.integral_exp_mul_le_sourceEqEight_of_ae_abs_le_one

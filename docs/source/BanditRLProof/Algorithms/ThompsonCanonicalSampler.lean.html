@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Algorithms/ThompsonCanonicalSampler.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Algorithms/ThompsonCanonicalSampler.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Algorithms/ThompsonCanonicalSampler.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Algorithms/ThompsonCanonicalSampler.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Algorithms.Thompson</span>
+<span id="L2">2 import Mathlib.Probability.Kernel.Composition.Lemmas</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Canonical one-step Thompson sampler</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module constructs the one-step joint law obtained by sampling an</span>
+<span id="L8">8 environment/history pair from a Bayesian prior-likelihood model and then</span>
+<span id="L9">9 sampling an action from the canonical posterior pushed through a measurable</span>
+<span id="L10">10 best-action selector.  The resulting probability-matching theorem has no</span>
+<span id="L11">11 separate pair-law or action-law premise.</span>
+<span id="L12">12 -/</span>
+<span id="L13">13 </span>
+<span id="L14">14 open MeasureTheory</span>
+<span id="L15">15 open scoped ProbabilityTheory</span>
+<span id="L16">16 </span>
+<span id="L17">17 universe u v w</span>
+<span id="L18">18 </span>
+<span id="L19">19 namespace BanditRLProof</span>
+<span id="L20">20 namespace Thompson</span>
+<span id="L21">21 </span>
+<span id="L22">22 /-- The Thompson action kernel induced by Mathlib&#x27;s canonical posterior. -/</span>
+<span id="L23">23 noncomputable def canonicalActionKernel</span>
+<span id="L24">24     {History : Type u} {Env : Type v} {Action : Type w}</span>
+<span id="L25">25     [MeasurableSpace History]</span>
+<span id="L26">26     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L27">27     [MeasurableSpace Action]</span>
+<span id="L28">28     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L29">29     (likelihood : ProbabilityTheory.Kernel Env History)</span>
+<span id="L30">30     [ProbabilityTheory.IsMarkovKernel likelihood]</span>
+<span id="L31">31     (bestAction : Env -&gt; Action) (_hbestAction : Measurable bestAction) :</span>
+<span id="L32">32     ProbabilityTheory.Kernel History Action :=</span>
+<span id="L33">33   (PosteriorKernel.canonicalPosterior prior likelihood).kernel.map bestAction</span>
+<span id="L34">34 </span>
+<span id="L35">35 instance instCanonicalActionKernelIsMarkovKernel</span>
+<span id="L36">36     {History : Type u} {Env : Type v} {Action : Type w}</span>
+<span id="L37">37     [MeasurableSpace History]</span>
+<span id="L38">38     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L39">39     [MeasurableSpace Action]</span>
+<span id="L40">40     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L41">41     (likelihood : ProbabilityTheory.Kernel Env History)</span>
+<span id="L42">42     [ProbabilityTheory.IsMarkovKernel likelihood]</span>
+<span id="L43">43     (bestAction : Env -&gt; Action) (hbestAction : Measurable bestAction) :</span>
+<span id="L44">44     ProbabilityTheory.IsMarkovKernel</span>
+<span id="L45">45       (canonicalActionKernel prior likelihood bestAction hbestAction) := by</span>
+<span id="L46">46   unfold canonicalActionKernel</span>
+<span id="L47">47   exact ProbabilityTheory.Kernel.IsMarkovKernel.map _ hbestAction</span>
+<span id="L48">48 </span>
+<span id="L49">49 /-- Lift the history-indexed action kernel to environment/history pairs. -/</span>
+<span id="L50">50 noncomputable def canonicalActionKernelOnPair</span>
+<span id="L51">51     {History : Type u} {Env : Type v} {Action : Type w}</span>
+<span id="L52">52     [MeasurableSpace History]</span>
+<span id="L53">53     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L54">54     [MeasurableSpace Action]</span>
+<span id="L55">55     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L56">56     (likelihood : ProbabilityTheory.Kernel Env History)</span>
+<span id="L57">57     [ProbabilityTheory.IsMarkovKernel likelihood]</span>
+<span id="L58">58     (bestAction : Env -&gt; Action) (hbestAction : Measurable bestAction) :</span>
+<span id="L59">59     ProbabilityTheory.Kernel (Env × History) Action :=</span>
+<span id="L60">60   (canonicalActionKernel prior likelihood bestAction hbestAction).comap</span>
+<span id="L61">61     Prod.snd measurable_snd</span>
+<span id="L62">62 </span>
+<span id="L63">63 instance instCanonicalActionKernelOnPairIsMarkovKernel</span>
+<span id="L64">64     {History : Type u} {Env : Type v} {Action : Type w}</span>
+<span id="L65">65     [MeasurableSpace History]</span>
+<span id="L66">66     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L67">67     [MeasurableSpace Action]</span>
+<span id="L68">68     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L69">69     (likelihood : ProbabilityTheory.Kernel Env History)</span>
+<span id="L70">70     [ProbabilityTheory.IsMarkovKernel likelihood]</span>
+<span id="L71">71     (bestAction : Env -&gt; Action) (hbestAction : Measurable bestAction) :</span>
+<span id="L72">72     ProbabilityTheory.IsMarkovKernel</span>
+<span id="L73">73       (canonicalActionKernelOnPair prior likelihood bestAction hbestAction) := by</span>
+<span id="L74">74   unfold canonicalActionKernelOnPair</span>
+<span id="L75">75   infer_instance</span>
+<span id="L76">76 </span>
+<span id="L77">77 /--</span>
+<span id="L78">78 The canonical one-step Thompson law on `(Env × History) × Action`.</span>
+<span id="L79">79 </span>
+<span id="L80">80 The first component is sampled from `prior ⊗ₘ likelihood`; the action is then</span>
+<span id="L81">81 sampled from the canonical posterior mapped by `bestAction` at that history.</span>
+<span id="L82">82 -/</span>
+<span id="L83">83 noncomputable def canonicalSamplerMeasure</span>
+<span id="L84">84     {History : Type u} {Env : Type v} {Action : Type w}</span>
+<span id="L85">85     [MeasurableSpace History]</span>
+<span id="L86">86     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L87">87     [MeasurableSpace Action]</span>
+<span id="L88">88     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L89">89     (likelihood : ProbabilityTheory.Kernel Env History)</span>
+<span id="L90">90     [ProbabilityTheory.IsMarkovKernel likelihood]</span>
+<span id="L91">91     (bestAction : Env -&gt; Action) (hbestAction : Measurable bestAction) :</span>
+<span id="L92">92     Measure ((Env × History) × Action) :=</span>
+<span id="L93">93   PosteriorKernel.canonicalJointMeasure prior likelihood ⊗ₘ</span>
+<span id="L94">94     canonicalActionKernelOnPair prior likelihood bestAction hbestAction</span>
+<span id="L95">95 </span>
+<span id="L96">96 instance instCanonicalSamplerMeasureIsProbabilityMeasure</span>
+<span id="L97">97     {History : Type u} {Env : Type v} {Action : Type w}</span>
+<span id="L98">98     [MeasurableSpace History]</span>
+<span id="L99">99     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L100">100     [MeasurableSpace Action]</span>
+<span id="L101">101     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L102">102     (likelihood : ProbabilityTheory.Kernel Env History)</span>
+<span id="L103">103     [ProbabilityTheory.IsMarkovKernel likelihood]</span>
+<span id="L104">104     (bestAction : Env -&gt; Action) (hbestAction : Measurable bestAction) :</span>
+<span id="L105">105     IsProbabilityMeasure</span>
+<span id="L106">106       (canonicalSamplerMeasure prior likelihood bestAction hbestAction) := by</span>
+<span id="L107">107   unfold canonicalSamplerMeasure</span>
+<span id="L108">108   infer_instance</span>
+<span id="L109">109 </span>
+<span id="L110">110 /-- Environment coordinate of the canonical sampler source. -/</span>
+<span id="L111">111 def canonicalSamplerEnv {Env History Action : Type*} :</span>
+<span id="L112">112     (Env × History) × Action -&gt; Env :=</span>
+<span id="L113">113   fun sample =&gt; sample.1.1</span>
+<span id="L114">114 </span>
+<span id="L115">115 /-- History coordinate of the canonical sampler source. -/</span>
+<span id="L116">116 def canonicalSamplerHistory {Env History Action : Type*} :</span>
+<span id="L117">117     (Env × History) × Action -&gt; History :=</span>
+<span id="L118">118   fun sample =&gt; sample.1.2</span>
+<span id="L119">119 </span>
+<span id="L120">120 /-- Action coordinate of the canonical sampler source. -/</span>
+<span id="L121">121 def canonicalSamplerAction {Env History Action : Type*} :</span>
+<span id="L122">122     (Env × History) × Action -&gt; Action :=</span>
+<span id="L123">123   fun sample =&gt; sample.2</span>
+<span id="L124">124 </span>
+<span id="L125">125 theorem canonicalSamplerEnv_measurable</span>
+<span id="L126">126     {Env History Action : Type*}</span>
+<span id="L127">127     [MeasurableSpace Env] [MeasurableSpace History] [MeasurableSpace Action] :</span>
+<span id="L128">128     Measurable (@canonicalSamplerEnv Env History Action) :=</span>
+<span id="L129">129   measurable_fst.comp measurable_fst</span>
+<span id="L130">130 </span>
+<span id="L131">131 theorem canonicalSamplerHistory_measurable</span>
+<span id="L132">132     {Env History Action : Type*}</span>
+<span id="L133">133     [MeasurableSpace Env] [MeasurableSpace History] [MeasurableSpace Action] :</span>
+<span id="L134">134     Measurable (@canonicalSamplerHistory Env History Action) :=</span>
+<span id="L135">135   measurable_snd.comp measurable_fst</span>
+<span id="L136">136 </span>
+<span id="L137">137 theorem canonicalSamplerAction_measurable</span>
+<span id="L138">138     {Env History Action : Type*}</span>
+<span id="L139">139     [MeasurableSpace Env] [MeasurableSpace History] [MeasurableSpace Action] :</span>
+<span id="L140">140     Measurable (@canonicalSamplerAction Env History Action) :=</span>
+<span id="L141">141   measurable_snd</span>
+<span id="L142">142 </span>
+<span id="L143">143 /--</span>
+<span id="L144">144 Projecting a composition product whose kernel depends only on the second base</span>
+<span id="L145">145 coordinate gives the second-coordinate marginal composed with that kernel.</span>
+<span id="L146">146 -/</span>
+<span id="L147">147 theorem map_compProd_comap_snd</span>
+<span id="L148">148     {Env History Action : Type*}</span>
+<span id="L149">149     [MeasurableSpace Env] [MeasurableSpace History] [MeasurableSpace Action]</span>
+<span id="L150">150     (mu : Measure (Env × History)) [IsFiniteMeasure mu]</span>
+<span id="L151">151     (actionKernel : ProbabilityTheory.Kernel History Action)</span>
+<span id="L152">152     [ProbabilityTheory.IsMarkovKernel actionKernel] :</span>
+<span id="L153">153     (mu ⊗ₘ actionKernel.comap Prod.snd measurable_snd).map</span>
+<span id="L154">154         (fun sample =&gt; (sample.1.2, sample.2)) =</span>
+<span id="L155">155       mu.map Prod.snd ⊗ₘ actionKernel := by</span>
+<span id="L156">156   apply Measure.ext_prod</span>
+<span id="L157">157   intro historyEvent actionEvent hhistoryEvent hactionEvent</span>
+<span id="L158">158   have hmap : Measurable</span>
+<span id="L159">159       (fun sample : (Env × History) × Action =&gt; (sample.1.2, sample.2)) :=</span>
+<span id="L160">160     (measurable_snd.comp measurable_fst).prodMk measurable_snd</span>
+<span id="L161">161   rw [Measure.map_apply hmap (hhistoryEvent.prod hactionEvent)]</span>
+<span id="L162">162   have hpreimage :</span>
+<span id="L163">163       (fun sample : (Env × History) × Action =&gt; (sample.1.2, sample.2)) ⁻¹&#x27;</span>
+<span id="L164">164           (historyEvent ×ˢ actionEvent) =</span>
+<span id="L165">165         (Set.univ ×ˢ historyEvent) ×ˢ actionEvent := by</span>
+<span id="L166">166     ext sample</span>
+<span id="L167">167     simp</span>
+<span id="L168">168   rw [hpreimage,</span>
+<span id="L169">169     Measure.compProd_apply_prod (MeasurableSet.univ.prod hhistoryEvent) hactionEvent,</span>
+<span id="L170">170     Measure.compProd_apply_prod hhistoryEvent hactionEvent]</span>
+<span id="L171">171   simp_rw [ProbabilityTheory.Kernel.comap_apply]</span>
+<span id="L172">172   rw [MeasureTheory.setLIntegral_map hhistoryEvent</span>
+<span id="L173">173     (actionKernel.measurable_coe hactionEvent) measurable_snd]</span>
+<span id="L174">174   have hsndPreimage :</span>
+<span id="L175">175       Prod.snd ⁻¹&#x27; historyEvent = (Set.univ ×ˢ historyEvent : Set (Env × History)) := by</span>
+<span id="L176">176     ext sample</span>
+<span id="L177">177     simp</span>
+<span id="L178">178   rw [hsndPreimage]</span>
+<span id="L179">179 </span>
+<span id="L180">180 /-- The canonical sampler preserves the prescribed environment/history law. -/</span>
+<span id="L181">181 theorem canonicalSampler_env_history_map_eq</span>
+<span id="L182">182     {History : Type u} {Env : Type v} {Action : Type w}</span>
+<span id="L183">183     [MeasurableSpace History]</span>
+<span id="L184">184     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L185">185     [MeasurableSpace Action]</span>
+<span id="L186">186     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L187">187     (likelihood : ProbabilityTheory.Kernel Env History)</span>
+<span id="L188">188     [ProbabilityTheory.IsMarkovKernel likelihood]</span>
+<span id="L189">189     (bestAction : Env -&gt; Action) (hbestAction : Measurable bestAction) :</span>
+<span id="L190">190     (canonicalSamplerMeasure prior likelihood bestAction hbestAction).map</span>
+<span id="L191">191         (fun sample =&gt;</span>
+<span id="L192">192           (canonicalSamplerEnv sample, canonicalSamplerHistory sample)) =</span>
+<span id="L193">193       PosteriorKernel.canonicalJointMeasure prior likelihood := by</span>
+<span id="L194">194   change</span>
+<span id="L195">195     (canonicalSamplerMeasure prior likelihood bestAction hbestAction).fst =</span>
+<span id="L196">196       PosteriorKernel.canonicalJointMeasure prior likelihood</span>
+<span id="L197">197   rw [canonicalSamplerMeasure, Measure.fst_compProd]</span>
+<span id="L198">198 </span>
+<span id="L199">199 /-- The history/action marginal is generated by the canonical action kernel. -/</span>
+<span id="L200">200 theorem canonicalSampler_history_action_map_eq</span>
+<span id="L201">201     {History : Type u} {Env : Type v} {Action : Type w}</span>
+<span id="L202">202     [MeasurableSpace History]</span>
+<span id="L203">203     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L204">204     [MeasurableSpace Action]</span>
+<span id="L205">205     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L206">206     (likelihood : ProbabilityTheory.Kernel Env History)</span>
+<span id="L207">207     [ProbabilityTheory.IsMarkovKernel likelihood]</span>
+<span id="L208">208     (bestAction : Env -&gt; Action) (hbestAction : Measurable bestAction) :</span>
+<span id="L209">209     (canonicalSamplerMeasure prior likelihood bestAction hbestAction).map</span>
+<span id="L210">210         (fun sample =&gt;</span>
+<span id="L211">211           (canonicalSamplerHistory sample, canonicalSamplerAction sample)) =</span>
+<span id="L212">212       (canonicalSamplerMeasure prior likelihood bestAction hbestAction).map</span>
+<span id="L213">213           canonicalSamplerHistory ⊗ₘ</span>
+<span id="L214">214         canonicalActionKernel prior likelihood bestAction hbestAction := by</span>
+<span id="L215">215   have hhistoryLaw :</span>
+<span id="L216">216       (canonicalSamplerMeasure prior likelihood bestAction hbestAction).map</span>
+<span id="L217">217           canonicalSamplerHistory =</span>
+<span id="L218">218         (PosteriorKernel.canonicalJointMeasure prior likelihood).map Prod.snd := by</span>
+<span id="L219">219     calc</span>
+<span id="L220">220       (canonicalSamplerMeasure prior likelihood bestAction hbestAction).map</span>
+<span id="L221">221           canonicalSamplerHistory =</span>
+<span id="L222">222           ((canonicalSamplerMeasure prior likelihood bestAction hbestAction).map</span>
+<span id="L223">223             Prod.fst).map Prod.snd := by</span>
+<span id="L224">224               rw [Measure.map_map measurable_snd measurable_fst]</span>
+<span id="L225">225               rfl</span>
+<span id="L226">226       _ = (PosteriorKernel.canonicalJointMeasure prior likelihood).map Prod.snd := by</span>
+<span id="L227">227         rw [show</span>
+<span id="L228">228           (canonicalSamplerMeasure prior likelihood bestAction hbestAction).map</span>
+<span id="L229">229               Prod.fst =</span>
+<span id="L230">230             PosteriorKernel.canonicalJointMeasure prior likelihood by</span>
+<span id="L231">231           simpa only [canonicalSamplerEnv, canonicalSamplerHistory] using</span>
+<span id="L232">232             canonicalSampler_env_history_map_eq</span>
+<span id="L233">233               prior likelihood bestAction hbestAction]</span>
+<span id="L234">234   have htransport := map_compProd_comap_snd</span>
+<span id="L235">235     (PosteriorKernel.canonicalJointMeasure prior likelihood)</span>
+<span id="L236">236     (canonicalActionKernel prior likelihood bestAction hbestAction)</span>
+<span id="L237">237   rw [hhistoryLaw]</span>
+<span id="L238">238   simpa only [canonicalSamplerMeasure, canonicalActionKernelOnPair,</span>
+<span id="L239">239     canonicalSamplerHistory, canonicalSamplerAction] using htransport</span>
+<span id="L240">240 </span>
+<span id="L241">241 /-- The constructed sampler has the intended next-action conditional law. -/</span>
+<span id="L242">242 theorem canonicalSampler_condDistrib_action_ae_eq_actionKernel</span>
+<span id="L243">243     {History : Type u} {Env : Type v} {Action : Type w}</span>
+<span id="L244">244     [MeasurableSpace History]</span>
+<span id="L245">245     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L246">246     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L247">247     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L248">248     (likelihood : ProbabilityTheory.Kernel Env History)</span>
+<span id="L249">249     [ProbabilityTheory.IsMarkovKernel likelihood]</span>
+<span id="L250">250     (bestAction : Env -&gt; Action) (hbestAction : Measurable bestAction) :</span>
+<span id="L251">251     ProbabilityTheory.condDistrib canonicalSamplerAction canonicalSamplerHistory</span>
+<span id="L252">252         (canonicalSamplerMeasure prior likelihood bestAction hbestAction) =ᵐ[</span>
+<span id="L253">253       (canonicalSamplerMeasure prior likelihood bestAction hbestAction).map</span>
+<span id="L254">254         canonicalSamplerHistory]</span>
+<span id="L255">255       canonicalActionKernel prior likelihood bestAction hbestAction := by</span>
+<span id="L256">256   exact (ProbabilityTheory.condDistrib_ae_eq_iff_measure_eq_compProd</span>
+<span id="L257">257     (μ := canonicalSamplerMeasure prior likelihood bestAction hbestAction)</span>
+<span id="L258">258     canonicalSamplerHistory canonicalSamplerAction_measurable.aemeasurable</span>
+<span id="L259">259     (canonicalActionKernel prior likelihood bestAction hbestAction)).2</span>
+<span id="L260">260       (canonicalSampler_history_action_map_eq</span>
+<span id="L261">261         prior likelihood bestAction hbestAction)</span>
+<span id="L262">262 </span>
+<span id="L263">263 /--</span>
+<span id="L264">264 Premise-free one-step Thompson probability matching for the canonical sampler.</span>
+<span id="L265">265 </span>
+<span id="L266">266 Both law premises of the generic theorem are discharged by the constructed</span>
+<span id="L267">267 composition-product measure: its environment/history marginal is the canonical</span>
+<span id="L268">268 Bayesian joint law, and its history/action marginal is generated by the mapped</span>
+<span id="L269">269 canonical posterior.</span>
+<span id="L270">270 -/</span>
+<span id="L271">271 theorem canonicalSampler_condDistrib_action_ae_eq_bestAction</span>
+<span id="L272">272     {History : Type u} {Env : Type v} {Action : Type w}</span>
+<span id="L273">273     [MeasurableSpace History]</span>
+<span id="L274">274     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L275">275     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L276">276     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L277">277     (likelihood : ProbabilityTheory.Kernel Env History)</span>
+<span id="L278">278     [ProbabilityTheory.IsMarkovKernel likelihood]</span>
+<span id="L279">279     (bestAction : Env -&gt; Action) (hbestAction : Measurable bestAction) :</span>
+<span id="L280">280     ProbabilityTheory.condDistrib canonicalSamplerAction canonicalSamplerHistory</span>
+<span id="L281">281         (canonicalSamplerMeasure prior likelihood bestAction hbestAction) =ᵐ[</span>
+<span id="L282">282       (canonicalSamplerMeasure prior likelihood bestAction hbestAction).map</span>
+<span id="L283">283         canonicalSamplerHistory]</span>
+<span id="L284">284       ProbabilityTheory.condDistrib (bestAction ∘ canonicalSamplerEnv)</span>
+<span id="L285">285         canonicalSamplerHistory</span>
+<span id="L286">286         (canonicalSamplerMeasure prior likelihood bestAction hbestAction) := by</span>
+<span id="L287">287   exact condDistrib_action_ae_eq_bestAction_of_bayesianPairMap</span>
+<span id="L288">288     (canonicalSamplerMeasure prior likelihood bestAction hbestAction)</span>
+<span id="L289">289     canonicalSamplerEnv canonicalSamplerHistory canonicalSamplerAction</span>
+<span id="L290">290     prior likelihood bestAction hbestAction</span>
+<span id="L291">291     canonicalSamplerEnv_measurable canonicalSamplerHistory_measurable</span>
+<span id="L292">292     canonicalSamplerAction_measurable</span>
+<span id="L293">293     (canonicalSampler_env_history_map_eq prior likelihood bestAction hbestAction)</span>
+<span id="L294">294     (canonicalSampler_condDistrib_action_ae_eq_actionKernel</span>
+<span id="L295">295       prior likelihood bestAction hbestAction)</span>
+<span id="L296">296 </span>
+<span id="L297">297 end Thompson</span>
+<span id="L298">298 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

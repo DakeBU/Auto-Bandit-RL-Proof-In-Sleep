@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonIIDMultiBatchCumulativeConfidenceRegret.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonIIDMultiBatchCumulativeConfidenceRegret.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonIIDMultiBatchCumulativeConfidenceRegret.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonIIDMultiBatchCumulativeConfidenceRegret.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonIIDAllCoordinateFiniteBatchConfidence</span>
+<span id="L2">2 import BanditRLProof.ProbabilityUnionBound</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Finite iid multibatch confidence and cumulative expected regret</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module takes a finite Mathlib product of the compiled fixed-policy iid</span>
+<span id="L8">8 episode-batch law. Each product coordinate receives an equal confidence share.</span>
+<span id="L9">9 Outside the finite union of pulled-back count events, every batch-specific</span>
+<span id="L10">10 empirical model has a confidence witness, and the resulting one-episode</span>
+<span id="L11">11 expected-regret bounds sum over the finite product index.</span>
+<span id="L12">12 </span>
+<span id="L13">13 The data-generating policy is fixed across product coordinates. The optimistic</span>
+<span id="L14">14 policy may depend on its batch, but this is not an adaptive online trajectory</span>
+<span id="L15">15 law and the cumulative quantity is a sum of expected regrets, not realized</span>
+<span id="L16">16 cumulative regret.</span>
+<span id="L17">17 -/</span>
+<span id="L18">18 </span>
+<span id="L19">19 open MeasureTheory</span>
+<span id="L20">20 open scoped ENNReal ProbabilityTheory</span>
+<span id="L21">21 </span>
+<span id="L22">22 universe u v</span>
+<span id="L23">23 </span>
+<span id="L24">24 namespace BanditRLProof</span>
+<span id="L25">25 namespace FiniteHorizonRL</span>
+<span id="L26">26 </span>
+<span id="L27">27 variable {State : Type u} {Action : Type v}</span>
+<span id="L28">28     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L29">29     [Fintype State] [Fintype Action]</span>
+<span id="L30">30     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L31">31     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L32">32     [Nonempty Action]</span>
+<span id="L33">33 </span>
+<span id="L34">34 /-- Equal confidence share assigned to every product-batch coordinate. -/</span>
+<span id="L35">35 noncomputable def multiBatchLocalDelta (rounds : Nat) (delta : Real) : Real :=</span>
+<span id="L36">36   delta / (rounds : Real)</span>
+<span id="L37">37 </span>
+<span id="L38">38 namespace MarkovPolicy</span>
+<span id="L39">39 </span>
+<span id="L40">40 /-- Finite product of one fixed-policy iid episode-batch law. -/</span>
+<span id="L41">41 noncomputable def iidEpisodeBatchFamilyMeasure</span>
+<span id="L42">42     {mdp : MDP State Action} (policy : MarkovPolicy mdp)</span>
+<span id="L43">43     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L44">44     (rounds episodes : Nat) :</span>
+<span id="L45">45     Measure (Fin rounds -&gt; EpisodeBatch mdp episodes) :=</span>
+<span id="L46">46   Measure.pi fun _round : Fin rounds =&gt;</span>
+<span id="L47">47     policy.iidEpisodeBatchMeasure initialState episodes</span>
+<span id="L48">48 </span>
+<span id="L49">49 omit [DecidableEq State] [DecidableEq Action] [Nonempty Action] in</span>
+<span id="L50">50 /-- Every product coordinate has the compiled single-batch marginal law. -/</span>
+<span id="L51">51 theorem iidEpisodeBatchFamilyMeasure_map_eval</span>
+<span id="L52">52     {mdp : MDP State Action} (policy : MarkovPolicy mdp)</span>
+<span id="L53">53     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L54">54     (rounds episodes : Nat) (round : Fin rounds) :</span>
+<span id="L55">55     (policy.iidEpisodeBatchFamilyMeasure initialState rounds episodes).map</span>
+<span id="L56">56         (Function.eval round) =</span>
+<span id="L57">57       policy.iidEpisodeBatchMeasure initialState episodes := by</span>
+<span id="L58">58   exact</span>
+<span id="L59">59     (MeasureTheory.measurePreserving_eval</span>
+<span id="L60">60       (fun _round : Fin rounds =&gt;</span>
+<span id="L61">61         policy.iidEpisodeBatchMeasure initialState episodes) round).map_eq</span>
+<span id="L62">62 </span>
+<span id="L63">63 /-- Pullback of one local simultaneous-count event to a product coordinate. -/</span>
+<span id="L64">64 def multiBatchRoundBadEvent</span>
+<span id="L65">65     {mdp : MDP State Action} (policy : MarkovPolicy mdp)</span>
+<span id="L66">66     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L67">67     (rounds episodes : Nat) (delta : Real)</span>
+<span id="L68">68     (round : Fin rounds) :</span>
+<span id="L69">69     Set (Fin rounds -&gt; EpisodeBatch mdp episodes) :=</span>
+<span id="L70">70   (Function.eval round) ⁻¹&#x27;</span>
+<span id="L71">71     policy.simultaneousCountBadEvent initialState episodes</span>
+<span id="L72">72       (multiBatchLocalDelta rounds delta)</span>
+<span id="L73">73 </span>
+<span id="L74">74 /-- Union of the local simultaneous-count events over all product batches. -/</span>
+<span id="L75">75 def multiBatchSimultaneousCountBadEvent</span>
+<span id="L76">76     {mdp : MDP State Action} (policy : MarkovPolicy mdp)</span>
+<span id="L77">77     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L78">78     (rounds episodes : Nat) (delta : Real) :</span>
+<span id="L79">79     Set (Fin rounds -&gt; EpisodeBatch mdp episodes) :=</span>
+<span id="L80">80   ⋃ round, policy.multiBatchRoundBadEvent</span>
+<span id="L81">81     initialState rounds episodes delta round</span>
+<span id="L82">82 </span>
+<span id="L83">83 omit [Nonempty Action] in</span>
+<span id="L84">84 /-- The pulled-back finite union is measurable. -/</span>
+<span id="L85">85 theorem measurableSet_multiBatchSimultaneousCountBadEvent</span>
+<span id="L86">86     {mdp : MDP State Action} (policy : MarkovPolicy mdp)</span>
+<span id="L87">87     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L88">88     (rounds episodes : Nat) (delta : Real) :</span>
+<span id="L89">89     MeasurableSet</span>
+<span id="L90">90       (policy.multiBatchSimultaneousCountBadEvent</span>
+<span id="L91">91         initialState rounds episodes delta) := by</span>
+<span id="L92">92   unfold multiBatchSimultaneousCountBadEvent multiBatchRoundBadEvent</span>
+<span id="L93">93   exact MeasurableSet.iUnion fun round =&gt;</span>
+<span id="L94">94     (policy.measurableSet_simultaneousCountBadEvent initialState episodes</span>
+<span id="L95">95       (multiBatchLocalDelta rounds delta)).preimage</span>
+<span id="L96">96         (measurable_pi_apply round)</span>
+<span id="L97">97 </span>
+<span id="L98">98 omit [Nonempty Action] in</span>
+<span id="L99">99 /-- Each pulled-back local event has its equal-share probability bound. -/</span>
+<span id="L100">100 theorem iidEpisodeBatchFamilyMeasure_roundBadEvent_le</span>
+<span id="L101">101     {mdp : MDP State Action} (policy : MarkovPolicy mdp)</span>
+<span id="L102">102     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L103">103     (rounds : Nat) (hrounds : 0 &lt; rounds)</span>
+<span id="L104">104     (episodes : Nat) (hepisodes : 0 &lt; episodes)</span>
+<span id="L105">105     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L106">106     (round : Fin rounds) :</span>
+<span id="L107">107     (policy.iidEpisodeBatchFamilyMeasure initialState rounds episodes)</span>
+<span id="L108">108         (policy.multiBatchRoundBadEvent</span>
+<span id="L109">109           initialState rounds episodes delta round) &lt;=</span>
+<span id="L110">110       ENNReal.ofReal (multiBatchLocalDelta rounds delta) := by</span>
+<span id="L111">111   have hroundsReal : 0 &lt; (rounds : Real) := Nat.cast_pos.mpr hrounds</span>
+<span id="L112">112   have hroundsOne : (1 : Real) &lt;= (rounds : Real) := by</span>
+<span id="L113">113     exact_mod_cast hrounds</span>
+<span id="L114">114   have hlocal_pos : 0 &lt; multiBatchLocalDelta rounds delta :=</span>
+<span id="L115">115     div_pos hdelta hroundsReal</span>
+<span id="L116">116   have hlocal_le_one : multiBatchLocalDelta rounds delta &lt;= 1 := by</span>
+<span id="L117">117     unfold multiBatchLocalDelta</span>
+<span id="L118">118     exact (div_le_one hroundsReal).2 (hdelta_le_one.trans hroundsOne)</span>
+<span id="L119">119   let evaluation := MeasureTheory.measurePreserving_eval</span>
+<span id="L120">120     (fun _round : Fin rounds =&gt;</span>
+<span id="L121">121       policy.iidEpisodeBatchMeasure initialState episodes) round</span>
+<span id="L122">122   rw [multiBatchRoundBadEvent]</span>
+<span id="L123">123   unfold iidEpisodeBatchFamilyMeasure</span>
+<span id="L124">124   rw [evaluation.measure_preimage</span>
+<span id="L125">125     (policy.measurableSet_simultaneousCountBadEvent</span>
+<span id="L126">126       initialState episodes (multiBatchLocalDelta rounds delta)).nullMeasurableSet]</span>
+<span id="L127">127   exact policy.iidEpisodeBatch_simultaneousCountBadEvent_le</span>
+<span id="L128">128     initialState episodes hepisodes (multiBatchLocalDelta rounds delta)</span>
+<span id="L129">129       hlocal_pos hlocal_le_one</span>
+<span id="L130">130 </span>
+<span id="L131">131 omit [Nonempty Action] in</span>
+<span id="L132">132 /-- Equal-share union over product coordinates retains the global delta. -/</span>
+<span id="L133">133 theorem iidEpisodeBatchFamilyMeasure_multiBatchSimultaneousCountBadEvent_le</span>
+<span id="L134">134     {mdp : MDP State Action} (policy : MarkovPolicy mdp)</span>
+<span id="L135">135     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L136">136     (rounds : Nat) (hrounds : 0 &lt; rounds)</span>
+<span id="L137">137     (episodes : Nat) (hepisodes : 0 &lt; episodes)</span>
+<span id="L138">138     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1) :</span>
+<span id="L139">139     (policy.iidEpisodeBatchFamilyMeasure initialState rounds episodes)</span>
+<span id="L140">140         (policy.multiBatchSimultaneousCountBadEvent</span>
+<span id="L141">141           initialState rounds episodes delta) &lt;=</span>
+<span id="L142">142       ENNReal.ofReal delta := by</span>
+<span id="L143">143   letI : Nonempty (Fin rounds) := ⟨⟨0, hrounds⟩⟩</span>
+<span id="L144">144   simpa [multiBatchSimultaneousCountBadEvent, multiBatchLocalDelta] using</span>
+<span id="L145">145     (ProbabilityUnionBound.measure_biUnion_finset_le_of_uniform</span>
+<span id="L146">146       (policy.iidEpisodeBatchFamilyMeasure initialState rounds episodes)</span>
+<span id="L147">147       (Finset.univ : Finset (Fin rounds)) Finset.univ_nonempty delta</span>
+<span id="L148">148       (fun round =&gt; policy.multiBatchRoundBadEvent</span>
+<span id="L149">149         initialState rounds episodes delta round)</span>
+<span id="L150">150       (fun round _hround =&gt; by</span>
+<span id="L151">151         simpa [multiBatchLocalDelta] using</span>
+<span id="L152">152           policy.iidEpisodeBatchFamilyMeasure_roundBadEvent_le</span>
+<span id="L153">153             initialState rounds hrounds episodes hepisodes delta hdelta</span>
+<span id="L154">154               hdelta_le_one round))</span>
+<span id="L155">155 </span>
+<span id="L156">156 omit [DecidableEq State] [DecidableEq Action] [Nonempty Action] in</span>
+<span id="L157">157 /-- Every product batch is reward-consistent almost everywhere. -/</span>
+<span id="L158">158 theorem iidEpisodeBatchFamilyMeasure_rewardConsistent_ae</span>
+<span id="L159">159     {mdp : MDP State Action} (policy : MarkovPolicy mdp)</span>
+<span id="L160">160     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L161">161     (rounds episodes : Nat) :</span>
+<span id="L162">162     ∀ᵐ batches ∂policy.iidEpisodeBatchFamilyMeasure</span>
+<span id="L163">163         initialState rounds episodes,</span>
+<span id="L164">164       ∀ round, (batches round).RewardConsistent := by</span>
+<span id="L165">165   rw [ae_all_iff]</span>
+<span id="L166">166   intro round</span>
+<span id="L167">167   have htarget := policy.iidEpisodeBatchMeasure_rewardConsistent_ae</span>
+<span id="L168">168     initialState episodes</span>
+<span id="L169">169   rw [← policy.iidEpisodeBatchFamilyMeasure_map_eval</span>
+<span id="L170">170     initialState rounds episodes round] at htarget</span>
+<span id="L171">171   exact ae_of_ae_map (measurable_pi_apply round).aemeasurable htarget</span>
+<span id="L172">172 </span>
+<span id="L173">173 /-- Batch-specific canonical empirical model at one product coordinate. -/</span>
+<span id="L174">174 noncomputable def multiBatchEmpiricalModelAt</span>
+<span id="L175">175     {mdp : MDP State Action} (_policy : MarkovPolicy mdp)</span>
+<span id="L176">176     {rounds episodes : Nat} (batches : Fin rounds -&gt; EpisodeBatch mdp episodes)</span>
+<span id="L177">177     (defaultState : State) (transitionBudget : Real) (round : Fin rounds) :</span>
+<span id="L178">178     MDP.FiniteBatchModel mdp episodes :=</span>
+<span id="L179">179   mdp.allCoordinateEmpiricalFiniteBatchModel episodes (batches round)</span>
+<span id="L180">180     defaultState transitionBudget</span>
+<span id="L181">181 </span>
+<span id="L182">182 /-- Sum of batch-specific optimistic-policy expected regrets. -/</span>
+<span id="L183">183 noncomputable def multiBatchCumulativeExpectedRegret</span>
+<span id="L184">184     {mdp : MDP State Action} (policy : MarkovPolicy mdp)</span>
+<span id="L185">185     (initialState : Measure State) {rounds episodes : Nat}</span>
+<span id="L186">186     (batches : Fin rounds -&gt; EpisodeBatch mdp episodes)</span>
+<span id="L187">187     (defaultState : State) (transitionBudget : Real) : Real :=</span>
+<span id="L188">188   ∑ round, (policy.multiBatchEmpiricalModelAt batches defaultState</span>
+<span id="L189">189     transitionBudget round).plan.optimisticPolicy.expectedRegret initialState</span>
+<span id="L190">190 </span>
+<span id="L191">191 /-- Sum of the batch-specific selected-radius occupancy bounds. -/</span>
+<span id="L192">192 noncomputable def multiBatchCumulativeSelectedRadiusOccupancy</span>
+<span id="L193">193     {mdp : MDP State Action} (policy : MarkovPolicy mdp)</span>
+<span id="L194">194     (initialState : Measure State) {rounds episodes : Nat}</span>
+<span id="L195">195     (batches : Fin rounds -&gt; EpisodeBatch mdp episodes)</span>
+<span id="L196">196     (defaultState : State) (transitionBudget : Real) : Real :=</span>
+<span id="L197">197   ∑ round,</span>
+<span id="L198">198     let model := policy.multiBatchEmpiricalModelAt batches defaultState</span>
+<span id="L199">199       transitionBudget round</span>
+<span id="L200">200     model.plan.optimisticPolicy.occupancySumRemaining</span>
+<span id="L201">201       (fun remaining hremaining state =&gt;</span>
+<span id="L202">202         2 * model.plan.selectedRadiusRemaining remaining hremaining state)</span>
+<span id="L203">203       mdp.horizon le_rfl initialState</span>
+<span id="L204">204 </span>
+<span id="L205">205 /--</span>
+<span id="L206">206 Pathwise confidence-family producer outside the finite pulled-back bad-event</span>
+<span id="L207">207 union, assuming the generated reward-consistency support at every coordinate.</span>
+<span id="L208">208 -/</span>
+<span id="L209">209 noncomputable def allCoordinateConfidenceFamily_of_not_mem</span>
+<span id="L210">210     {mdp : MDP State Action} (policy : MarkovPolicy mdp)</span>
+<span id="L211">211     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L212">212     {rounds episodes : Nat} {delta : Real}</span>
+<span id="L213">213     (batches : Fin rounds -&gt; EpisodeBatch mdp episodes)</span>
+<span id="L214">214     (hbatches : batches ∉ policy.multiBatchSimultaneousCountBadEvent</span>
+<span id="L215">215       initialState rounds episodes delta)</span>
+<span id="L216">216     (hreward : ∀ round, (batches round).RewardConsistent)</span>
+<span id="L217">217     (defaultState : State) (rewardBound transitionBudget : Real)</span>
+<span id="L218">218     (hrewardBound : ∀ state action, |mdp.reward state action| &lt;= rewardBound)</span>
+<span id="L219">219     (htransitionBudget_nonneg : 0 &lt;= transitionBudget)</span>
+<span id="L220">220     (hmargin : ∀ coordinate : VisitCoordinate mdp,</span>
+<span id="L221">221       simultaneousCountConfidenceRadius mdp episodes</span>
+<span id="L222">222           (multiBatchLocalDelta rounds delta) &lt;</span>
+<span id="L223">223         coordinate.expectedCount policy initialState episodes)</span>
+<span id="L224">224     (hcover : ∀ (remaining : Nat)</span>
+<span id="L225">225         (hremaining : remaining + 1 &lt;= mdp.horizon)</span>
+<span id="L226">226         (state : State) (action : Action),</span>
+<span id="L227">227       (∑ nextState,</span>
+<span id="L228">228           policy.expectedCountTransitionCoordinateRadius</span>
+<span id="L229">229               initialState episodes (multiBatchLocalDelta rounds delta)</span>
+<span id="L230">230               (mdp.decisionStageRemaining remaining hremaining)</span>
+<span id="L231">231               state action nextState *</span>
+<span id="L232">232             empiricalFiniteBatchValueEnvelope</span>
+<span id="L233">233               rewardBound transitionBudget remaining) &lt;=</span>
+<span id="L234">234         transitionBudget) :</span>
+<span id="L235">235     ∀ round,</span>
+<span id="L236">236       (policy.multiBatchEmpiricalModelAt batches defaultState</span>
+<span id="L237">237         transitionBudget round).Confidence := by</span>
+<span id="L238">238   intro round</span>
+<span id="L239">239   have hround : batches round ∉ policy.simultaneousCountBadEvent</span>
+<span id="L240">240       initialState episodes (multiBatchLocalDelta rounds delta) := by</span>
+<span id="L241">241     intro hbad</span>
+<span id="L242">242     apply hbatches</span>
+<span id="L243">243     apply Set.mem_iUnion_of_mem round</span>
+<span id="L244">244     simpa [multiBatchRoundBadEvent] using hbad</span>
+<span id="L245">245   exact policy.allCoordinateEmpiricalFiniteBatchModelConfidence_of_not_mem</span>
+<span id="L246">246     initialState (batches round) hround (hreward round) defaultState</span>
+<span id="L247">247       rewardBound transitionBudget hrewardBound htransitionBudget_nonneg</span>
+<span id="L248">248         hmargin hcover</span>
+<span id="L249">249 </span>
+<span id="L250">250 /-- Finite sums preserve all roundwise optimism and expected-regret bounds. -/</span>
+<span id="L251">251 theorem confidenceFamily_optimism_and_cumulativeExpectedRegret</span>
+<span id="L252">252     {mdp : MDP State Action} (policy : MarkovPolicy mdp)</span>
+<span id="L253">253     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L254">254     {rounds episodes : Nat}</span>
+<span id="L255">255     (batches : Fin rounds -&gt; EpisodeBatch mdp episodes)</span>
+<span id="L256">256     (defaultState : State) (transitionBudget : Real)</span>
+<span id="L257">257     (confidence : ∀ round,</span>
+<span id="L258">258       (policy.multiBatchEmpiricalModelAt batches defaultState</span>
+<span id="L259">259         transitionBudget round).Confidence) :</span>
+<span id="L260">260     (∀ round state,</span>
+<span id="L261">261         mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;=</span>
+<span id="L262">262           (policy.multiBatchEmpiricalModelAt batches defaultState</span>
+<span id="L263">263             transitionBudget round).plan.upperValueRemaining</span>
+<span id="L264">264               mdp.horizon le_rfl state) ∧</span>
+<span id="L265">265       policy.multiBatchCumulativeExpectedRegret initialState batches</span>
+<span id="L266">266           defaultState transitionBudget &lt;=</span>
+<span id="L267">267         policy.multiBatchCumulativeSelectedRadiusOccupancy initialState batches</span>
+<span id="L268">268           defaultState transitionBudget := by</span>
+<span id="L269">269   constructor</span>
+<span id="L270">270   · intro round state</span>
+<span id="L271">271     exact</span>
+<span id="L272">272       (MDP.FiniteBatchModel.Confidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining</span>
+<span id="L273">273           (confidence round) initialState).1 state</span>
+<span id="L274">274   · unfold multiBatchCumulativeExpectedRegret</span>
+<span id="L275">275       multiBatchCumulativeSelectedRadiusOccupancy</span>
+<span id="L276">276     apply Finset.sum_le_sum</span>
+<span id="L277">277     intro round _hround</span>
+<span id="L278">278     exact</span>
+<span id="L279">279       (MDP.FiniteBatchModel.Confidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining</span>
+<span id="L280">280           (confidence round) initialState).2</span>
+<span id="L281">281 </span>
+<span id="L282">282 /--</span>
+<span id="L283">283 Mapped finite-product confidence endpoint: one global-delta event and an a.e.</span>
+<span id="L284">284 family of confidence witnesses, with no measurable witness selection claim.</span>
+<span id="L285">285 -/</span>
+<span id="L286">286 theorem iidEpisodeBatchFamily_allCoordinate_finiteBatchModel_confidence</span>
+<span id="L287">287     {mdp : MDP State Action} (policy : MarkovPolicy mdp)</span>
+<span id="L288">288     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L289">289     (rounds : Nat) (hrounds : 0 &lt; rounds)</span>
+<span id="L290">290     (episodes : Nat) (hepisodes : 0 &lt; episodes)</span>
+<span id="L291">291     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L292">292     (defaultState : State) (rewardBound transitionBudget : Real)</span>
+<span id="L293">293     (hrewardBound : ∀ state action, |mdp.reward state action| &lt;= rewardBound)</span>
+<span id="L294">294     (htransitionBudget_nonneg : 0 &lt;= transitionBudget)</span>
+<span id="L295">295     (hmargin : ∀ coordinate : VisitCoordinate mdp,</span>
+<span id="L296">296       simultaneousCountConfidenceRadius mdp episodes</span>
+<span id="L297">297           (multiBatchLocalDelta rounds delta) &lt;</span>
+<span id="L298">298         coordinate.expectedCount policy initialState episodes)</span>
+<span id="L299">299     (hcover : ∀ (remaining : Nat)</span>
+<span id="L300">300         (hremaining : remaining + 1 &lt;= mdp.horizon)</span>
+<span id="L301">301         (state : State) (action : Action),</span>
+<span id="L302">302       (∑ nextState,</span>
+<span id="L303">303           policy.expectedCountTransitionCoordinateRadius</span>
+<span id="L304">304               initialState episodes (multiBatchLocalDelta rounds delta)</span>
+<span id="L305">305               (mdp.decisionStageRemaining remaining hremaining)</span>
+<span id="L306">306               state action nextState *</span>
+<span id="L307">307             empiricalFiniteBatchValueEnvelope</span>
+<span id="L308">308               rewardBound transitionBudget remaining) &lt;=</span>
+<span id="L309">309         transitionBudget) :</span>
+<span id="L310">310     MeasurableSet (policy.multiBatchSimultaneousCountBadEvent</span>
+<span id="L311">311         initialState rounds episodes delta) ∧</span>
+<span id="L312">312       (policy.iidEpisodeBatchFamilyMeasure initialState rounds episodes)</span>
+<span id="L313">313           (policy.multiBatchSimultaneousCountBadEvent</span>
+<span id="L314">314             initialState rounds episodes delta) &lt;=</span>
+<span id="L315">315         ENNReal.ofReal delta ∧</span>
+<span id="L316">316       ∀ᵐ batches ∂policy.iidEpisodeBatchFamilyMeasure</span>
+<span id="L317">317           initialState rounds episodes,</span>
+<span id="L318">318         batches ∉ policy.multiBatchSimultaneousCountBadEvent</span>
+<span id="L319">319             initialState rounds episodes delta -&gt;</span>
+<span id="L320">320           Nonempty (∀ round,</span>
+<span id="L321">321             (policy.multiBatchEmpiricalModelAt batches defaultState</span>
+<span id="L322">322               transitionBudget round).Confidence) := by</span>
+<span id="L323">323   refine ⟨policy.measurableSet_multiBatchSimultaneousCountBadEvent</span>
+<span id="L324">324       initialState rounds episodes delta,</span>
+<span id="L325">325     policy.iidEpisodeBatchFamilyMeasure_multiBatchSimultaneousCountBadEvent_le</span>
+<span id="L326">326       initialState rounds hrounds episodes hepisodes delta hdelta</span>
+<span id="L327">327         hdelta_le_one, ?_⟩</span>
+<span id="L328">328   filter_upwards [policy.iidEpisodeBatchFamilyMeasure_rewardConsistent_ae</span>
+<span id="L329">329     initialState rounds episodes] with batches hreward</span>
+<span id="L330">330   intro hbatches</span>
+<span id="L331">331   exact ⟨policy.allCoordinateConfidenceFamily_of_not_mem</span>
+<span id="L332">332     initialState batches hbatches hreward defaultState rewardBound</span>
+<span id="L333">333       transitionBudget hrewardBound htransitionBudget_nonneg hmargin hcover⟩</span>
+<span id="L334">334 </span>
+<span id="L335">335 /--</span>
+<span id="L336">336 Route endpoint: the same finite-product event simultaneously yields optimism</span>
+<span id="L337">337 for every batch model and the cumulative finite sum of expected-regret bounds.</span>
+<span id="L338">338 -/</span>
+<span id="L339">339 theorem iidEpisodeBatchFamily_allCoordinate_optimism_and_cumulativeExpectedRegret</span>
+<span id="L340">340     {mdp : MDP State Action} (policy : MarkovPolicy mdp)</span>
+<span id="L341">341     (initialState : Measure State) [IsProbabilityMeasure initialState]</span>
+<span id="L342">342     (rounds : Nat) (hrounds : 0 &lt; rounds)</span>
+<span id="L343">343     (episodes : Nat) (hepisodes : 0 &lt; episodes)</span>
+<span id="L344">344     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_le_one : delta &lt;= 1)</span>
+<span id="L345">345     (defaultState : State) (rewardBound transitionBudget : Real)</span>
+<span id="L346">346     (hrewardBound : ∀ state action, |mdp.reward state action| &lt;= rewardBound)</span>
+<span id="L347">347     (htransitionBudget_nonneg : 0 &lt;= transitionBudget)</span>
+<span id="L348">348     (hmargin : ∀ coordinate : VisitCoordinate mdp,</span>
+<span id="L349">349       simultaneousCountConfidenceRadius mdp episodes</span>
+<span id="L350">350           (multiBatchLocalDelta rounds delta) &lt;</span>
+<span id="L351">351         coordinate.expectedCount policy initialState episodes)</span>
+<span id="L352">352     (hcover : ∀ (remaining : Nat)</span>
+<span id="L353">353         (hremaining : remaining + 1 &lt;= mdp.horizon)</span>
+<span id="L354">354         (state : State) (action : Action),</span>
+<span id="L355">355       (∑ nextState,</span>
+<span id="L356">356           policy.expectedCountTransitionCoordinateRadius</span>
+<span id="L357">357               initialState episodes (multiBatchLocalDelta rounds delta)</span>
+<span id="L358">358               (mdp.decisionStageRemaining remaining hremaining)</span>
+<span id="L359">359               state action nextState *</span>
+<span id="L360">360             empiricalFiniteBatchValueEnvelope</span>
+<span id="L361">361               rewardBound transitionBudget remaining) &lt;=</span>
+<span id="L362">362         transitionBudget) :</span>
+<span id="L363">363     MeasurableSet (policy.multiBatchSimultaneousCountBadEvent</span>
+<span id="L364">364         initialState rounds episodes delta) ∧</span>
+<span id="L365">365       (policy.iidEpisodeBatchFamilyMeasure initialState rounds episodes)</span>
+<span id="L366">366           (policy.multiBatchSimultaneousCountBadEvent</span>
+<span id="L367">367             initialState rounds episodes delta) &lt;=</span>
+<span id="L368">368         ENNReal.ofReal delta ∧</span>
+<span id="L369">369       ∀ᵐ batches ∂policy.iidEpisodeBatchFamilyMeasure</span>
+<span id="L370">370           initialState rounds episodes,</span>
+<span id="L371">371         batches ∉ policy.multiBatchSimultaneousCountBadEvent</span>
+<span id="L372">372             initialState rounds episodes delta -&gt;</span>
+<span id="L373">373           (∀ round state,</span>
+<span id="L374">374               mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;=</span>
+<span id="L375">375                 (policy.multiBatchEmpiricalModelAt batches defaultState</span>
+<span id="L376">376                   transitionBudget round).plan.upperValueRemaining</span>
+<span id="L377">377                     mdp.horizon le_rfl state) ∧</span>
+<span id="L378">378             policy.multiBatchCumulativeExpectedRegret initialState batches</span>
+<span id="L379">379                 defaultState transitionBudget &lt;=</span>
+<span id="L380">380               policy.multiBatchCumulativeSelectedRadiusOccupancy initialState</span>
+<span id="L381">381                 batches defaultState transitionBudget := by</span>
+<span id="L382">382   obtain ⟨hmeasurable, htail, hconfidence⟩ :=</span>
+<span id="L383">383     policy.iidEpisodeBatchFamily_allCoordinate_finiteBatchModel_confidence</span>
+<span id="L384">384       initialState rounds hrounds episodes hepisodes delta hdelta hdelta_le_one</span>
+<span id="L385">385         defaultState rewardBound transitionBudget hrewardBound</span>
+<span id="L386">386           htransitionBudget_nonneg hmargin hcover</span>
+<span id="L387">387   refine ⟨hmeasurable, htail, ?_⟩</span>
+<span id="L388">388   filter_upwards [hconfidence] with batches hbatchConfidence</span>
+<span id="L389">389   intro hbatches</span>
+<span id="L390">390   obtain ⟨confidence⟩ := hbatchConfidence hbatches</span>
+<span id="L391">391   exact policy.confidenceFamily_optimism_and_cumulativeExpectedRegret</span>
+<span id="L392">392     initialState batches defaultState transitionBudget confidence</span>
+<span id="L393">393 </span>
+<span id="L394">394 end MarkovPolicy</span>
+<span id="L395">395 end FiniteHorizonRL</span>
+<span id="L396">396 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

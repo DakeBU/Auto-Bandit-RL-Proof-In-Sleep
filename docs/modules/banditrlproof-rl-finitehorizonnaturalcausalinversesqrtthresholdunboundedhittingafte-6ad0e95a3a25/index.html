@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.RL.FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.RL.FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.RL.FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Finite-horizon RL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>RL.<wbr>Finite<wbr>Horizon<wbr>Natural<wbr>Causal<wbr>Inverse<wbr>Sqrt<wbr>Threshold<wbr>Unbounded<wbr>Hitting<wbr>After<wbr>Square<wbr>Integrable<wbr>Finite<wbr>Stopping<wbr>Time</h1>
+  <p class="lede">This module upgrades each fixed-index genuine hittingAfter first passage from a first moment to OFUL.SquareIntegrableFiniteStoppingTime when 4 &lt; mdp.horizon. Squaring the fourth-power checkpoint values produces a seventh-degree block weight. The stronger horizon contract supplies an inverse-tenth local confidence share, leaving a summable inverse-square diagonal after shifted-tail reindexing.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html"><code>BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/finite-horizon-rl/index.html">9. Finite-horizon reinforcement learning</a></dd></div>
+    <div><dt>Declarations</dt><dd>27</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-rl-finitehorizonnaturalcausalinversesqrtthresholdunboundedhittingafte-84e1e76d235b/index.html"><code>BanditRLProof.RL.FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterIntegrableFiniteStoppingTime</code></a>, <a href="../banditrlproof-ofulscheduledunboundedstoppingtimeexpectedregretrate/index.html"><code>BanditRLProof.OFULScheduledUnboundedStoppingTimeExpectedRegretRate</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-rl-finitehorizonnaturalcausalinversesqrtthresholdunboundedhittingafte-3752d32798f7/index.html"><code>BanditRLProof.RL.FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterIntegrableExpectedUpperBound</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-625951fb08e4">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.explicitHighProbabilityQuarticSquareBlockWeight</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Seventh-degree envelope for one consecutive squared fourth-power checkpoint block.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> explicitHighProbabilityQuarticSquareBlockWeight (n : Nat) : Nat</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L36">Source line 36</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c44938cdaab0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.explicitHighProbabilityRounds_succ_square_sub_le_quarticSquareBlockWeight</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A consecutive squared fourth-power checkpoint gap is bounded by the seventh-degree weight.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> explicitHighProbabilityRounds_succ_square_sub_le_quarticSquareBlockWeight (n : Nat) : (explicitHighProbabilityRounds (n + <span class="num">1</span>) + <span class="num">1</span>) ^ <span class="num">2</span> - (explicitHighProbabilityRounds n + <span class="num">1</span>) ^ <span class="num">2</span> &lt;= explicitHighProbabilityQuarticSquareBlockWeight n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L43">Source line 43</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ab3fb7d6a9ad">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledLocalDelta_le_inv_pow_ten</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Horizon at least five makes every local confidence share no larger than a shifted inverse tenth power.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledLocalDelta_le_inv_pow_ten (mdp : MDP State Action) (hhorizon : <span class="num">4</span> &lt; mdp.horizon) (t : Nat) : AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledLocalDelta mdp t &lt;= <span class="num">1</span> / (((t + <span class="num">2</span> : Nat) : Real) ^ <span class="num">10</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L58">Source line 58</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f7b6aedb2af4">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.quarticSquareBlockShiftedInverseCubePairEnvelope</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Inverse-cube pair envelope after a seventh-degree weight cancels seven inverse powers.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> quarticSquareBlockShiftedInverseCubePairEnvelope (p : Nat × Nat) : ENNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L69">Source line 69</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-319070557916">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.tsum_quarticSquareBlockShiftedInverseCubePairEnvelope_ne_top</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The square-block shifted pair envelope has finite total ENNReal mass.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> tsum_quarticSquareBlockShiftedInverseCubePairEnvelope_ne_top : Ne (∑&#x27; p : Nat × Nat, quarticSquareBlockShiftedInverseCubePairEnvelope p) ∞</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L77">Source line 77</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-485629302f6b">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.quarticSquareBlockShiftedCoordinateModelFailureCharge</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">One squared-checkpoint block weight times one shifted coordinate model-failure charge.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> quarticSquareBlockShiftedCoordinateModelFailureCharge (mdp : MDP State Action) (p : Nat × Nat) : ENNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L88">Source line 88</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1253d0414db6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.quarticSquareBlockShiftedCoordinateModelFailureCharge_le_pairEnvelope</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The inverse-tenth local share puts every seventh-weighted coordinate charge below the pair envelope.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> quarticSquareBlockShiftedCoordinateModelFailureCharge_le_pairEnvelope (mdp : MDP State Action) (hhorizon : <span class="num">4</span> &lt; mdp.horizon) (p : Nat × Nat) : quarticSquareBlockShiftedCoordinateModelFailureCharge mdp p &lt;= quarticSquareBlockShiftedInverseCubePairEnvelope p</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L98">Source line 98</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3b15919093e4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.tsum_quarticSquareBlockShiftedCoordinateModelFailureCharge_ne_top</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The seventh-weighted shifted coordinate charges have finite total ENNReal mass.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> tsum_quarticSquareBlockShiftedCoordinateModelFailureCharge_ne_top (mdp : MDP State Action) (hhorizon : <span class="num">4</span> &lt; mdp.horizon) : Ne (∑&#x27; p : Nat × Nat, quarticSquareBlockShiftedCoordinateModelFailureCharge mdp p) ∞</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L170">Source line 170</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e56003251685">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.quarticSquareBlockWeight_mul_tailModelFailureBudget_eq_tsum_shiftedCoordinateCharge</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A model tail after `n+1`, charged by one squared-checkpoint block, is the shifted coordinate row.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> quarticSquareBlockWeight_mul_tailModelFailureBudget_eq_tsum_shiftedCoordinateCharge (mdp : MDP State Action) (n : Nat) : (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) * selfConsistentScheduledCausalTailModelFailureBudget mdp (n + <span class="num">1</span>) = ∑&#x27; j : Nat, quarticSquareBlockShiftedCoordinateModelFailureCharge mdp (n, j)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L184">Source line 184</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ff67ae15481c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.tsum_quarticSquareBlockWeight_mul_tailModelFailureBudget_ne_top</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Squared-checkpoint block weights are summable against the exact infinite model-tail budgets.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> tsum_quarticSquareBlockWeight_mul_tailModelFailureBudget_ne_top (mdp : MDP State Action) (hhorizon : <span class="num">4</span> &lt; mdp.horizon) : Ne (∑&#x27; n : Nat, (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) * selfConsistentScheduledCausalTailModelFailureBudget mdp (n + <span class="num">1</span>)) ∞</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L210">Source line 210</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e2f9eaaaed28">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.summable_quarticSquareBlockWeight_mul_explicitHighProbabilityReturnDelta</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A seventh-degree squared-checkpoint weight times the exponential return share is summable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> summable_quarticSquareBlockWeight_mul_explicitHighProbabilityReturnDelta : Summable (<span class="kw">fun</span> n : Nat =&gt; ((explicitHighProbabilityQuarticSquareBlockWeight n : Nat) : Real) * explicitHighProbabilityReturnDelta n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L232">Source line 232</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-36f21ed6a577">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.tsum_quarticSquareBlockWeight_mul_explicitHighProbabilityReturnDelta_ne_top</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The exact return shares have finite total mass after squared-checkpoint charging.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> tsum_quarticSquareBlockWeight_mul_explicitHighProbabilityReturnDelta_ne_top : Ne (∑&#x27; n : Nat, (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) * ENNReal.ofReal (explicitHighProbabilityReturnDelta n)) ∞</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L269">Source line 269</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b7b137a6cc34">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.tsum_quarticSquareBlockWeight_mul_explicitPolynomialPrefixTailModelReturnFailureBudget_ne_top</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The exact checkpoint violation budgets remain summable after squared-checkpoint charging.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> tsum_quarticSquareBlockWeight_mul_explicitPolynomialPrefixTailModelReturnFailureBudget_ne_top (mdp : MDP State Action) (hhorizon : <span class="num">4</span> &lt; mdp.horizon) : Ne (∑&#x27; n : Nat, (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) * explicitPolynomialPrefixTailModelReturnFailureBudget mdp n) ∞</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L288">Source line 288</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-387a3297ec20">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.explicitHighProbabilityRounds_add_square_le_add_sum_Ico_quarticSquareBlockWeight</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Seventh-degree weights dominate every finite telescope of squared checkpoint values.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> explicitHighProbabilityRounds_add_square_le_add_sum_Ico_quarticSquareBlockWeight (start width : Nat) : (explicitHighProbabilityRounds (start + width) + <span class="num">1</span>) ^ <span class="num">2</span> &lt;= (explicitHighProbabilityRounds start + <span class="num">1</span>) ^ <span class="num">2</span> + (Finset.Ico start (start + width)).sum explicitHighProbabilityQuarticSquareBlockWeight</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L309">Source line 309</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f9dce88b1d20">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.natCast_succ_square_le_checkpoint_square_add_tsum_quarticSquareBlockWeight_of_delayed</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The square of a finite natural time is paid for by an initial squared checkpoint plus preceding delayed blocks.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> natCast_succ_square_le_checkpoint_square_add_tsum_quarticSquareBlockWeight_of_delayed (start time : Nat) : (((time + <span class="num">1</span>) ^ <span class="num">2</span> : Nat) : ENNReal) &lt;= (((explicitHighProbabilityRounds start + <span class="num">1</span>) ^ <span class="num">2</span> : Nat) : ENNReal) + ∑&#x27; n : Nat, <span class="kw">if</span> start &lt;= n ∧ explicitHighProbabilityRounds n &lt; time <span class="kw">then</span> (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) <span class="kw">else</span> <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L358">Source line 358</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2180854ceeb3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.exists_inverseSqrtThresholdUnboundedHittingAfterTailStart</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A deterministic checkpoint after which the scheduled regret envelope is
+below the fixed inverse-square-root first-passage threshold.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exists_inverseSqrtThresholdUnboundedHittingAfterTailStart (mdp : MDP State Action) (varianceProxy : NNReal) (baseVisitFloor : Real) (scheduleIndex : Nat) : ∃ start : Nat, scheduleIndex &lt;= start ∧ ∀ n, start &lt;= n -&gt; explicitPolynomialPrefixAverageRealizedBehaviorRegretRate mdp varianceProxy baseVisitFloor n &lt;= selfConsistentScheduledNaturalCausalInverseSqrtFirstPassageThreshold scheduleIndex</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L468">Source line 468</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-30a271499e3d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.inverseSqrtThresholdUnboundedHittingAfterTailStart</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical deterministic witness for the eventual delayed-checkpoint tail
+bound at a fixed inverse-square-root threshold index.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> inverseSqrtThresholdUnboundedHittingAfterTailStart (mdp : MDP State Action) (varianceProxy : NNReal) (baseVisitFloor : Real) (scheduleIndex : Nat) : Nat</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L490">Source line 490</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-19461ed70cea">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.inverseSqrtThresholdUnboundedHittingAfterTailStart_spec</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The canonical tail start is beyond the threshold index and validates the
+scheduled regret-rate comparison at every later checkpoint.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> inverseSqrtThresholdUnboundedHittingAfterTailStart_spec (mdp : MDP State Action) (varianceProxy : NNReal) (baseVisitFloor : Real) (scheduleIndex : Nat) : scheduleIndex &lt;= inverseSqrtThresholdUnboundedHittingAfterTailStart mdp varianceProxy baseVisitFloor scheduleIndex ∧ ∀ n, inverseSqrtThresholdUnboundedHittingAfterTailStart mdp varianceProxy baseVisitFloor scheduleIndex &lt;= n -&gt; explicitPolynomialPrefixAverageRealizedBehaviorRegretRate mdp varianceProxy baseVisitFloor n &lt;= selfConsistentScheduledNaturalCausalInverseSqrtFirstPassageThreshold scheduleIndex</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L500">Source line 500</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bd39a16af19d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentENNRealBudget</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Explicit deterministic ENNReal budget for the second moment of the
+successor round count at the uncapped inverse-square-root hitting time.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentENNRealBudget (mdp : MDP State Action) (varianceProxy : NNReal) (baseVisitFloor : Real) (scheduleIndex : Nat) : ENNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L520">Source line 520</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-986d6bc4330e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentENNRealBudget_ne_top</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The deterministic stopping-round second-moment budget is finite whenever
+the horizon supplies the inverse-tenth confidence exponent.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentENNRealBudget_ne_top (mdp : MDP State Action) (varianceProxy : NNReal) (baseVisitFloor : Real) (scheduleIndex : Nat) (hhorizon : <span class="num">4</span> &lt; mdp.horizon) : inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentENNRealBudget mdp varianceProxy baseVisitFloor scheduleIndex ≠ ∞</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L533">Source line 533</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-19fe02ea0b01">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentBudget</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Real-valued form of the deterministic stopping-round second-moment
+budget.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentBudget (mdp : MDP State Action) (varianceProxy : NNReal) (baseVisitFloor : Real) (scheduleIndex : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L549">Source line 549</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a8b3740fd058">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.lintegral_sq_untopA_add_one_le_quarticSquareCheckpointBudget</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A pointwise delayed-checkpoint tail budget gives an explicit ENNReal
+upper bound for the successor stopping-round second moment.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> lintegral_sq_untopA_add_one_le_quarticSquareCheckpointBudget {Omega : Type*} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (tau : Omega -&gt; WithTop Nat) (htau : Measurable tau) (budget : Nat -&gt; ENNReal) (start : Nat) (htailStart : ∀ n, start &lt;= n -&gt; mu {omega | (explicitHighProbabilityRounds n : WithTop Nat) &lt; tau omega} &lt;= budget n) : ∫⁻ omega, ENNReal.ofReal (((((tau omega).untopA + <span class="num">1</span> : Nat) : Real)) ^ <span class="num">2</span>) ∂mu &lt;= (((explicitHighProbabilityRounds start + <span class="num">1</span>) ^ <span class="num">2</span> : Nat) : ENNReal) + ∑&#x27; n : Nat, (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) * budget n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L561">Source line 561</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0b92dccb41c5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.memLp_two_untopA_add_one_of_eventually_quarticSquareCheckpointTail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Eventually summable squared fourth-power checkpoint crossing tails imply a finite second moment.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> memLp_two_untopA_add_one_of_eventually_quarticSquareCheckpointTail {Omega : Type*} [MeasurableSpace Omega] (mu : Measure Omega) [IsProbabilityMeasure mu] (tau : Omega -&gt; WithTop Nat) (htau : Measurable tau) (budget : Nat -&gt; ENNReal) (hbudget : Ne (∑&#x27; n : Nat, (explicitHighProbabilityQuarticSquareBlockWeight n : ENNReal) * budget n) ∞) (htail : ∀ᶠ n : Nat <span class="kw">in</span> atTop, mu {omega | (explicitHighProbabilityRounds n : WithTop Nat) &lt; tau omega} &lt;= budget n) : MemLp (<span class="kw">fun</span> omega =&gt; (((tau omega).untopA + <span class="num">1</span> : Nat) : Real)) <span class="num">2</span> mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L660">Source line 660</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-dee9ac27d84a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_trajectoryMeasure_inverseSqrtThresholdUnboundedHittingAfterDelayedCheckpointSet_le_of_tailStart</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">From the canonical tail start onward, every delayed uncapped first-passage
+checkpoint has the exact compiled model/return failure budget.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledCausalSource_trajectoryMeasure_inverseSqrtThresholdUnboundedHittingAfterDelayedCheckpointSet_le_of_tailStart (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : <span class="num">0</span> &lt; varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support <span class="num">1</span> baseVisitFloor) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) (scheduleIndex checkpointIndex : Nat) (hcheckpointIndex : inverseSqrtThresholdUnboundedHittingAfterTailStart mdp varianceProxy baseVisitFloor scheduleIndex &lt;= checkpointIndex) : <span class="kw">let</span> source := selfConsistentScheduledCausalSource mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor source.trajectoryMeasure (selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterDelayedCheckpointSet mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor scheduleIndex checkpointIndex) &lt;= explicitPolynomialPrefixTailModelReturnFailureBudget mdp checkpointIndex</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L773">Source line 773</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-dd9210f2ef35">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_lintegral_stoppingRound_sq_le_ENNRealBudget</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The actual successor stopping-round square has an explicit deterministic
+ENNReal upper bound at every fixed inverse-square-root threshold index.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_lintegral_stoppingRound_sq_le_ENNRealBudget (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : <span class="num">0</span> &lt; varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support <span class="num">1</span> baseVisitFloor) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (hhorizon : <span class="num">0</span> &lt; mdp.horizon) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) (scheduleIndex : Nat) : <span class="kw">let</span> source := selfConsistentScheduledCausalSource mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor <span class="kw">let</span> tau := selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor scheduleIndex ∫⁻ trajectory, ENNReal.ofReal (((((tau trajectory).untopA + <span class="num">1</span> : Nat) : Real)) ^ <span class="num">2</span>) ∂source.trajectoryMeasure &lt;= inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentENNRealBudget mdp varianceProxy baseVisitFloor scheduleIndex</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L826">Source line 826</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5d537b98d971">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_squareIntegrableFiniteStoppingTime</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Each fixed-index genuine uncapped inverse-square-root first passage has a
+finite second moment when the finite-horizon confidence exponent is at least ten.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_squareIntegrableFiniteStoppingTime (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : <span class="num">0</span> &lt; varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support <span class="num">1</span> baseVisitFloor) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (hhorizon : <span class="num">4</span> &lt; mdp.horizon) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) (scheduleIndex : Nat) : <span class="kw">let</span> source := selfConsistentScheduledCausalSource mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor BanditRLProof.OFUL.SquareIntegrableFiniteStoppingTime source.trajectoryMeasure (selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor scheduleIndex)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L876">Source line 876</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bc915aec614d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.AdaptiveStochasticSampledEmpiricalOptimisticSource.selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_integral_stoppingRound_sq_le_budget</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The Bochner second moment of the actual successor stopping-round count is
+bounded by the canonical deterministic checkpoint/failure budget.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> selfConsistentScheduledCausalSource_inverseSqrtThresholdUnboundedHittingAfter_integral_stoppingRound_sq_le_budget (mdp : MDP State Action) (initialState : Measure State) [IsProbabilityMeasure initialState] [StandardBorelSpace State] [StandardBorelSpace Action] (rewardSource : mdp.MeanCompatibleRewardKernel) (varianceProxy : NNReal) (hvarianceProxy : <span class="num">0</span> &lt; varianceProxy) (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy) (initialTable : DeterministicMarkovPolicyTable mdp) (defaultState : State) (support : ExploratoryPathSupport mdp initialState) (baseVisitFloor : Real) (hbaseFloor : ExploratoryPathUniformVisitFloor support <span class="num">1</span> baseVisitFloor) (hrewardBound : <span class="kw">forall</span> state action, |mdp.reward state action| &lt;= <span class="num">1</span>) (hhorizon : <span class="num">4</span> &lt; mdp.horizon) (hbaseVisitFloor : <span class="num">0</span> &lt; baseVisitFloor) (scheduleIndex : Nat) : <span class="kw">let</span> source := selfConsistentScheduledCausalSource mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor <span class="kw">let</span> tau := selfConsistentScheduledNaturalCausalInverseSqrtThresholdUnboundedHittingAfterStoppingPrefix mdp initialState rewardSource initialTable defaultState varianceProxy baseVisitFloor scheduleIndex integral source.trajectoryMeasure (<span class="kw">fun</span> trajectory =&gt; ((((tau trajectory).untopA + <span class="num">1</span> : Nat) : Real)) ^ <span class="num">2</span>) &lt;= inverseSqrtThresholdUnboundedHittingAfterStoppingRoundSecondMomentBudget mdp varianceProxy baseVisitFloor scheduleIndex</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonNaturalCausalInverseSqrtThresholdUnboundedHittingAfterSquareIntegrableFiniteStoppingTime.lean.html#L928">Source line 928</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

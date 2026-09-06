@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.UCBArmStreamSource · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.UCBArmStreamSource · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.UCBArmStreamSource · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · UCB</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>UCB<wbr>Arm<wbr>Stream<wbr>Source</h1>
+  <p class="lede">This module implements the pathwise reward-consumption rule used by the pinned LML UCB route. Whenever an action is selected, the observed reward is the next unused coordinate of that arm&#x27;s latent stream. Consequently, the selected reward sum is exactly the stream prefix whose length is the realized pull count, so it supplies FixedArmPrefixSource without an extra pathwise hypothesis.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/UCBArmStreamSource.lean.html"><code>BanditRLProof/Algorithms/UCBArmStreamSource.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/ucb/index.html">4. UCB: confidence events to regret</a></dd></div>
+    <div><dt>Declarations</dt><dd>6</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-algorithms-ucbfixedcountpeeling/index.html"><code>BanditRLProof.Algorithms.UCBFixedCountPeeling</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-ucbarmstreamprocess/index.html"><code>BanditRLProof.Algorithms.UCBArmStreamProcess</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-f80e9e674072">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.rewardFromArmStream</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Read the next unused latent reward of the arm selected at time `t`.
+
+The action trace may depend on the whole sample point. The coordinate index is
+the number of earlier selections of the currently selected arm.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> rewardFromArmStream {Omega : Type u} {K : Nat} (action : Omega -&gt; ActionTrace (Fin K)) (armStream : Omega -&gt; ArmRewardStream K) : Omega -&gt; RewardTrace Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamSource.lean.html#L28">Source line 28</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-84e6d4a0bc9c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.sumRewards_rewardFromArmStream_eq_armPrefixSum</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Rewards consumed from one arm are exactly the prefix of that arm&#x27;s latent
+stream whose length is the realized pull count.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sumRewards_rewardFromArmStream_eq_armPrefixSum {Omega : Type u} {K : Nat} (action : Omega -&gt; ActionTrace (Fin K)) (armStream : Omega -&gt; ArmRewardStream K) (omega : Omega) (arm : Fin K) (n : Nat) : sumRewards (action omega) (rewardFromArmStream action armStream omega) arm n = armPrefixSum arm (pullCount (action omega) arm n) (armStream omega)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamSource.lean.html#L42">Source line 42</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-85479513a1e0">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.fixedArmPrefixSourceOfArmStream</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The next-unused-coordinate reward rule produces a fixed-arm prefix source as
+soon as the latent stream coordinates are measurable.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> fixedArmPrefixSourceOfArmStream {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (action : Omega -&gt; ActionTrace (Fin K)) (armStream : Omega -&gt; ArmRewardStream K) (hmeasurable : <span class="kw">forall</span> i arm, Measurable (<span class="kw">fun</span> omega =&gt; armStream omega i arm)) : FixedArmPrefixSource action (rewardFromArmStream action armStream) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamSource.lean.html#L65">Source line 65</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-317d6c0a1446">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measure_pullCount_prod_sumRewards_rewardFromArmStream_mem_le_identDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Fixed-count peeling for rewards generated by the next-unused-coordinate rule,
+with complete-stream law transport to a canonical stream.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_pullCount_prod_sumRewards_rewardFromArmStream_mem_le_identDistrib {Omega : Type u} {Xi : Type v} {K : Nat} [MeasurableSpace Omega] [MeasurableSpace Xi] (mu : Measure Omega) (nu : Measure Xi) (action : Omega -&gt; ActionTrace (Fin K)) (armStream : Omega -&gt; ArmRewardStream K) (hmeasurable : <span class="kw">forall</span> i arm, Measurable (<span class="kw">fun</span> omega =&gt; armStream omega i arm)) (canonicalStream : Xi -&gt; ArmRewardStream K) (hstreamLaw : IdentDistrib armStream canonicalStream mu nu) (arm : Fin K) (n : Nat) (s : Set (Nat × Real)) [DecidablePred (<span class="kw">fun</span> k : Nat =&gt; k ∈ Prod.fst &#x27;&#x27; s)] (hs : MeasurableSet s) : mu {omega | (pullCount (action omega) arm n, sumRewards (action omega) (rewardFromArmStream action armStream omega) arm n) ∈ s} ≤ ((Finset.range (n + <span class="num">1</span>)).filter (<span class="kw">fun</span> k =&gt; k ∈ Prod.fst &#x27;&#x27; s)).sum (<span class="kw">fun</span> k =&gt; nu {xi | armPrefixSum arm k (canonicalStream xi) ∈ Prod.mk k ⁻¹&#x27; s})</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamSource.lean.html#L81">Source line 81</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7ec08358d921">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.UCB.canonicalFixedArmPrefixSource</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The canonical stream space supplies its own measurable latent stream.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> canonicalFixedArmPrefixSource {K : Nat} (action : ArmRewardStream K -&gt; ActionTrace (Fin K)) : FixedArmPrefixSource action (rewardFromArmStream action id)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamSource.lean.html#L109">Source line 109</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4a1302f7b2b1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measure_pullCount_prod_sumRewards_rewardFromCanonicalArmStream_mem_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pathwise peeling directly on the canonical latent stream space. This theorem
+is ready for any recursively defined action trace on that space; probability
+or stationarity assumptions enter only in later fixed-prefix tail leaves.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_pullCount_prod_sumRewards_rewardFromCanonicalArmStream_mem_le {K : Nat} (mu : Measure (ArmRewardStream K)) (action : ArmRewardStream K -&gt; ActionTrace (Fin K)) (arm : Fin K) (n : Nat) (s : Set (Nat × Real)) [DecidablePred (<span class="kw">fun</span> k : Nat =&gt; k ∈ Prod.fst &#x27;&#x27; s)] : mu {stream | (pullCount (action stream) arm n, sumRewards (action stream) (rewardFromArmStream action id stream) arm n) ∈ s} ≤ ((Finset.range (n + <span class="num">1</span>)).filter (<span class="kw">fun</span> k =&gt; k ∈ Prod.fst &#x27;&#x27; s)).sum (<span class="kw">fun</span> k =&gt; mu {stream | armPrefixSum arm k stream ∈ Prod.mk k ⁻¹&#x27; s})</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/UCBArmStreamSource.lean.html#L121">Source line 121</a>
+
+      <a href="../../chapters/ucb/index.html">Chapter context: UCB</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

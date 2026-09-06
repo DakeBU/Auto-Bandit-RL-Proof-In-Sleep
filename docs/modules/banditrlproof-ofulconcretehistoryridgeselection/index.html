@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.OFULConcreteHistoryRidgeSelection · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.OFULConcreteHistoryRidgeSelection · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.OFULConcreteHistoryRidgeSelection · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · OFUL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>OFUL<wbr>Concrete<wbr>History<wbr>Ridge<wbr>Selection</h1>
+  <p class="lede">This module reconstructs the standard scalar-ridge OFUL state from an inclusive finite action/Real-reward history. It proves the complete finite-dimensional measurability chain and instantiates the measurable recursive selector without a caller-supplied score-measurability premise.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html"><code>BanditRLProof/OFULConcreteHistoryRidgeSelection.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/oful/index.html">5. OFUL, self-normalized confidence, and stopping times</a></dd></div>
+    <div><dt>Declarations</dt><dd>26</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-ofulmeasurablerecursiveselection/index.html"><code>BanditRLProof.OFULMeasurableRecursiveSelection</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-ofulgeneratedtrajectoryconfidencegap/index.html"><code>BanditRLProof.OFULGeneratedTrajectoryConfidenceGap</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-5c84f240948c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measurable_matrix_det_of_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A determinant is measurable when every random matrix entry is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_matrix_det_of_apply {Omega Index : Type*} [MeasurableSpace Omega] [Fintype Index] [DecidableEq Index] (A : Omega -&gt; Matrix Index Index Real) (hA : <span class="kw">forall</span> i j, Measurable (<span class="kw">fun</span> omega =&gt; A omega i j)) : Measurable (<span class="kw">fun</span> omega =&gt; Matrix.det (A omega))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L21">Source line 21</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-76f08458a800">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measurable_matrix_adjugate_apply_of_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every adjugate entry is measurable under coordinatewise matrix measurability.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_matrix_adjugate_apply_of_apply {Omega Index : Type*} [MeasurableSpace Omega] [Fintype Index] [DecidableEq Index] (A : Omega -&gt; Matrix Index Index Real) (hA : <span class="kw">forall</span> i j, Measurable (<span class="kw">fun</span> omega =&gt; A omega i j)) (i j : Index) : Measurable (<span class="kw">fun</span> omega =&gt; Matrix.adjugate (A omega) i j)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L35">Source line 35</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4a965e3690e5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measurable_matrix_nonsingInv_apply_of_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every entry of Mathlib&#x27;s nonsingular inverse is measurable.  The proof uses
+the determinant/adjugate formula, including its zero-at-singular convention.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_matrix_nonsingInv_apply_of_apply {Omega Index : Type*} [MeasurableSpace Omega] [Fintype Index] [DecidableEq Index] (A : Omega -&gt; Matrix Index Index Real) (hA : <span class="kw">forall</span> i j, Measurable (<span class="kw">fun</span> omega =&gt; A omega i j)) (i j : Index) : Measurable (<span class="kw">fun</span> omega =&gt; (A omega)⁻¹ i j)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L57">Source line 57</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-364e65025831">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measurable_matrix_mulVec_apply_of_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A random matrix-vector product is coordinatewise measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_matrix_mulVec_apply_of_apply {Omega Index : Type*} [MeasurableSpace Omega] [Fintype Index] (A : Omega -&gt; Matrix Index Index Real) (x : Omega -&gt; Index -&gt; Real) (hA : <span class="kw">forall</span> i j, Measurable (<span class="kw">fun</span> omega =&gt; A omega i j)) (hx : <span class="kw">forall</span> i, Measurable (<span class="kw">fun</span> omega =&gt; x omega i)) (i : Index) : Measurable (<span class="kw">fun</span> omega =&gt; (A omega).mulVec (x omega) i)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L73">Source line 73</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c54c21a8bfac">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measurable_dotProduct_of_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A random finite dot product is measurable coordinatewise.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_dotProduct_of_apply {Omega Index : Type*} [MeasurableSpace Omega] [Fintype Index] (x y : Omega -&gt; Index -&gt; Real) (hx : <span class="kw">forall</span> i, Measurable (<span class="kw">fun</span> omega =&gt; x omega i)) (hy : <span class="kw">forall</span> i, Measurable (<span class="kw">fun</span> omega =&gt; y omega i)) : Measurable (<span class="kw">fun</span> omega =&gt; dotProduct (x omega) (y omega))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L85">Source line 85</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-56d1025ae4d8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measurable_confidenceWidth_of_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The OFUL confidence width is measurable from matrix and feature coordinates.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_confidenceWidth_of_apply {Omega Feature : Type*} [MeasurableSpace Omega] [Fintype Feature] [DecidableEq Feature] (V : Omega -&gt; Matrix Feature Feature Real) (x : Omega -&gt; Feature -&gt; Real) (hV : <span class="kw">forall</span> i j, Measurable (<span class="kw">fun</span> omega =&gt; V omega i j)) (hx : <span class="kw">forall</span> i, Measurable (<span class="kw">fun</span> omega =&gt; x omega i)) : Measurable (<span class="kw">fun</span> omega =&gt; confidenceWidth (V omega) (x omega))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L95">Source line 95</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-674b3b40f71f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measurable_optimisticScore_of_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The OFUL optimistic score is measurable from its scalar coordinates.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_optimisticScore_of_apply {Omega Feature : Type*} [MeasurableSpace Omega] [Fintype Feature] [DecidableEq Feature] (thetaHat : Omega -&gt; Feature -&gt; Real) (V : Omega -&gt; Matrix Feature Feature Real) (beta : Omega -&gt; Real) (x : Omega -&gt; Feature -&gt; Real) (hthetaHat : <span class="kw">forall</span> i, Measurable (<span class="kw">fun</span> omega =&gt; thetaHat omega i)) (hV : <span class="kw">forall</span> i j, Measurable (<span class="kw">fun</span> omega =&gt; V omega i j)) (hbeta : Measurable beta) (hx : <span class="kw">forall</span> i, Measurable (<span class="kw">fun</span> omega =&gt; x omega i)) : Measurable (<span class="kw">fun</span> omega =&gt; optimisticScore (thetaHat omega) (V omega) (beta omega) (x omega))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L114">Source line 114</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c51a68827848">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measurable_finiteHorizonFeatureGram_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Entries of a finite-horizon feature Gram are measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_finiteHorizonFeatureGram_apply {Omega Feature : Type*} [MeasurableSpace Omega] (feature : Nat -&gt; Omega -&gt; Feature -&gt; Real) (hfeature : <span class="kw">forall</span> t i, Measurable (<span class="kw">fun</span> omega =&gt; feature t omega i)) (n : Nat) (i j : Feature) : Measurable (<span class="kw">fun</span> omega =&gt; finiteHorizonFeatureGram feature n omega i j)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L134">Source line 134</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0be529ebc760">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measurable_finiteHorizonResponseVector_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Coordinates of the finite-horizon response vector are measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_finiteHorizonResponseVector_apply {Omega Feature : Type*} [MeasurableSpace Omega] [Fintype Feature] (feature : Nat -&gt; Omega -&gt; Feature -&gt; Real) (response : Nat -&gt; Omega -&gt; Real) (hfeature : <span class="kw">forall</span> t i, Measurable (<span class="kw">fun</span> omega =&gt; feature t omega i)) (hresponse : <span class="kw">forall</span> t, Measurable (response t)) (n : Nat) (i : Feature) : Measurable (<span class="kw">fun</span> omega =&gt; finiteHorizonResponseVector feature response n omega i)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L147">Source line 147</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fbc4e76c3aba">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measurable_finiteHorizonRidgeEstimate_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every coordinate of the finite-horizon ridge estimate is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_finiteHorizonRidgeEstimate_apply {Omega Feature : Type*} [MeasurableSpace Omega] [Fintype Feature] [DecidableEq Feature] (V0 : Matrix Feature Feature Real) (feature : Nat -&gt; Omega -&gt; Feature -&gt; Real) (response : Nat -&gt; Omega -&gt; Real) (hfeature : <span class="kw">forall</span> t i, Measurable (<span class="kw">fun</span> omega =&gt; feature t omega i)) (hresponse : <span class="kw">forall</span> t, Measurable (response t)) (n : Nat) (i : Feature) : Measurable (<span class="kw">fun</span> omega =&gt; finiteHorizonRidgeEstimate V0 feature response n omega i)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L163">Source line 163</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-31838aa9f593">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measurable_finiteHorizonScalarConfidenceRadius</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The scalar-ridge finite-horizon confidence radius is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_finiteHorizonScalarConfidenceRadius {Omega Feature : Type*} [MeasurableSpace Omega] [Fintype Feature] [DecidableEq Feature] (feature : Nat -&gt; Omega -&gt; Feature -&gt; Real) (hfeature : <span class="kw">forall</span> t i, Measurable (<span class="kw">fun</span> omega =&gt; feature t omega i)) (R delta lambda S : Real) (n : Nat) : Measurable (finiteHorizonScalarConfidenceRadius feature R delta lambda S n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L188">Source line 188</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9cfa4bec280f">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.finiteHistoryObservedFeature</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Feature observed at a history coordinate, with zero outside the prefix.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteHistoryObservedFeature {K : Nat} {Feature : Type u} (actionFeature : Fin K -&gt; Feature -&gt; Real) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (t : Nat) : Feature -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L217">Source line 217</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1854624d3f86">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.finiteHistoryObservedResponse</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Reward observed at a history coordinate, with zero outside the prefix.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteHistoryObservedResponse {K : Nat} (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (t : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L228">Source line 228</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b8cdd910b87b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measurable_finiteHistoryObservedFeature_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every coordinate of the history-observed feature process is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_finiteHistoryObservedFeature_apply {K : Nat} {Feature : Type u} (actionFeature : Fin K -&gt; Feature -&gt; Real) (n t : Nat) (i : Feature) : Measurable (<span class="kw">fun</span> history : History.FinitePairHistory (Fin K) Real n =&gt; finiteHistoryObservedFeature actionFeature n history t i)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L238">Source line 238</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-07fc37823ba8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measurable_finiteHistoryObservedResponse</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The history-observed response process is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_finiteHistoryObservedResponse {K : Nat} (n t : Nat) : Measurable (<span class="kw">fun</span> history : History.FinitePairHistory (Fin K) Real n =&gt; finiteHistoryObservedResponse n history t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L255">Source line 255</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f9a961cd5b04">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.finiteHistoryScalarRidgeEstimate</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Scalar-ridge estimate reconstructed from the inclusive finite history.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteHistoryScalarRidgeEstimate {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) : Feature -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L268">Source line 268</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d72d8de91c55">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.finiteHistoryScalarRidgeDesign</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Scalar-ridge design matrix reconstructed from the inclusive finite history.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteHistoryScalarRidgeDesign {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) : Matrix Feature Feature Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L284">Source line 284</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c49f0a46c076">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.finiteHistoryScalarRidgeRadius</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Scalar confidence radius reconstructed from the inclusive finite history.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteHistoryScalarRidgeRadius {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta lambda S : Real) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L298">Source line 298</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-644a96b5bfdf">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.finiteHistoryFixedActionFeature</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The fixed feature of an arm, exposed on the finite-history component API.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> finiteHistoryFixedActionFeature {K : Nat} {Feature : Type u} (actionFeature : Fin K -&gt; Feature -&gt; Real) (n : Nat) (_history : History.FinitePairHistory (Fin K) Real n) (action : Fin K) : Feature -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L311">Source line 311</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-87840a0e8ef9">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.finiteHistoryScalarRidgeOptimisticScore</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Concrete scalar-ridge OFUL score computed from an inclusive finite history.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteHistoryScalarRidgeOptimisticScore {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta S : Real) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (action : Fin K) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L319">Source line 319</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-649b1e7e5103">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.measurable_finiteHistoryScalarRidgeOptimisticScore</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every fixed-arm concrete scalar-ridge score is measurable.  In particular,
+callers do not need to supply a score-measurability premise.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_finiteHistoryScalarRidgeOptimisticScore {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (lambda : Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta S : Real) (n : Nat) (action : Fin K) : Measurable (<span class="kw">fun</span> history : History.FinitePairHistory (Fin K) Real n =&gt; finiteHistoryScalarRidgeOptimisticScore lambda actionFeature R delta S n history action)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L338">Source line 338</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-30a7468fcb8d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.finiteHistoryScalarRidgeOptimisticAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Deterministic score-maximizing arm for the concrete scalar-ridge state.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteHistoryScalarRidgeOptimisticAction {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta S : Real) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) : Fin K</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L386">Source line 386</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8fb9713e9dfc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.finiteHistoryScalarRidgeOptimisticAction_score_max</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The concrete finite-history selector maximizes its scalar-ridge score.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finiteHistoryScalarRidgeOptimisticAction_score_max {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta S : Real) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (action : Fin K) : finiteHistoryScalarRidgeOptimisticScore lambda actionFeature R delta S n history action &lt;= finiteHistoryScalarRidgeOptimisticScore lambda actionFeature R delta S n history (finiteHistoryScalarRidgeOptimisticAction hK lambda actionFeature R delta S n history)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L404">Source line 404</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-32eb58d852cd">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.finiteHistoryScalarRidgeOptimisticAlgorithm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Concrete measurable history algorithm obtained from the reconstructed
+scalar-ridge state, with score measurability discharged internally.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteHistoryScalarRidgeOptimisticAlgorithm {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta S : Real) : Thompson.HistoryAlgorithm (Fin K) Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L431">Source line 431</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-94560445cf21">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.OFUL.finiteHistoryScalarRidgeSelectedFeature</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Feature selected by the concrete scalar-ridge history selector.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> finiteHistoryScalarRidgeSelectedFeature {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta S : Real) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) : Feature -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L449">Source line 449</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c8b3b148ba40">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.OFUL.canonicalHistoryTrajectory_observedFeature_succ_ae_eq_finiteHistoryScalarRidgeSelectedFeature</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">On the canonical recursive trajectory, the feature of the actual successor
+arm is almost surely the feature selected from the realized scalar-ridge state.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> canonicalHistoryTrajectory_observedFeature_succ_ae_eq_finiteHistoryScalarRidgeSelectedFeature {K : Nat} {Feature : Type u} [Fintype Feature] [DecidableEq Feature] (hK : <span class="num">0</span> &lt; K) (lambda : Real) (actionFeature : Fin K -&gt; Feature -&gt; Real) (R delta S : Real) (environment : Thompson.HistoryEnvironment (Fin K) Real) (n : Nat) : ∀ᵐ trajectory ∂ Thompson.canonicalHistoryTrajectoryMeasure (finiteHistoryScalarRidgeOptimisticAlgorithm hK lambda actionFeature R delta S) environment, actionFeature (Thompson.canonicalHistoryTrajectoryAction trajectory (n + <span class="num">1</span>)) = finiteHistoryScalarRidgeSelectedFeature hK lambda actionFeature R delta S n (History.finitePairHistoryOfTrace (Thompson.canonicalHistoryTrajectoryAction trajectory) (Thompson.canonicalHistoryTrajectoryReward trajectory) n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/OFULConcreteHistoryRidgeSelection.lean.html#L466">Source line 466</a>
+
+      <a href="../../chapters/oful/index.html">Chapter context: OFUL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

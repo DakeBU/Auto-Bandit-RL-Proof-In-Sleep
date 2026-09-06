@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/OFULScheduledPowerOfTwoForcedHighProbabilityRegretRate.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/OFULScheduledPowerOfTwoForcedHighProbabilityRegretRate.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/OFULScheduledPowerOfTwoForcedHighProbabilityRegretRate.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/OFULScheduledPowerOfTwoForcedHighProbabilityRegretRate.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.OFULScheduledPowerOfTwoForcedScalarChargeBound</span>
+<span id="L2">2 import BanditRLProof.OFULScheduledBoundedStoppingTimeExpectedRegretAsymptotics</span>
+<span id="L3">3 import Mathlib.Analysis.SpecialFunctions.Log.Base</span>
+<span id="L4">4 </span>
+<span id="L5">5 /-!</span>
+<span id="L6">6 # Asymptotic high-probability rate for power-of-two forced OFUL</span>
+<span id="L7">7 </span>
+<span id="L8">8 This module packages the exact scalar all-horizon budget of the fixed</span>
+<span id="L9">9 power-of-two forced policy and proves its fixed-model asymptotic growth. The</span>
+<span id="L10">10 probability event, policy, canonical measure, and confidence budget are</span>
+<span id="L11">11 inherited unchanged from the finite-horizon scalar theorem.</span>
+<span id="L12">12 -/</span>
+<span id="L13">13 </span>
+<span id="L14">14 namespace BanditRLProof.OFUL</span>
+<span id="L15">15 </span>
+<span id="L16">16 open Filter Real MeasureTheory Set</span>
+<span id="L17">17 open scoped ENNReal Topology</span>
+<span id="L18">18 </span>
+<span id="L19">19 universe u</span>
+<span id="L20">20 </span>
+<span id="L21">21 /-- The complete scalar budget displayed by the power-of-two forced tail. -/</span>
+<span id="L22">22 noncomputable def powerOfTwoForcedScalarHighProbabilityPseudoRegretBound</span>
+<span id="L23">23     {Feature : Type u} [Fintype Feature]</span>
+<span id="L24">24     (R delta lambda S : Real) (horizon : Nat) (L2 : Real) : Real :=</span>
+<span id="L25">25   ((Nat.log2 horizon + 1 : Nat) : Real) *</span>
+<span id="L26">26       (2 * S * Real.sqrt L2) +</span>
+<span id="L27">27     telescopingHighProbabilityPseudoRegretBound</span>
+<span id="L28">28       (Feature := Feature) R delta lambda S horizon L2</span>
+<span id="L29">29 </span>
+<span id="L30">30 /--</span>
+<span id="L31">31 Increasing the outer confidence budget decreases the explicit telescoping</span>
+<span id="L32">32 confidence logarithm.</span>
+<span id="L33">33 -/</span>
+<span id="L34">34 theorem telescopingHighProbabilityRegretLogBudget_anti_delta</span>
+<span id="L35">35     {Feature : Type u} [Fintype Feature]</span>
+<span id="L36">36     (lambda L2 : Real)</span>
+<span id="L37">37     {deltaSmall deltaLarge : Real}</span>
+<span id="L38">38     (hdeltaSmall : 0 &lt; deltaSmall)</span>
+<span id="L39">39     (hdelta : deltaSmall &lt;= deltaLarge)</span>
+<span id="L40">40     (horizon : Nat) :</span>
+<span id="L41">41     telescopingHighProbabilityRegretLogBudget</span>
+<span id="L42">42         (Feature := Feature) lambda deltaLarge horizon L2 &lt;=</span>
+<span id="L43">43       telescopingHighProbabilityRegretLogBudget</span>
+<span id="L44">44         (Feature := Feature) lambda deltaSmall horizon L2 := by</span>
+<span id="L45">45   have hdeltaLarge : 0 &lt; deltaLarge := hdeltaSmall.trans_le hdelta</span>
+<span id="L46">46   have hnum_nonneg :</span>
+<span id="L47">47       0 &lt;=</span>
+<span id="L48">48         (((horizon + 1 : Nat) : Real) *</span>
+<span id="L49">49           ((horizon + 2 : Nat) : Real)) := by</span>
+<span id="L50">50     positivity</span>
+<span id="L51">51   have hnum_pos :</span>
+<span id="L52">52       0 &lt;</span>
+<span id="L53">53         (((horizon + 1 : Nat) : Real) *</span>
+<span id="L54">54           ((horizon + 2 : Nat) : Real)) := by</span>
+<span id="L55">55     positivity</span>
+<span id="L56">56   have hratio :</span>
+<span id="L57">57       ((((horizon + 1 : Nat) : Real) *</span>
+<span id="L58">58             ((horizon + 2 : Nat) : Real)) / deltaLarge) &lt;=</span>
+<span id="L59">59         ((((horizon + 1 : Nat) : Real) *</span>
+<span id="L60">60             ((horizon + 2 : Nat) : Real)) / deltaSmall) :=</span>
+<span id="L61">61     div_le_div_of_nonneg_left hnum_nonneg hdeltaSmall hdelta</span>
+<span id="L62">62   have hlog :</span>
+<span id="L63">63       Real.log</span>
+<span id="L64">64           ((((horizon + 1 : Nat) : Real) *</span>
+<span id="L65">65               ((horizon + 2 : Nat) : Real)) / deltaLarge) &lt;=</span>
+<span id="L66">66         Real.log</span>
+<span id="L67">67           ((((horizon + 1 : Nat) : Real) *</span>
+<span id="L68">68               ((horizon + 2 : Nat) : Real)) / deltaSmall) :=</span>
+<span id="L69">69     Real.log_le_log (div_pos hnum_pos hdeltaLarge) hratio</span>
+<span id="L70">70   unfold telescopingHighProbabilityRegretLogBudget</span>
+<span id="L71">71   exact add_le_add le_rfl</span>
+<span id="L72">72     (mul_le_mul_of_nonneg_left hlog (by norm_num : (0 : Real) &lt;= 2))</span>
+<span id="L73">73 </span>
+<span id="L74">74 /--</span>
+<span id="L75">75 For fixed positive `delta`, the explicit telescoping confidence logarithm is</span>
+<span id="L76">76 `O(log (T + 1))`.</span>
+<span id="L77">77 -/</span>
+<span id="L78">78 theorem telescopingHighProbabilityRegretLogBudget_isBigO_log_succ</span>
+<span id="L79">79     {Feature : Type u}</span>
+<span id="L80">80     [Fintype Feature] [Nonempty Feature]</span>
+<span id="L81">81     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L82">82     (delta : Real) (hdelta : 0 &lt; delta)</span>
+<span id="L83">83     (L2 : Real) (hL2 : 0 &lt;= L2) :</span>
+<span id="L84">84     (fun horizon : Nat =&gt;</span>
+<span id="L85">85       telescopingHighProbabilityRegretLogBudget</span>
+<span id="L86">86         (Feature := Feature) lambda delta horizon L2) =O[atTop]</span>
+<span id="L87">87       (fun horizon : Nat =&gt;</span>
+<span id="L88">88         Real.log (((horizon + 1 : Nat) : Real))) := by</span>
+<span id="L89">89   have hscheduled :</span>
+<span id="L90">90       (fun horizon : Nat =&gt;</span>
+<span id="L91">91         telescopingStandardExpectedRegretLogBudget</span>
+<span id="L92">92           (Feature := Feature) lambda horizon L2) =O[atTop]</span>
+<span id="L93">93         (fun horizon : Nat =&gt;</span>
+<span id="L94">94           Real.log (((horizon + 1 : Nat) : Real))) :=</span>
+<span id="L95">95     telescopingStandardExpectedRegretLogBudget_isBigO_log</span>
+<span id="L96">96       (Feature := Feature) lambda hlambda L2 hL2</span>
+<span id="L97">97   have hcompare :</span>
+<span id="L98">98       (fun horizon : Nat =&gt;</span>
+<span id="L99">99         telescopingHighProbabilityRegretLogBudget</span>
+<span id="L100">100           (Feature := Feature) lambda delta horizon L2) =O[atTop]</span>
+<span id="L101">101         (fun horizon : Nat =&gt;</span>
+<span id="L102">102           telescopingStandardExpectedRegretLogBudget</span>
+<span id="L103">103             (Feature := Feature) lambda horizon L2) := by</span>
+<span id="L104">104     rw [Asymptotics.isBigO_iff]</span>
+<span id="L105">105     refine ⟨1, ?_⟩</span>
+<span id="L106">106     obtain ⟨threshold, hthreshold⟩ :=</span>
+<span id="L107">107       (exists_nat_gt (max (1 / delta) delta) : ∃ threshold : Nat,</span>
+<span id="L108">108         max (1 / delta) delta &lt; threshold)</span>
+<span id="L109">109     filter_upwards [eventually_ge_atTop threshold] with horizon hhorizon</span>
+<span id="L110">110     have hthreshold_le :</span>
+<span id="L111">111         (threshold : Real) &lt;= (((horizon + 1 : Nat) : Real)) := by</span>
+<span id="L112">112       exact_mod_cast le_trans hhorizon (Nat.le_add_right horizon 1)</span>
+<span id="L113">113     have hscale :</span>
+<span id="L114">114         1 / delta &lt; (((horizon + 1 : Nat) : Real)) :=</span>
+<span id="L115">115       ((le_max_left (1 / delta) delta).trans_lt hthreshold).trans_le</span>
+<span id="L116">116         hthreshold_le</span>
+<span id="L117">117     have hdelta_succ :</span>
+<span id="L118">118         delta &lt; (((horizon + 1 : Nat) : Real)) :=</span>
+<span id="L119">119       ((le_max_right (1 / delta) delta).trans_lt hthreshold).trans_le</span>
+<span id="L120">120         hthreshold_le</span>
+<span id="L121">121     have hshare :</span>
+<span id="L122">122         standardExpectedRegretDelta horizon &lt;= delta := by</span>
+<span id="L123">123       unfold standardExpectedRegretDelta</span>
+<span id="L124">124       rw [div_le_iff₀ (by positivity :</span>
+<span id="L125">125         0 &lt; (((horizon + 1 : Nat) : Real)))]</span>
+<span id="L126">126       have hmul :</span>
+<span id="L127">127           1 &lt; (((horizon + 1 : Nat) : Real)) * delta :=</span>
+<span id="L128">128         (div_lt_iff₀ hdelta).mp hscale</span>
+<span id="L129">129       nlinarith</span>
+<span id="L130">130     have hfixed_nonneg :</span>
+<span id="L131">131         0 &lt;=</span>
+<span id="L132">132           telescopingHighProbabilityRegretLogBudget</span>
+<span id="L133">133             (Feature := Feature) lambda delta horizon L2 := by</span>
+<span id="L134">134       have hdet :</span>
+<span id="L135">135           0 &lt;= standardScalarLogDetBudget</span>
+<span id="L136">136             (Feature := Feature) lambda (horizon + 1) L2 :=</span>
+<span id="L137">137         standardScalarLogDetBudget_nonneg</span>
+<span id="L138">138           (Feature := Feature) lambda hlambda (horizon + 1) L2 hL2</span>
+<span id="L139">139       have hfirst_nonneg :</span>
+<span id="L140">140           0 &lt;= (((horizon + 1 : Nat) : Real)) := by positivity</span>
+<span id="L141">141       have hsecond_one :</span>
+<span id="L142">142           (1 : Real) &lt;= (((horizon + 2 : Nat) : Real)) := by</span>
+<span id="L143">143         exact_mod_cast Nat.succ_le_succ (Nat.zero_le (horizon + 1))</span>
+<span id="L144">144       have hdelta_prod :</span>
+<span id="L145">145           delta &lt;=</span>
+<span id="L146">146             (((horizon + 1 : Nat) : Real) *</span>
+<span id="L147">147               ((horizon + 2 : Nat) : Real)) :=</span>
+<span id="L148">148         (le_of_lt hdelta_succ).trans</span>
+<span id="L149">149           (le_mul_of_one_le_right hfirst_nonneg hsecond_one)</span>
+<span id="L150">150       have hratio_one :</span>
+<span id="L151">151           (1 : Real) &lt;=</span>
+<span id="L152">152             ((((horizon + 1 : Nat) : Real) *</span>
+<span id="L153">153                 ((horizon + 2 : Nat) : Real)) / delta) := by</span>
+<span id="L154">154         rw [le_div_iff₀ hdelta]</span>
+<span id="L155">155         simpa using hdelta_prod</span>
+<span id="L156">156       unfold telescopingHighProbabilityRegretLogBudget</span>
+<span id="L157">157       exact add_nonneg hdet</span>
+<span id="L158">158         (mul_nonneg (by norm_num) (Real.log_nonneg hratio_one))</span>
+<span id="L159">159     have hscheduled_nonneg :</span>
+<span id="L160">160         0 &lt;=</span>
+<span id="L161">161           telescopingStandardExpectedRegretLogBudget</span>
+<span id="L162">162             (Feature := Feature) lambda horizon L2 := by</span>
+<span id="L163">163       rw [←</span>
+<span id="L164">164         telescopingHighProbabilityRegretLogBudget_standardExpectedRegretDelta</span>
+<span id="L165">165           (Feature := Feature) lambda horizon L2]</span>
+<span id="L166">166       exact</span>
+<span id="L167">167         telescopingHighProbabilityRegretLogBudget_nonneg</span>
+<span id="L168">168           (Feature := Feature) lambda hlambda</span>
+<span id="L169">169           (standardExpectedRegretDelta horizon)</span>
+<span id="L170">170           (standardExpectedRegretDelta_pos horizon)</span>
+<span id="L171">171           (standardExpectedRegretDelta_le_one horizon)</span>
+<span id="L172">172           horizon L2 hL2</span>
+<span id="L173">173     have hbudget :</span>
+<span id="L174">174         telescopingHighProbabilityRegretLogBudget</span>
+<span id="L175">175             (Feature := Feature) lambda delta horizon L2 &lt;=</span>
+<span id="L176">176           telescopingStandardExpectedRegretLogBudget</span>
+<span id="L177">177             (Feature := Feature) lambda horizon L2 := by</span>
+<span id="L178">178       rw [←</span>
+<span id="L179">179         telescopingHighProbabilityRegretLogBudget_standardExpectedRegretDelta</span>
+<span id="L180">180           (Feature := Feature) lambda horizon L2]</span>
+<span id="L181">181       exact</span>
+<span id="L182">182         telescopingHighProbabilityRegretLogBudget_anti_delta</span>
+<span id="L183">183           (Feature := Feature) lambda L2</span>
+<span id="L184">184           (standardExpectedRegretDelta_pos horizon) hshare horizon</span>
+<span id="L185">185     rw [Real.norm_eq_abs, abs_of_nonneg hfixed_nonneg,</span>
+<span id="L186">186       Real.norm_eq_abs, abs_of_nonneg hscheduled_nonneg, one_mul]</span>
+<span id="L187">187     exact hbudget</span>
+<span id="L188">188   exact hcompare.trans hscheduled</span>
+<span id="L189">189 </span>
+<span id="L190">190 /--</span>
+<span id="L191">191 For fixed model parameters and confidence level, the explicit telescoping</span>
+<span id="L192">192 high-probability budget is `O(sqrt (T + 1) * log (T + 1))`.</span>
+<span id="L193">193 -/</span>
+<span id="L194">194 theorem</span>
+<span id="L195">195     telescopingHighProbabilityPseudoRegretBound_isBigO_sqrt_mul_log</span>
+<span id="L196">196     {Feature : Type u}</span>
+<span id="L197">197     [Fintype Feature] [Nonempty Feature]</span>
+<span id="L198">198     (R : Real)</span>
+<span id="L199">199     (delta : Real) (hdelta : 0 &lt; delta)</span>
+<span id="L200">200     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L201">201     (S : Real) (L2 : Real) (hL2 : 0 &lt;= L2) :</span>
+<span id="L202">202     (fun horizon : Nat =&gt;</span>
+<span id="L203">203       telescopingHighProbabilityPseudoRegretBound</span>
+<span id="L204">204         (Feature := Feature) R delta lambda S horizon L2) =O[atTop]</span>
+<span id="L205">205       (fun horizon : Nat =&gt;</span>
+<span id="L206">206         Real.sqrt (((horizon + 1 : Nat) : Real)) *</span>
+<span id="L207">207           Real.log (((horizon + 1 : Nat) : Real))) := by</span>
+<span id="L208">208   let n : Nat -&gt; Real := fun horizon =&gt; (((horizon + 1 : Nat) : Real))</span>
+<span id="L209">209   let logN : Nat -&gt; Real := fun horizon =&gt; Real.log (n horizon)</span>
+<span id="L210">210   let sqrtN : Nat -&gt; Real := fun horizon =&gt; Real.sqrt (n horizon)</span>
+<span id="L211">211   let B : Nat -&gt; Real := fun horizon =&gt;</span>
+<span id="L212">212     standardScalarLogDetBudget</span>
+<span id="L213">213       (Feature := Feature) lambda (horizon + 1) L2</span>
+<span id="L214">214   let C : Nat -&gt; Real := fun horizon =&gt;</span>
+<span id="L215">215     telescopingHighProbabilityRegretLogBudget</span>
+<span id="L216">216       (Feature := Feature) lambda delta horizon L2</span>
+<span id="L217">217   have hlog_nonneg :</span>
+<span id="L218">218       ∀ᶠ horizon in atTop, 0 &lt;= logN horizon := by</span>
+<span id="L219">219     exact Filter.Eventually.of_forall fun horizon =&gt; by</span>
+<span id="L220">220       dsimp [logN, n]</span>
+<span id="L221">221       exact Real.log_nonneg (by</span>
+<span id="L222">222         exact_mod_cast Nat.succ_le_succ (Nat.zero_le horizon))</span>
+<span id="L223">223   have hB : B =O[atTop] logN := by</span>
+<span id="L224">224     simpa [B, logN, n] using</span>
+<span id="L225">225       standardScalarLogDetBudget_isBigO_log</span>
+<span id="L226">226         (Feature := Feature) lambda hlambda L2 hL2</span>
+<span id="L227">227   have hC : C =O[atTop] logN := by</span>
+<span id="L228">228     simpa [C, logN, n] using</span>
+<span id="L229">229       telescopingHighProbabilityRegretLogBudget_isBigO_log_succ</span>
+<span id="L230">230         (Feature := Feature) lambda hlambda</span>
+<span id="L231">231         delta hdelta L2 hL2</span>
+<span id="L232">232   have hsqrtC :</span>
+<span id="L233">233       (fun horizon =&gt; Real.sqrt (C horizon)) =O[atTop]</span>
+<span id="L234">234         (fun horizon =&gt; Real.sqrt (logN horizon)) :=</span>
+<span id="L235">235     hC.sqrt hlog_nonneg</span>
+<span id="L236">236   have hsqrt2B :</span>
+<span id="L237">237       (fun horizon =&gt; Real.sqrt (2 * B horizon)) =O[atTop]</span>
+<span id="L238">238         (fun horizon =&gt; Real.sqrt (logN horizon)) :=</span>
+<span id="L239">239     (hB.const_mul_left 2).sqrt hlog_nonneg</span>
+<span id="L240">240   have hsqrtLogLog :</span>
+<span id="L241">241       (fun horizon =&gt; Real.sqrt (logN horizon)) =O[atTop] logN := by</span>
+<span id="L242">242     simpa [logN, n] using sqrt_log_succ_isBigO_log_succ</span>
+<span id="L243">243   have hsqrtN : sqrtN =O[atTop] sqrtN :=</span>
+<span id="L244">244     Asymptotics.isBigO_refl _ _</span>
+<span id="L245">245   have hsqrtN_sqrtLog_scale :</span>
+<span id="L246">246       (fun horizon =&gt; sqrtN horizon * Real.sqrt (logN horizon)) =O[atTop]</span>
+<span id="L247">247         (fun horizon =&gt; sqrtN horizon * logN horizon) :=</span>
+<span id="L248">248     hsqrtN.mul hsqrtLogLog</span>
+<span id="L249">249   have hvariance :</span>
+<span id="L250">250       (fun horizon =&gt; sqrtN horizon * Real.sqrt (2 * B horizon)) =O[atTop]</span>
+<span id="L251">251         (fun horizon =&gt; sqrtN horizon * logN horizon) :=</span>
+<span id="L252">252     (hsqrtN.mul hsqrt2B).trans hsqrtN_sqrtLog_scale</span>
+<span id="L253">253   have hconfidenceVariance :</span>
+<span id="L254">254       (fun horizon =&gt;</span>
+<span id="L255">255         Real.sqrt (C horizon) *</span>
+<span id="L256">256           (sqrtN horizon * Real.sqrt (2 * B horizon))) =O[atTop]</span>
+<span id="L257">257         (fun horizon =&gt; sqrtN horizon * logN horizon) := by</span>
+<span id="L258">258     have hproduct := hsqrtC.mul hsqrt2B</span>
+<span id="L259">259     have hproductLog :</span>
+<span id="L260">260         (fun horizon =&gt;</span>
+<span id="L261">261           Real.sqrt (C horizon) * Real.sqrt (2 * B horizon)) =O[atTop]</span>
+<span id="L262">262           logN := by</span>
+<span id="L263">263       refine hproduct.congr&#x27; Filter.EventuallyEq.rfl ?_</span>
+<span id="L264">264       filter_upwards [hlog_nonneg] with horizon hlog</span>
+<span id="L265">265       exact Real.mul_self_sqrt hlog</span>
+<span id="L266">266     have hmul := hsqrtN.mul hproductLog</span>
+<span id="L267">267     simpa [mul_assoc, mul_left_comm, mul_comm] using hmul</span>
+<span id="L268">268   have hn_tendsto : Tendsto n atTop atTop := by</span>
+<span id="L269">269     dsimp [n]</span>
+<span id="L270">270     exact (tendsto_add_atTop_iff_nat 1).2 tendsto_natCast_atTop_atTop</span>
+<span id="L271">271   have hconstantLog :</span>
+<span id="L272">272       (fun _horizon : Nat =&gt; 2 * S * Real.sqrt L2) =o[atTop] logN := by</span>
+<span id="L273">273     change</span>
+<span id="L274">274       (fun _horizon : Nat =&gt; 2 * S * Real.sqrt L2) =o[atTop]</span>
+<span id="L275">275         (fun horizon =&gt; Real.log (n horizon))</span>
+<span id="L276">276     simpa only [Function.comp_apply] using</span>
+<span id="L277">277       (Real.isLittleO_const_log_atTop</span>
+<span id="L278">278         (c := 2 * S * Real.sqrt L2)).comp_tendsto hn_tendsto</span>
+<span id="L279">279   have hlogScale :</span>
+<span id="L280">280       logN =O[atTop] (fun horizon =&gt; sqrtN horizon * logN horizon) := by</span>
+<span id="L281">281     refine (Asymptotics.isBigO_refl logN atTop).trans_le ?_</span>
+<span id="L282">282     intro horizon</span>
+<span id="L283">283     have hn_one : 1 &lt;= n horizon := by</span>
+<span id="L284">284       dsimp [n]</span>
+<span id="L285">285       exact_mod_cast Nat.succ_le_succ (Nat.zero_le horizon)</span>
+<span id="L286">286     have hsqrt_one : 1 &lt;= sqrtN horizon := by</span>
+<span id="L287">287       dsimp [sqrtN]</span>
+<span id="L288">288       rw [← Real.sqrt_one]</span>
+<span id="L289">289       exact Real.sqrt_le_sqrt hn_one</span>
+<span id="L290">290     have hlog : 0 &lt;= logN horizon := by</span>
+<span id="L291">291       dsimp [logN]</span>
+<span id="L292">292       exact Real.log_nonneg hn_one</span>
+<span id="L293">293     rw [Real.norm_eq_abs, abs_of_nonneg hlog,</span>
+<span id="L294">294       Real.norm_eq_abs, abs_of_nonneg</span>
+<span id="L295">295         (mul_nonneg (Real.sqrt_nonneg _) hlog)]</span>
+<span id="L296">296     nlinarith</span>
+<span id="L297">297   have hconstant :</span>
+<span id="L298">298       (fun _horizon : Nat =&gt; 2 * S * Real.sqrt L2) =O[atTop]</span>
+<span id="L299">299         (fun horizon =&gt; sqrtN horizon * logN horizon) :=</span>
+<span id="L300">300     hconstantLog.isBigO.trans hlogScale</span>
+<span id="L301">301   have hconfidenceTerm :</span>
+<span id="L302">302       (fun horizon =&gt;</span>
+<span id="L303">303         2 * R *</span>
+<span id="L304">304           (Real.sqrt (C horizon) *</span>
+<span id="L305">305             (sqrtN horizon * Real.sqrt (2 * B horizon)))) =O[atTop]</span>
+<span id="L306">306         (fun horizon =&gt; sqrtN horizon * logN horizon) :=</span>
+<span id="L307">307     hconfidenceVariance.const_mul_left (2 * R)</span>
+<span id="L308">308   have hbiasTerm :</span>
+<span id="L309">309       (fun horizon =&gt;</span>
+<span id="L310">310         (2 * (Real.sqrt lambda * S)) *</span>
+<span id="L311">311           (sqrtN horizon * Real.sqrt (2 * B horizon))) =O[atTop]</span>
+<span id="L312">312         (fun horizon =&gt; sqrtN horizon * logN horizon) :=</span>
+<span id="L313">313     hvariance.const_mul_left (2 * (Real.sqrt lambda * S))</span>
+<span id="L314">314   have hsum := hconstant.add (hconfidenceTerm.add hbiasTerm)</span>
+<span id="L315">315   refine hsum.congr (fun horizon =&gt; ?_) (fun _ =&gt; rfl)</span>
+<span id="L316">316   simp only [telescopingHighProbabilityPseudoRegretBound]</span>
+<span id="L317">317   dsimp [B, C, sqrtN, logN, n]</span>
+<span id="L318">318   ring</span>
+<span id="L319">319 </span>
+<span id="L320">320 /-- The cast of `Nat.log2 T + 1` is `O(log (T + 1))`. -/</span>
+<span id="L321">321 theorem natCast_log2_add_one_isBigO_log_succ :</span>
+<span id="L322">322     (fun horizon : Nat =&gt; ((Nat.log2 horizon + 1 : Nat) : Real)) =O[atTop]</span>
+<span id="L323">323       (fun horizon : Nat =&gt;</span>
+<span id="L324">324         Real.log (((horizon + 1 : Nat) : Real))) := by</span>
+<span id="L325">325   rw [Asymptotics.isBigO_iff]</span>
+<span id="L326">326   let C : Real := 1 / Real.log 2 + 1 / Real.log 3</span>
+<span id="L327">327   refine ⟨C, ?_⟩</span>
+<span id="L328">328   filter_upwards [eventually_ge_atTop 2] with horizon hhorizon</span>
+<span id="L329">329   have hlog2 : 0 &lt; Real.log 2 := Real.log_pos (by norm_num)</span>
+<span id="L330">330   have hlog3 : 0 &lt; Real.log 3 := Real.log_pos (by norm_num)</span>
+<span id="L331">331   have hhorizon_pos : 0 &lt; (horizon : Real) := by</span>
+<span id="L332">332     exact_mod_cast lt_of_lt_of_le (by norm_num : 0 &lt; 2) hhorizon</span>
+<span id="L333">333   have hhorizon_le_succ :</span>
+<span id="L334">334       (horizon : Real) &lt;= (((horizon + 1 : Nat) : Real)) := by</span>
+<span id="L335">335     exact_mod_cast Nat.le_add_right horizon 1</span>
+<span id="L336">336   have hthree_le_succ :</span>
+<span id="L337">337       (3 : Real) &lt;= (((horizon + 1 : Nat) : Real)) := by</span>
+<span id="L338">338     exact_mod_cast Nat.succ_le_succ hhorizon</span>
+<span id="L339">339   have hlog_horizon_le :</span>
+<span id="L340">340       Real.log (horizon : Real) &lt;=</span>
+<span id="L341">341         Real.log (((horizon + 1 : Nat) : Real)) :=</span>
+<span id="L342">342     Real.log_le_log hhorizon_pos hhorizon_le_succ</span>
+<span id="L343">343   have hlog_three_le :</span>
+<span id="L344">344       Real.log 3 &lt;=</span>
+<span id="L345">345         Real.log (((horizon + 1 : Nat) : Real)) :=</span>
+<span id="L346">346     Real.log_le_log (by norm_num) hthree_le_succ</span>
+<span id="L347">347   have hnat_log :</span>
+<span id="L348">348       (Nat.log2 horizon : Real) &lt;=</span>
+<span id="L349">349         Real.log (((horizon + 1 : Nat) : Real)) / Real.log 2 := by</span>
+<span id="L350">350     calc</span>
+<span id="L351">351       (Nat.log2 horizon : Real) &lt;= Real.logb 2 horizon :=</span>
+<span id="L352">352         Real.log2_le_logb horizon</span>
+<span id="L353">353       _ = Real.log (horizon : Real) / Real.log 2 := by</span>
+<span id="L354">354         rfl</span>
+<span id="L355">355       _ &lt;=</span>
+<span id="L356">356           Real.log (((horizon + 1 : Nat) : Real)) / Real.log 2 :=</span>
+<span id="L357">357         (div_le_div_iff_of_pos_right hlog2).2 hlog_horizon_le</span>
+<span id="L358">358   have hone :</span>
+<span id="L359">359       (1 : Real) &lt;=</span>
+<span id="L360">360         Real.log (((horizon + 1 : Nat) : Real)) / Real.log 3 :=</span>
+<span id="L361">361     (le_div_iff₀ hlog3).2 (by simpa using hlog_three_le)</span>
+<span id="L362">362   have hbound :</span>
+<span id="L363">363       ((Nat.log2 horizon + 1 : Nat) : Real) &lt;=</span>
+<span id="L364">364         C * Real.log (((horizon + 1 : Nat) : Real)) := by</span>
+<span id="L365">365     norm_num only [Nat.cast_add, Nat.cast_one] at hnat_log hone ⊢</span>
+<span id="L366">366     dsimp [C]</span>
+<span id="L367">367     calc</span>
+<span id="L368">368       (Nat.log2 horizon : Real) + 1 &lt;=</span>
+<span id="L369">369           Real.log ((horizon : Real) + 1) / Real.log 2 +</span>
+<span id="L370">370             Real.log ((horizon : Real) + 1) / Real.log 3 :=</span>
+<span id="L371">371         add_le_add hnat_log hone</span>
+<span id="L372">372       _ =</span>
+<span id="L373">373           (1 / Real.log 2 + 1 / Real.log 3) *</span>
+<span id="L374">374             Real.log ((horizon : Real) + 1) := by</span>
+<span id="L375">375         ring</span>
+<span id="L376">376   have hleft_nonneg :</span>
+<span id="L377">377       0 &lt;= ((Nat.log2 horizon + 1 : Nat) : Real) := by positivity</span>
+<span id="L378">378   have hright_log_nonneg :</span>
+<span id="L379">379       0 &lt;= Real.log (((horizon + 1 : Nat) : Real)) := by</span>
+<span id="L380">380     exact Real.log_nonneg (by</span>
+<span id="L381">381       exact_mod_cast Nat.succ_le_succ (Nat.zero_le horizon))</span>
+<span id="L382">382   have hC_nonneg : 0 &lt;= C := by</span>
+<span id="L383">383     dsimp [C]</span>
+<span id="L384">384     positivity</span>
+<span id="L385">385   rw [Real.norm_eq_abs, abs_of_nonneg hleft_nonneg,</span>
+<span id="L386">386     Real.norm_eq_abs, abs_of_nonneg hright_log_nonneg]</span>
+<span id="L387">387   simpa only [Real.norm_eq_abs, abs_of_nonneg hC_nonneg] using hbound</span>
+<span id="L388">388 </span>
+<span id="L389">389 /--</span>
+<span id="L390">390 The exact scalar power-of-two forced budget is</span>
+<span id="L391">391 `O(sqrt (T + 1) * log (T + 1))`.</span>
+<span id="L392">392 -/</span>
+<span id="L393">393 theorem</span>
+<span id="L394">394     powerOfTwoForcedScalarHighProbabilityPseudoRegretBound_isBigO_sqrt_mul_log</span>
+<span id="L395">395     {Feature : Type u}</span>
+<span id="L396">396     [Fintype Feature] [Nonempty Feature]</span>
+<span id="L397">397     (R : Real)</span>
+<span id="L398">398     (delta : Real) (hdelta : 0 &lt; delta)</span>
+<span id="L399">399     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L400">400     (S : Real) (L2 : Real) (hL2 : 0 &lt;= L2) :</span>
+<span id="L401">401     (fun horizon : Nat =&gt;</span>
+<span id="L402">402       powerOfTwoForcedScalarHighProbabilityPseudoRegretBound</span>
+<span id="L403">403         (Feature := Feature) R delta lambda S horizon L2) =O[atTop]</span>
+<span id="L404">404       (fun horizon : Nat =&gt;</span>
+<span id="L405">405         Real.sqrt (((horizon + 1 : Nat) : Real)) *</span>
+<span id="L406">406           Real.log (((horizon + 1 : Nat) : Real))) := by</span>
+<span id="L407">407   let logN : Nat -&gt; Real := fun horizon =&gt;</span>
+<span id="L408">408     Real.log (((horizon + 1 : Nat) : Real))</span>
+<span id="L409">409   let sqrtN : Nat -&gt; Real := fun horizon =&gt;</span>
+<span id="L410">410     Real.sqrt (((horizon + 1 : Nat) : Real))</span>
+<span id="L411">411   have hforcedLog :</span>
+<span id="L412">412       (fun horizon : Nat =&gt; ((Nat.log2 horizon + 1 : Nat) : Real)) =O[atTop]</span>
+<span id="L413">413         logN := by</span>
+<span id="L414">414     simpa [logN] using natCast_log2_add_one_isBigO_log_succ</span>
+<span id="L415">415   have hlogScale :</span>
+<span id="L416">416       logN =O[atTop] (fun horizon =&gt; sqrtN horizon * logN horizon) := by</span>
+<span id="L417">417     refine (Asymptotics.isBigO_refl logN atTop).trans_le ?_</span>
+<span id="L418">418     intro horizon</span>
+<span id="L419">419     have hn_one : 1 &lt;= (((horizon + 1 : Nat) : Real)) := by</span>
+<span id="L420">420       exact_mod_cast Nat.succ_le_succ (Nat.zero_le horizon)</span>
+<span id="L421">421     have hsqrt_one : 1 &lt;= sqrtN horizon := by</span>
+<span id="L422">422       dsimp [sqrtN]</span>
+<span id="L423">423       rw [← Real.sqrt_one]</span>
+<span id="L424">424       exact Real.sqrt_le_sqrt hn_one</span>
+<span id="L425">425     have hlog : 0 &lt;= logN horizon := by</span>
+<span id="L426">426       dsimp [logN]</span>
+<span id="L427">427       exact Real.log_nonneg hn_one</span>
+<span id="L428">428     rw [Real.norm_eq_abs, abs_of_nonneg hlog,</span>
+<span id="L429">429       Real.norm_eq_abs, abs_of_nonneg</span>
+<span id="L430">430         (mul_nonneg (Real.sqrt_nonneg _) hlog)]</span>
+<span id="L431">431     nlinarith</span>
+<span id="L432">432   have hforced :</span>
+<span id="L433">433       (fun horizon : Nat =&gt;</span>
+<span id="L434">434         ((Nat.log2 horizon + 1 : Nat) : Real) *</span>
+<span id="L435">435           (2 * S * Real.sqrt L2)) =O[atTop]</span>
+<span id="L436">436         (fun horizon =&gt; sqrtN horizon * logN horizon) := by</span>
+<span id="L437">437     have hforced&#x27; :=</span>
+<span id="L438">438       (hforcedLog.const_mul_left (2 * S * Real.sqrt L2)).trans hlogScale</span>
+<span id="L439">439     simpa [mul_comm] using hforced&#x27;</span>
+<span id="L440">440   have htelescoping :</span>
+<span id="L441">441       (fun horizon : Nat =&gt;</span>
+<span id="L442">442         telescopingHighProbabilityPseudoRegretBound</span>
+<span id="L443">443           (Feature := Feature) R delta lambda S horizon L2) =O[atTop]</span>
+<span id="L444">444         (fun horizon =&gt; sqrtN horizon * logN horizon) := by</span>
+<span id="L445">445     simpa [sqrtN, logN] using</span>
+<span id="L446">446       telescopingHighProbabilityPseudoRegretBound_isBigO_sqrt_mul_log</span>
+<span id="L447">447         (Feature := Feature) R delta hdelta</span>
+<span id="L448">448         lambda hlambda S L2 hL2</span>
+<span id="L449">449   simpa [</span>
+<span id="L450">450     powerOfTwoForcedScalarHighProbabilityPseudoRegretBound,</span>
+<span id="L451">451     sqrtN,</span>
+<span id="L452">452     logN] using hforced.add htelescoping</span>
+<span id="L453">453 </span>
+<span id="L454">454 /-- Named all-horizon violation event for the exact scalar asymptotic budget. -/</span>
+<span id="L455">455 noncomputable def</span>
+<span id="L456">456     powerOfTwoForcedCanonicalAsymptoticHighProbabilityPseudoRegretAllHorizonViolationSet</span>
+<span id="L457">457     {K : Nat} {Feature : Type u}</span>
+<span id="L458">458     [Fintype Feature]</span>
+<span id="L459">459     (lambda : Real)</span>
+<span id="L460">460     (thetaStar : Feature -&gt; Real)</span>
+<span id="L461">461     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L462">462     (R delta S L2 : Real)</span>
+<span id="L463">463     (best : Fin K) :</span>
+<span id="L464">464     Set (Nat -&gt; Fin K × Real) :=</span>
+<span id="L465">465   {trajectory | exists horizon,</span>
+<span id="L466">466     powerOfTwoForcedScalarHighProbabilityPseudoRegretBound</span>
+<span id="L467">467         (Feature := Feature) R delta lambda S horizon L2 &lt;</span>
+<span id="L468">468       canonicalStandardHighProbabilityPseudoRegret</span>
+<span id="L469">469         thetaStar actionFeature best horizon trajectory}</span>
+<span id="L470">470 </span>
+<span id="L471">471 /-- The asymptotic wrapper uses exactly the compiled scalar violation event. -/</span>
+<span id="L472">472 theorem</span>
+<span id="L473">473     powerOfTwoForcedCanonicalAsymptoticHighProbabilityPseudoRegretAllHorizonViolationSet_eq_scalar</span>
+<span id="L474">474     {K : Nat} {Feature : Type u}</span>
+<span id="L475">475     [Fintype Feature]</span>
+<span id="L476">476     (lambda : Real)</span>
+<span id="L477">477     (thetaStar : Feature -&gt; Real)</span>
+<span id="L478">478     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L479">479     (R delta S L2 : Real)</span>
+<span id="L480">480     (best : Fin K) :</span>
+<span id="L481">481     powerOfTwoForcedCanonicalAsymptoticHighProbabilityPseudoRegretAllHorizonViolationSet</span>
+<span id="L482">482         lambda thetaStar actionFeature R delta S L2 best =</span>
+<span id="L483">483       powerOfTwoForcedCanonicalStandardHighProbabilityPseudoRegretScalarAllHorizonViolationSet</span>
+<span id="L484">484         lambda thetaStar actionFeature R delta S L2 best := by</span>
+<span id="L485">485   rfl</span>
+<span id="L486">486 </span>
+<span id="L487">487 /--</span>
+<span id="L488">488 Complete one-policy asymptotic high-probability theorem: the exact scalar</span>
+<span id="L489">489 budget has the displayed fixed-model Big-O rate, complete pseudo-regret is</span>
+<span id="L490">490 nonnegative, and the unchanged all-horizon violation event has probability at</span>
+<span id="L491">491 most `delta`.</span>
+<span id="L492">492 -/</span>
+<span id="L493">493 theorem</span>
+<span id="L494">494     powerOfTwoForcedCanonicalStandardHighProbabilityPseudoRegret_asymptoticRate_nonneg_and_allHorizon_tail_le_of_linearSubgaussianEnvironment_of_featureBound_le_regularization</span>
+<span id="L495">495     {K : Nat} {Feature : Type u}</span>
+<span id="L496">496     [Fintype Feature] [DecidableEq Feature] [Nonempty Feature]</span>
+<span id="L497">497     (hK : 0 &lt; K)</span>
+<span id="L498">498     (lambda : Real) (hlambda : 0 &lt; lambda)</span>
+<span id="L499">499     (thetaStar : Feature -&gt; Real)</span>
+<span id="L500">500     (actionFeature : Fin K -&gt; Feature -&gt; Real)</span>
+<span id="L501">501     (R : Real) (hR : 0 &lt; R)</span>
+<span id="L502">502     (delta : Real) (hdelta : 0 &lt; delta) (hdelta_one : delta &lt;= 1)</span>
+<span id="L503">503     (S : Real) (hS : 0 &lt;= S)</span>
+<span id="L504">504     (forcedAction : Nat -&gt; Fin K)</span>
+<span id="L505">505     (environment : Thompson.HistoryEnvironment (Fin K) Real)</span>
+<span id="L506">506     (L2 : Real) (hL2 : 0 &lt;= L2)</span>
+<span id="L507">507     (hactionFeatureBound : forall action,</span>
+<span id="L508">508       dotProduct (actionFeature action) (actionFeature action) &lt;= L2)</span>
+<span id="L509">509     (hL2lambda : L2 &lt;= lambda)</span>
+<span id="L510">510     (best : Fin K)</span>
+<span id="L511">511     (hbest : IsOptimalLinearArm thetaStar actionFeature best)</span>
+<span id="L512">512     (source : CanonicalLinearSubgaussianEnvironmentLaw</span>
+<span id="L513">513       hK thetaStar actionFeature R S environment) :</span>
+<span id="L514">514     ((fun horizon : Nat =&gt;</span>
+<span id="L515">515       powerOfTwoForcedScalarHighProbabilityPseudoRegretBound</span>
+<span id="L516">516         (Feature := Feature) R delta lambda S horizon L2) =O[atTop]</span>
+<span id="L517">517       (fun horizon : Nat =&gt;</span>
+<span id="L518">518         Real.sqrt (((horizon + 1 : Nat) : Real)) *</span>
+<span id="L519">519           Real.log (((horizon + 1 : Nat) : Real)))) ∧</span>
+<span id="L520">520       (forall horizon trajectory,</span>
+<span id="L521">521         0 &lt;= canonicalStandardHighProbabilityPseudoRegret</span>
+<span id="L522">522           thetaStar actionFeature best horizon trajectory) ∧</span>
+<span id="L523">523       Thompson.canonicalHistoryTrajectoryMeasure</span>
+<span id="L524">524           (finiteHistoryPowerOfTwoForcedTelescopingScalarRidgeAlgorithm</span>
+<span id="L525">525             hK lambda actionFeature R delta S forcedAction)</span>
+<span id="L526">526           environment</span>
+<span id="L527">527           (powerOfTwoForcedCanonicalAsymptoticHighProbabilityPseudoRegretAllHorizonViolationSet</span>
+<span id="L528">528             lambda thetaStar actionFeature R delta S L2 best) &lt;=</span>
+<span id="L529">529         ENNReal.ofReal delta := by</span>
+<span id="L530">530   have hrate :=</span>
+<span id="L531">531     powerOfTwoForcedScalarHighProbabilityPseudoRegretBound_isBigO_sqrt_mul_log</span>
+<span id="L532">532       (Feature := Feature) R delta hdelta</span>
+<span id="L533">533       lambda hlambda S L2 hL2</span>
+<span id="L534">534   have htail :=</span>
+<span id="L535">535     powerOfTwoForcedCanonicalStandardHighProbabilityPseudoRegret_nonneg_and_scalarAllHorizon_tail_le_explicitBound_of_linearSubgaussianEnvironment_of_featureBound_le_regularization</span>
+<span id="L536">536       hK lambda hlambda thetaStar actionFeature R hR</span>
+<span id="L537">537       delta hdelta hdelta_one S hS forcedAction environment</span>
+<span id="L538">538       L2 hL2 hactionFeatureBound hL2lambda best hbest source</span>
+<span id="L539">539   refine ⟨hrate, htail.1, ?_⟩</span>
+<span id="L540">540   rw [</span>
+<span id="L541">541     powerOfTwoForcedCanonicalAsymptoticHighProbabilityPseudoRegretAllHorizonViolationSet_eq_scalar]</span>
+<span id="L542">542   exact htail.2</span>
+<span id="L543">543 </span>
+<span id="L544">544 end BanditRLProof.OFUL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

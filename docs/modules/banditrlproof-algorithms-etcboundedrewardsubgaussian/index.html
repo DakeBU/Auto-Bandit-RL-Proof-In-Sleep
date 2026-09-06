@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.ETCBoundedRewardSubGaussian · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.ETCBoundedRewardSubGaussian · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.ETCBoundedRewardSubGaussian · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · ETC</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>ETC<wbr>Bounded<wbr>Reward<wbr>Sub<wbr>Gaussian</h1>
+  <p class="lede">This module connects Mathlib&#x27;s bounded-variable Hoeffding lemma to the ETC reward-coordinate wrong-commit route. It still leaves the stochastic source of reward-coordinate independence, boundedness, and mean identities explicit.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSubGaussian.lean.html"><code>BanditRLProof/Algorithms/ETCBoundedRewardSubGaussian.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/etc/index.html">3. Explore-Then-Commit</a></dd></div>
+    <div><dt>Declarations</dt><dd>8</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-algorithms-etccentereddiffrewardsubgaussian/index.html"><code>BanditRLProof.Algorithms.ETCCenteredDiffRewardSubGaussian</code></a>, <a href="../banditrlproof-concentrationsubgaussian/index.html"><code>BanditRLProof.ConcentrationSubGaussian</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-etcboundedrewardsource/index.html"><code>BanditRLProof.Algorithms.ETCBoundedRewardSource</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-bbe490c07c1f">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.ETC.centeredRewardBoundVarianceProxy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Sub-Gaussian variance proxy induced by an almost-sure interval bound on one
+raw reward coordinate.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> centeredRewardBoundVarianceProxy {K : Nat} (lo hi : Fin K -&gt; Nat -&gt; Real) (a : Fin K) (t : Nat) : NNReal</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSubGaussian.lean.html#L19">Source line 19</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e27e9062581c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredReward_integrable_of_mem_Icc</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">An a.e. bounded raw reward coordinate is integrable.
+
+This is the bounded-to-integrable source needed by the conditional mean-zero
+route.  It is a thin ETC-shaped wrapper around Mathlib&#x27;s
+`MeasureTheory.Integrable.of_mem_Icc`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredReward_integrable_of_mem_Icc {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] (reward : Omega -&gt; RewardTrace Rat) (lo hi : Fin K -&gt; Nat -&gt; Real) (a : Fin K) (t : Nat) (hmeas : AEMeasurable (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t : Rat) : Real))) mu) (hbound : Filter.Eventually (<span class="kw">fun</span> omega : Omega =&gt; Set.Icc (lo a t) (hi a t) (((reward omega t : Rat) : Real))) (MeasureTheory.ae mu)) : MeasureTheory.Integrable (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t : Rat) : Real))) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSubGaussian.lean.html#L32">Source line 32</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1498f459f9c2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredReward_integral_eq_zero_of_integral_eq_mean</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">An exact raw-reward mean identity gives zero integral for the centered reward.
+
+This is the zero-integral source needed by the conditional mean-zero wrapper.
+It still keeps raw reward integrability explicit; boundedness or a concrete
+reward law can discharge that assumption in later leaves.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredReward_integral_eq_zero_of_integral_eq_mean {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (model : FiniteBanditModel K) (reward : Omega -&gt; RewardTrace Rat) (a : Fin K) (t : Nat) (hint : MeasureTheory.Integrable (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t : Rat) : Real))) mu) (hmean : MeasureTheory.integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t : Rat) : Real))) = (((model.mean a : Rat) : Real))) : MeasureTheory.integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t - model.mean a : Rat) : Real))) = <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSubGaussian.lean.html#L56">Source line 56</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9468b9f90114">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredReward_integral_eq_zero_of_mem_Icc_integral_eq_mean</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Bounded reward plus the correct raw-reward mean identity gives zero integral
+for the centered reward.
+
+This combines the bounded-to-integrable source with the exact-mean
+zero-integral wrapper.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredReward_integral_eq_zero_of_mem_Icc_integral_eq_mean {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (model : FiniteBanditModel K) (reward : Omega -&gt; RewardTrace Rat) (lo hi : Fin K -&gt; Nat -&gt; Real) (a : Fin K) (t : Nat) (hmeas : AEMeasurable (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t : Rat) : Real))) mu) (hbound : Filter.Eventually (<span class="kw">fun</span> omega : Omega =&gt; Set.Icc (lo a t) (hi a t) (((reward omega t : Rat) : Real))) (MeasureTheory.ae mu)) (hmean : MeasureTheory.integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t : Rat) : Real))) = (((model.mean a : Rat) : Real))) : MeasureTheory.integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t - model.mean a : Rat) : Real))) = <span class="num">0</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSubGaussian.lean.html#L103">Source line 103</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-148daefd99e2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.centeredReward_hasSubgaussianMGF_of_mem_Icc_integral_eq_mean</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Bounded reward plus the correct mean identity gives a centered reward
+sub-Gaussian witness.
+
+This is the `ETC-CENTERED-REWARD-BOUNDED-SUBGAUSSIAN-SOURCE` leaf. It is a
+thin ETC-shaped wrapper around Mathlib&#x27;s
+`ProbabilityTheory.hasSubgaussianMGF_of_mem_Icc`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> centeredReward_hasSubgaussianMGF_of_mem_Icc_integral_eq_mean {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (model : FiniteBanditModel K) (reward : Omega -&gt; RewardTrace Rat) (lo hi : Fin K -&gt; Nat -&gt; Real) (a : Fin K) (t : Nat) (hmeas : AEMeasurable (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t : Rat) : Real))) mu) (hbound : Filter.Eventually (<span class="kw">fun</span> omega : Omega =&gt; Set.Icc (lo a t) (hi a t) (((reward omega t : Rat) : Real))) (MeasureTheory.ae mu)) (hmean : MeasureTheory.integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t : Rat) : Real))) = (((model.mean a : Rat) : Real))) : ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t - model.mean a : Rat) : Real))) (ETC.centeredRewardBoundVarianceProxy lo hi a t) mu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSubGaussian.lean.html#L138">Source line 138</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c108481a315d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_centeredDiffSubGaussianTail_of_reward_iIndepFun_bounded_centered</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Concrete argmax-oracle wrong-commit probability bound from reward-coordinate
+independence, almost-sure bounded rewards, and exact per-coordinate mean
+identities.
+
+This is the `ETC-WRONG-COMMIT-BOUNDED-REWARD-SUBGAUSSIAN-BOUND` leaf. It
+uses Mathlib&#x27;s bounded-variable Hoeffding lemma only to produce the per-time
+centered reward `HasSubgaussianMGF` witnesses consumed by the already compiled
+reward-coordinate-law wrong-commit theorem.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_centeredDiffSubGaussianTail_of_reward_iIndepFun_bounded_centered {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (hK : <span class="num">0</span> &lt; K) (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (lo hi : Fin K -&gt; Nat -&gt; Real) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (h_reward_indep : ProbabilityTheory.iIndepFun (<span class="kw">fun</span> t omega =&gt; reward omega t) mu) (h_reward_meas : <span class="kw">forall</span> _b : Fin K, <span class="kw">forall</span> t, t &lt; spec.explorationPulls * K -&gt; AEMeasurable (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t : Rat) : Real))) mu) (h_reward_bound : <span class="kw">forall</span> b : Fin K, <span class="kw">forall</span> t, t &lt; spec.explorationPulls * K -&gt; Filter.Eventually (<span class="kw">fun</span> omega : Omega =&gt; Set.Icc (lo b t) (hi b t) (((reward omega t : Rat) : Real))) (MeasureTheory.ae mu)) (h_reward_mean : <span class="kw">forall</span> b : Fin K, <span class="kw">forall</span> t, t &lt; spec.explorationPulls * K -&gt; MeasureTheory.integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t : Rat) : Real))) = (((model.mean b : Rat) : Real))) : mu {omega : Omega | (ETC.argmaxCommitOracle hK).choose (<span class="kw">fun</span> a : Fin K =&gt; ETC.empMeanAtExploration spec commitArm (reward omega) a) = model.bestArm -&gt; False} &lt;= ((Finset.univ : Finset (Fin K)).filter (<span class="kw">fun</span> a : Fin K =&gt; a = model.bestArm -&gt; False)).sum (ETC.centeredDiffSubGaussianTail spec model (ETC.centeredPairwiseRewardDiffVarianceProxy spec model commitArm (ETC.centeredRewardBoundVarianceProxy lo hi)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSubGaussian.lean.html#L177">Source line 177</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-64ae517553bb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_centeredDiffSubGaussianTail_of_reward_iIndepFun_action_centeredReward_subG</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Concrete argmax-oracle wrong-commit probability bound from reward-coordinate
+independence plus action-matched centered reward sub-Gaussian witnesses.
+
+Unlike
+`prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_centeredDiffSubGaussianTail_of_reward_iIndepFun_centeredReward_subG`,
+this theorem only requires the centered witness for the arm actually pulled at
+time `t`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_centeredDiffSubGaussianTail_of_reward_iIndepFun_action_centeredReward_subG {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (hK : <span class="num">0</span> &lt; K) (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsFiniteMeasure mu] [MeasureTheory.IsZeroOrProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (cReward : Fin K -&gt; Nat -&gt; NNReal) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (h_reward_indep : ProbabilityTheory.iIndepFun (<span class="kw">fun</span> t omega =&gt; reward omega t) mu) (h_reward_subG : <span class="kw">forall</span> t, t &lt; spec.explorationPulls * K -&gt; ProbabilityTheory.HasSubgaussianMGF (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t - model.mean (ETC.actionWithCommit spec commitArm t) : Rat) : Real))) (cReward (ETC.actionWithCommit spec commitArm t) t) mu) : mu {omega : Omega | (ETC.argmaxCommitOracle hK).choose (<span class="kw">fun</span> a : Fin K =&gt; ETC.empMeanAtExploration spec commitArm (reward omega) a) = model.bestArm -&gt; False} &lt;= ((Finset.univ : Finset (Fin K)).filter (<span class="kw">fun</span> a : Fin K =&gt; a = model.bestArm -&gt; False)).sum (ETC.centeredDiffSubGaussianTail spec model (ETC.centeredPairwiseRewardDiffVarianceProxy spec model commitArm cReward))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSubGaussian.lean.html#L236">Source line 236</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d53c079382c2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.ETC.prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_centeredDiffSubGaussianTail_of_reward_iIndepFun_action_bounded_centered</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Concrete argmax-oracle wrong-commit probability bound from reward-coordinate
+independence, action-matched almost-sure reward bounds, and action-matched
+exact mean identities.
+
+This is the practical fixed-commit ETC source boundary for a single observed
+reward trace: `reward omega t` is centered at the mean of the arm actually
+pulled at time `t`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> prob_argmaxCommitOracle_ne_bestArm_le_filtered_sum_centeredDiffSubGaussianTail_of_reward_iIndepFun_action_bounded_centered {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (hK : <span class="num">0</span> &lt; K) (mu : MeasureTheory.Measure Omega) [MeasureTheory.IsProbabilityMeasure mu] (spec : ETC.Spec K) (model : FiniteBanditModel K) (commitArm : Fin K) (reward : Omega -&gt; RewardTrace Rat) (lo hi : Fin K -&gt; Nat -&gt; Real) (hexplorationPulls_pos : <span class="num">0</span> &lt; spec.explorationPulls) (h_reward_indep : ProbabilityTheory.iIndepFun (<span class="kw">fun</span> t omega =&gt; reward omega t) mu) (h_reward_meas : <span class="kw">forall</span> t, t &lt; spec.explorationPulls * K -&gt; AEMeasurable (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t : Rat) : Real))) mu) (h_reward_bound : <span class="kw">forall</span> t, t &lt; spec.explorationPulls * K -&gt; Filter.Eventually (<span class="kw">fun</span> omega : Omega =&gt; Set.Icc (lo (ETC.actionWithCommit spec commitArm t) t) (hi (ETC.actionWithCommit spec commitArm t) t) (((reward omega t : Rat) : Real))) (MeasureTheory.ae mu)) (h_reward_mean : <span class="kw">forall</span> t, t &lt; spec.explorationPulls * K -&gt; MeasureTheory.integral mu (<span class="kw">fun</span> omega : Omega =&gt; (((reward omega t : Rat) : Real))) = (((model.mean (ETC.actionWithCommit spec commitArm t) : Rat) : Real))) : mu {omega : Omega | (ETC.argmaxCommitOracle hK).choose (<span class="kw">fun</span> a : Fin K =&gt; ETC.empMeanAtExploration spec commitArm (reward omega) a) = model.bestArm -&gt; False} &lt;= ((Finset.univ : Finset (Fin K)).filter (<span class="kw">fun</span> a : Fin K =&gt; a = model.bestArm -&gt; False)).sum (ETC.centeredDiffSubGaussianTail spec model (ETC.centeredPairwiseRewardDiffVarianceProxy spec model commitArm (ETC.centeredRewardBoundVarianceProxy lo hi)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ETCBoundedRewardSubGaussian.lean.html#L290">Source line 290</a>
+
+      <a href="../../chapters/etc/index.html">Chapter context: ETC</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

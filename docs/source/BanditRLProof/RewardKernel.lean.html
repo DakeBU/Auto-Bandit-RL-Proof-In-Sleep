@@ -1,0 +1,2067 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RewardKernel.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RewardKernel.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RewardKernel.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RewardKernel.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.PolicyMeasurability</span>
+<span id="L2">2 import Mathlib.Probability.Kernel.Basic</span>
+<span id="L3">3 import Mathlib.Probability.Kernel.Composition.MapComap</span>
+<span id="L4">4 import Mathlib.Probability.Kernel.Composition.Prod</span>
+<span id="L5">5 import Mathlib.Probability.Kernel.IonescuTulcea.PartialTraj</span>
+<span id="L6">6 import Mathlib.Probability.Kernel.IonescuTulcea.Traj</span>
+<span id="L7">7 import Mathlib.Probability.Moments.SubGaussian</span>
+<span id="L8">8 </span>
+<span id="L9">9 /-!</span>
+<span id="L10">10 # Reward kernel contract surface</span>
+<span id="L11">11 </span>
+<span id="L12">12 This module records a narrow `KERNEL-REWARD` leaf: a reward law is represented</span>
+<span id="L13">13 as a Mathlib Markov kernel indexed by an arm/context object.  It exposes the</span>
+<span id="L14">14 kernel and the measurability/probability regularity facts needed by later</span>
+<span id="L15">15 policy-kernel and trajectory-law leaves, but it does not bind kernels or build</span>
+<span id="L16">16 a trajectory measure.</span>
+<span id="L17">17 -/</span>
+<span id="L18">18 </span>
+<span id="L19">19 open MeasureTheory</span>
+<span id="L20">20 </span>
+<span id="L21">21 universe u v w x y</span>
+<span id="L22">22 </span>
+<span id="L23">23 namespace BanditRLProof</span>
+<span id="L24">24 namespace RewardKernel</span>
+<span id="L25">25 </span>
+<span id="L26">26 /--</span>
+<span id="L27">27 A reward distribution indexed by an arm/context object.  The underlying object</span>
+<span id="L28">28 is Mathlib&#x27;s `ProbabilityTheory.Kernel`; the local wrapper gives later bandit</span>
+<span id="L29">29 proof leaves a stable project-level name for the regularity contract.</span>
+<span id="L30">30 -/</span>
+<span id="L31">31 structure MarkovRewardKernel</span>
+<span id="L32">32     (Index : Type u) (Reward : Type v)</span>
+<span id="L33">33     [MeasurableSpace Index] [MeasurableSpace Reward] where</span>
+<span id="L34">34   kernel : ProbabilityTheory.Kernel Index Reward</span>
+<span id="L35">35   isMarkovKernel : ProbabilityTheory.IsMarkovKernel kernel</span>
+<span id="L36">36 </span>
+<span id="L37">37 variable {Index : Type u} {Reward : Type v}</span>
+<span id="L38">38     [MeasurableSpace Index] [MeasurableSpace Reward]</span>
+<span id="L39">39 </span>
+<span id="L40">40 instance instIsMarkovKernel</span>
+<span id="L41">41     (rewardKernel : MarkovRewardKernel Index Reward) :</span>
+<span id="L42">42     ProbabilityTheory.IsMarkovKernel rewardKernel.kernel :=</span>
+<span id="L43">43   rewardKernel.isMarkovKernel</span>
+<span id="L44">44 </span>
+<span id="L45">45 /-- Build the local reward-kernel contract from a Mathlib Markov kernel. -/</span>
+<span id="L46">46 def ofKernel</span>
+<span id="L47">47     (kernel : ProbabilityTheory.Kernel Index Reward)</span>
+<span id="L48">48     (hkernel : ProbabilityTheory.IsMarkovKernel kernel) :</span>
+<span id="L49">49     MarkovRewardKernel Index Reward where</span>
+<span id="L50">50   kernel := kernel</span>
+<span id="L51">51   isMarkovKernel := hkernel</span>
+<span id="L52">52 </span>
+<span id="L53">53 /-- The reward kernel is measurable as a map into measures. -/</span>
+<span id="L54">54 theorem measurable_kernel</span>
+<span id="L55">55     (rewardKernel : MarkovRewardKernel Index Reward) :</span>
+<span id="L56">56     Measurable rewardKernel.kernel :=</span>
+<span id="L57">57   rewardKernel.kernel.measurable</span>
+<span id="L58">58 </span>
+<span id="L59">59 /-- A measurable random index selects a measurable random reward measure. -/</span>
+<span id="L60">60 theorem measurable_apply_of_measurable_index</span>
+<span id="L61">61     {Omega : Type w} [MeasurableSpace Omega]</span>
+<span id="L62">62     (rewardKernel : MarkovRewardKernel Index Reward)</span>
+<span id="L63">63     (index : Omega -&gt; Index)</span>
+<span id="L64">64     (hindex : Measurable index) :</span>
+<span id="L65">65     Measurable (fun omega : Omega =&gt; rewardKernel.kernel (index omega)) :=</span>
+<span id="L66">66   rewardKernel.kernel.measurable.comp hindex</span>
+<span id="L67">67 </span>
+<span id="L68">68 /--</span>
+<span id="L69">69 For every measurable reward event, the selected event probability is a</span>
+<span id="L70">70 measurable scalar function of the random index.</span>
+<span id="L71">71 -/</span>
+<span id="L72">72 theorem measurable_eventProbability_of_measurable_index</span>
+<span id="L73">73     {Omega : Type w} [MeasurableSpace Omega]</span>
+<span id="L74">74     (rewardKernel : MarkovRewardKernel Index Reward)</span>
+<span id="L75">75     (index : Omega -&gt; Index)</span>
+<span id="L76">76     (hindex : Measurable index)</span>
+<span id="L77">77     {event : Set Reward}</span>
+<span id="L78">78     (hevent : MeasurableSet event) :</span>
+<span id="L79">79     Measurable</span>
+<span id="L80">80       (fun omega : Omega =&gt; rewardKernel.kernel (index omega) event) :=</span>
+<span id="L81">81   (ProbabilityTheory.Kernel.measurable_coe rewardKernel.kernel hevent).comp</span>
+<span id="L82">82     hindex</span>
+<span id="L83">83 </span>
+<span id="L84">84 /-- Every measure selected by a reward kernel is a probability measure. -/</span>
+<span id="L85">85 theorem isProbabilityMeasure_apply</span>
+<span id="L86">86     (rewardKernel : MarkovRewardKernel Index Reward)</span>
+<span id="L87">87     (index : Index) :</span>
+<span id="L88">88     IsProbabilityMeasure (rewardKernel.kernel index) := by</span>
+<span id="L89">89   haveI : ProbabilityTheory.IsMarkovKernel rewardKernel.kernel :=</span>
+<span id="L90">90     rewardKernel.isMarkovKernel</span>
+<span id="L91">91   infer_instance</span>
+<span id="L92">92 </span>
+<span id="L93">93 @[simp]</span>
+<span id="L94">94 theorem apply_univ</span>
+<span id="L95">95     (rewardKernel : MarkovRewardKernel Index Reward)</span>
+<span id="L96">96     (index : Index) :</span>
+<span id="L97">97     rewardKernel.kernel index Set.univ = 1 := by</span>
+<span id="L98">98   haveI : IsProbabilityMeasure (rewardKernel.kernel index) :=</span>
+<span id="L99">99     isProbabilityMeasure_apply rewardKernel index</span>
+<span id="L100">100   simp</span>
+<span id="L101">101 </span>
+<span id="L102">102 /-- Constant probability reward law as a reward-kernel contract. -/</span>
+<span id="L103">103 def const</span>
+<span id="L104">104     (mu : Measure Reward)</span>
+<span id="L105">105     (hmu : IsProbabilityMeasure mu) :</span>
+<span id="L106">106     MarkovRewardKernel Index Reward where</span>
+<span id="L107">107   kernel := ProbabilityTheory.Kernel.const Index mu</span>
+<span id="L108">108   isMarkovKernel := by</span>
+<span id="L109">109     haveI : IsProbabilityMeasure mu := hmu</span>
+<span id="L110">110     infer_instance</span>
+<span id="L111">111 </span>
+<span id="L112">112 /-- Deterministic measurable reward law as a reward-kernel contract. -/</span>
+<span id="L113">113 noncomputable def deterministic</span>
+<span id="L114">114     (reward : Index -&gt; Reward)</span>
+<span id="L115">115     (hreward : Measurable reward) :</span>
+<span id="L116">116     MarkovRewardKernel Index Reward where</span>
+<span id="L117">117   kernel := ProbabilityTheory.Kernel.deterministic reward hreward</span>
+<span id="L118">118   isMarkovKernel := by infer_instance</span>
+<span id="L119">119 </span>
+<span id="L120">120 variable {Context : Type x} {Action : Type y}</span>
+<span id="L121">121     [MeasurableSpace Context] [MeasurableSpace Action]</span>
+<span id="L122">122 </span>
+<span id="L123">123 /--</span>
+<span id="L124">124 Select the reward measure associated with a context/action pair.  This is only</span>
+<span id="L125">125 the one-step reward-law lookup; it is not a trajectory-law construction.</span>
+<span id="L126">126 -/</span>
+<span id="L127">127 def selectedMeasure</span>
+<span id="L128">128     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L129">129     (context : Context) (action : Action) :</span>
+<span id="L130">130     Measure Reward :=</span>
+<span id="L131">131   rewardKernel.kernel (context, action)</span>
+<span id="L132">132 </span>
+<span id="L133">133 /--</span>
+<span id="L134">134 Build a context-independent reward kernel from action-indexed probability</span>
+<span id="L135">135 laws. Countability and measurable singletons make the action-to-measure map</span>
+<span id="L136">136 measurable; pulling it back along `Prod.snd` leaves the context unrestricted.</span>
+<span id="L137">137 -/</span>
+<span id="L138">138 def contextIndependentOfActionLaws</span>
+<span id="L139">139     [MeasurableSingletonClass Action] [Countable Action]</span>
+<span id="L140">140     (actionLaw : Action -&gt; Measure Reward)</span>
+<span id="L141">141     (hprob : forall action, IsProbabilityMeasure (actionLaw action)) :</span>
+<span id="L142">142     MarkovRewardKernel (Context × Action) Reward where</span>
+<span id="L143">143   kernel :=</span>
+<span id="L144">144     (ProbabilityTheory.Kernel.ofFunOfCountable actionLaw).comap</span>
+<span id="L145">145       Prod.snd measurable_snd</span>
+<span id="L146">146   isMarkovKernel := by</span>
+<span id="L147">147     constructor</span>
+<span id="L148">148     intro pair</span>
+<span id="L149">149     simpa using hprob pair.2</span>
+<span id="L150">150 </span>
+<span id="L151">151 /-- A context-independent reward kernel selects the original action law. -/</span>
+<span id="L152">152 @[simp]</span>
+<span id="L153">153 theorem selectedMeasure_contextIndependentOfActionLaws</span>
+<span id="L154">154     [MeasurableSingletonClass Action] [Countable Action]</span>
+<span id="L155">155     (actionLaw : Action -&gt; Measure Reward)</span>
+<span id="L156">156     (hprob : forall action, IsProbabilityMeasure (actionLaw action))</span>
+<span id="L157">157     (context : Context) (action : Action) :</span>
+<span id="L158">158     selectedMeasure</span>
+<span id="L159">159         (contextIndependentOfActionLaws actionLaw hprob) context action =</span>
+<span id="L160">160       actionLaw action := by</span>
+<span id="L161">161   rfl</span>
+<span id="L162">162 </span>
+<span id="L163">163 /-- A context/action-selected reward measure is a probability measure. -/</span>
+<span id="L164">164 theorem isProbabilityMeasure_selectedMeasure</span>
+<span id="L165">165     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L166">166     (context : Context) (action : Action) :</span>
+<span id="L167">167     IsProbabilityMeasure</span>
+<span id="L168">168       (selectedMeasure rewardKernel context action) := by</span>
+<span id="L169">169   simpa [selectedMeasure] using</span>
+<span id="L170">170     isProbabilityMeasure_apply rewardKernel (context, action)</span>
+<span id="L171">171 </span>
+<span id="L172">172 @[simp]</span>
+<span id="L173">173 theorem selectedMeasure_univ</span>
+<span id="L174">174     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L175">175     (context : Context) (action : Action) :</span>
+<span id="L176">176     selectedMeasure rewardKernel context action Set.univ = 1 := by</span>
+<span id="L177">177   simp [selectedMeasure]</span>
+<span id="L178">178 </span>
+<span id="L179">179 /--</span>
+<span id="L180">180 Measurable context and action random variables select a measurable random</span>
+<span id="L181">181 reward measure from the context/action reward kernel.</span>
+<span id="L182">182 -/</span>
+<span id="L183">183 theorem measurable_selectedMeasure_of_measurable</span>
+<span id="L184">184     {Omega : Type w} [MeasurableSpace Omega]</span>
+<span id="L185">185     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L186">186     (context : Omega -&gt; Context)</span>
+<span id="L187">187     (action : Omega -&gt; Action)</span>
+<span id="L188">188     (hcontext : Measurable context)</span>
+<span id="L189">189     (haction : Measurable action) :</span>
+<span id="L190">190     Measurable</span>
+<span id="L191">191       (fun omega : Omega =&gt;</span>
+<span id="L192">192         selectedMeasure rewardKernel (context omega) (action omega)) := by</span>
+<span id="L193">193   exact</span>
+<span id="L194">194     measurable_apply_of_measurable_index rewardKernel</span>
+<span id="L195">195       (fun omega : Omega =&gt; (context omega, action omega))</span>
+<span id="L196">196       (hcontext.prod haction)</span>
+<span id="L197">197 </span>
+<span id="L198">198 /--</span>
+<span id="L199">199 For a measurable reward event, measurable context and action random variables</span>
+<span id="L200">200 select a measurable event-probability scalar from the reward kernel.</span>
+<span id="L201">201 -/</span>
+<span id="L202">202 theorem measurable_selectedEventProbability_of_measurable</span>
+<span id="L203">203     {Omega : Type w} [MeasurableSpace Omega]</span>
+<span id="L204">204     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L205">205     (context : Omega -&gt; Context)</span>
+<span id="L206">206     (action : Omega -&gt; Action)</span>
+<span id="L207">207     (hcontext : Measurable context)</span>
+<span id="L208">208     (haction : Measurable action)</span>
+<span id="L209">209     {event : Set Reward}</span>
+<span id="L210">210     (hevent : MeasurableSet event) :</span>
+<span id="L211">211     Measurable</span>
+<span id="L212">212       (fun omega : Omega =&gt;</span>
+<span id="L213">213         selectedMeasure rewardKernel (context omega) (action omega) event) := by</span>
+<span id="L214">214   exact</span>
+<span id="L215">215     measurable_eventProbability_of_measurable_index rewardKernel</span>
+<span id="L216">216       (fun omega : Omega =&gt; (context omega, action omega))</span>
+<span id="L217">217       (hcontext.prod haction)</span>
+<span id="L218">218       hevent</span>
+<span id="L219">219 </span>
+<span id="L220">220 /--</span>
+<span id="L221">221 A measurable policy applied to a measurable state can be used as the action</span>
+<span id="L222">222 coordinate of a context/action reward kernel.</span>
+<span id="L223">223 -/</span>
+<span id="L224">224 theorem measurable_selectedMeasure_of_policy_state</span>
+<span id="L225">225     {Omega : Type w} {State : Type u}</span>
+<span id="L226">226     [MeasurableSpace Omega] [MeasurableSpace State]</span>
+<span id="L227">227     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L228">228     (policy : Policy.MeasurablePolicy State Action)</span>
+<span id="L229">229     (context : Omega -&gt; Context)</span>
+<span id="L230">230     (state : Omega -&gt; State)</span>
+<span id="L231">231     (hcontext : Measurable context)</span>
+<span id="L232">232     (hstate : Measurable state) :</span>
+<span id="L233">233     Measurable</span>
+<span id="L234">234       (fun omega : Omega =&gt;</span>
+<span id="L235">235         selectedMeasure rewardKernel (context omega)</span>
+<span id="L236">236           (policy.action (state omega))) := by</span>
+<span id="L237">237   exact</span>
+<span id="L238">238     measurable_selectedMeasure_of_measurable rewardKernel context</span>
+<span id="L239">239       (fun omega : Omega =&gt; policy.action (state omega))</span>
+<span id="L240">240       hcontext</span>
+<span id="L241">241       (Policy.measurable_action_of_measurable_state policy state hstate)</span>
+<span id="L242">242 </span>
+<span id="L243">243 /--</span>
+<span id="L244">244 Event-probability version of</span>
+<span id="L245">245 `measurable_selectedMeasure_of_policy_state`.</span>
+<span id="L246">246 -/</span>
+<span id="L247">247 theorem measurable_selectedEventProbability_of_policy_state</span>
+<span id="L248">248     {Omega : Type w} {State : Type u}</span>
+<span id="L249">249     [MeasurableSpace Omega] [MeasurableSpace State]</span>
+<span id="L250">250     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L251">251     (policy : Policy.MeasurablePolicy State Action)</span>
+<span id="L252">252     (context : Omega -&gt; Context)</span>
+<span id="L253">253     (state : Omega -&gt; State)</span>
+<span id="L254">254     (hcontext : Measurable context)</span>
+<span id="L255">255     (hstate : Measurable state)</span>
+<span id="L256">256     {event : Set Reward}</span>
+<span id="L257">257     (hevent : MeasurableSet event) :</span>
+<span id="L258">258     Measurable</span>
+<span id="L259">259       (fun omega : Omega =&gt;</span>
+<span id="L260">260         selectedMeasure rewardKernel (context omega)</span>
+<span id="L261">261           (policy.action (state omega)) event) := by</span>
+<span id="L262">262   exact</span>
+<span id="L263">263     measurable_selectedEventProbability_of_measurable rewardKernel context</span>
+<span id="L264">264       (fun omega : Omega =&gt; policy.action (state omega))</span>
+<span id="L265">265       hcontext</span>
+<span id="L266">266       (Policy.measurable_action_of_measurable_state policy state hstate)</span>
+<span id="L267">267       hevent</span>
+<span id="L268">268 </span>
+<span id="L269">269 /--</span>
+<span id="L270">270 The deterministic index map that turns a context/state pair into the</span>
+<span id="L271">271 context/action pair selected by a measurable policy.</span>
+<span id="L272">272 -/</span>
+<span id="L273">273 def policyContextStateIndex</span>
+<span id="L274">274     {State : Type u} [MeasurableSpace State]</span>
+<span id="L275">275     (policy : Policy.MeasurablePolicy State Action) :</span>
+<span id="L276">276     Context × State -&gt; Context × Action :=</span>
+<span id="L277">277   fun pair =&gt; (pair.1, policy.action pair.2)</span>
+<span id="L278">278 </span>
+<span id="L279">279 /-- The policy-induced context/state index map is measurable. -/</span>
+<span id="L280">280 theorem measurable_policyContextStateIndex</span>
+<span id="L281">281     {State : Type u} [MeasurableSpace State]</span>
+<span id="L282">282     (policy : Policy.MeasurablePolicy State Action) :</span>
+<span id="L283">283     Measurable (policyContextStateIndex (Context := Context) policy) := by</span>
+<span id="L284">284   exact measurable_fst.prodMk (policy.measurable_action.comp measurable_snd)</span>
+<span id="L285">285 </span>
+<span id="L286">286 /--</span>
+<span id="L287">287 Compose a measurable policy with a context/action reward kernel to obtain the</span>
+<span id="L288">288 one-step reward kernel indexed by context/state pairs.</span>
+<span id="L289">289 </span>
+<span id="L290">290 This is a one-step `KERNEL-POLICY-BIND` precursor.  It composes the policy map</span>
+<span id="L291">291 with reward-kernel lookup, but it does not yet build a finite-horizon or</span>
+<span id="L292">292 infinite-horizon trajectory law.</span>
+<span id="L293">293 -/</span>
+<span id="L294">294 def composePolicy</span>
+<span id="L295">295     {State : Type u} [MeasurableSpace State]</span>
+<span id="L296">296     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L297">297     (policy : Policy.MeasurablePolicy State Action) :</span>
+<span id="L298">298     MarkovRewardKernel (Context × State) Reward where</span>
+<span id="L299">299   kernel :=</span>
+<span id="L300">300     { toFun := fun pair : Context × State =&gt;</span>
+<span id="L301">301         selectedMeasure rewardKernel pair.1 (policy.action pair.2)</span>
+<span id="L302">302       measurable&#x27; := by</span>
+<span id="L303">303         simpa [policyContextStateIndex, selectedMeasure] using</span>
+<span id="L304">304           measurable_apply_of_measurable_index rewardKernel</span>
+<span id="L305">305             (policyContextStateIndex (Context := Context) policy)</span>
+<span id="L306">306             (measurable_policyContextStateIndex</span>
+<span id="L307">307               (Context := Context) policy) }</span>
+<span id="L308">308   isMarkovKernel := by</span>
+<span id="L309">309     refine ⟨fun pair =&gt; ?_⟩</span>
+<span id="L310">310     simpa [selectedMeasure] using</span>
+<span id="L311">311       isProbabilityMeasure_selectedMeasure rewardKernel pair.1</span>
+<span id="L312">312         (policy.action pair.2)</span>
+<span id="L313">313 </span>
+<span id="L314">314 @[simp]</span>
+<span id="L315">315 theorem composePolicy_kernel_apply</span>
+<span id="L316">316     {State : Type u} [MeasurableSpace State]</span>
+<span id="L317">317     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L318">318     (policy : Policy.MeasurablePolicy State Action)</span>
+<span id="L319">319     (pair : Context × State) :</span>
+<span id="L320">320     (composePolicy rewardKernel policy).kernel pair =</span>
+<span id="L321">321       selectedMeasure rewardKernel pair.1 (policy.action pair.2) :=</span>
+<span id="L322">322   rfl</span>
+<span id="L323">323 </span>
+<span id="L324">324 /-- The composed policy/reward kernel is a Mathlib Markov kernel. -/</span>
+<span id="L325">325 theorem isMarkovKernel_composePolicy</span>
+<span id="L326">326     {State : Type u} [MeasurableSpace State]</span>
+<span id="L327">327     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L328">328     (policy : Policy.MeasurablePolicy State Action) :</span>
+<span id="L329">329     ProbabilityTheory.IsMarkovKernel</span>
+<span id="L330">330       (composePolicy rewardKernel policy).kernel :=</span>
+<span id="L331">331   (composePolicy rewardKernel policy).isMarkovKernel</span>
+<span id="L332">332 </span>
+<span id="L333">333 /--</span>
+<span id="L334">334 For a measurable reward event, the event probability under the composed</span>
+<span id="L335">335 policy/reward kernel is measurable in the context/state pair.</span>
+<span id="L336">336 -/</span>
+<span id="L337">337 theorem measurable_composePolicy_eventProbability</span>
+<span id="L338">338     {State : Type u} [MeasurableSpace State]</span>
+<span id="L339">339     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L340">340     (policy : Policy.MeasurablePolicy State Action)</span>
+<span id="L341">341     {event : Set Reward}</span>
+<span id="L342">342     (hevent : MeasurableSet event) :</span>
+<span id="L343">343     Measurable</span>
+<span id="L344">344       (fun pair : Context × State =&gt;</span>
+<span id="L345">345         (composePolicy rewardKernel policy).kernel pair event) := by</span>
+<span id="L346">346   exact</span>
+<span id="L347">347     measurable_eventProbability_of_measurable_index</span>
+<span id="L348">348       (composePolicy rewardKernel policy)</span>
+<span id="L349">349       (fun pair : Context × State =&gt; pair)</span>
+<span id="L350">350       measurable_id</span>
+<span id="L351">351       hevent</span>
+<span id="L352">352 </span>
+<span id="L353">353 /--</span>
+<span id="L354">354 The policy-selected action as a deterministic map from context/state pairs.</span>
+<span id="L355">355 The context coordinate is carried so this map has the same source as the</span>
+<span id="L356">356 composed context/state reward kernel.</span>
+<span id="L357">357 -/</span>
+<span id="L358">358 def policyActionOfContextState</span>
+<span id="L359">359     {State : Type u} [MeasurableSpace State]</span>
+<span id="L360">360     (policy : Policy.MeasurablePolicy State Action) :</span>
+<span id="L361">361     Context × State -&gt; Action :=</span>
+<span id="L362">362   fun pair =&gt; policy.action pair.2</span>
+<span id="L363">363 </span>
+<span id="L364">364 /-- The policy-selected action map on context/state pairs is measurable. -/</span>
+<span id="L365">365 theorem measurable_policyActionOfContextState</span>
+<span id="L366">366     {State : Type u} [MeasurableSpace State]</span>
+<span id="L367">367     (policy : Policy.MeasurablePolicy State Action) :</span>
+<span id="L368">368     Measurable (policyActionOfContextState (Context := Context) policy) := by</span>
+<span id="L369">369   exact policy.measurable_action.comp measurable_snd</span>
+<span id="L370">370 </span>
+<span id="L371">371 /-- The deterministic action kernel induced by a measurable policy. -/</span>
+<span id="L372">372 noncomputable def policyActionKernel</span>
+<span id="L373">373     {State : Type u} [MeasurableSpace State]</span>
+<span id="L374">374     (policy : Policy.MeasurablePolicy State Action) :</span>
+<span id="L375">375     ProbabilityTheory.Kernel (Context × State) Action :=</span>
+<span id="L376">376   ProbabilityTheory.Kernel.deterministic</span>
+<span id="L377">377     (policyActionOfContextState (Context := Context) policy)</span>
+<span id="L378">378     (measurable_policyActionOfContextState (Context := Context) policy)</span>
+<span id="L379">379 </span>
+<span id="L380">380 @[simp]</span>
+<span id="L381">381 theorem policyActionKernel_apply</span>
+<span id="L382">382     {State : Type u} [MeasurableSpace State]</span>
+<span id="L383">383     (policy : Policy.MeasurablePolicy State Action)</span>
+<span id="L384">384     (pair : Context × State) :</span>
+<span id="L385">385     policyActionKernel (Context := Context) policy pair =</span>
+<span id="L386">386       Measure.dirac (policy.action pair.2) :=</span>
+<span id="L387">387   rfl</span>
+<span id="L388">388 </span>
+<span id="L389">389 /-- The policy action kernel is a Mathlib Markov kernel. -/</span>
+<span id="L390">390 theorem isMarkovKernel_policyActionKernel</span>
+<span id="L391">391     {State : Type u} [MeasurableSpace State]</span>
+<span id="L392">392     (policy : Policy.MeasurablePolicy State Action) :</span>
+<span id="L393">393     ProbabilityTheory.IsMarkovKernel</span>
+<span id="L394">394       (policyActionKernel (Context := Context) policy) := by</span>
+<span id="L395">395   unfold policyActionKernel</span>
+<span id="L396">396   infer_instance</span>
+<span id="L397">397 </span>
+<span id="L398">398 /--</span>
+<span id="L399">399 One-step action/reward kernel induced by a deterministic measurable policy and</span>
+<span id="L400">400 a context/action reward kernel.</span>
+<span id="L401">401 </span>
+<span id="L402">402 The output is the pair `(action, reward)`: the action coordinate is the</span>
+<span id="L403">403 policy-selected deterministic action, and the reward coordinate is drawn from</span>
+<span id="L404">404 the reward law selected by that same action.  This is still a one-step</span>
+<span id="L405">405 construction; finite-prefix assembly is provided separately below.</span>
+<span id="L406">406 -/</span>
+<span id="L407">407 noncomputable def composePolicyActionReward</span>
+<span id="L408">408     {State : Type u} [MeasurableSpace State]</span>
+<span id="L409">409     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L410">410     (policy : Policy.MeasurablePolicy State Action) :</span>
+<span id="L411">411     MarkovRewardKernel (Context × State) (Action × Reward) where</span>
+<span id="L412">412   kernel :=</span>
+<span id="L413">413     ProbabilityTheory.Kernel.prod</span>
+<span id="L414">414       (policyActionKernel (Context := Context) policy)</span>
+<span id="L415">415       (composePolicy rewardKernel policy).kernel</span>
+<span id="L416">416   isMarkovKernel := by</span>
+<span id="L417">417     haveI :</span>
+<span id="L418">418         ProbabilityTheory.IsMarkovKernel</span>
+<span id="L419">419           (policyActionKernel (Context := Context) policy) :=</span>
+<span id="L420">420       isMarkovKernel_policyActionKernel (Context := Context) policy</span>
+<span id="L421">421     haveI :</span>
+<span id="L422">422         ProbabilityTheory.IsMarkovKernel</span>
+<span id="L423">423           (composePolicy rewardKernel policy).kernel :=</span>
+<span id="L424">424       isMarkovKernel_composePolicy rewardKernel policy</span>
+<span id="L425">425     infer_instance</span>
+<span id="L426">426 </span>
+<span id="L427">427 @[simp]</span>
+<span id="L428">428 theorem composePolicyActionReward_kernel</span>
+<span id="L429">429     {State : Type u} [MeasurableSpace State]</span>
+<span id="L430">430     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L431">431     (policy : Policy.MeasurablePolicy State Action) :</span>
+<span id="L432">432     (composePolicyActionReward rewardKernel policy).kernel =</span>
+<span id="L433">433       ProbabilityTheory.Kernel.prod</span>
+<span id="L434">434         (policyActionKernel (Context := Context) policy)</span>
+<span id="L435">435         (composePolicy rewardKernel policy).kernel :=</span>
+<span id="L436">436   rfl</span>
+<span id="L437">437 </span>
+<span id="L438">438 /-- The one-step action/reward policy/reward kernel is a Mathlib Markov kernel. -/</span>
+<span id="L439">439 theorem isMarkovKernel_composePolicyActionReward</span>
+<span id="L440">440     {State : Type u} [MeasurableSpace State]</span>
+<span id="L441">441     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L442">442     (policy : Policy.MeasurablePolicy State Action) :</span>
+<span id="L443">443     ProbabilityTheory.IsMarkovKernel</span>
+<span id="L444">444       (composePolicyActionReward rewardKernel policy).kernel :=</span>
+<span id="L445">445   (composePolicyActionReward rewardKernel policy).isMarkovKernel</span>
+<span id="L446">446 </span>
+<span id="L447">447 /--</span>
+<span id="L448">448 Event-probability measurability for the one-step action/reward kernel.</span>
+<span id="L449">449 -/</span>
+<span id="L450">450 theorem measurable_composePolicyActionReward_eventProbability</span>
+<span id="L451">451     {State : Type u} [MeasurableSpace State]</span>
+<span id="L452">452     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L453">453     (policy : Policy.MeasurablePolicy State Action)</span>
+<span id="L454">454     {event : Set (Action × Reward)}</span>
+<span id="L455">455     (hevent : MeasurableSet event) :</span>
+<span id="L456">456     Measurable</span>
+<span id="L457">457       (fun pair : Context × State =&gt;</span>
+<span id="L458">458         (composePolicyActionReward rewardKernel policy).kernel pair event) := by</span>
+<span id="L459">459   exact</span>
+<span id="L460">460     measurable_eventProbability_of_measurable_index</span>
+<span id="L461">461       (composePolicyActionReward rewardKernel policy)</span>
+<span id="L462">462       (fun pair : Context × State =&gt; pair)</span>
+<span id="L463">463       measurable_id</span>
+<span id="L464">464       hevent</span>
+<span id="L465">465 </span>
+<span id="L466">466 /--</span>
+<span id="L467">467 The reward marginal of the one-step action/reward kernel is exactly the</span>
+<span id="L468">468 policy-selected reward law.</span>
+<span id="L469">469 </span>
+<span id="L470">470 This is a kernel-level law-transfer wrapper: it identifies the second</span>
+<span id="L471">471 coordinate of the `(Action × Reward)` step kernel, but it does not identify a</span>
+<span id="L472">472 global conditional expectation kernel.</span>
+<span id="L473">473 -/</span>
+<span id="L474">474 theorem composePolicyActionReward_reward_event</span>
+<span id="L475">475     {State : Type u} [MeasurableSpace State]</span>
+<span id="L476">476     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L477">477     (policy : Policy.MeasurablePolicy State Action)</span>
+<span id="L478">478     (pair : Context × State)</span>
+<span id="L479">479     {event : Set Reward}</span>
+<span id="L480">480     (hevent : MeasurableSet event) :</span>
+<span id="L481">481     (composePolicyActionReward rewardKernel policy).kernel pair</span>
+<span id="L482">482         (Prod.snd ⁻¹&#x27; event) =</span>
+<span id="L483">483       selectedMeasure rewardKernel pair.1 (policy.action pair.2) event := by</span>
+<span id="L484">484   have hsnd :</span>
+<span id="L485">485       ProbabilityTheory.Kernel.snd</span>
+<span id="L486">486         (composePolicyActionReward rewardKernel policy).kernel =</span>
+<span id="L487">487       (composePolicy rewardKernel policy).kernel := by</span>
+<span id="L488">488     rw [composePolicyActionReward_kernel]</span>
+<span id="L489">489     haveI :</span>
+<span id="L490">490         ProbabilityTheory.IsMarkovKernel</span>
+<span id="L491">491           (policyActionKernel (Context := Context) policy) :=</span>
+<span id="L492">492       isMarkovKernel_policyActionKernel (Context := Context) policy</span>
+<span id="L493">493     haveI :</span>
+<span id="L494">494         ProbabilityTheory.IsSFiniteKernel</span>
+<span id="L495">495           (composePolicy rewardKernel policy).kernel := by</span>
+<span id="L496">496       infer_instance</span>
+<span id="L497">497     exact</span>
+<span id="L498">498       ProbabilityTheory.Kernel.snd_prod</span>
+<span id="L499">499         (policyActionKernel (Context := Context) policy)</span>
+<span id="L500">500         (composePolicy rewardKernel policy).kernel</span>
+<span id="L501">501   calc</span>
+<span id="L502">502     (composePolicyActionReward rewardKernel policy).kernel pair</span>
+<span id="L503">503         (Prod.snd ⁻¹&#x27; event)</span>
+<span id="L504">504         =</span>
+<span id="L505">505       ProbabilityTheory.Kernel.snd</span>
+<span id="L506">506         (composePolicyActionReward rewardKernel policy).kernel pair event := by</span>
+<span id="L507">507           rw [ProbabilityTheory.Kernel.snd_apply&#x27;</span>
+<span id="L508">508             (composePolicyActionReward rewardKernel policy).kernel pair hevent]</span>
+<span id="L509">509     _ = (composePolicy rewardKernel policy).kernel pair event := by</span>
+<span id="L510">510           rw [hsnd]</span>
+<span id="L511">511     _ = selectedMeasure rewardKernel pair.1 (policy.action pair.2) event := by</span>
+<span id="L512">512           rw [composePolicy_kernel_apply]</span>
+<span id="L513">513 </span>
+<span id="L514">514 /--</span>
+<span id="L515">515 Measure-level reward marginal of the one-step action/reward kernel.</span>
+<span id="L516">516 </span>
+<span id="L517">517 This is the pushforward version of `composePolicyActionReward_reward_event`.</span>
+<span id="L518">518 It exposes the exact shape needed by conditional-kernel law identification:</span>
+<span id="L519">519 mapping the `(Action × Reward)` one-step law through `Prod.snd` recovers the</span>
+<span id="L520">520 policy-selected reward law.</span>
+<span id="L521">521 -/</span>
+<span id="L522">522 theorem composePolicyActionReward_reward_map</span>
+<span id="L523">523     {State : Type u} [MeasurableSpace State]</span>
+<span id="L524">524     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L525">525     (policy : Policy.MeasurablePolicy State Action)</span>
+<span id="L526">526     (pair : Context × State) :</span>
+<span id="L527">527     Measure.map Prod.snd</span>
+<span id="L528">528         ((composePolicyActionReward rewardKernel policy).kernel pair) =</span>
+<span id="L529">529       selectedMeasure rewardKernel pair.1 (policy.action pair.2) := by</span>
+<span id="L530">530   refine Measure.ext fun event hevent =&gt; ?_</span>
+<span id="L531">531   rw [Measure.map_apply measurable_snd hevent]</span>
+<span id="L532">532   exact</span>
+<span id="L533">533     composePolicyActionReward_reward_event rewardKernel policy pair hevent</span>
+<span id="L534">534 </span>
+<span id="L535">535 /--</span>
+<span id="L536">536 Pointwise measure shape of the one-step action/reward policy/reward kernel.</span>
+<span id="L537">537 </span>
+<span id="L538">538 The action coordinate is deterministic, so the full `(Action × Reward)` law is</span>
+<span id="L539">539 the selected reward law pushed through `Prod.mk` with the policy action fixed.</span>
+<span id="L540">540 -/</span>
+<span id="L541">541 theorem composePolicyActionReward_kernel_apply_eq_map_prod_mk</span>
+<span id="L542">542     {State : Type u} [MeasurableSpace State]</span>
+<span id="L543">543     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L544">544     (policy : Policy.MeasurablePolicy State Action)</span>
+<span id="L545">545     (pair : Context × State) :</span>
+<span id="L546">546     (composePolicyActionReward rewardKernel policy).kernel pair =</span>
+<span id="L547">547       Measure.map (Prod.mk (policy.action pair.2))</span>
+<span id="L548">548         (selectedMeasure rewardKernel pair.1 (policy.action pair.2)) := by</span>
+<span id="L549">549   haveI :</span>
+<span id="L550">550       ProbabilityTheory.IsMarkovKernel</span>
+<span id="L551">551         (policyActionKernel (Context := Context) policy) :=</span>
+<span id="L552">552     isMarkovKernel_policyActionKernel (Context := Context) policy</span>
+<span id="L553">553   haveI :</span>
+<span id="L554">554       ProbabilityTheory.IsSFiniteKernel</span>
+<span id="L555">555         (composePolicy rewardKernel policy).kernel := by</span>
+<span id="L556">556     infer_instance</span>
+<span id="L557">557   haveI :</span>
+<span id="L558">558       IsProbabilityMeasure</span>
+<span id="L559">559         (selectedMeasure rewardKernel pair.1 (policy.action pair.2)) :=</span>
+<span id="L560">560     isProbabilityMeasure_selectedMeasure rewardKernel pair.1</span>
+<span id="L561">561       (policy.action pair.2)</span>
+<span id="L562">562   rw [composePolicyActionReward_kernel]</span>
+<span id="L563">563   rw [ProbabilityTheory.Kernel.prod_apply]</span>
+<span id="L564">564   rw [policyActionKernel_apply]</span>
+<span id="L565">565   rw [composePolicy_kernel_apply]</span>
+<span id="L566">566   rw [Measure.dirac_prod]</span>
+<span id="L567">567 </span>
+<span id="L568">568 /--</span>
+<span id="L569">569 Measure-level action marginal of the one-step action/reward kernel.</span>
+<span id="L570">570 </span>
+<span id="L571">571 The action coordinate is deterministic: mapping the `(Action × Reward)` law</span>
+<span id="L572">572 through `Prod.fst` recovers the Dirac measure at the policy-selected action.</span>
+<span id="L573">573 -/</span>
+<span id="L574">574 theorem composePolicyActionReward_action_map</span>
+<span id="L575">575     {State : Type u} [MeasurableSpace State]</span>
+<span id="L576">576     (rewardKernel : MarkovRewardKernel (Prod Context Action) Reward)</span>
+<span id="L577">577     (policy : Policy.MeasurablePolicy State Action)</span>
+<span id="L578">578     (pair : Prod Context State) :</span>
+<span id="L579">579     Measure.map Prod.fst</span>
+<span id="L580">580         ((composePolicyActionReward rewardKernel policy).kernel pair) =</span>
+<span id="L581">581       Measure.dirac (policy.action pair.2) := by</span>
+<span id="L582">582   rw [composePolicyActionReward_kernel_apply_eq_map_prod_mk]</span>
+<span id="L583">583   have hprod :</span>
+<span id="L584">584       Measurable</span>
+<span id="L585">585         (Prod.mk (policy.action pair.2) :</span>
+<span id="L586">586           Reward -&gt; Prod Action Reward) := by</span>
+<span id="L587">587     fun_prop</span>
+<span id="L588">588   haveI :</span>
+<span id="L589">589       IsProbabilityMeasure</span>
+<span id="L590">590         (selectedMeasure rewardKernel pair.1 (policy.action pair.2)) :=</span>
+<span id="L591">591     isProbabilityMeasure_selectedMeasure rewardKernel pair.1</span>
+<span id="L592">592       (policy.action pair.2)</span>
+<span id="L593">593   refine Measure.ext fun event hevent =&gt; ?_</span>
+<span id="L594">594   rw [Measure.map_apply measurable_fst hevent]</span>
+<span id="L595">595   rw [Measure.map_apply hprod (measurable_fst hevent)]</span>
+<span id="L596">596   rw [Measure.dirac_apply&#x27; (policy.action pair.2) hevent]</span>
+<span id="L597">597   by_cases hmem : event (policy.action pair.2)</span>
+<span id="L598">598   · have hpre :</span>
+<span id="L599">599         Set.preimage</span>
+<span id="L600">600             (Prod.mk (policy.action pair.2) :</span>
+<span id="L601">601               Reward -&gt; Prod Action Reward)</span>
+<span id="L602">602             (Set.preimage Prod.fst event) =</span>
+<span id="L603">603           Set.univ := by</span>
+<span id="L604">604       ext reward</span>
+<span id="L605">605       change event (policy.action pair.2) ↔ True</span>
+<span id="L606">606       exact iff_true_intro hmem</span>
+<span id="L607">607     rw [hpre]</span>
+<span id="L608">608     simp [Set.indicator_of_mem hmem]</span>
+<span id="L609">609   · have hpre :</span>
+<span id="L610">610         Set.preimage</span>
+<span id="L611">611             (Prod.mk (policy.action pair.2) :</span>
+<span id="L612">612               Reward -&gt; Prod Action Reward)</span>
+<span id="L613">613             (Set.preimage Prod.fst event) =</span>
+<span id="L614">614           {reward : Reward | False} := by</span>
+<span id="L615">615       ext reward</span>
+<span id="L616">616       change event (policy.action pair.2) ↔ False</span>
+<span id="L617">617       exact iff_false_intro hmem</span>
+<span id="L618">618     rw [hpre]</span>
+<span id="L619">619     simp [Set.indicator_of_notMem hmem]</span>
+<span id="L620">620 </span>
+<span id="L621">621 /--</span>
+<span id="L622">622 Pointwise centered-reward law contract for a context/action reward kernel.</span>
+<span id="L623">623 </span>
+<span id="L624">624 For every context/action index, the selected reward law has a centered reward</span>
+<span id="L625">625 with zero integral and a sub-Gaussian MGF.  The contract is deliberately</span>
+<span id="L626">626 one-step: the transfer theorems below move these facts through policy</span>
+<span id="L627">627 composition and history-indexed step kernels, but they do not identify a</span>
+<span id="L628">628 global trajectory conditional expectation.</span>
+<span id="L629">629 -/</span>
+<span id="L630">630 structure CenteredRewardKernelLaw</span>
+<span id="L631">631     {Context : Type x} {Action : Type y}</span>
+<span id="L632">632     [MeasurableSpace Context] [MeasurableSpace Action]</span>
+<span id="L633">633     (rewardKernel : MarkovRewardKernel (Context × Action) Rat)</span>
+<span id="L634">634     (mean : Context -&gt; Action -&gt; Rat)</span>
+<span id="L635">635     (varianceProxy : Context -&gt; Action -&gt; NNReal) where</span>
+<span id="L636">636   integrable :</span>
+<span id="L637">637     forall context action,</span>
+<span id="L638">638       MeasureTheory.Integrable</span>
+<span id="L639">639         (fun reward : Rat =&gt;</span>
+<span id="L640">640           (((reward - mean context action : Rat) : Real)))</span>
+<span id="L641">641         (selectedMeasure rewardKernel context action)</span>
+<span id="L642">642   integral_eq_zero :</span>
+<span id="L643">643     forall context action,</span>
+<span id="L644">644       MeasureTheory.integral (selectedMeasure rewardKernel context action)</span>
+<span id="L645">645         (fun reward : Rat =&gt;</span>
+<span id="L646">646           (((reward - mean context action : Rat) : Real))) = 0</span>
+<span id="L647">647   hasSubgaussianMGF :</span>
+<span id="L648">648     forall context action,</span>
+<span id="L649">649       ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L650">650         (fun reward : Rat =&gt;</span>
+<span id="L651">651           (((reward - mean context action : Rat) : Real)))</span>
+<span id="L652">652         (varianceProxy context action)</span>
+<span id="L653">653         (selectedMeasure rewardKernel context action)</span>
+<span id="L654">654 </span>
+<span id="L655">655 /--</span>
+<span id="L656">656 A policy-composed one-step reward kernel inherits centered-reward integrability</span>
+<span id="L657">657 from the underlying context/action reward law.</span>
+<span id="L658">658 -/</span>
+<span id="L659">659 theorem composePolicy_centeredReward_integrable</span>
+<span id="L660">660     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L661">661     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L662">662     [MeasurableSpace Action]</span>
+<span id="L663">663     (rewardKernel : MarkovRewardKernel (Context × Action) Rat)</span>
+<span id="L664">664     (policy : Policy.MeasurablePolicy State Action)</span>
+<span id="L665">665     (mean : Context -&gt; Action -&gt; Rat)</span>
+<span id="L666">666     (varianceProxy : Context -&gt; Action -&gt; NNReal)</span>
+<span id="L667">667     (law :</span>
+<span id="L668">668       CenteredRewardKernelLaw rewardKernel mean varianceProxy)</span>
+<span id="L669">669     (pair : Context × State) :</span>
+<span id="L670">670     MeasureTheory.Integrable</span>
+<span id="L671">671       (fun reward : Rat =&gt;</span>
+<span id="L672">672         (((reward - mean pair.1 (policy.action pair.2) : Rat) : Real)))</span>
+<span id="L673">673       ((composePolicy rewardKernel policy).kernel pair) := by</span>
+<span id="L674">674   simpa using</span>
+<span id="L675">675     law.integrable pair.1 (policy.action pair.2)</span>
+<span id="L676">676 </span>
+<span id="L677">677 /--</span>
+<span id="L678">678 A policy-composed one-step reward kernel inherits the centered-reward</span>
+<span id="L679">679 zero-integral fact from the underlying context/action reward law.</span>
+<span id="L680">680 -/</span>
+<span id="L681">681 theorem composePolicy_centeredReward_integral_eq_zero</span>
+<span id="L682">682     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L683">683     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L684">684     [MeasurableSpace Action]</span>
+<span id="L685">685     (rewardKernel : MarkovRewardKernel (Context × Action) Rat)</span>
+<span id="L686">686     (policy : Policy.MeasurablePolicy State Action)</span>
+<span id="L687">687     (mean : Context -&gt; Action -&gt; Rat)</span>
+<span id="L688">688     (varianceProxy : Context -&gt; Action -&gt; NNReal)</span>
+<span id="L689">689     (law :</span>
+<span id="L690">690       CenteredRewardKernelLaw rewardKernel mean varianceProxy)</span>
+<span id="L691">691     (pair : Context × State) :</span>
+<span id="L692">692     MeasureTheory.integral ((composePolicy rewardKernel policy).kernel pair)</span>
+<span id="L693">693       (fun reward : Rat =&gt;</span>
+<span id="L694">694         (((reward - mean pair.1 (policy.action pair.2) : Rat) : Real))) = 0 := by</span>
+<span id="L695">695   simpa using</span>
+<span id="L696">696     law.integral_eq_zero pair.1 (policy.action pair.2)</span>
+<span id="L697">697 </span>
+<span id="L698">698 /--</span>
+<span id="L699">699 A policy-composed one-step reward kernel inherits the centered-reward</span>
+<span id="L700">700 sub-Gaussian MGF witness from the underlying context/action reward law.</span>
+<span id="L701">701 -/</span>
+<span id="L702">702 theorem composePolicy_centeredReward_hasSubgaussianMGF</span>
+<span id="L703">703     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L704">704     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L705">705     [MeasurableSpace Action]</span>
+<span id="L706">706     (rewardKernel : MarkovRewardKernel (Context × Action) Rat)</span>
+<span id="L707">707     (policy : Policy.MeasurablePolicy State Action)</span>
+<span id="L708">708     (mean : Context -&gt; Action -&gt; Rat)</span>
+<span id="L709">709     (varianceProxy : Context -&gt; Action -&gt; NNReal)</span>
+<span id="L710">710     (law :</span>
+<span id="L711">711       CenteredRewardKernelLaw rewardKernel mean varianceProxy)</span>
+<span id="L712">712     (pair : Context × State) :</span>
+<span id="L713">713     ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L714">714       (fun reward : Rat =&gt;</span>
+<span id="L715">715         (((reward - mean pair.1 (policy.action pair.2) : Rat) : Real)))</span>
+<span id="L716">716       (varianceProxy pair.1 (policy.action pair.2))</span>
+<span id="L717">717       ((composePolicy rewardKernel policy).kernel pair) := by</span>
+<span id="L718">718   simpa using</span>
+<span id="L719">719     law.hasSubgaussianMGF pair.1 (policy.action pair.2)</span>
+<span id="L720">720 </span>
+<span id="L721">721 /--</span>
+<span id="L722">722 The one-step reward kernel selected from a finite reward history.</span>
+<span id="L723">723 </span>
+<span id="L724">724 This is an Ionescu-Tulcea-facing precursor for `KERNEL-POLICY-BIND`: for each</span>
+<span id="L725">725 time `n`, a measurable context extractor and a measurable policy-state</span>
+<span id="L726">726 extractor turn the finite reward history `Π i : Finset.Iic n, Reward` into the</span>
+<span id="L727">727 context/state pair consumed by the one-step policy/reward kernel.</span>
+<span id="L728">728 -/</span>
+<span id="L729">729 def historyStepRewardKernel</span>
+<span id="L730">730     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L731">731     {Reward : Type v}</span>
+<span id="L732">732     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L733">733     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L734">734     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L735">735     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L736">736     (context : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; Context)</span>
+<span id="L737">737     (state : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; State)</span>
+<span id="L738">738     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L739">739     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L740">740     (n : Nat) :</span>
+<span id="L741">741     MarkovRewardKernel ((i : Finset.Iic n) -&gt; Reward) Reward where</span>
+<span id="L742">742   kernel :=</span>
+<span id="L743">743     { toFun := fun history =&gt;</span>
+<span id="L744">744         selectedMeasure rewardKernel (context n history)</span>
+<span id="L745">745           ((policy n).action (state n history))</span>
+<span id="L746">746       measurable&#x27; := by</span>
+<span id="L747">747         exact</span>
+<span id="L748">748           measurable_selectedMeasure_of_policy_state rewardKernel (policy n)</span>
+<span id="L749">749             (context n) (state n) (hcontext n) (hstate n) }</span>
+<span id="L750">750   isMarkovKernel := by</span>
+<span id="L751">751     refine ⟨fun history =&gt; ?_⟩</span>
+<span id="L752">752     simpa [selectedMeasure] using</span>
+<span id="L753">753       isProbabilityMeasure_selectedMeasure rewardKernel (context n history)</span>
+<span id="L754">754         ((policy n).action (state n history))</span>
+<span id="L755">755 </span>
+<span id="L756">756 /--</span>
+<span id="L757">757 The Mathlib kernel family consumed by `ProbabilityTheory.Kernel.partialTraj`</span>
+<span id="L758">758 for the constant reward-coordinate type family.</span>
+<span id="L759">759 -/</span>
+<span id="L760">760 def historyStepKernelFamily</span>
+<span id="L761">761     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L762">762     {Reward : Type v}</span>
+<span id="L763">763     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L764">764     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L765">765     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L766">766     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L767">767     (context : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; Context)</span>
+<span id="L768">768     (state : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; State)</span>
+<span id="L769">769     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L770">770     (hstate : forall n : Nat, Measurable (state n)) :</span>
+<span id="L771">771     (n : Nat) -&gt;</span>
+<span id="L772">772       ProbabilityTheory.Kernel ((i : Finset.Iic n) -&gt; Reward) Reward :=</span>
+<span id="L773">773   fun n =&gt;</span>
+<span id="L774">774     (historyStepRewardKernel rewardKernel policy context state hcontext hstate n).kernel</span>
+<span id="L775">775 </span>
+<span id="L776">776 @[simp]</span>
+<span id="L777">777 theorem historyStepKernelFamily_apply</span>
+<span id="L778">778     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L779">779     {Reward : Type v}</span>
+<span id="L780">780     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L781">781     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L782">782     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L783">783     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L784">784     (context : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; Context)</span>
+<span id="L785">785     (state : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; State)</span>
+<span id="L786">786     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L787">787     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L788">788     (n : Nat) (history : (i : Finset.Iic n) -&gt; Reward) :</span>
+<span id="L789">789     historyStepKernelFamily rewardKernel policy context state hcontext hstate n history =</span>
+<span id="L790">790       selectedMeasure rewardKernel (context n history)</span>
+<span id="L791">791         ((policy n).action (state n history)) :=</span>
+<span id="L792">792   rfl</span>
+<span id="L793">793 </span>
+<span id="L794">794 /-- Every kernel in `historyStepKernelFamily` is a Mathlib Markov kernel. -/</span>
+<span id="L795">795 theorem isMarkovKernel_historyStepKernelFamily</span>
+<span id="L796">796     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L797">797     {Reward : Type v}</span>
+<span id="L798">798     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L799">799     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L800">800     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L801">801     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L802">802     (context : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; Context)</span>
+<span id="L803">803     (state : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; State)</span>
+<span id="L804">804     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L805">805     (hstate : forall n : Nat, Measurable (state n)) :</span>
+<span id="L806">806     forall n : Nat,</span>
+<span id="L807">807       ProbabilityTheory.IsMarkovKernel</span>
+<span id="L808">808         (historyStepKernelFamily rewardKernel policy context state hcontext hstate n) :=</span>
+<span id="L809">809   fun n =&gt;</span>
+<span id="L810">810     (historyStepRewardKernel rewardKernel policy context state hcontext hstate n).isMarkovKernel</span>
+<span id="L811">811 </span>
+<span id="L812">812 instance instIsMarkovKernel_historyStepKernelFamily</span>
+<span id="L813">813     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L814">814     {Reward : Type v}</span>
+<span id="L815">815     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L816">816     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L817">817     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L818">818     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L819">819     (context : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; Context)</span>
+<span id="L820">820     (state : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; State)</span>
+<span id="L821">821     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L822">822     (hstate : forall n : Nat, Measurable (state n)) :</span>
+<span id="L823">823     forall n : Nat,</span>
+<span id="L824">824       ProbabilityTheory.IsMarkovKernel</span>
+<span id="L825">825         (historyStepKernelFamily rewardKernel policy context state hcontext hstate n) :=</span>
+<span id="L826">826   isMarkovKernel_historyStepKernelFamily rewardKernel policy context state</span>
+<span id="L827">827     hcontext hstate</span>
+<span id="L828">828 </span>
+<span id="L829">829 /--</span>
+<span id="L830">830 For any measurable reward event, the event probability selected by one member</span>
+<span id="L831">831 of the history-indexed kernel family is measurable in the finite reward</span>
+<span id="L832">832 history.</span>
+<span id="L833">833 -/</span>
+<span id="L834">834 theorem measurable_historyStepKernelFamily_eventProbability</span>
+<span id="L835">835     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L836">836     {Reward : Type v}</span>
+<span id="L837">837     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L838">838     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L839">839     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L840">840     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L841">841     (context : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; Context)</span>
+<span id="L842">842     (state : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; State)</span>
+<span id="L843">843     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L844">844     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L845">845     (n : Nat)</span>
+<span id="L846">846     {event : Set Reward}</span>
+<span id="L847">847     (hevent : MeasurableSet event) :</span>
+<span id="L848">848     Measurable</span>
+<span id="L849">849       (fun history : (i : Finset.Iic n) -&gt; Reward =&gt;</span>
+<span id="L850">850         historyStepKernelFamily rewardKernel policy context state hcontext hstate</span>
+<span id="L851">851           n history event) := by</span>
+<span id="L852">852   exact</span>
+<span id="L853">853     measurable_selectedEventProbability_of_policy_state rewardKernel (policy n)</span>
+<span id="L854">854       (context n) (state n) (hcontext n) (hstate n) hevent</span>
+<span id="L855">855 </span>
+<span id="L856">856 /--</span>
+<span id="L857">857 The history-indexed one-step reward kernel inherits centered-reward</span>
+<span id="L858">858 integrability from the underlying context/action reward law.</span>
+<span id="L859">859 -/</span>
+<span id="L860">860 theorem historyStepKernelFamily_centeredReward_integrable</span>
+<span id="L861">861     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L862">862     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L863">863     [MeasurableSpace Action]</span>
+<span id="L864">864     (rewardKernel : MarkovRewardKernel (Context × Action) Rat)</span>
+<span id="L865">865     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L866">866     (context : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Rat) -&gt; Context)</span>
+<span id="L867">867     (state : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Rat) -&gt; State)</span>
+<span id="L868">868     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L869">869     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L870">870     (mean : Context -&gt; Action -&gt; Rat)</span>
+<span id="L871">871     (varianceProxy : Context -&gt; Action -&gt; NNReal)</span>
+<span id="L872">872     (law :</span>
+<span id="L873">873       CenteredRewardKernelLaw rewardKernel mean varianceProxy)</span>
+<span id="L874">874     (n : Nat) (history : (i : Finset.Iic n) -&gt; Rat) :</span>
+<span id="L875">875     MeasureTheory.Integrable</span>
+<span id="L876">876       (fun reward : Rat =&gt;</span>
+<span id="L877">877         (((reward -</span>
+<span id="L878">878           mean (context n history) ((policy n).action (state n history)) :</span>
+<span id="L879">879             Rat) : Real)))</span>
+<span id="L880">880       (historyStepKernelFamily rewardKernel policy context state hcontext hstate</span>
+<span id="L881">881         n history) := by</span>
+<span id="L882">882   simpa [historyStepKernelFamily_apply] using</span>
+<span id="L883">883     law.integrable (context n history) ((policy n).action (state n history))</span>
+<span id="L884">884 </span>
+<span id="L885">885 /--</span>
+<span id="L886">886 The history-indexed one-step reward kernel inherits the centered-reward</span>
+<span id="L887">887 zero-integral fact from the underlying context/action reward law.</span>
+<span id="L888">888 -/</span>
+<span id="L889">889 theorem historyStepKernelFamily_centeredReward_integral_eq_zero</span>
+<span id="L890">890     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L891">891     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L892">892     [MeasurableSpace Action]</span>
+<span id="L893">893     (rewardKernel : MarkovRewardKernel (Context × Action) Rat)</span>
+<span id="L894">894     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L895">895     (context : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Rat) -&gt; Context)</span>
+<span id="L896">896     (state : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Rat) -&gt; State)</span>
+<span id="L897">897     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L898">898     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L899">899     (mean : Context -&gt; Action -&gt; Rat)</span>
+<span id="L900">900     (varianceProxy : Context -&gt; Action -&gt; NNReal)</span>
+<span id="L901">901     (law :</span>
+<span id="L902">902       CenteredRewardKernelLaw rewardKernel mean varianceProxy)</span>
+<span id="L903">903     (n : Nat) (history : (i : Finset.Iic n) -&gt; Rat) :</span>
+<span id="L904">904     MeasureTheory.integral</span>
+<span id="L905">905       (historyStepKernelFamily rewardKernel policy context state hcontext hstate</span>
+<span id="L906">906         n history)</span>
+<span id="L907">907       (fun reward : Rat =&gt;</span>
+<span id="L908">908         (((reward -</span>
+<span id="L909">909           mean (context n history) ((policy n).action (state n history)) :</span>
+<span id="L910">910             Rat) : Real))) = 0 := by</span>
+<span id="L911">911   simpa [historyStepKernelFamily_apply] using</span>
+<span id="L912">912     law.integral_eq_zero</span>
+<span id="L913">913       (context n history) ((policy n).action (state n history))</span>
+<span id="L914">914 </span>
+<span id="L915">915 /--</span>
+<span id="L916">916 The history-indexed one-step reward kernel inherits the centered-reward</span>
+<span id="L917">917 sub-Gaussian MGF witness from the underlying context/action reward law.</span>
+<span id="L918">918 -/</span>
+<span id="L919">919 theorem historyStepKernelFamily_centeredReward_hasSubgaussianMGF</span>
+<span id="L920">920     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L921">921     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L922">922     [MeasurableSpace Action]</span>
+<span id="L923">923     (rewardKernel : MarkovRewardKernel (Context × Action) Rat)</span>
+<span id="L924">924     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L925">925     (context : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Rat) -&gt; Context)</span>
+<span id="L926">926     (state : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Rat) -&gt; State)</span>
+<span id="L927">927     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L928">928     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L929">929     (mean : Context -&gt; Action -&gt; Rat)</span>
+<span id="L930">930     (varianceProxy : Context -&gt; Action -&gt; NNReal)</span>
+<span id="L931">931     (law :</span>
+<span id="L932">932       CenteredRewardKernelLaw rewardKernel mean varianceProxy)</span>
+<span id="L933">933     (n : Nat) (history : (i : Finset.Iic n) -&gt; Rat) :</span>
+<span id="L934">934     ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L935">935       (fun reward : Rat =&gt;</span>
+<span id="L936">936         (((reward -</span>
+<span id="L937">937           mean (context n history) ((policy n).action (state n history)) :</span>
+<span id="L938">938             Rat) : Real)))</span>
+<span id="L939">939       (varianceProxy</span>
+<span id="L940">940         (context n history) ((policy n).action (state n history)))</span>
+<span id="L941">941       (historyStepKernelFamily rewardKernel policy context state hcontext hstate</span>
+<span id="L942">942         n history) := by</span>
+<span id="L943">943   simpa [historyStepKernelFamily_apply] using</span>
+<span id="L944">944     law.hasSubgaussianMGF</span>
+<span id="L945">945       (context n history) ((policy n).action (state n history))</span>
+<span id="L946">946 </span>
+<span id="L947">947 /--</span>
+<span id="L948">948 Finite-prefix trajectory kernel obtained by feeding the history-indexed</span>
+<span id="L949">949 policy/reward step-kernel family to Mathlib&#x27;s `partialTraj` construction.</span>
+<span id="L950">950 </span>
+<span id="L951">951 This gives the finite-prefix Ionescu-Tulcea assembly surface for reward</span>
+<span id="L952">952 histories only.  It is not yet the final bandit trajectory law with action</span>
+<span id="L953">953 trace, conditional reward-law transfer, or adaptive regret theorem.</span>
+<span id="L954">954 -/</span>
+<span id="L955">955 noncomputable def partialTrajectoryKernel</span>
+<span id="L956">956     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L957">957     {Reward : Type v}</span>
+<span id="L958">958     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L959">959     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L960">960     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L961">961     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L962">962     (context : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; Context)</span>
+<span id="L963">963     (state : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; State)</span>
+<span id="L964">964     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L965">965     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L966">966     (a b : Nat) :</span>
+<span id="L967">967     ProbabilityTheory.Kernel</span>
+<span id="L968">968       ((i : Finset.Iic a) -&gt; Reward)</span>
+<span id="L969">969       ((i : Finset.Iic b) -&gt; Reward) :=</span>
+<span id="L970">970   ProbabilityTheory.Kernel.partialTraj</span>
+<span id="L971">971     (X := fun _ : Nat =&gt; Reward)</span>
+<span id="L972">972     (historyStepKernelFamily rewardKernel policy context state hcontext hstate)</span>
+<span id="L973">973     a b</span>
+<span id="L974">974 </span>
+<span id="L975">975 /-- The finite-prefix trajectory kernel assembled by `partialTraj` is Markov. -/</span>
+<span id="L976">976 theorem isMarkovKernel_partialTrajectoryKernel</span>
+<span id="L977">977     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L978">978     {Reward : Type v}</span>
+<span id="L979">979     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L980">980     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L981">981     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L982">982     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L983">983     (context : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; Context)</span>
+<span id="L984">984     (state : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; State)</span>
+<span id="L985">985     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L986">986     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L987">987     (a b : Nat) :</span>
+<span id="L988">988     ProbabilityTheory.IsMarkovKernel</span>
+<span id="L989">989       (partialTrajectoryKernel rewardKernel policy context state hcontext hstate</span>
+<span id="L990">990         a b) := by</span>
+<span id="L991">991   haveI :</span>
+<span id="L992">992       forall n : Nat,</span>
+<span id="L993">993         ProbabilityTheory.IsMarkovKernel</span>
+<span id="L994">994           (historyStepKernelFamily rewardKernel policy context state hcontext hstate n) :=</span>
+<span id="L995">995     isMarkovKernel_historyStepKernelFamily rewardKernel policy context state</span>
+<span id="L996">996       hcontext hstate</span>
+<span id="L997">997   unfold partialTrajectoryKernel</span>
+<span id="L998">998   infer_instance</span>
+<span id="L999">999 </span>
+<span id="L1000">1000 /--</span>
+<span id="L1001">1001 Event-probability measurability for the finite-prefix trajectory kernel</span>
+<span id="L1002">1002 assembled by Mathlib&#x27;s `partialTraj`.</span>
+<span id="L1003">1003 -/</span>
+<span id="L1004">1004 theorem measurable_partialTrajectoryKernel_eventProbability</span>
+<span id="L1005">1005     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1006">1006     {Reward : Type v}</span>
+<span id="L1007">1007     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1008">1008     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1009">1009     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L1010">1010     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1011">1011     (context : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; Context)</span>
+<span id="L1012">1012     (state : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; State)</span>
+<span id="L1013">1013     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1014">1014     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1015">1015     (a b : Nat)</span>
+<span id="L1016">1016     {event : Set ((i : Finset.Iic b) -&gt; Reward)}</span>
+<span id="L1017">1017     (hevent : MeasurableSet event) :</span>
+<span id="L1018">1018     Measurable</span>
+<span id="L1019">1019       (fun history : (i : Finset.Iic a) -&gt; Reward =&gt;</span>
+<span id="L1020">1020         partialTrajectoryKernel rewardKernel policy context state hcontext hstate</span>
+<span id="L1021">1021           a b history event) := by</span>
+<span id="L1022">1022   exact</span>
+<span id="L1023">1023     ProbabilityTheory.Kernel.measurable_coe</span>
+<span id="L1024">1024       (partialTrajectoryKernel rewardKernel policy context state hcontext hstate</span>
+<span id="L1025">1025         a b)</span>
+<span id="L1026">1026       hevent</span>
+<span id="L1027">1027 </span>
+<span id="L1028">1028 /--</span>
+<span id="L1029">1029 For a one-step extension, the reward-only partial trajectory kernel has the</span>
+<span id="L1030">1030 configured history-step reward kernel as its next-coordinate marginal.</span>
+<span id="L1031">1031 </span>
+<span id="L1032">1032 This is a local wrapper around Mathlib&#x27;s `Kernel.map_partialTraj_succ_self`.</span>
+<span id="L1033">1033 It is a trajectory-kernel fact, not a conditional-expectation-kernel</span>
+<span id="L1034">1034 identification.</span>
+<span id="L1035">1035 -/</span>
+<span id="L1036">1036 theorem partialTrajectoryKernel_succ_next_map</span>
+<span id="L1037">1037     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1038">1038     {Reward : Type v}</span>
+<span id="L1039">1039     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1040">1040     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1041">1041     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L1042">1042     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1043">1043     (context : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; Context)</span>
+<span id="L1044">1044     (state : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; State)</span>
+<span id="L1045">1045     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1046">1046     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1047">1047     (n : Nat) :</span>
+<span id="L1048">1048     (partialTrajectoryKernel rewardKernel policy context state hcontext hstate</span>
+<span id="L1049">1049         n (n + 1)).map</span>
+<span id="L1050">1050       (fun history : (i : Finset.Iic (n + 1)) -&gt; Reward =&gt;</span>
+<span id="L1051">1051         history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩) =</span>
+<span id="L1052">1052       historyStepKernelFamily rewardKernel policy context state hcontext hstate n := by</span>
+<span id="L1053">1053   haveI :</span>
+<span id="L1054">1054       forall n : Nat,</span>
+<span id="L1055">1055         ProbabilityTheory.IsMarkovKernel</span>
+<span id="L1056">1056           (historyStepKernelFamily rewardKernel policy context state hcontext hstate n) :=</span>
+<span id="L1057">1057     isMarkovKernel_historyStepKernelFamily rewardKernel policy context state</span>
+<span id="L1058">1058       hcontext hstate</span>
+<span id="L1059">1059   simpa [partialTrajectoryKernel] using</span>
+<span id="L1060">1060     (ProbabilityTheory.Kernel.map_partialTraj_succ_self</span>
+<span id="L1061">1061       (X := fun _ : Nat =&gt; Reward)</span>
+<span id="L1062">1062       (κ := historyStepKernelFamily rewardKernel policy context state hcontext hstate)</span>
+<span id="L1063">1063       n)</span>
+<span id="L1064">1064 </span>
+<span id="L1065">1065 /--</span>
+<span id="L1066">1066 Pointwise measure form of `partialTrajectoryKernel_succ_next_map`.</span>
+<span id="L1067">1067 -/</span>
+<span id="L1068">1068 theorem partialTrajectoryKernel_succ_next_map_apply</span>
+<span id="L1069">1069     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1070">1070     {Reward : Type v}</span>
+<span id="L1071">1071     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1072">1072     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1073">1073     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L1074">1074     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1075">1075     (context : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; Context)</span>
+<span id="L1076">1076     (state : (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Reward) -&gt; State)</span>
+<span id="L1077">1077     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1078">1078     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1079">1079     (n : Nat) (history : (i : Finset.Iic n) -&gt; Reward) :</span>
+<span id="L1080">1080     Measure.map</span>
+<span id="L1081">1081         (fun extended : (i : Finset.Iic (n + 1)) -&gt; Reward =&gt;</span>
+<span id="L1082">1082           extended ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩)</span>
+<span id="L1083">1083         (partialTrajectoryKernel rewardKernel policy context state hcontext hstate</span>
+<span id="L1084">1084           n (n + 1) history) =</span>
+<span id="L1085">1085       historyStepKernelFamily rewardKernel policy context state hcontext hstate</span>
+<span id="L1086">1086         n history := by</span>
+<span id="L1087">1087   have h_kernel :=</span>
+<span id="L1088">1088     partialTrajectoryKernel_succ_next_map rewardKernel policy context state</span>
+<span id="L1089">1089       hcontext hstate n</span>
+<span id="L1090">1090   have h_next_meas :</span>
+<span id="L1091">1091       Measurable</span>
+<span id="L1092">1092         (fun extended : (i : Finset.Iic (n + 1)) -&gt; Reward =&gt;</span>
+<span id="L1093">1093           extended ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩) :=</span>
+<span id="L1094">1094     measurable_pi_apply _</span>
+<span id="L1095">1095   simpa [ProbabilityTheory.Kernel.map_apply _ h_next_meas history] using</span>
+<span id="L1096">1096     congrArg (fun kernel =&gt; kernel history) h_kernel</span>
+<span id="L1097">1097 </span>
+<span id="L1098">1098 /--</span>
+<span id="L1099">1099 The one-step action/reward kernel selected from a finite action/reward pair</span>
+<span id="L1100">1100 history.</span>
+<span id="L1101">1101 </span>
+<span id="L1102">1102 This is the action/reward analogue of `historyStepRewardKernel`: the state</span>
+<span id="L1103">1103 seen by the policy may depend on the finite prefix of previously emitted</span>
+<span id="L1104">1104 `(Action × Reward)` pairs, and the next emitted object is again an</span>
+<span id="L1105">1105 `(Action × Reward)` pair.</span>
+<span id="L1106">1106 -/</span>
+<span id="L1107">1107 noncomputable def actionRewardHistoryStepKernel</span>
+<span id="L1108">1108     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1109">1109     {Reward : Type v}</span>
+<span id="L1110">1110     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1111">1111     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1112">1112     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L1113">1113     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1114">1114     (context :</span>
+<span id="L1115">1115       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; Context)</span>
+<span id="L1116">1116     (state :</span>
+<span id="L1117">1117       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; State)</span>
+<span id="L1118">1118     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1119">1119     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1120">1120     (n : Nat) :</span>
+<span id="L1121">1121     MarkovRewardKernel</span>
+<span id="L1122">1122       ((i : Finset.Iic n) -&gt; Action × Reward) (Action × Reward) where</span>
+<span id="L1123">1123   kernel :=</span>
+<span id="L1124">1124     { toFun := fun history =&gt;</span>
+<span id="L1125">1125         (composePolicyActionReward rewardKernel (policy n)).kernel</span>
+<span id="L1126">1126           (context n history, state n history)</span>
+<span id="L1127">1127       measurable&#x27; := by</span>
+<span id="L1128">1128         exact</span>
+<span id="L1129">1129           measurable_apply_of_measurable_index</span>
+<span id="L1130">1130             (composePolicyActionReward rewardKernel (policy n))</span>
+<span id="L1131">1131             (fun history =&gt; (context n history, state n history))</span>
+<span id="L1132">1132             ((hcontext n).prod (hstate n)) }</span>
+<span id="L1133">1133   isMarkovKernel := by</span>
+<span id="L1134">1134     refine ⟨fun history =&gt; ?_⟩</span>
+<span id="L1135">1135     exact</span>
+<span id="L1136">1136       isProbabilityMeasure_apply</span>
+<span id="L1137">1137         (composePolicyActionReward rewardKernel (policy n))</span>
+<span id="L1138">1138         (context n history, state n history)</span>
+<span id="L1139">1139 </span>
+<span id="L1140">1140 /--</span>
+<span id="L1141">1141 The Mathlib kernel family consumed by `partialTraj` for constant</span>
+<span id="L1142">1142 `(Action × Reward)` trajectory coordinates.</span>
+<span id="L1143">1143 -/</span>
+<span id="L1144">1144 noncomputable def actionRewardHistoryStepKernelFamily</span>
+<span id="L1145">1145     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1146">1146     {Reward : Type v}</span>
+<span id="L1147">1147     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1148">1148     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1149">1149     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L1150">1150     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1151">1151     (context :</span>
+<span id="L1152">1152       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; Context)</span>
+<span id="L1153">1153     (state :</span>
+<span id="L1154">1154       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; State)</span>
+<span id="L1155">1155     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1156">1156     (hstate : forall n : Nat, Measurable (state n)) :</span>
+<span id="L1157">1157     (n : Nat) -&gt;</span>
+<span id="L1158">1158       ProbabilityTheory.Kernel</span>
+<span id="L1159">1159         ((i : Finset.Iic n) -&gt; Action × Reward) (Action × Reward) :=</span>
+<span id="L1160">1160   fun n =&gt;</span>
+<span id="L1161">1161     (actionRewardHistoryStepKernel rewardKernel policy context state</span>
+<span id="L1162">1162       hcontext hstate n).kernel</span>
+<span id="L1163">1163 </span>
+<span id="L1164">1164 @[simp]</span>
+<span id="L1165">1165 theorem actionRewardHistoryStepKernelFamily_apply</span>
+<span id="L1166">1166     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1167">1167     {Reward : Type v}</span>
+<span id="L1168">1168     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1169">1169     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1170">1170     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L1171">1171     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1172">1172     (context :</span>
+<span id="L1173">1173       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; Context)</span>
+<span id="L1174">1174     (state :</span>
+<span id="L1175">1175       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; State)</span>
+<span id="L1176">1176     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1177">1177     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1178">1178     (n : Nat) (history : (i : Finset.Iic n) -&gt; Action × Reward) :</span>
+<span id="L1179">1179     actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1180">1180         hcontext hstate n history =</span>
+<span id="L1181">1181       (composePolicyActionReward rewardKernel (policy n)).kernel</span>
+<span id="L1182">1182         (context n history, state n history) :=</span>
+<span id="L1183">1183   rfl</span>
+<span id="L1184">1184 </span>
+<span id="L1185">1185 /-- Every kernel in `actionRewardHistoryStepKernelFamily` is Markov. -/</span>
+<span id="L1186">1186 theorem isMarkovKernel_actionRewardHistoryStepKernelFamily</span>
+<span id="L1187">1187     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1188">1188     {Reward : Type v}</span>
+<span id="L1189">1189     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1190">1190     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1191">1191     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L1192">1192     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1193">1193     (context :</span>
+<span id="L1194">1194       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; Context)</span>
+<span id="L1195">1195     (state :</span>
+<span id="L1196">1196       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; State)</span>
+<span id="L1197">1197     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1198">1198     (hstate : forall n : Nat, Measurable (state n)) :</span>
+<span id="L1199">1199     forall n : Nat,</span>
+<span id="L1200">1200       ProbabilityTheory.IsMarkovKernel</span>
+<span id="L1201">1201         (actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1202">1202           hcontext hstate n) :=</span>
+<span id="L1203">1203   fun n =&gt;</span>
+<span id="L1204">1204     (actionRewardHistoryStepKernel rewardKernel policy context state</span>
+<span id="L1205">1205       hcontext hstate n).isMarkovKernel</span>
+<span id="L1206">1206 </span>
+<span id="L1207">1207 instance instIsMarkovKernel_actionRewardHistoryStepKernelFamily</span>
+<span id="L1208">1208     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1209">1209     {Reward : Type v}</span>
+<span id="L1210">1210     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1211">1211     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1212">1212     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L1213">1213     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1214">1214     (context :</span>
+<span id="L1215">1215       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; Context)</span>
+<span id="L1216">1216     (state :</span>
+<span id="L1217">1217       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; State)</span>
+<span id="L1218">1218     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1219">1219     (hstate : forall n : Nat, Measurable (state n)) :</span>
+<span id="L1220">1220     forall n : Nat,</span>
+<span id="L1221">1221       ProbabilityTheory.IsMarkovKernel</span>
+<span id="L1222">1222         (actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1223">1223           hcontext hstate n) :=</span>
+<span id="L1224">1224   isMarkovKernel_actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L1225">1225     context state hcontext hstate</span>
+<span id="L1226">1226 </span>
+<span id="L1227">1227 /--</span>
+<span id="L1228">1228 For any measurable action/reward-pair event, the event probability selected by</span>
+<span id="L1229">1229 one member of the action/reward history-indexed kernel family is measurable in</span>
+<span id="L1230">1230 the finite action/reward pair history.</span>
+<span id="L1231">1231 -/</span>
+<span id="L1232">1232 theorem measurable_actionRewardHistoryStepKernelFamily_eventProbability</span>
+<span id="L1233">1233     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1234">1234     {Reward : Type v}</span>
+<span id="L1235">1235     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1236">1236     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1237">1237     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L1238">1238     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1239">1239     (context :</span>
+<span id="L1240">1240       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; Context)</span>
+<span id="L1241">1241     (state :</span>
+<span id="L1242">1242       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; State)</span>
+<span id="L1243">1243     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1244">1244     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1245">1245     (n : Nat)</span>
+<span id="L1246">1246     {event : Set (Action × Reward)}</span>
+<span id="L1247">1247     (hevent : MeasurableSet event) :</span>
+<span id="L1248">1248     Measurable</span>
+<span id="L1249">1249       (fun history : (i : Finset.Iic n) -&gt; Action × Reward =&gt;</span>
+<span id="L1250">1250         actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1251">1251           hcontext hstate n history event) := by</span>
+<span id="L1252">1252   exact</span>
+<span id="L1253">1253     measurable_eventProbability_of_measurable_index</span>
+<span id="L1254">1254       (composePolicyActionReward rewardKernel (policy n))</span>
+<span id="L1255">1255       (fun history =&gt; (context n history, state n history))</span>
+<span id="L1256">1256       ((hcontext n).prod (hstate n))</span>
+<span id="L1257">1257       hevent</span>
+<span id="L1258">1258 </span>
+<span id="L1259">1259 /--</span>
+<span id="L1260">1260 The reward marginal of a history-indexed one-step action/reward kernel is the</span>
+<span id="L1261">1261 reward law selected by the same finite history.</span>
+<span id="L1262">1262 -/</span>
+<span id="L1263">1263 theorem actionRewardHistoryStepKernelFamily_reward_event</span>
+<span id="L1264">1264     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1265">1265     {Reward : Type v}</span>
+<span id="L1266">1266     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1267">1267     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1268">1268     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L1269">1269     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1270">1270     (context :</span>
+<span id="L1271">1271       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; Context)</span>
+<span id="L1272">1272     (state :</span>
+<span id="L1273">1273       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; State)</span>
+<span id="L1274">1274     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1275">1275     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1276">1276     (n : Nat) (history : (i : Finset.Iic n) -&gt; Action × Reward)</span>
+<span id="L1277">1277     {event : Set Reward}</span>
+<span id="L1278">1278     (hevent : MeasurableSet event) :</span>
+<span id="L1279">1279     actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1280">1280         hcontext hstate n history (Prod.snd ⁻¹&#x27; event) =</span>
+<span id="L1281">1281       selectedMeasure rewardKernel</span>
+<span id="L1282">1282         (context n history) ((policy n).action (state n history)) event := by</span>
+<span id="L1283">1283   rw [actionRewardHistoryStepKernelFamily_apply]</span>
+<span id="L1284">1284   exact</span>
+<span id="L1285">1285     composePolicyActionReward_reward_event rewardKernel (policy n)</span>
+<span id="L1286">1286       (context n history, state n history) hevent</span>
+<span id="L1287">1287 </span>
+<span id="L1288">1288 /--</span>
+<span id="L1289">1289 Measure-level reward marginal of a history-indexed one-step action/reward</span>
+<span id="L1290">1290 kernel.</span>
+<span id="L1291">1291 </span>
+<span id="L1292">1292 This is the pushforward version of</span>
+<span id="L1293">1293 `actionRewardHistoryStepKernelFamily_reward_event`, and is the local</span>
+<span id="L1294">1294 `RewardKernel` side of the future `condExpKernel` reward-coordinate map</span>
+<span id="L1295">1295 identification.</span>
+<span id="L1296">1296 -/</span>
+<span id="L1297">1297 theorem actionRewardHistoryStepKernelFamily_reward_map</span>
+<span id="L1298">1298     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1299">1299     {Reward : Type v}</span>
+<span id="L1300">1300     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1301">1301     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1302">1302     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L1303">1303     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1304">1304     (context :</span>
+<span id="L1305">1305       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; Context)</span>
+<span id="L1306">1306     (state :</span>
+<span id="L1307">1307       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; State)</span>
+<span id="L1308">1308     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1309">1309     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1310">1310     (n : Nat) (history : (i : Finset.Iic n) -&gt; Action × Reward) :</span>
+<span id="L1311">1311     Measure.map Prod.snd</span>
+<span id="L1312">1312         (actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1313">1313           hcontext hstate n history) =</span>
+<span id="L1314">1314       selectedMeasure rewardKernel</span>
+<span id="L1315">1315         (context n history) ((policy n).action (state n history)) := by</span>
+<span id="L1316">1316   refine Measure.ext fun event hevent =&gt; ?_</span>
+<span id="L1317">1317   rw [Measure.map_apply measurable_snd hevent]</span>
+<span id="L1318">1318   exact</span>
+<span id="L1319">1319     actionRewardHistoryStepKernelFamily_reward_event rewardKernel policy</span>
+<span id="L1320">1320       context state hcontext hstate n history hevent</span>
+<span id="L1321">1321 </span>
+<span id="L1322">1322 /--</span>
+<span id="L1323">1323 Measure-level action marginal of a history-indexed one-step action/reward</span>
+<span id="L1324">1324 kernel.</span>
+<span id="L1325">1325 </span>
+<span id="L1326">1326 For a fixed finite history, the next action is deterministic and equals the</span>
+<span id="L1327">1327 action chosen by the time-`n` policy on the state selected from that history.</span>
+<span id="L1328">1328 -/</span>
+<span id="L1329">1329 theorem actionRewardHistoryStepKernelFamily_action_map</span>
+<span id="L1330">1330     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1331">1331     {Reward : Type v}</span>
+<span id="L1332">1332     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1333">1333     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1334">1334     (rewardKernel : MarkovRewardKernel (Prod Context Action) Reward)</span>
+<span id="L1335">1335     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1336">1336     (context :</span>
+<span id="L1337">1337       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Prod Action Reward) -&gt; Context)</span>
+<span id="L1338">1338     (state :</span>
+<span id="L1339">1339       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Prod Action Reward) -&gt; State)</span>
+<span id="L1340">1340     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1341">1341     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1342">1342     (n : Nat) (history : (i : Finset.Iic n) -&gt; Prod Action Reward) :</span>
+<span id="L1343">1343     Measure.map Prod.fst</span>
+<span id="L1344">1344         (actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1345">1345           hcontext hstate n history) =</span>
+<span id="L1346">1346       Measure.dirac ((policy n).action (state n history)) := by</span>
+<span id="L1347">1347   rw [actionRewardHistoryStepKernelFamily_apply]</span>
+<span id="L1348">1348   exact</span>
+<span id="L1349">1349     composePolicyActionReward_action_map rewardKernel (policy n)</span>
+<span id="L1350">1350       (context n history, state n history)</span>
+<span id="L1351">1351 </span>
+<span id="L1352">1352 /--</span>
+<span id="L1353">1353 Pointwise measure shape of a history-indexed action/reward step kernel.</span>
+<span id="L1354">1354 </span>
+<span id="L1355">1355 For a fixed finite pair history, the next action is the policy-selected action</span>
+<span id="L1356">1356 and the reward coordinate is drawn from the corresponding selected reward law.</span>
+<span id="L1357">1357 -/</span>
+<span id="L1358">1358 theorem actionRewardHistoryStepKernelFamily_apply_eq_map_prod_mk</span>
+<span id="L1359">1359     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1360">1360     {Reward : Type v}</span>
+<span id="L1361">1361     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1362">1362     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1363">1363     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L1364">1364     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1365">1365     (context :</span>
+<span id="L1366">1366       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; Context)</span>
+<span id="L1367">1367     (state :</span>
+<span id="L1368">1368       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; State)</span>
+<span id="L1369">1369     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1370">1370     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1371">1371     (n : Nat) (history : (i : Finset.Iic n) -&gt; Action × Reward) :</span>
+<span id="L1372">1372     actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1373">1373         hcontext hstate n history =</span>
+<span id="L1374">1374       Measure.map</span>
+<span id="L1375">1375         (Prod.mk ((policy n).action (state n history)))</span>
+<span id="L1376">1376         (selectedMeasure rewardKernel (context n history)</span>
+<span id="L1377">1377           ((policy n).action (state n history))) := by</span>
+<span id="L1378">1378   rw [actionRewardHistoryStepKernelFamily_apply]</span>
+<span id="L1379">1379   exact</span>
+<span id="L1380">1380     composePolicyActionReward_kernel_apply_eq_map_prod_mk rewardKernel</span>
+<span id="L1381">1381       (policy n) (context n history, state n history)</span>
+<span id="L1382">1382 </span>
+<span id="L1383">1383 /--</span>
+<span id="L1384">1384 Finite-prefix action/reward trajectory kernel obtained by feeding the</span>
+<span id="L1385">1385 history-indexed action/reward step-kernel family to Mathlib&#x27;s `partialTraj`.</span>
+<span id="L1386">1386 </span>
+<span id="L1387">1387 This is the compiled finite-prefix action/reward trajectory-law surface for</span>
+<span id="L1388">1388 `KERNEL-POLICY-BIND`.  It still does not prove conditional reward-law transfer,</span>
+<span id="L1389">1389 posterior kernels, or final adaptive regret theorems.</span>
+<span id="L1390">1390 -/</span>
+<span id="L1391">1391 noncomputable def actionRewardPartialTrajectoryKernel</span>
+<span id="L1392">1392     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1393">1393     {Reward : Type v}</span>
+<span id="L1394">1394     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1395">1395     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1396">1396     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L1397">1397     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1398">1398     (context :</span>
+<span id="L1399">1399       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; Context)</span>
+<span id="L1400">1400     (state :</span>
+<span id="L1401">1401       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; State)</span>
+<span id="L1402">1402     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1403">1403     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1404">1404     (a b : Nat) :</span>
+<span id="L1405">1405     ProbabilityTheory.Kernel</span>
+<span id="L1406">1406       ((i : Finset.Iic a) -&gt; Action × Reward)</span>
+<span id="L1407">1407       ((i : Finset.Iic b) -&gt; Action × Reward) :=</span>
+<span id="L1408">1408   ProbabilityTheory.Kernel.partialTraj</span>
+<span id="L1409">1409     (X := fun _ : Nat =&gt; Action × Reward)</span>
+<span id="L1410">1410     (actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1411">1411       hcontext hstate)</span>
+<span id="L1412">1412     a b</span>
+<span id="L1413">1413 </span>
+<span id="L1414">1414 /-- The finite-prefix action/reward trajectory kernel is Markov. -/</span>
+<span id="L1415">1415 theorem isMarkovKernel_actionRewardPartialTrajectoryKernel</span>
+<span id="L1416">1416     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1417">1417     {Reward : Type v}</span>
+<span id="L1418">1418     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1419">1419     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1420">1420     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L1421">1421     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1422">1422     (context :</span>
+<span id="L1423">1423       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; Context)</span>
+<span id="L1424">1424     (state :</span>
+<span id="L1425">1425       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; State)</span>
+<span id="L1426">1426     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1427">1427     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1428">1428     (a b : Nat) :</span>
+<span id="L1429">1429     ProbabilityTheory.IsMarkovKernel</span>
+<span id="L1430">1430       (actionRewardPartialTrajectoryKernel rewardKernel policy context state</span>
+<span id="L1431">1431         hcontext hstate a b) := by</span>
+<span id="L1432">1432   haveI :</span>
+<span id="L1433">1433       forall n : Nat,</span>
+<span id="L1434">1434         ProbabilityTheory.IsMarkovKernel</span>
+<span id="L1435">1435           (actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1436">1436             hcontext hstate n) :=</span>
+<span id="L1437">1437     isMarkovKernel_actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L1438">1438       context state hcontext hstate</span>
+<span id="L1439">1439   unfold actionRewardPartialTrajectoryKernel</span>
+<span id="L1440">1440   infer_instance</span>
+<span id="L1441">1441 </span>
+<span id="L1442">1442 /--</span>
+<span id="L1443">1443 Event-probability measurability for the finite-prefix action/reward trajectory</span>
+<span id="L1444">1444 kernel assembled by Mathlib&#x27;s `partialTraj`.</span>
+<span id="L1445">1445 -/</span>
+<span id="L1446">1446 theorem measurable_actionRewardPartialTrajectoryKernel_eventProbability</span>
+<span id="L1447">1447     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1448">1448     {Reward : Type v}</span>
+<span id="L1449">1449     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1450">1450     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1451">1451     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L1452">1452     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1453">1453     (context :</span>
+<span id="L1454">1454       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; Context)</span>
+<span id="L1455">1455     (state :</span>
+<span id="L1456">1456       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; State)</span>
+<span id="L1457">1457     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1458">1458     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1459">1459     (a b : Nat)</span>
+<span id="L1460">1460     {event : Set ((i : Finset.Iic b) -&gt; Action × Reward)}</span>
+<span id="L1461">1461     (hevent : MeasurableSet event) :</span>
+<span id="L1462">1462     Measurable</span>
+<span id="L1463">1463       (fun history : (i : Finset.Iic a) -&gt; Action × Reward =&gt;</span>
+<span id="L1464">1464         actionRewardPartialTrajectoryKernel rewardKernel policy context state</span>
+<span id="L1465">1465           hcontext hstate a b history event) := by</span>
+<span id="L1466">1466   exact</span>
+<span id="L1467">1467     ProbabilityTheory.Kernel.measurable_coe</span>
+<span id="L1468">1468       (actionRewardPartialTrajectoryKernel rewardKernel policy context state</span>
+<span id="L1469">1469         hcontext hstate a b)</span>
+<span id="L1470">1470       hevent</span>
+<span id="L1471">1471 </span>
+<span id="L1472">1472 /--</span>
+<span id="L1473">1473 For a one-step extension, the action/reward partial trajectory kernel has the</span>
+<span id="L1474">1474 configured action/reward history-step kernel as its next-coordinate marginal.</span>
+<span id="L1475">1475 </span>
+<span id="L1476">1476 This is the action/reward-pair version of</span>
+<span id="L1477">1477 `partialTrajectoryKernel_succ_next_map` and exposes the exact Mathlib</span>
+<span id="L1478">1478 `partialTraj` marginal used by future `condExpKernel` pair-law identification.</span>
+<span id="L1479">1479 -/</span>
+<span id="L1480">1480 theorem actionRewardPartialTrajectoryKernel_succ_next_map</span>
+<span id="L1481">1481     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1482">1482     {Reward : Type v}</span>
+<span id="L1483">1483     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1484">1484     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1485">1485     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L1486">1486     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1487">1487     (context :</span>
+<span id="L1488">1488       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; Context)</span>
+<span id="L1489">1489     (state :</span>
+<span id="L1490">1490       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; State)</span>
+<span id="L1491">1491     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1492">1492     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1493">1493     (n : Nat) :</span>
+<span id="L1494">1494     (actionRewardPartialTrajectoryKernel rewardKernel policy context state</span>
+<span id="L1495">1495         hcontext hstate n (n + 1)).map</span>
+<span id="L1496">1496       (fun history : (i : Finset.Iic (n + 1)) -&gt; Action × Reward =&gt;</span>
+<span id="L1497">1497         history ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩) =</span>
+<span id="L1498">1498       actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1499">1499         hcontext hstate n := by</span>
+<span id="L1500">1500   haveI :</span>
+<span id="L1501">1501       forall n : Nat,</span>
+<span id="L1502">1502         ProbabilityTheory.IsMarkovKernel</span>
+<span id="L1503">1503           (actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1504">1504             hcontext hstate n) :=</span>
+<span id="L1505">1505     isMarkovKernel_actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L1506">1506       context state hcontext hstate</span>
+<span id="L1507">1507   simpa [actionRewardPartialTrajectoryKernel] using</span>
+<span id="L1508">1508     (ProbabilityTheory.Kernel.map_partialTraj_succ_self</span>
+<span id="L1509">1509       (X := fun _ : Nat =&gt; Action × Reward)</span>
+<span id="L1510">1510       (κ := actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1511">1511         hcontext hstate)</span>
+<span id="L1512">1512       n)</span>
+<span id="L1513">1513 </span>
+<span id="L1514">1514 /--</span>
+<span id="L1515">1515 Pointwise measure form of</span>
+<span id="L1516">1516 `actionRewardPartialTrajectoryKernel_succ_next_map`.</span>
+<span id="L1517">1517 -/</span>
+<span id="L1518">1518 theorem actionRewardPartialTrajectoryKernel_succ_next_map_apply</span>
+<span id="L1519">1519     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1520">1520     {Reward : Type v}</span>
+<span id="L1521">1521     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1522">1522     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1523">1523     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L1524">1524     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1525">1525     (context :</span>
+<span id="L1526">1526       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; Context)</span>
+<span id="L1527">1527     (state :</span>
+<span id="L1528">1528       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; State)</span>
+<span id="L1529">1529     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1530">1530     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1531">1531     (n : Nat) (history : (i : Finset.Iic n) -&gt; Action × Reward) :</span>
+<span id="L1532">1532     Measure.map</span>
+<span id="L1533">1533         (fun extended : (i : Finset.Iic (n + 1)) -&gt; Action × Reward =&gt;</span>
+<span id="L1534">1534           extended ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩)</span>
+<span id="L1535">1535         (actionRewardPartialTrajectoryKernel rewardKernel policy context state</span>
+<span id="L1536">1536           hcontext hstate n (n + 1) history) =</span>
+<span id="L1537">1537       actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1538">1538         hcontext hstate n history := by</span>
+<span id="L1539">1539   have h_kernel :=</span>
+<span id="L1540">1540     actionRewardPartialTrajectoryKernel_succ_next_map rewardKernel policy</span>
+<span id="L1541">1541       context state hcontext hstate n</span>
+<span id="L1542">1542   have h_next_meas :</span>
+<span id="L1543">1543       Measurable</span>
+<span id="L1544">1544         (fun extended : (i : Finset.Iic (n + 1)) -&gt; Action × Reward =&gt;</span>
+<span id="L1545">1545           extended ⟨n + 1, Finset.mem_Iic.mpr le_rfl⟩) :=</span>
+<span id="L1546">1546     measurable_pi_apply _</span>
+<span id="L1547">1547   simpa [ProbabilityTheory.Kernel.map_apply _ h_next_meas history] using</span>
+<span id="L1548">1548     congrArg (fun kernel =&gt; kernel history) h_kernel</span>
+<span id="L1549">1549 </span>
+<span id="L1550">1550 /--</span>
+<span id="L1551">1551 Pointwise one-step extension form of the action/reward `partialTraj` kernel.</span>
+<span id="L1552">1552 </span>
+<span id="L1553">1553 For one transition, the finite-prefix trajectory kernel is the history-step</span>
+<span id="L1554">1554 action/reward kernel pushed through the deterministic operation that appends</span>
+<span id="L1555">1555 the sampled next pair to the old finite pair prefix.</span>
+<span id="L1556">1556 -/</span>
+<span id="L1557">1557 theorem actionRewardPartialTrajectoryKernel_succ_extend_map_apply</span>
+<span id="L1558">1558     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1559">1559     {Reward : Type v}</span>
+<span id="L1560">1560     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1561">1561     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1562">1562     (rewardKernel : MarkovRewardKernel (Context × Action) Reward)</span>
+<span id="L1563">1563     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1564">1564     (context :</span>
+<span id="L1565">1565       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; Context)</span>
+<span id="L1566">1566     (state :</span>
+<span id="L1567">1567       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Action × Reward) -&gt; State)</span>
+<span id="L1568">1568     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1569">1569     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1570">1570     (n : Nat) (history : (i : Finset.Iic n) -&gt; Action × Reward) :</span>
+<span id="L1571">1571     actionRewardPartialTrajectoryKernel rewardKernel policy context state</span>
+<span id="L1572">1572         hcontext hstate n (n + 1) history =</span>
+<span id="L1573">1573       Measure.map</span>
+<span id="L1574">1574         (fun next : Action × Reward =&gt;</span>
+<span id="L1575">1575           History.extendPairHistorySucc history next)</span>
+<span id="L1576">1576         (actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1577">1577           hcontext hstate n history) := by</span>
+<span id="L1578">1578   haveI :</span>
+<span id="L1579">1579       forall n : Nat,</span>
+<span id="L1580">1580         ProbabilityTheory.IsMarkovKernel</span>
+<span id="L1581">1581           (actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1582">1582             hcontext hstate n) :=</span>
+<span id="L1583">1583     isMarkovKernel_actionRewardHistoryStepKernelFamily rewardKernel policy</span>
+<span id="L1584">1584       context state hcontext hstate</span>
+<span id="L1585">1585   have h_extend_comp :</span>
+<span id="L1586">1586       (fun next : Action × Reward =&gt;</span>
+<span id="L1587">1587         IicProdIoc (X := fun _ : Nat =&gt; Action × Reward) n (n + 1)</span>
+<span id="L1588">1588           (history, MeasurableEquiv.piSingleton</span>
+<span id="L1589">1589             (X := fun _ : Nat =&gt; Action × Reward) n next)) =</span>
+<span id="L1590">1590         fun next : Action × Reward =&gt;</span>
+<span id="L1591">1591           History.extendPairHistorySucc history next := by</span>
+<span id="L1592">1592     funext next j</span>
+<span id="L1593">1593     by_cases hj : j.1 &lt;= n</span>
+<span id="L1594">1594     · simp [IicProdIoc, History.extendPairHistorySucc, hj]</span>
+<span id="L1595">1595     · have hj_le : j.1 &lt;= n + 1 := Finset.mem_Iic.mp j.2</span>
+<span id="L1596">1596       have h_succ_le : n + 1 &lt;= j.1 :=</span>
+<span id="L1597">1597         Nat.succ_le_of_lt (lt_of_not_ge hj)</span>
+<span id="L1598">1598       have hj_eq : j.1 = n + 1 := le_antisymm hj_le h_succ_le</span>
+<span id="L1599">1599       simp [IicProdIoc, History.extendPairHistorySucc, hj_eq,</span>
+<span id="L1600">1600         MeasurableEquiv.piSingleton]</span>
+<span id="L1601">1601   have h_glue_meas :</span>
+<span id="L1602">1602       Measurable</span>
+<span id="L1603">1603         (IicProdIoc (X := fun _ : Nat =&gt; Action × Reward) n (n + 1)) :=</span>
+<span id="L1604">1604     measurable_IicProdIoc</span>
+<span id="L1605">1605   have h_singleton_meas :</span>
+<span id="L1606">1606       Measurable</span>
+<span id="L1607">1607         (MeasurableEquiv.piSingleton</span>
+<span id="L1608">1608           (X := fun _ : Nat =&gt; Action × Reward) n) :=</span>
+<span id="L1609">1609     (MeasurableEquiv.piSingleton</span>
+<span id="L1610">1610       (X := fun _ : Nat =&gt; Action × Reward) n).measurable</span>
+<span id="L1611">1611   rw [actionRewardPartialTrajectoryKernel]</span>
+<span id="L1612">1612   rw [ProbabilityTheory.Kernel.partialTraj_succ_self]</span>
+<span id="L1613">1613   rw [ProbabilityTheory.Kernel.map_apply _ h_glue_meas]</span>
+<span id="L1614">1614   rw [ProbabilityTheory.Kernel.prod_apply]</span>
+<span id="L1615">1615   rw [ProbabilityTheory.Kernel.id_apply]</span>
+<span id="L1616">1616   rw [ProbabilityTheory.Kernel.map_apply _ h_singleton_meas]</span>
+<span id="L1617">1617   rw [Measure.dirac_prod]</span>
+<span id="L1618">1618   rw [Measure.map_map h_glue_meas (by fun_prop)]</span>
+<span id="L1619">1619   rw [Measure.map_map (h_glue_meas.comp (by fun_prop))</span>
+<span id="L1620">1620     (MeasurableEquiv.piSingleton</span>
+<span id="L1621">1621       (X := fun _ : Nat =&gt; Action × Reward) n).measurable]</span>
+<span id="L1622">1622   exact</span>
+<span id="L1623">1623     congrArg</span>
+<span id="L1624">1624       (fun f =&gt;</span>
+<span id="L1625">1625         Measure.map f</span>
+<span id="L1626">1626           (actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1627">1627             hcontext hstate n history))</span>
+<span id="L1628">1628       h_extend_comp</span>
+<span id="L1629">1629 </span>
+<span id="L1630">1630 /--</span>
+<span id="L1631">1631 Canonical regular conditional distribution for the action/reward trajectory</span>
+<span id="L1632">1632 generated by the local history-step kernel family.</span>
+<span id="L1633">1633 </span>
+<span id="L1634">1634 This is the Mathlib-backed trajectory-measure side of the open</span>
+<span id="L1635">1635 `COND-EXPECT-REWARD` law-identification route.  It does not identify an</span>
+<span id="L1636">1636 arbitrary ambient `condExpKernel`; it records that, on Mathlib&#x27;s canonical</span>
+<span id="L1637">1637 `trajMeasure`, conditioning the next action/reward pair on the finite prefix</span>
+<span id="L1638">1638 recovers the configured `actionRewardHistoryStepKernelFamily`.</span>
+<span id="L1639">1639 -/</span>
+<span id="L1640">1640 theorem actionRewardHistoryStepKernelFamily_condDistrib_trajMeasure</span>
+<span id="L1641">1641     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1642">1642     {Reward : Type v}</span>
+<span id="L1643">1643     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1644">1644     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1645">1645     [StandardBorelSpace (Prod Action Reward)]</span>
+<span id="L1646">1646     [Nonempty (Prod Action Reward)]</span>
+<span id="L1647">1647     (mu0 : Measure (Prod Action Reward))</span>
+<span id="L1648">1648     [MeasureTheory.IsProbabilityMeasure mu0]</span>
+<span id="L1649">1649     (rewardKernel : MarkovRewardKernel (Prod Context Action) Reward)</span>
+<span id="L1650">1650     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1651">1651     (context :</span>
+<span id="L1652">1652       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Prod Action Reward) -&gt; Context)</span>
+<span id="L1653">1653     (state :</span>
+<span id="L1654">1654       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Prod Action Reward) -&gt; State)</span>
+<span id="L1655">1655     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1656">1656     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1657">1657     (n : Nat) :</span>
+<span id="L1658">1658     ProbabilityTheory.condDistrib</span>
+<span id="L1659">1659         (fun trajectory : (t : Nat) -&gt; Prod Action Reward =&gt;</span>
+<span id="L1660">1660           trajectory (n + 1))</span>
+<span id="L1661">1661         (Preorder.frestrictLe n)</span>
+<span id="L1662">1662         (ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L1663">1663           (X := fun _ : Nat =&gt; Prod Action Reward)</span>
+<span id="L1664">1664           mu0</span>
+<span id="L1665">1665           (actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1666">1666             hcontext hstate))</span>
+<span id="L1667">1667       =ᵐ[</span>
+<span id="L1668">1668         (ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L1669">1669           (X := fun _ : Nat =&gt; Prod Action Reward)</span>
+<span id="L1670">1670           mu0</span>
+<span id="L1671">1671           (actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1672">1672             hcontext hstate)).map</span>
+<span id="L1673">1673           (Preorder.frestrictLe n)]</span>
+<span id="L1674">1674         actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1675">1675           hcontext hstate n := by</span>
+<span id="L1676">1676   exact</span>
+<span id="L1677">1677     ProbabilityTheory.Kernel.condDistrib_trajMeasure</span>
+<span id="L1678">1678       (X := fun _ : Nat =&gt; Prod Action Reward)</span>
+<span id="L1679">1679       (a := n)</span>
+<span id="L1680">1680 </span>
+<span id="L1681">1681 /--</span>
+<span id="L1682">1682 Canonical reward-marginal regular conditional distribution for the</span>
+<span id="L1683">1683 action/reward trajectory generated by the local history-step kernel family.</span>
+<span id="L1684">1684 </span>
+<span id="L1685">1685 This is the `Prod.snd` projection of</span>
+<span id="L1686">1686 `actionRewardHistoryStepKernelFamily_condDistrib_trajMeasure`: on Mathlib&#x27;s</span>
+<span id="L1687">1687 canonical `trajMeasure`, conditioning the next reward coordinate on the finite</span>
+<span id="L1688">1688 action/reward prefix recovers the reward marginal of the configured</span>
+<span id="L1689">1689 `actionRewardHistoryStepKernelFamily`.</span>
+<span id="L1690">1690 -/</span>
+<span id="L1691">1691 theorem actionRewardHistoryStepKernelFamily_reward_condDistrib_trajMeasure</span>
+<span id="L1692">1692     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1693">1693     {Reward : Type v}</span>
+<span id="L1694">1694     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1695">1695     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1696">1696     [StandardBorelSpace (Prod Action Reward)]</span>
+<span id="L1697">1697     [StandardBorelSpace Reward]</span>
+<span id="L1698">1698     [Nonempty (Prod Action Reward)] [Nonempty Reward]</span>
+<span id="L1699">1699     (mu0 : Measure (Prod Action Reward))</span>
+<span id="L1700">1700     [MeasureTheory.IsProbabilityMeasure mu0]</span>
+<span id="L1701">1701     (rewardKernel : MarkovRewardKernel (Prod Context Action) Reward)</span>
+<span id="L1702">1702     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1703">1703     (context :</span>
+<span id="L1704">1704       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Prod Action Reward) -&gt; Context)</span>
+<span id="L1705">1705     (state :</span>
+<span id="L1706">1706       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Prod Action Reward) -&gt; State)</span>
+<span id="L1707">1707     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1708">1708     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1709">1709     (n : Nat) :</span>
+<span id="L1710">1710     Filter.EventuallyEq</span>
+<span id="L1711">1711       (MeasureTheory.ae</span>
+<span id="L1712">1712         ((ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L1713">1713           (X := fun _ : Nat =&gt; Prod Action Reward)</span>
+<span id="L1714">1714           mu0</span>
+<span id="L1715">1715           (actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1716">1716             hcontext hstate)).map</span>
+<span id="L1717">1717           (Preorder.frestrictLe n)))</span>
+<span id="L1718">1718       (ProbabilityTheory.condDistrib</span>
+<span id="L1719">1719         (fun trajectory : (t : Nat) -&gt; Prod Action Reward =&gt;</span>
+<span id="L1720">1720           (trajectory (n + 1)).2)</span>
+<span id="L1721">1721         (Preorder.frestrictLe n)</span>
+<span id="L1722">1722         (ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L1723">1723           (X := fun _ : Nat =&gt; Prod Action Reward)</span>
+<span id="L1724">1724           mu0</span>
+<span id="L1725">1725           (actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1726">1726             hcontext hstate)))</span>
+<span id="L1727">1727       ((actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1728">1728         hcontext hstate n).map Prod.snd) := by</span>
+<span id="L1729">1729   let stepKernel :=</span>
+<span id="L1730">1730     actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1731">1731       hcontext hstate</span>
+<span id="L1732">1732   let trajMeasure :=</span>
+<span id="L1733">1733     ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L1734">1734       (X := fun _ : Nat =&gt; Prod Action Reward) mu0 stepKernel</span>
+<span id="L1735">1735   have hcomp :</span>
+<span id="L1736">1736       Filter.EventuallyEq</span>
+<span id="L1737">1737         (MeasureTheory.ae (trajMeasure.map (Preorder.frestrictLe n)))</span>
+<span id="L1738">1738         (ProbabilityTheory.condDistrib</span>
+<span id="L1739">1739           (fun trajectory : (t : Nat) -&gt; Prod Action Reward =&gt;</span>
+<span id="L1740">1740             (trajectory (n + 1)).2)</span>
+<span id="L1741">1741           (Preorder.frestrictLe n)</span>
+<span id="L1742">1742           trajMeasure)</span>
+<span id="L1743">1743         ((ProbabilityTheory.condDistrib</span>
+<span id="L1744">1744           (fun trajectory : (t : Nat) -&gt; Prod Action Reward =&gt;</span>
+<span id="L1745">1745             trajectory (n + 1))</span>
+<span id="L1746">1746           (Preorder.frestrictLe n)</span>
+<span id="L1747">1747           trajMeasure).map Prod.snd) := by</span>
+<span id="L1748">1748     have h :=</span>
+<span id="L1749">1749       ProbabilityTheory.condDistrib_comp</span>
+<span id="L1750">1750         (Y := fun trajectory : (t : Nat) -&gt; Prod Action Reward =&gt;</span>
+<span id="L1751">1751           trajectory (n + 1))</span>
+<span id="L1752">1752         (μ := trajMeasure)</span>
+<span id="L1753">1753         (mβ := MeasurableSpace.pi)</span>
+<span id="L1754">1754         ((Preorder.frestrictLe n) :</span>
+<span id="L1755">1755           ((t : Nat) -&gt; Prod Action Reward) -&gt;</span>
+<span id="L1756">1756             ((i : Finset.Iic n) -&gt; Prod Action Reward))</span>
+<span id="L1757">1757         (measurable_pi_apply (n + 1)).aemeasurable</span>
+<span id="L1758">1758         (f := Prod.snd)</span>
+<span id="L1759">1759         measurable_snd</span>
+<span id="L1760">1760     simpa [Function.comp_def] using h</span>
+<span id="L1761">1761   have hpair :</span>
+<span id="L1762">1762       Filter.EventuallyEq</span>
+<span id="L1763">1763         (MeasureTheory.ae (trajMeasure.map (Preorder.frestrictLe n)))</span>
+<span id="L1764">1764         (ProbabilityTheory.condDistrib</span>
+<span id="L1765">1765           (fun trajectory : (t : Nat) -&gt; Prod Action Reward =&gt;</span>
+<span id="L1766">1766             trajectory (n + 1))</span>
+<span id="L1767">1767           (Preorder.frestrictLe n)</span>
+<span id="L1768">1768           trajMeasure)</span>
+<span id="L1769">1769         (stepKernel n) := by</span>
+<span id="L1770">1770     simpa [stepKernel, trajMeasure] using</span>
+<span id="L1771">1771       actionRewardHistoryStepKernelFamily_condDistrib_trajMeasure</span>
+<span id="L1772">1772         mu0 rewardKernel policy context state hcontext hstate n</span>
+<span id="L1773">1773   filter_upwards [hcomp, hpair] with history hcomp_eq hpair_eq</span>
+<span id="L1774">1774   rw [hcomp_eq]</span>
+<span id="L1775">1775   rw [ProbabilityTheory.Kernel.map_apply _ measurable_snd]</span>
+<span id="L1776">1776   rw [hpair_eq]</span>
+<span id="L1777">1777   rw [← ProbabilityTheory.Kernel.map_apply _ measurable_snd]</span>
+<span id="L1778">1778 </span>
+<span id="L1779">1779 /--</span>
+<span id="L1780">1780 Canonical action-marginal regular conditional distribution for the</span>
+<span id="L1781">1781 action/reward trajectory generated by the local history-step kernel family.</span>
+<span id="L1782">1782 </span>
+<span id="L1783">1783 This is the `Prod.fst` projection of</span>
+<span id="L1784">1784 `actionRewardHistoryStepKernelFamily_condDistrib_trajMeasure`: on Mathlib&#x27;s</span>
+<span id="L1785">1785 canonical `trajMeasure`, conditioning the next action coordinate on the finite</span>
+<span id="L1786">1786 action/reward prefix recovers the action marginal of the configured</span>
+<span id="L1787">1787 `actionRewardHistoryStepKernelFamily`.</span>
+<span id="L1788">1788 -/</span>
+<span id="L1789">1789 theorem actionRewardHistoryStepKernelFamily_action_condDistrib_trajMeasure</span>
+<span id="L1790">1790     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1791">1791     {Reward : Type v}</span>
+<span id="L1792">1792     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1793">1793     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1794">1794     [StandardBorelSpace (Prod Action Reward)]</span>
+<span id="L1795">1795     [StandardBorelSpace Action]</span>
+<span id="L1796">1796     [Nonempty (Prod Action Reward)] [Nonempty Action]</span>
+<span id="L1797">1797     (mu0 : Measure (Prod Action Reward))</span>
+<span id="L1798">1798     [MeasureTheory.IsProbabilityMeasure mu0]</span>
+<span id="L1799">1799     (rewardKernel : MarkovRewardKernel (Prod Context Action) Reward)</span>
+<span id="L1800">1800     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1801">1801     (context :</span>
+<span id="L1802">1802       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Prod Action Reward) -&gt; Context)</span>
+<span id="L1803">1803     (state :</span>
+<span id="L1804">1804       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Prod Action Reward) -&gt; State)</span>
+<span id="L1805">1805     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1806">1806     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1807">1807     (n : Nat) :</span>
+<span id="L1808">1808     Filter.EventuallyEq</span>
+<span id="L1809">1809       (MeasureTheory.ae</span>
+<span id="L1810">1810         ((ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L1811">1811           (X := fun _ : Nat =&gt; Prod Action Reward)</span>
+<span id="L1812">1812           mu0</span>
+<span id="L1813">1813           (actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1814">1814             hcontext hstate)).map</span>
+<span id="L1815">1815           (Preorder.frestrictLe n)))</span>
+<span id="L1816">1816       (ProbabilityTheory.condDistrib</span>
+<span id="L1817">1817         (fun trajectory : (t : Nat) -&gt; Prod Action Reward =&gt;</span>
+<span id="L1818">1818           (trajectory (n + 1)).1)</span>
+<span id="L1819">1819         (Preorder.frestrictLe n)</span>
+<span id="L1820">1820         (ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L1821">1821           (X := fun _ : Nat =&gt; Prod Action Reward)</span>
+<span id="L1822">1822           mu0</span>
+<span id="L1823">1823           (actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1824">1824             hcontext hstate)))</span>
+<span id="L1825">1825       ((actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1826">1826         hcontext hstate n).map Prod.fst) := by</span>
+<span id="L1827">1827   let stepKernel :=</span>
+<span id="L1828">1828     actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1829">1829       hcontext hstate</span>
+<span id="L1830">1830   let trajMeasure :=</span>
+<span id="L1831">1831     ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L1832">1832       (X := fun _ : Nat =&gt; Prod Action Reward) mu0 stepKernel</span>
+<span id="L1833">1833   have hcomp :</span>
+<span id="L1834">1834       Filter.EventuallyEq</span>
+<span id="L1835">1835         (MeasureTheory.ae (trajMeasure.map (Preorder.frestrictLe n)))</span>
+<span id="L1836">1836         (ProbabilityTheory.condDistrib</span>
+<span id="L1837">1837           (fun trajectory : (t : Nat) -&gt; Prod Action Reward =&gt;</span>
+<span id="L1838">1838             (trajectory (n + 1)).1)</span>
+<span id="L1839">1839           (Preorder.frestrictLe n)</span>
+<span id="L1840">1840           trajMeasure)</span>
+<span id="L1841">1841         ((ProbabilityTheory.condDistrib</span>
+<span id="L1842">1842           (fun trajectory : (t : Nat) -&gt; Prod Action Reward =&gt;</span>
+<span id="L1843">1843             trajectory (n + 1))</span>
+<span id="L1844">1844           (Preorder.frestrictLe n)</span>
+<span id="L1845">1845           trajMeasure).map Prod.fst) := by</span>
+<span id="L1846">1846     have h :=</span>
+<span id="L1847">1847       ProbabilityTheory.condDistrib_comp</span>
+<span id="L1848">1848         (Y := fun trajectory : (t : Nat) -&gt; Prod Action Reward =&gt;</span>
+<span id="L1849">1849           trajectory (n + 1))</span>
+<span id="L1850">1850         (μ := trajMeasure)</span>
+<span id="L1851">1851         (mβ := MeasurableSpace.pi)</span>
+<span id="L1852">1852         ((Preorder.frestrictLe n) :</span>
+<span id="L1853">1853           ((t : Nat) -&gt; Prod Action Reward) -&gt;</span>
+<span id="L1854">1854             ((i : Finset.Iic n) -&gt; Prod Action Reward))</span>
+<span id="L1855">1855         (measurable_pi_apply (n + 1)).aemeasurable</span>
+<span id="L1856">1856         (f := Prod.fst)</span>
+<span id="L1857">1857         measurable_fst</span>
+<span id="L1858">1858     simpa [Function.comp_def] using h</span>
+<span id="L1859">1859   have hpair :</span>
+<span id="L1860">1860       Filter.EventuallyEq</span>
+<span id="L1861">1861         (MeasureTheory.ae (trajMeasure.map (Preorder.frestrictLe n)))</span>
+<span id="L1862">1862         (ProbabilityTheory.condDistrib</span>
+<span id="L1863">1863           (fun trajectory : (t : Nat) -&gt; Prod Action Reward =&gt;</span>
+<span id="L1864">1864             trajectory (n + 1))</span>
+<span id="L1865">1865           (Preorder.frestrictLe n)</span>
+<span id="L1866">1866           trajMeasure)</span>
+<span id="L1867">1867         (stepKernel n) := by</span>
+<span id="L1868">1868     simpa [stepKernel, trajMeasure] using</span>
+<span id="L1869">1869       actionRewardHistoryStepKernelFamily_condDistrib_trajMeasure</span>
+<span id="L1870">1870         mu0 rewardKernel policy context state hcontext hstate n</span>
+<span id="L1871">1871   filter_upwards [hcomp, hpair] with history hcomp_eq hpair_eq</span>
+<span id="L1872">1872   rw [hcomp_eq]</span>
+<span id="L1873">1873   rw [ProbabilityTheory.Kernel.map_apply _ measurable_fst]</span>
+<span id="L1874">1874   rw [hpair_eq]</span>
+<span id="L1875">1875   rw [← ProbabilityTheory.Kernel.map_apply _ measurable_fst]</span>
+<span id="L1876">1876 </span>
+<span id="L1877">1877 /--</span>
+<span id="L1878">1878 Canonical selected-action regular conditional distribution for the</span>
+<span id="L1879">1879 action/reward trajectory generated by the local history-step kernel family.</span>
+<span id="L1880">1880 </span>
+<span id="L1881">1881 This rewrites the action marginal from</span>
+<span id="L1882">1882 `actionRewardHistoryStepKernelFamily_action_condDistrib_trajMeasure` into the</span>
+<span id="L1883">1883 Dirac law at the action selected by the frozen finite-history policy state.</span>
+<span id="L1884">1884 -/</span>
+<span id="L1885">1885 theorem actionRewardHistoryStepKernelFamily_selectedAction_condDistrib_trajMeasure</span>
+<span id="L1886">1886     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1887">1887     {Reward : Type v}</span>
+<span id="L1888">1888     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1889">1889     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1890">1890     [StandardBorelSpace (Prod Action Reward)]</span>
+<span id="L1891">1891     [StandardBorelSpace Action]</span>
+<span id="L1892">1892     [Nonempty (Prod Action Reward)] [Nonempty Action]</span>
+<span id="L1893">1893     (mu0 : Measure (Prod Action Reward))</span>
+<span id="L1894">1894     [MeasureTheory.IsProbabilityMeasure mu0]</span>
+<span id="L1895">1895     (rewardKernel : MarkovRewardKernel (Prod Context Action) Reward)</span>
+<span id="L1896">1896     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1897">1897     (context :</span>
+<span id="L1898">1898       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Prod Action Reward) -&gt; Context)</span>
+<span id="L1899">1899     (state :</span>
+<span id="L1900">1900       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Prod Action Reward) -&gt; State)</span>
+<span id="L1901">1901     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1902">1902     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1903">1903     (n : Nat) :</span>
+<span id="L1904">1904     Filter.EventuallyEq</span>
+<span id="L1905">1905       (MeasureTheory.ae</span>
+<span id="L1906">1906         ((ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L1907">1907           (X := fun _ : Nat =&gt; Prod Action Reward)</span>
+<span id="L1908">1908           mu0</span>
+<span id="L1909">1909           (actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1910">1910             hcontext hstate)).map</span>
+<span id="L1911">1911           (Preorder.frestrictLe n)))</span>
+<span id="L1912">1912       (ProbabilityTheory.condDistrib</span>
+<span id="L1913">1913         (fun trajectory : (t : Nat) -&gt; Prod Action Reward =&gt;</span>
+<span id="L1914">1914           (trajectory (n + 1)).1)</span>
+<span id="L1915">1915         (Preorder.frestrictLe n)</span>
+<span id="L1916">1916         (ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L1917">1917           (X := fun _ : Nat =&gt; Prod Action Reward)</span>
+<span id="L1918">1918           mu0</span>
+<span id="L1919">1919           (actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1920">1920             hcontext hstate)))</span>
+<span id="L1921">1921       (fun history : (i : Finset.Iic n) -&gt; Prod Action Reward =&gt;</span>
+<span id="L1922">1922         Measure.dirac ((policy n).action (state n history))) := by</span>
+<span id="L1923">1923   have haction :=</span>
+<span id="L1924">1924     actionRewardHistoryStepKernelFamily_action_condDistrib_trajMeasure</span>
+<span id="L1925">1925       mu0 rewardKernel policy context state hcontext hstate n</span>
+<span id="L1926">1926   filter_upwards [haction] with history haction_eq</span>
+<span id="L1927">1927   rw [haction_eq]</span>
+<span id="L1928">1928   rw [ProbabilityTheory.Kernel.map_apply _ measurable_fst]</span>
+<span id="L1929">1929   exact</span>
+<span id="L1930">1930     actionRewardHistoryStepKernelFamily_action_map</span>
+<span id="L1931">1931       rewardKernel policy context state hcontext hstate n history</span>
+<span id="L1932">1932 </span>
+<span id="L1933">1933 /--</span>
+<span id="L1934">1934 Canonical selected-reward regular conditional distribution for the</span>
+<span id="L1935">1935 action/reward trajectory generated by the local history-step kernel family.</span>
+<span id="L1936">1936 </span>
+<span id="L1937">1937 This rewrites the reward marginal from</span>
+<span id="L1938">1938 `actionRewardHistoryStepKernelFamily_reward_condDistrib_trajMeasure` into the</span>
+<span id="L1939">1939 selected context/action reward measure at the frozen finite pair history.</span>
+<span id="L1940">1940 -/</span>
+<span id="L1941">1941 theorem actionRewardHistoryStepKernelFamily_selectedMeasure_condDistrib_trajMeasure</span>
+<span id="L1942">1942     {Context : Type x} {State : Type u} {Action : Type y}</span>
+<span id="L1943">1943     {Reward : Type v}</span>
+<span id="L1944">1944     [MeasurableSpace Context] [MeasurableSpace State]</span>
+<span id="L1945">1945     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L1946">1946     [StandardBorelSpace (Prod Action Reward)]</span>
+<span id="L1947">1947     [StandardBorelSpace Reward]</span>
+<span id="L1948">1948     [Nonempty (Prod Action Reward)] [Nonempty Reward]</span>
+<span id="L1949">1949     (mu0 : Measure (Prod Action Reward))</span>
+<span id="L1950">1950     [MeasureTheory.IsProbabilityMeasure mu0]</span>
+<span id="L1951">1951     (rewardKernel : MarkovRewardKernel (Prod Context Action) Reward)</span>
+<span id="L1952">1952     (policy : Nat -&gt; Policy.MeasurablePolicy State Action)</span>
+<span id="L1953">1953     (context :</span>
+<span id="L1954">1954       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Prod Action Reward) -&gt; Context)</span>
+<span id="L1955">1955     (state :</span>
+<span id="L1956">1956       (n : Nat) -&gt; ((i : Finset.Iic n) -&gt; Prod Action Reward) -&gt; State)</span>
+<span id="L1957">1957     (hcontext : forall n : Nat, Measurable (context n))</span>
+<span id="L1958">1958     (hstate : forall n : Nat, Measurable (state n))</span>
+<span id="L1959">1959     (n : Nat) :</span>
+<span id="L1960">1960     Filter.EventuallyEq</span>
+<span id="L1961">1961       (MeasureTheory.ae</span>
+<span id="L1962">1962         ((ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L1963">1963           (X := fun _ : Nat =&gt; Prod Action Reward)</span>
+<span id="L1964">1964           mu0</span>
+<span id="L1965">1965           (actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1966">1966             hcontext hstate)).map</span>
+<span id="L1967">1967           (Preorder.frestrictLe n)))</span>
+<span id="L1968">1968       (ProbabilityTheory.condDistrib</span>
+<span id="L1969">1969         (fun trajectory : (t : Nat) -&gt; Prod Action Reward =&gt;</span>
+<span id="L1970">1970           (trajectory (n + 1)).2)</span>
+<span id="L1971">1971         (Preorder.frestrictLe n)</span>
+<span id="L1972">1972         (ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L1973">1973           (X := fun _ : Nat =&gt; Prod Action Reward)</span>
+<span id="L1974">1974           mu0</span>
+<span id="L1975">1975           (actionRewardHistoryStepKernelFamily rewardKernel policy context state</span>
+<span id="L1976">1976             hcontext hstate)))</span>
+<span id="L1977">1977       (fun history : (i : Finset.Iic n) -&gt; Prod Action Reward =&gt;</span>
+<span id="L1978">1978         selectedMeasure rewardKernel</span>
+<span id="L1979">1979           (context n history) ((policy n).action (state n history))) := by</span>
+<span id="L1980">1980   have hreward :=</span>
+<span id="L1981">1981     actionRewardHistoryStepKernelFamily_reward_condDistrib_trajMeasure</span>
+<span id="L1982">1982       mu0 rewardKernel policy context state hcontext hstate n</span>
+<span id="L1983">1983   filter_upwards [hreward] with history hreward_eq</span>
+<span id="L1984">1984   rw [hreward_eq]</span>
+<span id="L1985">1985   rw [ProbabilityTheory.Kernel.map_apply _ measurable_snd]</span>
+<span id="L1986">1986   exact</span>
+<span id="L1987">1987     actionRewardHistoryStepKernelFamily_reward_map</span>
+<span id="L1988">1988       rewardKernel policy context state hcontext hstate n history</span>
+<span id="L1989">1989 </span>
+<span id="L1990">1990 end RewardKernel</span>
+<span id="L1991">1991 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

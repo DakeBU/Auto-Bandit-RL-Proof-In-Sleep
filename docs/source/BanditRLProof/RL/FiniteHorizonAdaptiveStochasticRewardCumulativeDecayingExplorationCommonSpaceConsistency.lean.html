@@ -1,0 +1,695 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationCommonSpaceConsistency.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationCommonSpaceConsistency.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationCommonSpaceConsistency.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationCommonSpaceConsistency.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonAdaptiveStochasticRewardCumulativeDecayingExplorationRegularityClosedConsistency</span>
+<span id="L2">2 import Mathlib.MeasureTheory.Function.ConvergenceInMeasure</span>
+<span id="L3">3 import Mathlib.Probability.ProductMeasure</span>
+<span id="L4">4 </span>
+<span id="L5">5 /-!</span>
+<span id="L6">6 # Stochastic common-space realized behavior consistency</span>
+<span id="L7">7 </span>
+<span id="L8">8 The compiled stochastic cumulative route gives a sharp certificate on each</span>
+<span id="L9">9 scheduled finite-window trajectory space. This module places those complete</span>
+<span id="L10">10 finite-window experiments on one dependent infinite product and proves that</span>
+<span id="L11">11 the scheduled stochastic realized-regret process converges to zero in measure.</span>
+<span id="L12">12 </span>
+<span id="L13">13 The coupling is intentionally the independent-coordinate product coupling. It</span>
+<span id="L14">14 has the exact scheduled laws as marginals, but it is not a nested causal stream</span>
+<span id="L15">15 of one online run and yields no pathwise, almost-sure, or anytime conclusion.</span>
+<span id="L16">16 -/</span>
+<span id="L17">17 </span>
+<span id="L18">18 open Filter MeasureTheory</span>
+<span id="L19">19 open scoped ENNReal NNReal ProbabilityTheory Topology</span>
+<span id="L20">20 </span>
+<span id="L21">21 universe u v</span>
+<span id="L22">22 </span>
+<span id="L23">23 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L24">24 </span>
+<span id="L25">25 variable {State : Type u} {Action : Type v}</span>
+<span id="L26">26     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L27">27     [Fintype State] [Fintype Action]</span>
+<span id="L28">28     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L29">29     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L30">30     [Nonempty State] [Nonempty Action]</span>
+<span id="L31">31 </span>
+<span id="L32">32 namespace AdaptiveStochasticEpisodeBatchSource</span>
+<span id="L33">33 </span>
+<span id="L34">34 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L35">35     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L36">36     [Nonempty State] in</span>
+<span id="L37">37 /-- Stochastic realized cumulative successor regret is trajectory-measurable. -/</span>
+<span id="L38">38 theorem measurable_realizedSuccessorCumulativeRegret</span>
+<span id="L39">39     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L40">40     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L41">41     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L42">42     (rounds : Nat) :</span>
+<span id="L43">43     Measurable (fun trajectory =&gt;</span>
+<span id="L44">44       source.realizedSuccessorCumulativeRegret trajectory rounds) := by</span>
+<span id="L45">45   unfold realizedSuccessorCumulativeRegret</span>
+<span id="L46">46   refine Finset.measurable_sum Finset.univ fun round _ =&gt; ?_</span>
+<span id="L47">47   exact measurable_const.sub</span>
+<span id="L48">48     ((mdp.measurable_sampledCumulativeRewardSum episodes).comp</span>
+<span id="L49">49       (measurable_pi_apply ((round : Nat) + 1)))</span>
+<span id="L50">50 </span>
+<span id="L51">51 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L52">52     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L53">53     [Nonempty State] in</span>
+<span id="L54">54 /-- Stochastic realized average successor regret is trajectory-measurable. -/</span>
+<span id="L55">55 theorem measurable_realizedSuccessorAverageRegret</span>
+<span id="L56">56     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L57">57     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L58">58     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L59">59     (rounds : Nat) :</span>
+<span id="L60">60     Measurable (fun trajectory =&gt;</span>
+<span id="L61">61       source.realizedSuccessorAverageRegret trajectory rounds) := by</span>
+<span id="L62">62   unfold realizedSuccessorAverageRegret</span>
+<span id="L63">63   exact (source.measurable_realizedSuccessorCumulativeRegret rounds).div_const _</span>
+<span id="L64">64 </span>
+<span id="L65">65 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L66">66     [MeasurableSingletonClass Action] [Nonempty State] in</span>
+<span id="L67">67 /-- A finite sum of selected stochastic-policy expected regrets is nonnegative. -/</span>
+<span id="L68">68 theorem successorExpectedCumulativeRegret_nonneg</span>
+<span id="L69">69     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L70">70     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L71">71     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L72">72     (trajectory : StochasticEpisodeBatchTrajectory mdp episodes)</span>
+<span id="L73">73     (rounds : Nat) :</span>
+<span id="L74">74     0 &lt;= source.successorExpectedCumulativeRegret trajectory rounds := by</span>
+<span id="L75">75   unfold successorExpectedCumulativeRegret</span>
+<span id="L76">76   exact Finset.sum_nonneg fun round _ =&gt;</span>
+<span id="L77">77     (source.successorPolicyAt trajectory round).expectedRegret_nonneg initialState</span>
+<span id="L78">78 </span>
+<span id="L79">79 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L80">80     [MeasurableSingletonClass Action] [Nonempty State] in</span>
+<span id="L81">81 /-- The average selected stochastic-policy expected regret is nonnegative. -/</span>
+<span id="L82">82 theorem successorExpectedAverageRegret_nonneg</span>
+<span id="L83">83     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L84">84     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L85">85     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L86">86     (trajectory : StochasticEpisodeBatchTrajectory mdp episodes)</span>
+<span id="L87">87     (rounds : Nat) :</span>
+<span id="L88">88     0 &lt;= source.successorExpectedAverageRegret trajectory rounds := by</span>
+<span id="L89">89   unfold successorExpectedAverageRegret</span>
+<span id="L90">90   exact div_nonneg</span>
+<span id="L91">91     (source.successorExpectedCumulativeRegret_nonneg trajectory rounds)</span>
+<span id="L92">92     (by positivity)</span>
+<span id="L93">93 </span>
+<span id="L94">94 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L95">95     [MeasurableSingletonClass Action] [Nonempty State] in</span>
+<span id="L96">96 /--</span>
+<span id="L97">97 An expected-regret upper bound and a two-sided global return-deviation bound</span>
+<span id="L98">98 control the absolute stochastic realized average regret.</span>
+<span id="L99">99 -/</span>
+<span id="L100">100 theorem abs_realizedSuccessorAverageRegret_le_of_expected_le_of_deviation_abs_le</span>
+<span id="L101">101     {mdp : MDP State Action} {initialState : Measure State}</span>
+<span id="L102">102     [IsProbabilityMeasure initialState] {episodes : Nat}</span>
+<span id="L103">103     (source : AdaptiveStochasticEpisodeBatchSource mdp initialState episodes)</span>
+<span id="L104">104     (trajectory : StochasticEpisodeBatchTrajectory mdp episodes)</span>
+<span id="L105">105     (rounds : Nat) (hrounds : 0 &lt; rounds) (hepisodes : 0 &lt; episodes)</span>
+<span id="L106">106     (expectedBound deviationBound : Real)</span>
+<span id="L107">107     (hexpected :</span>
+<span id="L108">108       source.successorExpectedAverageRegret trajectory rounds &lt;= expectedBound)</span>
+<span id="L109">109     (hdeviation :</span>
+<span id="L110">110       |source.cumulativeSuccessorGlobalReturnDeviation rounds trajectory| &lt;=</span>
+<span id="L111">111         deviationBound) :</span>
+<span id="L112">112     |source.realizedSuccessorAverageRegret trajectory rounds| &lt;=</span>
+<span id="L113">113       expectedBound + deviationBound / ((episodes : Real) * (rounds : Real)) := by</span>
+<span id="L114">114   have hdenom : 0 &lt; (episodes : Real) * (rounds : Real) := by positivity</span>
+<span id="L115">115   rw [source.realizedSuccessorAverageRegret_eq_expected_sub_deviation</span>
+<span id="L116">116     trajectory rounds hrounds hepisodes]</span>
+<span id="L117">117   calc</span>
+<span id="L118">118     |source.successorExpectedAverageRegret trajectory rounds -</span>
+<span id="L119">119         source.cumulativeSuccessorGlobalReturnDeviation rounds trajectory /</span>
+<span id="L120">120           ((episodes : Real) * (rounds : Real))| &lt;=</span>
+<span id="L121">121         |source.successorExpectedAverageRegret trajectory rounds| +</span>
+<span id="L122">122           |source.cumulativeSuccessorGlobalReturnDeviation rounds trajectory /</span>
+<span id="L123">123             ((episodes : Real) * (rounds : Real))| := abs_sub _ _</span>
+<span id="L124">124     _ = source.successorExpectedAverageRegret trajectory rounds +</span>
+<span id="L125">125           |source.cumulativeSuccessorGlobalReturnDeviation rounds trajectory| /</span>
+<span id="L126">126             ((episodes : Real) * (rounds : Real)) := by</span>
+<span id="L127">127       rw [abs_of_nonneg</span>
+<span id="L128">128         (source.successorExpectedAverageRegret_nonneg trajectory rounds),</span>
+<span id="L129">129         abs_div, abs_of_pos hdenom]</span>
+<span id="L130">130     _ &lt;= expectedBound + deviationBound / ((episodes : Real) * (rounds : Real)) :=</span>
+<span id="L131">131       add_le_add hexpected (div_le_div_of_nonneg_right hdeviation hdenom.le)</span>
+<span id="L132">132 </span>
+<span id="L133">133 end AdaptiveStochasticEpisodeBatchSource</span>
+<span id="L134">134 </span>
+<span id="L135">135 namespace AdaptiveCumulativeStochasticEmpiricalOptimisticSource</span>
+<span id="L136">136 </span>
+<span id="L137">137 /--</span>
+<span id="L138">138 The stochastic finite-window certificate upgraded to absolute realized regret.</span>
+<span id="L139">139 This is the exact finite-window input consumed by convergence in probability.</span>
+<span id="L140">140 -/</span>
+<span id="L141">141 theorem exploratorySource_trajectoryMeasure_projectedCumulativeInverseSqrtPathSupport_optimism_and_decayingExplorationAverageAbsoluteRealizedBehaviorConsistency_of_standardBorel</span>
+<span id="L142">142     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L143">143     [IsProbabilityMeasure initialState]</span>
+<span id="L144">144     (baseVisitFloor : Real) (n : Nat)</span>
+<span id="L145">145     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L146">146     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L147">147     (rewardVarianceProxy : NNReal)</span>
+<span id="L148">148     (law : rewardSource.UniformSubgaussianRewardLaw rewardVarianceProxy)</span>
+<span id="L149">149     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L150">150     (defaultState : State)</span>
+<span id="L151">151     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L152">152     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L153">153     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L154">154     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L155">155     let rounds := AdaptiveEpisodeBatchSource.decayingExplorationRounds mdp n</span>
+<span id="L156">156     let delta := AdaptiveEpisodeBatchSource.vanishingAverageConfidenceDelta n</span>
+<span id="L157">157     let explorationRate := AdaptiveEpisodeBatchSource.decayingExplorationRate n</span>
+<span id="L158">158     let visitFloor := AdaptiveEpisodeBatchSource.decayingExplorationVisitFloor</span>
+<span id="L159">159       mdp baseVisitFloor n</span>
+<span id="L160">160     let episodes := AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes</span>
+<span id="L161">161       mdp baseVisitFloor n</span>
+<span id="L162">162     let countRadius :=</span>
+<span id="L163">163       AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtCountRadius</span>
+<span id="L164">164         mdp rounds delta visitFloor</span>
+<span id="L165">165     let source := exploratorySource mdp initialState episodes rewardSource</span>
+<span id="L166">166       initialTable defaultState countRadius explorationRate</span>
+<span id="L167">167         (AdaptiveEpisodeBatchSource.decayingExplorationRate_le_one n)</span>
+<span id="L168">168     let projection :=</span>
+<span id="L169">169       MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchTrajectory</span>
+<span id="L170">170         (mdp := mdp) episodes</span>
+<span id="L171">171     let countBadEvent := projectedAdaptiveCumulativeCountBadEvent</span>
+<span id="L172">172       (mdp := mdp) (initialState := initialState) (episodes := episodes)</span>
+<span id="L173">173       initialTable defaultState countRadius explorationRate</span>
+<span id="L174">174         (AdaptiveEpisodeBatchSource.decayingExplorationRate_le_one n)</span>
+<span id="L175">175         rounds delta</span>
+<span id="L176">176     let returnBadEvent := source.successorGlobalReturnDeviationBadEvent</span>
+<span id="L177">177       rounds 1 rewardVarianceProxy delta</span>
+<span id="L178">178     let combinedBadEvent := countBadEvent ∪ returnBadEvent</span>
+<span id="L179">179     MeasurableSet combinedBadEvent /\</span>
+<span id="L180">180       source.trajectoryMeasure combinedBadEvent &lt;=</span>
+<span id="L181">181         AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticRealizedFailureBudget n /\</span>
+<span id="L182">182       forall trajectory, trajectory ∉ combinedBadEvent -&gt;</span>
+<span id="L183">183         (forall round : Fin rounds, forall state,</span>
+<span id="L184">184           mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;=</span>
+<span id="L185">185             (adaptiveCumulativeEmpiricalOptimisticPlanAt</span>
+<span id="L186">186               (projection trajectory) defaultState countRadius round</span>
+<span id="L187">187               ).upperValueRemaining mdp.horizon le_rfl state) /\</span>
+<span id="L188">188         |source.realizedSuccessorAverageRegret trajectory rounds| &lt;=</span>
+<span id="L189">189           AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticAverageRealizedBehaviorRegretBound</span>
+<span id="L190">190             mdp baseVisitFloor rewardVarianceProxy n := by</span>
+<span id="L191">191   let rounds := AdaptiveEpisodeBatchSource.decayingExplorationRounds mdp n</span>
+<span id="L192">192   let delta := AdaptiveEpisodeBatchSource.vanishingAverageConfidenceDelta n</span>
+<span id="L193">193   let explorationRate := AdaptiveEpisodeBatchSource.decayingExplorationRate n</span>
+<span id="L194">194   let visitFloor := AdaptiveEpisodeBatchSource.decayingExplorationVisitFloor</span>
+<span id="L195">195     mdp baseVisitFloor n</span>
+<span id="L196">196   let episodes := AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes</span>
+<span id="L197">197     mdp baseVisitFloor n</span>
+<span id="L198">198   let countRadius :=</span>
+<span id="L199">199     AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtCountRadius</span>
+<span id="L200">200       mdp rounds delta visitFloor</span>
+<span id="L201">201   let source := exploratorySource mdp initialState episodes rewardSource</span>
+<span id="L202">202     initialTable defaultState countRadius explorationRate</span>
+<span id="L203">203       (AdaptiveEpisodeBatchSource.decayingExplorationRate_le_one n)</span>
+<span id="L204">204   let projection :=</span>
+<span id="L205">205     MDP.MeanCompatibleRewardKernel.knownRewardEpisodeBatchTrajectory</span>
+<span id="L206">206       (mdp := mdp) episodes</span>
+<span id="L207">207   let countBadEvent := projectedAdaptiveCumulativeCountBadEvent</span>
+<span id="L208">208     (mdp := mdp) (initialState := initialState) (episodes := episodes)</span>
+<span id="L209">209     initialTable defaultState countRadius explorationRate</span>
+<span id="L210">210       (AdaptiveEpisodeBatchSource.decayingExplorationRate_le_one n)</span>
+<span id="L211">211       rounds delta</span>
+<span id="L212">212   let returnBadEvent := source.successorGlobalReturnDeviationBadEvent</span>
+<span id="L213">213     rounds 1 rewardVarianceProxy delta</span>
+<span id="L214">214   let combinedBadEvent := countBadEvent ∪ returnBadEvent</span>
+<span id="L215">215   have hfinite :=</span>
+<span id="L216">216     exploratorySource_trajectoryMeasure_projectedCumulativeInverseSqrtPathSupport_optimism_and_decayingExplorationAverageRealizedBehaviorConsistency_of_standardBorel</span>
+<span id="L217">217       mdp initialState baseVisitFloor n rewardSource rewardVarianceProxy law</span>
+<span id="L218">218         initialTable defaultState support hbaseFloor hrewardBound hhorizon</span>
+<span id="L219">219           hbaseVisitFloor</span>
+<span id="L220">220   dsimp only at hfinite</span>
+<span id="L221">221   rcases hfinite with</span>
+<span id="L222">222     ⟨hmeasurable, htail, _hsubset, _hviolationTail, houtsideFinite⟩</span>
+<span id="L223">223   have hcount :=</span>
+<span id="L224">224     exploratorySource_trajectoryMeasure_projectedCumulativeInverseSqrtPathSupport_optimism_and_decayingExplorationAverageExploratoryBehaviorExpectedRegret</span>
+<span id="L225">225       mdp initialState baseVisitFloor n rewardSource initialTable defaultState</span>
+<span id="L226">226         support hbaseFloor hrewardBound hhorizon hbaseVisitFloor</span>
+<span id="L227">227   dsimp only at hcount</span>
+<span id="L228">228   rcases hcount with ⟨_hcountMeasurable, _hcountTail, hcountOutside⟩</span>
+<span id="L229">229   have hrounds : 0 &lt; rounds :=</span>
+<span id="L230">230     AdaptiveEpisodeBatchSource.decayingExplorationRounds_pos mdp n</span>
+<span id="L231">231   have hepisodes : 0 &lt; episodes := by</span>
+<span id="L232">232     unfold episodes AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes</span>
+<span id="L233">233     exact</span>
+<span id="L234">234       AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtScheduledEpisodes_pos</span>
+<span id="L235">235         _ _ _ _</span>
+<span id="L236">236   refine ⟨hmeasurable, htail, ?_⟩</span>
+<span id="L237">237   intro trajectory htrajectory</span>
+<span id="L238">238   have hnotCount : trajectory ∉ countBadEvent := by</span>
+<span id="L239">239     exact fun hmem =&gt; htrajectory (Set.mem_union_left returnBadEvent hmem)</span>
+<span id="L240">240   have hnotReturn : trajectory ∉ returnBadEvent := by</span>
+<span id="L241">241     exact fun hmem =&gt; htrajectory (Set.mem_union_right countBadEvent hmem)</span>
+<span id="L242">242   have hfiniteGood := houtsideFinite trajectory htrajectory</span>
+<span id="L243">243   have hcountGood := hcountOutside trajectory hnotCount</span>
+<span id="L244">244   have hdeviation :</span>
+<span id="L245">245       |source.cumulativeSuccessorGlobalReturnDeviation rounds trajectory| &lt;=</span>
+<span id="L246">246         Concentration.subGaussianSumConfidenceRadius</span>
+<span id="L247">247           (AdaptiveStochasticEpisodeBatchSource.cumulativeSuccessorGlobalReturnVarianceProxy</span>
+<span id="L248">248             mdp rounds episodes 1 rewardVarianceProxy) delta := by</span>
+<span id="L249">249     have hdeviationLt :</span>
+<span id="L250">250         |source.cumulativeSuccessorGlobalReturnDeviation rounds trajectory| &lt;</span>
+<span id="L251">251           Concentration.subGaussianSumConfidenceRadius</span>
+<span id="L252">252             (AdaptiveStochasticEpisodeBatchSource.cumulativeSuccessorGlobalReturnVarianceProxy</span>
+<span id="L253">253               mdp rounds episodes 1 rewardVarianceProxy) delta := by</span>
+<span id="L254">254       apply lt_of_not_ge</span>
+<span id="L255">255       intro hge</span>
+<span id="L256">256       apply hnotReturn</span>
+<span id="L257">257       simpa [returnBadEvent,</span>
+<span id="L258">258         AdaptiveStochasticEpisodeBatchSource.successorGlobalReturnDeviationBadEvent]</span>
+<span id="L259">259         using hge</span>
+<span id="L260">260     exact hdeviationLt.le</span>
+<span id="L261">261   refine ⟨hfiniteGood.1, ?_⟩</span>
+<span id="L262">262   have habs :=</span>
+<span id="L263">263     source.abs_realizedSuccessorAverageRegret_le_of_expected_le_of_deviation_abs_le</span>
+<span id="L264">264       trajectory rounds hrounds hepisodes</span>
+<span id="L265">265       (AdaptiveEpisodeBatchSource.decayingExplorationAverageExploratoryBehaviorExpectedRegretBound</span>
+<span id="L266">266         mdp baseVisitFloor n)</span>
+<span id="L267">267       (Concentration.subGaussianSumConfidenceRadius</span>
+<span id="L268">268         (AdaptiveStochasticEpisodeBatchSource.cumulativeSuccessorGlobalReturnVarianceProxy</span>
+<span id="L269">269           mdp rounds episodes 1 rewardVarianceProxy) delta)</span>
+<span id="L270">270       hcountGood.2 hdeviation</span>
+<span id="L271">271   simpa [AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticAverageRealizedBehaviorRegretBound,</span>
+<span id="L272">272     AdaptiveStochasticEpisodeBatchSource.normalizedSuccessorGlobalReturnConfidenceRadius]</span>
+<span id="L273">273     using habs</span>
+<span id="L274">274 </span>
+<span id="L275">275 /-- One complete scheduled stochastic experiment at every product coordinate. -/</span>
+<span id="L276">276 abbrev DecayingExplorationStochasticWindowSpace</span>
+<span id="L277">277     (mdp : MDP State Action) (baseVisitFloor : Real) :=</span>
+<span id="L278">278   (n : Nat) -&gt; StochasticEpisodeBatchTrajectory mdp</span>
+<span id="L279">279     (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes</span>
+<span id="L280">280       mdp baseVisitFloor n)</span>
+<span id="L281">281 </span>
+<span id="L282">282 /-- The stochastic adaptive source used at schedule coordinate `n`. -/</span>
+<span id="L283">283 noncomputable def decayingExplorationStochasticWindowSource</span>
+<span id="L284">284     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L285">285     [IsProbabilityMeasure initialState]</span>
+<span id="L286">286     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L287">287     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L288">288     (defaultState : State) (baseVisitFloor : Real) (n : Nat) :</span>
+<span id="L289">289     AdaptiveStochasticEpisodeBatchSource mdp initialState</span>
+<span id="L290">290       (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes</span>
+<span id="L291">291         mdp baseVisitFloor n) :=</span>
+<span id="L292">292   exploratorySource mdp initialState</span>
+<span id="L293">293     (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes</span>
+<span id="L294">294       mdp baseVisitFloor n)</span>
+<span id="L295">295     rewardSource initialTable defaultState</span>
+<span id="L296">296     (AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtCountRadius</span>
+<span id="L297">297       mdp (AdaptiveEpisodeBatchSource.decayingExplorationRounds mdp n)</span>
+<span id="L298">298       (AdaptiveEpisodeBatchSource.vanishingAverageConfidenceDelta n)</span>
+<span id="L299">299       (AdaptiveEpisodeBatchSource.decayingExplorationVisitFloor</span>
+<span id="L300">300         mdp baseVisitFloor n))</span>
+<span id="L301">301     (AdaptiveEpisodeBatchSource.decayingExplorationRate n)</span>
+<span id="L302">302     (AdaptiveEpisodeBatchSource.decayingExplorationRate_le_one n)</span>
+<span id="L303">303 </span>
+<span id="L304">304 /-- The scheduled stochastic trajectory law at product coordinate `n`. -/</span>
+<span id="L305">305 noncomputable def decayingExplorationStochasticWindowMeasure</span>
+<span id="L306">306     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L307">307     [IsProbabilityMeasure initialState]</span>
+<span id="L308">308     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L309">309     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L310">310     (defaultState : State) (baseVisitFloor : Real) (n : Nat) :</span>
+<span id="L311">311     Measure (StochasticEpisodeBatchTrajectory mdp</span>
+<span id="L312">312       (AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes</span>
+<span id="L313">313         mdp baseVisitFloor n)) :=</span>
+<span id="L314">314   (decayingExplorationStochasticWindowSource mdp initialState rewardSource</span>
+<span id="L315">315     initialTable defaultState baseVisitFloor n).trajectoryMeasure</span>
+<span id="L316">316 </span>
+<span id="L317">317 instance instDecayingExplorationStochasticWindowMeasureIsProbabilityMeasure</span>
+<span id="L318">318     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L319">319     [IsProbabilityMeasure initialState]</span>
+<span id="L320">320     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L321">321     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L322">322     (defaultState : State) (baseVisitFloor : Real) (n : Nat) :</span>
+<span id="L323">323     IsProbabilityMeasure</span>
+<span id="L324">324       (decayingExplorationStochasticWindowMeasure mdp initialState rewardSource</span>
+<span id="L325">325         initialTable defaultState baseVisitFloor n) := by</span>
+<span id="L326">326   unfold decayingExplorationStochasticWindowMeasure</span>
+<span id="L327">327   infer_instance</span>
+<span id="L328">328 </span>
+<span id="L329">329 /-- Independent product coupling of the complete scheduled stochastic laws. -/</span>
+<span id="L330">330 noncomputable def decayingExplorationStochasticCommonMeasure</span>
+<span id="L331">331     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L332">332     [IsProbabilityMeasure initialState]</span>
+<span id="L333">333     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L334">334     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L335">335     (defaultState : State) (baseVisitFloor : Real) :</span>
+<span id="L336">336     Measure (DecayingExplorationStochasticWindowSpace mdp baseVisitFloor) :=</span>
+<span id="L337">337   Measure.infinitePi fun n =&gt;</span>
+<span id="L338">338     decayingExplorationStochasticWindowMeasure mdp initialState rewardSource</span>
+<span id="L339">339       initialTable defaultState baseVisitFloor n</span>
+<span id="L340">340 </span>
+<span id="L341">341 instance instDecayingExplorationStochasticCommonMeasureIsProbabilityMeasure</span>
+<span id="L342">342     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L343">343     [IsProbabilityMeasure initialState]</span>
+<span id="L344">344     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L345">345     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L346">346     (defaultState : State) (baseVisitFloor : Real) :</span>
+<span id="L347">347     IsProbabilityMeasure</span>
+<span id="L348">348       (decayingExplorationStochasticCommonMeasure mdp initialState rewardSource</span>
+<span id="L349">349         initialTable defaultState baseVisitFloor) := by</span>
+<span id="L350">350   unfold decayingExplorationStochasticCommonMeasure</span>
+<span id="L351">351   infer_instance</span>
+<span id="L352">352 </span>
+<span id="L353">353 /-- Each common-space coordinate has exactly its scheduled stochastic law. -/</span>
+<span id="L354">354 theorem decayingExplorationStochasticCommonMeasure_map_eval</span>
+<span id="L355">355     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L356">356     [IsProbabilityMeasure initialState]</span>
+<span id="L357">357     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L358">358     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L359">359     (defaultState : State) (baseVisitFloor : Real) (n : Nat) :</span>
+<span id="L360">360     (decayingExplorationStochasticCommonMeasure mdp initialState rewardSource</span>
+<span id="L361">361       initialTable defaultState baseVisitFloor).map (fun omega =&gt; omega n) =</span>
+<span id="L362">362       decayingExplorationStochasticWindowMeasure mdp initialState rewardSource</span>
+<span id="L363">363         initialTable defaultState baseVisitFloor n := by</span>
+<span id="L364">364   unfold decayingExplorationStochasticCommonMeasure</span>
+<span id="L365">365   exact Measure.infinitePi_map_eval _ n</span>
+<span id="L366">366 </span>
+<span id="L367">367 /-- Scheduled stochastic realized successor-average regret on the common space. -/</span>
+<span id="L368">368 noncomputable def decayingExplorationStochasticRealizedBehaviorRegretProcess</span>
+<span id="L369">369     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L370">370     [IsProbabilityMeasure initialState]</span>
+<span id="L371">371     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L372">372     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L373">373     (defaultState : State) (baseVisitFloor : Real)</span>
+<span id="L374">374     (n : Nat) (omega : DecayingExplorationStochasticWindowSpace</span>
+<span id="L375">375       mdp baseVisitFloor) : Real :=</span>
+<span id="L376">376   (decayingExplorationStochasticWindowSource mdp initialState rewardSource</span>
+<span id="L377">377     initialTable defaultState baseVisitFloor n).realizedSuccessorAverageRegret</span>
+<span id="L378">378       (omega n) (AdaptiveEpisodeBatchSource.decayingExplorationRounds mdp n)</span>
+<span id="L379">379 </span>
+<span id="L380">380 /-- Every scheduled stochastic regret coordinate is measurable. -/</span>
+<span id="L381">381 theorem measurable_decayingExplorationStochasticRealizedBehaviorRegretProcess</span>
+<span id="L382">382     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L383">383     [IsProbabilityMeasure initialState]</span>
+<span id="L384">384     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L385">385     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L386">386     (defaultState : State) (baseVisitFloor : Real) (n : Nat) :</span>
+<span id="L387">387     Measurable</span>
+<span id="L388">388       (decayingExplorationStochasticRealizedBehaviorRegretProcess mdp</span>
+<span id="L389">389         initialState rewardSource initialTable defaultState baseVisitFloor n) := by</span>
+<span id="L390">390   unfold decayingExplorationStochasticRealizedBehaviorRegretProcess</span>
+<span id="L391">391   exact</span>
+<span id="L392">392     ((decayingExplorationStochasticWindowSource mdp initialState rewardSource</span>
+<span id="L393">393       initialTable defaultState baseVisitFloor n</span>
+<span id="L394">394       ).measurable_realizedSuccessorAverageRegret</span>
+<span id="L395">395         (AdaptiveEpisodeBatchSource.decayingExplorationRounds mdp n)).comp</span>
+<span id="L396">396       (measurable_pi_apply n)</span>
+<span id="L397">397 </span>
+<span id="L398">398 /-- Pull the finite projected-count/global-return union to the common space. -/</span>
+<span id="L399">399 noncomputable def decayingExplorationStochasticCommonBadEvent</span>
+<span id="L400">400     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L401">401     [IsProbabilityMeasure initialState]</span>
+<span id="L402">402     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L403">403     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L404">404     (defaultState : State) (baseVisitFloor : Real)</span>
+<span id="L405">405     (rewardVarianceProxy : NNReal) (n : Nat) :</span>
+<span id="L406">406     Set (DecayingExplorationStochasticWindowSpace mdp baseVisitFloor) :=</span>
+<span id="L407">407   let source := decayingExplorationStochasticWindowSource mdp initialState</span>
+<span id="L408">408     rewardSource initialTable defaultState baseVisitFloor n</span>
+<span id="L409">409   let rounds := AdaptiveEpisodeBatchSource.decayingExplorationRounds mdp n</span>
+<span id="L410">410   let delta := AdaptiveEpisodeBatchSource.vanishingAverageConfidenceDelta n</span>
+<span id="L411">411   let explorationRate := AdaptiveEpisodeBatchSource.decayingExplorationRate n</span>
+<span id="L412">412   let visitFloor := AdaptiveEpisodeBatchSource.decayingExplorationVisitFloor</span>
+<span id="L413">413     mdp baseVisitFloor n</span>
+<span id="L414">414   let episodes := AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes</span>
+<span id="L415">415     mdp baseVisitFloor n</span>
+<span id="L416">416   let countRadius :=</span>
+<span id="L417">417     AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtCountRadius</span>
+<span id="L418">418       mdp rounds delta visitFloor</span>
+<span id="L419">419   (fun omega =&gt; omega n) ⁻¹&#x27;</span>
+<span id="L420">420     (projectedAdaptiveCumulativeCountBadEvent</span>
+<span id="L421">421       (mdp := mdp) (initialState := initialState) (episodes := episodes)</span>
+<span id="L422">422       initialTable defaultState countRadius explorationRate</span>
+<span id="L423">423         (AdaptiveEpisodeBatchSource.decayingExplorationRate_le_one n)</span>
+<span id="L424">424         rounds delta ∪</span>
+<span id="L425">425       source.successorGlobalReturnDeviationBadEvent</span>
+<span id="L426">426         rounds 1 rewardVarianceProxy delta)</span>
+<span id="L427">427 </span>
+<span id="L428">428 /-- The pulled-back stochastic bad event inherits the finite-window budget. -/</span>
+<span id="L429">429 theorem decayingExplorationStochasticCommonMeasure_badEvent_le</span>
+<span id="L430">430     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L431">431     [IsProbabilityMeasure initialState]</span>
+<span id="L432">432     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L433">433     (baseVisitFloor : Real)</span>
+<span id="L434">434     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L435">435     (rewardVarianceProxy : NNReal)</span>
+<span id="L436">436     (law : rewardSource.UniformSubgaussianRewardLaw rewardVarianceProxy)</span>
+<span id="L437">437     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L438">438     (defaultState : State)</span>
+<span id="L439">439     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L440">440     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L441">441     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L442">442     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L443">443     (n : Nat) :</span>
+<span id="L444">444     decayingExplorationStochasticCommonMeasure mdp initialState rewardSource</span>
+<span id="L445">445         initialTable defaultState baseVisitFloor</span>
+<span id="L446">446         (decayingExplorationStochasticCommonBadEvent mdp initialState</span>
+<span id="L447">447           rewardSource initialTable defaultState baseVisitFloor</span>
+<span id="L448">448             rewardVarianceProxy n) &lt;=</span>
+<span id="L449">449       AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticRealizedFailureBudget n := by</span>
+<span id="L450">450   have hfinite :=</span>
+<span id="L451">451     exploratorySource_trajectoryMeasure_projectedCumulativeInverseSqrtPathSupport_optimism_and_decayingExplorationAverageAbsoluteRealizedBehaviorConsistency_of_standardBorel</span>
+<span id="L452">452       mdp initialState baseVisitFloor n rewardSource rewardVarianceProxy law</span>
+<span id="L453">453         initialTable defaultState support hbaseFloor hrewardBound hhorizon</span>
+<span id="L454">454           hbaseVisitFloor</span>
+<span id="L455">455   dsimp only at hfinite</span>
+<span id="L456">456   rcases hfinite with ⟨hmeasurable, htail, _houtside⟩</span>
+<span id="L457">457   have hmeasurable&#x27; : MeasurableSet</span>
+<span id="L458">458       (projectedAdaptiveCumulativeCountBadEvent</span>
+<span id="L459">459           (mdp := mdp) (initialState := initialState)</span>
+<span id="L460">460           (episodes := AdaptiveEpisodeBatchSource.decayingExplorationScheduledEpisodes</span>
+<span id="L461">461             mdp baseVisitFloor n)</span>
+<span id="L462">462           initialTable defaultState</span>
+<span id="L463">463           (AdaptiveEpisodeBatchSource.normalizedCumulativeInverseSqrtCountRadius</span>
+<span id="L464">464             mdp (AdaptiveEpisodeBatchSource.decayingExplorationRounds mdp n)</span>
+<span id="L465">465             (AdaptiveEpisodeBatchSource.vanishingAverageConfidenceDelta n)</span>
+<span id="L466">466             (AdaptiveEpisodeBatchSource.decayingExplorationVisitFloor</span>
+<span id="L467">467               mdp baseVisitFloor n))</span>
+<span id="L468">468           (AdaptiveEpisodeBatchSource.decayingExplorationRate n)</span>
+<span id="L469">469           (AdaptiveEpisodeBatchSource.decayingExplorationRate_le_one n)</span>
+<span id="L470">470           (AdaptiveEpisodeBatchSource.decayingExplorationRounds mdp n)</span>
+<span id="L471">471           (AdaptiveEpisodeBatchSource.vanishingAverageConfidenceDelta n) ∪</span>
+<span id="L472">472         (decayingExplorationStochasticWindowSource mdp initialState rewardSource</span>
+<span id="L473">473           initialTable defaultState baseVisitFloor n</span>
+<span id="L474">474           ).successorGlobalReturnDeviationBadEvent</span>
+<span id="L475">475             (AdaptiveEpisodeBatchSource.decayingExplorationRounds mdp n)</span>
+<span id="L476">476             1 rewardVarianceProxy</span>
+<span id="L477">477             (AdaptiveEpisodeBatchSource.vanishingAverageConfidenceDelta n)) := by</span>
+<span id="L478">478     simpa [decayingExplorationStochasticWindowSource] using hmeasurable</span>
+<span id="L479">479   unfold decayingExplorationStochasticCommonBadEvent</span>
+<span id="L480">480   dsimp only</span>
+<span id="L481">481   unfold decayingExplorationStochasticCommonMeasure</span>
+<span id="L482">482   rw [(measurePreserving_eval_infinitePi</span>
+<span id="L483">483     (fun k =&gt; decayingExplorationStochasticWindowMeasure mdp initialState</span>
+<span id="L484">484       rewardSource initialTable defaultState baseVisitFloor k) n).measure_preimage</span>
+<span id="L485">485         hmeasurable&#x27;.nullMeasurableSet]</span>
+<span id="L486">486   simpa [decayingExplorationStochasticWindowMeasure,</span>
+<span id="L487">487     decayingExplorationStochasticWindowSource] using htail</span>
+<span id="L488">488 </span>
+<span id="L489">489 /-- Outside the pulled-back bad event, coordinate `n` has the absolute bound. -/</span>
+<span id="L490">490 theorem abs_decayingExplorationStochasticRealizedBehaviorRegretProcess_le_of_not_mem_badEvent</span>
+<span id="L491">491     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L492">492     [IsProbabilityMeasure initialState]</span>
+<span id="L493">493     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L494">494     (baseVisitFloor : Real)</span>
+<span id="L495">495     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L496">496     (rewardVarianceProxy : NNReal)</span>
+<span id="L497">497     (law : rewardSource.UniformSubgaussianRewardLaw rewardVarianceProxy)</span>
+<span id="L498">498     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L499">499     (defaultState : State)</span>
+<span id="L500">500     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L501">501     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L502">502     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L503">503     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L504">504     (n : Nat)</span>
+<span id="L505">505     (omega : DecayingExplorationStochasticWindowSpace mdp baseVisitFloor)</span>
+<span id="L506">506     (homega : omega ∉</span>
+<span id="L507">507       decayingExplorationStochasticCommonBadEvent mdp initialState rewardSource</span>
+<span id="L508">508         initialTable defaultState baseVisitFloor rewardVarianceProxy n) :</span>
+<span id="L509">509     |decayingExplorationStochasticRealizedBehaviorRegretProcess mdp initialState</span>
+<span id="L510">510         rewardSource initialTable defaultState baseVisitFloor n omega| &lt;=</span>
+<span id="L511">511       AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticAverageRealizedBehaviorRegretBound</span>
+<span id="L512">512         mdp baseVisitFloor rewardVarianceProxy n := by</span>
+<span id="L513">513   have hfinite :=</span>
+<span id="L514">514     exploratorySource_trajectoryMeasure_projectedCumulativeInverseSqrtPathSupport_optimism_and_decayingExplorationAverageAbsoluteRealizedBehaviorConsistency_of_standardBorel</span>
+<span id="L515">515       mdp initialState baseVisitFloor n rewardSource rewardVarianceProxy law</span>
+<span id="L516">516         initialTable defaultState support hbaseFloor hrewardBound hhorizon</span>
+<span id="L517">517           hbaseVisitFloor</span>
+<span id="L518">518   dsimp only at hfinite</span>
+<span id="L519">519   rcases hfinite with ⟨_hmeasurable, _htail, houtside⟩</span>
+<span id="L520">520   exact (houtside (omega n) (by</span>
+<span id="L521">521     simpa [decayingExplorationStochasticCommonBadEvent] using homega)).2</span>
+<span id="L522">522 </span>
+<span id="L523">523 /--</span>
+<span id="L524">524 Terminal theorem: exact stochastic schedule marginals and convergence in</span>
+<span id="L525">525 probability of realized successor-average behavior regret to zero.</span>
+<span id="L526">526 -/</span>
+<span id="L527">527 theorem exploratorySource_decayingExplorationStochasticCommonMeasure_marginals_and_realizedBehaviorRegret_tendstoInMeasure_zero</span>
+<span id="L528">528     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L529">529     [IsProbabilityMeasure initialState]</span>
+<span id="L530">530     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L531">531     (baseVisitFloor : Real)</span>
+<span id="L532">532     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L533">533     (rewardVarianceProxy : NNReal)</span>
+<span id="L534">534     (law : rewardSource.UniformSubgaussianRewardLaw rewardVarianceProxy)</span>
+<span id="L535">535     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L536">536     (defaultState : State)</span>
+<span id="L537">537     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L538">538     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L539">539     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L540">540     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L541">541     (forall n,</span>
+<span id="L542">542       Measurable</span>
+<span id="L543">543         (decayingExplorationStochasticRealizedBehaviorRegretProcess mdp</span>
+<span id="L544">544           initialState rewardSource initialTable defaultState baseVisitFloor n)) /\</span>
+<span id="L545">545       (forall n,</span>
+<span id="L546">546         (decayingExplorationStochasticCommonMeasure mdp initialState rewardSource</span>
+<span id="L547">547           initialTable defaultState baseVisitFloor).map (fun omega =&gt; omega n) =</span>
+<span id="L548">548           decayingExplorationStochasticWindowMeasure mdp initialState</span>
+<span id="L549">549             rewardSource initialTable defaultState baseVisitFloor n) /\</span>
+<span id="L550">550       TendstoInMeasure</span>
+<span id="L551">551         (decayingExplorationStochasticCommonMeasure mdp initialState</span>
+<span id="L552">552           rewardSource initialTable defaultState baseVisitFloor)</span>
+<span id="L553">553         (decayingExplorationStochasticRealizedBehaviorRegretProcess mdp</span>
+<span id="L554">554           initialState rewardSource initialTable defaultState baseVisitFloor)</span>
+<span id="L555">555         atTop (fun _ =&gt; 0) := by</span>
+<span id="L556">556   refine ⟨fun n =&gt;</span>
+<span id="L557">557     measurable_decayingExplorationStochasticRealizedBehaviorRegretProcess</span>
+<span id="L558">558       mdp initialState rewardSource initialTable defaultState baseVisitFloor n,</span>
+<span id="L559">559     fun n =&gt;</span>
+<span id="L560">560       decayingExplorationStochasticCommonMeasure_map_eval mdp initialState</span>
+<span id="L561">561         rewardSource initialTable defaultState baseVisitFloor n, ?_⟩</span>
+<span id="L562">562   rw [tendstoInMeasure_iff_dist]</span>
+<span id="L563">563   intro epsilon hepsilon</span>
+<span id="L564">564   have hbound :=</span>
+<span id="L565">565     AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticAverageRealizedBehaviorRegretBound_tendsto_zero</span>
+<span id="L566">566       mdp hhorizon baseVisitFloor hbaseVisitFloor rewardVarianceProxy</span>
+<span id="L567">567   have hboundEventually :</span>
+<span id="L568">568       ∀ᶠ n in atTop,</span>
+<span id="L569">569         AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticAverageRealizedBehaviorRegretBound</span>
+<span id="L570">570           mdp baseVisitFloor rewardVarianceProxy n &lt; epsilon :=</span>
+<span id="L571">571     (tendsto_order.1 hbound).2 epsilon hepsilon</span>
+<span id="L572">572   apply ENNReal.tendsto_nhds_zero.2</span>
+<span id="L573">573   intro eta heta</span>
+<span id="L574">574   have hfailureEventually :</span>
+<span id="L575">575       ∀ᶠ n in atTop,</span>
+<span id="L576">576         AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticRealizedFailureBudget n &lt;= eta :=</span>
+<span id="L577">577     (ENNReal.tendsto_nhds_zero.1</span>
+<span id="L578">578       AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticRealizedFailureBudget_tendsto_zero</span>
+<span id="L579">579       eta heta)</span>
+<span id="L580">580   filter_upwards [hboundEventually, hfailureEventually] with n hboundN hfailureN</span>
+<span id="L581">581   calc</span>
+<span id="L582">582     decayingExplorationStochasticCommonMeasure mdp initialState rewardSource</span>
+<span id="L583">583         initialTable defaultState baseVisitFloor</span>
+<span id="L584">584         {omega |</span>
+<span id="L585">585           epsilon &lt;= dist</span>
+<span id="L586">586             (decayingExplorationStochasticRealizedBehaviorRegretProcess mdp</span>
+<span id="L587">587               initialState rewardSource initialTable defaultState</span>
+<span id="L588">588                 baseVisitFloor n omega)</span>
+<span id="L589">589             0} &lt;=</span>
+<span id="L590">590       decayingExplorationStochasticCommonMeasure mdp initialState rewardSource</span>
+<span id="L591">591         initialTable defaultState baseVisitFloor</span>
+<span id="L592">592         (decayingExplorationStochasticCommonBadEvent mdp initialState</span>
+<span id="L593">593           rewardSource initialTable defaultState baseVisitFloor</span>
+<span id="L594">594             rewardVarianceProxy n) := by</span>
+<span id="L595">595       apply measure_mono</span>
+<span id="L596">596       intro omega homega</span>
+<span id="L597">597       by_contra hnotBad</span>
+<span id="L598">598       have habs :=</span>
+<span id="L599">599         abs_decayingExplorationStochasticRealizedBehaviorRegretProcess_le_of_not_mem_badEvent</span>
+<span id="L600">600           mdp initialState baseVisitFloor rewardSource rewardVarianceProxy law</span>
+<span id="L601">601           initialTable defaultState support hbaseFloor hrewardBound hhorizon</span>
+<span id="L602">602           hbaseVisitFloor n omega hnotBad</span>
+<span id="L603">603       have hdist :</span>
+<span id="L604">604           epsilon &lt;=</span>
+<span id="L605">605             |decayingExplorationStochasticRealizedBehaviorRegretProcess mdp</span>
+<span id="L606">606               initialState rewardSource initialTable defaultState</span>
+<span id="L607">607                 baseVisitFloor n omega| := by</span>
+<span id="L608">608         simpa [Real.dist_eq] using homega</span>
+<span id="L609">609       exact (not_le_of_gt hboundN) (hdist.trans habs)</span>
+<span id="L610">610     _ &lt;= AdaptiveStochasticEpisodeBatchSource.decayingExplorationStochasticRealizedFailureBudget n :=</span>
+<span id="L611">611       decayingExplorationStochasticCommonMeasure_badEvent_le</span>
+<span id="L612">612         mdp initialState baseVisitFloor rewardSource rewardVarianceProxy law</span>
+<span id="L613">613         initialTable defaultState support hbaseFloor hrewardBound hhorizon</span>
+<span id="L614">614         hbaseVisitFloor n</span>
+<span id="L615">615     _ &lt;= eta := hfailureN</span>
+<span id="L616">616 </span>
+<span id="L617">617 end AdaptiveCumulativeStochasticEmpiricalOptimisticSource</span>
+<span id="L618">618 </span>
+<span id="L619">619 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.ThompsonReferencePolicy · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.ThompsonReferencePolicy · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.ThompsonReferencePolicy · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Thompson sampling</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>Thompson<wbr>Reference<wbr>Policy</h1>
+  <p class="lede">LML defines Thompson sampling from the posterior under a fixed reference algorithm and then transports that posterior to the actual process by an algorithm-density theorem. This module isolates the corresponding local Mathlib boundary.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/ThompsonReferencePolicy.lean.html"><code>BanditRLProof/Algorithms/ThompsonReferencePolicy.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/thompson/index.html">6. Thompson sampling and Bayesian regret</a></dd></div>
+    <div><dt>Declarations</dt><dd>17</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-algorithms-thompsoncanonicalsampler/index.html"><code>BanditRLProof.Algorithms.ThompsonCanonicalSampler</code></a>, <a href="../banditrlproof-historyfiltration/index.html"><code>BanditRLProof.HistoryFiltration</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-stochasticgradientbandittheoremtwonativetrajectory/index.html"><code>BanditRLProof.Algorithms.StochasticGradientBanditTheoremTwoNativeTrajectory</code></a>, <a href="../banditrlproof-algorithms-thompsonalgorithmdensity/index.html"><code>BanditRLProof.Algorithms.ThompsonAlgorithmDensity</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-15e79ea28b0b">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.referencePosterior</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A reference source&#x27;s environment posterior given its history.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> referencePosterior {OmegaRef : Type u} {History : Type v} {Env : Type w} [MeasurableSpace OmegaRef] [MeasurableSpace History] [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] (referenceMu : Measure OmegaRef) [IsFiniteMeasure referenceMu] (referenceEnv : OmegaRef -&gt; Env) (referenceHistory : OmegaRef -&gt; History) (_hreferenceEnv : Measurable referenceEnv) (_hreferenceHistory : Measurable referenceHistory) : PosteriorKernel.MarkovPosteriorKernel History Env</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonReferencePolicy.lean.html#L27">Source line 27</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-de06988d73cc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.referencePosterior_kernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> referencePosterior_kernel {OmegaRef : Type u} {History : Type v} {Env : Type w} [MeasurableSpace OmegaRef] [MeasurableSpace History] [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] (referenceMu : Measure OmegaRef) [IsFiniteMeasure referenceMu] (referenceEnv : OmegaRef -&gt; Env) (referenceHistory : OmegaRef -&gt; History) (hreferenceEnv : Measurable referenceEnv) (hreferenceHistory : Measurable referenceHistory) : (referencePosterior referenceMu referenceEnv referenceHistory hreferenceEnv hreferenceHistory).kernel = ProbabilityTheory.condDistrib referenceEnv referenceHistory referenceMu</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonReferencePolicy.lean.html#L42">Source line 42</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-af9d16e44fa5">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.referenceActionKernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The Thompson action policy obtained by mapping a reference posterior.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> referenceActionKernel {OmegaRef : Type u} {History : Type v} {Env : Type w} {Action : Type x} [MeasurableSpace OmegaRef] [MeasurableSpace History] [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [MeasurableSpace Action] (referenceMu : Measure OmegaRef) [IsFiniteMeasure referenceMu] (referenceEnv : OmegaRef -&gt; Env) (referenceHistory : OmegaRef -&gt; History) (hreferenceEnv : Measurable referenceEnv) (hreferenceHistory : Measurable referenceHistory) (bestAction : Env -&gt; Action) (_hbestAction : Measurable bestAction) : ProbabilityTheory.Kernel History Action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonReferencePolicy.lean.html#L57">Source line 57</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-040f005a3140">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.policySamplerMeasure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Extend a base process by sampling an action from a history-indexed policy.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> policySamplerMeasure {Omega : Type u} {History : Type v} {Action : Type w} [MeasurableSpace Omega] [MeasurableSpace History] [MeasurableSpace Action] (mu : Measure Omega) [IsFiniteMeasure mu] (history : Omega -&gt; History) (hhistory : Measurable history) (policy : ProbabilityTheory.Kernel History Action) [ProbabilityTheory.IsMarkovKernel policy] : Measure (Omega × Action)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonReferencePolicy.lean.html#L90">Source line 90</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-511d795339b2">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.policySamplerEnv</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Base environment coordinate after adjoining a sampled action.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> policySamplerEnv {Omega Env Action : Type*} (env : Omega -&gt; Env) : Omega × Action -&gt; Env</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonReferencePolicy.lean.html#L112">Source line 112</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e825f90fc6b2">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.policySamplerHistory</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Base history coordinate after adjoining a sampled action.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> policySamplerHistory {Omega History Action : Type*} (history : Omega -&gt; History) : Omega × Action -&gt; History</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonReferencePolicy.lean.html#L118">Source line 118</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c19e63a28623">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.policySamplerAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Newly sampled action coordinate.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> policySamplerAction {Omega Action : Type*} : Omega × Action -&gt; Action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonReferencePolicy.lean.html#L124">Source line 124</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a0d2e288fc28">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.policySamplerEnv_measurable</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> policySamplerEnv_measurable {Omega Env Action : Type*} [MeasurableSpace Omega] [MeasurableSpace Env] [MeasurableSpace Action] (env : Omega -&gt; Env) (henv : Measurable env) : Measurable (@policySamplerEnv Omega Env Action env)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonReferencePolicy.lean.html#L127">Source line 127</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-63685fae1d1c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.policySamplerHistory_measurable</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> policySamplerHistory_measurable {Omega History Action : Type*} [MeasurableSpace Omega] [MeasurableSpace History] [MeasurableSpace Action] (history : Omega -&gt; History) (hhistory : Measurable history) : Measurable (@policySamplerHistory Omega History Action history)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonReferencePolicy.lean.html#L134">Source line 134</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5bee4e7bbea1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.policySamplerAction_measurable</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> policySamplerAction_measurable {Omega Action : Type*} [MeasurableSpace Omega] [MeasurableSpace Action] : Measurable (@policySamplerAction Omega Action)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonReferencePolicy.lean.html#L141">Source line 141</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d0902bbc089f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.map_compProd_comap_history</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">History/action projection of a policy sampler.
+
+This is the arbitrary-history-map version of `map_compProd_comap_snd` and is a
+generic Mathlib candidate.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> map_compProd_comap_history {Omega History Action : Type*} [MeasurableSpace Omega] [MeasurableSpace History] [MeasurableSpace Action] (mu : Measure Omega) [IsFiniteMeasure mu] (history : Omega -&gt; History) (hhistory : Measurable history) (policy : ProbabilityTheory.Kernel History Action) [ProbabilityTheory.IsMarkovKernel policy] : (mu ⊗ₘ policy.comap history hhistory).map (<span class="kw">fun</span> sample =&gt; (history sample.<span class="num">1</span>, sample.<span class="num">2</span>)) = mu.map history ⊗ₘ policy</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonReferencePolicy.lean.html#L153">Source line 153</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-19ec1b25039b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.policySampler_base_map_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Adjoining a Markov-policy sample preserves every measurable base map.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> policySampler_base_map_eq {Omega History Action Target : Type*} [MeasurableSpace Omega] [MeasurableSpace History] [MeasurableSpace Action] [MeasurableSpace Target] (mu : Measure Omega) [IsFiniteMeasure mu] (history : Omega -&gt; History) (hhistory : Measurable history) (policy : ProbabilityTheory.Kernel History Action) [ProbabilityTheory.IsMarkovKernel policy] (f : Omega -&gt; Target) (hf : Measurable f) : (policySamplerMeasure mu history hhistory policy).map (<span class="kw">fun</span> sample =&gt; f sample.<span class="num">1</span>) = mu.map f</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonReferencePolicy.lean.html#L183">Source line 183</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-985aa7199498">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.policySampler_history_action_map_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The constructed sampler&#x27;s history/action joint law is `historyLaw ⊗ policy`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> policySampler_history_action_map_eq {Omega History Action : Type*} [MeasurableSpace Omega] [MeasurableSpace History] [MeasurableSpace Action] (mu : Measure Omega) [IsFiniteMeasure mu] (history : Omega -&gt; History) (hhistory : Measurable history) (policy : ProbabilityTheory.Kernel History Action) [ProbabilityTheory.IsMarkovKernel policy] : (policySamplerMeasure mu history hhistory policy).map (<span class="kw">fun</span> sample =&gt; (policySamplerHistory history sample, policySamplerAction sample)) = (policySamplerMeasure mu history hhistory policy).map (policySamplerHistory history) ⊗ₘ policy</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonReferencePolicy.lean.html#L207">Source line 207</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b0cdd1fdd061">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.policySampler_condDistrib_action_ae_eq_policy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The sampled action has the policy as its conditional law given history.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> policySampler_condDistrib_action_ae_eq_policy {Omega History Action : Type*} [MeasurableSpace Omega] [MeasurableSpace History] [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action] (mu : Measure Omega) [IsFiniteMeasure mu] (history : Omega -&gt; History) (hhistory : Measurable history) (policy : ProbabilityTheory.Kernel History Action) [ProbabilityTheory.IsMarkovKernel policy] : ProbabilityTheory.condDistrib policySamplerAction (policySamplerHistory history) (policySamplerMeasure mu history hhistory policy) =ᵐ[ (policySamplerMeasure mu history hhistory policy).map (policySamplerHistory history)] policy</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonReferencePolicy.lean.html#L229">Source line 229</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0dbdd6da4173">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.policySampler_condDistrib_env_ae_eq_of_base</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Adjoining a history-dependent action sample preserves an environment posterior.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> policySampler_condDistrib_env_ae_eq_of_base {Omega History Env Action : Type*} [MeasurableSpace Omega] [MeasurableSpace History] [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [MeasurableSpace Action] (mu : Measure Omega) [IsFiniteMeasure mu] (env : Omega -&gt; Env) (history : Omega -&gt; History) (henv : Measurable env) (hhistory : Measurable history) (policy : ProbabilityTheory.Kernel History Action) [ProbabilityTheory.IsMarkovKernel policy] (posterior : ProbabilityTheory.Kernel History Env) [ProbabilityTheory.IsMarkovKernel posterior] (hbase : ProbabilityTheory.condDistrib env history mu =ᵐ[mu.map history] posterior) : ProbabilityTheory.condDistrib (policySamplerEnv env) (policySamplerHistory history) (policySamplerMeasure mu history hhistory policy) =ᵐ[ (policySamplerMeasure mu history hhistory policy).map (policySamplerHistory history)] posterior</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonReferencePolicy.lean.html#L251">Source line 251</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-03957617c6e4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.referencePolicySampler_condDistrib_action_ae_eq_bestAction_of_posterior_invariance</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Reference-posterior Thompson probability matching with a constructed sampler.
+
+The action law is generated by `policySamplerMeasure`.  The sole law transport
+premise is that the reference posterior agrees with the actual environment
+posterior at the actual history law; this is the conclusion supplied by LML&#x27;s
+algorithm-density route.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> referencePolicySampler_condDistrib_action_ae_eq_bestAction_of_posterior_invariance {Omega : Type u} {OmegaRef : Type v} {History : Type w} {Env : Type x} {Action : Type y} [MeasurableSpace Omega] [MeasurableSpace OmegaRef] [MeasurableSpace History] [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action] (mu : Measure Omega) [IsFiniteMeasure mu] (env : Omega -&gt; Env) (history : Omega -&gt; History) (henv : Measurable env) (hhistory : Measurable history) (referenceMu : Measure OmegaRef) [IsFiniteMeasure referenceMu] (referenceEnv : OmegaRef -&gt; Env) (referenceHistory : OmegaRef -&gt; History) (hreferenceEnv : Measurable referenceEnv) (hreferenceHistory : Measurable referenceHistory) (bestAction : Env -&gt; Action) (hbestAction : Measurable bestAction) (hposteriorInvariance : (referencePosterior referenceMu referenceEnv referenceHistory hreferenceEnv hreferenceHistory).kernel =ᵐ[mu.map history] ProbabilityTheory.condDistrib env history mu) : <span class="kw">let</span> policy := referenceActionKernel referenceMu referenceEnv referenceHistory hreferenceEnv hreferenceHistory bestAction hbestAction <span class="kw">let</span> sampler := policySamplerMeasure mu history hhistory policy ProbabilityTheory.condDistrib policySamplerAction (policySamplerHistory history) sampler =ᵐ[ sampler.map (policySamplerHistory history)] ProbabilityTheory.condDistrib (bestAction ∘ policySamplerEnv env) (policySamplerHistory history) sampler</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonReferencePolicy.lean.html#L307">Source line 307</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2d16a8c5f700">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.finitePairReferencePolicySampler_condDistrib_action_ae_eq_bestAction_of_posterior_invariance</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite action/reward-prefix specialization of the reference-policy theorem.
+
+This is the per-time interface used by the recursive bandit route.  The
+remaining premise is exactly posterior invariance between the reference and
+actual finite-pair history laws.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> finitePairReferencePolicySampler_condDistrib_action_ae_eq_bestAction_of_posterior_invariance {Omega : Type u} {OmegaRef : Type v} {Env : Type w} {Action : Type x} {Reward : Type y} [MeasurableSpace Omega] [MeasurableSpace OmegaRef] [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action] [MeasurableSpace Reward] (mu : Measure Omega) [IsFiniteMeasure mu] (env : Omega -&gt; Env) (action : Omega -&gt; ActionTrace Action) (reward : Omega -&gt; RewardTrace Reward) (henv : Measurable env) (haction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega =&gt; reward omega t)) (referenceMu : Measure OmegaRef) [IsFiniteMeasure referenceMu] (referenceEnv : OmegaRef -&gt; Env) (referenceAction : OmegaRef -&gt; ActionTrace Action) (referenceReward : OmegaRef -&gt; RewardTrace Reward) (hreferenceEnv : Measurable referenceEnv) (hreferenceAction : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega =&gt; referenceAction omega t)) (hreferenceReward : <span class="kw">forall</span> t : Nat, Measurable (<span class="kw">fun</span> omega =&gt; referenceReward omega t)) (n : Nat) (bestAction : Env -&gt; Action) (hbestAction : Measurable bestAction) (hposteriorInvariance : ProbabilityTheory.condDistrib referenceEnv (<span class="kw">fun</span> omega =&gt; History.finitePairHistoryOfTrace (referenceAction omega) (referenceReward omega) n) referenceMu =ᵐ[ mu.map (<span class="kw">fun</span> omega =&gt; History.finitePairHistoryOfTrace (action omega) (reward omega) n)] ProbabilityTheory.condDistrib env (<span class="kw">fun</span> omega =&gt; History.finitePairHistoryOfTrace (action omega) (reward omega) n) mu) : <span class="kw">let</span> actualHistory := <span class="kw">fun</span> omega =&gt; History.finitePairHistoryOfTrace (action omega) (reward omega) n <span class="kw">let</span> referenceHistory := <span class="kw">fun</span> omega =&gt; History.finitePairHistoryOfTrace (referenceAction omega) (referenceReward omega) n <span class="kw">let</span> policy := referenceActionKernel referenceMu referenceEnv referenceHistory hreferenceEnv (History.measurable_finitePairHistoryOfTrace referenceAction referenceReward hreferenceAction hreferenceReward n) bestAction hbestAction <span class="kw">let</span> sampler := policySamplerMeasure mu actualHistory (History.measurable_finitePairHistoryOfTrace action reward haction hreward n) policy ProbabilityTheory.condDistrib policySamplerAction (policySamplerHistory actualHistory) sampler =ᵐ[ sampler.map (policySamplerHistory actualHistory)] ProbabilityTheory.condDistrib (bestAction ∘ policySamplerEnv env) (policySamplerHistory actualHistory) sampler</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonReferencePolicy.lean.html#L373">Source line 373</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

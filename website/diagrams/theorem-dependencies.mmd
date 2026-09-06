@@ -1,0 +1,12 @@
+flowchart LR
+  Core["Shared proof core<br/>models · generated trajectories<br/>conditional reward laws"]
+  Core --> Stochastic["Finite stochastic<br/>ETC · UCB"]
+  Core --> OFUL["Linear optimism<br/>OFUL · stopping"]
+  Core --> Thompson["Bayesian route<br/>Thompson sampling"]
+  Core --> Adversarial["Adversarial route<br/>EXP3 · Tsallis-FTRL"]
+  Core --> RL["Finite-horizon RL<br/>UCBVI-CH"]
+  Stochastic --> Regret["Regret terminals"]
+  OFUL --> Regret
+  Thompson --> Regret
+  Adversarial --> Regret
+  RL --> Regret

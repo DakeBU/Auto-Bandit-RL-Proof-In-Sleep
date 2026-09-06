@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/TsallisFiniteArmIndependentDriftingMeanAllRegimes.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/TsallisFiniteArmIndependentDriftingMeanAllRegimes.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/TsallisFiniteArmIndependentDriftingMeanAllRegimes.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/TsallisFiniteArmIndependentDriftingMeanAllRegimes.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.TsallisFiniteArmIndependentDriftingMeanRefinedRegret</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # All-regimes regret for independent reward laws with drifting means</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module combines the compact-window refined endpoint with the logarithmic</span>
+<span id="L7">7 fallback for the same independent, nonidentical generated reward law. The</span>
+<span id="L8">8 comparator remains the fixed baseline arm `model.bestArm`.</span>
+<span id="L9">9 -/</span>
+<span id="L10">10 </span>
+<span id="L11">11 open scoped ENNReal NNReal Topology ProbabilityTheory</span>
+<span id="L12">12 open MeasureTheory ProbabilityTheory Set Filter Finset</span>
+<span id="L13">13 </span>
+<span id="L14">14 namespace BanditRLProof</span>
+<span id="L15">15 namespace Tsallis</span>
+<span id="L16">16 </span>
+<span id="L17">17 /-- Total explicit fixed-comparator bound for independent nonidentical reward</span>
+<span id="L18">18 laws with drifting means. The refined expression is used exactly inside its</span>
+<span id="L19">19 coefficient-aware window; the logarithmic explicit-budget expression is used</span>
+<span id="L20">20 on the complement. -/</span>
+<span id="L21">21 noncomputable def finiteArmIndependentDriftingMeanAllRegimeBound</span>
+<span id="L22">22     {K : Nat} (model : FiniteBanditModel K) (horizon : Nat)</span>
+<span id="L23">23     (meanDeviation : Nat -&gt; Fin K -&gt; Real) : Real := by</span>
+<span id="L24">24   classical</span>
+<span id="L25">25   let actions := (Finset.univ : Finset (Fin K)).erase model.bestArm</span>
+<span id="L26">26   let armCount : Real := (actions.card : Real)</span>
+<span id="L27">27   let horizonMass : Real := ((horizon + 1 : Nat) : Real)</span>
+<span id="L28">28   let reciprocalGap := actions.sum</span>
+<span id="L29">29     (fun arm =&gt; 1 / ((model.gap arm : Rat) : Real))</span>
+<span id="L30">30   let scale := 2 * armCount * horizonMass</span>
+<span id="L31">31   let corruption :=</span>
+<span id="L32">32     finiteArmIndependentMeanDeviationBudget model horizon meanDeviation</span>
+<span id="L33">33   exact if actions.Nonempty ∧</span>
+<span id="L34">34       finiteArmIndependentDriftingMeanRefinedCorruptionWindow</span>
+<span id="L35">35         model horizon meanDeviation then</span>
+<span id="L36">36     1 + Real.log horizonMass +</span>
+<span id="L37">37       10 * Real.sqrt (corruption * reciprocalGap) *</span>
+<span id="L38">38         (2 + Real.sqrt</span>
+<span id="L39">39           (Real.log (scale / (corruption * reciprocalGap)) + 1))</span>
+<span id="L40">40   else</span>
+<span id="L41">41     (1 + Real.log horizonMass) * (1 + 25 * reciprocalGap) + corruption</span>
+<span id="L42">42 </span>
+<span id="L43">43 /-- With one arm there is no suboptimal coordinate, so the all-regimes</span>
+<span id="L44">44 envelope reduces to the logarithmic base term. -/</span>
+<span id="L45">45 @[simp]</span>
+<span id="L46">46 theorem finiteArmIndependentDriftingMeanAllRegimeBound_fin_one</span>
+<span id="L47">47     (model : FiniteBanditModel 1) (horizon : Nat)</span>
+<span id="L48">48     (meanDeviation : Nat -&gt; Fin 1 -&gt; Real) :</span>
+<span id="L49">49     finiteArmIndependentDriftingMeanAllRegimeBound</span>
+<span id="L50">50         model horizon meanDeviation =</span>
+<span id="L51">51       1 + Real.log (((horizon + 1 : Nat) : Real)) := by</span>
+<span id="L52">52   have hbest : model.bestArm = 0 := Subsingleton.elim _ _</span>
+<span id="L53">53   simp [finiteArmIndependentDriftingMeanAllRegimeBound,</span>
+<span id="L54">54     finiteArmIndependentMeanDeviationBudget_eq, hbest]</span>
+<span id="L55">55 </span>
+<span id="L56">56 /-- Generated scheduled half-Tsallis regret against the fixed baseline</span>
+<span id="L57">57 comparator for every deterministic mean-deviation envelope and finite horizon.</span>
+<span id="L58">58 The theorem automatically selects the compact-window refined branch or the</span>
+<span id="L59">59 logarithmic fallback and requires no caller window proof. This is not dynamic</span>
+<span id="L60">60 regret. -/</span>
+<span id="L61">61 theorem integral_sampledScheduledHalfTsallisFiniteArmIndependentDriftingMeanRewardLawRegret_le_allRegimes</span>
+<span id="L62">62     {K : Nat} (model : FiniteBanditModel K)</span>
+<span id="L63">63     (armLaw : Nat -&gt; Fin K -&gt; Measure Rat)</span>
+<span id="L64">64     (hprob : forall t arm, IsProbabilityMeasure (armLaw t arm))</span>
+<span id="L65">65     (hbound : forall t arm, ∀ᵐ reward ∂armLaw t arm,</span>
+<span id="L66">66       ((reward : Rat) : Real) ∈ Set.Icc (0 : Real) 1)</span>
+<span id="L67">67     (meanDeviation : Nat -&gt; Fin K -&gt; Real)</span>
+<span id="L68">68     (hmeanDeviation : forall t arm,</span>
+<span id="L69">69       |finiteArmIndependentRewardMean armLaw t arm -</span>
+<span id="L70">70           ((model.mean arm : Rat) : Real)| &lt;= meanDeviation t arm)</span>
+<span id="L71">71     (hgapPos : forall arm, arm ≠ model.bestArm -&gt;</span>
+<span id="L72">72       0 &lt; ((model.gap arm : Rat) : Real))</span>
+<span id="L73">73     (hgapLeOne : forall arm, arm ≠ model.bestArm -&gt;</span>
+<span id="L74">74       ((model.gap arm : Rat) : Real) &lt;= 1)</span>
+<span id="L75">75     (horizon : Nat) :</span>
+<span id="L76">76     letI : Nonempty (Fin K) := ⟨model.bestArm⟩</span>
+<span id="L77">77     let law := finiteArmIndependentRewardVectorLaw armLaw</span>
+<span id="L78">78     let value := fun _ : Nat =&gt; finiteArmIIDRewardVectorLoss</span>
+<span id="L79">79     let loss := iidTimeVaryingLossStatePredictableLossVector value</span>
+<span id="L80">80       (fun _ =&gt; measurable_finiteArmIIDRewardVectorLoss)</span>
+<span id="L81">81       (fun _ =&gt; finiteArmIIDRewardVectorLoss_nonneg)</span>
+<span id="L82">82       (fun _ =&gt; finiteArmIIDRewardVectorLoss_le_one)</span>
+<span id="L83">83     let selector :=</span>
+<span id="L84">84       canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L85">85         (Finset.univ : Finset (Fin K)) Finset.univ_nonempty</span>
+<span id="L86">86         sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L87">87     let prior := Measure.infinitePi law</span>
+<span id="L88">88     let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L89">89       (Finset.univ : Finset (Fin K)) Finset.univ_nonempty</span>
+<span id="L90">90       sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L91">91       selector.finiteHistory loss.environment</span>
+<span id="L92">92     integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L93">93         (Finset.univ : Finset (Fin K)) Finset.univ_nonempty</span>
+<span id="L94">94         sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L95">95         (pointMass model.bestArm) horizon) &lt;=</span>
+<span id="L96">96       finiteArmIndependentDriftingMeanAllRegimeBound</span>
+<span id="L97">97         model horizon meanDeviation := by</span>
+<span id="L98">98   classical</span>
+<span id="L99">99   by_cases hsuboptimal :</span>
+<span id="L100">100       ((Finset.univ : Finset (Fin K)).erase model.bestArm).Nonempty</span>
+<span id="L101">101   · by_cases hwindow :</span>
+<span id="L102">102         finiteArmIndependentDriftingMeanRefinedCorruptionWindow</span>
+<span id="L103">103           model horizon meanDeviation</span>
+<span id="L104">104     · have hroute :=</span>
+<span id="L105">105         integral_sampledScheduledHalfTsallisFiniteArmIndependentDriftingMeanRewardLawRegret_le_refinedLocalExplicit_of_window</span>
+<span id="L106">106           model armLaw hprob hbound meanDeviation hmeanDeviation hsuboptimal</span>
+<span id="L107">107             hgapPos hgapLeOne horizon hwindow</span>
+<span id="L108">108       simpa only [finiteArmIndependentDriftingMeanAllRegimeBound,</span>
+<span id="L109">109         hsuboptimal, hwindow, and_self, if_pos] using hroute</span>
+<span id="L110">110     · have hroute :=</span>
+<span id="L111">111         integral_sampledScheduledHalfTsallisFiniteArmIndependentDriftingMeanRewardLawRegret_le_log</span>
+<span id="L112">112           model armLaw hprob hbound meanDeviation hmeanDeviation hgapPos horizon</span>
+<span id="L113">113       simpa only [finiteArmIndependentDriftingMeanAllRegimeBound,</span>
+<span id="L114">114         hsuboptimal, hwindow, and_false, if_neg] using hroute</span>
+<span id="L115">115   · have hroute :=</span>
+<span id="L116">116       integral_sampledScheduledHalfTsallisFiniteArmIndependentDriftingMeanRewardLawRegret_le_log</span>
+<span id="L117">117         model armLaw hprob hbound meanDeviation hmeanDeviation hgapPos horizon</span>
+<span id="L118">118     simpa only [finiteArmIndependentDriftingMeanAllRegimeBound,</span>
+<span id="L119">119       hsuboptimal, false_and, if_neg] using hroute</span>
+<span id="L120">120 </span>
+<span id="L121">121 end Tsallis</span>
+<span id="L122">122 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

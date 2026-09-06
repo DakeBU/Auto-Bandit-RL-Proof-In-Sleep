@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Exp3RecursiveTrajectory.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Exp3RecursiveTrajectory.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Exp3RecursiveTrajectory.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Exp3RecursiveTrajectory.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Exp3ScoreRegularity</span>
+<span id="L2">2 import BanditRLProof.Algorithms.ThompsonRecursiveSampler</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Recursive measurable EXP3 trajectories</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module turns a measurable finite-history score into the exploration-mixed</span>
+<span id="L8">8 exponential policy used by EXP3.  It proves normalization, coordinate</span>
+<span id="L9">9 measurability, and a uniform exploration floor, packages the policy as the</span>
+<span id="L10">10 project&#x27;s stochastic finite-history algorithm, and invokes the Mathlib-backed</span>
+<span id="L11">11 Ionescu--Tulcea trajectory kernel.  The resulting theorem identifies every</span>
+<span id="L12">12 successor action&#x27;s conditional law with the explicit finite-action policy.</span>
+<span id="L13">13 </span>
+<span id="L14">14 The score is an input contract here.  Constructing it recursively from sampled</span>
+<span id="L15">15 importance-weighted losses is the next layer of the EXP3 route.</span>
+<span id="L16">16 -/</span>
+<span id="L17">17 </span>
+<span id="L18">18 namespace BanditRLProof</span>
+<span id="L19">19 namespace Exp3</span>
+<span id="L20">20 </span>
+<span id="L21">21 open MeasureTheory ProbabilityTheory</span>
+<span id="L22">22 </span>
+<span id="L23">23 universe u v w</span>
+<span id="L24">24 </span>
+<span id="L25">25 /-- Exponential weight generated by a finite-history cumulative score. -/</span>
+<span id="L26">26 noncomputable def historyWeight {Action History : Type*}</span>
+<span id="L27">27     (eta : Real) (score : History -&gt; Action -&gt; Real)</span>
+<span id="L28">28     (history : History) (action : Action) : Real :=</span>
+<span id="L29">29   Real.exp (-eta * score history action)</span>
+<span id="L30">30 </span>
+<span id="L31">31 /-- Total exponential weight on the explicit finite support. -/</span>
+<span id="L32">32 noncomputable def historyTotalWeight {Action History : Type*}</span>
+<span id="L33">33     (arms : Finset Action) (eta : Real)</span>
+<span id="L34">34     (score : History -&gt; Action -&gt; Real) (history : History) : Real :=</span>
+<span id="L35">35   arms.sum (historyWeight eta score history)</span>
+<span id="L36">36 </span>
+<span id="L37">37 /-- Normalized exponential history policy before explicit exploration mixing. -/</span>
+<span id="L38">38 noncomputable def normalizedHistoryDistribution {Action History : Type*}</span>
+<span id="L39">39     (arms : Finset Action) (eta : Real)</span>
+<span id="L40">40     (score : History -&gt; Action -&gt; Real) (history : History)</span>
+<span id="L41">41     (action : Action) : Real :=</span>
+<span id="L42">42   historyWeight eta score history action /</span>
+<span id="L43">43     historyTotalWeight arms eta score history</span>
+<span id="L44">44 </span>
+<span id="L45">45 /-- EXP3 policy: normalized exponential weights mixed with uniform exploration. -/</span>
+<span id="L46">46 noncomputable def exploredHistoryDistribution {Action History : Type*}</span>
+<span id="L47">47     (arms : Finset Action) (eta gamma : Real)</span>
+<span id="L48">48     (score : History -&gt; Action -&gt; Real) (history : History)</span>
+<span id="L49">49     (action : Action) : Real :=</span>
+<span id="L50">50   (1 - gamma) * normalizedHistoryDistribution arms eta score history action +</span>
+<span id="L51">51     gamma / (arms.card : Real)</span>
+<span id="L52">52 </span>
+<span id="L53">53 theorem historyTotalWeight_pos</span>
+<span id="L54">54     {Action History : Type*}</span>
+<span id="L55">55     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L56">56     (eta : Real) (score : History -&gt; Action -&gt; Real) (history : History) :</span>
+<span id="L57">57     0 &lt; historyTotalWeight arms eta score history := by</span>
+<span id="L58">58   unfold historyTotalWeight</span>
+<span id="L59">59   refine Finset.sum_pos&#x27; (fun action _ =&gt; (Real.exp_pos _).le) ?_</span>
+<span id="L60">60   rcases harms with ⟨action, haction⟩</span>
+<span id="L61">61   exact ⟨action, haction, Real.exp_pos _⟩</span>
+<span id="L62">62 </span>
+<span id="L63">63 theorem normalizedHistoryDistribution_nonneg</span>
+<span id="L64">64     {Action History : Type*}</span>
+<span id="L65">65     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L66">66     (eta : Real) (score : History -&gt; Action -&gt; Real)</span>
+<span id="L67">67     (history : History) (action : Action) :</span>
+<span id="L68">68     0 &lt;= normalizedHistoryDistribution arms eta score history action := by</span>
+<span id="L69">69   exact div_nonneg (Real.exp_pos _).le</span>
+<span id="L70">70     (historyTotalWeight_pos arms harms eta score history).le</span>
+<span id="L71">71 </span>
+<span id="L72">72 theorem sum_normalizedHistoryDistribution</span>
+<span id="L73">73     {Action History : Type*}</span>
+<span id="L74">74     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L75">75     (eta : Real) (score : History -&gt; Action -&gt; Real) (history : History) :</span>
+<span id="L76">76     arms.sum (normalizedHistoryDistribution arms eta score history) = 1 := by</span>
+<span id="L77">77   rw [show arms.sum (normalizedHistoryDistribution arms eta score history) =</span>
+<span id="L78">78       arms.sum (historyWeight eta score history) /</span>
+<span id="L79">79         historyTotalWeight arms eta score history by</span>
+<span id="L80">80     simp only [normalizedHistoryDistribution]</span>
+<span id="L81">81     rw [Finset.sum_div]]</span>
+<span id="L82">82   rw [show arms.sum (historyWeight eta score history) =</span>
+<span id="L83">83       historyTotalWeight arms eta score history by rfl]</span>
+<span id="L84">84   exact div_self (ne_of_gt</span>
+<span id="L85">85     (historyTotalWeight_pos arms harms eta score history))</span>
+<span id="L86">86 </span>
+<span id="L87">87 theorem exploredHistoryDistribution_nonneg</span>
+<span id="L88">88     {Action History : Type*}</span>
+<span id="L89">89     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L90">90     (eta gamma : Real) (score : History -&gt; Action -&gt; Real)</span>
+<span id="L91">91     (hgamma_nonneg : 0 &lt;= gamma) (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L92">92     (history : History) (action : Action) :</span>
+<span id="L93">93     0 &lt;= exploredHistoryDistribution arms eta gamma score history action := by</span>
+<span id="L94">94   unfold exploredHistoryDistribution</span>
+<span id="L95">95   exact add_nonneg</span>
+<span id="L96">96     (mul_nonneg (sub_nonneg.mpr hgamma_le_one)</span>
+<span id="L97">97       (normalizedHistoryDistribution_nonneg arms harms eta score history action))</span>
+<span id="L98">98     (div_nonneg hgamma_nonneg (Nat.cast_nonneg _))</span>
+<span id="L99">99 </span>
+<span id="L100">100 theorem sum_exploredHistoryDistribution</span>
+<span id="L101">101     {Action History : Type*}</span>
+<span id="L102">102     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L103">103     (eta gamma : Real) (score : History -&gt; Action -&gt; Real)</span>
+<span id="L104">104     (history : History) :</span>
+<span id="L105">105     arms.sum (exploredHistoryDistribution arms eta gamma score history) = 1 := by</span>
+<span id="L106">106   have hcard_pos : 0 &lt; (arms.card : Real) := by</span>
+<span id="L107">107     exact_mod_cast harms.card_pos</span>
+<span id="L108">108   unfold exploredHistoryDistribution</span>
+<span id="L109">109   rw [Finset.sum_add_distrib, ← Finset.mul_sum,</span>
+<span id="L110">110     sum_normalizedHistoryDistribution arms harms]</span>
+<span id="L111">111   simp only [Finset.sum_const, nsmul_eq_mul]</span>
+<span id="L112">112   field_simp</span>
+<span id="L113">113   ring</span>
+<span id="L114">114 </span>
+<span id="L115">115 theorem exploredHistoryDistribution_floor</span>
+<span id="L116">116     {Action History : Type*}</span>
+<span id="L117">117     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L118">118     (eta gamma : Real) (score : History -&gt; Action -&gt; Real)</span>
+<span id="L119">119     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L120">120     (history : History) (action : Action) :</span>
+<span id="L121">121     gamma / (arms.card : Real) &lt;=</span>
+<span id="L122">122       exploredHistoryDistribution arms eta gamma score history action := by</span>
+<span id="L123">123   unfold exploredHistoryDistribution</span>
+<span id="L124">124   exact le_add_of_nonneg_left</span>
+<span id="L125">125     (mul_nonneg (sub_nonneg.mpr hgamma_le_one)</span>
+<span id="L126">126       (normalizedHistoryDistribution_nonneg arms harms eta score history action))</span>
+<span id="L127">127 </span>
+<span id="L128">128 theorem explorationFloor_pos</span>
+<span id="L129">129     {Action : Type*}</span>
+<span id="L130">130     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L131">131     (gamma : Real) (hgamma_pos : 0 &lt; gamma) :</span>
+<span id="L132">132     0 &lt; gamma / (arms.card : Real) := by</span>
+<span id="L133">133   exact div_pos hgamma_pos (by exact_mod_cast harms.card_pos)</span>
+<span id="L134">134 </span>
+<span id="L135">135 theorem finiteActionDistribution_exploredHistoryDistribution</span>
+<span id="L136">136     {Action History : Type*}</span>
+<span id="L137">137     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L138">138     (eta gamma : Real) (score : History -&gt; Action -&gt; Real)</span>
+<span id="L139">139     (hgamma_nonneg : 0 &lt;= gamma) (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L140">140     (history : History) :</span>
+<span id="L141">141     FiniteActionDistribution arms</span>
+<span id="L142">142       (exploredHistoryDistribution arms eta gamma score history) where</span>
+<span id="L143">143   nonneg := fun action _ =&gt; exploredHistoryDistribution_nonneg</span>
+<span id="L144">144     arms harms eta gamma score hgamma_nonneg hgamma_le_one history action</span>
+<span id="L145">145   sum_eq_one := sum_exploredHistoryDistribution</span>
+<span id="L146">146     arms harms eta gamma score history</span>
+<span id="L147">147 </span>
+<span id="L148">148 theorem measurable_historyWeight</span>
+<span id="L149">149     {Action History : Type*} [MeasurableSpace History]</span>
+<span id="L150">150     (eta : Real) (score : History -&gt; Action -&gt; Real)</span>
+<span id="L151">151     (action : Action) (hscore : Measurable (fun history =&gt; score history action)) :</span>
+<span id="L152">152     Measurable (fun history =&gt; historyWeight eta score history action) := by</span>
+<span id="L153">153   exact Real.measurable_exp.comp (measurable_const.mul hscore)</span>
+<span id="L154">154 </span>
+<span id="L155">155 theorem measurable_historyTotalWeight</span>
+<span id="L156">156     {Action History : Type*} [MeasurableSpace History]</span>
+<span id="L157">157     (arms : Finset Action) (eta : Real)</span>
+<span id="L158">158     (score : History -&gt; Action -&gt; Real)</span>
+<span id="L159">159     (hscore : forall action, action ∈ arms -&gt;</span>
+<span id="L160">160       Measurable (fun history =&gt; score history action)) :</span>
+<span id="L161">161     Measurable (historyTotalWeight arms eta score) := by</span>
+<span id="L162">162   unfold historyTotalWeight</span>
+<span id="L163">163   exact Finset.measurable_sum arms fun action haction =&gt;</span>
+<span id="L164">164     measurable_historyWeight eta score action (hscore action haction)</span>
+<span id="L165">165 </span>
+<span id="L166">166 theorem measurable_normalizedHistoryDistribution</span>
+<span id="L167">167     {Action History : Type*} [MeasurableSpace History]</span>
+<span id="L168">168     (arms : Finset Action) (eta : Real)</span>
+<span id="L169">169     (score : History -&gt; Action -&gt; Real)</span>
+<span id="L170">170     (hscore : forall action, action ∈ arms -&gt;</span>
+<span id="L171">171       Measurable (fun history =&gt; score history action))</span>
+<span id="L172">172     (action : Action) (haction : action ∈ arms) :</span>
+<span id="L173">173     Measurable (fun history =&gt;</span>
+<span id="L174">174       normalizedHistoryDistribution arms eta score history action) := by</span>
+<span id="L175">175   exact (measurable_historyWeight eta score action (hscore action haction)).div</span>
+<span id="L176">176     (measurable_historyTotalWeight arms eta score hscore)</span>
+<span id="L177">177 </span>
+<span id="L178">178 theorem measurable_exploredHistoryDistribution</span>
+<span id="L179">179     {Action History : Type*} [MeasurableSpace History]</span>
+<span id="L180">180     (arms : Finset Action) (eta gamma : Real)</span>
+<span id="L181">181     (score : History -&gt; Action -&gt; Real)</span>
+<span id="L182">182     (hscore : forall action, action ∈ arms -&gt;</span>
+<span id="L183">183       Measurable (fun history =&gt; score history action))</span>
+<span id="L184">184     (action : Action) (haction : action ∈ arms) :</span>
+<span id="L185">185     Measurable (fun history =&gt;</span>
+<span id="L186">186       exploredHistoryDistribution arms eta gamma score history action) := by</span>
+<span id="L187">187   exact (measurable_const.mul</span>
+<span id="L188">188     (measurable_normalizedHistoryDistribution arms eta score hscore</span>
+<span id="L189">189       action haction)).add measurable_const</span>
+<span id="L190">190 </span>
+<span id="L191">191 /-- Coordinate measurability for a score indexed by inclusive pair histories. -/</span>
+<span id="L192">192 structure MeasurableFiniteHistoryScore</span>
+<span id="L193">193     {Action : Type u} {Loss : Type v}</span>
+<span id="L194">194     [MeasurableSpace Action] [MeasurableSpace Loss]</span>
+<span id="L195">195     (arms : Finset Action)</span>
+<span id="L196">196     (score : (n : Nat) -&gt; History.FinitePairHistory Action Loss n -&gt;</span>
+<span id="L197">197       Action -&gt; Real) : Prop where</span>
+<span id="L198">198   measurable_score : forall n action, action ∈ arms -&gt;</span>
+<span id="L199">199     Measurable (fun history =&gt; score n history action)</span>
+<span id="L200">200 </span>
+<span id="L201">201 /-- The un-explored normalized exponential-weights policy supplies measurable</span>
+<span id="L202">202 probability vectors on every finite-history level. -/</span>
+<span id="L203">203 def normalizedHistoryDistributionSource</span>
+<span id="L204">204     {Action : Type u} {Loss : Type v}</span>
+<span id="L205">205     [MeasurableSpace Action] [MeasurableSpace Loss]</span>
+<span id="L206">206     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L207">207     (eta : Real)</span>
+<span id="L208">208     (score : (n : Nat) -&gt; History.FinitePairHistory Action Loss n -&gt;</span>
+<span id="L209">209       Action -&gt; Real)</span>
+<span id="L210">210     (hscore : MeasurableFiniteHistoryScore arms score)</span>
+<span id="L211">211     (n : Nat) :</span>
+<span id="L212">212     MeasurableFiniteActionDistribution arms</span>
+<span id="L213">213       (normalizedHistoryDistribution arms eta (score n)) where</span>
+<span id="L214">214   distribution := fun history =&gt;</span>
+<span id="L215">215     { nonneg := fun action _haction =&gt;</span>
+<span id="L216">216         normalizedHistoryDistribution_nonneg arms harms eta (score n)</span>
+<span id="L217">217           history action</span>
+<span id="L218">218       sum_eq_one :=</span>
+<span id="L219">219         sum_normalizedHistoryDistribution arms harms eta (score n) history }</span>
+<span id="L220">220   measurable_prob := fun action haction =&gt;</span>
+<span id="L221">221     measurable_normalizedHistoryDistribution arms eta (score n)</span>
+<span id="L222">222       (fun selected hselected =&gt;</span>
+<span id="L223">223         hscore.measurable_score n selected hselected) action haction</span>
+<span id="L224">224 </span>
+<span id="L225">225 /-- The exploration-mixed history policy supplies measurable probability vectors. -/</span>
+<span id="L226">226 def exploredHistoryDistributionSource</span>
+<span id="L227">227     {Action : Type u} {Loss : Type v}</span>
+<span id="L228">228     [MeasurableSpace Action] [MeasurableSpace Loss]</span>
+<span id="L229">229     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L230">230     (eta gamma : Real)</span>
+<span id="L231">231     (score : (n : Nat) -&gt; History.FinitePairHistory Action Loss n -&gt;</span>
+<span id="L232">232       Action -&gt; Real)</span>
+<span id="L233">233     (hscore : MeasurableFiniteHistoryScore arms score)</span>
+<span id="L234">234     (hgamma_nonneg : 0 &lt;= gamma) (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L235">235     (n : Nat) :</span>
+<span id="L236">236     MeasurableFiniteActionDistribution arms</span>
+<span id="L237">237       (exploredHistoryDistribution arms eta gamma (score n)) where</span>
+<span id="L238">238   distribution := fun history =&gt;</span>
+<span id="L239">239     finiteActionDistribution_exploredHistoryDistribution arms harms eta gamma</span>
+<span id="L240">240       (score n) hgamma_nonneg hgamma_le_one history</span>
+<span id="L241">241   measurable_prob := fun action haction =&gt;</span>
+<span id="L242">242     measurable_exploredHistoryDistribution arms eta gamma (score n)</span>
+<span id="L243">243       (fun selected hselected =&gt;</span>
+<span id="L244">244         hscore.measurable_score n selected hselected) action haction</span>
+<span id="L245">245 </span>
+<span id="L246">246 /-- Initial EXP3 probabilities, obtained from zero cumulative scores. -/</span>
+<span id="L247">247 noncomputable def initialExploredDistribution {Action : Type u}</span>
+<span id="L248">248     (arms : Finset Action) (eta gamma : Real) : Action -&gt; Real :=</span>
+<span id="L249">249   exploredHistoryDistribution arms eta gamma</span>
+<span id="L250">250     (fun _ : Unit =&gt; fun _ =&gt; 0) ()</span>
+<span id="L251">251 </span>
+<span id="L252">252 theorem finiteActionDistribution_initialExploredDistribution</span>
+<span id="L253">253     {Action : Type u}</span>
+<span id="L254">254     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L255">255     (eta gamma : Real)</span>
+<span id="L256">256     (hgamma_nonneg : 0 &lt;= gamma) (hgamma_le_one : gamma &lt;= 1) :</span>
+<span id="L257">257     FiniteActionDistribution arms</span>
+<span id="L258">258       (initialExploredDistribution arms eta gamma) := by</span>
+<span id="L259">259   exact finiteActionDistribution_exploredHistoryDistribution arms harms</span>
+<span id="L260">260     eta gamma (fun _ : Unit =&gt; fun _ =&gt; 0) hgamma_nonneg hgamma_le_one ()</span>
+<span id="L261">261 </span>
+<span id="L262">262 /-- Stochastic finite-history algorithm generated by the EXP3 score policy. -/</span>
+<span id="L263">263 noncomputable def exploredHistoryAlgorithm</span>
+<span id="L264">264     {Action : Type u} {Loss : Type v}</span>
+<span id="L265">265     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L266">266     [MeasurableSpace Loss]</span>
+<span id="L267">267     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L268">268     (eta gamma : Real)</span>
+<span id="L269">269     (score : (n : Nat) -&gt; History.FinitePairHistory Action Loss n -&gt;</span>
+<span id="L270">270       Action -&gt; Real)</span>
+<span id="L271">271     (hscore : MeasurableFiniteHistoryScore arms score)</span>
+<span id="L272">272     (hgamma_nonneg : 0 &lt;= gamma) (hgamma_le_one : gamma &lt;= 1) :</span>
+<span id="L273">273     Thompson.HistoryAlgorithm Action Loss where</span>
+<span id="L274">274   policy n := finiteActionKernel arms</span>
+<span id="L275">275     (exploredHistoryDistribution arms eta gamma (score n))</span>
+<span id="L276">276     (exploredHistoryDistributionSource arms harms eta gamma score hscore</span>
+<span id="L277">277       hgamma_nonneg hgamma_le_one n)</span>
+<span id="L278">278   policy_isMarkov n := instFiniteActionKernelIsMarkovKernel</span>
+<span id="L279">279     arms (exploredHistoryDistribution arms eta gamma (score n))</span>
+<span id="L280">280       (exploredHistoryDistributionSource arms harms eta gamma score hscore</span>
+<span id="L281">281         hgamma_nonneg hgamma_le_one n)</span>
+<span id="L282">282   initialAction := finiteActionMeasure arms</span>
+<span id="L283">283     (initialExploredDistribution arms eta gamma)</span>
+<span id="L284">284   initialAction_isProbability := finiteActionMeasure_isProbabilityMeasure arms</span>
+<span id="L285">285     (initialExploredDistribution arms eta gamma)</span>
+<span id="L286">286     (finiteActionDistribution_initialExploredDistribution arms harms eta gamma</span>
+<span id="L287">287       hgamma_nonneg hgamma_le_one)</span>
+<span id="L288">288 </span>
+<span id="L289">289 @[simp]</span>
+<span id="L290">290 theorem exploredHistoryAlgorithm_policy</span>
+<span id="L291">291     {Action : Type u} {Loss : Type v}</span>
+<span id="L292">292     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L293">293     [MeasurableSpace Loss]</span>
+<span id="L294">294     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L295">295     (eta gamma : Real)</span>
+<span id="L296">296     (score : (n : Nat) -&gt; History.FinitePairHistory Action Loss n -&gt;</span>
+<span id="L297">297       Action -&gt; Real)</span>
+<span id="L298">298     (hscore : MeasurableFiniteHistoryScore arms score)</span>
+<span id="L299">299     (hgamma_nonneg : 0 &lt;= gamma) (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L300">300     (n : Nat) :</span>
+<span id="L301">301     (exploredHistoryAlgorithm arms harms eta gamma score hscore</span>
+<span id="L302">302       hgamma_nonneg hgamma_le_one).policy n =</span>
+<span id="L303">303       finiteActionKernel arms</span>
+<span id="L304">304         (exploredHistoryDistribution arms eta gamma (score n))</span>
+<span id="L305">305         (exploredHistoryDistributionSource arms harms eta gamma score hscore</span>
+<span id="L306">306           hgamma_nonneg hgamma_le_one n) :=</span>
+<span id="L307">307   rfl</span>
+<span id="L308">308 </span>
+<span id="L309">309 /-- Complete environment-indexed recursive EXP3 action/loss trajectory kernel. -/</span>
+<span id="L310">310 noncomputable def exploredTrajectoryKernel</span>
+<span id="L311">311     {Env : Type w} {Action : Type u} {Loss : Type v}</span>
+<span id="L312">312     [MeasurableSpace Env]</span>
+<span id="L313">313     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L314">314     [MeasurableSpace Loss] [Nonempty Action] [Nonempty Loss]</span>
+<span id="L315">315     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L316">316     (eta gamma : Real)</span>
+<span id="L317">317     (score : (n : Nat) -&gt; History.FinitePairHistory Action Loss n -&gt;</span>
+<span id="L318">318       Action -&gt; Real)</span>
+<span id="L319">319     (hscore : MeasurableFiniteHistoryScore arms score)</span>
+<span id="L320">320     (hgamma_nonneg : 0 &lt;= gamma) (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L321">321     (environment : Thompson.MeasurableHistoryEnvironment Env Action Loss) :</span>
+<span id="L322">322     Kernel Env ((n : Nat) -&gt; Action × Loss) :=</span>
+<span id="L323">323   Thompson.canonicalMeasurableEnvironmentTrajectoryKernel</span>
+<span id="L324">324     (exploredHistoryAlgorithm arms harms eta gamma score hscore</span>
+<span id="L325">325       hgamma_nonneg hgamma_le_one) environment</span>
+<span id="L326">326 </span>
+<span id="L327">327 instance instExploredTrajectoryKernelIsMarkov</span>
+<span id="L328">328     {Env : Type w} {Action : Type u} {Loss : Type v}</span>
+<span id="L329">329     [MeasurableSpace Env]</span>
+<span id="L330">330     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L331">331     [MeasurableSpace Loss] [Nonempty Action] [Nonempty Loss]</span>
+<span id="L332">332     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L333">333     (eta gamma : Real)</span>
+<span id="L334">334     (score : (n : Nat) -&gt; History.FinitePairHistory Action Loss n -&gt;</span>
+<span id="L335">335       Action -&gt; Real)</span>
+<span id="L336">336     (hscore : MeasurableFiniteHistoryScore arms score)</span>
+<span id="L337">337     (hgamma_nonneg : 0 &lt;= gamma) (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L338">338     (environment : Thompson.MeasurableHistoryEnvironment Env Action Loss) :</span>
+<span id="L339">339     IsMarkovKernel</span>
+<span id="L340">340       (exploredTrajectoryKernel arms harms eta gamma score hscore</span>
+<span id="L341">341         hgamma_nonneg hgamma_le_one environment) := by</span>
+<span id="L342">342   unfold exploredTrajectoryKernel</span>
+<span id="L343">343   infer_instance</span>
+<span id="L344">344 </span>
+<span id="L345">345 /--</span>
+<span id="L346">346 Every successor action of the recursive trajectory has the explicit</span>
+<span id="L347">347 exploration-mixed EXP3 policy as its conditional law given the finite history.</span>
+<span id="L348">348 -/</span>
+<span id="L349">349 theorem exploredTrajectoryMeasure_condDistrib_action</span>
+<span id="L350">350     {Env : Type w} {Action : Type u} {Loss : Type v}</span>
+<span id="L351">351     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L352">352     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L353">353     [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L354">354     [MeasurableSpace Loss] [StandardBorelSpace Loss] [Nonempty Loss]</span>
+<span id="L355">355     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L356">356     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L357">357     (eta gamma : Real)</span>
+<span id="L358">358     (score : (n : Nat) -&gt; History.FinitePairHistory Action Loss n -&gt;</span>
+<span id="L359">359       Action -&gt; Real)</span>
+<span id="L360">360     (hscore : MeasurableFiniteHistoryScore arms score)</span>
+<span id="L361">361     (hgamma_nonneg : 0 &lt;= gamma) (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L362">362     (environment : Thompson.MeasurableHistoryEnvironment Env Action Loss)</span>
+<span id="L363">363     (n : Nat) :</span>
+<span id="L364">364     condDistrib</span>
+<span id="L365">365         (fun sample : Env × ((k : Nat) -&gt; Action × Loss) =&gt;</span>
+<span id="L366">366           (sample.2 (n + 1)).1)</span>
+<span id="L367">367         (fun sample =&gt; Preorder.frestrictLe n sample.2)</span>
+<span id="L368">368         (prior ⊗ₘ exploredTrajectoryKernel arms harms eta gamma score hscore</span>
+<span id="L369">369           hgamma_nonneg hgamma_le_one environment) =ᵐ[</span>
+<span id="L370">370       (prior ⊗ₘ exploredTrajectoryKernel arms harms eta gamma score hscore</span>
+<span id="L371">371         hgamma_nonneg hgamma_le_one environment).map</span>
+<span id="L372">372           (fun sample =&gt; Preorder.frestrictLe n sample.2)]</span>
+<span id="L373">373       finiteActionKernel arms</span>
+<span id="L374">374         (exploredHistoryDistribution arms eta gamma (score n))</span>
+<span id="L375">375         (exploredHistoryDistributionSource arms harms eta gamma score hscore</span>
+<span id="L376">376           hgamma_nonneg hgamma_le_one n) := by</span>
+<span id="L377">377   simpa [exploredTrajectoryKernel, exploredHistoryAlgorithm_policy] using</span>
+<span id="L378">378     (Thompson.canonicalMeasurableEnvironmentTrajectoryMeasure_condDistrib_action</span>
+<span id="L379">379       prior</span>
+<span id="L380">380       (exploredHistoryAlgorithm arms harms eta gamma score hscore</span>
+<span id="L381">381         hgamma_nonneg hgamma_le_one)</span>
+<span id="L382">382       environment n)</span>
+<span id="L383">383 </span>
+<span id="L384">384 end Exp3</span>
+<span id="L385">385 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

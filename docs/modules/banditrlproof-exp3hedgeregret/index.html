@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Exp3HedgeRegret · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Exp3HedgeRegret · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Exp3HedgeRegret · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · EXP3</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Exp3Hedge<wbr>Regret</h1>
+  <p class="lede">This module closes the full-information exponential-weights/Hedge potential argument that sits immediately below EXP3. It defines weights from cumulative losses, normalizes them on an explicit nonempty finite action set, proves the one-step logarithmic potential inequality, and telescopes it into second-order and [0,1] finite-horizon regret bounds.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html"><code>BanditRLProof/Exp3HedgeRegret.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/exp3/index.html">7. EXP3 and adversarial concentration</a></dd></div>
+    <div><dt>Declarations</dt><dd>26</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-exp3potential/index.html"><code>BanditRLProof.Exp3Potential</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-exp3importanceweighted/index.html"><code>BanditRLProof.Exp3ImportanceWeighted</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-8ef24797a264">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.cumulativeLoss</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Cumulative loss of one action before round `t`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> cumulativeLoss {Action : Type u} (loss : Nat -&gt; Action -&gt; Real) (t : Nat) (a : Action) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L30">Source line 30</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7688b144da49">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.weight</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Exponential weight generated by the cumulative loss before round `t`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> weight {Action : Type u} (eta : Real) (loss : Nat -&gt; Action -&gt; Real) (t : Nat) (a : Action) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L35">Source line 35</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7381d6b3d7bd">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.totalWeight</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Total exponential weight on an explicit finite action set.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> totalWeight {Action : Type u} (arms : Finset Action) (eta : Real) (loss : Nat -&gt; Action -&gt; Real) (t : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L40">Source line 40</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1c765b8402d1">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.distribution</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Normalized exponential weight at round `t`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> distribution {Action : Type u} (arms : Finset Action) (eta : Real) (loss : Nat -&gt; Action -&gt; Real) (t : Nat) (a : Action) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L46">Source line 46</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-01a54d13a0d3">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.mixedLoss</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Mixed loss incurred by the normalized exponential weights at round `t`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> mixedLoss {Action : Type u} (arms : Finset Action) (eta : Real) (loss : Nat -&gt; Action -&gt; Real) (t : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L52">Source line 52</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-99709d95cca8">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Exp3.mixedSquaredLoss</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Mixed second moment of the losses at round `t`.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> mixedSquaredLoss {Action : Type u} (arms : Finset Action) (eta : Real) (loss : Nat -&gt; Action -&gt; Real) (t : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L58">Source line 58</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6a695d25ba2e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.cumulativeLoss_succ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> cumulativeLoss_succ {Action : Type u} (loss : Nat -&gt; Action -&gt; Real) (t : Nat) (a : Action) : cumulativeLoss loss (t + <span class="num">1</span>) a = cumulativeLoss loss t a + loss t a</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L63">Source line 63</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-69c62930cc62">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.weight_pos</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> weight_pos {Action : Type u} (eta : Real) (loss : Nat -&gt; Action -&gt; Real) (t : Nat) (a : Action) : <span class="num">0</span> &lt; weight eta loss t a</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L68">Source line 68</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9721b2b292f9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.weight_succ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> weight_succ {Action : Type u} (eta : Real) (loss : Nat -&gt; Action -&gt; Real) (t : Nat) (a : Action) : weight eta loss (t + <span class="num">1</span>) a = weight eta loss t a * Real.exp (-eta * loss t a)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L73">Source line 73</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e325529c662d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.totalWeight_pos</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> totalWeight_pos {Action : Type u} (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (loss : Nat -&gt; Action -&gt; Real) (t : Nat) : <span class="num">0</span> &lt; totalWeight arms eta loss t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L83">Source line 83</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-632a431925b3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.distribution_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> distribution_nonneg {Action : Type u} (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (loss : Nat -&gt; Action -&gt; Real) (t : Nat) (a : Action) : <span class="num">0</span> &lt;= distribution arms eta loss t a</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L92">Source line 92</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a4678bf9b3f3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.distribution_pos</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> distribution_pos {Action : Type u} (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (loss : Nat -&gt; Action -&gt; Real) (t : Nat) (a : Action) : <span class="num">0</span> &lt; distribution arms eta loss t a</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L99">Source line 99</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ec399e2d0217">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.sum_distribution</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sum_distribution {Action : Type u} (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (loss : Nat -&gt; Action -&gt; Real) (t : Nat) : arms.sum (distribution arms eta loss t) = <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L106">Source line 106</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b6fb74151c2a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.totalWeight_zero</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> totalWeight_zero {Action : Type u} (arms : Finset Action) (eta : Real) (loss : Nat -&gt; Action -&gt; Real) : totalWeight arms eta loss <span class="num">0</span> = arms.card</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L117">Source line 117</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-39829dd3792f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.exp_neg_le_one_sub_add_sq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Global quadratic upper bound for a nonnegative exponential argument.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exp_neg_le_one_sub_add_sq {x : Real} (hx : <span class="num">0</span> &lt;= x) : Real.exp (-x) &lt;= <span class="num">1</span> - x + x ^ <span class="num">2</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L123">Source line 123</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6ac98e9c6c3b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.exp_neg_mul_le_one_sub_add_sq_of_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Quadratic exponential bound for arbitrary nonnegative learning rates and losses.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exp_neg_mul_le_one_sub_add_sq_of_nonneg {eta ell : Real} (heta : <span class="num">0</span> &lt;= eta) (hell : <span class="num">0</span> &lt;= ell) : Real.exp (-eta * ell) &lt;= <span class="num">1</span> - eta * ell + eta ^ <span class="num">2</span> * ell ^ <span class="num">2</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L140">Source line 140</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5e613bd7f4eb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.exp_neg_mul_le_one_sub_add_sq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Backwards-compatible bounded-loss specialization of the global bound.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exp_neg_mul_le_one_sub_add_sq {eta ell : Real} (heta : <span class="num">0</span> &lt;= eta) (_heta_le : eta &lt;= <span class="num">1</span>) (hell : <span class="num">0</span> &lt;= ell) (_hell_le : ell &lt;= <span class="num">1</span>) : Real.exp (-eta * ell) &lt;= <span class="num">1</span> - eta * ell + eta ^ <span class="num">2</span> * ell ^ <span class="num">2</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L147">Source line 147</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-dd09daa5e508">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.totalWeight_succ_div_eq_sum_distribution_mul_exp</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> totalWeight_succ_div_eq_sum_distribution_mul_exp {Action : Type u} (arms : Finset Action) (eta : Real) (loss : Nat -&gt; Action -&gt; Real) (t : Nat) : totalWeight arms eta loss (t + <span class="num">1</span>) / totalWeight arms eta loss t = arms.sum (<span class="kw">fun</span> a =&gt; distribution arms eta loss t a * Real.exp (-eta * loss t a))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L153">Source line 153</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8646314044fb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.totalWeight_succ_div_le_of_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> totalWeight_succ_div_le_of_nonneg {Action : Type u} (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (heta : <span class="num">0</span> &lt;= eta) (loss : Nat -&gt; Action -&gt; Real) (t : Nat) (hloss : <span class="kw">forall</span> a, a ∈ arms -&gt; <span class="num">0</span> &lt;= loss t a) : totalWeight arms eta loss (t + <span class="num">1</span>) / totalWeight arms eta loss t &lt;= <span class="num">1</span> - eta * mixedLoss arms eta loss t + eta ^ <span class="num">2</span> * mixedSquaredLoss arms eta loss t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L169">Source line 169</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3773196ebcd1">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.totalWeight_succ_div_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> totalWeight_succ_div_le {Action : Type u} (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (heta : <span class="num">0</span> &lt;= eta) (_heta_le : eta &lt;= <span class="num">1</span>) (loss : Nat -&gt; Action -&gt; Real) (t : Nat) (hloss : <span class="kw">forall</span> a, a ∈ arms -&gt; <span class="num">0</span> &lt;= loss t a ∧ loss t a &lt;= <span class="num">1</span>) : totalWeight arms eta loss (t + <span class="num">1</span>) / totalWeight arms eta loss t &lt;= <span class="num">1</span> - eta * mixedLoss arms eta loss t + eta ^ <span class="num">2</span> * mixedSquaredLoss arms eta loss t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L218">Source line 218</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b7120b22d7e0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.log_totalWeight_succ_sub_le_of_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> log_totalWeight_succ_sub_le_of_nonneg {Action : Type u} (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (heta : <span class="num">0</span> &lt;= eta) (loss : Nat -&gt; Action -&gt; Real) (t : Nat) (hloss : <span class="kw">forall</span> a, a ∈ arms -&gt; <span class="num">0</span> &lt;= loss t a) : Real.log (totalWeight arms eta loss (t + <span class="num">1</span>)) - Real.log (totalWeight arms eta loss t) &lt;= -eta * mixedLoss arms eta loss t + eta ^ <span class="num">2</span> * mixedSquaredLoss arms eta loss t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L231">Source line 231</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4102743bf0fc">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.log_totalWeight_succ_sub_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> log_totalWeight_succ_sub_le {Action : Type u} (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (heta : <span class="num">0</span> &lt;= eta) (_heta_le : eta &lt;= <span class="num">1</span>) (loss : Nat -&gt; Action -&gt; Real) (t : Nat) (hloss : <span class="kw">forall</span> a, a ∈ arms -&gt; <span class="num">0</span> &lt;= loss t a ∧ loss t a &lt;= <span class="num">1</span>) : Real.log (totalWeight arms eta loss (t + <span class="num">1</span>)) - Real.log (totalWeight arms eta loss t) &lt;= -eta * mixedLoss arms eta loss t + eta ^ <span class="num">2</span> * mixedSquaredLoss arms eta loss t</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L249">Source line 249</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e9c74b0d2952">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.mixedSquaredLoss_le_one</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> mixedSquaredLoss_le_one {Action : Type u} (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (loss : Nat -&gt; Action -&gt; Real) (t : Nat) (hloss : <span class="kw">forall</span> a, a ∈ arms -&gt; <span class="num">0</span> &lt;= loss t a ∧ loss t a &lt;= <span class="num">1</span>) : mixedSquaredLoss arms eta loss t &lt;= <span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L262">Source line 262</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1c1b7b7f2961">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.hedge_regret_le_log_card_div_add_eta_mul_mixedSquaredLoss_of_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Second-order finite-horizon Hedge regret bound against one comparator action.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> hedge_regret_le_log_card_div_add_eta_mul_mixedSquaredLoss_of_nonneg {Action : Type u} (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (heta : <span class="num">0</span> &lt; eta) (loss : Nat -&gt; Action -&gt; Real) (T : Nat) (hloss : <span class="kw">forall</span> t, t &lt; T -&gt; <span class="kw">forall</span> a, a ∈ arms -&gt; <span class="num">0</span> &lt;= loss t a) (comparator : Action) (hcomparator : comparator ∈ arms) : (Finset.range T).sum (<span class="kw">fun</span> t =&gt; mixedLoss arms eta loss t) - cumulativeLoss loss T comparator &lt;= Real.log arms.card / eta + eta * (Finset.range T).sum (<span class="kw">fun</span> t =&gt; mixedSquaredLoss arms eta loss t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L283">Source line 283</a>
+      <a href="../../chapters/exp3/index.html#decl-1c1b7b7f2961-teaching">Open teaching explanation</a>
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-36052c1873b7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.hedge_regret_le_log_card_div_add_eta_mul_mixedSquaredLoss</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Bounded-loss compatibility wrapper for the generalized second-order theorem.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> hedge_regret_le_log_card_div_add_eta_mul_mixedSquaredLoss {Action : Type u} (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (heta : <span class="num">0</span> &lt; eta) (_heta_le : eta &lt;= <span class="num">1</span>) (loss : Nat -&gt; Action -&gt; Real) (T : Nat) (hloss : <span class="kw">forall</span> t, t &lt; T -&gt; <span class="kw">forall</span> a, a ∈ arms -&gt; <span class="num">0</span> &lt;= loss t a ∧ loss t a &lt;= <span class="num">1</span>) (comparator : Action) (hcomparator : comparator ∈ arms) : (Finset.range T).sum (<span class="kw">fun</span> t =&gt; mixedLoss arms eta loss t) - cumulativeLoss loss T comparator &lt;= Real.log arms.card / eta + eta * (Finset.range T).sum (<span class="kw">fun</span> t =&gt; mixedSquaredLoss arms eta loss t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L359">Source line 359</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-80ae8edd2c79">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Exp3.hedge_regret_le_log_card_div_add_eta_mul_horizon</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-horizon Hedge regret for losses in `[0,1]`.
+
+This is the deterministic full-information theorem consumed by the future
+importance-weighted EXP3 route.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> hedge_regret_le_log_card_div_add_eta_mul_horizon {Action : Type u} (arms : Finset Action) (harms : arms.Nonempty) (eta : Real) (heta : <span class="num">0</span> &lt; eta) (heta_le : eta &lt;= <span class="num">1</span>) (loss : Nat -&gt; Action -&gt; Real) (T : Nat) (hloss : <span class="kw">forall</span> t, t &lt; T -&gt; <span class="kw">forall</span> a, a ∈ arms -&gt; <span class="num">0</span> &lt;= loss t a ∧ loss t a &lt;= <span class="num">1</span>) (comparator : Action) (hcomparator : comparator ∈ arms) : (Finset.range T).sum (<span class="kw">fun</span> t =&gt; mixedLoss arms eta loss t) - cumulativeLoss loss T comparator &lt;= Real.log arms.card / eta + eta * T</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Exp3HedgeRegret.lean.html#L382">Source line 382</a>
+
+      <a href="../../chapters/exp3/index.html">Chapter context: EXP3</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

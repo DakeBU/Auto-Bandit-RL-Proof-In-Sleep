@@ -1,0 +1,16 @@
+flowchart LR
+    Target["Frozen mathematical target<br/>paper, textbook, or proposal"] --> Scheduler["Evidence-aware scheduler<br/>same target, budget, and source packet"]
+    subgraph Harness["ABRL · adaptive autoformalization harness"]
+        Scheduler --> Hierarchy["Hierarchical default<br/>director → planner → one Lean leaf"]
+        Scheduler -. "bounded experiment" .-> Parallel["Master–worker trial<br/>independent proof routes"]
+        Hierarchy --> Gate["Common Lean + reviewer gate<br/>certificate, blocker, reuse"]
+        Parallel --> Gate
+        Gate -. "matched log and diagnostics" .-> Scheduler
+    end
+    Gate -->|accepted declarations| Library["BanditRLlib<br/>verified Lean library"]
+    Library --> Learn["Learn<br/>source-mapped Book Map"]
+    Library --> Reuse["Reuse<br/>declarations + proof graph"]
+    Library --> Formalize["Formalize<br/>local experimental workspace"]
+    Library --> Contribute["Contribute<br/>reviewed lemma packets"]
+    Formalize -. "candidate packet" .-> Target
+    Contribute -. "proposal packet" .-> Target

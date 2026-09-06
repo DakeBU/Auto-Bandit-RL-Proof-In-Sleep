@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Algorithms/StochasticGradientBanditTwoArmMeasurableRecurrence.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Algorithms/StochasticGradientBanditTwoArmMeasurableRecurrence.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Algorithms/StochasticGradientBanditTwoArmMeasurableRecurrence.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Algorithms/StochasticGradientBanditTwoArmMeasurableRecurrence.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Algorithms.StochasticGradientBanditTwoArmRecurrence</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Measurable-environment and trajectory interfaces for the two-arm recurrences</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module lifts the fixed-history recurrences to the jointly measurable</span>
+<span id="L7">7 environment kernel used by the canonical SGB trajectory.  It also records one</span>
+<span id="L8">8 uniform, source-faithful environment contract: every initial and successor</span>
+<span id="L9">9 reward fiber is supported in `[-1,1]` almost everywhere and has the same fixed</span>
+<span id="L10">10 arm mean, uniformly over environment values, times, and finite histories.</span>
+<span id="L11">11 </span>
+<span id="L12">12 Process / filtration ledger:</span>
+<span id="L13">13 </span>
+<span id="L14">14 * the ambient finite measure is the canonical measure</span>
+<span id="L15">15   `prior ⊗ₘ trajectoryKernel 0 eta environment` on an environment and an</span>
+<span id="L16">16   infinite action/reward trace; it is a probability measure only when the</span>
+<span id="L17">17   supplied `prior` is one;</span>
+<span id="L18">18 * at successor index `n`, the conditioning statistic retains the environment</span>
+<span id="L19">19   and trace pairs `0,...,n`; its generated next pair is trace pair `n+1`;</span>
+<span id="L20">20 * the retained history parameter is source `theta_{.,n+2}` and adding the</span>
+<span id="L21">21   next source update produces `theta_{.,n+3}`;</span>
+<span id="L22">22 * the prefix statistic retains the latent environment as well as the observed</span>
+<span id="L23">23   pairs.  Thus the filtration below is an environment-revealed filtration for</span>
+<span id="L24">24   a general prior; it agrees with the fixed-instance source reading after</span>
+<span id="L25">25   specializing to a deterministic/Dirac environment;</span>
+<span id="L26">26 * `trajectoryMeasure_condDistrib_nextPair_given_environment_prefix` identifies</span>
+<span id="L27">27   the regular conditional distribution of that next pair with the actual</span>
+<span id="L28">28   measurable history-step kernel;</span>
+<span id="L29">29 * no independence or `Delta &gt; eta * sourceC eta` premise is used.</span>
+<span id="L30">30 </span>
+<span id="L31">31 The final trajectory declarations are conditional-distribution integral</span>
+<span id="L32">32 bounds.  Mathlib&#x27;s `condExp_prod_ae_eq_integral_condDistrib` would turn these</span>
+<span id="L33">33 into function-valued conditional-expectation bounds after proving global</span>
+<span id="L34">34 integrability of the successor exponential potential.  The current local</span>
+<span id="L35">35 fiber bounds do not yet establish that path-level integrability over every</span>
+<span id="L36">36 generated prefix.  This module does construct the nested prefix filtration</span>
+<span id="L37">37 needed by `condExp_condExp_of_le`; global integrability of the two exponential</span>
+<span id="L38">38 processes is the remaining conditional-expectation/tower blocker and is left</span>
+<span id="L39">39 as a named downstream obligation rather than a hidden assumption.</span>
+<span id="L40">40 -/</span>
+<span id="L41">41 </span>
+<span id="L42">42 namespace BanditRLProof</span>
+<span id="L43">43 namespace StochasticGradientBandit</span>
+<span id="L44">44 </span>
+<span id="L45">45 open MeasureTheory ProbabilityTheory</span>
+<span id="L46">46 open scoped BigOperators ProbabilityTheory</span>
+<span id="L47">47 </span>
+<span id="L48">48 noncomputable section</span>
+<span id="L49">49 </span>
+<span id="L50">50 universe v</span>
+<span id="L51">51 </span>
+<span id="L52">52 /-- The forward successor exponential at a retained finite two-arm history. -/</span>
+<span id="L53">53 def twoArmForwardSuccessorPotential (eta : Real) {n : Nat}</span>
+<span id="L54">54     (history : History.FinitePairHistory (Fin 2) Real n)</span>
+<span id="L55">55     (pair : Fin 2 × Real) : Real :=</span>
+<span id="L56">56   Real.exp</span>
+<span id="L57">57     (2 *</span>
+<span id="L58">58       (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history 0 +</span>
+<span id="L59">59         eta * sourceIncrement</span>
+<span id="L60">60           (softmaxProbability</span>
+<span id="L61">61             (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history))</span>
+<span id="L62">62           pair.2 pair.1 0))</span>
+<span id="L63">63 </span>
+<span id="L64">64 /-- The inverse-odds successor exponential at the same time fence. -/</span>
+<span id="L65">65 def twoArmInverseSuccessorPotential (eta : Real) {n : Nat}</span>
+<span id="L66">66     (history : History.FinitePairHistory (Fin 2) Real n)</span>
+<span id="L67">67     (pair : Fin 2 × Real) : Real :=</span>
+<span id="L68">68   Real.exp</span>
+<span id="L69">69     (-2 *</span>
+<span id="L70">70       (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history 0 +</span>
+<span id="L71">71         eta * sourceIncrement</span>
+<span id="L72">72           (softmaxProbability</span>
+<span id="L73">73             (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history))</span>
+<span id="L74">74           pair.2 pair.1 0))</span>
+<span id="L75">75 </span>
+<span id="L76">76 /-- The additive right side of the forward conditional recurrence. -/</span>
+<span id="L77">77 def twoArmForwardRecurrenceBound (eta Delta : Real) {n : Nat}</span>
+<span id="L78">78     (history : History.FinitePairHistory (Fin 2) Real n) : Real :=</span>
+<span id="L79">79   Real.exp</span>
+<span id="L80">80       (2 * historyParameter (fun _ : Fin 2 =&gt; 0) eta n history 0) +</span>
+<span id="L81">81     2 *</span>
+<span id="L82">82       softmaxProbability</span>
+<span id="L83">83           (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history) 0 ^ 2 *</span>
+<span id="L84">84       (eta * Delta + eta ^ 2 * sourceC eta)</span>
+<span id="L85">85 </span>
+<span id="L86">86 /-- The additive right side of the inverse conditional recurrence. -/</span>
+<span id="L87">87 def twoArmInverseRecurrenceBound (eta Delta : Real) {n : Nat}</span>
+<span id="L88">88     (history : History.FinitePairHistory (Fin 2) Real n) : Real :=</span>
+<span id="L89">89   Real.exp</span>
+<span id="L90">90       (-2 * historyParameter (fun _ : Fin 2 =&gt; 0) eta n history 0) -</span>
+<span id="L91">91     2 * eta *</span>
+<span id="L92">92       (1 - softmaxProbability</span>
+<span id="L93">93           (historyParameter (fun _ : Fin 2 =&gt; 0) eta n history) 0) ^ 2 *</span>
+<span id="L94">94       (Delta - eta * sourceC eta)</span>
+<span id="L95">95 </span>
+<span id="L96">96 theorem measurable_twoArmForwardSuccessorPotential (eta : Real) (n : Nat) :</span>
+<span id="L97">97     Measurable</span>
+<span id="L98">98       (fun input : History.FinitePairHistory (Fin 2) Real n ×</span>
+<span id="L99">99           (Fin 2 × Real) =&gt;</span>
+<span id="L100">100         twoArmForwardSuccessorPotential eta input.1 input.2) := by</span>
+<span id="L101">101   let theta := fun input : History.FinitePairHistory (Fin 2) Real n ×</span>
+<span id="L102">102       (Fin 2 × Real) =&gt;</span>
+<span id="L103">103     historyParameter (fun _ : Fin 2 =&gt; 0) eta n input.1</span>
+<span id="L104">104   have htheta (arm : Fin 2) : Measurable (fun input =&gt; theta input arm) :=</span>
+<span id="L105">105     (measurable_historyParameter (fun _ : Fin 2 =&gt; 0) eta n arm).comp</span>
+<span id="L106">106       measurable_fst</span>
+<span id="L107">107   have hprob : Measurable</span>
+<span id="L108">108       (fun input =&gt; softmaxProbability (theta input) 0) :=</span>
+<span id="L109">109     measurable_softmaxProbability theta htheta 0</span>
+<span id="L110">110   have hincrement : Measurable</span>
+<span id="L111">111       (fun input =&gt; sourceIncrement (softmaxProbability (theta input))</span>
+<span id="L112">112         input.2.2 input.2.1 0) :=</span>
+<span id="L113">113     measurable_sourceIncrement</span>
+<span id="L114">114       (fun input =&gt; softmaxProbability (theta input))</span>
+<span id="L115">115       (fun input =&gt; input.2.2) (fun input =&gt; input.2.1) 0 hprob</span>
+<span id="L116">116       (measurable_snd.comp measurable_snd)</span>
+<span id="L117">117       (measurable_fst.comp measurable_snd)</span>
+<span id="L118">118   have hexponent : Measurable</span>
+<span id="L119">119       (fun input =&gt; 2 * (theta input 0 + eta *</span>
+<span id="L120">120         sourceIncrement (softmaxProbability (theta input))</span>
+<span id="L121">121           input.2.2 input.2.1 0)) :=</span>
+<span id="L122">122     measurable_const.mul ((htheta 0).add (measurable_const.mul hincrement))</span>
+<span id="L123">123   simpa [twoArmForwardSuccessorPotential, theta] using</span>
+<span id="L124">124     Real.measurable_exp.comp hexponent</span>
+<span id="L125">125 </span>
+<span id="L126">126 theorem measurable_twoArmInverseSuccessorPotential (eta : Real) (n : Nat) :</span>
+<span id="L127">127     Measurable</span>
+<span id="L128">128       (fun input : History.FinitePairHistory (Fin 2) Real n ×</span>
+<span id="L129">129           (Fin 2 × Real) =&gt;</span>
+<span id="L130">130         twoArmInverseSuccessorPotential eta input.1 input.2) := by</span>
+<span id="L131">131   let theta := fun input : History.FinitePairHistory (Fin 2) Real n ×</span>
+<span id="L132">132       (Fin 2 × Real) =&gt;</span>
+<span id="L133">133     historyParameter (fun _ : Fin 2 =&gt; 0) eta n input.1</span>
+<span id="L134">134   have htheta (arm : Fin 2) : Measurable (fun input =&gt; theta input arm) :=</span>
+<span id="L135">135     (measurable_historyParameter (fun _ : Fin 2 =&gt; 0) eta n arm).comp</span>
+<span id="L136">136       measurable_fst</span>
+<span id="L137">137   have hprob : Measurable</span>
+<span id="L138">138       (fun input =&gt; softmaxProbability (theta input) 0) :=</span>
+<span id="L139">139     measurable_softmaxProbability theta htheta 0</span>
+<span id="L140">140   have hincrement : Measurable</span>
+<span id="L141">141       (fun input =&gt; sourceIncrement (softmaxProbability (theta input))</span>
+<span id="L142">142         input.2.2 input.2.1 0) :=</span>
+<span id="L143">143     measurable_sourceIncrement</span>
+<span id="L144">144       (fun input =&gt; softmaxProbability (theta input))</span>
+<span id="L145">145       (fun input =&gt; input.2.2) (fun input =&gt; input.2.1) 0 hprob</span>
+<span id="L146">146       (measurable_snd.comp measurable_snd)</span>
+<span id="L147">147       (measurable_fst.comp measurable_snd)</span>
+<span id="L148">148   have hexponent : Measurable</span>
+<span id="L149">149       (fun input =&gt; -2 * (theta input 0 + eta *</span>
+<span id="L150">150         sourceIncrement (softmaxProbability (theta input))</span>
+<span id="L151">151           input.2.2 input.2.1 0)) :=</span>
+<span id="L152">152     measurable_const.mul ((htheta 0).add (measurable_const.mul hincrement))</span>
+<span id="L153">153   simpa [twoArmInverseSuccessorPotential, theta] using</span>
+<span id="L154">154     Real.measurable_exp.comp hexponent</span>
+<span id="L155">155 </span>
+<span id="L156">156 theorem measurable_twoArmForwardRecurrenceBound</span>
+<span id="L157">157     (eta Delta : Real) (n : Nat) :</span>
+<span id="L158">158     Measurable</span>
+<span id="L159">159       (twoArmForwardRecurrenceBound eta Delta :</span>
+<span id="L160">160         History.FinitePairHistory (Fin 2) Real n -&gt; Real) := by</span>
+<span id="L161">161   let theta := fun history : History.FinitePairHistory (Fin 2) Real n =&gt;</span>
+<span id="L162">162     historyParameter (fun _ : Fin 2 =&gt; 0) eta n history</span>
+<span id="L163">163   have htheta (arm : Fin 2) : Measurable (fun history =&gt; theta history arm) :=</span>
+<span id="L164">164     measurable_historyParameter (fun _ : Fin 2 =&gt; 0) eta n arm</span>
+<span id="L165">165   have hprob : Measurable</span>
+<span id="L166">166       (fun history =&gt; softmaxProbability (theta history) 0) :=</span>
+<span id="L167">167     measurable_softmaxProbability theta htheta 0</span>
+<span id="L168">168   unfold twoArmForwardRecurrenceBound</span>
+<span id="L169">169   exact (Real.measurable_exp.comp (measurable_const.mul (htheta 0))).add</span>
+<span id="L170">170     ((measurable_const.mul (hprob.pow_const 2)).mul measurable_const)</span>
+<span id="L171">171 </span>
+<span id="L172">172 theorem measurable_twoArmInverseRecurrenceBound</span>
+<span id="L173">173     (eta Delta : Real) (n : Nat) :</span>
+<span id="L174">174     Measurable</span>
+<span id="L175">175       (twoArmInverseRecurrenceBound eta Delta :</span>
+<span id="L176">176         History.FinitePairHistory (Fin 2) Real n -&gt; Real) := by</span>
+<span id="L177">177   let theta := fun history : History.FinitePairHistory (Fin 2) Real n =&gt;</span>
+<span id="L178">178     historyParameter (fun _ : Fin 2 =&gt; 0) eta n history</span>
+<span id="L179">179   have htheta (arm : Fin 2) : Measurable (fun history =&gt; theta history arm) :=</span>
+<span id="L180">180     measurable_historyParameter (fun _ : Fin 2 =&gt; 0) eta n arm</span>
+<span id="L181">181   have hprob : Measurable</span>
+<span id="L182">182       (fun history =&gt; softmaxProbability (theta history) 0) :=</span>
+<span id="L183">183     measurable_softmaxProbability theta htheta 0</span>
+<span id="L184">184   unfold twoArmInverseRecurrenceBound</span>
+<span id="L185">185   exact (Real.measurable_exp.comp (measurable_const.mul (htheta 0))).sub</span>
+<span id="L186">186     (((measurable_const.mul</span>
+<span id="L187">187       ((measurable_const.sub hprob).pow_const 2)).mul measurable_const))</span>
+<span id="L188">188 </span>
+<span id="L189">189 /--</span>
+<span id="L190">190 Uniform source model for the two-arm Theorem-1 route.  The same `mean` is used</span>
+<span id="L191">191 at the initial pair and at every history-dependent successor reward law.  This</span>
+<span id="L192">192 is a conditional fixed-mean contract, not an independence assertion.</span>
+<span id="L193">193 -/</span>
+<span id="L194">194 structure TwoArmBoundedFixedMeanEnvironmentContract</span>
+<span id="L195">195     {Env : Type v} [MeasurableSpace Env]</span>
+<span id="L196">196     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L197">197     (mean : Fin 2 -&gt; Real) : Prop where</span>
+<span id="L198">198   initial_reward_bound : forall env selected,</span>
+<span id="L199">199     ∀ᵐ reward ∂environment.initialFeedback (env, selected), |reward| &lt;= 1</span>
+<span id="L200">200   initial_mean : forall env selected,</span>
+<span id="L201">201     integral (environment.initialFeedback (env, selected)) id = mean selected</span>
+<span id="L202">202   successor_reward_bound : forall n env</span>
+<span id="L203">203       (history : History.FinitePairHistory (Fin 2) Real n) selected,</span>
+<span id="L204">204     ∀ᵐ reward ∂environment.feedback n (env, (history, selected)),</span>
+<span id="L205">205       |reward| &lt;= 1</span>
+<span id="L206">206   successor_mean : forall n env</span>
+<span id="L207">207       (history : History.FinitePairHistory (Fin 2) Real n) selected,</span>
+<span id="L208">208     integral (environment.feedback n (env, (history, selected))) id =</span>
+<span id="L209">209       mean selected</span>
+<span id="L210">210 </span>
+<span id="L211">211 /-- Forward recurrence on the jointly measurable environment/history kernel. -/</span>
+<span id="L212">212 theorem integral_measurableTwoArmHistoryStepKernel_forwardSuccessor_le</span>
+<span id="L213">213     {Env : Type v} [MeasurableSpace Env]</span>
+<span id="L214">214     (eta Delta : Real) (heta : 0 &lt;= eta)</span>
+<span id="L215">215     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L216">216     (n : Nat) (env : Env)</span>
+<span id="L217">217     (history : History.FinitePairHistory (Fin 2) Real n)</span>
+<span id="L218">218     (mean : Fin 2 -&gt; Real)</span>
+<span id="L219">219     (hreward : forall selected,</span>
+<span id="L220">220       ∀ᵐ reward ∂environment.feedback n (env, (history, selected)),</span>
+<span id="L221">221         |reward| &lt;= 1)</span>
+<span id="L222">222     (hmean : forall selected,</span>
+<span id="L223">223       integral (environment.feedback n (env, (history, selected))) id =</span>
+<span id="L224">224         mean selected)</span>
+<span id="L225">225     (hgap : mean 0 - mean 1 = Delta) :</span>
+<span id="L226">226     integral</span>
+<span id="L227">227         (Thompson.measurableEnvironmentHistoryStepKernel</span>
+<span id="L228">228           (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta) environment n</span>
+<span id="L229">229           (env, history))</span>
+<span id="L230">230         (twoArmForwardSuccessorPotential eta history) &lt;=</span>
+<span id="L231">231       twoArmForwardRecurrenceBound eta Delta history := by</span>
+<span id="L232">232   rw [Thompson.measurableEnvironmentHistoryStepKernel_apply]</span>
+<span id="L233">233   apply integral_twoArmHistoryStepKernel_exp_forwardSuccessor_le_add_success_sq</span>
+<span id="L234">234     eta Delta heta (environment.at env) n history mean</span>
+<span id="L235">235   · intro selected</span>
+<span id="L236">236     simpa [Thompson.MeasurableHistoryEnvironment.at,</span>
+<span id="L237">237       ProbabilityTheory.Kernel.comap_apply] using hreward selected</span>
+<span id="L238">238   · intro selected</span>
+<span id="L239">239     simpa [Thompson.MeasurableHistoryEnvironment.at,</span>
+<span id="L240">240       ProbabilityTheory.Kernel.comap_apply] using hmean selected</span>
+<span id="L241">241   · exact hgap</span>
+<span id="L242">242 </span>
+<span id="L243">243 /-- Inverse recurrence on the jointly measurable environment/history kernel. -/</span>
+<span id="L244">244 theorem integral_measurableTwoArmHistoryStepKernel_inverseSuccessor_le</span>
+<span id="L245">245     {Env : Type v} [MeasurableSpace Env]</span>
+<span id="L246">246     (eta Delta : Real) (heta : 0 &lt;= eta)</span>
+<span id="L247">247     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L248">248     (n : Nat) (env : Env)</span>
+<span id="L249">249     (history : History.FinitePairHistory (Fin 2) Real n)</span>
+<span id="L250">250     (mean : Fin 2 -&gt; Real)</span>
+<span id="L251">251     (hreward : forall selected,</span>
+<span id="L252">252       ∀ᵐ reward ∂environment.feedback n (env, (history, selected)),</span>
+<span id="L253">253         |reward| &lt;= 1)</span>
+<span id="L254">254     (hmean : forall selected,</span>
+<span id="L255">255       integral (environment.feedback n (env, (history, selected))) id =</span>
+<span id="L256">256         mean selected)</span>
+<span id="L257">257     (hgap : mean 0 - mean 1 = Delta) :</span>
+<span id="L258">258     integral</span>
+<span id="L259">259         (Thompson.measurableEnvironmentHistoryStepKernel</span>
+<span id="L260">260           (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta) environment n</span>
+<span id="L261">261           (env, history))</span>
+<span id="L262">262         (twoArmInverseSuccessorPotential eta history) &lt;=</span>
+<span id="L263">263       twoArmInverseRecurrenceBound eta Delta history := by</span>
+<span id="L264">264   rw [Thompson.measurableEnvironmentHistoryStepKernel_apply]</span>
+<span id="L265">265   apply integral_twoArmHistoryStepKernel_exp_inverseSuccessor_le_sub_failure_sq</span>
+<span id="L266">266     eta Delta heta (environment.at env) n history mean</span>
+<span id="L267">267   · intro selected</span>
+<span id="L268">268     simpa [Thompson.MeasurableHistoryEnvironment.at,</span>
+<span id="L269">269       ProbabilityTheory.Kernel.comap_apply] using hreward selected</span>
+<span id="L270">270   · intro selected</span>
+<span id="L271">271     simpa [Thompson.MeasurableHistoryEnvironment.at,</span>
+<span id="L272">272       ProbabilityTheory.Kernel.comap_apply] using hmean selected</span>
+<span id="L273">273   · exact hgap</span>
+<span id="L274">274 </span>
+<span id="L275">275 /-- The uniform environment contract supplies the forward recurrence at every</span>
+<span id="L276">276 environment value and retained history. -/</span>
+<span id="L277">277 theorem integral_measurableTwoArmHistoryStepKernel_forwardSuccessor_le_of_contract</span>
+<span id="L278">278     {Env : Type v} [MeasurableSpace Env]</span>
+<span id="L279">279     (eta Delta : Real) (heta : 0 &lt;= eta)</span>
+<span id="L280">280     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L281">281     (mean : Fin 2 -&gt; Real)</span>
+<span id="L282">282     (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean)</span>
+<span id="L283">283     (hgap : mean 0 - mean 1 = Delta)</span>
+<span id="L284">284     (n : Nat) (env : Env)</span>
+<span id="L285">285     (history : History.FinitePairHistory (Fin 2) Real n) :</span>
+<span id="L286">286     integral</span>
+<span id="L287">287         (Thompson.measurableEnvironmentHistoryStepKernel</span>
+<span id="L288">288           (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta) environment n</span>
+<span id="L289">289           (env, history))</span>
+<span id="L290">290         (twoArmForwardSuccessorPotential eta history) &lt;=</span>
+<span id="L291">291       twoArmForwardRecurrenceBound eta Delta history := by</span>
+<span id="L292">292   exact integral_measurableTwoArmHistoryStepKernel_forwardSuccessor_le</span>
+<span id="L293">293     eta Delta heta environment n env history mean</span>
+<span id="L294">294       (contract.successor_reward_bound n env history)</span>
+<span id="L295">295       (contract.successor_mean n env history) hgap</span>
+<span id="L296">296 </span>
+<span id="L297">297 /-- The same contract supplies the inverse recurrence at every successor. -/</span>
+<span id="L298">298 theorem integral_measurableTwoArmHistoryStepKernel_inverseSuccessor_le_of_contract</span>
+<span id="L299">299     {Env : Type v} [MeasurableSpace Env]</span>
+<span id="L300">300     (eta Delta : Real) (heta : 0 &lt;= eta)</span>
+<span id="L301">301     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L302">302     (mean : Fin 2 -&gt; Real)</span>
+<span id="L303">303     (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean)</span>
+<span id="L304">304     (hgap : mean 0 - mean 1 = Delta)</span>
+<span id="L305">305     (n : Nat) (env : Env)</span>
+<span id="L306">306     (history : History.FinitePairHistory (Fin 2) Real n) :</span>
+<span id="L307">307     integral</span>
+<span id="L308">308         (Thompson.measurableEnvironmentHistoryStepKernel</span>
+<span id="L309">309           (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta) environment n</span>
+<span id="L310">310           (env, history))</span>
+<span id="L311">311         (twoArmInverseSuccessorPotential eta history) &lt;=</span>
+<span id="L312">312       twoArmInverseRecurrenceBound eta Delta history := by</span>
+<span id="L313">313   exact integral_measurableTwoArmHistoryStepKernel_inverseSuccessor_le</span>
+<span id="L314">314     eta Delta heta environment n env history mean</span>
+<span id="L315">315       (contract.successor_reward_bound n env history)</span>
+<span id="L316">316       (contract.successor_mean n env history) hgap</span>
+<span id="L317">317 </span>
+<span id="L318">318 /-- Canonical two-arm trajectory measure under zero initialization. -/</span>
+<span id="L319">319 def twoArmTrajectoryMeasure</span>
+<span id="L320">320     {Env : Type v} [MeasurableSpace Env]</span>
+<span id="L321">321     (prior : Measure Env) (eta : Real)</span>
+<span id="L322">322     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) :</span>
+<span id="L323">323     Measure (Env × ((k : Nat) -&gt; Fin 2 × Real)) :=</span>
+<span id="L324">324   prior ⊗ₘ trajectoryKernel (fun _ : Fin 2 =&gt; 0) eta environment</span>
+<span id="L325">325 </span>
+<span id="L326">326 instance instTwoArmTrajectoryMeasureIsFinite</span>
+<span id="L327">327     {Env : Type v} [MeasurableSpace Env]</span>
+<span id="L328">328     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L329">329     (eta : Real)</span>
+<span id="L330">330     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real) :</span>
+<span id="L331">331     IsFiniteMeasure (twoArmTrajectoryMeasure prior eta environment) := by</span>
+<span id="L332">332   unfold twoArmTrajectoryMeasure</span>
+<span id="L333">333   infer_instance</span>
+<span id="L334">334 </span>
+<span id="L335">335 /-- The environment together with the visible inclusive prefix through `n`. -/</span>
+<span id="L336">336 def twoArmEnvironmentPrefix</span>
+<span id="L337">337     {Env : Type v} (n : Nat)</span>
+<span id="L338">338     (sample : Env × ((k : Nat) -&gt; Fin 2 × Real)) :</span>
+<span id="L339">339     Env × History.FinitePairHistory (Fin 2) Real n :=</span>
+<span id="L340">340   (sample.1, Preorder.frestrictLe n sample.2)</span>
+<span id="L341">341 </span>
+<span id="L342">342 /-- The next generated action/reward pair after the inclusive prefix. -/</span>
+<span id="L343">343 def twoArmNextPair</span>
+<span id="L344">344     {Env : Type v} (n : Nat)</span>
+<span id="L345">345     (sample : Env × ((k : Nat) -&gt; Fin 2 × Real)) : Fin 2 × Real :=</span>
+<span id="L346">346   sample.2 (n + 1)</span>
+<span id="L347">347 </span>
+<span id="L348">348 theorem measurable_twoArmEnvironmentPrefix</span>
+<span id="L349">349     {Env : Type v} [MeasurableSpace Env] (n : Nat) :</span>
+<span id="L350">350     Measurable (twoArmEnvironmentPrefix (Env := Env) n) :=</span>
+<span id="L351">351   measurable_fst.prodMk</span>
+<span id="L352">352     ((Preorder.measurable_frestrictLe n).comp measurable_snd)</span>
+<span id="L353">353 </span>
+<span id="L354">354 theorem measurable_twoArmNextPair</span>
+<span id="L355">355     {Env : Type v} [MeasurableSpace Env] (n : Nat) :</span>
+<span id="L356">356     Measurable (twoArmNextPair (Env := Env) n) :=</span>
+<span id="L357">357   (measurable_pi_apply (n + 1)).comp measurable_snd</span>
+<span id="L358">358 </span>
+<span id="L359">359 /-- The sigma-algebra generated by retaining the environment and the inclusive</span>
+<span id="L360">360 trace prefix through `n`. -/</span>
+<span id="L361">361 @[reducible] def twoArmPrefixSigma</span>
+<span id="L362">362     {Env : Type v} [MeasurableSpace Env] (n : Nat) :</span>
+<span id="L363">363     MeasurableSpace (Env × ((k : Nat) -&gt; Fin 2 × Real)) :=</span>
+<span id="L364">364   (inferInstance : MeasurableSpace</span>
+<span id="L365">365     (Env × History.FinitePairHistory (Fin 2) Real n)).comap</span>
+<span id="L366">366       (twoArmEnvironmentPrefix n)</span>
+<span id="L367">367 </span>
+<span id="L368">368 theorem twoArmPrefixSigma_mono</span>
+<span id="L369">369     {Env : Type v} [MeasurableSpace Env] {n m : Nat} (hnm : n &lt;= m) :</span>
+<span id="L370">370     twoArmPrefixSigma (Env := Env) n &lt;= twoArmPrefixSigma (Env := Env) m := by</span>
+<span id="L371">371   let reduce :</span>
+<span id="L372">372       Env × History.FinitePairHistory (Fin 2) Real m -&gt;</span>
+<span id="L373">373         Env × History.FinitePairHistory (Fin 2) Real n :=</span>
+<span id="L374">374     fun context =&gt;</span>
+<span id="L375">375       (context.1,</span>
+<span id="L376">376         Preorder.frestrictLe₂ (π := fun _ : Nat =&gt; Fin 2 × Real)</span>
+<span id="L377">377           hnm context.2)</span>
+<span id="L378">378   have hreduce : Measurable reduce :=</span>
+<span id="L379">379     measurable_fst.prodMk</span>
+<span id="L380">380       ((Preorder.measurable_frestrictLe₂ hnm).comp measurable_snd)</span>
+<span id="L381">381   have hfactor :</span>
+<span id="L382">382       twoArmEnvironmentPrefix (Env := Env) n =</span>
+<span id="L383">383         reduce ∘ twoArmEnvironmentPrefix m := by</span>
+<span id="L384">384     funext sample</span>
+<span id="L385">385     apply Prod.ext</span>
+<span id="L386">386     · rfl</span>
+<span id="L387">387     · exact (congrFun</span>
+<span id="L388">388         (Preorder.frestrictLe₂_comp_frestrictLe</span>
+<span id="L389">389           (π := fun _ : Nat =&gt; Fin 2 × Real) hnm) sample.2).symm</span>
+<span id="L390">390   unfold twoArmPrefixSigma</span>
+<span id="L391">391   rw [hfactor, ← MeasurableSpace.comap_comp]</span>
+<span id="L392">392   exact MeasurableSpace.comap_mono hreduce.comap_le</span>
+<span id="L393">393 </span>
+<span id="L394">394 /-- The retained environment/prefix sigma-algebras form the canonical</span>
+<span id="L395">395 discrete-time filtration needed by the later tower argument. -/</span>
+<span id="L396">396 def twoArmPrefixFiltration</span>
+<span id="L397">397     {Env : Type v} [MeasurableSpace Env] :</span>
+<span id="L398">398     Filtration Nat</span>
+<span id="L399">399       (inferInstance : MeasurableSpace</span>
+<span id="L400">400         (Env × ((k : Nat) -&gt; Fin 2 × Real))) where</span>
+<span id="L401">401   seq := twoArmPrefixSigma</span>
+<span id="L402">402   mono&#x27; := fun _ _ hnm =&gt; twoArmPrefixSigma_mono hnm</span>
+<span id="L403">403   le&#x27; := fun n =&gt; (measurable_twoArmEnvironmentPrefix n).comap_le</span>
+<span id="L404">404 </span>
+<span id="L405">405 theorem measurable_twoArmForwardTrajectorySuccessorPotential</span>
+<span id="L406">406     {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) :</span>
+<span id="L407">407     Measurable</span>
+<span id="L408">408       (fun sample : Env × ((k : Nat) -&gt; Fin 2 × Real) =&gt;</span>
+<span id="L409">409         twoArmForwardSuccessorPotential eta</span>
+<span id="L410">410           (twoArmEnvironmentPrefix n sample).2</span>
+<span id="L411">411           (twoArmNextPair n sample)) :=</span>
+<span id="L412">412   (measurable_twoArmForwardSuccessorPotential eta n).comp</span>
+<span id="L413">413     ((measurable_snd.comp (measurable_twoArmEnvironmentPrefix n)).prodMk</span>
+<span id="L414">414       (measurable_twoArmNextPair n))</span>
+<span id="L415">415 </span>
+<span id="L416">416 theorem measurable_twoArmInverseTrajectorySuccessorPotential</span>
+<span id="L417">417     {Env : Type v} [MeasurableSpace Env] (eta : Real) (n : Nat) :</span>
+<span id="L418">418     Measurable</span>
+<span id="L419">419       (fun sample : Env × ((k : Nat) -&gt; Fin 2 × Real) =&gt;</span>
+<span id="L420">420         twoArmInverseSuccessorPotential eta</span>
+<span id="L421">421           (twoArmEnvironmentPrefix n sample).2</span>
+<span id="L422">422           (twoArmNextPair n sample)) :=</span>
+<span id="L423">423   (measurable_twoArmInverseSuccessorPotential eta n).comp</span>
+<span id="L424">424     ((measurable_snd.comp (measurable_twoArmEnvironmentPrefix n)).prodMk</span>
+<span id="L425">425       (measurable_twoArmNextPair n))</span>
+<span id="L426">426 </span>
+<span id="L427">427 /-- On the actual canonical trajectory, the conditional-distribution integral</span>
+<span id="L428">428 of the forward successor potential obeys the source recurrence for almost</span>
+<span id="L429">429 every retained environment/prefix. -/</span>
+<span id="L430">430 theorem trajectoryPrefix_condDistrib_integral_forwardSuccessor_le</span>
+<span id="L431">431     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L432">432     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L433">433     (eta Delta : Real) (heta : 0 &lt;= eta)</span>
+<span id="L434">434     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L435">435     (mean : Fin 2 -&gt; Real)</span>
+<span id="L436">436     (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean)</span>
+<span id="L437">437     (hgap : mean 0 - mean 1 = Delta)</span>
+<span id="L438">438     (n : Nat) :</span>
+<span id="L439">439     ∀ᵐ context</span>
+<span id="L440">440         ∂(twoArmTrajectoryMeasure prior eta environment).map</span>
+<span id="L441">441           (twoArmEnvironmentPrefix n),</span>
+<span id="L442">442       integral</span>
+<span id="L443">443           (condDistrib (twoArmNextPair n) (twoArmEnvironmentPrefix n)</span>
+<span id="L444">444             (twoArmTrajectoryMeasure prior eta environment) context)</span>
+<span id="L445">445           (twoArmForwardSuccessorPotential eta context.2) &lt;=</span>
+<span id="L446">446         twoArmForwardRecurrenceBound eta Delta context.2 := by</span>
+<span id="L447">447   have hcond :</span>
+<span id="L448">448       condDistrib (twoArmNextPair n) (twoArmEnvironmentPrefix n)</span>
+<span id="L449">449           (twoArmTrajectoryMeasure prior eta environment) =ᵐ[</span>
+<span id="L450">450         (twoArmTrajectoryMeasure prior eta environment).map</span>
+<span id="L451">451           (twoArmEnvironmentPrefix n)]</span>
+<span id="L452">452         Thompson.measurableEnvironmentHistoryStepKernel</span>
+<span id="L453">453           (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta) environment n := by</span>
+<span id="L454">454     simpa [twoArmTrajectoryMeasure, twoArmEnvironmentPrefix,</span>
+<span id="L455">455       twoArmNextPair] using</span>
+<span id="L456">456       (trajectoryMeasure_condDistrib_nextPair_given_environment_prefix</span>
+<span id="L457">457         prior (fun _ : Fin 2 =&gt; 0) eta environment n)</span>
+<span id="L458">458   filter_upwards [hcond] with context hkernel</span>
+<span id="L459">459   rw [hkernel]</span>
+<span id="L460">460   exact</span>
+<span id="L461">461     integral_measurableTwoArmHistoryStepKernel_forwardSuccessor_le_of_contract</span>
+<span id="L462">462       eta Delta heta environment mean contract hgap n context.1 context.2</span>
+<span id="L463">463 </span>
+<span id="L464">464 /-- The inverse-potential recurrence transported to the same canonical</span>
+<span id="L465">465 trajectory conditional distribution. -/</span>
+<span id="L466">466 theorem trajectoryPrefix_condDistrib_integral_inverseSuccessor_le</span>
+<span id="L467">467     {Env : Type v} [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L468">468     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L469">469     (eta Delta : Real) (heta : 0 &lt;= eta)</span>
+<span id="L470">470     (environment : Thompson.MeasurableHistoryEnvironment Env (Fin 2) Real)</span>
+<span id="L471">471     (mean : Fin 2 -&gt; Real)</span>
+<span id="L472">472     (contract : TwoArmBoundedFixedMeanEnvironmentContract environment mean)</span>
+<span id="L473">473     (hgap : mean 0 - mean 1 = Delta)</span>
+<span id="L474">474     (n : Nat) :</span>
+<span id="L475">475     ∀ᵐ context</span>
+<span id="L476">476         ∂(twoArmTrajectoryMeasure prior eta environment).map</span>
+<span id="L477">477           (twoArmEnvironmentPrefix n),</span>
+<span id="L478">478       integral</span>
+<span id="L479">479           (condDistrib (twoArmNextPair n) (twoArmEnvironmentPrefix n)</span>
+<span id="L480">480             (twoArmTrajectoryMeasure prior eta environment) context)</span>
+<span id="L481">481           (twoArmInverseSuccessorPotential eta context.2) &lt;=</span>
+<span id="L482">482         twoArmInverseRecurrenceBound eta Delta context.2 := by</span>
+<span id="L483">483   have hcond :</span>
+<span id="L484">484       condDistrib (twoArmNextPair n) (twoArmEnvironmentPrefix n)</span>
+<span id="L485">485           (twoArmTrajectoryMeasure prior eta environment) =ᵐ[</span>
+<span id="L486">486         (twoArmTrajectoryMeasure prior eta environment).map</span>
+<span id="L487">487           (twoArmEnvironmentPrefix n)]</span>
+<span id="L488">488         Thompson.measurableEnvironmentHistoryStepKernel</span>
+<span id="L489">489           (historyAlgorithm (fun _ : Fin 2 =&gt; 0) eta) environment n := by</span>
+<span id="L490">490     simpa [twoArmTrajectoryMeasure, twoArmEnvironmentPrefix,</span>
+<span id="L491">491       twoArmNextPair] using</span>
+<span id="L492">492       (trajectoryMeasure_condDistrib_nextPair_given_environment_prefix</span>
+<span id="L493">493         prior (fun _ : Fin 2 =&gt; 0) eta environment n)</span>
+<span id="L494">494   filter_upwards [hcond] with context hkernel</span>
+<span id="L495">495   rw [hkernel]</span>
+<span id="L496">496   exact</span>
+<span id="L497">497     integral_measurableTwoArmHistoryStepKernel_inverseSuccessor_le_of_contract</span>
+<span id="L498">498       eta Delta heta environment mean contract hgap n context.1 context.2</span>
+<span id="L499">499 </span>
+<span id="L500">500 end</span>
+<span id="L501">501 </span>
+<span id="L502">502 end StochasticGradientBandit</span>
+<span id="L503">503 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

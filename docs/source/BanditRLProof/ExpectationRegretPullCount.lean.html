@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/ExpectationRegretPullCount.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/ExpectationRegretPullCount.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/ExpectationRegretPullCount.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/ExpectationRegretPullCount.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import Mathlib.MeasureTheory.Integral.Bochner.Basic</span>
+<span id="L2">2 import BanditRLProof.ExpectationBochnerSums</span>
+<span id="L3">3 import BanditRLProof.MeasurablePullCountCast</span>
+<span id="L4">4 import BanditRLProof.RegretDecomposition</span>
+<span id="L5">5 </span>
+<span id="L6">6 /-!</span>
+<span id="L7">7 # Bochner expected-regret pull-count decomposition</span>
+<span id="L8">8 </span>
+<span id="L9">9 This module lifts the deterministic `REGRET-PULLCOUNT` equality to a</span>
+<span id="L10">10 Real-valued Bochner expectation statement.  It stays at the bookkeeping layer:</span>
+<span id="L11">11 the only probabilistic regularity assumption is integrability of each finite</span>
+<span id="L12">12 horizon pull-count random variable after casting to `Real`.</span>
+<span id="L13">13 -/</span>
+<span id="L14">14 </span>
+<span id="L15">15 namespace BanditRLProof</span>
+<span id="L16">16 </span>
+<span id="L17">17 open MeasureTheory</span>
+<span id="L18">18 </span>
+<span id="L19">19 universe u</span>
+<span id="L20">20 </span>
+<span id="L21">21 private theorem real_pseudoRegret_eq_univ_sum_gap_mul_natCast_pullCount</span>
+<span id="L22">22     {K : Nat}</span>
+<span id="L23">23     (model : FiniteBanditModel K)</span>
+<span id="L24">24     (action : ActionTrace (Fin K))</span>
+<span id="L25">25     (n : Nat) :</span>
+<span id="L26">26     ((pseudoRegret model action n : Rat) : Real) =</span>
+<span id="L27">27       (Finset.univ : Finset (Fin K)).sum</span>
+<span id="L28">28         (fun a : Fin K =&gt;</span>
+<span id="L29">29           ((model.gap a : Rat) : Real) *</span>
+<span id="L30">30             ((pullCount action a n : Nat) : Real)) := by</span>
+<span id="L31">31   simp [pseudoRegret_eq_finset_sum_gap_mul_pullCount]</span>
+<span id="L32">32 </span>
+<span id="L33">33 /--</span>
+<span id="L34">34 The Real cast of a finite-horizon pull count is integrable under any finite</span>
+<span id="L35">35 measure when the action trace is measurable one time coordinate at a time.</span>
+<span id="L36">36 </span>
+<span id="L37">37 This is the generic regularity adapter behind Real expected-regret wrappers:</span>
+<span id="L38">38 measurability comes from `measurable_natCast_pullCount`, while</span>
+<span id="L39">39 `pullCount_le_time` supplies the deterministic integrable bound.</span>
+<span id="L40">40 -/</span>
+<span id="L41">41 theorem integrable_real_pullCount_of_measurable_action</span>
+<span id="L42">42     {Omega : Type u} {Action : Type*}</span>
+<span id="L43">43     [MeasurableSpace Omega] [MeasurableSpace Action]</span>
+<span id="L44">44     [MeasurableSingletonClass Action] [DecidableEq Action]</span>
+<span id="L45">45     (mu : Measure Omega) [MeasureTheory.IsFiniteMeasure mu]</span>
+<span id="L46">46     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L47">47     (haction : forall t : Nat,</span>
+<span id="L48">48       Measurable (fun omega : Omega =&gt; action omega t))</span>
+<span id="L49">49     (arm : Action) (n : Nat) :</span>
+<span id="L50">50     Integrable</span>
+<span id="L51">51       (fun omega : Omega =&gt;</span>
+<span id="L52">52         ((pullCount (action omega) arm n : Nat) : Real)) mu := by</span>
+<span id="L53">53   have hmeas :</span>
+<span id="L54">54       Measurable</span>
+<span id="L55">55         (fun omega : Omega =&gt;</span>
+<span id="L56">56           ((pullCount (action omega) arm n : Nat) : Real)) :=</span>
+<span id="L57">57     measurable_natCast_pullCount action haction arm n</span>
+<span id="L58">58   refine Integrable.of_bound hmeas.aestronglyMeasurable (n : Real) ?_</span>
+<span id="L59">59   filter_upwards [] with omega</span>
+<span id="L60">60   rw [Real.norm_eq_abs, abs_of_nonneg (Nat.cast_nonneg _)]</span>
+<span id="L61">61   exact_mod_cast pullCount_le_time (action omega) arm n</span>
+<span id="L62">62 </span>
+<span id="L63">63 /--</span>
+<span id="L64">64 If every finite-horizon pull count is integrable after casting to `Real`, then</span>
+<span id="L65">65 the corresponding Real-valued pseudo-regret is integrable.</span>
+<span id="L66">66 </span>
+<span id="L67">67 This is the regularity adapter used by the Bochner expected-regret</span>
+<span id="L68">68 decomposition.  It does not prove measurability or integrability from a policy</span>
+<span id="L69">69 model; callers provide the pull-count integrability witnesses.</span>
+<span id="L70">70 -/</span>
+<span id="L71">71 theorem integrable_real_pseudoRegret_of_integrable_pullCount</span>
+<span id="L72">72     {Omega : Type u} {K : Nat}</span>
+<span id="L73">73     [MeasurableSpace Omega]</span>
+<span id="L74">74     (mu : Measure Omega)</span>
+<span id="L75">75     (model : FiniteBanditModel K)</span>
+<span id="L76">76     (action : Omega -&gt; ActionTrace (Fin K))</span>
+<span id="L77">77     (n : Nat)</span>
+<span id="L78">78     (hcount : forall a : Fin K,</span>
+<span id="L79">79       Integrable</span>
+<span id="L80">80         (fun omega : Omega =&gt;</span>
+<span id="L81">81           ((pullCount (action omega) a n : Nat) : Real)) mu) :</span>
+<span id="L82">82     Integrable</span>
+<span id="L83">83       (fun omega : Omega =&gt;</span>
+<span id="L84">84         ((pseudoRegret model (action omega) n : Rat) : Real)) mu := by</span>
+<span id="L85">85   let term : Fin K -&gt; Omega -&gt; Real :=</span>
+<span id="L86">86     fun a omega =&gt;</span>
+<span id="L87">87       ((model.gap a : Rat) : Real) *</span>
+<span id="L88">88         ((pullCount (action omega) a n : Nat) : Real)</span>
+<span id="L89">89   have hterm : forall a : Fin K, Integrable (term a) mu := by</span>
+<span id="L90">90     intro a</span>
+<span id="L91">91     exact (hcount a).const_mul ((model.gap a : Rat) : Real)</span>
+<span id="L92">92   have hsum :</span>
+<span id="L93">93       Integrable</span>
+<span id="L94">94         (fun omega : Omega =&gt;</span>
+<span id="L95">95           (Finset.univ : Finset (Fin K)).sum</span>
+<span id="L96">96             (fun a : Fin K =&gt; term a omega)) mu := by</span>
+<span id="L97">97     exact</span>
+<span id="L98">98       IntegrabilitySums.integrable_univ_sum</span>
+<span id="L99">99         (mu := mu)</span>
+<span id="L100">100         (f := term)</span>
+<span id="L101">101         (hf := hterm)</span>
+<span id="L102">102   have hfun :</span>
+<span id="L103">103       (fun omega : Omega =&gt;</span>
+<span id="L104">104           ((pseudoRegret model (action omega) n : Rat) : Real))</span>
+<span id="L105">105         =</span>
+<span id="L106">106       (fun omega : Omega =&gt;</span>
+<span id="L107">107         (Finset.univ : Finset (Fin K)).sum</span>
+<span id="L108">108           (fun a : Fin K =&gt; term a omega)) := by</span>
+<span id="L109">109     funext omega</span>
+<span id="L110">110     exact</span>
+<span id="L111">111       real_pseudoRegret_eq_univ_sum_gap_mul_natCast_pullCount</span>
+<span id="L112">112         (model := model)</span>
+<span id="L113">113         (action := action omega)</span>
+<span id="L114">114         (n := n)</span>
+<span id="L115">115   rwa [hfun]</span>
+<span id="L116">116 </span>
+<span id="L117">117 /--</span>
+<span id="L118">118 The Real-valued Bochner expectation of pseudo-regret is the finite sum of each</span>
+<span id="L119">119 arm gap multiplied by the Bochner expectation of that arm&#x27;s pull count.</span>
+<span id="L120">120 </span>
+<span id="L121">121 This is the local `EXP-REGRET-PULLCOUNT` leaf.  It consumes the deterministic</span>
+<span id="L122">122 `REGRET-PULLCOUNT` bridge and the Mathlib-backed `EXP-FINITE-SUM` wrapper.</span>
+<span id="L123">123 -/</span>
+<span id="L124">124 theorem integral_real_pseudoRegret_eq_sum_gap_mul_integral_pullCount</span>
+<span id="L125">125     {Omega : Type u} {K : Nat}</span>
+<span id="L126">126     [MeasurableSpace Omega]</span>
+<span id="L127">127     (mu : Measure Omega)</span>
+<span id="L128">128     (model : FiniteBanditModel K)</span>
+<span id="L129">129     (action : Omega -&gt; ActionTrace (Fin K))</span>
+<span id="L130">130     (n : Nat)</span>
+<span id="L131">131     (hcount : forall a : Fin K,</span>
+<span id="L132">132       Integrable</span>
+<span id="L133">133         (fun omega : Omega =&gt;</span>
+<span id="L134">134           ((pullCount (action omega) a n : Nat) : Real)) mu) :</span>
+<span id="L135">135     MeasureTheory.integral mu</span>
+<span id="L136">136       (fun omega : Omega =&gt;</span>
+<span id="L137">137         ((pseudoRegret model (action omega) n : Rat) : Real))</span>
+<span id="L138">138       =</span>
+<span id="L139">139     (Finset.univ : Finset (Fin K)).sum</span>
+<span id="L140">140       (fun a : Fin K =&gt;</span>
+<span id="L141">141         ((model.gap a : Rat) : Real) *</span>
+<span id="L142">142           MeasureTheory.integral mu</span>
+<span id="L143">143             (fun omega : Omega =&gt;</span>
+<span id="L144">144               ((pullCount (action omega) a n : Nat) : Real))) := by</span>
+<span id="L145">145   let term : Fin K -&gt; Omega -&gt; Real :=</span>
+<span id="L146">146     fun a omega =&gt;</span>
+<span id="L147">147       ((model.gap a : Rat) : Real) *</span>
+<span id="L148">148         ((pullCount (action omega) a n : Nat) : Real)</span>
+<span id="L149">149   have hterm : forall a : Fin K, Integrable (term a) mu := by</span>
+<span id="L150">150     intro a</span>
+<span id="L151">151     exact (hcount a).const_mul ((model.gap a : Rat) : Real)</span>
+<span id="L152">152   have hfun :</span>
+<span id="L153">153       (fun omega : Omega =&gt;</span>
+<span id="L154">154           ((pseudoRegret model (action omega) n : Rat) : Real))</span>
+<span id="L155">155         =</span>
+<span id="L156">156       (fun omega : Omega =&gt;</span>
+<span id="L157">157         (Finset.univ : Finset (Fin K)).sum</span>
+<span id="L158">158           (fun a : Fin K =&gt; term a omega)) := by</span>
+<span id="L159">159     funext omega</span>
+<span id="L160">160     exact</span>
+<span id="L161">161       real_pseudoRegret_eq_univ_sum_gap_mul_natCast_pullCount</span>
+<span id="L162">162         (model := model)</span>
+<span id="L163">163         (action := action omega)</span>
+<span id="L164">164         (n := n)</span>
+<span id="L165">165   calc</span>
+<span id="L166">166     MeasureTheory.integral mu</span>
+<span id="L167">167       (fun omega : Omega =&gt;</span>
+<span id="L168">168         ((pseudoRegret model (action omega) n : Rat) : Real))</span>
+<span id="L169">169         =</span>
+<span id="L170">170       MeasureTheory.integral mu</span>
+<span id="L171">171         (fun omega : Omega =&gt;</span>
+<span id="L172">172           (Finset.univ : Finset (Fin K)).sum</span>
+<span id="L173">173             (fun a : Fin K =&gt; term a omega)) := by</span>
+<span id="L174">174           rw [hfun]</span>
+<span id="L175">175     _ =</span>
+<span id="L176">176       (Finset.univ : Finset (Fin K)).sum</span>
+<span id="L177">177         (fun a : Fin K =&gt;</span>
+<span id="L178">178           MeasureTheory.integral mu (term a)) := by</span>
+<span id="L179">179           exact</span>
+<span id="L180">180             ExpectationBochnerSums.integral_univ_sum</span>
+<span id="L181">181               (mu := mu)</span>
+<span id="L182">182               (f := term)</span>
+<span id="L183">183               (hf := hterm)</span>
+<span id="L184">184     _ =</span>
+<span id="L185">185       (Finset.univ : Finset (Fin K)).sum</span>
+<span id="L186">186         (fun a : Fin K =&gt;</span>
+<span id="L187">187           ((model.gap a : Rat) : Real) *</span>
+<span id="L188">188             MeasureTheory.integral mu</span>
+<span id="L189">189               (fun omega : Omega =&gt;</span>
+<span id="L190">190                 ((pullCount (action omega) a n : Nat) : Real))) := by</span>
+<span id="L191">191           apply Finset.sum_congr rfl</span>
+<span id="L192">192           intro a _ha</span>
+<span id="L193">193           simp [term, MeasureTheory.integral_const_mul]</span>
+<span id="L194">194 </span>
+<span id="L195">195 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

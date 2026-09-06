@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="website/scripts/check_site.py · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="website/scripts/check_site.py · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>website/scripts/check_site.py · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>website/scripts/check_site.py</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 &quot;&quot;&quot;Check anonymous website links, declaration anchors, statuses and metadata.&quot;&quot;&quot;</span>
+<span id="L2">2 from pathlib import Path</span>
+<span id="L3">3 from html.parser import HTMLParser</span>
+<span id="L4">4 from urllib.parse import urlsplit, unquote</span>
+<span id="L5">5 import json</span>
+<span id="L6">6 import re</span>
+<span id="L7">7 from functools import lru_cache</span>
+<span id="L8">8 </span>
+<span id="L9">9 ROOT = Path(__file__).resolve().parents[2]</span>
+<span id="L10">10 SITE = ROOT / &#x27;docs&#x27;</span>
+<span id="L11">11 </span>
+<span id="L12">12 @lru_cache(maxsize=None)</span>
+<span id="L13">13 def resolve_target(parent, path):</span>
+<span id="L14">14     target = (parent / unquote(path)).resolve()</span>
+<span id="L15">15     return target / &#x27;index.html&#x27; if target.is_dir() else target</span>
+<span id="L16">16 </span>
+<span id="L17">17 class Page(HTMLParser):</span>
+<span id="L18">18     def __init__(self, text):</span>
+<span id="L19">19         super().__init__()</span>
+<span id="L20">20         self.ids, self.links = set(), []</span>
+<span id="L21">21         self.feed(text)</span>
+<span id="L22">22     def handle_starttag(self, tag, attrs):</span>
+<span id="L23">23         attrs = dict(attrs)</span>
+<span id="L24">24         if &#x27;id&#x27; in attrs:</span>
+<span id="L25">25             self.ids.add(attrs[&#x27;id&#x27;])</span>
+<span id="L26">26         for key in (&#x27;href&#x27;, &#x27;src&#x27;):</span>
+<span id="L27">27             if attrs.get(key):</span>
+<span id="L28">28                 self.links.append(attrs[key])</span>
+<span id="L29">29 </span>
+<span id="L30">30 def main():</span>
+<span id="L31">31     manifest = json.loads((SITE / &#x27;site-manifest.json&#x27;).read_text(encoding=&#x27;utf-8&#x27;))</span>
+<span id="L32">32     assert manifest[&#x27;anonymous_review&#x27;]</span>
+<span id="L33">33     assert manifest[&#x27;author_count&#x27;] == manifest[&#x27;contributor_count&#x27;] == 0</span>
+<span id="L34">34     assert &#x27;source_commit&#x27; not in manifest</span>
+<span id="L35">35     assert not (SITE / &#x27;contributors/index.html&#x27;).exists()</span>
+<span id="L36">36     pages, errors = {}, []</span>
+<span id="L37">37     for path in SITE.rglob(&#x27;*.html&#x27;):</span>
+<span id="L38">38         text = path.read_text(encoding=&#x27;utf-8&#x27;)</span>
+<span id="L39">39         pages[path.resolve()] = Page(text)</span>
+<span id="L40">40         if re.search(r&#x27;class=&quot;contributor-card|href=&quot;[^&quot;]*contributors/index.html&#x27;, text):</span>
+<span id="L41">41             errors.append(f&#x27;Authorship UI: {path.relative_to(SITE)}&#x27;)</span>
+<span id="L42">42         if &#x27;name=&quot;referrer&quot; content=&quot;no-referrer&quot;&#x27; not in text:</span>
+<span id="L43">43             errors.append(f&#x27;Missing referrer policy: {path.relative_to(SITE)}&#x27;)</span>
+<span id="L44">44     checked = 0</span>
+<span id="L45">45     for path, page in pages.items():</span>
+<span id="L46">46         for link in page.links:</span>
+<span id="L47">47             url = urlsplit(link)</span>
+<span id="L48">48             if url.scheme in {&#x27;http&#x27;, &#x27;https&#x27;, &#x27;mailto&#x27;, &#x27;data&#x27;} or url.netloc:</span>
+<span id="L49">49                 continue</span>
+<span id="L50">50             if url.scheme:</span>
+<span id="L51">51                 errors.append(f&#x27;Unresolved URL: {path.relative_to(SITE)}: {link}&#x27;)</span>
+<span id="L52">52                 continue</span>
+<span id="L53">53             target = resolve_target(path.parent, url.path) if url.path else path</span>
+<span id="L54">54             if not target.is_file() or not target.is_relative_to(SITE.resolve()):</span>
+<span id="L55">55                 errors.append(f&#x27;Missing local link: {path.relative_to(SITE)}: {link}&#x27;)</span>
+<span id="L56">56             elif url.fragment and target in pages and unquote(url.fragment) not in pages[target].ids:</span>
+<span id="L57">57                 errors.append(f&#x27;Missing anchor: {path.relative_to(SITE)}: {link}&#x27;)</span>
+<span id="L58">58             checked += 1</span>
+<span id="L59">59     search = json.loads((SITE / &#x27;search-index.json&#x27;).read_text(encoding=&#x27;utf-8&#x27;))</span>
+<span id="L60">60     assert len(search) == manifest[&#x27;declaration_count&#x27;]</span>
+<span id="L61">61     assert manifest[&#x27;placeholder_count&#x27;] == 0</span>
+<span id="L62">62     if errors:</span>
+<span id="L63">63         print(&#x27;\n&#x27;.join(errors[:40]))</span>
+<span id="L64">64         raise SystemExit(f&#x27;{len(errors)} failures&#x27;)</span>
+<span id="L65">65     print(f&#x27;PASS: {len(pages)} HTML pages; {checked} local links/anchors; {len(search)} declarations; no authorship UI.&#x27;)</span>
+<span id="L66">66 </span>
+<span id="L67">67 if __name__ == &#x27;__main__&#x27;:</span>
+<span id="L68">68     main()</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

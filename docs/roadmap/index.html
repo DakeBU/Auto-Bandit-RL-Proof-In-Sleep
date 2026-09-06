@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="Progress and roadmap · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Progress and roadmap · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>Progress and roadmap · BanditRLlib</title>
+  <link rel="icon" href="../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../index.html">Overview</a><a href="../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../learning/index.html">All chapters</a><a class="book-nav-link" href="../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../banditrlwiki/index.html">BanditRLwiki</a><a href="../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../banditrlwiki/papers/index.html">Paper index</a><a href="../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../declarations/index.html">Lean declarations</a><a href="../implementation-map/index.html">Implementation map</a><a href="../lean-graph/index.html">Lean Graph</a><a href="../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../ide/index.html">Local Formalization Lab</a><a href="../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group active" data-nav-group="community" data-nav-group-active="true" open><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../community/index.html">Contribute</a><a href="index.html" aria-current="page">Roadmap</a><a href="../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="roadmap">
+  <p class="eyebrow">Compiled endpoints and named gaps</p>
+  <h1 class="page-title">Progress and roadmap</h1>
+  <p class="lede">Progress means a declaration compiled under its exact hypotheses. Route completion means the advertised mathematical target is reached. These are tracked separately.</p>
+</section>
+
+<section id="progress">
+  <h2>Current evidence at a glance</h2>
+  <div class="roadmap-status-grid" aria-label="Counts of nonempty explicitly mapped theorem-route statuses"><article><strong>72</strong><span>Compiled</span></article><article><strong>8</strong><span>Partial</span></article><article><strong>2</strong><span>Blocked</span></article><article><strong>1</strong><span>Planned</span></article></div>
+  <p>The counts come from <code>website/content/results.json</code>. They describe only explicitly mapped milestones, not a percentage of the textbook or the field.</p>
+</section>
+
+<section id="focus">
+  <p class="eyebrow">Six current non-terminal routes</p>
+  <h2>What the project is trying to unlock next</h2>
+  <p class="section-intro">These are the partial or planned Frontier milestones at the end of the maintained ledger. Each card names one immediate mathematical boundary; compiled declarations remain evidence for the route, not proof of its terminal theorem.</p>
+  <div class="roadmap-focus-grid">
+<article class="roadmap-focus-card">
+  <div><span class="status partial">Partial</span><code>DELAYED-SAPO-D10-D12-GAP-ORDERING-AUDIT</code></div>
+  <h3>Lemma-D.10/D.12 width-direction diagnostic and conditional same-snapshot skeleton</h3>
+  <p class="roadmap-evidence"><strong>19</strong> indexed declarations support this route.</p>
+  <p class="roadmap-next"><strong>Next named boundary.</strong> A measurable generated Delayed-SAPO trajectory, its Algorithm-5 transition-and-invariant-to-summary producer, and the D.4 simultaneous probability producer for the two count inequalities consumed by the compiled…</p>
+  <details class="roadmap-route-notes"><summary>Route context and full boundary</summary><div>
+    <p>Lean proves that the source inverse-square-root empirical width is antitone in a positive pull count and gives both a normalized count-one/count-four witness and a literal T=4 witness against the printed reverse transport. It also proves the exact source-shaped small-count implication count &lt;= 192 log T -&gt; 1 &lt;= 10 width. A branched active-arm consumer uses current-UCB and the optimal-to-later factor-three edge only in the large-count branch, while the small-count branch uses bounded means plus an explicit source-width/count certificate. A separate processed-prefix producer now derives these algebraic inputs and the later-to-earlier factor-ten edge from a source-time ledger and D.1 count certificate. The earlier explicit four-edge consumer remains for comparison. These 19 diagnostic declarations, even together with that producer, do not verify or refute source Lemmas D.10/D.12, main-text Lemma 4.2, or Theorem 4.1.</p>
+    <h4>Full next boundary</h4>
+    <p>A measurable generated Delayed-SAPO trajectory, its Algorithm-5 transition-and-invariant-to-summary producer, and the D.4 simultaneous probability producer for the two count inequalities consumed by the compiled trace-summary adapter.</p>
+  </div></details>
+  <a class="roadmap-evidence-link" href="../implementation-map/index.html">Open declarations, dependencies, and gaps →</a>
+</article>
+<article class="roadmap-focus-card">
+  <div><span class="status partial">Partial</span><code>NEURIPS-2025-DELAYED-BOBW-CENTRAL-ENDPOINTS</code></div>
+  <h3>Source-frozen delayed best-of-both-worlds endpoint audit</h3>
+  <p class="roadmap-evidence"><strong>5</strong> indexed declarations support this route.</p>
+  <p class="roadmap-next"><strong>Next named boundary.</strong> The complete Definition-D.1 event, its D.2–D.7 component probability producers, Delayed SAPO BSC/EAP phase transitions beyond the line-10 initializer, switching rule, and ordered update semantics.</p>
+  <details class="roadmap-route-notes"><summary>Route context and full boundary</summary><div>
+    <p>The exact NeurIPS 2025 source is hash-frozen, a same-algorithm multi-regime contract compiles, and 197 named source-audit declarations compile across accounting, causality, processing, allocation, elimination, source-scoped good-event projection/union assembly, the one-round action law, the 19-declaration D.10/D.12 diagnostic layer, a 16-declaration processed-prefix count-to-width producer, a 9-declaration processed-trace-summary adapter, a 15-declaration ordered no-switch structural transition, a 12-declaration ordered trace, a six-declaration nonnegative-domain D.11 counting core, and a 31-declaration Algorithm-5 line-10 initializer. The trace proves active-set monotonicity and the temporal factor-20 premise; the new numerical producer initializes only the first eliminated-arm EAP state. BanditRLlib still does not execute EAP/BSC, generate a measurable randomized trajectory, prove D.4&#x27;s simultaneous 2/T probability bound, cover the switch branch, resolve D.13, or reach a regret endpoint. It therefore does not promote source Lemmas D.4, D.10/D.12, D.13, main-text Lemma 4.2, or Theorem 4.1, and it does not yet prove the D.2–D.7 component bounds on a generated trajectory or either regret endpoint.</p>
+    <h4>Full next boundary</h4>
+    <p>The complete Definition-D.1 event, its D.2–D.7 component probability producers, Delayed SAPO BSC/EAP phase transitions beyond the line-10 initializer, switching rule, and ordered update semantics.</p>
+  </div></details>
+  <a class="roadmap-evidence-link" href="../implementation-map/index.html">Open declarations, dependencies, and gaps →</a>
+</article>
+<article class="roadmap-focus-card">
+  <div><span class="status partial">Partial</span><code>NEURIPS-2025-SUCCINCT-LOWER-BOUND-GEOMETRY-AUDIT</code></div>
+  <h3>Source-frozen succinct lower-bound geometry audit</h3>
+  <p class="roadmap-evidence"><strong>54</strong> indexed declarations support this route.</p>
+  <p class="roadmap-next"><strong>Next named boundary.</strong> A source-faithful global repair for R: a spanning/nondegeneracy premise, an extended-real codomain, or restriction to the atom-generated span or quotient.</p>
+  <details class="roadmap-route-notes"><summary>Route context and full boundary</summary><div>
+    <p>The exact Zeng–Honorio NeurIPS 2025 source is hash-frozen, and 54 named local declarations compile the nonempty symmetric unit-atom system, the literal succinct-support correlation contract, the source-shaped real-valued Q and R definitions, Definitions 3.1–3.3, and Lemmas 3.1–3.4. For the same vector, the strict-support route turns local R equality into unit correlations and applies finite Bessel to prove that a strict representation uses no more atoms than any succinct representation; the two-direction consumer makes strict representation size unique. Lean also proves a separate diagnostic: if a nonzero ambient vector is orthogonal to every atom, then the candidate set defining the paper&#x27;s global real-valued R is unbounded. This exposes a regularity/codomain obligation without claiming that the paper is incorrect. The global Lemmas 3.5–3.6, Assumption 3.7, Theorem 3.8, and every stochastic-bandit regret endpoint remain uncompiled.</p>
+    <h4>Full next boundary</h4>
+    <p>A source-faithful global repair for R: a spanning/nondegeneracy premise, an extended-real codomain, or restriction to the atom-generated span or quotient.</p>
+  </div></details>
+  <a class="roadmap-evidence-link" href="../implementation-map/index.html">Open declarations, dependencies, and gaps →</a>
+</article>
+<article class="roadmap-focus-card">
+  <div><span class="status partial">Partial</span><code>NEURIPS-2025-STOCHASTIC-GRADIENT-BANDIT-MECHANISM-AUDIT</code></div>
+  <h3>Source-frozen stochastic-gradient-bandit Theorem-1 endpoint and Theorem-4 contract audit</h3>
+  <p class="roadmap-evidence"><strong>223</strong> indexed declarations support this route.</p>
+  <p class="roadmap-next"><strong>Next named boundary.</strong> The source-faithful two-arm learning-rate regimes and regret endpoints in Theorems 2–3.</p>
+  <details class="roadmap-route-notes"><summary>Route context and full boundary</summary><div>
+    <p>The exact Baudry–Johnson–Vary–Pike-Burke–Rebeschini NeurIPS 2025 source is hash-frozen. Two hundred twenty-three named declarations comprise a frozen 215-declaration, twelve-layer Theorem-1 stack in the exact 26+18+18+14+4+10+3+25+19+9+37+32 split plus a separate eight-declaration Appendix-E/Theorem-4 source-contract audit. The first stack closes twoArmFixedIIDDirac_theoremOne: the source Theorem 1 for bounded two-arm fixed-IID laws with exact arm means, a Dirac environment prior, actual generated sampled pseudo-regret, 0 &lt; Delta &lt; 1, eta &gt; 0, eta C_eta &lt; Delta, and T = tailHorizon + 1. The separate gate proves only the positive Equation-(22) drift margin, an audited finite survival-event lower bound under explicit premises, and finite geometric transient-phase bounds. It exposes an unresolved Step-4 conditioning/direction mismatch but does not construct the general-K generated process, uniform buffered-event producer, stopped supermartingale/Doob route, or Theorem 4. Theorems 2–4 remain open.</p>
+    <h4>Full next boundary</h4>
+    <p>The source-faithful two-arm learning-rate regimes and regret endpoints in Theorems 2–3.</p>
+  </div></details>
+  <a class="roadmap-evidence-link" href="../implementation-map/index.html">Open declarations, dependencies, and gaps →</a>
+</article>
+<article class="roadmap-focus-card">
+  <div><span class="status partial">Partial</span><code>NEURIPS-2025-SGB-PHASE-TRANSITION-FOLLOWON</code></div>
+  <h3>Prospectively frozen SGB Corollary-1 and Theorem-2 follow-on</h3>
+  <p class="roadmap-evidence"><strong>138</strong> indexed declarations support this route.</p>
+  <p class="roadmap-next"><strong>Next named boundary.</strong> A bridge from the compiled terminal-count-below event to a fixed-cutoff starvation trigger/event; the exact probability split and missing-pull-to-terminal-count inclusion do not supply occurrence-conditioned IID.</p>
+  <details class="roadmap-route-notes"><summary>Route context and full boundary</summary><div>
+    <p>This follow-on preserves the historical 223-declaration SGB mechanism audit and adds 138 counted audit-slice declarations, for an exact 361 = 223 + 23 + 25 + 26 + 7 + 8 + 13 + 28 + 8 inventory. The counted layers compile Corollary 1, deterministic starvation and terminal-count consumers, chronological nth-pull infrastructure, latent product/readout, deferred-decisions prefix factorization, action/readout interfaces, count-capped branch locality, and deterministic-time selected-reward freshness. A separate ten-declaration module identifies the complete visible/native trajectory law. The selected-block module now has 36 declarations: eight transport finite pull-time/reward blocks to an exact masked latent-coupling law, fourteen define and transport the exact finite Appendix-C `S0/S1` event, ten split its pure latent probability into the generated all-present event plus an explicit missing-pull event, and four connect that branch to the generated finite-horizon terminal-count-below event and its nonnegative-gap expected sampled pseudo-regret consumer through the exact visible marginal. This transport does not prove positive missing-pull mass, a product or selected-IID theorem, or a fixed-cutoff starvation trigger; future/no-return, ballot probability, asymptotic assembly, and the Theorem-2 terminal remain open.</p>
+    <h4>Full next boundary</h4>
+    <p>A bridge from the compiled terminal-count-below event to a fixed-cutoff starvation trigger/event; the exact probability split and missing-pull-to-terminal-count inclusion do not supply occurrence-conditioned IID.</p>
+  </div></details>
+  <a class="roadmap-evidence-link" href="../implementation-map/index.html">Open declarations, dependencies, and gaps →</a>
+</article>
+<article class="roadmap-focus-card">
+  <div><span class="status planned">Planned</span><code>TARGET-DRIFT-V2-CONTROLLED-EVALUATION</code></div>
+  <h3>Balanced target-drift controlled evaluation</h3>
+  <p class="roadmap-evidence"><strong>0</strong> indexed declarations support this route.</p>
+  <p class="roadmap-next"><strong>Next named boundary.</strong> Freeze the provider, operator-attested immutable model version, exact Codex CLI provider-client bytes/version, auth-only runtime boundary, reasoning effort, service tier, sampling semantics, dated…</p>
+  <details class="roadmap-route-notes"><summary>Route context and full boundary</summary><div>
+    <p>Version 2 reuses 30 frozen source cases while balancing 75 source-faithful and 75 injected-drift target-replicate triplets across compile-only, source-aware blueprint, and full ABRL conditions. Both variants use one matched field/value template, with a frozen text-only leakage diagnostic. The result-free protocol and component-tested code specify a pre-audit common workspace, opaque identifiers, content-addressed sealing, workflow-artifact presence/hash records, an atomic operator grading pack, a physically separate exact-positive-allowlist grader export, and source/target-aware analysis with multiplicity-controlled secondary endpoints. The grader-only export contains only normalized packets, the frozen prompt and rubric, a response template, and a digest manifest; it excludes the operator mapping, completion ledger, semantic labels, and execution/workflow metadata. Before export or assembly, the internal pack is reconstructed byte for byte from the sealed run manifest, current complete ledger, and checked-run evidence, including its deterministic grade mapping. Before inference, the analyzer reruns the hash-matched sealed assembler from the two grader responses and adjudication and requires an exact byte match with the supplied grade ledger. These are component-tested result-free controls; no grader export, human grade, or 450-run outcome has been produced. A new exact 450-ID completion ledger implements the frozen no-replacement/no-imputation policy: remaining prospectively specified runs continue after an individual failure, but any missing or non-production-eligible run prevents grading and every inferential effect estimate, interval, p-value, q-value, or success claim; only cause/condition/variant missingness counts may be emitted. The sealed adapter boundary distinguishes its Python entrypoint/runtime from the separately invoked Codex CLI provider client. A result-free Codex CLI candidate parses the supported JSONL event schema, records observable task/thread identities without relabeling them as provider request IDs, retains cache-read, cache-write, and reasoning-output token categories, reconstructs Lean patches and build traces, and recomputes cost from separately frozen dated rates. It disables web/MCP/plugin/collaboration and related nonexperimental tool surfaces, copies one auth file into a fresh disposable CODEX_HOME, exposes a frozen command-environment allowlist, launches no automatic second CLI invocation, rejects forbidden or unknown events, and protects adapter-owned outputs from link attacks; provider-client-internal retries remain outside the observable trace. The CLI bytes/version are hash-bound and rechecked; the remote model version remains an operator/provider attestation rather than a JSONL-derived fact. This is component-tested adapter plumbing, not a production agent-sandbox or model result. Neutral replay is split into a host controller that never executes Lean, a canonical Docker launcher, a trusted in-image controller, and a restricted Lean worker. The sandbox receives only a pristine base snapshot, submitted patch, public declaration names, expected file hashes, and opaque/hash bindings; the complete sealed pack, operator metadata, source bank, condition, variant, and ground truth are excluded. Runtime binding covers the allowlisted Docker executable, version/daemon/signature-or-package ledger, image recipe/SBOM, exact argv, and actual launcher/controller/inner bytes. A provenance-bound multi-stage builder now derives the cache-complete image context from the exact common pre-audit Git snapshot, excludes evaluation and operator data, runs the full Lean and Tests targets, byte-manifests the cache, keeps builder-stage source out of the final image, and emits an image/toolchain/cache SBOM plus sealed provenance sidecars. A first result-free Linux CI candidate build produced an unpublished cache-complete image, a 121,277-file cache manifest, and matching build-input/log/SBOM hashes after an offline Lean 4.29.1 / Lake 5.0.0-src+f72c35b worker probe. A later result-free candidate run rebuilt an unpublished image, bound the exact Docker runtime and command boundary, and passed all seven candidate isolation probes: network denial, host-sentinel and operator-ground-truth protection, output protection with worker CapEff zero, patched-source/controller-input read-only enforcement, mounted-input/cidfile protection, and background-process reaping. Its downloaded manifest and image/cache/build/runtime hash chain were independently recomputed. The image existed only on the ephemeral runner: this is candidate isolation evidence, not a frozen published production checker, production agent sandbox, real-infrastructure smoke, or final experiment seal. The launcher verifies the manifest extracted from a digest-pinned image, the inner checker verifies every cached file, and the already restricted worker copies the seed into the per-run tmpfs replay. A separate hash-bound one-case-by-three-condition smoke materializer and runner now derive exactly one matched triplet, hide the smoke purpose from the agent request, and force every production-checker success to checked_smoke_nonexperimental with result_eligible=false; grading independently rejects that purpose, so smoke artifacts cannot enter the 450 or any inference. This is an implemented, component-tested lane, not a completed smoke. A result-free Linux lifecycle candidate also bound an ephemeral image, Docker runtime, exact command, and PID-1 controller; an independent-session heartbeat increased before abrupt host-client loss, then froze after control-channel EOF and PID-namespace removal. This closes only that exact generic lifecycle-component check. A later exact combined result-free run layered the SRI/SHA-512-locked native Linux Codex 0.130.0 client, bundled bwrap/rg, adapter, and PID-1 controller onto the cache-complete Lean base. On one unpublished digest it passed byte/toolchain and raw checker-evidence verification, exact AppArmor inheritance, workspace-write and persistent-outside-write boundaries, outer credential-sentinel unreadability, an outer-reachable/inner-socket-EPERM same-IPv4 network check, fresh PID visibility, and destructive control-loss lifecycle reaping. All 23 downloaded artifact bytes and hashes, plus the available report/SBOM/cache/runtime/source/lifecycle cross-file bindings, were independently recomputed. This is exact result-free candidate evidence only: the image existed on an ephemeral runner, no credential or remote model was used, and it is not a production agent sandbox, real smoke, 450-run result, or formalization outcome. A later result-free fake-only outer component probe on the same unpublished digest recorded a one-time root-open read-only descriptor handoff that the uid/gid-dropped worker consumed and closed before the nested sandbox. That sandbox recorded EACCES on the existing auth and root-control paths, no broker environment marker or auth-targeting descriptor, zero worker and nested effective capabilities, denied network, immutable original input, and a writable copied workspace. This closes only the fake-only component gate: no real credential, provider request, remote model, active budget, smoke, grade, analysis, or formalization outcome exists. A credential-bearing production launcher and authentication path, remote-model attestation and settings, dated price schedule, active budgets, final published images with resealed probes, final seal, prospectively specified real-infrastructure smoke, and all primary runs remain pending.</p>
+    <h4>Full next boundary</h4>
+    <p>Freeze the provider, operator-attested immutable model version, exact Codex CLI provider-client bytes/version, auth-only runtime boundary, reasoning effort, service tier, sampling semantics, dated cache-read/cache-write/input/output token prices, replicate semantics, and token/tool/build/time/cost budgets; hash-seal the implemented missing-run policy and completion-ledger builder, keep the adapter to one CLI invocation, and explicitly freeze or disclose the provider-client-internal retry boundary.</p>
+  </div></details>
+  <a class="roadmap-evidence-link" href="../implementation-map/index.html">Open declarations, dependencies, and gaps →</a>
+</article></div>
+  <div class="hero-actions"><a class="button primary" href="../implementation-map/index.html#milestones">Search all 83 milestones</a><a class="button" href="../banditrlwiki/frontier/index.html">Browse theorem frontier leaves</a></div>
+</section>
+
+<section id="route-registry">
+  <h2>Historical machine route registry</h2>
+  <details class="inventory-disclosure"><summary>Open the technical planning registry (14 routes)</summary><div>
+    <div class="callout warning"><strong>Historical planning layer.</strong> Some narrative <em>compiled_local_core</em> fields lag newer Lean files. The generated declaration catalog and Implementation Map take precedence for current local code.</div>
+    <div class="table-wrap" tabindex="0" role="region" aria-label="Historical machine route registry"><table><thead><tr><th>Route</th><th>Priority</th><th>Registry's compiled core summary</th><th>Next registered leaves</th></tr></thead><tbody>
+<tr>
+  <td><code>ROUTE-ETC-FINITE-STOCHASTIC</code><br>Explore-Then-Commit finite stochastic regret</td>
+  <td>active</td>
+  <td>ETC round-robin counts · fixed-commit trace phase boundary · empirical mean measurability · argmax oracle · wrong-commit event reduction · bounded reward source contracts · infinitePi wrong-commit bound · ENNReal.ofReal lower-integral regret assembly</td>
+  <td>convert lower-integral ETC surrogate to the desired Bochner/Rat expected-regret theorem · generalize fixed actionWithCommit source to policy-generated adaptive traces · extract reusable bounded-centered reward sub-Gaussian contracts into Mathlib-shaped statements</td>
+</tr>
+<tr>
+  <td><code>ROUTE-UCB1-FINITE-STOCHASTIC</code><br>UCB1 logarithmic finite-arm regret</td>
+  <td>active-next</td>
+  <td>pull-count regret decomposition · expected pull-count decomposition · finite-horizon bad-event union/summability · sub-Gaussian tail wrappers</td>
+  <td>define non-placeholder UCB score with sqrt/log confidence width · prove positive count after initialization · prove UCB maximality implies suboptimal pull has a bad event or small count · prove confidence-width algebra and logarithmic count bound · assemble expected pull count and regret</td>
+</tr>
+<tr>
+  <td><code>ROUTE-KL-UCB</code><br>KL-UCB bounded stochastic bandits</td>
+  <td>planned</td>
+  <td>finite arms and regret decomposition · tail union wrappers</td>
+  <td>Bernoulli KL definition and nonnegativity · KL monotonicity/inversion for confidence sets · bounded reward KL confidence route · KL-UCB index maximality and pull-count bound</td>
+</tr>
+<tr>
+  <td><code>ROUTE-THOMPSON-BAYES</code><br>Thompson sampling and Bayesian regret</td>
+  <td>planned</td>
+  <td>posterior kernel surface · posterior action identity ledger · finite/countable best-action measurability · conditional expectation bridge · expected regret decomposition</td>
+  <td>Bayes prior/environment product law · posterior action-law construction or LML import · noncountable posterior best-action measurability if needed · Bayesian regret integrability contract · clipped-UCB or information-ratio bridge</td>
+</tr>
+<tr>
+  <td><code>ROUTE-EXP3-ADVERSARIAL</code><br>EXP3 adversarial finite-arm regret</td>
+  <td>planned</td>
+  <td>finite exponential-weights potential · updated-potential unfolding · potential telescoping</td>
+  <td>probability simplex sampling API · importance-weighted estimator unbiasedness · exp x &lt;= 1 + x + x^2 route under bounded losses · learning-rate optimization</td>
+</tr>
+<tr>
+  <td><code>ROUTE-TSALLIS-INF-FTRL</code><br>Tsallis-INF and finite-arm FTRL best-of-both-worlds</td>
+  <td>planned</td>
+  <td>FTRL one-step inequality under explicit minimizer certificate · finite-simplex predicate · Tsallis power sum and negative entropy well-definedness</td>
+  <td>finite-simplex convexity and feasible minimizer existence · Tsallis regularizer convexity and derivative/subgradient shape · stability/penalty decomposition · self-bounding conversion · adaptive learning-rate schedule algebra</td>
+</tr>
+<tr>
+  <td><code>ROUTE-BOBW-LINEAR-CONTEXTUAL</code><br>Best-of-both-worlds linear contextual bandits</td>
+  <td>watchlist</td>
+  <td>FTRL/Tsallis finite-action surface · policy measurability surface · finite regret decomposition</td>
+  <td>context distribution and margin condition contract · linear loss estimator · covariance/Gram matrix inverse or inverse-free route · BoBW stochastic/adversarial split</td>
+</tr>
+<tr>
+  <td><code>ROUTE-LINEAR-OFUL</code><br>OFUL and LinUCB linear bandit regret</td>
+  <td>planned</td>
+  <td>policy measurability surface · martingale-difference prefix contracts · finite regret decomposition</td>
+  <td>finite-dimensional feature vector API · Gram matrix PSD and monotonicity · least-squares estimator and confidence ellipsoid · elliptical potential lemma · self-normalized concentration theorem card/import route</td>
+</tr>
+<tr>
+  <td><code>ROUTE-CONTEXTUAL-EXP4-LINUCB</code><br>contextual bandits: EXP4, LinUCB, and policy regret</td>
+  <td>planned</td>
+  <td>policy measurability · reward kernel surface · finite trajectory kernels</td>
+  <td>context/history API · policy class regret definition · expert advice mixture over policies · offline evaluation/IPW regularity contracts</td>
+</tr>
+<tr>
+  <td><code>ROUTE-RL-UCBVI</code><br>finite-horizon RL and UCB-VI regret</td>
+  <td>compiled-canonical</td>
+  <td>reward kernel surface · policy-generated traces · finite trajectory kernel ingredients · martingale-difference contracts · finite MDP data and measurable one-step Bellman action-value surface · stage-indexed Markov policy evaluation with induced state kernels and Bellman recursion · generated finite policy trajectory and expected cumulative-reward value identity · finite-action Bellman optimality and measurable greedy-policy attainment · true state occupancy and exact expected-regret performance difference · optimistic Bellman certificate and true-occupancy bonus regret bound · estimated reward/transition confidence transport, estimated-greedy policy, and factor-two selected-radius single-episode regret bound · finite-state singleton transition-coordinate errors and recursive-tail envelopes transported into Bellman confidence and the optimistic-regret endpoint · stochastic sampled cumulative return around recursive policy value with exact reward-noise/Bellman split, additive conditional MGF proxy, and fixed-horizon two-sided tail · same-prefix aggregate generated transition numerators and visit denominators with exact row-sum and successor alignment · previous-Q clipped recurrent known-reward UCBVI-CH planner with optimistic zero count and measurable finite argmax · joint singleton-Bernstein and normalized optimal-tail confidence on the recurrent source trajectory measure · all-episode recurrent Bellman optimism and generated raw episode pseudo-regret decomposition · actual-count charge summation and generated-filtration Bellman innovation tail · frozen 20/250 high-probability UCBVI-CH terminal and integrable expectation bound plus K H delta</td>
+  <td>Bernstein or variance-aware empirical transition confidence and total-variance summation for the separate minimax milestone · stochastic-reward UCBVI confidence and changed terminal constants · realized sampled-return high-probability regret on the canonical recurrent source · posterior-sampling, model-free, or continuous-space RL extensions</td>
+</tr>
+<tr>
+  <td><code>ROUTE-BWK-RESOURCE</code><br>bandits with knapsacks and resource constraints</td>
+  <td>planned</td>
+  <td>budget stopping-time wrapper · finite pull-count/regret decomposition</td>
+  <td>resource consumption trace and measurability · budget feasibility invariant · primal-dual Lagrangian comparison · optional-stopping or stopped-process expectation bridge</td>
+</tr>
+<tr>
+  <td><code>ROUTE-PREFERENCE-DUELING</code><br>dueling and preference bandits</td>
+  <td>watchlist</td>
+  <td>finite actions and finite sums</td>
+  <td>pairwise preference matrix · Condorcet/Borda winner definitions · comparison feedback kernel · comparison regret decomposition</td>
+</tr>
+<tr>
+  <td><code>ROUTE-ROBUST-NONSTATIONARY-DELAYED</code><br>robust, corrupted, nonstationary, delayed, and batched bandits</td>
+  <td>watchlist</td>
+  <td>variance concentration wrappers · finite sums and time windows · martingale/filtration surfaces · global-law oracle-restart local expected stability transport and coarse epoch certificate</td>
+  <td>windowed pull-count and reward sums · restart-local refined finite-sum and local-rate/penalty tuning under the global generated oracle-restart law, plus a law-derived schedule-epoch-cardinality bound · median-of-means/trimmed estimator contracts · delay queue and pending-feedback filtration</td>
+</tr>
+<tr>
+  <td><code>ROUTE-LLM-FEDERATED-NEURAL</code><br>LLM, neural, recommender, and federated bandits</td>
+  <td>watchlist</td>
+  <td>contextual policy measurability · posterior kernel surface · finite-action regret decomposition</td>
+  <td>embedding/context contract without overformalizing neural nets · model-selection action space · client-indexed trace and communication round counts · offline-to-online prior and logged-data positivity</td>
+</tr></tbody></table></div>
+  </div></details>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Roadmap</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#roadmap">Roadmap</a><a data-toc-link href="#progress">Evidence snapshot</a><a data-toc-link href="#focus">Active routes</a><a data-toc-link href="#route-registry">Historical registry</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../static/site.js?v=20260903f"></script>
+</body>
+</html>

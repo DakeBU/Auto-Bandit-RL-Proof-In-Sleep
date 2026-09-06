@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonCoordinateModelConfidence.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonCoordinateModelConfidence.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonCoordinateModelConfidence.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonCoordinateModelConfidence.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonEstimatedModelCertificate</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Coordinate confidence for finite-horizon estimated models</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module turns finite-state singleton transition-mass errors into the</span>
+<span id="L7">7 transition-expectation confidence consumed by the estimated-model optimistic</span>
+<span id="L8">8 regret route.  The only value regularity required is an absolute envelope for</span>
+<span id="L9">9 the recursively generated tail upper value.</span>
+<span id="L10">10 -/</span>
+<span id="L11">11 </span>
+<span id="L12">12 open MeasureTheory</span>
+<span id="L13">13 open scoped ProbabilityTheory</span>
+<span id="L14">14 </span>
+<span id="L15">15 universe u v</span>
+<span id="L16">16 </span>
+<span id="L17">17 namespace BanditRLProof</span>
+<span id="L18">18 namespace FiniteHorizonRL</span>
+<span id="L19">19 </span>
+<span id="L20">20 variable {State : Type u} {Action : Type v}</span>
+<span id="L21">21     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L22">22     [Fintype State] [Fintype Action]</span>
+<span id="L23">23     [MeasurableSingletonClass State] [Nonempty Action]</span>
+<span id="L24">24 </span>
+<span id="L25">25 /--</span>
+<span id="L26">26 On a finite measurable space, coordinate bounds on singleton masses control</span>
+<span id="L27">27 the expectation error of every pointwise-enveloped real value.</span>
+<span id="L28">28 -/</span>
+<span id="L29">29 theorem abs_integral_sub_integral_le_sum_coordinateRadius_mul_envelope</span>
+<span id="L30">30     (estimated trueMeasure : Measure State)</span>
+<span id="L31">31     [IsFiniteMeasure estimated] [IsFiniteMeasure trueMeasure]</span>
+<span id="L32">32     (value coordinateRadius : State -&gt; Real) (envelope : Real)</span>
+<span id="L33">33     (hcoordinate : forall state,</span>
+<span id="L34">34       |estimated.real {state} - trueMeasure.real {state}| &lt;=</span>
+<span id="L35">35         coordinateRadius state)</span>
+<span id="L36">36     (hvalue : forall state, |value state| &lt;= envelope) :</span>
+<span id="L37">37     |(∫ state, value state ∂estimated) -</span>
+<span id="L38">38         ∫ state, value state ∂trueMeasure| &lt;=</span>
+<span id="L39">39       ∑ state, coordinateRadius state * envelope := by</span>
+<span id="L40">40   rw [integral_fintype</span>
+<span id="L41">41     (integrable_of_fintype _ _ (measurable_of_finite value))]</span>
+<span id="L42">42   rw [integral_fintype</span>
+<span id="L43">43     (integrable_of_fintype _ _ (measurable_of_finite value))]</span>
+<span id="L44">44   simp only [smul_eq_mul]</span>
+<span id="L45">45   calc</span>
+<span id="L46">46     |(∑ state, estimated.real {state} * value state) -</span>
+<span id="L47">47         ∑ state, trueMeasure.real {state} * value state| =</span>
+<span id="L48">48         |∑ state,</span>
+<span id="L49">49           (estimated.real {state} - trueMeasure.real {state}) *</span>
+<span id="L50">50             value state| := by</span>
+<span id="L51">51       congr 1</span>
+<span id="L52">52       rw [← Finset.sum_sub_distrib]</span>
+<span id="L53">53       apply Finset.sum_congr rfl</span>
+<span id="L54">54       intro state _</span>
+<span id="L55">55       ring</span>
+<span id="L56">56     _ &lt;= ∑ state,</span>
+<span id="L57">57         |(estimated.real {state} - trueMeasure.real {state}) *</span>
+<span id="L58">58           value state| :=</span>
+<span id="L59">59       Finset.abs_sum_le_sum_abs _ _</span>
+<span id="L60">60     _ &lt;= ∑ state, coordinateRadius state * envelope := by</span>
+<span id="L61">61       apply Finset.sum_le_sum</span>
+<span id="L62">62       intro state _</span>
+<span id="L63">63       rw [abs_mul]</span>
+<span id="L64">64       calc</span>
+<span id="L65">65         |estimated.real {state} - trueMeasure.real {state}| *</span>
+<span id="L66">66               |value state| &lt;=</span>
+<span id="L67">67             coordinateRadius state * |value state| :=</span>
+<span id="L68">68           mul_le_mul_of_nonneg_right (hcoordinate state) (abs_nonneg _)</span>
+<span id="L69">69         _ &lt;= coordinateRadius state * envelope :=</span>
+<span id="L70">70           mul_le_mul_of_nonneg_left (hvalue state)</span>
+<span id="L71">71             ((abs_nonneg _).trans (hcoordinate state))</span>
+<span id="L72">72 </span>
+<span id="L73">73 namespace MDP</span>
+<span id="L74">74 namespace EstimatedModelPlan</span>
+<span id="L75">75 </span>
+<span id="L76">76 /--</span>
+<span id="L77">77 Finite-state coordinate confidence sufficient for the recursive optimistic</span>
+<span id="L78">78 model route.  The transition radius may be any upper bound on the displayed</span>
+<span id="L79">79 coordinate sum, so later concentration producers can choose their own radii.</span>
+<span id="L80">80 -/</span>
+<span id="L81">81 structure CoordinateConfidence</span>
+<span id="L82">82     {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) where</span>
+<span id="L83">83   transitionCoordinateRadius :</span>
+<span id="L84">84     Fin mdp.horizon -&gt; State -&gt; Action -&gt; State -&gt; Real</span>
+<span id="L85">85   valueEnvelope : Nat -&gt; Real</span>
+<span id="L86">86   rewardError_le_radius : forall (stage : Fin mdp.horizon)</span>
+<span id="L87">87     (state : State) (action : Action),</span>
+<span id="L88">88     |plan.estimatedReward stage state action - mdp.reward state action| &lt;=</span>
+<span id="L89">89       plan.rewardRadius stage state action</span>
+<span id="L90">90   transitionCoordinateError_le_radius : forall (remaining : Nat)</span>
+<span id="L91">91     (hremaining : remaining + 1 &lt;= mdp.horizon)</span>
+<span id="L92">92     (state : State) (action : Action) (nextState : State),</span>
+<span id="L93">93     |(plan.estimatedTransition</span>
+<span id="L94">94           (mdp.decisionStageRemaining remaining hremaining)</span>
+<span id="L95">95           (state, action)).real {nextState} -</span>
+<span id="L96">96         (mdp.transition (state, action)).real {nextState}| &lt;=</span>
+<span id="L97">97       transitionCoordinateRadius</span>
+<span id="L98">98         (mdp.decisionStageRemaining remaining hremaining)</span>
+<span id="L99">99         state action nextState</span>
+<span id="L100">100   upperValue_abs_le_envelope : forall (remaining : Nat)</span>
+<span id="L101">101     (hremaining : remaining + 1 &lt;= mdp.horizon) (state : State),</span>
+<span id="L102">102     |plan.upperValueRemaining remaining (by omega) state| &lt;=</span>
+<span id="L103">103       valueEnvelope remaining</span>
+<span id="L104">104   transitionRadius_cover : forall (remaining : Nat)</span>
+<span id="L105">105     (hremaining : remaining + 1 &lt;= mdp.horizon)</span>
+<span id="L106">106     (state : State) (action : Action),</span>
+<span id="L107">107     (∑ nextState,</span>
+<span id="L108">108         transitionCoordinateRadius</span>
+<span id="L109">109             (mdp.decisionStageRemaining remaining hremaining)</span>
+<span id="L110">110             state action nextState *</span>
+<span id="L111">111           valueEnvelope remaining) &lt;=</span>
+<span id="L112">112       plan.transitionRadius</span>
+<span id="L113">113         (mdp.decisionStageRemaining remaining hremaining) state action</span>
+<span id="L114">114 </span>
+<span id="L115">115 /-- Coordinate transition confidence implies the recursive Bellman error bound. -/</span>
+<span id="L116">116 theorem CoordinateConfidence.transitionError_le_radius</span>
+<span id="L117">117     {mdp : MDP State Action} {plan : EstimatedModelPlan mdp}</span>
+<span id="L118">118     (confidence : plan.CoordinateConfidence) (remaining : Nat)</span>
+<span id="L119">119     (hremaining : remaining + 1 &lt;= mdp.horizon)</span>
+<span id="L120">120     (state : State) (action : Action) :</span>
+<span id="L121">121     |plan.transitionValue (mdp.decisionStageRemaining remaining hremaining)</span>
+<span id="L122">122           (plan.upperValueRemaining remaining (by omega)) state action -</span>
+<span id="L123">123         mdp.transitionValue</span>
+<span id="L124">124           (plan.upperValueRemaining remaining (by omega)) state action| &lt;=</span>
+<span id="L125">125       plan.transitionRadius</span>
+<span id="L126">126         (mdp.decisionStageRemaining remaining hremaining) state action := by</span>
+<span id="L127">127   unfold transitionValue MDP.transitionValue</span>
+<span id="L128">128   exact</span>
+<span id="L129">129     (abs_integral_sub_integral_le_sum_coordinateRadius_mul_envelope</span>
+<span id="L130">130       (plan.estimatedTransition</span>
+<span id="L131">131         (mdp.decisionStageRemaining remaining hremaining) (state, action))</span>
+<span id="L132">132       (mdp.transition (state, action))</span>
+<span id="L133">133       (plan.upperValueRemaining remaining (by omega))</span>
+<span id="L134">134       (confidence.transitionCoordinateRadius</span>
+<span id="L135">135         (mdp.decisionStageRemaining remaining hremaining) state action)</span>
+<span id="L136">136       (confidence.valueEnvelope remaining)</span>
+<span id="L137">137       (confidence.transitionCoordinateError_le_radius</span>
+<span id="L138">138         remaining hremaining state action)</span>
+<span id="L139">139       (confidence.upperValue_abs_le_envelope remaining hremaining)).trans</span>
+<span id="L140">140         (confidence.transitionRadius_cover</span>
+<span id="L141">141           remaining hremaining state action)</span>
+<span id="L142">142 </span>
+<span id="L143">143 /-- Package coordinate confidence as the existing estimated-model confidence. -/</span>
+<span id="L144">144 def CoordinateConfidence.toConfidence</span>
+<span id="L145">145     {mdp : MDP State Action} {plan : EstimatedModelPlan mdp}</span>
+<span id="L146">146     (confidence : plan.CoordinateConfidence) : plan.Confidence where</span>
+<span id="L147">147   rewardError_le_radius := confidence.rewardError_le_radius</span>
+<span id="L148">148   transitionError_le_radius := confidence.transitionError_le_radius</span>
+<span id="L149">149 </span>
+<span id="L150">150 /--</span>
+<span id="L151">151 Route endpoint: coordinate model confidence gives global optimism and the</span>
+<span id="L152">152 compiled selected-radius single-episode expected-regret bound.</span>
+<span id="L153">153 -/</span>
+<span id="L154">154 theorem CoordinateConfidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining</span>
+<span id="L155">155     {mdp : MDP State Action} {plan : EstimatedModelPlan mdp}</span>
+<span id="L156">156     (confidence : plan.CoordinateConfidence) (initialState : Measure State)</span>
+<span id="L157">157     [IsProbabilityMeasure initialState] :</span>
+<span id="L158">158     (forall state,</span>
+<span id="L159">159       mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;=</span>
+<span id="L160">160         plan.upperValueRemaining mdp.horizon le_rfl state) /\</span>
+<span id="L161">161       plan.optimisticPolicy.expectedRegret initialState &lt;=</span>
+<span id="L162">162         plan.optimisticPolicy.occupancySumRemaining</span>
+<span id="L163">163           (fun remaining hremaining state =&gt;</span>
+<span id="L164">164             2 * plan.selectedRadiusRemaining remaining hremaining state)</span>
+<span id="L165">165           mdp.horizon le_rfl initialState :=</span>
+<span id="L166">166   confidence.toConfidence</span>
+<span id="L167">167     |&gt;.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining</span>
+<span id="L168">168       initialState</span>
+<span id="L169">169 </span>
+<span id="L170">170 end EstimatedModelPlan</span>
+<span id="L171">171 end MDP</span>
+<span id="L172">172 end FiniteHorizonRL</span>
+<span id="L173">173 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

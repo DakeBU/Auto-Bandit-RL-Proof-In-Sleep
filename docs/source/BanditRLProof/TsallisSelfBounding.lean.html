@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/TsallisSelfBounding.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/TsallisSelfBounding.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/TsallisSelfBounding.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/TsallisSelfBounding.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.TsallisFTRLEstimatedEnvironmentRegret</span>
+<span id="L2">2 import Mathlib.Tactic.FieldSimp</span>
+<span id="L3">3 import Mathlib.Tactic.Linarith</span>
+<span id="L4">4 import Mathlib.Tactic.Ring</span>
+<span id="L5">5 </span>
+<span id="L6">6 /-!</span>
+<span id="L7">7 # Self-bounding interfaces for the half-Tsallis route</span>
+<span id="L8">8 </span>
+<span id="L9">9 This module records the paper-facing `(Delta, C, T)` self-bounding condition,</span>
+<span id="L10">10 identifies it on the generated predictable trajectory under an exact gap law,</span>
+<span id="L11">11 and proves the finite completion-of-squares conversion used after a refined</span>
+<span id="L12">12 suboptimal-arm stability bound is available.</span>
+<span id="L13">13 </span>
+<span id="L14">14 The currently compiled half-power stability endpoint contains the optimal-arm</span>
+<span id="L15">15 term.  The final counterexample below records why that endpoint cannot be fed</span>
+<span id="L16">16 directly into the gap conversion.</span>
+<span id="L17">17 -/</span>
+<span id="L18">18 </span>
+<span id="L19">19 namespace BanditRLProof</span>
+<span id="L20">20 namespace Tsallis</span>
+<span id="L21">21 </span>
+<span id="L22">22 open MeasureTheory ProbabilityTheory</span>
+<span id="L23">23 </span>
+<span id="L24">24 universe u v</span>
+<span id="L25">25 </span>
+<span id="L26">26 /-- Unit mass at one action, used as the fixed optimal-arm comparator. -/</span>
+<span id="L27">27 def pointMass {Action : Type u} [DecidableEq Action]</span>
+<span id="L28">28     (best : Action) : Action -&gt; Real :=</span>
+<span id="L29">29   fun action =&gt; if action = best then 1 else 0</span>
+<span id="L30">30 </span>
+<span id="L31">31 theorem finiteSimplex_pointMass</span>
+<span id="L32">32     {Action : Type u} [DecidableEq Action]</span>
+<span id="L33">33     (arms : Finset Action) {best : Action} (hbest : best ∈ arms) :</span>
+<span id="L34">34     FTRL.finiteSimplex arms (pointMass best) := by</span>
+<span id="L35">35   constructor</span>
+<span id="L36">36   · intro action _haction</span>
+<span id="L37">37     by_cases h : action = best &lt;;&gt; simp [pointMass, h]</span>
+<span id="L38">38   · simp [pointMass, hbest]</span>
+<span id="L39">39 </span>
+<span id="L40">40 theorem linearLoss_pointMass</span>
+<span id="L41">41     {Action : Type u} [DecidableEq Action]</span>
+<span id="L42">42     (arms : Finset Action) {best : Action} (hbest : best ∈ arms)</span>
+<span id="L43">43     (loss : Action -&gt; Real) :</span>
+<span id="L44">44     FTRL.linearLoss arms (pointMass best) loss = loss best := by</span>
+<span id="L45">45   unfold FTRL.linearLoss pointMass</span>
+<span id="L46">46   simp [hbest]</span>
+<span id="L47">47 </span>
+<span id="L48">48 /-- One-round regret against a point mass is the probability-weighted gap. -/</span>
+<span id="L49">49 theorem linearLoss_sub_pointMass_eq_gapMass</span>
+<span id="L50">50     {Action : Type u} [DecidableEq Action]</span>
+<span id="L51">51     (arms : Finset Action) {best : Action} (hbest : best ∈ arms)</span>
+<span id="L52">52     (prob loss gap : Action -&gt; Real)</span>
+<span id="L53">53     (hprob : FTRL.finiteSimplex arms prob)</span>
+<span id="L54">54     (hgap : ∀ action ∈ arms, loss action - loss best = gap action) :</span>
+<span id="L55">55     FTRL.linearLoss arms prob loss -</span>
+<span id="L56">56         FTRL.linearLoss arms (pointMass best) loss =</span>
+<span id="L57">57       arms.sum (fun action =&gt; prob action * gap action) := by</span>
+<span id="L58">58   rw [linearLoss_pointMass arms hbest loss]</span>
+<span id="L59">59   have hconstant :</span>
+<span id="L60">60       arms.sum (fun action =&gt; prob action * loss best) = loss best := by</span>
+<span id="L61">61     rw [← Finset.sum_mul, hprob.2, one_mul]</span>
+<span id="L62">62   calc</span>
+<span id="L63">63     FTRL.linearLoss arms prob loss - loss best =</span>
+<span id="L64">64         arms.sum (fun action =&gt; prob action * loss action) -</span>
+<span id="L65">65           arms.sum (fun action =&gt; prob action * loss best) := by</span>
+<span id="L66">66       rw [hconstant]</span>
+<span id="L67">67       rfl</span>
+<span id="L68">68     _ = arms.sum (fun action =&gt;</span>
+<span id="L69">69         prob action * loss action - prob action * loss best) := by</span>
+<span id="L70">70       rw [Finset.sum_sub_distrib]</span>
+<span id="L71">71     _ = arms.sum (fun action =&gt; prob action * gap action) := by</span>
+<span id="L72">72       apply Finset.sum_congr rfl</span>
+<span id="L73">73       intro action haction</span>
+<span id="L74">74       rw [← hgap action haction]</span>
+<span id="L75">75       ring</span>
+<span id="L76">76 </span>
+<span id="L77">77 /-- Gap mass accumulated by the generated actual-time sampling laws. -/</span>
+<span id="L78">78 noncomputable def sampledHalfTsallisPredictableGapMass</span>
+<span id="L79">79     {Env : Type u} {Action : Type v} [DecidableEq Action]</span>
+<span id="L80">80     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L81">81     (gap : Action -&gt; Real) (horizon : Nat)</span>
+<span id="L82">82     (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real :=</span>
+<span id="L83">83   (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L84">84     arms.sum (fun action =&gt;</span>
+<span id="L85">85       sampledHalfTsallisProbabilityAtTime</span>
+<span id="L86">86         arms harms eta t sample action * gap action))</span>
+<span id="L87">87 </span>
+<span id="L88">88 /-- Paper-facing scalar form of a `(Delta, C, T)` self-bounding constraint. -/</span>
+<span id="L89">89 def HasSelfBoundingRegret</span>
+<span id="L90">90     (expectedGapMass regret corruption : Real) : Prop :=</span>
+<span id="L91">91   expectedGapMass - corruption ≤ regret</span>
+<span id="L92">92 </span>
+<span id="L93">93 /-- A predictable fixed-gap law identifies environment regret pathwise. -/</span>
+<span id="L94">94 theorem sampledHalfTsallisPredictableEnvironmentRegret_pointMass_eq_gapMass</span>
+<span id="L95">95     {Env : Type u} {Action : Type v}</span>
+<span id="L96">96     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L97">97     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L98">98     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L99">99     {best : Action} (hbest : best ∈ arms) (gap : Action -&gt; Real)</span>
+<span id="L100">100     (horizon : Nat)</span>
+<span id="L101">101     (hgap : ∀ t sample action, action ∈ arms -&gt;</span>
+<span id="L102">102       Exp3.predictableLossAt loss t sample action -</span>
+<span id="L103">103         Exp3.predictableLossAt loss t sample best = gap action)</span>
+<span id="L104">104     (sample : Env × ((k : Nat) -&gt; Action × Real)) :</span>
+<span id="L105">105     sampledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L106">106         arms harms eta loss (pointMass best) horizon sample =</span>
+<span id="L107">107       sampledHalfTsallisPredictableGapMass</span>
+<span id="L108">108         arms harms eta gap horizon sample := by</span>
+<span id="L109">109   unfold sampledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L110">110     sampledHalfTsallisPredictableGapMass</span>
+<span id="L111">111   apply Finset.sum_congr rfl</span>
+<span id="L112">112   intro t _ht</span>
+<span id="L113">113   exact linearLoss_sub_pointMass_eq_gapMass</span>
+<span id="L114">114     arms hbest</span>
+<span id="L115">115     (sampledHalfTsallisProbabilityAtTime arms harms eta t sample)</span>
+<span id="L116">116     (Exp3.predictableLossAt loss t sample) gap</span>
+<span id="L117">117     (finiteSimplex_sampledHalfTsallisProbabilityAtTime</span>
+<span id="L118">118       arms harms eta t sample)</span>
+<span id="L119">119     (hgap t sample)</span>
+<span id="L120">120 </span>
+<span id="L121">121 /-- The fixed-gap predictable environment satisfies the integrated</span>
+<span id="L122">122 self-bounding condition, with any nonnegative corruption allowance. -/</span>
+<span id="L123">123 theorem integral_sampledHalfTsallisPredictableEnvironmentRegret_hasSelfBounding</span>
+<span id="L124">124     {Env : Type u} {Action : Type v}</span>
+<span id="L125">125     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L126">126     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L127">127     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L128">128     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L129">129     (arms : Finset Action) (harms : arms.Nonempty) (eta : Real)</span>
+<span id="L130">130     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L131">131     {best : Action} (hbest : best ∈ arms) (gap : Action -&gt; Real)</span>
+<span id="L132">132     (horizon : Nat)</span>
+<span id="L133">133     (hgap : ∀ t sample action, action ∈ arms -&gt;</span>
+<span id="L134">134       Exp3.predictableLossAt loss t sample action -</span>
+<span id="L135">135         Exp3.predictableLossAt loss t sample best = gap action)</span>
+<span id="L136">136     (corruption : Real) (hcorruption : 0 ≤ corruption) :</span>
+<span id="L137">137     let selector := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L138">138       arms harms eta</span>
+<span id="L139">139     let mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel</span>
+<span id="L140">140       arms harms eta selector loss.environment</span>
+<span id="L141">141     HasSelfBoundingRegret</span>
+<span id="L142">142       (integral mu (sampledHalfTsallisPredictableGapMass</span>
+<span id="L143">143         arms harms eta gap horizon))</span>
+<span id="L144">144       (integral mu (sampledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L145">145         arms harms eta loss (pointMass best) horizon))</span>
+<span id="L146">146       corruption := by</span>
+<span id="L147">147   dsimp only</span>
+<span id="L148">148   unfold HasSelfBoundingRegret</span>
+<span id="L149">149   have heq :</span>
+<span id="L150">150       integral</span>
+<span id="L151">151           (prior ⊗ₘ sampledHalfTsallisTrajectoryKernel arms harms eta</span>
+<span id="L152">152             (canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L153">153               arms harms eta) loss.environment)</span>
+<span id="L154">154           (sampledHalfTsallisPredictableGapMass</span>
+<span id="L155">155             arms harms eta gap horizon) =</span>
+<span id="L156">156         integral</span>
+<span id="L157">157           (prior ⊗ₘ sampledHalfTsallisTrajectoryKernel arms harms eta</span>
+<span id="L158">158             (canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L159">159               arms harms eta) loss.environment)</span>
+<span id="L160">160           (sampledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L161">161             arms harms eta loss (pointMass best) horizon) := by</span>
+<span id="L162">162     apply integral_congr_ae</span>
+<span id="L163">163     exact Filter.Eventually.of_forall (fun sample =&gt;</span>
+<span id="L164">164       (sampledHalfTsallisPredictableEnvironmentRegret_pointMass_eq_gapMass</span>
+<span id="L165">165         arms harms eta loss hbest gap horizon hgap sample).symm)</span>
+<span id="L166">166   linarith</span>
+<span id="L167">167 </span>
+<span id="L168">168 /-- Actual generated environment-regret upper bound specialized to the</span>
+<span id="L169">169 optimal-arm point-mass comparator. -/</span>
+<span id="L170">170 theorem integral_sampledHalfTsallisPredictableEnvironmentRegret_pointMass_le</span>
+<span id="L171">171     {Env : Type u} {Action : Type v}</span>
+<span id="L172">172     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L173">173     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L174">174     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L175">175     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L176">176     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L177">177     (eta : Real) (heta : 0 &lt; eta)</span>
+<span id="L178">178     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L179">179     {best : Action} (hbest : best ∈ arms) (horizon : Nat) :</span>
+<span id="L180">180     let selector := canonicalHalfTsallisFiniteHistorySelectorMeasurability</span>
+<span id="L181">181       arms harms eta</span>
+<span id="L182">182     let mu := prior ⊗ₘ sampledHalfTsallisTrajectoryKernel</span>
+<span id="L183">183       arms harms eta selector loss.environment</span>
+<span id="L184">184     integral mu (sampledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L185">185         arms harms eta loss (pointMass best) horizon) &lt;=</span>
+<span id="L186">186       2 * eta * powerSum arms (1 / 2 : Real)</span>
+<span id="L187">187           (initialHalfTsallisDistribution arms harms eta) +</span>
+<span id="L188">188         integral mu (fun sample =&gt; (Finset.range horizon).sum (fun n =&gt;</span>
+<span id="L189">189           sampledHalfTsallisHalfPowerBoundAt (Env := Env)</span>
+<span id="L190">190             arms harms eta n (sampledHalfTsallisHistoryAt n sample))) +</span>
+<span id="L191">191         ((powerSum arms (1 / 2 : Real)</span>
+<span id="L192">192               (initialHalfTsallisDistribution arms harms eta) -</span>
+<span id="L193">193             powerSum arms (1 / 2 : Real) (pointMass best)) /</span>
+<span id="L194">194           (1 - (1 / 2 : Real))) / eta := by</span>
+<span id="L195">195   exact integral_sampledHalfTsallisPredictableEnvironmentRegret_le</span>
+<span id="L196">196     prior arms harms eta heta loss (pointMass best)</span>
+<span id="L197">197       (finiteSimplex_pointMass arms hbest) horizon</span>
+<span id="L198">198 </span>
+<span id="L199">199 /-- Coordinate completion of squares used by the self-bounding conversion. -/</span>
+<span id="L200">200 theorem two_mul_coeff_mul_sqrt_sub_gap_mul_le_sq_div_gap</span>
+<span id="L201">201     (coeff probability gap : Real) (hprobability : 0 ≤ probability)</span>
+<span id="L202">202     (hgap : 0 &lt; gap) :</span>
+<span id="L203">203     2 * coeff * Real.sqrt probability - gap * probability ≤</span>
+<span id="L204">204       coeff ^ 2 / gap := by</span>
+<span id="L205">205   apply (le_div_iff₀ hgap).2</span>
+<span id="L206">206   have hsqrtSq := Real.sq_sqrt hprobability</span>
+<span id="L207">207   have hsq := sq_nonneg (coeff - gap * Real.sqrt probability)</span>
+<span id="L208">208   calc</span>
+<span id="L209">209     (2 * coeff * Real.sqrt probability - gap * probability) * gap =</span>
+<span id="L210">210         2 * coeff * Real.sqrt probability * gap - gap ^ 2 * probability := by</span>
+<span id="L211">211       ring</span>
+<span id="L212">212     _ = 2 * coeff * Real.sqrt probability * gap -</span>
+<span id="L213">213         gap ^ 2 * (Real.sqrt probability) ^ 2 := by</span>
+<span id="L214">214       rw [hsqrtSq]</span>
+<span id="L215">215     _ = coeff ^ 2 - (coeff - gap * Real.sqrt probability) ^ 2 := by</span>
+<span id="L216">216       ring</span>
+<span id="L217">217     _ &lt;= coeff ^ 2 := sub_le_self _ hsq</span>
+<span id="L218">218 </span>
+<span id="L219">219 /-- Finite `(Delta, C, T)` self-bounding conversion after a refined upper</span>
+<span id="L220">220 bound has removed every zero-gap coordinate. -/</span>
+<span id="L221">221 theorem regret_le_two_mul_base_add_sum_sq_div_gap_add_corruption</span>
+<span id="L222">222     {Index : Type u} (indices : Finset Index)</span>
+<span id="L223">223     (probability coeff gap : Index -&gt; Real)</span>
+<span id="L224">224     (regret base corruption : Real)</span>
+<span id="L225">225     (hprobability : ∀ index ∈ indices, 0 ≤ probability index)</span>
+<span id="L226">226     (hgap : ∀ index ∈ indices, 0 &lt; gap index)</span>
+<span id="L227">227     (hselfBounding :</span>
+<span id="L228">228       indices.sum (fun index =&gt; gap index * probability index) -</span>
+<span id="L229">229           corruption ≤ regret)</span>
+<span id="L230">230     (hupper :</span>
+<span id="L231">231       regret ≤ base + indices.sum (fun index =&gt;</span>
+<span id="L232">232         coeff index * Real.sqrt (probability index))) :</span>
+<span id="L233">233     regret ≤</span>
+<span id="L234">234       2 * base + indices.sum (fun index =&gt; coeff index ^ 2 / gap index) +</span>
+<span id="L235">235         corruption := by</span>
+<span id="L236">236   have hcombine :</span>
+<span id="L237">237       regret ≤</span>
+<span id="L238">238         2 * (base + indices.sum (fun index =&gt;</span>
+<span id="L239">239           coeff index * Real.sqrt (probability index))) -</span>
+<span id="L240">240         indices.sum (fun index =&gt; gap index * probability index) +</span>
+<span id="L241">241         corruption := by</span>
+<span id="L242">242     linarith</span>
+<span id="L243">243   have hcoordinates :</span>
+<span id="L244">244       indices.sum (fun index =&gt;</span>
+<span id="L245">245           2 * coeff index * Real.sqrt (probability index) -</span>
+<span id="L246">246             gap index * probability index) ≤</span>
+<span id="L247">247         indices.sum (fun index =&gt; coeff index ^ 2 / gap index) := by</span>
+<span id="L248">248     apply Finset.sum_le_sum</span>
+<span id="L249">249     intro index hindex</span>
+<span id="L250">250     exact two_mul_coeff_mul_sqrt_sub_gap_mul_le_sq_div_gap</span>
+<span id="L251">251       (coeff index) (probability index) (gap index)</span>
+<span id="L252">252       (hprobability index hindex) (hgap index hindex)</span>
+<span id="L253">253   have hrewrite :</span>
+<span id="L254">254       2 * (base + indices.sum (fun index =&gt;</span>
+<span id="L255">255           coeff index * Real.sqrt (probability index))) -</span>
+<span id="L256">256           indices.sum (fun index =&gt; gap index * probability index) +</span>
+<span id="L257">257           corruption =</span>
+<span id="L258">258         2 * base + indices.sum (fun index =&gt;</span>
+<span id="L259">259           2 * coeff index * Real.sqrt (probability index) -</span>
+<span id="L260">260             gap index * probability index) + corruption := by</span>
+<span id="L261">261     rw [Finset.sum_sub_distrib]</span>
+<span id="L262">262     simp_rw [mul_assoc]</span>
+<span id="L263">263     rw [← Finset.mul_sum]</span>
+<span id="L264">264     ring</span>
+<span id="L265">265   rw [hrewrite] at hcombine</span>
+<span id="L266">266   linarith</span>
+<span id="L267">267 </span>
+<span id="L268">268 theorem powerSum_pointMass_half</span>
+<span id="L269">269     {Action : Type u} [DecidableEq Action]</span>
+<span id="L270">270     (arms : Finset Action) {best : Action} (hbest : best ∈ arms) :</span>
+<span id="L271">271     powerSum arms (1 / 2 : Real) (pointMass best) = 1 := by</span>
+<span id="L272">272   unfold powerSum pointMass</span>
+<span id="L273">273   simp [hbest]</span>
+<span id="L274">274 </span>
+<span id="L275">275 theorem sum_erase_sqrt_pointMass</span>
+<span id="L276">276     {Action : Type u} [DecidableEq Action]</span>
+<span id="L277">277     (arms : Finset Action) (best : Action) :</span>
+<span id="L278">278     (arms.erase best).sum (fun action =&gt;</span>
+<span id="L279">279       Real.sqrt (pointMass best action)) = 0 := by</span>
+<span id="L280">280   apply Finset.sum_eq_zero</span>
+<span id="L281">281   intro action haction</span>
+<span id="L282">282   have hne : action ≠ best := (Finset.mem_erase.mp haction).1</span>
+<span id="L283">283   simp [pointMass, hne]</span>
+<span id="L284">284 </span>
+<span id="L285">285 /-- The existing total half-power budget cannot uniformly be replaced by a</span>
+<span id="L286">286 suboptimal-arm square-root budget.  A refined `(1-p)` factor is genuinely</span>
+<span id="L287">287 needed before the self-bounding conversion can consume the trajectory bound. -/</span>
+<span id="L288">288 theorem not_forall_powerSum_half_le_sum_erase_sqrt</span>
+<span id="L289">289     {Action : Type u} [DecidableEq Action]</span>
+<span id="L290">290     (arms : Finset Action) {best : Action} (hbest : best ∈ arms) :</span>
+<span id="L291">291     ¬ ∀ p : Action -&gt; Real, FTRL.finiteSimplex arms p -&gt;</span>
+<span id="L292">292       powerSum arms (1 / 2 : Real) p ≤</span>
+<span id="L293">293         (arms.erase best).sum (fun action =&gt; Real.sqrt (p action)) := by</span>
+<span id="L294">294   intro h</span>
+<span id="L295">295   have hbad := h (pointMass best) (finiteSimplex_pointMass arms hbest)</span>
+<span id="L296">296   rw [powerSum_pointMass_half arms hbest,</span>
+<span id="L297">297     sum_erase_sqrt_pointMass arms best] at hbad</span>
+<span id="L298">298   norm_num at hbad</span>
+<span id="L299">299 </span>
+<span id="L300">300 end Tsallis</span>
+<span id="L301">301 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

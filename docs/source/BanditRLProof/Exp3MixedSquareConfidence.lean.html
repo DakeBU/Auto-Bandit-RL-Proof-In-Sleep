@@ -1,0 +1,996 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Exp3MixedSquareConfidence.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Exp3MixedSquareConfidence.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Exp3MixedSquareConfidence.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Exp3MixedSquareConfidence.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Exp3RandomSquareHighProbabilityRegret</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Exponential confidence for the EXP3 mixed estimator-square sum</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module replaces the Markov-only confidence step for the observed mixed</span>
+<span id="L7">7 importance-weighted estimator-square sum by a finite-action conditional</span>
+<span id="L8">8 sub-Gaussian route.  The raw score lies in `[0, 1 / epsilon]` and its</span>
+<span id="L9">9 conditional mean is the armwise predictable loss-square sum.  Consequently,</span>
+<span id="L10">10 the centered generated process has an exponential finite-horizon tail.</span>
+<span id="L11">11 </span>
+<span id="L12">12 The proxy remains Hoeffding&#x27;s interval proxy for `[0, |arms| / gamma]`.  This</span>
+<span id="L13">13 is a genuine exponential tail, but not the sharper variance-sensitive</span>
+<span id="L14">14 Freedman/EXP3.P rate.</span>
+<span id="L15">15 -/</span>
+<span id="L16">16 </span>
+<span id="L17">17 namespace BanditRLProof.Exp3</span>
+<span id="L18">18 </span>
+<span id="L19">19 open MeasureTheory ProbabilityTheory</span>
+<span id="L20">20 </span>
+<span id="L21">21 universe u v w</span>
+<span id="L22">22 </span>
+<span id="L23">23 /-- Under a positive probability floor and unit losses, the mixed estimator</span>
+<span id="L24">24 square has the sharper reciprocal-floor bound, rather than the generic square</span>
+<span id="L25">25 of that reciprocal. -/</span>
+<span id="L26">26 theorem mixedSquaredImportanceWeightedLoss_le_inv_floor</span>
+<span id="L27">27     {History : Type u} {Action : Type v}</span>
+<span id="L28">28     [MeasurableSpace History] [MeasurableSpace Action]</span>
+<span id="L29">29     [MeasurableSingletonClass Action] [DecidableEq Action]</span>
+<span id="L30">30     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L31">31     (epsilon : Real)</span>
+<span id="L32">32     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L33">33       arms prob loss epsilon)</span>
+<span id="L34">34     (history : History) (chosen : Action) :</span>
+<span id="L35">35     mixedSquaredImportanceWeightedLoss arms (prob history) (loss history)</span>
+<span id="L36">36         chosen &lt;= 1 / epsilon := by</span>
+<span id="L37">37   by_cases hchosen : chosen ∈ arms</span>
+<span id="L38">38   · have hprob_pos := regularity.prob_pos history chosen hchosen</span>
+<span id="L39">39     have hloss := regularity.loss_mem_Icc history chosen hchosen</span>
+<span id="L40">40     have hsq : (loss history chosen) ^ 2 &lt;= 1 := by</span>
+<span id="L41">41       nlinarith [hloss.1, hloss.2]</span>
+<span id="L42">42     have hone_le : 1 &lt;= (1 / epsilon) * prob history chosen := by</span>
+<span id="L43">43       rw [one_div_mul_eq_div, le_div_iff₀ regularity.epsilon_pos]</span>
+<span id="L44">44       simpa using regularity.prob_floor history chosen hchosen</span>
+<span id="L45">45     rw [mixedSquaredImportanceWeightedLoss_eq_selectedLoss_sq_div</span>
+<span id="L46">46       arms (prob history) (loss history) chosen hchosen hprob_pos.ne&#x27;]</span>
+<span id="L47">47     apply (div_le_iff₀ hprob_pos).2</span>
+<span id="L48">48     exact hsq.trans hone_le</span>
+<span id="L49">49   · have hzero : mixedSquaredImportanceWeightedLoss arms (prob history)</span>
+<span id="L50">50         (loss history) chosen = 0 := by</span>
+<span id="L51">51       unfold mixedSquaredImportanceWeightedLoss</span>
+<span id="L52">52       apply Finset.sum_eq_zero</span>
+<span id="L53">53       intro candidate hcandidate</span>
+<span id="L54">54       have hne : chosen ≠ candidate := by</span>
+<span id="L55">55         intro heq</span>
+<span id="L56">56         exact hchosen (heq ▸ hcandidate)</span>
+<span id="L57">57       simp [importanceWeightedLoss, hne]</span>
+<span id="L58">58     rw [hzero]</span>
+<span id="L59">59     exact one_div_nonneg.mpr regularity.epsilon_pos.le</span>
+<span id="L60">60 </span>
+<span id="L61">61 /-- A finite-action mixed estimator square, centered by its exact conditional</span>
+<span id="L62">62 mean, is conditionally sub-Gaussian whenever the selected action has the stated</span>
+<span id="L63">63 finite-action conditional distribution. -/</span>
+<span id="L64">64 theorem mixedSquaredEstimator_hasCondSubgaussianMGF_of_condDistrib_ae_eq_finiteActionKernel</span>
+<span id="L65">65     {Omega : Type u} {History : Type v} {Action : Type w}</span>
+<span id="L66">66     [mOmega : MeasurableSpace Omega] [StandardBorelSpace Omega] [Nonempty Omega]</span>
+<span id="L67">67     [mHistory : MeasurableSpace History] [StandardBorelSpace History]</span>
+<span id="L68">68     [mAction : MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L69">69     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L70">70     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L71">71     (history : Omega -&gt; History) (hhistory : Measurable history)</span>
+<span id="L72">72     (action : Omega -&gt; Action) (haction : Measurable action)</span>
+<span id="L73">73     (arms : Finset Action) (prob loss : History -&gt; Action -&gt; Real)</span>
+<span id="L74">74     (source : MeasurableFiniteActionDistribution arms prob)</span>
+<span id="L75">75     (epsilon : Real)</span>
+<span id="L76">76     (regularity : BoundedMeasurableLossWithProbabilityFloor</span>
+<span id="L77">77       arms prob loss epsilon)</span>
+<span id="L78">78     (hcond : condDistrib action history mu =ᵐ[mu.map history]</span>
+<span id="L79">79       finiteActionKernel arms prob source) :</span>
+<span id="L80">80     ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L81">81       (mHistory.comap history)</span>
+<span id="L82">82       hhistory.comap_le</span>
+<span id="L83">83       (fun omega =&gt;</span>
+<span id="L84">84         mixedSquaredImportanceWeightedLoss arms (prob (history omega))</span>
+<span id="L85">85             (loss (history omega)) (action omega) -</span>
+<span id="L86">86           arms.sum (fun candidate =&gt; (loss (history omega) candidate) ^ 2))</span>
+<span id="L87">87       (Concentration.intervalVarianceProxy 0 (1 / epsilon)) mu := by</span>
+<span id="L88">88   let mcond := mHistory.comap history</span>
+<span id="L89">89   let mean := fun h : History =&gt;</span>
+<span id="L90">90     arms.sum (fun candidate =&gt; (loss h candidate) ^ 2)</span>
+<span id="L91">91   let X := fun omega =&gt;</span>
+<span id="L92">92     mixedSquaredImportanceWeightedLoss arms (prob (history omega))</span>
+<span id="L93">93         (loss (history omega)) (action omega) - mean (history omega)</span>
+<span id="L94">94   let target : Omega -&gt; Measure Real := fun omega =&gt; Measure.map</span>
+<span id="L95">95     (fun selected =&gt;</span>
+<span id="L96">96       mixedSquaredImportanceWeightedLoss arms (prob (history omega))</span>
+<span id="L97">97           (loss (history omega)) selected - mean (history omega))</span>
+<span id="L98">98     (finiteActionMeasure arms (prob (history omega)))</span>
+<span id="L99">99   have hmcond : mcond &lt;= mOmega := hhistory.comap_le</span>
+<span id="L100">100   have hrawPair := measurable_mixedSquaredImportanceWeightedLoss_score</span>
+<span id="L101">101     arms prob loss source epsilon regularity</span>
+<span id="L102">102   have hmean : Measurable mean := by</span>
+<span id="L103">103     refine Finset.measurable_sum arms fun candidate hcandidate =&gt; ?_</span>
+<span id="L104">104     exact (regularity.measurable_loss candidate hcandidate).pow_const 2</span>
+<span id="L105">105   have hX : @Measurable Omega Real mOmega inferInstance X :=</span>
+<span id="L106">106     (hrawPair.comp (hhistory.prodMk haction)).sub (hmean.comp hhistory)</span>
+<span id="L107">107   have haction_map :=</span>
+<span id="L108">108     condExpKernel_map_eq_finiteActionMeasure_of_condDistrib_ae_eq</span>
+<span id="L109">109       (mOmega := mOmega) (mCondition := mHistory) (mAction := mAction)</span>
+<span id="L110">110       mu action history haction hhistory arms prob source hcond</span>
+<span id="L111">111   have hhistory_mcond :</span>
+<span id="L112">112       @Measurable Omega History mcond mHistory history :=</span>
+<span id="L113">113     Measurable.of_comap_le le_rfl</span>
+<span id="L114">114   have hhistory_map :=</span>
+<span id="L115">115     ConditionalExpectationReward.condExpKernel_map_eq_dirac_of_measurable</span>
+<span id="L116">116       (mOmega := mOmega) (mTarget := mHistory)</span>
+<span id="L117">117       mu mcond hmcond history hhistory_mcond</span>
+<span id="L118">118   have hhistory_ae :</span>
+<span id="L119">119       Filter.Eventually</span>
+<span id="L120">120         (fun omega =&gt; Filter.EventuallyEq</span>
+<span id="L121">121           (ae (@condExpKernel Omega mOmega _ mu _ mcond omega))</span>
+<span id="L122">122           history (fun _ =&gt; history omega))</span>
+<span id="L123">123         (ae (mu.trim hmcond)) := by</span>
+<span id="L124">124     filter_upwards [hhistory_map] with omega hmap</span>
+<span id="L125">125     exact ConditionalExpectationReward.eventuallyEq_const_of_map_eq_dirac</span>
+<span id="L126">126       (mOmega := mOmega) (mTarget := mHistory)</span>
+<span id="L127">127       (@condExpKernel Omega mOmega _ mu _ mcond omega)</span>
+<span id="L128">128       history (history omega) hhistory hmap</span>
+<span id="L129">129   have hkernel_X_eq :</span>
+<span id="L130">130       Filter.Eventually</span>
+<span id="L131">131         (fun omega =&gt; Filter.EventuallyEq</span>
+<span id="L132">132           (ae (@condExpKernel Omega mOmega _ mu _ mcond omega))</span>
+<span id="L133">133           X</span>
+<span id="L134">134           (fun y =&gt;</span>
+<span id="L135">135             mixedSquaredImportanceWeightedLoss arms (prob (history omega))</span>
+<span id="L136">136                 (loss (history omega)) (action y) - mean (history omega)))</span>
+<span id="L137">137         (ae (mu.trim hmcond)) := by</span>
+<span id="L138">138     filter_upwards [hhistory_ae] with omega hfreeze</span>
+<span id="L139">139     filter_upwards [hfreeze] with y hy</span>
+<span id="L140">140     simp only [X]</span>
+<span id="L141">141     rw [hy]</span>
+<span id="L142">142   have hkernel_map :</span>
+<span id="L143">143       Filter.Eventually</span>
+<span id="L144">144         (fun omega =&gt;</span>
+<span id="L145">145           @Measure.map Omega Real mOmega inferInstance X</span>
+<span id="L146">146               (@condExpKernel Omega mOmega _ mu _ mcond omega) =</span>
+<span id="L147">147             target omega)</span>
+<span id="L148">148         (ae (mu.trim hmcond)) := by</span>
+<span id="L149">149     filter_upwards [haction_map, hkernel_X_eq] with omega haction_eq hXeq</span>
+<span id="L150">150     let score : Action -&gt; Real := fun selected =&gt;</span>
+<span id="L151">151       mixedSquaredImportanceWeightedLoss arms (prob (history omega))</span>
+<span id="L152">152           (loss (history omega)) selected - mean (history omega)</span>
+<span id="L153">153     have hscore : Measurable score :=</span>
+<span id="L154">154       (hrawPair.comp (measurable_const.prodMk measurable_id)).sub measurable_const</span>
+<span id="L155">155     calc</span>
+<span id="L156">156       @Measure.map Omega Real mOmega inferInstance X</span>
+<span id="L157">157           (@condExpKernel Omega mOmega _ mu _ mcond omega) =</span>
+<span id="L158">158         @Measure.map Omega Real mOmega inferInstance</span>
+<span id="L159">159           (fun y =&gt; score (action y))</span>
+<span id="L160">160           (@condExpKernel Omega mOmega _ mu _ mcond omega) :=</span>
+<span id="L161">161             Measure.map_congr hXeq</span>
+<span id="L162">162       _ = Measure.map score</span>
+<span id="L163">163           (@Measure.map Omega Action mOmega mAction action</span>
+<span id="L164">164             (@condExpKernel Omega mOmega _ mu _ mcond omega)) := by</span>
+<span id="L165">165               rw [Measure.map_map hscore haction]</span>
+<span id="L166">166               congr 1</span>
+<span id="L167">167       _ = target omega := by rw [haction_eq]</span>
+<span id="L168">168   have htarget_subG :</span>
+<span id="L169">169       Filter.Eventually</span>
+<span id="L170">170         (fun omega =&gt; HasSubgaussianMGF (fun z : Real =&gt; z)</span>
+<span id="L171">171           (Concentration.intervalVarianceProxy 0 (1 / epsilon)) (target omega))</span>
+<span id="L172">172         (ae (mu.trim hmcond)) := by</span>
+<span id="L173">173     filter_upwards [] with omega</span>
+<span id="L174">174     let actionMu := finiteActionMeasure arms (prob (history omega))</span>
+<span id="L175">175     let raw : Action -&gt; Real := fun selected =&gt;</span>
+<span id="L176">176       mixedSquaredImportanceWeightedLoss arms (prob (history omega))</span>
+<span id="L177">177         (loss (history omega)) selected</span>
+<span id="L178">178     let score : Action -&gt; Real := fun selected =&gt; raw selected - mean (history omega)</span>
+<span id="L179">179     letI : IsProbabilityMeasure actionMu :=</span>
+<span id="L180">180       finiteActionMeasure_isProbabilityMeasure arms (prob (history omega))</span>
+<span id="L181">181         (source.distribution (history omega))</span>
+<span id="L182">182     have hraw : Measurable raw :=</span>
+<span id="L183">183       hrawPair.comp (measurable_const.prodMk measurable_id)</span>
+<span id="L184">184     have hbound : Filter.Eventually</span>
+<span id="L185">185         (fun selected =&gt; raw selected ∈ Set.Icc (0 : Real) (1 / epsilon))</span>
+<span id="L186">186         (ae actionMu) := Filter.Eventually.of_forall fun selected =&gt; by</span>
+<span id="L187">187       have hnonneg : 0 &lt;= raw selected := by</span>
+<span id="L188">188         unfold raw mixedSquaredImportanceWeightedLoss</span>
+<span id="L189">189         exact Finset.sum_nonneg fun candidate hcandidate =&gt;</span>
+<span id="L190">190           mul_nonneg</span>
+<span id="L191">191             ((source.distribution (history omega)).nonneg candidate hcandidate)</span>
+<span id="L192">192             (sq_nonneg _)</span>
+<span id="L193">193       exact ⟨hnonneg,</span>
+<span id="L194">194         mixedSquaredImportanceWeightedLoss_le_inv_floor arms prob loss</span>
+<span id="L195">195           epsilon regularity (history omega) selected⟩</span>
+<span id="L196">196     have hmean_eq : integral actionMu raw = mean (history omega) := by</span>
+<span id="L197">197       rw [integral_finiteActionMeasure_eq_sum arms (prob (history omega))</span>
+<span id="L198">198         (source.distribution (history omega)) raw]</span>
+<span id="L199">199       simpa [raw, mean] using</span>
+<span id="L200">200         (sum_prob_mul_mixedSquaredImportanceWeightedLoss_eq_sum_loss_sq</span>
+<span id="L201">201           arms (prob (history omega)) (loss (history omega))</span>
+<span id="L202">202             (fun candidate hcandidate =&gt;</span>
+<span id="L203">203               (regularity.prob_pos (history omega) candidate hcandidate).ne&#x27;))</span>
+<span id="L204">204     have hsub : HasSubgaussianMGF score</span>
+<span id="L205">205         (Concentration.intervalVarianceProxy 0 (1 / epsilon)) actionMu := by</span>
+<span id="L206">206       simpa [score, raw] using</span>
+<span id="L207">207         (Concentration.boundedCentered_hasSubgaussianMGF_of_mem_Icc_integral_eq</span>
+<span id="L208">208           actionMu hraw.aemeasurable hbound hmean_eq)</span>
+<span id="L209">209     have hscore : Measurable score := hraw.sub measurable_const</span>
+<span id="L210">210     apply (HasSubgaussianMGF.id_map_iff hscore.aemeasurable).2</span>
+<span id="L211">211     simpa [target, actionMu, score, raw] using hsub</span>
+<span id="L212">212   exact ConditionalExpectationReward.hasCondSubgaussianMGF_of_condExpKernel_map_eq</span>
+<span id="L213">213     (mOmega := mOmega)</span>
+<span id="L214">214     mu mcond hmcond X (Concentration.intervalVarianceProxy 0 (1 / epsilon))</span>
+<span id="L215">215       hX target hkernel_map htarget_subG</span>
+<span id="L216">216 </span>
+<span id="L217">217 /-- The predictable mixed-square deviation at an actual generated time. -/</span>
+<span id="L218">218 noncomputable def sampledTrajectoryPredictableMixedSquaredDeviationAt</span>
+<span id="L219">219     {Env : Type u} {Action : Type v}</span>
+<span id="L220">220     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L221">221     (arms : Finset Action) (eta gamma : Real)</span>
+<span id="L222">222     (loss : PredictableLossVector Env Action) (t : Nat)</span>
+<span id="L223">223     (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real :=</span>
+<span id="L224">224   mixedSquaredImportanceWeightedLoss arms</span>
+<span id="L225">225       (sampledTrajectoryProbabilityAt arms eta gamma t sample)</span>
+<span id="L226">226       (predictableLossAt loss t sample) (sample.2 t).1 -</span>
+<span id="L227">227     arms.sum (fun candidate =&gt; (predictableLossAt loss t sample candidate) ^ 2)</span>
+<span id="L228">228 </span>
+<span id="L229">229 theorem sampledPredictableMixedSquaredDeviation_zero_hasCondSubgaussianMGF</span>
+<span id="L230">230     {Env : Type u} {Action : Type v}</span>
+<span id="L231">231     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L232">232     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L233">233     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L234">234     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L235">235     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L236">236     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L237">237     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L238">238     (loss : PredictableLossVector Env Action) :</span>
+<span id="L239">239     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L240">240       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L241">241     ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L242">242       ((inferInstance : MeasurableSpace Env).comap</span>
+<span id="L243">243         (fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; sample.1))</span>
+<span id="L244">244       measurable_fst.comap_le</span>
+<span id="L245">245       (sampledTrajectoryPredictableMixedSquaredDeviationAt</span>
+<span id="L246">246         arms eta gamma loss 0)</span>
+<span id="L247">247       (Concentration.intervalVarianceProxy 0</span>
+<span id="L248">248         (1 / (gamma / (arms.card : Real)))) mu := by</span>
+<span id="L249">249   dsimp only</span>
+<span id="L250">250   let algorithm := sampledImportanceWeightedHistoryAlgorithm arms harms</span>
+<span id="L251">251     eta gamma hgamma_pos.le hgamma_le_one</span>
+<span id="L252">252   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L253">253     eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L254">254   let history := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt; sample.1</span>
+<span id="L255">255   let action := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L256">256     (sample.2 0).1</span>
+<span id="L257">257   let prob := fun _env : Env =&gt; initialExploredDistribution arms eta gamma</span>
+<span id="L258">258   let source := sampledInitialEnvironmentDistributionSource</span>
+<span id="L259">259     (Env := Env) arms harms eta gamma hgamma_pos.le hgamma_le_one</span>
+<span id="L260">260   let regularity := sampledPredictableInitialLossRegularity</span>
+<span id="L261">261     arms harms eta gamma hgamma_pos hgamma_le_one loss</span>
+<span id="L262">262   have hkernel : Kernel.const Env algorithm.initialAction =</span>
+<span id="L263">263       finiteActionKernel arms prob source := by</span>
+<span id="L264">264     ext env event hevent</span>
+<span id="L265">265     rw [Kernel.const_apply, finiteActionKernel_apply]</span>
+<span id="L266">266     rfl</span>
+<span id="L267">267   have hcond : condDistrib action history mu =ᵐ[mu.map history]</span>
+<span id="L268">268       finiteActionKernel arms prob source := by</span>
+<span id="L269">269     have hbase :=</span>
+<span id="L270">270       canonicalMeasurableEnvironmentTrajectoryMeasure_condDistrib_action_zero_given_environment</span>
+<span id="L271">271         prior algorithm loss.environment</span>
+<span id="L272">272     rw [hkernel] at hbase</span>
+<span id="L273">273     simpa [mu, algorithm, history, action,</span>
+<span id="L274">274       sampledImportanceWeightedTrajectoryKernel] using hbase</span>
+<span id="L275">275   have hmgf :=</span>
+<span id="L276">276     mixedSquaredEstimator_hasCondSubgaussianMGF_of_condDistrib_ae_eq_finiteActionKernel</span>
+<span id="L277">277       mu history measurable_fst action (by fun_prop) arms prob loss.initial</span>
+<span id="L278">278         source (gamma / (arms.card : Real)) regularity hcond</span>
+<span id="L279">279   simpa [mu, history, action, prob,</span>
+<span id="L280">280     sampledTrajectoryPredictableMixedSquaredDeviationAt,</span>
+<span id="L281">281     sampledTrajectoryProbabilityAt, predictableLossAt] using hmgf</span>
+<span id="L282">282 </span>
+<span id="L283">283 theorem sampledPredictableMixedSquaredDeviation_succ_hasCondSubgaussianMGF</span>
+<span id="L284">284     {Env : Type u} {Action : Type v}</span>
+<span id="L285">285     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L286">286     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L287">287     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L288">288     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L289">289     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L290">290     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L291">291     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L292">292     (loss : PredictableLossVector Env Action) (n : Nat) :</span>
+<span id="L293">293     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L294">294       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L295">295     let history := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L296">296       (sample.1, Preorder.frestrictLe n sample.2)</span>
+<span id="L297">297     ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L298">298       ((inferInstance : MeasurableSpace</span>
+<span id="L299">299         (Env × History.FinitePairHistory Action Real n)).comap history)</span>
+<span id="L300">300       (measurable_fst.prodMk</span>
+<span id="L301">301         ((Preorder.measurable_frestrictLe n).comp measurable_snd)).comap_le</span>
+<span id="L302">302       (sampledTrajectoryPredictableMixedSquaredDeviationAt</span>
+<span id="L303">303         arms eta gamma loss (n + 1))</span>
+<span id="L304">304       (Concentration.intervalVarianceProxy 0</span>
+<span id="L305">305         (1 / (gamma / (arms.card : Real)))) mu := by</span>
+<span id="L306">306   dsimp only</span>
+<span id="L307">307   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L308">308     eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L309">309   let history := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L310">310     (sample.1, Preorder.frestrictLe n sample.2)</span>
+<span id="L311">311   let action := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L312">312     (sample.2 (n + 1)).1</span>
+<span id="L313">313   let prob := fun input : Env × History.FinitePairHistory Action Real n =&gt;</span>
+<span id="L314">314     sampledHistoryDistribution arms eta gamma n input.2</span>
+<span id="L315">315   let roundLoss := fun input : Env × History.FinitePairHistory Action Real n =&gt;</span>
+<span id="L316">316     loss.successor n input.1 input.2</span>
+<span id="L317">317   let source := sampledEnvironmentHistoryDistributionSource</span>
+<span id="L318">318     (Env := Env) arms harms eta gamma hgamma_pos.le hgamma_le_one n</span>
+<span id="L319">319   let regularity := sampledPredictableSuccessorLossRegularity</span>
+<span id="L320">320     arms harms eta gamma hgamma_pos hgamma_le_one loss n</span>
+<span id="L321">321   have hhistory : Measurable history := measurable_fst.prodMk</span>
+<span id="L322">322     ((Preorder.measurable_frestrictLe n).comp measurable_snd)</span>
+<span id="L323">323   have haction : Measurable action := by fun_prop</span>
+<span id="L324">324   have hcond : condDistrib action history mu =ᵐ[mu.map history]</span>
+<span id="L325">325       finiteActionKernel arms prob source := by</span>
+<span id="L326">326     simpa [mu, history, action, prob, source] using</span>
+<span id="L327">327       (sampledImportanceWeightedTrajectoryMeasure_condDistrib_action_given_environment</span>
+<span id="L328">328         prior arms harms eta gamma hgamma_pos.le hgamma_le_one loss n)</span>
+<span id="L329">329   have hmgf :=</span>
+<span id="L330">330     mixedSquaredEstimator_hasCondSubgaussianMGF_of_condDistrib_ae_eq_finiteActionKernel</span>
+<span id="L331">331       mu history hhistory action haction arms prob roundLoss source</span>
+<span id="L332">332         (gamma / (arms.card : Real)) regularity hcond</span>
+<span id="L333">333   simpa [mu, history, action, prob, roundLoss,</span>
+<span id="L334">334     sampledTrajectoryPredictableMixedSquaredDeviationAt,</span>
+<span id="L335">335     sampledTrajectoryProbabilityAt, predictableLossAt] using hmgf</span>
+<span id="L336">336 </span>
+<span id="L337">337 /-- Shift the actual-time predictable mixed-square deviations by one so that</span>
+<span id="L338">338 the process starts with the deterministic zero required by the finite-sum</span>
+<span id="L339">339 conditional concentration API. -/</span>
+<span id="L340">340 noncomputable def sampledPredictableMixedSquaredDeviationProcess</span>
+<span id="L341">341     {Env : Type u} {Action : Type v}</span>
+<span id="L342">342     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L343">343     (arms : Finset Action) (eta gamma : Real)</span>
+<span id="L344">344     (loss : PredictableLossVector Env Action) :</span>
+<span id="L345">345     Nat -&gt; Env × ((k : Nat) -&gt; Action × Real) -&gt; Real</span>
+<span id="L346">346   | 0, _sample =&gt; 0</span>
+<span id="L347">347   | i + 1, sample =&gt;</span>
+<span id="L348">348       sampledTrajectoryPredictableMixedSquaredDeviationAt</span>
+<span id="L349">349         arms eta gamma loss i sample</span>
+<span id="L350">350 </span>
+<span id="L351">351 noncomputable def sampledMixedSquaredVarianceProxy</span>
+<span id="L352">352     {Action : Type v} (arms : Finset Action) (gamma : Real) : NNReal :=</span>
+<span id="L353">353   Concentration.intervalVarianceProxy 0</span>
+<span id="L354">354     (1 / (gamma / (arms.card : Real)))</span>
+<span id="L355">355 </span>
+<span id="L356">356 noncomputable def sampledMixedSquaredDeviationProxy</span>
+<span id="L357">357     {Action : Type v} (arms : Finset Action) (gamma : Real) : Nat -&gt; NNReal</span>
+<span id="L358">358   | 0 =&gt; 0</span>
+<span id="L359">359   | _i + 1 =&gt; sampledMixedSquaredVarianceProxy arms gamma</span>
+<span id="L360">360 </span>
+<span id="L361">361 set_option maxHeartbeats 800000 in</span>
+<span id="L362">362 theorem sampledPredictableMixedSquaredDeviationProcess_stronglyAdapted</span>
+<span id="L363">363     {Env : Type u} {Action : Type v}</span>
+<span id="L364">364     [MeasurableSpace Env] [MeasurableSpace Action]</span>
+<span id="L365">365     [MeasurableSingletonClass Action] [DecidableEq Action]</span>
+<span id="L366">366     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L367">367     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L368">368     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L369">369     (loss : PredictableLossVector Env Action) :</span>
+<span id="L370">370     StronglyAdapted</span>
+<span id="L371">371       (sampledPredictableDeviationFiltration Env Action)</span>
+<span id="L372">372       (sampledPredictableMixedSquaredDeviationProcess</span>
+<span id="L373">373         arms eta gamma loss) := by</span>
+<span id="L374">374   intro t</span>
+<span id="L375">375   cases t with</span>
+<span id="L376">376   | zero =&gt;</span>
+<span id="L377">377       simpa [sampledPredictableMixedSquaredDeviationProcess] using</span>
+<span id="L378">378         (stronglyMeasurable_const :</span>
+<span id="L379">379           StronglyMeasurable[</span>
+<span id="L380">380             sampledPredictableDeviationFiltration Env Action 0]</span>
+<span id="L381">381               (fun _ : Env × ((k : Nat) -&gt; Action × Real) =&gt; (0 : Real)))</span>
+<span id="L382">382   | succ i =&gt;</span>
+<span id="L383">383       cases i with</span>
+<span id="L384">384       | zero =&gt;</span>
+<span id="L385">385           let history := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L386">386             (sample.1, Preorder.frestrictLe 0 sample.2)</span>
+<span id="L387">387           let zeroIndex : Finset.Iic 0 := ⟨0, by simp⟩</span>
+<span id="L388">388           let selectedAction := fun input :</span>
+<span id="L389">389               Env × History.FinitePairHistory Action Real 0 =&gt;</span>
+<span id="L390">390             (input.2 zeroIndex).1</span>
+<span id="L391">391           let prob := fun _env : Env =&gt;</span>
+<span id="L392">392             initialExploredDistribution arms eta gamma</span>
+<span id="L393">393           let roundLoss := loss.initial</span>
+<span id="L394">394           let mean := fun env : Env =&gt;</span>
+<span id="L395">395             arms.sum (fun candidate =&gt; (roundLoss env candidate) ^ 2)</span>
+<span id="L396">396           let raw := fun input : Env × History.FinitePairHistory Action Real 0 =&gt;</span>
+<span id="L397">397             mixedSquaredImportanceWeightedLoss arms (prob input.1)</span>
+<span id="L398">398               (roundLoss input.1) (selectedAction input)</span>
+<span id="L399">399           let score := fun input : Env × History.FinitePairHistory Action Real 0 =&gt;</span>
+<span id="L400">400             raw input - mean input.1</span>
+<span id="L401">401           have hhistory :</span>
+<span id="L402">402               @Measurable (Env × ((k : Nat) -&gt; Action × Real))</span>
+<span id="L403">403                 (Env × History.FinitePairHistory Action Real 0)</span>
+<span id="L404">404                 (sampledPredictableDeviationFiltration Env Action 1)</span>
+<span id="L405">405                 inferInstance history := by</span>
+<span id="L406">406             rw [sampledPredictableDeviationFiltration_succ]</span>
+<span id="L407">407             exact Measurable.of_comap_le le_rfl</span>
+<span id="L408">408           have hcoordinate : Measurable</span>
+<span id="L409">409               (fun h : History.FinitePairHistory Action Real 0 =&gt;</span>
+<span id="L410">410                 h zeroIndex) := measurable_pi_apply zeroIndex</span>
+<span id="L411">411           have hselectedAction : Measurable selectedAction :=</span>
+<span id="L412">412             measurable_fst.comp (hcoordinate.comp measurable_snd)</span>
+<span id="L413">413           let source := sampledInitialEnvironmentDistributionSource</span>
+<span id="L414">414             (Env := Env) arms harms eta gamma hgamma_pos.le hgamma_le_one</span>
+<span id="L415">415           let regularity := sampledPredictableInitialLossRegularity</span>
+<span id="L416">416             arms harms eta gamma hgamma_pos hgamma_le_one loss</span>
+<span id="L417">417           have hrawBase : Measurable (fun input : Env × Action =&gt;</span>
+<span id="L418">418               mixedSquaredImportanceWeightedLoss arms (prob input.1)</span>
+<span id="L419">419                 (roundLoss input.1) input.2) :=</span>
+<span id="L420">420             measurable_mixedSquaredImportanceWeightedLoss_score</span>
+<span id="L421">421               arms prob roundLoss source (gamma / (arms.card : Real)) regularity</span>
+<span id="L422">422           have hrawInput : Measurable (fun input :</span>
+<span id="L423">423               Env × History.FinitePairHistory Action Real 0 =&gt;</span>
+<span id="L424">424                 (input.1, selectedAction input)) :=</span>
+<span id="L425">425             measurable_fst.prodMk hselectedAction</span>
+<span id="L426">426           have hraw : Measurable raw := by</span>
+<span id="L427">427             simpa [raw, prob, roundLoss] using hrawBase.comp hrawInput</span>
+<span id="L428">428           have hmean : Measurable mean := by</span>
+<span id="L429">429             refine Finset.measurable_sum arms fun candidate _hcandidate =&gt; ?_</span>
+<span id="L430">430             exact (loss.measurable_initial.comp</span>
+<span id="L431">431               (measurable_id.prodMk measurable_const)).pow_const 2</span>
+<span id="L432">432           have hscore : Measurable score := hraw.sub (hmean.comp measurable_fst)</span>
+<span id="L433">433           have hfactor :</span>
+<span id="L434">434               sampledPredictableMixedSquaredDeviationProcess</span>
+<span id="L435">435                   arms eta gamma loss 1 = score ∘ history := by</span>
+<span id="L436">436             funext sample</span>
+<span id="L437">437             simp [sampledPredictableMixedSquaredDeviationProcess, score, raw,</span>
+<span id="L438">438               mean, prob, roundLoss, selectedAction, history, zeroIndex,</span>
+<span id="L439">439               sampledTrajectoryPredictableMixedSquaredDeviationAt,</span>
+<span id="L440">440               sampledTrajectoryProbabilityAt, predictableLossAt]</span>
+<span id="L441">441           rw [hfactor]</span>
+<span id="L442">442           exact (hscore.comp hhistory).stronglyMeasurable</span>
+<span id="L443">443       | succ n =&gt;</span>
+<span id="L444">444           let history := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L445">445             (sample.1, Preorder.frestrictLe (n + 1) sample.2)</span>
+<span id="L446">446           let previous := fun input :</span>
+<span id="L447">447               Env × History.FinitePairHistory Action Real (n + 1) =&gt;</span>
+<span id="L448">448             (input.1, Preorder.frestrictLe₂</span>
+<span id="L449">449               (π := fun _ : Nat =&gt; Action × Real) n.le_succ input.2)</span>
+<span id="L450">450           let currentIndex : Finset.Iic (n + 1) := ⟨n + 1, by simp⟩</span>
+<span id="L451">451           let selectedAction := fun input :</span>
+<span id="L452">452               Env × History.FinitePairHistory Action Real (n + 1) =&gt;</span>
+<span id="L453">453             (input.2 currentIndex).1</span>
+<span id="L454">454           let prob := fun input : Env × History.FinitePairHistory Action Real n =&gt;</span>
+<span id="L455">455             sampledHistoryDistribution arms eta gamma n input.2</span>
+<span id="L456">456           let roundLoss := fun input : Env × History.FinitePairHistory Action Real n =&gt;</span>
+<span id="L457">457             loss.successor n input.1 input.2</span>
+<span id="L458">458           let mean := fun input : Env × History.FinitePairHistory Action Real n =&gt;</span>
+<span id="L459">459             arms.sum (fun candidate =&gt; (roundLoss input candidate) ^ 2)</span>
+<span id="L460">460           let raw := fun input :</span>
+<span id="L461">461               Env × History.FinitePairHistory Action Real (n + 1) =&gt;</span>
+<span id="L462">462             mixedSquaredImportanceWeightedLoss arms (prob (previous input))</span>
+<span id="L463">463               (roundLoss (previous input)) (selectedAction input)</span>
+<span id="L464">464           let score := fun input :</span>
+<span id="L465">465               Env × History.FinitePairHistory Action Real (n + 1) =&gt;</span>
+<span id="L466">466             raw input - mean (previous input)</span>
+<span id="L467">467           have hhistory :</span>
+<span id="L468">468               @Measurable (Env × ((k : Nat) -&gt; Action × Real))</span>
+<span id="L469">469                 (Env × History.FinitePairHistory Action Real (n + 1))</span>
+<span id="L470">470                 (sampledPredictableDeviationFiltration Env Action (n + 2))</span>
+<span id="L471">471                 inferInstance history := by</span>
+<span id="L472">472             rw [show n + 2 = (n + 1) + 1 by omega,</span>
+<span id="L473">473               sampledPredictableDeviationFiltration_succ]</span>
+<span id="L474">474             exact Measurable.of_comap_le le_rfl</span>
+<span id="L475">475           have hprevious : Measurable previous :=</span>
+<span id="L476">476             measurable_fst.prodMk</span>
+<span id="L477">477               ((Preorder.measurable_frestrictLe₂ n.le_succ).comp measurable_snd)</span>
+<span id="L478">478           have hcoordinate : Measurable</span>
+<span id="L479">479               (fun h : History.FinitePairHistory Action Real (n + 1) =&gt;</span>
+<span id="L480">480                 h currentIndex) := measurable_pi_apply currentIndex</span>
+<span id="L481">481           have hselectedAction : Measurable selectedAction :=</span>
+<span id="L482">482             measurable_fst.comp (hcoordinate.comp measurable_snd)</span>
+<span id="L483">483           let source := sampledEnvironmentHistoryDistributionSource</span>
+<span id="L484">484             (Env := Env) arms harms eta gamma hgamma_pos.le hgamma_le_one n</span>
+<span id="L485">485           let regularity := sampledPredictableSuccessorLossRegularity</span>
+<span id="L486">486             arms harms eta gamma hgamma_pos hgamma_le_one loss n</span>
+<span id="L487">487           have hrawBase : Measurable</span>
+<span id="L488">488               (fun input : (Env × History.FinitePairHistory Action Real n) × Action =&gt;</span>
+<span id="L489">489                 mixedSquaredImportanceWeightedLoss arms (prob input.1)</span>
+<span id="L490">490                   (roundLoss input.1) input.2) :=</span>
+<span id="L491">491             measurable_mixedSquaredImportanceWeightedLoss_score</span>
+<span id="L492">492               arms prob roundLoss source (gamma / (arms.card : Real)) regularity</span>
+<span id="L493">493           have hrawInput : Measurable (fun input :</span>
+<span id="L494">494               Env × History.FinitePairHistory Action Real (n + 1) =&gt;</span>
+<span id="L495">495                 (previous input, selectedAction input)) :=</span>
+<span id="L496">496             hprevious.prodMk hselectedAction</span>
+<span id="L497">497           have hraw : Measurable raw := by</span>
+<span id="L498">498             simpa [raw] using hrawBase.comp hrawInput</span>
+<span id="L499">499           have hmean : Measurable mean := by</span>
+<span id="L500">500             refine Finset.measurable_sum arms fun candidate hcandidate =&gt; ?_</span>
+<span id="L501">501             exact (regularity.measurable_loss candidate hcandidate).pow_const 2</span>
+<span id="L502">502           have hscore : Measurable score :=</span>
+<span id="L503">503             hraw.sub (hmean.comp hprevious)</span>
+<span id="L504">504           have hfactor :</span>
+<span id="L505">505               sampledPredictableMixedSquaredDeviationProcess</span>
+<span id="L506">506                   arms eta gamma loss (n + 2) = score ∘ history := by</span>
+<span id="L507">507             funext sample</span>
+<span id="L508">508             have hprefix :</span>
+<span id="L509">509                 Preorder.frestrictLe₂</span>
+<span id="L510">510                     (π := fun _ : Nat =&gt; Action × Real) n.le_succ</span>
+<span id="L511">511                     (Preorder.frestrictLe (n + 1) sample.2) =</span>
+<span id="L512">512                   Preorder.frestrictLe n sample.2 := by</span>
+<span id="L513">513               rfl</span>
+<span id="L514">514             simp [sampledPredictableMixedSquaredDeviationProcess, score, raw,</span>
+<span id="L515">515               mean, prob, roundLoss, previous, selectedAction, history,</span>
+<span id="L516">516               currentIndex, sampledTrajectoryPredictableMixedSquaredDeviationAt,</span>
+<span id="L517">517               sampledTrajectoryProbabilityAt, predictableLossAt, hprefix]</span>
+<span id="L518">518           rw [hfactor]</span>
+<span id="L519">519           exact (hscore.comp hhistory).stronglyMeasurable</span>
+<span id="L520">520 </span>
+<span id="L521">521 theorem sampledPredictableMixedSquaredDeviationProcess_sum_range_succ</span>
+<span id="L522">522     {Env : Type u} {Action : Type v}</span>
+<span id="L523">523     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L524">524     (arms : Finset Action) (eta gamma : Real)</span>
+<span id="L525">525     (loss : PredictableLossVector Env Action)</span>
+<span id="L526">526     (horizon : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) :</span>
+<span id="L527">527     (Finset.range (horizon + 1)).sum (fun i =&gt;</span>
+<span id="L528">528         sampledPredictableMixedSquaredDeviationProcess</span>
+<span id="L529">529           arms eta gamma loss i sample) =</span>
+<span id="L530">530       (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L531">531         sampledTrajectoryPredictableMixedSquaredDeviationAt</span>
+<span id="L532">532           arms eta gamma loss i sample) := by</span>
+<span id="L533">533   induction horizon with</span>
+<span id="L534">534   | zero =&gt; simp [sampledPredictableMixedSquaredDeviationProcess]</span>
+<span id="L535">535   | succ n ih =&gt;</span>
+<span id="L536">536       rw [show Nat.succ n + 1 = (n + 1) + 1 by rfl,</span>
+<span id="L537">537         Finset.sum_range_succ, ih]</span>
+<span id="L538">538       rw [Finset.sum_range_succ]</span>
+<span id="L539">539       rfl</span>
+<span id="L540">540 </span>
+<span id="L541">541 theorem sampledMixedSquaredDeviationProxy_sum_range_succ</span>
+<span id="L542">542     {Action : Type v} (arms : Finset Action) (gamma : Real) (horizon : Nat) :</span>
+<span id="L543">543     (Finset.range (horizon + 1)).sum</span>
+<span id="L544">544         (sampledMixedSquaredDeviationProxy arms gamma) =</span>
+<span id="L545">545       (horizon : NNReal) * sampledMixedSquaredVarianceProxy arms gamma := by</span>
+<span id="L546">546   induction horizon with</span>
+<span id="L547">547   | zero =&gt; simp [sampledMixedSquaredDeviationProxy]</span>
+<span id="L548">548   | succ n ih =&gt;</span>
+<span id="L549">549       rw [show n + 1 + 1 = (n + 1) + 1 by rfl,</span>
+<span id="L550">550         Finset.sum_range_succ, ih]</span>
+<span id="L551">551       simp only [sampledMixedSquaredDeviationProxy]</span>
+<span id="L552">552       push_cast</span>
+<span id="L553">553       ring</span>
+<span id="L554">554 </span>
+<span id="L555">555 /-- Exponential tail for the centered predictable mixed estimator-square sum. -/</span>
+<span id="L556">556 theorem sampledPredictableMixedSquaredDeviation_sum_tail_ennreal</span>
+<span id="L557">557     {Env : Type u} {Action : Type v}</span>
+<span id="L558">558     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L559">559     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L560">560     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L561">561     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L562">562     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L563">563     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L564">564     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L565">565     (loss : PredictableLossVector Env Action)</span>
+<span id="L566">566     (horizon : Nat) {eps : Real} (heps : 0 &lt;= eps) :</span>
+<span id="L567">567     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L568">568       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L569">569     mu {sample | eps &lt;= (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L570">570         sampledTrajectoryPredictableMixedSquaredDeviationAt</span>
+<span id="L571">571           arms eta gamma loss i sample)} &lt;=</span>
+<span id="L572">572       ENNReal.ofReal (Real.exp</span>
+<span id="L573">573         (-eps ^ 2 /</span>
+<span id="L574">574           (2 * ((((horizon : NNReal) *</span>
+<span id="L575">575             sampledMixedSquaredVarianceProxy arms gamma : NNReal)) : Real)))) := by</span>
+<span id="L576">576   dsimp only</span>
+<span id="L577">577   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L578">578     eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L579">579   let F := sampledPredictableDeviationFiltration Env Action</span>
+<span id="L580">580   let Y := sampledPredictableMixedSquaredDeviationProcess arms eta gamma loss</span>
+<span id="L581">581   let cY := sampledMixedSquaredDeviationProxy arms gamma</span>
+<span id="L582">582   letI : IsProbabilityMeasure mu := by</span>
+<span id="L583">583     dsimp [mu]</span>
+<span id="L584">584     infer_instance</span>
+<span id="L585">585   have hadapted : StronglyAdapted F Y := by</span>
+<span id="L586">586     simpa [F, Y] using</span>
+<span id="L587">587       (sampledPredictableMixedSquaredDeviationProcess_stronglyAdapted</span>
+<span id="L588">588         arms harms eta gamma hgamma_pos hgamma_le_one loss)</span>
+<span id="L589">589   have hzero : ProbabilityTheory.HasSubgaussianMGF</span>
+<span id="L590">590       (Y 0) (cY 0) mu := by</span>
+<span id="L591">591     change ProbabilityTheory.HasSubgaussianMGF (fun _ =&gt; 0) 0 mu</span>
+<span id="L592">592     exact ProbabilityTheory.HasSubgaussianMGF.fun_zero</span>
+<span id="L593">593   have hcond : forall i, i &lt; (horizon + 1) - 1 -&gt;</span>
+<span id="L594">594       ProbabilityTheory.HasCondSubgaussianMGF</span>
+<span id="L595">595         (F i) (F.le i) (Y (i + 1)) (cY (i + 1)) mu := by</span>
+<span id="L596">596     intro i _hi</span>
+<span id="L597">597     cases i with</span>
+<span id="L598">598     | zero =&gt;</span>
+<span id="L599">599         simpa [mu, F, Y, cY,</span>
+<span id="L600">600           sampledPredictableMixedSquaredDeviationProcess,</span>
+<span id="L601">601           sampledMixedSquaredDeviationProxy,</span>
+<span id="L602">602           sampledMixedSquaredVarianceProxy] using</span>
+<span id="L603">603           (sampledPredictableMixedSquaredDeviation_zero_hasCondSubgaussianMGF</span>
+<span id="L604">604             prior arms harms eta gamma hgamma_pos hgamma_le_one loss)</span>
+<span id="L605">605     | succ n =&gt;</span>
+<span id="L606">606         simpa [mu, F, Y, cY,</span>
+<span id="L607">607           sampledPredictableMixedSquaredDeviationProcess,</span>
+<span id="L608">608           sampledMixedSquaredDeviationProxy,</span>
+<span id="L609">609           sampledMixedSquaredVarianceProxy,</span>
+<span id="L610">610           Nat.succ_eq_add_one, Nat.add_assoc] using</span>
+<span id="L611">611           (sampledPredictableMixedSquaredDeviation_succ_hasCondSubgaussianMGF</span>
+<span id="L612">612             prior arms harms eta gamma hgamma_pos hgamma_le_one loss n)</span>
+<span id="L613">613   have htail := Concentration.condSubGaussian_sum_tail_ennreal_of_stronglyAdapted</span>
+<span id="L614">614     hadapted hzero (horizon + 1) hcond heps</span>
+<span id="L615">615   have hprocess (sample : Env × ((k : Nat) -&gt; Action × Real)) :=</span>
+<span id="L616">616     sampledPredictableMixedSquaredDeviationProcess_sum_range_succ</span>
+<span id="L617">617       arms eta gamma loss horizon sample</span>
+<span id="L618">618   have hproxy :=</span>
+<span id="L619">619     sampledMixedSquaredDeviationProxy_sum_range_succ arms gamma horizon</span>
+<span id="L620">620   simpa [Y, cY, hprocess, hproxy] using htail</span>
+<span id="L621">621 </span>
+<span id="L622">622 /-- The latent predictable mixed estimator-square sum. -/</span>
+<span id="L623">623 noncomputable def sampledPredictableMixedSquaredSum</span>
+<span id="L624">624     {Env : Type u} {Action : Type v}</span>
+<span id="L625">625     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L626">626     (arms : Finset Action) (eta gamma : Real) (loss : PredictableLossVector Env Action)</span>
+<span id="L627">627     (horizon : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real :=</span>
+<span id="L628">628   (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L629">629     mixedSquaredImportanceWeightedLoss arms</span>
+<span id="L630">630       (sampledTrajectoryProbabilityAt arms eta gamma t sample)</span>
+<span id="L631">631       (predictableLossAt loss t sample) (sample.2 t).1)</span>
+<span id="L632">632 </span>
+<span id="L633">633 /-- The sum of exact conditional means of the latent mixed-square scores. -/</span>
+<span id="L634">634 noncomputable def sampledPredictableLossSquaredSum</span>
+<span id="L635">635     {Env : Type u} {Action : Type v}</span>
+<span id="L636">636     [MeasurableSpace Env] [MeasurableSpace Action]</span>
+<span id="L637">637     (arms : Finset Action) (loss : PredictableLossVector Env Action)</span>
+<span id="L638">638     (horizon : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real :=</span>
+<span id="L639">639   (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L640">640     arms.sum (fun candidate =&gt; (predictableLossAt loss t sample candidate) ^ 2))</span>
+<span id="L641">641 </span>
+<span id="L642">642 theorem sampledPredictableLossSquaredAt_le_card</span>
+<span id="L643">643     {Env : Type u} {Action : Type v}</span>
+<span id="L644">644     [MeasurableSpace Env] [MeasurableSpace Action]</span>
+<span id="L645">645     (arms : Finset Action) (loss : PredictableLossVector Env Action)</span>
+<span id="L646">646     (t : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) :</span>
+<span id="L647">647     arms.sum (fun candidate =&gt; (predictableLossAt loss t sample candidate) ^ 2) &lt;=</span>
+<span id="L648">648       (arms.card : Real) := by</span>
+<span id="L649">649   calc</span>
+<span id="L650">650     arms.sum (fun candidate =&gt; (predictableLossAt loss t sample candidate) ^ 2) &lt;=</span>
+<span id="L651">651         arms.sum (fun _candidate =&gt; (1 : Real)) := by</span>
+<span id="L652">652       apply Finset.sum_le_sum</span>
+<span id="L653">653       intro candidate _hcandidate</span>
+<span id="L654">654       cases t with</span>
+<span id="L655">655       | zero =&gt;</span>
+<span id="L656">656           have hloss := loss.initial_mem_unitInterval sample.1 candidate</span>
+<span id="L657">657           simpa [predictableLossAt] using</span>
+<span id="L658">658             (sq_le_sq₀ hloss.1 zero_le_one).2 hloss.2</span>
+<span id="L659">659       | succ n =&gt;</span>
+<span id="L660">660           have hloss := loss.successor_mem_unitInterval n sample.1</span>
+<span id="L661">661             (Preorder.frestrictLe n sample.2) candidate</span>
+<span id="L662">662           simpa [predictableLossAt] using</span>
+<span id="L663">663             (sq_le_sq₀ hloss.1 zero_le_one).2 hloss.2</span>
+<span id="L664">664     _ = (arms.card : Real) := by simp</span>
+<span id="L665">665 </span>
+<span id="L666">666 theorem sampledPredictableLossSquaredSum_le_card_mul</span>
+<span id="L667">667     {Env : Type u} {Action : Type v}</span>
+<span id="L668">668     [MeasurableSpace Env] [MeasurableSpace Action]</span>
+<span id="L669">669     (arms : Finset Action) (loss : PredictableLossVector Env Action)</span>
+<span id="L670">670     (horizon : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) :</span>
+<span id="L671">671     sampledPredictableLossSquaredSum arms loss horizon sample &lt;=</span>
+<span id="L672">672       (arms.card : Real) * (horizon : Real) := by</span>
+<span id="L673">673   unfold sampledPredictableLossSquaredSum</span>
+<span id="L674">674   calc</span>
+<span id="L675">675     (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L676">676         arms.sum (fun candidate =&gt; (predictableLossAt loss t sample candidate) ^ 2)) &lt;=</span>
+<span id="L677">677       (Finset.range horizon).sum (fun _t =&gt; (arms.card : Real)) := by</span>
+<span id="L678">678         exact Finset.sum_le_sum fun t _ht =&gt;</span>
+<span id="L679">679           sampledPredictableLossSquaredAt_le_card arms loss t sample</span>
+<span id="L680">680     _ = (arms.card : Real) * (horizon : Real) := by</span>
+<span id="L681">681       simp [mul_comm]</span>
+<span id="L682">682 </span>
+<span id="L683">683 theorem sampledPredictableMixedSquaredDeviation_sum_eq</span>
+<span id="L684">684     {Env : Type u} {Action : Type v}</span>
+<span id="L685">685     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L686">686     (arms : Finset Action) (eta gamma : Real) (loss : PredictableLossVector Env Action)</span>
+<span id="L687">687     (horizon : Nat) (sample : Env × ((k : Nat) -&gt; Action × Real)) :</span>
+<span id="L688">688     (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L689">689         sampledTrajectoryPredictableMixedSquaredDeviationAt</span>
+<span id="L690">690           arms eta gamma loss t sample) =</span>
+<span id="L691">691       sampledPredictableMixedSquaredSum arms eta gamma loss horizon sample -</span>
+<span id="L692">692         sampledPredictableLossSquaredSum arms loss horizon sample := by</span>
+<span id="L693">693   simp [sampledTrajectoryPredictableMixedSquaredDeviationAt,</span>
+<span id="L694">694     sampledPredictableMixedSquaredSum, sampledPredictableLossSquaredSum,</span>
+<span id="L695">695     Finset.sum_sub_distrib]</span>
+<span id="L696">696 </span>
+<span id="L697">697 /-- Exponential tail for the latent, uncentered mixed estimator-square sum. -/</span>
+<span id="L698">698 theorem sampledPredictableMixedSquared_sum_tail_ennreal</span>
+<span id="L699">699     {Env : Type u} {Action : Type v}</span>
+<span id="L700">700     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L701">701     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L702">702     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L703">703     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L704">704     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L705">705     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L706">706     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L707">707     (loss : PredictableLossVector Env Action)</span>
+<span id="L708">708     (horizon : Nat) {eps : Real} (heps : 0 &lt;= eps) :</span>
+<span id="L709">709     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L710">710       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L711">711     mu {sample |</span>
+<span id="L712">712         (arms.card : Real) * (horizon : Real) + eps &lt;=</span>
+<span id="L713">713           sampledPredictableMixedSquaredSum arms eta gamma loss horizon sample} &lt;=</span>
+<span id="L714">714       ENNReal.ofReal (Real.exp</span>
+<span id="L715">715         (-eps ^ 2 /</span>
+<span id="L716">716           (2 * ((((horizon : NNReal) *</span>
+<span id="L717">717             sampledMixedSquaredVarianceProxy arms gamma : NNReal)) : Real)))) := by</span>
+<span id="L718">718   dsimp only</span>
+<span id="L719">719   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L720">720     eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L721">721   have htail := sampledPredictableMixedSquaredDeviation_sum_tail_ennreal</span>
+<span id="L722">722     prior arms harms eta gamma hgamma_pos hgamma_le_one loss horizon heps</span>
+<span id="L723">723   let raw := sampledPredictableMixedSquaredSum</span>
+<span id="L724">724     (Env := Env) arms eta gamma loss horizon</span>
+<span id="L725">725   let mean := sampledPredictableLossSquaredSum arms loss horizon</span>
+<span id="L726">726   let centered := fun sample : Env × ((k : Nat) -&gt; Action × Real) =&gt;</span>
+<span id="L727">727     (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L728">728       sampledTrajectoryPredictableMixedSquaredDeviationAt</span>
+<span id="L729">729         arms eta gamma loss t sample)</span>
+<span id="L730">730   have hsubset :</span>
+<span id="L731">731       {sample | (arms.card : Real) * (horizon : Real) + eps &lt;= raw sample} ⊆</span>
+<span id="L732">732         {sample | eps &lt;= centered sample} := by</span>
+<span id="L733">733     intro sample hsample</span>
+<span id="L734">734     have hmean := sampledPredictableLossSquaredSum_le_card_mul</span>
+<span id="L735">735       arms loss horizon sample</span>
+<span id="L736">736     have hcentered := sampledPredictableMixedSquaredDeviation_sum_eq</span>
+<span id="L737">737       arms eta gamma loss horizon sample</span>
+<span id="L738">738     dsimp [raw, mean, centered] at hsample hmean hcentered ⊢</span>
+<span id="L739">739     linarith</span>
+<span id="L740">740   exact (measure_mono hsubset).trans (by simpa [mu, centered] using htail)</span>
+<span id="L741">741 </span>
+<span id="L742">742 /-- The observed scalar-feedback mixed-square sum agrees almost everywhere</span>
+<span id="L743">743 with the latent predictable mixed-square sum. -/</span>
+<span id="L744">744 theorem sampledObservedMixedSquaredSum_eq_predictable_ae</span>
+<span id="L745">745     {Env : Type u} {Action : Type v}</span>
+<span id="L746">746     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L747">747     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L748">748     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L749">749     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L750">750     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L751">751     (eta gamma : Real) (hgamma_nonneg : 0 &lt;= gamma)</span>
+<span id="L752">752     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L753">753     (loss : PredictableLossVector Env Action) (horizon : Nat) :</span>
+<span id="L754">754     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L755">755       eta gamma hgamma_nonneg hgamma_le_one loss.environment</span>
+<span id="L756">756     sampledObservedMixedSquaredSum arms eta gamma horizon =ᵐ[mu]</span>
+<span id="L757">757       sampledPredictableMixedSquaredSum arms eta gamma loss horizon := by</span>
+<span id="L758">758   dsimp only</span>
+<span id="L759">759   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L760">760     eta gamma hgamma_nonneg hgamma_le_one loss.environment</span>
+<span id="L761">761   induction horizon with</span>
+<span id="L762">762   | zero =&gt;</span>
+<span id="L763">763       exact Filter.Eventually.of_forall fun sample =&gt; by</span>
+<span id="L764">764         simp [sampledObservedMixedSquaredSum, sampledPredictableMixedSquaredSum]</span>
+<span id="L765">765   | succ n ih =&gt;</span>
+<span id="L766">766       have hterm :=</span>
+<span id="L767">767         (observedAt_eq_predictableAt_ae prior arms harms eta gamma hgamma_nonneg</span>
+<span id="L768">768           hgamma_le_one loss n (Classical.choice inferInstance)).2</span>
+<span id="L769">769       filter_upwards [ih, hterm] with sample hsum hscore</span>
+<span id="L770">770       simp only [sampledObservedMixedSquaredSum, sampledPredictableMixedSquaredSum,</span>
+<span id="L771">771         Finset.sum_range_succ] at hsum ⊢</span>
+<span id="L772">772       rw [hsum, hscore]</span>
+<span id="L773">773 </span>
+<span id="L774">774 /-- Exponential confidence for the observed mixed estimator-square sum. -/</span>
+<span id="L775">775 theorem sampledPredictableObservedMixedSquared_sum_tail_exponential</span>
+<span id="L776">776     {Env : Type u} {Action : Type v}</span>
+<span id="L777">777     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L778">778     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L779">779     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L780">780     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L781">781     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L782">782     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L783">783     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L784">784     (loss : PredictableLossVector Env Action)</span>
+<span id="L785">785     (horizon : Nat) {eps : Real} (heps : 0 &lt;= eps) :</span>
+<span id="L786">786     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L787">787       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L788">788     mu {sample |</span>
+<span id="L789">789         (arms.card : Real) * (horizon : Real) + eps &lt;=</span>
+<span id="L790">790           sampledObservedMixedSquaredSum arms eta gamma horizon sample} &lt;=</span>
+<span id="L791">791       ENNReal.ofReal (Real.exp</span>
+<span id="L792">792         (-eps ^ 2 /</span>
+<span id="L793">793           (2 * ((((horizon : NNReal) *</span>
+<span id="L794">794             sampledMixedSquaredVarianceProxy arms gamma : NNReal)) : Real)))) := by</span>
+<span id="L795">795   dsimp only</span>
+<span id="L796">796   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L797">797     eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L798">798   have htail := sampledPredictableMixedSquared_sum_tail_ennreal</span>
+<span id="L799">799     prior arms harms eta gamma hgamma_pos hgamma_le_one loss horizon heps</span>
+<span id="L800">800   have heq := sampledObservedMixedSquaredSum_eq_predictable_ae</span>
+<span id="L801">801     prior arms harms eta gamma hgamma_pos.le hgamma_le_one loss horizon</span>
+<span id="L802">802   have hevents :</span>
+<span id="L803">803       {sample | (arms.card : Real) * (horizon : Real) + eps &lt;=</span>
+<span id="L804">804           sampledObservedMixedSquaredSum arms eta gamma horizon sample} =ᵐ[mu]</span>
+<span id="L805">805         {sample | (arms.card : Real) * (horizon : Real) + eps &lt;=</span>
+<span id="L806">806           sampledPredictableMixedSquaredSum arms eta gamma loss horizon sample} := by</span>
+<span id="L807">807     filter_upwards [heq] with sample hsample</span>
+<span id="L808">808     change ((arms.card : Real) * (horizon : Real) + eps &lt;=</span>
+<span id="L809">809         sampledObservedMixedSquaredSum arms eta gamma horizon sample) =</span>
+<span id="L810">810       ((arms.card : Real) * (horizon : Real) + eps &lt;=</span>
+<span id="L811">811         sampledPredictableMixedSquaredSum arms eta gamma loss horizon sample)</span>
+<span id="L812">812     rw [hsample]</span>
+<span id="L813">813   rw [measure_congr hevents]</span>
+<span id="L814">814   simpa [mu] using htail</span>
+<span id="L815">815 </span>
+<span id="L816">816 noncomputable def sampledMixedSquaredConfidenceRadius</span>
+<span id="L817">817     {Action : Type v} (arms : Finset Action) (gamma : Real)</span>
+<span id="L818">818     (horizon : Nat) (delta : Real) : Real :=</span>
+<span id="L819">819   Real.sqrt</span>
+<span id="L820">820     (2 * ((((horizon : NNReal) *</span>
+<span id="L821">821       sampledMixedSquaredVarianceProxy arms gamma : NNReal)) : Real) *</span>
+<span id="L822">822         Real.log (1 / delta))</span>
+<span id="L823">823 </span>
+<span id="L824">824 theorem sampledMixedSquaredVarianceProxy_pos</span>
+<span id="L825">825     {Action : Type v} (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L826">826     (gamma : Real) (hgamma_pos : 0 &lt; gamma) :</span>
+<span id="L827">827     0 &lt; ((sampledMixedSquaredVarianceProxy arms gamma : NNReal) : Real) := by</span>
+<span id="L828">828   have hfloor : 0 &lt; gamma / (arms.card : Real) :=</span>
+<span id="L829">829     explorationFloor_pos arms harms gamma hgamma_pos</span>
+<span id="L830">830   have hinv : 0 &lt; 1 / (gamma / (arms.card : Real)) := one_div_pos.mpr hfloor</span>
+<span id="L831">831   unfold sampledMixedSquaredVarianceProxy</span>
+<span id="L832">832   unfold Concentration.intervalVarianceProxy</span>
+<span id="L833">833   rw [NNReal.coe_pos]</span>
+<span id="L834">834   apply sq_pos_of_pos</span>
+<span id="L835">835   rw [← NNReal.coe_pos]</span>
+<span id="L836">836   push_cast</span>
+<span id="L837">837   rw [Real.norm_of_nonneg]</span>
+<span id="L838">838   · simpa using div_pos hinv (by norm_num : (0 : Real) &lt; 2)</span>
+<span id="L839">839   · simpa using hinv.le</span>
+<span id="L840">840 </span>
+<span id="L841">841 theorem sampledPredictableObservedMixedSquared_sum_tail_exp_neg_budget</span>
+<span id="L842">842     {Env : Type u} {Action : Type v}</span>
+<span id="L843">843     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L844">844     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L845">845     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L846">846     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L847">847     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L848">848     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L849">849     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L850">850     (loss : PredictableLossVector Env Action)</span>
+<span id="L851">851     (horizon : Nat) (hhorizon : 0 &lt; horizon) (budget : Real) :</span>
+<span id="L852">852     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L853">853       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L854">854     mu {sample |</span>
+<span id="L855">855         (arms.card : Real) * (horizon : Real) + Real.sqrt</span>
+<span id="L856">856           (2 * ((((horizon : NNReal) *</span>
+<span id="L857">857             sampledMixedSquaredVarianceProxy arms gamma : NNReal)) : Real) *</span>
+<span id="L858">858               budget) &lt;=</span>
+<span id="L859">859           sampledObservedMixedSquaredSum arms eta gamma horizon sample} &lt;=</span>
+<span id="L860">860       ENNReal.ofReal (Real.exp (-budget)) := by</span>
+<span id="L861">861   dsimp only</span>
+<span id="L862">862   let variance : Real := ((((horizon : NNReal) *</span>
+<span id="L863">863     sampledMixedSquaredVarianceProxy arms gamma : NNReal)) : Real)</span>
+<span id="L864">864   let radius : Real := Real.sqrt (2 * variance * budget)</span>
+<span id="L865">865   have hvariance_pos : 0 &lt; variance := by</span>
+<span id="L866">866     change 0 &lt; (horizon : Real) *</span>
+<span id="L867">867       ((sampledMixedSquaredVarianceProxy arms gamma : NNReal) : Real)</span>
+<span id="L868">868     exact mul_pos (by exact_mod_cast hhorizon)</span>
+<span id="L869">869       (sampledMixedSquaredVarianceProxy_pos arms harms gamma hgamma_pos)</span>
+<span id="L870">870   have htail := sampledPredictableObservedMixedSquared_sum_tail_exponential</span>
+<span id="L871">871     prior arms harms eta gamma hgamma_pos hgamma_le_one loss horizon</span>
+<span id="L872">872       (eps := radius) (Real.sqrt_nonneg _)</span>
+<span id="L873">873   have hradius_sq : 2 * variance * budget &lt;= radius ^ 2 := by</span>
+<span id="L874">874     dsimp [radius]</span>
+<span id="L875">875     rw [Real.sq_sqrt&#x27;]</span>
+<span id="L876">876     exact le_max_left _ _</span>
+<span id="L877">877   have hden_pos : 0 &lt; 2 * variance := mul_pos (by norm_num) hvariance_pos</span>
+<span id="L878">878   have hbudget_le : budget &lt;= radius ^ 2 / (2 * variance) := by</span>
+<span id="L879">879     rw [le_div_iff₀ hden_pos]</span>
+<span id="L880">880     simpa [mul_assoc, mul_comm, mul_left_comm] using hradius_sq</span>
+<span id="L881">881   have hexp_le :</span>
+<span id="L882">882       Real.exp (-radius ^ 2 / (2 * variance)) &lt;= Real.exp (-budget) := by</span>
+<span id="L883">883     apply Real.exp_le_exp.mpr</span>
+<span id="L884">884     simpa [neg_div] using neg_le_neg hbudget_le</span>
+<span id="L885">885   exact htail.trans (ENNReal.ofReal_le_ofReal hexp_le)</span>
+<span id="L886">886 </span>
+<span id="L887">887 /-- Delta-shaped exponential confidence bound for the observed finite-horizon</span>
+<span id="L888">888 mixed estimator-square sum. -/</span>
+<span id="L889">889 theorem sampledPredictableObservedMixedSquared_sum_tail_delta</span>
+<span id="L890">890     {Env : Type u} {Action : Type v}</span>
+<span id="L891">891     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L892">892     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L893">893     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L894">894     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L895">895     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L896">896     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L897">897     (hgamma_le_one : gamma &lt;= 1)</span>
+<span id="L898">898     (loss : PredictableLossVector Env Action)</span>
+<span id="L899">899     (horizon : Nat) (hhorizon : 0 &lt; horizon)</span>
+<span id="L900">900     (delta : Real) (hdelta : 0 &lt; delta) :</span>
+<span id="L901">901     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L902">902       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L903">903     mu {sample |</span>
+<span id="L904">904         (arms.card : Real) * (horizon : Real) +</span>
+<span id="L905">905             sampledMixedSquaredConfidenceRadius arms gamma horizon delta &lt;=</span>
+<span id="L906">906           sampledObservedMixedSquaredSum arms eta gamma horizon sample} &lt;=</span>
+<span id="L907">907       ENNReal.ofReal delta := by</span>
+<span id="L908">908   dsimp only</span>
+<span id="L909">909   have htail :=</span>
+<span id="L910">910     sampledPredictableObservedMixedSquared_sum_tail_exp_neg_budget</span>
+<span id="L911">911       prior arms harms eta gamma hgamma_pos hgamma_le_one loss horizon hhorizon</span>
+<span id="L912">912         (Real.log (1 / delta))</span>
+<span id="L913">913   have hscale : 0 &lt; 1 / delta := one_div_pos.mpr hdelta</span>
+<span id="L914">914   have hexp : Real.exp (-(Real.log (1 / delta))) = delta := by</span>
+<span id="L915">915     rw [Real.exp_neg, Real.exp_log hscale]</span>
+<span id="L916">916     field_simp</span>
+<span id="L917">917   rw [hexp] at htail</span>
+<span id="L918">918   simpa only [sampledMixedSquaredConfidenceRadius] using htail</span>
+<span id="L919">919 </span>
+<span id="L920">920 end BanditRLProof.Exp3</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

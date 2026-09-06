@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/TsallisOracleRestartPredictableRegret.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/TsallisOracleRestartPredictableRegret.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/TsallisOracleRestartPredictableRegret.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/TsallisOracleRestartPredictableRegret.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.TsallisOracleRestartGeneratedTrajectory</span>
+<span id="L2">2 import BanditRLProof.TsallisOracleRestartDynamicRegret</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Predictable regret for generated oracle-restart trajectories</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module puts the generated restart probability into the pointwise regret</span>
+<span id="L8">8 summand and aligns the deterministic epoch assembly with `schedule.start`.</span>
+<span id="L9">9 Epoch-local regret certificates remain explicit downstream inputs.</span>
+<span id="L10">10 -/</span>
+<span id="L11">11 </span>
+<span id="L12">12 open scoped ENNReal NNReal Topology ProbabilityTheory</span>
+<span id="L13">13 open MeasureTheory ProbabilityTheory Set Filter Finset</span>
+<span id="L14">14 </span>
+<span id="L15">15 namespace BanditRLProof</span>
+<span id="L16">16 namespace Tsallis</span>
+<span id="L17">17 </span>
+<span id="L18">18 universe u v</span>
+<span id="L19">19 </span>
+<span id="L20">20 /-- Predictable environment regret of the generated restart probabilities</span>
+<span id="L21">21 against a fixed comparator distribution through the inclusive horizon. -/</span>
+<span id="L22">22 noncomputable def sampledOracleRestartHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L23">23     {Env : Type u} {Action : Type v}</span>
+<span id="L24">24     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L25">25     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L26">26     (schedule : OracleRestartSchedule)</span>
+<span id="L27">27     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L28">28     (q : Action -&gt; Real) (horizon : Nat)</span>
+<span id="L29">29     (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real :=</span>
+<span id="L30">30   (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L31">31     FTRL.linearLoss arms</span>
+<span id="L32">32         (sampledOracleRestartHalfTsallisProbabilityAtTime</span>
+<span id="L33">33           arms harms eta schedule t sample)</span>
+<span id="L34">34         (Exp3.predictableLossAt loss t sample) -</span>
+<span id="L35">35       FTRL.linearLoss arms q (Exp3.predictableLossAt loss t sample))</span>
+<span id="L36">36 </span>
+<span id="L37">37 /-- Predictable environment regret of the generated restart probabilities</span>
+<span id="L38">38 against a deterministic comparator arm that may change with the round. -/</span>
+<span id="L39">39 noncomputable def sampledOracleRestartHalfTsallisPredictableMovingComparatorEnvironmentRegret</span>
+<span id="L40">40     {Env : Type u} {Action : Type v}</span>
+<span id="L41">41     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L42">42     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L43">43     (schedule : OracleRestartSchedule)</span>
+<span id="L44">44     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L45">45     (comparator : Nat -&gt; Action) (horizon : Nat)</span>
+<span id="L46">46     (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real :=</span>
+<span id="L47">47   (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L48">48     FTRL.linearLoss arms</span>
+<span id="L49">49         (sampledOracleRestartHalfTsallisProbabilityAtTime</span>
+<span id="L50">50           arms harms eta schedule t sample)</span>
+<span id="L51">51         (Exp3.predictableLossAt loss t sample) -</span>
+<span id="L52">52       Exp3.predictableLossAt loss t sample (comparator t))</span>
+<span id="L53">53 </span>
+<span id="L54">54 @[simp]</span>
+<span id="L55">55 theorem sampledOracleRestartHalfTsallisPredictableEnvironmentRegret_neverRestart</span>
+<span id="L56">56     {Env : Type u} {Action : Type v}</span>
+<span id="L57">57     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L58">58     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L59">59     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L60">60     (q : Action -&gt; Real) (horizon : Nat)</span>
+<span id="L61">61     (sample : Env × ((k : Nat) -&gt; Action × Real)) :</span>
+<span id="L62">62     sampledOracleRestartHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L63">63         arms harms eta oracleNeverRestartSchedule loss q horizon sample =</span>
+<span id="L64">64       sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L65">65         arms harms eta loss q horizon sample := by</span>
+<span id="L66">66   simp [sampledOracleRestartHalfTsallisPredictableEnvironmentRegret,</span>
+<span id="L67">67     sampledScheduledHalfTsallisPredictableEnvironmentRegret]</span>
+<span id="L68">68 </span>
+<span id="L69">69 @[simp]</span>
+<span id="L70">70 theorem sampledOracleRestartHalfTsallisPredictableMovingComparatorEnvironmentRegret_neverRestart</span>
+<span id="L71">71     {Env : Type u} {Action : Type v}</span>
+<span id="L72">72     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L73">73     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L74">74     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L75">75     (comparator : Nat -&gt; Action) (horizon : Nat)</span>
+<span id="L76">76     (sample : Env × ((k : Nat) -&gt; Action × Real)) :</span>
+<span id="L77">77     sampledOracleRestartHalfTsallisPredictableMovingComparatorEnvironmentRegret</span>
+<span id="L78">78         arms harms eta oracleNeverRestartSchedule loss comparator horizon</span>
+<span id="L79">79         sample =</span>
+<span id="L80">80       sampledScheduledHalfTsallisPredictableMovingComparatorEnvironmentRegret</span>
+<span id="L81">81         arms harms eta loss comparator horizon sample := by</span>
+<span id="L82">82   simp [</span>
+<span id="L83">83     sampledOracleRestartHalfTsallisPredictableMovingComparatorEnvironmentRegret,</span>
+<span id="L84">84     sampledScheduledHalfTsallisPredictableMovingComparatorEnvironmentRegret]</span>
+<span id="L85">85 </span>
+<span id="L86">86 /-- Restarted moving-comparator regret is fixed point-mass regret plus the</span>
+<span id="L87">87 cumulative advantage of the moving comparator over the fixed arm. -/</span>
+<span id="L88">88 theorem sampledOracleRestartHalfTsallisPredictableMovingComparatorEnvironmentRegret_eq_fixed_add</span>
+<span id="L89">89     {Env : Type u} {Action : Type v}</span>
+<span id="L90">90     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L91">91     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L92">92     (schedule : OracleRestartSchedule)</span>
+<span id="L93">93     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L94">94     {best : Action} (hbest : best ∈ arms)</span>
+<span id="L95">95     (comparator : Nat -&gt; Action) (horizon : Nat)</span>
+<span id="L96">96     (sample : Env × ((k : Nat) -&gt; Action × Real)) :</span>
+<span id="L97">97     sampledOracleRestartHalfTsallisPredictableMovingComparatorEnvironmentRegret</span>
+<span id="L98">98         arms harms eta schedule loss comparator horizon sample =</span>
+<span id="L99">99       sampledOracleRestartHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L100">100           arms harms eta schedule loss (pointMass best) horizon sample +</span>
+<span id="L101">101         (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L102">102           Exp3.predictableLossAt loss t sample best -</span>
+<span id="L103">103             Exp3.predictableLossAt loss t sample (comparator t)) := by</span>
+<span id="L104">104   unfold</span>
+<span id="L105">105     sampledOracleRestartHalfTsallisPredictableMovingComparatorEnvironmentRegret</span>
+<span id="L106">106     sampledOracleRestartHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L107">107   simp_rw [linearLoss_pointMass arms hbest]</span>
+<span id="L108">108   rw [← Finset.sum_add_distrib]</span>
+<span id="L109">109   apply Finset.sum_congr rfl</span>
+<span id="L110">110   intro t _ht</span>
+<span id="L111">111   ring</span>
+<span id="L112">112 </span>
+<span id="L113">113 /-- Epoch ids actually visited by the restart schedule through the inclusive</span>
+<span id="L114">114 horizon. The epoch assignment is exactly `schedule.start`. -/</span>
+<span id="L115">115 def oracleRestartScheduleEpochs</span>
+<span id="L116">116     (schedule : OracleRestartSchedule) (horizon : Nat) : Finset Nat :=</span>
+<span id="L117">117   (Finset.range (horizon + 1)).image schedule.start</span>
+<span id="L118">118 </span>
+<span id="L119">119 theorem oracleRestartSchedule_start_mem_epochs</span>
+<span id="L120">120     (schedule : OracleRestartSchedule) (horizon t : Nat)</span>
+<span id="L121">121     (ht : t ∈ Finset.range (horizon + 1)) :</span>
+<span id="L122">122     schedule.start t ∈ oracleRestartScheduleEpochs schedule horizon := by</span>
+<span id="L123">123   exact Finset.mem_image.mpr ⟨t, ht, rfl⟩</span>
+<span id="L124">124 </span>
+<span id="L125">125 /-- Restart-specific predictable regret contributed by one schedule epoch. -/</span>
+<span id="L126">126 noncomputable def sampledOracleRestartHalfTsallisPredictableScheduleEpochRegret</span>
+<span id="L127">127     {Env : Type u} {Action : Type v}</span>
+<span id="L128">128     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L129">129     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L130">130     (schedule : OracleRestartSchedule)</span>
+<span id="L131">131     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L132">132     (epochComparator : Nat -&gt; Action) (horizon epoch : Nat)</span>
+<span id="L133">133     (sample : Env × ((k : Nat) -&gt; Action × Real)) : Real :=</span>
+<span id="L134">134   (oracleRestartEpochRounds schedule.start horizon epoch).sum (fun t =&gt;</span>
+<span id="L135">135     FTRL.linearLoss arms</span>
+<span id="L136">136         (sampledOracleRestartHalfTsallisProbabilityAtTime</span>
+<span id="L137">137           arms harms eta schedule t sample)</span>
+<span id="L138">138         (Exp3.predictableLossAt loss t sample) -</span>
+<span id="L139">139       Exp3.predictableLossAt loss t sample</span>
+<span id="L140">140         (epochComparator (schedule.start t)))</span>
+<span id="L141">141 </span>
+<span id="L142">142 /-- Schedule-aligned moving regret is exactly the sum of its epoch-fiber</span>
+<span id="L143">143 regrets, with no independent `epochOf` compatibility premise. -/</span>
+<span id="L144">144 theorem sampledOracleRestartHalfTsallisPredictableMovingComparatorEnvironmentRegret_eq_sum_scheduleEpochRegret</span>
+<span id="L145">145     {Env : Type u} {Action : Type v}</span>
+<span id="L146">146     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L147">147     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L148">148     (schedule : OracleRestartSchedule)</span>
+<span id="L149">149     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L150">150     (epochComparator : Nat -&gt; Action) (horizon : Nat)</span>
+<span id="L151">151     (sample : Env × ((k : Nat) -&gt; Action × Real)) :</span>
+<span id="L152">152     sampledOracleRestartHalfTsallisPredictableMovingComparatorEnvironmentRegret</span>
+<span id="L153">153         arms harms eta schedule loss</span>
+<span id="L154">154         (fun t =&gt; epochComparator (schedule.start t)) horizon sample =</span>
+<span id="L155">155       (oracleRestartScheduleEpochs schedule horizon).sum (fun epoch =&gt;</span>
+<span id="L156">156         sampledOracleRestartHalfTsallisPredictableScheduleEpochRegret</span>
+<span id="L157">157           arms harms eta schedule loss epochComparator horizon epoch sample) := by</span>
+<span id="L158">158   unfold</span>
+<span id="L159">159     sampledOracleRestartHalfTsallisPredictableMovingComparatorEnvironmentRegret</span>
+<span id="L160">160     sampledOracleRestartHalfTsallisPredictableScheduleEpochRegret</span>
+<span id="L161">161     oracleRestartEpochRounds</span>
+<span id="L162">162   symm</span>
+<span id="L163">163   exact Finset.sum_fiberwise_of_maps_to</span>
+<span id="L164">164     (fun t ht =&gt; oracleRestartSchedule_start_mem_epochs schedule horizon t ht)</span>
+<span id="L165">165     (fun t =&gt;</span>
+<span id="L166">166       FTRL.linearLoss arms</span>
+<span id="L167">167           (sampledOracleRestartHalfTsallisProbabilityAtTime</span>
+<span id="L168">168             arms harms eta schedule t sample)</span>
+<span id="L169">169           (Exp3.predictableLossAt loss t sample) -</span>
+<span id="L170">170         Exp3.predictableLossAt loss t sample</span>
+<span id="L171">171           (epochComparator (schedule.start t)))</span>
+<span id="L172">172 </span>
+<span id="L173">173 /-- Schedule-aligned epoch certificates assemble into a global square-root</span>
+<span id="L174">174 bound for the generated restart regret surface. -/</span>
+<span id="L175">175 theorem sampledOracleRestartHalfTsallisPredictableMovingComparatorEnvironmentRegret_le_scheduleSqrt</span>
+<span id="L176">176     {Env : Type u} {Action : Type v}</span>
+<span id="L177">177     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L178">178     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L179">179     (schedule : OracleRestartSchedule)</span>
+<span id="L180">180     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L181">181     (epochComparator : Nat -&gt; Action) (horizon : Nat)</span>
+<span id="L182">182     (coefficient : Real) (hcoefficient : 0 &lt;= coefficient)</span>
+<span id="L183">183     (sample : Env × ((k : Nat) -&gt; Action × Real))</span>
+<span id="L184">184     (hEpochRegret :</span>
+<span id="L185">185       ∀ epoch ∈ oracleRestartScheduleEpochs schedule horizon,</span>
+<span id="L186">186         sampledOracleRestartHalfTsallisPredictableScheduleEpochRegret</span>
+<span id="L187">187             arms harms eta schedule loss epochComparator horizon epoch sample &lt;=</span>
+<span id="L188">188           coefficient *</span>
+<span id="L189">189             Real.sqrt</span>
+<span id="L190">190               ((oracleRestartEpochRounds</span>
+<span id="L191">191                 schedule.start horizon epoch).card : Real)) :</span>
+<span id="L192">192     sampledOracleRestartHalfTsallisPredictableMovingComparatorEnvironmentRegret</span>
+<span id="L193">193         arms harms eta schedule loss</span>
+<span id="L194">194         (fun t =&gt; epochComparator (schedule.start t)) horizon sample &lt;=</span>
+<span id="L195">195       coefficient *</span>
+<span id="L196">196           Real.sqrt ((oracleRestartScheduleEpochs schedule horizon).card : Real) *</span>
+<span id="L197">197         Real.sqrt (((horizon + 1 : Nat) : Real)) := by</span>
+<span id="L198">198   rw [</span>
+<span id="L199">199     sampledOracleRestartHalfTsallisPredictableMovingComparatorEnvironmentRegret_eq_sum_scheduleEpochRegret</span>
+<span id="L200">200       arms harms eta schedule loss epochComparator horizon sample]</span>
+<span id="L201">201   calc</span>
+<span id="L202">202     _ &lt;= (oracleRestartScheduleEpochs schedule horizon).sum (fun epoch =&gt;</span>
+<span id="L203">203         coefficient *</span>
+<span id="L204">204           Real.sqrt</span>
+<span id="L205">205             ((oracleRestartEpochRounds</span>
+<span id="L206">206               schedule.start horizon epoch).card : Real)) := by</span>
+<span id="L207">207       exact Finset.sum_le_sum (fun epoch hepoch =&gt;</span>
+<span id="L208">208         hEpochRegret epoch hepoch)</span>
+<span id="L209">209     _ = coefficient *</span>
+<span id="L210">210         (oracleRestartScheduleEpochs schedule horizon).sum (fun epoch =&gt;</span>
+<span id="L211">211           Real.sqrt</span>
+<span id="L212">212             ((oracleRestartEpochRounds</span>
+<span id="L213">213               schedule.start horizon epoch).card : Real)) := by</span>
+<span id="L214">214       rw [Finset.mul_sum]</span>
+<span id="L215">215     _ &lt;= coefficient *</span>
+<span id="L216">216         (Real.sqrt</span>
+<span id="L217">217             ((oracleRestartScheduleEpochs schedule horizon).card : Real) *</span>
+<span id="L218">218           Real.sqrt (((horizon + 1 : Nat) : Real))) := by</span>
+<span id="L219">219       exact mul_le_mul_of_nonneg_left</span>
+<span id="L220">220         (sum_sqrt_oracleRestartEpochRounds_card_le</span>
+<span id="L221">221           (oracleRestartScheduleEpochs schedule horizon)</span>
+<span id="L222">222           schedule.start horizon</span>
+<span id="L223">223           (fun t ht =&gt;</span>
+<span id="L224">224             oracleRestartSchedule_start_mem_epochs schedule horizon t ht))</span>
+<span id="L225">225         hcoefficient</span>
+<span id="L226">226     _ = coefficient *</span>
+<span id="L227">227           Real.sqrt</span>
+<span id="L228">228             ((oracleRestartScheduleEpochs schedule horizon).card : Real) *</span>
+<span id="L229">229         Real.sqrt (((horizon + 1 : Nat) : Real)) := by ring</span>
+<span id="L230">230 </span>
+<span id="L231">231 /-- Switch-count-facing schedule assembly under an explicit cardinality</span>
+<span id="L232">232 contract on the epochs actually visited by `schedule.start`. -/</span>
+<span id="L233">233 theorem sampledOracleRestartHalfTsallisPredictableMovingComparatorEnvironmentRegret_le_scheduleSwitchCountSqrt</span>
+<span id="L234">234     {Env : Type u} {Action : Type v}</span>
+<span id="L235">235     [MeasurableSpace Env] [MeasurableSpace Action] [DecidableEq Action]</span>
+<span id="L236">236     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L237">237     (schedule : OracleRestartSchedule)</span>
+<span id="L238">238     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L239">239     (epochComparator : Nat -&gt; Action) (horizon switches : Nat)</span>
+<span id="L240">240     (hEpochCard :</span>
+<span id="L241">241       (oracleRestartScheduleEpochs schedule horizon).card &lt;= switches + 1)</span>
+<span id="L242">242     (coefficient : Real) (hcoefficient : 0 &lt;= coefficient)</span>
+<span id="L243">243     (sample : Env × ((k : Nat) -&gt; Action × Real))</span>
+<span id="L244">244     (hEpochRegret :</span>
+<span id="L245">245       ∀ epoch ∈ oracleRestartScheduleEpochs schedule horizon,</span>
+<span id="L246">246         sampledOracleRestartHalfTsallisPredictableScheduleEpochRegret</span>
+<span id="L247">247             arms harms eta schedule loss epochComparator horizon epoch sample &lt;=</span>
+<span id="L248">248           coefficient *</span>
+<span id="L249">249             Real.sqrt</span>
+<span id="L250">250               ((oracleRestartEpochRounds</span>
+<span id="L251">251                 schedule.start horizon epoch).card : Real)) :</span>
+<span id="L252">252     sampledOracleRestartHalfTsallisPredictableMovingComparatorEnvironmentRegret</span>
+<span id="L253">253         arms harms eta schedule loss</span>
+<span id="L254">254         (fun t =&gt; epochComparator (schedule.start t)) horizon sample &lt;=</span>
+<span id="L255">255       coefficient * Real.sqrt (((switches + 1 : Nat) : Real)) *</span>
+<span id="L256">256         Real.sqrt (((horizon + 1 : Nat) : Real)) := by</span>
+<span id="L257">257   have hrestart :=</span>
+<span id="L258">258     sampledOracleRestartHalfTsallisPredictableMovingComparatorEnvironmentRegret_le_scheduleSqrt</span>
+<span id="L259">259       arms harms eta schedule loss epochComparator horizon</span>
+<span id="L260">260       coefficient hcoefficient sample hEpochRegret</span>
+<span id="L261">261   have hcardReal :</span>
+<span id="L262">262       ((oracleRestartScheduleEpochs schedule horizon).card : Real) &lt;=</span>
+<span id="L263">263         (((switches + 1 : Nat) : Real)) := by</span>
+<span id="L264">264     exact_mod_cast hEpochCard</span>
+<span id="L265">265   have hsqrt :</span>
+<span id="L266">266       Real.sqrt</span>
+<span id="L267">267           ((oracleRestartScheduleEpochs schedule horizon).card : Real) &lt;=</span>
+<span id="L268">268         Real.sqrt (((switches + 1 : Nat) : Real)) :=</span>
+<span id="L269">269     Real.sqrt_le_sqrt hcardReal</span>
+<span id="L270">270   calc</span>
+<span id="L271">271     _ &lt;= coefficient *</span>
+<span id="L272">272           Real.sqrt</span>
+<span id="L273">273             ((oracleRestartScheduleEpochs schedule horizon).card : Real) *</span>
+<span id="L274">274         Real.sqrt (((horizon + 1 : Nat) : Real)) := hrestart</span>
+<span id="L275">275     _ &lt;= coefficient * Real.sqrt (((switches + 1 : Nat) : Real)) *</span>
+<span id="L276">276         Real.sqrt (((horizon + 1 : Nat) : Real)) := by</span>
+<span id="L277">277       exact mul_le_mul_of_nonneg_right</span>
+<span id="L278">278         (mul_le_mul_of_nonneg_left hsqrt hcoefficient)</span>
+<span id="L279">279         (Real.sqrt_nonneg _)</span>
+<span id="L280">280 </span>
+<span id="L281">281 end Tsallis</span>
+<span id="L282">282 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

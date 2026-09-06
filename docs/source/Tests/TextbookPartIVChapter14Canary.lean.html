@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="Tests/TextbookPartIVChapter14Canary.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Tests/TextbookPartIVChapter14Canary.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>Tests/TextbookPartIVChapter14Canary.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>Tests/TextbookPartIVChapter14Canary.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof</span>
+<span id="L2">2 import Mathlib.Tactic.NormNum</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Textbook Part IV Chapter 14 public canary</span>
+<span id="L6">6 </span>
+<span id="L7">7 This root-import canary exercises the finite prefix-code/entropy surface, the</span>
+<span id="L8">8 exact extended-real KL branches, the full sub-sigma-algebra and event data-</span>
+<span id="L9">9 processing adapters, and the unconditional Bretagnolle--Huber terminal.  It</span>
+<span id="L10">10 does not claim the adaptive-history KL decomposition deferred to Chapter 15.</span>
+<span id="L11">11 -/</span>
+<span id="L12">12 </span>
+<span id="L13">13 namespace BanditRLProof.TextbookPartIVChapter14Canary</span>
+<span id="L14">14 </span>
+<span id="L15">15 open MeasureTheory Set</span>
+<span id="L16">16 open scoped BigOperators ENNReal</span>
+<span id="L17">17 open LowerBounds</span>
+<span id="L18">18 </span>
+<span id="L19">19 section CodingAndEntropy</span>
+<span id="L20">20 </span>
+<span id="L21">21 variable {Symbol : Type*} [Fintype Symbol] [DecidableEq Symbol]</span>
+<span id="L22">22 </span>
+<span id="L23">23 /-- Concrete two-symbol code exercising every `BinaryPrefixCode` field. -/</span>
+<span id="L24">24 def boolOneBitPrefixCode : BinaryPrefixCode Bool where</span>
+<span id="L25">25   encode bit := [bit]</span>
+<span id="L26">26   injective := by</span>
+<span id="L27">27     intro left right h</span>
+<span id="L28">28     simpa using h</span>
+<span id="L29">29   nonempty := by simp</span>
+<span id="L30">30   prefixFree := by</span>
+<span id="L31">31     intro left right h</span>
+<span id="L32">32     rcases h with ⟨tail, htail⟩</span>
+<span id="L33">33     simpa using congrArg List.head? htail</span>
+<span id="L34">34 </span>
+<span id="L35">35 example : boolOneBitPrefixCode.encode false = [false] := rfl</span>
+<span id="L36">36 </span>
+<span id="L37">37 example :</span>
+<span id="L38">38     InformationTheory.UniquelyDecodable</span>
+<span id="L39">39       (Set.range boolOneBitPrefixCode.encode) :=</span>
+<span id="L40">40   boolOneBitPrefixCode.uniquelyDecodable_range</span>
+<span id="L41">41 </span>
+<span id="L42">42 example :</span>
+<span id="L43">43     ∑ word ∈ boolOneBitPrefixCode.codebook,</span>
+<span id="L44">44       (1 / 2 : Real) ^ word.length ≤ 1 :=</span>
+<span id="L45">45   boolOneBitPrefixCode.kraft_inequality</span>
+<span id="L46">46 </span>
+<span id="L47">47 example :</span>
+<span id="L48">48     expectedCodeLength (fun _ : Bool =&gt; (1 / 2 : Real))</span>
+<span id="L49">49       boolOneBitPrefixCode = 1 := by</span>
+<span id="L50">50   norm_num [expectedCodeLength, boolOneBitPrefixCode]</span>
+<span id="L51">51 </span>
+<span id="L52">52 example (code : BinaryPrefixCode Symbol) :</span>
+<span id="L53">53     ∑ word ∈ code.codebook, (1 / 2 : Real) ^ word.length ≤ 1 :=</span>
+<span id="L54">54   code.kraft_inequality</span>
+<span id="L55">55 </span>
+<span id="L56">56 example (support : Finset Symbol) (probability : Symbol → Real) :</span>
+<span id="L57">57     discreteEntropyBaseTwo support probability =</span>
+<span id="L58">58       discreteEntropy support probability / Real.log 2 :=</span>
+<span id="L59">59   discreteEntropyBaseTwo_eq_div_log_two support probability</span>
+<span id="L60">60 </span>
+<span id="L61">61 example (support : Finset Symbol) (probability : Symbol → Real)</span>
+<span id="L62">62     (hprobability : ∀ symbol ∈ support,</span>
+<span id="L63">63       0 ≤ probability symbol ∧ probability symbol ≤ 1) :</span>
+<span id="L64">64     0 ≤ discreteEntropy support probability :=</span>
+<span id="L65">65   discreteEntropy_nonneg support probability hprobability</span>
+<span id="L66">66 </span>
+<span id="L67">67 end CodingAndEntropy</span>
+<span id="L68">68 </span>
+<span id="L69">69 section RelativeEntropySurface</span>
+<span id="L70">70 </span>
+<span id="L71">71 example {α : Type*} [MeasurableSpace α] {P Q : Measure α}</span>
+<span id="L72">72     (hPQ : ¬ P ≪ Q) :</span>
+<span id="L73">73     relativeEntropy P Q = (⊤ : ENNReal) :=</span>
+<span id="L74">74   relativeEntropy_eq_top_of_not_absolutelyContinuous hPQ</span>
+<span id="L75">75 </span>
+<span id="L76">76 example {α : Type*} [MeasurableSpace α] {P Q : Measure α} :</span>
+<span id="L77">77     relativeEntropy P Q ≠ (⊤ : ENNReal) ↔</span>
+<span id="L78">78       P ≪ Q ∧ Integrable (llr P Q) P :=</span>
+<span id="L79">79   relativeEntropy_ne_top_iff</span>
+<span id="L80">80 </span>
+<span id="L81">81 example {α : Type*} [MeasurableSpace α] {P Q : Measure α}</span>
+<span id="L82">82     [IsFiniteMeasure P] [IsFiniteMeasure Q] :</span>
+<span id="L83">83     relativeEntropy P Q = 0 ↔ P = Q :=</span>
+<span id="L84">84   relativeEntropy_eq_zero_iff</span>
+<span id="L85">85 </span>
+<span id="L86">86 example {α : Type*} {m m₀ : MeasurableSpace α}</span>
+<span id="L87">87     {P Q : @Measure α m₀} [IsFiniteMeasure P] [IsFiniteMeasure Q]</span>
+<span id="L88">88     (hm : m ≤ m₀) :</span>
+<span id="L89">89     @relativeEntropy α m (P.trim hm) (Q.trim hm) ≤</span>
+<span id="L90">90       @relativeEntropy α m₀ P Q :=</span>
+<span id="L91">91   relativeEntropy_trim_le hm</span>
+<span id="L92">92 </span>
+<span id="L93">93 end RelativeEntropySurface</span>
+<span id="L94">94 </span>
+<span id="L95">95 section FiniteAlphabet</span>
+<span id="L96">96 </span>
+<span id="L97">97 variable {α : Type*} [Fintype α] [MeasurableSpace α]</span>
+<span id="L98">98   [MeasurableSingletonClass α] (P Q : Measure α)</span>
+<span id="L99">99   [IsProbabilityMeasure P] [IsProbabilityMeasure Q]</span>
+<span id="L100">100 </span>
+<span id="L101">101 example (h : ∀ x, Q {x} = 0 → P {x} = 0) :</span>
+<span id="L102">102     relativeEntropy P Q = ENNReal.ofReal</span>
+<span id="L103">103       (∑ x, (P {x}).toReal * Real.log ((P {x}).toReal / (Q {x}).toReal)) :=</span>
+<span id="L104">104   relativeEntropy_finite_sum_log P Q</span>
+<span id="L105">105     ((absolutelyContinuous_iff_atom_support P Q).2 h)</span>
+<span id="L106">106 </span>
+<span id="L107">107 example : relativeEntropy P Q = (⊤ : ENNReal) ↔ ∃ x, P {x} ≠ 0 ∧ Q {x} = 0 :=</span>
+<span id="L108">108   relativeEntropy_finite_eq_top_iff P Q</span>
+<span id="L109">109 </span>
+<span id="L110">110 -- Three-symbol endpoint examples retain the unused zero-mass atoms.</span>
+<span id="L111">111 example : relativeEntropy (Measure.dirac (0 : Fin 3))</span>
+<span id="L112">112     (Measure.dirac (0 : Fin 3)) = 0 := by</span>
+<span id="L113">113   rw [relativeEntropy_finite_sum_log _ _ Measure.AbsolutelyContinuous.rfl]</span>
+<span id="L114">114   simp</span>
+<span id="L115">115 </span>
+<span id="L116">116 example : relativeEntropy (Measure.dirac (0 : Fin 3))</span>
+<span id="L117">117     (Measure.dirac (1 : Fin 3)) = (⊤ : ENNReal) := by</span>
+<span id="L118">118   apply relativeEntropy_eq_top_of_atom_support_mismatch _ _ (0 : Fin 3)</span>
+<span id="L119">119   · simp</span>
+<span id="L120">120   · simp</span>
+<span id="L121">121 </span>
+<span id="L122">122 end FiniteAlphabet</span>
+<span id="L123">123 </span>
+<span id="L124">124 section BinaryTesting</span>
+<span id="L125">125 </span>
+<span id="L126">126 example :</span>
+<span id="L127">127     bretagnolleHuberScale (bernoulliRelativeEntropy (1 / 4) (3 / 4)) ≤</span>
+<span id="L128">128       (1 / 4 : Real) + (1 - 3 / 4) := by</span>
+<span id="L129">129   apply binaryBretagnolleHuber</span>
+<span id="L130">130   · constructor &lt;;&gt; norm_num</span>
+<span id="L131">131   · constructor &lt;;&gt; norm_num</span>
+<span id="L132">132 </span>
+<span id="L133">133 /-- A support-mismatched Bernoulli comparison takes the infinite-KL branch. -/</span>
+<span id="L134">134 example : bretagnolleHuberScale (bernoulliRelativeEntropy 0 1) = 0 := by</span>
+<span id="L135">135   norm_num [bernoulliRelativeEntropy, KLUCB.bernoulliKL,</span>
+<span id="L136">136     KLUCB.IsBernoulliParameter, bretagnolleHuberScale]</span>
+<span id="L137">137 </span>
+<span id="L138">138 end BinaryTesting</span>
+<span id="L139">139 </span>
+<span id="L140">140 section EventTesting</span>
+<span id="L141">141 </span>
+<span id="L142">142 variable {α : Type*} [MeasurableSpace α]</span>
+<span id="L143">143 variable (P Q : Measure α)</span>
+<span id="L144">144 variable [IsProbabilityMeasure P] [IsProbabilityMeasure Q]</span>
+<span id="L145">145 variable {A : Set α} (hA : MeasurableSet A)</span>
+<span id="L146">146 </span>
+<span id="L147">147 example :</span>
+<span id="L148">148     bernoulliRelativeEntropy (P.real A) (Q.real A) ≤</span>
+<span id="L149">149       relativeEntropy P Q :=</span>
+<span id="L150">150   bernoulliRelativeEntropy_event_le hA</span>
+<span id="L151">151 </span>
+<span id="L152">152 example :</span>
+<span id="L153">153     bretagnolleHuberScale (relativeEntropy P Q) ≤</span>
+<span id="L154">154       P.real A + Q.real Aᶜ :=</span>
+<span id="L155">155   bretagnolleHuber hA</span>
+<span id="L156">156 </span>
+<span id="L157">157 end EventTesting</span>
+<span id="L158">158 </span>
+<span id="L159">159 #print axioms LowerBounds.relativeEntropy</span>
+<span id="L160">160 #print axioms boolOneBitPrefixCode</span>
+<span id="L161">161 #print axioms LowerBounds.BinaryPrefixCode.uniquelyDecodable_range</span>
+<span id="L162">162 #print axioms LowerBounds.BinaryPrefixCode.kraft_inequality</span>
+<span id="L163">163 #print axioms LowerBounds.discreteEntropy</span>
+<span id="L164">164 #print axioms LowerBounds.discreteEntropyBaseTwo</span>
+<span id="L165">165 #print axioms LowerBounds.discreteEntropyBaseTwo_eq_div_log_two</span>
+<span id="L166">166 #print axioms LowerBounds.discreteEntropy_nonneg</span>
+<span id="L167">167 #print axioms LowerBounds.expectedCodeLength</span>
+<span id="L168">168 #print axioms LowerBounds.expectedCodeLength_nonneg</span>
+<span id="L169">169 #print axioms LowerBounds.relativeEntropy_of_absolutelyContinuous_of_integrable</span>
+<span id="L170">170 #print axioms LowerBounds.relativeEntropy_of_probability_absolutelyContinuous_of_integrable</span>
+<span id="L171">171 #print axioms LowerBounds.relativeEntropy_eq_top_of_not_absolutelyContinuous</span>
+<span id="L172">172 #print axioms LowerBounds.relativeEntropy_ne_top_iff</span>
+<span id="L173">173 #print axioms LowerBounds.relativeEntropy_eq_zero_iff</span>
+<span id="L174">174 #print axioms LowerBounds.absolutelyContinuous_iff_atom_support</span>
+<span id="L175">175 #print axioms LowerBounds.rnDeriv_mul_atom</span>
+<span id="L176">176 #print axioms LowerBounds.rnDeriv_atom_eq_div</span>
+<span id="L177">177 #print axioms LowerBounds.relativeEntropy_finite_klFun</span>
+<span id="L178">178 #print axioms LowerBounds.relativeEntropy_finite_sum_log</span>
+<span id="L179">179 #print axioms LowerBounds.relativeEntropy_finite_eq_if</span>
+<span id="L180">180 #print axioms LowerBounds.relativeEntropy_finite_eq_top_iff</span>
+<span id="L181">181 #print axioms LowerBounds.relativeEntropy_eq_top_of_atom_support_mismatch</span>
+<span id="L182">182 #print axioms LowerBounds.relativeEntropy_trim_le</span>
+<span id="L183">183 #print axioms LowerBounds.bernoulliRelativeEntropy</span>
+<span id="L184">184 #print axioms LowerBounds.rnDeriv_restrict_restrict</span>
+<span id="L185">185 #print axioms LowerBounds.relativeEntropy_restrict_add_compl</span>
+<span id="L186">186 #print axioms LowerBounds.bernoulliKLCore_event_le</span>
+<span id="L187">187 #print axioms LowerBounds.exp_neg_half_bernoulliKLCore_le_affinity</span>
+<span id="L188">188 #print axioms LowerBounds.half_binaryAffinity_sq_le_eventError</span>
+<span id="L189">189 #print axioms LowerBounds.binaryBretagnolleHuberCore</span>
+<span id="L190">190 #print axioms LowerBounds.bretagnolleHuberScale</span>
+<span id="L191">191 #print axioms LowerBounds.bretagnolleHuberScale_nonneg</span>
+<span id="L192">192 #print axioms LowerBounds.binaryBretagnolleHuber</span>
+<span id="L193">193 #print axioms LowerBounds.bernoulliRelativeEntropy_event_le</span>
+<span id="L194">194 #print axioms LowerBounds.bretagnolleHuberScale_antitone</span>
+<span id="L195">195 #print axioms LowerBounds.bretagnolleHuber</span>
+<span id="L196">196 </span>
+<span id="L197">197 end BanditRLProof.TextbookPartIVChapter14Canary</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/TsallisFiniteArmIIDCorruptedRewardLaw.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.TsallisFiniteArmIIDRewardLaw</span>
+<span id="L2">2 import BanditRLProof.TsallisSqrtScheduleFixedGap</span>
+<span id="L3">3 import Mathlib.Topology.UnitInterval</span>
+<span id="L4">4 </span>
+<span id="L5">5 /-!</span>
+<span id="L6">6 # Stationary corrupted finite-arm IID reward laws for scheduled half-Tsallis</span>
+<span id="L7">7 </span>
+<span id="L8">8 This module replaces the free nonnegative `corruption` parameter of the</span>
+<span id="L9">9 abstract self-bounding endpoint by a quantity derived from a concrete process.</span>
+<span id="L10">10 Each arm receives a fixed real reward shift, the shifted reward is projected</span>
+<span id="L11">11 back to `[0, 1]`, and fresh finite reward vectors remain IID across rounds.</span>
+<span id="L12">12 </span>
+<span id="L13">13 The route is deliberately stationary and oblivious.  History-dependent or</span>
+<span id="L14">14 time-varying corruptions require a later predictable-law transport.</span>
+<span id="L15">15 -/</span>
+<span id="L16">16 </span>
+<span id="L17">17 namespace BanditRLProof</span>
+<span id="L18">18 namespace Tsallis</span>
+<span id="L19">19 </span>
+<span id="L20">20 open MeasureTheory ProbabilityTheory</span>
+<span id="L21">21 </span>
+<span id="L22">22 /-- Projection of a real value to the unit interval. -/</span>
+<span id="L23">23 noncomputable def clippedUnitReal (value : Real) : Real :=</span>
+<span id="L24">24   (Set.projIcc (0 : Real) 1 zero_le_one value : Real)</span>
+<span id="L25">25 </span>
+<span id="L26">26 theorem clippedUnitReal_mem_Icc (value : Real) :</span>
+<span id="L27">27     clippedUnitReal value ∈ Set.Icc (0 : Real) 1 := by</span>
+<span id="L28">28   exact (Set.projIcc (0 : Real) 1 zero_le_one value).property</span>
+<span id="L29">29 </span>
+<span id="L30">30 theorem clippedUnitReal_eq_of_mem_Icc (value : Real)</span>
+<span id="L31">31     (hvalue : value ∈ Set.Icc (0 : Real) 1) :</span>
+<span id="L32">32     clippedUnitReal value = value := by</span>
+<span id="L33">33   simpa [clippedUnitReal] using</span>
+<span id="L34">34     congrArg Subtype.val (Set.projIcc_of_mem zero_le_one hvalue)</span>
+<span id="L35">35 </span>
+<span id="L36">36 theorem abs_clippedUnitReal_add_sub_self_le (value shift : Real)</span>
+<span id="L37">37     (hvalue : value ∈ Set.Icc (0 : Real) 1) :</span>
+<span id="L38">38     |clippedUnitReal (value + shift) - value| &lt;= |shift| := by</span>
+<span id="L39">39   have hcontraction := Set.abs_projIcc_sub_projIcc</span>
+<span id="L40">40     (a := (0 : Real)) (b := 1) zero_le_one</span>
+<span id="L41">41     (c := value + shift) (d := value)</span>
+<span id="L42">42   calc</span>
+<span id="L43">43     |clippedUnitReal (value + shift) - value| =</span>
+<span id="L44">44         |clippedUnitReal (value + shift) - clippedUnitReal value| := by</span>
+<span id="L45">45       rw [clippedUnitReal_eq_of_mem_Icc value hvalue]</span>
+<span id="L46">46     _ &lt;= |(value + shift) - value| := by</span>
+<span id="L47">47       simpa only [clippedUnitReal] using hcontraction</span>
+<span id="L48">48     _ = |shift| := by ring_nf</span>
+<span id="L49">49 </span>
+<span id="L50">50 /-- Reward after a stationary arm-dependent shift and unit-interval clipping. -/</span>
+<span id="L51">51 noncomputable def finiteArmIIDStationaryCorruptedReward {K : Nat}</span>
+<span id="L52">52     (rewardShift : Fin K -&gt; Real) (state : Fin K -&gt; Rat) (arm : Fin K) : Real :=</span>
+<span id="L53">53   clippedUnitReal (clippedUnitReward (state arm) + rewardShift arm)</span>
+<span id="L54">54 </span>
+<span id="L55">55 /-- Selected loss associated with the stationary corrupted reward vector. -/</span>
+<span id="L56">56 noncomputable def finiteArmIIDStationaryCorruptedRewardVectorLoss {K : Nat}</span>
+<span id="L57">57     (rewardShift : Fin K -&gt; Real) (state : Fin K -&gt; Rat) (arm : Fin K) : Real :=</span>
+<span id="L58">58   1 - finiteArmIIDStationaryCorruptedReward rewardShift state arm</span>
+<span id="L59">59 </span>
+<span id="L60">60 theorem measurable_finiteArmIIDStationaryCorruptedRewardVectorLoss {K : Nat}</span>
+<span id="L61">61     (rewardShift : Fin K -&gt; Real) :</span>
+<span id="L62">62     Measurable (fun input : (Fin K -&gt; Rat) × Fin K =&gt;</span>
+<span id="L63">63       finiteArmIIDStationaryCorruptedRewardVectorLoss</span>
+<span id="L64">64         rewardShift input.1 input.2) := by</span>
+<span id="L65">65   exact measurable_of_countable _</span>
+<span id="L66">66 </span>
+<span id="L67">67 theorem finiteArmIIDStationaryCorruptedRewardVectorLoss_nonneg {K : Nat}</span>
+<span id="L68">68     (rewardShift : Fin K -&gt; Real) (state : Fin K -&gt; Rat) (arm : Fin K) :</span>
+<span id="L69">69     0 &lt;= finiteArmIIDStationaryCorruptedRewardVectorLoss</span>
+<span id="L70">70       rewardShift state arm := by</span>
+<span id="L71">71   have hmem := clippedUnitReal_mem_Icc</span>
+<span id="L72">72     (clippedUnitReward (state arm) + rewardShift arm)</span>
+<span id="L73">73   dsimp only [finiteArmIIDStationaryCorruptedRewardVectorLoss,</span>
+<span id="L74">74     finiteArmIIDStationaryCorruptedReward]</span>
+<span id="L75">75   linarith [hmem.2]</span>
+<span id="L76">76 </span>
+<span id="L77">77 theorem finiteArmIIDStationaryCorruptedRewardVectorLoss_le_one {K : Nat}</span>
+<span id="L78">78     (rewardShift : Fin K -&gt; Real) (state : Fin K -&gt; Rat) (arm : Fin K) :</span>
+<span id="L79">79     finiteArmIIDStationaryCorruptedRewardVectorLoss rewardShift state arm &lt;= 1 := by</span>
+<span id="L80">80   have hmem := clippedUnitReal_mem_Icc</span>
+<span id="L81">81     (clippedUnitReward (state arm) + rewardShift arm)</span>
+<span id="L82">82   dsimp only [finiteArmIIDStationaryCorruptedRewardVectorLoss,</span>
+<span id="L83">83     finiteArmIIDStationaryCorruptedReward]</span>
+<span id="L84">84   linarith [hmem.1]</span>
+<span id="L85">85 </span>
+<span id="L86">86 theorem abs_finiteArmIIDStationaryCorruptedReward_sub_base_le {K : Nat}</span>
+<span id="L87">87     (rewardShift : Fin K -&gt; Real) (state : Fin K -&gt; Rat) (arm : Fin K) :</span>
+<span id="L88">88     |finiteArmIIDStationaryCorruptedReward rewardShift state arm -</span>
+<span id="L89">89         clippedUnitReward (state arm)| &lt;= |rewardShift arm| := by</span>
+<span id="L90">90   exact abs_clippedUnitReal_add_sub_self_le _ _</span>
+<span id="L91">91     ⟨clippedUnitReward_nonneg (state arm),</span>
+<span id="L92">92       clippedUnitReward_le_one (state arm)⟩</span>
+<span id="L93">93 </span>
+<span id="L94">94 theorem abs_stationaryCorruptedLossDiff_sub_baseLossDiff_le {K : Nat}</span>
+<span id="L95">95     (rewardShift : Fin K -&gt; Real) (state : Fin K -&gt; Rat)</span>
+<span id="L96">96     (best arm : Fin K) :</span>
+<span id="L97">97     |(finiteArmIIDStationaryCorruptedRewardVectorLoss rewardShift state arm -</span>
+<span id="L98">98           finiteArmIIDStationaryCorruptedRewardVectorLoss rewardShift state best) -</span>
+<span id="L99">99         (finiteArmIIDRewardVectorLoss state arm -</span>
+<span id="L100">100           finiteArmIIDRewardVectorLoss state best)| &lt;=</span>
+<span id="L101">101       |rewardShift arm| + |rewardShift best| := by</span>
+<span id="L102">102   have harm := abs_finiteArmIIDStationaryCorruptedReward_sub_base_le</span>
+<span id="L103">103     rewardShift state arm</span>
+<span id="L104">104   have hbest := abs_finiteArmIIDStationaryCorruptedReward_sub_base_le</span>
+<span id="L105">105     rewardShift state best</span>
+<span id="L106">106   calc</span>
+<span id="L107">107     |(finiteArmIIDStationaryCorruptedRewardVectorLoss rewardShift state arm -</span>
+<span id="L108">108           finiteArmIIDStationaryCorruptedRewardVectorLoss rewardShift state best) -</span>
+<span id="L109">109         (finiteArmIIDRewardVectorLoss state arm -</span>
+<span id="L110">110           finiteArmIIDRewardVectorLoss state best)| =</span>
+<span id="L111">111         |(finiteArmIIDStationaryCorruptedReward rewardShift state best -</span>
+<span id="L112">112             clippedUnitReward (state best)) -</span>
+<span id="L113">113           (finiteArmIIDStationaryCorruptedReward rewardShift state arm -</span>
+<span id="L114">114             clippedUnitReward (state arm))| := by</span>
+<span id="L115">115       congr 1</span>
+<span id="L116">116       simp only [finiteArmIIDStationaryCorruptedRewardVectorLoss,</span>
+<span id="L117">117         finiteArmIIDRewardVectorLoss]</span>
+<span id="L118">118       ring</span>
+<span id="L119">119     _ &lt;= |finiteArmIIDStationaryCorruptedReward rewardShift state best -</span>
+<span id="L120">120             clippedUnitReward (state best)| +</span>
+<span id="L121">121           |finiteArmIIDStationaryCorruptedReward rewardShift state arm -</span>
+<span id="L122">122             clippedUnitReward (state arm)| := abs_sub _ _</span>
+<span id="L123">123     _ &lt;= |rewardShift best| + |rewardShift arm| := add_le_add hbest harm</span>
+<span id="L124">124     _ = |rewardShift arm| + |rewardShift best| := add_comm _ _</span>
+<span id="L125">125 </span>
+<span id="L126">126 theorem integrable_iidLossStateDiff</span>
+<span id="L127">127     {LossState Action : Type*} [MeasurableSpace LossState]</span>
+<span id="L128">128     [MeasurableSpace Action]</span>
+<span id="L129">129     (law : Measure LossState) [IsFiniteMeasure law]</span>
+<span id="L130">130     (value : LossState -&gt; Action -&gt; Real)</span>
+<span id="L131">131     (hvalue : Measurable (fun input : LossState × Action =&gt;</span>
+<span id="L132">132       value input.1 input.2))</span>
+<span id="L133">133     (hvalue_nonneg : forall state action, 0 &lt;= value state action)</span>
+<span id="L134">134     (hvalue_le_one : forall state action, value state action &lt;= 1)</span>
+<span id="L135">135     (best arm : Action) :</span>
+<span id="L136">136     Integrable (fun state =&gt; value state arm - value state best) law := by</span>
+<span id="L137">137   have hmeas : Measurable (fun state =&gt; value state arm - value state best) :=</span>
+<span id="L138">138     (hvalue.comp (measurable_id.prodMk measurable_const)).sub</span>
+<span id="L139">139       (hvalue.comp (measurable_id.prodMk measurable_const))</span>
+<span id="L140">140   refine Integrable.of_bound hmeas.aestronglyMeasurable 1 ?_</span>
+<span id="L141">141   exact Filter.Eventually.of_forall fun state =&gt; by</span>
+<span id="L142">142     rw [Real.norm_eq_abs, abs_le]</span>
+<span id="L143">143     constructor &lt;;&gt; linarith [hvalue_nonneg state arm,</span>
+<span id="L144">144       hvalue_le_one state arm, hvalue_nonneg state best,</span>
+<span id="L145">145       hvalue_le_one state best]</span>
+<span id="L146">146 </span>
+<span id="L147">147 /-- The actual stationary-corrupted IID loss gap remains within the two</span>
+<span id="L148">148 affected arm shifts of the uncorrupted finite-bandit model gap. -/</span>
+<span id="L149">149 theorem abs_iidLossStateMeanGap_stationaryCorrupted_sub_modelGap_le</span>
+<span id="L150">150     {K : Nat} (model : FiniteBanditModel K)</span>
+<span id="L151">151     (armLaw : Fin K -&gt; Measure Rat)</span>
+<span id="L152">152     (hprob : forall arm, IsProbabilityMeasure (armLaw arm))</span>
+<span id="L153">153     (hbound : forall arm, ∀ᵐ reward ∂armLaw arm,</span>
+<span id="L154">154       ((reward : Rat) : Real) ∈ Set.Icc (0 : Real) 1)</span>
+<span id="L155">155     (hmean : forall arm,</span>
+<span id="L156">156       integral (armLaw arm) (fun reward : Rat =&gt; ((reward : Rat) : Real)) =</span>
+<span id="L157">157         ((model.mean arm : Rat) : Real))</span>
+<span id="L158">158     (rewardShift : Fin K -&gt; Real) (arm : Fin K) :</span>
+<span id="L159">159     |iidLossStateMeanGap (finiteArmIIDRewardVectorLaw armLaw)</span>
+<span id="L160">160           (finiteArmIIDStationaryCorruptedRewardVectorLoss rewardShift)</span>
+<span id="L161">161           model.bestArm arm - ((model.gap arm : Rat) : Real)| &lt;=</span>
+<span id="L162">162       |rewardShift arm| + |rewardShift model.bestArm| := by</span>
+<span id="L163">163   letI (i : Fin K) : IsProbabilityMeasure (armLaw i) := hprob i</span>
+<span id="L164">164   let law := finiteArmIIDRewardVectorLaw armLaw</span>
+<span id="L165">165   letI : IsProbabilityMeasure law := by</span>
+<span id="L166">166     dsimp only [law, finiteArmIIDRewardVectorLaw]</span>
+<span id="L167">167     infer_instance</span>
+<span id="L168">168   let actual := finiteArmIIDStationaryCorruptedRewardVectorLoss rewardShift</span>
+<span id="L169">169   let base := finiteArmIIDRewardVectorLoss (K := K)</span>
+<span id="L170">170   have hactualIntegrable : Integrable</span>
+<span id="L171">171       (fun state =&gt; actual state arm - actual state model.bestArm) law := by</span>
+<span id="L172">172     exact integrable_iidLossStateDiff law actual</span>
+<span id="L173">173       (measurable_finiteArmIIDStationaryCorruptedRewardVectorLoss rewardShift)</span>
+<span id="L174">174       (finiteArmIIDStationaryCorruptedRewardVectorLoss_nonneg rewardShift)</span>
+<span id="L175">175       (finiteArmIIDStationaryCorruptedRewardVectorLoss_le_one rewardShift)</span>
+<span id="L176">176       model.bestArm arm</span>
+<span id="L177">177   have hbaseIntegrable : Integrable</span>
+<span id="L178">178       (fun state =&gt; base state arm - base state model.bestArm) law := by</span>
+<span id="L179">179     exact integrable_iidLossStateDiff law base</span>
+<span id="L180">180       measurable_finiteArmIIDRewardVectorLoss</span>
+<span id="L181">181       finiteArmIIDRewardVectorLoss_nonneg finiteArmIIDRewardVectorLoss_le_one</span>
+<span id="L182">182       model.bestArm arm</span>
+<span id="L183">183   have hbaseGap : iidLossStateMeanGap law base model.bestArm arm =</span>
+<span id="L184">184       ((model.gap arm : Rat) : Real) := by</span>
+<span id="L185">185     exact iidLossStateMeanGap_finiteArmIIDRewardVectorLoss_eq_gap</span>
+<span id="L186">186       model armLaw hprob hbound hmean arm</span>
+<span id="L187">187   have heq :</span>
+<span id="L188">188       iidLossStateMeanGap law actual model.bestArm arm -</span>
+<span id="L189">189           ((model.gap arm : Rat) : Real) =</span>
+<span id="L190">190         integral law (fun state =&gt;</span>
+<span id="L191">191           (actual state arm - actual state model.bestArm) -</span>
+<span id="L192">192             (base state arm - base state model.bestArm)) := by</span>
+<span id="L193">193     rw [← hbaseGap]</span>
+<span id="L194">194     exact (integral_sub hactualIntegrable hbaseIntegrable).symm</span>
+<span id="L195">195   rw [heq, ← Real.norm_eq_abs]</span>
+<span id="L196">196   have hnorm := norm_integral_le_of_norm_le_const</span>
+<span id="L197">197     (μ := law) (C := |rewardShift arm| + |rewardShift model.bestArm|)</span>
+<span id="L198">198     (Filter.Eventually.of_forall fun state =&gt; by</span>
+<span id="L199">199       rw [Real.norm_eq_abs]</span>
+<span id="L200">200       exact abs_stationaryCorruptedLossDiff_sub_baseLossDiff_le</span>
+<span id="L201">201         rewardShift state model.bestArm arm)</span>
+<span id="L202">202   simpa [law] using hnorm</span>
+<span id="L203">203 </span>
+<span id="L204">204 /-- Total baseline-gap perturbation allowance through the inclusive horizon. -/</span>
+<span id="L205">205 noncomputable def scheduledGapDeviationBudget</span>
+<span id="L206">206     {Action : Type*} [DecidableEq Action]</span>
+<span id="L207">207     (arms : Finset Action) (best : Action) (horizon : Nat)</span>
+<span id="L208">208     (deviation : Action -&gt; Real) : Real :=</span>
+<span id="L209">209   (Finset.range (horizon + 1)).sum (fun _ =&gt;</span>
+<span id="L210">210     (arms.erase best).sum deviation)</span>
+<span id="L211">211 </span>
+<span id="L212">212 theorem scheduledGapDeviationBudget_eq</span>
+<span id="L213">213     {Action : Type*} [DecidableEq Action]</span>
+<span id="L214">214     (arms : Finset Action) (best : Action) (horizon : Nat)</span>
+<span id="L215">215     (deviation : Action -&gt; Real) :</span>
+<span id="L216">216     scheduledGapDeviationBudget arms best horizon deviation =</span>
+<span id="L217">217       (((horizon + 1 : Nat) : Real)) * (arms.erase best).sum deviation := by</span>
+<span id="L218">218   simp [scheduledGapDeviationBudget, nsmul_eq_mul]</span>
+<span id="L219">219 </span>
+<span id="L220">220 /-- An expected law for perturbed gaps yields the baseline-gap self-bound with</span>
+<span id="L221">221 the accumulated coordinatewise gap-deviation budget. -/</span>
+<span id="L222">222 theorem integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_hasSelfBounding_of_perturbedExpectedGapLaw</span>
+<span id="L223">223     {Env Action : Type*}</span>
+<span id="L224">224     [MeasurableSpace Env] [MeasurableSpace Action]</span>
+<span id="L225">225     [MeasurableSingletonClass Action] [DecidableEq Action]</span>
+<span id="L226">226     (mu : Measure (Env × ((k : Nat) -&gt; Action × Real)))</span>
+<span id="L227">227     [IsProbabilityMeasure mu]</span>
+<span id="L228">228     (arms : Finset Action) (harms : arms.Nonempty) (eta : Nat -&gt; Real)</span>
+<span id="L229">229     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L230">230     {best : Action} (hbest : best ∈ arms) (horizon : Nat)</span>
+<span id="L231">231     (baseGap actualGap deviation : Action -&gt; Real)</span>
+<span id="L232">232     (hactualGapLaw : HasScheduledExpectedGapLaw</span>
+<span id="L233">233       mu arms harms eta loss best actualGap horizon)</span>
+<span id="L234">234     (hdeviation : forall action, action ∈ arms.erase best -&gt;</span>
+<span id="L235">235       |actualGap action - baseGap action| &lt;= deviation action) :</span>
+<span id="L236">236     (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L237">237         (arms.erase best).sum (fun action =&gt;</span>
+<span id="L238">238           baseGap action * sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L239">239             mu arms harms eta t action)) -</span>
+<span id="L240">240       scheduledGapDeviationBudget arms best horizon deviation &lt;=</span>
+<span id="L241">241         integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L242">242           arms harms eta loss (pointMass best) horizon) := by</span>
+<span id="L243">243   have hregret :=</span>
+<span id="L244">244     integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_eq_suboptimalExpectedGapMass_of_expectedGapLaw</span>
+<span id="L245">245       mu arms harms eta loss hbest actualGap horizon hactualGapLaw</span>
+<span id="L246">246   have hbaseLe :</span>
+<span id="L247">247       (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L248">248           (arms.erase best).sum (fun action =&gt;</span>
+<span id="L249">249             baseGap action * sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L250">250               mu arms harms eta t action)) &lt;=</span>
+<span id="L251">251         (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L252">252           (arms.erase best).sum (fun action =&gt;</span>
+<span id="L253">253             actualGap action * sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L254">254               mu arms harms eta t action + deviation action)) := by</span>
+<span id="L255">255     apply Finset.sum_le_sum</span>
+<span id="L256">256     intro t _ht</span>
+<span id="L257">257     apply Finset.sum_le_sum</span>
+<span id="L258">258     intro action haction</span>
+<span id="L259">259     let probability := sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L260">260       mu arms harms eta t action</span>
+<span id="L261">261     have hsimplex :=</span>
+<span id="L262">262       finiteSimplex_sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L263">263         mu arms harms eta t</span>
+<span id="L264">264     have hp0 : 0 &lt;= probability :=</span>
+<span id="L265">265       hsimplex.1 action (Finset.mem_of_mem_erase haction)</span>
+<span id="L266">266     have hp1 : probability &lt;= 1 :=</span>
+<span id="L267">267       finiteSimplex_apply_le_one hsimplex</span>
+<span id="L268">268         (Finset.mem_of_mem_erase haction)</span>
+<span id="L269">269     have habs : baseGap action - actualGap action &lt;=</span>
+<span id="L270">270         |actualGap action - baseGap action| := by</span>
+<span id="L271">271       rw [abs_sub_comm]</span>
+<span id="L272">272       exact le_abs_self _</span>
+<span id="L273">273     have hweighted :</span>
+<span id="L274">274         (baseGap action - actualGap action) * probability &lt;=</span>
+<span id="L275">275           deviation action := by</span>
+<span id="L276">276       calc</span>
+<span id="L277">277         (baseGap action - actualGap action) * probability &lt;=</span>
+<span id="L278">278             |actualGap action - baseGap action| * probability :=</span>
+<span id="L279">279           mul_le_mul_of_nonneg_right habs hp0</span>
+<span id="L280">280         _ &lt;= |actualGap action - baseGap action| := by</span>
+<span id="L281">281           simpa using mul_le_of_le_one_right (abs_nonneg _) hp1</span>
+<span id="L282">282         _ &lt;= deviation action := hdeviation action haction</span>
+<span id="L283">283     dsimp only [probability] at hweighted ⊢</span>
+<span id="L284">284     linarith</span>
+<span id="L285">285   have hsplit :</span>
+<span id="L286">286       (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L287">287           (arms.erase best).sum (fun action =&gt;</span>
+<span id="L288">288             actualGap action * sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L289">289               mu arms harms eta t action + deviation action)) =</span>
+<span id="L290">290         (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L291">291           (arms.erase best).sum (fun action =&gt;</span>
+<span id="L292">292             actualGap action * sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L293">293               mu arms harms eta t action)) +</span>
+<span id="L294">294           scheduledGapDeviationBudget arms best horizon deviation := by</span>
+<span id="L295">295     simp only [Finset.sum_add_distrib, scheduledGapDeviationBudget]</span>
+<span id="L296">296   rw [hsplit] at hbaseLe</span>
+<span id="L297">297   rw [hregret]</span>
+<span id="L298">298   linarith</span>
+<span id="L299">299 </span>
+<span id="L300">300 /-- Explicit corruption budget for a stationary arm-dependent reward shift. -/</span>
+<span id="L301">301 noncomputable def finiteArmIIDStationaryRewardCorruptionBudget {K : Nat}</span>
+<span id="L302">302     (model : FiniteBanditModel K) (horizon : Nat)</span>
+<span id="L303">303     (rewardShift : Fin K -&gt; Real) : Real :=</span>
+<span id="L304">304   scheduledGapDeviationBudget (Finset.univ : Finset (Fin K)) model.bestArm</span>
+<span id="L305">305     horizon (fun arm =&gt; |rewardShift arm| + |rewardShift model.bestArm|)</span>
+<span id="L306">306 </span>
+<span id="L307">307 theorem finiteArmIIDStationaryRewardCorruptionBudget_eq {K : Nat}</span>
+<span id="L308">308     (model : FiniteBanditModel K) (horizon : Nat)</span>
+<span id="L309">309     (rewardShift : Fin K -&gt; Real) :</span>
+<span id="L310">310     finiteArmIIDStationaryRewardCorruptionBudget model horizon rewardShift =</span>
+<span id="L311">311       (((horizon + 1 : Nat) : Real)) *</span>
+<span id="L312">312         ((Finset.univ : Finset (Fin K)).erase model.bestArm).sum</span>
+<span id="L313">313           (fun arm =&gt; |rewardShift arm| + |rewardShift model.bestArm|) := by</span>
+<span id="L314">314   exact scheduledGapDeviationBudget_eq _ _ _ _</span>
+<span id="L315">315 </span>
+<span id="L316">316 @[simp]</span>
+<span id="L317">317 theorem finiteArmIIDStationaryRewardCorruptionBudget_zero {K : Nat}</span>
+<span id="L318">318     (model : FiniteBanditModel K) (horizon : Nat) :</span>
+<span id="L319">319     finiteArmIIDStationaryRewardCorruptionBudget model horizon</span>
+<span id="L320">320       (fun _ =&gt; 0) = 0 := by</span>
+<span id="L321">321   simp [finiteArmIIDStationaryRewardCorruptionBudget,</span>
+<span id="L322">322     scheduledGapDeviationBudget]</span>
+<span id="L323">323 </span>
+<span id="L324">324 /-- Scheduled half-Tsallis logarithmic regret for an IID finite-arm reward</span>
+<span id="L325">325 model with a fixed clipped reward shift.  The additive corruption term is</span>
+<span id="L326">326 derived from `rewardShift`; it is not a free theorem parameter. -/</span>
+<span id="L327">327 theorem integral_sampledScheduledHalfTsallisFiniteArmIIDStationaryCorruptedRewardLawRegret_le_log</span>
+<span id="L328">328     {K : Nat} (model : FiniteBanditModel K)</span>
+<span id="L329">329     (armLaw : Fin K -&gt; Measure Rat)</span>
+<span id="L330">330     (hprob : forall arm, IsProbabilityMeasure (armLaw arm))</span>
+<span id="L331">331     (hbound : forall arm, ∀ᵐ reward ∂armLaw arm,</span>
+<span id="L332">332       ((reward : Rat) : Real) ∈ Set.Icc (0 : Real) 1)</span>
+<span id="L333">333     (hmean : forall arm,</span>
+<span id="L334">334       integral (armLaw arm) (fun reward : Rat =&gt; ((reward : Rat) : Real)) =</span>
+<span id="L335">335         ((model.mean arm : Rat) : Real))</span>
+<span id="L336">336     (rewardShift : Fin K -&gt; Real)</span>
+<span id="L337">337     (hgapPos : forall arm, arm ≠ model.bestArm -&gt;</span>
+<span id="L338">338       0 &lt; ((model.gap arm : Rat) : Real))</span>
+<span id="L339">339     (horizon : Nat) :</span>
+<span id="L340">340     letI : Nonempty (Fin K) := ⟨model.bestArm⟩</span>
+<span id="L341">341     let law := finiteArmIIDRewardVectorLaw armLaw</span>
+<span id="L342">342     let value := finiteArmIIDStationaryCorruptedRewardVectorLoss rewardShift</span>
+<span id="L343">343     let loss := iidLossStatePredictableLossVector value</span>
+<span id="L344">344       (measurable_finiteArmIIDStationaryCorruptedRewardVectorLoss rewardShift)</span>
+<span id="L345">345       (finiteArmIIDStationaryCorruptedRewardVectorLoss_nonneg rewardShift)</span>
+<span id="L346">346       (finiteArmIIDStationaryCorruptedRewardVectorLoss_le_one rewardShift)</span>
+<span id="L347">347     let selector :=</span>
+<span id="L348">348       canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L349">349         (Finset.univ : Finset (Fin K)) Finset.univ_nonempty</span>
+<span id="L350">350         sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L351">351     let prior := Measure.infinitePi (fun _ : Nat =&gt; law)</span>
+<span id="L352">352     let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L353">353       (Finset.univ : Finset (Fin K)) Finset.univ_nonempty</span>
+<span id="L354">354       sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L355">355       selector.finiteHistory loss.environment</span>
+<span id="L356">356     integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L357">357         (Finset.univ : Finset (Fin K)) Finset.univ_nonempty</span>
+<span id="L358">358         sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L359">359         (pointMass model.bestArm) horizon) &lt;=</span>
+<span id="L360">360       (1 + Real.log (((horizon + 1 : Nat) : Real))) *</span>
+<span id="L361">361         (1 + 25 * ((Finset.univ : Finset (Fin K)).erase model.bestArm).sum</span>
+<span id="L362">362           (fun arm =&gt; 1 / ((model.gap arm : Rat) : Real))) +</span>
+<span id="L363">363         finiteArmIIDStationaryRewardCorruptionBudget</span>
+<span id="L364">364           model horizon rewardShift := by</span>
+<span id="L365">365   letI : Nonempty (Fin K) := ⟨model.bestArm⟩</span>
+<span id="L366">366   letI (arm : Fin K) : IsProbabilityMeasure (armLaw arm) := hprob arm</span>
+<span id="L367">367   let law := finiteArmIIDRewardVectorLaw armLaw</span>
+<span id="L368">368   letI : IsProbabilityMeasure law := by</span>
+<span id="L369">369     dsimp only [law, finiteArmIIDRewardVectorLaw]</span>
+<span id="L370">370     infer_instance</span>
+<span id="L371">371   let value := finiteArmIIDStationaryCorruptedRewardVectorLoss rewardShift</span>
+<span id="L372">372   let hvalue := measurable_finiteArmIIDStationaryCorruptedRewardVectorLoss</span>
+<span id="L373">373     rewardShift</span>
+<span id="L374">374   let hvalueNonneg :=</span>
+<span id="L375">375     finiteArmIIDStationaryCorruptedRewardVectorLoss_nonneg rewardShift</span>
+<span id="L376">376   let hvalueLeOne :=</span>
+<span id="L377">377     finiteArmIIDStationaryCorruptedRewardVectorLoss_le_one rewardShift</span>
+<span id="L378">378   let loss := iidLossStatePredictableLossVector value hvalue</span>
+<span id="L379">379     hvalueNonneg hvalueLeOne</span>
+<span id="L380">380   let arms : Finset (Fin K) := Finset.univ</span>
+<span id="L381">381   let harms : arms.Nonempty := Finset.univ_nonempty</span>
+<span id="L382">382   let eta := sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L383">383   let selector := canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L384">384     arms harms eta loss</span>
+<span id="L385">385   let prior := Measure.infinitePi (fun _ : Nat =&gt; law)</span>
+<span id="L386">386   let trajectoryKernel := sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L387">387     arms harms eta selector.finiteHistory loss.environment</span>
+<span id="L388">388   let mu := prior ⊗ₘ trajectoryKernel</span>
+<span id="L389">389   let actualGap := iidLossStateMeanGap law value model.bestArm</span>
+<span id="L390">390   let baseGap := fun arm : Fin K =&gt; ((model.gap arm : Rat) : Real)</span>
+<span id="L391">391   let deviation := fun arm : Fin K =&gt;</span>
+<span id="L392">392     |rewardShift arm| + |rewardShift model.bestArm|</span>
+<span id="L393">393   have hfactor : HasScheduledIIDPrefixKernelFactorization trajectoryKernel</span>
+<span id="L394">394       horizon := by</span>
+<span id="L395">395     simpa only [trajectoryKernel, selector, eta, loss, value, hvalue,</span>
+<span id="L396">396       hvalueNonneg, hvalueLeOne] using</span>
+<span id="L397">397       hasScheduledIIDPrefixKernelFactorization_sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L398">398         (fun _ : Fin K =&gt; (0 : Rat)) value hvalue hvalueNonneg hvalueLeOne</span>
+<span id="L399">399         arms harms eta selector.finiteHistory horizon</span>
+<span id="L400">400   have hindependent : HasScheduledIndependentMeanGapLaw</span>
+<span id="L401">401       mu arms loss model.bestArm actualGap horizon := by</span>
+<span id="L402">402     simpa only [mu, prior, trajectoryKernel, actualGap, loss] using</span>
+<span id="L403">403       hasScheduledIndependentMeanGapLaw_of_iidLossState</span>
+<span id="L404">404         law value hvalue hvalueNonneg hvalueLeOne arms model.bestArm horizon</span>
+<span id="L405">405           trajectoryKernel hfactor</span>
+<span id="L406">406   have hactualGapLaw : HasScheduledExpectedGapLaw</span>
+<span id="L407">407       mu arms harms eta loss model.bestArm actualGap horizon := by</span>
+<span id="L408">408     exact hasScheduledExpectedGapLaw_of_independentMeanGapLaw</span>
+<span id="L409">409       mu arms harms eta loss model.bestArm actualGap horizon hindependent</span>
+<span id="L410">410   have hdeviation : forall arm, arm ∈ arms.erase model.bestArm -&gt;</span>
+<span id="L411">411       |actualGap arm - baseGap arm| &lt;= deviation arm := by</span>
+<span id="L412">412     intro arm _harm</span>
+<span id="L413">413     exact abs_iidLossStateMeanGap_stationaryCorrupted_sub_modelGap_le</span>
+<span id="L414">414       model armLaw hprob hbound hmean rewardShift arm</span>
+<span id="L415">415   have hselfBounding :</span>
+<span id="L416">416       (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L417">417           (arms.erase model.bestArm).sum (fun arm =&gt;</span>
+<span id="L418">418             baseGap arm * sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L419">419               mu arms harms eta t arm)) -</span>
+<span id="L420">420         scheduledGapDeviationBudget arms model.bestArm horizon deviation &lt;=</span>
+<span id="L421">421       integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L422">422         arms harms eta loss (pointMass model.bestArm) horizon) := by</span>
+<span id="L423">423     exact</span>
+<span id="L424">424       integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_hasSelfBounding_of_perturbedExpectedGapLaw</span>
+<span id="L425">425         mu arms harms eta loss (Finset.mem_univ model.bestArm) horizon</span>
+<span id="L426">426         baseGap actualGap deviation hactualGapLaw hdeviation</span>
+<span id="L427">427   have hharmonic :=</span>
+<span id="L428">428     integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_sqrtSchedule_of_selfBounding</span>
+<span id="L429">429       prior arms harms loss (Finset.mem_univ model.bestArm) horizon baseGap</span>
+<span id="L430">430       (fun arm harm =&gt; hgapPos arm (Finset.ne_of_mem_erase harm))</span>
+<span id="L431">431       (scheduledGapDeviationBudget arms model.bestArm horizon deviation)</span>
+<span id="L432">432       (by simpa only [mu, trajectoryKernel, selector, eta] using hselfBounding)</span>
+<span id="L433">433   let gapFactor := 1 + 25 * (arms.erase model.bestArm).sum</span>
+<span id="L434">434     (fun arm =&gt; 1 / baseGap arm)</span>
+<span id="L435">435   have hgapSum : 0 &lt;= (arms.erase model.bestArm).sum</span>
+<span id="L436">436       (fun arm =&gt; 1 / baseGap arm) := by</span>
+<span id="L437">437     apply Finset.sum_nonneg</span>
+<span id="L438">438     intro arm harm</span>
+<span id="L439">439     exact le_of_lt (one_div_pos.mpr</span>
+<span id="L440">440       (hgapPos arm (Finset.ne_of_mem_erase harm)))</span>
+<span id="L441">441   have hgapFactor : 0 &lt;= gapFactor := by</span>
+<span id="L442">442     dsimp only [gapFactor]</span>
+<span id="L443">443     nlinarith</span>
+<span id="L444">444   have hbudget := sampledScheduledHalfTsallisHarmonicBudget_le_one_add_log</span>
+<span id="L445">445     horizon</span>
+<span id="L446">446   have hmul : sampledScheduledHalfTsallisHarmonicBudget horizon * gapFactor &lt;=</span>
+<span id="L447">447       (1 + Real.log (((horizon + 1 : Nat) : Real))) * gapFactor :=</span>
+<span id="L448">448     mul_le_mul_of_nonneg_right hbudget hgapFactor</span>
+<span id="L449">449   dsimp only at hharmonic</span>
+<span id="L450">450   calc</span>
+<span id="L451">451     integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L452">452         arms harms eta loss (pointMass model.bestArm) horizon) &lt;=</span>
+<span id="L453">453       sampledScheduledHalfTsallisHarmonicBudget horizon * gapFactor +</span>
+<span id="L454">454         scheduledGapDeviationBudget arms model.bestArm horizon deviation := by</span>
+<span id="L455">455       simpa only [gapFactor, eta, baseGap] using hharmonic</span>
+<span id="L456">456     _ &lt;= (1 + Real.log (((horizon + 1 : Nat) : Real))) * gapFactor +</span>
+<span id="L457">457         scheduledGapDeviationBudget arms model.bestArm horizon deviation := by</span>
+<span id="L458">458       linarith</span>
+<span id="L459">459     _ = (1 + Real.log (((horizon + 1 : Nat) : Real))) *</span>
+<span id="L460">460         (1 + 25 * ((Finset.univ : Finset (Fin K)).erase model.bestArm).sum</span>
+<span id="L461">461           (fun arm =&gt; 1 / ((model.gap arm : Rat) : Real))) +</span>
+<span id="L462">462         finiteArmIIDStationaryRewardCorruptionBudget</span>
+<span id="L463">463           model horizon rewardShift := by</span>
+<span id="L464">464       rfl</span>
+<span id="L465">465 </span>
+<span id="L466">466 end Tsallis</span>
+<span id="L467">467 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

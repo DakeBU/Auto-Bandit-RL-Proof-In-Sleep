@@ -1,0 +1,26 @@
+flowchart TB
+  MDP["finite-horizon MDP"] --> Bellman["optimal Bellman recursion"]
+  Bellman --> Occupancy["occupancy-gap identity"]
+  Episodes["generated adaptive episodes"] --> Counts["strict-prefix aggregate counts"]
+  Counts --> Empirical["aggregate empirical transition"]
+  Empirical --> Planner["previous-Q clipped<br/>UCBVI-CH planner"]
+  Planner --> Policy["measurable argmax policy"]
+  CondMGF["same-law conditional MGF"] --> Confidence["transition and value confidence"]
+  Counts --> Confidence
+  Confidence --> Optimism["all-episode Bellman optimism"]
+  Planner --> Optimism
+  Occupancy --> EpisodeRegret["generated-episode pseudo-regret"]
+  Policy --> EpisodeRegret
+  Optimism --> Decomp["charge and innovation decomposition"]
+  EpisodeRegret --> Decomp
+  Counts --> CountSum["actual-count charge summation"]
+  CondMGF --> Martingale["generated-filtration<br/>innovation tail"]
+  Decomp --> Terminal["20/250 high-probability<br/>UCBVI-CH terminal"]
+  CountSum --> Terminal
+  Martingale --> Terminal
+  Terminal --> Expected["expected regret + K H δ"]
+  Confidence --> Behavior["natural-causal consistency"]
+  StopL2["L2 stopping foundation"] --> Hitting["uncapped inverse-sqrt hitting"]
+  Behavior --> Hitting
+  Hitting --> ExpectedHit["stopped-value expectation bound"]
+  Terminal -. "separate milestone" .-> Bernstein["Bernstein / minimax UCB-VI"]

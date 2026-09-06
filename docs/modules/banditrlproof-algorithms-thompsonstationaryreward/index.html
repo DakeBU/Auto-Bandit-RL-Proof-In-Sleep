@@ -1,0 +1,1687 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.Algorithms.ThompsonStationaryReward · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.Algorithms.ThompsonStationaryReward · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.Algorithms.ThompsonStationaryReward · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Thompson sampling</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>Algorithms.<wbr>Thompson<wbr>Stationary<wbr>Reward</h1>
+  <p class="lede">This module isolates the stationary feedback adapter and the algorithm-independent latent-arm-stream tail used by the Thompson Bayesian-regret route. The tail theorems deliberately quantify over an arbitrary action trace: only the next-unused-coordinate reward rule and the product arm-stream law matter.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html"><code>BanditRLProof/Algorithms/ThompsonStationaryReward.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/thompson/index.html">6. Thompson sampling and Bayesian regret</a></dd></div>
+    <div><dt>Declarations</dt><dd>97</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-algorithms-thompsonclippeducbscore/index.html"><code>BanditRLProof.Algorithms.ThompsonClippedUCBScore</code></a>, <a href="../banditrlproof-algorithms-ucbarmstreamtail/index.html"><code>BanditRLProof.Algorithms.UCBArmStreamTail</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-algorithms-stochasticgradientbandittheoremtwolatentreward/index.html"><code>BanditRLProof.Algorithms.StochasticGradientBanditTheoremTwoLatentReward</code></a>, <a href="../banditrlproof-algorithms-stochasticgradientbandittwoarmfixediid/index.html"><code>BanditRLProof.Algorithms.StochasticGradientBanditTwoArmFixedIID</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-8f9acf67648c">
+  <summary>
+    <span class="kind">abbrev</span>
+    <code>BanditRLProof.Thompson.UnitArmStream</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Uniform random table used to represent all stationary reward-kernel draws.</p>
+    <pre class="lean-code"><code><span class="kw">abbrev</span> UnitArmStream (K : Nat)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L23">Source line 23</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e2734bedd9a6">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.uniformUnitArmStreamMeasure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Independent uniform coordinates indexed by pull number and arm.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> uniformUnitArmStreamMeasure (K : Nat) : Measure (UnitArmStream K)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L27">Source line 27</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f6530b069cb3">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.stationaryRewardSampler</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A fixed measurable uniform-randomness representation of a reward kernel.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> stationaryRewardSampler {Env : Type u} {K : Nat} [MeasurableSpace Env] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] : (Env × Fin K) -&gt; Set.Icc (<span class="num">0</span> : Real) <span class="num">1</span> -&gt; Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L38">Source line 38</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-79399ec87555">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measurable_uncurry_stationaryRewardSampler</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_uncurry_stationaryRewardSampler {Env : Type u} {K : Nat} [MeasurableSpace Env] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] : Measurable (Function.uncurry (stationaryRewardSampler rewardKernel))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L44">Source line 44</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-169dbed4bb07">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryRewardSampler_map_volume</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryRewardSampler_map_volume {Env : Type u} {K : Nat} [MeasurableSpace Env] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (input : Env × Fin K) : Measure.map (stationaryRewardSampler rewardKernel input) volume = rewardKernel input</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L50">Source line 50</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-59fc604a7fd5">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.rewardStreamOfUnitArmStream</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Turn one environment and one uniform table into its latent reward table.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> rewardStreamOfUnitArmStream {Env : Type u} {K : Nat} [MeasurableSpace Env] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] : Env × UnitArmStream K -&gt; UCB.ArmRewardStream K</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L59">Source line 59</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3e8c61b7a2ef">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measurable_rewardStreamOfUnitArmStream</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_rewardStreamOfUnitArmStream {Env : Type u} {K : Nat} [MeasurableSpace Env] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] : Measurable (rewardStreamOfUnitArmStream rewardKernel)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L66">Source line 66</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3c9d4caaa403">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.stationaryRewardKernelAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The arm-indexed reward kernel obtained by freezing the environment.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> stationaryRewardKernelAt {Env : Type u} {K : Nat} [MeasurableSpace Env] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (env : Env) : Kernel (Fin K) Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L77">Source line 77</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6d01f9e8920a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryRewardKernelAt_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryRewardKernelAt_apply {Env : Type u} {K : Nat} [MeasurableSpace Env] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (env : Env) (arm : Fin K) : stationaryRewardKernelAt rewardKernel env arm = rewardKernel (env, arm)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L91">Source line 91</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-900f10e7339b">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.stationaryArmStreamKernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Markov kernel that samples an independent latent reward stream at each environment.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> stationaryArmStreamKernel {Env : Type u} {K : Nat} [MeasurableSpace Env] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] : Kernel Env (UCB.ArmRewardStream K)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L99">Source line 99</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2230797d56a0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryArmStreamKernel_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">At a fixed environment, the sampled latent table has the canonical product arm-stream law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryArmStreamKernel_apply {Env : Type u} {K : Nat} [MeasurableSpace Env] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (env : Env) : stationaryArmStreamKernel rewardKernel env = UCB.armStreamMeasure (stationaryRewardKernelAt rewardKernel env)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L115">Source line 115</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0f9650178d4b">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.stationaryMeasurableHistoryEnvironment</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A stationary reward kernel is a measurable history environment that ignores history.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> stationaryMeasurableHistoryEnvironment {Env : Type u} {K : Nat} [MeasurableSpace Env] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] : MeasurableHistoryEnvironment Env (Fin K) Real <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L176">Source line 176</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a3cc0f0d5d8f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryMeasurableHistoryEnvironment_initialFeedback</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryMeasurableHistoryEnvironment_initialFeedback {Env : Type u} {K : Nat} [MeasurableSpace Env] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] : (stationaryMeasurableHistoryEnvironment rewardKernel).initialFeedback = rewardKernel</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L185">Source line 185</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-41df03efeedd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryMeasurableHistoryEnvironment_feedback_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryMeasurableHistoryEnvironment_feedback_apply {Env : Type u} {K : Nat} [MeasurableSpace Env] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (n : Nat) (env : Env) (history : History.FinitePairHistory (Fin K) Real n) (arm : Fin K) : (stationaryMeasurableHistoryEnvironment rewardKernel).feedback n (env, (history, arm)) = rewardKernel (env, arm)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L192">Source line 192</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-56f849fb55ac">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryMeasurableHistoryEnvironment_at_initialFeedback_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryMeasurableHistoryEnvironment_at_initialFeedback_apply {Env : Type u} {K : Nat} [MeasurableSpace Env] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (env : Env) (arm : Fin K) : ((stationaryMeasurableHistoryEnvironment rewardKernel).at env).initialFeedback arm = rewardKernel (env, arm)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L203">Source line 203</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-97553bd99a0c">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryMeasurableHistoryEnvironment_at_feedback_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryMeasurableHistoryEnvironment_at_feedback_apply {Env : Type u} {K : Nat} [MeasurableSpace Env] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (env : Env) (n : Nat) (history : History.FinitePairHistory (Fin K) Real n) (arm : Fin K) : ((stationaryMeasurableHistoryEnvironment rewardKernel).at env).feedback n (history, arm) = rewardKernel (env, arm)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L213">Source line 213</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-61317951e056">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.latentArmStreamInitialReward</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Initial reward read from coordinate zero of the selected latent arm.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> latentArmStreamInitialReward {Env : Type u} {K : Nat} : ((Env × UCB.ArmRewardStream K) × Fin K) → Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L225">Source line 225</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b95a5cf73c1b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measurable_latentArmStreamInitialReward</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_latentArmStreamInitialReward {Env : Type u} {K : Nat} [MeasurableSpace Env] : Measurable (latentArmStreamInitialReward (Env := Env) (K := K))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L230">Source line 230</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fc517c9a5d3a">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.latentArmStreamNextReward</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Next unused reward coordinate determined by the visible finite history.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> latentArmStreamNextReward {Env : Type u} {K : Nat} (n : Nat) : ((Env × UCB.ArmRewardStream K) × (History.FinitePairHistory (Fin K) Real n × Fin K)) → Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L238">Source line 238</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c513f444cc3e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measurable_latentArmStreamNextReward</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_latentArmStreamNextReward {Env : Type u} {K : Nat} [MeasurableSpace Env] (n : Nat) : Measurable (latentArmStreamNextReward (Env := Env) (K := K) n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L245">Source line 245</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-00ed196a90f5">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.latentArmStreamMeasurableHistoryEnvironment</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Measurable deterministic feedback environment that exposes a latent reward
+table through the next-unused-coordinate rule.  The first environment
+component is retained for the Bayesian model but does not affect feedback.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> latentArmStreamMeasurableHistoryEnvironment {Env : Type u} {K : Nat} [MeasurableSpace Env] : MeasurableHistoryEnvironment (Env × UCB.ArmRewardStream K) (Fin K) Real <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L267">Source line 267</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7467d204c022">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.latentArmStreamMeasurableHistoryEnvironment_initialFeedback_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> latentArmStreamMeasurableHistoryEnvironment_initialFeedback_apply {Env : Type u} {K : Nat} [MeasurableSpace Env] (env : Env) (stream : UCB.ArmRewardStream K) (arm : Fin K) : (latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).initialFeedback ((env, stream), arm) = Measure.dirac (stream <span class="num">0</span> arm)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L277">Source line 277</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c15c585376e7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.latentArmStreamMeasurableHistoryEnvironment_feedback_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> latentArmStreamMeasurableHistoryEnvironment_feedback_apply {Env : Type u} {K : Nat} [MeasurableSpace Env] (n : Nat) (env : Env) (stream : UCB.ArmRewardStream K) (history : History.FinitePairHistory (Fin K) Real n) (arm : Fin K) : (latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).feedback n ((env, stream), (history, arm)) = Measure.dirac (stream (ETC.realHistoryPullCount n history arm) arm)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L286">Source line 286</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-63e36d3dbde4">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measurable_latentArmStreamNextReward_fixed</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_latentArmStreamNextReward_fixed {Env : Type u} {K : Nat} [MeasurableSpace Env] (n : Nat) (env : Env) (stream : UCB.ArmRewardStream K) : Measurable (<span class="kw">fun</span> input : History.FinitePairHistory (Fin K) Real n × Fin K =&gt; stream (ETC.realHistoryPullCount n input.<span class="num">1</span> input.<span class="num">2</span>) input.<span class="num">2</span>)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L296">Source line 296</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-97685eb52105">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.latentArmStreamMeasurableHistoryEnvironment_at_initialFeedback_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> latentArmStreamMeasurableHistoryEnvironment_at_initialFeedback_apply {Env : Type u} {K : Nat} [MeasurableSpace Env] (env : Env) (stream : UCB.ArmRewardStream K) (arm : Fin K) : ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream)).initialFeedback arm = Measure.dirac (stream <span class="num">0</span> arm)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L311">Source line 311</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-52cb8e080e1b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.latentArmStreamMeasurableHistoryEnvironment_at_feedback_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> latentArmStreamMeasurableHistoryEnvironment_at_feedback_apply {Env : Type u} {K : Nat} [MeasurableSpace Env] (n : Nat) (env : Env) (stream : UCB.ArmRewardStream K) (history : History.FinitePairHistory (Fin K) Real n) (arm : Fin K) : ((latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)).at (env, stream)).feedback n (history, arm) = Measure.dirac (stream (ETC.realHistoryPullCount n history arm) arm)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L321">Source line 321</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5c35b166842d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.canonicalLatentArmStreamTrajectory_reward_zero_ae</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The initial canonical reward reads coordinate zero of the selected arm.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> canonicalLatentArmStreamTrajectory_reward_zero_ae {Env : Type u} {K : Nat} [MeasurableSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (stream : UCB.ArmRewardStream K) : ∀ᵐ trajectory ∂ canonicalMeasurableEnvironmentTrajectoryKernel algorithm (latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)) (env, stream), (trajectory <span class="num">0</span>).<span class="num">2</span> = stream <span class="num">0</span> (trajectory <span class="num">0</span>).<span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L332">Source line 332</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1ea492a6d6a0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.canonicalLatentArmStreamTrajectory_reward_succ_ae</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every shifted canonical reward reads the selected arm&#x27;s next unused coordinate.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> canonicalLatentArmStreamTrajectory_reward_succ_ae {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (stream : UCB.ArmRewardStream K) (n : Nat) : ∀ᵐ trajectory ∂ canonicalMeasurableEnvironmentTrajectoryKernel algorithm (latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)) (env, stream), (trajectory (n + <span class="num">1</span>)).<span class="num">2</span> = stream (pullCount (canonicalHistoryTrajectoryAction (Reward := Real) trajectory) (trajectory (n + <span class="num">1</span>)).<span class="num">1</span> (n + <span class="num">1</span>)) (trajectory (n + <span class="num">1</span>)).<span class="num">1</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L376">Source line 376</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-031ca318d6e0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.canonicalLatentArmStreamTrajectory_reward_eq_rewardFromArmStream_ae</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The canonical trajectory under deterministic latent-stream feedback has the
+same reward trace as the pathwise next-unused-coordinate construction.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> canonicalLatentArmStreamTrajectory_reward_eq_rewardFromArmStream_ae {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (stream : UCB.ArmRewardStream K) : canonicalHistoryTrajectoryReward =ᵐ[ canonicalMeasurableEnvironmentTrajectoryKernel algorithm (latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K)) (env, stream)] UCB.rewardFromArmStream canonicalHistoryTrajectoryAction (<span class="kw">fun</span> _ =&gt; stream)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L455">Source line 455</a>
+      <a href="../../chapters/thompson/index.html#decl-031ca318d6e0-teaching">Open teaching explanation</a>
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f217968268cb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measurable_rewardFromArmStream_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A next-unused arm-stream reward coordinate is measurable at each time.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_rewardFromArmStream_apply {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (action : Omega -&gt; ActionTrace (Fin K)) (haction : <span class="kw">forall</span> t, Measurable (<span class="kw">fun</span> omega =&gt; action omega t)) (armStream : Omega -&gt; ArmRewardStream K) (hmeasurable : <span class="kw">forall</span> i arm, Measurable (<span class="kw">fun</span> omega =&gt; armStream omega i arm)) (t : Nat) : Measurable (<span class="kw">fun</span> omega =&gt; rewardFromArmStream action armStream omega t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L493">Source line 493</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-93a6a3ab16b8">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measure_sumRewards_sub_pullCount_mul_ge_le_of_armStream_identDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Adaptive-count upper tail on any sample space whose latent-stream projection
+has the canonical stationary product law.  The action trace may use additional
+algorithmic randomness carried by the sample space.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_sumRewards_sub_pullCount_mul_ge_le_of_armStream_identDistrib {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (action : Omega -&gt; ActionTrace (Fin K)) (armStream : Omega -&gt; ArmRewardStream K) (hmeasurable : <span class="kw">forall</span> i arm, Measurable (<span class="kw">fun</span> omega =&gt; armStream omega i arm)) (hstreamLaw : IdentDistrib armStream id mu (armStreamMeasure nu)) (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean) sigma2 (nu arm)) (n : Nat) (threshold : Nat -&gt; Real) (hthreshold : <span class="kw">forall</span> k, k &lt;= n -&gt; <span class="num">0</span> &lt;= threshold k) : mu {omega : Omega | threshold (pullCount (action omega) arm n) &lt;= sumRewards (action omega) (rewardFromArmStream action armStream omega) arm n - (pullCount (action omega) arm n : Real) * mean} &lt;= (Finset.range (n + <span class="num">1</span>)).sum (<span class="kw">fun</span> k =&gt; ENNReal.ofReal (Real.exp (-(threshold k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L524">Source line 524</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0922fda6c8cf">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measure_pullCount_mul_sub_sumRewards_ge_le_of_armStream_identDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Lower-tail counterpart of the arbitrary-sample latent-stream transport.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_pullCount_mul_sub_sumRewards_ge_le_of_armStream_identDistrib {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (action : Omega -&gt; ActionTrace (Fin K)) (armStream : Omega -&gt; ArmRewardStream K) (hmeasurable : <span class="kw">forall</span> i arm, Measurable (<span class="kw">fun</span> omega =&gt; armStream omega i arm)) (hstreamLaw : IdentDistrib armStream id mu (armStreamMeasure nu)) (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean) sigma2 (nu arm)) (n : Nat) (threshold : Nat -&gt; Real) (hthreshold : <span class="kw">forall</span> k, k &lt;= n -&gt; <span class="num">0</span> &lt;= threshold k) : mu {omega : Omega | threshold (pullCount (action omega) arm n) &lt;= (pullCount (action omega) arm n : Real) * mean - sumRewards (action omega) (rewardFromArmStream action armStream omega) arm n} &lt;= (Finset.range (n + <span class="num">1</span>)).sum (<span class="kw">fun</span> k =&gt; ENNReal.ofReal (Real.exp (-(threshold k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L583">Source line 583</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b0948aae3b09">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measure_pos_and_sumRewards_sub_pullCount_mul_ge_le_of_armStream_identDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Positive-count upper tail under an arbitrary algorithmic-randomness coupling.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_pos_and_sumRewards_sub_pullCount_mul_ge_le_of_armStream_identDistrib {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (action : Omega -&gt; ActionTrace (Fin K)) (armStream : Omega -&gt; ArmRewardStream K) (hmeasurable : <span class="kw">forall</span> i arm, Measurable (<span class="kw">fun</span> omega =&gt; armStream omega i arm)) (hstreamLaw : IdentDistrib armStream id mu (armStreamMeasure nu)) (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean) sigma2 (nu arm)) (n : Nat) (threshold : Nat -&gt; Real) (hthreshold : <span class="kw">forall</span> k, <span class="num">0</span> &lt; k -&gt; k &lt;= n -&gt; <span class="num">0</span> &lt;= threshold k) : mu {omega : Omega | <span class="num">0</span> &lt; pullCount (action omega) arm n ∧ threshold (pullCount (action omega) arm n) &lt;= sumRewards (action omega) (rewardFromArmStream action armStream omega) arm n - (pullCount (action omega) arm n : Real) * mean} &lt;= ((Finset.range (n + <span class="num">1</span>)).filter (<span class="kw">fun</span> k =&gt; <span class="num">0</span> &lt; k)).sum (<span class="kw">fun</span> k =&gt; ENNReal.ofReal (Real.exp (-(threshold k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L642">Source line 642</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-21e5e7dec2ca">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measure_pos_and_pullCount_mul_sub_sumRewards_ge_le_of_armStream_identDistrib</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Positive-count lower tail under an arbitrary algorithmic-randomness coupling.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_pos_and_pullCount_mul_sub_sumRewards_ge_le_of_armStream_identDistrib {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (mu : Measure Omega) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (action : Omega -&gt; ActionTrace (Fin K)) (armStream : Omega -&gt; ArmRewardStream K) (hmeasurable : <span class="kw">forall</span> i arm, Measurable (<span class="kw">fun</span> omega =&gt; armStream omega i arm)) (hstreamLaw : IdentDistrib armStream id mu (armStreamMeasure nu)) (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean) sigma2 (nu arm)) (n : Nat) (threshold : Nat -&gt; Real) (hthreshold : <span class="kw">forall</span> k, <span class="num">0</span> &lt; k -&gt; k &lt;= n -&gt; <span class="num">0</span> &lt;= threshold k) : mu {omega : Omega | <span class="num">0</span> &lt; pullCount (action omega) arm n ∧ threshold (pullCount (action omega) arm n) &lt;= (pullCount (action omega) arm n : Real) * mean - sumRewards (action omega) (rewardFromArmStream action armStream omega) arm n} &lt;= ((Finset.range (n + <span class="num">1</span>)).filter (<span class="kw">fun</span> k =&gt; <span class="num">0</span> &lt; k)).sum (<span class="kw">fun</span> k =&gt; ENNReal.ofReal (Real.exp (-(threshold k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L715">Source line 715</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-801a91252751">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measure_sumRewards_sub_pullCount_mul_ge_le_of_canonicalArmStream</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Adaptive-count upper tail for any action trace driven by a canonical latent
+arm stream.  No UCB action rule is used.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_sumRewards_sub_pullCount_mul_ge_le_of_canonicalArmStream {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (action : ArmRewardStream K -&gt; ActionTrace (Fin K)) (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean) sigma2 (nu arm)) (n : Nat) (threshold : Nat -&gt; Real) (hthreshold : <span class="kw">forall</span> k, k &lt;= n -&gt; <span class="num">0</span> &lt;= threshold k) : armStreamMeasure nu {stream : ArmRewardStream K | threshold (pullCount (action stream) arm n) &lt;= sumRewards (action stream) (rewardFromArmStream action id stream) arm n - (pullCount (action stream) arm n : Real) * mean} &lt;= (Finset.range (n + <span class="num">1</span>)).sum (<span class="kw">fun</span> k =&gt; ENNReal.ofReal (Real.exp (-(threshold k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L790">Source line 790</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-afc1e30dcfbf">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.UCB.measure_pullCount_mul_sub_sumRewards_ge_le_of_canonicalArmStream</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Adaptive-count lower tail for any action trace driven by a canonical latent
+arm stream.  No UCB action rule is used.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_pullCount_mul_sub_sumRewards_ge_le_of_canonicalArmStream {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (action : ArmRewardStream K -&gt; ActionTrace (Fin K)) (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean) sigma2 (nu arm)) (n : Nat) (threshold : Nat -&gt; Real) (hthreshold : <span class="kw">forall</span> k, k &lt;= n -&gt; <span class="num">0</span> &lt;= threshold k) : armStreamMeasure nu {stream : ArmRewardStream K | threshold (pullCount (action stream) arm n) &lt;= (pullCount (action stream) arm n : Real) * mean - sumRewards (action stream) (rewardFromArmStream action id stream) arm n} &lt;= (Finset.range (n + <span class="num">1</span>)).sum (<span class="kw">fun</span> k =&gt; ENNReal.ofReal (Real.exp (-(threshold k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L838">Source line 838</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b754880eb82d">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.latentArmStreamTrajectoryKernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical trajectory kernel after freezing the non-stream environment.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> latentArmStreamTrajectoryKernel {Env : Type u} {K : Nat} [MeasurableSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) : Kernel (UCB.ArmRewardStream K) ((n : Nat) -&gt; Fin K × Real)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L887">Source line 887</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8a8519c5e048">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.latentArmStreamTrajectoryMeasure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Joint law of a stationary latent arm stream and its generated trajectory.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> latentArmStreamTrajectoryMeasure {Env : Type u} {K : Nat} [MeasurableSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] : Measure (UCB.ArmRewardStream K × ((n : Nat) -&gt; Fin K × Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L903">Source line 903</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-be8617bb8ded">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.latentArmStreamTrajectoryAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Action trace projected from the trajectory coordinate of the coupling.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> latentArmStreamTrajectoryAction {K : Nat} : (UCB.ArmRewardStream K × ((n : Nat) -&gt; Fin K × Real)) -&gt; ActionTrace (Fin K)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L919">Source line 919</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cc0d0a9aeed5">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.latentArmStreamTrajectoryReward</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Reward trace projected from the trajectory coordinate of the coupling.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> latentArmStreamTrajectoryReward {K : Nat} : (UCB.ArmRewardStream K × ((n : Nat) -&gt; Fin K × Real)) -&gt; RewardTrace Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L926">Source line 926</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3ed5c8c7bb9b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measurable_latentArmStreamTrajectoryAction_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_latentArmStreamTrajectoryAction_apply {K : Nat} (t : Nat) : Measurable (<span class="kw">fun</span> sample : UCB.ArmRewardStream K × ((n : Nat) -&gt; Fin K × Real) =&gt; latentArmStreamTrajectoryAction sample t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L932">Source line 932</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-213136218a28">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measurable_latentArmStreamTrajectoryReward_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_latentArmStreamTrajectoryReward_apply {K : Nat} (t : Nat) : Measurable (<span class="kw">fun</span> sample : UCB.ArmRewardStream K × ((n : Nat) -&gt; Fin K × Real) =&gt; latentArmStreamTrajectoryReward sample t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L939">Source line 939</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-94cb719c9693">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measurable_pullCount_selectedArm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pull counts remain measurable when the queried arm is sample-dependent.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_pullCount_selectedArm {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (action : Omega -&gt; ActionTrace (Fin K)) (haction : <span class="kw">forall</span> t, Measurable (<span class="kw">fun</span> omega =&gt; action omega t)) (arm : Omega -&gt; Fin K) (harm : Measurable arm) (n : Nat) : Measurable (<span class="kw">fun</span> omega =&gt; pullCount (action omega) (arm omega) n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L947">Source line 947</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a18aeaa29585">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measurable_sumRewards_selectedArm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Selected-arm reward sums are measurable for a measurable arm selector.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_sumRewards_selectedArm {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (action : Omega -&gt; ActionTrace (Fin K)) (reward : Omega -&gt; RewardTrace Real) (haction : <span class="kw">forall</span> t, Measurable (<span class="kw">fun</span> omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t, Measurable (<span class="kw">fun</span> omega =&gt; reward omega t)) (arm : Omega -&gt; Fin K) (harm : Measurable arm) (n : Nat) : Measurable (<span class="kw">fun</span> omega =&gt; sumRewards (action omega) (reward omega) (arm omega) n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L964">Source line 964</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2a2c8c4345dd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measurable_realEmpiricalMean_selectedArm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The real empirical mean is measurable for a measurable arm selector.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_realEmpiricalMean_selectedArm {Omega : Type u} {K : Nat} [MeasurableSpace Omega] (action : Omega -&gt; ActionTrace (Fin K)) (reward : Omega -&gt; RewardTrace Real) (haction : <span class="kw">forall</span> t, Measurable (<span class="kw">fun</span> omega =&gt; action omega t)) (hreward : <span class="kw">forall</span> t, Measurable (<span class="kw">fun</span> omega =&gt; reward omega t)) (arm : Omega -&gt; Fin K) (harm : Measurable arm) (n : Nat) : Measurable (<span class="kw">fun</span> omega =&gt; UCB.realEmpiricalMean (action omega) (reward omega) (arm omega) n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L984">Source line 984</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-eb6c21dd8651">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.identDistrib_fst_latentArmStreamTrajectoryMeasure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The stream coordinate of the coupling has exactly the canonical stream law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> identDistrib_fst_latentArmStreamTrajectoryMeasure {Env : Type u} {K : Nat} [MeasurableSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] : IdentDistrib Prod.fst id (latentArmStreamTrajectoryMeasure algorithm env nu) (UCB.armStreamMeasure nu) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L999">Source line 999</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-849bafcbb4ef">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.latentArmStreamTrajectoryReward_eq_rewardFromArmStream_ae</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The joint coupling reads its actual rewards from its own latent stream.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> latentArmStreamTrajectoryReward_eq_rewardFromArmStream_ae {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] : latentArmStreamTrajectoryReward =ᵐ[ latentArmStreamTrajectoryMeasure algorithm env nu] UCB.rewardFromArmStream latentArmStreamTrajectoryAction Prod.fst</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1015">Source line 1015</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f63bdaa24415">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measure_latentArmStreamTrajectory_sumRewards_sub_pullCount_mul_ge_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Upper adaptive-count tail for rewards on the coupled Thompson trajectory.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_latentArmStreamTrajectory_sumRewards_sub_pullCount_mul_ge_le {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean) sigma2 (nu arm)) (n : Nat) (threshold : Nat -&gt; Real) (hthreshold : <span class="kw">forall</span> k, k &lt;= n -&gt; <span class="num">0</span> &lt;= threshold k) : latentArmStreamTrajectoryMeasure algorithm env nu {sample | threshold (pullCount (latentArmStreamTrajectoryAction sample) arm n) &lt;= sumRewards (latentArmStreamTrajectoryAction sample) (latentArmStreamTrajectoryReward sample) arm n - (pullCount (latentArmStreamTrajectoryAction sample) arm n : Real) * mean} &lt;= (Finset.range (n + <span class="num">1</span>)).sum (<span class="kw">fun</span> k =&gt; ENNReal.ofReal (Real.exp (-(threshold k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1055">Source line 1055</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7da747c64696">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measure_latentArmStreamTrajectory_pullCount_mul_sub_sumRewards_ge_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Lower adaptive-count tail for rewards on the coupled Thompson trajectory.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_latentArmStreamTrajectory_pullCount_mul_sub_sumRewards_ge_le {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean) sigma2 (nu arm)) (n : Nat) (threshold : Nat -&gt; Real) (hthreshold : <span class="kw">forall</span> k, k &lt;= n -&gt; <span class="num">0</span> &lt;= threshold k) : latentArmStreamTrajectoryMeasure algorithm env nu {sample | threshold (pullCount (latentArmStreamTrajectoryAction sample) arm n) &lt;= (pullCount (latentArmStreamTrajectoryAction sample) arm n : Real) * mean - sumRewards (latentArmStreamTrajectoryAction sample) (latentArmStreamTrajectoryReward sample) arm n} &lt;= (Finset.range (n + <span class="num">1</span>)).sum (<span class="kw">fun</span> k =&gt; ENNReal.ofReal (Real.exp (-(threshold k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1119">Source line 1119</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-dd64f024baeb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measure_latentArmStreamTrajectory_pos_and_sumRewards_sub_pullCount_mul_ge_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Positive-count upper tail for rewards on the coupled trajectory.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_latentArmStreamTrajectory_pos_and_sumRewards_sub_pullCount_mul_ge_le {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean) sigma2 (nu arm)) (n : Nat) (threshold : Nat -&gt; Real) (hthreshold : <span class="kw">forall</span> k, <span class="num">0</span> &lt; k -&gt; k &lt;= n -&gt; <span class="num">0</span> &lt;= threshold k) : latentArmStreamTrajectoryMeasure algorithm env nu {sample | <span class="num">0</span> &lt; pullCount (latentArmStreamTrajectoryAction sample) arm n ∧ threshold (pullCount (latentArmStreamTrajectoryAction sample) arm n) &lt;= sumRewards (latentArmStreamTrajectoryAction sample) (latentArmStreamTrajectoryReward sample) arm n - (pullCount (latentArmStreamTrajectoryAction sample) arm n : Real) * mean} &lt;= ((Finset.range (n + <span class="num">1</span>)).filter (<span class="kw">fun</span> k =&gt; <span class="num">0</span> &lt; k)).sum (<span class="kw">fun</span> k =&gt; ENNReal.ofReal (Real.exp (-(threshold k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1183">Source line 1183</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8bc81422a227">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measure_latentArmStreamTrajectory_pos_and_pullCount_mul_sub_sumRewards_ge_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Positive-count lower tail for rewards on the coupled trajectory.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_latentArmStreamTrajectory_pos_and_pullCount_mul_sub_sumRewards_ge_le {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean) sigma2 (nu arm)) (n : Nat) (threshold : Nat -&gt; Real) (hthreshold : <span class="kw">forall</span> k, <span class="num">0</span> &lt; k -&gt; k &lt;= n -&gt; <span class="num">0</span> &lt;= threshold k) : latentArmStreamTrajectoryMeasure algorithm env nu {sample | <span class="num">0</span> &lt; pullCount (latentArmStreamTrajectoryAction sample) arm n ∧ threshold (pullCount (latentArmStreamTrajectoryAction sample) arm n) &lt;= (pullCount (latentArmStreamTrajectoryAction sample) arm n : Real) * mean - sumRewards (latentArmStreamTrajectoryAction sample) (latentArmStreamTrajectoryReward sample) arm n} &lt;= ((Finset.range (n + <span class="num">1</span>)).filter (<span class="kw">fun</span> k =&gt; <span class="num">0</span> &lt; k)).sum (<span class="kw">fun</span> k =&gt; ENNReal.ofReal (Real.exp (-(threshold k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1249">Source line 1249</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a56a2e0df39f">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamTrajectoryKernel</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Environment-indexed kernel that samples the stationary latent stream and then
+runs the actual history algorithm against next-unused deterministic feedback.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> stationaryLatentArmStreamTrajectoryKernel {Env : Type u} {K : Nat} [MeasurableSpace Env] [NeZero K] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) : Kernel Env (UCB.ArmRewardStream K × ((n : Nat) -&gt; Fin K × Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1318">Source line 1318</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8092ad6d17ff">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamTrajectoryKernel_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Its conditional law is exactly the fixed-environment coupling above.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamTrajectoryKernel_apply {Env : Type u} {K : Nat} [MeasurableSpace Env] [NeZero K] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) : stationaryLatentArmStreamTrajectoryKernel rewardKernel algorithm env = latentArmStreamTrajectoryMeasure algorithm env (stationaryRewardKernelAt rewardKernel env)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1340">Source line 1340</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c47e96db2977">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamTrajectoryKernel_sumRewards_upper_tail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pointwise upper tail for the actual augmented Thompson trajectory kernel.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamTrajectoryKernel_sumRewards_upper_tail {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) (mean : Env -&gt; Fin K -&gt; Real) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (env : Env) (arm : Fin K) (n : Nat) (threshold : Nat -&gt; Real) (hthreshold : <span class="kw">forall</span> k, k &lt;= n -&gt; <span class="num">0</span> &lt;= threshold k) : stationaryLatentArmStreamTrajectoryKernel rewardKernel algorithm env {sample | threshold (pullCount (latentArmStreamTrajectoryAction sample) arm n) &lt;= sumRewards (latentArmStreamTrajectoryAction sample) (latentArmStreamTrajectoryReward sample) arm n - (pullCount (latentArmStreamTrajectoryAction sample) arm n : Real) * mean env arm} &lt;= (Finset.range (n + <span class="num">1</span>)).sum (<span class="kw">fun</span> k =&gt; ENNReal.ofReal (Real.exp (-(threshold k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1355">Source line 1355</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9bdc652be61e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamTrajectoryKernel_sumRewards_lower_tail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pointwise lower tail for the actual augmented Thompson trajectory kernel.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamTrajectoryKernel_sumRewards_lower_tail {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) (mean : Env -&gt; Fin K -&gt; Real) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (env : Env) (arm : Fin K) (n : Nat) (threshold : Nat -&gt; Real) (hthreshold : <span class="kw">forall</span> k, k &lt;= n -&gt; <span class="num">0</span> &lt;= threshold k) : stationaryLatentArmStreamTrajectoryKernel rewardKernel algorithm env {sample | threshold (pullCount (latentArmStreamTrajectoryAction sample) arm n) &lt;= (pullCount (latentArmStreamTrajectoryAction sample) arm n : Real) * mean env arm - sumRewards (latentArmStreamTrajectoryAction sample) (latentArmStreamTrajectoryReward sample) arm n} &lt;= (Finset.range (n + <span class="num">1</span>)).sum (<span class="kw">fun</span> k =&gt; ENNReal.ofReal (Real.exp (-(threshold k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1388">Source line 1388</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-7c4991c64430">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamTrajectoryKernel_pos_and_sumRewards_upper_tail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Positive-count upper tail for the environment-indexed augmented kernel.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamTrajectoryKernel_pos_and_sumRewards_upper_tail {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) (mean : Env -&gt; Fin K -&gt; Real) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (env : Env) (arm : Fin K) (n : Nat) (threshold : Nat -&gt; Real) (hthreshold : <span class="kw">forall</span> k, <span class="num">0</span> &lt; k -&gt; k &lt;= n -&gt; <span class="num">0</span> &lt;= threshold k) : stationaryLatentArmStreamTrajectoryKernel rewardKernel algorithm env {sample | <span class="num">0</span> &lt; pullCount (latentArmStreamTrajectoryAction sample) arm n ∧ threshold (pullCount (latentArmStreamTrajectoryAction sample) arm n) &lt;= sumRewards (latentArmStreamTrajectoryAction sample) (latentArmStreamTrajectoryReward sample) arm n - (pullCount (latentArmStreamTrajectoryAction sample) arm n : Real) * mean env arm} &lt;= ((Finset.range (n + <span class="num">1</span>)).filter (<span class="kw">fun</span> k =&gt; <span class="num">0</span> &lt; k)).sum (<span class="kw">fun</span> k =&gt; ENNReal.ofReal (Real.exp (-(threshold k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1421">Source line 1421</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1c06ce90cdbd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamTrajectoryKernel_pos_and_sumRewards_lower_tail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Positive-count lower tail for the environment-indexed augmented kernel.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamTrajectoryKernel_pos_and_sumRewards_lower_tail {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) (mean : Env -&gt; Fin K -&gt; Real) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (env : Env) (arm : Fin K) (n : Nat) (threshold : Nat -&gt; Real) (hthreshold : <span class="kw">forall</span> k, <span class="num">0</span> &lt; k -&gt; k &lt;= n -&gt; <span class="num">0</span> &lt;= threshold k) : stationaryLatentArmStreamTrajectoryKernel rewardKernel algorithm env {sample | <span class="num">0</span> &lt; pullCount (latentArmStreamTrajectoryAction sample) arm n ∧ threshold (pullCount (latentArmStreamTrajectoryAction sample) arm n) &lt;= (pullCount (latentArmStreamTrajectoryAction sample) arm n : Real) * mean env arm - sumRewards (latentArmStreamTrajectoryAction sample) (latentArmStreamTrajectoryReward sample) arm n} &lt;= ((Finset.range (n + <span class="num">1</span>)).filter (<span class="kw">fun</span> k =&gt; <span class="num">0</span> &lt; k)).sum (<span class="kw">fun</span> k =&gt; ENNReal.ofReal (Real.exp (-(threshold k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1455">Source line 1455</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2c0a691fa606">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamTrajectoryEnvironment</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Environment coordinate of the stationary augmented trajectory sample.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> stationaryLatentArmStreamTrajectoryEnvironment {Env : Type u} {K : Nat} : (Env × (UCB.ArmRewardStream K × ((n : Nat) -&gt; Fin K × Real))) -&gt; Env</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1489">Source line 1489</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a7a41ca5936a">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamTrajectoryAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Action trace of the stationary augmented trajectory sample.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> stationaryLatentArmStreamTrajectoryAction {Env : Type u} {K : Nat} : (Env × (UCB.ArmRewardStream K × ((n : Nat) -&gt; Fin K × Real))) -&gt; ActionTrace (Fin K)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1495">Source line 1495</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c2f03fb1efab">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamTrajectoryReward</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Reward trace of the stationary augmented trajectory sample.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> stationaryLatentArmStreamTrajectoryReward {Env : Type u} {K : Nat} : (Env × (UCB.ArmRewardStream K × ((n : Nat) -&gt; Fin K × Real))) -&gt; RewardTrace Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1502">Source line 1502</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-dea654e28cbd">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measurable_stationaryLatentArmStreamTrajectoryEnvironment</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_stationaryLatentArmStreamTrajectoryEnvironment {Env : Type u} {K : Nat} [MeasurableSpace Env] : Measurable (stationaryLatentArmStreamTrajectoryEnvironment (Env := Env) (K := K))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1508">Source line 1508</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b1d7cced5bf2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measurable_stationaryLatentArmStreamTrajectoryAction_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_stationaryLatentArmStreamTrajectoryAction_apply {Env : Type u} {K : Nat} [MeasurableSpace Env] (t : Nat) : Measurable (<span class="kw">fun</span> sample : Env × (UCB.ArmRewardStream K × ((n : Nat) -&gt; Fin K × Real)) =&gt; stationaryLatentArmStreamTrajectoryAction sample t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1514">Source line 1514</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9b3c5804a0fa">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measurable_stationaryLatentArmStreamTrajectoryReward_apply</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_stationaryLatentArmStreamTrajectoryReward_apply {Env : Type u} {K : Nat} [MeasurableSpace Env] (t : Nat) : Measurable (<span class="kw">fun</span> sample : Env × (UCB.ArmRewardStream K × ((n : Nat) -&gt; Fin K × Real)) =&gt; stationaryLatentArmStreamTrajectoryReward sample t)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1521">Source line 1521</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-632159fbafb0">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamTrajectoryMeasure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Prior mixture of the stationary latent stream and its actual trajectory.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> stationaryLatentArmStreamTrajectoryMeasure {Env : Type u} {K : Nat} [MeasurableSpace Env] [NeZero K] (prior : Measure Env) (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) : Measure (Env × (UCB.ArmRewardStream K × ((n : Nat) -&gt; Fin K × Real)))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1529">Source line 1529</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4b962f9bcbf5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamTrajectoryMeasure_sumRewards_upper_tail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Upper fixed-arm adaptive-count tail after mixing the fixed-environment
+augmented trajectory through the environment prior.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamTrajectoryMeasure_sumRewards_upper_tail {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) (mean : Env -&gt; Fin K -&gt; Real) (hmeas_mean : Measurable (<span class="kw">fun</span> input : Env × Fin K =&gt; mean input.<span class="num">1</span> input.<span class="num">2</span>)) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (arm : Fin K) (n : Nat) (threshold : Nat -&gt; Real) (hthreshold : <span class="kw">forall</span> k, k &lt;= n -&gt; <span class="num">0</span> &lt;= threshold k) : stationaryLatentArmStreamTrajectoryMeasure prior rewardKernel algorithm {sample | threshold (pullCount (stationaryLatentArmStreamTrajectoryAction sample) arm n) &lt;= sumRewards (stationaryLatentArmStreamTrajectoryAction sample) (stationaryLatentArmStreamTrajectoryReward sample) arm n - (pullCount (stationaryLatentArmStreamTrajectoryAction sample) arm n : Real) * mean (stationaryLatentArmStreamTrajectoryEnvironment sample) arm} &lt;= (Finset.range (n + <span class="num">1</span>)).sum (<span class="kw">fun</span> k =&gt; ENNReal.ofReal (Real.exp (-(threshold k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1553">Source line 1553</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bfc0ce85f117">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamTrajectoryMeasure_sumRewards_lower_tail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Lower-tail counterpart of the augmented-prior mixture theorem.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamTrajectoryMeasure_sumRewards_lower_tail {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) (mean : Env -&gt; Fin K -&gt; Real) (hmeas_mean : Measurable (<span class="kw">fun</span> input : Env × Fin K =&gt; mean input.<span class="num">1</span> input.<span class="num">2</span>)) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (arm : Fin K) (n : Nat) (threshold : Nat -&gt; Real) (hthreshold : <span class="kw">forall</span> k, k &lt;= n -&gt; <span class="num">0</span> &lt;= threshold k) : stationaryLatentArmStreamTrajectoryMeasure prior rewardKernel algorithm {sample | threshold (pullCount (stationaryLatentArmStreamTrajectoryAction sample) arm n) &lt;= (pullCount (stationaryLatentArmStreamTrajectoryAction sample) arm n : Real) * mean (stationaryLatentArmStreamTrajectoryEnvironment sample) arm - sumRewards (stationaryLatentArmStreamTrajectoryAction sample) (stationaryLatentArmStreamTrajectoryReward sample) arm n} &lt;= (Finset.range (n + <span class="num">1</span>)).sum (<span class="kw">fun</span> k =&gt; ENNReal.ofReal (Real.exp (-(threshold k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1646">Source line 1646</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-c9fc7b731834">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measure_compProd_le_of_forall_kernel_apply_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Integrate a uniform pointwise kernel event bound through a probability prior.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_compProd_le_of_forall_kernel_apply_le {Env : Type u} {Omega : Type v} [MeasurableSpace Env] [MeasurableSpace Omega] (prior : Measure Env) [IsProbabilityMeasure prior] (kernel : Kernel Env Omega) [IsMarkovKernel kernel] (event : Set (Env × Omega)) (hevent : MeasurableSet event) (bound : ENNReal) (hbound : <span class="kw">forall</span> env, kernel env (Prod.mk env ⁻¹&#x27; event) &lt;= bound) : (prior ⊗ₘ kernel) event &lt;= bound</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1738">Source line 1738</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ab865ea0ab74">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamTrajectoryMeasure_pos_and_sumRewards_upper_tail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Positive-count upper tail after mixing through the environment prior.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamTrajectoryMeasure_pos_and_sumRewards_upper_tail {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) (mean : Env -&gt; Fin K -&gt; Real) (hmeas_mean : Measurable (<span class="kw">fun</span> input : Env × Fin K =&gt; mean input.<span class="num">1</span> input.<span class="num">2</span>)) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (arm : Fin K) (n : Nat) (threshold : Nat -&gt; Real) (hthreshold : <span class="kw">forall</span> k, <span class="num">0</span> &lt; k -&gt; k &lt;= n -&gt; <span class="num">0</span> &lt;= threshold k) : stationaryLatentArmStreamTrajectoryMeasure prior rewardKernel algorithm {sample | <span class="num">0</span> &lt; pullCount (stationaryLatentArmStreamTrajectoryAction sample) arm n ∧ threshold (pullCount (stationaryLatentArmStreamTrajectoryAction sample) arm n) &lt;= sumRewards (stationaryLatentArmStreamTrajectoryAction sample) (stationaryLatentArmStreamTrajectoryReward sample) arm n - (pullCount (stationaryLatentArmStreamTrajectoryAction sample) arm n : Real) * mean (stationaryLatentArmStreamTrajectoryEnvironment sample) arm} &lt;= ((Finset.range (n + <span class="num">1</span>)).filter (<span class="kw">fun</span> k =&gt; <span class="num">0</span> &lt; k)).sum (<span class="kw">fun</span> k =&gt; ENNReal.ofReal (Real.exp (-(threshold k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1754">Source line 1754</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1fee28d007c6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamTrajectoryMeasure_pos_and_sumRewards_lower_tail</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Positive-count lower tail after mixing through the environment prior.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamTrajectoryMeasure_pos_and_sumRewards_lower_tail {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) (mean : Env -&gt; Fin K -&gt; Real) (hmeas_mean : Measurable (<span class="kw">fun</span> input : Env × Fin K =&gt; mean input.<span class="num">1</span> input.<span class="num">2</span>)) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (arm : Fin K) (n : Nat) (threshold : Nat -&gt; Real) (hthreshold : <span class="kw">forall</span> k, <span class="num">0</span> &lt; k -&gt; k &lt;= n -&gt; <span class="num">0</span> &lt;= threshold k) : stationaryLatentArmStreamTrajectoryMeasure prior rewardKernel algorithm {sample | <span class="num">0</span> &lt; pullCount (stationaryLatentArmStreamTrajectoryAction sample) arm n ∧ threshold (pullCount (stationaryLatentArmStreamTrajectoryAction sample) arm n) &lt;= (pullCount (stationaryLatentArmStreamTrajectoryAction sample) arm n : Real) * mean (stationaryLatentArmStreamTrajectoryEnvironment sample) arm - sumRewards (stationaryLatentArmStreamTrajectoryAction sample) (stationaryLatentArmStreamTrajectoryReward sample) arm n} &lt;= ((Finset.range (n + <span class="num">1</span>)).filter (<span class="kw">fun</span> k =&gt; <span class="num">0</span> &lt; k)).sum (<span class="kw">fun</span> k =&gt; ENNReal.ofReal (Real.exp (-(threshold k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1834">Source line 1834</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-81adb11f4eab">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.clippedCountWidthThreshold</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pull-count-scaled radius used by the clipped Thompson score.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> clippedCountWidthThreshold (sigma2 : NNReal) (delta : Real) (k : Nat) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1913">Source line 1913</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1106a0eeee9e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.clippedCountWidthThreshold_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="empty">No declaration docstring is present; use the chapter context and exact statement below.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> clippedCountWidthThreshold_nonneg (sigma2 : NNReal) (delta : Real) (k : Nat) : <span class="num">0</span> &lt;= clippedCountWidthThreshold sigma2 delta k</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1919">Source line 1919</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-829ddae6c821">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.clippedCountWidthThreshold_sq_div_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The clipped-score count threshold has the intended confidence exponent.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> clippedCountWidthThreshold_sq_div_eq (sigma2 : NNReal) (delta : Real) (k : Nat) (hsigma2 : sigma2 ≠ <span class="num">0</span>) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (hk : <span class="num">0</span> &lt; k) : (clippedCountWidthThreshold sigma2 delta k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real)) = Real.log (<span class="num">1</span> / delta)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1925">Source line 1925</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ec78b4c27b76">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.sum_clippedCountWidthThreshold_tail_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The positive-count clipped-radius exponential sum is exactly `n * delta`.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> sum_clippedCountWidthThreshold_tail_eq (sigma2 : NNReal) (delta : Real) (n : Nat) (hsigma2 : sigma2 ≠ <span class="num">0</span>) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) : ((Finset.range (n + <span class="num">1</span>)).filter (<span class="kw">fun</span> k =&gt; <span class="num">0</span> &lt; k)).sum (<span class="kw">fun</span> k =&gt; ENNReal.ofReal (Real.exp (-(clippedCountWidthThreshold sigma2 delta k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real))))) = (n : ENNReal) * ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1948">Source line 1948</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5bef246ef35b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measure_biUnion_clippedCountWidthThreshold_le_mul_sub_armPrefixSum_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A finite union of lower prefix deviations pays once per positive pull count.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_biUnion_clippedCountWidthThreshold_le_mul_sub_armPrefixSum_le {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean) sigma2 (nu arm)) (hsigma2 : sigma2 ≠ <span class="num">0</span>) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (m : Nat) : UCB.armStreamMeasure nu (⋃ k ∈ Finset.Icc <span class="num">1</span> m, {stream : UCB.ArmRewardStream K | clippedCountWidthThreshold sigma2 delta k &lt;= (k : Real) * mean - UCB.armPrefixSum arm k stream}) &lt;= (m : ENNReal) * ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L1976">Source line 1976</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4435234d0d78">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.clippedCountWidthThreshold_le_mul_mean_sub_sumRewards</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A clipped-score lower-confidence failure implies a lower sum deviation.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> clippedCountWidthThreshold_le_mul_mean_sub_sumRewards {K : Nat} (action : ActionTrace (Fin K)) (reward : RewardTrace Real) (arm : Fin K) (n : Nat) (mean : Real) (sigma2 : NNReal) (delta : Real) (hcount : <span class="num">0</span> &lt; pullCount action arm n) (hindex : UCB.realEmpiricalMean action reward arm n + Real.sqrt (<span class="num">2</span> * (sigma2 : Real) * Real.log (<span class="num">1</span> / delta) / (pullCount action arm n : Real)) &lt;= mean) : clippedCountWidthThreshold sigma2 delta (pullCount action arm n) &lt;= (pullCount action arm n : Real) * mean - sumRewards action reward arm n</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L2015">Source line 2015</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0f128b6aa94b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.clippedCountWidthThreshold_le_sumRewards_sub_mul_mean</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A clipped-score upper-confidence failure implies an upper sum deviation.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> clippedCountWidthThreshold_le_sumRewards_sub_mul_mean {K : Nat} (action : ActionTrace (Fin K)) (reward : RewardTrace Real) (arm : Fin K) (n : Nat) (mean : Real) (sigma2 : NNReal) (delta : Real) (hcount : <span class="num">0</span> &lt; pullCount action arm n) (hindex : mean &lt;= UCB.realEmpiricalMean action reward arm n - Real.sqrt (<span class="num">2</span> * (sigma2 : Real) * Real.log (<span class="num">1</span> / delta) / (pullCount action arm n : Real))) : clippedCountWidthThreshold sigma2 delta (pullCount action arm n) &lt;= sumRewards action reward arm n - (pullCount action arm n : Real) * mean</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L2044">Source line 2044</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-cc1acb0fad6b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measure_latentArmStreamTrajectory_exists_realEmpiricalMean_add_width_le_mean_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-horizon lower-confidence failure for one arm on the coupled trajectory.
+
+All times with the same realized pull count reduce to the same latent-stream
+prefix event, so the bound pays for `1, ..., n - 1` once rather than unioning
+the fixed-time bounds.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_latentArmStreamTrajectory_exists_realEmpiricalMean_add_width_le_mean_le {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean) sigma2 (nu arm)) (hsigma2 : sigma2 ≠ <span class="num">0</span>) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (n : Nat) : latentArmStreamTrajectoryMeasure algorithm env nu {sample | ∃ t &lt; n, <span class="num">0</span> &lt; pullCount (latentArmStreamTrajectoryAction sample) arm t ∧ UCB.realEmpiricalMean (latentArmStreamTrajectoryAction sample) (latentArmStreamTrajectoryReward sample) arm t + Real.sqrt (<span class="num">2</span> * (sigma2 : Real) * Real.log (<span class="num">1</span> / delta) / (pullCount (latentArmStreamTrajectoryAction sample) arm t : Real)) &lt;= mean} &lt;= (n - <span class="num">1</span> : Nat) * ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L2078">Source line 2078</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-856f455d65c0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamTrajectoryMeasure_exists_selectedArm_realEmpiricalMean_add_width_le_mean_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Prior-mixed finite-horizon lower-confidence failure for an
+environment-dependent measurable arm selector.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamTrajectoryMeasure_exists_selectedArm_realEmpiricalMean_add_width_le_mean_le {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) (mean : Env -&gt; Fin K -&gt; Real) (hmeas_mean : Measurable (<span class="kw">fun</span> input : Env × Fin K =&gt; mean input.<span class="num">1</span> input.<span class="num">2</span>)) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (hsigma2 : sigma2 ≠ <span class="num">0</span>) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (selectedArm : Env -&gt; Fin K) (hselectedArm : Measurable selectedArm) (n : Nat) : stationaryLatentArmStreamTrajectoryMeasure prior rewardKernel algorithm {sample | ∃ t &lt; n, <span class="num">0</span> &lt; pullCount (stationaryLatentArmStreamTrajectoryAction sample) (selectedArm (stationaryLatentArmStreamTrajectoryEnvironment sample)) t ∧ UCB.realEmpiricalMean (stationaryLatentArmStreamTrajectoryAction sample) (stationaryLatentArmStreamTrajectoryReward sample) (selectedArm (stationaryLatentArmStreamTrajectoryEnvironment sample)) t + Real.sqrt (<span class="num">2</span> * (sigma2 : Real) * Real.log (<span class="num">1</span> / delta) / (pullCount (stationaryLatentArmStreamTrajectoryAction sample) (selectedArm (stationaryLatentArmStreamTrajectoryEnvironment sample)) t : Real)) &lt;= mean (stationaryLatentArmStreamTrajectoryEnvironment sample) (selectedArm (stationaryLatentArmStreamTrajectoryEnvironment sample))} &lt;= (n - <span class="num">1</span> : Nat) * ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L2180">Source line 2180</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d06350c673f9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamTrajectoryMeasure_realEmpiricalMean_add_width_le_mean</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Prior-mixed lower-confidence failure bound for the clipped score radius.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamTrajectoryMeasure_realEmpiricalMean_add_width_le_mean {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) (mean : Env -&gt; Fin K -&gt; Real) (hmeas_mean : Measurable (<span class="kw">fun</span> input : Env × Fin K =&gt; mean input.<span class="num">1</span> input.<span class="num">2</span>)) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (delta : Real) (arm : Fin K) (n : Nat) : stationaryLatentArmStreamTrajectoryMeasure prior rewardKernel algorithm {sample | <span class="num">0</span> &lt; pullCount (stationaryLatentArmStreamTrajectoryAction sample) arm n ∧ UCB.realEmpiricalMean (stationaryLatentArmStreamTrajectoryAction sample) (stationaryLatentArmStreamTrajectoryReward sample) arm n + Real.sqrt (<span class="num">2</span> * (sigma2 : Real) * Real.log (<span class="num">1</span> / delta) / (pullCount (stationaryLatentArmStreamTrajectoryAction sample) arm n : Real)) &lt;= mean (stationaryLatentArmStreamTrajectoryEnvironment sample) arm} &lt;= ((Finset.range (n + <span class="num">1</span>)).filter (<span class="kw">fun</span> k =&gt; <span class="num">0</span> &lt; k)).sum (<span class="kw">fun</span> k =&gt; ENNReal.ofReal (Real.exp (-(clippedCountWidthThreshold sigma2 delta k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L2301">Source line 2301</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-644711ccd344">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamTrajectoryMeasure_mean_le_realEmpiricalMean_sub_width</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Prior-mixed upper-confidence failure bound for the clipped score radius.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamTrajectoryMeasure_mean_le_realEmpiricalMean_sub_width {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) (mean : Env -&gt; Fin K -&gt; Real) (hmeas_mean : Measurable (<span class="kw">fun</span> input : Env × Fin K =&gt; mean input.<span class="num">1</span> input.<span class="num">2</span>)) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (delta : Real) (arm : Fin K) (n : Nat) : stationaryLatentArmStreamTrajectoryMeasure prior rewardKernel algorithm {sample | <span class="num">0</span> &lt; pullCount (stationaryLatentArmStreamTrajectoryAction sample) arm n ∧ mean (stationaryLatentArmStreamTrajectoryEnvironment sample) arm &lt;= UCB.realEmpiricalMean (stationaryLatentArmStreamTrajectoryAction sample) (stationaryLatentArmStreamTrajectoryReward sample) arm n - Real.sqrt (<span class="num">2</span> * (sigma2 : Real) * Real.log (<span class="num">1</span> / delta) / (pullCount (stationaryLatentArmStreamTrajectoryAction sample) arm n : Real))} &lt;= ((Finset.range (n + <span class="num">1</span>)).filter (<span class="kw">fun</span> k =&gt; <span class="num">0</span> &lt; k)).sum (<span class="kw">fun</span> k =&gt; ENNReal.ofReal (Real.exp (-(clippedCountWidthThreshold sigma2 delta k) ^ <span class="num">2</span> / (<span class="num">2</span> * (k : Real) * (sigma2 : Real)))))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L2379">Source line 2379</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8e4662072989">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamTrajectoryMeasure_realEmpiricalMean_add_width_le_mean_le_nat_mul_delta</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Simplified `n * delta` lower-confidence failure bound.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamTrajectoryMeasure_realEmpiricalMean_add_width_le_mean_le_nat_mul_delta {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) (mean : Env -&gt; Fin K -&gt; Real) (hmeas_mean : Measurable (<span class="kw">fun</span> input : Env × Fin K =&gt; mean input.<span class="num">1</span> input.<span class="num">2</span>)) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (hsigma2 : sigma2 ≠ <span class="num">0</span>) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (arm : Fin K) (n : Nat) : stationaryLatentArmStreamTrajectoryMeasure prior rewardKernel algorithm {sample | <span class="num">0</span> &lt; pullCount (stationaryLatentArmStreamTrajectoryAction sample) arm n ∧ UCB.realEmpiricalMean (stationaryLatentArmStreamTrajectoryAction sample) (stationaryLatentArmStreamTrajectoryReward sample) arm n + Real.sqrt (<span class="num">2</span> * (sigma2 : Real) * Real.log (<span class="num">1</span> / delta) / (pullCount (stationaryLatentArmStreamTrajectoryAction sample) arm n : Real)) &lt;= mean (stationaryLatentArmStreamTrajectoryEnvironment sample) arm} &lt;= (n : ENNReal) * ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L2457">Source line 2457</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5ef1728878ad">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamTrajectoryMeasure_mean_le_realEmpiricalMean_sub_width_le_nat_mul_delta</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Simplified `n * delta` upper-confidence failure bound.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamTrajectoryMeasure_mean_le_realEmpiricalMean_sub_width_le_nat_mul_delta {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) (mean : Env -&gt; Fin K -&gt; Real) (hmeas_mean : Measurable (<span class="kw">fun</span> input : Env × Fin K =&gt; mean input.<span class="num">1</span> input.<span class="num">2</span>)) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (hsigma2 : sigma2 ≠ <span class="num">0</span>) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (arm : Fin K) (n : Nat) : stationaryLatentArmStreamTrajectoryMeasure prior rewardKernel algorithm {sample | <span class="num">0</span> &lt; pullCount (stationaryLatentArmStreamTrajectoryAction sample) arm n ∧ mean (stationaryLatentArmStreamTrajectoryEnvironment sample) arm &lt;= UCB.realEmpiricalMean (stationaryLatentArmStreamTrajectoryAction sample) (stationaryLatentArmStreamTrajectoryReward sample) arm n - Real.sqrt (<span class="num">2</span> * (sigma2 : Real) * Real.log (<span class="num">1</span> / delta) / (pullCount (stationaryLatentArmStreamTrajectoryAction sample) arm n : Real))} &lt;= (n : ENNReal) * ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L2502">Source line 2502</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-4ba79a4916f5">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamPrior</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Bayesian prior augmented with the stationary latent arm stream.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> stationaryLatentArmStreamPrior {Env : Type u} {K : Nat} [MeasurableSpace Env] [NeZero K] (prior : Measure Env) (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] : Measure (Env × UCB.ArmRewardStream K)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L2547">Source line 2547</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9d84bf857ef9">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Canonical trajectory measure in the left-associated sample shape consumed by
+the Thompson Bayesian-regret decomposition.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> stationaryLatentArmStreamCanonicalTrajectoryMeasure {Env : Type u} {K : Nat} [MeasurableSpace Env] [NeZero K] (prior : Measure Env) (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) : Measure ((Env × UCB.ArmRewardStream K) × ((n : Nat) -&gt; Fin K × Real))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L2567">Source line 2567</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-95ad4ed0021a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamTrajectoryMeasure_map_prodAssoc_symm</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The concentration and decomposition sample shapes agree by product associativity.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamTrajectoryMeasure_map_prodAssoc_symm {Env : Type u} {K : Nat} [MeasurableSpace Env] [NeZero K] (prior : Measure Env) (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) : (stationaryLatentArmStreamTrajectoryMeasure prior rewardKernel algorithm).map MeasurableEquiv.prodAssoc.symm = stationaryLatentArmStreamCanonicalTrajectoryMeasure prior rewardKernel algorithm</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L2591">Source line 2591</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-788687fa6f8d">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_realEmpiricalMean_add_width_le_mean_le_nat_mul_delta</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Decomposition-facing lower-confidence failure bound on the canonical augmented
+trajectory measure.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamCanonicalTrajectoryMeasure_realEmpiricalMean_add_width_le_mean_le_nat_mul_delta {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) (mean : Env -&gt; Fin K -&gt; Real) (hmeas_mean : Measurable (<span class="kw">fun</span> input : Env × Fin K =&gt; mean input.<span class="num">1</span> input.<span class="num">2</span>)) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (hsigma2 : sigma2 ≠ <span class="num">0</span>) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (arm : Fin K) (n : Nat) : stationaryLatentArmStreamCanonicalTrajectoryMeasure prior rewardKernel algorithm {sample : (Env × UCB.ArmRewardStream K) × ((n : Nat) → Fin K × Real) | <span class="num">0</span> &lt; pullCount (environmentTrajectoryAction sample) arm n ∧ UCB.realEmpiricalMean (environmentTrajectoryAction sample) (environmentTrajectoryReward sample) arm n + Real.sqrt (<span class="num">2</span> * (sigma2 : Real) * Real.log (<span class="num">1</span> / delta) / (pullCount (environmentTrajectoryAction sample) arm n : Real)) &lt;= mean sample.<span class="num">1.1</span> arm} &lt;= (n : ENNReal) * ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L2611">Source line 2611</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-711def45b7f5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_mean_le_realEmpiricalMean_sub_width_le_nat_mul_delta</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Decomposition-facing upper-confidence failure bound on the canonical augmented
+trajectory measure.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamCanonicalTrajectoryMeasure_mean_le_realEmpiricalMean_sub_width_le_nat_mul_delta {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) (mean : Env -&gt; Fin K -&gt; Real) (hmeas_mean : Measurable (<span class="kw">fun</span> input : Env × Fin K =&gt; mean input.<span class="num">1</span> input.<span class="num">2</span>)) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (hsigma2 : sigma2 ≠ <span class="num">0</span>) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (arm : Fin K) (n : Nat) : stationaryLatentArmStreamCanonicalTrajectoryMeasure prior rewardKernel algorithm {sample : (Env × UCB.ArmRewardStream K) × ((n : Nat) → Fin K × Real) | <span class="num">0</span> &lt; pullCount (environmentTrajectoryAction sample) arm n ∧ mean sample.<span class="num">1.1</span> arm &lt;= UCB.realEmpiricalMean (environmentTrajectoryAction sample) (environmentTrajectoryReward sample) arm n - Real.sqrt (<span class="num">2</span> * (sigma2 : Real) * Real.log (<span class="num">1</span> / delta) / (pullCount (environmentTrajectoryAction sample) arm n : Real))} &lt;= (n : ENNReal) * ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L2691">Source line 2691</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3a7862d78cf7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_exists_selectedArm_realEmpiricalMean_add_width_le_mean_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Decomposition-facing horizon-uniform lower-confidence failure for a measurable
+environment-dependent arm, with the exact `(n - 1) * delta` cost.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamCanonicalTrajectoryMeasure_exists_selectedArm_realEmpiricalMean_add_width_le_mean_le {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) (mean : Env -&gt; Fin K -&gt; Real) (hmeas_mean : Measurable (<span class="kw">fun</span> input : Env × Fin K =&gt; mean input.<span class="num">1</span> input.<span class="num">2</span>)) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (hsigma2 : sigma2 ≠ <span class="num">0</span>) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (selectedArm : Env -&gt; Fin K) (hselectedArm : Measurable selectedArm) (n : Nat) : stationaryLatentArmStreamCanonicalTrajectoryMeasure prior rewardKernel algorithm {sample : (Env × UCB.ArmRewardStream K) × ((n : Nat) -&gt; Fin K × Real) | ∃ t &lt; n, <span class="num">0</span> &lt; pullCount (environmentTrajectoryAction sample) (selectedArm sample.<span class="num">1.1</span>) t ∧ UCB.realEmpiricalMean (environmentTrajectoryAction sample) (environmentTrajectoryReward sample) (selectedArm sample.<span class="num">1.1</span>) t + Real.sqrt (<span class="num">2</span> * (sigma2 : Real) * Real.log (<span class="num">1</span> / delta) / (pullCount (environmentTrajectoryAction sample) (selectedArm sample.<span class="num">1.1</span>) t : Real)) &lt;= mean sample.<span class="num">1.1</span> (selectedArm sample.<span class="num">1.1</span>)} &lt;= (n - <span class="num">1</span> : Nat) * ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L2771">Source line 2771</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-33bf066dbee5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_sum_mean_bestAction_sub_clippedUCB_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The first pinned-LML Thompson concentration expectation: the finite-horizon
+best-action mean minus clipped-UCB sum is controlled by the horizon-uniform
+lower-confidence failure event.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_sum_mean_bestAction_sub_clippedUCB_le {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) (bestAction : Env -&gt; Fin K) (hbestAction : Measurable bestAction) (mean : Env -&gt; Fin K -&gt; Real) (hmeas_mean : Measurable (<span class="kw">fun</span> input : Env × Fin K =&gt; mean input.<span class="num">1</span> input.<span class="num">2</span>)) (l u : Real) (hlu : l &lt;= u) (hmeanMem : <span class="kw">forall</span> env arm, mean env arm ∈ Set.Icc l u) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (hsigma2 : sigma2 ≠ <span class="num">0</span>) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (n : Nat) : integral (stationaryLatentArmStreamCanonicalTrajectoryMeasure prior rewardKernel algorithm) (<span class="kw">fun</span> sample =&gt; ∑ t ∈ Finset.range n, (mean sample.<span class="num">1.1</span> (bestAction sample.<span class="num">1.1</span>) - clippedUCB l u (sigma2 : Real) delta (environmentTrajectoryAction sample) (environmentTrajectoryReward sample) (bestAction sample.<span class="num">1.1</span>) t)) &lt;= (u - l) * (n - <span class="num">1</span>) * n * delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L2892">Source line 2892</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-77c2c7692a06">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measure_biUnion_clippedCountWidthThreshold_le_armPrefixSum_sub_mul_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A finite union of upper prefix deviations pays once per positive pull count.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_biUnion_clippedCountWidthThreshold_le_armPrefixSum_sub_mul_le {K : Nat} (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean) sigma2 (nu arm)) (hsigma2 : sigma2 ≠ <span class="num">0</span>) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (m : Nat) : UCB.armStreamMeasure nu (⋃ k ∈ Finset.Icc <span class="num">1</span> m, {stream : UCB.ArmRewardStream K | clippedCountWidthThreshold sigma2 delta k &lt;= UCB.armPrefixSum arm k stream - (k : Real) * mean}) &lt;= (m : ENNReal) * ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L3093">Source line 3093</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-abf9a3628536">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measure_latentArmStreamTrajectory_exists_mean_le_realEmpiricalMean_sub_width_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-horizon upper-confidence failure for one arm on the coupled trajectory.
+Times with the same positive pull count collapse to one latent-stream prefix
+event, preserving the exact `(n - 1) * delta` cost.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_latentArmStreamTrajectory_exists_mean_le_realEmpiricalMean_sub_width_le {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (arm : Fin K) (mean : Real) (sigma2 : NNReal) (hsubG : HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean) sigma2 (nu arm)) (hsigma2 : sigma2 ≠ <span class="num">0</span>) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (n : Nat) : latentArmStreamTrajectoryMeasure algorithm env nu {sample | ∃ t &lt; n, <span class="num">0</span> &lt; pullCount (latentArmStreamTrajectoryAction sample) arm t ∧ mean &lt;= UCB.realEmpiricalMean (latentArmStreamTrajectoryAction sample) (latentArmStreamTrajectoryReward sample) arm t - Real.sqrt (<span class="num">2</span> * (sigma2 : Real) * Real.log (<span class="num">1</span> / delta) / (pullCount (latentArmStreamTrajectoryAction sample) arm t : Real))} &lt;= (n - <span class="num">1</span> : Nat) * ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L3136">Source line 3136</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b03ed8e33ee0">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.measure_latentArmStreamTrajectory_exists_arm_exists_mean_le_realEmpiricalMean_sub_width_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Finite-arm union of the horizon upper-confidence failures at fixed environment.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measure_latentArmStreamTrajectory_exists_arm_exists_mean_le_realEmpiricalMean_sub_width_le {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (algorithm : HistoryAlgorithm (Fin K) Real) (env : Env) (nu : Kernel (Fin K) Real) [IsMarkovKernel nu] (mean : Fin K -&gt; Real) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean arm) sigma2 (nu arm)) (hsigma2 : sigma2 ≠ <span class="num">0</span>) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (n : Nat) : latentArmStreamTrajectoryMeasure algorithm env nu {sample | ∃ arm : Fin K, ∃ t &lt; n, <span class="num">0</span> &lt; pullCount (latentArmStreamTrajectoryAction sample) arm t ∧ mean arm &lt;= UCB.realEmpiricalMean (latentArmStreamTrajectoryAction sample) (latentArmStreamTrajectoryReward sample) arm t - Real.sqrt (<span class="num">2</span> * (sigma2 : Real) * Real.log (<span class="num">1</span> / delta) / (pullCount (latentArmStreamTrajectoryAction sample) arm t : Real))} &lt;= (K : ENNReal) * ((n - <span class="num">1</span> : Nat) : ENNReal) * ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L3236">Source line 3236</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5b348b032fd2">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamTrajectoryMeasure_exists_arm_exists_mean_le_realEmpiricalMean_sub_width_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Prior mixing preserves the finite-arm horizon upper-confidence budget.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamTrajectoryMeasure_exists_arm_exists_mean_le_realEmpiricalMean_sub_width_le {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) (mean : Env -&gt; Fin K -&gt; Real) (hmeas_mean : Measurable (<span class="kw">fun</span> input : Env × Fin K =&gt; mean input.<span class="num">1</span> input.<span class="num">2</span>)) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (hsigma2 : sigma2 ≠ <span class="num">0</span>) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (n : Nat) : stationaryLatentArmStreamTrajectoryMeasure prior rewardKernel algorithm {sample | ∃ arm : Fin K, ∃ t &lt; n, <span class="num">0</span> &lt; pullCount (stationaryLatentArmStreamTrajectoryAction sample) arm t ∧ mean (stationaryLatentArmStreamTrajectoryEnvironment sample) arm &lt;= UCB.realEmpiricalMean (stationaryLatentArmStreamTrajectoryAction sample) (stationaryLatentArmStreamTrajectoryReward sample) arm t - Real.sqrt (<span class="num">2</span> * (sigma2 : Real) * Real.log (<span class="num">1</span> / delta) / (pullCount (stationaryLatentArmStreamTrajectoryAction sample) arm t : Real))} &lt;= (K : ENNReal) * ((n - <span class="num">1</span> : Nat) : ENNReal) * ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L3299">Source line 3299</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-fbca9b0f1e7e">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_exists_arm_exists_mean_le_realEmpiricalMean_sub_width_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Decomposition-facing finite-arm horizon upper-confidence failure with exact
+`K * (n - 1) * delta` cost.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamCanonicalTrajectoryMeasure_exists_arm_exists_mean_le_realEmpiricalMean_sub_width_le {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) (mean : Env -&gt; Fin K -&gt; Real) (hmeas_mean : Measurable (<span class="kw">fun</span> input : Env × Fin K =&gt; mean input.<span class="num">1</span> input.<span class="num">2</span>)) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (hsigma2 : sigma2 ≠ <span class="num">0</span>) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (n : Nat) : stationaryLatentArmStreamCanonicalTrajectoryMeasure prior rewardKernel algorithm {sample | ∃ arm : Fin K, ∃ t &lt; n, <span class="num">0</span> &lt; pullCount (environmentTrajectoryAction sample) arm t ∧ mean sample.<span class="num">1.1</span> arm &lt;= UCB.realEmpiricalMean (environmentTrajectoryAction sample) (environmentTrajectoryReward sample) arm t - Real.sqrt (<span class="num">2</span> * (sigma2 : Real) * Real.log (<span class="num">1</span> / delta) / (pullCount (environmentTrajectoryAction sample) arm t : Real))} &lt;= (K : ENNReal) * ((n - <span class="num">1</span> : Nat) : ENNReal) * ENNReal.ofReal delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L3406">Source line 3406</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-0f2074e7fd9a">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_sum_clippedUCB_action_sub_mean_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The second pinned-LML Thompson concentration expectation: selected-action
+clipped-UCB excess is bounded by deterministic pull-count summation plus the
+finite-arm horizon upper-confidence failure budget.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_sum_clippedUCB_action_sub_mean_le {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (algorithm : HistoryAlgorithm (Fin K) Real) (mean : Env -&gt; Fin K -&gt; Real) (hmeas_mean : Measurable (<span class="kw">fun</span> input : Env × Fin K =&gt; mean input.<span class="num">1</span> input.<span class="num">2</span>)) (l u : Real) (hlu : l &lt;= u) (hmeanMem : <span class="kw">forall</span> env arm, mean env arm ∈ Set.Icc l u) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (hsigma2 : sigma2 ≠ <span class="num">0</span>) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (n : Nat) : integral (stationaryLatentArmStreamCanonicalTrajectoryMeasure prior rewardKernel algorithm) (<span class="kw">fun</span> sample =&gt; ∑ t ∈ Finset.range n, (clippedUCB l u (sigma2 : Real) delta (environmentTrajectoryAction sample) (environmentTrajectoryReward sample) (environmentTrajectoryAction sample t) t - mean sample.<span class="num">1.1</span> (environmentTrajectoryAction sample t))) &lt;= (u - l) * K + <span class="num">4</span> * Real.sqrt (<span class="num">2</span> * (sigma2 : Real) * Real.log (<span class="num">1</span> / delta) * K * n) + (u - l) * K * (n - <span class="num">1</span>) * n * delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L3512">Source line 3512</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-ded655f64179">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le_of_delta</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Stationary-reward Thompson Bayesian regret with an explicit confidence
+parameter.  This is the decomposition-facing join of the two pinned-LML
+clipped-UCB expectation bounds.  The analytic upper bound is in fact
+comparator-uniform, but the public Bayesian-regret endpoint deliberately
+retains `IsOptimalMeanSelector mean bestAction` as an interpretation contract.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le_of_delta {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (bestAction : Env -&gt; Fin K) (hbestAction : Measurable bestAction) (mean : Env -&gt; Fin K -&gt; Real) (hbest : IsOptimalMeanSelector mean bestAction) (hmeas_mean : Measurable (<span class="kw">fun</span> input : Env × Fin K =&gt; mean input.<span class="num">1</span> input.<span class="num">2</span>)) (l u : Real) (hlu : l &lt;= u) (hmeanMem : <span class="kw">forall</span> env arm, mean env arm ∈ Set.Icc l u) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (hsigma2 : sigma2 ≠ <span class="num">0</span>) (delta : Real) (hdelta : <span class="num">0</span> &lt; delta) (hdelta_one : delta &lt;= <span class="num">1</span>) (n : Nat) : <span class="kw">let</span> augmentedPrior := stationaryLatentArmStreamPrior prior rewardKernel <span class="kw">let</span> feedbackEnvironment := latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K) <span class="kw">let</span> augmentedBestAction := <span class="kw">fun</span> envStream : Env × UCB.ArmRewardStream K =&gt; bestAction envStream.<span class="num">1</span> <span class="kw">let</span> augmentedMean := <span class="kw">fun</span> envStream : Env × UCB.ArmRewardStream K =&gt; <span class="kw">fun</span> arm =&gt; mean envStream.<span class="num">1</span> arm <span class="kw">let</span> algorithm := uniformReferenceThompsonAlgorithm augmentedPrior feedbackEnvironment augmentedBestAction (hbestAction.comp measurable_fst) integral (stationaryLatentArmStreamCanonicalTrajectoryMeasure prior rewardKernel algorithm) (<span class="kw">fun</span> sample =&gt; trajectoryBayesMeanRegret augmentedMean augmentedBestAction sample n) &lt;= (u - l) * K + <span class="num">4</span> * Real.sqrt (<span class="num">2</span> * (sigma2 : Real) * Real.log (<span class="num">1</span> / delta) * K * n) + (u - l) * (K + <span class="num">1</span>) * (n - <span class="num">1</span>) * n * delta</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L3723">Source line 3723</a>
+
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-04335aae6150">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.Thompson.stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pinned-LML stationary-reward Thompson Bayesian-regret bound, obtained from
+the explicit-confidence theorem with `delta = 1 / n ^ 2`.  Unlike the
+comparator-relative decomposition, this endpoint explicitly requires the
+selector to maximize the declared mean surface pointwise.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> stationaryLatentArmStreamCanonicalTrajectoryMeasure_integral_trajectoryBayesMeanRegret_le {Env : Type u} {K : Nat} [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env] [NeZero K] (prior : Measure Env) [IsProbabilityMeasure prior] (rewardKernel : Kernel (Env × Fin K) Real) [IsMarkovKernel rewardKernel] (bestAction : Env -&gt; Fin K) (hbestAction : Measurable bestAction) (mean : Env -&gt; Fin K -&gt; Real) (hbest : IsOptimalMeanSelector mean bestAction) (hmeas_mean : Measurable (<span class="kw">fun</span> input : Env × Fin K =&gt; mean input.<span class="num">1</span> input.<span class="num">2</span>)) (l u : Real) (hlu : l &lt;= u) (hmeanMem : <span class="kw">forall</span> env arm, mean env arm ∈ Set.Icc l u) (sigma2 : NNReal) (hsubG : <span class="kw">forall</span> env arm, HasSubgaussianMGF (<span class="kw">fun</span> reward =&gt; reward - mean env arm) sigma2 (rewardKernel (env, arm))) (hsigma2 : sigma2 ≠ <span class="num">0</span>) (n : Nat) : <span class="kw">let</span> augmentedPrior := stationaryLatentArmStreamPrior prior rewardKernel <span class="kw">let</span> feedbackEnvironment := latentArmStreamMeasurableHistoryEnvironment (Env := Env) (K := K) <span class="kw">let</span> augmentedBestAction := <span class="kw">fun</span> envStream : Env × UCB.ArmRewardStream K =&gt; bestAction envStream.<span class="num">1</span> <span class="kw">let</span> augmentedMean := <span class="kw">fun</span> envStream : Env × UCB.ArmRewardStream K =&gt; <span class="kw">fun</span> arm =&gt; mean envStream.<span class="num">1</span> arm <span class="kw">let</span> algorithm := uniformReferenceThompsonAlgorithm augmentedPrior feedbackEnvironment augmentedBestAction (hbestAction.comp measurable_fst) integral (stationaryLatentArmStreamCanonicalTrajectoryMeasure prior rewardKernel algorithm) (<span class="kw">fun</span> sample =&gt; trajectoryBayesMeanRegret augmentedMean augmentedBestAction sample n) &lt;= (<span class="num">2</span> * K + <span class="num">1</span>) * (u - l) + <span class="num">8</span> * Real.sqrt ((sigma2 : Real) * K * n * Real.log n)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/Algorithms/ThompsonStationaryReward.lean.html#L3848">Source line 3848</a>
+      <a href="../../chapters/thompson/index.html#decl-04335aae6150-teaching">Open teaching explanation</a>
+      <a href="../../chapters/thompson/index.html">Chapter context: Thompson sampling</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

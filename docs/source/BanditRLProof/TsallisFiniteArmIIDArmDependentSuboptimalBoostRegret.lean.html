@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/TsallisFiniteArmIIDArmDependentSuboptimalBoostRegret.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/TsallisFiniteArmIIDArmDependentSuboptimalBoostRegret.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/TsallisFiniteArmIIDArmDependentSuboptimalBoostRegret.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/TsallisFiniteArmIIDArmDependentSuboptimalBoostRegret.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.TsallisFiniteArmIIDHistoryAdaptiveRefinedCorruptedRewardLaw</span>
+<span id="L2">2 </span>
+<span id="L3">3 open scoped ENNReal NNReal Topology ProbabilityTheory</span>
+<span id="L4">4 open MeasureTheory ProbabilityTheory Set Filter Finset</span>
+<span id="L5">5 </span>
+<span id="L6">6 namespace BanditRLProof</span>
+<span id="L7">7 namespace Tsallis</span>
+<span id="L8">8 </span>
+<span id="L9">9 /-- A stationary but arm-dependent corruption process that leaves the best arm</span>
+<span id="L10">10 unchanged and adds a prescribed nonnegative boost to every other arm. -/</span>
+<span id="L11">11 noncomputable def armDependentSuboptimalRewardBoostSource</span>
+<span id="L12">12     {K : Nat} (model : FiniteBanditModel K) (boost : Fin K -&gt; Real)</span>
+<span id="L13">13     (hboost : forall arm, 0 &lt;= boost arm) :</span>
+<span id="L14">14     FiniteArmIIDHistoryAdaptiveRewardShiftSource K where</span>
+<span id="L15">15   initial arm := if arm = model.bestArm then 0 else boost arm</span>
+<span id="L16">16   successor _ _ arm := if arm = model.bestArm then 0 else boost arm</span>
+<span id="L17">17   measurable_successor _ :=</span>
+<span id="L18">18     (measurable_of_countable</span>
+<span id="L19">19       (fun arm : Fin K =&gt; if arm = model.bestArm then 0 else boost arm)).comp</span>
+<span id="L20">20         measurable_snd</span>
+<span id="L21">21   envelope _ arm := if arm = model.bestArm then 0 else boost arm</span>
+<span id="L22">22   envelope_nonneg _ arm := by</span>
+<span id="L23">23     split_ifs</span>
+<span id="L24">24     · exact le_rfl</span>
+<span id="L25">25     · exact hboost arm</span>
+<span id="L26">26   initial_abs_le arm := by</span>
+<span id="L27">27     split_ifs &lt;;&gt; simp [abs_of_nonneg (hboost arm)]</span>
+<span id="L28">28   successor_abs_le _ _ arm := by</span>
+<span id="L29">29     split_ifs &lt;;&gt; simp [abs_of_nonneg (hboost arm)]</span>
+<span id="L30">30 </span>
+<span id="L31">31 /-- The arm-dependent suboptimal boost has exact deterministic envelope budget</span>
+<span id="L32">32 `(T+1) * sum_(a != best) boost(a)`. -/</span>
+<span id="L33">33 theorem finiteArmIIDHistoryAdaptiveRewardCorruptionBudget_armDependentSuboptimalRewardBoostSource</span>
+<span id="L34">34     {K : Nat} (model : FiniteBanditModel K) (horizon : Nat)</span>
+<span id="L35">35     (boost : Fin K -&gt; Real) (hboost : forall arm, 0 &lt;= boost arm) :</span>
+<span id="L36">36     finiteArmIIDHistoryAdaptiveRewardCorruptionBudget model horizon</span>
+<span id="L37">37         (armDependentSuboptimalRewardBoostSource model boost hboost) =</span>
+<span id="L38">38       (((horizon + 1 : Nat) : Real)) *</span>
+<span id="L39">39         ((Finset.univ : Finset (Fin K)).erase model.bestArm).sum boost := by</span>
+<span id="L40">40   rw [finiteArmIIDHistoryAdaptiveRewardCorruptionBudget_eq]</span>
+<span id="L41">41   simp only [armDependentSuboptimalRewardBoostSource]</span>
+<span id="L42">42   simp only [if_true, add_zero]</span>
+<span id="L43">43   have hinner :</span>
+<span id="L44">44       ((Finset.univ : Finset (Fin K)).erase model.bestArm).sum</span>
+<span id="L45">45           (fun arm =&gt; if arm = model.bestArm then 0 else boost arm) =</span>
+<span id="L46">46         ((Finset.univ : Finset (Fin K)).erase model.bestArm).sum boost := by</span>
+<span id="L47">47     apply Finset.sum_congr rfl</span>
+<span id="L48">48     intro arm harm</span>
+<span id="L49">49     rw [if_neg (Finset.ne_of_mem_erase harm)]</span>
+<span id="L50">50   calc</span>
+<span id="L51">51     (Finset.range (horizon + 1)).sum (fun _ =&gt;</span>
+<span id="L52">52         ((Finset.univ : Finset (Fin K)).erase model.bestArm).sum</span>
+<span id="L53">53           (fun arm =&gt; if arm = model.bestArm then 0 else boost arm)) =</span>
+<span id="L54">54       (Finset.range (horizon + 1)).sum (fun _ =&gt;</span>
+<span id="L55">55         ((Finset.univ : Finset (Fin K)).erase model.bestArm).sum boost) := by</span>
+<span id="L56">56         apply Finset.sum_congr rfl</span>
+<span id="L57">57         intro _ _</span>
+<span id="L58">58         exact hinner</span>
+<span id="L59">59     _ = (((horizon + 1 : Nat) : Real)) *</span>
+<span id="L60">60         ((Finset.univ : Finset (Fin K)).erase model.bestArm).sum boost := by</span>
+<span id="L61">61       simp only [Finset.sum_const, Finset.card_range, nsmul_eq_mul,</span>
+<span id="L62">62         Nat.cast_add, Nat.cast_one]</span>
+<span id="L63">63 </span>
+<span id="L64">64 /-- The coefficient-aware refined regime for an arm-dependent boost budget. -/</span>
+<span id="L65">65 noncomputable def finiteArmIIDArmDependentSuboptimalBoostRefinedRegime</span>
+<span id="L66">66     {K : Nat} (model : FiniteBanditModel K) (horizon : Nat)</span>
+<span id="L67">67     (boost : Fin K -&gt; Real) : Prop :=</span>
+<span id="L68">68   let actions := (Finset.univ : Finset (Fin K)).erase model.bestArm</span>
+<span id="L69">69   let armCount : Real := (actions.card : Real)</span>
+<span id="L70">70   let horizonMass : Real := ((horizon + 1 : Nat) : Real)</span>
+<span id="L71">71   let reciprocalGap := actions.sum</span>
+<span id="L72">72     (fun arm =&gt; 1 / ((model.gap arm : Rat) : Real))</span>
+<span id="L73">73   let totalBoost := actions.sum boost</span>
+<span id="L74">74   let corruption := horizonMass * totalBoost</span>
+<span id="L75">75   25 * reciprocalGap ^ 2 &lt;= armCount * horizonMass ∧</span>
+<span id="L76">76     corruption * reciprocalGap &lt;= armCount * horizonMass ∧</span>
+<span id="L77">77       25 * reciprocalGap *</span>
+<span id="L78">78           (Real.log</span>
+<span id="L79">79             ((2 * armCount * horizonMass) /</span>
+<span id="L80">80               (25 * reciprocalGap ^ 2)) + 2) &lt;=</span>
+<span id="L81">81         corruption</span>
+<span id="L82">82 </span>
+<span id="L83">83 /-- The named arm-dependent refined regime supplies the existing model-facing</span>
+<span id="L84">84 compact corruption window after the exact budget rewrite. -/</span>
+<span id="L85">85 theorem finiteArmIIDHistoryAdaptiveRefinedCorruptionWindow_armDependentSuboptimalRewardBoostSource_of_refinedRegime</span>
+<span id="L86">86     {K : Nat} (model : FiniteBanditModel K) (horizon : Nat)</span>
+<span id="L87">87     (boost : Fin K -&gt; Real) (hboost : forall arm, 0 &lt;= boost arm)</span>
+<span id="L88">88     (hregime : finiteArmIIDArmDependentSuboptimalBoostRefinedRegime</span>
+<span id="L89">89       model horizon boost) :</span>
+<span id="L90">90     finiteArmIIDHistoryAdaptiveRefinedCorruptionWindow model horizon</span>
+<span id="L91">91       (armDependentSuboptimalRewardBoostSource model boost hboost) := by</span>
+<span id="L92">92   rw [finiteArmIIDHistoryAdaptiveRefinedCorruptionWindow,</span>
+<span id="L93">93     finiteArmIIDHistoryAdaptiveRewardCorruptionBudget_armDependentSuboptimalRewardBoostSource]</span>
+<span id="L94">94   exact hregime</span>
+<span id="L95">95 </span>
+<span id="L96">96 /-- Total regret bound for arm-dependent boosts: the refined local expression</span>
+<span id="L97">97 inside its named regime and the logarithmic additive-budget expression on the</span>
+<span id="L98">98 complement. -/</span>
+<span id="L99">99 noncomputable def finiteArmIIDArmDependentSuboptimalBoostAllRegimeBound</span>
+<span id="L100">100     {K : Nat} (model : FiniteBanditModel K) (horizon : Nat)</span>
+<span id="L101">101     (boost : Fin K -&gt; Real) : Real := by</span>
+<span id="L102">102   classical</span>
+<span id="L103">103   let actions := (Finset.univ : Finset (Fin K)).erase model.bestArm</span>
+<span id="L104">104   let armCount : Real := (actions.card : Real)</span>
+<span id="L105">105   let horizonMass : Real := ((horizon + 1 : Nat) : Real)</span>
+<span id="L106">106   let reciprocalGap := actions.sum</span>
+<span id="L107">107     (fun arm =&gt; 1 / ((model.gap arm : Rat) : Real))</span>
+<span id="L108">108   let totalBoost := actions.sum boost</span>
+<span id="L109">109   let scale := 2 * armCount * horizonMass</span>
+<span id="L110">110   let corruption := horizonMass * totalBoost</span>
+<span id="L111">111   exact if finiteArmIIDArmDependentSuboptimalBoostRefinedRegime</span>
+<span id="L112">112       model horizon boost then</span>
+<span id="L113">113     1 + Real.log horizonMass +</span>
+<span id="L114">114       10 * Real.sqrt (corruption * reciprocalGap) *</span>
+<span id="L115">115         (2 + Real.sqrt</span>
+<span id="L116">116           (Real.log (scale / (corruption * reciprocalGap)) + 1))</span>
+<span id="L117">117   else</span>
+<span id="L118">118     (1 + Real.log horizonMass) * (1 + 25 * reciprocalGap) + corruption</span>
+<span id="L119">119 </span>
+<span id="L120">120 /-- Scheduled half-Tsallis regret for every nonnegative arm-dependent</span>
+<span id="L121">121 suboptimal reward boost and every finite horizon. The result automatically</span>
+<span id="L122">122 selects the refined or logarithmic branch and requires no caller window proof. -/</span>
+<span id="L123">123 theorem integral_sampledScheduledHalfTsallisFiniteArmIIDArmDependentSuboptimalBoostRewardLawRegret_le_allRegimes</span>
+<span id="L124">124     {K : Nat} (model : FiniteBanditModel K)</span>
+<span id="L125">125     (armLaw : Fin K -&gt; Measure Rat)</span>
+<span id="L126">126     (hprob : forall arm, IsProbabilityMeasure (armLaw arm))</span>
+<span id="L127">127     (hbound : forall arm, ∀ᵐ reward ∂armLaw arm,</span>
+<span id="L128">128       ((reward : Rat) : Real) ∈ Set.Icc (0 : Real) 1)</span>
+<span id="L129">129     (hmean : forall arm,</span>
+<span id="L130">130       integral (armLaw arm) (fun reward : Rat =&gt; ((reward : Rat) : Real)) =</span>
+<span id="L131">131         ((model.mean arm : Rat) : Real))</span>
+<span id="L132">132     (boost : Fin K -&gt; Real) (hboost : forall arm, 0 &lt;= boost arm)</span>
+<span id="L133">133     (hsuboptimal :</span>
+<span id="L134">134       ((Finset.univ : Finset (Fin K)).erase model.bestArm).Nonempty)</span>
+<span id="L135">135     (hgapPos : forall arm, arm ≠ model.bestArm -&gt;</span>
+<span id="L136">136       0 &lt; ((model.gap arm : Rat) : Real))</span>
+<span id="L137">137     (hgapLeOne : forall arm, arm ≠ model.bestArm -&gt;</span>
+<span id="L138">138       ((model.gap arm : Rat) : Real) &lt;= 1)</span>
+<span id="L139">139     (horizon : Nat) :</span>
+<span id="L140">140     letI : Nonempty (Fin K) := ⟨model.bestArm⟩</span>
+<span id="L141">141     let source := armDependentSuboptimalRewardBoostSource model boost hboost</span>
+<span id="L142">142     let law := finiteArmIIDRewardVectorLaw armLaw</span>
+<span id="L143">143     let loss := finiteArmIIDHistoryAdaptiveCorruptedRewardLoss source</span>
+<span id="L144">144     let selector :=</span>
+<span id="L145">145       canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L146">146         (Finset.univ : Finset (Fin K)) Finset.univ_nonempty</span>
+<span id="L147">147         sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L148">148     let prior := Measure.infinitePi (fun _ : Nat =&gt; law)</span>
+<span id="L149">149     let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L150">150       (Finset.univ : Finset (Fin K)) Finset.univ_nonempty</span>
+<span id="L151">151       sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L152">152       selector.finiteHistory loss.environment</span>
+<span id="L153">153     integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L154">154         (Finset.univ : Finset (Fin K)) Finset.univ_nonempty</span>
+<span id="L155">155         sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L156">156         (pointMass model.bestArm) horizon) &lt;=</span>
+<span id="L157">157       finiteArmIIDArmDependentSuboptimalBoostAllRegimeBound</span>
+<span id="L158">158         model horizon boost := by</span>
+<span id="L159">159   classical</span>
+<span id="L160">160   let source := armDependentSuboptimalRewardBoostSource model boost hboost</span>
+<span id="L161">161   by_cases hregime : finiteArmIIDArmDependentSuboptimalBoostRefinedRegime</span>
+<span id="L162">162       model horizon boost</span>
+<span id="L163">163   · have hwindow : finiteArmIIDHistoryAdaptiveRefinedCorruptionWindow</span>
+<span id="L164">164         model horizon source := by</span>
+<span id="L165">165       simpa only [source] using</span>
+<span id="L166">166         finiteArmIIDHistoryAdaptiveRefinedCorruptionWindow_armDependentSuboptimalRewardBoostSource_of_refinedRegime</span>
+<span id="L167">167           model horizon boost hboost hregime</span>
+<span id="L168">168     have hroute :=</span>
+<span id="L169">169       integral_sampledScheduledHalfTsallisFiniteArmIIDHistoryAdaptiveCorruptedRewardLawRegret_le_refinedLocalExplicit_of_window</span>
+<span id="L170">170         model armLaw hprob hbound hmean source hsuboptimal hgapPos hgapLeOne</span>
+<span id="L171">171           horizon hwindow</span>
+<span id="L172">172     simpa only [source,</span>
+<span id="L173">173       finiteArmIIDArmDependentSuboptimalBoostAllRegimeBound, hregime, if_pos,</span>
+<span id="L174">174       finiteArmIIDHistoryAdaptiveRewardCorruptionBudget_armDependentSuboptimalRewardBoostSource]</span>
+<span id="L175">175       using hroute</span>
+<span id="L176">176   · have hroute :=</span>
+<span id="L177">177       integral_sampledScheduledHalfTsallisFiniteArmIIDHistoryAdaptiveCorruptedRewardLawRegret_le_log</span>
+<span id="L178">178         model armLaw hprob hbound hmean source hgapPos horizon</span>
+<span id="L179">179     simpa only [source,</span>
+<span id="L180">180       finiteArmIIDArmDependentSuboptimalBoostAllRegimeBound, hregime, if_neg,</span>
+<span id="L181">181       finiteArmIIDHistoryAdaptiveRewardCorruptionBudget_armDependentSuboptimalRewardBoostSource]</span>
+<span id="L182">182       using hroute</span>
+<span id="L183">183 </span>
+<span id="L184">184 end Tsallis</span>
+<span id="L185">185 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

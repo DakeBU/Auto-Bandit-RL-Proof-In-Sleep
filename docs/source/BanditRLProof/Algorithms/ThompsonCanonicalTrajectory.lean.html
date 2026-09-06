@@ -1,0 +1,1018 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Algorithms/ThompsonCanonicalTrajectory.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Algorithms/ThompsonCanonicalTrajectory.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Algorithms/ThompsonCanonicalTrajectory.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Algorithms/ThompsonCanonicalTrajectory.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Algorithms.ThompsonAlgorithmDensityProcess</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Canonical trajectory producer for history-based Thompson processes</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module realizes a `HistoryAlgorithm` interacting with one fixed</span>
+<span id="L7">7 `HistoryEnvironment` on Mathlib&#x27;s Ionescu-Tulcea `trajMeasure`.  It proves both</span>
+<span id="L8">8 the combined action/reward process contract and the four split conditional-law</span>
+<span id="L9">9 fields used by the environment-indexed Thompson density route.</span>
+<span id="L10">10 -/</span>
+<span id="L11">11 </span>
+<span id="L12">12 open MeasureTheory</span>
+<span id="L13">13 open scoped ProbabilityTheory</span>
+<span id="L14">14 </span>
+<span id="L15">15 universe u v w</span>
+<span id="L16">16 </span>
+<span id="L17">17 namespace BanditRLProof</span>
+<span id="L18">18 namespace Thompson</span>
+<span id="L19">19 </span>
+<span id="L20">20 /-- The canonical Ionescu-Tulcea law of the observable action/reward pairs. -/</span>
+<span id="L21">21 noncomputable def canonicalHistoryTrajectoryMeasure</span>
+<span id="L22">22     {Action : Type u} {Reward : Type v}</span>
+<span id="L23">23     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L24">24     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L25">25     (environment : HistoryEnvironment Action Reward) :</span>
+<span id="L26">26     Measure ((n : Nat) -&gt; Action × Reward) :=</span>
+<span id="L27">27   ProbabilityTheory.Kernel.trajMeasure</span>
+<span id="L28">28     (algorithm.initialAction ⊗ₘ environment.initialFeedback)</span>
+<span id="L29">29     (fun n =&gt; historyStepKernel algorithm environment n)</span>
+<span id="L30">30 </span>
+<span id="L31">31 instance instCanonicalHistoryTrajectoryMeasureIsProbability</span>
+<span id="L32">32     {Action : Type u} {Reward : Type v}</span>
+<span id="L33">33     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L34">34     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L35">35     (environment : HistoryEnvironment Action Reward) :</span>
+<span id="L36">36     IsProbabilityMeasure</span>
+<span id="L37">37       (canonicalHistoryTrajectoryMeasure algorithm environment) := by</span>
+<span id="L38">38   unfold canonicalHistoryTrajectoryMeasure</span>
+<span id="L39">39   infer_instance</span>
+<span id="L40">40 </span>
+<span id="L41">41 /-- Action trace projected from the canonical pair trajectory. -/</span>
+<span id="L42">42 def canonicalHistoryTrajectoryAction</span>
+<span id="L43">43     {Action : Type u} {Reward : Type v} :</span>
+<span id="L44">44     ((n : Nat) -&gt; Action × Reward) -&gt; ActionTrace Action :=</span>
+<span id="L45">45   fun trajectory n =&gt; (trajectory n).1</span>
+<span id="L46">46 </span>
+<span id="L47">47 /-- Reward trace projected from the canonical pair trajectory. -/</span>
+<span id="L48">48 def canonicalHistoryTrajectoryReward</span>
+<span id="L49">49     {Action : Type u} {Reward : Type v} :</span>
+<span id="L50">50     ((n : Nat) -&gt; Action × Reward) -&gt; RewardTrace Reward :=</span>
+<span id="L51">51   fun trajectory n =&gt; (trajectory n).2</span>
+<span id="L52">52 </span>
+<span id="L53">53 theorem measurable_canonicalHistoryTrajectoryAction_apply</span>
+<span id="L54">54     {Action : Type u} {Reward : Type v}</span>
+<span id="L55">55     [MeasurableSpace Action] [MeasurableSpace Reward] (n : Nat) :</span>
+<span id="L56">56     Measurable (fun trajectory : (k : Nat) -&gt; Action × Reward =&gt;</span>
+<span id="L57">57       canonicalHistoryTrajectoryAction trajectory n) :=</span>
+<span id="L58">58   measurable_fst.comp (measurable_pi_apply n)</span>
+<span id="L59">59 </span>
+<span id="L60">60 theorem measurable_canonicalHistoryTrajectoryReward_apply</span>
+<span id="L61">61     {Action : Type u} {Reward : Type v}</span>
+<span id="L62">62     [MeasurableSpace Action] [MeasurableSpace Reward] (n : Nat) :</span>
+<span id="L63">63     Measurable (fun trajectory : (k : Nat) -&gt; Action × Reward =&gt;</span>
+<span id="L64">64       canonicalHistoryTrajectoryReward trajectory n) :=</span>
+<span id="L65">65   measurable_snd.comp (measurable_pi_apply n)</span>
+<span id="L66">66 </span>
+<span id="L67">67 theorem canonicalHistoryTrajectory_initialPair_map_eq</span>
+<span id="L68">68     {Action : Type u} {Reward : Type v}</span>
+<span id="L69">69     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L70">70     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L71">71     (environment : HistoryEnvironment Action Reward) :</span>
+<span id="L72">72     Measure.map</span>
+<span id="L73">73         (fun trajectory =&gt;</span>
+<span id="L74">74           (canonicalHistoryTrajectoryAction trajectory 0,</span>
+<span id="L75">75             canonicalHistoryTrajectoryReward trajectory 0))</span>
+<span id="L76">76         (canonicalHistoryTrajectoryMeasure algorithm environment) =</span>
+<span id="L77">77       algorithm.initialAction ⊗ₘ environment.initialFeedback := by</span>
+<span id="L78">78   rw [canonicalHistoryTrajectoryMeasure]</span>
+<span id="L79">79   have hpair :</span>
+<span id="L80">80       (fun trajectory : (n : Nat) -&gt; Action × Reward =&gt;</span>
+<span id="L81">81         (canonicalHistoryTrajectoryAction trajectory 0,</span>
+<span id="L82">82           canonicalHistoryTrajectoryReward trajectory 0)) =</span>
+<span id="L83">83         fun trajectory =&gt; trajectory 0 := by</span>
+<span id="L84">84     funext trajectory</span>
+<span id="L85">85     exact Prod.eta _</span>
+<span id="L86">86   rw [hpair]</span>
+<span id="L87">87   exact RewardKernel.trajMeasure_map_eval_zero</span>
+<span id="L88">88     (X := fun _ : Nat =&gt; Action × Reward)</span>
+<span id="L89">89     (algorithm.initialAction ⊗ₘ environment.initialFeedback)</span>
+<span id="L90">90     (fun n =&gt; historyStepKernel algorithm environment n)</span>
+<span id="L91">91 </span>
+<span id="L92">92 theorem canonicalHistoryTrajectory_step_condDistrib</span>
+<span id="L93">93     {Action : Type u} {Reward : Type v}</span>
+<span id="L94">94     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L95">95     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L96">96     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L97">97     (environment : HistoryEnvironment Action Reward) (n : Nat) :</span>
+<span id="L98">98     ProbabilityTheory.condDistrib</span>
+<span id="L99">99         (fun trajectory =&gt;</span>
+<span id="L100">100           (canonicalHistoryTrajectoryAction trajectory (n + 1),</span>
+<span id="L101">101             canonicalHistoryTrajectoryReward trajectory (n + 1)))</span>
+<span id="L102">102         (fun trajectory =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L103">103           (canonicalHistoryTrajectoryAction trajectory)</span>
+<span id="L104">104           (canonicalHistoryTrajectoryReward trajectory) n)</span>
+<span id="L105">105         (canonicalHistoryTrajectoryMeasure algorithm environment) =ᵐ[</span>
+<span id="L106">106       (canonicalHistoryTrajectoryMeasure algorithm environment).map</span>
+<span id="L107">107         (fun trajectory =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L108">108           (canonicalHistoryTrajectoryAction trajectory)</span>
+<span id="L109">109           (canonicalHistoryTrajectoryReward trajectory) n)]</span>
+<span id="L110">110       historyStepKernel algorithm environment n := by</span>
+<span id="L111">111   have hnext :</span>
+<span id="L112">112       (fun trajectory : (k : Nat) -&gt; Action × Reward =&gt;</span>
+<span id="L113">113         (canonicalHistoryTrajectoryAction trajectory (n + 1),</span>
+<span id="L114">114           canonicalHistoryTrajectoryReward trajectory (n + 1))) =</span>
+<span id="L115">115         fun trajectory =&gt; trajectory (n + 1) := by</span>
+<span id="L116">116     funext trajectory</span>
+<span id="L117">117     exact Prod.eta _</span>
+<span id="L118">118   have hhistory :</span>
+<span id="L119">119       (fun trajectory : (k : Nat) -&gt; Action × Reward =&gt;</span>
+<span id="L120">120         History.finitePairHistoryOfTrace</span>
+<span id="L121">121           (canonicalHistoryTrajectoryAction trajectory)</span>
+<span id="L122">122           (canonicalHistoryTrajectoryReward trajectory) n) =</span>
+<span id="L123">123         Preorder.frestrictLe n := by</span>
+<span id="L124">124     rfl</span>
+<span id="L125">125   rw [hnext, hhistory]</span>
+<span id="L126">126   simpa only [canonicalHistoryTrajectoryMeasure] using</span>
+<span id="L127">127     (ProbabilityTheory.Kernel.condDistrib_trajMeasure</span>
+<span id="L128">128       (X := fun _ : Nat =&gt; Action × Reward)</span>
+<span id="L129">129       (μ₀ := algorithm.initialAction ⊗ₘ environment.initialFeedback)</span>
+<span id="L130">130       (κ := fun k =&gt; historyStepKernel algorithm environment k) (a := n))</span>
+<span id="L131">131 </span>
+<span id="L132">132 /--</span>
+<span id="L133">133 The canonical pair trajectory satisfies the combined history-process contract</span>
+<span id="L134">134 without any externally supplied law premise.</span>
+<span id="L135">135 -/</span>
+<span id="L136">136 noncomputable def canonicalHistoryAlgorithmEnvironmentSequence</span>
+<span id="L137">137     {Action : Type u} {Reward : Type v}</span>
+<span id="L138">138     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L139">139     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L140">140     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L141">141     (environment : HistoryEnvironment Action Reward) :</span>
+<span id="L142">142     IsHistoryAlgorithmEnvironmentSequence</span>
+<span id="L143">143       (canonicalHistoryTrajectoryMeasure algorithm environment)</span>
+<span id="L144">144       canonicalHistoryTrajectoryAction canonicalHistoryTrajectoryReward</span>
+<span id="L145">145       algorithm environment where</span>
+<span id="L146">146   measurable_action := measurable_canonicalHistoryTrajectoryAction_apply</span>
+<span id="L147">147   measurable_reward := measurable_canonicalHistoryTrajectoryReward_apply</span>
+<span id="L148">148   initialPair_map_eq :=</span>
+<span id="L149">149     canonicalHistoryTrajectory_initialPair_map_eq algorithm environment</span>
+<span id="L150">150   step_condDistrib :=</span>
+<span id="L151">151     canonicalHistoryTrajectory_step_condDistrib algorithm environment</span>
+<span id="L152">152 </span>
+<span id="L153">153 /-- The combined initial pair law determines the initial action marginal. -/</span>
+<span id="L154">154 theorem initialAction_map_eq_of_historyAlgorithmEnvironmentSequence</span>
+<span id="L155">155     {Omega : Type w} {Action : Type u} {Reward : Type v}</span>
+<span id="L156">156     [MeasurableSpace Omega]</span>
+<span id="L157">157     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L158">158     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L159">159     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L160">160     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L161">161     (reward : Omega -&gt; RewardTrace Reward)</span>
+<span id="L162">162     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L163">163     (environment : HistoryEnvironment Action Reward)</span>
+<span id="L164">164     (source : IsHistoryAlgorithmEnvironmentSequence</span>
+<span id="L165">165       mu action reward algorithm environment) :</span>
+<span id="L166">166     mu.map (fun omega =&gt; action omega 0) = algorithm.initialAction := by</span>
+<span id="L167">167   calc</span>
+<span id="L168">168     mu.map (fun omega =&gt; action omega 0) =</span>
+<span id="L169">169         (mu.map (fun omega =&gt; (action omega 0, reward omega 0))).map Prod.fst := by</span>
+<span id="L170">170       rw [Measure.map_map measurable_fst</span>
+<span id="L171">171         ((source.measurable_action 0).prod (source.measurable_reward 0))]</span>
+<span id="L172">172       exact Measure.map_congr &lt;| Filter.Eventually.of_forall &lt;| fun _ =&gt; rfl</span>
+<span id="L173">173     _ = (algorithm.initialAction ⊗ₘ environment.initialFeedback).fst := by</span>
+<span id="L174">174       rw [source.initialPair_map_eq]</span>
+<span id="L175">175       rfl</span>
+<span id="L176">176     _ = algorithm.initialAction :=</span>
+<span id="L177">177       Measure.fst_compProd algorithm.initialAction environment.initialFeedback</span>
+<span id="L178">178 </span>
+<span id="L179">179 /-- The combined initial pair law determines the initial feedback conditional law. -/</span>
+<span id="L180">180 theorem initialFeedback_condDistrib_of_historyAlgorithmEnvironmentSequence</span>
+<span id="L181">181     {Omega : Type w} {Action : Type u} {Reward : Type v}</span>
+<span id="L182">182     [MeasurableSpace Omega]</span>
+<span id="L183">183     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L184">184     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L185">185     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L186">186     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L187">187     (reward : Omega -&gt; RewardTrace Reward)</span>
+<span id="L188">188     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L189">189     (environment : HistoryEnvironment Action Reward)</span>
+<span id="L190">190     (source : IsHistoryAlgorithmEnvironmentSequence</span>
+<span id="L191">191       mu action reward algorithm environment) :</span>
+<span id="L192">192     ProbabilityTheory.condDistrib (fun omega =&gt; reward omega 0)</span>
+<span id="L193">193         (fun omega =&gt; action omega 0) mu =ᵐ[</span>
+<span id="L194">194       mu.map (fun omega =&gt; action omega 0)] environment.initialFeedback :=</span>
+<span id="L195">195   ProbabilityTheory.condDistrib_ae_eq_of_measure_eq_compProd</span>
+<span id="L196">196     (fun omega =&gt; action omega 0) (source.measurable_reward 0).aemeasurable &lt;| by</span>
+<span id="L197">197       rw [initialAction_map_eq_of_historyAlgorithmEnvironmentSequence</span>
+<span id="L198">198         mu action reward algorithm environment source]</span>
+<span id="L199">199       exact source.initialPair_map_eq</span>
+<span id="L200">200 </span>
+<span id="L201">201 /-- The action marginal of a history step kernel is its policy kernel. -/</span>
+<span id="L202">202 theorem historyStepKernel_map_fst</span>
+<span id="L203">203     {Action : Type u} {Reward : Type v}</span>
+<span id="L204">204     [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L205">205     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L206">206     (environment : HistoryEnvironment Action Reward) (n : Nat) :</span>
+<span id="L207">207     (historyStepKernel algorithm environment n).map Prod.fst =</span>
+<span id="L208">208       algorithm.policy n := by</span>
+<span id="L209">209   rw [← ProbabilityTheory.Kernel.fst_eq]</span>
+<span id="L210">210   exact ProbabilityTheory.Kernel.fst_compProd _ _</span>
+<span id="L211">211 </span>
+<span id="L212">212 /-- The combined successor pair law determines the successor action policy. -/</span>
+<span id="L213">213 theorem policy_condDistrib_of_historyAlgorithmEnvironmentSequence</span>
+<span id="L214">214     {Omega : Type w} {Action : Type u} {Reward : Type v}</span>
+<span id="L215">215     [MeasurableSpace Omega]</span>
+<span id="L216">216     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L217">217     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L218">218     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L219">219     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L220">220     (reward : Omega -&gt; RewardTrace Reward)</span>
+<span id="L221">221     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L222">222     (environment : HistoryEnvironment Action Reward)</span>
+<span id="L223">223     (source : IsHistoryAlgorithmEnvironmentSequence</span>
+<span id="L224">224       mu action reward algorithm environment) (n : Nat) :</span>
+<span id="L225">225     ProbabilityTheory.condDistrib (fun omega =&gt; action omega (n + 1))</span>
+<span id="L226">226         (fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L227">227           (action omega) (reward omega) n) mu =ᵐ[</span>
+<span id="L228">228       mu.map (fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L229">229         (action omega) (reward omega) n)] algorithm.policy n := by</span>
+<span id="L230">230   let history := fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L231">231     (action omega) (reward omega) n</span>
+<span id="L232">232   let nextPair := fun omega =&gt; (action omega (n + 1), reward omega (n + 1))</span>
+<span id="L233">233   have hcomp :</span>
+<span id="L234">234       ProbabilityTheory.condDistrib (Prod.fst ∘ nextPair) history mu =ᵐ[</span>
+<span id="L235">235         mu.map history]</span>
+<span id="L236">236         (ProbabilityTheory.condDistrib nextPair history mu).map Prod.fst :=</span>
+<span id="L237">237     ProbabilityTheory.condDistrib_comp</span>
+<span id="L238">238       (μ := mu) (mβ := inferInstance) (Y := nextPair) history</span>
+<span id="L239">239       ((source.measurable_action (n + 1)).prod</span>
+<span id="L240">240         (source.measurable_reward (n + 1))).aemeasurable</span>
+<span id="L241">241       (f := Prod.fst) measurable_fst</span>
+<span id="L242">242   have hresult :</span>
+<span id="L243">243       ProbabilityTheory.condDistrib (Prod.fst ∘ nextPair) history mu =ᵐ[</span>
+<span id="L244">244         mu.map history] algorithm.policy n := by</span>
+<span id="L245">245     filter_upwards [hcomp, source.step_condDistrib n] with h hcompAt hpairAt</span>
+<span id="L246">246     calc</span>
+<span id="L247">247       ProbabilityTheory.condDistrib (Prod.fst ∘ nextPair)</span>
+<span id="L248">248           history mu h =</span>
+<span id="L249">249           ((ProbabilityTheory.condDistrib nextPair history mu).map Prod.fst) h :=</span>
+<span id="L250">250         hcompAt</span>
+<span id="L251">251       _ = ((historyStepKernel algorithm environment n).map Prod.fst) h := by</span>
+<span id="L252">252         rw [ProbabilityTheory.Kernel.map_apply _ measurable_fst,</span>
+<span id="L253">253           ProbabilityTheory.Kernel.map_apply _ measurable_fst, hpairAt]</span>
+<span id="L254">254       _ = algorithm.policy n h := by</span>
+<span id="L255">255         rw [historyStepKernel_map_fst]</span>
+<span id="L256">256   simpa [history, nextPair, Function.comp_def] using hresult</span>
+<span id="L257">257 </span>
+<span id="L258">258 /--</span>
+<span id="L259">259 The combined successor pair law also determines the feedback conditional law</span>
+<span id="L260">260 given the finite history and the newly sampled action.</span>
+<span id="L261">261 -/</span>
+<span id="L262">262 theorem feedback_condDistrib_of_historyAlgorithmEnvironmentSequence</span>
+<span id="L263">263     {Omega : Type w} {Action : Type u} {Reward : Type v}</span>
+<span id="L264">264     [MeasurableSpace Omega]</span>
+<span id="L265">265     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L266">266     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L267">267     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L268">268     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L269">269     (reward : Omega -&gt; RewardTrace Reward)</span>
+<span id="L270">270     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L271">271     (environment : HistoryEnvironment Action Reward)</span>
+<span id="L272">272     (source : IsHistoryAlgorithmEnvironmentSequence</span>
+<span id="L273">273       mu action reward algorithm environment) (n : Nat) :</span>
+<span id="L274">274     ProbabilityTheory.condDistrib (fun omega =&gt; reward omega (n + 1))</span>
+<span id="L275">275         (fun omega =&gt;</span>
+<span id="L276">276           (History.finitePairHistoryOfTrace</span>
+<span id="L277">277             (action omega) (reward omega) n, action omega (n + 1))) mu =ᵐ[</span>
+<span id="L278">278       mu.map (fun omega =&gt;</span>
+<span id="L279">279         (History.finitePairHistoryOfTrace</span>
+<span id="L280">280           (action omega) (reward omega) n, action omega (n + 1)))]</span>
+<span id="L281">281       environment.feedback n := by</span>
+<span id="L282">282   let history := fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L283">283     (action omega) (reward omega) n</span>
+<span id="L284">284   let nextAction := fun omega =&gt; action omega (n + 1)</span>
+<span id="L285">285   let nextReward := fun omega =&gt; reward omega (n + 1)</span>
+<span id="L286">286   let nextPair := fun omega =&gt; (nextAction omega, nextReward omega)</span>
+<span id="L287">287   have hhistory : Measurable history :=</span>
+<span id="L288">288     History.measurable_finitePairHistoryOfTrace</span>
+<span id="L289">289       action reward source.measurable_action source.measurable_reward n</span>
+<span id="L290">290   have hnextAction : Measurable nextAction := source.measurable_action (n + 1)</span>
+<span id="L291">291   have hnextReward : Measurable nextReward := source.measurable_reward (n + 1)</span>
+<span id="L292">292   have hpolicy := policy_condDistrib_of_historyAlgorithmEnvironmentSequence</span>
+<span id="L293">293     mu action reward algorithm environment source n</span>
+<span id="L294">294   have hpolicyJoint :</span>
+<span id="L295">295       mu.map (fun omega =&gt; (history omega, nextAction omega)) =</span>
+<span id="L296">296         mu.map history ⊗ₘ algorithm.policy n :=</span>
+<span id="L297">297     (ProbabilityTheory.condDistrib_ae_eq_iff_measure_eq_compProd</span>
+<span id="L298">298       history hnextAction.aemeasurable (algorithm.policy n)).mp &lt;| by</span>
+<span id="L299">299         simpa [history, nextAction] using hpolicy</span>
+<span id="L300">300   have hpairJoint :</span>
+<span id="L301">301       mu.map (fun omega =&gt; (history omega, nextPair omega)) =</span>
+<span id="L302">302         mu.map history ⊗ₘ historyStepKernel algorithm environment n := by</span>
+<span id="L303">303     simpa [history, nextPair, nextAction, nextReward] using</span>
+<span id="L304">304       nextPairJointLaw_eq_compProd</span>
+<span id="L305">305         mu action reward algorithm environment source n</span>
+<span id="L306">306   have hfeedbackJoint :</span>
+<span id="L307">307       mu.map (fun omega =&gt;</span>
+<span id="L308">308           ((history omega, nextAction omega), nextReward omega)) =</span>
+<span id="L309">309         mu.map (fun omega =&gt; (history omega, nextAction omega)) ⊗ₘ</span>
+<span id="L310">310           environment.feedback n := by</span>
+<span id="L311">311     calc</span>
+<span id="L312">312       mu.map (fun omega =&gt;</span>
+<span id="L313">313           ((history omega, nextAction omega), nextReward omega)) =</span>
+<span id="L314">314           (mu.map (fun omega =&gt; (history omega, nextPair omega))).map</span>
+<span id="L315">315             MeasurableEquiv.prodAssoc.symm := by</span>
+<span id="L316">316         rw [Measure.map_map MeasurableEquiv.prodAssoc.symm.measurable</span>
+<span id="L317">317           (hhistory.prod (hnextAction.prod hnextReward))]</span>
+<span id="L318">318         exact Measure.map_congr &lt;| Filter.Eventually.of_forall &lt;| fun _ =&gt; rfl</span>
+<span id="L319">319       _ = (mu.map history ⊗ₘ</span>
+<span id="L320">320           historyStepKernel algorithm environment n).map</span>
+<span id="L321">321             MeasurableEquiv.prodAssoc.symm := by</span>
+<span id="L322">322         rw [hpairJoint]</span>
+<span id="L323">323       _ = (mu.map history ⊗ₘ</span>
+<span id="L324">324           (algorithm.policy n ⊗ₖ environment.feedback n)).map</span>
+<span id="L325">325             MeasurableEquiv.prodAssoc.symm := by</span>
+<span id="L326">326         rfl</span>
+<span id="L327">327       _ = (mu.map history ⊗ₘ algorithm.policy n) ⊗ₘ</span>
+<span id="L328">328           environment.feedback n := Measure.compProd_assoc</span>
+<span id="L329">329       _ = mu.map (fun omega =&gt; (history omega, nextAction omega)) ⊗ₘ</span>
+<span id="L330">330           environment.feedback n := by</span>
+<span id="L331">331         rw [hpolicyJoint]</span>
+<span id="L332">332   have hresult :=</span>
+<span id="L333">333     ProbabilityTheory.condDistrib_ae_eq_of_measure_eq_compProd</span>
+<span id="L334">334       (fun omega =&gt; (history omega, nextAction omega))</span>
+<span id="L335">335       hnextReward.aemeasurable hfeedbackJoint</span>
+<span id="L336">336   simpa [history, nextAction, nextReward] using hresult</span>
+<span id="L337">337 </span>
+<span id="L338">338 /-- Split action/feedback laws for one fixed history environment. -/</span>
+<span id="L339">339 structure HistoryAlgorithmEnvironmentSplitSource</span>
+<span id="L340">340     {Omega : Type w} {Action : Type u} {Reward : Type v}</span>
+<span id="L341">341     [MeasurableSpace Omega]</span>
+<span id="L342">342     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L343">343     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L344">344     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L345">345     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L346">346     (reward : Omega -&gt; RewardTrace Reward)</span>
+<span id="L347">347     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L348">348     (environment : HistoryEnvironment Action Reward) : Prop where</span>
+<span id="L349">349   measurable_action : forall n, Measurable (fun omega =&gt; action omega n)</span>
+<span id="L350">350   measurable_reward : forall n, Measurable (fun omega =&gt; reward omega n)</span>
+<span id="L351">351   initialAction_map_eq :</span>
+<span id="L352">352     mu.map (fun omega =&gt; action omega 0) = algorithm.initialAction</span>
+<span id="L353">353   initialFeedback_condDistrib :</span>
+<span id="L354">354     ProbabilityTheory.condDistrib (fun omega =&gt; reward omega 0)</span>
+<span id="L355">355         (fun omega =&gt; action omega 0) mu =ᵐ[</span>
+<span id="L356">356       mu.map (fun omega =&gt; action omega 0)] environment.initialFeedback</span>
+<span id="L357">357   policy_condDistrib : forall n,</span>
+<span id="L358">358     ProbabilityTheory.condDistrib (fun omega =&gt; action omega (n + 1))</span>
+<span id="L359">359         (fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L360">360           (action omega) (reward omega) n) mu =ᵐ[</span>
+<span id="L361">361       mu.map (fun omega =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L362">362         (action omega) (reward omega) n)] algorithm.policy n</span>
+<span id="L363">363   feedback_condDistrib : forall n,</span>
+<span id="L364">364     ProbabilityTheory.condDistrib (fun omega =&gt; reward omega (n + 1))</span>
+<span id="L365">365         (fun omega =&gt;</span>
+<span id="L366">366           (History.finitePairHistoryOfTrace</span>
+<span id="L367">367             (action omega) (reward omega) n, action omega (n + 1))) mu =ᵐ[</span>
+<span id="L368">368       mu.map (fun omega =&gt;</span>
+<span id="L369">369         (History.finitePairHistoryOfTrace</span>
+<span id="L370">370           (action omega) (reward omega) n, action omega (n + 1)))]</span>
+<span id="L371">371       environment.feedback n</span>
+<span id="L372">372 </span>
+<span id="L373">373 /-- Assemble the combined process contract from a fixed-environment split source. -/</span>
+<span id="L374">374 noncomputable def HistoryAlgorithmEnvironmentSplitSource.toSequence</span>
+<span id="L375">375     {Omega : Type w} {Action : Type u} {Reward : Type v}</span>
+<span id="L376">376     [MeasurableSpace Omega]</span>
+<span id="L377">377     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L378">378     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L379">379     (mu : Measure Omega) [IsFiniteMeasure mu]</span>
+<span id="L380">380     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L381">381     (reward : Omega -&gt; RewardTrace Reward)</span>
+<span id="L382">382     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L383">383     (environment : HistoryEnvironment Action Reward)</span>
+<span id="L384">384     (source : HistoryAlgorithmEnvironmentSplitSource</span>
+<span id="L385">385       mu action reward algorithm environment) :</span>
+<span id="L386">386     IsHistoryAlgorithmEnvironmentSequence</span>
+<span id="L387">387       mu action reward algorithm environment :=</span>
+<span id="L388">388   isHistoryAlgorithmEnvironmentSequence_of_split</span>
+<span id="L389">389     mu action reward algorithm environment</span>
+<span id="L390">390     source.measurable_action source.measurable_reward</span>
+<span id="L391">391     source.initialAction_map_eq source.initialFeedback_condDistrib</span>
+<span id="L392">392     source.policy_condDistrib source.feedback_condDistrib</span>
+<span id="L393">393 </span>
+<span id="L394">394 /-- The canonical trajectory realizes all four fixed-environment split laws. -/</span>
+<span id="L395">395 noncomputable def canonicalHistoryAlgorithmEnvironmentSplitSource</span>
+<span id="L396">396     {Action : Type u} {Reward : Type v}</span>
+<span id="L397">397     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L398">398     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L399">399     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L400">400     (environment : HistoryEnvironment Action Reward) :</span>
+<span id="L401">401     HistoryAlgorithmEnvironmentSplitSource</span>
+<span id="L402">402       (canonicalHistoryTrajectoryMeasure algorithm environment)</span>
+<span id="L403">403       canonicalHistoryTrajectoryAction canonicalHistoryTrajectoryReward</span>
+<span id="L404">404       algorithm environment where</span>
+<span id="L405">405   measurable_action := measurable_canonicalHistoryTrajectoryAction_apply</span>
+<span id="L406">406   measurable_reward := measurable_canonicalHistoryTrajectoryReward_apply</span>
+<span id="L407">407   initialAction_map_eq :=</span>
+<span id="L408">408     initialAction_map_eq_of_historyAlgorithmEnvironmentSequence</span>
+<span id="L409">409       (canonicalHistoryTrajectoryMeasure algorithm environment)</span>
+<span id="L410">410       canonicalHistoryTrajectoryAction canonicalHistoryTrajectoryReward</span>
+<span id="L411">411       algorithm environment</span>
+<span id="L412">412       (canonicalHistoryAlgorithmEnvironmentSequence algorithm environment)</span>
+<span id="L413">413   initialFeedback_condDistrib :=</span>
+<span id="L414">414     initialFeedback_condDistrib_of_historyAlgorithmEnvironmentSequence</span>
+<span id="L415">415       (canonicalHistoryTrajectoryMeasure algorithm environment)</span>
+<span id="L416">416       canonicalHistoryTrajectoryAction canonicalHistoryTrajectoryReward</span>
+<span id="L417">417       algorithm environment</span>
+<span id="L418">418       (canonicalHistoryAlgorithmEnvironmentSequence algorithm environment)</span>
+<span id="L419">419   policy_condDistrib :=</span>
+<span id="L420">420     policy_condDistrib_of_historyAlgorithmEnvironmentSequence</span>
+<span id="L421">421       (canonicalHistoryTrajectoryMeasure algorithm environment)</span>
+<span id="L422">422       canonicalHistoryTrajectoryAction canonicalHistoryTrajectoryReward</span>
+<span id="L423">423       algorithm environment</span>
+<span id="L424">424       (canonicalHistoryAlgorithmEnvironmentSequence algorithm environment)</span>
+<span id="L425">425   feedback_condDistrib :=</span>
+<span id="L426">426     feedback_condDistrib_of_historyAlgorithmEnvironmentSequence</span>
+<span id="L427">427       (canonicalHistoryTrajectoryMeasure algorithm environment)</span>
+<span id="L428">428       canonicalHistoryTrajectoryAction canonicalHistoryTrajectoryReward</span>
+<span id="L429">429       algorithm environment</span>
+<span id="L430">430       (canonicalHistoryAlgorithmEnvironmentSequence algorithm environment)</span>
+<span id="L431">431 </span>
+<span id="L432">432 /-- The canonical combined process reconstructed specifically from its split laws. -/</span>
+<span id="L433">433 noncomputable def canonicalHistoryAlgorithmEnvironmentSequence_of_split</span>
+<span id="L434">434     {Action : Type u} {Reward : Type v}</span>
+<span id="L435">435     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L436">436     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L437">437     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L438">438     (environment : HistoryEnvironment Action Reward) :</span>
+<span id="L439">439     IsHistoryAlgorithmEnvironmentSequence</span>
+<span id="L440">440       (canonicalHistoryTrajectoryMeasure algorithm environment)</span>
+<span id="L441">441       canonicalHistoryTrajectoryAction canonicalHistoryTrajectoryReward</span>
+<span id="L442">442       algorithm environment :=</span>
+<span id="L443">443   (canonicalHistoryAlgorithmEnvironmentSplitSource algorithm environment).toSequence</span>
+<span id="L444">444     (canonicalHistoryTrajectoryMeasure algorithm environment)</span>
+<span id="L445">445     canonicalHistoryTrajectoryAction canonicalHistoryTrajectoryReward</span>
+<span id="L446">446     algorithm environment</span>
+<span id="L447">447 </span>
+<span id="L448">448 /-- Lift a kernel to samples that retain the kernel input as their first coordinate. -/</span>
+<span id="L449">449 noncomputable def kernelWithInput</span>
+<span id="L450">450     {Input : Type u} {Output : Type v}</span>
+<span id="L451">451     [MeasurableSpace Input] [MeasurableSpace Output]</span>
+<span id="L452">452     (kernel : ProbabilityTheory.Kernel Input Output) :</span>
+<span id="L453">453     ProbabilityTheory.Kernel Input (Input × Output) :=</span>
+<span id="L454">454   ProbabilityTheory.Kernel.id ⊗ₖ</span>
+<span id="L455">455     ProbabilityTheory.Kernel.prodMkLeft Input kernel</span>
+<span id="L456">456 </span>
+<span id="L457">457 instance instKernelWithInputIsMarkov</span>
+<span id="L458">458     {Input : Type u} {Output : Type v}</span>
+<span id="L459">459     [MeasurableSpace Input] [MeasurableSpace Output]</span>
+<span id="L460">460     (kernel : ProbabilityTheory.Kernel Input Output)</span>
+<span id="L461">461     [ProbabilityTheory.IsMarkovKernel kernel] :</span>
+<span id="L462">462     ProbabilityTheory.IsMarkovKernel (kernelWithInput kernel) := by</span>
+<span id="L463">463   unfold kernelWithInput</span>
+<span id="L464">464   infer_instance</span>
+<span id="L465">465 </span>
+<span id="L466">466 theorem kernelWithInput_apply</span>
+<span id="L467">467     {Input : Type u} {Output : Type v}</span>
+<span id="L468">468     [MeasurableSpace Input] [MeasurableSingletonClass Input]</span>
+<span id="L469">469     [MeasurableSpace Output]</span>
+<span id="L470">470     (kernel : ProbabilityTheory.Kernel Input Output)</span>
+<span id="L471">471     [ProbabilityTheory.IsMarkovKernel kernel] (input : Input) :</span>
+<span id="L472">472     kernelWithInput kernel input =</span>
+<span id="L473">473       (kernel input).map (Prod.mk input) := by</span>
+<span id="L474">474   ext event hevent</span>
+<span id="L475">475   rw [kernelWithInput,</span>
+<span id="L476">476     ProbabilityTheory.Kernel.compProd_apply hevent,</span>
+<span id="L477">477     ProbabilityTheory.Kernel.id_apply, lintegral_dirac]</span>
+<span id="L478">478   rw [ProbabilityTheory.Kernel.prodMkLeft_apply]</span>
+<span id="L479">479   rw [Measure.map_apply (f := Prod.mk input)</span>
+<span id="L480">480     (measurable_const.prodMk measurable_id) hevent]</span>
+<span id="L481">481 </span>
+<span id="L482">482 /--</span>
+<span id="L483">483 For a composition-product sample, conditioning the complete sample on its</span>
+<span id="L484">484 first coordinate keeps that coordinate and uses the supplied second-coordinate</span>
+<span id="L485">485 kernel.</span>
+<span id="L486">486 -/</span>
+<span id="L487">487 theorem condDistrib_id_fst_compProd_ae_eq_kernelWithInput</span>
+<span id="L488">488     {Input : Type u} {Output : Type v}</span>
+<span id="L489">489     [MeasurableSpace Input] [StandardBorelSpace Input] [Nonempty Input]</span>
+<span id="L490">490     [MeasurableSpace Output] [StandardBorelSpace Output] [Nonempty Output]</span>
+<span id="L491">491     (prior : Measure Input) [IsFiniteMeasure prior]</span>
+<span id="L492">492     (kernel : ProbabilityTheory.Kernel Input Output)</span>
+<span id="L493">493     [ProbabilityTheory.IsMarkovKernel kernel] :</span>
+<span id="L494">494     ProbabilityTheory.condDistrib id Prod.fst (prior ⊗ₘ kernel) =ᵐ[prior]</span>
+<span id="L495">495       kernelWithInput kernel := by</span>
+<span id="L496">496   let sampleMeasure := prior ⊗ₘ kernel</span>
+<span id="L497">497   have hfirst : sampleMeasure.map Prod.fst = prior := by</span>
+<span id="L498">498     change (prior ⊗ₘ kernel).fst = prior</span>
+<span id="L499">499     exact Measure.fst_compProd prior kernel</span>
+<span id="L500">500   have hjoint :</span>
+<span id="L501">501       sampleMeasure.map (fun sample =&gt; (sample.1, sample)) =</span>
+<span id="L502">502         sampleMeasure.map Prod.fst ⊗ₘ kernelWithInput kernel := by</span>
+<span id="L503">503     rw [hfirst]</span>
+<span id="L504">504     ext event hevent</span>
+<span id="L505">505     rw [Measure.map_apply</span>
+<span id="L506">506       (f := fun sample : Input × Output =&gt; (sample.1, sample))</span>
+<span id="L507">507       (measurable_fst.prodMk measurable_id) hevent]</span>
+<span id="L508">508     change (prior ⊗ₘ kernel)</span>
+<span id="L509">509         ((fun sample : Input × Output =&gt; (sample.1, sample)) ⁻¹&#x27; event) =</span>
+<span id="L510">510       (prior ⊗ₘ kernelWithInput kernel) event</span>
+<span id="L511">511     rw [Measure.compProd_apply</span>
+<span id="L512">512       (μ := prior) (κ := kernel)</span>
+<span id="L513">513       (s := (fun sample : Input × Output =&gt; (sample.1, sample)) ⁻¹&#x27; event)</span>
+<span id="L514">514       (hevent.preimage (measurable_fst.prodMk measurable_id)),</span>
+<span id="L515">515       Measure.compProd_apply</span>
+<span id="L516">516         (μ := prior) (κ := kernelWithInput kernel) (s := event) hevent]</span>
+<span id="L517">517     congr with input</span>
+<span id="L518">518     rw [kernelWithInput_apply,</span>
+<span id="L519">519       Measure.map_apply (f := Prod.mk input)</span>
+<span id="L520">520         (measurable_const.prodMk measurable_id)]</span>
+<span id="L521">521     · rfl</span>
+<span id="L522">522     · exact hevent.preimage (measurable_const.prodMk measurable_id)</span>
+<span id="L523">523   have hcond :=</span>
+<span id="L524">524     ProbabilityTheory.condDistrib_ae_eq_of_measure_eq_compProd_of_measurable</span>
+<span id="L525">525       (μ := sampleMeasure) (κ := kernelWithInput kernel)</span>
+<span id="L526">526       measurable_fst measurable_id hjoint</span>
+<span id="L527">527   rw [hfirst] at hcond</span>
+<span id="L528">528   exact hcond</span>
+<span id="L529">529 </span>
+<span id="L530">530 /-- Action trace of an environment/trajectory sample. -/</span>
+<span id="L531">531 def environmentTrajectoryAction</span>
+<span id="L532">532     {Env : Type u} {Action : Type v} {Reward : Type w} :</span>
+<span id="L533">533     (Env × ((n : Nat) -&gt; Action × Reward)) -&gt; ActionTrace Action :=</span>
+<span id="L534">534   fun sample n =&gt; (sample.2 n).1</span>
+<span id="L535">535 </span>
+<span id="L536">536 /-- Reward trace of an environment/trajectory sample. -/</span>
+<span id="L537">537 def environmentTrajectoryReward</span>
+<span id="L538">538     {Env : Type u} {Action : Type v} {Reward : Type w} :</span>
+<span id="L539">539     (Env × ((n : Nat) -&gt; Action × Reward)) -&gt; RewardTrace Reward :=</span>
+<span id="L540">540   fun sample n =&gt; (sample.2 n).2</span>
+<span id="L541">541 </span>
+<span id="L542">542 theorem measurable_environmentTrajectoryAction_apply</span>
+<span id="L543">543     {Env : Type u} {Action : Type v} {Reward : Type w}</span>
+<span id="L544">544     [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L545">545     (n : Nat) :</span>
+<span id="L546">546     Measurable (fun sample : Env × ((k : Nat) -&gt; Action × Reward) =&gt;</span>
+<span id="L547">547       environmentTrajectoryAction sample n) :=</span>
+<span id="L548">548   measurable_fst.comp ((measurable_pi_apply n).comp measurable_snd)</span>
+<span id="L549">549 </span>
+<span id="L550">550 theorem measurable_environmentTrajectoryReward_apply</span>
+<span id="L551">551     {Env : Type u} {Action : Type v} {Reward : Type w}</span>
+<span id="L552">552     [MeasurableSpace Env] [MeasurableSpace Action] [MeasurableSpace Reward]</span>
+<span id="L553">553     (n : Nat) :</span>
+<span id="L554">554     Measurable (fun sample : Env × ((k : Nat) -&gt; Action × Reward) =&gt;</span>
+<span id="L555">555       environmentTrajectoryReward sample n) :=</span>
+<span id="L556">556   measurable_snd.comp ((measurable_pi_apply n).comp measurable_snd)</span>
+<span id="L557">557 </span>
+<span id="L558">558 /-- Transport a history-process contract across an equality of source measures. -/</span>
+<span id="L559">559 noncomputable def historyAlgorithmEnvironmentSequence_of_measure_eq</span>
+<span id="L560">560     {Omega : Type w} {Action : Type u} {Reward : Type v}</span>
+<span id="L561">561     [MeasurableSpace Omega]</span>
+<span id="L562">562     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L563">563     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L564">564     (mu nu : Measure Omega) [IsFiniteMeasure mu] [IsFiniteMeasure nu]</span>
+<span id="L565">565     (action : Omega -&gt; ActionTrace Action)</span>
+<span id="L566">566     (reward : Omega -&gt; RewardTrace Reward)</span>
+<span id="L567">567     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L568">568     (environment : HistoryEnvironment Action Reward)</span>
+<span id="L569">569     (hmeasure : mu = nu)</span>
+<span id="L570">570     (source : IsHistoryAlgorithmEnvironmentSequence</span>
+<span id="L571">571       mu action reward algorithm environment) :</span>
+<span id="L572">572     IsHistoryAlgorithmEnvironmentSequence</span>
+<span id="L573">573       nu action reward algorithm environment := by</span>
+<span id="L574">574   subst nu</span>
+<span id="L575">575   exact source</span>
+<span id="L576">576 </span>
+<span id="L577">577 /-- Retaining a fixed environment coordinate preserves the canonical process. -/</span>
+<span id="L578">578 noncomputable def mappedCanonicalHistoryAlgorithmEnvironmentSequence</span>
+<span id="L579">579     {Env : Type u} {Action : Type v} {Reward : Type w}</span>
+<span id="L580">580     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L581">581     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L582">582     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L583">583     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L584">584     (feedbackEnvironment : Env -&gt; HistoryEnvironment Action Reward)</span>
+<span id="L585">585     (environment : Env) :</span>
+<span id="L586">586     IsHistoryAlgorithmEnvironmentSequence</span>
+<span id="L587">587       ((canonicalHistoryTrajectoryMeasure algorithm</span>
+<span id="L588">588         (feedbackEnvironment environment)).map (Prod.mk environment))</span>
+<span id="L589">589       environmentTrajectoryAction environmentTrajectoryReward</span>
+<span id="L590">590       algorithm (feedbackEnvironment environment) where</span>
+<span id="L591">591   measurable_action := measurable_environmentTrajectoryAction_apply</span>
+<span id="L592">592   measurable_reward := measurable_environmentTrajectoryReward_apply</span>
+<span id="L593">593   initialPair_map_eq := by</span>
+<span id="L594">594     calc</span>
+<span id="L595">595       Measure.map</span>
+<span id="L596">596           (fun sample =&gt;</span>
+<span id="L597">597             (environmentTrajectoryAction sample 0,</span>
+<span id="L598">598               environmentTrajectoryReward sample 0))</span>
+<span id="L599">599           ((canonicalHistoryTrajectoryMeasure algorithm</span>
+<span id="L600">600             (feedbackEnvironment environment)).map (Prod.mk environment)) =</span>
+<span id="L601">601           Measure.map</span>
+<span id="L602">602             ((fun sample =&gt;</span>
+<span id="L603">603               (environmentTrajectoryAction sample 0,</span>
+<span id="L604">604                 environmentTrajectoryReward sample 0)) ∘ Prod.mk environment)</span>
+<span id="L605">605             (canonicalHistoryTrajectoryMeasure algorithm</span>
+<span id="L606">606               (feedbackEnvironment environment)) := by</span>
+<span id="L607">607         exact Measure.map_map</span>
+<span id="L608">608           ((measurable_environmentTrajectoryAction_apply 0).prod</span>
+<span id="L609">609             (measurable_environmentTrajectoryReward_apply 0))</span>
+<span id="L610">610           (measurable_const.prodMk measurable_id)</span>
+<span id="L611">611       _ = Measure.map</span>
+<span id="L612">612           (fun trajectory =&gt;</span>
+<span id="L613">613             (canonicalHistoryTrajectoryAction trajectory 0,</span>
+<span id="L614">614               canonicalHistoryTrajectoryReward trajectory 0))</span>
+<span id="L615">615           (canonicalHistoryTrajectoryMeasure algorithm</span>
+<span id="L616">616             (feedbackEnvironment environment)) := by</span>
+<span id="L617">617         congr 1</span>
+<span id="L618">618       _ = algorithm.initialAction ⊗ₘ</span>
+<span id="L619">619           (feedbackEnvironment environment).initialFeedback :=</span>
+<span id="L620">620         canonicalHistoryTrajectory_initialPair_map_eq</span>
+<span id="L621">621           algorithm (feedbackEnvironment environment)</span>
+<span id="L622">622   step_condDistrib := fun n =&gt; by</span>
+<span id="L623">623     let canonicalMeasure := canonicalHistoryTrajectoryMeasure</span>
+<span id="L624">624       algorithm (feedbackEnvironment environment)</span>
+<span id="L625">625     let embed : ((k : Nat) -&gt; Action × Reward) -&gt;</span>
+<span id="L626">626         Env × ((k : Nat) -&gt; Action × Reward) := Prod.mk environment</span>
+<span id="L627">627     let history := fun sample : Env × ((k : Nat) -&gt; Action × Reward) =&gt;</span>
+<span id="L628">628       History.finitePairHistoryOfTrace</span>
+<span id="L629">629         (environmentTrajectoryAction sample)</span>
+<span id="L630">630         (environmentTrajectoryReward sample) n</span>
+<span id="L631">631     let nextPair := fun sample : Env × ((k : Nat) -&gt; Action × Reward) =&gt;</span>
+<span id="L632">632       (environmentTrajectoryAction sample (n + 1),</span>
+<span id="L633">633         environmentTrajectoryReward sample (n + 1))</span>
+<span id="L634">634     have hembed : Measurable embed := measurable_const.prodMk measurable_id</span>
+<span id="L635">635     have hhistory : Measurable history :=</span>
+<span id="L636">636       History.measurable_finitePairHistoryOfTrace</span>
+<span id="L637">637         environmentTrajectoryAction environmentTrajectoryReward</span>
+<span id="L638">638         measurable_environmentTrajectoryAction_apply</span>
+<span id="L639">639         measurable_environmentTrajectoryReward_apply n</span>
+<span id="L640">640     have hnextPair : Measurable nextPair :=</span>
+<span id="L641">641       (measurable_environmentTrajectoryAction_apply (n + 1)).prod</span>
+<span id="L642">642         (measurable_environmentTrajectoryReward_apply (n + 1))</span>
+<span id="L643">643     have hhistoryComp : history ∘ embed = Preorder.frestrictLe n := by</span>
+<span id="L644">644       rfl</span>
+<span id="L645">645     have hnextPairComp :</span>
+<span id="L646">646         nextPair ∘ embed =</span>
+<span id="L647">647           (fun trajectory : (k : Nat) -&gt; Action × Reward =&gt;</span>
+<span id="L648">648             trajectory (n + 1)) := by</span>
+<span id="L649">649       funext trajectory</span>
+<span id="L650">650       exact Prod.eta _</span>
+<span id="L651">651     have hfilter :</span>
+<span id="L652">652         (canonicalMeasure.map embed).map history =</span>
+<span id="L653">653           canonicalMeasure.map (Preorder.frestrictLe n) := by</span>
+<span id="L654">654       calc</span>
+<span id="L655">655         (canonicalMeasure.map embed).map history =</span>
+<span id="L656">656             canonicalMeasure.map (history ∘ embed) :=</span>
+<span id="L657">657           Measure.map_map hhistory hembed</span>
+<span id="L658">658         _ = canonicalMeasure.map (Preorder.frestrictLe n) := by</span>
+<span id="L659">659           rw [hhistoryComp]</span>
+<span id="L660">660     have hmap := ProbabilityTheory.condDistrib_map</span>
+<span id="L661">661       (ν := canonicalMeasure) (f := embed)</span>
+<span id="L662">662       (X := history) (Y := nextPair)</span>
+<span id="L663">663       hhistory.aemeasurable hnextPair.aemeasurable hembed.aemeasurable</span>
+<span id="L664">664     have hmap&#x27; :</span>
+<span id="L665">665         ProbabilityTheory.condDistrib nextPair history</span>
+<span id="L666">666             (canonicalMeasure.map embed) =ᵐ[</span>
+<span id="L667">667           canonicalMeasure.map (Preorder.frestrictLe n)]</span>
+<span id="L668">668           ProbabilityTheory.condDistrib</span>
+<span id="L669">669             (fun trajectory =&gt; trajectory (n + 1))</span>
+<span id="L670">670             (Preorder.frestrictLe n) canonicalMeasure := by</span>
+<span id="L671">671       simpa only [hnextPairComp, hhistoryComp] using hmap</span>
+<span id="L672">672     rw [hfilter]</span>
+<span id="L673">673     exact hmap&#x27;.trans &lt;| by</span>
+<span id="L674">674       simpa only [canonicalMeasure] using</span>
+<span id="L675">675         (ProbabilityTheory.Kernel.condDistrib_trajMeasure</span>
+<span id="L676">676           (X := fun _ : Nat =&gt; Action × Reward)</span>
+<span id="L677">677           (μ₀ := algorithm.initialAction ⊗ₘ</span>
+<span id="L678">678             (feedbackEnvironment environment).initialFeedback)</span>
+<span id="L679">679           (κ := fun k =&gt; historyStepKernel algorithm</span>
+<span id="L680">680             (feedbackEnvironment environment) k) (a := n))</span>
+<span id="L681">681 </span>
+<span id="L682">682 /--</span>
+<span id="L683">683 A trajectory kernel whose value is the canonical fixed-environment law yields</span>
+<span id="L684">684 the combined history-process contract after retaining its environment input.</span>
+<span id="L685">685 -/</span>
+<span id="L686">686 noncomputable def kernelWithInputHistoryAlgorithmEnvironmentSequence</span>
+<span id="L687">687     {Env : Type u} {Action : Type v} {Reward : Type w}</span>
+<span id="L688">688     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L689">689     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L690">690     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L691">691     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L692">692     (feedbackEnvironment : Env -&gt; HistoryEnvironment Action Reward)</span>
+<span id="L693">693     (trajectoryKernel : ProbabilityTheory.Kernel</span>
+<span id="L694">694       Env ((n : Nat) -&gt; Action × Reward))</span>
+<span id="L695">695     [ProbabilityTheory.IsMarkovKernel trajectoryKernel]</span>
+<span id="L696">696     (environment : Env)</span>
+<span id="L697">697     (hkernel : trajectoryKernel environment =</span>
+<span id="L698">698       canonicalHistoryTrajectoryMeasure algorithm</span>
+<span id="L699">699         (feedbackEnvironment environment)) :</span>
+<span id="L700">700     IsHistoryAlgorithmEnvironmentSequence</span>
+<span id="L701">701       (kernelWithInput trajectoryKernel environment)</span>
+<span id="L702">702       environmentTrajectoryAction environmentTrajectoryReward</span>
+<span id="L703">703       algorithm (feedbackEnvironment environment) := by</span>
+<span id="L704">704   have hmeasure :</span>
+<span id="L705">705       (canonicalHistoryTrajectoryMeasure algorithm</span>
+<span id="L706">706         (feedbackEnvironment environment)).map (Prod.mk environment) =</span>
+<span id="L707">707         kernelWithInput trajectoryKernel environment := by</span>
+<span id="L708">708     rw [kernelWithInput_apply, hkernel]</span>
+<span id="L709">709   exact historyAlgorithmEnvironmentSequence_of_measure_eq</span>
+<span id="L710">710     ((canonicalHistoryTrajectoryMeasure algorithm</span>
+<span id="L711">711       (feedbackEnvironment environment)).map (Prod.mk environment))</span>
+<span id="L712">712     (kernelWithInput trajectoryKernel environment)</span>
+<span id="L713">713     environmentTrajectoryAction environmentTrajectoryReward</span>
+<span id="L714">714     algorithm (feedbackEnvironment environment) hmeasure</span>
+<span id="L715">715     (mappedCanonicalHistoryAlgorithmEnvironmentSequence</span>
+<span id="L716">716       algorithm feedbackEnvironment environment)</span>
+<span id="L717">717 </span>
+<span id="L718">718 /--</span>
+<span id="L719">719 The regular conditional complete-sample law of a canonical environment/</span>
+<span id="L720">720 trajectory composition product satisfies the history-process contract.</span>
+<span id="L721">721 -/</span>
+<span id="L722">722 theorem conditionalHistoryAlgorithmEnvironmentSequence_of_canonicalTrajectoryKernel</span>
+<span id="L723">723     {Env : Type u} {Action : Type v} {Reward : Type w}</span>
+<span id="L724">724     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L725">725     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L726">726     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L727">727     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L728">728     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L729">729     (feedbackEnvironment : Env -&gt; HistoryEnvironment Action Reward)</span>
+<span id="L730">730     (trajectoryKernel : ProbabilityTheory.Kernel</span>
+<span id="L731">731       Env ((n : Nat) -&gt; Action × Reward))</span>
+<span id="L732">732     [ProbabilityTheory.IsMarkovKernel trajectoryKernel]</span>
+<span id="L733">733     (hkernel : forall environment,</span>
+<span id="L734">734       trajectoryKernel environment =</span>
+<span id="L735">735         canonicalHistoryTrajectoryMeasure algorithm</span>
+<span id="L736">736           (feedbackEnvironment environment)) :</span>
+<span id="L737">737     ∀ᵐ environment ∂(prior ⊗ₘ trajectoryKernel).map Prod.fst,</span>
+<span id="L738">738       IsHistoryAlgorithmEnvironmentSequence</span>
+<span id="L739">739         (ProbabilityTheory.condDistrib id Prod.fst</span>
+<span id="L740">740           (prior ⊗ₘ trajectoryKernel) environment)</span>
+<span id="L741">741         environmentTrajectoryAction environmentTrajectoryReward</span>
+<span id="L742">742         algorithm (feedbackEnvironment environment) := by</span>
+<span id="L743">743   have hfirst : (prior ⊗ₘ trajectoryKernel).map Prod.fst = prior := by</span>
+<span id="L744">744     change (prior ⊗ₘ trajectoryKernel).fst = prior</span>
+<span id="L745">745     exact Measure.fst_compProd prior trajectoryKernel</span>
+<span id="L746">746   have hcond := condDistrib_id_fst_compProd_ae_eq_kernelWithInput</span>
+<span id="L747">747     prior trajectoryKernel</span>
+<span id="L748">748   rw [hfirst]</span>
+<span id="L749">749   filter_upwards [hcond] with environment hcondAt</span>
+<span id="L750">750   exact historyAlgorithmEnvironmentSequence_of_measure_eq</span>
+<span id="L751">751     (kernelWithInput trajectoryKernel environment)</span>
+<span id="L752">752     (ProbabilityTheory.condDistrib id Prod.fst</span>
+<span id="L753">753       (prior ⊗ₘ trajectoryKernel) environment)</span>
+<span id="L754">754     environmentTrajectoryAction environmentTrajectoryReward</span>
+<span id="L755">755     algorithm (feedbackEnvironment environment) hcondAt.symm</span>
+<span id="L756">756     (kernelWithInputHistoryAlgorithmEnvironmentSequence</span>
+<span id="L757">757       algorithm feedbackEnvironment trajectoryKernel environment</span>
+<span id="L758">758       (hkernel environment))</span>
+<span id="L759">759 </span>
+<span id="L760">760 /--</span>
+<span id="L761">761 Canonical environment-indexed trajectory kernels supply all four conditional</span>
+<span id="L762">762 split law families required by the Thompson density route.</span>
+<span id="L763">763 -/</span>
+<span id="L764">764 noncomputable def conditionalHistoryAlgorithmEnvironmentSplitSource_of_canonicalTrajectoryKernel</span>
+<span id="L765">765     {Env : Type u} {Action : Type v} {Reward : Type w}</span>
+<span id="L766">766     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L767">767     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L768">768     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L769">769     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L770">770     (algorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L771">771     (feedbackEnvironment : Env -&gt; HistoryEnvironment Action Reward)</span>
+<span id="L772">772     (trajectoryKernel : ProbabilityTheory.Kernel</span>
+<span id="L773">773       Env ((n : Nat) -&gt; Action × Reward))</span>
+<span id="L774">774     [ProbabilityTheory.IsMarkovKernel trajectoryKernel]</span>
+<span id="L775">775     (hkernel : forall environment,</span>
+<span id="L776">776       trajectoryKernel environment =</span>
+<span id="L777">777         canonicalHistoryTrajectoryMeasure algorithm</span>
+<span id="L778">778           (feedbackEnvironment environment)) :</span>
+<span id="L779">779     ConditionalHistoryAlgorithmEnvironmentSplitSource</span>
+<span id="L780">780       (prior ⊗ₘ trajectoryKernel) Prod.fst</span>
+<span id="L781">781       environmentTrajectoryAction environmentTrajectoryReward</span>
+<span id="L782">782       algorithm feedbackEnvironment where</span>
+<span id="L783">783   measurable_env := measurable_fst</span>
+<span id="L784">784   measurable_action := measurable_environmentTrajectoryAction_apply</span>
+<span id="L785">785   measurable_reward := measurable_environmentTrajectoryReward_apply</span>
+<span id="L786">786   initial_action := by</span>
+<span id="L787">787     filter_upwards [</span>
+<span id="L788">788       conditionalHistoryAlgorithmEnvironmentSequence_of_canonicalTrajectoryKernel</span>
+<span id="L789">789         prior algorithm feedbackEnvironment trajectoryKernel hkernel]</span>
+<span id="L790">790       with environment source</span>
+<span id="L791">791     exact initialAction_map_eq_of_historyAlgorithmEnvironmentSequence</span>
+<span id="L792">792       (ProbabilityTheory.condDistrib id Prod.fst</span>
+<span id="L793">793         (prior ⊗ₘ trajectoryKernel) environment)</span>
+<span id="L794">794       environmentTrajectoryAction environmentTrajectoryReward</span>
+<span id="L795">795       algorithm (feedbackEnvironment environment) source</span>
+<span id="L796">796   initial_feedback := by</span>
+<span id="L797">797     filter_upwards [</span>
+<span id="L798">798       conditionalHistoryAlgorithmEnvironmentSequence_of_canonicalTrajectoryKernel</span>
+<span id="L799">799         prior algorithm feedbackEnvironment trajectoryKernel hkernel]</span>
+<span id="L800">800       with environment source</span>
+<span id="L801">801     exact initialFeedback_condDistrib_of_historyAlgorithmEnvironmentSequence</span>
+<span id="L802">802       (ProbabilityTheory.condDistrib id Prod.fst</span>
+<span id="L803">803         (prior ⊗ₘ trajectoryKernel) environment)</span>
+<span id="L804">804       environmentTrajectoryAction environmentTrajectoryReward</span>
+<span id="L805">805       algorithm (feedbackEnvironment environment) source</span>
+<span id="L806">806   policy := fun n =&gt; by</span>
+<span id="L807">807     filter_upwards [</span>
+<span id="L808">808       conditionalHistoryAlgorithmEnvironmentSequence_of_canonicalTrajectoryKernel</span>
+<span id="L809">809         prior algorithm feedbackEnvironment trajectoryKernel hkernel]</span>
+<span id="L810">810       with environment source</span>
+<span id="L811">811     exact policy_condDistrib_of_historyAlgorithmEnvironmentSequence</span>
+<span id="L812">812       (ProbabilityTheory.condDistrib id Prod.fst</span>
+<span id="L813">813         (prior ⊗ₘ trajectoryKernel) environment)</span>
+<span id="L814">814       environmentTrajectoryAction environmentTrajectoryReward</span>
+<span id="L815">815       algorithm (feedbackEnvironment environment) source n</span>
+<span id="L816">816   feedback := fun n =&gt; by</span>
+<span id="L817">817     filter_upwards [</span>
+<span id="L818">818       conditionalHistoryAlgorithmEnvironmentSequence_of_canonicalTrajectoryKernel</span>
+<span id="L819">819         prior algorithm feedbackEnvironment trajectoryKernel hkernel]</span>
+<span id="L820">820       with environment source</span>
+<span id="L821">821     exact feedback_condDistrib_of_historyAlgorithmEnvironmentSequence</span>
+<span id="L822">822       (ProbabilityTheory.condDistrib id Prod.fst</span>
+<span id="L823">823         (prior ⊗ₘ trajectoryKernel) environment)</span>
+<span id="L824">824       environmentTrajectoryAction environmentTrajectoryReward</span>
+<span id="L825">825       algorithm (feedbackEnvironment environment) source n</span>
+<span id="L826">826 </span>
+<span id="L827">827 /--</span>
+<span id="L828">828 Paired canonical actual/reference trajectory kernels construct the complete</span>
+<span id="L829">829 conditional split source consumed by algorithm-density transport.</span>
+<span id="L830">830 -/</span>
+<span id="L831">831 noncomputable def conditionalHistoryAlgorithmDensitySplitSource_of_canonicalTrajectoryKernels</span>
+<span id="L832">832     {Env : Type u} {Action : Type v} {Reward : Type w}</span>
+<span id="L833">833     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L834">834     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L835">835     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L836">836     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L837">837     (algorithm referenceAlgorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L838">838     (feedbackEnvironment : Env -&gt; HistoryEnvironment Action Reward)</span>
+<span id="L839">839     (trajectoryKernel referenceTrajectoryKernel : ProbabilityTheory.Kernel</span>
+<span id="L840">840       Env ((n : Nat) -&gt; Action × Reward))</span>
+<span id="L841">841     [ProbabilityTheory.IsMarkovKernel trajectoryKernel]</span>
+<span id="L842">842     [ProbabilityTheory.IsMarkovKernel referenceTrajectoryKernel]</span>
+<span id="L843">843     (htrajectoryKernel : forall environment,</span>
+<span id="L844">844       trajectoryKernel environment =</span>
+<span id="L845">845         canonicalHistoryTrajectoryMeasure algorithm</span>
+<span id="L846">846           (feedbackEnvironment environment))</span>
+<span id="L847">847     (hreferenceTrajectoryKernel : forall environment,</span>
+<span id="L848">848       referenceTrajectoryKernel environment =</span>
+<span id="L849">849         canonicalHistoryTrajectoryMeasure referenceAlgorithm</span>
+<span id="L850">850           (feedbackEnvironment environment))</span>
+<span id="L851">851     (absolutelyContinuous :</span>
+<span id="L852">852       HistoryAlgorithmAbsolutelyContinuous algorithm referenceAlgorithm) :</span>
+<span id="L853">853     ConditionalHistoryAlgorithmDensitySplitSource</span>
+<span id="L854">854       (prior ⊗ₘ trajectoryKernel) Prod.fst</span>
+<span id="L855">855       environmentTrajectoryAction environmentTrajectoryReward</span>
+<span id="L856">856       (prior ⊗ₘ referenceTrajectoryKernel) Prod.fst</span>
+<span id="L857">857       environmentTrajectoryAction environmentTrajectoryReward</span>
+<span id="L858">858       algorithm referenceAlgorithm feedbackEnvironment where</span>
+<span id="L859">859   actual :=</span>
+<span id="L860">860     conditionalHistoryAlgorithmEnvironmentSplitSource_of_canonicalTrajectoryKernel</span>
+<span id="L861">861       prior algorithm feedbackEnvironment trajectoryKernel htrajectoryKernel</span>
+<span id="L862">862   reference :=</span>
+<span id="L863">863     conditionalHistoryAlgorithmEnvironmentSplitSource_of_canonicalTrajectoryKernel</span>
+<span id="L864">864       prior referenceAlgorithm feedbackEnvironment referenceTrajectoryKernel</span>
+<span id="L865">865         hreferenceTrajectoryKernel</span>
+<span id="L866">866   env_map_eq := by</span>
+<span id="L867">867     change (prior ⊗ₘ trajectoryKernel).fst =</span>
+<span id="L868">868       (prior ⊗ₘ referenceTrajectoryKernel).fst</span>
+<span id="L869">869     rw [Measure.fst_compProd, Measure.fst_compProd]</span>
+<span id="L870">870   absolutelyContinuous := absolutelyContinuous</span>
+<span id="L871">871 </span>
+<span id="L872">872 /--</span>
+<span id="L873">873 Finite-prefix Thompson probability matching for paired canonical recursive</span>
+<span id="L874">874 trajectory kernels. The remaining producer obligation is exactly the</span>
+<span id="L875">875 measurable kernel family whose values are the fixed-environment canonical</span>
+<span id="L876">876 `trajMeasure`s.</span>
+<span id="L877">877 -/</span>
+<span id="L878">878 theorem finitePairReferencePolicySampler_condDistrib_action_ae_eq_bestAction_of_canonicalTrajectoryKernels</span>
+<span id="L879">879     {Env : Type u} {Action : Type v} {Reward : Type w}</span>
+<span id="L880">880     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L881">881     [MeasurableSpace Action] [StandardBorelSpace Action] [Nonempty Action]</span>
+<span id="L882">882     [MeasurableSpace Reward] [StandardBorelSpace Reward] [Nonempty Reward]</span>
+<span id="L883">883     (prior : Measure Env) [IsFiniteMeasure prior]</span>
+<span id="L884">884     (algorithm referenceAlgorithm : HistoryAlgorithm Action Reward)</span>
+<span id="L885">885     (feedbackEnvironment : Env -&gt; HistoryEnvironment Action Reward)</span>
+<span id="L886">886     (trajectoryKernel referenceTrajectoryKernel : ProbabilityTheory.Kernel</span>
+<span id="L887">887       Env ((n : Nat) -&gt; Action × Reward))</span>
+<span id="L888">888     [ProbabilityTheory.IsMarkovKernel trajectoryKernel]</span>
+<span id="L889">889     [ProbabilityTheory.IsMarkovKernel referenceTrajectoryKernel]</span>
+<span id="L890">890     (htrajectoryKernel : forall environment,</span>
+<span id="L891">891       trajectoryKernel environment =</span>
+<span id="L892">892         canonicalHistoryTrajectoryMeasure algorithm</span>
+<span id="L893">893           (feedbackEnvironment environment))</span>
+<span id="L894">894     (hreferenceTrajectoryKernel : forall environment,</span>
+<span id="L895">895       referenceTrajectoryKernel environment =</span>
+<span id="L896">896         canonicalHistoryTrajectoryMeasure referenceAlgorithm</span>
+<span id="L897">897           (feedbackEnvironment environment))</span>
+<span id="L898">898     (absolutelyContinuous :</span>
+<span id="L899">899       HistoryAlgorithmAbsolutelyContinuous algorithm referenceAlgorithm)</span>
+<span id="L900">900     (n : Nat) (bestAction : Env -&gt; Action)</span>
+<span id="L901">901     (hbestAction : Measurable bestAction) :</span>
+<span id="L902">902     let actualHistory := fun sample =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L903">903       (environmentTrajectoryAction sample)</span>
+<span id="L904">904       (environmentTrajectoryReward sample) n</span>
+<span id="L905">905     let referenceHistory := fun sample =&gt; History.finitePairHistoryOfTrace</span>
+<span id="L906">906       (environmentTrajectoryAction sample)</span>
+<span id="L907">907       (environmentTrajectoryReward sample) n</span>
+<span id="L908">908     let policy := referenceActionKernel</span>
+<span id="L909">909       (prior ⊗ₘ referenceTrajectoryKernel) Prod.fst referenceHistory</span>
+<span id="L910">910       measurable_fst</span>
+<span id="L911">911       (History.measurable_finitePairHistoryOfTrace</span>
+<span id="L912">912         environmentTrajectoryAction environmentTrajectoryReward</span>
+<span id="L913">913         measurable_environmentTrajectoryAction_apply</span>
+<span id="L914">914         measurable_environmentTrajectoryReward_apply n)</span>
+<span id="L915">915       bestAction hbestAction</span>
+<span id="L916">916     let sampler := policySamplerMeasure</span>
+<span id="L917">917       (prior ⊗ₘ trajectoryKernel) actualHistory</span>
+<span id="L918">918       (History.measurable_finitePairHistoryOfTrace</span>
+<span id="L919">919         environmentTrajectoryAction environmentTrajectoryReward</span>
+<span id="L920">920         measurable_environmentTrajectoryAction_apply</span>
+<span id="L921">921         measurable_environmentTrajectoryReward_apply n) policy</span>
+<span id="L922">922     ProbabilityTheory.condDistrib policySamplerAction</span>
+<span id="L923">923         (policySamplerHistory actualHistory) sampler =ᵐ[</span>
+<span id="L924">924       sampler.map (policySamplerHistory actualHistory)]</span>
+<span id="L925">925       ProbabilityTheory.condDistrib</span>
+<span id="L926">926         (bestAction ∘ policySamplerEnv Prod.fst)</span>
+<span id="L927">927         (policySamplerHistory actualHistory) sampler := by</span>
+<span id="L928">928   exact</span>
+<span id="L929">929     finitePairReferencePolicySampler_condDistrib_action_ae_eq_bestAction_of_conditionalSplitSource</span>
+<span id="L930">930       (prior ⊗ₘ trajectoryKernel) Prod.fst</span>
+<span id="L931">931       environmentTrajectoryAction environmentTrajectoryReward</span>
+<span id="L932">932       (prior ⊗ₘ referenceTrajectoryKernel) Prod.fst</span>
+<span id="L933">933       environmentTrajectoryAction environmentTrajectoryReward</span>
+<span id="L934">934       algorithm referenceAlgorithm feedbackEnvironment</span>
+<span id="L935">935       (conditionalHistoryAlgorithmDensitySplitSource_of_canonicalTrajectoryKernels</span>
+<span id="L936">936         prior algorithm referenceAlgorithm feedbackEnvironment</span>
+<span id="L937">937         trajectoryKernel referenceTrajectoryKernel</span>
+<span id="L938">938         htrajectoryKernel hreferenceTrajectoryKernel absolutelyContinuous)</span>
+<span id="L939">939       n bestAction hbestAction</span>
+<span id="L940">940 </span>
+<span id="L941">941 end Thompson</span>
+<span id="L942">942 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

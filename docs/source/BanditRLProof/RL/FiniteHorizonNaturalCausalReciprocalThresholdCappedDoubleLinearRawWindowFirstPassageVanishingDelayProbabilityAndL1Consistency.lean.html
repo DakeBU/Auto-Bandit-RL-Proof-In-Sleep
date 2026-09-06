@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/RL/FiniteHorizonNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageVanishingDelayProbabilityAndL1Consistency.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/RL/FiniteHorizonNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageVanishingDelayProbabilityAndL1Consistency.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/RL/FiniteHorizonNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageVanishingDelayProbabilityAndL1Consistency.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/RL/FiniteHorizonNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageVanishingDelayProbabilityAndL1Consistency.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.RL.FiniteHorizonNaturalCausalCappedDoubleLinearRawWindowFirstPassageStoppingTimeL1AverageRealizedBehaviorRegretConsistency</span>
+<span id="L2">2 import BanditRLProof.RL.FiniteHorizonNaturalCausalAverageRealizedBehaviorRegretAlmostSureExplicitSchedule</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Reciprocal-threshold capped first-passage delay probability and L1 consistency</span>
+<span id="L6">6 </span>
+<span id="L7">7 At schedule index `n`, use threshold `1/(n+1)` in the compiled capped</span>
+<span id="L8">8 first-passage scan from `(n+1)^4` through `(n+1)^4+(2*n+1)`.</span>
+<span id="L9">9 </span>
+<span id="L10">10 The event that the scan does not stop at its base is exactly the one-sided</span>
+<span id="L11">11 base-prefix threshold violation. It is therefore contained in the compiled</span>
+<span id="L12">12 absolute-distance event. The explicit scheduled L1 envelope and Markov&#x27;s</span>
+<span id="L13">13 inequality bound its probability by an inverse-square plus inverse-linear</span>
+<span id="L14">14 rate, which tends to zero. The compiled capped first-passage theorem supplies</span>
+<span id="L15">15 the full stopped L1, in-measure, and almost-everywhere terminal.</span>
+<span id="L16">16 </span>
+<span id="L17">17 This is a moving-threshold first-moment result. It proves neither summability</span>
+<span id="L18">18 of delay probabilities nor an uncapped hitting-time theorem.</span>
+<span id="L19">19 -/</span>
+<span id="L20">20 </span>
+<span id="L21">21 open Filter MeasureTheory ProbabilityTheory</span>
+<span id="L22">22 open scoped ENNReal NNReal ProbabilityTheory Topology</span>
+<span id="L23">23 </span>
+<span id="L24">24 namespace BanditRLProof.FiniteHorizonRL</span>
+<span id="L25">25 </span>
+<span id="L26">26 universe u v</span>
+<span id="L27">27 </span>
+<span id="L28">28 variable {State : Type u} {Action : Type v}</span>
+<span id="L29">29     [MeasurableSpace State] [MeasurableSpace Action]</span>
+<span id="L30">30     [Fintype State] [Fintype Action]</span>
+<span id="L31">31     [DecidableEq State] [DecidableEq Action]</span>
+<span id="L32">32     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L33">33     [Nonempty State] [Nonempty Action]</span>
+<span id="L34">34 </span>
+<span id="L35">35 namespace AdaptiveStochasticSampledEmpiricalOptimisticSource</span>
+<span id="L36">36 </span>
+<span id="L37">37 /-- Reciprocal threshold `1/(n+1)` for the scheduled first-passage scan. -/</span>
+<span id="L38">38 noncomputable def</span>
+<span id="L39">39     selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L40">40     (scheduleIndex : Nat) : Real :=</span>
+<span id="L41">41   1 / (explicitHighProbabilityScale scheduleIndex : Real)</span>
+<span id="L42">42 </span>
+<span id="L43">43 /-- Every reciprocal first-passage threshold is strictly positive. -/</span>
+<span id="L44">44 theorem</span>
+<span id="L45">45     selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold_pos</span>
+<span id="L46">46     (scheduleIndex : Nat) :</span>
+<span id="L47">47     0 &lt;</span>
+<span id="L48">48       selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L49">49         scheduleIndex := by</span>
+<span id="L50">50   unfold selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L51">51   exact one_div_pos.mpr</span>
+<span id="L52">52     (by</span>
+<span id="L53">53       exact_mod_cast explicitHighProbabilityScale_pos scheduleIndex)</span>
+<span id="L54">54 </span>
+<span id="L55">55 /-- The reciprocal first-passage threshold tends to zero. -/</span>
+<span id="L56">56 theorem</span>
+<span id="L57">57     selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold_tendsto_zero :</span>
+<span id="L58">58     Tendsto</span>
+<span id="L59">59       selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L60">60       atTop (nhds 0) := by</span>
+<span id="L61">61   unfold selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L62">62   exact tendsto_const_nhds.div_atTop</span>
+<span id="L63">63     explicitHighProbabilityScale_real_tendsto_atTop</span>
+<span id="L64">64 </span>
+<span id="L65">65 /-- The capped first-passage stopping rule at the reciprocal threshold. -/</span>
+<span id="L66">66 noncomputable def</span>
+<span id="L67">67     selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L68">68     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L69">69     [IsProbabilityMeasure initialState]</span>
+<span id="L70">70     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L71">71     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L72">72     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L73">73     (baseVisitFloor : Real) (scheduleIndex : Nat) :</span>
+<span id="L74">74     HeterogeneousStochasticEpisodeBatchTrajectory mdp</span>
+<span id="L75">75         (fun t =&gt;</span>
+<span id="L76">76           AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L77">77             mdp varianceProxy baseVisitFloor t) -&gt; WithTop Nat :=</span>
+<span id="L78">78   selfConsistentScheduledNaturalCausalCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L79">79     mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L80">80       baseVisitFloor</span>
+<span id="L81">81         selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L82">82           scheduleIndex</span>
+<span id="L83">83 </span>
+<span id="L84">84 /-- Event that reciprocal-threshold first passage does not stop at its base. -/</span>
+<span id="L85">85 noncomputable def</span>
+<span id="L86">86     selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedSet</span>
+<span id="L87">87     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L88">88     [IsProbabilityMeasure initialState]</span>
+<span id="L89">89     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L90">90     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L91">91     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L92">92     (baseVisitFloor : Real) (scheduleIndex : Nat) :</span>
+<span id="L93">93     Set (HeterogeneousStochasticEpisodeBatchTrajectory mdp</span>
+<span id="L94">94       (fun t =&gt;</span>
+<span id="L95">95         AdaptiveStochasticEpisodeBatchSource.selfConsistentScheduledEpisodes</span>
+<span id="L96">96           mdp varianceProxy baseVisitFloor t)) :=</span>
+<span id="L97">97   {trajectory |</span>
+<span id="L98">98     (explicitHighProbabilityRounds scheduleIndex : WithTop Nat) &lt;</span>
+<span id="L99">99       selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L100">100         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L101">101           baseVisitFloor scheduleIndex trajectory}</span>
+<span id="L102">102 </span>
+<span id="L103">103 /-- Probability of failing to stop at the first prefix in the scan window. -/</span>
+<span id="L104">104 noncomputable def</span>
+<span id="L105">105     selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedProbability</span>
+<span id="L106">106     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L107">107     [IsProbabilityMeasure initialState]</span>
+<span id="L108">108     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L109">109     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L110">110     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L111">111     (baseVisitFloor : Real) (scheduleIndex : Nat) : ENNReal :=</span>
+<span id="L112">112   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L113">113     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L114">114   source.trajectoryMeasure</span>
+<span id="L115">115     (selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedSet</span>
+<span id="L116">116       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L117">117         baseVisitFloor scheduleIndex)</span>
+<span id="L118">118 </span>
+<span id="L119">119 /-- Deterministic Markov rate for reciprocal-threshold first-passage delay. -/</span>
+<span id="L120">120 noncomputable def</span>
+<span id="L121">121     selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayRate</span>
+<span id="L122">122     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L123">123     (scheduleIndex : Nat) : Real :=</span>
+<span id="L124">124   explicitPolynomialPrefixAverageRealizedBehaviorRegretL1SummableEnvelope</span>
+<span id="L125">125       mdp varianceProxy scheduleIndex /</span>
+<span id="L126">126     selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L127">127       scheduleIndex</span>
+<span id="L128">128 </span>
+<span id="L129">129 /-- Delay is exactly strict one-sided threshold violation at the base prefix. -/</span>
+<span id="L130">130 theorem</span>
+<span id="L131">131     selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedSet_eq</span>
+<span id="L132">132     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L133">133     [IsProbabilityMeasure initialState]</span>
+<span id="L134">134     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L135">135     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L136">136     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L137">137     (baseVisitFloor : Real) (scheduleIndex : Nat) :</span>
+<span id="L138">138     selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedSet</span>
+<span id="L139">139         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L140">140           baseVisitFloor scheduleIndex =</span>
+<span id="L141">141       {trajectory |</span>
+<span id="L142">142         selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L143">143             scheduleIndex &lt;</span>
+<span id="L144">144           explicitPolynomialPrefixAverageRealizedBehaviorRegretProcess mdp</span>
+<span id="L145">145             initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L146">146               baseVisitFloor scheduleIndex trajectory} := by</span>
+<span id="L147">147   ext trajectory</span>
+<span id="L148">148   constructor</span>
+<span id="L149">149   · intro hdelay</span>
+<span id="L150">150     change (explicitHighProbabilityRounds scheduleIndex : WithTop Nat) &lt;</span>
+<span id="L151">151       (selfConsistentScheduledNaturalCausalCappedDoubleLinearRawWindowFirstPassagePrefixNat</span>
+<span id="L152">152         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L153">153           baseVisitFloor</span>
+<span id="L154">154             selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L155">155               scheduleIndex trajectory : WithTop Nat) at hdelay</span>
+<span id="L156">156     have hdelayNat :</span>
+<span id="L157">157         explicitHighProbabilityRounds scheduleIndex &lt;</span>
+<span id="L158">158           selfConsistentScheduledNaturalCausalCappedDoubleLinearRawWindowFirstPassagePrefixNat</span>
+<span id="L159">159             mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L160">160               baseVisitFloor</span>
+<span id="L161">161                 selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L162">162                   scheduleIndex trajectory := by</span>
+<span id="L163">163       exact_mod_cast hdelay</span>
+<span id="L164">164     simpa [explicitPolynomialPrefixAverageRealizedBehaviorRegretProcess] using</span>
+<span id="L165">165       (selfConsistentScheduledNaturalCausalCappedDoubleLinearRawWindowFirstPassagePrefixNat_before_gt</span>
+<span id="L166">166         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L167">167           baseVisitFloor</span>
+<span id="L168">168             selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L169">169               scheduleIndex (explicitHighProbabilityRounds scheduleIndex)</span>
+<span id="L170">170                 trajectory le_rfl hdelayNat)</span>
+<span id="L171">171   · intro hbaseViolation</span>
+<span id="L172">172     change (explicitHighProbabilityRounds scheduleIndex : WithTop Nat) &lt;</span>
+<span id="L173">173       selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L174">174         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L175">175           baseVisitFloor scheduleIndex trajectory</span>
+<span id="L176">176     have hlower :=</span>
+<span id="L177">177       selfConsistentScheduledNaturalCausalCappedDoubleLinearRawWindowFirstPassageStoppingPrefix_lower</span>
+<span id="L178">178         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L179">179           baseVisitFloor</span>
+<span id="L180">180             selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L181">181               scheduleIndex trajectory</span>
+<span id="L182">182     apply lt_of_le_of_ne hlower</span>
+<span id="L183">183     intro heq</span>
+<span id="L184">184     have heqNat :</span>
+<span id="L185">185         selfConsistentScheduledNaturalCausalCappedDoubleLinearRawWindowFirstPassagePrefixNat</span>
+<span id="L186">186             mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L187">187               baseVisitFloor</span>
+<span id="L188">188                 selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L189">189                   scheduleIndex trajectory =</span>
+<span id="L190">190           explicitHighProbabilityRounds scheduleIndex := by</span>
+<span id="L191">191       change</span>
+<span id="L192">192         (explicitHighProbabilityRounds scheduleIndex : WithTop Nat) =</span>
+<span id="L193">193           (selfConsistentScheduledNaturalCausalCappedDoubleLinearRawWindowFirstPassagePrefixNat</span>
+<span id="L194">194             mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L195">195               baseVisitFloor</span>
+<span id="L196">196                 selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L197">197                   scheduleIndex trajectory : WithTop Nat) at heq</span>
+<span id="L198">198       exact_mod_cast heq.symm</span>
+<span id="L199">199     have hstrict :</span>
+<span id="L200">200         selfConsistentScheduledNaturalCausalCappedDoubleLinearRawWindowFirstPassagePrefixNat</span>
+<span id="L201">201             mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L202">202               baseVisitFloor</span>
+<span id="L203">203                 selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L204">204                   scheduleIndex trajectory &lt;</span>
+<span id="L205">205           explicitHighProbabilityRounds scheduleIndex +</span>
+<span id="L206">206             (2 * scheduleIndex + 1) := by</span>
+<span id="L207">207       rw [heqNat]</span>
+<span id="L208">208       omega</span>
+<span id="L209">209     have hhit :=</span>
+<span id="L210">210       selfConsistentScheduledNaturalCausalCappedDoubleLinearRawWindowFirstPassagePrefixNat_le_threshold_of_lt_right</span>
+<span id="L211">211         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L212">212           baseVisitFloor</span>
+<span id="L213">213             selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L214">214               scheduleIndex trajectory hstrict</span>
+<span id="L215">215     rw [heqNat] at hhit</span>
+<span id="L216">216     exact (not_lt_of_ge hhit)</span>
+<span id="L217">217       (by</span>
+<span id="L218">218         simpa [explicitPolynomialPrefixAverageRealizedBehaviorRegretProcess]</span>
+<span id="L219">219           using hbaseViolation)</span>
+<span id="L220">220 </span>
+<span id="L221">221 /-- The reciprocal-threshold delay event is measurable. -/</span>
+<span id="L222">222 theorem</span>
+<span id="L223">223     measurableSet_selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedSet</span>
+<span id="L224">224     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L225">225     [IsProbabilityMeasure initialState]</span>
+<span id="L226">226     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L227">227     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L228">228     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L229">229     (baseVisitFloor : Real) (scheduleIndex : Nat) :</span>
+<span id="L230">230     MeasurableSet</span>
+<span id="L231">231       (selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedSet</span>
+<span id="L232">232         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L233">233           baseVisitFloor scheduleIndex) := by</span>
+<span id="L234">234   rw [</span>
+<span id="L235">235     selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedSet_eq]</span>
+<span id="L236">236   exact measurableSet_lt measurable_const</span>
+<span id="L237">237     (measurable_explicitPolynomialPrefixAverageRealizedBehaviorRegretProcess</span>
+<span id="L238">238       mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L239">239         baseVisitFloor scheduleIndex)</span>
+<span id="L240">240 </span>
+<span id="L241">241 /-- Delayed first passage is contained in the scheduled distance violation. -/</span>
+<span id="L242">242 theorem</span>
+<span id="L243">243     selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedSet_subset_distanceViolationSet</span>
+<span id="L244">244     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L245">245     [IsProbabilityMeasure initialState]</span>
+<span id="L246">246     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L247">247     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L248">248     (defaultState : State) (varianceProxy : NNReal)</span>
+<span id="L249">249     (baseVisitFloor : Real) (scheduleIndex : Nat) :</span>
+<span id="L250">250     selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedSet</span>
+<span id="L251">251         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L252">252           baseVisitFloor scheduleIndex ⊆</span>
+<span id="L253">253       explicitPolynomialPrefixAverageRealizedBehaviorRegretDistanceViolationSet</span>
+<span id="L254">254         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L255">255           baseVisitFloor</span>
+<span id="L256">256             (selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L257">257               scheduleIndex) scheduleIndex := by</span>
+<span id="L258">258   rw [</span>
+<span id="L259">259     selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedSet_eq]</span>
+<span id="L260">260   intro trajectory hdelay</span>
+<span id="L261">261   change</span>
+<span id="L262">262     selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L263">263         scheduleIndex &lt;=</span>
+<span id="L264">264       dist</span>
+<span id="L265">265         (explicitPolynomialPrefixAverageRealizedBehaviorRegretProcess mdp</span>
+<span id="L266">266           initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L267">267             baseVisitFloor scheduleIndex trajectory) 0</span>
+<span id="L268">268   have habs :</span>
+<span id="L269">269       selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L270">270           scheduleIndex &lt;=</span>
+<span id="L271">271         |explicitPolynomialPrefixAverageRealizedBehaviorRegretProcess mdp</span>
+<span id="L272">272           initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L273">273             baseVisitFloor scheduleIndex trajectory| :=</span>
+<span id="L274">274     (le_of_lt hdelay).trans (le_abs_self _)</span>
+<span id="L275">275   simpa [Real.dist_eq] using habs</span>
+<span id="L276">276 </span>
+<span id="L277">277 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L278">278     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L279">279     [Nonempty State] [Nonempty Action] in</span>
+<span id="L280">280 /-- Dividing the scheduled L1 envelope by the reciprocal threshold exposes</span>
+<span id="L281">281 an inverse-square plus inverse-linear delay rate. -/</span>
+<span id="L282">282 theorem</span>
+<span id="L283">283     selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayRate_eq</span>
+<span id="L284">284     (mdp : MDP State Action) (varianceProxy : NNReal)</span>
+<span id="L285">285     (scheduleIndex : Nat) :</span>
+<span id="L286">286     selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayRate</span>
+<span id="L287">287         mdp varianceProxy scheduleIndex =</span>
+<span id="L288">288       4 * selfConsistentScheduledNaturalCausalLogarithmicRateCoefficient mdp /</span>
+<span id="L289">289           (explicitHighProbabilityScale scheduleIndex : Real) ^ 2 +</span>
+<span id="L290">290         (2 * Real.sqrt</span>
+<span id="L291">291             (mdp.globalReturnDeviationPerEpisodeVarianceProxy 1 varianceProxy :</span>
+<span id="L292">292               Real) *</span>
+<span id="L293">293             Real.exp (1 / 2 : Real)) /</span>
+<span id="L294">294           (explicitHighProbabilityScale scheduleIndex : Real) := by</span>
+<span id="L295">295   unfold</span>
+<span id="L296">296     selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayRate</span>
+<span id="L297">297     selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L298">298     explicitPolynomialPrefixAverageRealizedBehaviorRegretL1SummableEnvelope</span>
+<span id="L299">299     explicitPolynomialPrefixAverageBehaviorRegretL1SummableEnvelope</span>
+<span id="L300">300     explicitPolynomialPrefixAverageReturnL1SummableEnvelope</span>
+<span id="L301">301   have hs : (explicitHighProbabilityScale scheduleIndex : Real) ≠ 0 := by</span>
+<span id="L302">302     exact_mod_cast (ne_of_gt (explicitHighProbabilityScale_pos scheduleIndex))</span>
+<span id="L303">303   field_simp [hs]</span>
+<span id="L304">304 </span>
+<span id="L305">305 /-- The scheduled expected absolute base process divided by the reciprocal</span>
+<span id="L306">306 threshold is bounded by the explicit delay rate. -/</span>
+<span id="L307">307 theorem</span>
+<span id="L308">308     explicitPolynomialPrefixExpectedAbsoluteAverageRealizedBehaviorRegret_div_reciprocalFirstPassageThreshold_le_delayRate</span>
+<span id="L309">309     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L310">310     [IsProbabilityMeasure initialState]</span>
+<span id="L311">311     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L312">312     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L313">313     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L314">314     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L315">315     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L316">316     (defaultState : State)</span>
+<span id="L317">317     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L318">318     (baseVisitFloor : Real)</span>
+<span id="L319">319     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L320">320     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L321">321     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L322">322     (scheduleIndex : Nat) :</span>
+<span id="L323">323     explicitPolynomialPrefixExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L324">324         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L325">325           baseVisitFloor scheduleIndex /</span>
+<span id="L326">326         selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L327">327           scheduleIndex &lt;=</span>
+<span id="L328">328       selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayRate</span>
+<span id="L329">329         mdp varianceProxy scheduleIndex := by</span>
+<span id="L330">330   unfold</span>
+<span id="L331">331     selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayRate</span>
+<span id="L332">332   exact div_le_div_of_nonneg_right</span>
+<span id="L333">333     (explicitPolynomialPrefixExpectedAbsoluteAverageRealizedBehaviorRegret_le_summableEnvelope</span>
+<span id="L334">334       mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L335">335         defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L336">336           hbaseVisitFloor scheduleIndex)</span>
+<span id="L337">337     (selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold_pos</span>
+<span id="L338">338       scheduleIndex).le</span>
+<span id="L339">339 </span>
+<span id="L340">340 omit [DecidableEq State] [DecidableEq Action]</span>
+<span id="L341">341     [MeasurableSingletonClass State] [MeasurableSingletonClass Action]</span>
+<span id="L342">342     [Nonempty State] [Nonempty Action] in</span>
+<span id="L343">343 /-- The reciprocal-threshold delay rate tends to zero. -/</span>
+<span id="L344">344 theorem</span>
+<span id="L345">345     selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayRate_tendsto_zero</span>
+<span id="L346">346     (mdp : MDP State Action) (varianceProxy : NNReal) :</span>
+<span id="L347">347     Tendsto</span>
+<span id="L348">348       (selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayRate</span>
+<span id="L349">349         mdp varianceProxy) atTop (nhds 0) := by</span>
+<span id="L350">350   rw [show</span>
+<span id="L351">351     selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayRate</span>
+<span id="L352">352         mdp varianceProxy =</span>
+<span id="L353">353       fun scheduleIndex =&gt;</span>
+<span id="L354">354         4 * selfConsistentScheduledNaturalCausalLogarithmicRateCoefficient mdp /</span>
+<span id="L355">355             (explicitHighProbabilityScale scheduleIndex : Real) ^ 2 +</span>
+<span id="L356">356           (2 * Real.sqrt</span>
+<span id="L357">357               (mdp.globalReturnDeviationPerEpisodeVarianceProxy 1 varianceProxy :</span>
+<span id="L358">358                 Real) *</span>
+<span id="L359">359               Real.exp (1 / 2 : Real)) /</span>
+<span id="L360">360             (explicitHighProbabilityScale scheduleIndex : Real) by</span>
+<span id="L361">361       funext scheduleIndex</span>
+<span id="L362">362       exact</span>
+<span id="L363">363         selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayRate_eq</span>
+<span id="L364">364           mdp varianceProxy scheduleIndex]</span>
+<span id="L365">365   have hscaleSq :</span>
+<span id="L366">366       Tendsto</span>
+<span id="L367">367         (fun scheduleIndex =&gt;</span>
+<span id="L368">368           (explicitHighProbabilityScale scheduleIndex : Real) ^ 2)</span>
+<span id="L369">369         atTop atTop := by</span>
+<span id="L370">370     simpa only [Function.comp_apply] using</span>
+<span id="L371">371       ((tendsto_pow_atTop (α := Real) (by norm_num : (2 : Nat) ≠ 0)).comp</span>
+<span id="L372">372         explicitHighProbabilityScale_real_tendsto_atTop)</span>
+<span id="L373">373   have hbehavior :</span>
+<span id="L374">374       Tendsto</span>
+<span id="L375">375         (fun scheduleIndex =&gt;</span>
+<span id="L376">376           4 * selfConsistentScheduledNaturalCausalLogarithmicRateCoefficient mdp /</span>
+<span id="L377">377             (explicitHighProbabilityScale scheduleIndex : Real) ^ 2)</span>
+<span id="L378">378         atTop (nhds 0) :=</span>
+<span id="L379">379     tendsto_const_nhds.div_atTop hscaleSq</span>
+<span id="L380">380   have hreturn :</span>
+<span id="L381">381       Tendsto</span>
+<span id="L382">382         (fun scheduleIndex =&gt;</span>
+<span id="L383">383           (2 * Real.sqrt</span>
+<span id="L384">384               (mdp.globalReturnDeviationPerEpisodeVarianceProxy 1 varianceProxy :</span>
+<span id="L385">385                 Real) *</span>
+<span id="L386">386               Real.exp (1 / 2 : Real)) /</span>
+<span id="L387">387             (explicitHighProbabilityScale scheduleIndex : Real))</span>
+<span id="L388">388         atTop (nhds 0) :=</span>
+<span id="L389">389     tendsto_const_nhds.div_atTop</span>
+<span id="L390">390       explicitHighProbabilityScale_real_tendsto_atTop</span>
+<span id="L391">391   simpa only [zero_add] using hbehavior.add hreturn</span>
+<span id="L392">392 </span>
+<span id="L393">393 /-- Markov control of the reciprocal-threshold first-passage delay event. -/</span>
+<span id="L394">394 theorem</span>
+<span id="L395">395     selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedProbability_le_rate</span>
+<span id="L396">396     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L397">397     [IsProbabilityMeasure initialState]</span>
+<span id="L398">398     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L399">399     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L400">400     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L401">401     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L402">402     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L403">403     (defaultState : State)</span>
+<span id="L404">404     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L405">405     (baseVisitFloor : Real)</span>
+<span id="L406">406     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L407">407     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L408">408     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor)</span>
+<span id="L409">409     (scheduleIndex : Nat) :</span>
+<span id="L410">410     selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedProbability</span>
+<span id="L411">411         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L412">412           baseVisitFloor scheduleIndex &lt;=</span>
+<span id="L413">413       ENNReal.ofReal</span>
+<span id="L414">414         (selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayRate</span>
+<span id="L415">415           mdp varianceProxy scheduleIndex) := by</span>
+<span id="L416">416   let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L417">417     rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L418">418   calc</span>
+<span id="L419">419     selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedProbability</span>
+<span id="L420">420         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L421">421           baseVisitFloor scheduleIndex =</span>
+<span id="L422">422       source.trajectoryMeasure</span>
+<span id="L423">423         (selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedSet</span>
+<span id="L424">424           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L425">425             baseVisitFloor scheduleIndex) := by rfl</span>
+<span id="L426">426     _ &lt;= source.trajectoryMeasure</span>
+<span id="L427">427         (explicitPolynomialPrefixAverageRealizedBehaviorRegretDistanceViolationSet</span>
+<span id="L428">428           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L429">429             baseVisitFloor</span>
+<span id="L430">430               (selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L431">431                 scheduleIndex) scheduleIndex) :=</span>
+<span id="L432">432       measure_mono</span>
+<span id="L433">433         (selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedSet_subset_distanceViolationSet</span>
+<span id="L434">434           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L435">435             baseVisitFloor scheduleIndex)</span>
+<span id="L436">436     _ =</span>
+<span id="L437">437       explicitPolynomialPrefixAverageRealizedBehaviorRegretDistanceViolationProbability</span>
+<span id="L438">438         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L439">439           baseVisitFloor</span>
+<span id="L440">440             (selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L441">441               scheduleIndex) scheduleIndex := by rfl</span>
+<span id="L442">442     _ &lt;= ENNReal.ofReal</span>
+<span id="L443">443         (explicitPolynomialPrefixExpectedAbsoluteAverageRealizedBehaviorRegret</span>
+<span id="L444">444           mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L445">445             baseVisitFloor scheduleIndex /</span>
+<span id="L446">446           selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L447">447             scheduleIndex) :=</span>
+<span id="L448">448       explicitPolynomialPrefixAverageRealizedBehaviorRegretDistanceViolationProbability_le_expectedAbsolute_div</span>
+<span id="L449">449         mdp initialState rewardSource varianceProxy law initialTable defaultState</span>
+<span id="L450">450           baseVisitFloor</span>
+<span id="L451">451             (selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L452">452               scheduleIndex)</span>
+<span id="L453">453             hrewardBound</span>
+<span id="L454">454               (selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold_pos</span>
+<span id="L455">455                 scheduleIndex) scheduleIndex</span>
+<span id="L456">456     _ &lt;= ENNReal.ofReal</span>
+<span id="L457">457         (selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayRate</span>
+<span id="L458">458           mdp varianceProxy scheduleIndex) :=</span>
+<span id="L459">459       ENNReal.ofReal_le_ofReal</span>
+<span id="L460">460         (explicitPolynomialPrefixExpectedAbsoluteAverageRealizedBehaviorRegret_div_reciprocalFirstPassageThreshold_le_delayRate</span>
+<span id="L461">461           mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L462">462             defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L463">463               hbaseVisitFloor scheduleIndex)</span>
+<span id="L464">464 </span>
+<span id="L465">465 /-- The probability of delaying beyond the first prefix tends to zero. -/</span>
+<span id="L466">466 theorem</span>
+<span id="L467">467     selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedProbability_tendsto_zero</span>
+<span id="L468">468     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L469">469     [IsProbabilityMeasure initialState]</span>
+<span id="L470">470     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L471">471     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L472">472     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L473">473     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L474">474     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L475">475     (defaultState : State)</span>
+<span id="L476">476     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L477">477     (baseVisitFloor : Real)</span>
+<span id="L478">478     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L479">479     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L480">480     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L481">481     Tendsto</span>
+<span id="L482">482       (selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedProbability</span>
+<span id="L483">483         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L484">484           baseVisitFloor) atTop (nhds 0) := by</span>
+<span id="L485">485   exact tendsto_of_tendsto_of_tendsto_of_le_of_le&#x27;</span>
+<span id="L486">486     tendsto_const_nhds</span>
+<span id="L487">487     (by</span>
+<span id="L488">488       simpa only [ENNReal.ofReal_zero] using</span>
+<span id="L489">489         ENNReal.tendsto_ofReal</span>
+<span id="L490">490           (selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayRate_tendsto_zero</span>
+<span id="L491">491             mdp varianceProxy))</span>
+<span id="L492">492     (Filter.Eventually.of_forall fun _ =&gt; bot_le)</span>
+<span id="L493">493     (Filter.Eventually.of_forall fun scheduleIndex =&gt;</span>
+<span id="L494">494       selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedProbability_le_rate</span>
+<span id="L495">495         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L496">496           defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L497">497             hbaseVisitFloor scheduleIndex)</span>
+<span id="L498">498 </span>
+<span id="L499">499 /- The calibrated first-passage probability and complete stopped L1 terminal. -/</span>
+<span id="L500">500 theorem</span>
+<span id="L501">501     selfConsistentScheduledCausalSource_reciprocalThresholdCappedDoubleLinearRawWindowFirstPassage_vanishingDelayProbability_and_L1_consistency</span>
+<span id="L502">502     (mdp : MDP State Action) (initialState : Measure State)</span>
+<span id="L503">503     [IsProbabilityMeasure initialState]</span>
+<span id="L504">504     [StandardBorelSpace State] [StandardBorelSpace Action]</span>
+<span id="L505">505     (rewardSource : mdp.MeanCompatibleRewardKernel)</span>
+<span id="L506">506     (varianceProxy : NNReal) (hvarianceProxy : 0 &lt; varianceProxy)</span>
+<span id="L507">507     (law : rewardSource.UniformSubgaussianRewardLaw varianceProxy)</span>
+<span id="L508">508     (initialTable : DeterministicMarkovPolicyTable mdp)</span>
+<span id="L509">509     (defaultState : State)</span>
+<span id="L510">510     (support : ExploratoryPathSupport mdp initialState)</span>
+<span id="L511">511     (baseVisitFloor : Real)</span>
+<span id="L512">512     (hbaseFloor : ExploratoryPathUniformVisitFloor support 1 baseVisitFloor)</span>
+<span id="L513">513     (hrewardBound : forall state action, |mdp.reward state action| &lt;= 1)</span>
+<span id="L514">514     (hhorizon : 0 &lt; mdp.horizon) (hbaseVisitFloor : 0 &lt; baseVisitFloor) :</span>
+<span id="L515">515     let threshold :=</span>
+<span id="L516">516       selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold</span>
+<span id="L517">517     let stoppingPrefix :=</span>
+<span id="L518">518       selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix</span>
+<span id="L519">519         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L520">520           baseVisitFloor</span>
+<span id="L521">521     let source := selfConsistentScheduledCausalSource mdp initialState</span>
+<span id="L522">522       rewardSource initialTable defaultState varianceProxy baseVisitFloor</span>
+<span id="L523">523     let process :=</span>
+<span id="L524">524       selfConsistentScheduledNaturalCausalAverageRealizedBehaviorRegretProcess mdp</span>
+<span id="L525">525         initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L526">526           baseVisitFloor</span>
+<span id="L527">527     let stoppedProcess :=</span>
+<span id="L528">528       selfConsistentScheduledNaturalCausalStoppingTimeAverageRealizedBehaviorRegretProcess</span>
+<span id="L529">529         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L530">530           baseVisitFloor stoppingPrefix</span>
+<span id="L531">531     let expectedAbsolute :=</span>
+<span id="L532">532       selfConsistentScheduledNaturalCausalExpectedAbsoluteRateControlledRawWindowStoppingAverageRealizedBehaviorRegret</span>
+<span id="L533">533         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L534">534           baseVisitFloor stoppingPrefix</span>
+<span id="L535">535     let budget :=</span>
+<span id="L536">536       selfConsistentScheduledNaturalCausalRateControlledRawWindowStoppingL1Budget</span>
+<span id="L537">537         mdp varianceProxy baseVisitFloor explicitHighProbabilityRounds</span>
+<span id="L538">538           (fun scheduleIndex =&gt; 2 * scheduleIndex + 1)</span>
+<span id="L539">539     let rate :=</span>
+<span id="L540">540       selfConsistentScheduledNaturalCausalRateControlledRawWindowStoppingL1Rate</span>
+<span id="L541">541         mdp varianceProxy explicitHighProbabilityRounds</span>
+<span id="L542">542           (fun scheduleIndex =&gt; 2 * scheduleIndex + 1)</span>
+<span id="L543">543     let delayedSet :=</span>
+<span id="L544">544       selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedSet</span>
+<span id="L545">545         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L546">546           baseVisitFloor</span>
+<span id="L547">547     let delayedProbability :=</span>
+<span id="L548">548       selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedProbability</span>
+<span id="L549">549         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L550">550           baseVisitFloor</span>
+<span id="L551">551     let delayRate :=</span>
+<span id="L552">552       selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayRate</span>
+<span id="L553">553         mdp varianceProxy</span>
+<span id="L554">554     (forall scheduleIndex, 0 &lt; threshold scheduleIndex) /\</span>
+<span id="L555">555       Tendsto threshold atTop (nhds 0) /\</span>
+<span id="L556">556       (forall scheduleIndex, MeasurableSet (delayedSet scheduleIndex)) /\</span>
+<span id="L557">557       (forall scheduleIndex,</span>
+<span id="L558">558         delayedSet scheduleIndex ⊆</span>
+<span id="L559">559           explicitPolynomialPrefixAverageRealizedBehaviorRegretDistanceViolationSet</span>
+<span id="L560">560             mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L561">561               baseVisitFloor (threshold scheduleIndex) scheduleIndex) /\</span>
+<span id="L562">562       (forall scheduleIndex,</span>
+<span id="L563">563         delayedProbability scheduleIndex &lt;= ENNReal.ofReal (delayRate scheduleIndex)) /\</span>
+<span id="L564">564       Tendsto delayRate atTop (nhds 0) /\</span>
+<span id="L565">565       Tendsto delayedProbability atTop (nhds 0) /\</span>
+<span id="L566">566       Tendsto (fun scheduleIndex : Nat =&gt; scheduleIndex) atTop atTop /\</span>
+<span id="L567">567       StronglyAdapted</span>
+<span id="L568">568         (selfConsistentScheduledNaturalCausalTrajectoryFiltration mdp initialState</span>
+<span id="L569">569           rewardSource initialTable defaultState varianceProxy baseVisitFloor)</span>
+<span id="L570">570         process /\</span>
+<span id="L571">571       (forall scheduleIndex, Measurable (stoppedProcess scheduleIndex)) /\</span>
+<span id="L572">572       (forall scheduleIndex,</span>
+<span id="L573">573         MemLp (stoppedProcess scheduleIndex) 1 source.trajectoryMeasure) /\</span>
+<span id="L574">574       (forall scheduleIndex, expectedAbsolute scheduleIndex &lt;= budget scheduleIndex) /\</span>
+<span id="L575">575       (forall scheduleIndex, budget scheduleIndex &lt;= rate scheduleIndex) /\</span>
+<span id="L576">576       Tendsto budget atTop (nhds 0) /\</span>
+<span id="L577">577       Tendsto expectedAbsolute atTop (nhds 0) /\</span>
+<span id="L578">578       Tendsto</span>
+<span id="L579">579         (fun scheduleIndex =&gt; eLpNorm</span>
+<span id="L580">580           (stoppedProcess scheduleIndex - (fun _ =&gt; 0)) 1</span>
+<span id="L581">581             source.trajectoryMeasure) atTop (nhds 0) /\</span>
+<span id="L582">582       TendstoInMeasure source.trajectoryMeasure stoppedProcess atTop (fun _ =&gt; 0) /\</span>
+<span id="L583">583       ∀ᵐ trajectory ∂source.trajectoryMeasure,</span>
+<span id="L584">584         Tendsto (fun scheduleIndex =&gt; stoppedProcess scheduleIndex trajectory)</span>
+<span id="L585">585           atTop (nhds 0) := by</span>
+<span id="L586">586   dsimp only</span>
+<span id="L587">587   refine ⟨</span>
+<span id="L588">588     selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold_pos,</span>
+<span id="L589">589     selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold_tendsto_zero,</span>
+<span id="L590">590     ?_, ?_, ?_, ?_, ?_, ?_⟩</span>
+<span id="L591">591   · exact fun scheduleIndex =&gt;</span>
+<span id="L592">592       measurableSet_selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedSet</span>
+<span id="L593">593         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L594">594           baseVisitFloor scheduleIndex</span>
+<span id="L595">595   · exact fun scheduleIndex =&gt;</span>
+<span id="L596">596       selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedSet_subset_distanceViolationSet</span>
+<span id="L597">597         mdp initialState rewardSource initialTable defaultState varianceProxy</span>
+<span id="L598">598           baseVisitFloor scheduleIndex</span>
+<span id="L599">599   · exact fun scheduleIndex =&gt;</span>
+<span id="L600">600       selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedProbability_le_rate</span>
+<span id="L601">601         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L602">602           defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L603">603             hbaseVisitFloor scheduleIndex</span>
+<span id="L604">604   · exact</span>
+<span id="L605">605       selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayRate_tendsto_zero</span>
+<span id="L606">606         mdp varianceProxy</span>
+<span id="L607">607   · exact</span>
+<span id="L608">608       selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageDelayedProbability_tendsto_zero</span>
+<span id="L609">609         mdp initialState rewardSource varianceProxy hvarianceProxy law initialTable</span>
+<span id="L610">610           defaultState support baseVisitFloor hbaseFloor hrewardBound hhorizon</span>
+<span id="L611">611             hbaseVisitFloor</span>
+<span id="L612">612   · simpa only [</span>
+<span id="L613">613       selfConsistentScheduledNaturalCausalReciprocalThresholdCappedDoubleLinearRawWindowFirstPassageStoppingPrefix]</span>
+<span id="L614">614       using</span>
+<span id="L615">615         (selfConsistentScheduledCausalSource_cappedDoubleLinearRawWindowFirstPassageStoppingTimeNaturalAverageRealizedBehaviorRegret_L1_consistency</span>
+<span id="L616">616           mdp initialState rewardSource varianceProxy hvarianceProxy law</span>
+<span id="L617">617             initialTable defaultState support baseVisitFloor hbaseFloor</span>
+<span id="L618">618               hrewardBound hhorizon hbaseVisitFloor</span>
+<span id="L619">619                 selfConsistentScheduledNaturalCausalReciprocalFirstPassageThreshold)</span>
+<span id="L620">620 </span>
+<span id="L621">621 end AdaptiveStochasticSampledEmpiricalOptimisticSource</span>
+<span id="L622">622 </span>
+<span id="L623">623 end BanditRLProof.FiniteHorizonRL</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

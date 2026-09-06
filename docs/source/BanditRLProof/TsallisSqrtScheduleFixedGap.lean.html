@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/TsallisSqrtScheduleFixedGap.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/TsallisSqrtScheduleFixedGap.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/TsallisSqrtScheduleFixedGap.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/TsallisSqrtScheduleFixedGap.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.TsallisScheduledRefinedStabilityPenalty</span>
+<span id="L2">2 import Mathlib.NumberTheory.Harmonic.Bounds</span>
+<span id="L3">3 </span>
+<span id="L4">4 /-!</span>
+<span id="L5">5 # Square-root schedule fixed-gap bound for half-Tsallis FTRL</span>
+<span id="L6">6 </span>
+<span id="L7">7 This module instantiates the scheduled refined stability-penalty theorem with</span>
+<span id="L8">8 `eta t = 1 / (2 * sqrt (t + 1))`.  The schedule contracts and its unified</span>
+<span id="L9">9 coefficient are bounded explicitly before the fixed-gap theorem is consumed.</span>
+<span id="L10">10 -/</span>
+<span id="L11">11 </span>
+<span id="L12">12 namespace BanditRLProof</span>
+<span id="L13">13 namespace Tsallis</span>
+<span id="L14">14 </span>
+<span id="L15">15 open MeasureTheory ProbabilityTheory</span>
+<span id="L16">16 </span>
+<span id="L17">17 universe u v</span>
+<span id="L18">18 </span>
+<span id="L19">19 /-- The concrete small-rate schedule used by the fixed-gap route. -/</span>
+<span id="L20">20 noncomputable def sampledScheduledHalfTsallisSqrtSchedule (t : Nat) : Real :=</span>
+<span id="L21">21   1 / (2 * Real.sqrt (((t + 1 : Nat) : Real)))</span>
+<span id="L22">22 </span>
+<span id="L23">23 /-- The finite harmonic budget through the inclusive horizon. -/</span>
+<span id="L24">24 noncomputable def sampledScheduledHalfTsallisHarmonicBudget</span>
+<span id="L25">25     (horizon : Nat) : Real :=</span>
+<span id="L26">26   (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L27">27     1 / (((t + 1 : Nat) : Real)))</span>
+<span id="L28">28 </span>
+<span id="L29">29 /-- The local real-valued budget is the real cast of Mathlib&#x27;s rational</span>
+<span id="L30">30 harmonic number. -/</span>
+<span id="L31">31 theorem sampledScheduledHalfTsallisHarmonicBudget_eq_harmonic</span>
+<span id="L32">32     (horizon : Nat) :</span>
+<span id="L33">33     sampledScheduledHalfTsallisHarmonicBudget horizon =</span>
+<span id="L34">34       (harmonic (horizon + 1) : Real) := by</span>
+<span id="L35">35   unfold sampledScheduledHalfTsallisHarmonicBudget harmonic</span>
+<span id="L36">36   rw [Rat.cast_sum]</span>
+<span id="L37">37   apply Finset.sum_congr rfl</span>
+<span id="L38">38   intro t ht</span>
+<span id="L39">39   simp only [Rat.cast_inv, Rat.cast_natCast]</span>
+<span id="L40">40   norm_num</span>
+<span id="L41">41 </span>
+<span id="L42">42 /-- Mathlib&#x27;s finite harmonic estimate gives the explicit logarithmic budget. -/</span>
+<span id="L43">43 theorem sampledScheduledHalfTsallisHarmonicBudget_le_one_add_log</span>
+<span id="L44">44     (horizon : Nat) :</span>
+<span id="L45">45     sampledScheduledHalfTsallisHarmonicBudget horizon &lt;=</span>
+<span id="L46">46       1 + Real.log (((horizon + 1 : Nat) : Real)) := by</span>
+<span id="L47">47   rw [sampledScheduledHalfTsallisHarmonicBudget_eq_harmonic]</span>
+<span id="L48">48   exact harmonic_le_one_add_log (horizon + 1)</span>
+<span id="L49">49 </span>
+<span id="L50">50 theorem sampledScheduledHalfTsallisSqrtSchedule_pos (t : Nat) :</span>
+<span id="L51">51     0 &lt; sampledScheduledHalfTsallisSqrtSchedule t := by</span>
+<span id="L52">52   unfold sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L53">53   positivity</span>
+<span id="L54">54 </span>
+<span id="L55">55 theorem sampledScheduledHalfTsallisSqrtSchedule_le_half (t : Nat) :</span>
+<span id="L56">56     sampledScheduledHalfTsallisSqrtSchedule t &lt;= 1 / 2 := by</span>
+<span id="L57">57   unfold sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L58">58   have hsqrt :</span>
+<span id="L59">59       1 &lt;= Real.sqrt (((t + 1 : Nat) : Real)) := by</span>
+<span id="L60">60     rw [← Real.sqrt_one]</span>
+<span id="L61">61     exact Real.sqrt_le_sqrt (by norm_num)</span>
+<span id="L62">62   exact one_div_le_one_div_of_le (by norm_num : (0 : Real) &lt; 2)</span>
+<span id="L63">63     (by nlinarith)</span>
+<span id="L64">64 </span>
+<span id="L65">65 theorem sampledScheduledHalfTsallisSqrtSchedule_succ_le (t : Nat) :</span>
+<span id="L66">66     sampledScheduledHalfTsallisSqrtSchedule (t + 1) &lt;=</span>
+<span id="L67">67       sampledScheduledHalfTsallisSqrtSchedule t := by</span>
+<span id="L68">68   unfold sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L69">69   have hsqrt :</span>
+<span id="L70">70       Real.sqrt (((t + 1 : Nat) : Real)) &lt;=</span>
+<span id="L71">71         Real.sqrt (((t + 2 : Nat) : Real)) := by</span>
+<span id="L72">72     exact Real.sqrt_le_sqrt (by norm_num)</span>
+<span id="L73">73   have hdenom :</span>
+<span id="L74">74       2 * Real.sqrt (((t + 1 : Nat) : Real)) &lt;=</span>
+<span id="L75">75         2 * Real.sqrt (((t + 2 : Nat) : Real)) := by</span>
+<span id="L76">76     nlinarith</span>
+<span id="L77">77   exact one_div_le_one_div_of_le (by positivity) (by simpa [Nat.add_assoc] using hdenom)</span>
+<span id="L78">78 </span>
+<span id="L79">79 theorem sampledScheduledHalfTsallisSqrtSchedule_four_mul_sq (t : Nat) :</span>
+<span id="L80">80     4 * (sampledScheduledHalfTsallisSqrtSchedule t) ^ 2 =</span>
+<span id="L81">81       1 / (((t + 1 : Nat) : Real)) := by</span>
+<span id="L82">82   unfold sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L83">83   have hnonneg : 0 &lt;= (((t + 1 : Nat) : Real)) := by positivity</span>
+<span id="L84">84   have hcastPos : 0 &lt; (((t + 1 : Nat) : Real)) := by</span>
+<span id="L85">85     exact_mod_cast Nat.zero_lt_succ t</span>
+<span id="L86">86   have hsqrt_ne : Real.sqrt (((t + 1 : Nat) : Real)) ≠ 0 :=</span>
+<span id="L87">87     ne_of_gt (Real.sqrt_pos.2 hcastPos)</span>
+<span id="L88">88   rw [div_pow, one_pow, mul_pow, Real.sq_sqrt hnonneg]</span>
+<span id="L89">89   field_simp</span>
+<span id="L90">90   ring</span>
+<span id="L91">91 </span>
+<span id="L92">92 private theorem sqrt_succ_sub_sqrt_le_one_div_sqrt_succ (t : Nat) :</span>
+<span id="L93">93     Real.sqrt (((t + 2 : Nat) : Real)) -</span>
+<span id="L94">94         Real.sqrt (((t + 1 : Nat) : Real)) &lt;=</span>
+<span id="L95">95       1 / Real.sqrt (((t + 2 : Nat) : Real)) := by</span>
+<span id="L96">96   let x := Real.sqrt (((t + 1 : Nat) : Real))</span>
+<span id="L97">97   let y := Real.sqrt (((t + 2 : Nat) : Real))</span>
+<span id="L98">98   have hx : 0 &lt;= x := Real.sqrt_nonneg _</span>
+<span id="L99">99   have hy : 0 &lt; y := Real.sqrt_pos.2 (by positivity)</span>
+<span id="L100">100   have hxy : x &lt;= y := by</span>
+<span id="L101">101     exact Real.sqrt_le_sqrt (by norm_num)</span>
+<span id="L102">102   have hxx : x ^ 2 = (((t + 1 : Nat) : Real)) := by</span>
+<span id="L103">103     exact Real.sq_sqrt (by positivity)</span>
+<span id="L104">104   have hyy : y ^ 2 = (((t + 2 : Nat) : Real)) := by</span>
+<span id="L105">105     exact Real.sq_sqrt (by positivity)</span>
+<span id="L106">106   have hprod : x ^ 2 &lt;= x * y := by</span>
+<span id="L107">107     nlinarith [mul_nonneg hx (sub_nonneg.mpr hxy)]</span>
+<span id="L108">108   apply (le_div_iff₀ hy).2</span>
+<span id="L109">109   change (y - x) * y &lt;= 1</span>
+<span id="L110">110   have hcast : (((t + 2 : Nat) : Real)) =</span>
+<span id="L111">111       (((t + 1 : Nat) : Real)) + 1 := by</span>
+<span id="L112">112     push_cast</span>
+<span id="L113">113     ring</span>
+<span id="L114">114   nlinarith [hprod]</span>
+<span id="L115">115 </span>
+<span id="L116">116 theorem sampledScheduledHalfTsallisRefinedCoefficient_sqrtSchedule_nonneg</span>
+<span id="L117">117     (t : Nat) :</span>
+<span id="L118">118     0 &lt;= sampledScheduledHalfTsallisRefinedCoefficient</span>
+<span id="L119">119       sampledScheduledHalfTsallisSqrtSchedule t := by</span>
+<span id="L120">120   cases t with</span>
+<span id="L121">121   | zero =&gt;</span>
+<span id="L122">122       norm_num [sampledScheduledHalfTsallisRefinedCoefficient,</span>
+<span id="L123">123         sampledScheduledHalfTsallisSqrtSchedule]</span>
+<span id="L124">124   | succ t =&gt;</span>
+<span id="L125">125       simp only [sampledScheduledHalfTsallisRefinedCoefficient]</span>
+<span id="L126">126       have hetaPos := sampledScheduledHalfTsallisSqrtSchedule_pos</span>
+<span id="L127">127       have hmono := sampledScheduledHalfTsallisSqrtSchedule_succ_le t</span>
+<span id="L128">128       have hreciprocal := one_div_le_one_div_of_le (hetaPos (t + 1)) hmono</span>
+<span id="L129">129       exact add_nonneg (mul_nonneg (by norm_num) (le_of_lt (hetaPos (t + 1))))</span>
+<span id="L130">130         (mul_nonneg (by norm_num) (sub_nonneg.mpr hreciprocal))</span>
+<span id="L131">131 </span>
+<span id="L132">132 theorem sampledScheduledHalfTsallisRefinedCoefficient_sqrtSchedule_le</span>
+<span id="L133">133     (t : Nat) :</span>
+<span id="L134">134     sampledScheduledHalfTsallisRefinedCoefficient</span>
+<span id="L135">135         sampledScheduledHalfTsallisSqrtSchedule t &lt;=</span>
+<span id="L136">136       5 / Real.sqrt (((t + 1 : Nat) : Real)) := by</span>
+<span id="L137">137   cases t with</span>
+<span id="L138">138   | zero =&gt;</span>
+<span id="L139">139       norm_num [sampledScheduledHalfTsallisRefinedCoefficient,</span>
+<span id="L140">140         sampledScheduledHalfTsallisSqrtSchedule]</span>
+<span id="L141">141   | succ t =&gt;</span>
+<span id="L142">142       have hxpos : 0 &lt; (((t + 1 : Nat) : Real)) := by</span>
+<span id="L143">143         exact_mod_cast Nat.zero_lt_succ t</span>
+<span id="L144">144       have hypos : 0 &lt; (((t + 2 : Nat) : Real)) := by</span>
+<span id="L145">145         positivity</span>
+<span id="L146">146       have hxne : Real.sqrt (((t + 1 : Nat) : Real)) ≠ 0 :=</span>
+<span id="L147">147         ne_of_gt (Real.sqrt_pos.2 hxpos)</span>
+<span id="L148">148       have hyne : Real.sqrt (((t + 2 : Nat) : Real)) ≠ 0 :=</span>
+<span id="L149">149         ne_of_gt (Real.sqrt_pos.2 hypos)</span>
+<span id="L150">150       have hdiff := sqrt_succ_sub_sqrt_le_one_div_sqrt_succ t</span>
+<span id="L151">151       simp only [sampledScheduledHalfTsallisRefinedCoefficient]</span>
+<span id="L152">152       unfold sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L153">153       field_simp [hxne, hyne] at hdiff ⊢</span>
+<span id="L154">154       nlinarith</span>
+<span id="L155">155 </span>
+<span id="L156">156 theorem sampledScheduledHalfTsallisRefinedCoefficient_sqrtSchedule_sq_le</span>
+<span id="L157">157     (t : Nat) :</span>
+<span id="L158">158     (sampledScheduledHalfTsallisRefinedCoefficient</span>
+<span id="L159">159         sampledScheduledHalfTsallisSqrtSchedule t) ^ 2 &lt;=</span>
+<span id="L160">160       25 / (((t + 1 : Nat) : Real)) := by</span>
+<span id="L161">161   have hnonneg :=</span>
+<span id="L162">162     sampledScheduledHalfTsallisRefinedCoefficient_sqrtSchedule_nonneg t</span>
+<span id="L163">163   have hupper :=</span>
+<span id="L164">164     sampledScheduledHalfTsallisRefinedCoefficient_sqrtSchedule_le t</span>
+<span id="L165">165   have hsqrtNonneg :</span>
+<span id="L166">166       0 &lt;= Real.sqrt (((t + 1 : Nat) : Real)) := Real.sqrt_nonneg _</span>
+<span id="L167">167   have hsqrtSq :</span>
+<span id="L168">168       (Real.sqrt (((t + 1 : Nat) : Real))) ^ 2 =</span>
+<span id="L169">169         (((t + 1 : Nat) : Real)) := Real.sq_sqrt (by positivity)</span>
+<span id="L170">170   have hboundNonneg :</span>
+<span id="L171">171       0 &lt;= 5 / Real.sqrt (((t + 1 : Nat) : Real)) := by positivity</span>
+<span id="L172">172   have hsq := (sq_le_sq₀ hnonneg hboundNonneg).2 hupper</span>
+<span id="L173">173   rw [div_pow, hsqrtSq] at hsq</span>
+<span id="L174">174   norm_num at hsq ⊢</span>
+<span id="L175">175   exact hsq</span>
+<span id="L176">176 </span>
+<span id="L177">177 /-- The square-root schedule closes any matching self-bounding route with a</span>
+<span id="L178">178 finite harmonic budget and an explicit reciprocal-gap factor. -/</span>
+<span id="L179">179 theorem integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_sqrtSchedule_of_selfBounding</span>
+<span id="L180">180     {Env : Type u} {Action : Type v}</span>
+<span id="L181">181     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L182">182     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L183">183     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L184">184     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L185">185     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L186">186     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L187">187     {best : Action} (hbest : best ∈ arms) (horizon : Nat)</span>
+<span id="L188">188     (gap : Action -&gt; Real)</span>
+<span id="L189">189     (hgapPos : ∀ action, action ∈ arms.erase best -&gt; 0 &lt; gap action)</span>
+<span id="L190">190     (corruption : Real)</span>
+<span id="L191">191     (hselfBounding :</span>
+<span id="L192">192       let selector :=</span>
+<span id="L193">193         canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L194">194           arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L195">195       let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L196">196         arms harms sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L197">197           selector.finiteHistory loss.environment</span>
+<span id="L198">198       (Finset.range (horizon + 1)).sum (fun t =&gt;</span>
+<span id="L199">199           (arms.erase best).sum (fun action =&gt;</span>
+<span id="L200">200             gap action * sampledScheduledHalfTsallisExpectedProbabilityAt</span>
+<span id="L201">201               mu arms harms sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L202">202                 t action)) - corruption &lt;=</span>
+<span id="L203">203         integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L204">204           arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L205">205             (pointMass best) horizon)) :</span>
+<span id="L206">206     let selector :=</span>
+<span id="L207">207       canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L208">208         arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L209">209     let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L210">210       arms harms sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L211">211         selector.finiteHistory loss.environment</span>
+<span id="L212">212     integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L213">213         arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L214">214           (pointMass best) horizon) &lt;=</span>
+<span id="L215">215       sampledScheduledHalfTsallisHarmonicBudget horizon *</span>
+<span id="L216">216         (1 + 25 * (arms.erase best).sum (fun action =&gt; 1 / gap action)) +</span>
+<span id="L217">217       corruption := by</span>
+<span id="L218">218   dsimp only</span>
+<span id="L219">219   let eta := sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L220">220   let selector :=</span>
+<span id="L221">221     canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L222">222       arms harms eta loss</span>
+<span id="L223">223   let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L224">224     arms harms eta selector.finiteHistory loss.environment</span>
+<span id="L225">225   let times := Finset.range (horizon + 1)</span>
+<span id="L226">226   let suboptimal := arms.erase best</span>
+<span id="L227">227   let harmonic := sampledScheduledHalfTsallisHarmonicBudget horizon</span>
+<span id="L228">228   let gapBudget := suboptimal.sum (fun action =&gt; 1 / gap action)</span>
+<span id="L229">229   let regret := integral mu</span>
+<span id="L230">230     (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L231">231       arms harms eta loss (pointMass best) horizon)</span>
+<span id="L232">232   dsimp only at hselfBounding</span>
+<span id="L233">233   have habstract :=</span>
+<span id="L234">234     integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_refinedStabilityPenalty_of_selfBounding</span>
+<span id="L235">235       prior arms harms eta loss hbest horizon</span>
+<span id="L236">236       (fun t _ht =&gt; sampledScheduledHalfTsallisSqrtSchedule_pos t)</span>
+<span id="L237">237       (fun t _ht =&gt; sampledScheduledHalfTsallisSqrtSchedule_le_half t)</span>
+<span id="L238">238       (fun t _ht =&gt; sampledScheduledHalfTsallisSqrtSchedule_succ_le t)</span>
+<span id="L239">239       gap hgapPos corruption (by</span>
+<span id="L240">240         simpa [eta, mu, selector] using hselfBounding)</span>
+<span id="L241">241   dsimp only at habstract</span>
+<span id="L242">242   have hbase :</span>
+<span id="L243">243       2 * times.sum (fun t =&gt; 2 * (eta t) ^ 2) = harmonic := by</span>
+<span id="L244">244     rw [Finset.mul_sum]</span>
+<span id="L245">245     apply Finset.sum_congr rfl</span>
+<span id="L246">246     intro t ht</span>
+<span id="L247">247     have hfour := sampledScheduledHalfTsallisSqrtSchedule_four_mul_sq t</span>
+<span id="L248">248     change 2 * (2 * (sampledScheduledHalfTsallisSqrtSchedule t) ^ 2) =</span>
+<span id="L249">249       1 / (((t + 1 : Nat) : Real))</span>
+<span id="L250">250     nlinarith [hfour]</span>
+<span id="L251">251   have hpenalty :</span>
+<span id="L252">252       (times.product suboptimal).sum (fun index =&gt;</span>
+<span id="L253">253           (sampledScheduledHalfTsallisRefinedCoefficient eta index.1) ^ 2 /</span>
+<span id="L254">254             gap index.2) &lt;=</span>
+<span id="L255">255         harmonic * (25 * gapBudget) := by</span>
+<span id="L256">256     calc</span>
+<span id="L257">257       (times.product suboptimal).sum (fun index =&gt;</span>
+<span id="L258">258           (sampledScheduledHalfTsallisRefinedCoefficient eta index.1) ^ 2 /</span>
+<span id="L259">259             gap index.2) =</span>
+<span id="L260">260           times.sum (fun t =&gt; suboptimal.sum (fun action =&gt;</span>
+<span id="L261">261             (sampledScheduledHalfTsallisRefinedCoefficient eta t) ^ 2 /</span>
+<span id="L262">262               gap action)) :=</span>
+<span id="L263">263         Finset.sum_product times suboptimal _</span>
+<span id="L264">264       _ &lt;= times.sum (fun t =&gt; suboptimal.sum (fun action =&gt;</span>
+<span id="L265">265             (25 / (((t + 1 : Nat) : Real))) / gap action)) := by</span>
+<span id="L266">266         apply Finset.sum_le_sum</span>
+<span id="L267">267         intro t ht</span>
+<span id="L268">268         apply Finset.sum_le_sum</span>
+<span id="L269">269         intro action haction</span>
+<span id="L270">270         exact (div_le_div_iff_of_pos_right</span>
+<span id="L271">271           (hgapPos action (by simpa [suboptimal] using haction))).2</span>
+<span id="L272">272           (by simpa [eta] using</span>
+<span id="L273">273             sampledScheduledHalfTsallisRefinedCoefficient_sqrtSchedule_sq_le t)</span>
+<span id="L274">274       _ = times.sum (fun t =&gt;</span>
+<span id="L275">275           (1 / (((t + 1 : Nat) : Real))) * (25 * gapBudget)) := by</span>
+<span id="L276">276         apply Finset.sum_congr rfl</span>
+<span id="L277">277         intro t ht</span>
+<span id="L278">278         simp only [gapBudget]</span>
+<span id="L279">279         rw [Finset.mul_sum, Finset.mul_sum]</span>
+<span id="L280">280         apply Finset.sum_congr rfl</span>
+<span id="L281">281         intro action haction</span>
+<span id="L282">282         ring</span>
+<span id="L283">283       _ = harmonic * (25 * gapBudget) := by</span>
+<span id="L284">284         rw [← Finset.sum_mul]</span>
+<span id="L285">285         rfl</span>
+<span id="L286">286   calc</span>
+<span id="L287">287     regret &lt;=</span>
+<span id="L288">288         2 * times.sum (fun t =&gt; 2 * (eta t) ^ 2) +</span>
+<span id="L289">289           (times.product suboptimal).sum (fun index =&gt;</span>
+<span id="L290">290             (sampledScheduledHalfTsallisRefinedCoefficient eta index.1) ^ 2 /</span>
+<span id="L291">291               gap index.2) + corruption := by</span>
+<span id="L292">292       simpa [regret, times, suboptimal, eta, mu, selector] using habstract</span>
+<span id="L293">293     _ &lt;= harmonic + harmonic * (25 * gapBudget) + corruption := by</span>
+<span id="L294">294       rw [hbase]</span>
+<span id="L295">295       gcongr</span>
+<span id="L296">296     _ = harmonic * (1 + 25 * gapBudget) + corruption := by ring</span>
+<span id="L297">297     _ = sampledScheduledHalfTsallisHarmonicBudget horizon *</span>
+<span id="L298">298           (1 + 25 * (arms.erase best).sum (fun action =&gt; 1 / gap action)) +</span>
+<span id="L299">299         corruption := by</span>
+<span id="L300">300       rfl</span>
+<span id="L301">301 </span>
+<span id="L302">302 /-- The square-root schedule closes the exact fixed-gap route with a finite</span>
+<span id="L303">303 harmonic budget and an explicit reciprocal-gap factor. -/</span>
+<span id="L304">304 theorem integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_sqrtSchedule_fixedGap</span>
+<span id="L305">305     {Env : Type u} {Action : Type v}</span>
+<span id="L306">306     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L307">307     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L308">308     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L309">309     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L310">310     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L311">311     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L312">312     {best : Action} (hbest : best ∈ arms) (horizon : Nat)</span>
+<span id="L313">313     (gap : Action -&gt; Real)</span>
+<span id="L314">314     (hgapPos : ∀ action, action ∈ arms.erase best -&gt; 0 &lt; gap action)</span>
+<span id="L315">315     (hgapLaw : ∀ t sample action, action ∈ arms -&gt;</span>
+<span id="L316">316       Exp3.predictableLossAt loss t sample action -</span>
+<span id="L317">317         Exp3.predictableLossAt loss t sample best = gap action)</span>
+<span id="L318">318     (corruption : Real) (hcorruption : 0 &lt;= corruption) :</span>
+<span id="L319">319     let selector :=</span>
+<span id="L320">320       canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L321">321         arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L322">322     let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L323">323       arms harms sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L324">324         selector.finiteHistory loss.environment</span>
+<span id="L325">325     integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L326">326         arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L327">327           (pointMass best) horizon) &lt;=</span>
+<span id="L328">328       sampledScheduledHalfTsallisHarmonicBudget horizon *</span>
+<span id="L329">329         (1 + 25 * (arms.erase best).sum (fun action =&gt; 1 / gap action)) +</span>
+<span id="L330">330       corruption := by</span>
+<span id="L331">331   apply</span>
+<span id="L332">332     integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_sqrtSchedule_of_selfBounding</span>
+<span id="L333">333       prior arms harms loss hbest horizon gap hgapPos corruption</span>
+<span id="L334">334   exact</span>
+<span id="L335">335     integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_hasSelfBounding_of_fixedGap</span>
+<span id="L336">336       prior arms harms sampledScheduledHalfTsallisSqrtSchedule loss hbest gap</span>
+<span id="L337">337         horizon hgapLaw corruption hcorruption</span>
+<span id="L338">338 </span>
+<span id="L339">339 /-- The square-root schedule also closes a coordinatewise expected-gap law;</span>
+<span id="L340">340 no samplewise fixed-gap identity is required. -/</span>
+<span id="L341">341 theorem integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_sqrtSchedule_expectedGap</span>
+<span id="L342">342     {Env : Type u} {Action : Type v}</span>
+<span id="L343">343     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L344">344     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L345">345     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L346">346     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L347">347     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L348">348     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L349">349     {best : Action} (hbest : best ∈ arms) (horizon : Nat)</span>
+<span id="L350">350     (gap : Action -&gt; Real)</span>
+<span id="L351">351     (hgapPos : ∀ action, action ∈ arms.erase best -&gt; 0 &lt; gap action)</span>
+<span id="L352">352     (hgapLaw :</span>
+<span id="L353">353       let selector :=</span>
+<span id="L354">354         canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L355">355           arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L356">356       let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L357">357         arms harms sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L358">358           selector.finiteHistory loss.environment</span>
+<span id="L359">359       HasScheduledExpectedGapLaw mu arms harms</span>
+<span id="L360">360         sampledScheduledHalfTsallisSqrtSchedule loss best gap horizon)</span>
+<span id="L361">361     (corruption : Real) (hcorruption : 0 &lt;= corruption) :</span>
+<span id="L362">362     let selector :=</span>
+<span id="L363">363       canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L364">364         arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L365">365     let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L366">366       arms harms sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L367">367         selector.finiteHistory loss.environment</span>
+<span id="L368">368     integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L369">369         arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L370">370           (pointMass best) horizon) &lt;=</span>
+<span id="L371">371       sampledScheduledHalfTsallisHarmonicBudget horizon *</span>
+<span id="L372">372         (1 + 25 * (arms.erase best).sum (fun action =&gt; 1 / gap action)) +</span>
+<span id="L373">373       corruption := by</span>
+<span id="L374">374   dsimp only at hgapLaw ⊢</span>
+<span id="L375">375   apply</span>
+<span id="L376">376     integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_sqrtSchedule_of_selfBounding</span>
+<span id="L377">377       prior arms harms loss hbest horizon gap hgapPos corruption</span>
+<span id="L378">378   exact</span>
+<span id="L379">379     integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_hasSelfBounding_of_expectedGapLaw</span>
+<span id="L380">380       _ arms harms sampledScheduledHalfTsallisSqrtSchedule loss hbest gap</span>
+<span id="L381">381         horizon hgapLaw corruption hcorruption</span>
+<span id="L382">382 </span>
+<span id="L383">383 /-- The concrete square-root schedule has an explicit logarithmic fixed-gap</span>
+<span id="L384">384 regret bound, obtained from Mathlib&#x27;s finite harmonic estimate. -/</span>
+<span id="L385">385 theorem integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_sqrtSchedule_log_fixedGap</span>
+<span id="L386">386     {Env : Type u} {Action : Type v}</span>
+<span id="L387">387     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L388">388     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L389">389     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L390">390     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L391">391     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L392">392     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L393">393     {best : Action} (hbest : best ∈ arms) (horizon : Nat)</span>
+<span id="L394">394     (gap : Action -&gt; Real)</span>
+<span id="L395">395     (hgapPos : ∀ action, action ∈ arms.erase best -&gt; 0 &lt; gap action)</span>
+<span id="L396">396     (hgapLaw : ∀ t sample action, action ∈ arms -&gt;</span>
+<span id="L397">397       Exp3.predictableLossAt loss t sample action -</span>
+<span id="L398">398         Exp3.predictableLossAt loss t sample best = gap action)</span>
+<span id="L399">399     (corruption : Real) (hcorruption : 0 &lt;= corruption) :</span>
+<span id="L400">400     let selector :=</span>
+<span id="L401">401       canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L402">402         arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L403">403     let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L404">404       arms harms sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L405">405         selector.finiteHistory loss.environment</span>
+<span id="L406">406     integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L407">407         arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L408">408           (pointMass best) horizon) &lt;=</span>
+<span id="L409">409       (1 + Real.log (((horizon + 1 : Nat) : Real))) *</span>
+<span id="L410">410         (1 + 25 * (arms.erase best).sum (fun action =&gt; 1 / gap action)) +</span>
+<span id="L411">411       corruption := by</span>
+<span id="L412">412   dsimp only</span>
+<span id="L413">413   let selector :=</span>
+<span id="L414">414     canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L415">415       arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L416">416   let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L417">417     arms harms sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L418">418       selector.finiteHistory loss.environment</span>
+<span id="L419">419   let gapFactor :=</span>
+<span id="L420">420     1 + 25 * (arms.erase best).sum (fun action =&gt; 1 / gap action)</span>
+<span id="L421">421   have hregret :=</span>
+<span id="L422">422     integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_sqrtSchedule_fixedGap</span>
+<span id="L423">423       prior arms harms loss hbest horizon gap hgapPos hgapLaw</span>
+<span id="L424">424         corruption hcorruption</span>
+<span id="L425">425   dsimp only at hregret</span>
+<span id="L426">426   have hgapSum :</span>
+<span id="L427">427       0 &lt;= (arms.erase best).sum (fun action =&gt; 1 / gap action) := by</span>
+<span id="L428">428     apply Finset.sum_nonneg</span>
+<span id="L429">429     intro action haction</span>
+<span id="L430">430     exact le_of_lt (one_div_pos.mpr (hgapPos action haction))</span>
+<span id="L431">431   have hgapFactor : 0 &lt;= gapFactor := by</span>
+<span id="L432">432     dsimp [gapFactor]</span>
+<span id="L433">433     nlinarith</span>
+<span id="L434">434   have hbudget :=</span>
+<span id="L435">435     sampledScheduledHalfTsallisHarmonicBudget_le_one_add_log horizon</span>
+<span id="L436">436   have hmul :</span>
+<span id="L437">437       sampledScheduledHalfTsallisHarmonicBudget horizon * gapFactor &lt;=</span>
+<span id="L438">438         (1 + Real.log (((horizon + 1 : Nat) : Real))) * gapFactor :=</span>
+<span id="L439">439     mul_le_mul_of_nonneg_right hbudget hgapFactor</span>
+<span id="L440">440   calc</span>
+<span id="L441">441     integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L442">442         arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L443">443           (pointMass best) horizon) &lt;=</span>
+<span id="L444">444       sampledScheduledHalfTsallisHarmonicBudget horizon * gapFactor +</span>
+<span id="L445">445         corruption := by</span>
+<span id="L446">446       simpa [mu, selector, gapFactor] using hregret</span>
+<span id="L447">447     _ &lt;= (1 + Real.log (((horizon + 1 : Nat) : Real))) * gapFactor +</span>
+<span id="L448">448         corruption := by</span>
+<span id="L449">449       nlinarith [hmul]</span>
+<span id="L450">450     _ = (1 + Real.log (((horizon + 1 : Nat) : Real))) *</span>
+<span id="L451">451           (1 + 25 * (arms.erase best).sum (fun action =&gt; 1 / gap action)) +</span>
+<span id="L452">452         corruption := by</span>
+<span id="L453">453       rfl</span>
+<span id="L454">454 </span>
+<span id="L455">455 /-- Mathlib&#x27;s harmonic estimate turns the coordinatewise expected-gap route</span>
+<span id="L456">456 into the same explicit logarithmic square-root-schedule bound. -/</span>
+<span id="L457">457 theorem integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_sqrtSchedule_log_expectedGap</span>
+<span id="L458">458     {Env : Type u} {Action : Type v}</span>
+<span id="L459">459     [MeasurableSpace Env] [StandardBorelSpace Env]</span>
+<span id="L460">460     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L461">461     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L462">462     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L463">463     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L464">464     (loss : Exp3.PredictableLossVector Env Action)</span>
+<span id="L465">465     {best : Action} (hbest : best ∈ arms) (horizon : Nat)</span>
+<span id="L466">466     (gap : Action -&gt; Real)</span>
+<span id="L467">467     (hgapPos : ∀ action, action ∈ arms.erase best -&gt; 0 &lt; gap action)</span>
+<span id="L468">468     (hgapLaw :</span>
+<span id="L469">469       let selector :=</span>
+<span id="L470">470         canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L471">471           arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L472">472       let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L473">473         arms harms sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L474">474           selector.finiteHistory loss.environment</span>
+<span id="L475">475       HasScheduledExpectedGapLaw mu arms harms</span>
+<span id="L476">476         sampledScheduledHalfTsallisSqrtSchedule loss best gap horizon)</span>
+<span id="L477">477     (corruption : Real) (hcorruption : 0 &lt;= corruption) :</span>
+<span id="L478">478     let selector :=</span>
+<span id="L479">479       canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L480">480         arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L481">481     let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L482">482       arms harms sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L483">483         selector.finiteHistory loss.environment</span>
+<span id="L484">484     integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L485">485         arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L486">486           (pointMass best) horizon) &lt;=</span>
+<span id="L487">487       (1 + Real.log (((horizon + 1 : Nat) : Real))) *</span>
+<span id="L488">488         (1 + 25 * (arms.erase best).sum (fun action =&gt; 1 / gap action)) +</span>
+<span id="L489">489       corruption := by</span>
+<span id="L490">490   dsimp only at hgapLaw ⊢</span>
+<span id="L491">491   let selector :=</span>
+<span id="L492">492     canonicalHalfTsallisScheduleGeneratedSelectorMeasurability</span>
+<span id="L493">493       arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L494">494   let mu := prior ⊗ₘ sampledScheduledHalfTsallisTrajectoryKernel</span>
+<span id="L495">495     arms harms sampledScheduledHalfTsallisSqrtSchedule</span>
+<span id="L496">496       selector.finiteHistory loss.environment</span>
+<span id="L497">497   let gapFactor :=</span>
+<span id="L498">498     1 + 25 * (arms.erase best).sum (fun action =&gt; 1 / gap action)</span>
+<span id="L499">499   have hregret :=</span>
+<span id="L500">500     integral_sampledScheduledHalfTsallisPredictableEnvironmentRegret_pointMass_le_sqrtSchedule_expectedGap</span>
+<span id="L501">501       prior arms harms loss hbest horizon gap hgapPos hgapLaw</span>
+<span id="L502">502         corruption hcorruption</span>
+<span id="L503">503   dsimp only at hregret</span>
+<span id="L504">504   have hgapSum :</span>
+<span id="L505">505       0 &lt;= (arms.erase best).sum (fun action =&gt; 1 / gap action) := by</span>
+<span id="L506">506     apply Finset.sum_nonneg</span>
+<span id="L507">507     intro action haction</span>
+<span id="L508">508     exact le_of_lt (one_div_pos.mpr (hgapPos action haction))</span>
+<span id="L509">509   have hgapFactor : 0 &lt;= gapFactor := by</span>
+<span id="L510">510     dsimp [gapFactor]</span>
+<span id="L511">511     nlinarith</span>
+<span id="L512">512   have hbudget :=</span>
+<span id="L513">513     sampledScheduledHalfTsallisHarmonicBudget_le_one_add_log horizon</span>
+<span id="L514">514   have hmul :</span>
+<span id="L515">515       sampledScheduledHalfTsallisHarmonicBudget horizon * gapFactor &lt;=</span>
+<span id="L516">516         (1 + Real.log (((horizon + 1 : Nat) : Real))) * gapFactor :=</span>
+<span id="L517">517     mul_le_mul_of_nonneg_right hbudget hgapFactor</span>
+<span id="L518">518   calc</span>
+<span id="L519">519     integral mu (sampledScheduledHalfTsallisPredictableEnvironmentRegret</span>
+<span id="L520">520         arms harms sampledScheduledHalfTsallisSqrtSchedule loss</span>
+<span id="L521">521           (pointMass best) horizon) &lt;=</span>
+<span id="L522">522       sampledScheduledHalfTsallisHarmonicBudget horizon * gapFactor +</span>
+<span id="L523">523         corruption := by</span>
+<span id="L524">524       simpa [mu, selector, gapFactor] using hregret</span>
+<span id="L525">525     _ &lt;= (1 + Real.log (((horizon + 1 : Nat) : Real))) * gapFactor +</span>
+<span id="L526">526         corruption := by</span>
+<span id="L527">527       nlinarith [hmul]</span>
+<span id="L528">528     _ = (1 + Real.log (((horizon + 1 : Nat) : Real))) *</span>
+<span id="L529">529           (1 + 25 * (arms.erase best).sum (fun action =&gt; 1 / gap action)) +</span>
+<span id="L530">530         corruption := by</span>
+<span id="L531">531       rfl</span>
+<span id="L532">532 </span>
+<span id="L533">533 end Tsallis</span>
+<span id="L534">534 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

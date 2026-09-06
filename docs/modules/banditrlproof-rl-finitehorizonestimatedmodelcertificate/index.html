@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof.RL.FiniteHorizonEstimatedModelCertificate · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof.RL.FiniteHorizonEstimatedModelCertificate · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof.RL.FiniteHorizonEstimatedModelCertificate · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group active" data-nav-group="library" data-nav-group-active="true" open><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content">
+<section class="hero" id="module">
+  <p class="eyebrow">Lean module · Finite-horizon RL</p>
+  <h1 class="page-title identifier-title">Bandit<wbr>RL<wbr>Proof.<wbr>RL.<wbr>Finite<wbr>Horizon<wbr>Estimated<wbr>Model<wbr>Certificate</h1>
+  <p class="lede">This module connects a stage-indexed estimated reward/transition model to the compiled deterministic optimistic-certificate route. Separate two-sided reward and transition-expectation radii are required only on the recursively generated tail upper values. They produce a true Bellman certificate. The deterministic policy greedy for the estimated optimistic backup then has true Bellman residual at most twice its selected reward-plus-transition radius, so the existing occupancy theorem gives a single-episode expected-regret bound.</p>
+</section>
+
+<section id="metadata">
+  <h2>Module map</h2>
+  <dl class="module-meta">
+    <div><dt>Source</dt><dd><a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html"><code>BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean</code></a></dd></div>
+    <div><dt>Teaching chapter</dt><dd><a href="../../chapters/finite-horizon-rl/index.html">9. Finite-horizon reinforcement learning</a></dd></div>
+    <div><dt>Declarations</dt><dd>30</dd></div>
+    <div><dt>Placeholders</dt><dd>0</dd></div>
+  </dl>
+  <h3>Imports</h3>
+  <p><a href="../banditrlproof-finiterealargmax/index.html"><code>BanditRLProof.FiniteRealArgmax</code></a>, <a href="../banditrlproof-rl-finitehorizonoptimisticcertificate/index.html"><code>BanditRLProof.RL.FiniteHorizonOptimisticCertificate</code></a></p>
+  <h3>Imported by</h3>
+  <p><a href="../banditrlproof/index.html"><code>BanditRLProof</code></a>, <a href="../banditrlproof-rl-finitehorizoncoordinatemodelconfidence/index.html"><code>BanditRLProof.RL.FiniteHorizonCoordinateModelConfidence</code></a></p>
+</section>
+
+<section id="declarations">
+  <h2>Declarations</h2>
+  <p>Open an item to read its exact compact statement and source link. Detailed teaching notes are linked when registered.</p>
+  <div class="declaration-list">
+<details class="declaration" id="decl-99e0fe4f8940">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.decisionStageRemaining</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Chronological stage corresponding to a successor remaining-horizon index.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> decisionStageRemaining (mdp : MDP State Action) (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) : Fin mdp.horizon</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L32">Source line 32</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5cfc50290a4c">
+  <summary>
+    <span class="kind">structure</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A stage-indexed estimated MDP together with separate reward and transition
+confidence radii.  Confidence itself is a downstream proposition because the
+transition error is evaluated on the recursively generated upper value.</p>
+    <pre class="lean-code"><code><span class="kw">structure</span> EstimatedModelPlan (mdp : MDP State Action) <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L41">Source line 41</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-3e6b86b08be6">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.exactModelPlan</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The true MDP with zero radii is the canonical exact estimated plan.</p>
+    <pre class="lean-code"><code><span class="kw">def</span> exactModelPlan (mdp : MDP State Action) : EstimatedModelPlan mdp <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L65">Source line 65</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-44163d853748">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.transitionValue</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Estimated next-state expectation of a continuation value.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> transitionValue {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) (stage : Fin mdp.horizon) (value : State -&gt; Real) (state : State) (action : Action) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L76">Source line 76</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-adaff1620fb8">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.bellmanQ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Estimated one-step reward plus continuation value.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> bellmanQ {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) (stage : Fin mdp.horizon) (value : State -&gt; Real) (state : State) (action : Action) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L83">Source line 83</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-2332244fca8f">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.optimisticQ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Estimated Bellman action value enlarged by both confidence radii.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> optimisticQ {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) (stage : Fin mdp.horizon) (value : State -&gt; Real) (state : State) (action : Action) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L91">Source line 91</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a677d4bdec88">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.measurable_transitionValue</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The estimated transition-value surface is measurable in the state-action pair.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_transitionValue {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) (stage : Fin mdp.horizon) {value : State -&gt; Real} (hvalue : Measurable value) : Measurable (Function.uncurry (plan.transitionValue stage value))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L101">Source line 101</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-23c70dddaff6">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.measurable_optimisticQ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The optimistic estimated action-value surface is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_optimisticQ {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) (stage : Fin mdp.horizon) {value : State -&gt; Real} (hvalue : Measurable value) : Measurable (Function.uncurry (plan.optimisticQ stage value))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L110">Source line 110</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d3677e66124f">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.optimisticAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">A finite action maximizing the estimated optimistic action value.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> optimisticAction {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) (stage : Fin mdp.horizon) (value : State -&gt; Real) (state : State) : Action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L122">Source line 122</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-69599bf1e38b">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.optimisticQ_le_optimisticAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every action is bounded by the selected optimistic estimated action value.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> optimisticQ_le_optimisticAction {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) (stage : Fin mdp.horizon) (value : State -&gt; Real) (state : State) (action : Action) : plan.optimisticQ stage value state action &lt;= plan.optimisticQ stage value state (plan.optimisticAction stage value state)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L130">Source line 130</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-9b162d9ed9ca">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.optimisticBellman</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Pointwise maximum of the estimated optimistic action values.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> optimisticBellman {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) (stage : Fin mdp.horizon) (value : State -&gt; Real) (state : State) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L141">Source line 141</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8ead73b3dc50">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.measurable_optimisticAction</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The finite-state estimated optimistic selector is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_optimisticAction {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) (stage : Fin mdp.horizon) (value : State -&gt; Real) : Measurable (plan.optimisticAction stage value)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L148">Source line 148</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-54a87a8b467a">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.upperValueRemaining</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Recursive estimated optimistic value indexed by decisions remaining.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> upperValueRemaining {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) : (remaining : Nat) -&gt; remaining &lt;= mdp.horizon -&gt; State -&gt; Real | <span class="num">0</span>, _ =&gt; <span class="kw">fun</span> _ =&gt; <span class="num">0</span> | remaining + <span class="num">1</span>, hremaining =&gt; plan.optimisticBellman (mdp.decisionStageRemaining remaining hremaining) (plan.upperValueRemaining remaining (<span class="kw">by</span> omega)) omit [MeasurableSingletonClass State] <span class="kw">in</span> /-- Transport the dependent upper-value recursion across equal remaining horizons. -/ <span class="kw">theorem</span> upperValueRemaining_eq_of_eq {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) {left right : Nat} (hleft : left &lt;= mdp.horizon) (hright : right &lt;= mdp.horizon) (h : left = right) : plan.upperValueRemaining left hleft = plan.upperValueRemaining right hright</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L155">Source line 155</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-1c19af1169ad">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.upperValueRemaining_eq_of_eq</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Transport the dependent upper-value recursion across equal remaining horizons.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> upperValueRemaining_eq_of_eq {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) {left right : Nat} (hleft : left &lt;= mdp.horizon) (hright : right &lt;= mdp.horizon) (h : left = right) : plan.upperValueRemaining left hleft = plan.upperValueRemaining right hright</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L165">Source line 165</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-bfe888623ebb">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.measurable_upperValueRemaining</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every recursively generated upper-value surface is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_upperValueRemaining {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) : Measurable (plan.upperValueRemaining remaining hremaining)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L175">Source line 175</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-633bd08ba5f2">
+  <summary>
+    <span class="kind">structure</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.Confidence</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Two-sided model confidence on the recursive upper-value route.  The transition
+contract is deliberately not quantified over arbitrary unbounded values.</p>
+    <pre class="lean-code"><code><span class="kw">structure</span> Confidence {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) : Prop <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L185">Source line 185</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-915d2d164276">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.exactModelPlan_confidence</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The canonical exact estimated plan satisfies confidence by reflexivity.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> exactModelPlan_confidence (mdp : MDP State Action) : (exactModelPlan mdp).Confidence</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L203">Source line 203</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-24b305aefbc9">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.Confidence.trueBellmanQ_le_optimisticQ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Two-sided confidence makes every true action value optimistic.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> Confidence.trueBellmanQ_le_optimisticQ {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.Confidence) (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (state : State) (action : Action) : mdp.bellmanQ (plan.upperValueRemaining remaining (<span class="kw">by</span> omega)) state action &lt;= plan.optimisticQ (mdp.decisionStageRemaining remaining hremaining) (plan.upperValueRemaining remaining (<span class="kw">by</span> omega)) state action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L213">Source line 213</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-8c6c8945afc6">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.certificate</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The recursive estimated optimistic values form a true Bellman certificate.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> certificate {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) (confidence : plan.Confidence) : mdp.OptimisticBellmanCertificate <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L231">Source line 231</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-252318e27cdf">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.Confidence.optimalValueRemaining_le_upperValueRemaining</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Estimated-model confidence implies pointwise global optimism.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> Confidence.optimalValueRemaining_le_upperValueRemaining {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.Confidence) (remaining : Nat) (hremaining : remaining &lt;= mdp.horizon) (state : State) : mdp.optimalValueRemaining remaining hremaining state &lt;= plan.upperValueRemaining remaining hremaining state</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L258">Source line 258</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-d46e5eade4c5">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.optimisticActionAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Estimated optimistic action at a chronological stage.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> optimisticActionAt {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) (stage : Fin mdp.horizon) : State -&gt; Action</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L268">Source line 268</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-a71a97b28173">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.measurable_optimisticActionAt</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The chronological estimated optimistic selector is measurable.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> measurable_optimisticActionAt {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) (stage : Fin mdp.horizon) : Measurable (plan.optimisticActionAt stage)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L276">Source line 276</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-5496367e3709">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.optimisticPolicy</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Deterministic Markov policy greedy for each estimated optimistic backup.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> optimisticPolicy {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) : MarkovPolicy mdp <span class="kw">where</span></code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L283">Source line 283</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-6508c2621789">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.optimisticActionAt_decisionStageRemaining</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Remaining-horizon and chronological selectors agree exactly.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> optimisticActionAt_decisionStageRemaining {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) : plan.optimisticActionAt (mdp.decisionStageRemaining remaining hremaining) = plan.optimisticAction (mdp.decisionStageRemaining remaining hremaining) (plan.upperValueRemaining remaining (<span class="kw">by</span> omega))</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L296">Source line 296</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-f7a7ff8588a3">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.optimisticPolicy_bellman_eq_bellmanQ</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The deterministic estimated-greedy policy Bellman integral selects its action.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> optimisticPolicy_bellman_eq_bellmanQ {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) (stage : Fin mdp.horizon) (value : State -&gt; Real) (state : State) : plan.optimisticPolicy.bellman stage value state = mdp.bellmanQ value state (plan.optimisticActionAt stage state)</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L311">Source line 311</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-db960ff853b1">
+  <summary>
+    <span class="kind">def</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.selectedRadiusRemaining</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Reward-plus-transition radius selected by the estimated optimistic policy.</p>
+    <pre class="lean-code"><code><span class="kw">noncomputable</span> <span class="kw">def</span> selectedRadiusRemaining {mdp : MDP State Action} (plan : EstimatedModelPlan mdp) (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (state : State) : Real</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L324">Source line 324</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-16954de7cf37">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.Confidence.selectedRadiusRemaining_nonneg</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Every selected radius is nonnegative under the two-sided confidence contract.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> Confidence.selectedRadiusRemaining_nonneg {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.Confidence) (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (state : State) : <span class="num">0</span> &lt;= plan.selectedRadiusRemaining remaining hremaining state</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L336">Source line 336</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-b022999abb8f">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.Confidence.policyBellmanResidual_le_two_selectedRadiusRemaining</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">The estimated-greedy policy residual is at most twice its selected model
+confidence radius.  One side of each absolute-error bound produced optimism;
+the other side controls the remaining selected-action overestimate.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> Confidence.policyBellmanResidual_le_two_selectedRadiusRemaining {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.Confidence) (remaining : Nat) (hremaining : remaining + <span class="num">1</span> &lt;= mdp.horizon) (state : State) : (plan.certificate confidence).policyBellmanResidual plan.optimisticPolicy remaining hremaining state &lt;= <span class="num">2</span> * plan.selectedRadiusRemaining remaining hremaining state</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L357">Source line 357</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-145182db48c7">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.Confidence.expectedRegret_le_two_occupancySelectedRadiusRemaining</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Full residual chain for the estimated-greedy policy under a probability initial law.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> Confidence.expectedRegret_le_two_occupancySelectedRadiusRemaining {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.Confidence) (initialState : Measure State) [IsProbabilityMeasure initialState] : <span class="num">0</span> &lt;= (plan.certificate confidence).residualOccupancyRemaining plan.optimisticPolicy mdp.horizon le_rfl initialState /\ plan.optimisticPolicy.expectedRegret initialState &lt;= (plan.certificate confidence).residualOccupancyRemaining plan.optimisticPolicy mdp.horizon le_rfl initialState /\ (plan.certificate confidence).residualOccupancyRemaining plan.optimisticPolicy mdp.horizon le_rfl initialState &lt;= plan.optimisticPolicy.occupancySumRemaining (<span class="kw">fun</span> remaining hremaining state =&gt; <span class="num">2</span> * plan.selectedRadiusRemaining remaining hremaining state) mdp.horizon le_rfl initialState /\ plan.optimisticPolicy.expectedRegret initialState &lt;= plan.optimisticPolicy.occupancySumRemaining (<span class="kw">fun</span> remaining hremaining state =&gt; <span class="num">2</span> * plan.selectedRadiusRemaining remaining hremaining state) mdp.horizon le_rfl initialState</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L392">Source line 392</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details>
+<details class="declaration" id="decl-e3f74d0b8df5">
+  <summary>
+    <span class="kind">theorem</span>
+    <code>BanditRLProof.FiniteHorizonRL.MDP.EstimatedModelPlan.Confidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining</code>
+    <span><span class="status compiled">Compiled</span> </span>
+  </summary>
+  <div class="declaration-content">
+    <p class="docstring">Route endpoint: estimated-model confidence simultaneously gives global
+optimism and the selected-radius single-episode expected-regret bound.</p>
+    <pre class="lean-code"><code><span class="kw">theorem</span> Confidence.optimism_and_expectedRegret_le_two_occupancySelectedRadiusRemaining {mdp : MDP State Action} {plan : EstimatedModelPlan mdp} (confidence : plan.Confidence) (initialState : Measure State) [IsProbabilityMeasure initialState] : (<span class="kw">forall</span> state, mdp.optimalValueRemaining mdp.horizon le_rfl state &lt;= plan.upperValueRemaining mdp.horizon le_rfl state) /\ plan.optimisticPolicy.expectedRegret initialState &lt;= plan.optimisticPolicy.occupancySumRemaining (<span class="kw">fun</span> remaining hremaining state =&gt; <span class="num">2</span> * plan.selectedRadiusRemaining remaining hremaining state) mdp.horizon le_rfl initialState</code></pre>
+    <div class="source-links">
+      <a href="../../source/BanditRLProof/RL/FiniteHorizonEstimatedModelCertificate.lean.html#L425">Source line 425</a>
+
+      <a href="../../chapters/finite-horizon-rl/index.html">Chapter context: Finite-horizon RL</a>
+    </div>
+  </div>
+</details></div>
+</section>
+</main>
+      <aside class="side-nav" data-page-toc aria-label="On this page"><button class="side-nav-toggle" type="button" data-toc-toggle aria-controls="page-toc-links" aria-expanded="false"><span class="side-nav-toggle-label">On this page</span><span class="side-nav-current" data-toc-current>Module</span><span class="side-nav-chevron" aria-hidden="true">⌄</span></button><strong class="side-nav-label">On this page</strong><nav class="side-nav-links" id="page-toc-links"><a data-toc-link href="#module">Module</a><a data-toc-link href="#metadata">Module map</a><a data-toc-link href="#declarations">Declarations</a></nav></aside>
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

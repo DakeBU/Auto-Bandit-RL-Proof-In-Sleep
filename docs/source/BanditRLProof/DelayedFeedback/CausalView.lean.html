@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/DelayedFeedback/CausalView.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/DelayedFeedback/CausalView.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/DelayedFeedback/CausalView.lean · BanditRLlib</title>
+  <link rel="icon" href="../../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../index.html">Overview</a><a href="../../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../../banditrlwiki/papers/index.html">Paper index</a><a href="../../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../declarations/index.html">Lean declarations</a><a href="../../../implementation-map/index.html">Implementation map</a><a href="../../../lean-graph/index.html">Lean Graph</a><a href="../../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../ide/index.html">Local Formalization Lab</a><a href="../../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../../community/index.html">Contribute</a><a href="../../../roadmap/index.html">Roadmap</a><a href="../../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/DelayedFeedback/CausalView.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.DelayedFeedback.Accounting</span>
+<span id="L2">2 </span>
+<span id="L3">3 namespace BanditRLProof</span>
+<span id="L4">4 </span>
+<span id="L5">5 namespace DelayedFeedback</span>
+<span id="L6">6 </span>
+<span id="L7">7 universe uAction uLoss uDecision</span>
+<span id="L8">8 </span>
+<span id="L9">9 /-- The information exposed to an action rule immediately before a delayed</span>
+<span id="L10">10 bandit action.  Past actions are visible, while a loss is exposed only when</span>
+<span id="L11">11 its source round belongs to the source-faithful strict-availability set.</span>
+<span id="L12">12 </span>
+<span id="L13">13 The view deliberately has no delay field and no total loss trace field.  A</span>
+<span id="L14">14 future Delayed SAPO implementation must consume this view (or a proved</span>
+<span id="L15">15 equivalent), rather than the environment&#x27;s hidden delay/loss functions. -/</span>
+<span id="L16">16 structure ActionTimeView (Action : Type uAction) (Loss : Type uLoss) where</span>
+<span id="L17">17   pastAction : Nat → Option Action</span>
+<span id="L18">18   observedLoss : Nat → Option Loss</span>
+<span id="L19">19 </span>
+<span id="L20">20 @[ext]</span>
+<span id="L21">21 theorem ActionTimeView.ext</span>
+<span id="L22">22     {Action : Type uAction} {Loss : Type uLoss}</span>
+<span id="L23">23     {left right : ActionTimeView Action Loss}</span>
+<span id="L24">24     (hpast : left.pastAction = right.pastAction)</span>
+<span id="L25">25     (hloss : left.observedLoss = right.observedLoss) :</span>
+<span id="L26">26     left = right := by</span>
+<span id="L27">27   cases left</span>
+<span id="L28">28   cases right</span>
+<span id="L29">29   cases hpast</span>
+<span id="L30">30   cases hloss</span>
+<span id="L31">31   rfl</span>
+<span id="L32">32 </span>
+<span id="L33">33 /-- Construct the pre-action view at round `t` from an environment trace.</span>
+<span id="L34">34 Actions before `t` are known to the learner.  A source loss is known exactly</span>
+<span id="L35">35 when `s + delay s &lt; t`; future and outstanding losses return `none`. -/</span>
+<span id="L36">36 def actionTimeViewAt</span>
+<span id="L37">37     {Action : Type uAction} {Loss : Type uLoss}</span>
+<span id="L38">38     (delay : Nat → Nat) (action : Nat → Action) (loss : Nat → Loss)</span>
+<span id="L39">39     (t : Nat) : ActionTimeView Action Loss where</span>
+<span id="L40">40   pastAction := fun s =&gt; if s &lt; t then some (action s) else none</span>
+<span id="L41">41   observedLoss := fun s =&gt;</span>
+<span id="L42">42     if s ∈ observedBefore delay t then some (loss s) else none</span>
+<span id="L43">43 </span>
+<span id="L44">44 /-- A causal decision rule receives only the round number and its action-time</span>
+<span id="L45">45 view.  `Decision` can later be instantiated by an action distribution, a</span>
+<span id="L46">46 kernel, or a deterministic action. -/</span>
+<span id="L47">47 abbrev CausalDecisionRule</span>
+<span id="L48">48     (Action : Type uAction) (Loss : Type uLoss) (Decision : Type uDecision) :=</span>
+<span id="L49">49   (t : Nat) → ActionTimeView Action Loss → Decision</span>
+<span id="L50">50 </span>
+<span id="L51">51 @[simp]</span>
+<span id="L52">52 theorem actionTimeViewAt_pastAction_of_lt</span>
+<span id="L53">53     {Action : Type uAction} {Loss : Type uLoss}</span>
+<span id="L54">54     (delay : Nat → Nat) (action : Nat → Action) (loss : Nat → Loss)</span>
+<span id="L55">55     {s t : Nat} (hs : s &lt; t) :</span>
+<span id="L56">56     (actionTimeViewAt delay action loss t).pastAction s = some (action s) := by</span>
+<span id="L57">57   simp [actionTimeViewAt, hs]</span>
+<span id="L58">58 </span>
+<span id="L59">59 @[simp]</span>
+<span id="L60">60 theorem actionTimeViewAt_pastAction_of_not_lt</span>
+<span id="L61">61     {Action : Type uAction} {Loss : Type uLoss}</span>
+<span id="L62">62     (delay : Nat → Nat) (action : Nat → Action) (loss : Nat → Loss)</span>
+<span id="L63">63     {s t : Nat} (hs : ¬ s &lt; t) :</span>
+<span id="L64">64     (actionTimeViewAt delay action loss t).pastAction s = none := by</span>
+<span id="L65">65   simp [actionTimeViewAt, hs]</span>
+<span id="L66">66 </span>
+<span id="L67">67 @[simp]</span>
+<span id="L68">68 theorem actionTimeViewAt_observedLoss_of_mem</span>
+<span id="L69">69     {Action : Type uAction} {Loss : Type uLoss}</span>
+<span id="L70">70     (delay : Nat → Nat) (action : Nat → Action) (loss : Nat → Loss)</span>
+<span id="L71">71     {s t : Nat} (hs : s ∈ observedBefore delay t) :</span>
+<span id="L72">72     (actionTimeViewAt delay action loss t).observedLoss s = some (loss s) := by</span>
+<span id="L73">73   simp [actionTimeViewAt, hs]</span>
+<span id="L74">74 </span>
+<span id="L75">75 @[simp]</span>
+<span id="L76">76 theorem actionTimeViewAt_observedLoss_of_not_mem</span>
+<span id="L77">77     {Action : Type uAction} {Loss : Type uLoss}</span>
+<span id="L78">78     (delay : Nat → Nat) (action : Nat → Action) (loss : Nat → Loss)</span>
+<span id="L79">79     {s t : Nat} (hs : s ∉ observedBefore delay t) :</span>
+<span id="L80">80     (actionTimeViewAt delay action loss t).observedLoss s = none := by</span>
+<span id="L81">81   simp [actionTimeViewAt, hs]</span>
+<span id="L82">82 </span>
+<span id="L83">83 /-- Outstanding feedback is absent from the action-time view. -/</span>
+<span id="L84">84 theorem actionTimeViewAt_outstanding_loss_hidden</span>
+<span id="L85">85     {Action : Type uAction} {Loss : Type uLoss}</span>
+<span id="L86">86     (delay : Nat → Nat) (action : Nat → Action) (loss : Nat → Loss)</span>
+<span id="L87">87     {s t : Nat} (hs : s ∈ outstandingAt delay t) :</span>
+<span id="L88">88     (actionTimeViewAt delay action loss t).observedLoss s = none := by</span>
+<span id="L89">89   apply actionTimeViewAt_observedLoss_of_not_mem</span>
+<span id="L90">90   intro hobserved</span>
+<span id="L91">91   exact (Finset.mem_filter.mp hs).2 (Finset.mem_filter.mp hobserved).2</span>
+<span id="L92">92 </span>
+<span id="L93">93 /-- Two environment traces yield exactly the same pre-action view whenever</span>
+<span id="L94">94 their visible source sets, past actions, and revealed losses agree.  Hidden</span>
+<span id="L95">95 delays and unobserved losses may differ. -/</span>
+<span id="L96">96 theorem actionTimeViewAt_eq_of_observation_equivalent</span>
+<span id="L97">97     {Action : Type uAction} {Loss : Type uLoss}</span>
+<span id="L98">98     (delay₁ delay₂ : Nat → Nat)</span>
+<span id="L99">99     (action₁ action₂ : Nat → Action) (loss₁ loss₂ : Nat → Loss)</span>
+<span id="L100">100     (t : Nat)</span>
+<span id="L101">101     (hvisible : observedBefore delay₁ t = observedBefore delay₂ t)</span>
+<span id="L102">102     (haction : ∀ s, s &lt; t → action₁ s = action₂ s)</span>
+<span id="L103">103     (hloss : ∀ s, s ∈ observedBefore delay₁ t → loss₁ s = loss₂ s) :</span>
+<span id="L104">104     actionTimeViewAt delay₁ action₁ loss₁ t =</span>
+<span id="L105">105       actionTimeViewAt delay₂ action₂ loss₂ t := by</span>
+<span id="L106">106   apply ActionTimeView.ext</span>
+<span id="L107">107   · funext s</span>
+<span id="L108">108     by_cases hs : s &lt; t</span>
+<span id="L109">109     · simp [actionTimeViewAt, hs, haction s hs]</span>
+<span id="L110">110     · simp [actionTimeViewAt, hs]</span>
+<span id="L111">111   · funext s</span>
+<span id="L112">112     by_cases hs : s ∈ observedBefore delay₁ t</span>
+<span id="L113">113     · have hs₂ : s ∈ observedBefore delay₂ t := by</span>
+<span id="L114">114         simpa [← hvisible] using hs</span>
+<span id="L115">115       simp [actionTimeViewAt, hs, hs₂, hloss s hs]</span>
+<span id="L116">116     · have hs₂ : s ∉ observedBefore delay₂ t := by</span>
+<span id="L117">117         simpa [← hvisible] using hs</span>
+<span id="L118">118       simp [actionTimeViewAt, hs, hs₂]</span>
+<span id="L119">119 </span>
+<span id="L120">120 /-- A decision rule consuming only `ActionTimeView` cannot distinguish two</span>
+<span id="L121">121 worlds that agree on all information visible before the action. -/</span>
+<span id="L122">122 theorem causalDecision_eq_of_observation_equivalent</span>
+<span id="L123">123     {Action : Type uAction} {Loss : Type uLoss}</span>
+<span id="L124">124     {Decision : Type uDecision}</span>
+<span id="L125">125     (rule : CausalDecisionRule Action Loss Decision)</span>
+<span id="L126">126     (delay₁ delay₂ : Nat → Nat)</span>
+<span id="L127">127     (action₁ action₂ : Nat → Action) (loss₁ loss₂ : Nat → Loss)</span>
+<span id="L128">128     (t : Nat)</span>
+<span id="L129">129     (hvisible : observedBefore delay₁ t = observedBefore delay₂ t)</span>
+<span id="L130">130     (haction : ∀ s, s &lt; t → action₁ s = action₂ s)</span>
+<span id="L131">131     (hloss : ∀ s, s ∈ observedBefore delay₁ t → loss₁ s = loss₂ s) :</span>
+<span id="L132">132     rule t (actionTimeViewAt delay₁ action₁ loss₁ t) =</span>
+<span id="L133">133       rule t (actionTimeViewAt delay₂ action₂ loss₂ t) := by</span>
+<span id="L134">134   rw [actionTimeViewAt_eq_of_observation_equivalent</span>
+<span id="L135">135     delay₁ delay₂ action₁ action₂ loss₁ loss₂ t hvisible haction hloss]</span>
+<span id="L136">136 </span>
+<span id="L137">137 end DelayedFeedback</span>
+<span id="L138">138 </span>
+<span id="L139">139 end BanditRLProof</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../../static/site.js?v=20260903f"></script>
+</body>
+</html>

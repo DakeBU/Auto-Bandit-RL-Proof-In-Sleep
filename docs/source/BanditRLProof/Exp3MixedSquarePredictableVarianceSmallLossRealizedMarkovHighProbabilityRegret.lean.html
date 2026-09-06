@@ -1,0 +1,1387 @@
+<!doctype html>
+<html lang="en" data-theme="blueprint">
+<head>
+  <meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta name="robots" content="noindex,nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="BanditRLlib: verified bandit and reinforcement-learning theory in Lean, produced by the target-faithful ABRL autoformalization harness.">
+  <meta name="citation_title" content="ABRL: A Target-Faithful Autoformalization Harness and Lean 4 Library for Bandit and Reinforcement Learning Theory">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BanditRLlib">
+  <meta property="og:title" content="BanditRLProof/Exp3MixedSquarePredictableVarianceSmallLossRealizedMarkovHighProbabilityRegret.lean · BanditRLlib">
+  <meta property="og:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="BanditRLProof/Exp3MixedSquarePredictableVarianceSmallLossRealizedMarkovHighProbabilityRegret.lean · BanditRLlib">
+  <meta name="twitter:description" content="Verified bandit and reinforcement-learning theory in Lean, with source-mapped teaching chapters, exact declarations, and explicit proof boundaries.">
+
+  <meta name="theme-color" content="#176b70">
+  <title>BanditRLProof/Exp3MixedSquarePredictableVarianceSmallLossRealizedMarkovHighProbabilityRegret.lean · BanditRLlib</title>
+  <link rel="icon" href="../../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../static/site.css?v=20260903f">
+
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      options: { skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'] }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+</head>
+<body data-site-root="../..">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <header class="mobile-bar">
+    <button class="sidebar-toggle" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">☰</span><span class="visually-hidden">Open site navigation</span></button>
+    <a class="mobile-brand" href="../../index.html">BanditRLlib</a>
+  </header>
+  <aside class="site-sidebar" id="site-sidebar" data-site-sidebar aria-label="Site navigation">
+    <div class="sidebar-heading">
+      <button class="sidebar-close" type="button" data-sidebar-toggle aria-controls="site-sidebar" aria-expanded="false"><span aria-hidden="true">×</span><span class="visually-hidden">Close site navigation</span></button>
+      <a class="brand" href="../../index.html">
+        <span class="brand-mark" aria-hidden="true">B</span>
+        <span><strong>BanditRLlib</strong><small>Verified Lean library</small></span>
+      </a>
+    </div>
+    <div class="search-shell sidebar-search">
+      <label class="nav-group-title" for="global-search"><span>Search the Lean library</span><kbd aria-hidden="true">/</kbd></label>
+      <input id="global-search" class="global-search" data-global-search type="search" placeholder="Declaration or module…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="global-search-results" aria-expanded="false" aria-keyshortcuts="/">
+      <ul id="global-search-results" class="search-results" data-global-results role="listbox" aria-label="Lean declaration search results" aria-live="polite" hidden></ul>
+    </div>
+    <nav class="sidebar-nav" aria-label="Primary">
+      <details class="nav-group" data-nav-group="start" data-nav-group-active="false"><summary class="nav-group-title"><span>Start</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../index.html">Overview</a><a href="../../installation/index.html">Installation</a></div></details><details class="nav-group" data-nav-group="book-map" data-nav-group-active="false"><summary class="nav-group-title"><span>Learn · Book map</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../learning/index.html">All chapters</a><a class="book-nav-link" href="../../chapters/foundations/index.html"><span>01</span>Foundations</a><a class="book-nav-link" href="../../chapters/probability/index.html"><span>02</span>Probability layer</a><a class="book-nav-link" href="../../chapters/etc/index.html"><span>03</span>ETC</a><a class="book-nav-link" href="../../chapters/ucb/index.html"><span>04</span>UCB</a><a class="book-nav-link" href="../../chapters/oful/index.html"><span>05</span>OFUL</a><a class="book-nav-link" href="../../chapters/thompson/index.html"><span>06</span>Thompson sampling</a><a class="book-nav-link" href="../../chapters/exp3/index.html"><span>07</span>EXP3</a><a class="book-nav-link" href="../../chapters/tsallis/index.html"><span>08</span>Tsallis-FTRL</a><a class="book-nav-link" href="../../chapters/finite-horizon-rl/index.html"><span>09</span>Finite-horizon RL</a><a class="book-nav-link" href="../../chapters/frontier/index.html"><span>10</span>Frontier</a></div></details><details class="nav-group" data-nav-group="textbook-spine" data-nav-group-active="false"><summary class="nav-group-title"><span>Textbook spine · Part IV</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../textbook-spine/index.html">Part IV overview</a><a class="spine-nav-link" href="../../textbook-spine/chapter-13-basic-ideas/index.html"><span>13</span>Lower Bounds: Basic Ideas</a><a class="spine-nav-link" href="../../textbook-spine/chapter-14-information-theory/index.html"><span>14</span>Foundations of Information Theory</a><a class="spine-nav-link" href="../../textbook-spine/chapter-15-minimax-lower-bounds/index.html"><span>15</span>Minimax Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-16-instance-dependent/index.html"><span>16</span>Instance-Dependent Lower Bounds</a><a class="spine-nav-link" href="../../textbook-spine/chapter-17-high-probability/index.html"><span>17</span>High-Probability Lower Bounds</a></div></details><details class="nav-group" data-nav-group="research" data-nav-group-active="false"><summary class="nav-group-title"><span>Research atlas</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../banditrlwiki/index.html">BanditRLwiki</a><a href="../../banditrlwiki/frontier/index.html">Frontier leaves</a><a href="../../banditrlwiki/papers/index.html">Paper index</a><a href="../../banditrlwiki/progress/index.html">Audit progress</a></div></details><details class="nav-group" data-nav-group="library" data-nav-group-active="false"><summary class="nav-group-title"><span>Library</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../declarations/index.html">Lean declarations</a><a href="../../implementation-map/index.html">Implementation map</a><a href="../../lean-graph/index.html">Lean Graph</a><a href="../../proof-graph-laboratory/index.html">Proof Graph Laboratory</a></div></details><details class="nav-group" data-nav-group="formalize" data-nav-group-active="false"><summary class="nav-group-title"><span>Formalize</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../ide/index.html">Local Formalization Lab</a><a href="../../workflow/index.html">ABRL Harness</a></div></details><details class="nav-group" data-nav-group="community" data-nav-group-active="false"><summary class="nav-group-title"><span>Community</span><span class="nav-group-chevron" aria-hidden="true">⌄</span></summary><div class="nav-group-links"><a href="../../community/index.html">Contribute</a><a href="../../roadmap/index.html">Roadmap</a><a href="../../attribution/index.html">Attribution</a></div></details>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../../source-access/index.html">Review source <span aria-hidden="true">↗</span></a>
+      <div class="theme-switcher" aria-label="Site style">
+        <button type="button" data-theme-choice="blueprint" aria-pressed="true">Blueprint</button>
+        <button type="button" data-theme-choice="modern" aria-pressed="false">Modern</button>
+        <button type="button" data-theme-choice="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+  </aside>
+  <button class="sidebar-scrim" type="button" data-sidebar-scrim aria-label="Close site navigation" aria-hidden="true" tabindex="-1"></button>
+  <div class="site-content">
+    <div class="verification-strip"><span class="verification-long">Frozen Lean sources match the successful CI build; compiled labels are limited to these declarations.</span><span class="verification-short">Lean-verified build · exact declarations linked.</span></div>
+    <div class="page-shell">
+      <main class="page-main" id="main-content"><h1>BanditRLProof/Exp3MixedSquarePredictableVarianceSmallLossRealizedMarkovHighProbabilityRegret.lean</h1><pre class="lean-code" tabindex="0"><code><span id="L1">1 import BanditRLProof.Exp3MixedSquarePredictableVarianceLossEnergyRealizedMarkovHighProbabilityRegret</span>
+<span id="L2">2 </span>
+<span id="L3">3 /-!</span>
+<span id="L4">4 # Small-loss control of realized predictable-variance EXP3 regret</span>
+<span id="L5">5 </span>
+<span id="L6">6 This module bounds predictable loss-square energy by armwise predictable loss</span>
+<span id="L7">7 mass. It turns an almost-everywhere small-loss budget under the exact generated</span>
+<span id="L8">8 trajectory measure into the variance `lintegral` contract used by the</span>
+<span id="L9">9 Markov-closed realized regret route. Universal pathwise budgets remain valid</span>
+<span id="L10">10 as a special case via `Filter.Eventually.of_forall`.</span>
+<span id="L11">11 -/</span>
+<span id="L12">12 </span>
+<span id="L13">13 namespace BanditRLProof.Exp3</span>
+<span id="L14">14 </span>
+<span id="L15">15 open MeasureTheory ProbabilityTheory</span>
+<span id="L16">16 </span>
+<span id="L17">17 universe u v</span>
+<span id="L18">18 </span>
+<span id="L19">19 /-- Every generated predictable loss coordinate remains in the unit interval. -/</span>
+<span id="L20">20 theorem predictableLossAt_mem_unitInterval</span>
+<span id="L21">21     {Env : Type u} {Action : Type v}</span>
+<span id="L22">22     [MeasurableSpace Env] [MeasurableSpace Action]</span>
+<span id="L23">23     (loss : PredictableLossVector Env Action) (t : Nat)</span>
+<span id="L24">24     (sample : Env × ((k : Nat) → Action × Real)) (action : Action) :</span>
+<span id="L25">25     predictableLossAt loss t sample action ∈ Set.Icc (0 : Real) 1 := by</span>
+<span id="L26">26   cases t with</span>
+<span id="L27">27   | zero =&gt;</span>
+<span id="L28">28       simpa [predictableLossAt] using</span>
+<span id="L29">29         loss.initial_mem_unitInterval sample.1 action</span>
+<span id="L30">30   | succ n =&gt;</span>
+<span id="L31">31       simpa [predictableLossAt] using</span>
+<span id="L32">32         loss.successor_mem_unitInterval n sample.1</span>
+<span id="L33">33           (Preorder.frestrictLe n sample.2) action</span>
+<span id="L34">34 </span>
+<span id="L35">35 /-- Cumulative armwise predictable loss mass along a generated trajectory. -/</span>
+<span id="L36">36 noncomputable def sampledPredictableLossMassSum</span>
+<span id="L37">37     {Env : Type u} {Action : Type v}</span>
+<span id="L38">38     [MeasurableSpace Env] [MeasurableSpace Action]</span>
+<span id="L39">39     (arms : Finset Action) (loss : PredictableLossVector Env Action)</span>
+<span id="L40">40     (horizon : Nat) (sample : Env × ((k : Nat) → Action × Real)) : Real :=</span>
+<span id="L41">41   (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L42">42     arms.sum (fun action =&gt; predictableLossAt loss t sample action))</span>
+<span id="L43">43 </span>
+<span id="L44">44 /-- Unit-interval losses have armwise square mass at most armwise loss mass. -/</span>
+<span id="L45">45 theorem sampledPredictableLossSquaredAt_le_lossMassAt</span>
+<span id="L46">46     {Env : Type u} {Action : Type v}</span>
+<span id="L47">47     [MeasurableSpace Env] [MeasurableSpace Action]</span>
+<span id="L48">48     (arms : Finset Action) (loss : PredictableLossVector Env Action)</span>
+<span id="L49">49     (t : Nat) (sample : Env × ((k : Nat) → Action × Real)) :</span>
+<span id="L50">50     arms.sum (fun action =&gt; (predictableLossAt loss t sample action) ^ 2) ≤</span>
+<span id="L51">51       arms.sum (fun action =&gt; predictableLossAt loss t sample action) := by</span>
+<span id="L52">52   apply Finset.sum_le_sum</span>
+<span id="L53">53   intro action _haction</span>
+<span id="L54">54   have hloss := predictableLossAt_mem_unitInterval loss t sample action</span>
+<span id="L55">55   have hproduct :</span>
+<span id="L56">56       0 ≤ predictableLossAt loss t sample action *</span>
+<span id="L57">57         (1 - predictableLossAt loss t sample action) :=</span>
+<span id="L58">58     mul_nonneg hloss.1 (sub_nonneg.mpr hloss.2)</span>
+<span id="L59">59   nlinarith</span>
+<span id="L60">60 </span>
+<span id="L61">61 /-- Cumulative predictable loss-square energy is at most cumulative armwise</span>
+<span id="L62">62 predictable loss mass. -/</span>
+<span id="L63">63 theorem sampledPredictableLossSquaredSum_le_lossMassSum</span>
+<span id="L64">64     {Env : Type u} {Action : Type v}</span>
+<span id="L65">65     [MeasurableSpace Env] [MeasurableSpace Action]</span>
+<span id="L66">66     (arms : Finset Action) (loss : PredictableLossVector Env Action)</span>
+<span id="L67">67     (horizon : Nat) (sample : Env × ((k : Nat) → Action × Real)) :</span>
+<span id="L68">68     sampledPredictableLossSquaredSum arms loss horizon sample ≤</span>
+<span id="L69">69       sampledPredictableLossMassSum arms loss horizon sample := by</span>
+<span id="L70">70   unfold sampledPredictableLossSquaredSum sampledPredictableLossMassSum</span>
+<span id="L71">71   exact Finset.sum_le_sum fun t _ht =&gt;</span>
+<span id="L72">72     sampledPredictableLossSquaredAt_le_lossMassAt arms loss t sample</span>
+<span id="L73">73 </span>
+<span id="L74">74 /-- Cumulative predictable mixed-square variance is controlled by armwise</span>
+<span id="L75">75 predictable loss mass. -/</span>
+<span id="L76">76 theorem sampledPredictableMixedSquaredVarianceSum_le_inv_floor_mul_lossMassSum</span>
+<span id="L77">77     {Env : Type u} {Action : Type v}</span>
+<span id="L78">78     [MeasurableSpace Env]</span>
+<span id="L79">79     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L80">80     [DecidableEq Action]</span>
+<span id="L81">81     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L82">82     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L83">83     (hgamma_le_one : gamma ≤ 1)</span>
+<span id="L84">84     (loss : PredictableLossVector Env Action) (horizon : Nat)</span>
+<span id="L85">85     (sample : Env × ((k : Nat) → Action × Real)) :</span>
+<span id="L86">86     sampledPredictableMixedSquaredVarianceSum</span>
+<span id="L87">87         arms eta gamma loss horizon sample ≤</span>
+<span id="L88">88       (1 / (gamma / (arms.card : Real))) *</span>
+<span id="L89">89         sampledPredictableLossMassSum arms loss horizon sample := by</span>
+<span id="L90">90   have hfloor_pos : 0 &lt; gamma / (arms.card : Real) :=</span>
+<span id="L91">91     div_pos hgamma_pos (Nat.cast_pos.2 (Finset.card_pos.mpr harms))</span>
+<span id="L92">92   exact</span>
+<span id="L93">93     (sampledPredictableMixedSquaredVarianceSum_le_inv_floor_mul_lossSquaredSum</span>
+<span id="L94">94       arms harms eta gamma hgamma_pos hgamma_le_one loss horizon sample).trans</span>
+<span id="L95">95       (mul_le_mul_of_nonneg_left</span>
+<span id="L96">96         (sampledPredictableLossSquaredSum_le_lossMassSum</span>
+<span id="L97">97           arms loss horizon sample)</span>
+<span id="L98">98         (one_div_nonneg.2 hfloor_pos.le))</span>
+<span id="L99">99 </span>
+<span id="L100">100 /-- An almost-everywhere armwise loss-mass budget supplies the</span>
+<span id="L101">101 cumulative-variance `lintegral` contract required by the Markov route. -/</span>
+<span id="L102">102 theorem sampledPredictableMixedSquaredVarianceLIntegral_le_of_lossMassSum_le</span>
+<span id="L103">103     {Env : Type u} {Action : Type v}</span>
+<span id="L104">104     [MeasurableSpace Env]</span>
+<span id="L105">105     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L106">106     [DecidableEq Action]</span>
+<span id="L107">107     (mu : Measure (Env × ((k : Nat) → Action × Real)))</span>
+<span id="L108">108     [IsProbabilityMeasure mu]</span>
+<span id="L109">109     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L110">110     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L111">111     (hgamma_le_one : gamma ≤ 1)</span>
+<span id="L112">112     (loss : PredictableLossVector Env Action) (horizon : Nat)</span>
+<span id="L113">113     (lossMassBudget : Real)</span>
+<span id="L114">114     (hmass : ∀ᵐ sample ∂mu,</span>
+<span id="L115">115       sampledPredictableLossMassSum arms loss horizon sample ≤</span>
+<span id="L116">116         lossMassBudget) :</span>
+<span id="L117">117     sampledPredictableMixedSquaredVarianceLIntegral</span>
+<span id="L118">118         mu arms eta gamma loss horizon ≤</span>
+<span id="L119">119       ENNReal.ofReal</span>
+<span id="L120">120         ((1 / (gamma / (arms.card : Real))) * lossMassBudget) := by</span>
+<span id="L121">121   let varianceSum := sampledPredictableMixedSquaredVarianceSum</span>
+<span id="L122">122     arms eta gamma loss horizon</span>
+<span id="L123">123   have hfloor_pos : 0 &lt; gamma / (arms.card : Real) := by</span>
+<span id="L124">124     exact div_pos hgamma_pos (Nat.cast_pos.2 (Finset.card_pos.mpr harms))</span>
+<span id="L125">125   have hinv_nonneg : 0 ≤ 1 / (gamma / (arms.card : Real)) :=</span>
+<span id="L126">126     one_div_nonneg.2 hfloor_pos.le</span>
+<span id="L127">127   have hpoint : ∀ᵐ sample ∂mu,</span>
+<span id="L128">128       varianceSum sample ≤</span>
+<span id="L129">129         (1 / (gamma / (arms.card : Real))) * lossMassBudget := by</span>
+<span id="L130">130     filter_upwards [hmass] with sample hsample</span>
+<span id="L131">131     exact</span>
+<span id="L132">132       (sampledPredictableMixedSquaredVarianceSum_le_inv_floor_mul_lossMassSum</span>
+<span id="L133">133         arms harms eta gamma hgamma_pos hgamma_le_one loss horizon sample).trans</span>
+<span id="L134">134         (mul_le_mul_of_nonneg_left hsample hinv_nonneg)</span>
+<span id="L135">135   calc</span>
+<span id="L136">136     sampledPredictableMixedSquaredVarianceLIntegral</span>
+<span id="L137">137         mu arms eta gamma loss horizon =</span>
+<span id="L138">138       ∫⁻ sample, ENNReal.ofReal (varianceSum sample) ∂mu := by rfl</span>
+<span id="L139">139     _ ≤ ∫⁻ _sample,</span>
+<span id="L140">140         ENNReal.ofReal</span>
+<span id="L141">141           ((1 / (gamma / (arms.card : Real))) * lossMassBudget) ∂mu := by</span>
+<span id="L142">142       exact lintegral_mono_ae</span>
+<span id="L143">143         (hpoint.mono fun _sample hsample =&gt; ENNReal.ofReal_le_ofReal hsample)</span>
+<span id="L144">144     _ = ENNReal.ofReal</span>
+<span id="L145">145         ((1 / (gamma / (arms.card : Real))) * lossMassBudget) := by</span>
+<span id="L146">146       simp</span>
+<span id="L147">147 </span>
+<span id="L148">148 /-- Off-bad observed-square tail when the armwise loss-mass budget may fail</span>
+<span id="L149">149 on an explicit bad set. No measurability assumption on that set is needed. -/</span>
+<span id="L150">150 theorem sampledPredictableObservedMixedSquared_sum_tail_predictableVariance_off_bad_of_lossMassSum_le_or_mem</span>
+<span id="L151">151     {Env : Type u} {Action : Type v}</span>
+<span id="L152">152     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L153">153     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L154">154     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L155">155     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L156">156     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L157">157     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L158">158     (hgamma_le_one : gamma ≤ 1)</span>
+<span id="L159">159     (loss : PredictableLossVector Env Action)</span>
+<span id="L160">160     (horizon : Nat) (lossMassBudget varianceBudget delta : Real)</span>
+<span id="L161">161     (hvarianceBudget : 0 &lt; varianceBudget) (hdelta : 0 &lt; delta)</span>
+<span id="L162">162     (bad : Set (Env × ((k : Nat) → Action × Real)))</span>
+<span id="L163">163     (hmass : ∀ᵐ sample ∂(prior ⊗ₘ</span>
+<span id="L164">164         sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L165">165           eta gamma hgamma_pos.le hgamma_le_one loss.environment),</span>
+<span id="L166">166       sampledPredictableLossMassSum arms loss horizon sample ≤</span>
+<span id="L167">167         lossMassBudget ∨ sample ∈ bad) :</span>
+<span id="L168">168     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L169">169       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L170">170     mu ({sample |</span>
+<span id="L171">171         lossMassBudget +</span>
+<span id="L172">172             sampledMixedSquaredPredictableVarianceRadius</span>
+<span id="L173">173               arms gamma varianceBudget delta ≤</span>
+<span id="L174">174           sampledObservedMixedSquaredSum arms eta gamma horizon sample ∧</span>
+<span id="L175">175         (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L176">176           sampledTrajectoryPredictableMixedSquaredVarianceAt</span>
+<span id="L177">177             arms eta gamma loss i sample) ≤ varianceBudget} \ bad) ≤</span>
+<span id="L178">178       ENNReal.ofReal delta := by</span>
+<span id="L179">179   dsimp only</span>
+<span id="L180">180   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L181">181     eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L182">182   let radius := sampledMixedSquaredPredictableVarianceRadius</span>
+<span id="L183">183     arms gamma varianceBudget delta</span>
+<span id="L184">184   let centeredBad : Set (Env × ((k : Nat) → Action × Real)) :=</span>
+<span id="L185">185     {sample |</span>
+<span id="L186">186       radius ≤ (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L187">187           sampledTrajectoryPredictableMixedSquaredDeviationAt</span>
+<span id="L188">188             arms eta gamma loss i sample) ∧</span>
+<span id="L189">189         (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L190">190           sampledTrajectoryPredictableMixedSquaredVarianceAt</span>
+<span id="L191">191             arms eta gamma loss i sample) ≤ varianceBudget}</span>
+<span id="L192">192   have htail :=</span>
+<span id="L193">193     sampledPredictableMixedSquaredDeviation_sum_tail_predictableVariance_delta</span>
+<span id="L194">194       prior arms harms eta gamma hgamma_pos hgamma_le_one loss horizon</span>
+<span id="L195">195         varianceBudget delta hvarianceBudget hdelta</span>
+<span id="L196">196   have heq := sampledObservedMixedSquaredSum_eq_predictable_ae</span>
+<span id="L197">197     prior arms harms eta gamma hgamma_pos.le hgamma_le_one loss horizon</span>
+<span id="L198">198   have hsubset : ∀ᵐ sample ∂mu,</span>
+<span id="L199">199       sample ∈ ({sample |</span>
+<span id="L200">200           lossMassBudget + radius ≤</span>
+<span id="L201">201             sampledObservedMixedSquaredSum arms eta gamma horizon sample ∧</span>
+<span id="L202">202           (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L203">203             sampledTrajectoryPredictableMixedSquaredVarianceAt</span>
+<span id="L204">204               arms eta gamma loss i sample) ≤ varianceBudget} \ bad) →</span>
+<span id="L205">205         sample ∈ centeredBad := by</span>
+<span id="L206">206     filter_upwards [heq, hmass] with sample hobs hmassSample</span>
+<span id="L207">207     intro hsample</span>
+<span id="L208">208     rcases hmassSample with hmassSample | hbad</span>
+<span id="L209">209     · have hsource := hsample.1</span>
+<span id="L210">210       simp only [Set.mem_setOf_eq] at hsource</span>
+<span id="L211">211       refine ⟨?_, hsource.2⟩</span>
+<span id="L212">212       have hmean :=</span>
+<span id="L213">213         (sampledPredictableLossSquaredSum_le_lossMassSum</span>
+<span id="L214">214           arms loss horizon sample).trans hmassSample</span>
+<span id="L215">215       have hcentered := sampledPredictableMixedSquaredDeviation_sum_eq</span>
+<span id="L216">216         arms eta gamma loss horizon sample</span>
+<span id="L217">217       rw [hobs] at hsource</span>
+<span id="L218">218       linarith</span>
+<span id="L219">219     · exact (hsample.2 hbad).elim</span>
+<span id="L220">220   calc</span>
+<span id="L221">221     mu ({sample |</span>
+<span id="L222">222         lossMassBudget + radius ≤</span>
+<span id="L223">223             sampledObservedMixedSquaredSum arms eta gamma horizon sample ∧</span>
+<span id="L224">224           (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L225">225             sampledTrajectoryPredictableMixedSquaredVarianceAt</span>
+<span id="L226">226               arms eta gamma loss i sample) ≤ varianceBudget} \ bad) ≤</span>
+<span id="L227">227         mu centeredBad := measure_mono_ae hsubset</span>
+<span id="L228">228     _ ≤ ENNReal.ofReal delta := by</span>
+<span id="L229">229       simpa [mu, radius, centeredBad] using htail</span>
+<span id="L230">230 </span>
+<span id="L231">231 /-- Residual observed-square tail when the armwise loss-mass budget may fail</span>
+<span id="L232">232 on an explicit bad set. -/</span>
+<span id="L233">233 theorem sampledPredictableObservedMixedSquared_sum_tail_predictableVariance_of_lossMassSum_le_or_mem</span>
+<span id="L234">234     {Env : Type u} {Action : Type v}</span>
+<span id="L235">235     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L236">236     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L237">237     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L238">238     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L239">239     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L240">240     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L241">241     (hgamma_le_one : gamma ≤ 1)</span>
+<span id="L242">242     (loss : PredictableLossVector Env Action)</span>
+<span id="L243">243     (horizon : Nat) (lossMassBudget varianceBudget delta : Real)</span>
+<span id="L244">244     (hvarianceBudget : 0 &lt; varianceBudget) (hdelta : 0 &lt; delta)</span>
+<span id="L245">245     (bad : Set (Env × ((k : Nat) → Action × Real)))</span>
+<span id="L246">246     (hmass : ∀ᵐ sample ∂(prior ⊗ₘ</span>
+<span id="L247">247         sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L248">248           eta gamma hgamma_pos.le hgamma_le_one loss.environment),</span>
+<span id="L249">249       sampledPredictableLossMassSum arms loss horizon sample ≤</span>
+<span id="L250">250         lossMassBudget ∨ sample ∈ bad) :</span>
+<span id="L251">251     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L252">252       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L253">253     mu {sample |</span>
+<span id="L254">254         lossMassBudget +</span>
+<span id="L255">255             sampledMixedSquaredPredictableVarianceRadius</span>
+<span id="L256">256               arms gamma varianceBudget delta ≤</span>
+<span id="L257">257           sampledObservedMixedSquaredSum arms eta gamma horizon sample ∧</span>
+<span id="L258">258         (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L259">259           sampledTrajectoryPredictableMixedSquaredVarianceAt</span>
+<span id="L260">260             arms eta gamma loss i sample) ≤ varianceBudget} ≤</span>
+<span id="L261">261       ENNReal.ofReal delta + mu bad := by</span>
+<span id="L262">262   dsimp only</span>
+<span id="L263">263   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L264">264     eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L265">265   let radius := sampledMixedSquaredPredictableVarianceRadius</span>
+<span id="L266">266     arms gamma varianceBudget delta</span>
+<span id="L267">267   let centeredBad : Set (Env × ((k : Nat) → Action × Real)) :=</span>
+<span id="L268">268     {sample |</span>
+<span id="L269">269       radius ≤ (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L270">270           sampledTrajectoryPredictableMixedSquaredDeviationAt</span>
+<span id="L271">271             arms eta gamma loss i sample) ∧</span>
+<span id="L272">272         (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L273">273           sampledTrajectoryPredictableMixedSquaredVarianceAt</span>
+<span id="L274">274             arms eta gamma loss i sample) ≤ varianceBudget}</span>
+<span id="L275">275   have htail :=</span>
+<span id="L276">276     sampledPredictableMixedSquaredDeviation_sum_tail_predictableVariance_delta</span>
+<span id="L277">277       prior arms harms eta gamma hgamma_pos hgamma_le_one loss horizon</span>
+<span id="L278">278         varianceBudget delta hvarianceBudget hdelta</span>
+<span id="L279">279   have heq := sampledObservedMixedSquaredSum_eq_predictable_ae</span>
+<span id="L280">280     prior arms harms eta gamma hgamma_pos.le hgamma_le_one loss horizon</span>
+<span id="L281">281   have hsubset : ∀ᵐ sample ∂mu,</span>
+<span id="L282">282       (lossMassBudget + radius ≤</span>
+<span id="L283">283           sampledObservedMixedSquaredSum arms eta gamma horizon sample ∧</span>
+<span id="L284">284         (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L285">285           sampledTrajectoryPredictableMixedSquaredVarianceAt</span>
+<span id="L286">286             arms eta gamma loss i sample) ≤ varianceBudget) →</span>
+<span id="L287">287       sample ∈ centeredBad ∪ bad := by</span>
+<span id="L288">288     filter_upwards [heq, hmass] with sample hobs hmassSample</span>
+<span id="L289">289     intro hsample</span>
+<span id="L290">290     rcases hmassSample with hmassSample | hbad</span>
+<span id="L291">291     · left</span>
+<span id="L292">292       refine ⟨?_, hsample.2⟩</span>
+<span id="L293">293       have hmean :=</span>
+<span id="L294">294         (sampledPredictableLossSquaredSum_le_lossMassSum</span>
+<span id="L295">295           arms loss horizon sample).trans hmassSample</span>
+<span id="L296">296       have hcentered := sampledPredictableMixedSquaredDeviation_sum_eq</span>
+<span id="L297">297         arms eta gamma loss horizon sample</span>
+<span id="L298">298       rw [hobs] at hsample</span>
+<span id="L299">299       linarith</span>
+<span id="L300">300     · exact Or.inr hbad</span>
+<span id="L301">301   calc</span>
+<span id="L302">302     mu {sample |</span>
+<span id="L303">303         lossMassBudget + radius ≤</span>
+<span id="L304">304             sampledObservedMixedSquaredSum arms eta gamma horizon sample ∧</span>
+<span id="L305">305           (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L306">306             sampledTrajectoryPredictableMixedSquaredVarianceAt</span>
+<span id="L307">307               arms eta gamma loss i sample) ≤ varianceBudget} ≤</span>
+<span id="L308">308         mu (centeredBad ∪ bad) := measure_mono_ae hsubset</span>
+<span id="L309">309     _ ≤ mu centeredBad + mu bad := measure_union_le _ _</span>
+<span id="L310">310     _ ≤ ENNReal.ofReal delta + mu bad := by</span>
+<span id="L311">311       exact add_le_add</span>
+<span id="L312">312         (by simpa [mu, radius, centeredBad] using htail) le_rfl</span>
+<span id="L313">313 </span>
+<span id="L314">314 /-- The observed mixed estimator-square sum has its predictable mean bounded by</span>
+<span id="L315">315 the supplied almost-everywhere armwise loss-mass budget. -/</span>
+<span id="L316">316 theorem sampledPredictableObservedMixedSquared_sum_tail_predictableVariance_of_lossMassSum_le</span>
+<span id="L317">317     {Env : Type u} {Action : Type v}</span>
+<span id="L318">318     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L319">319     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L320">320     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L321">321     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L322">322     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L323">323     (eta gamma : Real) (hgamma_pos : 0 &lt; gamma)</span>
+<span id="L324">324     (hgamma_le_one : gamma ≤ 1)</span>
+<span id="L325">325     (loss : PredictableLossVector Env Action)</span>
+<span id="L326">326     (horizon : Nat) (lossMassBudget varianceBudget delta : Real)</span>
+<span id="L327">327     (hvarianceBudget : 0 &lt; varianceBudget) (hdelta : 0 &lt; delta)</span>
+<span id="L328">328     (hmass : ∀ᵐ sample ∂(prior ⊗ₘ</span>
+<span id="L329">329         sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L330">330           eta gamma hgamma_pos.le hgamma_le_one loss.environment),</span>
+<span id="L331">331       sampledPredictableLossMassSum arms loss horizon sample ≤</span>
+<span id="L332">332         lossMassBudget) :</span>
+<span id="L333">333     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L334">334       eta gamma hgamma_pos.le hgamma_le_one loss.environment</span>
+<span id="L335">335     mu {sample |</span>
+<span id="L336">336         lossMassBudget +</span>
+<span id="L337">337             sampledMixedSquaredPredictableVarianceRadius</span>
+<span id="L338">338               arms gamma varianceBudget delta ≤</span>
+<span id="L339">339           sampledObservedMixedSquaredSum arms eta gamma horizon sample ∧</span>
+<span id="L340">340         (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L341">341           sampledTrajectoryPredictableMixedSquaredVarianceAt</span>
+<span id="L342">342             arms eta gamma loss i sample) ≤ varianceBudget} ≤</span>
+<span id="L343">343       ENNReal.ofReal delta := by</span>
+<span id="L344">344   have h :=</span>
+<span id="L345">345     sampledPredictableObservedMixedSquared_sum_tail_predictableVariance_of_lossMassSum_le_or_mem</span>
+<span id="L346">346       prior arms harms eta gamma hgamma_pos hgamma_le_one loss horizon</span>
+<span id="L347">347         lossMassBudget varianceBudget delta hvarianceBudget hdelta ∅</span>
+<span id="L348">348         (hmass.mono fun _sample hsample =&gt; Or.inl hsample)</span>
+<span id="L349">349   simpa using h</span>
+<span id="L350">350 </span>
+<span id="L351">351 /-- Predictable regret budget whose mixed-square mean upper bound is the</span>
+<span id="L352">352 supplied armwise loss-mass budget rather than `K * T`. -/</span>
+<span id="L353">353 noncomputable def sampledPredictableVarianceSquareSmallLossHighProbabilityRegretBudget</span>
+<span id="L354">354     {Action : Type v} [DecidableEq Action]</span>
+<span id="L355">355     (arms : Finset Action) (eta gamma : Real) (horizon : Nat)</span>
+<span id="L356">356     (lossMassBudget varianceBudget deltaSquare deltaConfidence : Real) : Real :=</span>
+<span id="L357">357   Real.log arms.card / eta +</span>
+<span id="L358">358     (eta * (1 / (1 - gamma))) *</span>
+<span id="L359">359       (lossMassBudget +</span>
+<span id="L360">360         sampledMixedSquaredPredictableVarianceRadius</span>
+<span id="L361">361           arms gamma varianceBudget deltaSquare) +</span>
+<span id="L362">362     gamma * (horizon : Real) +</span>
+<span id="L363">363     sampledPurePredictableMinusObservedBernsteinConfidenceRadius</span>
+<span id="L364">364       arms gamma horizon deltaConfidence +</span>
+<span id="L365">365     sampledComparatorEstimatorBernsteinConfidenceRadius</span>
+<span id="L366">366       arms gamma horizon deltaConfidence</span>
+<span id="L367">367 </span>
+<span id="L368">368 /-- Off-bad predictable small-loss regret on the variance-good event. The</span>
+<span id="L369">369 explicit bad set is removed from the source event, so it does not enter the</span>
+<span id="L370">370 confidence allocation. -/</span>
+<span id="L371">371 theorem sampledPredictable_predictableVarianceSquareSmallLossHighProbabilityRegret_tail_joint_off_bad_of_lossMassSum_le_or_mem</span>
+<span id="L372">372     {Env : Type u} {Action : Type v}</span>
+<span id="L373">373     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L374">374     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L375">375     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L376">376     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L377">377     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L378">378     (eta gamma : Real) (heta : 0 &lt; eta)</span>
+<span id="L379">379     (hgamma_pos : 0 &lt; gamma) (hgamma_lt_one : gamma &lt; 1)</span>
+<span id="L380">380     (loss : PredictableLossVector Env Action)</span>
+<span id="L381">381     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L382">382     (horizon : Nat) (lossMassBudget varianceBudget : Real)</span>
+<span id="L383">383     (deltaSquare deltaConfidence : Real)</span>
+<span id="L384">384     (hvarianceBudget : 0 &lt; varianceBudget)</span>
+<span id="L385">385     (hdeltaSquare : 0 &lt; deltaSquare)</span>
+<span id="L386">386     (hdeltaConfidence : 0 &lt; deltaConfidence)</span>
+<span id="L387">387     (bad : Set (Env × ((k : Nat) → Action × Real)))</span>
+<span id="L388">388     (hmass : ∀ᵐ sample ∂(prior ⊗ₘ</span>
+<span id="L389">389         sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L390">390           eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment),</span>
+<span id="L391">391       sampledPredictableLossMassSum arms loss horizon sample ≤</span>
+<span id="L392">392         lossMassBudget ∨ sample ∈ bad) :</span>
+<span id="L393">393     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L394">394       eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment</span>
+<span id="L395">395     mu ({sample |</span>
+<span id="L396">396         sampledPredictableVarianceSquareSmallLossHighProbabilityRegretBudget</span>
+<span id="L397">397             arms eta gamma horizon lossMassBudget varianceBudget deltaSquare</span>
+<span id="L398">398               deltaConfidence ≤</span>
+<span id="L399">399           (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L400">400               sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L401">401                 arms eta gamma loss t sample) -</span>
+<span id="L402">402             (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L403">403               predictableLossAt loss t sample comparator) ∧</span>
+<span id="L404">404         (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L405">405           sampledTrajectoryPredictableMixedSquaredVarianceAt</span>
+<span id="L406">406             arms eta gamma loss i sample) ≤ varianceBudget} \ bad) ≤</span>
+<span id="L407">407       (ENNReal.ofReal deltaSquare + ENNReal.ofReal deltaConfidence) +</span>
+<span id="L408">408         ENNReal.ofReal deltaConfidence := by</span>
+<span id="L409">409   dsimp only</span>
+<span id="L410">410   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L411">411     eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment</span>
+<span id="L412">412   let purePredictable := fun sample : Env × ((k : Nat) → Action × Real) =&gt;</span>
+<span id="L413">413     (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L414">414       sampledTrajectoryPurePredictableLossAt arms eta gamma loss t sample)</span>
+<span id="L415">415   let pureObserved := fun sample : Env × ((k : Nat) → Action × Real) =&gt;</span>
+<span id="L416">416     (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L417">417       sampledTrajectoryPureObservedLossAt arms eta gamma t sample)</span>
+<span id="L418">418   let comparatorObserved := fun sample : Env × ((k : Nat) → Action × Real) =&gt;</span>
+<span id="L419">419     (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L420">420       observedImportanceWeightedLossAt arms eta gamma t sample comparator)</span>
+<span id="L421">421   let comparatorTrue := fun sample : Env × ((k : Nat) → Action × Real) =&gt;</span>
+<span id="L422">422     (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L423">423       predictableLossAt loss t sample comparator)</span>
+<span id="L424">424   let exploredPredictable := fun sample : Env × ((k : Nat) → Action × Real) =&gt;</span>
+<span id="L425">425     (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L426">426       sampledTrajectoryExploredPredictableLossAt arms eta gamma loss t sample)</span>
+<span id="L427">427   let secondMoment := sampledObservedMixedSquaredSum</span>
+<span id="L428">428     (Env := Env) arms eta gamma horizon</span>
+<span id="L429">429   let predictableVariance := fun sample : Env × ((k : Nat) → Action × Real) =&gt;</span>
+<span id="L430">430     (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L431">431       sampledTrajectoryPredictableMixedSquaredVarianceAt</span>
+<span id="L432">432         arms eta gamma loss i sample)</span>
+<span id="L433">433   let secondMomentBudget := lossMassBudget +</span>
+<span id="L434">434     sampledMixedSquaredPredictableVarianceRadius</span>
+<span id="L435">435       arms gamma varianceBudget deltaSquare</span>
+<span id="L436">436   let pureRadius :=</span>
+<span id="L437">437     sampledPurePredictableMinusObservedBernsteinConfidenceRadius</span>
+<span id="L438">438       arms gamma horizon deltaConfidence</span>
+<span id="L439">439   let comparatorRadius := sampledComparatorEstimatorBernsteinConfidenceRadius</span>
+<span id="L440">440     arms gamma horizon deltaConfidence</span>
+<span id="L441">441   let secondMomentBad : Set (Env × ((k : Nat) → Action × Real)) :=</span>
+<span id="L442">442     {sample | secondMomentBudget ≤ secondMoment sample}</span>
+<span id="L443">443   let varianceGood : Set (Env × ((k : Nat) → Action × Real)) :=</span>
+<span id="L444">444     {sample | predictableVariance sample ≤ varianceBudget}</span>
+<span id="L445">445   let pureBad : Set (Env × ((k : Nat) → Action × Real)) :=</span>
+<span id="L446">446     {sample | pureRadius ≤ purePredictable sample - pureObserved sample}</span>
+<span id="L447">447   let comparatorBad : Set (Env × ((k : Nat) → Action × Real)) :=</span>
+<span id="L448">448     {sample | comparatorRadius ≤ comparatorObserved sample - comparatorTrue sample}</span>
+<span id="L449">449   let regretJoint : Set (Env × ((k : Nat) → Action × Real)) :=</span>
+<span id="L450">450     {sample |</span>
+<span id="L451">451       sampledPredictableVarianceSquareSmallLossHighProbabilityRegretBudget</span>
+<span id="L452">452             arms eta gamma horizon lossMassBudget varianceBudget deltaSquare</span>
+<span id="L453">453               deltaConfidence ≤</span>
+<span id="L454">454           exploredPredictable sample - comparatorTrue sample ∧</span>
+<span id="L455">455         predictableVariance sample ≤ varianceBudget}</span>
+<span id="L456">456   have hsecondTail : mu ((secondMomentBad ∩ varianceGood) \ bad) ≤</span>
+<span id="L457">457       ENNReal.ofReal deltaSquare := by</span>
+<span id="L458">458     have h :=</span>
+<span id="L459">459       sampledPredictableObservedMixedSquared_sum_tail_predictableVariance_off_bad_of_lossMassSum_le_or_mem</span>
+<span id="L460">460         prior arms harms eta gamma hgamma_pos hgamma_lt_one.le loss horizon</span>
+<span id="L461">461           lossMassBudget varianceBudget deltaSquare hvarianceBudget</span>
+<span id="L462">462           hdeltaSquare bad hmass</span>
+<span id="L463">463     dsimp only at h</span>
+<span id="L464">464     simpa [mu, secondMomentBad, varianceGood, secondMomentBudget, secondMoment,</span>
+<span id="L465">465       predictableVariance] using h</span>
+<span id="L466">466   have hpureTail : mu pureBad ≤ ENNReal.ofReal deltaConfidence := by</span>
+<span id="L467">467     have h := sampledPurePredictableMinusObserved_sum_tail_bernstein_delta</span>
+<span id="L468">468       prior arms harms eta gamma hgamma_pos hgamma_lt_one.le loss</span>
+<span id="L469">469         horizon deltaConfidence hdeltaConfidence</span>
+<span id="L470">470     dsimp only at h</span>
+<span id="L471">471     simpa [mu, pureBad, pureRadius, purePredictable, pureObserved] using h</span>
+<span id="L472">472   have hcomparatorTail : mu comparatorBad ≤ ENNReal.ofReal deltaConfidence := by</span>
+<span id="L473">473     have h := sampledObservedComparatorEstimatorDeviation_sum_tail_bernstein_delta</span>
+<span id="L474">474       prior arms harms eta gamma hgamma_pos hgamma_lt_one.le loss comparator</span>
+<span id="L475">475         hcomparator horizon deltaConfidence hdeltaConfidence</span>
+<span id="L476">476     dsimp only at h</span>
+<span id="L477">477     simpa [mu, comparatorBad, comparatorRadius, comparatorObserved,</span>
+<span id="L478">478       comparatorTrue,</span>
+<span id="L479">479       sampledTrajectoryObservedComparatorEstimatorDeviationAt] using h</span>
+<span id="L480">480   have hhedge :=</span>
+<span id="L481">481     sampledPredictableTrajectoryMeasure_hedge_exploredSecondMoment_le_ae</span>
+<span id="L482">482       prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss horizon</span>
+<span id="L483">483         comparator hcomparator</span>
+<span id="L484">484   dsimp only at hhedge</span>
+<span id="L485">485   have hsubset : ∀ᵐ sample ∂mu,</span>
+<span id="L486">486       sample ∈ regretJoint \ bad →</span>
+<span id="L487">487         sample ∈ ((secondMomentBad ∩ varianceGood) \ bad ∪ pureBad) ∪</span>
+<span id="L488">488           comparatorBad := by</span>
+<span id="L489">489     filter_upwards [hhedge] with sample hsampleHedge</span>
+<span id="L490">490     intro hregret</span>
+<span id="L491">491     have hregretSource := hregret.1</span>
+<span id="L492">492     simp only [regretJoint, Set.mem_setOf_eq] at hregretSource</span>
+<span id="L493">493     by_cases hsecond : sample ∈ secondMomentBad</span>
+<span id="L494">494     · exact Or.inl (Or.inl ⟨⟨hsecond, hregretSource.2⟩, hregret.2⟩)</span>
+<span id="L495">495     by_cases hpure : sample ∈ pureBad</span>
+<span id="L496">496     · exact Or.inl (Or.inr hpure)</span>
+<span id="L497">497     by_cases hcomparator : sample ∈ comparatorBad</span>
+<span id="L498">498     · exact Or.inr hcomparator</span>
+<span id="L499">499     exfalso</span>
+<span id="L500">500     have hsecondGood : secondMoment sample &lt; secondMomentBudget := by</span>
+<span id="L501">501       change ¬ secondMomentBudget ≤ secondMoment sample at hsecond</span>
+<span id="L502">502       exact lt_of_not_ge hsecond</span>
+<span id="L503">503     have hpureGood :</span>
+<span id="L504">504         purePredictable sample - pureObserved sample &lt; pureRadius := by</span>
+<span id="L505">505       change ¬ pureRadius ≤ purePredictable sample - pureObserved sample at hpure</span>
+<span id="L506">506       exact lt_of_not_ge hpure</span>
+<span id="L507">507     have hcomparatorGood :</span>
+<span id="L508">508         comparatorObserved sample - comparatorTrue sample &lt;</span>
+<span id="L509">509           comparatorRadius := by</span>
+<span id="L510">510       change ¬ comparatorRadius ≤</span>
+<span id="L511">511         comparatorObserved sample - comparatorTrue sample at hcomparator</span>
+<span id="L512">512       exact lt_of_not_ge hcomparator</span>
+<span id="L513">513     have hexploration :</span>
+<span id="L514">514         exploredPredictable sample ≤</span>
+<span id="L515">515           purePredictable sample + gamma * (horizon : Real) := by</span>
+<span id="L516">516       have h := (sampledTrajectory_finiteHorizon_explorationBias_secondMoment</span>
+<span id="L517">517         arms harms eta gamma hgamma_pos.le hgamma_lt_one loss horizon sample).1</span>
+<span id="L518">518       simpa [exploredPredictable, purePredictable,</span>
+<span id="L519">519         sampledTrajectoryExploredPredictableLossAt,</span>
+<span id="L520">520         sampledTrajectoryPurePredictableLossAt,</span>
+<span id="L521">521         sampledTrajectoryPureProbabilityAt] using h</span>
+<span id="L522">522     have hcoef_pos : 0 &lt; eta * (1 / (1 - gamma)) :=</span>
+<span id="L523">523       mul_pos heta (one_div_pos.mpr (sub_pos.mpr hgamma_lt_one))</span>
+<span id="L524">524     have hweightedSecond :</span>
+<span id="L525">525         (eta * (1 / (1 - gamma))) * secondMoment sample &lt;</span>
+<span id="L526">526           (eta * (1 / (1 - gamma))) * secondMomentBudget :=</span>
+<span id="L527">527       mul_lt_mul_of_pos_left hsecondGood hcoef_pos</span>
+<span id="L528">528     have hhedge&#x27; :</span>
+<span id="L529">529         pureObserved sample - comparatorObserved sample ≤</span>
+<span id="L530">530           Real.log arms.card / eta +</span>
+<span id="L531">531             (eta * (1 / (1 - gamma))) * secondMoment sample := by</span>
+<span id="L532">532       simpa [pureObserved, comparatorObserved, secondMoment,</span>
+<span id="L533">533         sampledObservedMixedSquaredSum] using hsampleHedge</span>
+<span id="L534">534     have hfinal : exploredPredictable sample - comparatorTrue sample &lt;</span>
+<span id="L535">535         sampledPredictableVarianceSquareSmallLossHighProbabilityRegretBudget</span>
+<span id="L536">536           arms eta gamma horizon lossMassBudget varianceBudget deltaSquare</span>
+<span id="L537">537             deltaConfidence := by</span>
+<span id="L538">538       dsimp [sampledPredictableVarianceSquareSmallLossHighProbabilityRegretBudget,</span>
+<span id="L539">539         secondMomentBudget, pureRadius, comparatorRadius]</span>
+<span id="L540">540       linarith</span>
+<span id="L541">541     exact (not_lt_of_ge hregretSource.1) hfinal</span>
+<span id="L542">542   change mu (regretJoint \ bad) ≤</span>
+<span id="L543">543     (ENNReal.ofReal deltaSquare + ENNReal.ofReal deltaConfidence) +</span>
+<span id="L544">544       ENNReal.ofReal deltaConfidence</span>
+<span id="L545">545   calc</span>
+<span id="L546">546     mu (regretJoint \ bad) ≤</span>
+<span id="L547">547         mu (((secondMomentBad ∩ varianceGood) \ bad ∪ pureBad) ∪</span>
+<span id="L548">548           comparatorBad) := measure_mono_ae hsubset</span>
+<span id="L549">549     _ ≤ (mu ((secondMomentBad ∩ varianceGood) \ bad) + mu pureBad) +</span>
+<span id="L550">550         mu comparatorBad := by</span>
+<span id="L551">551       exact (measure_union_le _ _).trans</span>
+<span id="L552">552         (add_le_add (measure_union_le _ _) le_rfl)</span>
+<span id="L553">553     _ ≤ (ENNReal.ofReal deltaSquare + ENNReal.ofReal deltaConfidence) +</span>
+<span id="L554">554         ENNReal.ofReal deltaConfidence :=</span>
+<span id="L555">555       add_le_add (add_le_add hsecondTail hpureTail) hcomparatorTail</span>
+<span id="L556">556 </span>
+<span id="L557">557 /-- Residual small-loss predictable regret on the variance-good event when the</span>
+<span id="L558">558 loss-mass budget may fail on an explicit bad set. -/</span>
+<span id="L559">559 theorem sampledPredictable_predictableVarianceSquareSmallLossHighProbabilityRegret_tail_joint_of_lossMassSum_le_or_mem</span>
+<span id="L560">560     {Env : Type u} {Action : Type v}</span>
+<span id="L561">561     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L562">562     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L563">563     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L564">564     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L565">565     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L566">566     (eta gamma : Real) (heta : 0 &lt; eta)</span>
+<span id="L567">567     (hgamma_pos : 0 &lt; gamma) (hgamma_lt_one : gamma &lt; 1)</span>
+<span id="L568">568     (loss : PredictableLossVector Env Action)</span>
+<span id="L569">569     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L570">570     (horizon : Nat) (lossMassBudget varianceBudget : Real)</span>
+<span id="L571">571     (deltaSquare deltaConfidence : Real)</span>
+<span id="L572">572     (hvarianceBudget : 0 &lt; varianceBudget)</span>
+<span id="L573">573     (hdeltaSquare : 0 &lt; deltaSquare)</span>
+<span id="L574">574     (hdeltaConfidence : 0 &lt; deltaConfidence)</span>
+<span id="L575">575     (bad : Set (Env × ((k : Nat) → Action × Real)))</span>
+<span id="L576">576     (hmass : ∀ᵐ sample ∂(prior ⊗ₘ</span>
+<span id="L577">577         sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L578">578           eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment),</span>
+<span id="L579">579       sampledPredictableLossMassSum arms loss horizon sample ≤</span>
+<span id="L580">580         lossMassBudget ∨ sample ∈ bad) :</span>
+<span id="L581">581     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L582">582       eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment</span>
+<span id="L583">583     mu {sample |</span>
+<span id="L584">584         sampledPredictableVarianceSquareSmallLossHighProbabilityRegretBudget</span>
+<span id="L585">585             arms eta gamma horizon lossMassBudget varianceBudget deltaSquare</span>
+<span id="L586">586               deltaConfidence ≤</span>
+<span id="L587">587           (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L588">588               sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L589">589                 arms eta gamma loss t sample) -</span>
+<span id="L590">590             (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L591">591               predictableLossAt loss t sample comparator) ∧</span>
+<span id="L592">592         (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L593">593           sampledTrajectoryPredictableMixedSquaredVarianceAt</span>
+<span id="L594">594             arms eta gamma loss i sample) ≤ varianceBudget} ≤</span>
+<span id="L595">595       (ENNReal.ofReal deltaSquare + ENNReal.ofReal deltaConfidence) +</span>
+<span id="L596">596         ENNReal.ofReal deltaConfidence + mu bad := by</span>
+<span id="L597">597   dsimp only</span>
+<span id="L598">598   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L599">599     eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment</span>
+<span id="L600">600   let purePredictable := fun sample : Env × ((k : Nat) → Action × Real) =&gt;</span>
+<span id="L601">601     (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L602">602       sampledTrajectoryPurePredictableLossAt arms eta gamma loss t sample)</span>
+<span id="L603">603   let pureObserved := fun sample : Env × ((k : Nat) → Action × Real) =&gt;</span>
+<span id="L604">604     (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L605">605       sampledTrajectoryPureObservedLossAt arms eta gamma t sample)</span>
+<span id="L606">606   let comparatorObserved := fun sample : Env × ((k : Nat) → Action × Real) =&gt;</span>
+<span id="L607">607     (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L608">608       observedImportanceWeightedLossAt arms eta gamma t sample comparator)</span>
+<span id="L609">609   let comparatorTrue := fun sample : Env × ((k : Nat) → Action × Real) =&gt;</span>
+<span id="L610">610     (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L611">611       predictableLossAt loss t sample comparator)</span>
+<span id="L612">612   let exploredPredictable := fun sample : Env × ((k : Nat) → Action × Real) =&gt;</span>
+<span id="L613">613     (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L614">614       sampledTrajectoryExploredPredictableLossAt arms eta gamma loss t sample)</span>
+<span id="L615">615   let secondMoment := sampledObservedMixedSquaredSum</span>
+<span id="L616">616     (Env := Env) arms eta gamma horizon</span>
+<span id="L617">617   let predictableVariance := fun sample : Env × ((k : Nat) → Action × Real) =&gt;</span>
+<span id="L618">618     (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L619">619       sampledTrajectoryPredictableMixedSquaredVarianceAt</span>
+<span id="L620">620         arms eta gamma loss i sample)</span>
+<span id="L621">621   let secondMomentBudget := lossMassBudget +</span>
+<span id="L622">622     sampledMixedSquaredPredictableVarianceRadius</span>
+<span id="L623">623       arms gamma varianceBudget deltaSquare</span>
+<span id="L624">624   let pureRadius :=</span>
+<span id="L625">625     sampledPurePredictableMinusObservedBernsteinConfidenceRadius</span>
+<span id="L626">626       arms gamma horizon deltaConfidence</span>
+<span id="L627">627   let comparatorRadius := sampledComparatorEstimatorBernsteinConfidenceRadius</span>
+<span id="L628">628     arms gamma horizon deltaConfidence</span>
+<span id="L629">629   let secondMomentBad : Set (Env × ((k : Nat) → Action × Real)) :=</span>
+<span id="L630">630     {sample | secondMomentBudget ≤ secondMoment sample}</span>
+<span id="L631">631   let varianceGood : Set (Env × ((k : Nat) → Action × Real)) :=</span>
+<span id="L632">632     {sample | predictableVariance sample ≤ varianceBudget}</span>
+<span id="L633">633   let pureBad : Set (Env × ((k : Nat) → Action × Real)) :=</span>
+<span id="L634">634     {sample | pureRadius ≤ purePredictable sample - pureObserved sample}</span>
+<span id="L635">635   let comparatorBad : Set (Env × ((k : Nat) → Action × Real)) :=</span>
+<span id="L636">636     {sample | comparatorRadius ≤ comparatorObserved sample - comparatorTrue sample}</span>
+<span id="L637">637   have hsecondTail : mu (secondMomentBad ∩ varianceGood) ≤</span>
+<span id="L638">638       ENNReal.ofReal deltaSquare + mu bad := by</span>
+<span id="L639">639     have h :=</span>
+<span id="L640">640       sampledPredictableObservedMixedSquared_sum_tail_predictableVariance_of_lossMassSum_le_or_mem</span>
+<span id="L641">641         prior arms harms eta gamma hgamma_pos hgamma_lt_one.le loss horizon</span>
+<span id="L642">642           lossMassBudget varianceBudget deltaSquare hvarianceBudget</span>
+<span id="L643">643           hdeltaSquare bad hmass</span>
+<span id="L644">644     dsimp only at h</span>
+<span id="L645">645     simpa [mu, secondMomentBad, varianceGood, secondMomentBudget, secondMoment,</span>
+<span id="L646">646       predictableVariance] using h</span>
+<span id="L647">647   have hpureTail : mu pureBad ≤ ENNReal.ofReal deltaConfidence := by</span>
+<span id="L648">648     have h := sampledPurePredictableMinusObserved_sum_tail_bernstein_delta</span>
+<span id="L649">649       prior arms harms eta gamma hgamma_pos hgamma_lt_one.le loss</span>
+<span id="L650">650         horizon deltaConfidence hdeltaConfidence</span>
+<span id="L651">651     dsimp only at h</span>
+<span id="L652">652     simpa [mu, pureBad, pureRadius, purePredictable, pureObserved] using h</span>
+<span id="L653">653   have hcomparatorTail : mu comparatorBad ≤ ENNReal.ofReal deltaConfidence := by</span>
+<span id="L654">654     have h := sampledObservedComparatorEstimatorDeviation_sum_tail_bernstein_delta</span>
+<span id="L655">655       prior arms harms eta gamma hgamma_pos hgamma_lt_one.le loss comparator</span>
+<span id="L656">656         hcomparator horizon deltaConfidence hdeltaConfidence</span>
+<span id="L657">657     dsimp only at h</span>
+<span id="L658">658     simpa [mu, comparatorBad, comparatorRadius, comparatorObserved,</span>
+<span id="L659">659       comparatorTrue,</span>
+<span id="L660">660       sampledTrajectoryObservedComparatorEstimatorDeviationAt] using h</span>
+<span id="L661">661   have hhedge :=</span>
+<span id="L662">662     sampledPredictableTrajectoryMeasure_hedge_exploredSecondMoment_le_ae</span>
+<span id="L663">663       prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss horizon</span>
+<span id="L664">664         comparator hcomparator</span>
+<span id="L665">665   dsimp only at hhedge</span>
+<span id="L666">666   have hsubset : ∀ᵐ sample ∂mu,</span>
+<span id="L667">667       (sampledPredictableVarianceSquareSmallLossHighProbabilityRegretBudget</span>
+<span id="L668">668             arms eta gamma horizon lossMassBudget varianceBudget deltaSquare</span>
+<span id="L669">669               deltaConfidence ≤ exploredPredictable sample - comparatorTrue sample ∧</span>
+<span id="L670">670         predictableVariance sample ≤ varianceBudget) →</span>
+<span id="L671">671       sample ∈ ((secondMomentBad ∩ varianceGood) ∪ pureBad) ∪ comparatorBad := by</span>
+<span id="L672">672     filter_upwards [hhedge] with sample hsampleHedge</span>
+<span id="L673">673     intro hregret</span>
+<span id="L674">674     by_cases hsecond : sample ∈ secondMomentBad</span>
+<span id="L675">675     · exact Or.inl (Or.inl ⟨hsecond, hregret.2⟩)</span>
+<span id="L676">676     by_cases hpure : sample ∈ pureBad</span>
+<span id="L677">677     · exact Or.inl (Or.inr hpure)</span>
+<span id="L678">678     by_cases hcomparator : sample ∈ comparatorBad</span>
+<span id="L679">679     · exact Or.inr hcomparator</span>
+<span id="L680">680     exfalso</span>
+<span id="L681">681     have hsecondGood : secondMoment sample &lt; secondMomentBudget := by</span>
+<span id="L682">682       change ¬ secondMomentBudget ≤ secondMoment sample at hsecond</span>
+<span id="L683">683       exact lt_of_not_ge hsecond</span>
+<span id="L684">684     have hpureGood :</span>
+<span id="L685">685         purePredictable sample - pureObserved sample &lt; pureRadius := by</span>
+<span id="L686">686       change ¬ pureRadius ≤ purePredictable sample - pureObserved sample at hpure</span>
+<span id="L687">687       exact lt_of_not_ge hpure</span>
+<span id="L688">688     have hcomparatorGood :</span>
+<span id="L689">689         comparatorObserved sample - comparatorTrue sample &lt;</span>
+<span id="L690">690           comparatorRadius := by</span>
+<span id="L691">691       change ¬ comparatorRadius ≤</span>
+<span id="L692">692         comparatorObserved sample - comparatorTrue sample at hcomparator</span>
+<span id="L693">693       exact lt_of_not_ge hcomparator</span>
+<span id="L694">694     have hexploration :</span>
+<span id="L695">695         exploredPredictable sample ≤</span>
+<span id="L696">696           purePredictable sample + gamma * (horizon : Real) := by</span>
+<span id="L697">697       have h := (sampledTrajectory_finiteHorizon_explorationBias_secondMoment</span>
+<span id="L698">698         arms harms eta gamma hgamma_pos.le hgamma_lt_one loss horizon sample).1</span>
+<span id="L699">699       simpa [exploredPredictable, purePredictable,</span>
+<span id="L700">700         sampledTrajectoryExploredPredictableLossAt,</span>
+<span id="L701">701         sampledTrajectoryPurePredictableLossAt,</span>
+<span id="L702">702         sampledTrajectoryPureProbabilityAt] using h</span>
+<span id="L703">703     have hcoef_pos : 0 &lt; eta * (1 / (1 - gamma)) :=</span>
+<span id="L704">704       mul_pos heta (one_div_pos.mpr (sub_pos.mpr hgamma_lt_one))</span>
+<span id="L705">705     have hweightedSecond :</span>
+<span id="L706">706         (eta * (1 / (1 - gamma))) * secondMoment sample &lt;</span>
+<span id="L707">707           (eta * (1 / (1 - gamma))) * secondMomentBudget :=</span>
+<span id="L708">708       mul_lt_mul_of_pos_left hsecondGood hcoef_pos</span>
+<span id="L709">709     have hhedge&#x27; :</span>
+<span id="L710">710         pureObserved sample - comparatorObserved sample ≤</span>
+<span id="L711">711           Real.log arms.card / eta +</span>
+<span id="L712">712             (eta * (1 / (1 - gamma))) * secondMoment sample := by</span>
+<span id="L713">713       simpa [pureObserved, comparatorObserved, secondMoment,</span>
+<span id="L714">714         sampledObservedMixedSquaredSum] using hsampleHedge</span>
+<span id="L715">715     have hfinal : exploredPredictable sample - comparatorTrue sample &lt;</span>
+<span id="L716">716         sampledPredictableVarianceSquareSmallLossHighProbabilityRegretBudget</span>
+<span id="L717">717           arms eta gamma horizon lossMassBudget varianceBudget deltaSquare</span>
+<span id="L718">718             deltaConfidence := by</span>
+<span id="L719">719       dsimp [sampledPredictableVarianceSquareSmallLossHighProbabilityRegretBudget,</span>
+<span id="L720">720         secondMomentBudget, pureRadius, comparatorRadius]</span>
+<span id="L721">721       linarith</span>
+<span id="L722">722     exact (not_lt_of_ge hregret.1) hfinal</span>
+<span id="L723">723   calc</span>
+<span id="L724">724     mu {sample |</span>
+<span id="L725">725         sampledPredictableVarianceSquareSmallLossHighProbabilityRegretBudget</span>
+<span id="L726">726             arms eta gamma horizon lossMassBudget varianceBudget deltaSquare</span>
+<span id="L727">727               deltaConfidence ≤</span>
+<span id="L728">728           (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L729">729               sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L730">730                 arms eta gamma loss t sample) -</span>
+<span id="L731">731             (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L732">732               predictableLossAt loss t sample comparator) ∧</span>
+<span id="L733">733         (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L734">734           sampledTrajectoryPredictableMixedSquaredVarianceAt</span>
+<span id="L735">735             arms eta gamma loss i sample) ≤ varianceBudget} ≤</span>
+<span id="L736">736         mu ((secondMomentBad ∩ varianceGood) ∪ pureBad ∪ comparatorBad) := by</span>
+<span id="L737">737       apply measure_mono_ae</span>
+<span id="L738">738       filter_upwards [hsubset] with sample hs</span>
+<span id="L739">739       intro hsource</span>
+<span id="L740">740       apply hs</span>
+<span id="L741">741       refine ⟨?_, ?_⟩</span>
+<span id="L742">742       · simpa [exploredPredictable, comparatorTrue] using hsource.1</span>
+<span id="L743">743       · simpa [predictableVariance] using hsource.2</span>
+<span id="L744">744     _ ≤ (mu (secondMomentBad ∩ varianceGood) + mu pureBad) +</span>
+<span id="L745">745         mu comparatorBad := by</span>
+<span id="L746">746       exact (measure_union_le _ _).trans</span>
+<span id="L747">747         (add_le_add (measure_union_le _ _) le_rfl)</span>
+<span id="L748">748     _ ≤ (ENNReal.ofReal deltaSquare + ENNReal.ofReal deltaConfidence) +</span>
+<span id="L749">749         ENNReal.ofReal deltaConfidence + mu bad := by</span>
+<span id="L750">750       calc</span>
+<span id="L751">751         (mu (secondMomentBad ∩ varianceGood) + mu pureBad) +</span>
+<span id="L752">752             mu comparatorBad ≤</span>
+<span id="L753">753           ((ENNReal.ofReal deltaSquare + mu bad) +</span>
+<span id="L754">754               ENNReal.ofReal deltaConfidence) +</span>
+<span id="L755">755             ENNReal.ofReal deltaConfidence :=</span>
+<span id="L756">756           add_le_add (add_le_add hsecondTail hpureTail) hcomparatorTail</span>
+<span id="L757">757         _ = (ENNReal.ofReal deltaSquare + ENNReal.ofReal deltaConfidence) +</span>
+<span id="L758">758             ENNReal.ofReal deltaConfidence + mu bad := by</span>
+<span id="L759">759           simp only [add_assoc, add_left_comm, add_comm]</span>
+<span id="L760">760 </span>
+<span id="L761">761 /-- Small-loss predictable regret on the event that cumulative predictable</span>
+<span id="L762">762 mixed-square variance stays below `varianceBudget`. -/</span>
+<span id="L763">763 theorem sampledPredictable_predictableVarianceSquareSmallLossHighProbabilityRegret_tail_joint</span>
+<span id="L764">764     {Env : Type u} {Action : Type v}</span>
+<span id="L765">765     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L766">766     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L767">767     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L768">768     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L769">769     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L770">770     (eta gamma : Real) (heta : 0 &lt; eta)</span>
+<span id="L771">771     (hgamma_pos : 0 &lt; gamma) (hgamma_lt_one : gamma &lt; 1)</span>
+<span id="L772">772     (loss : PredictableLossVector Env Action)</span>
+<span id="L773">773     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L774">774     (horizon : Nat) (lossMassBudget varianceBudget : Real)</span>
+<span id="L775">775     (deltaSquare deltaConfidence : Real)</span>
+<span id="L776">776     (hvarianceBudget : 0 &lt; varianceBudget)</span>
+<span id="L777">777     (hdeltaSquare : 0 &lt; deltaSquare)</span>
+<span id="L778">778     (hdeltaConfidence : 0 &lt; deltaConfidence)</span>
+<span id="L779">779     (hmass : ∀ᵐ sample ∂(prior ⊗ₘ</span>
+<span id="L780">780         sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L781">781           eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment),</span>
+<span id="L782">782       sampledPredictableLossMassSum arms loss horizon sample ≤</span>
+<span id="L783">783         lossMassBudget) :</span>
+<span id="L784">784     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L785">785       eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment</span>
+<span id="L786">786     mu {sample |</span>
+<span id="L787">787         sampledPredictableVarianceSquareSmallLossHighProbabilityRegretBudget</span>
+<span id="L788">788             arms eta gamma horizon lossMassBudget varianceBudget deltaSquare</span>
+<span id="L789">789               deltaConfidence ≤</span>
+<span id="L790">790           (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L791">791               sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L792">792                 arms eta gamma loss t sample) -</span>
+<span id="L793">793             (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L794">794               predictableLossAt loss t sample comparator) ∧</span>
+<span id="L795">795         (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L796">796           sampledTrajectoryPredictableMixedSquaredVarianceAt</span>
+<span id="L797">797             arms eta gamma loss i sample) ≤ varianceBudget} ≤</span>
+<span id="L798">798       (ENNReal.ofReal deltaSquare + ENNReal.ofReal deltaConfidence) +</span>
+<span id="L799">799         ENNReal.ofReal deltaConfidence := by</span>
+<span id="L800">800   have h :=</span>
+<span id="L801">801     sampledPredictable_predictableVarianceSquareSmallLossHighProbabilityRegret_tail_joint_of_lossMassSum_le_or_mem</span>
+<span id="L802">802       prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator</span>
+<span id="L803">803         hcomparator horizon lossMassBudget varianceBudget deltaSquare</span>
+<span id="L804">804           deltaConfidence hvarianceBudget hdeltaSquare hdeltaConfidence ∅</span>
+<span id="L805">805             (hmass.mono fun _sample hsample =&gt; Or.inl hsample)</span>
+<span id="L806">806   simpa using h</span>
+<span id="L807">807 </span>
+<span id="L808">808 /-- Realized small-loss regret budget with a caller-supplied predictable</span>
+<span id="L809">809 variance budget. -/</span>
+<span id="L810">810 noncomputable def sampledPredictableVarianceSquareSmallLossRealizedHighProbabilityRegretBudget</span>
+<span id="L811">811     {Action : Type v} [DecidableEq Action]</span>
+<span id="L812">812     (arms : Finset Action) (eta gamma : Real) (horizon : Nat)</span>
+<span id="L813">813     (lossMassBudget varianceBudget deltaSquare deltaConfidence deltaRealized : Real) : Real :=</span>
+<span id="L814">814   sampledPredictableVarianceSquareSmallLossHighProbabilityRegretBudget</span>
+<span id="L815">815       arms eta gamma horizon lossMassBudget varianceBudget deltaSquare</span>
+<span id="L816">816         deltaConfidence +</span>
+<span id="L817">817     sampledPredictableRealizedDeviationConfidenceRadius horizon deltaRealized</span>
+<span id="L818">818 </span>
+<span id="L819">819 /-- Off-bad realized small-loss regret on the predictable-variance-good event.</span>
+<span id="L820">820 The four confidence events are charged here; the explicit bad set can be</span>
+<span id="L821">821 charged once by a downstream pathwise decomposition. -/</span>
+<span id="L822">822 theorem sampledPredictable_predictableVarianceSquareSmallLossRealizedHighProbabilityRegret_tail_joint_off_bad_of_lossMassSum_le_or_mem</span>
+<span id="L823">823     {Env : Type u} {Action : Type v}</span>
+<span id="L824">824     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L825">825     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L826">826     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L827">827     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L828">828     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L829">829     (eta gamma : Real) (heta : 0 &lt; eta)</span>
+<span id="L830">830     (hgamma_pos : 0 &lt; gamma) (hgamma_lt_one : gamma &lt; 1)</span>
+<span id="L831">831     (loss : PredictableLossVector Env Action)</span>
+<span id="L832">832     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L833">833     (horizon : Nat) (hhorizon : 0 &lt; horizon)</span>
+<span id="L834">834     (lossMassBudget varianceBudget : Real)</span>
+<span id="L835">835     (deltaSquare deltaConfidence deltaRealized : Real)</span>
+<span id="L836">836     (hvarianceBudget : 0 &lt; varianceBudget)</span>
+<span id="L837">837     (hdeltaSquare : 0 &lt; deltaSquare)</span>
+<span id="L838">838     (hdeltaConfidence : 0 &lt; deltaConfidence)</span>
+<span id="L839">839     (hdeltaRealized : 0 &lt; deltaRealized)</span>
+<span id="L840">840     (bad : Set (Env × ((k : Nat) → Action × Real)))</span>
+<span id="L841">841     (hmass : ∀ᵐ sample ∂(prior ⊗ₘ</span>
+<span id="L842">842         sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L843">843           eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment),</span>
+<span id="L844">844       sampledPredictableLossMassSum arms loss horizon sample ≤</span>
+<span id="L845">845         lossMassBudget ∨ sample ∈ bad) :</span>
+<span id="L846">846     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L847">847       eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment</span>
+<span id="L848">848     mu ({sample |</span>
+<span id="L849">849         sampledPredictableVarianceSquareSmallLossRealizedHighProbabilityRegretBudget</span>
+<span id="L850">850             arms eta gamma horizon lossMassBudget varianceBudget deltaSquare</span>
+<span id="L851">851               deltaConfidence deltaRealized ≤</span>
+<span id="L852">852           (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L853">853               sampledTrajectoryRealizedLossAt t sample) -</span>
+<span id="L854">854             (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L855">855               predictableLossAt loss t sample comparator) ∧</span>
+<span id="L856">856         (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L857">857           sampledTrajectoryPredictableMixedSquaredVarianceAt</span>
+<span id="L858">858             arms eta gamma loss i sample) ≤ varianceBudget} \ bad) ≤</span>
+<span id="L859">859       ((ENNReal.ofReal deltaSquare + ENNReal.ofReal deltaConfidence) +</span>
+<span id="L860">860         ENNReal.ofReal deltaConfidence) + ENNReal.ofReal deltaRealized := by</span>
+<span id="L861">861   dsimp only</span>
+<span id="L862">862   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L863">863     eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment</span>
+<span id="L864">864   let predictableRegret := fun sample : Env × ((k : Nat) → Action × Real) =&gt;</span>
+<span id="L865">865     (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L866">866         sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L867">867           arms eta gamma loss t sample) -</span>
+<span id="L868">868       (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L869">869         predictableLossAt loss t sample comparator)</span>
+<span id="L870">870   let realizedDeviation := fun sample : Env × ((k : Nat) → Action × Real) =&gt;</span>
+<span id="L871">871     (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L872">872       sampledTrajectoryRealizedDeviationAt arms eta gamma loss t sample)</span>
+<span id="L873">873   let realizedRegret := fun sample : Env × ((k : Nat) → Action × Real) =&gt;</span>
+<span id="L874">874     (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L875">875         sampledTrajectoryRealizedLossAt t sample) -</span>
+<span id="L876">876       (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L877">877         predictableLossAt loss t sample comparator)</span>
+<span id="L878">878   let varianceSum := fun sample : Env × ((k : Nat) → Action × Real) =&gt;</span>
+<span id="L879">879     (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L880">880       sampledTrajectoryPredictableMixedSquaredVarianceAt</span>
+<span id="L881">881         arms eta gamma loss i sample)</span>
+<span id="L882">882   let predictableBudget :=</span>
+<span id="L883">883     sampledPredictableVarianceSquareSmallLossHighProbabilityRegretBudget</span>
+<span id="L884">884       arms eta gamma horizon lossMassBudget varianceBudget deltaSquare</span>
+<span id="L885">885         deltaConfidence</span>
+<span id="L886">886   let realizedRadius :=</span>
+<span id="L887">887     sampledPredictableRealizedDeviationConfidenceRadius horizon deltaRealized</span>
+<span id="L888">888   let predictableBad : Set (Env × ((k : Nat) → Action × Real)) :=</span>
+<span id="L889">889     {sample | predictableBudget ≤ predictableRegret sample}</span>
+<span id="L890">890   let varianceGood : Set (Env × ((k : Nat) → Action × Real)) :=</span>
+<span id="L891">891     {sample | varianceSum sample ≤ varianceBudget}</span>
+<span id="L892">892   let realizedBad : Set (Env × ((k : Nat) → Action × Real)) :=</span>
+<span id="L893">893     {sample | realizedRadius ≤ realizedDeviation sample}</span>
+<span id="L894">894   let regretJoint : Set (Env × ((k : Nat) → Action × Real)) :=</span>
+<span id="L895">895     {sample |</span>
+<span id="L896">896       predictableBudget + realizedRadius ≤ realizedRegret sample ∧</span>
+<span id="L897">897         varianceSum sample ≤ varianceBudget}</span>
+<span id="L898">898   have hpredictableTail :</span>
+<span id="L899">899       mu ((predictableBad ∩ varianceGood) \ bad) ≤</span>
+<span id="L900">900         (ENNReal.ofReal deltaSquare + ENNReal.ofReal deltaConfidence) +</span>
+<span id="L901">901           ENNReal.ofReal deltaConfidence := by</span>
+<span id="L902">902     have h :=</span>
+<span id="L903">903       sampledPredictable_predictableVarianceSquareSmallLossHighProbabilityRegret_tail_joint_off_bad_of_lossMassSum_le_or_mem</span>
+<span id="L904">904         prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator</span>
+<span id="L905">905           hcomparator horizon lossMassBudget varianceBudget deltaSquare</span>
+<span id="L906">906           deltaConfidence hvarianceBudget hdeltaSquare hdeltaConfidence bad hmass</span>
+<span id="L907">907     dsimp only at h</span>
+<span id="L908">908     simpa [mu, predictableBad, varianceGood, predictableBudget,</span>
+<span id="L909">909       predictableRegret, varianceSum] using h</span>
+<span id="L910">910   have hrealizedTail : mu realizedBad ≤ ENNReal.ofReal deltaRealized := by</span>
+<span id="L911">911     have h := sampledPredictableRealizedDeviation_sum_tail_delta</span>
+<span id="L912">912       prior arms harms eta gamma hgamma_pos.le hgamma_lt_one.le loss horizon</span>
+<span id="L913">913         hhorizon deltaRealized hdeltaRealized</span>
+<span id="L914">914     dsimp only at h</span>
+<span id="L915">915     simpa [mu, realizedBad, realizedRadius, realizedDeviation] using h</span>
+<span id="L916">916   have hdecomp : ∀ sample,</span>
+<span id="L917">917       realizedRegret sample = predictableRegret sample + realizedDeviation sample := by</span>
+<span id="L918">918     intro sample</span>
+<span id="L919">919     dsimp [realizedRegret, predictableRegret, realizedDeviation,</span>
+<span id="L920">920       sampledTrajectoryRealizedDeviationAt]</span>
+<span id="L921">921     rw [Finset.sum_sub_distrib]</span>
+<span id="L922">922     ring</span>
+<span id="L923">923   have hsubset :</span>
+<span id="L924">924       regretJoint \ bad ⊆</span>
+<span id="L925">925         ((predictableBad ∩ varianceGood) \ bad) ∪ realizedBad := by</span>
+<span id="L926">926     intro sample hregret</span>
+<span id="L927">927     have hregretSource := hregret.1</span>
+<span id="L928">928     simp only [regretJoint, Set.mem_setOf_eq] at hregretSource</span>
+<span id="L929">929     by_cases hpredictable : sample ∈ predictableBad</span>
+<span id="L930">930     · exact Or.inl ⟨⟨hpredictable, hregretSource.2⟩, hregret.2⟩</span>
+<span id="L931">931     by_cases hrealized : sample ∈ realizedBad</span>
+<span id="L932">932     · exact Or.inr hrealized</span>
+<span id="L933">933     exfalso</span>
+<span id="L934">934     have hpredictableGood : predictableRegret sample &lt; predictableBudget := by</span>
+<span id="L935">935       change ¬ predictableBudget ≤ predictableRegret sample at hpredictable</span>
+<span id="L936">936       exact lt_of_not_ge hpredictable</span>
+<span id="L937">937     have hrealizedGood : realizedDeviation sample &lt; realizedRadius := by</span>
+<span id="L938">938       change ¬ realizedRadius ≤ realizedDeviation sample at hrealized</span>
+<span id="L939">939       exact lt_of_not_ge hrealized</span>
+<span id="L940">940     have hregret&#x27; :</span>
+<span id="L941">941         predictableBudget + realizedRadius ≤ realizedRegret sample :=</span>
+<span id="L942">942       hregretSource.1</span>
+<span id="L943">943     rw [hdecomp sample] at hregret&#x27;</span>
+<span id="L944">944     linarith</span>
+<span id="L945">945   change mu (regretJoint \ bad) ≤</span>
+<span id="L946">946     ((ENNReal.ofReal deltaSquare + ENNReal.ofReal deltaConfidence) +</span>
+<span id="L947">947       ENNReal.ofReal deltaConfidence) + ENNReal.ofReal deltaRealized</span>
+<span id="L948">948   calc</span>
+<span id="L949">949     mu (regretJoint \ bad) ≤</span>
+<span id="L950">950         mu (((predictableBad ∩ varianceGood) \ bad) ∪ realizedBad) :=</span>
+<span id="L951">951       measure_mono hsubset</span>
+<span id="L952">952     _ ≤ mu ((predictableBad ∩ varianceGood) \ bad) + mu realizedBad :=</span>
+<span id="L953">953       measure_union_le _ _</span>
+<span id="L954">954     _ ≤ ((ENNReal.ofReal deltaSquare + ENNReal.ofReal deltaConfidence) +</span>
+<span id="L955">955           ENNReal.ofReal deltaConfidence) + ENNReal.ofReal deltaRealized :=</span>
+<span id="L956">956       add_le_add hpredictableTail hrealizedTail</span>
+<span id="L957">957 </span>
+<span id="L958">958 /-- Residual realized small-loss regret on the predictable-variance-good event</span>
+<span id="L959">959 when the loss-mass budget may fail on an explicit bad set. -/</span>
+<span id="L960">960 theorem sampledPredictable_predictableVarianceSquareSmallLossRealizedHighProbabilityRegret_tail_joint_of_lossMassSum_le_or_mem</span>
+<span id="L961">961     {Env : Type u} {Action : Type v}</span>
+<span id="L962">962     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L963">963     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L964">964     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L965">965     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L966">966     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L967">967     (eta gamma : Real) (heta : 0 &lt; eta)</span>
+<span id="L968">968     (hgamma_pos : 0 &lt; gamma) (hgamma_lt_one : gamma &lt; 1)</span>
+<span id="L969">969     (loss : PredictableLossVector Env Action)</span>
+<span id="L970">970     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L971">971     (horizon : Nat) (hhorizon : 0 &lt; horizon)</span>
+<span id="L972">972     (lossMassBudget varianceBudget : Real)</span>
+<span id="L973">973     (deltaSquare deltaConfidence deltaRealized : Real)</span>
+<span id="L974">974     (hvarianceBudget : 0 &lt; varianceBudget)</span>
+<span id="L975">975     (hdeltaSquare : 0 &lt; deltaSquare)</span>
+<span id="L976">976     (hdeltaConfidence : 0 &lt; deltaConfidence)</span>
+<span id="L977">977     (hdeltaRealized : 0 &lt; deltaRealized)</span>
+<span id="L978">978     (bad : Set (Env × ((k : Nat) → Action × Real)))</span>
+<span id="L979">979     (hmass : ∀ᵐ sample ∂(prior ⊗ₘ</span>
+<span id="L980">980         sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L981">981           eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment),</span>
+<span id="L982">982       sampledPredictableLossMassSum arms loss horizon sample ≤</span>
+<span id="L983">983         lossMassBudget ∨ sample ∈ bad) :</span>
+<span id="L984">984     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L985">985       eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment</span>
+<span id="L986">986     mu {sample |</span>
+<span id="L987">987         sampledPredictableVarianceSquareSmallLossRealizedHighProbabilityRegretBudget</span>
+<span id="L988">988             arms eta gamma horizon lossMassBudget varianceBudget deltaSquare</span>
+<span id="L989">989               deltaConfidence deltaRealized ≤</span>
+<span id="L990">990           (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L991">991               sampledTrajectoryRealizedLossAt t sample) -</span>
+<span id="L992">992             (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L993">993               predictableLossAt loss t sample comparator) ∧</span>
+<span id="L994">994         (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L995">995           sampledTrajectoryPredictableMixedSquaredVarianceAt</span>
+<span id="L996">996             arms eta gamma loss i sample) ≤ varianceBudget} ≤</span>
+<span id="L997">997       ((ENNReal.ofReal deltaSquare + ENNReal.ofReal deltaConfidence) +</span>
+<span id="L998">998         ENNReal.ofReal deltaConfidence) + ENNReal.ofReal deltaRealized +</span>
+<span id="L999">999           (prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L1000">1000             eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment) bad := by</span>
+<span id="L1001">1001   dsimp only</span>
+<span id="L1002">1002   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L1003">1003     eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment</span>
+<span id="L1004">1004   let predictableRegret := fun sample : Env × ((k : Nat) → Action × Real) =&gt;</span>
+<span id="L1005">1005     (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L1006">1006         sampledTrajectoryExploredPredictableLossAt</span>
+<span id="L1007">1007           arms eta gamma loss t sample) -</span>
+<span id="L1008">1008       (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L1009">1009         predictableLossAt loss t sample comparator)</span>
+<span id="L1010">1010   let realizedDeviation := fun sample : Env × ((k : Nat) → Action × Real) =&gt;</span>
+<span id="L1011">1011     (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L1012">1012       sampledTrajectoryRealizedDeviationAt arms eta gamma loss t sample)</span>
+<span id="L1013">1013   let realizedRegret := fun sample : Env × ((k : Nat) → Action × Real) =&gt;</span>
+<span id="L1014">1014     (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L1015">1015         sampledTrajectoryRealizedLossAt t sample) -</span>
+<span id="L1016">1016       (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L1017">1017         predictableLossAt loss t sample comparator)</span>
+<span id="L1018">1018   let varianceSum := fun sample : Env × ((k : Nat) → Action × Real) =&gt;</span>
+<span id="L1019">1019     (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L1020">1020       sampledTrajectoryPredictableMixedSquaredVarianceAt</span>
+<span id="L1021">1021         arms eta gamma loss i sample)</span>
+<span id="L1022">1022   let predictableBudget :=</span>
+<span id="L1023">1023     sampledPredictableVarianceSquareSmallLossHighProbabilityRegretBudget</span>
+<span id="L1024">1024       arms eta gamma horizon lossMassBudget varianceBudget deltaSquare</span>
+<span id="L1025">1025         deltaConfidence</span>
+<span id="L1026">1026   let realizedRadius :=</span>
+<span id="L1027">1027     sampledPredictableRealizedDeviationConfidenceRadius horizon deltaRealized</span>
+<span id="L1028">1028   let predictableBad : Set (Env × ((k : Nat) → Action × Real)) :=</span>
+<span id="L1029">1029     {sample | predictableBudget ≤ predictableRegret sample}</span>
+<span id="L1030">1030   let varianceGood : Set (Env × ((k : Nat) → Action × Real)) :=</span>
+<span id="L1031">1031     {sample | varianceSum sample ≤ varianceBudget}</span>
+<span id="L1032">1032   let realizedBad : Set (Env × ((k : Nat) → Action × Real)) :=</span>
+<span id="L1033">1033     {sample | realizedRadius ≤ realizedDeviation sample}</span>
+<span id="L1034">1034   have hpredictableTail : mu (predictableBad ∩ varianceGood) ≤</span>
+<span id="L1035">1035       (ENNReal.ofReal deltaSquare + ENNReal.ofReal deltaConfidence) +</span>
+<span id="L1036">1036         ENNReal.ofReal deltaConfidence + mu bad := by</span>
+<span id="L1037">1037     have h :=</span>
+<span id="L1038">1038       sampledPredictable_predictableVarianceSquareSmallLossHighProbabilityRegret_tail_joint_of_lossMassSum_le_or_mem</span>
+<span id="L1039">1039         prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator</span>
+<span id="L1040">1040           hcomparator horizon lossMassBudget varianceBudget deltaSquare</span>
+<span id="L1041">1041           deltaConfidence hvarianceBudget hdeltaSquare hdeltaConfidence bad hmass</span>
+<span id="L1042">1042     dsimp only at h</span>
+<span id="L1043">1043     simpa [mu, predictableBad, varianceGood, predictableBudget,</span>
+<span id="L1044">1044       predictableRegret, varianceSum] using h</span>
+<span id="L1045">1045   have hrealizedTail : mu realizedBad ≤ ENNReal.ofReal deltaRealized := by</span>
+<span id="L1046">1046     have h := sampledPredictableRealizedDeviation_sum_tail_delta</span>
+<span id="L1047">1047       prior arms harms eta gamma hgamma_pos.le hgamma_lt_one.le loss horizon</span>
+<span id="L1048">1048         hhorizon deltaRealized hdeltaRealized</span>
+<span id="L1049">1049     dsimp only at h</span>
+<span id="L1050">1050     simpa [mu, realizedBad, realizedRadius, realizedDeviation] using h</span>
+<span id="L1051">1051   have hdecomp : ∀ sample,</span>
+<span id="L1052">1052       realizedRegret sample = predictableRegret sample + realizedDeviation sample := by</span>
+<span id="L1053">1053     intro sample</span>
+<span id="L1054">1054     dsimp [realizedRegret, predictableRegret, realizedDeviation,</span>
+<span id="L1055">1055       sampledTrajectoryRealizedDeviationAt]</span>
+<span id="L1056">1056     rw [Finset.sum_sub_distrib]</span>
+<span id="L1057">1057     ring</span>
+<span id="L1058">1058   have hsubset :</span>
+<span id="L1059">1059       {sample |</span>
+<span id="L1060">1060           predictableBudget + realizedRadius ≤ realizedRegret sample ∧</span>
+<span id="L1061">1061           varianceSum sample ≤ varianceBudget} ⊆</span>
+<span id="L1062">1062         (predictableBad ∩ varianceGood) ∪ realizedBad := by</span>
+<span id="L1063">1063     intro sample hregret</span>
+<span id="L1064">1064     by_cases hpredictable : sample ∈ predictableBad</span>
+<span id="L1065">1065     · exact Or.inl ⟨hpredictable, hregret.2⟩</span>
+<span id="L1066">1066     by_cases hrealized : sample ∈ realizedBad</span>
+<span id="L1067">1067     · exact Or.inr hrealized</span>
+<span id="L1068">1068     exfalso</span>
+<span id="L1069">1069     have hpredictableGood : predictableRegret sample &lt; predictableBudget := by</span>
+<span id="L1070">1070       change ¬ predictableBudget ≤ predictableRegret sample at hpredictable</span>
+<span id="L1071">1071       exact lt_of_not_ge hpredictable</span>
+<span id="L1072">1072     have hrealizedGood : realizedDeviation sample &lt; realizedRadius := by</span>
+<span id="L1073">1073       change ¬ realizedRadius ≤ realizedDeviation sample at hrealized</span>
+<span id="L1074">1074       exact lt_of_not_ge hrealized</span>
+<span id="L1075">1075     have hregret&#x27; :</span>
+<span id="L1076">1076         predictableBudget + realizedRadius ≤ realizedRegret sample := hregret.1</span>
+<span id="L1077">1077     rw [hdecomp sample] at hregret&#x27;</span>
+<span id="L1078">1078     linarith</span>
+<span id="L1079">1079   calc</span>
+<span id="L1080">1080     mu {sample |</span>
+<span id="L1081">1081         sampledPredictableVarianceSquareSmallLossRealizedHighProbabilityRegretBudget</span>
+<span id="L1082">1082             arms eta gamma horizon lossMassBudget varianceBudget deltaSquare</span>
+<span id="L1083">1083               deltaConfidence deltaRealized ≤</span>
+<span id="L1084">1084           (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L1085">1085               sampledTrajectoryRealizedLossAt t sample) -</span>
+<span id="L1086">1086             (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L1087">1087               predictableLossAt loss t sample comparator) ∧</span>
+<span id="L1088">1088         (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L1089">1089           sampledTrajectoryPredictableMixedSquaredVarianceAt</span>
+<span id="L1090">1090             arms eta gamma loss i sample) ≤ varianceBudget} ≤</span>
+<span id="L1091">1091         mu ((predictableBad ∩ varianceGood) ∪ realizedBad) := by</span>
+<span id="L1092">1092       apply measure_mono</span>
+<span id="L1093">1093       simpa [sampledPredictableVarianceSquareSmallLossRealizedHighProbabilityRegretBudget,</span>
+<span id="L1094">1094         predictableBudget, realizedRadius, realizedRegret, varianceSum, mu]</span>
+<span id="L1095">1095         using hsubset</span>
+<span id="L1096">1096     _ ≤ mu (predictableBad ∩ varianceGood) + mu realizedBad :=</span>
+<span id="L1097">1097       measure_union_le _ _</span>
+<span id="L1098">1098     _ ≤ ((ENNReal.ofReal deltaSquare + ENNReal.ofReal deltaConfidence) +</span>
+<span id="L1099">1099           ENNReal.ofReal deltaConfidence) + ENNReal.ofReal deltaRealized +</span>
+<span id="L1100">1100             mu bad := by</span>
+<span id="L1101">1101       calc</span>
+<span id="L1102">1102         mu (predictableBad ∩ varianceGood) + mu realizedBad ≤</span>
+<span id="L1103">1103             (((ENNReal.ofReal deltaSquare + ENNReal.ofReal deltaConfidence) +</span>
+<span id="L1104">1104                 ENNReal.ofReal deltaConfidence) + mu bad) +</span>
+<span id="L1105">1105               ENNReal.ofReal deltaRealized :=</span>
+<span id="L1106">1106           add_le_add hpredictableTail hrealizedTail</span>
+<span id="L1107">1107         _ = ((ENNReal.ofReal deltaSquare + ENNReal.ofReal deltaConfidence) +</span>
+<span id="L1108">1108               ENNReal.ofReal deltaConfidence) + ENNReal.ofReal deltaRealized +</span>
+<span id="L1109">1109                 mu bad := by</span>
+<span id="L1110">1110           simp only [add_assoc, add_left_comm, add_comm]</span>
+<span id="L1111">1111 </span>
+<span id="L1112">1112 /-- Realized small-loss regret on the predictable-variance-good event. -/</span>
+<span id="L1113">1113 theorem sampledPredictable_predictableVarianceSquareSmallLossRealizedHighProbabilityRegret_tail_joint</span>
+<span id="L1114">1114     {Env : Type u} {Action : Type v}</span>
+<span id="L1115">1115     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L1116">1116     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L1117">1117     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L1118">1118     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L1119">1119     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L1120">1120     (eta gamma : Real) (heta : 0 &lt; eta)</span>
+<span id="L1121">1121     (hgamma_pos : 0 &lt; gamma) (hgamma_lt_one : gamma &lt; 1)</span>
+<span id="L1122">1122     (loss : PredictableLossVector Env Action)</span>
+<span id="L1123">1123     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L1124">1124     (horizon : Nat) (hhorizon : 0 &lt; horizon)</span>
+<span id="L1125">1125     (lossMassBudget varianceBudget : Real)</span>
+<span id="L1126">1126     (deltaSquare deltaConfidence deltaRealized : Real)</span>
+<span id="L1127">1127     (hvarianceBudget : 0 &lt; varianceBudget)</span>
+<span id="L1128">1128     (hdeltaSquare : 0 &lt; deltaSquare)</span>
+<span id="L1129">1129     (hdeltaConfidence : 0 &lt; deltaConfidence)</span>
+<span id="L1130">1130     (hdeltaRealized : 0 &lt; deltaRealized)</span>
+<span id="L1131">1131     (hmass : ∀ᵐ sample ∂(prior ⊗ₘ</span>
+<span id="L1132">1132         sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L1133">1133           eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment),</span>
+<span id="L1134">1134       sampledPredictableLossMassSum arms loss horizon sample ≤</span>
+<span id="L1135">1135         lossMassBudget) :</span>
+<span id="L1136">1136     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L1137">1137       eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment</span>
+<span id="L1138">1138     mu {sample |</span>
+<span id="L1139">1139         sampledPredictableVarianceSquareSmallLossRealizedHighProbabilityRegretBudget</span>
+<span id="L1140">1140             arms eta gamma horizon lossMassBudget varianceBudget deltaSquare</span>
+<span id="L1141">1141               deltaConfidence deltaRealized ≤</span>
+<span id="L1142">1142           (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L1143">1143               sampledTrajectoryRealizedLossAt t sample) -</span>
+<span id="L1144">1144             (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L1145">1145               predictableLossAt loss t sample comparator) ∧</span>
+<span id="L1146">1146         (Finset.range horizon).sum (fun i =&gt;</span>
+<span id="L1147">1147           sampledTrajectoryPredictableMixedSquaredVarianceAt</span>
+<span id="L1148">1148             arms eta gamma loss i sample) ≤ varianceBudget} ≤</span>
+<span id="L1149">1149       ((ENNReal.ofReal deltaSquare + ENNReal.ofReal deltaConfidence) +</span>
+<span id="L1150">1150         ENNReal.ofReal deltaConfidence) + ENNReal.ofReal deltaRealized := by</span>
+<span id="L1151">1151   have h :=</span>
+<span id="L1152">1152     sampledPredictable_predictableVarianceSquareSmallLossRealizedHighProbabilityRegret_tail_joint_of_lossMassSum_le_or_mem</span>
+<span id="L1153">1153       prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator</span>
+<span id="L1154">1154         hcomparator horizon hhorizon lossMassBudget varianceBudget deltaSquare</span>
+<span id="L1155">1155           deltaConfidence deltaRealized hvarianceBudget hdeltaSquare</span>
+<span id="L1156">1156             hdeltaConfidence hdeltaRealized ∅</span>
+<span id="L1157">1157               (hmass.mono fun _sample hsample =&gt; Or.inl hsample)</span>
+<span id="L1158">1158   simpa using h</span>
+<span id="L1159">1159 </span>
+<span id="L1160">1160 /-- Five-event small-loss realized budget: the mixed-square predictable mean is</span>
+<span id="L1161">1161 `lossMassBudget`, while the Markov variance mean is</span>
+<span id="L1162">1162 `(1 / (gamma / K)) * lossMassBudget`. -/</span>
+<span id="L1163">1163 noncomputable def sampledPredictableVarianceSquareSmallLossRealizedMarkovHighProbabilityRegretBudget</span>
+<span id="L1164">1164     {Action : Type v} [DecidableEq Action]</span>
+<span id="L1165">1165     (arms : Finset Action) (eta gamma : Real) (horizon : Nat)</span>
+<span id="L1166">1166     (lossMassBudget delta : Real) : Real :=</span>
+<span id="L1167">1167   sampledPredictableVarianceSquareSmallLossRealizedHighProbabilityRegretBudget</span>
+<span id="L1168">1168     arms eta gamma horizon lossMassBudget</span>
+<span id="L1169">1169       (((1 / (gamma / (arms.card : Real))) * lossMassBudget) / (delta / 5))</span>
+<span id="L1170">1170       (delta / 5) (delta / 5) (delta / 5)</span>
+<span id="L1171">1171 </span>
+<span id="L1172">1172 /-- Primary armwise small-loss specialization of the Markov-closed realized</span>
+<span id="L1173">1173 EXP3 theorem. -/</span>
+<span id="L1174">1174 theorem sampledPredictable_predictableVarianceSquareSmallLossRealizedMarkovHighProbabilityRegret_tail_total_delta</span>
+<span id="L1175">1175     {Env : Type u} {Action : Type v}</span>
+<span id="L1176">1176     [MeasurableSpace Env] [StandardBorelSpace Env] [Nonempty Env]</span>
+<span id="L1177">1177     [MeasurableSpace Action] [MeasurableSingletonClass Action]</span>
+<span id="L1178">1178     [StandardBorelSpace Action] [Nonempty Action] [DecidableEq Action]</span>
+<span id="L1179">1179     (prior : Measure Env) [IsProbabilityMeasure prior]</span>
+<span id="L1180">1180     (arms : Finset Action) (harms : arms.Nonempty)</span>
+<span id="L1181">1181     (eta gamma : Real) (heta : 0 &lt; eta)</span>
+<span id="L1182">1182     (hgamma_pos : 0 &lt; gamma) (hgamma_lt_one : gamma &lt; 1)</span>
+<span id="L1183">1183     (loss : PredictableLossVector Env Action)</span>
+<span id="L1184">1184     (comparator : Action) (hcomparator : comparator ∈ arms)</span>
+<span id="L1185">1185     (horizon : Nat) (hhorizon : 0 &lt; horizon)</span>
+<span id="L1186">1186     (lossMassBudget delta : Real)</span>
+<span id="L1187">1187     (hlossMassBudget : 0 &lt; lossMassBudget) (hdelta : 0 &lt; delta)</span>
+<span id="L1188">1188     (hmass : ∀ᵐ sample ∂(prior ⊗ₘ</span>
+<span id="L1189">1189         sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L1190">1190           eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment),</span>
+<span id="L1191">1191       sampledPredictableLossMassSum arms loss horizon sample ≤</span>
+<span id="L1192">1192         lossMassBudget) :</span>
+<span id="L1193">1193     let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L1194">1194       eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment</span>
+<span id="L1195">1195     mu {sample |</span>
+<span id="L1196">1196         sampledPredictableVarianceSquareSmallLossRealizedMarkovHighProbabilityRegretBudget</span>
+<span id="L1197">1197             arms eta gamma horizon lossMassBudget delta ≤</span>
+<span id="L1198">1198           (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L1199">1199               sampledTrajectoryRealizedLossAt t sample) -</span>
+<span id="L1200">1200             (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L1201">1201               predictableLossAt loss t sample comparator)} ≤</span>
+<span id="L1202">1202       ENNReal.ofReal delta := by</span>
+<span id="L1203">1203   let mu := prior ⊗ₘ sampledImportanceWeightedTrajectoryKernel arms harms</span>
+<span id="L1204">1204     eta gamma hgamma_pos.le hgamma_lt_one.le loss.environment</span>
+<span id="L1205">1205   let varianceMeanBudget :=</span>
+<span id="L1206">1206     (1 / (gamma / (arms.card : Real))) * lossMassBudget</span>
+<span id="L1207">1207   let varianceBudget := varianceMeanBudget / (delta / 5)</span>
+<span id="L1208">1208   let realizedBudget :=</span>
+<span id="L1209">1209     sampledPredictableVarianceSquareSmallLossRealizedHighProbabilityRegretBudget</span>
+<span id="L1210">1210       arms eta gamma horizon lossMassBudget varianceBudget</span>
+<span id="L1211">1211         (delta / 5) (delta / 5) (delta / 5)</span>
+<span id="L1212">1212   let realizedBad : Set (Env × ((k : Nat) → Action × Real)) :=</span>
+<span id="L1213">1213     {sample |</span>
+<span id="L1214">1214       realizedBudget ≤</span>
+<span id="L1215">1215         (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L1216">1216             sampledTrajectoryRealizedLossAt t sample) -</span>
+<span id="L1217">1217           (Finset.range horizon).sum (fun t =&gt;</span>
+<span id="L1218">1218             predictableLossAt loss t sample comparator)}</span>
+<span id="L1219">1219   let varianceSum := sampledPredictableMixedSquaredVarianceSum</span>
+<span id="L1220">1220     arms eta gamma loss horizon</span>
+<span id="L1221">1221   let varianceGood : Set (Env × ((k : Nat) → Action × Real)) :=</span>
+<span id="L1222">1222     {sample | varianceSum sample ≤ varianceBudget}</span>
+<span id="L1223">1223   let varianceBad : Set (Env × ((k : Nat) → Action × Real)) :=</span>
+<span id="L1224">1224     {sample | varianceBudget &lt; varianceSum sample}</span>
+<span id="L1225">1225   have hfifth_pos : 0 &lt; delta / 5 := div_pos hdelta (by norm_num)</span>
+<span id="L1226">1226   have hfloor_pos : 0 &lt; gamma / (arms.card : Real) :=</span>
+<span id="L1227">1227     div_pos hgamma_pos (Nat.cast_pos.2 (Finset.card_pos.mpr harms))</span>
+<span id="L1228">1228   have hmean_pos : 0 &lt; varianceMeanBudget := by</span>
+<span id="L1229">1229     dsimp [varianceMeanBudget]</span>
+<span id="L1230">1230     exact mul_pos (one_div_pos.2 hfloor_pos) hlossMassBudget</span>
+<span id="L1231">1231   have hvarianceBudget : 0 &lt; varianceBudget := by</span>
+<span id="L1232">1232     exact div_pos hmean_pos hfifth_pos</span>
+<span id="L1233">1233   have hjoint : mu (realizedBad ∩ varianceGood) ≤</span>
+<span id="L1234">1234       ((ENNReal.ofReal (delta / 5) + ENNReal.ofReal (delta / 5)) +</span>
+<span id="L1235">1235         ENNReal.ofReal (delta / 5)) + ENNReal.ofReal (delta / 5) := by</span>
+<span id="L1236">1236     have h :=</span>
+<span id="L1237">1237       sampledPredictable_predictableVarianceSquareSmallLossRealizedHighProbabilityRegret_tail_joint</span>
+<span id="L1238">1238         prior arms harms eta gamma heta hgamma_pos hgamma_lt_one loss comparator</span>
+<span id="L1239">1239           hcomparator horizon hhorizon lossMassBudget varianceBudget</span>
+<span id="L1240">1240           (delta / 5) (delta / 5) (delta / 5) hvarianceBudget</span>
+<span id="L1241">1241           hfifth_pos hfifth_pos hfifth_pos hmass</span>
+<span id="L1242">1242     dsimp only at h</span>
+<span id="L1243">1243     simpa [mu, realizedBad, varianceGood, varianceSum, realizedBudget] using h</span>
+<span id="L1244">1244   have hvarianceLIntegral :</span>
+<span id="L1245">1245       sampledPredictableMixedSquaredVarianceLIntegral</span>
+<span id="L1246">1246           mu arms eta gamma loss horizon ≤ ENNReal.ofReal varianceMeanBudget := by</span>
+<span id="L1247">1247     simpa [varianceMeanBudget] using</span>
+<span id="L1248">1248       sampledPredictableMixedSquaredVarianceLIntegral_le_of_lossMassSum_le</span>
+<span id="L1249">1249         mu arms harms eta gamma hgamma_pos hgamma_lt_one.le loss horizon</span>
+<span id="L1250">1250           lossMassBudget hmass</span>
+<span id="L1251">1251   have hoverflowBase :=</span>
+<span id="L1252">1252     measure_sampledPredictableMixedSquaredVarianceSum_gt_le_lintegral_div</span>
+<span id="L1253">1253       mu arms harms eta gamma hgamma_pos hgamma_lt_one.le loss horizon</span>
+<span id="L1254">1254         varianceBudget hvarianceBudget</span>
+<span id="L1255">1255   have hmean_ne_zero : ENNReal.ofReal varianceMeanBudget ≠ 0 :=</span>
+<span id="L1256">1256     (ENNReal.ofReal_pos.2 hmean_pos).ne&#x27;</span>
+<span id="L1257">1257   have hratio :</span>
+<span id="L1258">1258       ENNReal.ofReal varianceMeanBudget / ENNReal.ofReal varianceBudget =</span>
+<span id="L1259">1259         ENNReal.ofReal (delta / 5) := by</span>
+<span id="L1260">1260     dsimp [varianceBudget]</span>
+<span id="L1261">1261     rw [ENNReal.ofReal_div_of_pos hfifth_pos]</span>
+<span id="L1262">1262     exact ENNReal.div_div_cancel hmean_ne_zero ENNReal.ofReal_ne_top</span>
+<span id="L1263">1263   have hoverflow : mu varianceBad ≤ ENNReal.ofReal (delta / 5) := by</span>
+<span id="L1264">1264     calc</span>
+<span id="L1265">1265       mu varianceBad ≤</span>
+<span id="L1266">1266           sampledPredictableMixedSquaredVarianceLIntegral</span>
+<span id="L1267">1267               mu arms eta gamma loss horizon /</span>
+<span id="L1268">1268             ENNReal.ofReal varianceBudget := by</span>
+<span id="L1269">1269         simpa [varianceBad, varianceSum, sampledPredictableMixedSquaredVarianceSum]</span>
+<span id="L1270">1270           using hoverflowBase</span>
+<span id="L1271">1271       _ ≤ ENNReal.ofReal varianceMeanBudget /</span>
+<span id="L1272">1272           ENNReal.ofReal varianceBudget :=</span>
+<span id="L1273">1273         ENNReal.div_le_div hvarianceLIntegral le_rfl</span>
+<span id="L1274">1274       _ = ENNReal.ofReal (delta / 5) := hratio</span>
+<span id="L1275">1275   have hsplit : realizedBad ⊆ (realizedBad ∩ varianceGood) ∪ varianceBad := by</span>
+<span id="L1276">1276     intro sample hregret</span>
+<span id="L1277">1277     by_cases hvariance : varianceSum sample ≤ varianceBudget</span>
+<span id="L1278">1278     · exact Or.inl ⟨hregret, hvariance⟩</span>
+<span id="L1279">1279     · exact Or.inr (lt_of_not_ge hvariance)</span>
+<span id="L1280">1280   have hfifth_nonneg : 0 ≤ delta / 5 := hfifth_pos.le</span>
+<span id="L1281">1281   have hprob :</span>
+<span id="L1282">1282       (((ENNReal.ofReal (delta / 5) + ENNReal.ofReal (delta / 5)) +</span>
+<span id="L1283">1283           ENNReal.ofReal (delta / 5)) + ENNReal.ofReal (delta / 5)) +</span>
+<span id="L1284">1284           ENNReal.ofReal (delta / 5) = ENNReal.ofReal delta := by</span>
+<span id="L1285">1285     rw [← ENNReal.ofReal_add hfifth_nonneg hfifth_nonneg]</span>
+<span id="L1286">1286     rw [← ENNReal.ofReal_add</span>
+<span id="L1287">1287       (add_nonneg hfifth_nonneg hfifth_nonneg) hfifth_nonneg]</span>
+<span id="L1288">1288     rw [← ENNReal.ofReal_add</span>
+<span id="L1289">1289       (add_nonneg (add_nonneg hfifth_nonneg hfifth_nonneg)</span>
+<span id="L1290">1290         hfifth_nonneg) hfifth_nonneg]</span>
+<span id="L1291">1291     rw [← ENNReal.ofReal_add</span>
+<span id="L1292">1292       (add_nonneg</span>
+<span id="L1293">1293         (add_nonneg (add_nonneg hfifth_nonneg hfifth_nonneg)</span>
+<span id="L1294">1294           hfifth_nonneg) hfifth_nonneg) hfifth_nonneg]</span>
+<span id="L1295">1295     congr 1</span>
+<span id="L1296">1296     ring</span>
+<span id="L1297">1297   have htail : mu realizedBad ≤ ENNReal.ofReal delta := by</span>
+<span id="L1298">1298     calc</span>
+<span id="L1299">1299       mu realizedBad ≤ mu ((realizedBad ∩ varianceGood) ∪ varianceBad) :=</span>
+<span id="L1300">1300         measure_mono hsplit</span>
+<span id="L1301">1301       _ ≤ mu (realizedBad ∩ varianceGood) + mu varianceBad :=</span>
+<span id="L1302">1302         measure_union_le _ _</span>
+<span id="L1303">1303       _ ≤ (((ENNReal.ofReal (delta / 5) + ENNReal.ofReal (delta / 5)) +</span>
+<span id="L1304">1304             ENNReal.ofReal (delta / 5)) + ENNReal.ofReal (delta / 5)) +</span>
+<span id="L1305">1305             ENNReal.ofReal (delta / 5) := add_le_add hjoint hoverflow</span>
+<span id="L1306">1306       _ = ENNReal.ofReal delta := hprob</span>
+<span id="L1307">1307   simpa [mu, realizedBad, realizedBudget, varianceBudget, varianceMeanBudget,</span>
+<span id="L1308">1308     sampledPredictableVarianceSquareSmallLossRealizedMarkovHighProbabilityRegretBudget]</span>
+<span id="L1309">1309     using htail</span>
+<span id="L1310">1310 </span>
+<span id="L1311">1311 end BanditRLProof.Exp3</span></code></pre></main>
+
+    </div>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p><strong>BanditRLlib</strong> is the public Lean library and community interface produced by <strong>Anonymous (ABRL)</strong>. Frozen review snapshot generated at 2026-09-06T15:49:44+00:00; exact Lean statements and verification status take precedence.</p>
+        <p>Organization inspired by <a href="https://github.com/shosonoda/lean-ridgelet">Sho Sonoda's Lean-Ridgelet</a> and <a href="https://statsmllib.github.io/">StatsMLlib</a>; no participation or endorsement is implied. <a href="../../attribution/index.html">Attribution details</a>.</p>
+      </div>
+    </footer>
+  </div>
+  <script src="../../static/site.js?v=20260903f"></script>
+</body>
+</html>

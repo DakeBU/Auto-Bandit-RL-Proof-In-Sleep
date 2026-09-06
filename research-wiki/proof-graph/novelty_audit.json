@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "status": "prototype",
+  "claim_boundary": "This file specifies an audit protocol. It reports no proof-structural novelty result for CNG or any post-freeze candidate.",
+  "freeze_library_at_t": {
+    "git_commit": "review-snapshot",
+    "branch_source": "origin/main",
+    "proof_graph_sha256": "review-snapshot",
+    "project_nodes": 13512,
+    "external_boundary_nodes": 4309,
+    "edges": 664837,
+    "status": "frozen-local-observation"
+  },
+  "fixed_protocol": {
+    "faithful_formalization": {
+      "required": true,
+      "checks": [
+        "freeze theorem statement and assumptions before novelty comparison",
+        "record hidden positivity, interiority, finite-dimensionality, measurability, and nonemptiness assumptions",
+        "reject weakened targets and stronger unreported assumptions"
+      ]
+    },
+    "canonicalization": {
+      "version": "proof-structure-v1",
+      "name_independent": true,
+      "raw_new_node_count_is_novelty": false,
+      "motif_inputs": [
+        "declaration kind",
+        "type/value edge roles",
+        "fixed-round neighborhood colors",
+        "canonical obligation types",
+        "support-hyperedge motif multisets",
+        "composition-constraint signatures"
+      ],
+      "generated_and_helper_policy": "Generated declarations and helper multiplicity may affect cost but cannot by themselves create a novelty claim; irreducible motif signatures and audited route replacements are required."
+    },
+    "compression": {
+      "version": "scc-and-shared-support-v1",
+      "steps": [
+        "condense strongly connected components",
+        "charge each shared declaration once in a route union",
+        "keep type and value dependencies distinct",
+        "keep proof-state dependency outside ZDD",
+        "retain a reversible mapping to exact declarations"
+      ]
+    },
+    "ablations": [
+      "raw graph versus fixed canonicalization",
+      "compression enabled versus disabled",
+      "type-only versus type-plus-value dependencies",
+      "ZDD lexical, frequency-descending, frequency-ascending, and first-seen orders",
+      "with versus without the candidate abstraction"
+    ]
+  },
+  "novelty_vector": {
+    "conditional_residual": {
+      "dimensions": [
+        "irreducible lemma motif signatures",
+        "support hyperedge signatures",
+        "obligation types",
+        "composition constraints"
+      ],
+      "status": "prototype-proxy-result",
+      "result": {
+        "canonicalization": "proof-structure-wl-v1, two rounds, declaration names excluded",
+        "new_color_signatures": 9,
+        "new_direct_support_signatures": 5,
+        "irreducible_structure_established": false,
+        "warning": "New structural proxy signatures are not proofs of semantic irreducibility."
+      }
+    },
+    "backward_compression_gain": {
+      "dimensions": [
+        "union fixed-charge reduction",
+        "standalone route-charge reduction",
+        "maximum DAG-depth reduction",
+        "shared-support gain",
+        "human explanation-motif reduction"
+      ],
+      "status": "prototype-observed-no-gain",
+      "result": {
+        "existing_to_candidate_dependency_edges": 0,
+        "all_three_frozen_benchmark_roots_unchanged": true
+      }
+    },
+    "proof_cost_pareto_frontier_shift": {
+      "minimize": [
+        "new declarations",
+        "semantic DAG depth",
+        "proof-term object proxy",
+        "Lean check time",
+        "open obligations"
+      ],
+      "maximize": ["reuse coverage"],
+      "scalarization": false,
+      "status": "not-assessed-all-dimensions",
+      "result": {
+        "structural_support_relation": "equal",
+        "full_cost_vector_relation": "not-assessed",
+        "unmeasured_dimensions": ["Lean check time", "open obligations"],
+        "candidate_dominance_established": false
+      }
+    },
+    "heldout_transfer_gain": {
+      "design_families": ["EXP3", "half-Tsallis"],
+      "heldout_family": "OFUL",
+      "heldout_data_may_influence_design": false,
+      "dimensions": [
+        "new-declaration reduction",
+        "DAG-depth reduction",
+        "proof-term proxy reduction",
+        "check-time reduction",
+        "open-obligation reduction",
+        "previously blocked obligations unlocked"
+      ],
+      "status": "prototype-observed-no-transfer",
+      "result": {
+        "candidate_declarations_in_heldout_oful_support": 0,
+        "unlocked_obligations": []
+      }
+    },
+    "target_novelty": {
+      "separate_from_proof_novelty": true,
+      "status": "planned",
+      "result": null
+    }
+  },
+  "evaluation_design": {
+    "retrospective_cases": [
+      {
+        "id": "exp3-base-versus-variance-extensions",
+        "comparison": "base predictable/realized route versus later variance and sparsity extensions",
+        "status": "planned",
+        "label": null
+      },
+      {
+        "id": "half-tsallis-constrained-optimization",
+        "comparison": "route-specific half-Tsallis leaves before and after constrained quadratic abstractions",
+        "status": "planned",
+        "label": null
+      },
+      {
+        "id": "oful-elliptical-potential",
+        "comparison": "OFUL confidence/width routes before and after shared elliptical-potential infrastructure",
+        "status": "planned",
+        "label": null
+      }
+    ],
+    "neutral_grades": [
+      "coverage extension",
+      "library consolidation",
+      "new proof route",
+      "reusable abstraction",
+      "cross-family conceptual compression"
+    ],
+    "human_interpretability_review": {
+      "status": "planned",
+      "minimum_reviewers": 2,
+      "blind_to_proposed_grade": true,
+      "questions": [
+        "Can the residual motif be explained without declaration names?",
+        "Does the abstraction replace audited route-specific subgraphs?",
+        "Is the reversible mapping to exact Lean declarations understandable?",
+        "Would a domain expert distinguish target novelty from proof novelty?",
+        "Do ordering/canonicalization ablations change the conclusion?"
+      ]
+    }
+  },
+  "cng_candidate": {
+    "name": "Curvature-Noise-Gap calculus",
+    "status": "partial",
+    "current_evidence": "A route-independent finite algebra layer is compiled after the frozen graph. A name-independent two-round structural proxy observes 9 new color signatures and 5 new direct-support signatures, but does not establish semantic irreducibility. All three frozen benchmark structural supports are unchanged, existing-to-CNG dependency edges are zero, and held-out OFUL contains zero CNG declarations; backward compression and transfer are not demonstrated, the full Pareto relation is not assessed, and structural discovery is not established.",
+    "candidate_evaluation": "research-wiki/proof-graph/cng_candidate_evaluation.json",
+    "compiled_leaves": [
+      "BanditRLProof.CurvatureNoiseGap.tangentPairing_add_const_of_isSimplexTangent",
+      "BanditRLProof.CurvatureNoiseGap.sum_weight_mul_sub_weightedCenter_eq_zero",
+      "BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_decomposition_of_centered",
+      "BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_decomposition",
+      "BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_center_le",
+      "BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_eq_center_iff",
+      "BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_add_decomposition",
+      "BanditRLProof.CurvatureNoiseGap.weightedShiftEnergy_add_le_two"
+    ],
+    "must_not_count_as_evidence": [
+      "renaming or restating a Tsallis-INF derivation",
+      "adding helper lemmas without irreducible motif residual",
+      "lowering one route cost while increasing the other declared Pareto dimensions without disclosure",
+      "evaluating only theorem families used to design CNG"
+    ],
+    "falsifiable_upgrade_criteria": [
+      "a target-faithful compiled CNG interface replaces multiple route-specific subgraphs",
+      "the declared library-aware cost vector improves with a reported Pareto relation",
+      "at least one frozen held-out theorem family has positive transfer or a blocked obligation is unlocked",
+      "the result survives canonicalization, compression, and ordering ablations",
+      "independent human review finds the abstraction interpretable and the target/proof novelty split accurate"
+    ],
+    "failure_condition": "If route replacement, Pareto improvement, or held-out transfer is absent, retain CNG as proposed or classify the work as coverage extension/library consolidation rather than proof-structural discovery."
+  },
+  "scope_exclusion": "No Chapter 13-17 declaration, card, page, or active-frontier mutation is part of this audit."
+}
